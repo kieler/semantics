@@ -2,6 +2,7 @@
  * <copyright>
  * </copyright>
  *
+
  */
 package de.cau.cs.kieler.esterel.esterel.impl;
 
@@ -28,9 +29,9 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * The following features are implemented:
  * <ul>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.IfTestImpl#getExpr <em>Expr</em>}</li>
- *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.IfTestImpl#getThen <em>Then</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.IfTestImpl#getThenPart <em>Then Part</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.IfTestImpl#getElseIf <em>Else If</em>}</li>
- *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.IfTestImpl#getElse <em>Else</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.IfTestImpl#getElsePart <em>Else Part</em>}</li>
  * </ul>
  * </p>
  *
@@ -49,14 +50,14 @@ public class IfTestImpl extends StatementImpl implements IfTest
   protected DataExpr expr;
 
   /**
-   * The cached value of the '{@link #getThen() <em>Then</em>}' containment reference.
+   * The cached value of the '{@link #getThenPart() <em>Then Part</em>}' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getThen()
+   * @see #getThenPart()
    * @generated
    * @ordered
    */
-  protected ThenPart then;
+  protected ThenPart thenPart;
 
   /**
    * The cached value of the '{@link #getElseIf() <em>Else If</em>}' containment reference.
@@ -69,14 +70,14 @@ public class IfTestImpl extends StatementImpl implements IfTest
   protected ElsIfPart elseIf;
 
   /**
-   * The cached value of the '{@link #getElse() <em>Else</em>}' containment reference.
+   * The cached value of the '{@link #getElsePart() <em>Else Part</em>}' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getElse()
+   * @see #getElsePart()
    * @generated
    * @ordered
    */
-  protected ElsePart else_;
+  protected ElsePart elsePart;
 
   /**
    * <!-- begin-user-doc -->
@@ -152,9 +153,9 @@ public class IfTestImpl extends StatementImpl implements IfTest
    * <!-- end-user-doc -->
    * @generated
    */
-  public ThenPart getThen()
+  public ThenPart getThenPart()
   {
-    return then;
+    return thenPart;
   }
 
   /**
@@ -162,13 +163,13 @@ public class IfTestImpl extends StatementImpl implements IfTest
    * <!-- end-user-doc -->
    * @generated
    */
-  public NotificationChain basicSetThen(ThenPart newThen, NotificationChain msgs)
+  public NotificationChain basicSetThenPart(ThenPart newThenPart, NotificationChain msgs)
   {
-    ThenPart oldThen = then;
-    then = newThen;
+    ThenPart oldThenPart = thenPart;
+    thenPart = newThenPart;
     if (eNotificationRequired())
     {
-      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, EsterelPackage.IF_TEST__THEN, oldThen, newThen);
+      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, EsterelPackage.IF_TEST__THEN_PART, oldThenPart, newThenPart);
       if (msgs == null) msgs = notification; else msgs.add(notification);
     }
     return msgs;
@@ -179,20 +180,20 @@ public class IfTestImpl extends StatementImpl implements IfTest
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setThen(ThenPart newThen)
+  public void setThenPart(ThenPart newThenPart)
   {
-    if (newThen != then)
+    if (newThenPart != thenPart)
     {
       NotificationChain msgs = null;
-      if (then != null)
-        msgs = ((InternalEObject)then).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.IF_TEST__THEN, null, msgs);
-      if (newThen != null)
-        msgs = ((InternalEObject)newThen).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.IF_TEST__THEN, null, msgs);
-      msgs = basicSetThen(newThen, msgs);
+      if (thenPart != null)
+        msgs = ((InternalEObject)thenPart).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.IF_TEST__THEN_PART, null, msgs);
+      if (newThenPart != null)
+        msgs = ((InternalEObject)newThenPart).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.IF_TEST__THEN_PART, null, msgs);
+      msgs = basicSetThenPart(newThenPart, msgs);
       if (msgs != null) msgs.dispatch();
     }
     else if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.IF_TEST__THEN, newThen, newThen));
+      eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.IF_TEST__THEN_PART, newThenPart, newThenPart));
   }
 
   /**
@@ -248,9 +249,9 @@ public class IfTestImpl extends StatementImpl implements IfTest
    * <!-- end-user-doc -->
    * @generated
    */
-  public ElsePart getElse()
+  public ElsePart getElsePart()
   {
-    return else_;
+    return elsePart;
   }
 
   /**
@@ -258,13 +259,13 @@ public class IfTestImpl extends StatementImpl implements IfTest
    * <!-- end-user-doc -->
    * @generated
    */
-  public NotificationChain basicSetElse(ElsePart newElse, NotificationChain msgs)
+  public NotificationChain basicSetElsePart(ElsePart newElsePart, NotificationChain msgs)
   {
-    ElsePart oldElse = else_;
-    else_ = newElse;
+    ElsePart oldElsePart = elsePart;
+    elsePart = newElsePart;
     if (eNotificationRequired())
     {
-      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, EsterelPackage.IF_TEST__ELSE, oldElse, newElse);
+      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, EsterelPackage.IF_TEST__ELSE_PART, oldElsePart, newElsePart);
       if (msgs == null) msgs = notification; else msgs.add(notification);
     }
     return msgs;
@@ -275,20 +276,20 @@ public class IfTestImpl extends StatementImpl implements IfTest
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setElse(ElsePart newElse)
+  public void setElsePart(ElsePart newElsePart)
   {
-    if (newElse != else_)
+    if (newElsePart != elsePart)
     {
       NotificationChain msgs = null;
-      if (else_ != null)
-        msgs = ((InternalEObject)else_).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.IF_TEST__ELSE, null, msgs);
-      if (newElse != null)
-        msgs = ((InternalEObject)newElse).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.IF_TEST__ELSE, null, msgs);
-      msgs = basicSetElse(newElse, msgs);
+      if (elsePart != null)
+        msgs = ((InternalEObject)elsePart).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.IF_TEST__ELSE_PART, null, msgs);
+      if (newElsePart != null)
+        msgs = ((InternalEObject)newElsePart).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.IF_TEST__ELSE_PART, null, msgs);
+      msgs = basicSetElsePart(newElsePart, msgs);
       if (msgs != null) msgs.dispatch();
     }
     else if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.IF_TEST__ELSE, newElse, newElse));
+      eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.IF_TEST__ELSE_PART, newElsePart, newElsePart));
   }
 
   /**
@@ -303,12 +304,12 @@ public class IfTestImpl extends StatementImpl implements IfTest
     {
       case EsterelPackage.IF_TEST__EXPR:
         return basicSetExpr(null, msgs);
-      case EsterelPackage.IF_TEST__THEN:
-        return basicSetThen(null, msgs);
+      case EsterelPackage.IF_TEST__THEN_PART:
+        return basicSetThenPart(null, msgs);
       case EsterelPackage.IF_TEST__ELSE_IF:
         return basicSetElseIf(null, msgs);
-      case EsterelPackage.IF_TEST__ELSE:
-        return basicSetElse(null, msgs);
+      case EsterelPackage.IF_TEST__ELSE_PART:
+        return basicSetElsePart(null, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
@@ -325,12 +326,12 @@ public class IfTestImpl extends StatementImpl implements IfTest
     {
       case EsterelPackage.IF_TEST__EXPR:
         return getExpr();
-      case EsterelPackage.IF_TEST__THEN:
-        return getThen();
+      case EsterelPackage.IF_TEST__THEN_PART:
+        return getThenPart();
       case EsterelPackage.IF_TEST__ELSE_IF:
         return getElseIf();
-      case EsterelPackage.IF_TEST__ELSE:
-        return getElse();
+      case EsterelPackage.IF_TEST__ELSE_PART:
+        return getElsePart();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -348,14 +349,14 @@ public class IfTestImpl extends StatementImpl implements IfTest
       case EsterelPackage.IF_TEST__EXPR:
         setExpr((DataExpr)newValue);
         return;
-      case EsterelPackage.IF_TEST__THEN:
-        setThen((ThenPart)newValue);
+      case EsterelPackage.IF_TEST__THEN_PART:
+        setThenPart((ThenPart)newValue);
         return;
       case EsterelPackage.IF_TEST__ELSE_IF:
         setElseIf((ElsIfPart)newValue);
         return;
-      case EsterelPackage.IF_TEST__ELSE:
-        setElse((ElsePart)newValue);
+      case EsterelPackage.IF_TEST__ELSE_PART:
+        setElsePart((ElsePart)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -374,14 +375,14 @@ public class IfTestImpl extends StatementImpl implements IfTest
       case EsterelPackage.IF_TEST__EXPR:
         setExpr((DataExpr)null);
         return;
-      case EsterelPackage.IF_TEST__THEN:
-        setThen((ThenPart)null);
+      case EsterelPackage.IF_TEST__THEN_PART:
+        setThenPart((ThenPart)null);
         return;
       case EsterelPackage.IF_TEST__ELSE_IF:
         setElseIf((ElsIfPart)null);
         return;
-      case EsterelPackage.IF_TEST__ELSE:
-        setElse((ElsePart)null);
+      case EsterelPackage.IF_TEST__ELSE_PART:
+        setElsePart((ElsePart)null);
         return;
     }
     super.eUnset(featureID);
@@ -399,12 +400,12 @@ public class IfTestImpl extends StatementImpl implements IfTest
     {
       case EsterelPackage.IF_TEST__EXPR:
         return expr != null;
-      case EsterelPackage.IF_TEST__THEN:
-        return then != null;
+      case EsterelPackage.IF_TEST__THEN_PART:
+        return thenPart != null;
       case EsterelPackage.IF_TEST__ELSE_IF:
         return elseIf != null;
-      case EsterelPackage.IF_TEST__ELSE:
-        return else_ != null;
+      case EsterelPackage.IF_TEST__ELSE_PART:
+        return elsePart != null;
     }
     return super.eIsSet(featureID);
   }

@@ -112,7 +112,7 @@ Procedure:
 // ==============================================
 
 Statement:
-	Sequence ( {Parallel.left=current} "||" right=Sequence)*;
+	Sequence ( {Parallel.list+=current} "||" list+=Sequence)*;
 	
 AtomicStatement returns Statement:
 	Abort 
@@ -141,7 +141,7 @@ AtomicStatement returns Statement:
 // --> B.4.1 Control Flow Operators <--	
 	
 Sequence returns Statement:
-	AtomicStatement ({Sequence.left=current} ";" right=AtomicStatement)* ";"?;
+	AtomicStatement ({Sequence.list+=current} ";" list+=AtomicStatement)* ";"?;
 	
 Block:
 	"["statement=Statement"]";
@@ -152,9 +152,6 @@ Assignment:
 // --> B.4.2 abort: Strong Preemption
 Abort:
 	"abort" statement=Statement "when" body=AbortBody;
-//	("abort" statement=Statement "when" delay=DelayExpr "do" statement=Statement end=AbortEnd)
-//	|	("abort" statement=Statement "when" delay=DelayExpr)
-//	|	("abort" statement=Statement "when" cases+=AbortCaseSingle (cases+=AbortCaseSingle)* end=AbortEnd);
 
 AbortBody:
 	AbortInstance | AbortCase;
@@ -182,7 +179,7 @@ AwaitEnd:
 	"end" "await"?;
 
 AwaitInstance:
-	DelayExpr ("do" statement=Statement end=AwaitEnd)?; 
+	delay=DelayExpr ("do" statement=Statement end=AwaitEnd)?; 
 	
 AwaitCase:
 	cases+=AbortCaseSingle (cases+=AbortCaseSingle)* end=AwaitEnd;
@@ -190,7 +187,7 @@ AwaitCase:
 // --> B.4.5 do-upto: Conditional Iteration (deprecated)
 // --> B.4.6 do-watching: Strong Preemption (deprecated)
 Do:
-	"do" statement=Statement (end=DoUpto | end=DoWatching);
+	"do" statement=Statement (endUp=DoUpto | endWatch=DoWatching);
 	
 DoUpto:
 	"upto" expr=DelayExpr;
@@ -220,15 +217,15 @@ Halt:
 	
 // --> B.4.12: if: Conditional for Data
 IfTest:
-	"if" expr=DataExpr (then=ThenPart)? 
-	(elseIf=ElsIfPart)? (else=ElsePart)? 
+	"if" expr=DataExpr (thenPart=ThenPart)? 
+	(elseIf=ElsIfPart)? (elsePart=ElsePart)? 
 	"end" "if"?;
 	
 ElsIfPart:
 	elsif+=ElsIf (elsif+=ElsIf)*;
 	
 ElsIf:
-	"elsif" expr=DataExpr (then=ThenPart)?;
+	"elsif" expr=DataExpr (thenPart=ThenPart)?;
 	
 ThenPart:
 	"then" statement=Statement;
@@ -309,7 +306,7 @@ TypeRenaming:
 	newName=[Type|EsterelID] "/" oldName=[Type|EsterelID];
 	
 ConstantRenaming:
-	value=ConstantValue "/" newName=EsterelID;
+	newName=[Constant|EsterelID] "/" oldName=[Constant|EsterelID];
 	
 FunctionRenaming:
 	newName=[Function|EsterelID] "/" oldName=[Function|EsterelID];
@@ -472,8 +469,8 @@ DelayExpr:
 	
 DelayEvent:
 	((signal=[Signal|EsterelID]) | tick=Tick)
-	|	"pre" "(" SigExpr ")"
-	|	"[" SigExpr"]";
+	|	"pre" "(" preSigExpr=SigExpr ")"
+	|	"[" blockSigExpr=SigExpr"]";
 	
 
 
@@ -484,9 +481,14 @@ DelayEvent:
 
 // ==> Signals <==
 ChannelDescription:
-	(":" (type=EsterelID | type=BaseType))
-	|	("(" (type=EsterelID | type=BaseType) ")")
-	|	(":=" dataExpr=DataExpr ":" (type=EsterelID | type=BaseType));
+	(":" type=ChannelType)
+	|	("(" type=ChannelType ")")
+	|	(":=" dataExpr=DataExpr ":" type=ChannelType);
+	
+ChannelType:
+	(type=EsterelID | type=BaseType)
+	| ("combine" (type=EsterelID | type=BaseType) "with" func=[Function|EsterelID])
+	;
 	
 Signal:
 	name=EsterelID (channel=ChannelDescription)?;

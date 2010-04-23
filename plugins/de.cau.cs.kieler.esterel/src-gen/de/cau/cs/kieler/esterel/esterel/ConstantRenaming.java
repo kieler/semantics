@@ -2,6 +2,7 @@
  * <copyright>
  * </copyright>
  *
+
  */
 package de.cau.cs.kieler.esterel.esterel;
 
@@ -15,8 +16,8 @@ import org.eclipse.emf.ecore.EObject;
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link de.cau.cs.kieler.esterel.esterel.ConstantRenaming#getValue <em>Value</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.ConstantRenaming#getNewName <em>New Name</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.esterel.esterel.ConstantRenaming#getOldName <em>Old Name</em>}</li>
  * </ul>
  * </p>
  *
@@ -27,55 +28,55 @@ import org.eclipse.emf.ecore.EObject;
 public interface ConstantRenaming extends EObject
 {
   /**
-   * Returns the value of the '<em><b>Value</b></em>' attribute.
+   * Returns the value of the '<em><b>New Name</b></em>' reference.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Value</em>' attribute isn't clear,
+   * If the meaning of the '<em>New Name</em>' reference isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Value</em>' attribute.
-   * @see #setValue(String)
-   * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getConstantRenaming_Value()
-   * @model
-   * @generated
-   */
-  String getValue();
-
-  /**
-   * Sets the value of the '{@link de.cau.cs.kieler.esterel.esterel.ConstantRenaming#getValue <em>Value</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Value</em>' attribute.
-   * @see #getValue()
-   * @generated
-   */
-  void setValue(String value);
-
-  /**
-   * Returns the value of the '<em><b>New Name</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>New Name</em>' attribute isn't clear,
-   * there really should be more of a description here...
-   * </p>
-   * <!-- end-user-doc -->
-   * @return the value of the '<em>New Name</em>' attribute.
-   * @see #setNewName(String)
+   * @return the value of the '<em>New Name</em>' reference.
+   * @see #setNewName(Constant)
    * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getConstantRenaming_NewName()
    * @model
    * @generated
    */
-  String getNewName();
+  Constant getNewName();
 
   /**
-   * Sets the value of the '{@link de.cau.cs.kieler.esterel.esterel.ConstantRenaming#getNewName <em>New Name</em>}' attribute.
+   * Sets the value of the '{@link de.cau.cs.kieler.esterel.esterel.ConstantRenaming#getNewName <em>New Name</em>}' reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @param value the new value of the '<em>New Name</em>' attribute.
+   * @param value the new value of the '<em>New Name</em>' reference.
    * @see #getNewName()
    * @generated
    */
-  void setNewName(String value);
+  void setNewName(Constant value);
+
+  /**
+   * Returns the value of the '<em><b>Old Name</b></em>' reference.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Old Name</em>' reference isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Old Name</em>' reference.
+   * @see #setOldName(Constant)
+   * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getConstantRenaming_OldName()
+   * @model
+   * @generated
+   */
+  Constant getOldName();
+
+  /**
+   * Sets the value of the '{@link de.cau.cs.kieler.esterel.esterel.ConstantRenaming#getOldName <em>Old Name</em>}' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Old Name</em>' reference.
+   * @see #getOldName()
+   * @generated
+   */
+  void setOldName(Constant value);
 
 } // ConstantRenaming

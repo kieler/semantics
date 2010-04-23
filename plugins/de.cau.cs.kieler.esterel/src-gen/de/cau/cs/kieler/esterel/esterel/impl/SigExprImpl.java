@@ -2,26 +2,22 @@
  * <copyright>
  * </copyright>
  *
+
  */
 package de.cau.cs.kieler.esterel.esterel.impl;
 
-import de.cau.cs.kieler.esterel.esterel.DelayEvent;
 import de.cau.cs.kieler.esterel.esterel.EsterelPackage;
 import de.cau.cs.kieler.esterel.esterel.SigExpr;
 import de.cau.cs.kieler.esterel.esterel.SigExprAND;
-import de.cau.cs.kieler.esterel.esterel.Signal;
 
 import java.util.Collection;
 
-import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 
 import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
-
-import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
@@ -33,8 +29,6 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.SigExprImpl#getSignal <em>Signal</em>}</li>
- *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.SigExprImpl#getTick <em>Tick</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.SigExprImpl#getAndExpr <em>And Expr</em>}</li>
  * </ul>
  * </p>
@@ -43,36 +37,6 @@ import org.eclipse.emf.ecore.util.InternalEList;
  */
 public class SigExprImpl extends TrapExprImpl implements SigExpr
 {
-  /**
-   * The cached value of the '{@link #getSignal() <em>Signal</em>}' reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getSignal()
-   * @generated
-   * @ordered
-   */
-  protected Signal signal;
-
-  /**
-   * The default value of the '{@link #getTick() <em>Tick</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getTick()
-   * @generated
-   * @ordered
-   */
-  protected static final String TICK_EDEFAULT = null;
-
-  /**
-   * The cached value of the '{@link #getTick() <em>Tick</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getTick()
-   * @generated
-   * @ordered
-   */
-  protected String tick = TICK_EDEFAULT;
-
   /**
    * The cached value of the '{@link #getAndExpr() <em>And Expr</em>}' containment reference list.
    * <!-- begin-user-doc -->
@@ -102,72 +66,6 @@ public class SigExprImpl extends TrapExprImpl implements SigExpr
   protected EClass eStaticClass()
   {
     return EsterelPackage.Literals.SIG_EXPR;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public Signal getSignal()
-  {
-    if (signal != null && signal.eIsProxy())
-    {
-      InternalEObject oldSignal = (InternalEObject)signal;
-      signal = (Signal)eResolveProxy(oldSignal);
-      if (signal != oldSignal)
-      {
-        if (eNotificationRequired())
-          eNotify(new ENotificationImpl(this, Notification.RESOLVE, EsterelPackage.SIG_EXPR__SIGNAL, oldSignal, signal));
-      }
-    }
-    return signal;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public Signal basicGetSignal()
-  {
-    return signal;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public void setSignal(Signal newSignal)
-  {
-    Signal oldSignal = signal;
-    signal = newSignal;
-    if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.SIG_EXPR__SIGNAL, oldSignal, signal));
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public String getTick()
-  {
-    return tick;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public void setTick(String newTick)
-  {
-    String oldTick = tick;
-    tick = newTick;
-    if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.SIG_EXPR__TICK, oldTick, tick));
   }
 
   /**
@@ -210,11 +108,6 @@ public class SigExprImpl extends TrapExprImpl implements SigExpr
   {
     switch (featureID)
     {
-      case EsterelPackage.SIG_EXPR__SIGNAL:
-        if (resolve) return getSignal();
-        return basicGetSignal();
-      case EsterelPackage.SIG_EXPR__TICK:
-        return getTick();
       case EsterelPackage.SIG_EXPR__AND_EXPR:
         return getAndExpr();
     }
@@ -232,12 +125,6 @@ public class SigExprImpl extends TrapExprImpl implements SigExpr
   {
     switch (featureID)
     {
-      case EsterelPackage.SIG_EXPR__SIGNAL:
-        setSignal((Signal)newValue);
-        return;
-      case EsterelPackage.SIG_EXPR__TICK:
-        setTick((String)newValue);
-        return;
       case EsterelPackage.SIG_EXPR__AND_EXPR:
         getAndExpr().clear();
         getAndExpr().addAll((Collection<? extends SigExprAND>)newValue);
@@ -256,12 +143,6 @@ public class SigExprImpl extends TrapExprImpl implements SigExpr
   {
     switch (featureID)
     {
-      case EsterelPackage.SIG_EXPR__SIGNAL:
-        setSignal((Signal)null);
-        return;
-      case EsterelPackage.SIG_EXPR__TICK:
-        setTick(TICK_EDEFAULT);
-        return;
       case EsterelPackage.SIG_EXPR__AND_EXPR:
         getAndExpr().clear();
         return;
@@ -279,71 +160,10 @@ public class SigExprImpl extends TrapExprImpl implements SigExpr
   {
     switch (featureID)
     {
-      case EsterelPackage.SIG_EXPR__SIGNAL:
-        return signal != null;
-      case EsterelPackage.SIG_EXPR__TICK:
-        return TICK_EDEFAULT == null ? tick != null : !TICK_EDEFAULT.equals(tick);
       case EsterelPackage.SIG_EXPR__AND_EXPR:
         return andExpr != null && !andExpr.isEmpty();
     }
     return super.eIsSet(featureID);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public int eBaseStructuralFeatureID(int derivedFeatureID, Class<?> baseClass)
-  {
-    if (baseClass == DelayEvent.class)
-    {
-      switch (derivedFeatureID)
-      {
-        case EsterelPackage.SIG_EXPR__SIGNAL: return EsterelPackage.DELAY_EVENT__SIGNAL;
-        case EsterelPackage.SIG_EXPR__TICK: return EsterelPackage.DELAY_EVENT__TICK;
-        default: return -1;
-      }
-    }
-    return super.eBaseStructuralFeatureID(derivedFeatureID, baseClass);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public int eDerivedStructuralFeatureID(int baseFeatureID, Class<?> baseClass)
-  {
-    if (baseClass == DelayEvent.class)
-    {
-      switch (baseFeatureID)
-      {
-        case EsterelPackage.DELAY_EVENT__SIGNAL: return EsterelPackage.SIG_EXPR__SIGNAL;
-        case EsterelPackage.DELAY_EVENT__TICK: return EsterelPackage.SIG_EXPR__TICK;
-        default: return -1;
-      }
-    }
-    return super.eDerivedStructuralFeatureID(baseFeatureID, baseClass);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public String toString()
-  {
-    if (eIsProxy()) return super.toString();
-
-    StringBuffer result = new StringBuffer(super.toString());
-    result.append(" (tick: ");
-    result.append(tick);
-    result.append(')');
-    return result.toString();
   }
 
 } //SigExprImpl

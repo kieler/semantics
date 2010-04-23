@@ -23,7 +23,7 @@ import java.util.ArrayList;
 
 public class InternalEsterelParser extends AbstractInternalAntlrParser {
     public static final String[] tokenNames = new String[] {
-        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "RULE_ESTERELID", "RULE_BASETYPE", "RULE_INT", "RULE_STRING", "RULE_FLOAT", "RULE_BOOLEAN", "RULE_ESTEREL_SL_COMMENT", "RULE_ESTEREL_ML_COMMENT", "RULE_ID", "RULE_ML_COMMENT", "RULE_SL_COMMENT", "RULE_WS", "RULE_ANY_OTHER", "'module'", "':'", "'end'", "'.'", "'input'", "','", "';'", "'output'", "'inputoutput'", "'return'", "'sensor'", "'relation'", "'=>'", "'#'", "'type'", "'constant'", "'='", "'-'", "'function'", "'('", "')'", "'procedure'", "'||'", "'['", "']'", "':='", "'abort'", "'when'", "'do'", "'case'", "'await'", "'upto'", "'watching'", "'timeout'", "'emit'", "'every'", "'exit'", "'halt'", "'if'", "'elsif'", "'then'", "'else'", "'loop'", "'each'", "'nothing'", "'pause'", "'present'", "'positive'", "'repeat'", "'times'", "'run'", "'copymodule'", "'/'", "'signal'", "'in'", "'suspend'", "'sustain'", "'trap'", "'handle'", "'var'", "'weak'", "'and'", "'or'", "'not'", "'<'", "'>'", "'<='", "'>='", "'<>'", "'+'", "'*'", "'mod'", "'?'", "'pre'", "'??'", "'tick'"
+        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "RULE_ESTERELID", "RULE_BASETYPE", "RULE_INT", "RULE_STRING", "RULE_FLOAT", "RULE_BOOLEAN", "RULE_ESTEREL_SL_COMMENT", "RULE_ESTEREL_ML_COMMENT", "RULE_ID", "RULE_ML_COMMENT", "RULE_SL_COMMENT", "RULE_WS", "RULE_ANY_OTHER", "'module'", "':'", "'end'", "'.'", "'input'", "','", "';'", "'output'", "'inputoutput'", "'return'", "'sensor'", "'relation'", "'=>'", "'#'", "'type'", "'constant'", "'='", "'-'", "'function'", "'('", "')'", "'procedure'", "'||'", "'['", "']'", "':='", "'abort'", "'when'", "'do'", "'case'", "'await'", "'upto'", "'watching'", "'timeout'", "'emit'", "'every'", "'exit'", "'halt'", "'if'", "'elsif'", "'then'", "'else'", "'loop'", "'each'", "'nothing'", "'pause'", "'present'", "'positive'", "'repeat'", "'times'", "'run'", "'copymodule'", "'/'", "'signal'", "'in'", "'suspend'", "'sustain'", "'trap'", "'handle'", "'var'", "'weak'", "'and'", "'or'", "'not'", "'<'", "'>'", "'<='", "'>='", "'<>'", "'+'", "'*'", "'mod'", "'?'", "'pre'", "'??'", "'combine'", "'with'", "'tick'"
     };
     public static final int RULE_BOOLEAN=9;
     public static final int RULE_ID=12;
@@ -5168,23 +5168,23 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start ruleStatement
-    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:2368:1: ruleStatement returns [EObject current=null] : (this_Sequence_0= ruleSequence ( () '||' ( (lv_right_3_0= ruleSequence ) ) )* ) ;
+    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:2368:1: ruleStatement returns [EObject current=null] : (this_Sequence_0= ruleSequence ( () '||' ( (lv_list_3_0= ruleSequence ) ) )* ) ;
     public final EObject ruleStatement() throws RecognitionException {
         EObject current = null;
 
         EObject this_Sequence_0 = null;
 
-        EObject lv_right_3_0 = null;
+        EObject lv_list_3_0 = null;
 
 
          @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:2373:6: ( (this_Sequence_0= ruleSequence ( () '||' ( (lv_right_3_0= ruleSequence ) ) )* ) )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:2374:1: (this_Sequence_0= ruleSequence ( () '||' ( (lv_right_3_0= ruleSequence ) ) )* )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:2373:6: ( (this_Sequence_0= ruleSequence ( () '||' ( (lv_list_3_0= ruleSequence ) ) )* ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:2374:1: (this_Sequence_0= ruleSequence ( () '||' ( (lv_list_3_0= ruleSequence ) ) )* )
             {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:2374:1: (this_Sequence_0= ruleSequence ( () '||' ( (lv_right_3_0= ruleSequence ) ) )* )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:2375:5: this_Sequence_0= ruleSequence ( () '||' ( (lv_right_3_0= ruleSequence ) ) )*
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:2374:1: (this_Sequence_0= ruleSequence ( () '||' ( (lv_list_3_0= ruleSequence ) ) )* )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:2375:5: this_Sequence_0= ruleSequence ( () '||' ( (lv_list_3_0= ruleSequence ) ) )*
             {
              
                     currentNode=createCompositeNode(grammarAccess.getStatementAccess().getSequenceParserRuleCall_0(), currentNode); 
@@ -5197,7 +5197,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
                     current = this_Sequence_0; 
                     currentNode = currentNode.getParent();
                 
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:2383:1: ( () '||' ( (lv_right_3_0= ruleSequence ) ) )*
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:2383:1: ( () '||' ( (lv_list_3_0= ruleSequence ) ) )*
             loop36:
             do {
                 int alt36=2;
@@ -5210,21 +5210,21 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
                 switch (alt36) {
             	case 1 :
-            	    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:2383:2: () '||' ( (lv_right_3_0= ruleSequence ) )
+            	    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:2383:2: () '||' ( (lv_list_3_0= ruleSequence ) )
             	    {
             	    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:2383:2: ()
             	    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:2384:5: 
             	    {
             	     
-            	            temp=factory.create(grammarAccess.getStatementAccess().getParallelLeftAction_1_0().getType().getClassifier());
+            	            temp=factory.create(grammarAccess.getStatementAccess().getParallelListAction_1_0().getType().getClassifier());
             	            try {
-            	            	factory.set(temp, "left", current, null /*ParserRule*/, currentNode);
+            	            	factory.add(temp, "list", current, null /*ParserRule*/, currentNode);
             	            } catch(ValueConverterException vce) {
             	            	handleValueConverterException(vce);
             	            }
             	            current = temp; 
             	            temp = null;
-            	            CompositeNode newNode = createCompositeNode(grammarAccess.getStatementAccess().getParallelLeftAction_1_0(), currentNode.getParent());
+            	            CompositeNode newNode = createCompositeNode(grammarAccess.getStatementAccess().getParallelListAction_1_0(), currentNode.getParent());
             	        newNode.getChildren().add(currentNode);
             	        moveLookaheadInfo(currentNode, newNode);
             	        currentNode = newNode; 
@@ -5237,17 +5237,17 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
             	            createLeafNode(grammarAccess.getStatementAccess().getVerticalLineVerticalLineKeyword_1_1(), null); 
             	        
-            	    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:2403:1: ( (lv_right_3_0= ruleSequence ) )
-            	    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:2404:1: (lv_right_3_0= ruleSequence )
+            	    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:2403:1: ( (lv_list_3_0= ruleSequence ) )
+            	    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:2404:1: (lv_list_3_0= ruleSequence )
             	    {
-            	    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:2404:1: (lv_right_3_0= ruleSequence )
-            	    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:2405:3: lv_right_3_0= ruleSequence
+            	    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:2404:1: (lv_list_3_0= ruleSequence )
+            	    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:2405:3: lv_list_3_0= ruleSequence
             	    {
             	     
-            	    	        currentNode=createCompositeNode(grammarAccess.getStatementAccess().getRightSequenceParserRuleCall_1_2_0(), currentNode); 
+            	    	        currentNode=createCompositeNode(grammarAccess.getStatementAccess().getListSequenceParserRuleCall_1_2_0(), currentNode); 
             	    	    
             	    pushFollow(FOLLOW_ruleSequence_in_ruleStatement3933);
-            	    lv_right_3_0=ruleSequence();
+            	    lv_list_3_0=ruleSequence();
             	    _fsp--;
 
 
@@ -5256,10 +5256,10 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
             	    	            associateNodeWithAstElement(currentNode.getParent(), current);
             	    	        }
             	    	        try {
-            	    	       		set(
+            	    	       		add(
             	    	       			current, 
-            	    	       			"right",
-            	    	        		lv_right_3_0, 
+            	    	       			"list",
+            	    	        		lv_list_3_0, 
             	    	        		"Sequence", 
             	    	        		currentNode);
             	    	        } catch (ValueConverterException vce) {
@@ -5950,23 +5950,23 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start ruleSequence
-    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:2686:1: ruleSequence returns [EObject current=null] : (this_AtomicStatement_0= ruleAtomicStatement ( () ';' ( (lv_right_3_0= ruleAtomicStatement ) ) )* ( ';' )? ) ;
+    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:2686:1: ruleSequence returns [EObject current=null] : (this_AtomicStatement_0= ruleAtomicStatement ( () ';' ( (lv_list_3_0= ruleAtomicStatement ) ) )* ( ';' )? ) ;
     public final EObject ruleSequence() throws RecognitionException {
         EObject current = null;
 
         EObject this_AtomicStatement_0 = null;
 
-        EObject lv_right_3_0 = null;
+        EObject lv_list_3_0 = null;
 
 
          @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:2691:6: ( (this_AtomicStatement_0= ruleAtomicStatement ( () ';' ( (lv_right_3_0= ruleAtomicStatement ) ) )* ( ';' )? ) )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:2692:1: (this_AtomicStatement_0= ruleAtomicStatement ( () ';' ( (lv_right_3_0= ruleAtomicStatement ) ) )* ( ';' )? )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:2691:6: ( (this_AtomicStatement_0= ruleAtomicStatement ( () ';' ( (lv_list_3_0= ruleAtomicStatement ) ) )* ( ';' )? ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:2692:1: (this_AtomicStatement_0= ruleAtomicStatement ( () ';' ( (lv_list_3_0= ruleAtomicStatement ) ) )* ( ';' )? )
             {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:2692:1: (this_AtomicStatement_0= ruleAtomicStatement ( () ';' ( (lv_right_3_0= ruleAtomicStatement ) ) )* ( ';' )? )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:2693:5: this_AtomicStatement_0= ruleAtomicStatement ( () ';' ( (lv_right_3_0= ruleAtomicStatement ) ) )* ( ';' )?
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:2692:1: (this_AtomicStatement_0= ruleAtomicStatement ( () ';' ( (lv_list_3_0= ruleAtomicStatement ) ) )* ( ';' )? )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:2693:5: this_AtomicStatement_0= ruleAtomicStatement ( () ';' ( (lv_list_3_0= ruleAtomicStatement ) ) )* ( ';' )?
             {
              
                     currentNode=createCompositeNode(grammarAccess.getSequenceAccess().getAtomicStatementParserRuleCall_0(), currentNode); 
@@ -5979,7 +5979,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
                     current = this_AtomicStatement_0; 
                     currentNode = currentNode.getParent();
                 
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:2701:1: ( () ';' ( (lv_right_3_0= ruleAtomicStatement ) ) )*
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:2701:1: ( () ';' ( (lv_list_3_0= ruleAtomicStatement ) ) )*
             loop38:
             do {
                 int alt38=2;
@@ -5998,21 +5998,21 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
                 switch (alt38) {
             	case 1 :
-            	    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:2701:2: () ';' ( (lv_right_3_0= ruleAtomicStatement ) )
+            	    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:2701:2: () ';' ( (lv_list_3_0= ruleAtomicStatement ) )
             	    {
             	    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:2701:2: ()
             	    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:2702:5: 
             	    {
             	     
-            	            temp=factory.create(grammarAccess.getSequenceAccess().getSequenceLeftAction_1_0().getType().getClassifier());
+            	            temp=factory.create(grammarAccess.getSequenceAccess().getSequenceListAction_1_0().getType().getClassifier());
             	            try {
-            	            	factory.set(temp, "left", current, null /*ParserRule*/, currentNode);
+            	            	factory.add(temp, "list", current, null /*ParserRule*/, currentNode);
             	            } catch(ValueConverterException vce) {
             	            	handleValueConverterException(vce);
             	            }
             	            current = temp; 
             	            temp = null;
-            	            CompositeNode newNode = createCompositeNode(grammarAccess.getSequenceAccess().getSequenceLeftAction_1_0(), currentNode.getParent());
+            	            CompositeNode newNode = createCompositeNode(grammarAccess.getSequenceAccess().getSequenceListAction_1_0(), currentNode.getParent());
             	        newNode.getChildren().add(currentNode);
             	        moveLookaheadInfo(currentNode, newNode);
             	        currentNode = newNode; 
@@ -6025,17 +6025,17 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
             	            createLeafNode(grammarAccess.getSequenceAccess().getSemicolonKeyword_1_1(), null); 
             	        
-            	    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:2721:1: ( (lv_right_3_0= ruleAtomicStatement ) )
-            	    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:2722:1: (lv_right_3_0= ruleAtomicStatement )
+            	    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:2721:1: ( (lv_list_3_0= ruleAtomicStatement ) )
+            	    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:2722:1: (lv_list_3_0= ruleAtomicStatement )
             	    {
-            	    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:2722:1: (lv_right_3_0= ruleAtomicStatement )
-            	    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:2723:3: lv_right_3_0= ruleAtomicStatement
+            	    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:2722:1: (lv_list_3_0= ruleAtomicStatement )
+            	    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:2723:3: lv_list_3_0= ruleAtomicStatement
             	    {
             	     
-            	    	        currentNode=createCompositeNode(grammarAccess.getSequenceAccess().getRightAtomicStatementParserRuleCall_1_2_0(), currentNode); 
+            	    	        currentNode=createCompositeNode(grammarAccess.getSequenceAccess().getListAtomicStatementParserRuleCall_1_2_0(), currentNode); 
             	    	    
             	    pushFollow(FOLLOW_ruleAtomicStatement_in_ruleSequence4727);
-            	    lv_right_3_0=ruleAtomicStatement();
+            	    lv_list_3_0=ruleAtomicStatement();
             	    _fsp--;
 
 
@@ -6044,10 +6044,10 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
             	    	            associateNodeWithAstElement(currentNode.getParent(), current);
             	    	        }
             	    	        try {
-            	    	       		set(
+            	    	       		add(
             	    	       			current, 
-            	    	       			"right",
-            	    	        		lv_right_3_0, 
+            	    	       			"list",
+            	    	        		lv_list_3_0, 
             	    	        		"AtomicStatement", 
             	    	        		currentNode);
             	    	        } catch (ValueConverterException vce) {
@@ -6590,7 +6590,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
             int alt40=2;
             int LA40_0 = input.LA(1);
 
-            if ( (LA40_0==RULE_ESTERELID||(LA40_0>=RULE_INT && LA40_0<=RULE_BOOLEAN)||(LA40_0>=33 && LA40_0<=34)||LA40_0==36||LA40_0==40||LA40_0==69||(LA40_0>=78 && LA40_0<=92)) ) {
+            if ( (LA40_0==RULE_ESTERELID||(LA40_0>=RULE_INT && LA40_0<=RULE_BOOLEAN)||(LA40_0>=33 && LA40_0<=34)||LA40_0==36||LA40_0==40||LA40_0==69||(LA40_0>=78 && LA40_0<=91)||LA40_0==94) ) {
                 alt40=1;
             }
             else if ( (LA40_0==46) ) {
@@ -7514,7 +7514,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
             int alt45=2;
             int LA45_0 = input.LA(1);
 
-            if ( (LA45_0==RULE_ESTERELID||(LA45_0>=RULE_INT && LA45_0<=RULE_BOOLEAN)||(LA45_0>=33 && LA45_0<=34)||LA45_0==36||LA45_0==40||LA45_0==69||(LA45_0>=78 && LA45_0<=92)) ) {
+            if ( (LA45_0==RULE_ESTERELID||(LA45_0>=RULE_INT && LA45_0<=RULE_BOOLEAN)||(LA45_0>=33 && LA45_0<=34)||LA45_0==36||LA45_0==40||LA45_0==69||(LA45_0>=78 && LA45_0<=91)||LA45_0==94) ) {
                 alt45=1;
             }
             else if ( (LA45_0==46) ) {
@@ -7721,11 +7721,11 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start ruleAwaitInstance
-    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3453:1: ruleAwaitInstance returns [EObject current=null] : (this_DelayExpr_0= ruleDelayExpr ( 'do' ( (lv_statement_2_0= ruleStatement ) ) ( (lv_end_3_0= ruleAwaitEnd ) ) )? ) ;
+    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3453:1: ruleAwaitInstance returns [EObject current=null] : ( ( (lv_delay_0_0= ruleDelayExpr ) ) ( 'do' ( (lv_statement_2_0= ruleStatement ) ) ( (lv_end_3_0= ruleAwaitEnd ) ) )? ) ;
     public final EObject ruleAwaitInstance() throws RecognitionException {
         EObject current = null;
 
-        EObject this_DelayExpr_0 = null;
+        EObject lv_delay_0_0 = null;
 
         EObject lv_statement_2_0 = null;
 
@@ -7735,24 +7735,49 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
          @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3458:6: ( (this_DelayExpr_0= ruleDelayExpr ( 'do' ( (lv_statement_2_0= ruleStatement ) ) ( (lv_end_3_0= ruleAwaitEnd ) ) )? ) )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3459:1: (this_DelayExpr_0= ruleDelayExpr ( 'do' ( (lv_statement_2_0= ruleStatement ) ) ( (lv_end_3_0= ruleAwaitEnd ) ) )? )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3458:6: ( ( ( (lv_delay_0_0= ruleDelayExpr ) ) ( 'do' ( (lv_statement_2_0= ruleStatement ) ) ( (lv_end_3_0= ruleAwaitEnd ) ) )? ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3459:1: ( ( (lv_delay_0_0= ruleDelayExpr ) ) ( 'do' ( (lv_statement_2_0= ruleStatement ) ) ( (lv_end_3_0= ruleAwaitEnd ) ) )? )
             {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3459:1: (this_DelayExpr_0= ruleDelayExpr ( 'do' ( (lv_statement_2_0= ruleStatement ) ) ( (lv_end_3_0= ruleAwaitEnd ) ) )? )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3460:5: this_DelayExpr_0= ruleDelayExpr ( 'do' ( (lv_statement_2_0= ruleStatement ) ) ( (lv_end_3_0= ruleAwaitEnd ) ) )?
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3459:1: ( ( (lv_delay_0_0= ruleDelayExpr ) ) ( 'do' ( (lv_statement_2_0= ruleStatement ) ) ( (lv_end_3_0= ruleAwaitEnd ) ) )? )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3459:2: ( (lv_delay_0_0= ruleDelayExpr ) ) ( 'do' ( (lv_statement_2_0= ruleStatement ) ) ( (lv_end_3_0= ruleAwaitEnd ) ) )?
+            {
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3459:2: ( (lv_delay_0_0= ruleDelayExpr ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3460:1: (lv_delay_0_0= ruleDelayExpr )
+            {
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3460:1: (lv_delay_0_0= ruleDelayExpr )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3461:3: lv_delay_0_0= ruleDelayExpr
             {
              
-                    currentNode=createCompositeNode(grammarAccess.getAwaitInstanceAccess().getDelayExprParserRuleCall_0(), currentNode); 
-                
-            pushFollow(FOLLOW_ruleDelayExpr_in_ruleAwaitInstance6174);
-            this_DelayExpr_0=ruleDelayExpr();
+            	        currentNode=createCompositeNode(grammarAccess.getAwaitInstanceAccess().getDelayDelayExprParserRuleCall_0_0(), currentNode); 
+            	    
+            pushFollow(FOLLOW_ruleDelayExpr_in_ruleAwaitInstance6173);
+            lv_delay_0_0=ruleDelayExpr();
             _fsp--;
 
-             
-                    current = this_DelayExpr_0; 
-                    currentNode = currentNode.getParent();
-                
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3468:1: ( 'do' ( (lv_statement_2_0= ruleStatement ) ) ( (lv_end_3_0= ruleAwaitEnd ) ) )?
+
+            	        if (current==null) {
+            	            current = factory.create(grammarAccess.getAwaitInstanceRule().getType().getClassifier());
+            	            associateNodeWithAstElement(currentNode.getParent(), current);
+            	        }
+            	        try {
+            	       		set(
+            	       			current, 
+            	       			"delay",
+            	        		lv_delay_0_0, 
+            	        		"DelayExpr", 
+            	        		currentNode);
+            	        } catch (ValueConverterException vce) {
+            				handleValueConverterException(vce);
+            	        }
+            	        currentNode = currentNode.getParent();
+            	    
+
+            }
+
+
+            }
+
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3483:2: ( 'do' ( (lv_statement_2_0= ruleStatement ) ) ( (lv_end_3_0= ruleAwaitEnd ) ) )?
             int alt47=2;
             int LA47_0 = input.LA(1);
 
@@ -7761,17 +7786,17 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
             }
             switch (alt47) {
                 case 1 :
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3468:3: 'do' ( (lv_statement_2_0= ruleStatement ) ) ( (lv_end_3_0= ruleAwaitEnd ) )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3483:4: 'do' ( (lv_statement_2_0= ruleStatement ) ) ( (lv_end_3_0= ruleAwaitEnd ) )
                     {
                     match(input,45,FOLLOW_45_in_ruleAwaitInstance6184); 
 
                             createLeafNode(grammarAccess.getAwaitInstanceAccess().getDoKeyword_1_0(), null); 
                         
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3472:1: ( (lv_statement_2_0= ruleStatement ) )
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3473:1: (lv_statement_2_0= ruleStatement )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3487:1: ( (lv_statement_2_0= ruleStatement ) )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3488:1: (lv_statement_2_0= ruleStatement )
                     {
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3473:1: (lv_statement_2_0= ruleStatement )
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3474:3: lv_statement_2_0= ruleStatement
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3488:1: (lv_statement_2_0= ruleStatement )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3489:3: lv_statement_2_0= ruleStatement
                     {
                      
                     	        currentNode=createCompositeNode(grammarAccess.getAwaitInstanceAccess().getStatementStatementParserRuleCall_1_1_0(), currentNode); 
@@ -7803,11 +7828,11 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3496:2: ( (lv_end_3_0= ruleAwaitEnd ) )
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3497:1: (lv_end_3_0= ruleAwaitEnd )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3511:2: ( (lv_end_3_0= ruleAwaitEnd ) )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3512:1: (lv_end_3_0= ruleAwaitEnd )
                     {
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3497:1: (lv_end_3_0= ruleAwaitEnd )
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3498:3: lv_end_3_0= ruleAwaitEnd
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3512:1: (lv_end_3_0= ruleAwaitEnd )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3513:3: lv_end_3_0= ruleAwaitEnd
                     {
                      
                     	        currentNode=createCompositeNode(grammarAccess.getAwaitInstanceAccess().getEndAwaitEndParserRuleCall_1_2_0(), currentNode); 
@@ -7868,7 +7893,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start entryRuleAwaitCase
-    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3528:1: entryRuleAwaitCase returns [EObject current=null] : iv_ruleAwaitCase= ruleAwaitCase EOF ;
+    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3543:1: entryRuleAwaitCase returns [EObject current=null] : iv_ruleAwaitCase= ruleAwaitCase EOF ;
     public final EObject entryRuleAwaitCase() throws RecognitionException {
         EObject current = null;
 
@@ -7876,8 +7901,8 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3529:2: (iv_ruleAwaitCase= ruleAwaitCase EOF )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3530:2: iv_ruleAwaitCase= ruleAwaitCase EOF
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3544:2: (iv_ruleAwaitCase= ruleAwaitCase EOF )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3545:2: iv_ruleAwaitCase= ruleAwaitCase EOF
             {
              currentNode = createCompositeNode(grammarAccess.getAwaitCaseRule(), currentNode); 
             pushFollow(FOLLOW_ruleAwaitCase_in_entryRuleAwaitCase6264);
@@ -7903,7 +7928,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start ruleAwaitCase
-    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3537:1: ruleAwaitCase returns [EObject current=null] : ( ( (lv_cases_0_0= ruleAbortCaseSingle ) ) ( (lv_cases_1_0= ruleAbortCaseSingle ) )* ( (lv_end_2_0= ruleAwaitEnd ) ) ) ;
+    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3552:1: ruleAwaitCase returns [EObject current=null] : ( ( (lv_cases_0_0= ruleAbortCaseSingle ) ) ( (lv_cases_1_0= ruleAbortCaseSingle ) )* ( (lv_end_2_0= ruleAwaitEnd ) ) ) ;
     public final EObject ruleAwaitCase() throws RecognitionException {
         EObject current = null;
 
@@ -7917,17 +7942,17 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
          @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3542:6: ( ( ( (lv_cases_0_0= ruleAbortCaseSingle ) ) ( (lv_cases_1_0= ruleAbortCaseSingle ) )* ( (lv_end_2_0= ruleAwaitEnd ) ) ) )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3543:1: ( ( (lv_cases_0_0= ruleAbortCaseSingle ) ) ( (lv_cases_1_0= ruleAbortCaseSingle ) )* ( (lv_end_2_0= ruleAwaitEnd ) ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3557:6: ( ( ( (lv_cases_0_0= ruleAbortCaseSingle ) ) ( (lv_cases_1_0= ruleAbortCaseSingle ) )* ( (lv_end_2_0= ruleAwaitEnd ) ) ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3558:1: ( ( (lv_cases_0_0= ruleAbortCaseSingle ) ) ( (lv_cases_1_0= ruleAbortCaseSingle ) )* ( (lv_end_2_0= ruleAwaitEnd ) ) )
             {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3543:1: ( ( (lv_cases_0_0= ruleAbortCaseSingle ) ) ( (lv_cases_1_0= ruleAbortCaseSingle ) )* ( (lv_end_2_0= ruleAwaitEnd ) ) )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3543:2: ( (lv_cases_0_0= ruleAbortCaseSingle ) ) ( (lv_cases_1_0= ruleAbortCaseSingle ) )* ( (lv_end_2_0= ruleAwaitEnd ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3558:1: ( ( (lv_cases_0_0= ruleAbortCaseSingle ) ) ( (lv_cases_1_0= ruleAbortCaseSingle ) )* ( (lv_end_2_0= ruleAwaitEnd ) ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3558:2: ( (lv_cases_0_0= ruleAbortCaseSingle ) ) ( (lv_cases_1_0= ruleAbortCaseSingle ) )* ( (lv_end_2_0= ruleAwaitEnd ) )
             {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3543:2: ( (lv_cases_0_0= ruleAbortCaseSingle ) )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3544:1: (lv_cases_0_0= ruleAbortCaseSingle )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3558:2: ( (lv_cases_0_0= ruleAbortCaseSingle ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3559:1: (lv_cases_0_0= ruleAbortCaseSingle )
             {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3544:1: (lv_cases_0_0= ruleAbortCaseSingle )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3545:3: lv_cases_0_0= ruleAbortCaseSingle
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3559:1: (lv_cases_0_0= ruleAbortCaseSingle )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3560:3: lv_cases_0_0= ruleAbortCaseSingle
             {
              
             	        currentNode=createCompositeNode(grammarAccess.getAwaitCaseAccess().getCasesAbortCaseSingleParserRuleCall_0_0(), currentNode); 
@@ -7959,7 +7984,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
             }
 
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3567:2: ( (lv_cases_1_0= ruleAbortCaseSingle ) )*
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3582:2: ( (lv_cases_1_0= ruleAbortCaseSingle ) )*
             loop48:
             do {
                 int alt48=2;
@@ -7972,10 +7997,10 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
                 switch (alt48) {
             	case 1 :
-            	    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3568:1: (lv_cases_1_0= ruleAbortCaseSingle )
+            	    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3583:1: (lv_cases_1_0= ruleAbortCaseSingle )
             	    {
-            	    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3568:1: (lv_cases_1_0= ruleAbortCaseSingle )
-            	    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3569:3: lv_cases_1_0= ruleAbortCaseSingle
+            	    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3583:1: (lv_cases_1_0= ruleAbortCaseSingle )
+            	    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3584:3: lv_cases_1_0= ruleAbortCaseSingle
             	    {
             	     
             	    	        currentNode=createCompositeNode(grammarAccess.getAwaitCaseAccess().getCasesAbortCaseSingleParserRuleCall_1_0(), currentNode); 
@@ -8013,11 +8038,11 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
                 }
             } while (true);
 
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3591:3: ( (lv_end_2_0= ruleAwaitEnd ) )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3592:1: (lv_end_2_0= ruleAwaitEnd )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3606:3: ( (lv_end_2_0= ruleAwaitEnd ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3607:1: (lv_end_2_0= ruleAwaitEnd )
             {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3592:1: (lv_end_2_0= ruleAwaitEnd )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3593:3: lv_end_2_0= ruleAwaitEnd
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3607:1: (lv_end_2_0= ruleAwaitEnd )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3608:3: lv_end_2_0= ruleAwaitEnd
             {
              
             	        currentNode=createCompositeNode(grammarAccess.getAwaitCaseAccess().getEndAwaitEndParserRuleCall_2_0(), currentNode); 
@@ -8072,7 +8097,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start entryRuleDo
-    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3623:1: entryRuleDo returns [EObject current=null] : iv_ruleDo= ruleDo EOF ;
+    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3638:1: entryRuleDo returns [EObject current=null] : iv_ruleDo= ruleDo EOF ;
     public final EObject entryRuleDo() throws RecognitionException {
         EObject current = null;
 
@@ -8080,8 +8105,8 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3624:2: (iv_ruleDo= ruleDo EOF )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3625:2: iv_ruleDo= ruleDo EOF
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3639:2: (iv_ruleDo= ruleDo EOF )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3640:2: iv_ruleDo= ruleDo EOF
             {
              currentNode = createCompositeNode(grammarAccess.getDoRule(), currentNode); 
             pushFollow(FOLLOW_ruleDo_in_entryRuleDo6399);
@@ -8107,35 +8132,35 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start ruleDo
-    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3632:1: ruleDo returns [EObject current=null] : ( 'do' ( (lv_statement_1_0= ruleStatement ) ) ( ( (lv_end_2_0= ruleDoUpto ) ) | ( (lv_end_3_0= ruleDoWatching ) ) ) ) ;
+    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3647:1: ruleDo returns [EObject current=null] : ( 'do' ( (lv_statement_1_0= ruleStatement ) ) ( ( (lv_endUp_2_0= ruleDoUpto ) ) | ( (lv_endWatch_3_0= ruleDoWatching ) ) ) ) ;
     public final EObject ruleDo() throws RecognitionException {
         EObject current = null;
 
         EObject lv_statement_1_0 = null;
 
-        EObject lv_end_2_0 = null;
+        EObject lv_endUp_2_0 = null;
 
-        EObject lv_end_3_0 = null;
+        EObject lv_endWatch_3_0 = null;
 
 
          @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3637:6: ( ( 'do' ( (lv_statement_1_0= ruleStatement ) ) ( ( (lv_end_2_0= ruleDoUpto ) ) | ( (lv_end_3_0= ruleDoWatching ) ) ) ) )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3638:1: ( 'do' ( (lv_statement_1_0= ruleStatement ) ) ( ( (lv_end_2_0= ruleDoUpto ) ) | ( (lv_end_3_0= ruleDoWatching ) ) ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3652:6: ( ( 'do' ( (lv_statement_1_0= ruleStatement ) ) ( ( (lv_endUp_2_0= ruleDoUpto ) ) | ( (lv_endWatch_3_0= ruleDoWatching ) ) ) ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3653:1: ( 'do' ( (lv_statement_1_0= ruleStatement ) ) ( ( (lv_endUp_2_0= ruleDoUpto ) ) | ( (lv_endWatch_3_0= ruleDoWatching ) ) ) )
             {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3638:1: ( 'do' ( (lv_statement_1_0= ruleStatement ) ) ( ( (lv_end_2_0= ruleDoUpto ) ) | ( (lv_end_3_0= ruleDoWatching ) ) ) )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3638:3: 'do' ( (lv_statement_1_0= ruleStatement ) ) ( ( (lv_end_2_0= ruleDoUpto ) ) | ( (lv_end_3_0= ruleDoWatching ) ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3653:1: ( 'do' ( (lv_statement_1_0= ruleStatement ) ) ( ( (lv_endUp_2_0= ruleDoUpto ) ) | ( (lv_endWatch_3_0= ruleDoWatching ) ) ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3653:3: 'do' ( (lv_statement_1_0= ruleStatement ) ) ( ( (lv_endUp_2_0= ruleDoUpto ) ) | ( (lv_endWatch_3_0= ruleDoWatching ) ) )
             {
             match(input,45,FOLLOW_45_in_ruleDo6444); 
 
                     createLeafNode(grammarAccess.getDoAccess().getDoKeyword_0(), null); 
                 
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3642:1: ( (lv_statement_1_0= ruleStatement ) )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3643:1: (lv_statement_1_0= ruleStatement )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3657:1: ( (lv_statement_1_0= ruleStatement ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3658:1: (lv_statement_1_0= ruleStatement )
             {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3643:1: (lv_statement_1_0= ruleStatement )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3644:3: lv_statement_1_0= ruleStatement
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3658:1: (lv_statement_1_0= ruleStatement )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3659:3: lv_statement_1_0= ruleStatement
             {
              
             	        currentNode=createCompositeNode(grammarAccess.getDoAccess().getStatementStatementParserRuleCall_1_0(), currentNode); 
@@ -8167,7 +8192,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
             }
 
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3666:2: ( ( (lv_end_2_0= ruleDoUpto ) ) | ( (lv_end_3_0= ruleDoWatching ) ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3681:2: ( ( (lv_endUp_2_0= ruleDoUpto ) ) | ( (lv_endWatch_3_0= ruleDoWatching ) ) )
             int alt49=2;
             int LA49_0 = input.LA(1);
 
@@ -8179,25 +8204,25 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
             }
             else {
                 NoViableAltException nvae =
-                    new NoViableAltException("3666:2: ( ( (lv_end_2_0= ruleDoUpto ) ) | ( (lv_end_3_0= ruleDoWatching ) ) )", 49, 0, input);
+                    new NoViableAltException("3681:2: ( ( (lv_endUp_2_0= ruleDoUpto ) ) | ( (lv_endWatch_3_0= ruleDoWatching ) ) )", 49, 0, input);
 
                 throw nvae;
             }
             switch (alt49) {
                 case 1 :
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3666:3: ( (lv_end_2_0= ruleDoUpto ) )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3681:3: ( (lv_endUp_2_0= ruleDoUpto ) )
                     {
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3666:3: ( (lv_end_2_0= ruleDoUpto ) )
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3667:1: (lv_end_2_0= ruleDoUpto )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3681:3: ( (lv_endUp_2_0= ruleDoUpto ) )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3682:1: (lv_endUp_2_0= ruleDoUpto )
                     {
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3667:1: (lv_end_2_0= ruleDoUpto )
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3668:3: lv_end_2_0= ruleDoUpto
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3682:1: (lv_endUp_2_0= ruleDoUpto )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3683:3: lv_endUp_2_0= ruleDoUpto
                     {
                      
-                    	        currentNode=createCompositeNode(grammarAccess.getDoAccess().getEndDoUptoParserRuleCall_2_0_0(), currentNode); 
+                    	        currentNode=createCompositeNode(grammarAccess.getDoAccess().getEndUpDoUptoParserRuleCall_2_0_0(), currentNode); 
                     	    
                     pushFollow(FOLLOW_ruleDoUpto_in_ruleDo6487);
-                    lv_end_2_0=ruleDoUpto();
+                    lv_endUp_2_0=ruleDoUpto();
                     _fsp--;
 
 
@@ -8208,8 +8233,8 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
                     	        try {
                     	       		set(
                     	       			current, 
-                    	       			"end",
-                    	        		lv_end_2_0, 
+                    	       			"endUp",
+                    	        		lv_endUp_2_0, 
                     	        		"DoUpto", 
                     	        		currentNode);
                     	        } catch (ValueConverterException vce) {
@@ -8227,19 +8252,19 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3691:6: ( (lv_end_3_0= ruleDoWatching ) )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3706:6: ( (lv_endWatch_3_0= ruleDoWatching ) )
                     {
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3691:6: ( (lv_end_3_0= ruleDoWatching ) )
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3692:1: (lv_end_3_0= ruleDoWatching )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3706:6: ( (lv_endWatch_3_0= ruleDoWatching ) )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3707:1: (lv_endWatch_3_0= ruleDoWatching )
                     {
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3692:1: (lv_end_3_0= ruleDoWatching )
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3693:3: lv_end_3_0= ruleDoWatching
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3707:1: (lv_endWatch_3_0= ruleDoWatching )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3708:3: lv_endWatch_3_0= ruleDoWatching
                     {
                      
-                    	        currentNode=createCompositeNode(grammarAccess.getDoAccess().getEndDoWatchingParserRuleCall_2_1_0(), currentNode); 
+                    	        currentNode=createCompositeNode(grammarAccess.getDoAccess().getEndWatchDoWatchingParserRuleCall_2_1_0(), currentNode); 
                     	    
                     pushFollow(FOLLOW_ruleDoWatching_in_ruleDo6514);
-                    lv_end_3_0=ruleDoWatching();
+                    lv_endWatch_3_0=ruleDoWatching();
                     _fsp--;
 
 
@@ -8250,8 +8275,8 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
                     	        try {
                     	       		set(
                     	       			current, 
-                    	       			"end",
-                    	        		lv_end_3_0, 
+                    	       			"endWatch",
+                    	        		lv_endWatch_3_0, 
                     	        		"DoWatching", 
                     	        		currentNode);
                     	        } catch (ValueConverterException vce) {
@@ -8294,7 +8319,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start entryRuleDoUpto
-    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3723:1: entryRuleDoUpto returns [EObject current=null] : iv_ruleDoUpto= ruleDoUpto EOF ;
+    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3738:1: entryRuleDoUpto returns [EObject current=null] : iv_ruleDoUpto= ruleDoUpto EOF ;
     public final EObject entryRuleDoUpto() throws RecognitionException {
         EObject current = null;
 
@@ -8302,8 +8327,8 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3724:2: (iv_ruleDoUpto= ruleDoUpto EOF )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3725:2: iv_ruleDoUpto= ruleDoUpto EOF
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3739:2: (iv_ruleDoUpto= ruleDoUpto EOF )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3740:2: iv_ruleDoUpto= ruleDoUpto EOF
             {
              currentNode = createCompositeNode(grammarAccess.getDoUptoRule(), currentNode); 
             pushFollow(FOLLOW_ruleDoUpto_in_entryRuleDoUpto6551);
@@ -8329,7 +8354,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start ruleDoUpto
-    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3732:1: ruleDoUpto returns [EObject current=null] : ( 'upto' ( (lv_expr_1_0= ruleDelayExpr ) ) ) ;
+    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3747:1: ruleDoUpto returns [EObject current=null] : ( 'upto' ( (lv_expr_1_0= ruleDelayExpr ) ) ) ;
     public final EObject ruleDoUpto() throws RecognitionException {
         EObject current = null;
 
@@ -8339,21 +8364,21 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
          @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3737:6: ( ( 'upto' ( (lv_expr_1_0= ruleDelayExpr ) ) ) )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3738:1: ( 'upto' ( (lv_expr_1_0= ruleDelayExpr ) ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3752:6: ( ( 'upto' ( (lv_expr_1_0= ruleDelayExpr ) ) ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3753:1: ( 'upto' ( (lv_expr_1_0= ruleDelayExpr ) ) )
             {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3738:1: ( 'upto' ( (lv_expr_1_0= ruleDelayExpr ) ) )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3738:3: 'upto' ( (lv_expr_1_0= ruleDelayExpr ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3753:1: ( 'upto' ( (lv_expr_1_0= ruleDelayExpr ) ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3753:3: 'upto' ( (lv_expr_1_0= ruleDelayExpr ) )
             {
             match(input,48,FOLLOW_48_in_ruleDoUpto6596); 
 
                     createLeafNode(grammarAccess.getDoUptoAccess().getUptoKeyword_0(), null); 
                 
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3742:1: ( (lv_expr_1_0= ruleDelayExpr ) )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3743:1: (lv_expr_1_0= ruleDelayExpr )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3757:1: ( (lv_expr_1_0= ruleDelayExpr ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3758:1: (lv_expr_1_0= ruleDelayExpr )
             {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3743:1: (lv_expr_1_0= ruleDelayExpr )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3744:3: lv_expr_1_0= ruleDelayExpr
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3758:1: (lv_expr_1_0= ruleDelayExpr )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3759:3: lv_expr_1_0= ruleDelayExpr
             {
              
             	        currentNode=createCompositeNode(grammarAccess.getDoUptoAccess().getExprDelayExprParserRuleCall_1_0(), currentNode); 
@@ -8408,7 +8433,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start entryRuleDoWatching
-    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3774:1: entryRuleDoWatching returns [EObject current=null] : iv_ruleDoWatching= ruleDoWatching EOF ;
+    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3789:1: entryRuleDoWatching returns [EObject current=null] : iv_ruleDoWatching= ruleDoWatching EOF ;
     public final EObject entryRuleDoWatching() throws RecognitionException {
         EObject current = null;
 
@@ -8416,8 +8441,8 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3775:2: (iv_ruleDoWatching= ruleDoWatching EOF )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3776:2: iv_ruleDoWatching= ruleDoWatching EOF
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3790:2: (iv_ruleDoWatching= ruleDoWatching EOF )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3791:2: iv_ruleDoWatching= ruleDoWatching EOF
             {
              currentNode = createCompositeNode(grammarAccess.getDoWatchingRule(), currentNode); 
             pushFollow(FOLLOW_ruleDoWatching_in_entryRuleDoWatching6653);
@@ -8443,7 +8468,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start ruleDoWatching
-    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3783:1: ruleDoWatching returns [EObject current=null] : ( 'watching' ( (lv_delay_1_0= ruleDelayExpr ) ) ( (lv_end_2_0= ruleDoWatchingEnd ) )? ) ;
+    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3798:1: ruleDoWatching returns [EObject current=null] : ( 'watching' ( (lv_delay_1_0= ruleDelayExpr ) ) ( (lv_end_2_0= ruleDoWatchingEnd ) )? ) ;
     public final EObject ruleDoWatching() throws RecognitionException {
         EObject current = null;
 
@@ -8455,21 +8480,21 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
          @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3788:6: ( ( 'watching' ( (lv_delay_1_0= ruleDelayExpr ) ) ( (lv_end_2_0= ruleDoWatchingEnd ) )? ) )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3789:1: ( 'watching' ( (lv_delay_1_0= ruleDelayExpr ) ) ( (lv_end_2_0= ruleDoWatchingEnd ) )? )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3803:6: ( ( 'watching' ( (lv_delay_1_0= ruleDelayExpr ) ) ( (lv_end_2_0= ruleDoWatchingEnd ) )? ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3804:1: ( 'watching' ( (lv_delay_1_0= ruleDelayExpr ) ) ( (lv_end_2_0= ruleDoWatchingEnd ) )? )
             {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3789:1: ( 'watching' ( (lv_delay_1_0= ruleDelayExpr ) ) ( (lv_end_2_0= ruleDoWatchingEnd ) )? )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3789:3: 'watching' ( (lv_delay_1_0= ruleDelayExpr ) ) ( (lv_end_2_0= ruleDoWatchingEnd ) )?
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3804:1: ( 'watching' ( (lv_delay_1_0= ruleDelayExpr ) ) ( (lv_end_2_0= ruleDoWatchingEnd ) )? )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3804:3: 'watching' ( (lv_delay_1_0= ruleDelayExpr ) ) ( (lv_end_2_0= ruleDoWatchingEnd ) )?
             {
             match(input,49,FOLLOW_49_in_ruleDoWatching6698); 
 
                     createLeafNode(grammarAccess.getDoWatchingAccess().getWatchingKeyword_0(), null); 
                 
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3793:1: ( (lv_delay_1_0= ruleDelayExpr ) )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3794:1: (lv_delay_1_0= ruleDelayExpr )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3808:1: ( (lv_delay_1_0= ruleDelayExpr ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3809:1: (lv_delay_1_0= ruleDelayExpr )
             {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3794:1: (lv_delay_1_0= ruleDelayExpr )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3795:3: lv_delay_1_0= ruleDelayExpr
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3809:1: (lv_delay_1_0= ruleDelayExpr )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3810:3: lv_delay_1_0= ruleDelayExpr
             {
              
             	        currentNode=createCompositeNode(grammarAccess.getDoWatchingAccess().getDelayDelayExprParserRuleCall_1_0(), currentNode); 
@@ -8501,7 +8526,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
             }
 
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3817:2: ( (lv_end_2_0= ruleDoWatchingEnd ) )?
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3832:2: ( (lv_end_2_0= ruleDoWatchingEnd ) )?
             int alt50=2;
             int LA50_0 = input.LA(1);
 
@@ -8510,10 +8535,10 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
             }
             switch (alt50) {
                 case 1 :
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3818:1: (lv_end_2_0= ruleDoWatchingEnd )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3833:1: (lv_end_2_0= ruleDoWatchingEnd )
                     {
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3818:1: (lv_end_2_0= ruleDoWatchingEnd )
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3819:3: lv_end_2_0= ruleDoWatchingEnd
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3833:1: (lv_end_2_0= ruleDoWatchingEnd )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3834:3: lv_end_2_0= ruleDoWatchingEnd
                     {
                      
                     	        currentNode=createCompositeNode(grammarAccess.getDoWatchingAccess().getEndDoWatchingEndParserRuleCall_2_0(), currentNode); 
@@ -8571,7 +8596,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start entryRuleDoWatchingEnd
-    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3849:1: entryRuleDoWatchingEnd returns [EObject current=null] : iv_ruleDoWatchingEnd= ruleDoWatchingEnd EOF ;
+    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3864:1: entryRuleDoWatchingEnd returns [EObject current=null] : iv_ruleDoWatchingEnd= ruleDoWatchingEnd EOF ;
     public final EObject entryRuleDoWatchingEnd() throws RecognitionException {
         EObject current = null;
 
@@ -8579,8 +8604,8 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3850:2: (iv_ruleDoWatchingEnd= ruleDoWatchingEnd EOF )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3851:2: iv_ruleDoWatchingEnd= ruleDoWatchingEnd EOF
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3865:2: (iv_ruleDoWatchingEnd= ruleDoWatchingEnd EOF )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3866:2: iv_ruleDoWatchingEnd= ruleDoWatchingEnd EOF
             {
              currentNode = createCompositeNode(grammarAccess.getDoWatchingEndRule(), currentNode); 
             pushFollow(FOLLOW_ruleDoWatchingEnd_in_entryRuleDoWatchingEnd6777);
@@ -8606,7 +8631,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start ruleDoWatchingEnd
-    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3858:1: ruleDoWatchingEnd returns [EObject current=null] : ( 'timeout' ( (lv_statement_1_0= ruleStatement ) ) 'end' ( 'timeout' )? ) ;
+    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3873:1: ruleDoWatchingEnd returns [EObject current=null] : ( 'timeout' ( (lv_statement_1_0= ruleStatement ) ) 'end' ( 'timeout' )? ) ;
     public final EObject ruleDoWatchingEnd() throws RecognitionException {
         EObject current = null;
 
@@ -8616,21 +8641,21 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
          @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3863:6: ( ( 'timeout' ( (lv_statement_1_0= ruleStatement ) ) 'end' ( 'timeout' )? ) )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3864:1: ( 'timeout' ( (lv_statement_1_0= ruleStatement ) ) 'end' ( 'timeout' )? )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3878:6: ( ( 'timeout' ( (lv_statement_1_0= ruleStatement ) ) 'end' ( 'timeout' )? ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3879:1: ( 'timeout' ( (lv_statement_1_0= ruleStatement ) ) 'end' ( 'timeout' )? )
             {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3864:1: ( 'timeout' ( (lv_statement_1_0= ruleStatement ) ) 'end' ( 'timeout' )? )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3864:3: 'timeout' ( (lv_statement_1_0= ruleStatement ) ) 'end' ( 'timeout' )?
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3879:1: ( 'timeout' ( (lv_statement_1_0= ruleStatement ) ) 'end' ( 'timeout' )? )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3879:3: 'timeout' ( (lv_statement_1_0= ruleStatement ) ) 'end' ( 'timeout' )?
             {
             match(input,50,FOLLOW_50_in_ruleDoWatchingEnd6822); 
 
                     createLeafNode(grammarAccess.getDoWatchingEndAccess().getTimeoutKeyword_0(), null); 
                 
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3868:1: ( (lv_statement_1_0= ruleStatement ) )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3869:1: (lv_statement_1_0= ruleStatement )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3883:1: ( (lv_statement_1_0= ruleStatement ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3884:1: (lv_statement_1_0= ruleStatement )
             {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3869:1: (lv_statement_1_0= ruleStatement )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3870:3: lv_statement_1_0= ruleStatement
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3884:1: (lv_statement_1_0= ruleStatement )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3885:3: lv_statement_1_0= ruleStatement
             {
              
             	        currentNode=createCompositeNode(grammarAccess.getDoWatchingEndAccess().getStatementStatementParserRuleCall_1_0(), currentNode); 
@@ -8666,7 +8691,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
                     createLeafNode(grammarAccess.getDoWatchingEndAccess().getEndKeyword_2(), null); 
                 
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3896:1: ( 'timeout' )?
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3911:1: ( 'timeout' )?
             int alt51=2;
             int LA51_0 = input.LA(1);
 
@@ -8675,7 +8700,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
             }
             switch (alt51) {
                 case 1 :
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3896:3: 'timeout'
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3911:3: 'timeout'
                     {
                     match(input,50,FOLLOW_50_in_ruleDoWatchingEnd6864); 
 
@@ -8710,7 +8735,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start entryRuleEmit
-    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3908:1: entryRuleEmit returns [EObject current=null] : iv_ruleEmit= ruleEmit EOF ;
+    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3923:1: entryRuleEmit returns [EObject current=null] : iv_ruleEmit= ruleEmit EOF ;
     public final EObject entryRuleEmit() throws RecognitionException {
         EObject current = null;
 
@@ -8718,8 +8743,8 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3909:2: (iv_ruleEmit= ruleEmit EOF )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3910:2: iv_ruleEmit= ruleEmit EOF
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3924:2: (iv_ruleEmit= ruleEmit EOF )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3925:2: iv_ruleEmit= ruleEmit EOF
             {
              currentNode = createCompositeNode(grammarAccess.getEmitRule(), currentNode); 
             pushFollow(FOLLOW_ruleEmit_in_entryRuleEmit6902);
@@ -8745,7 +8770,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start ruleEmit
-    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3917:1: ruleEmit returns [EObject current=null] : ( 'emit' ( ( ( RULE_ESTERELID ) ) | ( (lv_tick_2_0= ruleTick ) ) ) ( '(' ( (lv_expr_4_0= ruleDataExpr ) ) ')' )? ) ;
+    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3932:1: ruleEmit returns [EObject current=null] : ( 'emit' ( ( ( RULE_ESTERELID ) ) | ( (lv_tick_2_0= ruleTick ) ) ) ( '(' ( (lv_expr_4_0= ruleDataExpr ) ) ')' )? ) ;
     public final EObject ruleEmit() throws RecognitionException {
         EObject current = null;
 
@@ -8757,41 +8782,41 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
          @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3922:6: ( ( 'emit' ( ( ( RULE_ESTERELID ) ) | ( (lv_tick_2_0= ruleTick ) ) ) ( '(' ( (lv_expr_4_0= ruleDataExpr ) ) ')' )? ) )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3923:1: ( 'emit' ( ( ( RULE_ESTERELID ) ) | ( (lv_tick_2_0= ruleTick ) ) ) ( '(' ( (lv_expr_4_0= ruleDataExpr ) ) ')' )? )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3937:6: ( ( 'emit' ( ( ( RULE_ESTERELID ) ) | ( (lv_tick_2_0= ruleTick ) ) ) ( '(' ( (lv_expr_4_0= ruleDataExpr ) ) ')' )? ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3938:1: ( 'emit' ( ( ( RULE_ESTERELID ) ) | ( (lv_tick_2_0= ruleTick ) ) ) ( '(' ( (lv_expr_4_0= ruleDataExpr ) ) ')' )? )
             {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3923:1: ( 'emit' ( ( ( RULE_ESTERELID ) ) | ( (lv_tick_2_0= ruleTick ) ) ) ( '(' ( (lv_expr_4_0= ruleDataExpr ) ) ')' )? )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3923:3: 'emit' ( ( ( RULE_ESTERELID ) ) | ( (lv_tick_2_0= ruleTick ) ) ) ( '(' ( (lv_expr_4_0= ruleDataExpr ) ) ')' )?
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3938:1: ( 'emit' ( ( ( RULE_ESTERELID ) ) | ( (lv_tick_2_0= ruleTick ) ) ) ( '(' ( (lv_expr_4_0= ruleDataExpr ) ) ')' )? )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3938:3: 'emit' ( ( ( RULE_ESTERELID ) ) | ( (lv_tick_2_0= ruleTick ) ) ) ( '(' ( (lv_expr_4_0= ruleDataExpr ) ) ')' )?
             {
             match(input,51,FOLLOW_51_in_ruleEmit6947); 
 
                     createLeafNode(grammarAccess.getEmitAccess().getEmitKeyword_0(), null); 
                 
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3927:1: ( ( ( RULE_ESTERELID ) ) | ( (lv_tick_2_0= ruleTick ) ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3942:1: ( ( ( RULE_ESTERELID ) ) | ( (lv_tick_2_0= ruleTick ) ) )
             int alt52=2;
             int LA52_0 = input.LA(1);
 
             if ( (LA52_0==RULE_ESTERELID) ) {
                 alt52=1;
             }
-            else if ( (LA52_0==92) ) {
+            else if ( (LA52_0==94) ) {
                 alt52=2;
             }
             else {
                 NoViableAltException nvae =
-                    new NoViableAltException("3927:1: ( ( ( RULE_ESTERELID ) ) | ( (lv_tick_2_0= ruleTick ) ) )", 52, 0, input);
+                    new NoViableAltException("3942:1: ( ( ( RULE_ESTERELID ) ) | ( (lv_tick_2_0= ruleTick ) ) )", 52, 0, input);
 
                 throw nvae;
             }
             switch (alt52) {
                 case 1 :
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3927:2: ( ( RULE_ESTERELID ) )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3942:2: ( ( RULE_ESTERELID ) )
                     {
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3927:2: ( ( RULE_ESTERELID ) )
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3928:1: ( RULE_ESTERELID )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3942:2: ( ( RULE_ESTERELID ) )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3943:1: ( RULE_ESTERELID )
                     {
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3928:1: ( RULE_ESTERELID )
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3929:3: RULE_ESTERELID
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3943:1: ( RULE_ESTERELID )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3944:3: RULE_ESTERELID
                     {
 
                     			if (current==null) {
@@ -8813,13 +8838,13 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3942:6: ( (lv_tick_2_0= ruleTick ) )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3957:6: ( (lv_tick_2_0= ruleTick ) )
                     {
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3942:6: ( (lv_tick_2_0= ruleTick ) )
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3943:1: (lv_tick_2_0= ruleTick )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3957:6: ( (lv_tick_2_0= ruleTick ) )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3958:1: (lv_tick_2_0= ruleTick )
                     {
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3943:1: (lv_tick_2_0= ruleTick )
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3944:3: lv_tick_2_0= ruleTick
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3958:1: (lv_tick_2_0= ruleTick )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3959:3: lv_tick_2_0= ruleTick
                     {
                      
                     	        currentNode=createCompositeNode(grammarAccess.getEmitAccess().getTickTickParserRuleCall_1_1_0(), currentNode); 
@@ -8857,7 +8882,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
             }
 
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3966:3: ( '(' ( (lv_expr_4_0= ruleDataExpr ) ) ')' )?
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3981:3: ( '(' ( (lv_expr_4_0= ruleDataExpr ) ) ')' )?
             int alt53=2;
             int LA53_0 = input.LA(1);
 
@@ -8866,17 +8891,17 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
             }
             switch (alt53) {
                 case 1 :
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3966:5: '(' ( (lv_expr_4_0= ruleDataExpr ) ) ')'
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3981:5: '(' ( (lv_expr_4_0= ruleDataExpr ) ) ')'
                     {
                     match(input,36,FOLLOW_36_in_ruleEmit7005); 
 
                             createLeafNode(grammarAccess.getEmitAccess().getLeftParenthesisKeyword_2_0(), null); 
                         
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3970:1: ( (lv_expr_4_0= ruleDataExpr ) )
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3971:1: (lv_expr_4_0= ruleDataExpr )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3985:1: ( (lv_expr_4_0= ruleDataExpr ) )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3986:1: (lv_expr_4_0= ruleDataExpr )
                     {
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3971:1: (lv_expr_4_0= ruleDataExpr )
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3972:3: lv_expr_4_0= ruleDataExpr
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3986:1: (lv_expr_4_0= ruleDataExpr )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3987:3: lv_expr_4_0= ruleDataExpr
                     {
                      
                     	        currentNode=createCompositeNode(grammarAccess.getEmitAccess().getExprDataExprParserRuleCall_2_1_0(), currentNode); 
@@ -8941,7 +8966,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start entryRuleEveryDo
-    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4006:1: entryRuleEveryDo returns [EObject current=null] : iv_ruleEveryDo= ruleEveryDo EOF ;
+    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4021:1: entryRuleEveryDo returns [EObject current=null] : iv_ruleEveryDo= ruleEveryDo EOF ;
     public final EObject entryRuleEveryDo() throws RecognitionException {
         EObject current = null;
 
@@ -8949,8 +8974,8 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4007:2: (iv_ruleEveryDo= ruleEveryDo EOF )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4008:2: iv_ruleEveryDo= ruleEveryDo EOF
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4022:2: (iv_ruleEveryDo= ruleEveryDo EOF )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4023:2: iv_ruleEveryDo= ruleEveryDo EOF
             {
              currentNode = createCompositeNode(grammarAccess.getEveryDoRule(), currentNode); 
             pushFollow(FOLLOW_ruleEveryDo_in_entryRuleEveryDo7074);
@@ -8976,7 +9001,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start ruleEveryDo
-    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4015:1: ruleEveryDo returns [EObject current=null] : ( 'every' ( (lv_delay_1_0= ruleDelayExpr ) ) 'do' ( (lv_statement_3_0= ruleStatement ) ) 'end' ( 'every' )? ) ;
+    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4030:1: ruleEveryDo returns [EObject current=null] : ( 'every' ( (lv_delay_1_0= ruleDelayExpr ) ) 'do' ( (lv_statement_3_0= ruleStatement ) ) 'end' ( 'every' )? ) ;
     public final EObject ruleEveryDo() throws RecognitionException {
         EObject current = null;
 
@@ -8988,21 +9013,21 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
          @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4020:6: ( ( 'every' ( (lv_delay_1_0= ruleDelayExpr ) ) 'do' ( (lv_statement_3_0= ruleStatement ) ) 'end' ( 'every' )? ) )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4021:1: ( 'every' ( (lv_delay_1_0= ruleDelayExpr ) ) 'do' ( (lv_statement_3_0= ruleStatement ) ) 'end' ( 'every' )? )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4035:6: ( ( 'every' ( (lv_delay_1_0= ruleDelayExpr ) ) 'do' ( (lv_statement_3_0= ruleStatement ) ) 'end' ( 'every' )? ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4036:1: ( 'every' ( (lv_delay_1_0= ruleDelayExpr ) ) 'do' ( (lv_statement_3_0= ruleStatement ) ) 'end' ( 'every' )? )
             {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4021:1: ( 'every' ( (lv_delay_1_0= ruleDelayExpr ) ) 'do' ( (lv_statement_3_0= ruleStatement ) ) 'end' ( 'every' )? )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4021:3: 'every' ( (lv_delay_1_0= ruleDelayExpr ) ) 'do' ( (lv_statement_3_0= ruleStatement ) ) 'end' ( 'every' )?
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4036:1: ( 'every' ( (lv_delay_1_0= ruleDelayExpr ) ) 'do' ( (lv_statement_3_0= ruleStatement ) ) 'end' ( 'every' )? )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4036:3: 'every' ( (lv_delay_1_0= ruleDelayExpr ) ) 'do' ( (lv_statement_3_0= ruleStatement ) ) 'end' ( 'every' )?
             {
             match(input,52,FOLLOW_52_in_ruleEveryDo7119); 
 
                     createLeafNode(grammarAccess.getEveryDoAccess().getEveryKeyword_0(), null); 
                 
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4025:1: ( (lv_delay_1_0= ruleDelayExpr ) )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4026:1: (lv_delay_1_0= ruleDelayExpr )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4040:1: ( (lv_delay_1_0= ruleDelayExpr ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4041:1: (lv_delay_1_0= ruleDelayExpr )
             {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4026:1: (lv_delay_1_0= ruleDelayExpr )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4027:3: lv_delay_1_0= ruleDelayExpr
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4041:1: (lv_delay_1_0= ruleDelayExpr )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4042:3: lv_delay_1_0= ruleDelayExpr
             {
              
             	        currentNode=createCompositeNode(grammarAccess.getEveryDoAccess().getDelayDelayExprParserRuleCall_1_0(), currentNode); 
@@ -9038,11 +9063,11 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
                     createLeafNode(grammarAccess.getEveryDoAccess().getDoKeyword_2(), null); 
                 
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4053:1: ( (lv_statement_3_0= ruleStatement ) )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4054:1: (lv_statement_3_0= ruleStatement )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4068:1: ( (lv_statement_3_0= ruleStatement ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4069:1: (lv_statement_3_0= ruleStatement )
             {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4054:1: (lv_statement_3_0= ruleStatement )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4055:3: lv_statement_3_0= ruleStatement
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4069:1: (lv_statement_3_0= ruleStatement )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4070:3: lv_statement_3_0= ruleStatement
             {
              
             	        currentNode=createCompositeNode(grammarAccess.getEveryDoAccess().getStatementStatementParserRuleCall_3_0(), currentNode); 
@@ -9078,7 +9103,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
                     createLeafNode(grammarAccess.getEveryDoAccess().getEndKeyword_4(), null); 
                 
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4081:1: ( 'every' )?
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4096:1: ( 'every' )?
             int alt54=2;
             int LA54_0 = input.LA(1);
 
@@ -9087,7 +9112,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
             }
             switch (alt54) {
                 case 1 :
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4081:3: 'every'
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4096:3: 'every'
                     {
                     match(input,52,FOLLOW_52_in_ruleEveryDo7192); 
 
@@ -9122,7 +9147,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start entryRuleExit
-    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4093:1: entryRuleExit returns [EObject current=null] : iv_ruleExit= ruleExit EOF ;
+    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4108:1: entryRuleExit returns [EObject current=null] : iv_ruleExit= ruleExit EOF ;
     public final EObject entryRuleExit() throws RecognitionException {
         EObject current = null;
 
@@ -9130,8 +9155,8 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4094:2: (iv_ruleExit= ruleExit EOF )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4095:2: iv_ruleExit= ruleExit EOF
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4109:2: (iv_ruleExit= ruleExit EOF )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4110:2: iv_ruleExit= ruleExit EOF
             {
              currentNode = createCompositeNode(grammarAccess.getExitRule(), currentNode); 
             pushFollow(FOLLOW_ruleExit_in_entryRuleExit7230);
@@ -9157,7 +9182,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start ruleExit
-    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4102:1: ruleExit returns [EObject current=null] : ( 'exit' ( ( RULE_ESTERELID ) ) ( '(' ( (lv_dataExpr_3_0= ruleDataExpr ) ) ')' )? ) ;
+    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4117:1: ruleExit returns [EObject current=null] : ( 'exit' ( ( RULE_ESTERELID ) ) ( '(' ( (lv_dataExpr_3_0= ruleDataExpr ) ) ')' )? ) ;
     public final EObject ruleExit() throws RecognitionException {
         EObject current = null;
 
@@ -9167,21 +9192,21 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
          @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4107:6: ( ( 'exit' ( ( RULE_ESTERELID ) ) ( '(' ( (lv_dataExpr_3_0= ruleDataExpr ) ) ')' )? ) )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4108:1: ( 'exit' ( ( RULE_ESTERELID ) ) ( '(' ( (lv_dataExpr_3_0= ruleDataExpr ) ) ')' )? )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4122:6: ( ( 'exit' ( ( RULE_ESTERELID ) ) ( '(' ( (lv_dataExpr_3_0= ruleDataExpr ) ) ')' )? ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4123:1: ( 'exit' ( ( RULE_ESTERELID ) ) ( '(' ( (lv_dataExpr_3_0= ruleDataExpr ) ) ')' )? )
             {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4108:1: ( 'exit' ( ( RULE_ESTERELID ) ) ( '(' ( (lv_dataExpr_3_0= ruleDataExpr ) ) ')' )? )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4108:3: 'exit' ( ( RULE_ESTERELID ) ) ( '(' ( (lv_dataExpr_3_0= ruleDataExpr ) ) ')' )?
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4123:1: ( 'exit' ( ( RULE_ESTERELID ) ) ( '(' ( (lv_dataExpr_3_0= ruleDataExpr ) ) ')' )? )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4123:3: 'exit' ( ( RULE_ESTERELID ) ) ( '(' ( (lv_dataExpr_3_0= ruleDataExpr ) ) ')' )?
             {
             match(input,53,FOLLOW_53_in_ruleExit7275); 
 
                     createLeafNode(grammarAccess.getExitAccess().getExitKeyword_0(), null); 
                 
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4112:1: ( ( RULE_ESTERELID ) )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4113:1: ( RULE_ESTERELID )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4127:1: ( ( RULE_ESTERELID ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4128:1: ( RULE_ESTERELID )
             {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4113:1: ( RULE_ESTERELID )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4114:3: RULE_ESTERELID
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4128:1: ( RULE_ESTERELID )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4129:3: RULE_ESTERELID
             {
 
             			if (current==null) {
@@ -9199,7 +9224,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
             }
 
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4126:2: ( '(' ( (lv_dataExpr_3_0= ruleDataExpr ) ) ')' )?
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4141:2: ( '(' ( (lv_dataExpr_3_0= ruleDataExpr ) ) ')' )?
             int alt55=2;
             int LA55_0 = input.LA(1);
 
@@ -9208,17 +9233,17 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
             }
             switch (alt55) {
                 case 1 :
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4126:4: '(' ( (lv_dataExpr_3_0= ruleDataExpr ) ) ')'
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4141:4: '(' ( (lv_dataExpr_3_0= ruleDataExpr ) ) ')'
                     {
                     match(input,36,FOLLOW_36_in_ruleExit7304); 
 
                             createLeafNode(grammarAccess.getExitAccess().getLeftParenthesisKeyword_2_0(), null); 
                         
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4130:1: ( (lv_dataExpr_3_0= ruleDataExpr ) )
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4131:1: (lv_dataExpr_3_0= ruleDataExpr )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4145:1: ( (lv_dataExpr_3_0= ruleDataExpr ) )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4146:1: (lv_dataExpr_3_0= ruleDataExpr )
                     {
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4131:1: (lv_dataExpr_3_0= ruleDataExpr )
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4132:3: lv_dataExpr_3_0= ruleDataExpr
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4146:1: (lv_dataExpr_3_0= ruleDataExpr )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4147:3: lv_dataExpr_3_0= ruleDataExpr
                     {
                      
                     	        currentNode=createCompositeNode(grammarAccess.getExitAccess().getDataExprDataExprParserRuleCall_2_1_0(), currentNode); 
@@ -9283,7 +9308,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start entryRuleHalt
-    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4166:1: entryRuleHalt returns [EObject current=null] : iv_ruleHalt= ruleHalt EOF ;
+    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4181:1: entryRuleHalt returns [EObject current=null] : iv_ruleHalt= ruleHalt EOF ;
     public final EObject entryRuleHalt() throws RecognitionException {
         EObject current = null;
 
@@ -9291,8 +9316,8 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4167:2: (iv_ruleHalt= ruleHalt EOF )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4168:2: iv_ruleHalt= ruleHalt EOF
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4182:2: (iv_ruleHalt= ruleHalt EOF )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4183:2: iv_ruleHalt= ruleHalt EOF
             {
              currentNode = createCompositeNode(grammarAccess.getHaltRule(), currentNode); 
             pushFollow(FOLLOW_ruleHalt_in_entryRuleHalt7373);
@@ -9318,25 +9343,25 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start ruleHalt
-    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4175:1: ruleHalt returns [EObject current=null] : ( 'halt' () ) ;
+    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4190:1: ruleHalt returns [EObject current=null] : ( 'halt' () ) ;
     public final EObject ruleHalt() throws RecognitionException {
         EObject current = null;
 
          @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4180:6: ( ( 'halt' () ) )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4181:1: ( 'halt' () )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4195:6: ( ( 'halt' () ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4196:1: ( 'halt' () )
             {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4181:1: ( 'halt' () )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4181:3: 'halt' ()
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4196:1: ( 'halt' () )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4196:3: 'halt' ()
             {
             match(input,54,FOLLOW_54_in_ruleHalt7418); 
 
                     createLeafNode(grammarAccess.getHaltAccess().getHaltKeyword_0(), null); 
                 
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4185:1: ()
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4186:5: 
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4200:1: ()
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4201:5: 
             {
              
                     temp=factory.create(grammarAccess.getHaltAccess().getHaltAction_1().getType().getClassifier());
@@ -9374,7 +9399,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start entryRuleIfTest
-    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4204:1: entryRuleIfTest returns [EObject current=null] : iv_ruleIfTest= ruleIfTest EOF ;
+    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4219:1: entryRuleIfTest returns [EObject current=null] : iv_ruleIfTest= ruleIfTest EOF ;
     public final EObject entryRuleIfTest() throws RecognitionException {
         EObject current = null;
 
@@ -9382,8 +9407,8 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4205:2: (iv_ruleIfTest= ruleIfTest EOF )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4206:2: iv_ruleIfTest= ruleIfTest EOF
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4220:2: (iv_ruleIfTest= ruleIfTest EOF )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4221:2: iv_ruleIfTest= ruleIfTest EOF
             {
              currentNode = createCompositeNode(grammarAccess.getIfTestRule(), currentNode); 
             pushFollow(FOLLOW_ruleIfTest_in_entryRuleIfTest7463);
@@ -9409,37 +9434,37 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start ruleIfTest
-    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4213:1: ruleIfTest returns [EObject current=null] : ( 'if' ( (lv_expr_1_0= ruleDataExpr ) ) ( (lv_then_2_0= ruleThenPart ) )? ( (lv_elseIf_3_0= ruleElsIfPart ) )? ( (lv_else_4_0= ruleElsePart ) )? 'end' ( 'if' )? ) ;
+    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4228:1: ruleIfTest returns [EObject current=null] : ( 'if' ( (lv_expr_1_0= ruleDataExpr ) ) ( (lv_thenPart_2_0= ruleThenPart ) )? ( (lv_elseIf_3_0= ruleElsIfPart ) )? ( (lv_elsePart_4_0= ruleElsePart ) )? 'end' ( 'if' )? ) ;
     public final EObject ruleIfTest() throws RecognitionException {
         EObject current = null;
 
         EObject lv_expr_1_0 = null;
 
-        EObject lv_then_2_0 = null;
+        EObject lv_thenPart_2_0 = null;
 
         EObject lv_elseIf_3_0 = null;
 
-        EObject lv_else_4_0 = null;
+        EObject lv_elsePart_4_0 = null;
 
 
          @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4218:6: ( ( 'if' ( (lv_expr_1_0= ruleDataExpr ) ) ( (lv_then_2_0= ruleThenPart ) )? ( (lv_elseIf_3_0= ruleElsIfPart ) )? ( (lv_else_4_0= ruleElsePart ) )? 'end' ( 'if' )? ) )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4219:1: ( 'if' ( (lv_expr_1_0= ruleDataExpr ) ) ( (lv_then_2_0= ruleThenPart ) )? ( (lv_elseIf_3_0= ruleElsIfPart ) )? ( (lv_else_4_0= ruleElsePart ) )? 'end' ( 'if' )? )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4233:6: ( ( 'if' ( (lv_expr_1_0= ruleDataExpr ) ) ( (lv_thenPart_2_0= ruleThenPart ) )? ( (lv_elseIf_3_0= ruleElsIfPart ) )? ( (lv_elsePart_4_0= ruleElsePart ) )? 'end' ( 'if' )? ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4234:1: ( 'if' ( (lv_expr_1_0= ruleDataExpr ) ) ( (lv_thenPart_2_0= ruleThenPart ) )? ( (lv_elseIf_3_0= ruleElsIfPart ) )? ( (lv_elsePart_4_0= ruleElsePart ) )? 'end' ( 'if' )? )
             {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4219:1: ( 'if' ( (lv_expr_1_0= ruleDataExpr ) ) ( (lv_then_2_0= ruleThenPart ) )? ( (lv_elseIf_3_0= ruleElsIfPart ) )? ( (lv_else_4_0= ruleElsePart ) )? 'end' ( 'if' )? )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4219:3: 'if' ( (lv_expr_1_0= ruleDataExpr ) ) ( (lv_then_2_0= ruleThenPart ) )? ( (lv_elseIf_3_0= ruleElsIfPart ) )? ( (lv_else_4_0= ruleElsePart ) )? 'end' ( 'if' )?
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4234:1: ( 'if' ( (lv_expr_1_0= ruleDataExpr ) ) ( (lv_thenPart_2_0= ruleThenPart ) )? ( (lv_elseIf_3_0= ruleElsIfPart ) )? ( (lv_elsePart_4_0= ruleElsePart ) )? 'end' ( 'if' )? )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4234:3: 'if' ( (lv_expr_1_0= ruleDataExpr ) ) ( (lv_thenPart_2_0= ruleThenPart ) )? ( (lv_elseIf_3_0= ruleElsIfPart ) )? ( (lv_elsePart_4_0= ruleElsePart ) )? 'end' ( 'if' )?
             {
             match(input,55,FOLLOW_55_in_ruleIfTest7508); 
 
                     createLeafNode(grammarAccess.getIfTestAccess().getIfKeyword_0(), null); 
                 
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4223:1: ( (lv_expr_1_0= ruleDataExpr ) )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4224:1: (lv_expr_1_0= ruleDataExpr )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4238:1: ( (lv_expr_1_0= ruleDataExpr ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4239:1: (lv_expr_1_0= ruleDataExpr )
             {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4224:1: (lv_expr_1_0= ruleDataExpr )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4225:3: lv_expr_1_0= ruleDataExpr
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4239:1: (lv_expr_1_0= ruleDataExpr )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4240:3: lv_expr_1_0= ruleDataExpr
             {
              
             	        currentNode=createCompositeNode(grammarAccess.getIfTestAccess().getExprDataExprParserRuleCall_1_0(), currentNode); 
@@ -9471,7 +9496,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
             }
 
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4247:2: ( (lv_then_2_0= ruleThenPart ) )?
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4262:2: ( (lv_thenPart_2_0= ruleThenPart ) )?
             int alt56=2;
             int LA56_0 = input.LA(1);
 
@@ -9480,16 +9505,16 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
             }
             switch (alt56) {
                 case 1 :
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4248:1: (lv_then_2_0= ruleThenPart )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4263:1: (lv_thenPart_2_0= ruleThenPart )
                     {
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4248:1: (lv_then_2_0= ruleThenPart )
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4249:3: lv_then_2_0= ruleThenPart
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4263:1: (lv_thenPart_2_0= ruleThenPart )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4264:3: lv_thenPart_2_0= ruleThenPart
                     {
                      
-                    	        currentNode=createCompositeNode(grammarAccess.getIfTestAccess().getThenThenPartParserRuleCall_2_0(), currentNode); 
+                    	        currentNode=createCompositeNode(grammarAccess.getIfTestAccess().getThenPartThenPartParserRuleCall_2_0(), currentNode); 
                     	    
                     pushFollow(FOLLOW_ruleThenPart_in_ruleIfTest7550);
-                    lv_then_2_0=ruleThenPart();
+                    lv_thenPart_2_0=ruleThenPart();
                     _fsp--;
 
 
@@ -9500,8 +9525,8 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
                     	        try {
                     	       		set(
                     	       			current, 
-                    	       			"then",
-                    	        		lv_then_2_0, 
+                    	       			"thenPart",
+                    	        		lv_thenPart_2_0, 
                     	        		"ThenPart", 
                     	        		currentNode);
                     	        } catch (ValueConverterException vce) {
@@ -9518,7 +9543,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
             }
 
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4271:3: ( (lv_elseIf_3_0= ruleElsIfPart ) )?
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4286:3: ( (lv_elseIf_3_0= ruleElsIfPart ) )?
             int alt57=2;
             int LA57_0 = input.LA(1);
 
@@ -9527,10 +9552,10 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
             }
             switch (alt57) {
                 case 1 :
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4272:1: (lv_elseIf_3_0= ruleElsIfPart )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4287:1: (lv_elseIf_3_0= ruleElsIfPart )
                     {
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4272:1: (lv_elseIf_3_0= ruleElsIfPart )
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4273:3: lv_elseIf_3_0= ruleElsIfPart
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4287:1: (lv_elseIf_3_0= ruleElsIfPart )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4288:3: lv_elseIf_3_0= ruleElsIfPart
                     {
                      
                     	        currentNode=createCompositeNode(grammarAccess.getIfTestAccess().getElseIfElsIfPartParserRuleCall_3_0(), currentNode); 
@@ -9565,7 +9590,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
             }
 
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4295:3: ( (lv_else_4_0= ruleElsePart ) )?
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4310:3: ( (lv_elsePart_4_0= ruleElsePart ) )?
             int alt58=2;
             int LA58_0 = input.LA(1);
 
@@ -9574,16 +9599,16 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
             }
             switch (alt58) {
                 case 1 :
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4296:1: (lv_else_4_0= ruleElsePart )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4311:1: (lv_elsePart_4_0= ruleElsePart )
                     {
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4296:1: (lv_else_4_0= ruleElsePart )
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4297:3: lv_else_4_0= ruleElsePart
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4311:1: (lv_elsePart_4_0= ruleElsePart )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4312:3: lv_elsePart_4_0= ruleElsePart
                     {
                      
-                    	        currentNode=createCompositeNode(grammarAccess.getIfTestAccess().getElseElsePartParserRuleCall_4_0(), currentNode); 
+                    	        currentNode=createCompositeNode(grammarAccess.getIfTestAccess().getElsePartElsePartParserRuleCall_4_0(), currentNode); 
                     	    
                     pushFollow(FOLLOW_ruleElsePart_in_ruleIfTest7594);
-                    lv_else_4_0=ruleElsePart();
+                    lv_elsePart_4_0=ruleElsePart();
                     _fsp--;
 
 
@@ -9594,8 +9619,8 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
                     	        try {
                     	       		set(
                     	       			current, 
-                    	       			"else",
-                    	        		lv_else_4_0, 
+                    	       			"elsePart",
+                    	        		lv_elsePart_4_0, 
                     	        		"ElsePart", 
                     	        		currentNode);
                     	        } catch (ValueConverterException vce) {
@@ -9616,7 +9641,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
                     createLeafNode(grammarAccess.getIfTestAccess().getEndKeyword_5(), null); 
                 
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4323:1: ( 'if' )?
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4338:1: ( 'if' )?
             int alt59=2;
             int LA59_0 = input.LA(1);
 
@@ -9625,7 +9650,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
             }
             switch (alt59) {
                 case 1 :
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4323:3: 'if'
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4338:3: 'if'
                     {
                     match(input,55,FOLLOW_55_in_ruleIfTest7616); 
 
@@ -9660,7 +9685,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start entryRuleElsIfPart
-    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4335:1: entryRuleElsIfPart returns [EObject current=null] : iv_ruleElsIfPart= ruleElsIfPart EOF ;
+    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4350:1: entryRuleElsIfPart returns [EObject current=null] : iv_ruleElsIfPart= ruleElsIfPart EOF ;
     public final EObject entryRuleElsIfPart() throws RecognitionException {
         EObject current = null;
 
@@ -9668,8 +9693,8 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4336:2: (iv_ruleElsIfPart= ruleElsIfPart EOF )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4337:2: iv_ruleElsIfPart= ruleElsIfPart EOF
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4351:2: (iv_ruleElsIfPart= ruleElsIfPart EOF )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4352:2: iv_ruleElsIfPart= ruleElsIfPart EOF
             {
              currentNode = createCompositeNode(grammarAccess.getElsIfPartRule(), currentNode); 
             pushFollow(FOLLOW_ruleElsIfPart_in_entryRuleElsIfPart7654);
@@ -9695,7 +9720,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start ruleElsIfPart
-    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4344:1: ruleElsIfPart returns [EObject current=null] : ( ( (lv_elsif_0_0= ruleElsIf ) ) ( (lv_elsif_1_0= ruleElsIf ) )* ) ;
+    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4359:1: ruleElsIfPart returns [EObject current=null] : ( ( (lv_elsif_0_0= ruleElsIf ) ) ( (lv_elsif_1_0= ruleElsIf ) )* ) ;
     public final EObject ruleElsIfPart() throws RecognitionException {
         EObject current = null;
 
@@ -9707,17 +9732,17 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
          @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4349:6: ( ( ( (lv_elsif_0_0= ruleElsIf ) ) ( (lv_elsif_1_0= ruleElsIf ) )* ) )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4350:1: ( ( (lv_elsif_0_0= ruleElsIf ) ) ( (lv_elsif_1_0= ruleElsIf ) )* )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4364:6: ( ( ( (lv_elsif_0_0= ruleElsIf ) ) ( (lv_elsif_1_0= ruleElsIf ) )* ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4365:1: ( ( (lv_elsif_0_0= ruleElsIf ) ) ( (lv_elsif_1_0= ruleElsIf ) )* )
             {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4350:1: ( ( (lv_elsif_0_0= ruleElsIf ) ) ( (lv_elsif_1_0= ruleElsIf ) )* )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4350:2: ( (lv_elsif_0_0= ruleElsIf ) ) ( (lv_elsif_1_0= ruleElsIf ) )*
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4365:1: ( ( (lv_elsif_0_0= ruleElsIf ) ) ( (lv_elsif_1_0= ruleElsIf ) )* )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4365:2: ( (lv_elsif_0_0= ruleElsIf ) ) ( (lv_elsif_1_0= ruleElsIf ) )*
             {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4350:2: ( (lv_elsif_0_0= ruleElsIf ) )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4351:1: (lv_elsif_0_0= ruleElsIf )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4365:2: ( (lv_elsif_0_0= ruleElsIf ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4366:1: (lv_elsif_0_0= ruleElsIf )
             {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4351:1: (lv_elsif_0_0= ruleElsIf )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4352:3: lv_elsif_0_0= ruleElsIf
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4366:1: (lv_elsif_0_0= ruleElsIf )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4367:3: lv_elsif_0_0= ruleElsIf
             {
              
             	        currentNode=createCompositeNode(grammarAccess.getElsIfPartAccess().getElsifElsIfParserRuleCall_0_0(), currentNode); 
@@ -9749,7 +9774,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
             }
 
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4374:2: ( (lv_elsif_1_0= ruleElsIf ) )*
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4389:2: ( (lv_elsif_1_0= ruleElsIf ) )*
             loop60:
             do {
                 int alt60=2;
@@ -9762,10 +9787,10 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
                 switch (alt60) {
             	case 1 :
-            	    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4375:1: (lv_elsif_1_0= ruleElsIf )
+            	    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4390:1: (lv_elsif_1_0= ruleElsIf )
             	    {
-            	    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4375:1: (lv_elsif_1_0= ruleElsIf )
-            	    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4376:3: lv_elsif_1_0= ruleElsIf
+            	    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4390:1: (lv_elsif_1_0= ruleElsIf )
+            	    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4391:3: lv_elsif_1_0= ruleElsIf
             	    {
             	     
             	    	        currentNode=createCompositeNode(grammarAccess.getElsIfPartAccess().getElsifElsIfParserRuleCall_1_0(), currentNode); 
@@ -9826,7 +9851,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start entryRuleElsIf
-    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4406:1: entryRuleElsIf returns [EObject current=null] : iv_ruleElsIf= ruleElsIf EOF ;
+    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4421:1: entryRuleElsIf returns [EObject current=null] : iv_ruleElsIf= ruleElsIf EOF ;
     public final EObject entryRuleElsIf() throws RecognitionException {
         EObject current = null;
 
@@ -9834,8 +9859,8 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4407:2: (iv_ruleElsIf= ruleElsIf EOF )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4408:2: iv_ruleElsIf= ruleElsIf EOF
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4422:2: (iv_ruleElsIf= ruleElsIf EOF )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4423:2: iv_ruleElsIf= ruleElsIf EOF
             {
              currentNode = createCompositeNode(grammarAccess.getElsIfRule(), currentNode); 
             pushFollow(FOLLOW_ruleElsIf_in_entryRuleElsIf7768);
@@ -9861,33 +9886,33 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start ruleElsIf
-    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4415:1: ruleElsIf returns [EObject current=null] : ( 'elsif' ( (lv_expr_1_0= ruleDataExpr ) ) ( (lv_then_2_0= ruleThenPart ) )? ) ;
+    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4430:1: ruleElsIf returns [EObject current=null] : ( 'elsif' ( (lv_expr_1_0= ruleDataExpr ) ) ( (lv_thenPart_2_0= ruleThenPart ) )? ) ;
     public final EObject ruleElsIf() throws RecognitionException {
         EObject current = null;
 
         EObject lv_expr_1_0 = null;
 
-        EObject lv_then_2_0 = null;
+        EObject lv_thenPart_2_0 = null;
 
 
          @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4420:6: ( ( 'elsif' ( (lv_expr_1_0= ruleDataExpr ) ) ( (lv_then_2_0= ruleThenPart ) )? ) )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4421:1: ( 'elsif' ( (lv_expr_1_0= ruleDataExpr ) ) ( (lv_then_2_0= ruleThenPart ) )? )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4435:6: ( ( 'elsif' ( (lv_expr_1_0= ruleDataExpr ) ) ( (lv_thenPart_2_0= ruleThenPart ) )? ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4436:1: ( 'elsif' ( (lv_expr_1_0= ruleDataExpr ) ) ( (lv_thenPart_2_0= ruleThenPart ) )? )
             {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4421:1: ( 'elsif' ( (lv_expr_1_0= ruleDataExpr ) ) ( (lv_then_2_0= ruleThenPart ) )? )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4421:3: 'elsif' ( (lv_expr_1_0= ruleDataExpr ) ) ( (lv_then_2_0= ruleThenPart ) )?
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4436:1: ( 'elsif' ( (lv_expr_1_0= ruleDataExpr ) ) ( (lv_thenPart_2_0= ruleThenPart ) )? )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4436:3: 'elsif' ( (lv_expr_1_0= ruleDataExpr ) ) ( (lv_thenPart_2_0= ruleThenPart ) )?
             {
             match(input,56,FOLLOW_56_in_ruleElsIf7813); 
 
                     createLeafNode(grammarAccess.getElsIfAccess().getElsifKeyword_0(), null); 
                 
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4425:1: ( (lv_expr_1_0= ruleDataExpr ) )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4426:1: (lv_expr_1_0= ruleDataExpr )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4440:1: ( (lv_expr_1_0= ruleDataExpr ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4441:1: (lv_expr_1_0= ruleDataExpr )
             {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4426:1: (lv_expr_1_0= ruleDataExpr )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4427:3: lv_expr_1_0= ruleDataExpr
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4441:1: (lv_expr_1_0= ruleDataExpr )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4442:3: lv_expr_1_0= ruleDataExpr
             {
              
             	        currentNode=createCompositeNode(grammarAccess.getElsIfAccess().getExprDataExprParserRuleCall_1_0(), currentNode); 
@@ -9919,7 +9944,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
             }
 
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4449:2: ( (lv_then_2_0= ruleThenPart ) )?
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4464:2: ( (lv_thenPart_2_0= ruleThenPart ) )?
             int alt61=2;
             int LA61_0 = input.LA(1);
 
@@ -9928,16 +9953,16 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
             }
             switch (alt61) {
                 case 1 :
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4450:1: (lv_then_2_0= ruleThenPart )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4465:1: (lv_thenPart_2_0= ruleThenPart )
                     {
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4450:1: (lv_then_2_0= ruleThenPart )
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4451:3: lv_then_2_0= ruleThenPart
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4465:1: (lv_thenPart_2_0= ruleThenPart )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4466:3: lv_thenPart_2_0= ruleThenPart
                     {
                      
-                    	        currentNode=createCompositeNode(grammarAccess.getElsIfAccess().getThenThenPartParserRuleCall_2_0(), currentNode); 
+                    	        currentNode=createCompositeNode(grammarAccess.getElsIfAccess().getThenPartThenPartParserRuleCall_2_0(), currentNode); 
                     	    
                     pushFollow(FOLLOW_ruleThenPart_in_ruleElsIf7855);
-                    lv_then_2_0=ruleThenPart();
+                    lv_thenPart_2_0=ruleThenPart();
                     _fsp--;
 
 
@@ -9948,8 +9973,8 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
                     	        try {
                     	       		set(
                     	       			current, 
-                    	       			"then",
-                    	        		lv_then_2_0, 
+                    	       			"thenPart",
+                    	        		lv_thenPart_2_0, 
                     	        		"ThenPart", 
                     	        		currentNode);
                     	        } catch (ValueConverterException vce) {
@@ -9989,7 +10014,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start entryRuleThenPart
-    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4481:1: entryRuleThenPart returns [EObject current=null] : iv_ruleThenPart= ruleThenPart EOF ;
+    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4496:1: entryRuleThenPart returns [EObject current=null] : iv_ruleThenPart= ruleThenPart EOF ;
     public final EObject entryRuleThenPart() throws RecognitionException {
         EObject current = null;
 
@@ -9997,8 +10022,8 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4482:2: (iv_ruleThenPart= ruleThenPart EOF )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4483:2: iv_ruleThenPart= ruleThenPart EOF
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4497:2: (iv_ruleThenPart= ruleThenPart EOF )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4498:2: iv_ruleThenPart= ruleThenPart EOF
             {
              currentNode = createCompositeNode(grammarAccess.getThenPartRule(), currentNode); 
             pushFollow(FOLLOW_ruleThenPart_in_entryRuleThenPart7892);
@@ -10024,7 +10049,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start ruleThenPart
-    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4490:1: ruleThenPart returns [EObject current=null] : ( 'then' ( (lv_statement_1_0= ruleStatement ) ) ) ;
+    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4505:1: ruleThenPart returns [EObject current=null] : ( 'then' ( (lv_statement_1_0= ruleStatement ) ) ) ;
     public final EObject ruleThenPart() throws RecognitionException {
         EObject current = null;
 
@@ -10034,21 +10059,21 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
          @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4495:6: ( ( 'then' ( (lv_statement_1_0= ruleStatement ) ) ) )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4496:1: ( 'then' ( (lv_statement_1_0= ruleStatement ) ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4510:6: ( ( 'then' ( (lv_statement_1_0= ruleStatement ) ) ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4511:1: ( 'then' ( (lv_statement_1_0= ruleStatement ) ) )
             {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4496:1: ( 'then' ( (lv_statement_1_0= ruleStatement ) ) )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4496:3: 'then' ( (lv_statement_1_0= ruleStatement ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4511:1: ( 'then' ( (lv_statement_1_0= ruleStatement ) ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4511:3: 'then' ( (lv_statement_1_0= ruleStatement ) )
             {
             match(input,57,FOLLOW_57_in_ruleThenPart7937); 
 
                     createLeafNode(grammarAccess.getThenPartAccess().getThenKeyword_0(), null); 
                 
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4500:1: ( (lv_statement_1_0= ruleStatement ) )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4501:1: (lv_statement_1_0= ruleStatement )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4515:1: ( (lv_statement_1_0= ruleStatement ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4516:1: (lv_statement_1_0= ruleStatement )
             {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4501:1: (lv_statement_1_0= ruleStatement )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4502:3: lv_statement_1_0= ruleStatement
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4516:1: (lv_statement_1_0= ruleStatement )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4517:3: lv_statement_1_0= ruleStatement
             {
              
             	        currentNode=createCompositeNode(grammarAccess.getThenPartAccess().getStatementStatementParserRuleCall_1_0(), currentNode); 
@@ -10103,7 +10128,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start entryRuleElsePart
-    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4532:1: entryRuleElsePart returns [EObject current=null] : iv_ruleElsePart= ruleElsePart EOF ;
+    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4547:1: entryRuleElsePart returns [EObject current=null] : iv_ruleElsePart= ruleElsePart EOF ;
     public final EObject entryRuleElsePart() throws RecognitionException {
         EObject current = null;
 
@@ -10111,8 +10136,8 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4533:2: (iv_ruleElsePart= ruleElsePart EOF )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4534:2: iv_ruleElsePart= ruleElsePart EOF
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4548:2: (iv_ruleElsePart= ruleElsePart EOF )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4549:2: iv_ruleElsePart= ruleElsePart EOF
             {
              currentNode = createCompositeNode(grammarAccess.getElsePartRule(), currentNode); 
             pushFollow(FOLLOW_ruleElsePart_in_entryRuleElsePart7994);
@@ -10138,7 +10163,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start ruleElsePart
-    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4541:1: ruleElsePart returns [EObject current=null] : ( 'else' ( (lv_statement_1_0= ruleStatement ) ) ) ;
+    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4556:1: ruleElsePart returns [EObject current=null] : ( 'else' ( (lv_statement_1_0= ruleStatement ) ) ) ;
     public final EObject ruleElsePart() throws RecognitionException {
         EObject current = null;
 
@@ -10148,21 +10173,21 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
          @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4546:6: ( ( 'else' ( (lv_statement_1_0= ruleStatement ) ) ) )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4547:1: ( 'else' ( (lv_statement_1_0= ruleStatement ) ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4561:6: ( ( 'else' ( (lv_statement_1_0= ruleStatement ) ) ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4562:1: ( 'else' ( (lv_statement_1_0= ruleStatement ) ) )
             {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4547:1: ( 'else' ( (lv_statement_1_0= ruleStatement ) ) )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4547:3: 'else' ( (lv_statement_1_0= ruleStatement ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4562:1: ( 'else' ( (lv_statement_1_0= ruleStatement ) ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4562:3: 'else' ( (lv_statement_1_0= ruleStatement ) )
             {
             match(input,58,FOLLOW_58_in_ruleElsePart8039); 
 
                     createLeafNode(grammarAccess.getElsePartAccess().getElseKeyword_0(), null); 
                 
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4551:1: ( (lv_statement_1_0= ruleStatement ) )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4552:1: (lv_statement_1_0= ruleStatement )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4566:1: ( (lv_statement_1_0= ruleStatement ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4567:1: (lv_statement_1_0= ruleStatement )
             {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4552:1: (lv_statement_1_0= ruleStatement )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4553:3: lv_statement_1_0= ruleStatement
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4567:1: (lv_statement_1_0= ruleStatement )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4568:3: lv_statement_1_0= ruleStatement
             {
              
             	        currentNode=createCompositeNode(grammarAccess.getElsePartAccess().getStatementStatementParserRuleCall_1_0(), currentNode); 
@@ -10217,7 +10242,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start entryRuleLoop
-    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4583:1: entryRuleLoop returns [EObject current=null] : iv_ruleLoop= ruleLoop EOF ;
+    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4598:1: entryRuleLoop returns [EObject current=null] : iv_ruleLoop= ruleLoop EOF ;
     public final EObject entryRuleLoop() throws RecognitionException {
         EObject current = null;
 
@@ -10225,8 +10250,8 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4584:2: (iv_ruleLoop= ruleLoop EOF )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4585:2: iv_ruleLoop= ruleLoop EOF
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4599:2: (iv_ruleLoop= ruleLoop EOF )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4600:2: iv_ruleLoop= ruleLoop EOF
             {
              currentNode = createCompositeNode(grammarAccess.getLoopRule(), currentNode); 
             pushFollow(FOLLOW_ruleLoop_in_entryRuleLoop8096);
@@ -10252,7 +10277,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start ruleLoop
-    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4592:1: ruleLoop returns [EObject current=null] : ( 'loop' ( (lv_body_1_0= ruleLoopBody ) ) ( ruleEndLoop | ( (lv_end_3_0= ruleLoopEach ) ) ) ) ;
+    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4607:1: ruleLoop returns [EObject current=null] : ( 'loop' ( (lv_body_1_0= ruleLoopBody ) ) ( ruleEndLoop | ( (lv_end_3_0= ruleLoopEach ) ) ) ) ;
     public final EObject ruleLoop() throws RecognitionException {
         EObject current = null;
 
@@ -10264,21 +10289,21 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
          @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4597:6: ( ( 'loop' ( (lv_body_1_0= ruleLoopBody ) ) ( ruleEndLoop | ( (lv_end_3_0= ruleLoopEach ) ) ) ) )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4598:1: ( 'loop' ( (lv_body_1_0= ruleLoopBody ) ) ( ruleEndLoop | ( (lv_end_3_0= ruleLoopEach ) ) ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4612:6: ( ( 'loop' ( (lv_body_1_0= ruleLoopBody ) ) ( ruleEndLoop | ( (lv_end_3_0= ruleLoopEach ) ) ) ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4613:1: ( 'loop' ( (lv_body_1_0= ruleLoopBody ) ) ( ruleEndLoop | ( (lv_end_3_0= ruleLoopEach ) ) ) )
             {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4598:1: ( 'loop' ( (lv_body_1_0= ruleLoopBody ) ) ( ruleEndLoop | ( (lv_end_3_0= ruleLoopEach ) ) ) )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4598:3: 'loop' ( (lv_body_1_0= ruleLoopBody ) ) ( ruleEndLoop | ( (lv_end_3_0= ruleLoopEach ) ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4613:1: ( 'loop' ( (lv_body_1_0= ruleLoopBody ) ) ( ruleEndLoop | ( (lv_end_3_0= ruleLoopEach ) ) ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4613:3: 'loop' ( (lv_body_1_0= ruleLoopBody ) ) ( ruleEndLoop | ( (lv_end_3_0= ruleLoopEach ) ) )
             {
             match(input,59,FOLLOW_59_in_ruleLoop8141); 
 
                     createLeafNode(grammarAccess.getLoopAccess().getLoopKeyword_0(), null); 
                 
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4602:1: ( (lv_body_1_0= ruleLoopBody ) )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4603:1: (lv_body_1_0= ruleLoopBody )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4617:1: ( (lv_body_1_0= ruleLoopBody ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4618:1: (lv_body_1_0= ruleLoopBody )
             {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4603:1: (lv_body_1_0= ruleLoopBody )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4604:3: lv_body_1_0= ruleLoopBody
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4618:1: (lv_body_1_0= ruleLoopBody )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4619:3: lv_body_1_0= ruleLoopBody
             {
              
             	        currentNode=createCompositeNode(grammarAccess.getLoopAccess().getBodyLoopBodyParserRuleCall_1_0(), currentNode); 
@@ -10310,7 +10335,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
             }
 
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4626:2: ( ruleEndLoop | ( (lv_end_3_0= ruleLoopEach ) ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4641:2: ( ruleEndLoop | ( (lv_end_3_0= ruleLoopEach ) ) )
             int alt62=2;
             int LA62_0 = input.LA(1);
 
@@ -10322,13 +10347,13 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
             }
             else {
                 NoViableAltException nvae =
-                    new NoViableAltException("4626:2: ( ruleEndLoop | ( (lv_end_3_0= ruleLoopEach ) ) )", 62, 0, input);
+                    new NoViableAltException("4641:2: ( ruleEndLoop | ( (lv_end_3_0= ruleLoopEach ) ) )", 62, 0, input);
 
                 throw nvae;
             }
             switch (alt62) {
                 case 1 :
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4626:3: ruleEndLoop
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4641:3: ruleEndLoop
                     {
                     pushFollow(FOLLOW_ruleEndLoop_in_ruleLoop8172);
                     ruleEndLoop();
@@ -10338,13 +10363,13 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4627:6: ( (lv_end_3_0= ruleLoopEach ) )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4642:6: ( (lv_end_3_0= ruleLoopEach ) )
                     {
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4627:6: ( (lv_end_3_0= ruleLoopEach ) )
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4628:1: (lv_end_3_0= ruleLoopEach )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4642:6: ( (lv_end_3_0= ruleLoopEach ) )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4643:1: (lv_end_3_0= ruleLoopEach )
                     {
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4628:1: (lv_end_3_0= ruleLoopEach )
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4629:3: lv_end_3_0= ruleLoopEach
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4643:1: (lv_end_3_0= ruleLoopEach )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4644:3: lv_end_3_0= ruleLoopEach
                     {
                      
                     	        currentNode=createCompositeNode(grammarAccess.getLoopAccess().getEndLoopEachParserRuleCall_2_1_0(), currentNode); 
@@ -10405,7 +10430,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start entryRuleEndLoop
-    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4659:1: entryRuleEndLoop returns [String current=null] : iv_ruleEndLoop= ruleEndLoop EOF ;
+    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4674:1: entryRuleEndLoop returns [String current=null] : iv_ruleEndLoop= ruleEndLoop EOF ;
     public final String entryRuleEndLoop() throws RecognitionException {
         String current = null;
 
@@ -10413,8 +10438,8 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4660:2: (iv_ruleEndLoop= ruleEndLoop EOF )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4661:2: iv_ruleEndLoop= ruleEndLoop EOF
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4675:2: (iv_ruleEndLoop= ruleEndLoop EOF )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4676:2: iv_ruleEndLoop= ruleEndLoop EOF
             {
              currentNode = createCompositeNode(grammarAccess.getEndLoopRule(), currentNode); 
             pushFollow(FOLLOW_ruleEndLoop_in_entryRuleEndLoop8229);
@@ -10440,7 +10465,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start ruleEndLoop
-    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4668:1: ruleEndLoop returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : (kw= 'end' (kw= 'loop' )? ) ;
+    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4683:1: ruleEndLoop returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : (kw= 'end' (kw= 'loop' )? ) ;
     public final AntlrDatatypeRuleToken ruleEndLoop() throws RecognitionException {
         AntlrDatatypeRuleToken current = new AntlrDatatypeRuleToken();
 
@@ -10449,11 +10474,11 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
          setCurrentLookahead(); resetLookahead(); 
             
         try {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4673:6: ( (kw= 'end' (kw= 'loop' )? ) )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4674:1: (kw= 'end' (kw= 'loop' )? )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4688:6: ( (kw= 'end' (kw= 'loop' )? ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4689:1: (kw= 'end' (kw= 'loop' )? )
             {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4674:1: (kw= 'end' (kw= 'loop' )? )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4675:2: kw= 'end' (kw= 'loop' )?
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4689:1: (kw= 'end' (kw= 'loop' )? )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4690:2: kw= 'end' (kw= 'loop' )?
             {
             kw=(Token)input.LT(1);
             match(input,19,FOLLOW_19_in_ruleEndLoop8278); 
@@ -10461,7 +10486,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
                     current.merge(kw);
                     createLeafNode(grammarAccess.getEndLoopAccess().getEndKeyword_0(), null); 
                 
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4680:1: (kw= 'loop' )?
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4695:1: (kw= 'loop' )?
             int alt63=2;
             int LA63_0 = input.LA(1);
 
@@ -10470,7 +10495,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
             }
             switch (alt63) {
                 case 1 :
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4681:2: kw= 'loop'
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4696:2: kw= 'loop'
                     {
                     kw=(Token)input.LT(1);
                     match(input,59,FOLLOW_59_in_ruleEndLoop8292); 
@@ -10507,7 +10532,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start entryRuleLoopEach
-    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4694:1: entryRuleLoopEach returns [EObject current=null] : iv_ruleLoopEach= ruleLoopEach EOF ;
+    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4709:1: entryRuleLoopEach returns [EObject current=null] : iv_ruleLoopEach= ruleLoopEach EOF ;
     public final EObject entryRuleLoopEach() throws RecognitionException {
         EObject current = null;
 
@@ -10515,8 +10540,8 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4695:2: (iv_ruleLoopEach= ruleLoopEach EOF )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4696:2: iv_ruleLoopEach= ruleLoopEach EOF
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4710:2: (iv_ruleLoopEach= ruleLoopEach EOF )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4711:2: iv_ruleLoopEach= ruleLoopEach EOF
             {
              currentNode = createCompositeNode(grammarAccess.getLoopEachRule(), currentNode); 
             pushFollow(FOLLOW_ruleLoopEach_in_entryRuleLoopEach8334);
@@ -10542,7 +10567,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start ruleLoopEach
-    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4703:1: ruleLoopEach returns [EObject current=null] : ( 'each' this_LoopDelay_1= ruleLoopDelay ) ;
+    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4718:1: ruleLoopEach returns [EObject current=null] : ( 'each' this_LoopDelay_1= ruleLoopDelay ) ;
     public final EObject ruleLoopEach() throws RecognitionException {
         EObject current = null;
 
@@ -10552,11 +10577,11 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
          @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4708:6: ( ( 'each' this_LoopDelay_1= ruleLoopDelay ) )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4709:1: ( 'each' this_LoopDelay_1= ruleLoopDelay )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4723:6: ( ( 'each' this_LoopDelay_1= ruleLoopDelay ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4724:1: ( 'each' this_LoopDelay_1= ruleLoopDelay )
             {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4709:1: ( 'each' this_LoopDelay_1= ruleLoopDelay )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4709:3: 'each' this_LoopDelay_1= ruleLoopDelay
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4724:1: ( 'each' this_LoopDelay_1= ruleLoopDelay )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4724:3: 'each' this_LoopDelay_1= ruleLoopDelay
             {
             match(input,60,FOLLOW_60_in_ruleLoopEach8379); 
 
@@ -10596,7 +10621,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start entryRuleLoopDelay
-    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4730:1: entryRuleLoopDelay returns [EObject current=null] : iv_ruleLoopDelay= ruleLoopDelay EOF ;
+    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4745:1: entryRuleLoopDelay returns [EObject current=null] : iv_ruleLoopDelay= ruleLoopDelay EOF ;
     public final EObject entryRuleLoopDelay() throws RecognitionException {
         EObject current = null;
 
@@ -10604,8 +10629,8 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4731:2: (iv_ruleLoopDelay= ruleLoopDelay EOF )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4732:2: iv_ruleLoopDelay= ruleLoopDelay EOF
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4746:2: (iv_ruleLoopDelay= ruleLoopDelay EOF )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4747:2: iv_ruleLoopDelay= ruleLoopDelay EOF
             {
              currentNode = createCompositeNode(grammarAccess.getLoopDelayRule(), currentNode); 
             pushFollow(FOLLOW_ruleLoopDelay_in_entryRuleLoopDelay8436);
@@ -10631,7 +10656,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start ruleLoopDelay
-    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4739:1: ruleLoopDelay returns [EObject current=null] : ( (lv_delay_0_0= ruleDelayExpr ) ) ;
+    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4754:1: ruleLoopDelay returns [EObject current=null] : ( (lv_delay_0_0= ruleDelayExpr ) ) ;
     public final EObject ruleLoopDelay() throws RecognitionException {
         EObject current = null;
 
@@ -10641,14 +10666,14 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
          @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4744:6: ( ( (lv_delay_0_0= ruleDelayExpr ) ) )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4745:1: ( (lv_delay_0_0= ruleDelayExpr ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4759:6: ( ( (lv_delay_0_0= ruleDelayExpr ) ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4760:1: ( (lv_delay_0_0= ruleDelayExpr ) )
             {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4745:1: ( (lv_delay_0_0= ruleDelayExpr ) )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4746:1: (lv_delay_0_0= ruleDelayExpr )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4760:1: ( (lv_delay_0_0= ruleDelayExpr ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4761:1: (lv_delay_0_0= ruleDelayExpr )
             {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4746:1: (lv_delay_0_0= ruleDelayExpr )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4747:3: lv_delay_0_0= ruleDelayExpr
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4761:1: (lv_delay_0_0= ruleDelayExpr )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4762:3: lv_delay_0_0= ruleDelayExpr
             {
              
             	        currentNode=createCompositeNode(grammarAccess.getLoopDelayAccess().getDelayDelayExprParserRuleCall_0(), currentNode); 
@@ -10700,7 +10725,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start entryRuleLoopBody
-    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4777:1: entryRuleLoopBody returns [EObject current=null] : iv_ruleLoopBody= ruleLoopBody EOF ;
+    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4792:1: entryRuleLoopBody returns [EObject current=null] : iv_ruleLoopBody= ruleLoopBody EOF ;
     public final EObject entryRuleLoopBody() throws RecognitionException {
         EObject current = null;
 
@@ -10708,8 +10733,8 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4778:2: (iv_ruleLoopBody= ruleLoopBody EOF )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4779:2: iv_ruleLoopBody= ruleLoopBody EOF
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4793:2: (iv_ruleLoopBody= ruleLoopBody EOF )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4794:2: iv_ruleLoopBody= ruleLoopBody EOF
             {
              currentNode = createCompositeNode(grammarAccess.getLoopBodyRule(), currentNode); 
             pushFollow(FOLLOW_ruleLoopBody_in_entryRuleLoopBody8526);
@@ -10735,7 +10760,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start ruleLoopBody
-    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4786:1: ruleLoopBody returns [EObject current=null] : ( (lv_statement_0_0= ruleStatement ) ) ;
+    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4801:1: ruleLoopBody returns [EObject current=null] : ( (lv_statement_0_0= ruleStatement ) ) ;
     public final EObject ruleLoopBody() throws RecognitionException {
         EObject current = null;
 
@@ -10745,14 +10770,14 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
          @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4791:6: ( ( (lv_statement_0_0= ruleStatement ) ) )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4792:1: ( (lv_statement_0_0= ruleStatement ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4806:6: ( ( (lv_statement_0_0= ruleStatement ) ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4807:1: ( (lv_statement_0_0= ruleStatement ) )
             {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4792:1: ( (lv_statement_0_0= ruleStatement ) )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4793:1: (lv_statement_0_0= ruleStatement )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4807:1: ( (lv_statement_0_0= ruleStatement ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4808:1: (lv_statement_0_0= ruleStatement )
             {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4793:1: (lv_statement_0_0= ruleStatement )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4794:3: lv_statement_0_0= ruleStatement
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4808:1: (lv_statement_0_0= ruleStatement )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4809:3: lv_statement_0_0= ruleStatement
             {
              
             	        currentNode=createCompositeNode(grammarAccess.getLoopBodyAccess().getStatementStatementParserRuleCall_0(), currentNode); 
@@ -10804,7 +10829,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start entryRuleNothing
-    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4824:1: entryRuleNothing returns [EObject current=null] : iv_ruleNothing= ruleNothing EOF ;
+    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4839:1: entryRuleNothing returns [EObject current=null] : iv_ruleNothing= ruleNothing EOF ;
     public final EObject entryRuleNothing() throws RecognitionException {
         EObject current = null;
 
@@ -10812,8 +10837,8 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4825:2: (iv_ruleNothing= ruleNothing EOF )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4826:2: iv_ruleNothing= ruleNothing EOF
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4840:2: (iv_ruleNothing= ruleNothing EOF )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4841:2: iv_ruleNothing= ruleNothing EOF
             {
              currentNode = createCompositeNode(grammarAccess.getNothingRule(), currentNode); 
             pushFollow(FOLLOW_ruleNothing_in_entryRuleNothing8616);
@@ -10839,25 +10864,25 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start ruleNothing
-    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4833:1: ruleNothing returns [EObject current=null] : ( 'nothing' () ) ;
+    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4848:1: ruleNothing returns [EObject current=null] : ( 'nothing' () ) ;
     public final EObject ruleNothing() throws RecognitionException {
         EObject current = null;
 
          @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4838:6: ( ( 'nothing' () ) )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4839:1: ( 'nothing' () )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4853:6: ( ( 'nothing' () ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4854:1: ( 'nothing' () )
             {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4839:1: ( 'nothing' () )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4839:3: 'nothing' ()
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4854:1: ( 'nothing' () )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4854:3: 'nothing' ()
             {
             match(input,61,FOLLOW_61_in_ruleNothing8661); 
 
                     createLeafNode(grammarAccess.getNothingAccess().getNothingKeyword_0(), null); 
                 
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4843:1: ()
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4844:5: 
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4858:1: ()
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4859:5: 
             {
              
                     temp=factory.create(grammarAccess.getNothingAccess().getNothingAction_1().getType().getClassifier());
@@ -10895,7 +10920,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start entryRulePause
-    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4862:1: entryRulePause returns [EObject current=null] : iv_rulePause= rulePause EOF ;
+    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4877:1: entryRulePause returns [EObject current=null] : iv_rulePause= rulePause EOF ;
     public final EObject entryRulePause() throws RecognitionException {
         EObject current = null;
 
@@ -10903,8 +10928,8 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4863:2: (iv_rulePause= rulePause EOF )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4864:2: iv_rulePause= rulePause EOF
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4878:2: (iv_rulePause= rulePause EOF )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4879:2: iv_rulePause= rulePause EOF
             {
              currentNode = createCompositeNode(grammarAccess.getPauseRule(), currentNode); 
             pushFollow(FOLLOW_rulePause_in_entryRulePause8706);
@@ -10930,25 +10955,25 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start rulePause
-    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4871:1: rulePause returns [EObject current=null] : ( 'pause' () ) ;
+    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4886:1: rulePause returns [EObject current=null] : ( 'pause' () ) ;
     public final EObject rulePause() throws RecognitionException {
         EObject current = null;
 
          @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4876:6: ( ( 'pause' () ) )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4877:1: ( 'pause' () )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4891:6: ( ( 'pause' () ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4892:1: ( 'pause' () )
             {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4877:1: ( 'pause' () )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4877:3: 'pause' ()
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4892:1: ( 'pause' () )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4892:3: 'pause' ()
             {
             match(input,62,FOLLOW_62_in_rulePause8751); 
 
                     createLeafNode(grammarAccess.getPauseAccess().getPauseKeyword_0(), null); 
                 
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4881:1: ()
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4882:5: 
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4896:1: ()
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4897:5: 
             {
              
                     temp=factory.create(grammarAccess.getPauseAccess().getPauseAction_1().getType().getClassifier());
@@ -10986,7 +11011,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start entryRulePresent
-    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4900:1: entryRulePresent returns [EObject current=null] : iv_rulePresent= rulePresent EOF ;
+    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4915:1: entryRulePresent returns [EObject current=null] : iv_rulePresent= rulePresent EOF ;
     public final EObject entryRulePresent() throws RecognitionException {
         EObject current = null;
 
@@ -10994,8 +11019,8 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4901:2: (iv_rulePresent= rulePresent EOF )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4902:2: iv_rulePresent= rulePresent EOF
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4916:2: (iv_rulePresent= rulePresent EOF )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4917:2: iv_rulePresent= rulePresent EOF
             {
              currentNode = createCompositeNode(grammarAccess.getPresentRule(), currentNode); 
             pushFollow(FOLLOW_rulePresent_in_entryRulePresent8796);
@@ -11021,7 +11046,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start rulePresent
-    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4909:1: rulePresent returns [EObject current=null] : ( 'present' ( (lv_body_1_0= rulePresentBody ) ) ( (lv_elsePart_2_0= ruleElsePart ) )? 'end' ( 'present' )? ) ;
+    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4924:1: rulePresent returns [EObject current=null] : ( 'present' ( (lv_body_1_0= rulePresentBody ) ) ( (lv_elsePart_2_0= ruleElsePart ) )? 'end' ( 'present' )? ) ;
     public final EObject rulePresent() throws RecognitionException {
         EObject current = null;
 
@@ -11033,21 +11058,21 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
          @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4914:6: ( ( 'present' ( (lv_body_1_0= rulePresentBody ) ) ( (lv_elsePart_2_0= ruleElsePart ) )? 'end' ( 'present' )? ) )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4915:1: ( 'present' ( (lv_body_1_0= rulePresentBody ) ) ( (lv_elsePart_2_0= ruleElsePart ) )? 'end' ( 'present' )? )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4929:6: ( ( 'present' ( (lv_body_1_0= rulePresentBody ) ) ( (lv_elsePart_2_0= ruleElsePart ) )? 'end' ( 'present' )? ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4930:1: ( 'present' ( (lv_body_1_0= rulePresentBody ) ) ( (lv_elsePart_2_0= ruleElsePart ) )? 'end' ( 'present' )? )
             {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4915:1: ( 'present' ( (lv_body_1_0= rulePresentBody ) ) ( (lv_elsePart_2_0= ruleElsePart ) )? 'end' ( 'present' )? )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4915:3: 'present' ( (lv_body_1_0= rulePresentBody ) ) ( (lv_elsePart_2_0= ruleElsePart ) )? 'end' ( 'present' )?
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4930:1: ( 'present' ( (lv_body_1_0= rulePresentBody ) ) ( (lv_elsePart_2_0= ruleElsePart ) )? 'end' ( 'present' )? )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4930:3: 'present' ( (lv_body_1_0= rulePresentBody ) ) ( (lv_elsePart_2_0= ruleElsePart ) )? 'end' ( 'present' )?
             {
             match(input,63,FOLLOW_63_in_rulePresent8841); 
 
                     createLeafNode(grammarAccess.getPresentAccess().getPresentKeyword_0(), null); 
                 
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4919:1: ( (lv_body_1_0= rulePresentBody ) )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4920:1: (lv_body_1_0= rulePresentBody )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4934:1: ( (lv_body_1_0= rulePresentBody ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4935:1: (lv_body_1_0= rulePresentBody )
             {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4920:1: (lv_body_1_0= rulePresentBody )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4921:3: lv_body_1_0= rulePresentBody
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4935:1: (lv_body_1_0= rulePresentBody )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4936:3: lv_body_1_0= rulePresentBody
             {
              
             	        currentNode=createCompositeNode(grammarAccess.getPresentAccess().getBodyPresentBodyParserRuleCall_1_0(), currentNode); 
@@ -11079,7 +11104,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
             }
 
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4943:2: ( (lv_elsePart_2_0= ruleElsePart ) )?
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4958:2: ( (lv_elsePart_2_0= ruleElsePart ) )?
             int alt64=2;
             int LA64_0 = input.LA(1);
 
@@ -11088,10 +11113,10 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
             }
             switch (alt64) {
                 case 1 :
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4944:1: (lv_elsePart_2_0= ruleElsePart )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4959:1: (lv_elsePart_2_0= ruleElsePart )
                     {
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4944:1: (lv_elsePart_2_0= ruleElsePart )
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4945:3: lv_elsePart_2_0= ruleElsePart
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4959:1: (lv_elsePart_2_0= ruleElsePart )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4960:3: lv_elsePart_2_0= ruleElsePart
                     {
                      
                     	        currentNode=createCompositeNode(grammarAccess.getPresentAccess().getElsePartElsePartParserRuleCall_2_0(), currentNode); 
@@ -11130,7 +11155,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
                     createLeafNode(grammarAccess.getPresentAccess().getEndKeyword_3(), null); 
                 
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4971:1: ( 'present' )?
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4986:1: ( 'present' )?
             int alt65=2;
             int LA65_0 = input.LA(1);
 
@@ -11139,7 +11164,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
             }
             switch (alt65) {
                 case 1 :
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4971:3: 'present'
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4986:3: 'present'
                     {
                     match(input,63,FOLLOW_63_in_rulePresent8905); 
 
@@ -11174,7 +11199,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start entryRulePresentBody
-    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4983:1: entryRulePresentBody returns [EObject current=null] : iv_rulePresentBody= rulePresentBody EOF ;
+    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4998:1: entryRulePresentBody returns [EObject current=null] : iv_rulePresentBody= rulePresentBody EOF ;
     public final EObject entryRulePresentBody() throws RecognitionException {
         EObject current = null;
 
@@ -11182,8 +11207,8 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4984:2: (iv_rulePresentBody= rulePresentBody EOF )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4985:2: iv_rulePresentBody= rulePresentBody EOF
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4999:2: (iv_rulePresentBody= rulePresentBody EOF )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5000:2: iv_rulePresentBody= rulePresentBody EOF
             {
              currentNode = createCompositeNode(grammarAccess.getPresentBodyRule(), currentNode); 
             pushFollow(FOLLOW_rulePresentBody_in_entryRulePresentBody8943);
@@ -11209,7 +11234,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start rulePresentBody
-    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4992:1: rulePresentBody returns [EObject current=null] : (this_PresentEventBody_0= rulePresentEventBody | this_PresentCaseList_1= rulePresentCaseList ) ;
+    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5007:1: rulePresentBody returns [EObject current=null] : (this_PresentEventBody_0= rulePresentEventBody | this_PresentCaseList_1= rulePresentCaseList ) ;
     public final EObject rulePresentBody() throws RecognitionException {
         EObject current = null;
 
@@ -11221,10 +11246,10 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
          @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4997:6: ( (this_PresentEventBody_0= rulePresentEventBody | this_PresentCaseList_1= rulePresentCaseList ) )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4998:1: (this_PresentEventBody_0= rulePresentEventBody | this_PresentCaseList_1= rulePresentCaseList )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5012:6: ( (this_PresentEventBody_0= rulePresentEventBody | this_PresentCaseList_1= rulePresentCaseList ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5013:1: (this_PresentEventBody_0= rulePresentEventBody | this_PresentCaseList_1= rulePresentCaseList )
             {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4998:1: (this_PresentEventBody_0= rulePresentEventBody | this_PresentCaseList_1= rulePresentCaseList )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5013:1: (this_PresentEventBody_0= rulePresentEventBody | this_PresentCaseList_1= rulePresentCaseList )
             int alt66=2;
             int LA66_0 = input.LA(1);
 
@@ -11236,13 +11261,13 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
             }
             else {
                 NoViableAltException nvae =
-                    new NoViableAltException("4998:1: (this_PresentEventBody_0= rulePresentEventBody | this_PresentCaseList_1= rulePresentCaseList )", 66, 0, input);
+                    new NoViableAltException("5013:1: (this_PresentEventBody_0= rulePresentEventBody | this_PresentCaseList_1= rulePresentCaseList )", 66, 0, input);
 
                 throw nvae;
             }
             switch (alt66) {
                 case 1 :
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4999:5: this_PresentEventBody_0= rulePresentEventBody
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5014:5: this_PresentEventBody_0= rulePresentEventBody
                     {
                      
                             currentNode=createCompositeNode(grammarAccess.getPresentBodyAccess().getPresentEventBodyParserRuleCall_0(), currentNode); 
@@ -11259,7 +11284,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5009:5: this_PresentCaseList_1= rulePresentCaseList
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5024:5: this_PresentCaseList_1= rulePresentCaseList
                     {
                      
                             currentNode=createCompositeNode(grammarAccess.getPresentBodyAccess().getPresentCaseListParserRuleCall_1(), currentNode); 
@@ -11298,7 +11323,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start entryRulePresentEventBody
-    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5025:1: entryRulePresentEventBody returns [EObject current=null] : iv_rulePresentEventBody= rulePresentEventBody EOF ;
+    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5040:1: entryRulePresentEventBody returns [EObject current=null] : iv_rulePresentEventBody= rulePresentEventBody EOF ;
     public final EObject entryRulePresentEventBody() throws RecognitionException {
         EObject current = null;
 
@@ -11306,8 +11331,8 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5026:2: (iv_rulePresentEventBody= rulePresentEventBody EOF )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5027:2: iv_rulePresentEventBody= rulePresentEventBody EOF
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5041:2: (iv_rulePresentEventBody= rulePresentEventBody EOF )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5042:2: iv_rulePresentEventBody= rulePresentEventBody EOF
             {
              currentNode = createCompositeNode(grammarAccess.getPresentEventBodyRule(), currentNode); 
             pushFollow(FOLLOW_rulePresentEventBody_in_entryRulePresentEventBody9062);
@@ -11333,7 +11358,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start rulePresentEventBody
-    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5034:1: rulePresentEventBody returns [EObject current=null] : ( ( (lv_event_0_0= rulePresentEvent ) ) ( (lv_thenPart_1_0= ruleThenPart ) )? ) ;
+    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5049:1: rulePresentEventBody returns [EObject current=null] : ( ( (lv_event_0_0= rulePresentEvent ) ) ( (lv_thenPart_1_0= ruleThenPart ) )? ) ;
     public final EObject rulePresentEventBody() throws RecognitionException {
         EObject current = null;
 
@@ -11345,17 +11370,17 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
          @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5039:6: ( ( ( (lv_event_0_0= rulePresentEvent ) ) ( (lv_thenPart_1_0= ruleThenPart ) )? ) )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5040:1: ( ( (lv_event_0_0= rulePresentEvent ) ) ( (lv_thenPart_1_0= ruleThenPart ) )? )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5054:6: ( ( ( (lv_event_0_0= rulePresentEvent ) ) ( (lv_thenPart_1_0= ruleThenPart ) )? ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5055:1: ( ( (lv_event_0_0= rulePresentEvent ) ) ( (lv_thenPart_1_0= ruleThenPart ) )? )
             {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5040:1: ( ( (lv_event_0_0= rulePresentEvent ) ) ( (lv_thenPart_1_0= ruleThenPart ) )? )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5040:2: ( (lv_event_0_0= rulePresentEvent ) ) ( (lv_thenPart_1_0= ruleThenPart ) )?
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5055:1: ( ( (lv_event_0_0= rulePresentEvent ) ) ( (lv_thenPart_1_0= ruleThenPart ) )? )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5055:2: ( (lv_event_0_0= rulePresentEvent ) ) ( (lv_thenPart_1_0= ruleThenPart ) )?
             {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5040:2: ( (lv_event_0_0= rulePresentEvent ) )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5041:1: (lv_event_0_0= rulePresentEvent )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5055:2: ( (lv_event_0_0= rulePresentEvent ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5056:1: (lv_event_0_0= rulePresentEvent )
             {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5041:1: (lv_event_0_0= rulePresentEvent )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5042:3: lv_event_0_0= rulePresentEvent
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5056:1: (lv_event_0_0= rulePresentEvent )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5057:3: lv_event_0_0= rulePresentEvent
             {
              
             	        currentNode=createCompositeNode(grammarAccess.getPresentEventBodyAccess().getEventPresentEventParserRuleCall_0_0(), currentNode); 
@@ -11387,7 +11412,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
             }
 
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5064:2: ( (lv_thenPart_1_0= ruleThenPart ) )?
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5079:2: ( (lv_thenPart_1_0= ruleThenPart ) )?
             int alt67=2;
             int LA67_0 = input.LA(1);
 
@@ -11396,10 +11421,10 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
             }
             switch (alt67) {
                 case 1 :
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5065:1: (lv_thenPart_1_0= ruleThenPart )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5080:1: (lv_thenPart_1_0= ruleThenPart )
                     {
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5065:1: (lv_thenPart_1_0= ruleThenPart )
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5066:3: lv_thenPart_1_0= ruleThenPart
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5080:1: (lv_thenPart_1_0= ruleThenPart )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5081:3: lv_thenPart_1_0= ruleThenPart
                     {
                      
                     	        currentNode=createCompositeNode(grammarAccess.getPresentEventBodyAccess().getThenPartThenPartParserRuleCall_1_0(), currentNode); 
@@ -11457,7 +11482,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start entryRulePresentCaseList
-    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5096:1: entryRulePresentCaseList returns [EObject current=null] : iv_rulePresentCaseList= rulePresentCaseList EOF ;
+    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5111:1: entryRulePresentCaseList returns [EObject current=null] : iv_rulePresentCaseList= rulePresentCaseList EOF ;
     public final EObject entryRulePresentCaseList() throws RecognitionException {
         EObject current = null;
 
@@ -11465,8 +11490,8 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5097:2: (iv_rulePresentCaseList= rulePresentCaseList EOF )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5098:2: iv_rulePresentCaseList= rulePresentCaseList EOF
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5112:2: (iv_rulePresentCaseList= rulePresentCaseList EOF )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5113:2: iv_rulePresentCaseList= rulePresentCaseList EOF
             {
              currentNode = createCompositeNode(grammarAccess.getPresentCaseListRule(), currentNode); 
             pushFollow(FOLLOW_rulePresentCaseList_in_entryRulePresentCaseList9176);
@@ -11492,7 +11517,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start rulePresentCaseList
-    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5105:1: rulePresentCaseList returns [EObject current=null] : ( ( (lv_case_0_0= rulePresentCase ) ) ( (lv_case_1_0= rulePresentCase ) )* ) ;
+    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5120:1: rulePresentCaseList returns [EObject current=null] : ( ( (lv_case_0_0= rulePresentCase ) ) ( (lv_case_1_0= rulePresentCase ) )* ) ;
     public final EObject rulePresentCaseList() throws RecognitionException {
         EObject current = null;
 
@@ -11504,17 +11529,17 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
          @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5110:6: ( ( ( (lv_case_0_0= rulePresentCase ) ) ( (lv_case_1_0= rulePresentCase ) )* ) )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5111:1: ( ( (lv_case_0_0= rulePresentCase ) ) ( (lv_case_1_0= rulePresentCase ) )* )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5125:6: ( ( ( (lv_case_0_0= rulePresentCase ) ) ( (lv_case_1_0= rulePresentCase ) )* ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5126:1: ( ( (lv_case_0_0= rulePresentCase ) ) ( (lv_case_1_0= rulePresentCase ) )* )
             {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5111:1: ( ( (lv_case_0_0= rulePresentCase ) ) ( (lv_case_1_0= rulePresentCase ) )* )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5111:2: ( (lv_case_0_0= rulePresentCase ) ) ( (lv_case_1_0= rulePresentCase ) )*
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5126:1: ( ( (lv_case_0_0= rulePresentCase ) ) ( (lv_case_1_0= rulePresentCase ) )* )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5126:2: ( (lv_case_0_0= rulePresentCase ) ) ( (lv_case_1_0= rulePresentCase ) )*
             {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5111:2: ( (lv_case_0_0= rulePresentCase ) )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5112:1: (lv_case_0_0= rulePresentCase )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5126:2: ( (lv_case_0_0= rulePresentCase ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5127:1: (lv_case_0_0= rulePresentCase )
             {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5112:1: (lv_case_0_0= rulePresentCase )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5113:3: lv_case_0_0= rulePresentCase
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5127:1: (lv_case_0_0= rulePresentCase )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5128:3: lv_case_0_0= rulePresentCase
             {
              
             	        currentNode=createCompositeNode(grammarAccess.getPresentCaseListAccess().getCasePresentCaseParserRuleCall_0_0(), currentNode); 
@@ -11546,7 +11571,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
             }
 
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5135:2: ( (lv_case_1_0= rulePresentCase ) )*
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5150:2: ( (lv_case_1_0= rulePresentCase ) )*
             loop68:
             do {
                 int alt68=2;
@@ -11559,10 +11584,10 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
                 switch (alt68) {
             	case 1 :
-            	    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5136:1: (lv_case_1_0= rulePresentCase )
+            	    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5151:1: (lv_case_1_0= rulePresentCase )
             	    {
-            	    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5136:1: (lv_case_1_0= rulePresentCase )
-            	    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5137:3: lv_case_1_0= rulePresentCase
+            	    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5151:1: (lv_case_1_0= rulePresentCase )
+            	    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5152:3: lv_case_1_0= rulePresentCase
             	    {
             	     
             	    	        currentNode=createCompositeNode(grammarAccess.getPresentCaseListAccess().getCasePresentCaseParserRuleCall_1_0(), currentNode); 
@@ -11623,7 +11648,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start entryRulePresentCase
-    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5167:1: entryRulePresentCase returns [EObject current=null] : iv_rulePresentCase= rulePresentCase EOF ;
+    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5182:1: entryRulePresentCase returns [EObject current=null] : iv_rulePresentCase= rulePresentCase EOF ;
     public final EObject entryRulePresentCase() throws RecognitionException {
         EObject current = null;
 
@@ -11631,8 +11656,8 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5168:2: (iv_rulePresentCase= rulePresentCase EOF )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5169:2: iv_rulePresentCase= rulePresentCase EOF
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5183:2: (iv_rulePresentCase= rulePresentCase EOF )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5184:2: iv_rulePresentCase= rulePresentCase EOF
             {
              currentNode = createCompositeNode(grammarAccess.getPresentCaseRule(), currentNode); 
             pushFollow(FOLLOW_rulePresentCase_in_entryRulePresentCase9290);
@@ -11658,7 +11683,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start rulePresentCase
-    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5176:1: rulePresentCase returns [EObject current=null] : ( 'case' ( (lv_event_1_0= rulePresentEvent ) ) ( 'do' ( (lv_statement_3_0= ruleStatement ) ) )? ) ;
+    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5191:1: rulePresentCase returns [EObject current=null] : ( 'case' ( (lv_event_1_0= rulePresentEvent ) ) ( 'do' ( (lv_statement_3_0= ruleStatement ) ) )? ) ;
     public final EObject rulePresentCase() throws RecognitionException {
         EObject current = null;
 
@@ -11670,21 +11695,21 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
          @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5181:6: ( ( 'case' ( (lv_event_1_0= rulePresentEvent ) ) ( 'do' ( (lv_statement_3_0= ruleStatement ) ) )? ) )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5182:1: ( 'case' ( (lv_event_1_0= rulePresentEvent ) ) ( 'do' ( (lv_statement_3_0= ruleStatement ) ) )? )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5196:6: ( ( 'case' ( (lv_event_1_0= rulePresentEvent ) ) ( 'do' ( (lv_statement_3_0= ruleStatement ) ) )? ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5197:1: ( 'case' ( (lv_event_1_0= rulePresentEvent ) ) ( 'do' ( (lv_statement_3_0= ruleStatement ) ) )? )
             {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5182:1: ( 'case' ( (lv_event_1_0= rulePresentEvent ) ) ( 'do' ( (lv_statement_3_0= ruleStatement ) ) )? )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5182:3: 'case' ( (lv_event_1_0= rulePresentEvent ) ) ( 'do' ( (lv_statement_3_0= ruleStatement ) ) )?
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5197:1: ( 'case' ( (lv_event_1_0= rulePresentEvent ) ) ( 'do' ( (lv_statement_3_0= ruleStatement ) ) )? )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5197:3: 'case' ( (lv_event_1_0= rulePresentEvent ) ) ( 'do' ( (lv_statement_3_0= ruleStatement ) ) )?
             {
             match(input,46,FOLLOW_46_in_rulePresentCase9335); 
 
                     createLeafNode(grammarAccess.getPresentCaseAccess().getCaseKeyword_0(), null); 
                 
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5186:1: ( (lv_event_1_0= rulePresentEvent ) )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5187:1: (lv_event_1_0= rulePresentEvent )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5201:1: ( (lv_event_1_0= rulePresentEvent ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5202:1: (lv_event_1_0= rulePresentEvent )
             {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5187:1: (lv_event_1_0= rulePresentEvent )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5188:3: lv_event_1_0= rulePresentEvent
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5202:1: (lv_event_1_0= rulePresentEvent )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5203:3: lv_event_1_0= rulePresentEvent
             {
              
             	        currentNode=createCompositeNode(grammarAccess.getPresentCaseAccess().getEventPresentEventParserRuleCall_1_0(), currentNode); 
@@ -11716,7 +11741,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
             }
 
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5210:2: ( 'do' ( (lv_statement_3_0= ruleStatement ) ) )?
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5225:2: ( 'do' ( (lv_statement_3_0= ruleStatement ) ) )?
             int alt69=2;
             int LA69_0 = input.LA(1);
 
@@ -11725,17 +11750,17 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
             }
             switch (alt69) {
                 case 1 :
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5210:4: 'do' ( (lv_statement_3_0= ruleStatement ) )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5225:4: 'do' ( (lv_statement_3_0= ruleStatement ) )
                     {
                     match(input,45,FOLLOW_45_in_rulePresentCase9367); 
 
                             createLeafNode(grammarAccess.getPresentCaseAccess().getDoKeyword_2_0(), null); 
                         
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5214:1: ( (lv_statement_3_0= ruleStatement ) )
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5215:1: (lv_statement_3_0= ruleStatement )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5229:1: ( (lv_statement_3_0= ruleStatement ) )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5230:1: (lv_statement_3_0= ruleStatement )
                     {
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5215:1: (lv_statement_3_0= ruleStatement )
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5216:3: lv_statement_3_0= ruleStatement
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5230:1: (lv_statement_3_0= ruleStatement )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5231:3: lv_statement_3_0= ruleStatement
                     {
                      
                     	        currentNode=createCompositeNode(grammarAccess.getPresentCaseAccess().getStatementStatementParserRuleCall_2_1_0(), currentNode); 
@@ -11796,7 +11821,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start entryRulePresentEvent
-    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5246:1: entryRulePresentEvent returns [EObject current=null] : iv_rulePresentEvent= rulePresentEvent EOF ;
+    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5261:1: entryRulePresentEvent returns [EObject current=null] : iv_rulePresentEvent= rulePresentEvent EOF ;
     public final EObject entryRulePresentEvent() throws RecognitionException {
         EObject current = null;
 
@@ -11804,8 +11829,8 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5247:2: (iv_rulePresentEvent= rulePresentEvent EOF )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5248:2: iv_rulePresentEvent= rulePresentEvent EOF
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5262:2: (iv_rulePresentEvent= rulePresentEvent EOF )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5263:2: iv_rulePresentEvent= rulePresentEvent EOF
             {
              currentNode = createCompositeNode(grammarAccess.getPresentEventRule(), currentNode); 
             pushFollow(FOLLOW_rulePresentEvent_in_entryRulePresentEvent9426);
@@ -11831,7 +11856,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start rulePresentEvent
-    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5255:1: rulePresentEvent returns [EObject current=null] : ( ( (lv_expression_0_0= ruleSigExpr ) ) | ( '[' ( (lv_expression_2_0= ruleSigExpr ) ) ']' ) ) ;
+    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5270:1: rulePresentEvent returns [EObject current=null] : ( ( (lv_expression_0_0= ruleSigExpr ) ) | ( '[' ( (lv_expression_2_0= ruleSigExpr ) ) ']' ) ) ;
     public final EObject rulePresentEvent() throws RecognitionException {
         EObject current = null;
 
@@ -11843,10 +11868,10 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
          @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5260:6: ( ( ( (lv_expression_0_0= ruleSigExpr ) ) | ( '[' ( (lv_expression_2_0= ruleSigExpr ) ) ']' ) ) )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5261:1: ( ( (lv_expression_0_0= ruleSigExpr ) ) | ( '[' ( (lv_expression_2_0= ruleSigExpr ) ) ']' ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5275:6: ( ( ( (lv_expression_0_0= ruleSigExpr ) ) | ( '[' ( (lv_expression_2_0= ruleSigExpr ) ) ']' ) ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5276:1: ( ( (lv_expression_0_0= ruleSigExpr ) ) | ( '[' ( (lv_expression_2_0= ruleSigExpr ) ) ']' ) )
             {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5261:1: ( ( (lv_expression_0_0= ruleSigExpr ) ) | ( '[' ( (lv_expression_2_0= ruleSigExpr ) ) ']' ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5276:1: ( ( (lv_expression_0_0= ruleSigExpr ) ) | ( '[' ( (lv_expression_2_0= ruleSigExpr ) ) ']' ) )
             int alt70=2;
             int LA70_0 = input.LA(1);
 
@@ -11858,19 +11883,19 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
             }
             else {
                 NoViableAltException nvae =
-                    new NoViableAltException("5261:1: ( ( (lv_expression_0_0= ruleSigExpr ) ) | ( '[' ( (lv_expression_2_0= ruleSigExpr ) ) ']' ) )", 70, 0, input);
+                    new NoViableAltException("5276:1: ( ( (lv_expression_0_0= ruleSigExpr ) ) | ( '[' ( (lv_expression_2_0= ruleSigExpr ) ) ']' ) )", 70, 0, input);
 
                 throw nvae;
             }
             switch (alt70) {
                 case 1 :
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5261:2: ( (lv_expression_0_0= ruleSigExpr ) )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5276:2: ( (lv_expression_0_0= ruleSigExpr ) )
                     {
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5261:2: ( (lv_expression_0_0= ruleSigExpr ) )
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5262:1: (lv_expression_0_0= ruleSigExpr )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5276:2: ( (lv_expression_0_0= ruleSigExpr ) )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5277:1: (lv_expression_0_0= ruleSigExpr )
                     {
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5262:1: (lv_expression_0_0= ruleSigExpr )
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5263:3: lv_expression_0_0= ruleSigExpr
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5277:1: (lv_expression_0_0= ruleSigExpr )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5278:3: lv_expression_0_0= ruleSigExpr
                     {
                      
                     	        currentNode=createCompositeNode(grammarAccess.getPresentEventAccess().getExpressionSigExprParserRuleCall_0_0(), currentNode); 
@@ -11906,20 +11931,20 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5286:6: ( '[' ( (lv_expression_2_0= ruleSigExpr ) ) ']' )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5301:6: ( '[' ( (lv_expression_2_0= ruleSigExpr ) ) ']' )
                     {
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5286:6: ( '[' ( (lv_expression_2_0= ruleSigExpr ) ) ']' )
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5286:8: '[' ( (lv_expression_2_0= ruleSigExpr ) ) ']'
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5301:6: ( '[' ( (lv_expression_2_0= ruleSigExpr ) ) ']' )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5301:8: '[' ( (lv_expression_2_0= ruleSigExpr ) ) ']'
                     {
                     match(input,40,FOLLOW_40_in_rulePresentEvent9499); 
 
                             createLeafNode(grammarAccess.getPresentEventAccess().getLeftSquareBracketKeyword_1_0(), null); 
                         
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5290:1: ( (lv_expression_2_0= ruleSigExpr ) )
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5291:1: (lv_expression_2_0= ruleSigExpr )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5305:1: ( (lv_expression_2_0= ruleSigExpr ) )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5306:1: (lv_expression_2_0= ruleSigExpr )
                     {
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5291:1: (lv_expression_2_0= ruleSigExpr )
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5292:3: lv_expression_2_0= ruleSigExpr
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5306:1: (lv_expression_2_0= ruleSigExpr )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5307:3: lv_expression_2_0= ruleSigExpr
                     {
                      
                     	        currentNode=createCompositeNode(grammarAccess.getPresentEventAccess().getExpressionSigExprParserRuleCall_1_1_0(), currentNode); 
@@ -11984,7 +12009,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start entryRuleRepeat
-    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5326:1: entryRuleRepeat returns [EObject current=null] : iv_ruleRepeat= ruleRepeat EOF ;
+    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5341:1: entryRuleRepeat returns [EObject current=null] : iv_ruleRepeat= ruleRepeat EOF ;
     public final EObject entryRuleRepeat() throws RecognitionException {
         EObject current = null;
 
@@ -11992,8 +12017,8 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5327:2: (iv_ruleRepeat= ruleRepeat EOF )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5328:2: iv_ruleRepeat= ruleRepeat EOF
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5342:2: (iv_ruleRepeat= ruleRepeat EOF )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5343:2: iv_ruleRepeat= ruleRepeat EOF
             {
              currentNode = createCompositeNode(grammarAccess.getRepeatRule(), currentNode); 
             pushFollow(FOLLOW_ruleRepeat_in_entryRuleRepeat9567);
@@ -12019,7 +12044,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start ruleRepeat
-    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5335:1: ruleRepeat returns [EObject current=null] : ( ( (lv_positive_0_0= 'positive' ) )? 'repeat' ( (lv_dataExpr_2_0= ruleDataExpr ) ) 'times' ( (lv_statement_4_0= ruleStatement ) ) 'end' ( 'repeat' )? ) ;
+    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5350:1: ruleRepeat returns [EObject current=null] : ( ( (lv_positive_0_0= 'positive' ) )? 'repeat' ( (lv_dataExpr_2_0= ruleDataExpr ) ) 'times' ( (lv_statement_4_0= ruleStatement ) ) 'end' ( 'repeat' )? ) ;
     public final EObject ruleRepeat() throws RecognitionException {
         EObject current = null;
 
@@ -12032,13 +12057,13 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
          @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5340:6: ( ( ( (lv_positive_0_0= 'positive' ) )? 'repeat' ( (lv_dataExpr_2_0= ruleDataExpr ) ) 'times' ( (lv_statement_4_0= ruleStatement ) ) 'end' ( 'repeat' )? ) )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5341:1: ( ( (lv_positive_0_0= 'positive' ) )? 'repeat' ( (lv_dataExpr_2_0= ruleDataExpr ) ) 'times' ( (lv_statement_4_0= ruleStatement ) ) 'end' ( 'repeat' )? )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5355:6: ( ( ( (lv_positive_0_0= 'positive' ) )? 'repeat' ( (lv_dataExpr_2_0= ruleDataExpr ) ) 'times' ( (lv_statement_4_0= ruleStatement ) ) 'end' ( 'repeat' )? ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5356:1: ( ( (lv_positive_0_0= 'positive' ) )? 'repeat' ( (lv_dataExpr_2_0= ruleDataExpr ) ) 'times' ( (lv_statement_4_0= ruleStatement ) ) 'end' ( 'repeat' )? )
             {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5341:1: ( ( (lv_positive_0_0= 'positive' ) )? 'repeat' ( (lv_dataExpr_2_0= ruleDataExpr ) ) 'times' ( (lv_statement_4_0= ruleStatement ) ) 'end' ( 'repeat' )? )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5341:2: ( (lv_positive_0_0= 'positive' ) )? 'repeat' ( (lv_dataExpr_2_0= ruleDataExpr ) ) 'times' ( (lv_statement_4_0= ruleStatement ) ) 'end' ( 'repeat' )?
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5356:1: ( ( (lv_positive_0_0= 'positive' ) )? 'repeat' ( (lv_dataExpr_2_0= ruleDataExpr ) ) 'times' ( (lv_statement_4_0= ruleStatement ) ) 'end' ( 'repeat' )? )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5356:2: ( (lv_positive_0_0= 'positive' ) )? 'repeat' ( (lv_dataExpr_2_0= ruleDataExpr ) ) 'times' ( (lv_statement_4_0= ruleStatement ) ) 'end' ( 'repeat' )?
             {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5341:2: ( (lv_positive_0_0= 'positive' ) )?
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5356:2: ( (lv_positive_0_0= 'positive' ) )?
             int alt71=2;
             int LA71_0 = input.LA(1);
 
@@ -12047,10 +12072,10 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
             }
             switch (alt71) {
                 case 1 :
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5342:1: (lv_positive_0_0= 'positive' )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5357:1: (lv_positive_0_0= 'positive' )
                     {
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5342:1: (lv_positive_0_0= 'positive' )
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5343:3: lv_positive_0_0= 'positive'
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5357:1: (lv_positive_0_0= 'positive' )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5358:3: lv_positive_0_0= 'positive'
                     {
                     lv_positive_0_0=(Token)input.LT(1);
                     match(input,64,FOLLOW_64_in_ruleRepeat9620); 
@@ -12082,11 +12107,11 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
                     createLeafNode(grammarAccess.getRepeatAccess().getRepeatKeyword_1(), null); 
                 
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5366:1: ( (lv_dataExpr_2_0= ruleDataExpr ) )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5367:1: (lv_dataExpr_2_0= ruleDataExpr )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5381:1: ( (lv_dataExpr_2_0= ruleDataExpr ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5382:1: (lv_dataExpr_2_0= ruleDataExpr )
             {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5367:1: (lv_dataExpr_2_0= ruleDataExpr )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5368:3: lv_dataExpr_2_0= ruleDataExpr
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5382:1: (lv_dataExpr_2_0= ruleDataExpr )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5383:3: lv_dataExpr_2_0= ruleDataExpr
             {
              
             	        currentNode=createCompositeNode(grammarAccess.getRepeatAccess().getDataExprDataExprParserRuleCall_2_0(), currentNode); 
@@ -12122,11 +12147,11 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
                     createLeafNode(grammarAccess.getRepeatAccess().getTimesKeyword_3(), null); 
                 
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5394:1: ( (lv_statement_4_0= ruleStatement ) )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5395:1: (lv_statement_4_0= ruleStatement )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5409:1: ( (lv_statement_4_0= ruleStatement ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5410:1: (lv_statement_4_0= ruleStatement )
             {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5395:1: (lv_statement_4_0= ruleStatement )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5396:3: lv_statement_4_0= ruleStatement
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5410:1: (lv_statement_4_0= ruleStatement )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5411:3: lv_statement_4_0= ruleStatement
             {
              
             	        currentNode=createCompositeNode(grammarAccess.getRepeatAccess().getStatementStatementParserRuleCall_4_0(), currentNode); 
@@ -12162,7 +12187,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
                     createLeafNode(grammarAccess.getRepeatAccess().getEndKeyword_5(), null); 
                 
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5422:1: ( 'repeat' )?
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5437:1: ( 'repeat' )?
             int alt72=2;
             int LA72_0 = input.LA(1);
 
@@ -12171,7 +12196,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
             }
             switch (alt72) {
                 case 1 :
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5422:3: 'repeat'
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5437:3: 'repeat'
                     {
                     match(input,65,FOLLOW_65_in_ruleRepeat9717); 
 
@@ -12206,7 +12231,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start entryRuleRun
-    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5434:1: entryRuleRun returns [EObject current=null] : iv_ruleRun= ruleRun EOF ;
+    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5449:1: entryRuleRun returns [EObject current=null] : iv_ruleRun= ruleRun EOF ;
     public final EObject entryRuleRun() throws RecognitionException {
         EObject current = null;
 
@@ -12214,8 +12239,8 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5435:2: (iv_ruleRun= ruleRun EOF )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5436:2: iv_ruleRun= ruleRun EOF
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5450:2: (iv_ruleRun= ruleRun EOF )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5451:2: iv_ruleRun= ruleRun EOF
             {
              currentNode = createCompositeNode(grammarAccess.getRunRule(), currentNode); 
             pushFollow(FOLLOW_ruleRun_in_entryRuleRun9755);
@@ -12241,7 +12266,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start ruleRun
-    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5443:1: ruleRun returns [EObject current=null] : ( ( 'run' ( (lv_module_1_0= ruleModuleRenaming ) ) ( '[' ( (lv_list_3_0= ruleRenamingList ) ) ']' )? ) | ( 'copymodule' ( (lv_module_6_0= ruleModuleRenaming ) ) ( '[' ( (lv_list_8_0= ruleRenamingList ) ) ']' )? ) ) ;
+    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5458:1: ruleRun returns [EObject current=null] : ( ( 'run' ( (lv_module_1_0= ruleModuleRenaming ) ) ( '[' ( (lv_list_3_0= ruleRenamingList ) ) ']' )? ) | ( 'copymodule' ( (lv_module_6_0= ruleModuleRenaming ) ) ( '[' ( (lv_list_8_0= ruleRenamingList ) ) ']' )? ) ) ;
     public final EObject ruleRun() throws RecognitionException {
         EObject current = null;
 
@@ -12257,10 +12282,10 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
          @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5448:6: ( ( ( 'run' ( (lv_module_1_0= ruleModuleRenaming ) ) ( '[' ( (lv_list_3_0= ruleRenamingList ) ) ']' )? ) | ( 'copymodule' ( (lv_module_6_0= ruleModuleRenaming ) ) ( '[' ( (lv_list_8_0= ruleRenamingList ) ) ']' )? ) ) )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5449:1: ( ( 'run' ( (lv_module_1_0= ruleModuleRenaming ) ) ( '[' ( (lv_list_3_0= ruleRenamingList ) ) ']' )? ) | ( 'copymodule' ( (lv_module_6_0= ruleModuleRenaming ) ) ( '[' ( (lv_list_8_0= ruleRenamingList ) ) ']' )? ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5463:6: ( ( ( 'run' ( (lv_module_1_0= ruleModuleRenaming ) ) ( '[' ( (lv_list_3_0= ruleRenamingList ) ) ']' )? ) | ( 'copymodule' ( (lv_module_6_0= ruleModuleRenaming ) ) ( '[' ( (lv_list_8_0= ruleRenamingList ) ) ']' )? ) ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5464:1: ( ( 'run' ( (lv_module_1_0= ruleModuleRenaming ) ) ( '[' ( (lv_list_3_0= ruleRenamingList ) ) ']' )? ) | ( 'copymodule' ( (lv_module_6_0= ruleModuleRenaming ) ) ( '[' ( (lv_list_8_0= ruleRenamingList ) ) ']' )? ) )
             {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5449:1: ( ( 'run' ( (lv_module_1_0= ruleModuleRenaming ) ) ( '[' ( (lv_list_3_0= ruleRenamingList ) ) ']' )? ) | ( 'copymodule' ( (lv_module_6_0= ruleModuleRenaming ) ) ( '[' ( (lv_list_8_0= ruleRenamingList ) ) ']' )? ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5464:1: ( ( 'run' ( (lv_module_1_0= ruleModuleRenaming ) ) ( '[' ( (lv_list_3_0= ruleRenamingList ) ) ']' )? ) | ( 'copymodule' ( (lv_module_6_0= ruleModuleRenaming ) ) ( '[' ( (lv_list_8_0= ruleRenamingList ) ) ']' )? ) )
             int alt75=2;
             int LA75_0 = input.LA(1);
 
@@ -12272,26 +12297,26 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
             }
             else {
                 NoViableAltException nvae =
-                    new NoViableAltException("5449:1: ( ( 'run' ( (lv_module_1_0= ruleModuleRenaming ) ) ( '[' ( (lv_list_3_0= ruleRenamingList ) ) ']' )? ) | ( 'copymodule' ( (lv_module_6_0= ruleModuleRenaming ) ) ( '[' ( (lv_list_8_0= ruleRenamingList ) ) ']' )? ) )", 75, 0, input);
+                    new NoViableAltException("5464:1: ( ( 'run' ( (lv_module_1_0= ruleModuleRenaming ) ) ( '[' ( (lv_list_3_0= ruleRenamingList ) ) ']' )? ) | ( 'copymodule' ( (lv_module_6_0= ruleModuleRenaming ) ) ( '[' ( (lv_list_8_0= ruleRenamingList ) ) ']' )? ) )", 75, 0, input);
 
                 throw nvae;
             }
             switch (alt75) {
                 case 1 :
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5449:2: ( 'run' ( (lv_module_1_0= ruleModuleRenaming ) ) ( '[' ( (lv_list_3_0= ruleRenamingList ) ) ']' )? )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5464:2: ( 'run' ( (lv_module_1_0= ruleModuleRenaming ) ) ( '[' ( (lv_list_3_0= ruleRenamingList ) ) ']' )? )
                     {
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5449:2: ( 'run' ( (lv_module_1_0= ruleModuleRenaming ) ) ( '[' ( (lv_list_3_0= ruleRenamingList ) ) ']' )? )
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5449:4: 'run' ( (lv_module_1_0= ruleModuleRenaming ) ) ( '[' ( (lv_list_3_0= ruleRenamingList ) ) ']' )?
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5464:2: ( 'run' ( (lv_module_1_0= ruleModuleRenaming ) ) ( '[' ( (lv_list_3_0= ruleRenamingList ) ) ']' )? )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5464:4: 'run' ( (lv_module_1_0= ruleModuleRenaming ) ) ( '[' ( (lv_list_3_0= ruleRenamingList ) ) ']' )?
                     {
                     match(input,67,FOLLOW_67_in_ruleRun9801); 
 
                             createLeafNode(grammarAccess.getRunAccess().getRunKeyword_0_0(), null); 
                         
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5453:1: ( (lv_module_1_0= ruleModuleRenaming ) )
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5454:1: (lv_module_1_0= ruleModuleRenaming )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5468:1: ( (lv_module_1_0= ruleModuleRenaming ) )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5469:1: (lv_module_1_0= ruleModuleRenaming )
                     {
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5454:1: (lv_module_1_0= ruleModuleRenaming )
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5455:3: lv_module_1_0= ruleModuleRenaming
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5469:1: (lv_module_1_0= ruleModuleRenaming )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5470:3: lv_module_1_0= ruleModuleRenaming
                     {
                      
                     	        currentNode=createCompositeNode(grammarAccess.getRunAccess().getModuleModuleRenamingParserRuleCall_0_1_0(), currentNode); 
@@ -12323,7 +12348,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5477:2: ( '[' ( (lv_list_3_0= ruleRenamingList ) ) ']' )?
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5492:2: ( '[' ( (lv_list_3_0= ruleRenamingList ) ) ']' )?
                     int alt73=2;
                     int LA73_0 = input.LA(1);
 
@@ -12332,17 +12357,17 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
                     }
                     switch (alt73) {
                         case 1 :
-                            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5477:4: '[' ( (lv_list_3_0= ruleRenamingList ) ) ']'
+                            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5492:4: '[' ( (lv_list_3_0= ruleRenamingList ) ) ']'
                             {
                             match(input,40,FOLLOW_40_in_ruleRun9833); 
 
                                     createLeafNode(grammarAccess.getRunAccess().getLeftSquareBracketKeyword_0_2_0(), null); 
                                 
-                            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5481:1: ( (lv_list_3_0= ruleRenamingList ) )
-                            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5482:1: (lv_list_3_0= ruleRenamingList )
+                            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5496:1: ( (lv_list_3_0= ruleRenamingList ) )
+                            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5497:1: (lv_list_3_0= ruleRenamingList )
                             {
-                            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5482:1: (lv_list_3_0= ruleRenamingList )
-                            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5483:3: lv_list_3_0= ruleRenamingList
+                            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5497:1: (lv_list_3_0= ruleRenamingList )
+                            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5498:3: lv_list_3_0= ruleRenamingList
                             {
                              
                             	        currentNode=createCompositeNode(grammarAccess.getRunAccess().getListRenamingListParserRuleCall_0_2_1_0(), currentNode); 
@@ -12391,20 +12416,20 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5510:6: ( 'copymodule' ( (lv_module_6_0= ruleModuleRenaming ) ) ( '[' ( (lv_list_8_0= ruleRenamingList ) ) ']' )? )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5525:6: ( 'copymodule' ( (lv_module_6_0= ruleModuleRenaming ) ) ( '[' ( (lv_list_8_0= ruleRenamingList ) ) ']' )? )
                     {
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5510:6: ( 'copymodule' ( (lv_module_6_0= ruleModuleRenaming ) ) ( '[' ( (lv_list_8_0= ruleRenamingList ) ) ']' )? )
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5510:8: 'copymodule' ( (lv_module_6_0= ruleModuleRenaming ) ) ( '[' ( (lv_list_8_0= ruleRenamingList ) ) ']' )?
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5525:6: ( 'copymodule' ( (lv_module_6_0= ruleModuleRenaming ) ) ( '[' ( (lv_list_8_0= ruleRenamingList ) ) ']' )? )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5525:8: 'copymodule' ( (lv_module_6_0= ruleModuleRenaming ) ) ( '[' ( (lv_list_8_0= ruleRenamingList ) ) ']' )?
                     {
                     match(input,68,FOLLOW_68_in_ruleRun9884); 
 
                             createLeafNode(grammarAccess.getRunAccess().getCopymoduleKeyword_1_0(), null); 
                         
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5514:1: ( (lv_module_6_0= ruleModuleRenaming ) )
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5515:1: (lv_module_6_0= ruleModuleRenaming )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5529:1: ( (lv_module_6_0= ruleModuleRenaming ) )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5530:1: (lv_module_6_0= ruleModuleRenaming )
                     {
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5515:1: (lv_module_6_0= ruleModuleRenaming )
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5516:3: lv_module_6_0= ruleModuleRenaming
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5530:1: (lv_module_6_0= ruleModuleRenaming )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5531:3: lv_module_6_0= ruleModuleRenaming
                     {
                      
                     	        currentNode=createCompositeNode(grammarAccess.getRunAccess().getModuleModuleRenamingParserRuleCall_1_1_0(), currentNode); 
@@ -12436,7 +12461,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5538:2: ( '[' ( (lv_list_8_0= ruleRenamingList ) ) ']' )?
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5553:2: ( '[' ( (lv_list_8_0= ruleRenamingList ) ) ']' )?
                     int alt74=2;
                     int LA74_0 = input.LA(1);
 
@@ -12445,17 +12470,17 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
                     }
                     switch (alt74) {
                         case 1 :
-                            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5538:4: '[' ( (lv_list_8_0= ruleRenamingList ) ) ']'
+                            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5553:4: '[' ( (lv_list_8_0= ruleRenamingList ) ) ']'
                             {
                             match(input,40,FOLLOW_40_in_ruleRun9916); 
 
                                     createLeafNode(grammarAccess.getRunAccess().getLeftSquareBracketKeyword_1_2_0(), null); 
                                 
-                            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5542:1: ( (lv_list_8_0= ruleRenamingList ) )
-                            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5543:1: (lv_list_8_0= ruleRenamingList )
+                            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5557:1: ( (lv_list_8_0= ruleRenamingList ) )
+                            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5558:1: (lv_list_8_0= ruleRenamingList )
                             {
-                            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5543:1: (lv_list_8_0= ruleRenamingList )
-                            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5544:3: lv_list_8_0= ruleRenamingList
+                            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5558:1: (lv_list_8_0= ruleRenamingList )
+                            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5559:3: lv_list_8_0= ruleRenamingList
                             {
                              
                             	        currentNode=createCompositeNode(grammarAccess.getRunAccess().getListRenamingListParserRuleCall_1_2_1_0(), currentNode); 
@@ -12526,7 +12551,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start entryRuleModuleRenaming
-    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5578:1: entryRuleModuleRenaming returns [EObject current=null] : iv_ruleModuleRenaming= ruleModuleRenaming EOF ;
+    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5593:1: entryRuleModuleRenaming returns [EObject current=null] : iv_ruleModuleRenaming= ruleModuleRenaming EOF ;
     public final EObject entryRuleModuleRenaming() throws RecognitionException {
         EObject current = null;
 
@@ -12534,8 +12559,8 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5579:2: (iv_ruleModuleRenaming= ruleModuleRenaming EOF )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5580:2: iv_ruleModuleRenaming= ruleModuleRenaming EOF
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5594:2: (iv_ruleModuleRenaming= ruleModuleRenaming EOF )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5595:2: iv_ruleModuleRenaming= ruleModuleRenaming EOF
             {
              currentNode = createCompositeNode(grammarAccess.getModuleRenamingRule(), currentNode); 
             pushFollow(FOLLOW_ruleModuleRenaming_in_entryRuleModuleRenaming9986);
@@ -12561,7 +12586,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start ruleModuleRenaming
-    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5587:1: ruleModuleRenaming returns [EObject current=null] : ( ( ( RULE_ESTERELID ) ) ( ( (lv_renamed_1_0= '/' ) ) ( (lv_newName_2_0= RULE_ESTERELID ) ) )? ) ;
+    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5602:1: ruleModuleRenaming returns [EObject current=null] : ( ( ( RULE_ESTERELID ) ) ( ( (lv_renamed_1_0= '/' ) ) ( (lv_newName_2_0= RULE_ESTERELID ) ) )? ) ;
     public final EObject ruleModuleRenaming() throws RecognitionException {
         EObject current = null;
 
@@ -12571,17 +12596,17 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
          @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5592:6: ( ( ( ( RULE_ESTERELID ) ) ( ( (lv_renamed_1_0= '/' ) ) ( (lv_newName_2_0= RULE_ESTERELID ) ) )? ) )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5593:1: ( ( ( RULE_ESTERELID ) ) ( ( (lv_renamed_1_0= '/' ) ) ( (lv_newName_2_0= RULE_ESTERELID ) ) )? )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5607:6: ( ( ( ( RULE_ESTERELID ) ) ( ( (lv_renamed_1_0= '/' ) ) ( (lv_newName_2_0= RULE_ESTERELID ) ) )? ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5608:1: ( ( ( RULE_ESTERELID ) ) ( ( (lv_renamed_1_0= '/' ) ) ( (lv_newName_2_0= RULE_ESTERELID ) ) )? )
             {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5593:1: ( ( ( RULE_ESTERELID ) ) ( ( (lv_renamed_1_0= '/' ) ) ( (lv_newName_2_0= RULE_ESTERELID ) ) )? )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5593:2: ( ( RULE_ESTERELID ) ) ( ( (lv_renamed_1_0= '/' ) ) ( (lv_newName_2_0= RULE_ESTERELID ) ) )?
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5608:1: ( ( ( RULE_ESTERELID ) ) ( ( (lv_renamed_1_0= '/' ) ) ( (lv_newName_2_0= RULE_ESTERELID ) ) )? )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5608:2: ( ( RULE_ESTERELID ) ) ( ( (lv_renamed_1_0= '/' ) ) ( (lv_newName_2_0= RULE_ESTERELID ) ) )?
             {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5593:2: ( ( RULE_ESTERELID ) )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5594:1: ( RULE_ESTERELID )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5608:2: ( ( RULE_ESTERELID ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5609:1: ( RULE_ESTERELID )
             {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5594:1: ( RULE_ESTERELID )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5595:3: RULE_ESTERELID
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5609:1: ( RULE_ESTERELID )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5610:3: RULE_ESTERELID
             {
 
             			if (current==null) {
@@ -12599,7 +12624,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
             }
 
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5607:2: ( ( (lv_renamed_1_0= '/' ) ) ( (lv_newName_2_0= RULE_ESTERELID ) ) )?
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5622:2: ( ( (lv_renamed_1_0= '/' ) ) ( (lv_newName_2_0= RULE_ESTERELID ) ) )?
             int alt76=2;
             int LA76_0 = input.LA(1);
 
@@ -12608,13 +12633,13 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
             }
             switch (alt76) {
                 case 1 :
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5607:3: ( (lv_renamed_1_0= '/' ) ) ( (lv_newName_2_0= RULE_ESTERELID ) )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5622:3: ( (lv_renamed_1_0= '/' ) ) ( (lv_newName_2_0= RULE_ESTERELID ) )
                     {
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5607:3: ( (lv_renamed_1_0= '/' ) )
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5608:1: (lv_renamed_1_0= '/' )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5622:3: ( (lv_renamed_1_0= '/' ) )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5623:1: (lv_renamed_1_0= '/' )
                     {
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5608:1: (lv_renamed_1_0= '/' )
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5609:3: lv_renamed_1_0= '/'
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5623:1: (lv_renamed_1_0= '/' )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5624:3: lv_renamed_1_0= '/'
                     {
                     lv_renamed_1_0=(Token)input.LT(1);
                     match(input,69,FOLLOW_69_in_ruleModuleRenaming10058); 
@@ -12639,11 +12664,11 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5628:2: ( (lv_newName_2_0= RULE_ESTERELID ) )
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5629:1: (lv_newName_2_0= RULE_ESTERELID )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5643:2: ( (lv_newName_2_0= RULE_ESTERELID ) )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5644:1: (lv_newName_2_0= RULE_ESTERELID )
                     {
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5629:1: (lv_newName_2_0= RULE_ESTERELID )
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5630:3: lv_newName_2_0= RULE_ESTERELID
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5644:1: (lv_newName_2_0= RULE_ESTERELID )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5645:3: lv_newName_2_0= RULE_ESTERELID
                     {
                     lv_newName_2_0=(Token)input.LT(1);
                     match(input,RULE_ESTERELID,FOLLOW_RULE_ESTERELID_in_ruleModuleRenaming10088); 
@@ -12701,7 +12726,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start entryRuleRenamingList
-    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5660:1: entryRuleRenamingList returns [EObject current=null] : iv_ruleRenamingList= ruleRenamingList EOF ;
+    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5675:1: entryRuleRenamingList returns [EObject current=null] : iv_ruleRenamingList= ruleRenamingList EOF ;
     public final EObject entryRuleRenamingList() throws RecognitionException {
         EObject current = null;
 
@@ -12709,8 +12734,8 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5661:2: (iv_ruleRenamingList= ruleRenamingList EOF )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5662:2: iv_ruleRenamingList= ruleRenamingList EOF
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5676:2: (iv_ruleRenamingList= ruleRenamingList EOF )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5677:2: iv_ruleRenamingList= ruleRenamingList EOF
             {
              currentNode = createCompositeNode(grammarAccess.getRenamingListRule(), currentNode); 
             pushFollow(FOLLOW_ruleRenamingList_in_entryRuleRenamingList10131);
@@ -12736,7 +12761,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start ruleRenamingList
-    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5669:1: ruleRenamingList returns [EObject current=null] : ( ( (lv_list_0_0= ruleRenaming ) ) ( ';' ( (lv_list_2_0= ruleRenaming ) ) )* ) ;
+    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5684:1: ruleRenamingList returns [EObject current=null] : ( ( (lv_list_0_0= ruleRenaming ) ) ( ';' ( (lv_list_2_0= ruleRenaming ) ) )* ) ;
     public final EObject ruleRenamingList() throws RecognitionException {
         EObject current = null;
 
@@ -12748,17 +12773,17 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
          @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5674:6: ( ( ( (lv_list_0_0= ruleRenaming ) ) ( ';' ( (lv_list_2_0= ruleRenaming ) ) )* ) )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5675:1: ( ( (lv_list_0_0= ruleRenaming ) ) ( ';' ( (lv_list_2_0= ruleRenaming ) ) )* )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5689:6: ( ( ( (lv_list_0_0= ruleRenaming ) ) ( ';' ( (lv_list_2_0= ruleRenaming ) ) )* ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5690:1: ( ( (lv_list_0_0= ruleRenaming ) ) ( ';' ( (lv_list_2_0= ruleRenaming ) ) )* )
             {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5675:1: ( ( (lv_list_0_0= ruleRenaming ) ) ( ';' ( (lv_list_2_0= ruleRenaming ) ) )* )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5675:2: ( (lv_list_0_0= ruleRenaming ) ) ( ';' ( (lv_list_2_0= ruleRenaming ) ) )*
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5690:1: ( ( (lv_list_0_0= ruleRenaming ) ) ( ';' ( (lv_list_2_0= ruleRenaming ) ) )* )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5690:2: ( (lv_list_0_0= ruleRenaming ) ) ( ';' ( (lv_list_2_0= ruleRenaming ) ) )*
             {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5675:2: ( (lv_list_0_0= ruleRenaming ) )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5676:1: (lv_list_0_0= ruleRenaming )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5690:2: ( (lv_list_0_0= ruleRenaming ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5691:1: (lv_list_0_0= ruleRenaming )
             {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5676:1: (lv_list_0_0= ruleRenaming )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5677:3: lv_list_0_0= ruleRenaming
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5691:1: (lv_list_0_0= ruleRenaming )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5692:3: lv_list_0_0= ruleRenaming
             {
              
             	        currentNode=createCompositeNode(grammarAccess.getRenamingListAccess().getListRenamingParserRuleCall_0_0(), currentNode); 
@@ -12790,7 +12815,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
             }
 
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5699:2: ( ';' ( (lv_list_2_0= ruleRenaming ) ) )*
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5714:2: ( ';' ( (lv_list_2_0= ruleRenaming ) ) )*
             loop77:
             do {
                 int alt77=2;
@@ -12803,17 +12828,17 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
                 switch (alt77) {
             	case 1 :
-            	    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5699:4: ';' ( (lv_list_2_0= ruleRenaming ) )
+            	    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5714:4: ';' ( (lv_list_2_0= ruleRenaming ) )
             	    {
             	    match(input,23,FOLLOW_23_in_ruleRenamingList10198); 
 
             	            createLeafNode(grammarAccess.getRenamingListAccess().getSemicolonKeyword_1_0(), null); 
             	        
-            	    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5703:1: ( (lv_list_2_0= ruleRenaming ) )
-            	    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5704:1: (lv_list_2_0= ruleRenaming )
+            	    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5718:1: ( (lv_list_2_0= ruleRenaming ) )
+            	    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5719:1: (lv_list_2_0= ruleRenaming )
             	    {
-            	    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5704:1: (lv_list_2_0= ruleRenaming )
-            	    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5705:3: lv_list_2_0= ruleRenaming
+            	    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5719:1: (lv_list_2_0= ruleRenaming )
+            	    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5720:3: lv_list_2_0= ruleRenaming
             	    {
             	     
             	    	        currentNode=createCompositeNode(grammarAccess.getRenamingListAccess().getListRenamingParserRuleCall_1_1_0(), currentNode); 
@@ -12877,7 +12902,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start entryRuleRenaming
-    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5735:1: entryRuleRenaming returns [EObject current=null] : iv_ruleRenaming= ruleRenaming EOF ;
+    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5750:1: entryRuleRenaming returns [EObject current=null] : iv_ruleRenaming= ruleRenaming EOF ;
     public final EObject entryRuleRenaming() throws RecognitionException {
         EObject current = null;
 
@@ -12885,8 +12910,8 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5736:2: (iv_ruleRenaming= ruleRenaming EOF )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5737:2: iv_ruleRenaming= ruleRenaming EOF
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5751:2: (iv_ruleRenaming= ruleRenaming EOF )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5752:2: iv_ruleRenaming= ruleRenaming EOF
             {
              currentNode = createCompositeNode(grammarAccess.getRenamingRule(), currentNode); 
             pushFollow(FOLLOW_ruleRenaming_in_entryRuleRenaming10257);
@@ -12912,7 +12937,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start ruleRenaming
-    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5744:1: ruleRenaming returns [EObject current=null] : ( ( 'type' ( (lv_renaming_1_0= ruleTypeRenaming ) ) ( ',' ( (lv_renaming_3_0= ruleTypeRenaming ) ) )* ) | ( 'constant' ( (lv_renaming_5_0= ruleConstantRenaming ) ) ( ',' ( (lv_renaming_7_0= ruleConstantRenaming ) ) )* ) | ( 'function' ( (lv_renaming_9_0= ruleFunctionRenaming ) ) ( ',' ( (lv_renaming_11_0= ruleFunctionRenaming ) ) )* ) | ( 'signal' ( (lv_renaming_13_0= ruleSignalRenaming ) ) ( ',' ( (lv_renaming_15_0= ruleSignalRenaming ) ) )* ) ) ;
+    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5759:1: ruleRenaming returns [EObject current=null] : ( ( 'type' ( (lv_renaming_1_0= ruleTypeRenaming ) ) ( ',' ( (lv_renaming_3_0= ruleTypeRenaming ) ) )* ) | ( 'constant' ( (lv_renaming_5_0= ruleConstantRenaming ) ) ( ',' ( (lv_renaming_7_0= ruleConstantRenaming ) ) )* ) | ( 'function' ( (lv_renaming_9_0= ruleFunctionRenaming ) ) ( ',' ( (lv_renaming_11_0= ruleFunctionRenaming ) ) )* ) | ( 'signal' ( (lv_renaming_13_0= ruleSignalRenaming ) ) ( ',' ( (lv_renaming_15_0= ruleSignalRenaming ) ) )* ) ) ;
     public final EObject ruleRenaming() throws RecognitionException {
         EObject current = null;
 
@@ -12936,10 +12961,10 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
          @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5749:6: ( ( ( 'type' ( (lv_renaming_1_0= ruleTypeRenaming ) ) ( ',' ( (lv_renaming_3_0= ruleTypeRenaming ) ) )* ) | ( 'constant' ( (lv_renaming_5_0= ruleConstantRenaming ) ) ( ',' ( (lv_renaming_7_0= ruleConstantRenaming ) ) )* ) | ( 'function' ( (lv_renaming_9_0= ruleFunctionRenaming ) ) ( ',' ( (lv_renaming_11_0= ruleFunctionRenaming ) ) )* ) | ( 'signal' ( (lv_renaming_13_0= ruleSignalRenaming ) ) ( ',' ( (lv_renaming_15_0= ruleSignalRenaming ) ) )* ) ) )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5750:1: ( ( 'type' ( (lv_renaming_1_0= ruleTypeRenaming ) ) ( ',' ( (lv_renaming_3_0= ruleTypeRenaming ) ) )* ) | ( 'constant' ( (lv_renaming_5_0= ruleConstantRenaming ) ) ( ',' ( (lv_renaming_7_0= ruleConstantRenaming ) ) )* ) | ( 'function' ( (lv_renaming_9_0= ruleFunctionRenaming ) ) ( ',' ( (lv_renaming_11_0= ruleFunctionRenaming ) ) )* ) | ( 'signal' ( (lv_renaming_13_0= ruleSignalRenaming ) ) ( ',' ( (lv_renaming_15_0= ruleSignalRenaming ) ) )* ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5764:6: ( ( ( 'type' ( (lv_renaming_1_0= ruleTypeRenaming ) ) ( ',' ( (lv_renaming_3_0= ruleTypeRenaming ) ) )* ) | ( 'constant' ( (lv_renaming_5_0= ruleConstantRenaming ) ) ( ',' ( (lv_renaming_7_0= ruleConstantRenaming ) ) )* ) | ( 'function' ( (lv_renaming_9_0= ruleFunctionRenaming ) ) ( ',' ( (lv_renaming_11_0= ruleFunctionRenaming ) ) )* ) | ( 'signal' ( (lv_renaming_13_0= ruleSignalRenaming ) ) ( ',' ( (lv_renaming_15_0= ruleSignalRenaming ) ) )* ) ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5765:1: ( ( 'type' ( (lv_renaming_1_0= ruleTypeRenaming ) ) ( ',' ( (lv_renaming_3_0= ruleTypeRenaming ) ) )* ) | ( 'constant' ( (lv_renaming_5_0= ruleConstantRenaming ) ) ( ',' ( (lv_renaming_7_0= ruleConstantRenaming ) ) )* ) | ( 'function' ( (lv_renaming_9_0= ruleFunctionRenaming ) ) ( ',' ( (lv_renaming_11_0= ruleFunctionRenaming ) ) )* ) | ( 'signal' ( (lv_renaming_13_0= ruleSignalRenaming ) ) ( ',' ( (lv_renaming_15_0= ruleSignalRenaming ) ) )* ) )
             {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5750:1: ( ( 'type' ( (lv_renaming_1_0= ruleTypeRenaming ) ) ( ',' ( (lv_renaming_3_0= ruleTypeRenaming ) ) )* ) | ( 'constant' ( (lv_renaming_5_0= ruleConstantRenaming ) ) ( ',' ( (lv_renaming_7_0= ruleConstantRenaming ) ) )* ) | ( 'function' ( (lv_renaming_9_0= ruleFunctionRenaming ) ) ( ',' ( (lv_renaming_11_0= ruleFunctionRenaming ) ) )* ) | ( 'signal' ( (lv_renaming_13_0= ruleSignalRenaming ) ) ( ',' ( (lv_renaming_15_0= ruleSignalRenaming ) ) )* ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5765:1: ( ( 'type' ( (lv_renaming_1_0= ruleTypeRenaming ) ) ( ',' ( (lv_renaming_3_0= ruleTypeRenaming ) ) )* ) | ( 'constant' ( (lv_renaming_5_0= ruleConstantRenaming ) ) ( ',' ( (lv_renaming_7_0= ruleConstantRenaming ) ) )* ) | ( 'function' ( (lv_renaming_9_0= ruleFunctionRenaming ) ) ( ',' ( (lv_renaming_11_0= ruleFunctionRenaming ) ) )* ) | ( 'signal' ( (lv_renaming_13_0= ruleSignalRenaming ) ) ( ',' ( (lv_renaming_15_0= ruleSignalRenaming ) ) )* ) )
             int alt82=4;
             switch ( input.LA(1) ) {
             case 31:
@@ -12964,27 +12989,27 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
                 break;
             default:
                 NoViableAltException nvae =
-                    new NoViableAltException("5750:1: ( ( 'type' ( (lv_renaming_1_0= ruleTypeRenaming ) ) ( ',' ( (lv_renaming_3_0= ruleTypeRenaming ) ) )* ) | ( 'constant' ( (lv_renaming_5_0= ruleConstantRenaming ) ) ( ',' ( (lv_renaming_7_0= ruleConstantRenaming ) ) )* ) | ( 'function' ( (lv_renaming_9_0= ruleFunctionRenaming ) ) ( ',' ( (lv_renaming_11_0= ruleFunctionRenaming ) ) )* ) | ( 'signal' ( (lv_renaming_13_0= ruleSignalRenaming ) ) ( ',' ( (lv_renaming_15_0= ruleSignalRenaming ) ) )* ) )", 82, 0, input);
+                    new NoViableAltException("5765:1: ( ( 'type' ( (lv_renaming_1_0= ruleTypeRenaming ) ) ( ',' ( (lv_renaming_3_0= ruleTypeRenaming ) ) )* ) | ( 'constant' ( (lv_renaming_5_0= ruleConstantRenaming ) ) ( ',' ( (lv_renaming_7_0= ruleConstantRenaming ) ) )* ) | ( 'function' ( (lv_renaming_9_0= ruleFunctionRenaming ) ) ( ',' ( (lv_renaming_11_0= ruleFunctionRenaming ) ) )* ) | ( 'signal' ( (lv_renaming_13_0= ruleSignalRenaming ) ) ( ',' ( (lv_renaming_15_0= ruleSignalRenaming ) ) )* ) )", 82, 0, input);
 
                 throw nvae;
             }
 
             switch (alt82) {
                 case 1 :
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5750:2: ( 'type' ( (lv_renaming_1_0= ruleTypeRenaming ) ) ( ',' ( (lv_renaming_3_0= ruleTypeRenaming ) ) )* )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5765:2: ( 'type' ( (lv_renaming_1_0= ruleTypeRenaming ) ) ( ',' ( (lv_renaming_3_0= ruleTypeRenaming ) ) )* )
                     {
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5750:2: ( 'type' ( (lv_renaming_1_0= ruleTypeRenaming ) ) ( ',' ( (lv_renaming_3_0= ruleTypeRenaming ) ) )* )
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5750:4: 'type' ( (lv_renaming_1_0= ruleTypeRenaming ) ) ( ',' ( (lv_renaming_3_0= ruleTypeRenaming ) ) )*
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5765:2: ( 'type' ( (lv_renaming_1_0= ruleTypeRenaming ) ) ( ',' ( (lv_renaming_3_0= ruleTypeRenaming ) ) )* )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5765:4: 'type' ( (lv_renaming_1_0= ruleTypeRenaming ) ) ( ',' ( (lv_renaming_3_0= ruleTypeRenaming ) ) )*
                     {
                     match(input,31,FOLLOW_31_in_ruleRenaming10303); 
 
                             createLeafNode(grammarAccess.getRenamingAccess().getTypeKeyword_0_0(), null); 
                         
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5754:1: ( (lv_renaming_1_0= ruleTypeRenaming ) )
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5755:1: (lv_renaming_1_0= ruleTypeRenaming )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5769:1: ( (lv_renaming_1_0= ruleTypeRenaming ) )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5770:1: (lv_renaming_1_0= ruleTypeRenaming )
                     {
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5755:1: (lv_renaming_1_0= ruleTypeRenaming )
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5756:3: lv_renaming_1_0= ruleTypeRenaming
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5770:1: (lv_renaming_1_0= ruleTypeRenaming )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5771:3: lv_renaming_1_0= ruleTypeRenaming
                     {
                      
                     	        currentNode=createCompositeNode(grammarAccess.getRenamingAccess().getRenamingTypeRenamingParserRuleCall_0_1_0(), currentNode); 
@@ -13016,7 +13041,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5778:2: ( ',' ( (lv_renaming_3_0= ruleTypeRenaming ) ) )*
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5793:2: ( ',' ( (lv_renaming_3_0= ruleTypeRenaming ) ) )*
                     loop78:
                     do {
                         int alt78=2;
@@ -13029,17 +13054,17 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
                         switch (alt78) {
                     	case 1 :
-                    	    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5778:4: ',' ( (lv_renaming_3_0= ruleTypeRenaming ) )
+                    	    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5793:4: ',' ( (lv_renaming_3_0= ruleTypeRenaming ) )
                     	    {
                     	    match(input,22,FOLLOW_22_in_ruleRenaming10335); 
 
                     	            createLeafNode(grammarAccess.getRenamingAccess().getCommaKeyword_0_2_0(), null); 
                     	        
-                    	    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5782:1: ( (lv_renaming_3_0= ruleTypeRenaming ) )
-                    	    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5783:1: (lv_renaming_3_0= ruleTypeRenaming )
+                    	    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5797:1: ( (lv_renaming_3_0= ruleTypeRenaming ) )
+                    	    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5798:1: (lv_renaming_3_0= ruleTypeRenaming )
                     	    {
-                    	    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5783:1: (lv_renaming_3_0= ruleTypeRenaming )
-                    	    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5784:3: lv_renaming_3_0= ruleTypeRenaming
+                    	    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5798:1: (lv_renaming_3_0= ruleTypeRenaming )
+                    	    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5799:3: lv_renaming_3_0= ruleTypeRenaming
                     	    {
                     	     
                     	    	        currentNode=createCompositeNode(grammarAccess.getRenamingAccess().getRenamingTypeRenamingParserRuleCall_0_2_1_0(), currentNode); 
@@ -13087,20 +13112,20 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5807:6: ( 'constant' ( (lv_renaming_5_0= ruleConstantRenaming ) ) ( ',' ( (lv_renaming_7_0= ruleConstantRenaming ) ) )* )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5822:6: ( 'constant' ( (lv_renaming_5_0= ruleConstantRenaming ) ) ( ',' ( (lv_renaming_7_0= ruleConstantRenaming ) ) )* )
                     {
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5807:6: ( 'constant' ( (lv_renaming_5_0= ruleConstantRenaming ) ) ( ',' ( (lv_renaming_7_0= ruleConstantRenaming ) ) )* )
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5807:8: 'constant' ( (lv_renaming_5_0= ruleConstantRenaming ) ) ( ',' ( (lv_renaming_7_0= ruleConstantRenaming ) ) )*
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5822:6: ( 'constant' ( (lv_renaming_5_0= ruleConstantRenaming ) ) ( ',' ( (lv_renaming_7_0= ruleConstantRenaming ) ) )* )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5822:8: 'constant' ( (lv_renaming_5_0= ruleConstantRenaming ) ) ( ',' ( (lv_renaming_7_0= ruleConstantRenaming ) ) )*
                     {
                     match(input,32,FOLLOW_32_in_ruleRenaming10376); 
 
                             createLeafNode(grammarAccess.getRenamingAccess().getConstantKeyword_1_0(), null); 
                         
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5811:1: ( (lv_renaming_5_0= ruleConstantRenaming ) )
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5812:1: (lv_renaming_5_0= ruleConstantRenaming )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5826:1: ( (lv_renaming_5_0= ruleConstantRenaming ) )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5827:1: (lv_renaming_5_0= ruleConstantRenaming )
                     {
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5812:1: (lv_renaming_5_0= ruleConstantRenaming )
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5813:3: lv_renaming_5_0= ruleConstantRenaming
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5827:1: (lv_renaming_5_0= ruleConstantRenaming )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5828:3: lv_renaming_5_0= ruleConstantRenaming
                     {
                      
                     	        currentNode=createCompositeNode(grammarAccess.getRenamingAccess().getRenamingConstantRenamingParserRuleCall_1_1_0(), currentNode); 
@@ -13132,7 +13157,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5835:2: ( ',' ( (lv_renaming_7_0= ruleConstantRenaming ) ) )*
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5850:2: ( ',' ( (lv_renaming_7_0= ruleConstantRenaming ) ) )*
                     loop79:
                     do {
                         int alt79=2;
@@ -13145,17 +13170,17 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
                         switch (alt79) {
                     	case 1 :
-                    	    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5835:4: ',' ( (lv_renaming_7_0= ruleConstantRenaming ) )
+                    	    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5850:4: ',' ( (lv_renaming_7_0= ruleConstantRenaming ) )
                     	    {
                     	    match(input,22,FOLLOW_22_in_ruleRenaming10408); 
 
                     	            createLeafNode(grammarAccess.getRenamingAccess().getCommaKeyword_1_2_0(), null); 
                     	        
-                    	    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5839:1: ( (lv_renaming_7_0= ruleConstantRenaming ) )
-                    	    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5840:1: (lv_renaming_7_0= ruleConstantRenaming )
+                    	    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5854:1: ( (lv_renaming_7_0= ruleConstantRenaming ) )
+                    	    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5855:1: (lv_renaming_7_0= ruleConstantRenaming )
                     	    {
-                    	    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5840:1: (lv_renaming_7_0= ruleConstantRenaming )
-                    	    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5841:3: lv_renaming_7_0= ruleConstantRenaming
+                    	    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5855:1: (lv_renaming_7_0= ruleConstantRenaming )
+                    	    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5856:3: lv_renaming_7_0= ruleConstantRenaming
                     	    {
                     	     
                     	    	        currentNode=createCompositeNode(grammarAccess.getRenamingAccess().getRenamingConstantRenamingParserRuleCall_1_2_1_0(), currentNode); 
@@ -13203,20 +13228,20 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 3 :
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5864:6: ( 'function' ( (lv_renaming_9_0= ruleFunctionRenaming ) ) ( ',' ( (lv_renaming_11_0= ruleFunctionRenaming ) ) )* )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5879:6: ( 'function' ( (lv_renaming_9_0= ruleFunctionRenaming ) ) ( ',' ( (lv_renaming_11_0= ruleFunctionRenaming ) ) )* )
                     {
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5864:6: ( 'function' ( (lv_renaming_9_0= ruleFunctionRenaming ) ) ( ',' ( (lv_renaming_11_0= ruleFunctionRenaming ) ) )* )
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5864:8: 'function' ( (lv_renaming_9_0= ruleFunctionRenaming ) ) ( ',' ( (lv_renaming_11_0= ruleFunctionRenaming ) ) )*
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5879:6: ( 'function' ( (lv_renaming_9_0= ruleFunctionRenaming ) ) ( ',' ( (lv_renaming_11_0= ruleFunctionRenaming ) ) )* )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5879:8: 'function' ( (lv_renaming_9_0= ruleFunctionRenaming ) ) ( ',' ( (lv_renaming_11_0= ruleFunctionRenaming ) ) )*
                     {
                     match(input,35,FOLLOW_35_in_ruleRenaming10449); 
 
                             createLeafNode(grammarAccess.getRenamingAccess().getFunctionKeyword_2_0(), null); 
                         
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5868:1: ( (lv_renaming_9_0= ruleFunctionRenaming ) )
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5869:1: (lv_renaming_9_0= ruleFunctionRenaming )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5883:1: ( (lv_renaming_9_0= ruleFunctionRenaming ) )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5884:1: (lv_renaming_9_0= ruleFunctionRenaming )
                     {
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5869:1: (lv_renaming_9_0= ruleFunctionRenaming )
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5870:3: lv_renaming_9_0= ruleFunctionRenaming
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5884:1: (lv_renaming_9_0= ruleFunctionRenaming )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5885:3: lv_renaming_9_0= ruleFunctionRenaming
                     {
                      
                     	        currentNode=createCompositeNode(grammarAccess.getRenamingAccess().getRenamingFunctionRenamingParserRuleCall_2_1_0(), currentNode); 
@@ -13248,7 +13273,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5892:2: ( ',' ( (lv_renaming_11_0= ruleFunctionRenaming ) ) )*
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5907:2: ( ',' ( (lv_renaming_11_0= ruleFunctionRenaming ) ) )*
                     loop80:
                     do {
                         int alt80=2;
@@ -13261,17 +13286,17 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
                         switch (alt80) {
                     	case 1 :
-                    	    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5892:4: ',' ( (lv_renaming_11_0= ruleFunctionRenaming ) )
+                    	    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5907:4: ',' ( (lv_renaming_11_0= ruleFunctionRenaming ) )
                     	    {
                     	    match(input,22,FOLLOW_22_in_ruleRenaming10481); 
 
                     	            createLeafNode(grammarAccess.getRenamingAccess().getCommaKeyword_2_2_0(), null); 
                     	        
-                    	    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5896:1: ( (lv_renaming_11_0= ruleFunctionRenaming ) )
-                    	    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5897:1: (lv_renaming_11_0= ruleFunctionRenaming )
+                    	    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5911:1: ( (lv_renaming_11_0= ruleFunctionRenaming ) )
+                    	    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5912:1: (lv_renaming_11_0= ruleFunctionRenaming )
                     	    {
-                    	    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5897:1: (lv_renaming_11_0= ruleFunctionRenaming )
-                    	    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5898:3: lv_renaming_11_0= ruleFunctionRenaming
+                    	    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5912:1: (lv_renaming_11_0= ruleFunctionRenaming )
+                    	    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5913:3: lv_renaming_11_0= ruleFunctionRenaming
                     	    {
                     	     
                     	    	        currentNode=createCompositeNode(grammarAccess.getRenamingAccess().getRenamingFunctionRenamingParserRuleCall_2_2_1_0(), currentNode); 
@@ -13319,20 +13344,20 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 4 :
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5921:6: ( 'signal' ( (lv_renaming_13_0= ruleSignalRenaming ) ) ( ',' ( (lv_renaming_15_0= ruleSignalRenaming ) ) )* )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5936:6: ( 'signal' ( (lv_renaming_13_0= ruleSignalRenaming ) ) ( ',' ( (lv_renaming_15_0= ruleSignalRenaming ) ) )* )
                     {
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5921:6: ( 'signal' ( (lv_renaming_13_0= ruleSignalRenaming ) ) ( ',' ( (lv_renaming_15_0= ruleSignalRenaming ) ) )* )
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5921:8: 'signal' ( (lv_renaming_13_0= ruleSignalRenaming ) ) ( ',' ( (lv_renaming_15_0= ruleSignalRenaming ) ) )*
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5936:6: ( 'signal' ( (lv_renaming_13_0= ruleSignalRenaming ) ) ( ',' ( (lv_renaming_15_0= ruleSignalRenaming ) ) )* )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5936:8: 'signal' ( (lv_renaming_13_0= ruleSignalRenaming ) ) ( ',' ( (lv_renaming_15_0= ruleSignalRenaming ) ) )*
                     {
                     match(input,70,FOLLOW_70_in_ruleRenaming10522); 
 
                             createLeafNode(grammarAccess.getRenamingAccess().getSignalKeyword_3_0(), null); 
                         
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5925:1: ( (lv_renaming_13_0= ruleSignalRenaming ) )
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5926:1: (lv_renaming_13_0= ruleSignalRenaming )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5940:1: ( (lv_renaming_13_0= ruleSignalRenaming ) )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5941:1: (lv_renaming_13_0= ruleSignalRenaming )
                     {
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5926:1: (lv_renaming_13_0= ruleSignalRenaming )
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5927:3: lv_renaming_13_0= ruleSignalRenaming
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5941:1: (lv_renaming_13_0= ruleSignalRenaming )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5942:3: lv_renaming_13_0= ruleSignalRenaming
                     {
                      
                     	        currentNode=createCompositeNode(grammarAccess.getRenamingAccess().getRenamingSignalRenamingParserRuleCall_3_1_0(), currentNode); 
@@ -13364,7 +13389,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5949:2: ( ',' ( (lv_renaming_15_0= ruleSignalRenaming ) ) )*
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5964:2: ( ',' ( (lv_renaming_15_0= ruleSignalRenaming ) ) )*
                     loop81:
                     do {
                         int alt81=2;
@@ -13377,17 +13402,17 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
                         switch (alt81) {
                     	case 1 :
-                    	    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5949:4: ',' ( (lv_renaming_15_0= ruleSignalRenaming ) )
+                    	    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5964:4: ',' ( (lv_renaming_15_0= ruleSignalRenaming ) )
                     	    {
                     	    match(input,22,FOLLOW_22_in_ruleRenaming10554); 
 
                     	            createLeafNode(grammarAccess.getRenamingAccess().getCommaKeyword_3_2_0(), null); 
                     	        
-                    	    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5953:1: ( (lv_renaming_15_0= ruleSignalRenaming ) )
-                    	    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5954:1: (lv_renaming_15_0= ruleSignalRenaming )
+                    	    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5968:1: ( (lv_renaming_15_0= ruleSignalRenaming ) )
+                    	    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5969:1: (lv_renaming_15_0= ruleSignalRenaming )
                     	    {
-                    	    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5954:1: (lv_renaming_15_0= ruleSignalRenaming )
-                    	    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5955:3: lv_renaming_15_0= ruleSignalRenaming
+                    	    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5969:1: (lv_renaming_15_0= ruleSignalRenaming )
+                    	    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5970:3: lv_renaming_15_0= ruleSignalRenaming
                     	    {
                     	     
                     	    	        currentNode=createCompositeNode(grammarAccess.getRenamingAccess().getRenamingSignalRenamingParserRuleCall_3_2_1_0(), currentNode); 
@@ -13457,7 +13482,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start entryRuleTypeRenaming
-    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5985:1: entryRuleTypeRenaming returns [EObject current=null] : iv_ruleTypeRenaming= ruleTypeRenaming EOF ;
+    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6000:1: entryRuleTypeRenaming returns [EObject current=null] : iv_ruleTypeRenaming= ruleTypeRenaming EOF ;
     public final EObject entryRuleTypeRenaming() throws RecognitionException {
         EObject current = null;
 
@@ -13465,8 +13490,8 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5986:2: (iv_ruleTypeRenaming= ruleTypeRenaming EOF )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5987:2: iv_ruleTypeRenaming= ruleTypeRenaming EOF
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6001:2: (iv_ruleTypeRenaming= ruleTypeRenaming EOF )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6002:2: iv_ruleTypeRenaming= ruleTypeRenaming EOF
             {
              currentNode = createCompositeNode(grammarAccess.getTypeRenamingRule(), currentNode); 
             pushFollow(FOLLOW_ruleTypeRenaming_in_entryRuleTypeRenaming10614);
@@ -13492,24 +13517,24 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start ruleTypeRenaming
-    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5994:1: ruleTypeRenaming returns [EObject current=null] : ( ( ( RULE_ESTERELID ) ) '/' ( ( RULE_ESTERELID ) ) ) ;
+    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6009:1: ruleTypeRenaming returns [EObject current=null] : ( ( ( RULE_ESTERELID ) ) '/' ( ( RULE_ESTERELID ) ) ) ;
     public final EObject ruleTypeRenaming() throws RecognitionException {
         EObject current = null;
 
          @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5999:6: ( ( ( ( RULE_ESTERELID ) ) '/' ( ( RULE_ESTERELID ) ) ) )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6000:1: ( ( ( RULE_ESTERELID ) ) '/' ( ( RULE_ESTERELID ) ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6014:6: ( ( ( ( RULE_ESTERELID ) ) '/' ( ( RULE_ESTERELID ) ) ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6015:1: ( ( ( RULE_ESTERELID ) ) '/' ( ( RULE_ESTERELID ) ) )
             {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6000:1: ( ( ( RULE_ESTERELID ) ) '/' ( ( RULE_ESTERELID ) ) )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6000:2: ( ( RULE_ESTERELID ) ) '/' ( ( RULE_ESTERELID ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6015:1: ( ( ( RULE_ESTERELID ) ) '/' ( ( RULE_ESTERELID ) ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6015:2: ( ( RULE_ESTERELID ) ) '/' ( ( RULE_ESTERELID ) )
             {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6000:2: ( ( RULE_ESTERELID ) )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6001:1: ( RULE_ESTERELID )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6015:2: ( ( RULE_ESTERELID ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6016:1: ( RULE_ESTERELID )
             {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6001:1: ( RULE_ESTERELID )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6002:3: RULE_ESTERELID
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6016:1: ( RULE_ESTERELID )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6017:3: RULE_ESTERELID
             {
 
             			if (current==null) {
@@ -13531,11 +13556,11 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
                     createLeafNode(grammarAccess.getTypeRenamingAccess().getSolidusKeyword_1(), null); 
                 
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6018:1: ( ( RULE_ESTERELID ) )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6019:1: ( RULE_ESTERELID )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6033:1: ( ( RULE_ESTERELID ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6034:1: ( RULE_ESTERELID )
             {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6019:1: ( RULE_ESTERELID )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6020:3: RULE_ESTERELID
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6034:1: ( RULE_ESTERELID )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6035:3: RULE_ESTERELID
             {
 
             			if (current==null) {
@@ -13576,7 +13601,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start entryRuleConstantRenaming
-    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6040:1: entryRuleConstantRenaming returns [EObject current=null] : iv_ruleConstantRenaming= ruleConstantRenaming EOF ;
+    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6055:1: entryRuleConstantRenaming returns [EObject current=null] : iv_ruleConstantRenaming= ruleConstantRenaming EOF ;
     public final EObject entryRuleConstantRenaming() throws RecognitionException {
         EObject current = null;
 
@@ -13584,8 +13609,8 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6041:2: (iv_ruleConstantRenaming= ruleConstantRenaming EOF )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6042:2: iv_ruleConstantRenaming= ruleConstantRenaming EOF
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6056:2: (iv_ruleConstantRenaming= ruleConstantRenaming EOF )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6057:2: iv_ruleConstantRenaming= ruleConstantRenaming EOF
             {
              currentNode = createCompositeNode(grammarAccess.getConstantRenamingRule(), currentNode); 
             pushFollow(FOLLOW_ruleConstantRenaming_in_entryRuleConstantRenaming10731);
@@ -13611,90 +13636,61 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start ruleConstantRenaming
-    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6049:1: ruleConstantRenaming returns [EObject current=null] : ( ( (lv_value_0_0= ruleConstantValue ) ) '/' ( (lv_newName_2_0= RULE_ESTERELID ) ) ) ;
+    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6064:1: ruleConstantRenaming returns [EObject current=null] : ( ( ( RULE_ESTERELID ) ) '/' ( ( RULE_ESTERELID ) ) ) ;
     public final EObject ruleConstantRenaming() throws RecognitionException {
         EObject current = null;
-
-        Token lv_newName_2_0=null;
-        AntlrDatatypeRuleToken lv_value_0_0 = null;
-
 
          @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6054:6: ( ( ( (lv_value_0_0= ruleConstantValue ) ) '/' ( (lv_newName_2_0= RULE_ESTERELID ) ) ) )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6055:1: ( ( (lv_value_0_0= ruleConstantValue ) ) '/' ( (lv_newName_2_0= RULE_ESTERELID ) ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6069:6: ( ( ( ( RULE_ESTERELID ) ) '/' ( ( RULE_ESTERELID ) ) ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6070:1: ( ( ( RULE_ESTERELID ) ) '/' ( ( RULE_ESTERELID ) ) )
             {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6055:1: ( ( (lv_value_0_0= ruleConstantValue ) ) '/' ( (lv_newName_2_0= RULE_ESTERELID ) ) )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6055:2: ( (lv_value_0_0= ruleConstantValue ) ) '/' ( (lv_newName_2_0= RULE_ESTERELID ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6070:1: ( ( ( RULE_ESTERELID ) ) '/' ( ( RULE_ESTERELID ) ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6070:2: ( ( RULE_ESTERELID ) ) '/' ( ( RULE_ESTERELID ) )
             {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6055:2: ( (lv_value_0_0= ruleConstantValue ) )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6056:1: (lv_value_0_0= ruleConstantValue )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6070:2: ( ( RULE_ESTERELID ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6071:1: ( RULE_ESTERELID )
             {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6056:1: (lv_value_0_0= ruleConstantValue )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6057:3: lv_value_0_0= ruleConstantValue
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6071:1: ( RULE_ESTERELID )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6072:3: RULE_ESTERELID
             {
-             
-            	        currentNode=createCompositeNode(grammarAccess.getConstantRenamingAccess().getValueConstantValueParserRuleCall_0_0(), currentNode); 
-            	    
-            pushFollow(FOLLOW_ruleConstantValue_in_ruleConstantRenaming10787);
-            lv_value_0_0=ruleConstantValue();
-            _fsp--;
 
-
-            	        if (current==null) {
-            	            current = factory.create(grammarAccess.getConstantRenamingRule().getType().getClassifier());
-            	            associateNodeWithAstElement(currentNode.getParent(), current);
-            	        }
-            	        try {
-            	       		set(
-            	       			current, 
-            	       			"value",
-            	        		lv_value_0_0, 
-            	        		"ConstantValue", 
-            	        		currentNode);
-            	        } catch (ValueConverterException vce) {
-            				handleValueConverterException(vce);
-            	        }
-            	        currentNode = currentNode.getParent();
-            	    
-
-            }
-
-
-            }
-
-            match(input,69,FOLLOW_69_in_ruleConstantRenaming10797); 
-
-                    createLeafNode(grammarAccess.getConstantRenamingAccess().getSolidusKeyword_1(), null); 
-                
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6083:1: ( (lv_newName_2_0= RULE_ESTERELID ) )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6084:1: (lv_newName_2_0= RULE_ESTERELID )
-            {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6084:1: (lv_newName_2_0= RULE_ESTERELID )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6085:3: lv_newName_2_0= RULE_ESTERELID
-            {
-            lv_newName_2_0=(Token)input.LT(1);
-            match(input,RULE_ESTERELID,FOLLOW_RULE_ESTERELID_in_ruleConstantRenaming10814); 
-
-            			createLeafNode(grammarAccess.getConstantRenamingAccess().getNewNameEsterelIDTerminalRuleCall_2_0(), "newName"); 
-            		
-
-            	        if (current==null) {
+            			if (current==null) {
             	            current = factory.create(grammarAccess.getConstantRenamingRule().getType().getClassifier());
             	            associateNodeWithAstElement(currentNode, current);
             	        }
-            	        try {
-            	       		set(
-            	       			current, 
-            	       			"newName",
-            	        		lv_newName_2_0, 
-            	        		"EsterelID", 
-            	        		lastConsumedNode);
-            	        } catch (ValueConverterException vce) {
-            				handleValueConverterException(vce);
+                    
+            match(input,RULE_ESTERELID,FOLLOW_RULE_ESTERELID_in_ruleConstantRenaming10784); 
+
+            		createLeafNode(grammarAccess.getConstantRenamingAccess().getNewNameConstantCrossReference_0_0(), "newName"); 
+            	
+
+            }
+
+
+            }
+
+            match(input,69,FOLLOW_69_in_ruleConstantRenaming10794); 
+
+                    createLeafNode(grammarAccess.getConstantRenamingAccess().getSolidusKeyword_1(), null); 
+                
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6088:1: ( ( RULE_ESTERELID ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6089:1: ( RULE_ESTERELID )
+            {
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6089:1: ( RULE_ESTERELID )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6090:3: RULE_ESTERELID
+            {
+
+            			if (current==null) {
+            	            current = factory.create(grammarAccess.getConstantRenamingRule().getType().getClassifier());
+            	            associateNodeWithAstElement(currentNode, current);
             	        }
-            	    
+                    
+            match(input,RULE_ESTERELID,FOLLOW_RULE_ESTERELID_in_ruleConstantRenaming10812); 
+
+            		createLeafNode(grammarAccess.getConstantRenamingAccess().getOldNameConstantCrossReference_2_0(), "oldName"); 
+            	
 
             }
 
@@ -13724,7 +13720,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start entryRuleFunctionRenaming
-    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6115:1: entryRuleFunctionRenaming returns [EObject current=null] : iv_ruleFunctionRenaming= ruleFunctionRenaming EOF ;
+    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6110:1: entryRuleFunctionRenaming returns [EObject current=null] : iv_ruleFunctionRenaming= ruleFunctionRenaming EOF ;
     public final EObject entryRuleFunctionRenaming() throws RecognitionException {
         EObject current = null;
 
@@ -13732,16 +13728,16 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6116:2: (iv_ruleFunctionRenaming= ruleFunctionRenaming EOF )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6117:2: iv_ruleFunctionRenaming= ruleFunctionRenaming EOF
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6111:2: (iv_ruleFunctionRenaming= ruleFunctionRenaming EOF )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6112:2: iv_ruleFunctionRenaming= ruleFunctionRenaming EOF
             {
              currentNode = createCompositeNode(grammarAccess.getFunctionRenamingRule(), currentNode); 
-            pushFollow(FOLLOW_ruleFunctionRenaming_in_entryRuleFunctionRenaming10855);
+            pushFollow(FOLLOW_ruleFunctionRenaming_in_entryRuleFunctionRenaming10848);
             iv_ruleFunctionRenaming=ruleFunctionRenaming();
             _fsp--;
 
              current =iv_ruleFunctionRenaming; 
-            match(input,EOF,FOLLOW_EOF_in_entryRuleFunctionRenaming10865); 
+            match(input,EOF,FOLLOW_EOF_in_entryRuleFunctionRenaming10858); 
 
             }
 
@@ -13759,24 +13755,24 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start ruleFunctionRenaming
-    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6124:1: ruleFunctionRenaming returns [EObject current=null] : ( ( ( RULE_ESTERELID ) ) '/' ( ( RULE_ESTERELID ) ) ) ;
+    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6119:1: ruleFunctionRenaming returns [EObject current=null] : ( ( ( RULE_ESTERELID ) ) '/' ( ( RULE_ESTERELID ) ) ) ;
     public final EObject ruleFunctionRenaming() throws RecognitionException {
         EObject current = null;
 
          @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6129:6: ( ( ( ( RULE_ESTERELID ) ) '/' ( ( RULE_ESTERELID ) ) ) )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6130:1: ( ( ( RULE_ESTERELID ) ) '/' ( ( RULE_ESTERELID ) ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6124:6: ( ( ( ( RULE_ESTERELID ) ) '/' ( ( RULE_ESTERELID ) ) ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6125:1: ( ( ( RULE_ESTERELID ) ) '/' ( ( RULE_ESTERELID ) ) )
             {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6130:1: ( ( ( RULE_ESTERELID ) ) '/' ( ( RULE_ESTERELID ) ) )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6130:2: ( ( RULE_ESTERELID ) ) '/' ( ( RULE_ESTERELID ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6125:1: ( ( ( RULE_ESTERELID ) ) '/' ( ( RULE_ESTERELID ) ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6125:2: ( ( RULE_ESTERELID ) ) '/' ( ( RULE_ESTERELID ) )
             {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6130:2: ( ( RULE_ESTERELID ) )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6131:1: ( RULE_ESTERELID )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6125:2: ( ( RULE_ESTERELID ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6126:1: ( RULE_ESTERELID )
             {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6131:1: ( RULE_ESTERELID )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6132:3: RULE_ESTERELID
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6126:1: ( RULE_ESTERELID )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6127:3: RULE_ESTERELID
             {
 
             			if (current==null) {
@@ -13784,7 +13780,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
             	            associateNodeWithAstElement(currentNode, current);
             	        }
                     
-            match(input,RULE_ESTERELID,FOLLOW_RULE_ESTERELID_in_ruleFunctionRenaming10908); 
+            match(input,RULE_ESTERELID,FOLLOW_RULE_ESTERELID_in_ruleFunctionRenaming10901); 
 
             		createLeafNode(grammarAccess.getFunctionRenamingAccess().getNewNameFunctionCrossReference_0_0(), "newName"); 
             	
@@ -13794,15 +13790,15 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
             }
 
-            match(input,69,FOLLOW_69_in_ruleFunctionRenaming10918); 
+            match(input,69,FOLLOW_69_in_ruleFunctionRenaming10911); 
 
                     createLeafNode(grammarAccess.getFunctionRenamingAccess().getSolidusKeyword_1(), null); 
                 
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6148:1: ( ( RULE_ESTERELID ) )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6149:1: ( RULE_ESTERELID )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6143:1: ( ( RULE_ESTERELID ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6144:1: ( RULE_ESTERELID )
             {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6149:1: ( RULE_ESTERELID )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6150:3: RULE_ESTERELID
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6144:1: ( RULE_ESTERELID )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6145:3: RULE_ESTERELID
             {
 
             			if (current==null) {
@@ -13810,7 +13806,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
             	            associateNodeWithAstElement(currentNode, current);
             	        }
                     
-            match(input,RULE_ESTERELID,FOLLOW_RULE_ESTERELID_in_ruleFunctionRenaming10936); 
+            match(input,RULE_ESTERELID,FOLLOW_RULE_ESTERELID_in_ruleFunctionRenaming10929); 
 
             		createLeafNode(grammarAccess.getFunctionRenamingAccess().getOldNameFunctionCrossReference_2_0(), "oldName"); 
             	
@@ -13843,7 +13839,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start entryRuleSignalRenaming
-    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6172:1: entryRuleSignalRenaming returns [EObject current=null] : iv_ruleSignalRenaming= ruleSignalRenaming EOF ;
+    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6167:1: entryRuleSignalRenaming returns [EObject current=null] : iv_ruleSignalRenaming= ruleSignalRenaming EOF ;
     public final EObject entryRuleSignalRenaming() throws RecognitionException {
         EObject current = null;
 
@@ -13851,16 +13847,16 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6173:2: (iv_ruleSignalRenaming= ruleSignalRenaming EOF )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6174:2: iv_ruleSignalRenaming= ruleSignalRenaming EOF
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6168:2: (iv_ruleSignalRenaming= ruleSignalRenaming EOF )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6169:2: iv_ruleSignalRenaming= ruleSignalRenaming EOF
             {
              currentNode = createCompositeNode(grammarAccess.getSignalRenamingRule(), currentNode); 
-            pushFollow(FOLLOW_ruleSignalRenaming_in_entryRuleSignalRenaming10974);
+            pushFollow(FOLLOW_ruleSignalRenaming_in_entryRuleSignalRenaming10967);
             iv_ruleSignalRenaming=ruleSignalRenaming();
             _fsp--;
 
              current =iv_ruleSignalRenaming; 
-            match(input,EOF,FOLLOW_EOF_in_entryRuleSignalRenaming10984); 
+            match(input,EOF,FOLLOW_EOF_in_entryRuleSignalRenaming10977); 
 
             }
 
@@ -13878,24 +13874,24 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start ruleSignalRenaming
-    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6181:1: ruleSignalRenaming returns [EObject current=null] : ( ( ( RULE_ESTERELID ) ) '/' ( ( RULE_ESTERELID ) ) ) ;
+    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6176:1: ruleSignalRenaming returns [EObject current=null] : ( ( ( RULE_ESTERELID ) ) '/' ( ( RULE_ESTERELID ) ) ) ;
     public final EObject ruleSignalRenaming() throws RecognitionException {
         EObject current = null;
 
          @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6186:6: ( ( ( ( RULE_ESTERELID ) ) '/' ( ( RULE_ESTERELID ) ) ) )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6187:1: ( ( ( RULE_ESTERELID ) ) '/' ( ( RULE_ESTERELID ) ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6181:6: ( ( ( ( RULE_ESTERELID ) ) '/' ( ( RULE_ESTERELID ) ) ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6182:1: ( ( ( RULE_ESTERELID ) ) '/' ( ( RULE_ESTERELID ) ) )
             {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6187:1: ( ( ( RULE_ESTERELID ) ) '/' ( ( RULE_ESTERELID ) ) )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6187:2: ( ( RULE_ESTERELID ) ) '/' ( ( RULE_ESTERELID ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6182:1: ( ( ( RULE_ESTERELID ) ) '/' ( ( RULE_ESTERELID ) ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6182:2: ( ( RULE_ESTERELID ) ) '/' ( ( RULE_ESTERELID ) )
             {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6187:2: ( ( RULE_ESTERELID ) )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6188:1: ( RULE_ESTERELID )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6182:2: ( ( RULE_ESTERELID ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6183:1: ( RULE_ESTERELID )
             {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6188:1: ( RULE_ESTERELID )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6189:3: RULE_ESTERELID
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6183:1: ( RULE_ESTERELID )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6184:3: RULE_ESTERELID
             {
 
             			if (current==null) {
@@ -13903,7 +13899,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
             	            associateNodeWithAstElement(currentNode, current);
             	        }
                     
-            match(input,RULE_ESTERELID,FOLLOW_RULE_ESTERELID_in_ruleSignalRenaming11027); 
+            match(input,RULE_ESTERELID,FOLLOW_RULE_ESTERELID_in_ruleSignalRenaming11020); 
 
             		createLeafNode(grammarAccess.getSignalRenamingAccess().getNewNameSignalCrossReference_0_0(), "newName"); 
             	
@@ -13913,15 +13909,15 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
             }
 
-            match(input,69,FOLLOW_69_in_ruleSignalRenaming11037); 
+            match(input,69,FOLLOW_69_in_ruleSignalRenaming11030); 
 
                     createLeafNode(grammarAccess.getSignalRenamingAccess().getSolidusKeyword_1(), null); 
                 
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6205:1: ( ( RULE_ESTERELID ) )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6206:1: ( RULE_ESTERELID )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6200:1: ( ( RULE_ESTERELID ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6201:1: ( RULE_ESTERELID )
             {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6206:1: ( RULE_ESTERELID )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6207:3: RULE_ESTERELID
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6201:1: ( RULE_ESTERELID )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6202:3: RULE_ESTERELID
             {
 
             			if (current==null) {
@@ -13929,7 +13925,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
             	            associateNodeWithAstElement(currentNode, current);
             	        }
                     
-            match(input,RULE_ESTERELID,FOLLOW_RULE_ESTERELID_in_ruleSignalRenaming11055); 
+            match(input,RULE_ESTERELID,FOLLOW_RULE_ESTERELID_in_ruleSignalRenaming11048); 
 
             		createLeafNode(grammarAccess.getSignalRenamingAccess().getOldNameSignalCrossReference_2_0(), "oldName"); 
             	
@@ -13962,7 +13958,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start entryRuleLocalSignalDecl
-    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6227:1: entryRuleLocalSignalDecl returns [EObject current=null] : iv_ruleLocalSignalDecl= ruleLocalSignalDecl EOF ;
+    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6222:1: entryRuleLocalSignalDecl returns [EObject current=null] : iv_ruleLocalSignalDecl= ruleLocalSignalDecl EOF ;
     public final EObject entryRuleLocalSignalDecl() throws RecognitionException {
         EObject current = null;
 
@@ -13970,16 +13966,16 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6228:2: (iv_ruleLocalSignalDecl= ruleLocalSignalDecl EOF )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6229:2: iv_ruleLocalSignalDecl= ruleLocalSignalDecl EOF
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6223:2: (iv_ruleLocalSignalDecl= ruleLocalSignalDecl EOF )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6224:2: iv_ruleLocalSignalDecl= ruleLocalSignalDecl EOF
             {
              currentNode = createCompositeNode(grammarAccess.getLocalSignalDeclRule(), currentNode); 
-            pushFollow(FOLLOW_ruleLocalSignalDecl_in_entryRuleLocalSignalDecl11091);
+            pushFollow(FOLLOW_ruleLocalSignalDecl_in_entryRuleLocalSignalDecl11084);
             iv_ruleLocalSignalDecl=ruleLocalSignalDecl();
             _fsp--;
 
              current =iv_ruleLocalSignalDecl; 
-            match(input,EOF,FOLLOW_EOF_in_entryRuleLocalSignalDecl11101); 
+            match(input,EOF,FOLLOW_EOF_in_entryRuleLocalSignalDecl11094); 
 
             }
 
@@ -13997,7 +13993,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start ruleLocalSignalDecl
-    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6236:1: ruleLocalSignalDecl returns [EObject current=null] : ( 'signal' ( (lv_signalList_1_0= ruleLocalSignalList ) ) 'in' ( (lv_statement_3_0= ruleStatement ) ) 'end' ( 'signal' )? ) ;
+    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6231:1: ruleLocalSignalDecl returns [EObject current=null] : ( 'signal' ( (lv_signalList_1_0= ruleLocalSignalList ) ) 'in' ( (lv_statement_3_0= ruleStatement ) ) 'end' ( 'signal' )? ) ;
     public final EObject ruleLocalSignalDecl() throws RecognitionException {
         EObject current = null;
 
@@ -14009,26 +14005,26 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
          @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6241:6: ( ( 'signal' ( (lv_signalList_1_0= ruleLocalSignalList ) ) 'in' ( (lv_statement_3_0= ruleStatement ) ) 'end' ( 'signal' )? ) )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6242:1: ( 'signal' ( (lv_signalList_1_0= ruleLocalSignalList ) ) 'in' ( (lv_statement_3_0= ruleStatement ) ) 'end' ( 'signal' )? )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6236:6: ( ( 'signal' ( (lv_signalList_1_0= ruleLocalSignalList ) ) 'in' ( (lv_statement_3_0= ruleStatement ) ) 'end' ( 'signal' )? ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6237:1: ( 'signal' ( (lv_signalList_1_0= ruleLocalSignalList ) ) 'in' ( (lv_statement_3_0= ruleStatement ) ) 'end' ( 'signal' )? )
             {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6242:1: ( 'signal' ( (lv_signalList_1_0= ruleLocalSignalList ) ) 'in' ( (lv_statement_3_0= ruleStatement ) ) 'end' ( 'signal' )? )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6242:3: 'signal' ( (lv_signalList_1_0= ruleLocalSignalList ) ) 'in' ( (lv_statement_3_0= ruleStatement ) ) 'end' ( 'signal' )?
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6237:1: ( 'signal' ( (lv_signalList_1_0= ruleLocalSignalList ) ) 'in' ( (lv_statement_3_0= ruleStatement ) ) 'end' ( 'signal' )? )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6237:3: 'signal' ( (lv_signalList_1_0= ruleLocalSignalList ) ) 'in' ( (lv_statement_3_0= ruleStatement ) ) 'end' ( 'signal' )?
             {
-            match(input,70,FOLLOW_70_in_ruleLocalSignalDecl11136); 
+            match(input,70,FOLLOW_70_in_ruleLocalSignalDecl11129); 
 
                     createLeafNode(grammarAccess.getLocalSignalDeclAccess().getSignalKeyword_0(), null); 
                 
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6246:1: ( (lv_signalList_1_0= ruleLocalSignalList ) )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6247:1: (lv_signalList_1_0= ruleLocalSignalList )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6241:1: ( (lv_signalList_1_0= ruleLocalSignalList ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6242:1: (lv_signalList_1_0= ruleLocalSignalList )
             {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6247:1: (lv_signalList_1_0= ruleLocalSignalList )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6248:3: lv_signalList_1_0= ruleLocalSignalList
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6242:1: (lv_signalList_1_0= ruleLocalSignalList )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6243:3: lv_signalList_1_0= ruleLocalSignalList
             {
              
             	        currentNode=createCompositeNode(grammarAccess.getLocalSignalDeclAccess().getSignalListLocalSignalListParserRuleCall_1_0(), currentNode); 
             	    
-            pushFollow(FOLLOW_ruleLocalSignalList_in_ruleLocalSignalDecl11157);
+            pushFollow(FOLLOW_ruleLocalSignalList_in_ruleLocalSignalDecl11150);
             lv_signalList_1_0=ruleLocalSignalList();
             _fsp--;
 
@@ -14055,20 +14051,20 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
             }
 
-            match(input,71,FOLLOW_71_in_ruleLocalSignalDecl11167); 
+            match(input,71,FOLLOW_71_in_ruleLocalSignalDecl11160); 
 
                     createLeafNode(grammarAccess.getLocalSignalDeclAccess().getInKeyword_2(), null); 
                 
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6274:1: ( (lv_statement_3_0= ruleStatement ) )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6275:1: (lv_statement_3_0= ruleStatement )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6269:1: ( (lv_statement_3_0= ruleStatement ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6270:1: (lv_statement_3_0= ruleStatement )
             {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6275:1: (lv_statement_3_0= ruleStatement )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6276:3: lv_statement_3_0= ruleStatement
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6270:1: (lv_statement_3_0= ruleStatement )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6271:3: lv_statement_3_0= ruleStatement
             {
              
             	        currentNode=createCompositeNode(grammarAccess.getLocalSignalDeclAccess().getStatementStatementParserRuleCall_3_0(), currentNode); 
             	    
-            pushFollow(FOLLOW_ruleStatement_in_ruleLocalSignalDecl11188);
+            pushFollow(FOLLOW_ruleStatement_in_ruleLocalSignalDecl11181);
             lv_statement_3_0=ruleStatement();
             _fsp--;
 
@@ -14095,11 +14091,11 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
             }
 
-            match(input,19,FOLLOW_19_in_ruleLocalSignalDecl11198); 
+            match(input,19,FOLLOW_19_in_ruleLocalSignalDecl11191); 
 
                     createLeafNode(grammarAccess.getLocalSignalDeclAccess().getEndKeyword_4(), null); 
                 
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6302:1: ( 'signal' )?
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6297:1: ( 'signal' )?
             int alt83=2;
             int LA83_0 = input.LA(1);
 
@@ -14108,9 +14104,9 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
             }
             switch (alt83) {
                 case 1 :
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6302:3: 'signal'
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6297:3: 'signal'
                     {
-                    match(input,70,FOLLOW_70_in_ruleLocalSignalDecl11209); 
+                    match(input,70,FOLLOW_70_in_ruleLocalSignalDecl11202); 
 
                             createLeafNode(grammarAccess.getLocalSignalDeclAccess().getSignalKeyword_5(), null); 
                         
@@ -14143,7 +14139,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start entryRuleLocalSignalList
-    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6314:1: entryRuleLocalSignalList returns [EObject current=null] : iv_ruleLocalSignalList= ruleLocalSignalList EOF ;
+    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6309:1: entryRuleLocalSignalList returns [EObject current=null] : iv_ruleLocalSignalList= ruleLocalSignalList EOF ;
     public final EObject entryRuleLocalSignalList() throws RecognitionException {
         EObject current = null;
 
@@ -14151,16 +14147,16 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6315:2: (iv_ruleLocalSignalList= ruleLocalSignalList EOF )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6316:2: iv_ruleLocalSignalList= ruleLocalSignalList EOF
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6310:2: (iv_ruleLocalSignalList= ruleLocalSignalList EOF )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6311:2: iv_ruleLocalSignalList= ruleLocalSignalList EOF
             {
              currentNode = createCompositeNode(grammarAccess.getLocalSignalListRule(), currentNode); 
-            pushFollow(FOLLOW_ruleLocalSignalList_in_entryRuleLocalSignalList11247);
+            pushFollow(FOLLOW_ruleLocalSignalList_in_entryRuleLocalSignalList11240);
             iv_ruleLocalSignalList=ruleLocalSignalList();
             _fsp--;
 
              current =iv_ruleLocalSignalList; 
-            match(input,EOF,FOLLOW_EOF_in_entryRuleLocalSignalList11257); 
+            match(input,EOF,FOLLOW_EOF_in_entryRuleLocalSignalList11250); 
 
             }
 
@@ -14178,7 +14174,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start ruleLocalSignalList
-    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6323:1: ruleLocalSignalList returns [EObject current=null] : ( () ( (lv_signal_1_0= ruleSignal ) ) ( ',' ( (lv_signal_3_0= ruleSignal ) ) )* ) ;
+    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6318:1: ruleLocalSignalList returns [EObject current=null] : ( () ( (lv_signal_1_0= ruleSignal ) ) ( ',' ( (lv_signal_3_0= ruleSignal ) ) )* ) ;
     public final EObject ruleLocalSignalList() throws RecognitionException {
         EObject current = null;
 
@@ -14190,14 +14186,14 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
          @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6328:6: ( ( () ( (lv_signal_1_0= ruleSignal ) ) ( ',' ( (lv_signal_3_0= ruleSignal ) ) )* ) )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6329:1: ( () ( (lv_signal_1_0= ruleSignal ) ) ( ',' ( (lv_signal_3_0= ruleSignal ) ) )* )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6323:6: ( ( () ( (lv_signal_1_0= ruleSignal ) ) ( ',' ( (lv_signal_3_0= ruleSignal ) ) )* ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6324:1: ( () ( (lv_signal_1_0= ruleSignal ) ) ( ',' ( (lv_signal_3_0= ruleSignal ) ) )* )
             {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6329:1: ( () ( (lv_signal_1_0= ruleSignal ) ) ( ',' ( (lv_signal_3_0= ruleSignal ) ) )* )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6329:2: () ( (lv_signal_1_0= ruleSignal ) ) ( ',' ( (lv_signal_3_0= ruleSignal ) ) )*
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6324:1: ( () ( (lv_signal_1_0= ruleSignal ) ) ( ',' ( (lv_signal_3_0= ruleSignal ) ) )* )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6324:2: () ( (lv_signal_1_0= ruleSignal ) ) ( ',' ( (lv_signal_3_0= ruleSignal ) ) )*
             {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6329:2: ()
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6330:5: 
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6324:2: ()
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6325:5: 
             {
              
                     temp=factory.create(grammarAccess.getLocalSignalListAccess().getLocalSignalAction_0().getType().getClassifier());
@@ -14212,16 +14208,16 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
             }
 
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6340:2: ( (lv_signal_1_0= ruleSignal ) )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6341:1: (lv_signal_1_0= ruleSignal )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6335:2: ( (lv_signal_1_0= ruleSignal ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6336:1: (lv_signal_1_0= ruleSignal )
             {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6341:1: (lv_signal_1_0= ruleSignal )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6342:3: lv_signal_1_0= ruleSignal
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6336:1: (lv_signal_1_0= ruleSignal )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6337:3: lv_signal_1_0= ruleSignal
             {
              
             	        currentNode=createCompositeNode(grammarAccess.getLocalSignalListAccess().getSignalSignalParserRuleCall_1_0(), currentNode); 
             	    
-            pushFollow(FOLLOW_ruleSignal_in_ruleLocalSignalList11312);
+            pushFollow(FOLLOW_ruleSignal_in_ruleLocalSignalList11305);
             lv_signal_1_0=ruleSignal();
             _fsp--;
 
@@ -14248,7 +14244,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
             }
 
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6364:2: ( ',' ( (lv_signal_3_0= ruleSignal ) ) )*
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6359:2: ( ',' ( (lv_signal_3_0= ruleSignal ) ) )*
             loop84:
             do {
                 int alt84=2;
@@ -14261,22 +14257,22 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
                 switch (alt84) {
             	case 1 :
-            	    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6364:4: ',' ( (lv_signal_3_0= ruleSignal ) )
+            	    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6359:4: ',' ( (lv_signal_3_0= ruleSignal ) )
             	    {
-            	    match(input,22,FOLLOW_22_in_ruleLocalSignalList11323); 
+            	    match(input,22,FOLLOW_22_in_ruleLocalSignalList11316); 
 
             	            createLeafNode(grammarAccess.getLocalSignalListAccess().getCommaKeyword_2_0(), null); 
             	        
-            	    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6368:1: ( (lv_signal_3_0= ruleSignal ) )
-            	    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6369:1: (lv_signal_3_0= ruleSignal )
+            	    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6363:1: ( (lv_signal_3_0= ruleSignal ) )
+            	    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6364:1: (lv_signal_3_0= ruleSignal )
             	    {
-            	    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6369:1: (lv_signal_3_0= ruleSignal )
-            	    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6370:3: lv_signal_3_0= ruleSignal
+            	    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6364:1: (lv_signal_3_0= ruleSignal )
+            	    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6365:3: lv_signal_3_0= ruleSignal
             	    {
             	     
             	    	        currentNode=createCompositeNode(grammarAccess.getLocalSignalListAccess().getSignalSignalParserRuleCall_2_1_0(), currentNode); 
             	    	    
-            	    pushFollow(FOLLOW_ruleSignal_in_ruleLocalSignalList11344);
+            	    pushFollow(FOLLOW_ruleSignal_in_ruleLocalSignalList11337);
             	    lv_signal_3_0=ruleSignal();
             	    _fsp--;
 
@@ -14335,7 +14331,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start entryRuleSuspend
-    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6400:1: entryRuleSuspend returns [EObject current=null] : iv_ruleSuspend= ruleSuspend EOF ;
+    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6395:1: entryRuleSuspend returns [EObject current=null] : iv_ruleSuspend= ruleSuspend EOF ;
     public final EObject entryRuleSuspend() throws RecognitionException {
         EObject current = null;
 
@@ -14343,16 +14339,16 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6401:2: (iv_ruleSuspend= ruleSuspend EOF )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6402:2: iv_ruleSuspend= ruleSuspend EOF
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6396:2: (iv_ruleSuspend= ruleSuspend EOF )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6397:2: iv_ruleSuspend= ruleSuspend EOF
             {
              currentNode = createCompositeNode(grammarAccess.getSuspendRule(), currentNode); 
-            pushFollow(FOLLOW_ruleSuspend_in_entryRuleSuspend11382);
+            pushFollow(FOLLOW_ruleSuspend_in_entryRuleSuspend11375);
             iv_ruleSuspend=ruleSuspend();
             _fsp--;
 
              current =iv_ruleSuspend; 
-            match(input,EOF,FOLLOW_EOF_in_entryRuleSuspend11392); 
+            match(input,EOF,FOLLOW_EOF_in_entryRuleSuspend11385); 
 
             }
 
@@ -14370,7 +14366,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start ruleSuspend
-    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6409:1: ruleSuspend returns [EObject current=null] : ( 'suspend' ( (lv_statement_1_0= ruleStatement ) ) 'when' ( (lv_delay_3_0= ruleDelayExpr ) ) ) ;
+    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6404:1: ruleSuspend returns [EObject current=null] : ( 'suspend' ( (lv_statement_1_0= ruleStatement ) ) 'when' ( (lv_delay_3_0= ruleDelayExpr ) ) ) ;
     public final EObject ruleSuspend() throws RecognitionException {
         EObject current = null;
 
@@ -14382,26 +14378,26 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
          @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6414:6: ( ( 'suspend' ( (lv_statement_1_0= ruleStatement ) ) 'when' ( (lv_delay_3_0= ruleDelayExpr ) ) ) )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6415:1: ( 'suspend' ( (lv_statement_1_0= ruleStatement ) ) 'when' ( (lv_delay_3_0= ruleDelayExpr ) ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6409:6: ( ( 'suspend' ( (lv_statement_1_0= ruleStatement ) ) 'when' ( (lv_delay_3_0= ruleDelayExpr ) ) ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6410:1: ( 'suspend' ( (lv_statement_1_0= ruleStatement ) ) 'when' ( (lv_delay_3_0= ruleDelayExpr ) ) )
             {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6415:1: ( 'suspend' ( (lv_statement_1_0= ruleStatement ) ) 'when' ( (lv_delay_3_0= ruleDelayExpr ) ) )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6415:3: 'suspend' ( (lv_statement_1_0= ruleStatement ) ) 'when' ( (lv_delay_3_0= ruleDelayExpr ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6410:1: ( 'suspend' ( (lv_statement_1_0= ruleStatement ) ) 'when' ( (lv_delay_3_0= ruleDelayExpr ) ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6410:3: 'suspend' ( (lv_statement_1_0= ruleStatement ) ) 'when' ( (lv_delay_3_0= ruleDelayExpr ) )
             {
-            match(input,72,FOLLOW_72_in_ruleSuspend11427); 
+            match(input,72,FOLLOW_72_in_ruleSuspend11420); 
 
                     createLeafNode(grammarAccess.getSuspendAccess().getSuspendKeyword_0(), null); 
                 
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6419:1: ( (lv_statement_1_0= ruleStatement ) )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6420:1: (lv_statement_1_0= ruleStatement )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6414:1: ( (lv_statement_1_0= ruleStatement ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6415:1: (lv_statement_1_0= ruleStatement )
             {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6420:1: (lv_statement_1_0= ruleStatement )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6421:3: lv_statement_1_0= ruleStatement
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6415:1: (lv_statement_1_0= ruleStatement )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6416:3: lv_statement_1_0= ruleStatement
             {
              
             	        currentNode=createCompositeNode(grammarAccess.getSuspendAccess().getStatementStatementParserRuleCall_1_0(), currentNode); 
             	    
-            pushFollow(FOLLOW_ruleStatement_in_ruleSuspend11448);
+            pushFollow(FOLLOW_ruleStatement_in_ruleSuspend11441);
             lv_statement_1_0=ruleStatement();
             _fsp--;
 
@@ -14428,20 +14424,20 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
             }
 
-            match(input,44,FOLLOW_44_in_ruleSuspend11458); 
+            match(input,44,FOLLOW_44_in_ruleSuspend11451); 
 
                     createLeafNode(grammarAccess.getSuspendAccess().getWhenKeyword_2(), null); 
                 
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6447:1: ( (lv_delay_3_0= ruleDelayExpr ) )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6448:1: (lv_delay_3_0= ruleDelayExpr )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6442:1: ( (lv_delay_3_0= ruleDelayExpr ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6443:1: (lv_delay_3_0= ruleDelayExpr )
             {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6448:1: (lv_delay_3_0= ruleDelayExpr )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6449:3: lv_delay_3_0= ruleDelayExpr
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6443:1: (lv_delay_3_0= ruleDelayExpr )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6444:3: lv_delay_3_0= ruleDelayExpr
             {
              
             	        currentNode=createCompositeNode(grammarAccess.getSuspendAccess().getDelayDelayExprParserRuleCall_3_0(), currentNode); 
             	    
-            pushFollow(FOLLOW_ruleDelayExpr_in_ruleSuspend11479);
+            pushFollow(FOLLOW_ruleDelayExpr_in_ruleSuspend11472);
             lv_delay_3_0=ruleDelayExpr();
             _fsp--;
 
@@ -14491,7 +14487,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start entryRuleSustain
-    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6479:1: entryRuleSustain returns [EObject current=null] : iv_ruleSustain= ruleSustain EOF ;
+    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6474:1: entryRuleSustain returns [EObject current=null] : iv_ruleSustain= ruleSustain EOF ;
     public final EObject entryRuleSustain() throws RecognitionException {
         EObject current = null;
 
@@ -14499,16 +14495,16 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6480:2: (iv_ruleSustain= ruleSustain EOF )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6481:2: iv_ruleSustain= ruleSustain EOF
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6475:2: (iv_ruleSustain= ruleSustain EOF )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6476:2: iv_ruleSustain= ruleSustain EOF
             {
              currentNode = createCompositeNode(grammarAccess.getSustainRule(), currentNode); 
-            pushFollow(FOLLOW_ruleSustain_in_entryRuleSustain11515);
+            pushFollow(FOLLOW_ruleSustain_in_entryRuleSustain11508);
             iv_ruleSustain=ruleSustain();
             _fsp--;
 
              current =iv_ruleSustain; 
-            match(input,EOF,FOLLOW_EOF_in_entryRuleSustain11525); 
+            match(input,EOF,FOLLOW_EOF_in_entryRuleSustain11518); 
 
             }
 
@@ -14526,7 +14522,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start ruleSustain
-    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6488:1: ruleSustain returns [EObject current=null] : ( 'sustain' ( ( ( RULE_ESTERELID ) ) | ( (lv_tick_2_0= ruleTick ) ) ) ( '(' ( (lv_dataExpr_4_0= ruleDataExpr ) ) ')' )? ) ;
+    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6483:1: ruleSustain returns [EObject current=null] : ( 'sustain' ( ( ( RULE_ESTERELID ) ) | ( (lv_tick_2_0= ruleTick ) ) ) ( '(' ( (lv_dataExpr_4_0= ruleDataExpr ) ) ')' )? ) ;
     public final EObject ruleSustain() throws RecognitionException {
         EObject current = null;
 
@@ -14538,41 +14534,41 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
          @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6493:6: ( ( 'sustain' ( ( ( RULE_ESTERELID ) ) | ( (lv_tick_2_0= ruleTick ) ) ) ( '(' ( (lv_dataExpr_4_0= ruleDataExpr ) ) ')' )? ) )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6494:1: ( 'sustain' ( ( ( RULE_ESTERELID ) ) | ( (lv_tick_2_0= ruleTick ) ) ) ( '(' ( (lv_dataExpr_4_0= ruleDataExpr ) ) ')' )? )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6488:6: ( ( 'sustain' ( ( ( RULE_ESTERELID ) ) | ( (lv_tick_2_0= ruleTick ) ) ) ( '(' ( (lv_dataExpr_4_0= ruleDataExpr ) ) ')' )? ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6489:1: ( 'sustain' ( ( ( RULE_ESTERELID ) ) | ( (lv_tick_2_0= ruleTick ) ) ) ( '(' ( (lv_dataExpr_4_0= ruleDataExpr ) ) ')' )? )
             {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6494:1: ( 'sustain' ( ( ( RULE_ESTERELID ) ) | ( (lv_tick_2_0= ruleTick ) ) ) ( '(' ( (lv_dataExpr_4_0= ruleDataExpr ) ) ')' )? )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6494:3: 'sustain' ( ( ( RULE_ESTERELID ) ) | ( (lv_tick_2_0= ruleTick ) ) ) ( '(' ( (lv_dataExpr_4_0= ruleDataExpr ) ) ')' )?
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6489:1: ( 'sustain' ( ( ( RULE_ESTERELID ) ) | ( (lv_tick_2_0= ruleTick ) ) ) ( '(' ( (lv_dataExpr_4_0= ruleDataExpr ) ) ')' )? )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6489:3: 'sustain' ( ( ( RULE_ESTERELID ) ) | ( (lv_tick_2_0= ruleTick ) ) ) ( '(' ( (lv_dataExpr_4_0= ruleDataExpr ) ) ')' )?
             {
-            match(input,73,FOLLOW_73_in_ruleSustain11560); 
+            match(input,73,FOLLOW_73_in_ruleSustain11553); 
 
                     createLeafNode(grammarAccess.getSustainAccess().getSustainKeyword_0(), null); 
                 
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6498:1: ( ( ( RULE_ESTERELID ) ) | ( (lv_tick_2_0= ruleTick ) ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6493:1: ( ( ( RULE_ESTERELID ) ) | ( (lv_tick_2_0= ruleTick ) ) )
             int alt85=2;
             int LA85_0 = input.LA(1);
 
             if ( (LA85_0==RULE_ESTERELID) ) {
                 alt85=1;
             }
-            else if ( (LA85_0==92) ) {
+            else if ( (LA85_0==94) ) {
                 alt85=2;
             }
             else {
                 NoViableAltException nvae =
-                    new NoViableAltException("6498:1: ( ( ( RULE_ESTERELID ) ) | ( (lv_tick_2_0= ruleTick ) ) )", 85, 0, input);
+                    new NoViableAltException("6493:1: ( ( ( RULE_ESTERELID ) ) | ( (lv_tick_2_0= ruleTick ) ) )", 85, 0, input);
 
                 throw nvae;
             }
             switch (alt85) {
                 case 1 :
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6498:2: ( ( RULE_ESTERELID ) )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6493:2: ( ( RULE_ESTERELID ) )
                     {
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6498:2: ( ( RULE_ESTERELID ) )
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6499:1: ( RULE_ESTERELID )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6493:2: ( ( RULE_ESTERELID ) )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6494:1: ( RULE_ESTERELID )
                     {
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6499:1: ( RULE_ESTERELID )
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6500:3: RULE_ESTERELID
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6494:1: ( RULE_ESTERELID )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6495:3: RULE_ESTERELID
                     {
 
                     			if (current==null) {
@@ -14580,7 +14576,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
                     	            associateNodeWithAstElement(currentNode, current);
                     	        }
                             
-                    match(input,RULE_ESTERELID,FOLLOW_RULE_ESTERELID_in_ruleSustain11579); 
+                    match(input,RULE_ESTERELID,FOLLOW_RULE_ESTERELID_in_ruleSustain11572); 
 
                     		createLeafNode(grammarAccess.getSustainAccess().getSignalSignalCrossReference_1_0_0(), "signal"); 
                     	
@@ -14594,18 +14590,18 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6513:6: ( (lv_tick_2_0= ruleTick ) )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6508:6: ( (lv_tick_2_0= ruleTick ) )
                     {
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6513:6: ( (lv_tick_2_0= ruleTick ) )
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6514:1: (lv_tick_2_0= ruleTick )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6508:6: ( (lv_tick_2_0= ruleTick ) )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6509:1: (lv_tick_2_0= ruleTick )
                     {
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6514:1: (lv_tick_2_0= ruleTick )
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6515:3: lv_tick_2_0= ruleTick
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6509:1: (lv_tick_2_0= ruleTick )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6510:3: lv_tick_2_0= ruleTick
                     {
                      
                     	        currentNode=createCompositeNode(grammarAccess.getSustainAccess().getTickTickParserRuleCall_1_1_0(), currentNode); 
                     	    
-                    pushFollow(FOLLOW_ruleTick_in_ruleSustain11606);
+                    pushFollow(FOLLOW_ruleTick_in_ruleSustain11599);
                     lv_tick_2_0=ruleTick();
                     _fsp--;
 
@@ -14638,7 +14634,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
             }
 
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6537:3: ( '(' ( (lv_dataExpr_4_0= ruleDataExpr ) ) ')' )?
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6532:3: ( '(' ( (lv_dataExpr_4_0= ruleDataExpr ) ) ')' )?
             int alt86=2;
             int LA86_0 = input.LA(1);
 
@@ -14647,22 +14643,22 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
             }
             switch (alt86) {
                 case 1 :
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6537:5: '(' ( (lv_dataExpr_4_0= ruleDataExpr ) ) ')'
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6532:5: '(' ( (lv_dataExpr_4_0= ruleDataExpr ) ) ')'
                     {
-                    match(input,36,FOLLOW_36_in_ruleSustain11618); 
+                    match(input,36,FOLLOW_36_in_ruleSustain11611); 
 
                             createLeafNode(grammarAccess.getSustainAccess().getLeftParenthesisKeyword_2_0(), null); 
                         
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6541:1: ( (lv_dataExpr_4_0= ruleDataExpr ) )
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6542:1: (lv_dataExpr_4_0= ruleDataExpr )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6536:1: ( (lv_dataExpr_4_0= ruleDataExpr ) )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6537:1: (lv_dataExpr_4_0= ruleDataExpr )
                     {
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6542:1: (lv_dataExpr_4_0= ruleDataExpr )
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6543:3: lv_dataExpr_4_0= ruleDataExpr
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6537:1: (lv_dataExpr_4_0= ruleDataExpr )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6538:3: lv_dataExpr_4_0= ruleDataExpr
                     {
                      
                     	        currentNode=createCompositeNode(grammarAccess.getSustainAccess().getDataExprDataExprParserRuleCall_2_1_0(), currentNode); 
                     	    
-                    pushFollow(FOLLOW_ruleDataExpr_in_ruleSustain11639);
+                    pushFollow(FOLLOW_ruleDataExpr_in_ruleSustain11632);
                     lv_dataExpr_4_0=ruleDataExpr();
                     _fsp--;
 
@@ -14689,7 +14685,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    match(input,37,FOLLOW_37_in_ruleSustain11649); 
+                    match(input,37,FOLLOW_37_in_ruleSustain11642); 
 
                             createLeafNode(grammarAccess.getSustainAccess().getRightParenthesisKeyword_2_2(), null); 
                         
@@ -14722,7 +14718,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start entryRuleTrap
-    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6577:1: entryRuleTrap returns [EObject current=null] : iv_ruleTrap= ruleTrap EOF ;
+    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6572:1: entryRuleTrap returns [EObject current=null] : iv_ruleTrap= ruleTrap EOF ;
     public final EObject entryRuleTrap() throws RecognitionException {
         EObject current = null;
 
@@ -14730,16 +14726,16 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6578:2: (iv_ruleTrap= ruleTrap EOF )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6579:2: iv_ruleTrap= ruleTrap EOF
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6573:2: (iv_ruleTrap= ruleTrap EOF )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6574:2: iv_ruleTrap= ruleTrap EOF
             {
              currentNode = createCompositeNode(grammarAccess.getTrapRule(), currentNode); 
-            pushFollow(FOLLOW_ruleTrap_in_entryRuleTrap11687);
+            pushFollow(FOLLOW_ruleTrap_in_entryRuleTrap11680);
             iv_ruleTrap=ruleTrap();
             _fsp--;
 
              current =iv_ruleTrap; 
-            match(input,EOF,FOLLOW_EOF_in_entryRuleTrap11697); 
+            match(input,EOF,FOLLOW_EOF_in_entryRuleTrap11690); 
 
             }
 
@@ -14757,7 +14753,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start ruleTrap
-    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6586:1: ruleTrap returns [EObject current=null] : ( 'trap' ( (lv_trapDeclList_1_0= ruleTrapDeclList ) ) 'in' ( (lv_statement_3_0= ruleStatement ) ) ( (lv_trapHandlerList_4_0= ruleTrapHandlerList ) )? 'end' ( 'trap' )? ) ;
+    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6581:1: ruleTrap returns [EObject current=null] : ( 'trap' ( (lv_trapDeclList_1_0= ruleTrapDeclList ) ) 'in' ( (lv_statement_3_0= ruleStatement ) ) ( (lv_trapHandlerList_4_0= ruleTrapHandlerList ) )? 'end' ( 'trap' )? ) ;
     public final EObject ruleTrap() throws RecognitionException {
         EObject current = null;
 
@@ -14771,26 +14767,26 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
          @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6591:6: ( ( 'trap' ( (lv_trapDeclList_1_0= ruleTrapDeclList ) ) 'in' ( (lv_statement_3_0= ruleStatement ) ) ( (lv_trapHandlerList_4_0= ruleTrapHandlerList ) )? 'end' ( 'trap' )? ) )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6592:1: ( 'trap' ( (lv_trapDeclList_1_0= ruleTrapDeclList ) ) 'in' ( (lv_statement_3_0= ruleStatement ) ) ( (lv_trapHandlerList_4_0= ruleTrapHandlerList ) )? 'end' ( 'trap' )? )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6586:6: ( ( 'trap' ( (lv_trapDeclList_1_0= ruleTrapDeclList ) ) 'in' ( (lv_statement_3_0= ruleStatement ) ) ( (lv_trapHandlerList_4_0= ruleTrapHandlerList ) )? 'end' ( 'trap' )? ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6587:1: ( 'trap' ( (lv_trapDeclList_1_0= ruleTrapDeclList ) ) 'in' ( (lv_statement_3_0= ruleStatement ) ) ( (lv_trapHandlerList_4_0= ruleTrapHandlerList ) )? 'end' ( 'trap' )? )
             {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6592:1: ( 'trap' ( (lv_trapDeclList_1_0= ruleTrapDeclList ) ) 'in' ( (lv_statement_3_0= ruleStatement ) ) ( (lv_trapHandlerList_4_0= ruleTrapHandlerList ) )? 'end' ( 'trap' )? )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6592:3: 'trap' ( (lv_trapDeclList_1_0= ruleTrapDeclList ) ) 'in' ( (lv_statement_3_0= ruleStatement ) ) ( (lv_trapHandlerList_4_0= ruleTrapHandlerList ) )? 'end' ( 'trap' )?
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6587:1: ( 'trap' ( (lv_trapDeclList_1_0= ruleTrapDeclList ) ) 'in' ( (lv_statement_3_0= ruleStatement ) ) ( (lv_trapHandlerList_4_0= ruleTrapHandlerList ) )? 'end' ( 'trap' )? )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6587:3: 'trap' ( (lv_trapDeclList_1_0= ruleTrapDeclList ) ) 'in' ( (lv_statement_3_0= ruleStatement ) ) ( (lv_trapHandlerList_4_0= ruleTrapHandlerList ) )? 'end' ( 'trap' )?
             {
-            match(input,74,FOLLOW_74_in_ruleTrap11732); 
+            match(input,74,FOLLOW_74_in_ruleTrap11725); 
 
                     createLeafNode(grammarAccess.getTrapAccess().getTrapKeyword_0(), null); 
                 
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6596:1: ( (lv_trapDeclList_1_0= ruleTrapDeclList ) )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6597:1: (lv_trapDeclList_1_0= ruleTrapDeclList )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6591:1: ( (lv_trapDeclList_1_0= ruleTrapDeclList ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6592:1: (lv_trapDeclList_1_0= ruleTrapDeclList )
             {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6597:1: (lv_trapDeclList_1_0= ruleTrapDeclList )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6598:3: lv_trapDeclList_1_0= ruleTrapDeclList
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6592:1: (lv_trapDeclList_1_0= ruleTrapDeclList )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6593:3: lv_trapDeclList_1_0= ruleTrapDeclList
             {
              
             	        currentNode=createCompositeNode(grammarAccess.getTrapAccess().getTrapDeclListTrapDeclListParserRuleCall_1_0(), currentNode); 
             	    
-            pushFollow(FOLLOW_ruleTrapDeclList_in_ruleTrap11753);
+            pushFollow(FOLLOW_ruleTrapDeclList_in_ruleTrap11746);
             lv_trapDeclList_1_0=ruleTrapDeclList();
             _fsp--;
 
@@ -14817,20 +14813,20 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
             }
 
-            match(input,71,FOLLOW_71_in_ruleTrap11763); 
+            match(input,71,FOLLOW_71_in_ruleTrap11756); 
 
                     createLeafNode(grammarAccess.getTrapAccess().getInKeyword_2(), null); 
                 
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6624:1: ( (lv_statement_3_0= ruleStatement ) )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6625:1: (lv_statement_3_0= ruleStatement )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6619:1: ( (lv_statement_3_0= ruleStatement ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6620:1: (lv_statement_3_0= ruleStatement )
             {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6625:1: (lv_statement_3_0= ruleStatement )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6626:3: lv_statement_3_0= ruleStatement
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6620:1: (lv_statement_3_0= ruleStatement )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6621:3: lv_statement_3_0= ruleStatement
             {
              
             	        currentNode=createCompositeNode(grammarAccess.getTrapAccess().getStatementStatementParserRuleCall_3_0(), currentNode); 
             	    
-            pushFollow(FOLLOW_ruleStatement_in_ruleTrap11784);
+            pushFollow(FOLLOW_ruleStatement_in_ruleTrap11777);
             lv_statement_3_0=ruleStatement();
             _fsp--;
 
@@ -14857,7 +14853,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
             }
 
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6648:2: ( (lv_trapHandlerList_4_0= ruleTrapHandlerList ) )?
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6643:2: ( (lv_trapHandlerList_4_0= ruleTrapHandlerList ) )?
             int alt87=2;
             int LA87_0 = input.LA(1);
 
@@ -14866,15 +14862,15 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
             }
             switch (alt87) {
                 case 1 :
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6649:1: (lv_trapHandlerList_4_0= ruleTrapHandlerList )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6644:1: (lv_trapHandlerList_4_0= ruleTrapHandlerList )
                     {
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6649:1: (lv_trapHandlerList_4_0= ruleTrapHandlerList )
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6650:3: lv_trapHandlerList_4_0= ruleTrapHandlerList
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6644:1: (lv_trapHandlerList_4_0= ruleTrapHandlerList )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6645:3: lv_trapHandlerList_4_0= ruleTrapHandlerList
                     {
                      
                     	        currentNode=createCompositeNode(grammarAccess.getTrapAccess().getTrapHandlerListTrapHandlerListParserRuleCall_4_0(), currentNode); 
                     	    
-                    pushFollow(FOLLOW_ruleTrapHandlerList_in_ruleTrap11805);
+                    pushFollow(FOLLOW_ruleTrapHandlerList_in_ruleTrap11798);
                     lv_trapHandlerList_4_0=ruleTrapHandlerList();
                     _fsp--;
 
@@ -14904,11 +14900,11 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
             }
 
-            match(input,19,FOLLOW_19_in_ruleTrap11816); 
+            match(input,19,FOLLOW_19_in_ruleTrap11809); 
 
                     createLeafNode(grammarAccess.getTrapAccess().getEndKeyword_5(), null); 
                 
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6676:1: ( 'trap' )?
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6671:1: ( 'trap' )?
             int alt88=2;
             int LA88_0 = input.LA(1);
 
@@ -14917,9 +14913,9 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
             }
             switch (alt88) {
                 case 1 :
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6676:3: 'trap'
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6671:3: 'trap'
                     {
-                    match(input,74,FOLLOW_74_in_ruleTrap11827); 
+                    match(input,74,FOLLOW_74_in_ruleTrap11820); 
 
                             createLeafNode(grammarAccess.getTrapAccess().getTrapKeyword_6(), null); 
                         
@@ -14952,7 +14948,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start entryRuleTrapDeclList
-    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6688:1: entryRuleTrapDeclList returns [EObject current=null] : iv_ruleTrapDeclList= ruleTrapDeclList EOF ;
+    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6683:1: entryRuleTrapDeclList returns [EObject current=null] : iv_ruleTrapDeclList= ruleTrapDeclList EOF ;
     public final EObject entryRuleTrapDeclList() throws RecognitionException {
         EObject current = null;
 
@@ -14960,16 +14956,16 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6689:2: (iv_ruleTrapDeclList= ruleTrapDeclList EOF )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6690:2: iv_ruleTrapDeclList= ruleTrapDeclList EOF
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6684:2: (iv_ruleTrapDeclList= ruleTrapDeclList EOF )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6685:2: iv_ruleTrapDeclList= ruleTrapDeclList EOF
             {
              currentNode = createCompositeNode(grammarAccess.getTrapDeclListRule(), currentNode); 
-            pushFollow(FOLLOW_ruleTrapDeclList_in_entryRuleTrapDeclList11865);
+            pushFollow(FOLLOW_ruleTrapDeclList_in_entryRuleTrapDeclList11858);
             iv_ruleTrapDeclList=ruleTrapDeclList();
             _fsp--;
 
              current =iv_ruleTrapDeclList; 
-            match(input,EOF,FOLLOW_EOF_in_entryRuleTrapDeclList11875); 
+            match(input,EOF,FOLLOW_EOF_in_entryRuleTrapDeclList11868); 
 
             }
 
@@ -14987,7 +14983,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start ruleTrapDeclList
-    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6697:1: ruleTrapDeclList returns [EObject current=null] : ( ( (lv_trapDecl_0_0= ruleTrapDecl ) ) ( ',' ( (lv_trapDecl_2_0= ruleTrapDecl ) ) )* ) ;
+    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6692:1: ruleTrapDeclList returns [EObject current=null] : ( ( (lv_trapDecl_0_0= ruleTrapDecl ) ) ( ',' ( (lv_trapDecl_2_0= ruleTrapDecl ) ) )* ) ;
     public final EObject ruleTrapDeclList() throws RecognitionException {
         EObject current = null;
 
@@ -14999,22 +14995,22 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
          @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6702:6: ( ( ( (lv_trapDecl_0_0= ruleTrapDecl ) ) ( ',' ( (lv_trapDecl_2_0= ruleTrapDecl ) ) )* ) )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6703:1: ( ( (lv_trapDecl_0_0= ruleTrapDecl ) ) ( ',' ( (lv_trapDecl_2_0= ruleTrapDecl ) ) )* )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6697:6: ( ( ( (lv_trapDecl_0_0= ruleTrapDecl ) ) ( ',' ( (lv_trapDecl_2_0= ruleTrapDecl ) ) )* ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6698:1: ( ( (lv_trapDecl_0_0= ruleTrapDecl ) ) ( ',' ( (lv_trapDecl_2_0= ruleTrapDecl ) ) )* )
             {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6703:1: ( ( (lv_trapDecl_0_0= ruleTrapDecl ) ) ( ',' ( (lv_trapDecl_2_0= ruleTrapDecl ) ) )* )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6703:2: ( (lv_trapDecl_0_0= ruleTrapDecl ) ) ( ',' ( (lv_trapDecl_2_0= ruleTrapDecl ) ) )*
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6698:1: ( ( (lv_trapDecl_0_0= ruleTrapDecl ) ) ( ',' ( (lv_trapDecl_2_0= ruleTrapDecl ) ) )* )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6698:2: ( (lv_trapDecl_0_0= ruleTrapDecl ) ) ( ',' ( (lv_trapDecl_2_0= ruleTrapDecl ) ) )*
             {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6703:2: ( (lv_trapDecl_0_0= ruleTrapDecl ) )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6704:1: (lv_trapDecl_0_0= ruleTrapDecl )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6698:2: ( (lv_trapDecl_0_0= ruleTrapDecl ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6699:1: (lv_trapDecl_0_0= ruleTrapDecl )
             {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6704:1: (lv_trapDecl_0_0= ruleTrapDecl )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6705:3: lv_trapDecl_0_0= ruleTrapDecl
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6699:1: (lv_trapDecl_0_0= ruleTrapDecl )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6700:3: lv_trapDecl_0_0= ruleTrapDecl
             {
              
             	        currentNode=createCompositeNode(grammarAccess.getTrapDeclListAccess().getTrapDeclTrapDeclParserRuleCall_0_0(), currentNode); 
             	    
-            pushFollow(FOLLOW_ruleTrapDecl_in_ruleTrapDeclList11921);
+            pushFollow(FOLLOW_ruleTrapDecl_in_ruleTrapDeclList11914);
             lv_trapDecl_0_0=ruleTrapDecl();
             _fsp--;
 
@@ -15041,7 +15037,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
             }
 
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6727:2: ( ',' ( (lv_trapDecl_2_0= ruleTrapDecl ) ) )*
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6722:2: ( ',' ( (lv_trapDecl_2_0= ruleTrapDecl ) ) )*
             loop89:
             do {
                 int alt89=2;
@@ -15054,22 +15050,22 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
                 switch (alt89) {
             	case 1 :
-            	    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6727:4: ',' ( (lv_trapDecl_2_0= ruleTrapDecl ) )
+            	    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6722:4: ',' ( (lv_trapDecl_2_0= ruleTrapDecl ) )
             	    {
-            	    match(input,22,FOLLOW_22_in_ruleTrapDeclList11932); 
+            	    match(input,22,FOLLOW_22_in_ruleTrapDeclList11925); 
 
             	            createLeafNode(grammarAccess.getTrapDeclListAccess().getCommaKeyword_1_0(), null); 
             	        
-            	    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6731:1: ( (lv_trapDecl_2_0= ruleTrapDecl ) )
-            	    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6732:1: (lv_trapDecl_2_0= ruleTrapDecl )
+            	    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6726:1: ( (lv_trapDecl_2_0= ruleTrapDecl ) )
+            	    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6727:1: (lv_trapDecl_2_0= ruleTrapDecl )
             	    {
-            	    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6732:1: (lv_trapDecl_2_0= ruleTrapDecl )
-            	    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6733:3: lv_trapDecl_2_0= ruleTrapDecl
+            	    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6727:1: (lv_trapDecl_2_0= ruleTrapDecl )
+            	    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6728:3: lv_trapDecl_2_0= ruleTrapDecl
             	    {
             	     
             	    	        currentNode=createCompositeNode(grammarAccess.getTrapDeclListAccess().getTrapDeclTrapDeclParserRuleCall_1_1_0(), currentNode); 
             	    	    
-            	    pushFollow(FOLLOW_ruleTrapDecl_in_ruleTrapDeclList11953);
+            	    pushFollow(FOLLOW_ruleTrapDecl_in_ruleTrapDeclList11946);
             	    lv_trapDecl_2_0=ruleTrapDecl();
             	    _fsp--;
 
@@ -15128,7 +15124,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start entryRuleTrapDecl
-    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6763:1: entryRuleTrapDecl returns [EObject current=null] : iv_ruleTrapDecl= ruleTrapDecl EOF ;
+    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6758:1: entryRuleTrapDecl returns [EObject current=null] : iv_ruleTrapDecl= ruleTrapDecl EOF ;
     public final EObject entryRuleTrapDecl() throws RecognitionException {
         EObject current = null;
 
@@ -15136,16 +15132,16 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6764:2: (iv_ruleTrapDecl= ruleTrapDecl EOF )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6765:2: iv_ruleTrapDecl= ruleTrapDecl EOF
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6759:2: (iv_ruleTrapDecl= ruleTrapDecl EOF )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6760:2: iv_ruleTrapDecl= ruleTrapDecl EOF
             {
              currentNode = createCompositeNode(grammarAccess.getTrapDeclRule(), currentNode); 
-            pushFollow(FOLLOW_ruleTrapDecl_in_entryRuleTrapDecl11991);
+            pushFollow(FOLLOW_ruleTrapDecl_in_entryRuleTrapDecl11984);
             iv_ruleTrapDecl=ruleTrapDecl();
             _fsp--;
 
              current =iv_ruleTrapDecl; 
-            match(input,EOF,FOLLOW_EOF_in_entryRuleTrapDecl12001); 
+            match(input,EOF,FOLLOW_EOF_in_entryRuleTrapDecl11994); 
 
             }
 
@@ -15163,7 +15159,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start ruleTrapDecl
-    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6772:1: ruleTrapDecl returns [EObject current=null] : ( ( (lv_name_0_0= RULE_ESTERELID ) ) ( (lv_channelDesc_1_0= ruleChannelDescription ) )? ) ;
+    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6767:1: ruleTrapDecl returns [EObject current=null] : ( ( (lv_name_0_0= RULE_ESTERELID ) ) ( (lv_channelDesc_1_0= ruleChannelDescription ) )? ) ;
     public final EObject ruleTrapDecl() throws RecognitionException {
         EObject current = null;
 
@@ -15174,20 +15170,20 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
          @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6777:6: ( ( ( (lv_name_0_0= RULE_ESTERELID ) ) ( (lv_channelDesc_1_0= ruleChannelDescription ) )? ) )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6778:1: ( ( (lv_name_0_0= RULE_ESTERELID ) ) ( (lv_channelDesc_1_0= ruleChannelDescription ) )? )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6772:6: ( ( ( (lv_name_0_0= RULE_ESTERELID ) ) ( (lv_channelDesc_1_0= ruleChannelDescription ) )? ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6773:1: ( ( (lv_name_0_0= RULE_ESTERELID ) ) ( (lv_channelDesc_1_0= ruleChannelDescription ) )? )
             {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6778:1: ( ( (lv_name_0_0= RULE_ESTERELID ) ) ( (lv_channelDesc_1_0= ruleChannelDescription ) )? )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6778:2: ( (lv_name_0_0= RULE_ESTERELID ) ) ( (lv_channelDesc_1_0= ruleChannelDescription ) )?
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6773:1: ( ( (lv_name_0_0= RULE_ESTERELID ) ) ( (lv_channelDesc_1_0= ruleChannelDescription ) )? )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6773:2: ( (lv_name_0_0= RULE_ESTERELID ) ) ( (lv_channelDesc_1_0= ruleChannelDescription ) )?
             {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6778:2: ( (lv_name_0_0= RULE_ESTERELID ) )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6779:1: (lv_name_0_0= RULE_ESTERELID )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6773:2: ( (lv_name_0_0= RULE_ESTERELID ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6774:1: (lv_name_0_0= RULE_ESTERELID )
             {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6779:1: (lv_name_0_0= RULE_ESTERELID )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6780:3: lv_name_0_0= RULE_ESTERELID
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6774:1: (lv_name_0_0= RULE_ESTERELID )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6775:3: lv_name_0_0= RULE_ESTERELID
             {
             lv_name_0_0=(Token)input.LT(1);
-            match(input,RULE_ESTERELID,FOLLOW_RULE_ESTERELID_in_ruleTrapDecl12043); 
+            match(input,RULE_ESTERELID,FOLLOW_RULE_ESTERELID_in_ruleTrapDecl12036); 
 
             			createLeafNode(grammarAccess.getTrapDeclAccess().getNameEsterelIDTerminalRuleCall_0_0(), "name"); 
             		
@@ -15213,7 +15209,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
             }
 
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6802:2: ( (lv_channelDesc_1_0= ruleChannelDescription ) )?
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6797:2: ( (lv_channelDesc_1_0= ruleChannelDescription ) )?
             int alt90=2;
             int LA90_0 = input.LA(1);
 
@@ -15222,15 +15218,15 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
             }
             switch (alt90) {
                 case 1 :
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6803:1: (lv_channelDesc_1_0= ruleChannelDescription )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6798:1: (lv_channelDesc_1_0= ruleChannelDescription )
                     {
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6803:1: (lv_channelDesc_1_0= ruleChannelDescription )
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6804:3: lv_channelDesc_1_0= ruleChannelDescription
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6798:1: (lv_channelDesc_1_0= ruleChannelDescription )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6799:3: lv_channelDesc_1_0= ruleChannelDescription
                     {
                      
                     	        currentNode=createCompositeNode(grammarAccess.getTrapDeclAccess().getChannelDescChannelDescriptionParserRuleCall_1_0(), currentNode); 
                     	    
-                    pushFollow(FOLLOW_ruleChannelDescription_in_ruleTrapDecl12069);
+                    pushFollow(FOLLOW_ruleChannelDescription_in_ruleTrapDecl12062);
                     lv_channelDesc_1_0=ruleChannelDescription();
                     _fsp--;
 
@@ -15283,7 +15279,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start entryRuleTrapHandlerList
-    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6834:1: entryRuleTrapHandlerList returns [EObject current=null] : iv_ruleTrapHandlerList= ruleTrapHandlerList EOF ;
+    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6829:1: entryRuleTrapHandlerList returns [EObject current=null] : iv_ruleTrapHandlerList= ruleTrapHandlerList EOF ;
     public final EObject entryRuleTrapHandlerList() throws RecognitionException {
         EObject current = null;
 
@@ -15291,16 +15287,16 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6835:2: (iv_ruleTrapHandlerList= ruleTrapHandlerList EOF )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6836:2: iv_ruleTrapHandlerList= ruleTrapHandlerList EOF
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6830:2: (iv_ruleTrapHandlerList= ruleTrapHandlerList EOF )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6831:2: iv_ruleTrapHandlerList= ruleTrapHandlerList EOF
             {
              currentNode = createCompositeNode(grammarAccess.getTrapHandlerListRule(), currentNode); 
-            pushFollow(FOLLOW_ruleTrapHandlerList_in_entryRuleTrapHandlerList12106);
+            pushFollow(FOLLOW_ruleTrapHandlerList_in_entryRuleTrapHandlerList12099);
             iv_ruleTrapHandlerList=ruleTrapHandlerList();
             _fsp--;
 
              current =iv_ruleTrapHandlerList; 
-            match(input,EOF,FOLLOW_EOF_in_entryRuleTrapHandlerList12116); 
+            match(input,EOF,FOLLOW_EOF_in_entryRuleTrapHandlerList12109); 
 
             }
 
@@ -15318,7 +15314,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start ruleTrapHandlerList
-    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6843:1: ruleTrapHandlerList returns [EObject current=null] : ( ( (lv_trapHandler_0_0= ruleTrapHandler ) ) ( (lv_trapHandler_1_0= ruleTrapHandler ) )* ) ;
+    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6838:1: ruleTrapHandlerList returns [EObject current=null] : ( ( (lv_trapHandler_0_0= ruleTrapHandler ) ) ( (lv_trapHandler_1_0= ruleTrapHandler ) )* ) ;
     public final EObject ruleTrapHandlerList() throws RecognitionException {
         EObject current = null;
 
@@ -15330,22 +15326,22 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
          @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6848:6: ( ( ( (lv_trapHandler_0_0= ruleTrapHandler ) ) ( (lv_trapHandler_1_0= ruleTrapHandler ) )* ) )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6849:1: ( ( (lv_trapHandler_0_0= ruleTrapHandler ) ) ( (lv_trapHandler_1_0= ruleTrapHandler ) )* )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6843:6: ( ( ( (lv_trapHandler_0_0= ruleTrapHandler ) ) ( (lv_trapHandler_1_0= ruleTrapHandler ) )* ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6844:1: ( ( (lv_trapHandler_0_0= ruleTrapHandler ) ) ( (lv_trapHandler_1_0= ruleTrapHandler ) )* )
             {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6849:1: ( ( (lv_trapHandler_0_0= ruleTrapHandler ) ) ( (lv_trapHandler_1_0= ruleTrapHandler ) )* )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6849:2: ( (lv_trapHandler_0_0= ruleTrapHandler ) ) ( (lv_trapHandler_1_0= ruleTrapHandler ) )*
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6844:1: ( ( (lv_trapHandler_0_0= ruleTrapHandler ) ) ( (lv_trapHandler_1_0= ruleTrapHandler ) )* )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6844:2: ( (lv_trapHandler_0_0= ruleTrapHandler ) ) ( (lv_trapHandler_1_0= ruleTrapHandler ) )*
             {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6849:2: ( (lv_trapHandler_0_0= ruleTrapHandler ) )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6850:1: (lv_trapHandler_0_0= ruleTrapHandler )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6844:2: ( (lv_trapHandler_0_0= ruleTrapHandler ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6845:1: (lv_trapHandler_0_0= ruleTrapHandler )
             {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6850:1: (lv_trapHandler_0_0= ruleTrapHandler )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6851:3: lv_trapHandler_0_0= ruleTrapHandler
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6845:1: (lv_trapHandler_0_0= ruleTrapHandler )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6846:3: lv_trapHandler_0_0= ruleTrapHandler
             {
              
             	        currentNode=createCompositeNode(grammarAccess.getTrapHandlerListAccess().getTrapHandlerTrapHandlerParserRuleCall_0_0(), currentNode); 
             	    
-            pushFollow(FOLLOW_ruleTrapHandler_in_ruleTrapHandlerList12162);
+            pushFollow(FOLLOW_ruleTrapHandler_in_ruleTrapHandlerList12155);
             lv_trapHandler_0_0=ruleTrapHandler();
             _fsp--;
 
@@ -15372,7 +15368,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
             }
 
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6873:2: ( (lv_trapHandler_1_0= ruleTrapHandler ) )*
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6868:2: ( (lv_trapHandler_1_0= ruleTrapHandler ) )*
             loop91:
             do {
                 int alt91=2;
@@ -15385,15 +15381,15 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
                 switch (alt91) {
             	case 1 :
-            	    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6874:1: (lv_trapHandler_1_0= ruleTrapHandler )
+            	    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6869:1: (lv_trapHandler_1_0= ruleTrapHandler )
             	    {
-            	    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6874:1: (lv_trapHandler_1_0= ruleTrapHandler )
-            	    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6875:3: lv_trapHandler_1_0= ruleTrapHandler
+            	    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6869:1: (lv_trapHandler_1_0= ruleTrapHandler )
+            	    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6870:3: lv_trapHandler_1_0= ruleTrapHandler
             	    {
             	     
             	    	        currentNode=createCompositeNode(grammarAccess.getTrapHandlerListAccess().getTrapHandlerTrapHandlerParserRuleCall_1_0(), currentNode); 
             	    	    
-            	    pushFollow(FOLLOW_ruleTrapHandler_in_ruleTrapHandlerList12183);
+            	    pushFollow(FOLLOW_ruleTrapHandler_in_ruleTrapHandlerList12176);
             	    lv_trapHandler_1_0=ruleTrapHandler();
             	    _fsp--;
 
@@ -15449,7 +15445,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start entryRuleTrapHandler
-    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6905:1: entryRuleTrapHandler returns [EObject current=null] : iv_ruleTrapHandler= ruleTrapHandler EOF ;
+    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6900:1: entryRuleTrapHandler returns [EObject current=null] : iv_ruleTrapHandler= ruleTrapHandler EOF ;
     public final EObject entryRuleTrapHandler() throws RecognitionException {
         EObject current = null;
 
@@ -15457,16 +15453,16 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6906:2: (iv_ruleTrapHandler= ruleTrapHandler EOF )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6907:2: iv_ruleTrapHandler= ruleTrapHandler EOF
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6901:2: (iv_ruleTrapHandler= ruleTrapHandler EOF )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6902:2: iv_ruleTrapHandler= ruleTrapHandler EOF
             {
              currentNode = createCompositeNode(grammarAccess.getTrapHandlerRule(), currentNode); 
-            pushFollow(FOLLOW_ruleTrapHandler_in_entryRuleTrapHandler12220);
+            pushFollow(FOLLOW_ruleTrapHandler_in_entryRuleTrapHandler12213);
             iv_ruleTrapHandler=ruleTrapHandler();
             _fsp--;
 
              current =iv_ruleTrapHandler; 
-            match(input,EOF,FOLLOW_EOF_in_entryRuleTrapHandler12230); 
+            match(input,EOF,FOLLOW_EOF_in_entryRuleTrapHandler12223); 
 
             }
 
@@ -15484,7 +15480,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start ruleTrapHandler
-    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6914:1: ruleTrapHandler returns [EObject current=null] : ( 'handle' ( (lv_trapExpr_1_0= ruleTrapExpr ) ) 'do' ( (lv_statement_3_0= ruleStatement ) ) ) ;
+    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6909:1: ruleTrapHandler returns [EObject current=null] : ( 'handle' ( (lv_trapExpr_1_0= ruleTrapExpr ) ) 'do' ( (lv_statement_3_0= ruleStatement ) ) ) ;
     public final EObject ruleTrapHandler() throws RecognitionException {
         EObject current = null;
 
@@ -15496,26 +15492,26 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
          @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6919:6: ( ( 'handle' ( (lv_trapExpr_1_0= ruleTrapExpr ) ) 'do' ( (lv_statement_3_0= ruleStatement ) ) ) )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6920:1: ( 'handle' ( (lv_trapExpr_1_0= ruleTrapExpr ) ) 'do' ( (lv_statement_3_0= ruleStatement ) ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6914:6: ( ( 'handle' ( (lv_trapExpr_1_0= ruleTrapExpr ) ) 'do' ( (lv_statement_3_0= ruleStatement ) ) ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6915:1: ( 'handle' ( (lv_trapExpr_1_0= ruleTrapExpr ) ) 'do' ( (lv_statement_3_0= ruleStatement ) ) )
             {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6920:1: ( 'handle' ( (lv_trapExpr_1_0= ruleTrapExpr ) ) 'do' ( (lv_statement_3_0= ruleStatement ) ) )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6920:3: 'handle' ( (lv_trapExpr_1_0= ruleTrapExpr ) ) 'do' ( (lv_statement_3_0= ruleStatement ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6915:1: ( 'handle' ( (lv_trapExpr_1_0= ruleTrapExpr ) ) 'do' ( (lv_statement_3_0= ruleStatement ) ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6915:3: 'handle' ( (lv_trapExpr_1_0= ruleTrapExpr ) ) 'do' ( (lv_statement_3_0= ruleStatement ) )
             {
-            match(input,75,FOLLOW_75_in_ruleTrapHandler12265); 
+            match(input,75,FOLLOW_75_in_ruleTrapHandler12258); 
 
                     createLeafNode(grammarAccess.getTrapHandlerAccess().getHandleKeyword_0(), null); 
                 
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6924:1: ( (lv_trapExpr_1_0= ruleTrapExpr ) )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6925:1: (lv_trapExpr_1_0= ruleTrapExpr )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6919:1: ( (lv_trapExpr_1_0= ruleTrapExpr ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6920:1: (lv_trapExpr_1_0= ruleTrapExpr )
             {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6925:1: (lv_trapExpr_1_0= ruleTrapExpr )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6926:3: lv_trapExpr_1_0= ruleTrapExpr
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6920:1: (lv_trapExpr_1_0= ruleTrapExpr )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6921:3: lv_trapExpr_1_0= ruleTrapExpr
             {
              
             	        currentNode=createCompositeNode(grammarAccess.getTrapHandlerAccess().getTrapExprTrapExprParserRuleCall_1_0(), currentNode); 
             	    
-            pushFollow(FOLLOW_ruleTrapExpr_in_ruleTrapHandler12286);
+            pushFollow(FOLLOW_ruleTrapExpr_in_ruleTrapHandler12279);
             lv_trapExpr_1_0=ruleTrapExpr();
             _fsp--;
 
@@ -15542,20 +15538,20 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
             }
 
-            match(input,45,FOLLOW_45_in_ruleTrapHandler12296); 
+            match(input,45,FOLLOW_45_in_ruleTrapHandler12289); 
 
                     createLeafNode(grammarAccess.getTrapHandlerAccess().getDoKeyword_2(), null); 
                 
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6952:1: ( (lv_statement_3_0= ruleStatement ) )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6953:1: (lv_statement_3_0= ruleStatement )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6947:1: ( (lv_statement_3_0= ruleStatement ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6948:1: (lv_statement_3_0= ruleStatement )
             {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6953:1: (lv_statement_3_0= ruleStatement )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6954:3: lv_statement_3_0= ruleStatement
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6948:1: (lv_statement_3_0= ruleStatement )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6949:3: lv_statement_3_0= ruleStatement
             {
              
             	        currentNode=createCompositeNode(grammarAccess.getTrapHandlerAccess().getStatementStatementParserRuleCall_3_0(), currentNode); 
             	    
-            pushFollow(FOLLOW_ruleStatement_in_ruleTrapHandler12317);
+            pushFollow(FOLLOW_ruleStatement_in_ruleTrapHandler12310);
             lv_statement_3_0=ruleStatement();
             _fsp--;
 
@@ -15605,7 +15601,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start entryRuleVariable
-    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6984:1: entryRuleVariable returns [EObject current=null] : iv_ruleVariable= ruleVariable EOF ;
+    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6979:1: entryRuleVariable returns [EObject current=null] : iv_ruleVariable= ruleVariable EOF ;
     public final EObject entryRuleVariable() throws RecognitionException {
         EObject current = null;
 
@@ -15613,16 +15609,16 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6985:2: (iv_ruleVariable= ruleVariable EOF )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6986:2: iv_ruleVariable= ruleVariable EOF
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6980:2: (iv_ruleVariable= ruleVariable EOF )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6981:2: iv_ruleVariable= ruleVariable EOF
             {
              currentNode = createCompositeNode(grammarAccess.getVariableRule(), currentNode); 
-            pushFollow(FOLLOW_ruleVariable_in_entryRuleVariable12353);
+            pushFollow(FOLLOW_ruleVariable_in_entryRuleVariable12346);
             iv_ruleVariable=ruleVariable();
             _fsp--;
 
              current =iv_ruleVariable; 
-            match(input,EOF,FOLLOW_EOF_in_entryRuleVariable12363); 
+            match(input,EOF,FOLLOW_EOF_in_entryRuleVariable12356); 
 
             }
 
@@ -15640,7 +15636,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start ruleVariable
-    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6993:1: ruleVariable returns [EObject current=null] : ( 'var' ( (lv_varDecl_1_0= ruleVariableDecl ) ) 'in' ( (lv_statement_3_0= ruleStatement ) ) 'end' ( 'var' )? ) ;
+    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6988:1: ruleVariable returns [EObject current=null] : ( 'var' ( (lv_varDecl_1_0= ruleVariableDecl ) ) 'in' ( (lv_statement_3_0= ruleStatement ) ) 'end' ( 'var' )? ) ;
     public final EObject ruleVariable() throws RecognitionException {
         EObject current = null;
 
@@ -15652,26 +15648,26 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
          @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6998:6: ( ( 'var' ( (lv_varDecl_1_0= ruleVariableDecl ) ) 'in' ( (lv_statement_3_0= ruleStatement ) ) 'end' ( 'var' )? ) )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6999:1: ( 'var' ( (lv_varDecl_1_0= ruleVariableDecl ) ) 'in' ( (lv_statement_3_0= ruleStatement ) ) 'end' ( 'var' )? )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6993:6: ( ( 'var' ( (lv_varDecl_1_0= ruleVariableDecl ) ) 'in' ( (lv_statement_3_0= ruleStatement ) ) 'end' ( 'var' )? ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6994:1: ( 'var' ( (lv_varDecl_1_0= ruleVariableDecl ) ) 'in' ( (lv_statement_3_0= ruleStatement ) ) 'end' ( 'var' )? )
             {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6999:1: ( 'var' ( (lv_varDecl_1_0= ruleVariableDecl ) ) 'in' ( (lv_statement_3_0= ruleStatement ) ) 'end' ( 'var' )? )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6999:3: 'var' ( (lv_varDecl_1_0= ruleVariableDecl ) ) 'in' ( (lv_statement_3_0= ruleStatement ) ) 'end' ( 'var' )?
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6994:1: ( 'var' ( (lv_varDecl_1_0= ruleVariableDecl ) ) 'in' ( (lv_statement_3_0= ruleStatement ) ) 'end' ( 'var' )? )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6994:3: 'var' ( (lv_varDecl_1_0= ruleVariableDecl ) ) 'in' ( (lv_statement_3_0= ruleStatement ) ) 'end' ( 'var' )?
             {
-            match(input,76,FOLLOW_76_in_ruleVariable12398); 
+            match(input,76,FOLLOW_76_in_ruleVariable12391); 
 
                     createLeafNode(grammarAccess.getVariableAccess().getVarKeyword_0(), null); 
                 
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7003:1: ( (lv_varDecl_1_0= ruleVariableDecl ) )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7004:1: (lv_varDecl_1_0= ruleVariableDecl )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6998:1: ( (lv_varDecl_1_0= ruleVariableDecl ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6999:1: (lv_varDecl_1_0= ruleVariableDecl )
             {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7004:1: (lv_varDecl_1_0= ruleVariableDecl )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7005:3: lv_varDecl_1_0= ruleVariableDecl
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6999:1: (lv_varDecl_1_0= ruleVariableDecl )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7000:3: lv_varDecl_1_0= ruleVariableDecl
             {
              
             	        currentNode=createCompositeNode(grammarAccess.getVariableAccess().getVarDeclVariableDeclParserRuleCall_1_0(), currentNode); 
             	    
-            pushFollow(FOLLOW_ruleVariableDecl_in_ruleVariable12419);
+            pushFollow(FOLLOW_ruleVariableDecl_in_ruleVariable12412);
             lv_varDecl_1_0=ruleVariableDecl();
             _fsp--;
 
@@ -15698,20 +15694,20 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
             }
 
-            match(input,71,FOLLOW_71_in_ruleVariable12429); 
+            match(input,71,FOLLOW_71_in_ruleVariable12422); 
 
                     createLeafNode(grammarAccess.getVariableAccess().getInKeyword_2(), null); 
                 
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7031:1: ( (lv_statement_3_0= ruleStatement ) )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7032:1: (lv_statement_3_0= ruleStatement )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7026:1: ( (lv_statement_3_0= ruleStatement ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7027:1: (lv_statement_3_0= ruleStatement )
             {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7032:1: (lv_statement_3_0= ruleStatement )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7033:3: lv_statement_3_0= ruleStatement
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7027:1: (lv_statement_3_0= ruleStatement )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7028:3: lv_statement_3_0= ruleStatement
             {
              
             	        currentNode=createCompositeNode(grammarAccess.getVariableAccess().getStatementStatementParserRuleCall_3_0(), currentNode); 
             	    
-            pushFollow(FOLLOW_ruleStatement_in_ruleVariable12450);
+            pushFollow(FOLLOW_ruleStatement_in_ruleVariable12443);
             lv_statement_3_0=ruleStatement();
             _fsp--;
 
@@ -15738,11 +15734,11 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
             }
 
-            match(input,19,FOLLOW_19_in_ruleVariable12460); 
+            match(input,19,FOLLOW_19_in_ruleVariable12453); 
 
                     createLeafNode(grammarAccess.getVariableAccess().getEndKeyword_4(), null); 
                 
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7059:1: ( 'var' )?
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7054:1: ( 'var' )?
             int alt92=2;
             int LA92_0 = input.LA(1);
 
@@ -15751,9 +15747,9 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
             }
             switch (alt92) {
                 case 1 :
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7059:3: 'var'
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7054:3: 'var'
                     {
-                    match(input,76,FOLLOW_76_in_ruleVariable12471); 
+                    match(input,76,FOLLOW_76_in_ruleVariable12464); 
 
                             createLeafNode(grammarAccess.getVariableAccess().getVarKeyword_5(), null); 
                         
@@ -15786,7 +15782,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start entryRuleVariableDecl
-    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7071:1: entryRuleVariableDecl returns [EObject current=null] : iv_ruleVariableDecl= ruleVariableDecl EOF ;
+    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7066:1: entryRuleVariableDecl returns [EObject current=null] : iv_ruleVariableDecl= ruleVariableDecl EOF ;
     public final EObject entryRuleVariableDecl() throws RecognitionException {
         EObject current = null;
 
@@ -15794,16 +15790,16 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7072:2: (iv_ruleVariableDecl= ruleVariableDecl EOF )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7073:2: iv_ruleVariableDecl= ruleVariableDecl EOF
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7067:2: (iv_ruleVariableDecl= ruleVariableDecl EOF )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7068:2: iv_ruleVariableDecl= ruleVariableDecl EOF
             {
              currentNode = createCompositeNode(grammarAccess.getVariableDeclRule(), currentNode); 
-            pushFollow(FOLLOW_ruleVariableDecl_in_entryRuleVariableDecl12509);
+            pushFollow(FOLLOW_ruleVariableDecl_in_entryRuleVariableDecl12502);
             iv_ruleVariableDecl=ruleVariableDecl();
             _fsp--;
 
              current =iv_ruleVariableDecl; 
-            match(input,EOF,FOLLOW_EOF_in_entryRuleVariableDecl12519); 
+            match(input,EOF,FOLLOW_EOF_in_entryRuleVariableDecl12512); 
 
             }
 
@@ -15821,7 +15817,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start ruleVariableDecl
-    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7080:1: ruleVariableDecl returns [EObject current=null] : ( ( (lv_varList_0_0= ruleVariableList ) ) ':' ( ( (lv_type_2_0= RULE_ESTERELID ) ) | ( (lv_type_3_0= RULE_BASETYPE ) ) ) ( () ',' ( (lv_varList_6_0= ruleVariableList ) ) ':' ( ( (lv_type_8_0= RULE_ESTERELID ) ) | ( (lv_type_9_0= RULE_BASETYPE ) ) ) )* ) ;
+    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7075:1: ruleVariableDecl returns [EObject current=null] : ( ( (lv_varList_0_0= ruleVariableList ) ) ':' ( ( (lv_type_2_0= RULE_ESTERELID ) ) | ( (lv_type_3_0= RULE_BASETYPE ) ) ) ( () ',' ( (lv_varList_6_0= ruleVariableList ) ) ':' ( ( (lv_type_8_0= RULE_ESTERELID ) ) | ( (lv_type_9_0= RULE_BASETYPE ) ) ) )* ) ;
     public final EObject ruleVariableDecl() throws RecognitionException {
         EObject current = null;
 
@@ -15837,22 +15833,22 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
          @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7085:6: ( ( ( (lv_varList_0_0= ruleVariableList ) ) ':' ( ( (lv_type_2_0= RULE_ESTERELID ) ) | ( (lv_type_3_0= RULE_BASETYPE ) ) ) ( () ',' ( (lv_varList_6_0= ruleVariableList ) ) ':' ( ( (lv_type_8_0= RULE_ESTERELID ) ) | ( (lv_type_9_0= RULE_BASETYPE ) ) ) )* ) )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7086:1: ( ( (lv_varList_0_0= ruleVariableList ) ) ':' ( ( (lv_type_2_0= RULE_ESTERELID ) ) | ( (lv_type_3_0= RULE_BASETYPE ) ) ) ( () ',' ( (lv_varList_6_0= ruleVariableList ) ) ':' ( ( (lv_type_8_0= RULE_ESTERELID ) ) | ( (lv_type_9_0= RULE_BASETYPE ) ) ) )* )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7080:6: ( ( ( (lv_varList_0_0= ruleVariableList ) ) ':' ( ( (lv_type_2_0= RULE_ESTERELID ) ) | ( (lv_type_3_0= RULE_BASETYPE ) ) ) ( () ',' ( (lv_varList_6_0= ruleVariableList ) ) ':' ( ( (lv_type_8_0= RULE_ESTERELID ) ) | ( (lv_type_9_0= RULE_BASETYPE ) ) ) )* ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7081:1: ( ( (lv_varList_0_0= ruleVariableList ) ) ':' ( ( (lv_type_2_0= RULE_ESTERELID ) ) | ( (lv_type_3_0= RULE_BASETYPE ) ) ) ( () ',' ( (lv_varList_6_0= ruleVariableList ) ) ':' ( ( (lv_type_8_0= RULE_ESTERELID ) ) | ( (lv_type_9_0= RULE_BASETYPE ) ) ) )* )
             {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7086:1: ( ( (lv_varList_0_0= ruleVariableList ) ) ':' ( ( (lv_type_2_0= RULE_ESTERELID ) ) | ( (lv_type_3_0= RULE_BASETYPE ) ) ) ( () ',' ( (lv_varList_6_0= ruleVariableList ) ) ':' ( ( (lv_type_8_0= RULE_ESTERELID ) ) | ( (lv_type_9_0= RULE_BASETYPE ) ) ) )* )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7086:2: ( (lv_varList_0_0= ruleVariableList ) ) ':' ( ( (lv_type_2_0= RULE_ESTERELID ) ) | ( (lv_type_3_0= RULE_BASETYPE ) ) ) ( () ',' ( (lv_varList_6_0= ruleVariableList ) ) ':' ( ( (lv_type_8_0= RULE_ESTERELID ) ) | ( (lv_type_9_0= RULE_BASETYPE ) ) ) )*
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7081:1: ( ( (lv_varList_0_0= ruleVariableList ) ) ':' ( ( (lv_type_2_0= RULE_ESTERELID ) ) | ( (lv_type_3_0= RULE_BASETYPE ) ) ) ( () ',' ( (lv_varList_6_0= ruleVariableList ) ) ':' ( ( (lv_type_8_0= RULE_ESTERELID ) ) | ( (lv_type_9_0= RULE_BASETYPE ) ) ) )* )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7081:2: ( (lv_varList_0_0= ruleVariableList ) ) ':' ( ( (lv_type_2_0= RULE_ESTERELID ) ) | ( (lv_type_3_0= RULE_BASETYPE ) ) ) ( () ',' ( (lv_varList_6_0= ruleVariableList ) ) ':' ( ( (lv_type_8_0= RULE_ESTERELID ) ) | ( (lv_type_9_0= RULE_BASETYPE ) ) ) )*
             {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7086:2: ( (lv_varList_0_0= ruleVariableList ) )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7087:1: (lv_varList_0_0= ruleVariableList )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7081:2: ( (lv_varList_0_0= ruleVariableList ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7082:1: (lv_varList_0_0= ruleVariableList )
             {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7087:1: (lv_varList_0_0= ruleVariableList )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7088:3: lv_varList_0_0= ruleVariableList
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7082:1: (lv_varList_0_0= ruleVariableList )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7083:3: lv_varList_0_0= ruleVariableList
             {
              
             	        currentNode=createCompositeNode(grammarAccess.getVariableDeclAccess().getVarListVariableListParserRuleCall_0_0(), currentNode); 
             	    
-            pushFollow(FOLLOW_ruleVariableList_in_ruleVariableDecl12565);
+            pushFollow(FOLLOW_ruleVariableList_in_ruleVariableDecl12558);
             lv_varList_0_0=ruleVariableList();
             _fsp--;
 
@@ -15879,11 +15875,11 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
             }
 
-            match(input,18,FOLLOW_18_in_ruleVariableDecl12575); 
+            match(input,18,FOLLOW_18_in_ruleVariableDecl12568); 
 
                     createLeafNode(grammarAccess.getVariableDeclAccess().getColonKeyword_1(), null); 
                 
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7114:1: ( ( (lv_type_2_0= RULE_ESTERELID ) ) | ( (lv_type_3_0= RULE_BASETYPE ) ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7109:1: ( ( (lv_type_2_0= RULE_ESTERELID ) ) | ( (lv_type_3_0= RULE_BASETYPE ) ) )
             int alt93=2;
             int LA93_0 = input.LA(1);
 
@@ -15895,22 +15891,22 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
             }
             else {
                 NoViableAltException nvae =
-                    new NoViableAltException("7114:1: ( ( (lv_type_2_0= RULE_ESTERELID ) ) | ( (lv_type_3_0= RULE_BASETYPE ) ) )", 93, 0, input);
+                    new NoViableAltException("7109:1: ( ( (lv_type_2_0= RULE_ESTERELID ) ) | ( (lv_type_3_0= RULE_BASETYPE ) ) )", 93, 0, input);
 
                 throw nvae;
             }
             switch (alt93) {
                 case 1 :
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7114:2: ( (lv_type_2_0= RULE_ESTERELID ) )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7109:2: ( (lv_type_2_0= RULE_ESTERELID ) )
                     {
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7114:2: ( (lv_type_2_0= RULE_ESTERELID ) )
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7115:1: (lv_type_2_0= RULE_ESTERELID )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7109:2: ( (lv_type_2_0= RULE_ESTERELID ) )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7110:1: (lv_type_2_0= RULE_ESTERELID )
                     {
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7115:1: (lv_type_2_0= RULE_ESTERELID )
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7116:3: lv_type_2_0= RULE_ESTERELID
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7110:1: (lv_type_2_0= RULE_ESTERELID )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7111:3: lv_type_2_0= RULE_ESTERELID
                     {
                     lv_type_2_0=(Token)input.LT(1);
-                    match(input,RULE_ESTERELID,FOLLOW_RULE_ESTERELID_in_ruleVariableDecl12593); 
+                    match(input,RULE_ESTERELID,FOLLOW_RULE_ESTERELID_in_ruleVariableDecl12586); 
 
                     			createLeafNode(grammarAccess.getVariableDeclAccess().getTypeEsterelIDTerminalRuleCall_2_0_0(), "type"); 
                     		
@@ -15940,16 +15936,16 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7139:6: ( (lv_type_3_0= RULE_BASETYPE ) )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7134:6: ( (lv_type_3_0= RULE_BASETYPE ) )
                     {
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7139:6: ( (lv_type_3_0= RULE_BASETYPE ) )
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7140:1: (lv_type_3_0= RULE_BASETYPE )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7134:6: ( (lv_type_3_0= RULE_BASETYPE ) )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7135:1: (lv_type_3_0= RULE_BASETYPE )
                     {
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7140:1: (lv_type_3_0= RULE_BASETYPE )
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7141:3: lv_type_3_0= RULE_BASETYPE
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7135:1: (lv_type_3_0= RULE_BASETYPE )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7136:3: lv_type_3_0= RULE_BASETYPE
                     {
                     lv_type_3_0=(Token)input.LT(1);
-                    match(input,RULE_BASETYPE,FOLLOW_RULE_BASETYPE_in_ruleVariableDecl12621); 
+                    match(input,RULE_BASETYPE,FOLLOW_RULE_BASETYPE_in_ruleVariableDecl12614); 
 
                     			createLeafNode(grammarAccess.getVariableDeclAccess().getTypeBaseTypeTerminalRuleCall_2_1_0(), "type"); 
                     		
@@ -15981,7 +15977,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
             }
 
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7163:3: ( () ',' ( (lv_varList_6_0= ruleVariableList ) ) ':' ( ( (lv_type_8_0= RULE_ESTERELID ) ) | ( (lv_type_9_0= RULE_BASETYPE ) ) ) )*
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7158:3: ( () ',' ( (lv_varList_6_0= ruleVariableList ) ) ':' ( ( (lv_type_8_0= RULE_ESTERELID ) ) | ( (lv_type_9_0= RULE_BASETYPE ) ) ) )*
             loop95:
             do {
                 int alt95=2;
@@ -15994,10 +15990,10 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
                 switch (alt95) {
             	case 1 :
-            	    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7163:4: () ',' ( (lv_varList_6_0= ruleVariableList ) ) ':' ( ( (lv_type_8_0= RULE_ESTERELID ) ) | ( (lv_type_9_0= RULE_BASETYPE ) ) )
+            	    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7158:4: () ',' ( (lv_varList_6_0= ruleVariableList ) ) ':' ( ( (lv_type_8_0= RULE_ESTERELID ) ) | ( (lv_type_9_0= RULE_BASETYPE ) ) )
             	    {
-            	    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7163:4: ()
-            	    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7164:5: 
+            	    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7158:4: ()
+            	    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7159:5: 
             	    {
             	     
             	            temp=factory.create(grammarAccess.getVariableDeclAccess().getVariableDeclLeftAction_3_0().getType().getClassifier());
@@ -16017,20 +16013,20 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
             	    }
 
-            	    match(input,22,FOLLOW_22_in_ruleVariableDecl12647); 
+            	    match(input,22,FOLLOW_22_in_ruleVariableDecl12640); 
 
             	            createLeafNode(grammarAccess.getVariableDeclAccess().getCommaKeyword_3_1(), null); 
             	        
-            	    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7183:1: ( (lv_varList_6_0= ruleVariableList ) )
-            	    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7184:1: (lv_varList_6_0= ruleVariableList )
+            	    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7178:1: ( (lv_varList_6_0= ruleVariableList ) )
+            	    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7179:1: (lv_varList_6_0= ruleVariableList )
             	    {
-            	    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7184:1: (lv_varList_6_0= ruleVariableList )
-            	    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7185:3: lv_varList_6_0= ruleVariableList
+            	    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7179:1: (lv_varList_6_0= ruleVariableList )
+            	    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7180:3: lv_varList_6_0= ruleVariableList
             	    {
             	     
             	    	        currentNode=createCompositeNode(grammarAccess.getVariableDeclAccess().getVarListVariableListParserRuleCall_3_2_0(), currentNode); 
             	    	    
-            	    pushFollow(FOLLOW_ruleVariableList_in_ruleVariableDecl12668);
+            	    pushFollow(FOLLOW_ruleVariableList_in_ruleVariableDecl12661);
             	    lv_varList_6_0=ruleVariableList();
             	    _fsp--;
 
@@ -16057,11 +16053,11 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
             	    }
 
-            	    match(input,18,FOLLOW_18_in_ruleVariableDecl12678); 
+            	    match(input,18,FOLLOW_18_in_ruleVariableDecl12671); 
 
             	            createLeafNode(grammarAccess.getVariableDeclAccess().getColonKeyword_3_3(), null); 
             	        
-            	    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7211:1: ( ( (lv_type_8_0= RULE_ESTERELID ) ) | ( (lv_type_9_0= RULE_BASETYPE ) ) )
+            	    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7206:1: ( ( (lv_type_8_0= RULE_ESTERELID ) ) | ( (lv_type_9_0= RULE_BASETYPE ) ) )
             	    int alt94=2;
             	    int LA94_0 = input.LA(1);
 
@@ -16073,22 +16069,22 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
             	    }
             	    else {
             	        NoViableAltException nvae =
-            	            new NoViableAltException("7211:1: ( ( (lv_type_8_0= RULE_ESTERELID ) ) | ( (lv_type_9_0= RULE_BASETYPE ) ) )", 94, 0, input);
+            	            new NoViableAltException("7206:1: ( ( (lv_type_8_0= RULE_ESTERELID ) ) | ( (lv_type_9_0= RULE_BASETYPE ) ) )", 94, 0, input);
 
             	        throw nvae;
             	    }
             	    switch (alt94) {
             	        case 1 :
-            	            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7211:2: ( (lv_type_8_0= RULE_ESTERELID ) )
+            	            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7206:2: ( (lv_type_8_0= RULE_ESTERELID ) )
             	            {
-            	            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7211:2: ( (lv_type_8_0= RULE_ESTERELID ) )
-            	            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7212:1: (lv_type_8_0= RULE_ESTERELID )
+            	            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7206:2: ( (lv_type_8_0= RULE_ESTERELID ) )
+            	            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7207:1: (lv_type_8_0= RULE_ESTERELID )
             	            {
-            	            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7212:1: (lv_type_8_0= RULE_ESTERELID )
-            	            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7213:3: lv_type_8_0= RULE_ESTERELID
+            	            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7207:1: (lv_type_8_0= RULE_ESTERELID )
+            	            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7208:3: lv_type_8_0= RULE_ESTERELID
             	            {
             	            lv_type_8_0=(Token)input.LT(1);
-            	            match(input,RULE_ESTERELID,FOLLOW_RULE_ESTERELID_in_ruleVariableDecl12696); 
+            	            match(input,RULE_ESTERELID,FOLLOW_RULE_ESTERELID_in_ruleVariableDecl12689); 
 
             	            			createLeafNode(grammarAccess.getVariableDeclAccess().getTypeEsterelIDTerminalRuleCall_3_4_0_0(), "type"); 
             	            		
@@ -16118,16 +16114,16 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
             	            }
             	            break;
             	        case 2 :
-            	            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7236:6: ( (lv_type_9_0= RULE_BASETYPE ) )
+            	            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7231:6: ( (lv_type_9_0= RULE_BASETYPE ) )
             	            {
-            	            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7236:6: ( (lv_type_9_0= RULE_BASETYPE ) )
-            	            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7237:1: (lv_type_9_0= RULE_BASETYPE )
+            	            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7231:6: ( (lv_type_9_0= RULE_BASETYPE ) )
+            	            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7232:1: (lv_type_9_0= RULE_BASETYPE )
             	            {
-            	            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7237:1: (lv_type_9_0= RULE_BASETYPE )
-            	            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7238:3: lv_type_9_0= RULE_BASETYPE
+            	            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7232:1: (lv_type_9_0= RULE_BASETYPE )
+            	            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7233:3: lv_type_9_0= RULE_BASETYPE
             	            {
             	            lv_type_9_0=(Token)input.LT(1);
-            	            match(input,RULE_BASETYPE,FOLLOW_RULE_BASETYPE_in_ruleVariableDecl12724); 
+            	            match(input,RULE_BASETYPE,FOLLOW_RULE_BASETYPE_in_ruleVariableDecl12717); 
 
             	            			createLeafNode(grammarAccess.getVariableDeclAccess().getTypeBaseTypeTerminalRuleCall_3_4_1_0(), "type"); 
             	            		
@@ -16191,7 +16187,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start entryRuleVariableList
-    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7268:1: entryRuleVariableList returns [EObject current=null] : iv_ruleVariableList= ruleVariableList EOF ;
+    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7263:1: entryRuleVariableList returns [EObject current=null] : iv_ruleVariableList= ruleVariableList EOF ;
     public final EObject entryRuleVariableList() throws RecognitionException {
         EObject current = null;
 
@@ -16199,16 +16195,16 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7269:2: (iv_ruleVariableList= ruleVariableList EOF )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7270:2: iv_ruleVariableList= ruleVariableList EOF
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7264:2: (iv_ruleVariableList= ruleVariableList EOF )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7265:2: iv_ruleVariableList= ruleVariableList EOF
             {
              currentNode = createCompositeNode(grammarAccess.getVariableListRule(), currentNode); 
-            pushFollow(FOLLOW_ruleVariableList_in_entryRuleVariableList12768);
+            pushFollow(FOLLOW_ruleVariableList_in_entryRuleVariableList12761);
             iv_ruleVariableList=ruleVariableList();
             _fsp--;
 
              current =iv_ruleVariableList; 
-            match(input,EOF,FOLLOW_EOF_in_entryRuleVariableList12778); 
+            match(input,EOF,FOLLOW_EOF_in_entryRuleVariableList12771); 
 
             }
 
@@ -16226,7 +16222,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start ruleVariableList
-    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7277:1: ruleVariableList returns [EObject current=null] : ( ( (lv_variable_0_0= RULE_ESTERELID ) ) ( ':=' ( (lv_expression_2_0= ruleDataExpr ) ) )? ( () ',' ( (lv_variable_5_0= RULE_ESTERELID ) ) ( ':=' ( (lv_expression_7_0= ruleDataExpr ) ) )? )* ) ;
+    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7272:1: ruleVariableList returns [EObject current=null] : ( ( (lv_variable_0_0= RULE_ESTERELID ) ) ( ':=' ( (lv_expression_2_0= ruleDataExpr ) ) )? ( () ',' ( (lv_variable_5_0= RULE_ESTERELID ) ) ( ':=' ( (lv_expression_7_0= ruleDataExpr ) ) )? )* ) ;
     public final EObject ruleVariableList() throws RecognitionException {
         EObject current = null;
 
@@ -16240,20 +16236,20 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
          @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7282:6: ( ( ( (lv_variable_0_0= RULE_ESTERELID ) ) ( ':=' ( (lv_expression_2_0= ruleDataExpr ) ) )? ( () ',' ( (lv_variable_5_0= RULE_ESTERELID ) ) ( ':=' ( (lv_expression_7_0= ruleDataExpr ) ) )? )* ) )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7283:1: ( ( (lv_variable_0_0= RULE_ESTERELID ) ) ( ':=' ( (lv_expression_2_0= ruleDataExpr ) ) )? ( () ',' ( (lv_variable_5_0= RULE_ESTERELID ) ) ( ':=' ( (lv_expression_7_0= ruleDataExpr ) ) )? )* )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7277:6: ( ( ( (lv_variable_0_0= RULE_ESTERELID ) ) ( ':=' ( (lv_expression_2_0= ruleDataExpr ) ) )? ( () ',' ( (lv_variable_5_0= RULE_ESTERELID ) ) ( ':=' ( (lv_expression_7_0= ruleDataExpr ) ) )? )* ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7278:1: ( ( (lv_variable_0_0= RULE_ESTERELID ) ) ( ':=' ( (lv_expression_2_0= ruleDataExpr ) ) )? ( () ',' ( (lv_variable_5_0= RULE_ESTERELID ) ) ( ':=' ( (lv_expression_7_0= ruleDataExpr ) ) )? )* )
             {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7283:1: ( ( (lv_variable_0_0= RULE_ESTERELID ) ) ( ':=' ( (lv_expression_2_0= ruleDataExpr ) ) )? ( () ',' ( (lv_variable_5_0= RULE_ESTERELID ) ) ( ':=' ( (lv_expression_7_0= ruleDataExpr ) ) )? )* )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7283:2: ( (lv_variable_0_0= RULE_ESTERELID ) ) ( ':=' ( (lv_expression_2_0= ruleDataExpr ) ) )? ( () ',' ( (lv_variable_5_0= RULE_ESTERELID ) ) ( ':=' ( (lv_expression_7_0= ruleDataExpr ) ) )? )*
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7278:1: ( ( (lv_variable_0_0= RULE_ESTERELID ) ) ( ':=' ( (lv_expression_2_0= ruleDataExpr ) ) )? ( () ',' ( (lv_variable_5_0= RULE_ESTERELID ) ) ( ':=' ( (lv_expression_7_0= ruleDataExpr ) ) )? )* )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7278:2: ( (lv_variable_0_0= RULE_ESTERELID ) ) ( ':=' ( (lv_expression_2_0= ruleDataExpr ) ) )? ( () ',' ( (lv_variable_5_0= RULE_ESTERELID ) ) ( ':=' ( (lv_expression_7_0= ruleDataExpr ) ) )? )*
             {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7283:2: ( (lv_variable_0_0= RULE_ESTERELID ) )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7284:1: (lv_variable_0_0= RULE_ESTERELID )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7278:2: ( (lv_variable_0_0= RULE_ESTERELID ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7279:1: (lv_variable_0_0= RULE_ESTERELID )
             {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7284:1: (lv_variable_0_0= RULE_ESTERELID )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7285:3: lv_variable_0_0= RULE_ESTERELID
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7279:1: (lv_variable_0_0= RULE_ESTERELID )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7280:3: lv_variable_0_0= RULE_ESTERELID
             {
             lv_variable_0_0=(Token)input.LT(1);
-            match(input,RULE_ESTERELID,FOLLOW_RULE_ESTERELID_in_ruleVariableList12820); 
+            match(input,RULE_ESTERELID,FOLLOW_RULE_ESTERELID_in_ruleVariableList12813); 
 
             			createLeafNode(grammarAccess.getVariableListAccess().getVariableEsterelIDTerminalRuleCall_0_0(), "variable"); 
             		
@@ -16279,7 +16275,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
             }
 
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7307:2: ( ':=' ( (lv_expression_2_0= ruleDataExpr ) ) )?
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7302:2: ( ':=' ( (lv_expression_2_0= ruleDataExpr ) ) )?
             int alt96=2;
             int LA96_0 = input.LA(1);
 
@@ -16288,22 +16284,22 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
             }
             switch (alt96) {
                 case 1 :
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7307:4: ':=' ( (lv_expression_2_0= ruleDataExpr ) )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7302:4: ':=' ( (lv_expression_2_0= ruleDataExpr ) )
                     {
-                    match(input,42,FOLLOW_42_in_ruleVariableList12836); 
+                    match(input,42,FOLLOW_42_in_ruleVariableList12829); 
 
                             createLeafNode(grammarAccess.getVariableListAccess().getColonEqualsSignKeyword_1_0(), null); 
                         
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7311:1: ( (lv_expression_2_0= ruleDataExpr ) )
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7312:1: (lv_expression_2_0= ruleDataExpr )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7306:1: ( (lv_expression_2_0= ruleDataExpr ) )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7307:1: (lv_expression_2_0= ruleDataExpr )
                     {
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7312:1: (lv_expression_2_0= ruleDataExpr )
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7313:3: lv_expression_2_0= ruleDataExpr
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7307:1: (lv_expression_2_0= ruleDataExpr )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7308:3: lv_expression_2_0= ruleDataExpr
                     {
                      
                     	        currentNode=createCompositeNode(grammarAccess.getVariableListAccess().getExpressionDataExprParserRuleCall_1_1_0(), currentNode); 
                     	    
-                    pushFollow(FOLLOW_ruleDataExpr_in_ruleVariableList12857);
+                    pushFollow(FOLLOW_ruleDataExpr_in_ruleVariableList12850);
                     lv_expression_2_0=ruleDataExpr();
                     _fsp--;
 
@@ -16336,7 +16332,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
             }
 
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7335:4: ( () ',' ( (lv_variable_5_0= RULE_ESTERELID ) ) ( ':=' ( (lv_expression_7_0= ruleDataExpr ) ) )? )*
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7330:4: ( () ',' ( (lv_variable_5_0= RULE_ESTERELID ) ) ( ':=' ( (lv_expression_7_0= ruleDataExpr ) ) )? )*
             loop98:
             do {
                 int alt98=2;
@@ -16349,10 +16345,10 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
                 switch (alt98) {
             	case 1 :
-            	    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7335:5: () ',' ( (lv_variable_5_0= RULE_ESTERELID ) ) ( ':=' ( (lv_expression_7_0= ruleDataExpr ) ) )?
+            	    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7330:5: () ',' ( (lv_variable_5_0= RULE_ESTERELID ) ) ( ':=' ( (lv_expression_7_0= ruleDataExpr ) ) )?
             	    {
-            	    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7335:5: ()
-            	    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7336:5: 
+            	    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7330:5: ()
+            	    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7331:5: 
             	    {
             	     
             	            temp=factory.create(grammarAccess.getVariableListAccess().getVariableListLeftAction_2_0().getType().getClassifier());
@@ -16372,18 +16368,18 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
             	    }
 
-            	    match(input,22,FOLLOW_22_in_ruleVariableList12879); 
+            	    match(input,22,FOLLOW_22_in_ruleVariableList12872); 
 
             	            createLeafNode(grammarAccess.getVariableListAccess().getCommaKeyword_2_1(), null); 
             	        
-            	    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7355:1: ( (lv_variable_5_0= RULE_ESTERELID ) )
-            	    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7356:1: (lv_variable_5_0= RULE_ESTERELID )
+            	    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7350:1: ( (lv_variable_5_0= RULE_ESTERELID ) )
+            	    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7351:1: (lv_variable_5_0= RULE_ESTERELID )
             	    {
-            	    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7356:1: (lv_variable_5_0= RULE_ESTERELID )
-            	    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7357:3: lv_variable_5_0= RULE_ESTERELID
+            	    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7351:1: (lv_variable_5_0= RULE_ESTERELID )
+            	    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7352:3: lv_variable_5_0= RULE_ESTERELID
             	    {
             	    lv_variable_5_0=(Token)input.LT(1);
-            	    match(input,RULE_ESTERELID,FOLLOW_RULE_ESTERELID_in_ruleVariableList12896); 
+            	    match(input,RULE_ESTERELID,FOLLOW_RULE_ESTERELID_in_ruleVariableList12889); 
 
             	    			createLeafNode(grammarAccess.getVariableListAccess().getVariableEsterelIDTerminalRuleCall_2_2_0(), "variable"); 
             	    		
@@ -16409,7 +16405,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
             	    }
 
-            	    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7379:2: ( ':=' ( (lv_expression_7_0= ruleDataExpr ) ) )?
+            	    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7374:2: ( ':=' ( (lv_expression_7_0= ruleDataExpr ) ) )?
             	    int alt97=2;
             	    int LA97_0 = input.LA(1);
 
@@ -16418,22 +16414,22 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
             	    }
             	    switch (alt97) {
             	        case 1 :
-            	            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7379:4: ':=' ( (lv_expression_7_0= ruleDataExpr ) )
+            	            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7374:4: ':=' ( (lv_expression_7_0= ruleDataExpr ) )
             	            {
-            	            match(input,42,FOLLOW_42_in_ruleVariableList12912); 
+            	            match(input,42,FOLLOW_42_in_ruleVariableList12905); 
 
             	                    createLeafNode(grammarAccess.getVariableListAccess().getColonEqualsSignKeyword_2_3_0(), null); 
             	                
-            	            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7383:1: ( (lv_expression_7_0= ruleDataExpr ) )
-            	            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7384:1: (lv_expression_7_0= ruleDataExpr )
+            	            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7378:1: ( (lv_expression_7_0= ruleDataExpr ) )
+            	            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7379:1: (lv_expression_7_0= ruleDataExpr )
             	            {
-            	            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7384:1: (lv_expression_7_0= ruleDataExpr )
-            	            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7385:3: lv_expression_7_0= ruleDataExpr
+            	            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7379:1: (lv_expression_7_0= ruleDataExpr )
+            	            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7380:3: lv_expression_7_0= ruleDataExpr
             	            {
             	             
             	            	        currentNode=createCompositeNode(grammarAccess.getVariableListAccess().getExpressionDataExprParserRuleCall_2_3_1_0(), currentNode); 
             	            	    
-            	            pushFollow(FOLLOW_ruleDataExpr_in_ruleVariableList12933);
+            	            pushFollow(FOLLOW_ruleDataExpr_in_ruleVariableList12926);
             	            lv_expression_7_0=ruleDataExpr();
             	            _fsp--;
 
@@ -16498,7 +16494,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start entryRuleWeakAbort
-    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7415:1: entryRuleWeakAbort returns [EObject current=null] : iv_ruleWeakAbort= ruleWeakAbort EOF ;
+    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7410:1: entryRuleWeakAbort returns [EObject current=null] : iv_ruleWeakAbort= ruleWeakAbort EOF ;
     public final EObject entryRuleWeakAbort() throws RecognitionException {
         EObject current = null;
 
@@ -16506,16 +16502,16 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7416:2: (iv_ruleWeakAbort= ruleWeakAbort EOF )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7417:2: iv_ruleWeakAbort= ruleWeakAbort EOF
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7411:2: (iv_ruleWeakAbort= ruleWeakAbort EOF )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7412:2: iv_ruleWeakAbort= ruleWeakAbort EOF
             {
              currentNode = createCompositeNode(grammarAccess.getWeakAbortRule(), currentNode); 
-            pushFollow(FOLLOW_ruleWeakAbort_in_entryRuleWeakAbort12973);
+            pushFollow(FOLLOW_ruleWeakAbort_in_entryRuleWeakAbort12966);
             iv_ruleWeakAbort=ruleWeakAbort();
             _fsp--;
 
              current =iv_ruleWeakAbort; 
-            match(input,EOF,FOLLOW_EOF_in_entryRuleWeakAbort12983); 
+            match(input,EOF,FOLLOW_EOF_in_entryRuleWeakAbort12976); 
 
             }
 
@@ -16533,7 +16529,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start ruleWeakAbort
-    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7424:1: ruleWeakAbort returns [EObject current=null] : ( 'weak' 'abort' ( (lv_statement_2_0= ruleStatement ) ) 'when' ( (lv_weakAbortBody_4_0= ruleWeakAbortBody ) ) ) ;
+    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7419:1: ruleWeakAbort returns [EObject current=null] : ( 'weak' 'abort' ( (lv_statement_2_0= ruleStatement ) ) 'when' ( (lv_weakAbortBody_4_0= ruleWeakAbortBody ) ) ) ;
     public final EObject ruleWeakAbort() throws RecognitionException {
         EObject current = null;
 
@@ -16545,30 +16541,30 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
          @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7429:6: ( ( 'weak' 'abort' ( (lv_statement_2_0= ruleStatement ) ) 'when' ( (lv_weakAbortBody_4_0= ruleWeakAbortBody ) ) ) )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7430:1: ( 'weak' 'abort' ( (lv_statement_2_0= ruleStatement ) ) 'when' ( (lv_weakAbortBody_4_0= ruleWeakAbortBody ) ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7424:6: ( ( 'weak' 'abort' ( (lv_statement_2_0= ruleStatement ) ) 'when' ( (lv_weakAbortBody_4_0= ruleWeakAbortBody ) ) ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7425:1: ( 'weak' 'abort' ( (lv_statement_2_0= ruleStatement ) ) 'when' ( (lv_weakAbortBody_4_0= ruleWeakAbortBody ) ) )
             {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7430:1: ( 'weak' 'abort' ( (lv_statement_2_0= ruleStatement ) ) 'when' ( (lv_weakAbortBody_4_0= ruleWeakAbortBody ) ) )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7430:3: 'weak' 'abort' ( (lv_statement_2_0= ruleStatement ) ) 'when' ( (lv_weakAbortBody_4_0= ruleWeakAbortBody ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7425:1: ( 'weak' 'abort' ( (lv_statement_2_0= ruleStatement ) ) 'when' ( (lv_weakAbortBody_4_0= ruleWeakAbortBody ) ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7425:3: 'weak' 'abort' ( (lv_statement_2_0= ruleStatement ) ) 'when' ( (lv_weakAbortBody_4_0= ruleWeakAbortBody ) )
             {
-            match(input,77,FOLLOW_77_in_ruleWeakAbort13018); 
+            match(input,77,FOLLOW_77_in_ruleWeakAbort13011); 
 
                     createLeafNode(grammarAccess.getWeakAbortAccess().getWeakKeyword_0(), null); 
                 
-            match(input,43,FOLLOW_43_in_ruleWeakAbort13028); 
+            match(input,43,FOLLOW_43_in_ruleWeakAbort13021); 
 
                     createLeafNode(grammarAccess.getWeakAbortAccess().getAbortKeyword_1(), null); 
                 
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7438:1: ( (lv_statement_2_0= ruleStatement ) )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7439:1: (lv_statement_2_0= ruleStatement )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7433:1: ( (lv_statement_2_0= ruleStatement ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7434:1: (lv_statement_2_0= ruleStatement )
             {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7439:1: (lv_statement_2_0= ruleStatement )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7440:3: lv_statement_2_0= ruleStatement
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7434:1: (lv_statement_2_0= ruleStatement )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7435:3: lv_statement_2_0= ruleStatement
             {
              
             	        currentNode=createCompositeNode(grammarAccess.getWeakAbortAccess().getStatementStatementParserRuleCall_2_0(), currentNode); 
             	    
-            pushFollow(FOLLOW_ruleStatement_in_ruleWeakAbort13049);
+            pushFollow(FOLLOW_ruleStatement_in_ruleWeakAbort13042);
             lv_statement_2_0=ruleStatement();
             _fsp--;
 
@@ -16595,20 +16591,20 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
             }
 
-            match(input,44,FOLLOW_44_in_ruleWeakAbort13059); 
+            match(input,44,FOLLOW_44_in_ruleWeakAbort13052); 
 
                     createLeafNode(grammarAccess.getWeakAbortAccess().getWhenKeyword_3(), null); 
                 
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7466:1: ( (lv_weakAbortBody_4_0= ruleWeakAbortBody ) )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7467:1: (lv_weakAbortBody_4_0= ruleWeakAbortBody )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7461:1: ( (lv_weakAbortBody_4_0= ruleWeakAbortBody ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7462:1: (lv_weakAbortBody_4_0= ruleWeakAbortBody )
             {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7467:1: (lv_weakAbortBody_4_0= ruleWeakAbortBody )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7468:3: lv_weakAbortBody_4_0= ruleWeakAbortBody
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7462:1: (lv_weakAbortBody_4_0= ruleWeakAbortBody )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7463:3: lv_weakAbortBody_4_0= ruleWeakAbortBody
             {
              
             	        currentNode=createCompositeNode(grammarAccess.getWeakAbortAccess().getWeakAbortBodyWeakAbortBodyParserRuleCall_4_0(), currentNode); 
             	    
-            pushFollow(FOLLOW_ruleWeakAbortBody_in_ruleWeakAbort13080);
+            pushFollow(FOLLOW_ruleWeakAbortBody_in_ruleWeakAbort13073);
             lv_weakAbortBody_4_0=ruleWeakAbortBody();
             _fsp--;
 
@@ -16658,7 +16654,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start entryRuleWeakAbortBody
-    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7498:1: entryRuleWeakAbortBody returns [EObject current=null] : iv_ruleWeakAbortBody= ruleWeakAbortBody EOF ;
+    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7493:1: entryRuleWeakAbortBody returns [EObject current=null] : iv_ruleWeakAbortBody= ruleWeakAbortBody EOF ;
     public final EObject entryRuleWeakAbortBody() throws RecognitionException {
         EObject current = null;
 
@@ -16666,16 +16662,16 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7499:2: (iv_ruleWeakAbortBody= ruleWeakAbortBody EOF )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7500:2: iv_ruleWeakAbortBody= ruleWeakAbortBody EOF
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7494:2: (iv_ruleWeakAbortBody= ruleWeakAbortBody EOF )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7495:2: iv_ruleWeakAbortBody= ruleWeakAbortBody EOF
             {
              currentNode = createCompositeNode(grammarAccess.getWeakAbortBodyRule(), currentNode); 
-            pushFollow(FOLLOW_ruleWeakAbortBody_in_entryRuleWeakAbortBody13116);
+            pushFollow(FOLLOW_ruleWeakAbortBody_in_entryRuleWeakAbortBody13109);
             iv_ruleWeakAbortBody=ruleWeakAbortBody();
             _fsp--;
 
              current =iv_ruleWeakAbortBody; 
-            match(input,EOF,FOLLOW_EOF_in_entryRuleWeakAbortBody13126); 
+            match(input,EOF,FOLLOW_EOF_in_entryRuleWeakAbortBody13119); 
 
             }
 
@@ -16693,7 +16689,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start ruleWeakAbortBody
-    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7507:1: ruleWeakAbortBody returns [EObject current=null] : (this_WeakAbortInstance_0= ruleWeakAbortInstance | this_WeakAbortCase_1= ruleWeakAbortCase ) ;
+    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7502:1: ruleWeakAbortBody returns [EObject current=null] : (this_WeakAbortInstance_0= ruleWeakAbortInstance | this_WeakAbortCase_1= ruleWeakAbortCase ) ;
     public final EObject ruleWeakAbortBody() throws RecognitionException {
         EObject current = null;
 
@@ -16705,14 +16701,14 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
          @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7512:6: ( (this_WeakAbortInstance_0= ruleWeakAbortInstance | this_WeakAbortCase_1= ruleWeakAbortCase ) )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7513:1: (this_WeakAbortInstance_0= ruleWeakAbortInstance | this_WeakAbortCase_1= ruleWeakAbortCase )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7507:6: ( (this_WeakAbortInstance_0= ruleWeakAbortInstance | this_WeakAbortCase_1= ruleWeakAbortCase ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7508:1: (this_WeakAbortInstance_0= ruleWeakAbortInstance | this_WeakAbortCase_1= ruleWeakAbortCase )
             {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7513:1: (this_WeakAbortInstance_0= ruleWeakAbortInstance | this_WeakAbortCase_1= ruleWeakAbortCase )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7508:1: (this_WeakAbortInstance_0= ruleWeakAbortInstance | this_WeakAbortCase_1= ruleWeakAbortCase )
             int alt99=2;
             int LA99_0 = input.LA(1);
 
-            if ( (LA99_0==RULE_ESTERELID||(LA99_0>=RULE_INT && LA99_0<=RULE_BOOLEAN)||(LA99_0>=33 && LA99_0<=34)||LA99_0==36||LA99_0==40||LA99_0==69||(LA99_0>=78 && LA99_0<=92)) ) {
+            if ( (LA99_0==RULE_ESTERELID||(LA99_0>=RULE_INT && LA99_0<=RULE_BOOLEAN)||(LA99_0>=33 && LA99_0<=34)||LA99_0==36||LA99_0==40||LA99_0==69||(LA99_0>=78 && LA99_0<=91)||LA99_0==94) ) {
                 alt99=1;
             }
             else if ( (LA99_0==46) ) {
@@ -16720,18 +16716,18 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
             }
             else {
                 NoViableAltException nvae =
-                    new NoViableAltException("7513:1: (this_WeakAbortInstance_0= ruleWeakAbortInstance | this_WeakAbortCase_1= ruleWeakAbortCase )", 99, 0, input);
+                    new NoViableAltException("7508:1: (this_WeakAbortInstance_0= ruleWeakAbortInstance | this_WeakAbortCase_1= ruleWeakAbortCase )", 99, 0, input);
 
                 throw nvae;
             }
             switch (alt99) {
                 case 1 :
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7514:5: this_WeakAbortInstance_0= ruleWeakAbortInstance
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7509:5: this_WeakAbortInstance_0= ruleWeakAbortInstance
                     {
                      
                             currentNode=createCompositeNode(grammarAccess.getWeakAbortBodyAccess().getWeakAbortInstanceParserRuleCall_0(), currentNode); 
                         
-                    pushFollow(FOLLOW_ruleWeakAbortInstance_in_ruleWeakAbortBody13173);
+                    pushFollow(FOLLOW_ruleWeakAbortInstance_in_ruleWeakAbortBody13166);
                     this_WeakAbortInstance_0=ruleWeakAbortInstance();
                     _fsp--;
 
@@ -16743,12 +16739,12 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7524:5: this_WeakAbortCase_1= ruleWeakAbortCase
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7519:5: this_WeakAbortCase_1= ruleWeakAbortCase
                     {
                      
                             currentNode=createCompositeNode(grammarAccess.getWeakAbortBodyAccess().getWeakAbortCaseParserRuleCall_1(), currentNode); 
                         
-                    pushFollow(FOLLOW_ruleWeakAbortCase_in_ruleWeakAbortBody13200);
+                    pushFollow(FOLLOW_ruleWeakAbortCase_in_ruleWeakAbortBody13193);
                     this_WeakAbortCase_1=ruleWeakAbortCase();
                     _fsp--;
 
@@ -16782,7 +16778,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start entryRuleWeakAbortEnd
-    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7540:1: entryRuleWeakAbortEnd returns [String current=null] : iv_ruleWeakAbortEnd= ruleWeakAbortEnd EOF ;
+    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7535:1: entryRuleWeakAbortEnd returns [String current=null] : iv_ruleWeakAbortEnd= ruleWeakAbortEnd EOF ;
     public final String entryRuleWeakAbortEnd() throws RecognitionException {
         String current = null;
 
@@ -16790,16 +16786,16 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7541:2: (iv_ruleWeakAbortEnd= ruleWeakAbortEnd EOF )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7542:2: iv_ruleWeakAbortEnd= ruleWeakAbortEnd EOF
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7536:2: (iv_ruleWeakAbortEnd= ruleWeakAbortEnd EOF )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7537:2: iv_ruleWeakAbortEnd= ruleWeakAbortEnd EOF
             {
              currentNode = createCompositeNode(grammarAccess.getWeakAbortEndRule(), currentNode); 
-            pushFollow(FOLLOW_ruleWeakAbortEnd_in_entryRuleWeakAbortEnd13236);
+            pushFollow(FOLLOW_ruleWeakAbortEnd_in_entryRuleWeakAbortEnd13229);
             iv_ruleWeakAbortEnd=ruleWeakAbortEnd();
             _fsp--;
 
              current =iv_ruleWeakAbortEnd.getText(); 
-            match(input,EOF,FOLLOW_EOF_in_entryRuleWeakAbortEnd13247); 
+            match(input,EOF,FOLLOW_EOF_in_entryRuleWeakAbortEnd13240); 
 
             }
 
@@ -16817,7 +16813,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start ruleWeakAbortEnd
-    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7549:1: ruleWeakAbortEnd returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : (kw= 'end' ( (kw= 'weak' )? kw= 'abort' )? ) ;
+    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7544:1: ruleWeakAbortEnd returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : (kw= 'end' ( (kw= 'weak' )? kw= 'abort' )? ) ;
     public final AntlrDatatypeRuleToken ruleWeakAbortEnd() throws RecognitionException {
         AntlrDatatypeRuleToken current = new AntlrDatatypeRuleToken();
 
@@ -16826,19 +16822,19 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
          setCurrentLookahead(); resetLookahead(); 
             
         try {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7554:6: ( (kw= 'end' ( (kw= 'weak' )? kw= 'abort' )? ) )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7555:1: (kw= 'end' ( (kw= 'weak' )? kw= 'abort' )? )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7549:6: ( (kw= 'end' ( (kw= 'weak' )? kw= 'abort' )? ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7550:1: (kw= 'end' ( (kw= 'weak' )? kw= 'abort' )? )
             {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7555:1: (kw= 'end' ( (kw= 'weak' )? kw= 'abort' )? )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7556:2: kw= 'end' ( (kw= 'weak' )? kw= 'abort' )?
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7550:1: (kw= 'end' ( (kw= 'weak' )? kw= 'abort' )? )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7551:2: kw= 'end' ( (kw= 'weak' )? kw= 'abort' )?
             {
             kw=(Token)input.LT(1);
-            match(input,19,FOLLOW_19_in_ruleWeakAbortEnd13285); 
+            match(input,19,FOLLOW_19_in_ruleWeakAbortEnd13278); 
 
                     current.merge(kw);
                     createLeafNode(grammarAccess.getWeakAbortEndAccess().getEndKeyword_0(), null); 
                 
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7561:1: ( (kw= 'weak' )? kw= 'abort' )?
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7556:1: ( (kw= 'weak' )? kw= 'abort' )?
             int alt101=2;
             int LA101_0 = input.LA(1);
 
@@ -16847,9 +16843,9 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
             }
             switch (alt101) {
                 case 1 :
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7561:2: (kw= 'weak' )? kw= 'abort'
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7556:2: (kw= 'weak' )? kw= 'abort'
                     {
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7561:2: (kw= 'weak' )?
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7556:2: (kw= 'weak' )?
                     int alt100=2;
                     int LA100_0 = input.LA(1);
 
@@ -16858,10 +16854,10 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
                     }
                     switch (alt100) {
                         case 1 :
-                            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7562:2: kw= 'weak'
+                            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7557:2: kw= 'weak'
                             {
                             kw=(Token)input.LT(1);
-                            match(input,77,FOLLOW_77_in_ruleWeakAbortEnd13300); 
+                            match(input,77,FOLLOW_77_in_ruleWeakAbortEnd13293); 
 
                                     current.merge(kw);
                                     createLeafNode(grammarAccess.getWeakAbortEndAccess().getWeakKeyword_1_0(), null); 
@@ -16873,7 +16869,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
                     }
 
                     kw=(Token)input.LT(1);
-                    match(input,43,FOLLOW_43_in_ruleWeakAbortEnd13315); 
+                    match(input,43,FOLLOW_43_in_ruleWeakAbortEnd13308); 
 
                             current.merge(kw);
                             createLeafNode(grammarAccess.getWeakAbortEndAccess().getAbortKeyword_1_1(), null); 
@@ -16907,7 +16903,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start entryRuleWeakAbortInstance
-    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7581:1: entryRuleWeakAbortInstance returns [EObject current=null] : iv_ruleWeakAbortInstance= ruleWeakAbortInstance EOF ;
+    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7576:1: entryRuleWeakAbortInstance returns [EObject current=null] : iv_ruleWeakAbortInstance= ruleWeakAbortInstance EOF ;
     public final EObject entryRuleWeakAbortInstance() throws RecognitionException {
         EObject current = null;
 
@@ -16915,16 +16911,16 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7582:2: (iv_ruleWeakAbortInstance= ruleWeakAbortInstance EOF )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7583:2: iv_ruleWeakAbortInstance= ruleWeakAbortInstance EOF
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7577:2: (iv_ruleWeakAbortInstance= ruleWeakAbortInstance EOF )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7578:2: iv_ruleWeakAbortInstance= ruleWeakAbortInstance EOF
             {
              currentNode = createCompositeNode(grammarAccess.getWeakAbortInstanceRule(), currentNode); 
-            pushFollow(FOLLOW_ruleWeakAbortInstance_in_entryRuleWeakAbortInstance13357);
+            pushFollow(FOLLOW_ruleWeakAbortInstance_in_entryRuleWeakAbortInstance13350);
             iv_ruleWeakAbortInstance=ruleWeakAbortInstance();
             _fsp--;
 
              current =iv_ruleWeakAbortInstance; 
-            match(input,EOF,FOLLOW_EOF_in_entryRuleWeakAbortInstance13367); 
+            match(input,EOF,FOLLOW_EOF_in_entryRuleWeakAbortInstance13360); 
 
             }
 
@@ -16942,7 +16938,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start ruleWeakAbortInstance
-    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7590:1: ruleWeakAbortInstance returns [EObject current=null] : ( ( (lv_delay_0_0= ruleDelayExpr ) ) ( 'do' ( (lv_statement_2_0= ruleStatement ) ) ( (lv_end_3_0= ruleWeakAbortEnd ) ) )? ) ;
+    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7585:1: ruleWeakAbortInstance returns [EObject current=null] : ( ( (lv_delay_0_0= ruleDelayExpr ) ) ( 'do' ( (lv_statement_2_0= ruleStatement ) ) ( (lv_end_3_0= ruleWeakAbortEnd ) ) )? ) ;
     public final EObject ruleWeakAbortInstance() throws RecognitionException {
         EObject current = null;
 
@@ -16956,22 +16952,22 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
          @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7595:6: ( ( ( (lv_delay_0_0= ruleDelayExpr ) ) ( 'do' ( (lv_statement_2_0= ruleStatement ) ) ( (lv_end_3_0= ruleWeakAbortEnd ) ) )? ) )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7596:1: ( ( (lv_delay_0_0= ruleDelayExpr ) ) ( 'do' ( (lv_statement_2_0= ruleStatement ) ) ( (lv_end_3_0= ruleWeakAbortEnd ) ) )? )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7590:6: ( ( ( (lv_delay_0_0= ruleDelayExpr ) ) ( 'do' ( (lv_statement_2_0= ruleStatement ) ) ( (lv_end_3_0= ruleWeakAbortEnd ) ) )? ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7591:1: ( ( (lv_delay_0_0= ruleDelayExpr ) ) ( 'do' ( (lv_statement_2_0= ruleStatement ) ) ( (lv_end_3_0= ruleWeakAbortEnd ) ) )? )
             {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7596:1: ( ( (lv_delay_0_0= ruleDelayExpr ) ) ( 'do' ( (lv_statement_2_0= ruleStatement ) ) ( (lv_end_3_0= ruleWeakAbortEnd ) ) )? )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7596:2: ( (lv_delay_0_0= ruleDelayExpr ) ) ( 'do' ( (lv_statement_2_0= ruleStatement ) ) ( (lv_end_3_0= ruleWeakAbortEnd ) ) )?
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7591:1: ( ( (lv_delay_0_0= ruleDelayExpr ) ) ( 'do' ( (lv_statement_2_0= ruleStatement ) ) ( (lv_end_3_0= ruleWeakAbortEnd ) ) )? )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7591:2: ( (lv_delay_0_0= ruleDelayExpr ) ) ( 'do' ( (lv_statement_2_0= ruleStatement ) ) ( (lv_end_3_0= ruleWeakAbortEnd ) ) )?
             {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7596:2: ( (lv_delay_0_0= ruleDelayExpr ) )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7597:1: (lv_delay_0_0= ruleDelayExpr )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7591:2: ( (lv_delay_0_0= ruleDelayExpr ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7592:1: (lv_delay_0_0= ruleDelayExpr )
             {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7597:1: (lv_delay_0_0= ruleDelayExpr )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7598:3: lv_delay_0_0= ruleDelayExpr
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7592:1: (lv_delay_0_0= ruleDelayExpr )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7593:3: lv_delay_0_0= ruleDelayExpr
             {
              
             	        currentNode=createCompositeNode(grammarAccess.getWeakAbortInstanceAccess().getDelayDelayExprParserRuleCall_0_0(), currentNode); 
             	    
-            pushFollow(FOLLOW_ruleDelayExpr_in_ruleWeakAbortInstance13413);
+            pushFollow(FOLLOW_ruleDelayExpr_in_ruleWeakAbortInstance13406);
             lv_delay_0_0=ruleDelayExpr();
             _fsp--;
 
@@ -16998,7 +16994,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
             }
 
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7620:2: ( 'do' ( (lv_statement_2_0= ruleStatement ) ) ( (lv_end_3_0= ruleWeakAbortEnd ) ) )?
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7615:2: ( 'do' ( (lv_statement_2_0= ruleStatement ) ) ( (lv_end_3_0= ruleWeakAbortEnd ) ) )?
             int alt102=2;
             int LA102_0 = input.LA(1);
 
@@ -17007,22 +17003,22 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
             }
             switch (alt102) {
                 case 1 :
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7620:4: 'do' ( (lv_statement_2_0= ruleStatement ) ) ( (lv_end_3_0= ruleWeakAbortEnd ) )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7615:4: 'do' ( (lv_statement_2_0= ruleStatement ) ) ( (lv_end_3_0= ruleWeakAbortEnd ) )
                     {
-                    match(input,45,FOLLOW_45_in_ruleWeakAbortInstance13424); 
+                    match(input,45,FOLLOW_45_in_ruleWeakAbortInstance13417); 
 
                             createLeafNode(grammarAccess.getWeakAbortInstanceAccess().getDoKeyword_1_0(), null); 
                         
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7624:1: ( (lv_statement_2_0= ruleStatement ) )
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7625:1: (lv_statement_2_0= ruleStatement )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7619:1: ( (lv_statement_2_0= ruleStatement ) )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7620:1: (lv_statement_2_0= ruleStatement )
                     {
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7625:1: (lv_statement_2_0= ruleStatement )
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7626:3: lv_statement_2_0= ruleStatement
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7620:1: (lv_statement_2_0= ruleStatement )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7621:3: lv_statement_2_0= ruleStatement
                     {
                      
                     	        currentNode=createCompositeNode(grammarAccess.getWeakAbortInstanceAccess().getStatementStatementParserRuleCall_1_1_0(), currentNode); 
                     	    
-                    pushFollow(FOLLOW_ruleStatement_in_ruleWeakAbortInstance13445);
+                    pushFollow(FOLLOW_ruleStatement_in_ruleWeakAbortInstance13438);
                     lv_statement_2_0=ruleStatement();
                     _fsp--;
 
@@ -17049,16 +17045,16 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7648:2: ( (lv_end_3_0= ruleWeakAbortEnd ) )
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7649:1: (lv_end_3_0= ruleWeakAbortEnd )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7643:2: ( (lv_end_3_0= ruleWeakAbortEnd ) )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7644:1: (lv_end_3_0= ruleWeakAbortEnd )
                     {
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7649:1: (lv_end_3_0= ruleWeakAbortEnd )
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7650:3: lv_end_3_0= ruleWeakAbortEnd
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7644:1: (lv_end_3_0= ruleWeakAbortEnd )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7645:3: lv_end_3_0= ruleWeakAbortEnd
                     {
                      
                     	        currentNode=createCompositeNode(grammarAccess.getWeakAbortInstanceAccess().getEndWeakAbortEndParserRuleCall_1_2_0(), currentNode); 
                     	    
-                    pushFollow(FOLLOW_ruleWeakAbortEnd_in_ruleWeakAbortInstance13466);
+                    pushFollow(FOLLOW_ruleWeakAbortEnd_in_ruleWeakAbortInstance13459);
                     lv_end_3_0=ruleWeakAbortEnd();
                     _fsp--;
 
@@ -17114,7 +17110,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start entryRuleWeakAbortCase
-    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7680:1: entryRuleWeakAbortCase returns [EObject current=null] : iv_ruleWeakAbortCase= ruleWeakAbortCase EOF ;
+    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7675:1: entryRuleWeakAbortCase returns [EObject current=null] : iv_ruleWeakAbortCase= ruleWeakAbortCase EOF ;
     public final EObject entryRuleWeakAbortCase() throws RecognitionException {
         EObject current = null;
 
@@ -17122,16 +17118,16 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7681:2: (iv_ruleWeakAbortCase= ruleWeakAbortCase EOF )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7682:2: iv_ruleWeakAbortCase= ruleWeakAbortCase EOF
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7676:2: (iv_ruleWeakAbortCase= ruleWeakAbortCase EOF )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7677:2: iv_ruleWeakAbortCase= ruleWeakAbortCase EOF
             {
              currentNode = createCompositeNode(grammarAccess.getWeakAbortCaseRule(), currentNode); 
-            pushFollow(FOLLOW_ruleWeakAbortCase_in_entryRuleWeakAbortCase13504);
+            pushFollow(FOLLOW_ruleWeakAbortCase_in_entryRuleWeakAbortCase13497);
             iv_ruleWeakAbortCase=ruleWeakAbortCase();
             _fsp--;
 
              current =iv_ruleWeakAbortCase; 
-            match(input,EOF,FOLLOW_EOF_in_entryRuleWeakAbortCase13514); 
+            match(input,EOF,FOLLOW_EOF_in_entryRuleWeakAbortCase13507); 
 
             }
 
@@ -17149,7 +17145,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start ruleWeakAbortCase
-    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7689:1: ruleWeakAbortCase returns [EObject current=null] : ( ( (lv_cases_0_0= ruleAbortCaseSingle ) ) ( (lv_cases_1_0= ruleAbortCaseSingle ) )* ( (lv_end_2_0= ruleWeakAbortEnd ) ) ) ;
+    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7684:1: ruleWeakAbortCase returns [EObject current=null] : ( ( (lv_cases_0_0= ruleAbortCaseSingle ) ) ( (lv_cases_1_0= ruleAbortCaseSingle ) )* ( (lv_end_2_0= ruleWeakAbortEnd ) ) ) ;
     public final EObject ruleWeakAbortCase() throws RecognitionException {
         EObject current = null;
 
@@ -17163,22 +17159,22 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
          @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7694:6: ( ( ( (lv_cases_0_0= ruleAbortCaseSingle ) ) ( (lv_cases_1_0= ruleAbortCaseSingle ) )* ( (lv_end_2_0= ruleWeakAbortEnd ) ) ) )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7695:1: ( ( (lv_cases_0_0= ruleAbortCaseSingle ) ) ( (lv_cases_1_0= ruleAbortCaseSingle ) )* ( (lv_end_2_0= ruleWeakAbortEnd ) ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7689:6: ( ( ( (lv_cases_0_0= ruleAbortCaseSingle ) ) ( (lv_cases_1_0= ruleAbortCaseSingle ) )* ( (lv_end_2_0= ruleWeakAbortEnd ) ) ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7690:1: ( ( (lv_cases_0_0= ruleAbortCaseSingle ) ) ( (lv_cases_1_0= ruleAbortCaseSingle ) )* ( (lv_end_2_0= ruleWeakAbortEnd ) ) )
             {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7695:1: ( ( (lv_cases_0_0= ruleAbortCaseSingle ) ) ( (lv_cases_1_0= ruleAbortCaseSingle ) )* ( (lv_end_2_0= ruleWeakAbortEnd ) ) )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7695:2: ( (lv_cases_0_0= ruleAbortCaseSingle ) ) ( (lv_cases_1_0= ruleAbortCaseSingle ) )* ( (lv_end_2_0= ruleWeakAbortEnd ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7690:1: ( ( (lv_cases_0_0= ruleAbortCaseSingle ) ) ( (lv_cases_1_0= ruleAbortCaseSingle ) )* ( (lv_end_2_0= ruleWeakAbortEnd ) ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7690:2: ( (lv_cases_0_0= ruleAbortCaseSingle ) ) ( (lv_cases_1_0= ruleAbortCaseSingle ) )* ( (lv_end_2_0= ruleWeakAbortEnd ) )
             {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7695:2: ( (lv_cases_0_0= ruleAbortCaseSingle ) )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7696:1: (lv_cases_0_0= ruleAbortCaseSingle )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7690:2: ( (lv_cases_0_0= ruleAbortCaseSingle ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7691:1: (lv_cases_0_0= ruleAbortCaseSingle )
             {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7696:1: (lv_cases_0_0= ruleAbortCaseSingle )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7697:3: lv_cases_0_0= ruleAbortCaseSingle
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7691:1: (lv_cases_0_0= ruleAbortCaseSingle )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7692:3: lv_cases_0_0= ruleAbortCaseSingle
             {
              
             	        currentNode=createCompositeNode(grammarAccess.getWeakAbortCaseAccess().getCasesAbortCaseSingleParserRuleCall_0_0(), currentNode); 
             	    
-            pushFollow(FOLLOW_ruleAbortCaseSingle_in_ruleWeakAbortCase13560);
+            pushFollow(FOLLOW_ruleAbortCaseSingle_in_ruleWeakAbortCase13553);
             lv_cases_0_0=ruleAbortCaseSingle();
             _fsp--;
 
@@ -17205,7 +17201,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
             }
 
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7719:2: ( (lv_cases_1_0= ruleAbortCaseSingle ) )*
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7714:2: ( (lv_cases_1_0= ruleAbortCaseSingle ) )*
             loop103:
             do {
                 int alt103=2;
@@ -17218,15 +17214,15 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
                 switch (alt103) {
             	case 1 :
-            	    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7720:1: (lv_cases_1_0= ruleAbortCaseSingle )
+            	    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7715:1: (lv_cases_1_0= ruleAbortCaseSingle )
             	    {
-            	    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7720:1: (lv_cases_1_0= ruleAbortCaseSingle )
-            	    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7721:3: lv_cases_1_0= ruleAbortCaseSingle
+            	    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7715:1: (lv_cases_1_0= ruleAbortCaseSingle )
+            	    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7716:3: lv_cases_1_0= ruleAbortCaseSingle
             	    {
             	     
             	    	        currentNode=createCompositeNode(grammarAccess.getWeakAbortCaseAccess().getCasesAbortCaseSingleParserRuleCall_1_0(), currentNode); 
             	    	    
-            	    pushFollow(FOLLOW_ruleAbortCaseSingle_in_ruleWeakAbortCase13581);
+            	    pushFollow(FOLLOW_ruleAbortCaseSingle_in_ruleWeakAbortCase13574);
             	    lv_cases_1_0=ruleAbortCaseSingle();
             	    _fsp--;
 
@@ -17259,16 +17255,16 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
                 }
             } while (true);
 
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7743:3: ( (lv_end_2_0= ruleWeakAbortEnd ) )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7744:1: (lv_end_2_0= ruleWeakAbortEnd )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7738:3: ( (lv_end_2_0= ruleWeakAbortEnd ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7739:1: (lv_end_2_0= ruleWeakAbortEnd )
             {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7744:1: (lv_end_2_0= ruleWeakAbortEnd )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7745:3: lv_end_2_0= ruleWeakAbortEnd
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7739:1: (lv_end_2_0= ruleWeakAbortEnd )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7740:3: lv_end_2_0= ruleWeakAbortEnd
             {
              
             	        currentNode=createCompositeNode(grammarAccess.getWeakAbortCaseAccess().getEndWeakAbortEndParserRuleCall_2_0(), currentNode); 
             	    
-            pushFollow(FOLLOW_ruleWeakAbortEnd_in_ruleWeakAbortCase13603);
+            pushFollow(FOLLOW_ruleWeakAbortEnd_in_ruleWeakAbortCase13596);
             lv_end_2_0=ruleWeakAbortEnd();
             _fsp--;
 
@@ -17318,7 +17314,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start entryRuleDataExpr
-    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7775:1: entryRuleDataExpr returns [EObject current=null] : iv_ruleDataExpr= ruleDataExpr EOF ;
+    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7770:1: entryRuleDataExpr returns [EObject current=null] : iv_ruleDataExpr= ruleDataExpr EOF ;
     public final EObject entryRuleDataExpr() throws RecognitionException {
         EObject current = null;
 
@@ -17326,16 +17322,16 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7776:2: (iv_ruleDataExpr= ruleDataExpr EOF )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7777:2: iv_ruleDataExpr= ruleDataExpr EOF
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7771:2: (iv_ruleDataExpr= ruleDataExpr EOF )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7772:2: iv_ruleDataExpr= ruleDataExpr EOF
             {
              currentNode = createCompositeNode(grammarAccess.getDataExprRule(), currentNode); 
-            pushFollow(FOLLOW_ruleDataExpr_in_entryRuleDataExpr13639);
+            pushFollow(FOLLOW_ruleDataExpr_in_entryRuleDataExpr13632);
             iv_ruleDataExpr=ruleDataExpr();
             _fsp--;
 
              current =iv_ruleDataExpr; 
-            match(input,EOF,FOLLOW_EOF_in_entryRuleDataExpr13649); 
+            match(input,EOF,FOLLOW_EOF_in_entryRuleDataExpr13642); 
 
             }
 
@@ -17353,7 +17349,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start ruleDataExpr
-    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7784:1: ruleDataExpr returns [EObject current=null] : ( (this_DataUnaryExpr_0= ruleDataUnaryExpr ( () ( (lv_op_2_0= ruleDataOp ) ) ( (lv_right_3_0= ruleDataExpr ) ) )? ) | ( ( (lv_op_4_0= ruleDataOp ) ) ( (lv_expr_5_0= ruleDataExpr ) ) ) ) ;
+    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7779:1: ruleDataExpr returns [EObject current=null] : ( (this_DataUnaryExpr_0= ruleDataUnaryExpr ( () ( (lv_op_2_0= ruleDataOp ) ) ( (lv_right_3_0= ruleDataExpr ) ) )? ) | ( ( (lv_op_4_0= ruleDataOp ) ) ( (lv_expr_5_0= ruleDataExpr ) ) ) ) ;
     public final EObject ruleDataExpr() throws RecognitionException {
         EObject current = null;
 
@@ -17371,10 +17367,10 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
          @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7789:6: ( ( (this_DataUnaryExpr_0= ruleDataUnaryExpr ( () ( (lv_op_2_0= ruleDataOp ) ) ( (lv_right_3_0= ruleDataExpr ) ) )? ) | ( ( (lv_op_4_0= ruleDataOp ) ) ( (lv_expr_5_0= ruleDataExpr ) ) ) ) )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7790:1: ( (this_DataUnaryExpr_0= ruleDataUnaryExpr ( () ( (lv_op_2_0= ruleDataOp ) ) ( (lv_right_3_0= ruleDataExpr ) ) )? ) | ( ( (lv_op_4_0= ruleDataOp ) ) ( (lv_expr_5_0= ruleDataExpr ) ) ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7784:6: ( ( (this_DataUnaryExpr_0= ruleDataUnaryExpr ( () ( (lv_op_2_0= ruleDataOp ) ) ( (lv_right_3_0= ruleDataExpr ) ) )? ) | ( ( (lv_op_4_0= ruleDataOp ) ) ( (lv_expr_5_0= ruleDataExpr ) ) ) ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7785:1: ( (this_DataUnaryExpr_0= ruleDataUnaryExpr ( () ( (lv_op_2_0= ruleDataOp ) ) ( (lv_right_3_0= ruleDataExpr ) ) )? ) | ( ( (lv_op_4_0= ruleDataOp ) ) ( (lv_expr_5_0= ruleDataExpr ) ) ) )
             {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7790:1: ( (this_DataUnaryExpr_0= ruleDataUnaryExpr ( () ( (lv_op_2_0= ruleDataOp ) ) ( (lv_right_3_0= ruleDataExpr ) ) )? ) | ( ( (lv_op_4_0= ruleDataOp ) ) ( (lv_expr_5_0= ruleDataExpr ) ) ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7785:1: ( (this_DataUnaryExpr_0= ruleDataUnaryExpr ( () ( (lv_op_2_0= ruleDataOp ) ) ( (lv_right_3_0= ruleDataExpr ) ) )? ) | ( ( (lv_op_4_0= ruleDataOp ) ) ( (lv_expr_5_0= ruleDataExpr ) ) ) )
             int alt105=2;
             int LA105_0 = input.LA(1);
 
@@ -17386,21 +17382,21 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
             }
             else {
                 NoViableAltException nvae =
-                    new NoViableAltException("7790:1: ( (this_DataUnaryExpr_0= ruleDataUnaryExpr ( () ( (lv_op_2_0= ruleDataOp ) ) ( (lv_right_3_0= ruleDataExpr ) ) )? ) | ( ( (lv_op_4_0= ruleDataOp ) ) ( (lv_expr_5_0= ruleDataExpr ) ) ) )", 105, 0, input);
+                    new NoViableAltException("7785:1: ( (this_DataUnaryExpr_0= ruleDataUnaryExpr ( () ( (lv_op_2_0= ruleDataOp ) ) ( (lv_right_3_0= ruleDataExpr ) ) )? ) | ( ( (lv_op_4_0= ruleDataOp ) ) ( (lv_expr_5_0= ruleDataExpr ) ) ) )", 105, 0, input);
 
                 throw nvae;
             }
             switch (alt105) {
                 case 1 :
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7790:2: (this_DataUnaryExpr_0= ruleDataUnaryExpr ( () ( (lv_op_2_0= ruleDataOp ) ) ( (lv_right_3_0= ruleDataExpr ) ) )? )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7785:2: (this_DataUnaryExpr_0= ruleDataUnaryExpr ( () ( (lv_op_2_0= ruleDataOp ) ) ( (lv_right_3_0= ruleDataExpr ) ) )? )
                     {
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7790:2: (this_DataUnaryExpr_0= ruleDataUnaryExpr ( () ( (lv_op_2_0= ruleDataOp ) ) ( (lv_right_3_0= ruleDataExpr ) ) )? )
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7791:5: this_DataUnaryExpr_0= ruleDataUnaryExpr ( () ( (lv_op_2_0= ruleDataOp ) ) ( (lv_right_3_0= ruleDataExpr ) ) )?
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7785:2: (this_DataUnaryExpr_0= ruleDataUnaryExpr ( () ( (lv_op_2_0= ruleDataOp ) ) ( (lv_right_3_0= ruleDataExpr ) ) )? )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7786:5: this_DataUnaryExpr_0= ruleDataUnaryExpr ( () ( (lv_op_2_0= ruleDataOp ) ) ( (lv_right_3_0= ruleDataExpr ) ) )?
                     {
                      
                             currentNode=createCompositeNode(grammarAccess.getDataExprAccess().getDataUnaryExprParserRuleCall_0_0(), currentNode); 
                         
-                    pushFollow(FOLLOW_ruleDataUnaryExpr_in_ruleDataExpr13697);
+                    pushFollow(FOLLOW_ruleDataUnaryExpr_in_ruleDataExpr13690);
                     this_DataUnaryExpr_0=ruleDataUnaryExpr();
                     _fsp--;
 
@@ -17408,7 +17404,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
                             current = this_DataUnaryExpr_0; 
                             currentNode = currentNode.getParent();
                         
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7799:1: ( () ( (lv_op_2_0= ruleDataOp ) ) ( (lv_right_3_0= ruleDataExpr ) ) )?
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7794:1: ( () ( (lv_op_2_0= ruleDataOp ) ) ( (lv_right_3_0= ruleDataExpr ) ) )?
                     int alt104=2;
                     int LA104_0 = input.LA(1);
 
@@ -17417,10 +17413,10 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
                     }
                     switch (alt104) {
                         case 1 :
-                            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7799:2: () ( (lv_op_2_0= ruleDataOp ) ) ( (lv_right_3_0= ruleDataExpr ) )
+                            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7794:2: () ( (lv_op_2_0= ruleDataOp ) ) ( (lv_right_3_0= ruleDataExpr ) )
                             {
-                            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7799:2: ()
-                            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7800:5: 
+                            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7794:2: ()
+                            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7795:5: 
                             {
                              
                                     temp=factory.create(grammarAccess.getDataExprAccess().getDataExprLeftAction_0_1_0().getType().getClassifier());
@@ -17440,16 +17436,16 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
                             }
 
-                            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7815:2: ( (lv_op_2_0= ruleDataOp ) )
-                            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7816:1: (lv_op_2_0= ruleDataOp )
+                            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7810:2: ( (lv_op_2_0= ruleDataOp ) )
+                            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7811:1: (lv_op_2_0= ruleDataOp )
                             {
-                            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7816:1: (lv_op_2_0= ruleDataOp )
-                            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7817:3: lv_op_2_0= ruleDataOp
+                            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7811:1: (lv_op_2_0= ruleDataOp )
+                            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7812:3: lv_op_2_0= ruleDataOp
                             {
                              
                             	        currentNode=createCompositeNode(grammarAccess.getDataExprAccess().getOpDataOpParserRuleCall_0_1_1_0(), currentNode); 
                             	    
-                            pushFollow(FOLLOW_ruleDataOp_in_ruleDataExpr13727);
+                            pushFollow(FOLLOW_ruleDataOp_in_ruleDataExpr13720);
                             lv_op_2_0=ruleDataOp();
                             _fsp--;
 
@@ -17476,16 +17472,16 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
                             }
 
-                            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7839:2: ( (lv_right_3_0= ruleDataExpr ) )
-                            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7840:1: (lv_right_3_0= ruleDataExpr )
+                            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7834:2: ( (lv_right_3_0= ruleDataExpr ) )
+                            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7835:1: (lv_right_3_0= ruleDataExpr )
                             {
-                            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7840:1: (lv_right_3_0= ruleDataExpr )
-                            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7841:3: lv_right_3_0= ruleDataExpr
+                            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7835:1: (lv_right_3_0= ruleDataExpr )
+                            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7836:3: lv_right_3_0= ruleDataExpr
                             {
                              
                             	        currentNode=createCompositeNode(grammarAccess.getDataExprAccess().getRightDataExprParserRuleCall_0_1_2_0(), currentNode); 
                             	    
-                            pushFollow(FOLLOW_ruleDataExpr_in_ruleDataExpr13748);
+                            pushFollow(FOLLOW_ruleDataExpr_in_ruleDataExpr13741);
                             lv_right_3_0=ruleDataExpr();
                             _fsp--;
 
@@ -17525,21 +17521,21 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7864:6: ( ( (lv_op_4_0= ruleDataOp ) ) ( (lv_expr_5_0= ruleDataExpr ) ) )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7859:6: ( ( (lv_op_4_0= ruleDataOp ) ) ( (lv_expr_5_0= ruleDataExpr ) ) )
                     {
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7864:6: ( ( (lv_op_4_0= ruleDataOp ) ) ( (lv_expr_5_0= ruleDataExpr ) ) )
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7864:7: ( (lv_op_4_0= ruleDataOp ) ) ( (lv_expr_5_0= ruleDataExpr ) )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7859:6: ( ( (lv_op_4_0= ruleDataOp ) ) ( (lv_expr_5_0= ruleDataExpr ) ) )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7859:7: ( (lv_op_4_0= ruleDataOp ) ) ( (lv_expr_5_0= ruleDataExpr ) )
                     {
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7864:7: ( (lv_op_4_0= ruleDataOp ) )
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7865:1: (lv_op_4_0= ruleDataOp )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7859:7: ( (lv_op_4_0= ruleDataOp ) )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7860:1: (lv_op_4_0= ruleDataOp )
                     {
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7865:1: (lv_op_4_0= ruleDataOp )
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7866:3: lv_op_4_0= ruleDataOp
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7860:1: (lv_op_4_0= ruleDataOp )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7861:3: lv_op_4_0= ruleDataOp
                     {
                      
                     	        currentNode=createCompositeNode(grammarAccess.getDataExprAccess().getOpDataOpParserRuleCall_1_0_0(), currentNode); 
                     	    
-                    pushFollow(FOLLOW_ruleDataOp_in_ruleDataExpr13779);
+                    pushFollow(FOLLOW_ruleDataOp_in_ruleDataExpr13772);
                     lv_op_4_0=ruleDataOp();
                     _fsp--;
 
@@ -17566,16 +17562,16 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7888:2: ( (lv_expr_5_0= ruleDataExpr ) )
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7889:1: (lv_expr_5_0= ruleDataExpr )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7883:2: ( (lv_expr_5_0= ruleDataExpr ) )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7884:1: (lv_expr_5_0= ruleDataExpr )
                     {
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7889:1: (lv_expr_5_0= ruleDataExpr )
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7890:3: lv_expr_5_0= ruleDataExpr
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7884:1: (lv_expr_5_0= ruleDataExpr )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7885:3: lv_expr_5_0= ruleDataExpr
                     {
                      
                     	        currentNode=createCompositeNode(grammarAccess.getDataExprAccess().getExprDataExprParserRuleCall_1_1_0(), currentNode); 
                     	    
-                    pushFollow(FOLLOW_ruleDataExpr_in_ruleDataExpr13800);
+                    pushFollow(FOLLOW_ruleDataExpr_in_ruleDataExpr13793);
                     lv_expr_5_0=ruleDataExpr();
                     _fsp--;
 
@@ -17631,7 +17627,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start entryRuleDataOp
-    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7920:1: entryRuleDataOp returns [String current=null] : iv_ruleDataOp= ruleDataOp EOF ;
+    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7915:1: entryRuleDataOp returns [String current=null] : iv_ruleDataOp= ruleDataOp EOF ;
     public final String entryRuleDataOp() throws RecognitionException {
         String current = null;
 
@@ -17639,16 +17635,16 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7921:2: (iv_ruleDataOp= ruleDataOp EOF )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7922:2: iv_ruleDataOp= ruleDataOp EOF
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7916:2: (iv_ruleDataOp= ruleDataOp EOF )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7917:2: iv_ruleDataOp= ruleDataOp EOF
             {
              currentNode = createCompositeNode(grammarAccess.getDataOpRule(), currentNode); 
-            pushFollow(FOLLOW_ruleDataOp_in_entryRuleDataOp13838);
+            pushFollow(FOLLOW_ruleDataOp_in_entryRuleDataOp13831);
             iv_ruleDataOp=ruleDataOp();
             _fsp--;
 
              current =iv_ruleDataOp.getText(); 
-            match(input,EOF,FOLLOW_EOF_in_entryRuleDataOp13849); 
+            match(input,EOF,FOLLOW_EOF_in_entryRuleDataOp13842); 
 
             }
 
@@ -17666,7 +17662,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start ruleDataOp
-    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7929:1: ruleDataOp returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : (kw= 'and' | kw= 'or' | kw= 'not' | kw= '<' | kw= '>' | kw= '<=' | kw= '>=' | kw= '<>' | kw= '=' | kw= '+' | kw= '-' | kw= '*' | kw= '/' | kw= 'mod' ) ;
+    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7924:1: ruleDataOp returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : (kw= 'and' | kw= 'or' | kw= 'not' | kw= '<' | kw= '>' | kw= '<=' | kw= '>=' | kw= '<>' | kw= '=' | kw= '+' | kw= '-' | kw= '*' | kw= '/' | kw= 'mod' ) ;
     public final AntlrDatatypeRuleToken ruleDataOp() throws RecognitionException {
         AntlrDatatypeRuleToken current = new AntlrDatatypeRuleToken();
 
@@ -17675,10 +17671,10 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
          setCurrentLookahead(); resetLookahead(); 
             
         try {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7934:6: ( (kw= 'and' | kw= 'or' | kw= 'not' | kw= '<' | kw= '>' | kw= '<=' | kw= '>=' | kw= '<>' | kw= '=' | kw= '+' | kw= '-' | kw= '*' | kw= '/' | kw= 'mod' ) )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7935:1: (kw= 'and' | kw= 'or' | kw= 'not' | kw= '<' | kw= '>' | kw= '<=' | kw= '>=' | kw= '<>' | kw= '=' | kw= '+' | kw= '-' | kw= '*' | kw= '/' | kw= 'mod' )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7929:6: ( (kw= 'and' | kw= 'or' | kw= 'not' | kw= '<' | kw= '>' | kw= '<=' | kw= '>=' | kw= '<>' | kw= '=' | kw= '+' | kw= '-' | kw= '*' | kw= '/' | kw= 'mod' ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7930:1: (kw= 'and' | kw= 'or' | kw= 'not' | kw= '<' | kw= '>' | kw= '<=' | kw= '>=' | kw= '<>' | kw= '=' | kw= '+' | kw= '-' | kw= '*' | kw= '/' | kw= 'mod' )
             {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7935:1: (kw= 'and' | kw= 'or' | kw= 'not' | kw= '<' | kw= '>' | kw= '<=' | kw= '>=' | kw= '<>' | kw= '=' | kw= '+' | kw= '-' | kw= '*' | kw= '/' | kw= 'mod' )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7930:1: (kw= 'and' | kw= 'or' | kw= 'not' | kw= '<' | kw= '>' | kw= '<=' | kw= '>=' | kw= '<>' | kw= '=' | kw= '+' | kw= '-' | kw= '*' | kw= '/' | kw= 'mod' )
             int alt106=14;
             switch ( input.LA(1) ) {
             case 78:
@@ -17753,17 +17749,17 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
                 break;
             default:
                 NoViableAltException nvae =
-                    new NoViableAltException("7935:1: (kw= 'and' | kw= 'or' | kw= 'not' | kw= '<' | kw= '>' | kw= '<=' | kw= '>=' | kw= '<>' | kw= '=' | kw= '+' | kw= '-' | kw= '*' | kw= '/' | kw= 'mod' )", 106, 0, input);
+                    new NoViableAltException("7930:1: (kw= 'and' | kw= 'or' | kw= 'not' | kw= '<' | kw= '>' | kw= '<=' | kw= '>=' | kw= '<>' | kw= '=' | kw= '+' | kw= '-' | kw= '*' | kw= '/' | kw= 'mod' )", 106, 0, input);
 
                 throw nvae;
             }
 
             switch (alt106) {
                 case 1 :
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7936:2: kw= 'and'
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7931:2: kw= 'and'
                     {
                     kw=(Token)input.LT(1);
-                    match(input,78,FOLLOW_78_in_ruleDataOp13887); 
+                    match(input,78,FOLLOW_78_in_ruleDataOp13880); 
 
                             current.merge(kw);
                             createLeafNode(grammarAccess.getDataOpAccess().getAndKeyword_0(), null); 
@@ -17772,10 +17768,10 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7943:2: kw= 'or'
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7938:2: kw= 'or'
                     {
                     kw=(Token)input.LT(1);
-                    match(input,79,FOLLOW_79_in_ruleDataOp13906); 
+                    match(input,79,FOLLOW_79_in_ruleDataOp13899); 
 
                             current.merge(kw);
                             createLeafNode(grammarAccess.getDataOpAccess().getOrKeyword_1(), null); 
@@ -17784,10 +17780,10 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 3 :
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7950:2: kw= 'not'
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7945:2: kw= 'not'
                     {
                     kw=(Token)input.LT(1);
-                    match(input,80,FOLLOW_80_in_ruleDataOp13925); 
+                    match(input,80,FOLLOW_80_in_ruleDataOp13918); 
 
                             current.merge(kw);
                             createLeafNode(grammarAccess.getDataOpAccess().getNotKeyword_2(), null); 
@@ -17796,10 +17792,10 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 4 :
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7957:2: kw= '<'
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7952:2: kw= '<'
                     {
                     kw=(Token)input.LT(1);
-                    match(input,81,FOLLOW_81_in_ruleDataOp13944); 
+                    match(input,81,FOLLOW_81_in_ruleDataOp13937); 
 
                             current.merge(kw);
                             createLeafNode(grammarAccess.getDataOpAccess().getLessThanSignKeyword_3(), null); 
@@ -17808,10 +17804,10 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 5 :
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7964:2: kw= '>'
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7959:2: kw= '>'
                     {
                     kw=(Token)input.LT(1);
-                    match(input,82,FOLLOW_82_in_ruleDataOp13963); 
+                    match(input,82,FOLLOW_82_in_ruleDataOp13956); 
 
                             current.merge(kw);
                             createLeafNode(grammarAccess.getDataOpAccess().getGreaterThanSignKeyword_4(), null); 
@@ -17820,10 +17816,10 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 6 :
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7971:2: kw= '<='
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7966:2: kw= '<='
                     {
                     kw=(Token)input.LT(1);
-                    match(input,83,FOLLOW_83_in_ruleDataOp13982); 
+                    match(input,83,FOLLOW_83_in_ruleDataOp13975); 
 
                             current.merge(kw);
                             createLeafNode(grammarAccess.getDataOpAccess().getLessThanSignEqualsSignKeyword_5(), null); 
@@ -17832,10 +17828,10 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 7 :
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7978:2: kw= '>='
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7973:2: kw= '>='
                     {
                     kw=(Token)input.LT(1);
-                    match(input,84,FOLLOW_84_in_ruleDataOp14001); 
+                    match(input,84,FOLLOW_84_in_ruleDataOp13994); 
 
                             current.merge(kw);
                             createLeafNode(grammarAccess.getDataOpAccess().getGreaterThanSignEqualsSignKeyword_6(), null); 
@@ -17844,10 +17840,10 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 8 :
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7985:2: kw= '<>'
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7980:2: kw= '<>'
                     {
                     kw=(Token)input.LT(1);
-                    match(input,85,FOLLOW_85_in_ruleDataOp14020); 
+                    match(input,85,FOLLOW_85_in_ruleDataOp14013); 
 
                             current.merge(kw);
                             createLeafNode(grammarAccess.getDataOpAccess().getLessThanSignGreaterThanSignKeyword_7(), null); 
@@ -17856,10 +17852,10 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 9 :
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7992:2: kw= '='
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7987:2: kw= '='
                     {
                     kw=(Token)input.LT(1);
-                    match(input,33,FOLLOW_33_in_ruleDataOp14039); 
+                    match(input,33,FOLLOW_33_in_ruleDataOp14032); 
 
                             current.merge(kw);
                             createLeafNode(grammarAccess.getDataOpAccess().getEqualsSignKeyword_8(), null); 
@@ -17868,10 +17864,10 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 10 :
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7999:2: kw= '+'
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7994:2: kw= '+'
                     {
                     kw=(Token)input.LT(1);
-                    match(input,86,FOLLOW_86_in_ruleDataOp14058); 
+                    match(input,86,FOLLOW_86_in_ruleDataOp14051); 
 
                             current.merge(kw);
                             createLeafNode(grammarAccess.getDataOpAccess().getPlusSignKeyword_9(), null); 
@@ -17880,10 +17876,10 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 11 :
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8006:2: kw= '-'
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8001:2: kw= '-'
                     {
                     kw=(Token)input.LT(1);
-                    match(input,34,FOLLOW_34_in_ruleDataOp14077); 
+                    match(input,34,FOLLOW_34_in_ruleDataOp14070); 
 
                             current.merge(kw);
                             createLeafNode(grammarAccess.getDataOpAccess().getHyphenMinusKeyword_10(), null); 
@@ -17892,10 +17888,10 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 12 :
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8013:2: kw= '*'
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8008:2: kw= '*'
                     {
                     kw=(Token)input.LT(1);
-                    match(input,87,FOLLOW_87_in_ruleDataOp14096); 
+                    match(input,87,FOLLOW_87_in_ruleDataOp14089); 
 
                             current.merge(kw);
                             createLeafNode(grammarAccess.getDataOpAccess().getAsteriskKeyword_11(), null); 
@@ -17904,10 +17900,10 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 13 :
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8020:2: kw= '/'
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8015:2: kw= '/'
                     {
                     kw=(Token)input.LT(1);
-                    match(input,69,FOLLOW_69_in_ruleDataOp14115); 
+                    match(input,69,FOLLOW_69_in_ruleDataOp14108); 
 
                             current.merge(kw);
                             createLeafNode(grammarAccess.getDataOpAccess().getSolidusKeyword_12(), null); 
@@ -17916,10 +17912,10 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 14 :
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8027:2: kw= 'mod'
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8022:2: kw= 'mod'
                     {
                     kw=(Token)input.LT(1);
-                    match(input,88,FOLLOW_88_in_ruleDataOp14134); 
+                    match(input,88,FOLLOW_88_in_ruleDataOp14127); 
 
                             current.merge(kw);
                             createLeafNode(grammarAccess.getDataOpAccess().getModKeyword_13(), null); 
@@ -17950,7 +17946,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start entryRuleDataUnaryExpr
-    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8040:1: entryRuleDataUnaryExpr returns [EObject current=null] : iv_ruleDataUnaryExpr= ruleDataUnaryExpr EOF ;
+    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8035:1: entryRuleDataUnaryExpr returns [EObject current=null] : iv_ruleDataUnaryExpr= ruleDataUnaryExpr EOF ;
     public final EObject entryRuleDataUnaryExpr() throws RecognitionException {
         EObject current = null;
 
@@ -17958,16 +17954,16 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8041:2: (iv_ruleDataUnaryExpr= ruleDataUnaryExpr EOF )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8042:2: iv_ruleDataUnaryExpr= ruleDataUnaryExpr EOF
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8036:2: (iv_ruleDataUnaryExpr= ruleDataUnaryExpr EOF )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8037:2: iv_ruleDataUnaryExpr= ruleDataUnaryExpr EOF
             {
              currentNode = createCompositeNode(grammarAccess.getDataUnaryExprRule(), currentNode); 
-            pushFollow(FOLLOW_ruleDataUnaryExpr_in_entryRuleDataUnaryExpr14174);
+            pushFollow(FOLLOW_ruleDataUnaryExpr_in_entryRuleDataUnaryExpr14167);
             iv_ruleDataUnaryExpr=ruleDataUnaryExpr();
             _fsp--;
 
              current =iv_ruleDataUnaryExpr; 
-            match(input,EOF,FOLLOW_EOF_in_entryRuleDataUnaryExpr14184); 
+            match(input,EOF,FOLLOW_EOF_in_entryRuleDataUnaryExpr14177); 
 
             }
 
@@ -17985,7 +17981,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start ruleDataUnaryExpr
-    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8049:1: ruleDataUnaryExpr returns [EObject current=null] : (this_DataValueFloat_0= ruleDataValueFloat | this_DataValueBoolean_1= ruleDataValueBoolean | this_DataValueInt_2= ruleDataValueInt | this_DataValueString_3= ruleDataValueString | this_DataValueID_4= ruleDataValueID | this_DataBlock_5= ruleDataBlock | this_DataCurrent_6= ruleDataCurrent | this_DataPre_7= ruleDataPre | this_DataTrap_8= ruleDataTrap | this_DataFunction_9= ruleDataFunction ) ;
+    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8044:1: ruleDataUnaryExpr returns [EObject current=null] : (this_DataValueFloat_0= ruleDataValueFloat | this_DataValueBoolean_1= ruleDataValueBoolean | this_DataValueInt_2= ruleDataValueInt | this_DataValueString_3= ruleDataValueString | this_DataValueID_4= ruleDataValueID | this_DataBlock_5= ruleDataBlock | this_DataCurrent_6= ruleDataCurrent | this_DataPre_7= ruleDataPre | this_DataTrap_8= ruleDataTrap | this_DataFunction_9= ruleDataFunction ) ;
     public final EObject ruleDataUnaryExpr() throws RecognitionException {
         EObject current = null;
 
@@ -18013,10 +18009,10 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
          @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8054:6: ( (this_DataValueFloat_0= ruleDataValueFloat | this_DataValueBoolean_1= ruleDataValueBoolean | this_DataValueInt_2= ruleDataValueInt | this_DataValueString_3= ruleDataValueString | this_DataValueID_4= ruleDataValueID | this_DataBlock_5= ruleDataBlock | this_DataCurrent_6= ruleDataCurrent | this_DataPre_7= ruleDataPre | this_DataTrap_8= ruleDataTrap | this_DataFunction_9= ruleDataFunction ) )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8055:1: (this_DataValueFloat_0= ruleDataValueFloat | this_DataValueBoolean_1= ruleDataValueBoolean | this_DataValueInt_2= ruleDataValueInt | this_DataValueString_3= ruleDataValueString | this_DataValueID_4= ruleDataValueID | this_DataBlock_5= ruleDataBlock | this_DataCurrent_6= ruleDataCurrent | this_DataPre_7= ruleDataPre | this_DataTrap_8= ruleDataTrap | this_DataFunction_9= ruleDataFunction )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8049:6: ( (this_DataValueFloat_0= ruleDataValueFloat | this_DataValueBoolean_1= ruleDataValueBoolean | this_DataValueInt_2= ruleDataValueInt | this_DataValueString_3= ruleDataValueString | this_DataValueID_4= ruleDataValueID | this_DataBlock_5= ruleDataBlock | this_DataCurrent_6= ruleDataCurrent | this_DataPre_7= ruleDataPre | this_DataTrap_8= ruleDataTrap | this_DataFunction_9= ruleDataFunction ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8050:1: (this_DataValueFloat_0= ruleDataValueFloat | this_DataValueBoolean_1= ruleDataValueBoolean | this_DataValueInt_2= ruleDataValueInt | this_DataValueString_3= ruleDataValueString | this_DataValueID_4= ruleDataValueID | this_DataBlock_5= ruleDataBlock | this_DataCurrent_6= ruleDataCurrent | this_DataPre_7= ruleDataPre | this_DataTrap_8= ruleDataTrap | this_DataFunction_9= ruleDataFunction )
             {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8055:1: (this_DataValueFloat_0= ruleDataValueFloat | this_DataValueBoolean_1= ruleDataValueBoolean | this_DataValueInt_2= ruleDataValueInt | this_DataValueString_3= ruleDataValueString | this_DataValueID_4= ruleDataValueID | this_DataBlock_5= ruleDataBlock | this_DataCurrent_6= ruleDataCurrent | this_DataPre_7= ruleDataPre | this_DataTrap_8= ruleDataTrap | this_DataFunction_9= ruleDataFunction )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8050:1: (this_DataValueFloat_0= ruleDataValueFloat | this_DataValueBoolean_1= ruleDataValueBoolean | this_DataValueInt_2= ruleDataValueInt | this_DataValueString_3= ruleDataValueString | this_DataValueID_4= ruleDataValueID | this_DataBlock_5= ruleDataBlock | this_DataCurrent_6= ruleDataCurrent | this_DataPre_7= ruleDataPre | this_DataTrap_8= ruleDataTrap | this_DataFunction_9= ruleDataFunction )
             int alt107=10;
             switch ( input.LA(1) ) {
             case RULE_FLOAT:
@@ -18046,12 +18042,12 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
                 if ( (LA107_5==36) ) {
                     alt107=10;
                 }
-                else if ( (LA107_5==EOF||LA107_5==RULE_ESTERELID||(LA107_5>=18 && LA107_5<=20)||(LA107_5>=22 && LA107_5<=23)||(LA107_5>=33 && LA107_5<=34)||LA107_5==37||(LA107_5>=39 && LA107_5<=41)||LA107_5==44||LA107_5==46||(LA107_5>=48 && LA107_5<=49)||(LA107_5>=56 && LA107_5<=58)||LA107_5==60||LA107_5==66||LA107_5==69||LA107_5==75||(LA107_5>=78 && LA107_5<=88)||LA107_5==90||LA107_5==92) ) {
+                else if ( (LA107_5==EOF||LA107_5==RULE_ESTERELID||(LA107_5>=18 && LA107_5<=20)||(LA107_5>=22 && LA107_5<=23)||(LA107_5>=33 && LA107_5<=34)||LA107_5==37||(LA107_5>=39 && LA107_5<=41)||LA107_5==44||LA107_5==46||(LA107_5>=48 && LA107_5<=49)||(LA107_5>=56 && LA107_5<=58)||LA107_5==60||LA107_5==66||LA107_5==69||LA107_5==75||(LA107_5>=78 && LA107_5<=88)||LA107_5==90||LA107_5==94) ) {
                     alt107=5;
                 }
                 else {
                     NoViableAltException nvae =
-                        new NoViableAltException("8055:1: (this_DataValueFloat_0= ruleDataValueFloat | this_DataValueBoolean_1= ruleDataValueBoolean | this_DataValueInt_2= ruleDataValueInt | this_DataValueString_3= ruleDataValueString | this_DataValueID_4= ruleDataValueID | this_DataBlock_5= ruleDataBlock | this_DataCurrent_6= ruleDataCurrent | this_DataPre_7= ruleDataPre | this_DataTrap_8= ruleDataTrap | this_DataFunction_9= ruleDataFunction )", 107, 5, input);
+                        new NoViableAltException("8050:1: (this_DataValueFloat_0= ruleDataValueFloat | this_DataValueBoolean_1= ruleDataValueBoolean | this_DataValueInt_2= ruleDataValueInt | this_DataValueString_3= ruleDataValueString | this_DataValueID_4= ruleDataValueID | this_DataBlock_5= ruleDataBlock | this_DataCurrent_6= ruleDataCurrent | this_DataPre_7= ruleDataPre | this_DataTrap_8= ruleDataTrap | this_DataFunction_9= ruleDataFunction )", 107, 5, input);
 
                     throw nvae;
                 }
@@ -18079,19 +18075,19 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
                 break;
             default:
                 NoViableAltException nvae =
-                    new NoViableAltException("8055:1: (this_DataValueFloat_0= ruleDataValueFloat | this_DataValueBoolean_1= ruleDataValueBoolean | this_DataValueInt_2= ruleDataValueInt | this_DataValueString_3= ruleDataValueString | this_DataValueID_4= ruleDataValueID | this_DataBlock_5= ruleDataBlock | this_DataCurrent_6= ruleDataCurrent | this_DataPre_7= ruleDataPre | this_DataTrap_8= ruleDataTrap | this_DataFunction_9= ruleDataFunction )", 107, 0, input);
+                    new NoViableAltException("8050:1: (this_DataValueFloat_0= ruleDataValueFloat | this_DataValueBoolean_1= ruleDataValueBoolean | this_DataValueInt_2= ruleDataValueInt | this_DataValueString_3= ruleDataValueString | this_DataValueID_4= ruleDataValueID | this_DataBlock_5= ruleDataBlock | this_DataCurrent_6= ruleDataCurrent | this_DataPre_7= ruleDataPre | this_DataTrap_8= ruleDataTrap | this_DataFunction_9= ruleDataFunction )", 107, 0, input);
 
                 throw nvae;
             }
 
             switch (alt107) {
                 case 1 :
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8056:5: this_DataValueFloat_0= ruleDataValueFloat
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8051:5: this_DataValueFloat_0= ruleDataValueFloat
                     {
                      
                             currentNode=createCompositeNode(grammarAccess.getDataUnaryExprAccess().getDataValueFloatParserRuleCall_0(), currentNode); 
                         
-                    pushFollow(FOLLOW_ruleDataValueFloat_in_ruleDataUnaryExpr14231);
+                    pushFollow(FOLLOW_ruleDataValueFloat_in_ruleDataUnaryExpr14224);
                     this_DataValueFloat_0=ruleDataValueFloat();
                     _fsp--;
 
@@ -18103,12 +18099,12 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8066:5: this_DataValueBoolean_1= ruleDataValueBoolean
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8061:5: this_DataValueBoolean_1= ruleDataValueBoolean
                     {
                      
                             currentNode=createCompositeNode(grammarAccess.getDataUnaryExprAccess().getDataValueBooleanParserRuleCall_1(), currentNode); 
                         
-                    pushFollow(FOLLOW_ruleDataValueBoolean_in_ruleDataUnaryExpr14258);
+                    pushFollow(FOLLOW_ruleDataValueBoolean_in_ruleDataUnaryExpr14251);
                     this_DataValueBoolean_1=ruleDataValueBoolean();
                     _fsp--;
 
@@ -18120,12 +18116,12 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 3 :
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8076:5: this_DataValueInt_2= ruleDataValueInt
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8071:5: this_DataValueInt_2= ruleDataValueInt
                     {
                      
                             currentNode=createCompositeNode(grammarAccess.getDataUnaryExprAccess().getDataValueIntParserRuleCall_2(), currentNode); 
                         
-                    pushFollow(FOLLOW_ruleDataValueInt_in_ruleDataUnaryExpr14285);
+                    pushFollow(FOLLOW_ruleDataValueInt_in_ruleDataUnaryExpr14278);
                     this_DataValueInt_2=ruleDataValueInt();
                     _fsp--;
 
@@ -18137,12 +18133,12 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 4 :
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8086:5: this_DataValueString_3= ruleDataValueString
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8081:5: this_DataValueString_3= ruleDataValueString
                     {
                      
                             currentNode=createCompositeNode(grammarAccess.getDataUnaryExprAccess().getDataValueStringParserRuleCall_3(), currentNode); 
                         
-                    pushFollow(FOLLOW_ruleDataValueString_in_ruleDataUnaryExpr14312);
+                    pushFollow(FOLLOW_ruleDataValueString_in_ruleDataUnaryExpr14305);
                     this_DataValueString_3=ruleDataValueString();
                     _fsp--;
 
@@ -18154,12 +18150,12 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 5 :
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8096:5: this_DataValueID_4= ruleDataValueID
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8091:5: this_DataValueID_4= ruleDataValueID
                     {
                      
                             currentNode=createCompositeNode(grammarAccess.getDataUnaryExprAccess().getDataValueIDParserRuleCall_4(), currentNode); 
                         
-                    pushFollow(FOLLOW_ruleDataValueID_in_ruleDataUnaryExpr14339);
+                    pushFollow(FOLLOW_ruleDataValueID_in_ruleDataUnaryExpr14332);
                     this_DataValueID_4=ruleDataValueID();
                     _fsp--;
 
@@ -18171,12 +18167,12 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 6 :
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8106:5: this_DataBlock_5= ruleDataBlock
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8101:5: this_DataBlock_5= ruleDataBlock
                     {
                      
                             currentNode=createCompositeNode(grammarAccess.getDataUnaryExprAccess().getDataBlockParserRuleCall_5(), currentNode); 
                         
-                    pushFollow(FOLLOW_ruleDataBlock_in_ruleDataUnaryExpr14366);
+                    pushFollow(FOLLOW_ruleDataBlock_in_ruleDataUnaryExpr14359);
                     this_DataBlock_5=ruleDataBlock();
                     _fsp--;
 
@@ -18188,12 +18184,12 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 7 :
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8116:5: this_DataCurrent_6= ruleDataCurrent
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8111:5: this_DataCurrent_6= ruleDataCurrent
                     {
                      
                             currentNode=createCompositeNode(grammarAccess.getDataUnaryExprAccess().getDataCurrentParserRuleCall_6(), currentNode); 
                         
-                    pushFollow(FOLLOW_ruleDataCurrent_in_ruleDataUnaryExpr14393);
+                    pushFollow(FOLLOW_ruleDataCurrent_in_ruleDataUnaryExpr14386);
                     this_DataCurrent_6=ruleDataCurrent();
                     _fsp--;
 
@@ -18205,12 +18201,12 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 8 :
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8126:5: this_DataPre_7= ruleDataPre
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8121:5: this_DataPre_7= ruleDataPre
                     {
                      
                             currentNode=createCompositeNode(grammarAccess.getDataUnaryExprAccess().getDataPreParserRuleCall_7(), currentNode); 
                         
-                    pushFollow(FOLLOW_ruleDataPre_in_ruleDataUnaryExpr14420);
+                    pushFollow(FOLLOW_ruleDataPre_in_ruleDataUnaryExpr14413);
                     this_DataPre_7=ruleDataPre();
                     _fsp--;
 
@@ -18222,12 +18218,12 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 9 :
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8136:5: this_DataTrap_8= ruleDataTrap
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8131:5: this_DataTrap_8= ruleDataTrap
                     {
                      
                             currentNode=createCompositeNode(grammarAccess.getDataUnaryExprAccess().getDataTrapParserRuleCall_8(), currentNode); 
                         
-                    pushFollow(FOLLOW_ruleDataTrap_in_ruleDataUnaryExpr14447);
+                    pushFollow(FOLLOW_ruleDataTrap_in_ruleDataUnaryExpr14440);
                     this_DataTrap_8=ruleDataTrap();
                     _fsp--;
 
@@ -18239,12 +18235,12 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 10 :
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8146:5: this_DataFunction_9= ruleDataFunction
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8141:5: this_DataFunction_9= ruleDataFunction
                     {
                      
                             currentNode=createCompositeNode(grammarAccess.getDataUnaryExprAccess().getDataFunctionParserRuleCall_9(), currentNode); 
                         
-                    pushFollow(FOLLOW_ruleDataFunction_in_ruleDataUnaryExpr14474);
+                    pushFollow(FOLLOW_ruleDataFunction_in_ruleDataUnaryExpr14467);
                     this_DataFunction_9=ruleDataFunction();
                     _fsp--;
 
@@ -18278,7 +18274,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start entryRuleDataValueID
-    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8162:1: entryRuleDataValueID returns [EObject current=null] : iv_ruleDataValueID= ruleDataValueID EOF ;
+    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8157:1: entryRuleDataValueID returns [EObject current=null] : iv_ruleDataValueID= ruleDataValueID EOF ;
     public final EObject entryRuleDataValueID() throws RecognitionException {
         EObject current = null;
 
@@ -18286,16 +18282,16 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8163:2: (iv_ruleDataValueID= ruleDataValueID EOF )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8164:2: iv_ruleDataValueID= ruleDataValueID EOF
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8158:2: (iv_ruleDataValueID= ruleDataValueID EOF )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8159:2: iv_ruleDataValueID= ruleDataValueID EOF
             {
              currentNode = createCompositeNode(grammarAccess.getDataValueIDRule(), currentNode); 
-            pushFollow(FOLLOW_ruleDataValueID_in_entryRuleDataValueID14509);
+            pushFollow(FOLLOW_ruleDataValueID_in_entryRuleDataValueID14502);
             iv_ruleDataValueID=ruleDataValueID();
             _fsp--;
 
              current =iv_ruleDataValueID; 
-            match(input,EOF,FOLLOW_EOF_in_entryRuleDataValueID14519); 
+            match(input,EOF,FOLLOW_EOF_in_entryRuleDataValueID14512); 
 
             }
 
@@ -18313,7 +18309,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start ruleDataValueID
-    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8171:1: ruleDataValueID returns [EObject current=null] : ( (lv_value_0_0= RULE_ESTERELID ) ) ;
+    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8166:1: ruleDataValueID returns [EObject current=null] : ( (lv_value_0_0= RULE_ESTERELID ) ) ;
     public final EObject ruleDataValueID() throws RecognitionException {
         EObject current = null;
 
@@ -18322,17 +18318,17 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
          @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8176:6: ( ( (lv_value_0_0= RULE_ESTERELID ) ) )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8177:1: ( (lv_value_0_0= RULE_ESTERELID ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8171:6: ( ( (lv_value_0_0= RULE_ESTERELID ) ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8172:1: ( (lv_value_0_0= RULE_ESTERELID ) )
             {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8177:1: ( (lv_value_0_0= RULE_ESTERELID ) )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8178:1: (lv_value_0_0= RULE_ESTERELID )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8172:1: ( (lv_value_0_0= RULE_ESTERELID ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8173:1: (lv_value_0_0= RULE_ESTERELID )
             {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8178:1: (lv_value_0_0= RULE_ESTERELID )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8179:3: lv_value_0_0= RULE_ESTERELID
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8173:1: (lv_value_0_0= RULE_ESTERELID )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8174:3: lv_value_0_0= RULE_ESTERELID
             {
             lv_value_0_0=(Token)input.LT(1);
-            match(input,RULE_ESTERELID,FOLLOW_RULE_ESTERELID_in_ruleDataValueID14560); 
+            match(input,RULE_ESTERELID,FOLLOW_RULE_ESTERELID_in_ruleDataValueID14553); 
 
             			createLeafNode(grammarAccess.getDataValueIDAccess().getValueEsterelIDTerminalRuleCall_0(), "value"); 
             		
@@ -18378,7 +18374,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start entryRuleDataValueFloat
-    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8209:1: entryRuleDataValueFloat returns [EObject current=null] : iv_ruleDataValueFloat= ruleDataValueFloat EOF ;
+    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8204:1: entryRuleDataValueFloat returns [EObject current=null] : iv_ruleDataValueFloat= ruleDataValueFloat EOF ;
     public final EObject entryRuleDataValueFloat() throws RecognitionException {
         EObject current = null;
 
@@ -18386,16 +18382,16 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8210:2: (iv_ruleDataValueFloat= ruleDataValueFloat EOF )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8211:2: iv_ruleDataValueFloat= ruleDataValueFloat EOF
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8205:2: (iv_ruleDataValueFloat= ruleDataValueFloat EOF )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8206:2: iv_ruleDataValueFloat= ruleDataValueFloat EOF
             {
              currentNode = createCompositeNode(grammarAccess.getDataValueFloatRule(), currentNode); 
-            pushFollow(FOLLOW_ruleDataValueFloat_in_entryRuleDataValueFloat14600);
+            pushFollow(FOLLOW_ruleDataValueFloat_in_entryRuleDataValueFloat14593);
             iv_ruleDataValueFloat=ruleDataValueFloat();
             _fsp--;
 
              current =iv_ruleDataValueFloat; 
-            match(input,EOF,FOLLOW_EOF_in_entryRuleDataValueFloat14610); 
+            match(input,EOF,FOLLOW_EOF_in_entryRuleDataValueFloat14603); 
 
             }
 
@@ -18413,7 +18409,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start ruleDataValueFloat
-    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8218:1: ruleDataValueFloat returns [EObject current=null] : ( (lv_value_0_0= RULE_FLOAT ) ) ;
+    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8213:1: ruleDataValueFloat returns [EObject current=null] : ( (lv_value_0_0= RULE_FLOAT ) ) ;
     public final EObject ruleDataValueFloat() throws RecognitionException {
         EObject current = null;
 
@@ -18422,17 +18418,17 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
          @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8223:6: ( ( (lv_value_0_0= RULE_FLOAT ) ) )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8224:1: ( (lv_value_0_0= RULE_FLOAT ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8218:6: ( ( (lv_value_0_0= RULE_FLOAT ) ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8219:1: ( (lv_value_0_0= RULE_FLOAT ) )
             {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8224:1: ( (lv_value_0_0= RULE_FLOAT ) )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8225:1: (lv_value_0_0= RULE_FLOAT )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8219:1: ( (lv_value_0_0= RULE_FLOAT ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8220:1: (lv_value_0_0= RULE_FLOAT )
             {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8225:1: (lv_value_0_0= RULE_FLOAT )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8226:3: lv_value_0_0= RULE_FLOAT
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8220:1: (lv_value_0_0= RULE_FLOAT )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8221:3: lv_value_0_0= RULE_FLOAT
             {
             lv_value_0_0=(Token)input.LT(1);
-            match(input,RULE_FLOAT,FOLLOW_RULE_FLOAT_in_ruleDataValueFloat14651); 
+            match(input,RULE_FLOAT,FOLLOW_RULE_FLOAT_in_ruleDataValueFloat14644); 
 
             			createLeafNode(grammarAccess.getDataValueFloatAccess().getValueFloatTerminalRuleCall_0(), "value"); 
             		
@@ -18478,7 +18474,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start entryRuleDataValueBoolean
-    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8256:1: entryRuleDataValueBoolean returns [EObject current=null] : iv_ruleDataValueBoolean= ruleDataValueBoolean EOF ;
+    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8251:1: entryRuleDataValueBoolean returns [EObject current=null] : iv_ruleDataValueBoolean= ruleDataValueBoolean EOF ;
     public final EObject entryRuleDataValueBoolean() throws RecognitionException {
         EObject current = null;
 
@@ -18486,16 +18482,16 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8257:2: (iv_ruleDataValueBoolean= ruleDataValueBoolean EOF )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8258:2: iv_ruleDataValueBoolean= ruleDataValueBoolean EOF
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8252:2: (iv_ruleDataValueBoolean= ruleDataValueBoolean EOF )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8253:2: iv_ruleDataValueBoolean= ruleDataValueBoolean EOF
             {
              currentNode = createCompositeNode(grammarAccess.getDataValueBooleanRule(), currentNode); 
-            pushFollow(FOLLOW_ruleDataValueBoolean_in_entryRuleDataValueBoolean14691);
+            pushFollow(FOLLOW_ruleDataValueBoolean_in_entryRuleDataValueBoolean14684);
             iv_ruleDataValueBoolean=ruleDataValueBoolean();
             _fsp--;
 
              current =iv_ruleDataValueBoolean; 
-            match(input,EOF,FOLLOW_EOF_in_entryRuleDataValueBoolean14701); 
+            match(input,EOF,FOLLOW_EOF_in_entryRuleDataValueBoolean14694); 
 
             }
 
@@ -18513,7 +18509,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start ruleDataValueBoolean
-    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8265:1: ruleDataValueBoolean returns [EObject current=null] : ( (lv_value_0_0= RULE_BOOLEAN ) ) ;
+    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8260:1: ruleDataValueBoolean returns [EObject current=null] : ( (lv_value_0_0= RULE_BOOLEAN ) ) ;
     public final EObject ruleDataValueBoolean() throws RecognitionException {
         EObject current = null;
 
@@ -18522,17 +18518,17 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
          @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8270:6: ( ( (lv_value_0_0= RULE_BOOLEAN ) ) )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8271:1: ( (lv_value_0_0= RULE_BOOLEAN ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8265:6: ( ( (lv_value_0_0= RULE_BOOLEAN ) ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8266:1: ( (lv_value_0_0= RULE_BOOLEAN ) )
             {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8271:1: ( (lv_value_0_0= RULE_BOOLEAN ) )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8272:1: (lv_value_0_0= RULE_BOOLEAN )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8266:1: ( (lv_value_0_0= RULE_BOOLEAN ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8267:1: (lv_value_0_0= RULE_BOOLEAN )
             {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8272:1: (lv_value_0_0= RULE_BOOLEAN )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8273:3: lv_value_0_0= RULE_BOOLEAN
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8267:1: (lv_value_0_0= RULE_BOOLEAN )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8268:3: lv_value_0_0= RULE_BOOLEAN
             {
             lv_value_0_0=(Token)input.LT(1);
-            match(input,RULE_BOOLEAN,FOLLOW_RULE_BOOLEAN_in_ruleDataValueBoolean14742); 
+            match(input,RULE_BOOLEAN,FOLLOW_RULE_BOOLEAN_in_ruleDataValueBoolean14735); 
 
             			createLeafNode(grammarAccess.getDataValueBooleanAccess().getValueBooleanTerminalRuleCall_0(), "value"); 
             		
@@ -18578,7 +18574,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start entryRuleDataValueInt
-    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8303:1: entryRuleDataValueInt returns [EObject current=null] : iv_ruleDataValueInt= ruleDataValueInt EOF ;
+    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8298:1: entryRuleDataValueInt returns [EObject current=null] : iv_ruleDataValueInt= ruleDataValueInt EOF ;
     public final EObject entryRuleDataValueInt() throws RecognitionException {
         EObject current = null;
 
@@ -18586,16 +18582,16 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8304:2: (iv_ruleDataValueInt= ruleDataValueInt EOF )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8305:2: iv_ruleDataValueInt= ruleDataValueInt EOF
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8299:2: (iv_ruleDataValueInt= ruleDataValueInt EOF )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8300:2: iv_ruleDataValueInt= ruleDataValueInt EOF
             {
              currentNode = createCompositeNode(grammarAccess.getDataValueIntRule(), currentNode); 
-            pushFollow(FOLLOW_ruleDataValueInt_in_entryRuleDataValueInt14782);
+            pushFollow(FOLLOW_ruleDataValueInt_in_entryRuleDataValueInt14775);
             iv_ruleDataValueInt=ruleDataValueInt();
             _fsp--;
 
              current =iv_ruleDataValueInt; 
-            match(input,EOF,FOLLOW_EOF_in_entryRuleDataValueInt14792); 
+            match(input,EOF,FOLLOW_EOF_in_entryRuleDataValueInt14785); 
 
             }
 
@@ -18613,7 +18609,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start ruleDataValueInt
-    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8312:1: ruleDataValueInt returns [EObject current=null] : ( (lv_value_0_0= RULE_INT ) ) ;
+    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8307:1: ruleDataValueInt returns [EObject current=null] : ( (lv_value_0_0= RULE_INT ) ) ;
     public final EObject ruleDataValueInt() throws RecognitionException {
         EObject current = null;
 
@@ -18622,17 +18618,17 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
          @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8317:6: ( ( (lv_value_0_0= RULE_INT ) ) )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8318:1: ( (lv_value_0_0= RULE_INT ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8312:6: ( ( (lv_value_0_0= RULE_INT ) ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8313:1: ( (lv_value_0_0= RULE_INT ) )
             {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8318:1: ( (lv_value_0_0= RULE_INT ) )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8319:1: (lv_value_0_0= RULE_INT )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8313:1: ( (lv_value_0_0= RULE_INT ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8314:1: (lv_value_0_0= RULE_INT )
             {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8319:1: (lv_value_0_0= RULE_INT )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8320:3: lv_value_0_0= RULE_INT
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8314:1: (lv_value_0_0= RULE_INT )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8315:3: lv_value_0_0= RULE_INT
             {
             lv_value_0_0=(Token)input.LT(1);
-            match(input,RULE_INT,FOLLOW_RULE_INT_in_ruleDataValueInt14833); 
+            match(input,RULE_INT,FOLLOW_RULE_INT_in_ruleDataValueInt14826); 
 
             			createLeafNode(grammarAccess.getDataValueIntAccess().getValueINTTerminalRuleCall_0(), "value"); 
             		
@@ -18678,7 +18674,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start entryRuleDataValueString
-    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8350:1: entryRuleDataValueString returns [EObject current=null] : iv_ruleDataValueString= ruleDataValueString EOF ;
+    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8345:1: entryRuleDataValueString returns [EObject current=null] : iv_ruleDataValueString= ruleDataValueString EOF ;
     public final EObject entryRuleDataValueString() throws RecognitionException {
         EObject current = null;
 
@@ -18686,16 +18682,16 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8351:2: (iv_ruleDataValueString= ruleDataValueString EOF )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8352:2: iv_ruleDataValueString= ruleDataValueString EOF
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8346:2: (iv_ruleDataValueString= ruleDataValueString EOF )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8347:2: iv_ruleDataValueString= ruleDataValueString EOF
             {
              currentNode = createCompositeNode(grammarAccess.getDataValueStringRule(), currentNode); 
-            pushFollow(FOLLOW_ruleDataValueString_in_entryRuleDataValueString14873);
+            pushFollow(FOLLOW_ruleDataValueString_in_entryRuleDataValueString14866);
             iv_ruleDataValueString=ruleDataValueString();
             _fsp--;
 
              current =iv_ruleDataValueString; 
-            match(input,EOF,FOLLOW_EOF_in_entryRuleDataValueString14883); 
+            match(input,EOF,FOLLOW_EOF_in_entryRuleDataValueString14876); 
 
             }
 
@@ -18713,7 +18709,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start ruleDataValueString
-    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8359:1: ruleDataValueString returns [EObject current=null] : ( (lv_value_0_0= RULE_STRING ) ) ;
+    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8354:1: ruleDataValueString returns [EObject current=null] : ( (lv_value_0_0= RULE_STRING ) ) ;
     public final EObject ruleDataValueString() throws RecognitionException {
         EObject current = null;
 
@@ -18722,17 +18718,17 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
          @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8364:6: ( ( (lv_value_0_0= RULE_STRING ) ) )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8365:1: ( (lv_value_0_0= RULE_STRING ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8359:6: ( ( (lv_value_0_0= RULE_STRING ) ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8360:1: ( (lv_value_0_0= RULE_STRING ) )
             {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8365:1: ( (lv_value_0_0= RULE_STRING ) )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8366:1: (lv_value_0_0= RULE_STRING )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8360:1: ( (lv_value_0_0= RULE_STRING ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8361:1: (lv_value_0_0= RULE_STRING )
             {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8366:1: (lv_value_0_0= RULE_STRING )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8367:3: lv_value_0_0= RULE_STRING
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8361:1: (lv_value_0_0= RULE_STRING )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8362:3: lv_value_0_0= RULE_STRING
             {
             lv_value_0_0=(Token)input.LT(1);
-            match(input,RULE_STRING,FOLLOW_RULE_STRING_in_ruleDataValueString14924); 
+            match(input,RULE_STRING,FOLLOW_RULE_STRING_in_ruleDataValueString14917); 
 
             			createLeafNode(grammarAccess.getDataValueStringAccess().getValueSTRINGTerminalRuleCall_0(), "value"); 
             		
@@ -18778,7 +18774,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start entryRuleDataBlock
-    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8397:1: entryRuleDataBlock returns [EObject current=null] : iv_ruleDataBlock= ruleDataBlock EOF ;
+    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8392:1: entryRuleDataBlock returns [EObject current=null] : iv_ruleDataBlock= ruleDataBlock EOF ;
     public final EObject entryRuleDataBlock() throws RecognitionException {
         EObject current = null;
 
@@ -18786,16 +18782,16 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8398:2: (iv_ruleDataBlock= ruleDataBlock EOF )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8399:2: iv_ruleDataBlock= ruleDataBlock EOF
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8393:2: (iv_ruleDataBlock= ruleDataBlock EOF )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8394:2: iv_ruleDataBlock= ruleDataBlock EOF
             {
              currentNode = createCompositeNode(grammarAccess.getDataBlockRule(), currentNode); 
-            pushFollow(FOLLOW_ruleDataBlock_in_entryRuleDataBlock14964);
+            pushFollow(FOLLOW_ruleDataBlock_in_entryRuleDataBlock14957);
             iv_ruleDataBlock=ruleDataBlock();
             _fsp--;
 
              current =iv_ruleDataBlock; 
-            match(input,EOF,FOLLOW_EOF_in_entryRuleDataBlock14974); 
+            match(input,EOF,FOLLOW_EOF_in_entryRuleDataBlock14967); 
 
             }
 
@@ -18813,7 +18809,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start ruleDataBlock
-    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8406:1: ruleDataBlock returns [EObject current=null] : ( '(' ( (lv_dataExpr_1_0= ruleDataExpr ) ) ')' ) ;
+    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8401:1: ruleDataBlock returns [EObject current=null] : ( '(' ( (lv_dataExpr_1_0= ruleDataExpr ) ) ')' ) ;
     public final EObject ruleDataBlock() throws RecognitionException {
         EObject current = null;
 
@@ -18823,26 +18819,26 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
          @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8411:6: ( ( '(' ( (lv_dataExpr_1_0= ruleDataExpr ) ) ')' ) )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8412:1: ( '(' ( (lv_dataExpr_1_0= ruleDataExpr ) ) ')' )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8406:6: ( ( '(' ( (lv_dataExpr_1_0= ruleDataExpr ) ) ')' ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8407:1: ( '(' ( (lv_dataExpr_1_0= ruleDataExpr ) ) ')' )
             {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8412:1: ( '(' ( (lv_dataExpr_1_0= ruleDataExpr ) ) ')' )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8412:3: '(' ( (lv_dataExpr_1_0= ruleDataExpr ) ) ')'
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8407:1: ( '(' ( (lv_dataExpr_1_0= ruleDataExpr ) ) ')' )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8407:3: '(' ( (lv_dataExpr_1_0= ruleDataExpr ) ) ')'
             {
-            match(input,36,FOLLOW_36_in_ruleDataBlock15009); 
+            match(input,36,FOLLOW_36_in_ruleDataBlock15002); 
 
                     createLeafNode(grammarAccess.getDataBlockAccess().getLeftParenthesisKeyword_0(), null); 
                 
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8416:1: ( (lv_dataExpr_1_0= ruleDataExpr ) )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8417:1: (lv_dataExpr_1_0= ruleDataExpr )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8411:1: ( (lv_dataExpr_1_0= ruleDataExpr ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8412:1: (lv_dataExpr_1_0= ruleDataExpr )
             {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8417:1: (lv_dataExpr_1_0= ruleDataExpr )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8418:3: lv_dataExpr_1_0= ruleDataExpr
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8412:1: (lv_dataExpr_1_0= ruleDataExpr )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8413:3: lv_dataExpr_1_0= ruleDataExpr
             {
              
             	        currentNode=createCompositeNode(grammarAccess.getDataBlockAccess().getDataExprDataExprParserRuleCall_1_0(), currentNode); 
             	    
-            pushFollow(FOLLOW_ruleDataExpr_in_ruleDataBlock15030);
+            pushFollow(FOLLOW_ruleDataExpr_in_ruleDataBlock15023);
             lv_dataExpr_1_0=ruleDataExpr();
             _fsp--;
 
@@ -18869,7 +18865,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
             }
 
-            match(input,37,FOLLOW_37_in_ruleDataBlock15040); 
+            match(input,37,FOLLOW_37_in_ruleDataBlock15033); 
 
                     createLeafNode(grammarAccess.getDataBlockAccess().getRightParenthesisKeyword_2(), null); 
                 
@@ -18896,7 +18892,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start entryRuleDataCurrent
-    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8452:1: entryRuleDataCurrent returns [EObject current=null] : iv_ruleDataCurrent= ruleDataCurrent EOF ;
+    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8447:1: entryRuleDataCurrent returns [EObject current=null] : iv_ruleDataCurrent= ruleDataCurrent EOF ;
     public final EObject entryRuleDataCurrent() throws RecognitionException {
         EObject current = null;
 
@@ -18904,16 +18900,16 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8453:2: (iv_ruleDataCurrent= ruleDataCurrent EOF )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8454:2: iv_ruleDataCurrent= ruleDataCurrent EOF
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8448:2: (iv_ruleDataCurrent= ruleDataCurrent EOF )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8449:2: iv_ruleDataCurrent= ruleDataCurrent EOF
             {
              currentNode = createCompositeNode(grammarAccess.getDataCurrentRule(), currentNode); 
-            pushFollow(FOLLOW_ruleDataCurrent_in_entryRuleDataCurrent15076);
+            pushFollow(FOLLOW_ruleDataCurrent_in_entryRuleDataCurrent15069);
             iv_ruleDataCurrent=ruleDataCurrent();
             _fsp--;
 
              current =iv_ruleDataCurrent; 
-            match(input,EOF,FOLLOW_EOF_in_entryRuleDataCurrent15086); 
+            match(input,EOF,FOLLOW_EOF_in_entryRuleDataCurrent15079); 
 
             }
 
@@ -18931,7 +18927,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start ruleDataCurrent
-    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8461:1: ruleDataCurrent returns [EObject current=null] : ( '?' ( ( ( RULE_ESTERELID ) ) | ( (lv_tick_2_0= ruleTick ) ) ) ) ;
+    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8456:1: ruleDataCurrent returns [EObject current=null] : ( '?' ( ( ( RULE_ESTERELID ) ) | ( (lv_tick_2_0= ruleTick ) ) ) ) ;
     public final EObject ruleDataCurrent() throws RecognitionException {
         EObject current = null;
 
@@ -18941,41 +18937,41 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
          @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8466:6: ( ( '?' ( ( ( RULE_ESTERELID ) ) | ( (lv_tick_2_0= ruleTick ) ) ) ) )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8467:1: ( '?' ( ( ( RULE_ESTERELID ) ) | ( (lv_tick_2_0= ruleTick ) ) ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8461:6: ( ( '?' ( ( ( RULE_ESTERELID ) ) | ( (lv_tick_2_0= ruleTick ) ) ) ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8462:1: ( '?' ( ( ( RULE_ESTERELID ) ) | ( (lv_tick_2_0= ruleTick ) ) ) )
             {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8467:1: ( '?' ( ( ( RULE_ESTERELID ) ) | ( (lv_tick_2_0= ruleTick ) ) ) )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8467:3: '?' ( ( ( RULE_ESTERELID ) ) | ( (lv_tick_2_0= ruleTick ) ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8462:1: ( '?' ( ( ( RULE_ESTERELID ) ) | ( (lv_tick_2_0= ruleTick ) ) ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8462:3: '?' ( ( ( RULE_ESTERELID ) ) | ( (lv_tick_2_0= ruleTick ) ) )
             {
-            match(input,89,FOLLOW_89_in_ruleDataCurrent15121); 
+            match(input,89,FOLLOW_89_in_ruleDataCurrent15114); 
 
                     createLeafNode(grammarAccess.getDataCurrentAccess().getQuestionMarkKeyword_0(), null); 
                 
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8471:1: ( ( ( RULE_ESTERELID ) ) | ( (lv_tick_2_0= ruleTick ) ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8466:1: ( ( ( RULE_ESTERELID ) ) | ( (lv_tick_2_0= ruleTick ) ) )
             int alt108=2;
             int LA108_0 = input.LA(1);
 
             if ( (LA108_0==RULE_ESTERELID) ) {
                 alt108=1;
             }
-            else if ( (LA108_0==92) ) {
+            else if ( (LA108_0==94) ) {
                 alt108=2;
             }
             else {
                 NoViableAltException nvae =
-                    new NoViableAltException("8471:1: ( ( ( RULE_ESTERELID ) ) | ( (lv_tick_2_0= ruleTick ) ) )", 108, 0, input);
+                    new NoViableAltException("8466:1: ( ( ( RULE_ESTERELID ) ) | ( (lv_tick_2_0= ruleTick ) ) )", 108, 0, input);
 
                 throw nvae;
             }
             switch (alt108) {
                 case 1 :
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8471:2: ( ( RULE_ESTERELID ) )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8466:2: ( ( RULE_ESTERELID ) )
                     {
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8471:2: ( ( RULE_ESTERELID ) )
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8472:1: ( RULE_ESTERELID )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8466:2: ( ( RULE_ESTERELID ) )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8467:1: ( RULE_ESTERELID )
                     {
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8472:1: ( RULE_ESTERELID )
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8473:3: RULE_ESTERELID
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8467:1: ( RULE_ESTERELID )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8468:3: RULE_ESTERELID
                     {
 
                     			if (current==null) {
@@ -18983,7 +18979,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
                     	            associateNodeWithAstElement(currentNode, current);
                     	        }
                             
-                    match(input,RULE_ESTERELID,FOLLOW_RULE_ESTERELID_in_ruleDataCurrent15140); 
+                    match(input,RULE_ESTERELID,FOLLOW_RULE_ESTERELID_in_ruleDataCurrent15133); 
 
                     		createLeafNode(grammarAccess.getDataCurrentAccess().getSignalSignalCrossReference_1_0_0(), "signal"); 
                     	
@@ -18997,18 +18993,18 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8486:6: ( (lv_tick_2_0= ruleTick ) )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8481:6: ( (lv_tick_2_0= ruleTick ) )
                     {
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8486:6: ( (lv_tick_2_0= ruleTick ) )
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8487:1: (lv_tick_2_0= ruleTick )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8481:6: ( (lv_tick_2_0= ruleTick ) )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8482:1: (lv_tick_2_0= ruleTick )
                     {
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8487:1: (lv_tick_2_0= ruleTick )
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8488:3: lv_tick_2_0= ruleTick
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8482:1: (lv_tick_2_0= ruleTick )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8483:3: lv_tick_2_0= ruleTick
                     {
                      
                     	        currentNode=createCompositeNode(grammarAccess.getDataCurrentAccess().getTickTickParserRuleCall_1_1_0(), currentNode); 
                     	    
-                    pushFollow(FOLLOW_ruleTick_in_ruleDataCurrent15167);
+                    pushFollow(FOLLOW_ruleTick_in_ruleDataCurrent15160);
                     lv_tick_2_0=ruleTick();
                     _fsp--;
 
@@ -19064,7 +19060,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start entryRuleDataPre
-    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8518:1: entryRuleDataPre returns [EObject current=null] : iv_ruleDataPre= ruleDataPre EOF ;
+    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8513:1: entryRuleDataPre returns [EObject current=null] : iv_ruleDataPre= ruleDataPre EOF ;
     public final EObject entryRuleDataPre() throws RecognitionException {
         EObject current = null;
 
@@ -19072,16 +19068,16 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8519:2: (iv_ruleDataPre= ruleDataPre EOF )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8520:2: iv_ruleDataPre= ruleDataPre EOF
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8514:2: (iv_ruleDataPre= ruleDataPre EOF )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8515:2: iv_ruleDataPre= ruleDataPre EOF
             {
              currentNode = createCompositeNode(grammarAccess.getDataPreRule(), currentNode); 
-            pushFollow(FOLLOW_ruleDataPre_in_entryRuleDataPre15204);
+            pushFollow(FOLLOW_ruleDataPre_in_entryRuleDataPre15197);
             iv_ruleDataPre=ruleDataPre();
             _fsp--;
 
              current =iv_ruleDataPre; 
-            match(input,EOF,FOLLOW_EOF_in_entryRuleDataPre15214); 
+            match(input,EOF,FOLLOW_EOF_in_entryRuleDataPre15207); 
 
             }
 
@@ -19099,7 +19095,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start ruleDataPre
-    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8527:1: ruleDataPre returns [EObject current=null] : ( 'pre' '(' '?' ( ( ( RULE_ESTERELID ) ) | ( (lv_tick_4_0= ruleTick ) ) ) ')' ) ;
+    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8522:1: ruleDataPre returns [EObject current=null] : ( 'pre' '(' '?' ( ( ( RULE_ESTERELID ) ) | ( (lv_tick_4_0= ruleTick ) ) ) ')' ) ;
     public final EObject ruleDataPre() throws RecognitionException {
         EObject current = null;
 
@@ -19109,49 +19105,49 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
          @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8532:6: ( ( 'pre' '(' '?' ( ( ( RULE_ESTERELID ) ) | ( (lv_tick_4_0= ruleTick ) ) ) ')' ) )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8533:1: ( 'pre' '(' '?' ( ( ( RULE_ESTERELID ) ) | ( (lv_tick_4_0= ruleTick ) ) ) ')' )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8527:6: ( ( 'pre' '(' '?' ( ( ( RULE_ESTERELID ) ) | ( (lv_tick_4_0= ruleTick ) ) ) ')' ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8528:1: ( 'pre' '(' '?' ( ( ( RULE_ESTERELID ) ) | ( (lv_tick_4_0= ruleTick ) ) ) ')' )
             {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8533:1: ( 'pre' '(' '?' ( ( ( RULE_ESTERELID ) ) | ( (lv_tick_4_0= ruleTick ) ) ) ')' )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8533:3: 'pre' '(' '?' ( ( ( RULE_ESTERELID ) ) | ( (lv_tick_4_0= ruleTick ) ) ) ')'
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8528:1: ( 'pre' '(' '?' ( ( ( RULE_ESTERELID ) ) | ( (lv_tick_4_0= ruleTick ) ) ) ')' )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8528:3: 'pre' '(' '?' ( ( ( RULE_ESTERELID ) ) | ( (lv_tick_4_0= ruleTick ) ) ) ')'
             {
-            match(input,90,FOLLOW_90_in_ruleDataPre15249); 
+            match(input,90,FOLLOW_90_in_ruleDataPre15242); 
 
                     createLeafNode(grammarAccess.getDataPreAccess().getPreKeyword_0(), null); 
                 
-            match(input,36,FOLLOW_36_in_ruleDataPre15259); 
+            match(input,36,FOLLOW_36_in_ruleDataPre15252); 
 
                     createLeafNode(grammarAccess.getDataPreAccess().getLeftParenthesisKeyword_1(), null); 
                 
-            match(input,89,FOLLOW_89_in_ruleDataPre15269); 
+            match(input,89,FOLLOW_89_in_ruleDataPre15262); 
 
                     createLeafNode(grammarAccess.getDataPreAccess().getQuestionMarkKeyword_2(), null); 
                 
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8545:1: ( ( ( RULE_ESTERELID ) ) | ( (lv_tick_4_0= ruleTick ) ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8540:1: ( ( ( RULE_ESTERELID ) ) | ( (lv_tick_4_0= ruleTick ) ) )
             int alt109=2;
             int LA109_0 = input.LA(1);
 
             if ( (LA109_0==RULE_ESTERELID) ) {
                 alt109=1;
             }
-            else if ( (LA109_0==92) ) {
+            else if ( (LA109_0==94) ) {
                 alt109=2;
             }
             else {
                 NoViableAltException nvae =
-                    new NoViableAltException("8545:1: ( ( ( RULE_ESTERELID ) ) | ( (lv_tick_4_0= ruleTick ) ) )", 109, 0, input);
+                    new NoViableAltException("8540:1: ( ( ( RULE_ESTERELID ) ) | ( (lv_tick_4_0= ruleTick ) ) )", 109, 0, input);
 
                 throw nvae;
             }
             switch (alt109) {
                 case 1 :
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8545:2: ( ( RULE_ESTERELID ) )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8540:2: ( ( RULE_ESTERELID ) )
                     {
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8545:2: ( ( RULE_ESTERELID ) )
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8546:1: ( RULE_ESTERELID )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8540:2: ( ( RULE_ESTERELID ) )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8541:1: ( RULE_ESTERELID )
                     {
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8546:1: ( RULE_ESTERELID )
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8547:3: RULE_ESTERELID
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8541:1: ( RULE_ESTERELID )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8542:3: RULE_ESTERELID
                     {
 
                     			if (current==null) {
@@ -19159,7 +19155,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
                     	            associateNodeWithAstElement(currentNode, current);
                     	        }
                             
-                    match(input,RULE_ESTERELID,FOLLOW_RULE_ESTERELID_in_ruleDataPre15288); 
+                    match(input,RULE_ESTERELID,FOLLOW_RULE_ESTERELID_in_ruleDataPre15281); 
 
                     		createLeafNode(grammarAccess.getDataPreAccess().getSignalSignalCrossReference_3_0_0(), "signal"); 
                     	
@@ -19173,18 +19169,18 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8560:6: ( (lv_tick_4_0= ruleTick ) )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8555:6: ( (lv_tick_4_0= ruleTick ) )
                     {
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8560:6: ( (lv_tick_4_0= ruleTick ) )
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8561:1: (lv_tick_4_0= ruleTick )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8555:6: ( (lv_tick_4_0= ruleTick ) )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8556:1: (lv_tick_4_0= ruleTick )
                     {
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8561:1: (lv_tick_4_0= ruleTick )
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8562:3: lv_tick_4_0= ruleTick
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8556:1: (lv_tick_4_0= ruleTick )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8557:3: lv_tick_4_0= ruleTick
                     {
                      
                     	        currentNode=createCompositeNode(grammarAccess.getDataPreAccess().getTickTickParserRuleCall_3_1_0(), currentNode); 
                     	    
-                    pushFollow(FOLLOW_ruleTick_in_ruleDataPre15315);
+                    pushFollow(FOLLOW_ruleTick_in_ruleDataPre15308);
                     lv_tick_4_0=ruleTick();
                     _fsp--;
 
@@ -19217,7 +19213,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
             }
 
-            match(input,37,FOLLOW_37_in_ruleDataPre15326); 
+            match(input,37,FOLLOW_37_in_ruleDataPre15319); 
 
                     createLeafNode(grammarAccess.getDataPreAccess().getRightParenthesisKeyword_4(), null); 
                 
@@ -19244,7 +19240,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start entryRuleDataTrap
-    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8596:1: entryRuleDataTrap returns [EObject current=null] : iv_ruleDataTrap= ruleDataTrap EOF ;
+    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8591:1: entryRuleDataTrap returns [EObject current=null] : iv_ruleDataTrap= ruleDataTrap EOF ;
     public final EObject entryRuleDataTrap() throws RecognitionException {
         EObject current = null;
 
@@ -19252,16 +19248,16 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8597:2: (iv_ruleDataTrap= ruleDataTrap EOF )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8598:2: iv_ruleDataTrap= ruleDataTrap EOF
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8592:2: (iv_ruleDataTrap= ruleDataTrap EOF )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8593:2: iv_ruleDataTrap= ruleDataTrap EOF
             {
              currentNode = createCompositeNode(grammarAccess.getDataTrapRule(), currentNode); 
-            pushFollow(FOLLOW_ruleDataTrap_in_entryRuleDataTrap15362);
+            pushFollow(FOLLOW_ruleDataTrap_in_entryRuleDataTrap15355);
             iv_ruleDataTrap=ruleDataTrap();
             _fsp--;
 
              current =iv_ruleDataTrap; 
-            match(input,EOF,FOLLOW_EOF_in_entryRuleDataTrap15372); 
+            match(input,EOF,FOLLOW_EOF_in_entryRuleDataTrap15365); 
 
             }
 
@@ -19279,28 +19275,28 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start ruleDataTrap
-    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8605:1: ruleDataTrap returns [EObject current=null] : ( '??' ( ( RULE_ESTERELID ) ) ) ;
+    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8600:1: ruleDataTrap returns [EObject current=null] : ( '??' ( ( RULE_ESTERELID ) ) ) ;
     public final EObject ruleDataTrap() throws RecognitionException {
         EObject current = null;
 
          @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8610:6: ( ( '??' ( ( RULE_ESTERELID ) ) ) )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8611:1: ( '??' ( ( RULE_ESTERELID ) ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8605:6: ( ( '??' ( ( RULE_ESTERELID ) ) ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8606:1: ( '??' ( ( RULE_ESTERELID ) ) )
             {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8611:1: ( '??' ( ( RULE_ESTERELID ) ) )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8611:3: '??' ( ( RULE_ESTERELID ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8606:1: ( '??' ( ( RULE_ESTERELID ) ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8606:3: '??' ( ( RULE_ESTERELID ) )
             {
-            match(input,91,FOLLOW_91_in_ruleDataTrap15407); 
+            match(input,91,FOLLOW_91_in_ruleDataTrap15400); 
 
                     createLeafNode(grammarAccess.getDataTrapAccess().getQuestionMarkQuestionMarkKeyword_0(), null); 
                 
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8615:1: ( ( RULE_ESTERELID ) )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8616:1: ( RULE_ESTERELID )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8610:1: ( ( RULE_ESTERELID ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8611:1: ( RULE_ESTERELID )
             {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8616:1: ( RULE_ESTERELID )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8617:3: RULE_ESTERELID
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8611:1: ( RULE_ESTERELID )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8612:3: RULE_ESTERELID
             {
 
             			if (current==null) {
@@ -19308,7 +19304,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
             	            associateNodeWithAstElement(currentNode, current);
             	        }
                     
-            match(input,RULE_ESTERELID,FOLLOW_RULE_ESTERELID_in_ruleDataTrap15425); 
+            match(input,RULE_ESTERELID,FOLLOW_RULE_ESTERELID_in_ruleDataTrap15418); 
 
             		createLeafNode(grammarAccess.getDataTrapAccess().getTrapTrapDeclCrossReference_1_0(), "trap"); 
             	
@@ -19341,7 +19337,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start entryRuleDataFunction
-    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8637:1: entryRuleDataFunction returns [EObject current=null] : iv_ruleDataFunction= ruleDataFunction EOF ;
+    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8632:1: entryRuleDataFunction returns [EObject current=null] : iv_ruleDataFunction= ruleDataFunction EOF ;
     public final EObject entryRuleDataFunction() throws RecognitionException {
         EObject current = null;
 
@@ -19349,16 +19345,16 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8638:2: (iv_ruleDataFunction= ruleDataFunction EOF )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8639:2: iv_ruleDataFunction= ruleDataFunction EOF
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8633:2: (iv_ruleDataFunction= ruleDataFunction EOF )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8634:2: iv_ruleDataFunction= ruleDataFunction EOF
             {
              currentNode = createCompositeNode(grammarAccess.getDataFunctionRule(), currentNode); 
-            pushFollow(FOLLOW_ruleDataFunction_in_entryRuleDataFunction15461);
+            pushFollow(FOLLOW_ruleDataFunction_in_entryRuleDataFunction15454);
             iv_ruleDataFunction=ruleDataFunction();
             _fsp--;
 
              current =iv_ruleDataFunction; 
-            match(input,EOF,FOLLOW_EOF_in_entryRuleDataFunction15471); 
+            match(input,EOF,FOLLOW_EOF_in_entryRuleDataFunction15464); 
 
             }
 
@@ -19376,7 +19372,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start ruleDataFunction
-    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8646:1: ruleDataFunction returns [EObject current=null] : ( ( ( RULE_ESTERELID ) ) '(' ( (lv_dataExpr_2_0= ruleDataExpr ) ) ( ',' ( (lv_dataExpr_4_0= ruleDataExpr ) ) )* ')' ) ;
+    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8641:1: ruleDataFunction returns [EObject current=null] : ( ( ( RULE_ESTERELID ) ) '(' ( (lv_dataExpr_2_0= ruleDataExpr ) ) ( ',' ( (lv_dataExpr_4_0= ruleDataExpr ) ) )* ')' ) ;
     public final EObject ruleDataFunction() throws RecognitionException {
         EObject current = null;
 
@@ -19388,17 +19384,17 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
          @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8651:6: ( ( ( ( RULE_ESTERELID ) ) '(' ( (lv_dataExpr_2_0= ruleDataExpr ) ) ( ',' ( (lv_dataExpr_4_0= ruleDataExpr ) ) )* ')' ) )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8652:1: ( ( ( RULE_ESTERELID ) ) '(' ( (lv_dataExpr_2_0= ruleDataExpr ) ) ( ',' ( (lv_dataExpr_4_0= ruleDataExpr ) ) )* ')' )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8646:6: ( ( ( ( RULE_ESTERELID ) ) '(' ( (lv_dataExpr_2_0= ruleDataExpr ) ) ( ',' ( (lv_dataExpr_4_0= ruleDataExpr ) ) )* ')' ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8647:1: ( ( ( RULE_ESTERELID ) ) '(' ( (lv_dataExpr_2_0= ruleDataExpr ) ) ( ',' ( (lv_dataExpr_4_0= ruleDataExpr ) ) )* ')' )
             {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8652:1: ( ( ( RULE_ESTERELID ) ) '(' ( (lv_dataExpr_2_0= ruleDataExpr ) ) ( ',' ( (lv_dataExpr_4_0= ruleDataExpr ) ) )* ')' )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8652:2: ( ( RULE_ESTERELID ) ) '(' ( (lv_dataExpr_2_0= ruleDataExpr ) ) ( ',' ( (lv_dataExpr_4_0= ruleDataExpr ) ) )* ')'
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8647:1: ( ( ( RULE_ESTERELID ) ) '(' ( (lv_dataExpr_2_0= ruleDataExpr ) ) ( ',' ( (lv_dataExpr_4_0= ruleDataExpr ) ) )* ')' )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8647:2: ( ( RULE_ESTERELID ) ) '(' ( (lv_dataExpr_2_0= ruleDataExpr ) ) ( ',' ( (lv_dataExpr_4_0= ruleDataExpr ) ) )* ')'
             {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8652:2: ( ( RULE_ESTERELID ) )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8653:1: ( RULE_ESTERELID )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8647:2: ( ( RULE_ESTERELID ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8648:1: ( RULE_ESTERELID )
             {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8653:1: ( RULE_ESTERELID )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8654:3: RULE_ESTERELID
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8648:1: ( RULE_ESTERELID )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8649:3: RULE_ESTERELID
             {
 
             			if (current==null) {
@@ -19406,7 +19402,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
             	            associateNodeWithAstElement(currentNode, current);
             	        }
                     
-            match(input,RULE_ESTERELID,FOLLOW_RULE_ESTERELID_in_ruleDataFunction15514); 
+            match(input,RULE_ESTERELID,FOLLOW_RULE_ESTERELID_in_ruleDataFunction15507); 
 
             		createLeafNode(grammarAccess.getDataFunctionAccess().getFunctionFunctionCrossReference_0_0(), "function"); 
             	
@@ -19416,20 +19412,20 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
             }
 
-            match(input,36,FOLLOW_36_in_ruleDataFunction15524); 
+            match(input,36,FOLLOW_36_in_ruleDataFunction15517); 
 
                     createLeafNode(grammarAccess.getDataFunctionAccess().getLeftParenthesisKeyword_1(), null); 
                 
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8670:1: ( (lv_dataExpr_2_0= ruleDataExpr ) )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8671:1: (lv_dataExpr_2_0= ruleDataExpr )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8665:1: ( (lv_dataExpr_2_0= ruleDataExpr ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8666:1: (lv_dataExpr_2_0= ruleDataExpr )
             {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8671:1: (lv_dataExpr_2_0= ruleDataExpr )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8672:3: lv_dataExpr_2_0= ruleDataExpr
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8666:1: (lv_dataExpr_2_0= ruleDataExpr )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8667:3: lv_dataExpr_2_0= ruleDataExpr
             {
              
             	        currentNode=createCompositeNode(grammarAccess.getDataFunctionAccess().getDataExprDataExprParserRuleCall_2_0(), currentNode); 
             	    
-            pushFollow(FOLLOW_ruleDataExpr_in_ruleDataFunction15545);
+            pushFollow(FOLLOW_ruleDataExpr_in_ruleDataFunction15538);
             lv_dataExpr_2_0=ruleDataExpr();
             _fsp--;
 
@@ -19456,7 +19452,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
             }
 
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8694:2: ( ',' ( (lv_dataExpr_4_0= ruleDataExpr ) ) )*
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8689:2: ( ',' ( (lv_dataExpr_4_0= ruleDataExpr ) ) )*
             loop110:
             do {
                 int alt110=2;
@@ -19469,22 +19465,22 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
                 switch (alt110) {
             	case 1 :
-            	    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8694:4: ',' ( (lv_dataExpr_4_0= ruleDataExpr ) )
+            	    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8689:4: ',' ( (lv_dataExpr_4_0= ruleDataExpr ) )
             	    {
-            	    match(input,22,FOLLOW_22_in_ruleDataFunction15556); 
+            	    match(input,22,FOLLOW_22_in_ruleDataFunction15549); 
 
             	            createLeafNode(grammarAccess.getDataFunctionAccess().getCommaKeyword_3_0(), null); 
             	        
-            	    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8698:1: ( (lv_dataExpr_4_0= ruleDataExpr ) )
-            	    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8699:1: (lv_dataExpr_4_0= ruleDataExpr )
+            	    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8693:1: ( (lv_dataExpr_4_0= ruleDataExpr ) )
+            	    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8694:1: (lv_dataExpr_4_0= ruleDataExpr )
             	    {
-            	    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8699:1: (lv_dataExpr_4_0= ruleDataExpr )
-            	    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8700:3: lv_dataExpr_4_0= ruleDataExpr
+            	    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8694:1: (lv_dataExpr_4_0= ruleDataExpr )
+            	    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8695:3: lv_dataExpr_4_0= ruleDataExpr
             	    {
             	     
             	    	        currentNode=createCompositeNode(grammarAccess.getDataFunctionAccess().getDataExprDataExprParserRuleCall_3_1_0(), currentNode); 
             	    	    
-            	    pushFollow(FOLLOW_ruleDataExpr_in_ruleDataFunction15577);
+            	    pushFollow(FOLLOW_ruleDataExpr_in_ruleDataFunction15570);
             	    lv_dataExpr_4_0=ruleDataExpr();
             	    _fsp--;
 
@@ -19520,7 +19516,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
                 }
             } while (true);
 
-            match(input,37,FOLLOW_37_in_ruleDataFunction15589); 
+            match(input,37,FOLLOW_37_in_ruleDataFunction15582); 
 
                     createLeafNode(grammarAccess.getDataFunctionAccess().getRightParenthesisKeyword_4(), null); 
                 
@@ -19547,7 +19543,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start entryRuleTrapExpr
-    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8734:1: entryRuleTrapExpr returns [EObject current=null] : iv_ruleTrapExpr= ruleTrapExpr EOF ;
+    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8729:1: entryRuleTrapExpr returns [EObject current=null] : iv_ruleTrapExpr= ruleTrapExpr EOF ;
     public final EObject entryRuleTrapExpr() throws RecognitionException {
         EObject current = null;
 
@@ -19555,16 +19551,16 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8735:2: (iv_ruleTrapExpr= ruleTrapExpr EOF )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8736:2: iv_ruleTrapExpr= ruleTrapExpr EOF
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8730:2: (iv_ruleTrapExpr= ruleTrapExpr EOF )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8731:2: iv_ruleTrapExpr= ruleTrapExpr EOF
             {
              currentNode = createCompositeNode(grammarAccess.getTrapExprRule(), currentNode); 
-            pushFollow(FOLLOW_ruleTrapExpr_in_entryRuleTrapExpr15625);
+            pushFollow(FOLLOW_ruleTrapExpr_in_entryRuleTrapExpr15618);
             iv_ruleTrapExpr=ruleTrapExpr();
             _fsp--;
 
              current =iv_ruleTrapExpr; 
-            match(input,EOF,FOLLOW_EOF_in_entryRuleTrapExpr15635); 
+            match(input,EOF,FOLLOW_EOF_in_entryRuleTrapExpr15628); 
 
             }
 
@@ -19582,7 +19578,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start ruleTrapExpr
-    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8743:1: ruleTrapExpr returns [EObject current=null] : this_SigExpr_0= ruleSigExpr ;
+    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8738:1: ruleTrapExpr returns [EObject current=null] : this_SigExpr_0= ruleSigExpr ;
     public final EObject ruleTrapExpr() throws RecognitionException {
         EObject current = null;
 
@@ -19592,13 +19588,13 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
          @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8748:6: (this_SigExpr_0= ruleSigExpr )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8750:5: this_SigExpr_0= ruleSigExpr
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8743:6: (this_SigExpr_0= ruleSigExpr )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8745:5: this_SigExpr_0= ruleSigExpr
             {
              
                     currentNode=createCompositeNode(grammarAccess.getTrapExprAccess().getSigExprParserRuleCall(), currentNode); 
                 
-            pushFollow(FOLLOW_ruleSigExpr_in_ruleTrapExpr15681);
+            pushFollow(FOLLOW_ruleSigExpr_in_ruleTrapExpr15674);
             this_SigExpr_0=ruleSigExpr();
             _fsp--;
 
@@ -19626,7 +19622,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start entryRuleSigExpr
-    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8766:1: entryRuleSigExpr returns [EObject current=null] : iv_ruleSigExpr= ruleSigExpr EOF ;
+    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8761:1: entryRuleSigExpr returns [EObject current=null] : iv_ruleSigExpr= ruleSigExpr EOF ;
     public final EObject entryRuleSigExpr() throws RecognitionException {
         EObject current = null;
 
@@ -19634,16 +19630,16 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8767:2: (iv_ruleSigExpr= ruleSigExpr EOF )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8768:2: iv_ruleSigExpr= ruleSigExpr EOF
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8762:2: (iv_ruleSigExpr= ruleSigExpr EOF )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8763:2: iv_ruleSigExpr= ruleSigExpr EOF
             {
              currentNode = createCompositeNode(grammarAccess.getSigExprRule(), currentNode); 
-            pushFollow(FOLLOW_ruleSigExpr_in_entryRuleSigExpr15715);
+            pushFollow(FOLLOW_ruleSigExpr_in_entryRuleSigExpr15708);
             iv_ruleSigExpr=ruleSigExpr();
             _fsp--;
 
              current =iv_ruleSigExpr; 
-            match(input,EOF,FOLLOW_EOF_in_entryRuleSigExpr15725); 
+            match(input,EOF,FOLLOW_EOF_in_entryRuleSigExpr15718); 
 
             }
 
@@ -19661,7 +19657,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start ruleSigExpr
-    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8775:1: ruleSigExpr returns [EObject current=null] : ( ( (lv_andExpr_0_0= ruleSigExprAND ) ) ( 'or' ( (lv_andExpr_2_0= ruleSigExprAND ) ) )* ) ;
+    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8770:1: ruleSigExpr returns [EObject current=null] : ( ( (lv_andExpr_0_0= ruleSigExprAND ) ) ( 'or' ( (lv_andExpr_2_0= ruleSigExprAND ) ) )* ) ;
     public final EObject ruleSigExpr() throws RecognitionException {
         EObject current = null;
 
@@ -19673,22 +19669,22 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
          @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8780:6: ( ( ( (lv_andExpr_0_0= ruleSigExprAND ) ) ( 'or' ( (lv_andExpr_2_0= ruleSigExprAND ) ) )* ) )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8781:1: ( ( (lv_andExpr_0_0= ruleSigExprAND ) ) ( 'or' ( (lv_andExpr_2_0= ruleSigExprAND ) ) )* )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8775:6: ( ( ( (lv_andExpr_0_0= ruleSigExprAND ) ) ( 'or' ( (lv_andExpr_2_0= ruleSigExprAND ) ) )* ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8776:1: ( ( (lv_andExpr_0_0= ruleSigExprAND ) ) ( 'or' ( (lv_andExpr_2_0= ruleSigExprAND ) ) )* )
             {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8781:1: ( ( (lv_andExpr_0_0= ruleSigExprAND ) ) ( 'or' ( (lv_andExpr_2_0= ruleSigExprAND ) ) )* )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8781:2: ( (lv_andExpr_0_0= ruleSigExprAND ) ) ( 'or' ( (lv_andExpr_2_0= ruleSigExprAND ) ) )*
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8776:1: ( ( (lv_andExpr_0_0= ruleSigExprAND ) ) ( 'or' ( (lv_andExpr_2_0= ruleSigExprAND ) ) )* )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8776:2: ( (lv_andExpr_0_0= ruleSigExprAND ) ) ( 'or' ( (lv_andExpr_2_0= ruleSigExprAND ) ) )*
             {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8781:2: ( (lv_andExpr_0_0= ruleSigExprAND ) )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8782:1: (lv_andExpr_0_0= ruleSigExprAND )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8776:2: ( (lv_andExpr_0_0= ruleSigExprAND ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8777:1: (lv_andExpr_0_0= ruleSigExprAND )
             {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8782:1: (lv_andExpr_0_0= ruleSigExprAND )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8783:3: lv_andExpr_0_0= ruleSigExprAND
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8777:1: (lv_andExpr_0_0= ruleSigExprAND )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8778:3: lv_andExpr_0_0= ruleSigExprAND
             {
              
             	        currentNode=createCompositeNode(grammarAccess.getSigExprAccess().getAndExprSigExprANDParserRuleCall_0_0(), currentNode); 
             	    
-            pushFollow(FOLLOW_ruleSigExprAND_in_ruleSigExpr15771);
+            pushFollow(FOLLOW_ruleSigExprAND_in_ruleSigExpr15764);
             lv_andExpr_0_0=ruleSigExprAND();
             _fsp--;
 
@@ -19715,7 +19711,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
             }
 
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8805:2: ( 'or' ( (lv_andExpr_2_0= ruleSigExprAND ) ) )*
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8800:2: ( 'or' ( (lv_andExpr_2_0= ruleSigExprAND ) ) )*
             loop111:
             do {
                 int alt111=2;
@@ -19728,22 +19724,22 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
                 switch (alt111) {
             	case 1 :
-            	    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8805:4: 'or' ( (lv_andExpr_2_0= ruleSigExprAND ) )
+            	    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8800:4: 'or' ( (lv_andExpr_2_0= ruleSigExprAND ) )
             	    {
-            	    match(input,79,FOLLOW_79_in_ruleSigExpr15782); 
+            	    match(input,79,FOLLOW_79_in_ruleSigExpr15775); 
 
             	            createLeafNode(grammarAccess.getSigExprAccess().getOrKeyword_1_0(), null); 
             	        
-            	    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8809:1: ( (lv_andExpr_2_0= ruleSigExprAND ) )
-            	    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8810:1: (lv_andExpr_2_0= ruleSigExprAND )
+            	    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8804:1: ( (lv_andExpr_2_0= ruleSigExprAND ) )
+            	    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8805:1: (lv_andExpr_2_0= ruleSigExprAND )
             	    {
-            	    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8810:1: (lv_andExpr_2_0= ruleSigExprAND )
-            	    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8811:3: lv_andExpr_2_0= ruleSigExprAND
+            	    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8805:1: (lv_andExpr_2_0= ruleSigExprAND )
+            	    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8806:3: lv_andExpr_2_0= ruleSigExprAND
             	    {
             	     
             	    	        currentNode=createCompositeNode(grammarAccess.getSigExprAccess().getAndExprSigExprANDParserRuleCall_1_1_0(), currentNode); 
             	    	    
-            	    pushFollow(FOLLOW_ruleSigExprAND_in_ruleSigExpr15803);
+            	    pushFollow(FOLLOW_ruleSigExprAND_in_ruleSigExpr15796);
             	    lv_andExpr_2_0=ruleSigExprAND();
             	    _fsp--;
 
@@ -19802,7 +19798,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start entryRuleSigExprAND
-    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8841:1: entryRuleSigExprAND returns [EObject current=null] : iv_ruleSigExprAND= ruleSigExprAND EOF ;
+    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8836:1: entryRuleSigExprAND returns [EObject current=null] : iv_ruleSigExprAND= ruleSigExprAND EOF ;
     public final EObject entryRuleSigExprAND() throws RecognitionException {
         EObject current = null;
 
@@ -19810,16 +19806,16 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8842:2: (iv_ruleSigExprAND= ruleSigExprAND EOF )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8843:2: iv_ruleSigExprAND= ruleSigExprAND EOF
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8837:2: (iv_ruleSigExprAND= ruleSigExprAND EOF )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8838:2: iv_ruleSigExprAND= ruleSigExprAND EOF
             {
              currentNode = createCompositeNode(grammarAccess.getSigExprANDRule(), currentNode); 
-            pushFollow(FOLLOW_ruleSigExprAND_in_entryRuleSigExprAND15841);
+            pushFollow(FOLLOW_ruleSigExprAND_in_entryRuleSigExprAND15834);
             iv_ruleSigExprAND=ruleSigExprAND();
             _fsp--;
 
              current =iv_ruleSigExprAND; 
-            match(input,EOF,FOLLOW_EOF_in_entryRuleSigExprAND15851); 
+            match(input,EOF,FOLLOW_EOF_in_entryRuleSigExprAND15844); 
 
             }
 
@@ -19837,7 +19833,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start ruleSigExprAND
-    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8850:1: ruleSigExprAND returns [EObject current=null] : ( ( (lv_unaExpr_0_0= ruleSigExprUnary ) ) ( 'and' ( (lv_unaExpr_2_0= ruleSigExprUnary ) ) )* ) ;
+    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8845:1: ruleSigExprAND returns [EObject current=null] : ( ( (lv_unaExpr_0_0= ruleSigExprUnary ) ) ( 'and' ( (lv_unaExpr_2_0= ruleSigExprUnary ) ) )* ) ;
     public final EObject ruleSigExprAND() throws RecognitionException {
         EObject current = null;
 
@@ -19849,22 +19845,22 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
          @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8855:6: ( ( ( (lv_unaExpr_0_0= ruleSigExprUnary ) ) ( 'and' ( (lv_unaExpr_2_0= ruleSigExprUnary ) ) )* ) )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8856:1: ( ( (lv_unaExpr_0_0= ruleSigExprUnary ) ) ( 'and' ( (lv_unaExpr_2_0= ruleSigExprUnary ) ) )* )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8850:6: ( ( ( (lv_unaExpr_0_0= ruleSigExprUnary ) ) ( 'and' ( (lv_unaExpr_2_0= ruleSigExprUnary ) ) )* ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8851:1: ( ( (lv_unaExpr_0_0= ruleSigExprUnary ) ) ( 'and' ( (lv_unaExpr_2_0= ruleSigExprUnary ) ) )* )
             {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8856:1: ( ( (lv_unaExpr_0_0= ruleSigExprUnary ) ) ( 'and' ( (lv_unaExpr_2_0= ruleSigExprUnary ) ) )* )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8856:2: ( (lv_unaExpr_0_0= ruleSigExprUnary ) ) ( 'and' ( (lv_unaExpr_2_0= ruleSigExprUnary ) ) )*
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8851:1: ( ( (lv_unaExpr_0_0= ruleSigExprUnary ) ) ( 'and' ( (lv_unaExpr_2_0= ruleSigExprUnary ) ) )* )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8851:2: ( (lv_unaExpr_0_0= ruleSigExprUnary ) ) ( 'and' ( (lv_unaExpr_2_0= ruleSigExprUnary ) ) )*
             {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8856:2: ( (lv_unaExpr_0_0= ruleSigExprUnary ) )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8857:1: (lv_unaExpr_0_0= ruleSigExprUnary )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8851:2: ( (lv_unaExpr_0_0= ruleSigExprUnary ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8852:1: (lv_unaExpr_0_0= ruleSigExprUnary )
             {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8857:1: (lv_unaExpr_0_0= ruleSigExprUnary )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8858:3: lv_unaExpr_0_0= ruleSigExprUnary
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8852:1: (lv_unaExpr_0_0= ruleSigExprUnary )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8853:3: lv_unaExpr_0_0= ruleSigExprUnary
             {
              
             	        currentNode=createCompositeNode(grammarAccess.getSigExprANDAccess().getUnaExprSigExprUnaryParserRuleCall_0_0(), currentNode); 
             	    
-            pushFollow(FOLLOW_ruleSigExprUnary_in_ruleSigExprAND15897);
+            pushFollow(FOLLOW_ruleSigExprUnary_in_ruleSigExprAND15890);
             lv_unaExpr_0_0=ruleSigExprUnary();
             _fsp--;
 
@@ -19891,7 +19887,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
             }
 
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8880:2: ( 'and' ( (lv_unaExpr_2_0= ruleSigExprUnary ) ) )*
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8875:2: ( 'and' ( (lv_unaExpr_2_0= ruleSigExprUnary ) ) )*
             loop112:
             do {
                 int alt112=2;
@@ -19904,22 +19900,22 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
                 switch (alt112) {
             	case 1 :
-            	    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8880:4: 'and' ( (lv_unaExpr_2_0= ruleSigExprUnary ) )
+            	    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8875:4: 'and' ( (lv_unaExpr_2_0= ruleSigExprUnary ) )
             	    {
-            	    match(input,78,FOLLOW_78_in_ruleSigExprAND15908); 
+            	    match(input,78,FOLLOW_78_in_ruleSigExprAND15901); 
 
             	            createLeafNode(grammarAccess.getSigExprANDAccess().getAndKeyword_1_0(), null); 
             	        
-            	    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8884:1: ( (lv_unaExpr_2_0= ruleSigExprUnary ) )
-            	    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8885:1: (lv_unaExpr_2_0= ruleSigExprUnary )
+            	    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8879:1: ( (lv_unaExpr_2_0= ruleSigExprUnary ) )
+            	    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8880:1: (lv_unaExpr_2_0= ruleSigExprUnary )
             	    {
-            	    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8885:1: (lv_unaExpr_2_0= ruleSigExprUnary )
-            	    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8886:3: lv_unaExpr_2_0= ruleSigExprUnary
+            	    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8880:1: (lv_unaExpr_2_0= ruleSigExprUnary )
+            	    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8881:3: lv_unaExpr_2_0= ruleSigExprUnary
             	    {
             	     
             	    	        currentNode=createCompositeNode(grammarAccess.getSigExprANDAccess().getUnaExprSigExprUnaryParserRuleCall_1_1_0(), currentNode); 
             	    	    
-            	    pushFollow(FOLLOW_ruleSigExprUnary_in_ruleSigExprAND15929);
+            	    pushFollow(FOLLOW_ruleSigExprUnary_in_ruleSigExprAND15922);
             	    lv_unaExpr_2_0=ruleSigExprUnary();
             	    _fsp--;
 
@@ -19978,7 +19974,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start entryRuleSigExprUnary
-    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8916:1: entryRuleSigExprUnary returns [EObject current=null] : iv_ruleSigExprUnary= ruleSigExprUnary EOF ;
+    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8911:1: entryRuleSigExprUnary returns [EObject current=null] : iv_ruleSigExprUnary= ruleSigExprUnary EOF ;
     public final EObject entryRuleSigExprUnary() throws RecognitionException {
         EObject current = null;
 
@@ -19986,16 +19982,16 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8917:2: (iv_ruleSigExprUnary= ruleSigExprUnary EOF )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8918:2: iv_ruleSigExprUnary= ruleSigExprUnary EOF
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8912:2: (iv_ruleSigExprUnary= ruleSigExprUnary EOF )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8913:2: iv_ruleSigExprUnary= ruleSigExprUnary EOF
             {
              currentNode = createCompositeNode(grammarAccess.getSigExprUnaryRule(), currentNode); 
-            pushFollow(FOLLOW_ruleSigExprUnary_in_entryRuleSigExprUnary15967);
+            pushFollow(FOLLOW_ruleSigExprUnary_in_entryRuleSigExprUnary15960);
             iv_ruleSigExprUnary=ruleSigExprUnary();
             _fsp--;
 
              current =iv_ruleSigExprUnary; 
-            match(input,EOF,FOLLOW_EOF_in_entryRuleSigExprUnary15977); 
+            match(input,EOF,FOLLOW_EOF_in_entryRuleSigExprUnary15970); 
 
             }
 
@@ -20013,7 +20009,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start ruleSigExprUnary
-    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8925:1: ruleSigExprUnary returns [EObject current=null] : ( ( (lv_expr_0_0= RULE_ESTERELID ) ) | ( '(' ( (lv_sigExpr_2_0= ruleSigExpr ) ) ')' ) | ( 'not' ( (lv_sigExpr_5_0= ruleSigExprUnary ) ) ) ) ;
+    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8920:1: ruleSigExprUnary returns [EObject current=null] : ( ( (lv_expr_0_0= RULE_ESTERELID ) ) | ( '(' ( (lv_sigExpr_2_0= ruleSigExpr ) ) ')' ) | ( 'not' ( (lv_sigExpr_5_0= ruleSigExprUnary ) ) ) ) ;
     public final EObject ruleSigExprUnary() throws RecognitionException {
         EObject current = null;
 
@@ -20026,10 +20022,10 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
          @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8930:6: ( ( ( (lv_expr_0_0= RULE_ESTERELID ) ) | ( '(' ( (lv_sigExpr_2_0= ruleSigExpr ) ) ')' ) | ( 'not' ( (lv_sigExpr_5_0= ruleSigExprUnary ) ) ) ) )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8931:1: ( ( (lv_expr_0_0= RULE_ESTERELID ) ) | ( '(' ( (lv_sigExpr_2_0= ruleSigExpr ) ) ')' ) | ( 'not' ( (lv_sigExpr_5_0= ruleSigExprUnary ) ) ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8925:6: ( ( ( (lv_expr_0_0= RULE_ESTERELID ) ) | ( '(' ( (lv_sigExpr_2_0= ruleSigExpr ) ) ')' ) | ( 'not' ( (lv_sigExpr_5_0= ruleSigExprUnary ) ) ) ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8926:1: ( ( (lv_expr_0_0= RULE_ESTERELID ) ) | ( '(' ( (lv_sigExpr_2_0= ruleSigExpr ) ) ')' ) | ( 'not' ( (lv_sigExpr_5_0= ruleSigExprUnary ) ) ) )
             {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8931:1: ( ( (lv_expr_0_0= RULE_ESTERELID ) ) | ( '(' ( (lv_sigExpr_2_0= ruleSigExpr ) ) ')' ) | ( 'not' ( (lv_sigExpr_5_0= ruleSigExprUnary ) ) ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8926:1: ( ( (lv_expr_0_0= RULE_ESTERELID ) ) | ( '(' ( (lv_sigExpr_2_0= ruleSigExpr ) ) ')' ) | ( 'not' ( (lv_sigExpr_5_0= ruleSigExprUnary ) ) ) )
             int alt113=3;
             switch ( input.LA(1) ) {
             case RULE_ESTERELID:
@@ -20049,23 +20045,23 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
                 break;
             default:
                 NoViableAltException nvae =
-                    new NoViableAltException("8931:1: ( ( (lv_expr_0_0= RULE_ESTERELID ) ) | ( '(' ( (lv_sigExpr_2_0= ruleSigExpr ) ) ')' ) | ( 'not' ( (lv_sigExpr_5_0= ruleSigExprUnary ) ) ) )", 113, 0, input);
+                    new NoViableAltException("8926:1: ( ( (lv_expr_0_0= RULE_ESTERELID ) ) | ( '(' ( (lv_sigExpr_2_0= ruleSigExpr ) ) ')' ) | ( 'not' ( (lv_sigExpr_5_0= ruleSigExprUnary ) ) ) )", 113, 0, input);
 
                 throw nvae;
             }
 
             switch (alt113) {
                 case 1 :
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8931:2: ( (lv_expr_0_0= RULE_ESTERELID ) )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8926:2: ( (lv_expr_0_0= RULE_ESTERELID ) )
                     {
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8931:2: ( (lv_expr_0_0= RULE_ESTERELID ) )
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8932:1: (lv_expr_0_0= RULE_ESTERELID )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8926:2: ( (lv_expr_0_0= RULE_ESTERELID ) )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8927:1: (lv_expr_0_0= RULE_ESTERELID )
                     {
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8932:1: (lv_expr_0_0= RULE_ESTERELID )
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8933:3: lv_expr_0_0= RULE_ESTERELID
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8927:1: (lv_expr_0_0= RULE_ESTERELID )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8928:3: lv_expr_0_0= RULE_ESTERELID
                     {
                     lv_expr_0_0=(Token)input.LT(1);
-                    match(input,RULE_ESTERELID,FOLLOW_RULE_ESTERELID_in_ruleSigExprUnary16019); 
+                    match(input,RULE_ESTERELID,FOLLOW_RULE_ESTERELID_in_ruleSigExprUnary16012); 
 
                     			createLeafNode(grammarAccess.getSigExprUnaryAccess().getExprEsterelIDTerminalRuleCall_0_0(), "expr"); 
                     		
@@ -20095,25 +20091,25 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8956:6: ( '(' ( (lv_sigExpr_2_0= ruleSigExpr ) ) ')' )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8951:6: ( '(' ( (lv_sigExpr_2_0= ruleSigExpr ) ) ')' )
                     {
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8956:6: ( '(' ( (lv_sigExpr_2_0= ruleSigExpr ) ) ')' )
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8956:8: '(' ( (lv_sigExpr_2_0= ruleSigExpr ) ) ')'
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8951:6: ( '(' ( (lv_sigExpr_2_0= ruleSigExpr ) ) ')' )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8951:8: '(' ( (lv_sigExpr_2_0= ruleSigExpr ) ) ')'
                     {
-                    match(input,36,FOLLOW_36_in_ruleSigExprUnary16041); 
+                    match(input,36,FOLLOW_36_in_ruleSigExprUnary16034); 
 
                             createLeafNode(grammarAccess.getSigExprUnaryAccess().getLeftParenthesisKeyword_1_0(), null); 
                         
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8960:1: ( (lv_sigExpr_2_0= ruleSigExpr ) )
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8961:1: (lv_sigExpr_2_0= ruleSigExpr )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8955:1: ( (lv_sigExpr_2_0= ruleSigExpr ) )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8956:1: (lv_sigExpr_2_0= ruleSigExpr )
                     {
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8961:1: (lv_sigExpr_2_0= ruleSigExpr )
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8962:3: lv_sigExpr_2_0= ruleSigExpr
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8956:1: (lv_sigExpr_2_0= ruleSigExpr )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8957:3: lv_sigExpr_2_0= ruleSigExpr
                     {
                      
                     	        currentNode=createCompositeNode(grammarAccess.getSigExprUnaryAccess().getSigExprSigExprParserRuleCall_1_1_0(), currentNode); 
                     	    
-                    pushFollow(FOLLOW_ruleSigExpr_in_ruleSigExprUnary16062);
+                    pushFollow(FOLLOW_ruleSigExpr_in_ruleSigExprUnary16055);
                     lv_sigExpr_2_0=ruleSigExpr();
                     _fsp--;
 
@@ -20140,7 +20136,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    match(input,37,FOLLOW_37_in_ruleSigExprUnary16072); 
+                    match(input,37,FOLLOW_37_in_ruleSigExprUnary16065); 
 
                             createLeafNode(grammarAccess.getSigExprUnaryAccess().getRightParenthesisKeyword_1_2(), null); 
                         
@@ -20151,25 +20147,25 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 3 :
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8989:6: ( 'not' ( (lv_sigExpr_5_0= ruleSigExprUnary ) ) )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8984:6: ( 'not' ( (lv_sigExpr_5_0= ruleSigExprUnary ) ) )
                     {
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8989:6: ( 'not' ( (lv_sigExpr_5_0= ruleSigExprUnary ) ) )
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8989:8: 'not' ( (lv_sigExpr_5_0= ruleSigExprUnary ) )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8984:6: ( 'not' ( (lv_sigExpr_5_0= ruleSigExprUnary ) ) )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8984:8: 'not' ( (lv_sigExpr_5_0= ruleSigExprUnary ) )
                     {
-                    match(input,80,FOLLOW_80_in_ruleSigExprUnary16090); 
+                    match(input,80,FOLLOW_80_in_ruleSigExprUnary16083); 
 
                             createLeafNode(grammarAccess.getSigExprUnaryAccess().getNotKeyword_2_0(), null); 
                         
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8993:1: ( (lv_sigExpr_5_0= ruleSigExprUnary ) )
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8994:1: (lv_sigExpr_5_0= ruleSigExprUnary )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8988:1: ( (lv_sigExpr_5_0= ruleSigExprUnary ) )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8989:1: (lv_sigExpr_5_0= ruleSigExprUnary )
                     {
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8994:1: (lv_sigExpr_5_0= ruleSigExprUnary )
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8995:3: lv_sigExpr_5_0= ruleSigExprUnary
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8989:1: (lv_sigExpr_5_0= ruleSigExprUnary )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8990:3: lv_sigExpr_5_0= ruleSigExprUnary
                     {
                      
                     	        currentNode=createCompositeNode(grammarAccess.getSigExprUnaryAccess().getSigExprSigExprUnaryParserRuleCall_2_1_0(), currentNode); 
                     	    
-                    pushFollow(FOLLOW_ruleSigExprUnary_in_ruleSigExprUnary16111);
+                    pushFollow(FOLLOW_ruleSigExprUnary_in_ruleSigExprUnary16104);
                     lv_sigExpr_5_0=ruleSigExprUnary();
                     _fsp--;
 
@@ -20225,7 +20221,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start entryRuleDelayExpr
-    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9025:1: entryRuleDelayExpr returns [EObject current=null] : iv_ruleDelayExpr= ruleDelayExpr EOF ;
+    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9020:1: entryRuleDelayExpr returns [EObject current=null] : iv_ruleDelayExpr= ruleDelayExpr EOF ;
     public final EObject entryRuleDelayExpr() throws RecognitionException {
         EObject current = null;
 
@@ -20233,16 +20229,16 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9026:2: (iv_ruleDelayExpr= ruleDelayExpr EOF )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9027:2: iv_ruleDelayExpr= ruleDelayExpr EOF
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9021:2: (iv_ruleDelayExpr= ruleDelayExpr EOF )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9022:2: iv_ruleDelayExpr= ruleDelayExpr EOF
             {
              currentNode = createCompositeNode(grammarAccess.getDelayExprRule(), currentNode); 
-            pushFollow(FOLLOW_ruleDelayExpr_in_entryRuleDelayExpr16148);
+            pushFollow(FOLLOW_ruleDelayExpr_in_entryRuleDelayExpr16141);
             iv_ruleDelayExpr=ruleDelayExpr();
             _fsp--;
 
              current =iv_ruleDelayExpr; 
-            match(input,EOF,FOLLOW_EOF_in_entryRuleDelayExpr16158); 
+            match(input,EOF,FOLLOW_EOF_in_entryRuleDelayExpr16151); 
 
             }
 
@@ -20260,7 +20256,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start ruleDelayExpr
-    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9034:1: ruleDelayExpr returns [EObject current=null] : ( ( (lv_event_0_0= ruleDelayEvent ) ) | ( ( (lv_expr_1_0= ruleDataExpr ) ) ( (lv_event_2_0= ruleDelayEvent ) ) ) ) ;
+    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9029:1: ruleDelayExpr returns [EObject current=null] : ( ( (lv_event_0_0= ruleDelayEvent ) ) | ( ( (lv_expr_1_0= ruleDataExpr ) ) ( (lv_event_2_0= ruleDelayEvent ) ) ) ) ;
     public final EObject ruleDelayExpr() throws RecognitionException {
         EObject current = null;
 
@@ -20274,17 +20270,17 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
          @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9039:6: ( ( ( (lv_event_0_0= ruleDelayEvent ) ) | ( ( (lv_expr_1_0= ruleDataExpr ) ) ( (lv_event_2_0= ruleDelayEvent ) ) ) ) )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9040:1: ( ( (lv_event_0_0= ruleDelayEvent ) ) | ( ( (lv_expr_1_0= ruleDataExpr ) ) ( (lv_event_2_0= ruleDelayEvent ) ) ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9034:6: ( ( ( (lv_event_0_0= ruleDelayEvent ) ) | ( ( (lv_expr_1_0= ruleDataExpr ) ) ( (lv_event_2_0= ruleDelayEvent ) ) ) ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9035:1: ( ( (lv_event_0_0= ruleDelayEvent ) ) | ( ( (lv_expr_1_0= ruleDataExpr ) ) ( (lv_event_2_0= ruleDelayEvent ) ) ) )
             {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9040:1: ( ( (lv_event_0_0= ruleDelayEvent ) ) | ( ( (lv_expr_1_0= ruleDataExpr ) ) ( (lv_event_2_0= ruleDelayEvent ) ) ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9035:1: ( ( (lv_event_0_0= ruleDelayEvent ) ) | ( ( (lv_expr_1_0= ruleDataExpr ) ) ( (lv_event_2_0= ruleDelayEvent ) ) ) )
             int alt114=2;
             switch ( input.LA(1) ) {
             case RULE_ESTERELID:
                 {
                 int LA114_1 = input.LA(2);
 
-                if ( (LA114_1==RULE_ESTERELID||(LA114_1>=33 && LA114_1<=34)||LA114_1==36||LA114_1==40||LA114_1==69||(LA114_1>=78 && LA114_1<=88)||LA114_1==90||LA114_1==92) ) {
+                if ( (LA114_1==RULE_ESTERELID||(LA114_1>=33 && LA114_1<=34)||LA114_1==36||LA114_1==40||LA114_1==69||(LA114_1>=78 && LA114_1<=88)||LA114_1==90||LA114_1==94) ) {
                     alt114=2;
                 }
                 else if ( (LA114_1==EOF||(LA114_1>=19 && LA114_1<=20)||LA114_1==23||LA114_1==39||LA114_1==41||(LA114_1>=44 && LA114_1<=46)||(LA114_1>=48 && LA114_1<=50)||LA114_1==56||LA114_1==58||LA114_1==60||LA114_1==75) ) {
@@ -20292,14 +20288,14 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
                 }
                 else {
                     NoViableAltException nvae =
-                        new NoViableAltException("9040:1: ( ( (lv_event_0_0= ruleDelayEvent ) ) | ( ( (lv_expr_1_0= ruleDataExpr ) ) ( (lv_event_2_0= ruleDelayEvent ) ) ) )", 114, 1, input);
+                        new NoViableAltException("9035:1: ( ( (lv_event_0_0= ruleDelayEvent ) ) | ( ( (lv_expr_1_0= ruleDataExpr ) ) ( (lv_event_2_0= ruleDelayEvent ) ) ) )", 114, 1, input);
 
                     throw nvae;
                 }
                 }
                 break;
             case 40:
-            case 92:
+            case 94:
                 {
                 alt114=1;
                 }
@@ -20319,14 +20315,14 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
                     }
                     else {
                         NoViableAltException nvae =
-                            new NoViableAltException("9040:1: ( ( (lv_event_0_0= ruleDelayEvent ) ) | ( ( (lv_expr_1_0= ruleDataExpr ) ) ( (lv_event_2_0= ruleDelayEvent ) ) ) )", 114, 5, input);
+                            new NoViableAltException("9035:1: ( ( (lv_event_0_0= ruleDelayEvent ) ) | ( ( (lv_expr_1_0= ruleDataExpr ) ) ( (lv_event_2_0= ruleDelayEvent ) ) ) )", 114, 5, input);
 
                         throw nvae;
                     }
                 }
                 else {
                     NoViableAltException nvae =
-                        new NoViableAltException("9040:1: ( ( (lv_event_0_0= ruleDelayEvent ) ) | ( ( (lv_expr_1_0= ruleDataExpr ) ) ( (lv_event_2_0= ruleDelayEvent ) ) ) )", 114, 3, input);
+                        new NoViableAltException("9035:1: ( ( (lv_event_0_0= ruleDelayEvent ) ) | ( ( (lv_expr_1_0= ruleDataExpr ) ) ( (lv_event_2_0= ruleDelayEvent ) ) ) )", 114, 3, input);
 
                     throw nvae;
                 }
@@ -20359,25 +20355,25 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
                 break;
             default:
                 NoViableAltException nvae =
-                    new NoViableAltException("9040:1: ( ( (lv_event_0_0= ruleDelayEvent ) ) | ( ( (lv_expr_1_0= ruleDataExpr ) ) ( (lv_event_2_0= ruleDelayEvent ) ) ) )", 114, 0, input);
+                    new NoViableAltException("9035:1: ( ( (lv_event_0_0= ruleDelayEvent ) ) | ( ( (lv_expr_1_0= ruleDataExpr ) ) ( (lv_event_2_0= ruleDelayEvent ) ) ) )", 114, 0, input);
 
                 throw nvae;
             }
 
             switch (alt114) {
                 case 1 :
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9040:2: ( (lv_event_0_0= ruleDelayEvent ) )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9035:2: ( (lv_event_0_0= ruleDelayEvent ) )
                     {
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9040:2: ( (lv_event_0_0= ruleDelayEvent ) )
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9041:1: (lv_event_0_0= ruleDelayEvent )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9035:2: ( (lv_event_0_0= ruleDelayEvent ) )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9036:1: (lv_event_0_0= ruleDelayEvent )
                     {
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9041:1: (lv_event_0_0= ruleDelayEvent )
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9042:3: lv_event_0_0= ruleDelayEvent
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9036:1: (lv_event_0_0= ruleDelayEvent )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9037:3: lv_event_0_0= ruleDelayEvent
                     {
                      
                     	        currentNode=createCompositeNode(grammarAccess.getDelayExprAccess().getEventDelayEventParserRuleCall_0_0(), currentNode); 
                     	    
-                    pushFollow(FOLLOW_ruleDelayEvent_in_ruleDelayExpr16204);
+                    pushFollow(FOLLOW_ruleDelayEvent_in_ruleDelayExpr16197);
                     lv_event_0_0=ruleDelayEvent();
                     _fsp--;
 
@@ -20408,21 +20404,21 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9065:6: ( ( (lv_expr_1_0= ruleDataExpr ) ) ( (lv_event_2_0= ruleDelayEvent ) ) )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9060:6: ( ( (lv_expr_1_0= ruleDataExpr ) ) ( (lv_event_2_0= ruleDelayEvent ) ) )
                     {
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9065:6: ( ( (lv_expr_1_0= ruleDataExpr ) ) ( (lv_event_2_0= ruleDelayEvent ) ) )
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9065:7: ( (lv_expr_1_0= ruleDataExpr ) ) ( (lv_event_2_0= ruleDelayEvent ) )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9060:6: ( ( (lv_expr_1_0= ruleDataExpr ) ) ( (lv_event_2_0= ruleDelayEvent ) ) )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9060:7: ( (lv_expr_1_0= ruleDataExpr ) ) ( (lv_event_2_0= ruleDelayEvent ) )
                     {
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9065:7: ( (lv_expr_1_0= ruleDataExpr ) )
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9066:1: (lv_expr_1_0= ruleDataExpr )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9060:7: ( (lv_expr_1_0= ruleDataExpr ) )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9061:1: (lv_expr_1_0= ruleDataExpr )
                     {
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9066:1: (lv_expr_1_0= ruleDataExpr )
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9067:3: lv_expr_1_0= ruleDataExpr
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9061:1: (lv_expr_1_0= ruleDataExpr )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9062:3: lv_expr_1_0= ruleDataExpr
                     {
                      
                     	        currentNode=createCompositeNode(grammarAccess.getDelayExprAccess().getExprDataExprParserRuleCall_1_0_0(), currentNode); 
                     	    
-                    pushFollow(FOLLOW_ruleDataExpr_in_ruleDelayExpr16232);
+                    pushFollow(FOLLOW_ruleDataExpr_in_ruleDelayExpr16225);
                     lv_expr_1_0=ruleDataExpr();
                     _fsp--;
 
@@ -20449,16 +20445,16 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9089:2: ( (lv_event_2_0= ruleDelayEvent ) )
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9090:1: (lv_event_2_0= ruleDelayEvent )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9084:2: ( (lv_event_2_0= ruleDelayEvent ) )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9085:1: (lv_event_2_0= ruleDelayEvent )
                     {
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9090:1: (lv_event_2_0= ruleDelayEvent )
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9091:3: lv_event_2_0= ruleDelayEvent
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9085:1: (lv_event_2_0= ruleDelayEvent )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9086:3: lv_event_2_0= ruleDelayEvent
                     {
                      
                     	        currentNode=createCompositeNode(grammarAccess.getDelayExprAccess().getEventDelayEventParserRuleCall_1_1_0(), currentNode); 
                     	    
-                    pushFollow(FOLLOW_ruleDelayEvent_in_ruleDelayExpr16253);
+                    pushFollow(FOLLOW_ruleDelayEvent_in_ruleDelayExpr16246);
                     lv_event_2_0=ruleDelayEvent();
                     _fsp--;
 
@@ -20514,7 +20510,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start entryRuleDelayEvent
-    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9121:1: entryRuleDelayEvent returns [EObject current=null] : iv_ruleDelayEvent= ruleDelayEvent EOF ;
+    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9116:1: entryRuleDelayEvent returns [EObject current=null] : iv_ruleDelayEvent= ruleDelayEvent EOF ;
     public final EObject entryRuleDelayEvent() throws RecognitionException {
         EObject current = null;
 
@@ -20522,16 +20518,16 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9122:2: (iv_ruleDelayEvent= ruleDelayEvent EOF )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9123:2: iv_ruleDelayEvent= ruleDelayEvent EOF
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9117:2: (iv_ruleDelayEvent= ruleDelayEvent EOF )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9118:2: iv_ruleDelayEvent= ruleDelayEvent EOF
             {
              currentNode = createCompositeNode(grammarAccess.getDelayEventRule(), currentNode); 
-            pushFollow(FOLLOW_ruleDelayEvent_in_entryRuleDelayEvent16290);
+            pushFollow(FOLLOW_ruleDelayEvent_in_entryRuleDelayEvent16283);
             iv_ruleDelayEvent=ruleDelayEvent();
             _fsp--;
 
              current =iv_ruleDelayEvent; 
-            match(input,EOF,FOLLOW_EOF_in_entryRuleDelayEvent16300); 
+            match(input,EOF,FOLLOW_EOF_in_entryRuleDelayEvent16293); 
 
             }
 
@@ -20549,28 +20545,28 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start ruleDelayEvent
-    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9130:1: ruleDelayEvent returns [EObject current=null] : ( ( ( ( RULE_ESTERELID ) ) | ( (lv_tick_1_0= ruleTick ) ) ) | ( 'pre' '(' this_SigExpr_4= ruleSigExpr ')' ) | ( '[' this_SigExpr_7= ruleSigExpr ']' ) ) ;
+    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9125:1: ruleDelayEvent returns [EObject current=null] : ( ( ( ( RULE_ESTERELID ) ) | ( (lv_tick_1_0= ruleTick ) ) ) | ( 'pre' '(' ( (lv_preSigExpr_4_0= ruleSigExpr ) ) ')' ) | ( '[' ( (lv_blockSigExpr_7_0= ruleSigExpr ) ) ']' ) ) ;
     public final EObject ruleDelayEvent() throws RecognitionException {
         EObject current = null;
 
         AntlrDatatypeRuleToken lv_tick_1_0 = null;
 
-        EObject this_SigExpr_4 = null;
+        EObject lv_preSigExpr_4_0 = null;
 
-        EObject this_SigExpr_7 = null;
+        EObject lv_blockSigExpr_7_0 = null;
 
 
          @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9135:6: ( ( ( ( ( RULE_ESTERELID ) ) | ( (lv_tick_1_0= ruleTick ) ) ) | ( 'pre' '(' this_SigExpr_4= ruleSigExpr ')' ) | ( '[' this_SigExpr_7= ruleSigExpr ']' ) ) )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9136:1: ( ( ( ( RULE_ESTERELID ) ) | ( (lv_tick_1_0= ruleTick ) ) ) | ( 'pre' '(' this_SigExpr_4= ruleSigExpr ')' ) | ( '[' this_SigExpr_7= ruleSigExpr ']' ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9130:6: ( ( ( ( ( RULE_ESTERELID ) ) | ( (lv_tick_1_0= ruleTick ) ) ) | ( 'pre' '(' ( (lv_preSigExpr_4_0= ruleSigExpr ) ) ')' ) | ( '[' ( (lv_blockSigExpr_7_0= ruleSigExpr ) ) ']' ) ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9131:1: ( ( ( ( RULE_ESTERELID ) ) | ( (lv_tick_1_0= ruleTick ) ) ) | ( 'pre' '(' ( (lv_preSigExpr_4_0= ruleSigExpr ) ) ')' ) | ( '[' ( (lv_blockSigExpr_7_0= ruleSigExpr ) ) ']' ) )
             {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9136:1: ( ( ( ( RULE_ESTERELID ) ) | ( (lv_tick_1_0= ruleTick ) ) ) | ( 'pre' '(' this_SigExpr_4= ruleSigExpr ')' ) | ( '[' this_SigExpr_7= ruleSigExpr ']' ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9131:1: ( ( ( ( RULE_ESTERELID ) ) | ( (lv_tick_1_0= ruleTick ) ) ) | ( 'pre' '(' ( (lv_preSigExpr_4_0= ruleSigExpr ) ) ')' ) | ( '[' ( (lv_blockSigExpr_7_0= ruleSigExpr ) ) ']' ) )
             int alt116=3;
             switch ( input.LA(1) ) {
             case RULE_ESTERELID:
-            case 92:
+            case 94:
                 {
                 alt116=1;
                 }
@@ -20587,40 +20583,40 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
                 break;
             default:
                 NoViableAltException nvae =
-                    new NoViableAltException("9136:1: ( ( ( ( RULE_ESTERELID ) ) | ( (lv_tick_1_0= ruleTick ) ) ) | ( 'pre' '(' this_SigExpr_4= ruleSigExpr ')' ) | ( '[' this_SigExpr_7= ruleSigExpr ']' ) )", 116, 0, input);
+                    new NoViableAltException("9131:1: ( ( ( ( RULE_ESTERELID ) ) | ( (lv_tick_1_0= ruleTick ) ) ) | ( 'pre' '(' ( (lv_preSigExpr_4_0= ruleSigExpr ) ) ')' ) | ( '[' ( (lv_blockSigExpr_7_0= ruleSigExpr ) ) ']' ) )", 116, 0, input);
 
                 throw nvae;
             }
 
             switch (alt116) {
                 case 1 :
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9136:2: ( ( ( RULE_ESTERELID ) ) | ( (lv_tick_1_0= ruleTick ) ) )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9131:2: ( ( ( RULE_ESTERELID ) ) | ( (lv_tick_1_0= ruleTick ) ) )
                     {
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9136:2: ( ( ( RULE_ESTERELID ) ) | ( (lv_tick_1_0= ruleTick ) ) )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9131:2: ( ( ( RULE_ESTERELID ) ) | ( (lv_tick_1_0= ruleTick ) ) )
                     int alt115=2;
                     int LA115_0 = input.LA(1);
 
                     if ( (LA115_0==RULE_ESTERELID) ) {
                         alt115=1;
                     }
-                    else if ( (LA115_0==92) ) {
+                    else if ( (LA115_0==94) ) {
                         alt115=2;
                     }
                     else {
                         NoViableAltException nvae =
-                            new NoViableAltException("9136:2: ( ( ( RULE_ESTERELID ) ) | ( (lv_tick_1_0= ruleTick ) ) )", 115, 0, input);
+                            new NoViableAltException("9131:2: ( ( ( RULE_ESTERELID ) ) | ( (lv_tick_1_0= ruleTick ) ) )", 115, 0, input);
 
                         throw nvae;
                     }
                     switch (alt115) {
                         case 1 :
-                            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9136:3: ( ( RULE_ESTERELID ) )
+                            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9131:3: ( ( RULE_ESTERELID ) )
                             {
-                            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9136:3: ( ( RULE_ESTERELID ) )
-                            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9137:1: ( RULE_ESTERELID )
+                            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9131:3: ( ( RULE_ESTERELID ) )
+                            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9132:1: ( RULE_ESTERELID )
                             {
-                            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9137:1: ( RULE_ESTERELID )
-                            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9138:3: RULE_ESTERELID
+                            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9132:1: ( RULE_ESTERELID )
+                            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9133:3: RULE_ESTERELID
                             {
 
                             			if (current==null) {
@@ -20628,7 +20624,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
                             	            associateNodeWithAstElement(currentNode, current);
                             	        }
                                     
-                            match(input,RULE_ESTERELID,FOLLOW_RULE_ESTERELID_in_ruleDelayEvent16344); 
+                            match(input,RULE_ESTERELID,FOLLOW_RULE_ESTERELID_in_ruleDelayEvent16337); 
 
                             		createLeafNode(grammarAccess.getDelayEventAccess().getSignalSignalCrossReference_0_0_0(), "signal"); 
                             	
@@ -20642,18 +20638,18 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
                             }
                             break;
                         case 2 :
-                            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9151:6: ( (lv_tick_1_0= ruleTick ) )
+                            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9146:6: ( (lv_tick_1_0= ruleTick ) )
                             {
-                            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9151:6: ( (lv_tick_1_0= ruleTick ) )
-                            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9152:1: (lv_tick_1_0= ruleTick )
+                            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9146:6: ( (lv_tick_1_0= ruleTick ) )
+                            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9147:1: (lv_tick_1_0= ruleTick )
                             {
-                            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9152:1: (lv_tick_1_0= ruleTick )
-                            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9153:3: lv_tick_1_0= ruleTick
+                            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9147:1: (lv_tick_1_0= ruleTick )
+                            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9148:3: lv_tick_1_0= ruleTick
                             {
                              
                             	        currentNode=createCompositeNode(grammarAccess.getDelayEventAccess().getTickTickParserRuleCall_0_1_0(), currentNode); 
                             	    
-                            pushFollow(FOLLOW_ruleTick_in_ruleDelayEvent16371);
+                            pushFollow(FOLLOW_ruleTick_in_ruleDelayEvent16364);
                             lv_tick_1_0=ruleTick();
                             _fsp--;
 
@@ -20690,31 +20686,56 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9176:6: ( 'pre' '(' this_SigExpr_4= ruleSigExpr ')' )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9171:6: ( 'pre' '(' ( (lv_preSigExpr_4_0= ruleSigExpr ) ) ')' )
                     {
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9176:6: ( 'pre' '(' this_SigExpr_4= ruleSigExpr ')' )
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9176:8: 'pre' '(' this_SigExpr_4= ruleSigExpr ')'
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9171:6: ( 'pre' '(' ( (lv_preSigExpr_4_0= ruleSigExpr ) ) ')' )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9171:8: 'pre' '(' ( (lv_preSigExpr_4_0= ruleSigExpr ) ) ')'
                     {
-                    match(input,90,FOLLOW_90_in_ruleDelayEvent16389); 
+                    match(input,90,FOLLOW_90_in_ruleDelayEvent16382); 
 
                             createLeafNode(grammarAccess.getDelayEventAccess().getPreKeyword_1_0(), null); 
                         
-                    match(input,36,FOLLOW_36_in_ruleDelayEvent16399); 
+                    match(input,36,FOLLOW_36_in_ruleDelayEvent16392); 
 
                             createLeafNode(grammarAccess.getDelayEventAccess().getLeftParenthesisKeyword_1_1(), null); 
                         
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9179:1: ( (lv_preSigExpr_4_0= ruleSigExpr ) )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9180:1: (lv_preSigExpr_4_0= ruleSigExpr )
+                    {
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9180:1: (lv_preSigExpr_4_0= ruleSigExpr )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9181:3: lv_preSigExpr_4_0= ruleSigExpr
+                    {
                      
-                            currentNode=createCompositeNode(grammarAccess.getDelayEventAccess().getSigExprParserRuleCall_1_2(), currentNode); 
-                        
-                    pushFollow(FOLLOW_ruleSigExpr_in_ruleDelayEvent16421);
-                    this_SigExpr_4=ruleSigExpr();
+                    	        currentNode=createCompositeNode(grammarAccess.getDelayEventAccess().getPreSigExprSigExprParserRuleCall_1_2_0(), currentNode); 
+                    	    
+                    pushFollow(FOLLOW_ruleSigExpr_in_ruleDelayEvent16413);
+                    lv_preSigExpr_4_0=ruleSigExpr();
                     _fsp--;
 
-                     
-                            current = this_SigExpr_4; 
-                            currentNode = currentNode.getParent();
-                        
-                    match(input,37,FOLLOW_37_in_ruleDelayEvent16430); 
+
+                    	        if (current==null) {
+                    	            current = factory.create(grammarAccess.getDelayEventRule().getType().getClassifier());
+                    	            associateNodeWithAstElement(currentNode.getParent(), current);
+                    	        }
+                    	        try {
+                    	       		set(
+                    	       			current, 
+                    	       			"preSigExpr",
+                    	        		lv_preSigExpr_4_0, 
+                    	        		"SigExpr", 
+                    	        		currentNode);
+                    	        } catch (ValueConverterException vce) {
+                    				handleValueConverterException(vce);
+                    	        }
+                    	        currentNode = currentNode.getParent();
+                    	    
+
+                    }
+
+
+                    }
+
+                    match(input,37,FOLLOW_37_in_ruleDelayEvent16423); 
 
                             createLeafNode(grammarAccess.getDelayEventAccess().getRightParenthesisKeyword_1_3(), null); 
                         
@@ -20725,27 +20746,52 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 3 :
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9198:6: ( '[' this_SigExpr_7= ruleSigExpr ']' )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9208:6: ( '[' ( (lv_blockSigExpr_7_0= ruleSigExpr ) ) ']' )
                     {
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9198:6: ( '[' this_SigExpr_7= ruleSigExpr ']' )
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9198:8: '[' this_SigExpr_7= ruleSigExpr ']'
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9208:6: ( '[' ( (lv_blockSigExpr_7_0= ruleSigExpr ) ) ']' )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9208:8: '[' ( (lv_blockSigExpr_7_0= ruleSigExpr ) ) ']'
                     {
-                    match(input,40,FOLLOW_40_in_ruleDelayEvent16448); 
+                    match(input,40,FOLLOW_40_in_ruleDelayEvent16441); 
 
                             createLeafNode(grammarAccess.getDelayEventAccess().getLeftSquareBracketKeyword_2_0(), null); 
                         
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9212:1: ( (lv_blockSigExpr_7_0= ruleSigExpr ) )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9213:1: (lv_blockSigExpr_7_0= ruleSigExpr )
+                    {
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9213:1: (lv_blockSigExpr_7_0= ruleSigExpr )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9214:3: lv_blockSigExpr_7_0= ruleSigExpr
+                    {
                      
-                            currentNode=createCompositeNode(grammarAccess.getDelayEventAccess().getSigExprParserRuleCall_2_1(), currentNode); 
-                        
-                    pushFollow(FOLLOW_ruleSigExpr_in_ruleDelayEvent16470);
-                    this_SigExpr_7=ruleSigExpr();
+                    	        currentNode=createCompositeNode(grammarAccess.getDelayEventAccess().getBlockSigExprSigExprParserRuleCall_2_1_0(), currentNode); 
+                    	    
+                    pushFollow(FOLLOW_ruleSigExpr_in_ruleDelayEvent16462);
+                    lv_blockSigExpr_7_0=ruleSigExpr();
                     _fsp--;
 
-                     
-                            current = this_SigExpr_7; 
-                            currentNode = currentNode.getParent();
-                        
-                    match(input,41,FOLLOW_41_in_ruleDelayEvent16479); 
+
+                    	        if (current==null) {
+                    	            current = factory.create(grammarAccess.getDelayEventRule().getType().getClassifier());
+                    	            associateNodeWithAstElement(currentNode.getParent(), current);
+                    	        }
+                    	        try {
+                    	       		set(
+                    	       			current, 
+                    	       			"blockSigExpr",
+                    	        		lv_blockSigExpr_7_0, 
+                    	        		"SigExpr", 
+                    	        		currentNode);
+                    	        } catch (ValueConverterException vce) {
+                    				handleValueConverterException(vce);
+                    	        }
+                    	        currentNode = currentNode.getParent();
+                    	    
+
+                    }
+
+
+                    }
+
+                    match(input,41,FOLLOW_41_in_ruleDelayEvent16472); 
 
                             createLeafNode(grammarAccess.getDelayEventAccess().getRightSquareBracketKeyword_2_2(), null); 
                         
@@ -20778,7 +20824,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start entryRuleChannelDescription
-    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9223:1: entryRuleChannelDescription returns [EObject current=null] : iv_ruleChannelDescription= ruleChannelDescription EOF ;
+    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9248:1: entryRuleChannelDescription returns [EObject current=null] : iv_ruleChannelDescription= ruleChannelDescription EOF ;
     public final EObject entryRuleChannelDescription() throws RecognitionException {
         EObject current = null;
 
@@ -20786,16 +20832,16 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9224:2: (iv_ruleChannelDescription= ruleChannelDescription EOF )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9225:2: iv_ruleChannelDescription= ruleChannelDescription EOF
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9249:2: (iv_ruleChannelDescription= ruleChannelDescription EOF )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9250:2: iv_ruleChannelDescription= ruleChannelDescription EOF
             {
              currentNode = createCompositeNode(grammarAccess.getChannelDescriptionRule(), currentNode); 
-            pushFollow(FOLLOW_ruleChannelDescription_in_entryRuleChannelDescription16516);
+            pushFollow(FOLLOW_ruleChannelDescription_in_entryRuleChannelDescription16509);
             iv_ruleChannelDescription=ruleChannelDescription();
             _fsp--;
 
              current =iv_ruleChannelDescription; 
-            match(input,EOF,FOLLOW_EOF_in_entryRuleChannelDescription16526); 
+            match(input,EOF,FOLLOW_EOF_in_entryRuleChannelDescription16519); 
 
             }
 
@@ -20813,156 +20859,94 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start ruleChannelDescription
-    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9232:1: ruleChannelDescription returns [EObject current=null] : ( ( ':' ( ( (lv_type_1_0= RULE_ESTERELID ) ) | ( (lv_type_2_0= RULE_BASETYPE ) ) ) ) | ( '(' ( ( (lv_type_4_0= RULE_ESTERELID ) ) | ( (lv_type_5_0= RULE_BASETYPE ) ) ) ')' ) | ( ':=' ( (lv_dataExpr_8_0= ruleDataExpr ) ) ':' ( ( (lv_type_10_0= RULE_ESTERELID ) ) | ( (lv_type_11_0= RULE_BASETYPE ) ) ) ) ) ;
+    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9257:1: ruleChannelDescription returns [EObject current=null] : ( ( ':' ( (lv_type_1_0= ruleChannelType ) ) ) | ( '(' ( (lv_type_3_0= ruleChannelType ) ) ')' ) | ( ':=' ( (lv_dataExpr_6_0= ruleDataExpr ) ) ':' ( (lv_type_8_0= ruleChannelType ) ) ) ) ;
     public final EObject ruleChannelDescription() throws RecognitionException {
         EObject current = null;
 
-        Token lv_type_1_0=null;
-        Token lv_type_2_0=null;
-        Token lv_type_4_0=null;
-        Token lv_type_5_0=null;
-        Token lv_type_10_0=null;
-        Token lv_type_11_0=null;
-        EObject lv_dataExpr_8_0 = null;
+        EObject lv_type_1_0 = null;
+
+        EObject lv_type_3_0 = null;
+
+        EObject lv_dataExpr_6_0 = null;
+
+        EObject lv_type_8_0 = null;
 
 
          @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9237:6: ( ( ( ':' ( ( (lv_type_1_0= RULE_ESTERELID ) ) | ( (lv_type_2_0= RULE_BASETYPE ) ) ) ) | ( '(' ( ( (lv_type_4_0= RULE_ESTERELID ) ) | ( (lv_type_5_0= RULE_BASETYPE ) ) ) ')' ) | ( ':=' ( (lv_dataExpr_8_0= ruleDataExpr ) ) ':' ( ( (lv_type_10_0= RULE_ESTERELID ) ) | ( (lv_type_11_0= RULE_BASETYPE ) ) ) ) ) )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9238:1: ( ( ':' ( ( (lv_type_1_0= RULE_ESTERELID ) ) | ( (lv_type_2_0= RULE_BASETYPE ) ) ) ) | ( '(' ( ( (lv_type_4_0= RULE_ESTERELID ) ) | ( (lv_type_5_0= RULE_BASETYPE ) ) ) ')' ) | ( ':=' ( (lv_dataExpr_8_0= ruleDataExpr ) ) ':' ( ( (lv_type_10_0= RULE_ESTERELID ) ) | ( (lv_type_11_0= RULE_BASETYPE ) ) ) ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9262:6: ( ( ( ':' ( (lv_type_1_0= ruleChannelType ) ) ) | ( '(' ( (lv_type_3_0= ruleChannelType ) ) ')' ) | ( ':=' ( (lv_dataExpr_6_0= ruleDataExpr ) ) ':' ( (lv_type_8_0= ruleChannelType ) ) ) ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9263:1: ( ( ':' ( (lv_type_1_0= ruleChannelType ) ) ) | ( '(' ( (lv_type_3_0= ruleChannelType ) ) ')' ) | ( ':=' ( (lv_dataExpr_6_0= ruleDataExpr ) ) ':' ( (lv_type_8_0= ruleChannelType ) ) ) )
             {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9238:1: ( ( ':' ( ( (lv_type_1_0= RULE_ESTERELID ) ) | ( (lv_type_2_0= RULE_BASETYPE ) ) ) ) | ( '(' ( ( (lv_type_4_0= RULE_ESTERELID ) ) | ( (lv_type_5_0= RULE_BASETYPE ) ) ) ')' ) | ( ':=' ( (lv_dataExpr_8_0= ruleDataExpr ) ) ':' ( ( (lv_type_10_0= RULE_ESTERELID ) ) | ( (lv_type_11_0= RULE_BASETYPE ) ) ) ) )
-            int alt120=3;
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9263:1: ( ( ':' ( (lv_type_1_0= ruleChannelType ) ) ) | ( '(' ( (lv_type_3_0= ruleChannelType ) ) ')' ) | ( ':=' ( (lv_dataExpr_6_0= ruleDataExpr ) ) ':' ( (lv_type_8_0= ruleChannelType ) ) ) )
+            int alt117=3;
             switch ( input.LA(1) ) {
             case 18:
                 {
-                alt120=1;
+                alt117=1;
                 }
                 break;
             case 36:
                 {
-                alt120=2;
+                alt117=2;
                 }
                 break;
             case 42:
                 {
-                alt120=3;
+                alt117=3;
                 }
                 break;
             default:
                 NoViableAltException nvae =
-                    new NoViableAltException("9238:1: ( ( ':' ( ( (lv_type_1_0= RULE_ESTERELID ) ) | ( (lv_type_2_0= RULE_BASETYPE ) ) ) ) | ( '(' ( ( (lv_type_4_0= RULE_ESTERELID ) ) | ( (lv_type_5_0= RULE_BASETYPE ) ) ) ')' ) | ( ':=' ( (lv_dataExpr_8_0= ruleDataExpr ) ) ':' ( ( (lv_type_10_0= RULE_ESTERELID ) ) | ( (lv_type_11_0= RULE_BASETYPE ) ) ) ) )", 120, 0, input);
+                    new NoViableAltException("9263:1: ( ( ':' ( (lv_type_1_0= ruleChannelType ) ) ) | ( '(' ( (lv_type_3_0= ruleChannelType ) ) ')' ) | ( ':=' ( (lv_dataExpr_6_0= ruleDataExpr ) ) ':' ( (lv_type_8_0= ruleChannelType ) ) ) )", 117, 0, input);
 
                 throw nvae;
             }
 
-            switch (alt120) {
+            switch (alt117) {
                 case 1 :
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9238:2: ( ':' ( ( (lv_type_1_0= RULE_ESTERELID ) ) | ( (lv_type_2_0= RULE_BASETYPE ) ) ) )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9263:2: ( ':' ( (lv_type_1_0= ruleChannelType ) ) )
                     {
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9238:2: ( ':' ( ( (lv_type_1_0= RULE_ESTERELID ) ) | ( (lv_type_2_0= RULE_BASETYPE ) ) ) )
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9238:4: ':' ( ( (lv_type_1_0= RULE_ESTERELID ) ) | ( (lv_type_2_0= RULE_BASETYPE ) ) )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9263:2: ( ':' ( (lv_type_1_0= ruleChannelType ) ) )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9263:4: ':' ( (lv_type_1_0= ruleChannelType ) )
                     {
-                    match(input,18,FOLLOW_18_in_ruleChannelDescription16562); 
+                    match(input,18,FOLLOW_18_in_ruleChannelDescription16555); 
 
                             createLeafNode(grammarAccess.getChannelDescriptionAccess().getColonKeyword_0_0(), null); 
                         
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9242:1: ( ( (lv_type_1_0= RULE_ESTERELID ) ) | ( (lv_type_2_0= RULE_BASETYPE ) ) )
-                    int alt117=2;
-                    int LA117_0 = input.LA(1);
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9267:1: ( (lv_type_1_0= ruleChannelType ) )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9268:1: (lv_type_1_0= ruleChannelType )
+                    {
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9268:1: (lv_type_1_0= ruleChannelType )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9269:3: lv_type_1_0= ruleChannelType
+                    {
+                     
+                    	        currentNode=createCompositeNode(grammarAccess.getChannelDescriptionAccess().getTypeChannelTypeParserRuleCall_0_1_0(), currentNode); 
+                    	    
+                    pushFollow(FOLLOW_ruleChannelType_in_ruleChannelDescription16576);
+                    lv_type_1_0=ruleChannelType();
+                    _fsp--;
 
-                    if ( (LA117_0==RULE_ESTERELID) ) {
-                        alt117=1;
+
+                    	        if (current==null) {
+                    	            current = factory.create(grammarAccess.getChannelDescriptionRule().getType().getClassifier());
+                    	            associateNodeWithAstElement(currentNode.getParent(), current);
+                    	        }
+                    	        try {
+                    	       		set(
+                    	       			current, 
+                    	       			"type",
+                    	        		lv_type_1_0, 
+                    	        		"ChannelType", 
+                    	        		currentNode);
+                    	        } catch (ValueConverterException vce) {
+                    				handleValueConverterException(vce);
+                    	        }
+                    	        currentNode = currentNode.getParent();
+                    	    
+
                     }
-                    else if ( (LA117_0==RULE_BASETYPE) ) {
-                        alt117=2;
-                    }
-                    else {
-                        NoViableAltException nvae =
-                            new NoViableAltException("9242:1: ( ( (lv_type_1_0= RULE_ESTERELID ) ) | ( (lv_type_2_0= RULE_BASETYPE ) ) )", 117, 0, input);
 
-                        throw nvae;
-                    }
-                    switch (alt117) {
-                        case 1 :
-                            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9242:2: ( (lv_type_1_0= RULE_ESTERELID ) )
-                            {
-                            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9242:2: ( (lv_type_1_0= RULE_ESTERELID ) )
-                            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9243:1: (lv_type_1_0= RULE_ESTERELID )
-                            {
-                            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9243:1: (lv_type_1_0= RULE_ESTERELID )
-                            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9244:3: lv_type_1_0= RULE_ESTERELID
-                            {
-                            lv_type_1_0=(Token)input.LT(1);
-                            match(input,RULE_ESTERELID,FOLLOW_RULE_ESTERELID_in_ruleChannelDescription16580); 
-
-                            			createLeafNode(grammarAccess.getChannelDescriptionAccess().getTypeEsterelIDTerminalRuleCall_0_1_0_0(), "type"); 
-                            		
-
-                            	        if (current==null) {
-                            	            current = factory.create(grammarAccess.getChannelDescriptionRule().getType().getClassifier());
-                            	            associateNodeWithAstElement(currentNode, current);
-                            	        }
-                            	        try {
-                            	       		set(
-                            	       			current, 
-                            	       			"type",
-                            	        		lv_type_1_0, 
-                            	        		"EsterelID", 
-                            	        		lastConsumedNode);
-                            	        } catch (ValueConverterException vce) {
-                            				handleValueConverterException(vce);
-                            	        }
-                            	    
-
-                            }
-
-
-                            }
-
-
-                            }
-                            break;
-                        case 2 :
-                            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9267:6: ( (lv_type_2_0= RULE_BASETYPE ) )
-                            {
-                            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9267:6: ( (lv_type_2_0= RULE_BASETYPE ) )
-                            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9268:1: (lv_type_2_0= RULE_BASETYPE )
-                            {
-                            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9268:1: (lv_type_2_0= RULE_BASETYPE )
-                            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9269:3: lv_type_2_0= RULE_BASETYPE
-                            {
-                            lv_type_2_0=(Token)input.LT(1);
-                            match(input,RULE_BASETYPE,FOLLOW_RULE_BASETYPE_in_ruleChannelDescription16608); 
-
-                            			createLeafNode(grammarAccess.getChannelDescriptionAccess().getTypeBaseTypeTerminalRuleCall_0_1_1_0(), "type"); 
-                            		
-
-                            	        if (current==null) {
-                            	            current = factory.create(grammarAccess.getChannelDescriptionRule().getType().getClassifier());
-                            	            associateNodeWithAstElement(currentNode, current);
-                            	        }
-                            	        try {
-                            	       		set(
-                            	       			current, 
-                            	       			"type",
-                            	        		lv_type_2_0, 
-                            	        		"BaseType", 
-                            	        		lastConsumedNode);
-                            	        } catch (ValueConverterException vce) {
-                            				handleValueConverterException(vce);
-                            	        }
-                            	    
-
-                            }
-
-
-                            }
-
-
-                            }
-                            break;
 
                     }
 
@@ -20973,114 +20957,52 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9292:6: ( '(' ( ( (lv_type_4_0= RULE_ESTERELID ) ) | ( (lv_type_5_0= RULE_BASETYPE ) ) ) ')' )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9292:6: ( '(' ( (lv_type_3_0= ruleChannelType ) ) ')' )
                     {
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9292:6: ( '(' ( ( (lv_type_4_0= RULE_ESTERELID ) ) | ( (lv_type_5_0= RULE_BASETYPE ) ) ) ')' )
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9292:8: '(' ( ( (lv_type_4_0= RULE_ESTERELID ) ) | ( (lv_type_5_0= RULE_BASETYPE ) ) ) ')'
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9292:6: ( '(' ( (lv_type_3_0= ruleChannelType ) ) ')' )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9292:8: '(' ( (lv_type_3_0= ruleChannelType ) ) ')'
                     {
-                    match(input,36,FOLLOW_36_in_ruleChannelDescription16632); 
+                    match(input,36,FOLLOW_36_in_ruleChannelDescription16594); 
 
                             createLeafNode(grammarAccess.getChannelDescriptionAccess().getLeftParenthesisKeyword_1_0(), null); 
                         
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9296:1: ( ( (lv_type_4_0= RULE_ESTERELID ) ) | ( (lv_type_5_0= RULE_BASETYPE ) ) )
-                    int alt118=2;
-                    int LA118_0 = input.LA(1);
-
-                    if ( (LA118_0==RULE_ESTERELID) ) {
-                        alt118=1;
-                    }
-                    else if ( (LA118_0==RULE_BASETYPE) ) {
-                        alt118=2;
-                    }
-                    else {
-                        NoViableAltException nvae =
-                            new NoViableAltException("9296:1: ( ( (lv_type_4_0= RULE_ESTERELID ) ) | ( (lv_type_5_0= RULE_BASETYPE ) ) )", 118, 0, input);
-
-                        throw nvae;
-                    }
-                    switch (alt118) {
-                        case 1 :
-                            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9296:2: ( (lv_type_4_0= RULE_ESTERELID ) )
-                            {
-                            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9296:2: ( (lv_type_4_0= RULE_ESTERELID ) )
-                            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9297:1: (lv_type_4_0= RULE_ESTERELID )
-                            {
-                            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9297:1: (lv_type_4_0= RULE_ESTERELID )
-                            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9298:3: lv_type_4_0= RULE_ESTERELID
-                            {
-                            lv_type_4_0=(Token)input.LT(1);
-                            match(input,RULE_ESTERELID,FOLLOW_RULE_ESTERELID_in_ruleChannelDescription16650); 
-
-                            			createLeafNode(grammarAccess.getChannelDescriptionAccess().getTypeEsterelIDTerminalRuleCall_1_1_0_0(), "type"); 
-                            		
-
-                            	        if (current==null) {
-                            	            current = factory.create(grammarAccess.getChannelDescriptionRule().getType().getClassifier());
-                            	            associateNodeWithAstElement(currentNode, current);
-                            	        }
-                            	        try {
-                            	       		set(
-                            	       			current, 
-                            	       			"type",
-                            	        		lv_type_4_0, 
-                            	        		"EsterelID", 
-                            	        		lastConsumedNode);
-                            	        } catch (ValueConverterException vce) {
-                            				handleValueConverterException(vce);
-                            	        }
-                            	    
-
-                            }
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9296:1: ( (lv_type_3_0= ruleChannelType ) )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9297:1: (lv_type_3_0= ruleChannelType )
+                    {
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9297:1: (lv_type_3_0= ruleChannelType )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9298:3: lv_type_3_0= ruleChannelType
+                    {
+                     
+                    	        currentNode=createCompositeNode(grammarAccess.getChannelDescriptionAccess().getTypeChannelTypeParserRuleCall_1_1_0(), currentNode); 
+                    	    
+                    pushFollow(FOLLOW_ruleChannelType_in_ruleChannelDescription16615);
+                    lv_type_3_0=ruleChannelType();
+                    _fsp--;
 
 
-                            }
-
-
-                            }
-                            break;
-                        case 2 :
-                            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9321:6: ( (lv_type_5_0= RULE_BASETYPE ) )
-                            {
-                            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9321:6: ( (lv_type_5_0= RULE_BASETYPE ) )
-                            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9322:1: (lv_type_5_0= RULE_BASETYPE )
-                            {
-                            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9322:1: (lv_type_5_0= RULE_BASETYPE )
-                            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9323:3: lv_type_5_0= RULE_BASETYPE
-                            {
-                            lv_type_5_0=(Token)input.LT(1);
-                            match(input,RULE_BASETYPE,FOLLOW_RULE_BASETYPE_in_ruleChannelDescription16678); 
-
-                            			createLeafNode(grammarAccess.getChannelDescriptionAccess().getTypeBaseTypeTerminalRuleCall_1_1_1_0(), "type"); 
-                            		
-
-                            	        if (current==null) {
-                            	            current = factory.create(grammarAccess.getChannelDescriptionRule().getType().getClassifier());
-                            	            associateNodeWithAstElement(currentNode, current);
-                            	        }
-                            	        try {
-                            	       		set(
-                            	       			current, 
-                            	       			"type",
-                            	        		lv_type_5_0, 
-                            	        		"BaseType", 
-                            	        		lastConsumedNode);
-                            	        } catch (ValueConverterException vce) {
-                            				handleValueConverterException(vce);
-                            	        }
-                            	    
-
-                            }
-
-
-                            }
-
-
-                            }
-                            break;
+                    	        if (current==null) {
+                    	            current = factory.create(grammarAccess.getChannelDescriptionRule().getType().getClassifier());
+                    	            associateNodeWithAstElement(currentNode.getParent(), current);
+                    	        }
+                    	        try {
+                    	       		set(
+                    	       			current, 
+                    	       			"type",
+                    	        		lv_type_3_0, 
+                    	        		"ChannelType", 
+                    	        		currentNode);
+                    	        } catch (ValueConverterException vce) {
+                    				handleValueConverterException(vce);
+                    	        }
+                    	        currentNode = currentNode.getParent();
+                    	    
 
                     }
 
-                    match(input,37,FOLLOW_37_in_ruleChannelDescription16694); 
+
+                    }
+
+                    match(input,37,FOLLOW_37_in_ruleChannelDescription16625); 
 
                             createLeafNode(grammarAccess.getChannelDescriptionAccess().getRightParenthesisKeyword_1_2(), null); 
                         
@@ -21091,26 +21013,26 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 3 :
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9350:6: ( ':=' ( (lv_dataExpr_8_0= ruleDataExpr ) ) ':' ( ( (lv_type_10_0= RULE_ESTERELID ) ) | ( (lv_type_11_0= RULE_BASETYPE ) ) ) )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9325:6: ( ':=' ( (lv_dataExpr_6_0= ruleDataExpr ) ) ':' ( (lv_type_8_0= ruleChannelType ) ) )
                     {
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9350:6: ( ':=' ( (lv_dataExpr_8_0= ruleDataExpr ) ) ':' ( ( (lv_type_10_0= RULE_ESTERELID ) ) | ( (lv_type_11_0= RULE_BASETYPE ) ) ) )
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9350:8: ':=' ( (lv_dataExpr_8_0= ruleDataExpr ) ) ':' ( ( (lv_type_10_0= RULE_ESTERELID ) ) | ( (lv_type_11_0= RULE_BASETYPE ) ) )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9325:6: ( ':=' ( (lv_dataExpr_6_0= ruleDataExpr ) ) ':' ( (lv_type_8_0= ruleChannelType ) ) )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9325:8: ':=' ( (lv_dataExpr_6_0= ruleDataExpr ) ) ':' ( (lv_type_8_0= ruleChannelType ) )
                     {
-                    match(input,42,FOLLOW_42_in_ruleChannelDescription16712); 
+                    match(input,42,FOLLOW_42_in_ruleChannelDescription16643); 
 
                             createLeafNode(grammarAccess.getChannelDescriptionAccess().getColonEqualsSignKeyword_2_0(), null); 
                         
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9354:1: ( (lv_dataExpr_8_0= ruleDataExpr ) )
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9355:1: (lv_dataExpr_8_0= ruleDataExpr )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9329:1: ( (lv_dataExpr_6_0= ruleDataExpr ) )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9330:1: (lv_dataExpr_6_0= ruleDataExpr )
                     {
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9355:1: (lv_dataExpr_8_0= ruleDataExpr )
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9356:3: lv_dataExpr_8_0= ruleDataExpr
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9330:1: (lv_dataExpr_6_0= ruleDataExpr )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9331:3: lv_dataExpr_6_0= ruleDataExpr
                     {
                      
                     	        currentNode=createCompositeNode(grammarAccess.getChannelDescriptionAccess().getDataExprDataExprParserRuleCall_2_1_0(), currentNode); 
                     	    
-                    pushFollow(FOLLOW_ruleDataExpr_in_ruleChannelDescription16733);
-                    lv_dataExpr_8_0=ruleDataExpr();
+                    pushFollow(FOLLOW_ruleDataExpr_in_ruleChannelDescription16664);
+                    lv_dataExpr_6_0=ruleDataExpr();
                     _fsp--;
 
 
@@ -21122,7 +21044,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
                     	       		set(
                     	       			current, 
                     	       			"dataExpr",
-                    	        		lv_dataExpr_8_0, 
+                    	        		lv_dataExpr_6_0, 
                     	        		"DataExpr", 
                     	        		currentNode);
                     	        } catch (ValueConverterException vce) {
@@ -21136,105 +21058,43 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    match(input,18,FOLLOW_18_in_ruleChannelDescription16743); 
+                    match(input,18,FOLLOW_18_in_ruleChannelDescription16674); 
 
                             createLeafNode(grammarAccess.getChannelDescriptionAccess().getColonKeyword_2_2(), null); 
                         
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9382:1: ( ( (lv_type_10_0= RULE_ESTERELID ) ) | ( (lv_type_11_0= RULE_BASETYPE ) ) )
-                    int alt119=2;
-                    int LA119_0 = input.LA(1);
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9357:1: ( (lv_type_8_0= ruleChannelType ) )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9358:1: (lv_type_8_0= ruleChannelType )
+                    {
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9358:1: (lv_type_8_0= ruleChannelType )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9359:3: lv_type_8_0= ruleChannelType
+                    {
+                     
+                    	        currentNode=createCompositeNode(grammarAccess.getChannelDescriptionAccess().getTypeChannelTypeParserRuleCall_2_3_0(), currentNode); 
+                    	    
+                    pushFollow(FOLLOW_ruleChannelType_in_ruleChannelDescription16695);
+                    lv_type_8_0=ruleChannelType();
+                    _fsp--;
 
-                    if ( (LA119_0==RULE_ESTERELID) ) {
-                        alt119=1;
+
+                    	        if (current==null) {
+                    	            current = factory.create(grammarAccess.getChannelDescriptionRule().getType().getClassifier());
+                    	            associateNodeWithAstElement(currentNode.getParent(), current);
+                    	        }
+                    	        try {
+                    	       		set(
+                    	       			current, 
+                    	       			"type",
+                    	        		lv_type_8_0, 
+                    	        		"ChannelType", 
+                    	        		currentNode);
+                    	        } catch (ValueConverterException vce) {
+                    				handleValueConverterException(vce);
+                    	        }
+                    	        currentNode = currentNode.getParent();
+                    	    
+
                     }
-                    else if ( (LA119_0==RULE_BASETYPE) ) {
-                        alt119=2;
-                    }
-                    else {
-                        NoViableAltException nvae =
-                            new NoViableAltException("9382:1: ( ( (lv_type_10_0= RULE_ESTERELID ) ) | ( (lv_type_11_0= RULE_BASETYPE ) ) )", 119, 0, input);
 
-                        throw nvae;
-                    }
-                    switch (alt119) {
-                        case 1 :
-                            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9382:2: ( (lv_type_10_0= RULE_ESTERELID ) )
-                            {
-                            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9382:2: ( (lv_type_10_0= RULE_ESTERELID ) )
-                            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9383:1: (lv_type_10_0= RULE_ESTERELID )
-                            {
-                            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9383:1: (lv_type_10_0= RULE_ESTERELID )
-                            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9384:3: lv_type_10_0= RULE_ESTERELID
-                            {
-                            lv_type_10_0=(Token)input.LT(1);
-                            match(input,RULE_ESTERELID,FOLLOW_RULE_ESTERELID_in_ruleChannelDescription16761); 
-
-                            			createLeafNode(grammarAccess.getChannelDescriptionAccess().getTypeEsterelIDTerminalRuleCall_2_3_0_0(), "type"); 
-                            		
-
-                            	        if (current==null) {
-                            	            current = factory.create(grammarAccess.getChannelDescriptionRule().getType().getClassifier());
-                            	            associateNodeWithAstElement(currentNode, current);
-                            	        }
-                            	        try {
-                            	       		set(
-                            	       			current, 
-                            	       			"type",
-                            	        		lv_type_10_0, 
-                            	        		"EsterelID", 
-                            	        		lastConsumedNode);
-                            	        } catch (ValueConverterException vce) {
-                            				handleValueConverterException(vce);
-                            	        }
-                            	    
-
-                            }
-
-
-                            }
-
-
-                            }
-                            break;
-                        case 2 :
-                            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9407:6: ( (lv_type_11_0= RULE_BASETYPE ) )
-                            {
-                            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9407:6: ( (lv_type_11_0= RULE_BASETYPE ) )
-                            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9408:1: (lv_type_11_0= RULE_BASETYPE )
-                            {
-                            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9408:1: (lv_type_11_0= RULE_BASETYPE )
-                            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9409:3: lv_type_11_0= RULE_BASETYPE
-                            {
-                            lv_type_11_0=(Token)input.LT(1);
-                            match(input,RULE_BASETYPE,FOLLOW_RULE_BASETYPE_in_ruleChannelDescription16789); 
-
-                            			createLeafNode(grammarAccess.getChannelDescriptionAccess().getTypeBaseTypeTerminalRuleCall_2_3_1_0(), "type"); 
-                            		
-
-                            	        if (current==null) {
-                            	            current = factory.create(grammarAccess.getChannelDescriptionRule().getType().getClassifier());
-                            	            associateNodeWithAstElement(currentNode, current);
-                            	        }
-                            	        try {
-                            	       		set(
-                            	       			current, 
-                            	       			"type",
-                            	        		lv_type_11_0, 
-                            	        		"BaseType", 
-                            	        		lastConsumedNode);
-                            	        } catch (ValueConverterException vce) {
-                            				handleValueConverterException(vce);
-                            	        }
-                            	    
-
-                            }
-
-
-                            }
-
-
-                            }
-                            break;
 
                     }
 
@@ -21266,8 +21126,342 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
     // $ANTLR end ruleChannelDescription
 
 
+    // $ANTLR start entryRuleChannelType
+    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9389:1: entryRuleChannelType returns [EObject current=null] : iv_ruleChannelType= ruleChannelType EOF ;
+    public final EObject entryRuleChannelType() throws RecognitionException {
+        EObject current = null;
+
+        EObject iv_ruleChannelType = null;
+
+
+        try {
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9390:2: (iv_ruleChannelType= ruleChannelType EOF )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9391:2: iv_ruleChannelType= ruleChannelType EOF
+            {
+             currentNode = createCompositeNode(grammarAccess.getChannelTypeRule(), currentNode); 
+            pushFollow(FOLLOW_ruleChannelType_in_entryRuleChannelType16732);
+            iv_ruleChannelType=ruleChannelType();
+            _fsp--;
+
+             current =iv_ruleChannelType; 
+            match(input,EOF,FOLLOW_EOF_in_entryRuleChannelType16742); 
+
+            }
+
+        }
+         
+            catch (RecognitionException re) { 
+                recover(input,re); 
+                appendSkippedTokens();
+            } 
+        finally {
+        }
+        return current;
+    }
+    // $ANTLR end entryRuleChannelType
+
+
+    // $ANTLR start ruleChannelType
+    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9398:1: ruleChannelType returns [EObject current=null] : ( ( ( (lv_type_0_0= RULE_ESTERELID ) ) | ( (lv_type_1_0= RULE_BASETYPE ) ) ) | ( 'combine' ( ( (lv_type_3_0= RULE_ESTERELID ) ) | ( (lv_type_4_0= RULE_BASETYPE ) ) ) 'with' ( ( RULE_ESTERELID ) ) ) ) ;
+    public final EObject ruleChannelType() throws RecognitionException {
+        EObject current = null;
+
+        Token lv_type_0_0=null;
+        Token lv_type_1_0=null;
+        Token lv_type_3_0=null;
+        Token lv_type_4_0=null;
+
+         @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
+            
+        try {
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9403:6: ( ( ( ( (lv_type_0_0= RULE_ESTERELID ) ) | ( (lv_type_1_0= RULE_BASETYPE ) ) ) | ( 'combine' ( ( (lv_type_3_0= RULE_ESTERELID ) ) | ( (lv_type_4_0= RULE_BASETYPE ) ) ) 'with' ( ( RULE_ESTERELID ) ) ) ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9404:1: ( ( ( (lv_type_0_0= RULE_ESTERELID ) ) | ( (lv_type_1_0= RULE_BASETYPE ) ) ) | ( 'combine' ( ( (lv_type_3_0= RULE_ESTERELID ) ) | ( (lv_type_4_0= RULE_BASETYPE ) ) ) 'with' ( ( RULE_ESTERELID ) ) ) )
+            {
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9404:1: ( ( ( (lv_type_0_0= RULE_ESTERELID ) ) | ( (lv_type_1_0= RULE_BASETYPE ) ) ) | ( 'combine' ( ( (lv_type_3_0= RULE_ESTERELID ) ) | ( (lv_type_4_0= RULE_BASETYPE ) ) ) 'with' ( ( RULE_ESTERELID ) ) ) )
+            int alt120=2;
+            int LA120_0 = input.LA(1);
+
+            if ( ((LA120_0>=RULE_ESTERELID && LA120_0<=RULE_BASETYPE)) ) {
+                alt120=1;
+            }
+            else if ( (LA120_0==92) ) {
+                alt120=2;
+            }
+            else {
+                NoViableAltException nvae =
+                    new NoViableAltException("9404:1: ( ( ( (lv_type_0_0= RULE_ESTERELID ) ) | ( (lv_type_1_0= RULE_BASETYPE ) ) ) | ( 'combine' ( ( (lv_type_3_0= RULE_ESTERELID ) ) | ( (lv_type_4_0= RULE_BASETYPE ) ) ) 'with' ( ( RULE_ESTERELID ) ) ) )", 120, 0, input);
+
+                throw nvae;
+            }
+            switch (alt120) {
+                case 1 :
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9404:2: ( ( (lv_type_0_0= RULE_ESTERELID ) ) | ( (lv_type_1_0= RULE_BASETYPE ) ) )
+                    {
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9404:2: ( ( (lv_type_0_0= RULE_ESTERELID ) ) | ( (lv_type_1_0= RULE_BASETYPE ) ) )
+                    int alt118=2;
+                    int LA118_0 = input.LA(1);
+
+                    if ( (LA118_0==RULE_ESTERELID) ) {
+                        alt118=1;
+                    }
+                    else if ( (LA118_0==RULE_BASETYPE) ) {
+                        alt118=2;
+                    }
+                    else {
+                        NoViableAltException nvae =
+                            new NoViableAltException("9404:2: ( ( (lv_type_0_0= RULE_ESTERELID ) ) | ( (lv_type_1_0= RULE_BASETYPE ) ) )", 118, 0, input);
+
+                        throw nvae;
+                    }
+                    switch (alt118) {
+                        case 1 :
+                            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9404:3: ( (lv_type_0_0= RULE_ESTERELID ) )
+                            {
+                            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9404:3: ( (lv_type_0_0= RULE_ESTERELID ) )
+                            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9405:1: (lv_type_0_0= RULE_ESTERELID )
+                            {
+                            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9405:1: (lv_type_0_0= RULE_ESTERELID )
+                            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9406:3: lv_type_0_0= RULE_ESTERELID
+                            {
+                            lv_type_0_0=(Token)input.LT(1);
+                            match(input,RULE_ESTERELID,FOLLOW_RULE_ESTERELID_in_ruleChannelType16785); 
+
+                            			createLeafNode(grammarAccess.getChannelTypeAccess().getTypeEsterelIDTerminalRuleCall_0_0_0(), "type"); 
+                            		
+
+                            	        if (current==null) {
+                            	            current = factory.create(grammarAccess.getChannelTypeRule().getType().getClassifier());
+                            	            associateNodeWithAstElement(currentNode, current);
+                            	        }
+                            	        try {
+                            	       		set(
+                            	       			current, 
+                            	       			"type",
+                            	        		lv_type_0_0, 
+                            	        		"EsterelID", 
+                            	        		lastConsumedNode);
+                            	        } catch (ValueConverterException vce) {
+                            				handleValueConverterException(vce);
+                            	        }
+                            	    
+
+                            }
+
+
+                            }
+
+
+                            }
+                            break;
+                        case 2 :
+                            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9429:6: ( (lv_type_1_0= RULE_BASETYPE ) )
+                            {
+                            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9429:6: ( (lv_type_1_0= RULE_BASETYPE ) )
+                            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9430:1: (lv_type_1_0= RULE_BASETYPE )
+                            {
+                            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9430:1: (lv_type_1_0= RULE_BASETYPE )
+                            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9431:3: lv_type_1_0= RULE_BASETYPE
+                            {
+                            lv_type_1_0=(Token)input.LT(1);
+                            match(input,RULE_BASETYPE,FOLLOW_RULE_BASETYPE_in_ruleChannelType16813); 
+
+                            			createLeafNode(grammarAccess.getChannelTypeAccess().getTypeBaseTypeTerminalRuleCall_0_1_0(), "type"); 
+                            		
+
+                            	        if (current==null) {
+                            	            current = factory.create(grammarAccess.getChannelTypeRule().getType().getClassifier());
+                            	            associateNodeWithAstElement(currentNode, current);
+                            	        }
+                            	        try {
+                            	       		set(
+                            	       			current, 
+                            	       			"type",
+                            	        		lv_type_1_0, 
+                            	        		"BaseType", 
+                            	        		lastConsumedNode);
+                            	        } catch (ValueConverterException vce) {
+                            				handleValueConverterException(vce);
+                            	        }
+                            	    
+
+                            }
+
+
+                            }
+
+
+                            }
+                            break;
+
+                    }
+
+
+                    }
+                    break;
+                case 2 :
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9454:6: ( 'combine' ( ( (lv_type_3_0= RULE_ESTERELID ) ) | ( (lv_type_4_0= RULE_BASETYPE ) ) ) 'with' ( ( RULE_ESTERELID ) ) )
+                    {
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9454:6: ( 'combine' ( ( (lv_type_3_0= RULE_ESTERELID ) ) | ( (lv_type_4_0= RULE_BASETYPE ) ) ) 'with' ( ( RULE_ESTERELID ) ) )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9454:8: 'combine' ( ( (lv_type_3_0= RULE_ESTERELID ) ) | ( (lv_type_4_0= RULE_BASETYPE ) ) ) 'with' ( ( RULE_ESTERELID ) )
+                    {
+                    match(input,92,FOLLOW_92_in_ruleChannelType16836); 
+
+                            createLeafNode(grammarAccess.getChannelTypeAccess().getCombineKeyword_1_0(), null); 
+                        
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9458:1: ( ( (lv_type_3_0= RULE_ESTERELID ) ) | ( (lv_type_4_0= RULE_BASETYPE ) ) )
+                    int alt119=2;
+                    int LA119_0 = input.LA(1);
+
+                    if ( (LA119_0==RULE_ESTERELID) ) {
+                        alt119=1;
+                    }
+                    else if ( (LA119_0==RULE_BASETYPE) ) {
+                        alt119=2;
+                    }
+                    else {
+                        NoViableAltException nvae =
+                            new NoViableAltException("9458:1: ( ( (lv_type_3_0= RULE_ESTERELID ) ) | ( (lv_type_4_0= RULE_BASETYPE ) ) )", 119, 0, input);
+
+                        throw nvae;
+                    }
+                    switch (alt119) {
+                        case 1 :
+                            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9458:2: ( (lv_type_3_0= RULE_ESTERELID ) )
+                            {
+                            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9458:2: ( (lv_type_3_0= RULE_ESTERELID ) )
+                            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9459:1: (lv_type_3_0= RULE_ESTERELID )
+                            {
+                            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9459:1: (lv_type_3_0= RULE_ESTERELID )
+                            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9460:3: lv_type_3_0= RULE_ESTERELID
+                            {
+                            lv_type_3_0=(Token)input.LT(1);
+                            match(input,RULE_ESTERELID,FOLLOW_RULE_ESTERELID_in_ruleChannelType16854); 
+
+                            			createLeafNode(grammarAccess.getChannelTypeAccess().getTypeEsterelIDTerminalRuleCall_1_1_0_0(), "type"); 
+                            		
+
+                            	        if (current==null) {
+                            	            current = factory.create(grammarAccess.getChannelTypeRule().getType().getClassifier());
+                            	            associateNodeWithAstElement(currentNode, current);
+                            	        }
+                            	        try {
+                            	       		set(
+                            	       			current, 
+                            	       			"type",
+                            	        		lv_type_3_0, 
+                            	        		"EsterelID", 
+                            	        		lastConsumedNode);
+                            	        } catch (ValueConverterException vce) {
+                            				handleValueConverterException(vce);
+                            	        }
+                            	    
+
+                            }
+
+
+                            }
+
+
+                            }
+                            break;
+                        case 2 :
+                            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9483:6: ( (lv_type_4_0= RULE_BASETYPE ) )
+                            {
+                            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9483:6: ( (lv_type_4_0= RULE_BASETYPE ) )
+                            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9484:1: (lv_type_4_0= RULE_BASETYPE )
+                            {
+                            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9484:1: (lv_type_4_0= RULE_BASETYPE )
+                            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9485:3: lv_type_4_0= RULE_BASETYPE
+                            {
+                            lv_type_4_0=(Token)input.LT(1);
+                            match(input,RULE_BASETYPE,FOLLOW_RULE_BASETYPE_in_ruleChannelType16882); 
+
+                            			createLeafNode(grammarAccess.getChannelTypeAccess().getTypeBaseTypeTerminalRuleCall_1_1_1_0(), "type"); 
+                            		
+
+                            	        if (current==null) {
+                            	            current = factory.create(grammarAccess.getChannelTypeRule().getType().getClassifier());
+                            	            associateNodeWithAstElement(currentNode, current);
+                            	        }
+                            	        try {
+                            	       		set(
+                            	       			current, 
+                            	       			"type",
+                            	        		lv_type_4_0, 
+                            	        		"BaseType", 
+                            	        		lastConsumedNode);
+                            	        } catch (ValueConverterException vce) {
+                            				handleValueConverterException(vce);
+                            	        }
+                            	    
+
+                            }
+
+
+                            }
+
+
+                            }
+                            break;
+
+                    }
+
+                    match(input,93,FOLLOW_93_in_ruleChannelType16898); 
+
+                            createLeafNode(grammarAccess.getChannelTypeAccess().getWithKeyword_1_2(), null); 
+                        
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9511:1: ( ( RULE_ESTERELID ) )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9512:1: ( RULE_ESTERELID )
+                    {
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9512:1: ( RULE_ESTERELID )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9513:3: RULE_ESTERELID
+                    {
+
+                    			if (current==null) {
+                    	            current = factory.create(grammarAccess.getChannelTypeRule().getType().getClassifier());
+                    	            associateNodeWithAstElement(currentNode, current);
+                    	        }
+                            
+                    match(input,RULE_ESTERELID,FOLLOW_RULE_ESTERELID_in_ruleChannelType16916); 
+
+                    		createLeafNode(grammarAccess.getChannelTypeAccess().getFuncFunctionCrossReference_1_3_0(), "func"); 
+                    	
+
+                    }
+
+
+                    }
+
+
+                    }
+
+
+                    }
+                    break;
+
+            }
+
+
+            }
+
+             resetLookahead(); 
+                	lastConsumedNode = currentNode;
+                
+        }
+         
+            catch (RecognitionException re) { 
+                recover(input,re); 
+                appendSkippedTokens();
+            } 
+        finally {
+        }
+        return current;
+    }
+    // $ANTLR end ruleChannelType
+
+
     // $ANTLR start entryRuleSignal
-    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9439:1: entryRuleSignal returns [EObject current=null] : iv_ruleSignal= ruleSignal EOF ;
+    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9533:1: entryRuleSignal returns [EObject current=null] : iv_ruleSignal= ruleSignal EOF ;
     public final EObject entryRuleSignal() throws RecognitionException {
         EObject current = null;
 
@@ -21275,16 +21469,16 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9440:2: (iv_ruleSignal= ruleSignal EOF )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9441:2: iv_ruleSignal= ruleSignal EOF
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9534:2: (iv_ruleSignal= ruleSignal EOF )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9535:2: iv_ruleSignal= ruleSignal EOF
             {
              currentNode = createCompositeNode(grammarAccess.getSignalRule(), currentNode); 
-            pushFollow(FOLLOW_ruleSignal_in_entryRuleSignal16832);
+            pushFollow(FOLLOW_ruleSignal_in_entryRuleSignal16953);
             iv_ruleSignal=ruleSignal();
             _fsp--;
 
              current =iv_ruleSignal; 
-            match(input,EOF,FOLLOW_EOF_in_entryRuleSignal16842); 
+            match(input,EOF,FOLLOW_EOF_in_entryRuleSignal16963); 
 
             }
 
@@ -21302,7 +21496,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start ruleSignal
-    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9448:1: ruleSignal returns [EObject current=null] : ( ( (lv_name_0_0= RULE_ESTERELID ) ) ( (lv_channel_1_0= ruleChannelDescription ) )? ) ;
+    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9542:1: ruleSignal returns [EObject current=null] : ( ( (lv_name_0_0= RULE_ESTERELID ) ) ( (lv_channel_1_0= ruleChannelDescription ) )? ) ;
     public final EObject ruleSignal() throws RecognitionException {
         EObject current = null;
 
@@ -21313,20 +21507,20 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
          @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9453:6: ( ( ( (lv_name_0_0= RULE_ESTERELID ) ) ( (lv_channel_1_0= ruleChannelDescription ) )? ) )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9454:1: ( ( (lv_name_0_0= RULE_ESTERELID ) ) ( (lv_channel_1_0= ruleChannelDescription ) )? )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9547:6: ( ( ( (lv_name_0_0= RULE_ESTERELID ) ) ( (lv_channel_1_0= ruleChannelDescription ) )? ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9548:1: ( ( (lv_name_0_0= RULE_ESTERELID ) ) ( (lv_channel_1_0= ruleChannelDescription ) )? )
             {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9454:1: ( ( (lv_name_0_0= RULE_ESTERELID ) ) ( (lv_channel_1_0= ruleChannelDescription ) )? )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9454:2: ( (lv_name_0_0= RULE_ESTERELID ) ) ( (lv_channel_1_0= ruleChannelDescription ) )?
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9548:1: ( ( (lv_name_0_0= RULE_ESTERELID ) ) ( (lv_channel_1_0= ruleChannelDescription ) )? )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9548:2: ( (lv_name_0_0= RULE_ESTERELID ) ) ( (lv_channel_1_0= ruleChannelDescription ) )?
             {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9454:2: ( (lv_name_0_0= RULE_ESTERELID ) )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9455:1: (lv_name_0_0= RULE_ESTERELID )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9548:2: ( (lv_name_0_0= RULE_ESTERELID ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9549:1: (lv_name_0_0= RULE_ESTERELID )
             {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9455:1: (lv_name_0_0= RULE_ESTERELID )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9456:3: lv_name_0_0= RULE_ESTERELID
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9549:1: (lv_name_0_0= RULE_ESTERELID )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9550:3: lv_name_0_0= RULE_ESTERELID
             {
             lv_name_0_0=(Token)input.LT(1);
-            match(input,RULE_ESTERELID,FOLLOW_RULE_ESTERELID_in_ruleSignal16884); 
+            match(input,RULE_ESTERELID,FOLLOW_RULE_ESTERELID_in_ruleSignal17005); 
 
             			createLeafNode(grammarAccess.getSignalAccess().getNameEsterelIDTerminalRuleCall_0_0(), "name"); 
             		
@@ -21352,7 +21546,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
             }
 
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9478:2: ( (lv_channel_1_0= ruleChannelDescription ) )?
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9572:2: ( (lv_channel_1_0= ruleChannelDescription ) )?
             int alt121=2;
             int LA121_0 = input.LA(1);
 
@@ -21361,15 +21555,15 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
             }
             switch (alt121) {
                 case 1 :
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9479:1: (lv_channel_1_0= ruleChannelDescription )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9573:1: (lv_channel_1_0= ruleChannelDescription )
                     {
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9479:1: (lv_channel_1_0= ruleChannelDescription )
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9480:3: lv_channel_1_0= ruleChannelDescription
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9573:1: (lv_channel_1_0= ruleChannelDescription )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9574:3: lv_channel_1_0= ruleChannelDescription
                     {
                      
                     	        currentNode=createCompositeNode(grammarAccess.getSignalAccess().getChannelChannelDescriptionParserRuleCall_1_0(), currentNode); 
                     	    
-                    pushFollow(FOLLOW_ruleChannelDescription_in_ruleSignal16910);
+                    pushFollow(FOLLOW_ruleChannelDescription_in_ruleSignal17031);
                     lv_channel_1_0=ruleChannelDescription();
                     _fsp--;
 
@@ -21422,7 +21616,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start entryRuleTick
-    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9510:1: entryRuleTick returns [String current=null] : iv_ruleTick= ruleTick EOF ;
+    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9604:1: entryRuleTick returns [String current=null] : iv_ruleTick= ruleTick EOF ;
     public final String entryRuleTick() throws RecognitionException {
         String current = null;
 
@@ -21430,16 +21624,16 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9511:2: (iv_ruleTick= ruleTick EOF )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9512:2: iv_ruleTick= ruleTick EOF
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9605:2: (iv_ruleTick= ruleTick EOF )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9606:2: iv_ruleTick= ruleTick EOF
             {
              currentNode = createCompositeNode(grammarAccess.getTickRule(), currentNode); 
-            pushFollow(FOLLOW_ruleTick_in_entryRuleTick16948);
+            pushFollow(FOLLOW_ruleTick_in_entryRuleTick17069);
             iv_ruleTick=ruleTick();
             _fsp--;
 
              current =iv_ruleTick.getText(); 
-            match(input,EOF,FOLLOW_EOF_in_entryRuleTick16959); 
+            match(input,EOF,FOLLOW_EOF_in_entryRuleTick17080); 
 
             }
 
@@ -21457,7 +21651,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start ruleTick
-    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9519:1: ruleTick returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : kw= 'tick' ;
+    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9613:1: ruleTick returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : kw= 'tick' ;
     public final AntlrDatatypeRuleToken ruleTick() throws RecognitionException {
         AntlrDatatypeRuleToken current = new AntlrDatatypeRuleToken();
 
@@ -21466,11 +21660,11 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
          setCurrentLookahead(); resetLookahead(); 
             
         try {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9524:6: (kw= 'tick' )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9526:2: kw= 'tick'
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9618:6: (kw= 'tick' )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9620:2: kw= 'tick'
             {
             kw=(Token)input.LT(1);
-            match(input,92,FOLLOW_92_in_ruleTick16996); 
+            match(input,94,FOLLOW_94_in_ruleTick17117); 
 
                     current.merge(kw);
                     createLeafNode(grammarAccess.getTickAccess().getTickKeyword(), null); 
@@ -21495,7 +21689,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start entryRuleSensor
-    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9539:1: entryRuleSensor returns [EObject current=null] : iv_ruleSensor= ruleSensor EOF ;
+    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9633:1: entryRuleSensor returns [EObject current=null] : iv_ruleSensor= ruleSensor EOF ;
     public final EObject entryRuleSensor() throws RecognitionException {
         EObject current = null;
 
@@ -21503,16 +21697,16 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9540:2: (iv_ruleSensor= ruleSensor EOF )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9541:2: iv_ruleSensor= ruleSensor EOF
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9634:2: (iv_ruleSensor= ruleSensor EOF )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9635:2: iv_ruleSensor= ruleSensor EOF
             {
              currentNode = createCompositeNode(grammarAccess.getSensorRule(), currentNode); 
-            pushFollow(FOLLOW_ruleSensor_in_entryRuleSensor17035);
+            pushFollow(FOLLOW_ruleSensor_in_entryRuleSensor17156);
             iv_ruleSensor=ruleSensor();
             _fsp--;
 
              current =iv_ruleSensor; 
-            match(input,EOF,FOLLOW_EOF_in_entryRuleSensor17045); 
+            match(input,EOF,FOLLOW_EOF_in_entryRuleSensor17166); 
 
             }
 
@@ -21530,7 +21724,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start ruleSensor
-    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9548:1: ruleSensor returns [EObject current=null] : ( ( ( (lv_name_0_0= RULE_ESTERELID ) ) ':' ( ( (lv_type_2_0= RULE_ESTERELID ) ) | ( (lv_type_3_0= RULE_BASETYPE ) ) ) ) | ( ( (lv_name_4_0= RULE_ESTERELID ) ) '(' ( ( (lv_type_6_0= RULE_ESTERELID ) ) | ( (lv_type_7_0= RULE_BASETYPE ) ) ) ')' ) ) ;
+    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9642:1: ruleSensor returns [EObject current=null] : ( ( ( (lv_name_0_0= RULE_ESTERELID ) ) ':' ( ( (lv_type_2_0= RULE_ESTERELID ) ) | ( (lv_type_3_0= RULE_BASETYPE ) ) ) ) | ( ( (lv_name_4_0= RULE_ESTERELID ) ) '(' ( ( (lv_type_6_0= RULE_ESTERELID ) ) | ( (lv_type_7_0= RULE_BASETYPE ) ) ) ')' ) ) ;
     public final EObject ruleSensor() throws RecognitionException {
         EObject current = null;
 
@@ -21544,10 +21738,10 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
          @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9553:6: ( ( ( ( (lv_name_0_0= RULE_ESTERELID ) ) ':' ( ( (lv_type_2_0= RULE_ESTERELID ) ) | ( (lv_type_3_0= RULE_BASETYPE ) ) ) ) | ( ( (lv_name_4_0= RULE_ESTERELID ) ) '(' ( ( (lv_type_6_0= RULE_ESTERELID ) ) | ( (lv_type_7_0= RULE_BASETYPE ) ) ) ')' ) ) )
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9554:1: ( ( ( (lv_name_0_0= RULE_ESTERELID ) ) ':' ( ( (lv_type_2_0= RULE_ESTERELID ) ) | ( (lv_type_3_0= RULE_BASETYPE ) ) ) ) | ( ( (lv_name_4_0= RULE_ESTERELID ) ) '(' ( ( (lv_type_6_0= RULE_ESTERELID ) ) | ( (lv_type_7_0= RULE_BASETYPE ) ) ) ')' ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9647:6: ( ( ( ( (lv_name_0_0= RULE_ESTERELID ) ) ':' ( ( (lv_type_2_0= RULE_ESTERELID ) ) | ( (lv_type_3_0= RULE_BASETYPE ) ) ) ) | ( ( (lv_name_4_0= RULE_ESTERELID ) ) '(' ( ( (lv_type_6_0= RULE_ESTERELID ) ) | ( (lv_type_7_0= RULE_BASETYPE ) ) ) ')' ) ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9648:1: ( ( ( (lv_name_0_0= RULE_ESTERELID ) ) ':' ( ( (lv_type_2_0= RULE_ESTERELID ) ) | ( (lv_type_3_0= RULE_BASETYPE ) ) ) ) | ( ( (lv_name_4_0= RULE_ESTERELID ) ) '(' ( ( (lv_type_6_0= RULE_ESTERELID ) ) | ( (lv_type_7_0= RULE_BASETYPE ) ) ) ')' ) )
             {
-            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9554:1: ( ( ( (lv_name_0_0= RULE_ESTERELID ) ) ':' ( ( (lv_type_2_0= RULE_ESTERELID ) ) | ( (lv_type_3_0= RULE_BASETYPE ) ) ) ) | ( ( (lv_name_4_0= RULE_ESTERELID ) ) '(' ( ( (lv_type_6_0= RULE_ESTERELID ) ) | ( (lv_type_7_0= RULE_BASETYPE ) ) ) ')' ) )
+            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9648:1: ( ( ( (lv_name_0_0= RULE_ESTERELID ) ) ':' ( ( (lv_type_2_0= RULE_ESTERELID ) ) | ( (lv_type_3_0= RULE_BASETYPE ) ) ) ) | ( ( (lv_name_4_0= RULE_ESTERELID ) ) '(' ( ( (lv_type_6_0= RULE_ESTERELID ) ) | ( (lv_type_7_0= RULE_BASETYPE ) ) ) ')' ) )
             int alt124=2;
             int LA124_0 = input.LA(1);
 
@@ -21562,32 +21756,32 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
                 }
                 else {
                     NoViableAltException nvae =
-                        new NoViableAltException("9554:1: ( ( ( (lv_name_0_0= RULE_ESTERELID ) ) ':' ( ( (lv_type_2_0= RULE_ESTERELID ) ) | ( (lv_type_3_0= RULE_BASETYPE ) ) ) ) | ( ( (lv_name_4_0= RULE_ESTERELID ) ) '(' ( ( (lv_type_6_0= RULE_ESTERELID ) ) | ( (lv_type_7_0= RULE_BASETYPE ) ) ) ')' ) )", 124, 1, input);
+                        new NoViableAltException("9648:1: ( ( ( (lv_name_0_0= RULE_ESTERELID ) ) ':' ( ( (lv_type_2_0= RULE_ESTERELID ) ) | ( (lv_type_3_0= RULE_BASETYPE ) ) ) ) | ( ( (lv_name_4_0= RULE_ESTERELID ) ) '(' ( ( (lv_type_6_0= RULE_ESTERELID ) ) | ( (lv_type_7_0= RULE_BASETYPE ) ) ) ')' ) )", 124, 1, input);
 
                     throw nvae;
                 }
             }
             else {
                 NoViableAltException nvae =
-                    new NoViableAltException("9554:1: ( ( ( (lv_name_0_0= RULE_ESTERELID ) ) ':' ( ( (lv_type_2_0= RULE_ESTERELID ) ) | ( (lv_type_3_0= RULE_BASETYPE ) ) ) ) | ( ( (lv_name_4_0= RULE_ESTERELID ) ) '(' ( ( (lv_type_6_0= RULE_ESTERELID ) ) | ( (lv_type_7_0= RULE_BASETYPE ) ) ) ')' ) )", 124, 0, input);
+                    new NoViableAltException("9648:1: ( ( ( (lv_name_0_0= RULE_ESTERELID ) ) ':' ( ( (lv_type_2_0= RULE_ESTERELID ) ) | ( (lv_type_3_0= RULE_BASETYPE ) ) ) ) | ( ( (lv_name_4_0= RULE_ESTERELID ) ) '(' ( ( (lv_type_6_0= RULE_ESTERELID ) ) | ( (lv_type_7_0= RULE_BASETYPE ) ) ) ')' ) )", 124, 0, input);
 
                 throw nvae;
             }
             switch (alt124) {
                 case 1 :
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9554:2: ( ( (lv_name_0_0= RULE_ESTERELID ) ) ':' ( ( (lv_type_2_0= RULE_ESTERELID ) ) | ( (lv_type_3_0= RULE_BASETYPE ) ) ) )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9648:2: ( ( (lv_name_0_0= RULE_ESTERELID ) ) ':' ( ( (lv_type_2_0= RULE_ESTERELID ) ) | ( (lv_type_3_0= RULE_BASETYPE ) ) ) )
                     {
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9554:2: ( ( (lv_name_0_0= RULE_ESTERELID ) ) ':' ( ( (lv_type_2_0= RULE_ESTERELID ) ) | ( (lv_type_3_0= RULE_BASETYPE ) ) ) )
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9554:3: ( (lv_name_0_0= RULE_ESTERELID ) ) ':' ( ( (lv_type_2_0= RULE_ESTERELID ) ) | ( (lv_type_3_0= RULE_BASETYPE ) ) )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9648:2: ( ( (lv_name_0_0= RULE_ESTERELID ) ) ':' ( ( (lv_type_2_0= RULE_ESTERELID ) ) | ( (lv_type_3_0= RULE_BASETYPE ) ) ) )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9648:3: ( (lv_name_0_0= RULE_ESTERELID ) ) ':' ( ( (lv_type_2_0= RULE_ESTERELID ) ) | ( (lv_type_3_0= RULE_BASETYPE ) ) )
                     {
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9554:3: ( (lv_name_0_0= RULE_ESTERELID ) )
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9555:1: (lv_name_0_0= RULE_ESTERELID )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9648:3: ( (lv_name_0_0= RULE_ESTERELID ) )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9649:1: (lv_name_0_0= RULE_ESTERELID )
                     {
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9555:1: (lv_name_0_0= RULE_ESTERELID )
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9556:3: lv_name_0_0= RULE_ESTERELID
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9649:1: (lv_name_0_0= RULE_ESTERELID )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9650:3: lv_name_0_0= RULE_ESTERELID
                     {
                     lv_name_0_0=(Token)input.LT(1);
-                    match(input,RULE_ESTERELID,FOLLOW_RULE_ESTERELID_in_ruleSensor17088); 
+                    match(input,RULE_ESTERELID,FOLLOW_RULE_ESTERELID_in_ruleSensor17209); 
 
                     			createLeafNode(grammarAccess.getSensorAccess().getNameEsterelIDTerminalRuleCall_0_0_0(), "name"); 
                     		
@@ -21613,11 +21807,11 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    match(input,18,FOLLOW_18_in_ruleSensor17103); 
+                    match(input,18,FOLLOW_18_in_ruleSensor17224); 
 
                             createLeafNode(grammarAccess.getSensorAccess().getColonKeyword_0_1(), null); 
                         
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9582:1: ( ( (lv_type_2_0= RULE_ESTERELID ) ) | ( (lv_type_3_0= RULE_BASETYPE ) ) )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9676:1: ( ( (lv_type_2_0= RULE_ESTERELID ) ) | ( (lv_type_3_0= RULE_BASETYPE ) ) )
                     int alt122=2;
                     int LA122_0 = input.LA(1);
 
@@ -21629,22 +21823,22 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
                     }
                     else {
                         NoViableAltException nvae =
-                            new NoViableAltException("9582:1: ( ( (lv_type_2_0= RULE_ESTERELID ) ) | ( (lv_type_3_0= RULE_BASETYPE ) ) )", 122, 0, input);
+                            new NoViableAltException("9676:1: ( ( (lv_type_2_0= RULE_ESTERELID ) ) | ( (lv_type_3_0= RULE_BASETYPE ) ) )", 122, 0, input);
 
                         throw nvae;
                     }
                     switch (alt122) {
                         case 1 :
-                            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9582:2: ( (lv_type_2_0= RULE_ESTERELID ) )
+                            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9676:2: ( (lv_type_2_0= RULE_ESTERELID ) )
                             {
-                            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9582:2: ( (lv_type_2_0= RULE_ESTERELID ) )
-                            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9583:1: (lv_type_2_0= RULE_ESTERELID )
+                            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9676:2: ( (lv_type_2_0= RULE_ESTERELID ) )
+                            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9677:1: (lv_type_2_0= RULE_ESTERELID )
                             {
-                            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9583:1: (lv_type_2_0= RULE_ESTERELID )
-                            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9584:3: lv_type_2_0= RULE_ESTERELID
+                            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9677:1: (lv_type_2_0= RULE_ESTERELID )
+                            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9678:3: lv_type_2_0= RULE_ESTERELID
                             {
                             lv_type_2_0=(Token)input.LT(1);
-                            match(input,RULE_ESTERELID,FOLLOW_RULE_ESTERELID_in_ruleSensor17121); 
+                            match(input,RULE_ESTERELID,FOLLOW_RULE_ESTERELID_in_ruleSensor17242); 
 
                             			createLeafNode(grammarAccess.getSensorAccess().getTypeEsterelIDTerminalRuleCall_0_2_0_0(), "type"); 
                             		
@@ -21674,16 +21868,16 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
                             }
                             break;
                         case 2 :
-                            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9607:6: ( (lv_type_3_0= RULE_BASETYPE ) )
+                            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9701:6: ( (lv_type_3_0= RULE_BASETYPE ) )
                             {
-                            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9607:6: ( (lv_type_3_0= RULE_BASETYPE ) )
-                            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9608:1: (lv_type_3_0= RULE_BASETYPE )
+                            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9701:6: ( (lv_type_3_0= RULE_BASETYPE ) )
+                            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9702:1: (lv_type_3_0= RULE_BASETYPE )
                             {
-                            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9608:1: (lv_type_3_0= RULE_BASETYPE )
-                            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9609:3: lv_type_3_0= RULE_BASETYPE
+                            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9702:1: (lv_type_3_0= RULE_BASETYPE )
+                            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9703:3: lv_type_3_0= RULE_BASETYPE
                             {
                             lv_type_3_0=(Token)input.LT(1);
-                            match(input,RULE_BASETYPE,FOLLOW_RULE_BASETYPE_in_ruleSensor17149); 
+                            match(input,RULE_BASETYPE,FOLLOW_RULE_BASETYPE_in_ruleSensor17270); 
 
                             			createLeafNode(grammarAccess.getSensorAccess().getTypeBaseTypeTerminalRuleCall_0_2_1_0(), "type"); 
                             		
@@ -21722,19 +21916,19 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9632:6: ( ( (lv_name_4_0= RULE_ESTERELID ) ) '(' ( ( (lv_type_6_0= RULE_ESTERELID ) ) | ( (lv_type_7_0= RULE_BASETYPE ) ) ) ')' )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9726:6: ( ( (lv_name_4_0= RULE_ESTERELID ) ) '(' ( ( (lv_type_6_0= RULE_ESTERELID ) ) | ( (lv_type_7_0= RULE_BASETYPE ) ) ) ')' )
                     {
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9632:6: ( ( (lv_name_4_0= RULE_ESTERELID ) ) '(' ( ( (lv_type_6_0= RULE_ESTERELID ) ) | ( (lv_type_7_0= RULE_BASETYPE ) ) ) ')' )
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9632:7: ( (lv_name_4_0= RULE_ESTERELID ) ) '(' ( ( (lv_type_6_0= RULE_ESTERELID ) ) | ( (lv_type_7_0= RULE_BASETYPE ) ) ) ')'
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9726:6: ( ( (lv_name_4_0= RULE_ESTERELID ) ) '(' ( ( (lv_type_6_0= RULE_ESTERELID ) ) | ( (lv_type_7_0= RULE_BASETYPE ) ) ) ')' )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9726:7: ( (lv_name_4_0= RULE_ESTERELID ) ) '(' ( ( (lv_type_6_0= RULE_ESTERELID ) ) | ( (lv_type_7_0= RULE_BASETYPE ) ) ) ')'
                     {
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9632:7: ( (lv_name_4_0= RULE_ESTERELID ) )
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9633:1: (lv_name_4_0= RULE_ESTERELID )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9726:7: ( (lv_name_4_0= RULE_ESTERELID ) )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9727:1: (lv_name_4_0= RULE_ESTERELID )
                     {
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9633:1: (lv_name_4_0= RULE_ESTERELID )
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9634:3: lv_name_4_0= RULE_ESTERELID
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9727:1: (lv_name_4_0= RULE_ESTERELID )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9728:3: lv_name_4_0= RULE_ESTERELID
                     {
                     lv_name_4_0=(Token)input.LT(1);
-                    match(input,RULE_ESTERELID,FOLLOW_RULE_ESTERELID_in_ruleSensor17180); 
+                    match(input,RULE_ESTERELID,FOLLOW_RULE_ESTERELID_in_ruleSensor17301); 
 
                     			createLeafNode(grammarAccess.getSensorAccess().getNameEsterelIDTerminalRuleCall_1_0_0(), "name"); 
                     		
@@ -21760,11 +21954,11 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    match(input,36,FOLLOW_36_in_ruleSensor17195); 
+                    match(input,36,FOLLOW_36_in_ruleSensor17316); 
 
                             createLeafNode(grammarAccess.getSensorAccess().getLeftParenthesisKeyword_1_1(), null); 
                         
-                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9660:1: ( ( (lv_type_6_0= RULE_ESTERELID ) ) | ( (lv_type_7_0= RULE_BASETYPE ) ) )
+                    // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9754:1: ( ( (lv_type_6_0= RULE_ESTERELID ) ) | ( (lv_type_7_0= RULE_BASETYPE ) ) )
                     int alt123=2;
                     int LA123_0 = input.LA(1);
 
@@ -21776,22 +21970,22 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
                     }
                     else {
                         NoViableAltException nvae =
-                            new NoViableAltException("9660:1: ( ( (lv_type_6_0= RULE_ESTERELID ) ) | ( (lv_type_7_0= RULE_BASETYPE ) ) )", 123, 0, input);
+                            new NoViableAltException("9754:1: ( ( (lv_type_6_0= RULE_ESTERELID ) ) | ( (lv_type_7_0= RULE_BASETYPE ) ) )", 123, 0, input);
 
                         throw nvae;
                     }
                     switch (alt123) {
                         case 1 :
-                            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9660:2: ( (lv_type_6_0= RULE_ESTERELID ) )
+                            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9754:2: ( (lv_type_6_0= RULE_ESTERELID ) )
                             {
-                            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9660:2: ( (lv_type_6_0= RULE_ESTERELID ) )
-                            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9661:1: (lv_type_6_0= RULE_ESTERELID )
+                            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9754:2: ( (lv_type_6_0= RULE_ESTERELID ) )
+                            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9755:1: (lv_type_6_0= RULE_ESTERELID )
                             {
-                            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9661:1: (lv_type_6_0= RULE_ESTERELID )
-                            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9662:3: lv_type_6_0= RULE_ESTERELID
+                            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9755:1: (lv_type_6_0= RULE_ESTERELID )
+                            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9756:3: lv_type_6_0= RULE_ESTERELID
                             {
                             lv_type_6_0=(Token)input.LT(1);
-                            match(input,RULE_ESTERELID,FOLLOW_RULE_ESTERELID_in_ruleSensor17213); 
+                            match(input,RULE_ESTERELID,FOLLOW_RULE_ESTERELID_in_ruleSensor17334); 
 
                             			createLeafNode(grammarAccess.getSensorAccess().getTypeEsterelIDTerminalRuleCall_1_2_0_0(), "type"); 
                             		
@@ -21821,16 +22015,16 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
                             }
                             break;
                         case 2 :
-                            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9685:6: ( (lv_type_7_0= RULE_BASETYPE ) )
+                            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9779:6: ( (lv_type_7_0= RULE_BASETYPE ) )
                             {
-                            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9685:6: ( (lv_type_7_0= RULE_BASETYPE ) )
-                            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9686:1: (lv_type_7_0= RULE_BASETYPE )
+                            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9779:6: ( (lv_type_7_0= RULE_BASETYPE ) )
+                            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9780:1: (lv_type_7_0= RULE_BASETYPE )
                             {
-                            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9686:1: (lv_type_7_0= RULE_BASETYPE )
-                            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9687:3: lv_type_7_0= RULE_BASETYPE
+                            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9780:1: (lv_type_7_0= RULE_BASETYPE )
+                            // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9781:3: lv_type_7_0= RULE_BASETYPE
                             {
                             lv_type_7_0=(Token)input.LT(1);
-                            match(input,RULE_BASETYPE,FOLLOW_RULE_BASETYPE_in_ruleSensor17241); 
+                            match(input,RULE_BASETYPE,FOLLOW_RULE_BASETYPE_in_ruleSensor17362); 
 
                             			createLeafNode(grammarAccess.getSensorAccess().getTypeBaseTypeTerminalRuleCall_1_2_1_0(), "type"); 
                             		
@@ -21862,7 +22056,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    match(input,37,FOLLOW_37_in_ruleSensor17257); 
+                    match(input,37,FOLLOW_37_in_ruleSensor17378); 
 
                             createLeafNode(grammarAccess.getSensorAccess().getRightParenthesisKeyword_1_3(), null); 
                         
@@ -22108,7 +22302,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
     public static final BitSet FOLLOW_EOF_in_entryRuleAbort5024 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_43_in_ruleAbort5059 = new BitSet(new long[]{0xE8F8A90000000010L,0x000000000000375BL});
     public static final BitSet FOLLOW_ruleStatement_in_ruleAbort5080 = new BitSet(new long[]{0x0000100000000000L});
-    public static final BitSet FOLLOW_44_in_ruleAbort5090 = new BitSet(new long[]{0x00004116000003D0L,0x000000001FFFC020L});
+    public static final BitSet FOLLOW_44_in_ruleAbort5090 = new BitSet(new long[]{0x00004116000003D0L,0x000000004FFFC020L});
     public static final BitSet FOLLOW_ruleAbortBody_in_ruleAbort5111 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleAbortBody_in_entryRuleAbortBody5147 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuleAbortBody5157 = new BitSet(new long[]{0x0000000000000002L});
@@ -22131,13 +22325,13 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
     public static final BitSet FOLLOW_ruleAbortEnd_in_ruleAbortCase5618 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleAbortCaseSingle_in_entryRuleAbortCaseSingle5654 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuleAbortCaseSingle5664 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_46_in_ruleAbortCaseSingle5699 = new BitSet(new long[]{0x00000116000003D0L,0x000000001FFFC020L});
+    public static final BitSet FOLLOW_46_in_ruleAbortCaseSingle5699 = new BitSet(new long[]{0x00000116000003D0L,0x000000004FFFC020L});
     public static final BitSet FOLLOW_ruleDelayExpr_in_ruleAbortCaseSingle5720 = new BitSet(new long[]{0x0000200000000002L});
     public static final BitSet FOLLOW_45_in_ruleAbortCaseSingle5731 = new BitSet(new long[]{0xE8F8A90000000010L,0x000000000000375BL});
     public static final BitSet FOLLOW_ruleStatement_in_ruleAbortCaseSingle5752 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleAwait_in_entryRuleAwait5790 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuleAwait5800 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_47_in_ruleAwait5835 = new BitSet(new long[]{0x00004116000003D0L,0x000000001FFFC020L});
+    public static final BitSet FOLLOW_47_in_ruleAwait5835 = new BitSet(new long[]{0x00004116000003D0L,0x000000004FFFC020L});
     public static final BitSet FOLLOW_ruleAwaitBody_in_ruleAwait5856 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleAwaitBody_in_entryRuleAwaitBody5892 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuleAwaitBody5902 = new BitSet(new long[]{0x0000000000000002L});
@@ -22149,7 +22343,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
     public static final BitSet FOLLOW_47_in_ruleAwaitEnd6075 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleAwaitInstance_in_entryRuleAwaitInstance6117 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuleAwaitInstance6127 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleDelayExpr_in_ruleAwaitInstance6174 = new BitSet(new long[]{0x0000200000000002L});
+    public static final BitSet FOLLOW_ruleDelayExpr_in_ruleAwaitInstance6173 = new BitSet(new long[]{0x0000200000000002L});
     public static final BitSet FOLLOW_45_in_ruleAwaitInstance6184 = new BitSet(new long[]{0xE8F8A90000000010L,0x000000000000375BL});
     public static final BitSet FOLLOW_ruleStatement_in_ruleAwaitInstance6205 = new BitSet(new long[]{0x0000000000080000L});
     public static final BitSet FOLLOW_ruleAwaitEnd_in_ruleAwaitInstance6226 = new BitSet(new long[]{0x0000000000000002L});
@@ -22166,11 +22360,11 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
     public static final BitSet FOLLOW_ruleDoWatching_in_ruleDo6514 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleDoUpto_in_entryRuleDoUpto6551 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuleDoUpto6561 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_48_in_ruleDoUpto6596 = new BitSet(new long[]{0x00000116000003D0L,0x000000001FFFC020L});
+    public static final BitSet FOLLOW_48_in_ruleDoUpto6596 = new BitSet(new long[]{0x00000116000003D0L,0x000000004FFFC020L});
     public static final BitSet FOLLOW_ruleDelayExpr_in_ruleDoUpto6617 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleDoWatching_in_entryRuleDoWatching6653 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuleDoWatching6663 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_49_in_ruleDoWatching6698 = new BitSet(new long[]{0x00000116000003D0L,0x000000001FFFC020L});
+    public static final BitSet FOLLOW_49_in_ruleDoWatching6698 = new BitSet(new long[]{0x00000116000003D0L,0x000000004FFFC020L});
     public static final BitSet FOLLOW_ruleDelayExpr_in_ruleDoWatching6719 = new BitSet(new long[]{0x0004000000000002L});
     public static final BitSet FOLLOW_ruleDoWatchingEnd_in_ruleDoWatching6740 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleDoWatchingEnd_in_entryRuleDoWatchingEnd6777 = new BitSet(new long[]{0x0000000000000000L});
@@ -22181,7 +22375,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
     public static final BitSet FOLLOW_50_in_ruleDoWatchingEnd6864 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleEmit_in_entryRuleEmit6902 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuleEmit6912 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_51_in_ruleEmit6947 = new BitSet(new long[]{0x0000000000000010L,0x0000000010000000L});
+    public static final BitSet FOLLOW_51_in_ruleEmit6947 = new BitSet(new long[]{0x0000000000000010L,0x0000000040000000L});
     public static final BitSet FOLLOW_RULE_ESTERELID_in_ruleEmit6966 = new BitSet(new long[]{0x0000001000000002L});
     public static final BitSet FOLLOW_ruleTick_in_ruleEmit6993 = new BitSet(new long[]{0x0000001000000002L});
     public static final BitSet FOLLOW_36_in_ruleEmit7005 = new BitSet(new long[]{0x00000016000003D0L,0x000000000FFFC020L});
@@ -22189,7 +22383,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
     public static final BitSet FOLLOW_37_in_ruleEmit7036 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleEveryDo_in_entryRuleEveryDo7074 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuleEveryDo7084 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_52_in_ruleEveryDo7119 = new BitSet(new long[]{0x00000116000003D0L,0x000000001FFFC020L});
+    public static final BitSet FOLLOW_52_in_ruleEveryDo7119 = new BitSet(new long[]{0x00000116000003D0L,0x000000004FFFC020L});
     public static final BitSet FOLLOW_ruleDelayExpr_in_ruleEveryDo7140 = new BitSet(new long[]{0x0000200000000000L});
     public static final BitSet FOLLOW_45_in_ruleEveryDo7150 = new BitSet(new long[]{0xE8F8A90000000010L,0x000000000000375BL});
     public static final BitSet FOLLOW_ruleStatement_in_ruleEveryDo7171 = new BitSet(new long[]{0x0000000000080000L});
@@ -22243,7 +22437,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
     public static final BitSet FOLLOW_59_in_ruleEndLoop8292 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleLoopEach_in_entryRuleLoopEach8334 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuleLoopEach8344 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_60_in_ruleLoopEach8379 = new BitSet(new long[]{0x00000116000003D0L,0x000000001FFFC020L});
+    public static final BitSet FOLLOW_60_in_ruleLoopEach8379 = new BitSet(new long[]{0x00000116000003D0L,0x000000004FFFC020L});
     public static final BitSet FOLLOW_ruleLoopDelay_in_ruleLoopEach8401 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleLoopDelay_in_entryRuleLoopDelay8436 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuleLoopDelay8446 = new BitSet(new long[]{0x0000000000000002L});
@@ -22325,9 +22519,9 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
     public static final BitSet FOLLOW_ruleTypeRenaming_in_ruleRenaming10324 = new BitSet(new long[]{0x0000000000400002L});
     public static final BitSet FOLLOW_22_in_ruleRenaming10335 = new BitSet(new long[]{0x0000000000000010L});
     public static final BitSet FOLLOW_ruleTypeRenaming_in_ruleRenaming10356 = new BitSet(new long[]{0x0000000000400002L});
-    public static final BitSet FOLLOW_32_in_ruleRenaming10376 = new BitSet(new long[]{0x00000004000003D0L});
+    public static final BitSet FOLLOW_32_in_ruleRenaming10376 = new BitSet(new long[]{0x0000000000000010L});
     public static final BitSet FOLLOW_ruleConstantRenaming_in_ruleRenaming10397 = new BitSet(new long[]{0x0000000000400002L});
-    public static final BitSet FOLLOW_22_in_ruleRenaming10408 = new BitSet(new long[]{0x00000004000003D0L});
+    public static final BitSet FOLLOW_22_in_ruleRenaming10408 = new BitSet(new long[]{0x0000000000000010L});
     public static final BitSet FOLLOW_ruleConstantRenaming_in_ruleRenaming10429 = new BitSet(new long[]{0x0000000000400002L});
     public static final BitSet FOLLOW_35_in_ruleRenaming10449 = new BitSet(new long[]{0x0000000000000010L});
     public static final BitSet FOLLOW_ruleFunctionRenaming_in_ruleRenaming10470 = new BitSet(new long[]{0x0000000000400002L});
@@ -22344,277 +22538,283 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
     public static final BitSet FOLLOW_RULE_ESTERELID_in_ruleTypeRenaming10695 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleConstantRenaming_in_entryRuleConstantRenaming10731 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuleConstantRenaming10741 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleConstantValue_in_ruleConstantRenaming10787 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000020L});
-    public static final BitSet FOLLOW_69_in_ruleConstantRenaming10797 = new BitSet(new long[]{0x0000000000000010L});
-    public static final BitSet FOLLOW_RULE_ESTERELID_in_ruleConstantRenaming10814 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleFunctionRenaming_in_entryRuleFunctionRenaming10855 = new BitSet(new long[]{0x0000000000000000L});
-    public static final BitSet FOLLOW_EOF_in_entryRuleFunctionRenaming10865 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_ESTERELID_in_ruleFunctionRenaming10908 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000020L});
-    public static final BitSet FOLLOW_69_in_ruleFunctionRenaming10918 = new BitSet(new long[]{0x0000000000000010L});
-    public static final BitSet FOLLOW_RULE_ESTERELID_in_ruleFunctionRenaming10936 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleSignalRenaming_in_entryRuleSignalRenaming10974 = new BitSet(new long[]{0x0000000000000000L});
-    public static final BitSet FOLLOW_EOF_in_entryRuleSignalRenaming10984 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_ESTERELID_in_ruleSignalRenaming11027 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000020L});
-    public static final BitSet FOLLOW_69_in_ruleSignalRenaming11037 = new BitSet(new long[]{0x0000000000000010L});
-    public static final BitSet FOLLOW_RULE_ESTERELID_in_ruleSignalRenaming11055 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleLocalSignalDecl_in_entryRuleLocalSignalDecl11091 = new BitSet(new long[]{0x0000000000000000L});
-    public static final BitSet FOLLOW_EOF_in_entryRuleLocalSignalDecl11101 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_70_in_ruleLocalSignalDecl11136 = new BitSet(new long[]{0x0000000000000010L});
-    public static final BitSet FOLLOW_ruleLocalSignalList_in_ruleLocalSignalDecl11157 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000080L});
-    public static final BitSet FOLLOW_71_in_ruleLocalSignalDecl11167 = new BitSet(new long[]{0xE8F8A90000000010L,0x000000000000375BL});
-    public static final BitSet FOLLOW_ruleStatement_in_ruleLocalSignalDecl11188 = new BitSet(new long[]{0x0000000000080000L});
-    public static final BitSet FOLLOW_19_in_ruleLocalSignalDecl11198 = new BitSet(new long[]{0x0000000000000002L,0x0000000000000040L});
-    public static final BitSet FOLLOW_70_in_ruleLocalSignalDecl11209 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleLocalSignalList_in_entryRuleLocalSignalList11247 = new BitSet(new long[]{0x0000000000000000L});
-    public static final BitSet FOLLOW_EOF_in_entryRuleLocalSignalList11257 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleSignal_in_ruleLocalSignalList11312 = new BitSet(new long[]{0x0000000000400002L});
-    public static final BitSet FOLLOW_22_in_ruleLocalSignalList11323 = new BitSet(new long[]{0x0000000000000010L});
-    public static final BitSet FOLLOW_ruleSignal_in_ruleLocalSignalList11344 = new BitSet(new long[]{0x0000000000400002L});
-    public static final BitSet FOLLOW_ruleSuspend_in_entryRuleSuspend11382 = new BitSet(new long[]{0x0000000000000000L});
-    public static final BitSet FOLLOW_EOF_in_entryRuleSuspend11392 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_72_in_ruleSuspend11427 = new BitSet(new long[]{0xE8F8A90000000010L,0x000000000000375BL});
-    public static final BitSet FOLLOW_ruleStatement_in_ruleSuspend11448 = new BitSet(new long[]{0x0000100000000000L});
-    public static final BitSet FOLLOW_44_in_ruleSuspend11458 = new BitSet(new long[]{0x00000116000003D0L,0x000000001FFFC020L});
-    public static final BitSet FOLLOW_ruleDelayExpr_in_ruleSuspend11479 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleSustain_in_entryRuleSustain11515 = new BitSet(new long[]{0x0000000000000000L});
-    public static final BitSet FOLLOW_EOF_in_entryRuleSustain11525 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_73_in_ruleSustain11560 = new BitSet(new long[]{0x0000000000000010L,0x0000000010000000L});
-    public static final BitSet FOLLOW_RULE_ESTERELID_in_ruleSustain11579 = new BitSet(new long[]{0x0000001000000002L});
-    public static final BitSet FOLLOW_ruleTick_in_ruleSustain11606 = new BitSet(new long[]{0x0000001000000002L});
-    public static final BitSet FOLLOW_36_in_ruleSustain11618 = new BitSet(new long[]{0x00000016000003D0L,0x000000000FFFC020L});
-    public static final BitSet FOLLOW_ruleDataExpr_in_ruleSustain11639 = new BitSet(new long[]{0x0000002000000000L});
-    public static final BitSet FOLLOW_37_in_ruleSustain11649 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleTrap_in_entryRuleTrap11687 = new BitSet(new long[]{0x0000000000000000L});
-    public static final BitSet FOLLOW_EOF_in_entryRuleTrap11697 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_74_in_ruleTrap11732 = new BitSet(new long[]{0x0000000000000010L});
-    public static final BitSet FOLLOW_ruleTrapDeclList_in_ruleTrap11753 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000080L});
-    public static final BitSet FOLLOW_71_in_ruleTrap11763 = new BitSet(new long[]{0xE8F8A90000000010L,0x000000000000375BL});
-    public static final BitSet FOLLOW_ruleStatement_in_ruleTrap11784 = new BitSet(new long[]{0x0000000000080000L,0x0000000000000800L});
-    public static final BitSet FOLLOW_ruleTrapHandlerList_in_ruleTrap11805 = new BitSet(new long[]{0x0000000000080000L});
-    public static final BitSet FOLLOW_19_in_ruleTrap11816 = new BitSet(new long[]{0x0000000000000002L,0x0000000000000400L});
-    public static final BitSet FOLLOW_74_in_ruleTrap11827 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleTrapDeclList_in_entryRuleTrapDeclList11865 = new BitSet(new long[]{0x0000000000000000L});
-    public static final BitSet FOLLOW_EOF_in_entryRuleTrapDeclList11875 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleTrapDecl_in_ruleTrapDeclList11921 = new BitSet(new long[]{0x0000000000400002L});
-    public static final BitSet FOLLOW_22_in_ruleTrapDeclList11932 = new BitSet(new long[]{0x0000000000000010L});
-    public static final BitSet FOLLOW_ruleTrapDecl_in_ruleTrapDeclList11953 = new BitSet(new long[]{0x0000000000400002L});
-    public static final BitSet FOLLOW_ruleTrapDecl_in_entryRuleTrapDecl11991 = new BitSet(new long[]{0x0000000000000000L});
-    public static final BitSet FOLLOW_EOF_in_entryRuleTrapDecl12001 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_ESTERELID_in_ruleTrapDecl12043 = new BitSet(new long[]{0x0000041000040002L});
-    public static final BitSet FOLLOW_ruleChannelDescription_in_ruleTrapDecl12069 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleTrapHandlerList_in_entryRuleTrapHandlerList12106 = new BitSet(new long[]{0x0000000000000000L});
-    public static final BitSet FOLLOW_EOF_in_entryRuleTrapHandlerList12116 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleTrapHandler_in_ruleTrapHandlerList12162 = new BitSet(new long[]{0x0000000000000002L,0x0000000000000800L});
-    public static final BitSet FOLLOW_ruleTrapHandler_in_ruleTrapHandlerList12183 = new BitSet(new long[]{0x0000000000000002L,0x0000000000000800L});
-    public static final BitSet FOLLOW_ruleTrapHandler_in_entryRuleTrapHandler12220 = new BitSet(new long[]{0x0000000000000000L});
-    public static final BitSet FOLLOW_EOF_in_entryRuleTrapHandler12230 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_75_in_ruleTrapHandler12265 = new BitSet(new long[]{0x0000001000000010L,0x0000000000010000L});
-    public static final BitSet FOLLOW_ruleTrapExpr_in_ruleTrapHandler12286 = new BitSet(new long[]{0x0000200000000000L});
-    public static final BitSet FOLLOW_45_in_ruleTrapHandler12296 = new BitSet(new long[]{0xE8F8A90000000010L,0x000000000000375BL});
-    public static final BitSet FOLLOW_ruleStatement_in_ruleTrapHandler12317 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleVariable_in_entryRuleVariable12353 = new BitSet(new long[]{0x0000000000000000L});
-    public static final BitSet FOLLOW_EOF_in_entryRuleVariable12363 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_76_in_ruleVariable12398 = new BitSet(new long[]{0x0000000000000010L});
-    public static final BitSet FOLLOW_ruleVariableDecl_in_ruleVariable12419 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000080L});
-    public static final BitSet FOLLOW_71_in_ruleVariable12429 = new BitSet(new long[]{0xE8F8A90000000010L,0x000000000000375BL});
-    public static final BitSet FOLLOW_ruleStatement_in_ruleVariable12450 = new BitSet(new long[]{0x0000000000080000L});
-    public static final BitSet FOLLOW_19_in_ruleVariable12460 = new BitSet(new long[]{0x0000000000000002L,0x0000000000001000L});
-    public static final BitSet FOLLOW_76_in_ruleVariable12471 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleVariableDecl_in_entryRuleVariableDecl12509 = new BitSet(new long[]{0x0000000000000000L});
-    public static final BitSet FOLLOW_EOF_in_entryRuleVariableDecl12519 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleVariableList_in_ruleVariableDecl12565 = new BitSet(new long[]{0x0000000000040000L});
-    public static final BitSet FOLLOW_18_in_ruleVariableDecl12575 = new BitSet(new long[]{0x0000000000000030L});
-    public static final BitSet FOLLOW_RULE_ESTERELID_in_ruleVariableDecl12593 = new BitSet(new long[]{0x0000000000400002L});
-    public static final BitSet FOLLOW_RULE_BASETYPE_in_ruleVariableDecl12621 = new BitSet(new long[]{0x0000000000400002L});
-    public static final BitSet FOLLOW_22_in_ruleVariableDecl12647 = new BitSet(new long[]{0x0000000000000010L});
-    public static final BitSet FOLLOW_ruleVariableList_in_ruleVariableDecl12668 = new BitSet(new long[]{0x0000000000040000L});
-    public static final BitSet FOLLOW_18_in_ruleVariableDecl12678 = new BitSet(new long[]{0x0000000000000030L});
-    public static final BitSet FOLLOW_RULE_ESTERELID_in_ruleVariableDecl12696 = new BitSet(new long[]{0x0000000000400002L});
-    public static final BitSet FOLLOW_RULE_BASETYPE_in_ruleVariableDecl12724 = new BitSet(new long[]{0x0000000000400002L});
-    public static final BitSet FOLLOW_ruleVariableList_in_entryRuleVariableList12768 = new BitSet(new long[]{0x0000000000000000L});
-    public static final BitSet FOLLOW_EOF_in_entryRuleVariableList12778 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_ESTERELID_in_ruleVariableList12820 = new BitSet(new long[]{0x0000040000400002L});
-    public static final BitSet FOLLOW_42_in_ruleVariableList12836 = new BitSet(new long[]{0x00000016000003D0L,0x000000000FFFC020L});
-    public static final BitSet FOLLOW_ruleDataExpr_in_ruleVariableList12857 = new BitSet(new long[]{0x0000000000400002L});
-    public static final BitSet FOLLOW_22_in_ruleVariableList12879 = new BitSet(new long[]{0x0000000000000010L});
-    public static final BitSet FOLLOW_RULE_ESTERELID_in_ruleVariableList12896 = new BitSet(new long[]{0x0000040000400002L});
-    public static final BitSet FOLLOW_42_in_ruleVariableList12912 = new BitSet(new long[]{0x00000016000003D0L,0x000000000FFFC020L});
-    public static final BitSet FOLLOW_ruleDataExpr_in_ruleVariableList12933 = new BitSet(new long[]{0x0000000000400002L});
-    public static final BitSet FOLLOW_ruleWeakAbort_in_entryRuleWeakAbort12973 = new BitSet(new long[]{0x0000000000000000L});
-    public static final BitSet FOLLOW_EOF_in_entryRuleWeakAbort12983 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_77_in_ruleWeakAbort13018 = new BitSet(new long[]{0x0000080000000000L});
-    public static final BitSet FOLLOW_43_in_ruleWeakAbort13028 = new BitSet(new long[]{0xE8F8A90000000010L,0x000000000000375BL});
-    public static final BitSet FOLLOW_ruleStatement_in_ruleWeakAbort13049 = new BitSet(new long[]{0x0000100000000000L});
-    public static final BitSet FOLLOW_44_in_ruleWeakAbort13059 = new BitSet(new long[]{0x00004116000003D0L,0x000000001FFFC020L});
-    public static final BitSet FOLLOW_ruleWeakAbortBody_in_ruleWeakAbort13080 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleWeakAbortBody_in_entryRuleWeakAbortBody13116 = new BitSet(new long[]{0x0000000000000000L});
-    public static final BitSet FOLLOW_EOF_in_entryRuleWeakAbortBody13126 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleWeakAbortInstance_in_ruleWeakAbortBody13173 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleWeakAbortCase_in_ruleWeakAbortBody13200 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleWeakAbortEnd_in_entryRuleWeakAbortEnd13236 = new BitSet(new long[]{0x0000000000000000L});
-    public static final BitSet FOLLOW_EOF_in_entryRuleWeakAbortEnd13247 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_19_in_ruleWeakAbortEnd13285 = new BitSet(new long[]{0x0000080000000002L,0x0000000000002000L});
-    public static final BitSet FOLLOW_77_in_ruleWeakAbortEnd13300 = new BitSet(new long[]{0x0000080000000000L});
-    public static final BitSet FOLLOW_43_in_ruleWeakAbortEnd13315 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleWeakAbortInstance_in_entryRuleWeakAbortInstance13357 = new BitSet(new long[]{0x0000000000000000L});
-    public static final BitSet FOLLOW_EOF_in_entryRuleWeakAbortInstance13367 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleDelayExpr_in_ruleWeakAbortInstance13413 = new BitSet(new long[]{0x0000200000000002L});
-    public static final BitSet FOLLOW_45_in_ruleWeakAbortInstance13424 = new BitSet(new long[]{0xE8F8A90000000010L,0x000000000000375BL});
-    public static final BitSet FOLLOW_ruleStatement_in_ruleWeakAbortInstance13445 = new BitSet(new long[]{0x0000000000080000L});
-    public static final BitSet FOLLOW_ruleWeakAbortEnd_in_ruleWeakAbortInstance13466 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleWeakAbortCase_in_entryRuleWeakAbortCase13504 = new BitSet(new long[]{0x0000000000000000L});
-    public static final BitSet FOLLOW_EOF_in_entryRuleWeakAbortCase13514 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleAbortCaseSingle_in_ruleWeakAbortCase13560 = new BitSet(new long[]{0x0000400000080000L});
-    public static final BitSet FOLLOW_ruleAbortCaseSingle_in_ruleWeakAbortCase13581 = new BitSet(new long[]{0x0000400000080000L});
-    public static final BitSet FOLLOW_ruleWeakAbortEnd_in_ruleWeakAbortCase13603 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleDataExpr_in_entryRuleDataExpr13639 = new BitSet(new long[]{0x0000000000000000L});
-    public static final BitSet FOLLOW_EOF_in_entryRuleDataExpr13649 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleDataUnaryExpr_in_ruleDataExpr13697 = new BitSet(new long[]{0x0000000600000002L,0x0000000001FFC020L});
-    public static final BitSet FOLLOW_ruleDataOp_in_ruleDataExpr13727 = new BitSet(new long[]{0x00000016000003D0L,0x000000000FFFC020L});
-    public static final BitSet FOLLOW_ruleDataExpr_in_ruleDataExpr13748 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleDataOp_in_ruleDataExpr13779 = new BitSet(new long[]{0x00000016000003D0L,0x000000000FFFC020L});
-    public static final BitSet FOLLOW_ruleDataExpr_in_ruleDataExpr13800 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleDataOp_in_entryRuleDataOp13838 = new BitSet(new long[]{0x0000000000000000L});
-    public static final BitSet FOLLOW_EOF_in_entryRuleDataOp13849 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_78_in_ruleDataOp13887 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_79_in_ruleDataOp13906 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_80_in_ruleDataOp13925 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_81_in_ruleDataOp13944 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_82_in_ruleDataOp13963 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_83_in_ruleDataOp13982 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_84_in_ruleDataOp14001 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_85_in_ruleDataOp14020 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_33_in_ruleDataOp14039 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_86_in_ruleDataOp14058 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_34_in_ruleDataOp14077 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_87_in_ruleDataOp14096 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_69_in_ruleDataOp14115 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_88_in_ruleDataOp14134 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleDataUnaryExpr_in_entryRuleDataUnaryExpr14174 = new BitSet(new long[]{0x0000000000000000L});
-    public static final BitSet FOLLOW_EOF_in_entryRuleDataUnaryExpr14184 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleDataValueFloat_in_ruleDataUnaryExpr14231 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleDataValueBoolean_in_ruleDataUnaryExpr14258 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleDataValueInt_in_ruleDataUnaryExpr14285 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleDataValueString_in_ruleDataUnaryExpr14312 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleDataValueID_in_ruleDataUnaryExpr14339 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleDataBlock_in_ruleDataUnaryExpr14366 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleDataCurrent_in_ruleDataUnaryExpr14393 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleDataPre_in_ruleDataUnaryExpr14420 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleDataTrap_in_ruleDataUnaryExpr14447 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleDataFunction_in_ruleDataUnaryExpr14474 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleDataValueID_in_entryRuleDataValueID14509 = new BitSet(new long[]{0x0000000000000000L});
-    public static final BitSet FOLLOW_EOF_in_entryRuleDataValueID14519 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_ESTERELID_in_ruleDataValueID14560 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleDataValueFloat_in_entryRuleDataValueFloat14600 = new BitSet(new long[]{0x0000000000000000L});
-    public static final BitSet FOLLOW_EOF_in_entryRuleDataValueFloat14610 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_FLOAT_in_ruleDataValueFloat14651 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleDataValueBoolean_in_entryRuleDataValueBoolean14691 = new BitSet(new long[]{0x0000000000000000L});
-    public static final BitSet FOLLOW_EOF_in_entryRuleDataValueBoolean14701 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_BOOLEAN_in_ruleDataValueBoolean14742 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleDataValueInt_in_entryRuleDataValueInt14782 = new BitSet(new long[]{0x0000000000000000L});
-    public static final BitSet FOLLOW_EOF_in_entryRuleDataValueInt14792 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_INT_in_ruleDataValueInt14833 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleDataValueString_in_entryRuleDataValueString14873 = new BitSet(new long[]{0x0000000000000000L});
-    public static final BitSet FOLLOW_EOF_in_entryRuleDataValueString14883 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_STRING_in_ruleDataValueString14924 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleDataBlock_in_entryRuleDataBlock14964 = new BitSet(new long[]{0x0000000000000000L});
-    public static final BitSet FOLLOW_EOF_in_entryRuleDataBlock14974 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_36_in_ruleDataBlock15009 = new BitSet(new long[]{0x00000016000003D0L,0x000000000FFFC020L});
-    public static final BitSet FOLLOW_ruleDataExpr_in_ruleDataBlock15030 = new BitSet(new long[]{0x0000002000000000L});
-    public static final BitSet FOLLOW_37_in_ruleDataBlock15040 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleDataCurrent_in_entryRuleDataCurrent15076 = new BitSet(new long[]{0x0000000000000000L});
-    public static final BitSet FOLLOW_EOF_in_entryRuleDataCurrent15086 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_89_in_ruleDataCurrent15121 = new BitSet(new long[]{0x0000000000000010L,0x0000000010000000L});
-    public static final BitSet FOLLOW_RULE_ESTERELID_in_ruleDataCurrent15140 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleTick_in_ruleDataCurrent15167 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleDataPre_in_entryRuleDataPre15204 = new BitSet(new long[]{0x0000000000000000L});
-    public static final BitSet FOLLOW_EOF_in_entryRuleDataPre15214 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_90_in_ruleDataPre15249 = new BitSet(new long[]{0x0000001000000000L});
-    public static final BitSet FOLLOW_36_in_ruleDataPre15259 = new BitSet(new long[]{0x0000000000000000L,0x0000000002000000L});
-    public static final BitSet FOLLOW_89_in_ruleDataPre15269 = new BitSet(new long[]{0x0000000000000010L,0x0000000010000000L});
-    public static final BitSet FOLLOW_RULE_ESTERELID_in_ruleDataPre15288 = new BitSet(new long[]{0x0000002000000000L});
-    public static final BitSet FOLLOW_ruleTick_in_ruleDataPre15315 = new BitSet(new long[]{0x0000002000000000L});
-    public static final BitSet FOLLOW_37_in_ruleDataPre15326 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleDataTrap_in_entryRuleDataTrap15362 = new BitSet(new long[]{0x0000000000000000L});
-    public static final BitSet FOLLOW_EOF_in_entryRuleDataTrap15372 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_91_in_ruleDataTrap15407 = new BitSet(new long[]{0x0000000000000010L});
-    public static final BitSet FOLLOW_RULE_ESTERELID_in_ruleDataTrap15425 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleDataFunction_in_entryRuleDataFunction15461 = new BitSet(new long[]{0x0000000000000000L});
-    public static final BitSet FOLLOW_EOF_in_entryRuleDataFunction15471 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_ESTERELID_in_ruleDataFunction15514 = new BitSet(new long[]{0x0000001000000000L});
-    public static final BitSet FOLLOW_36_in_ruleDataFunction15524 = new BitSet(new long[]{0x00000016000003D0L,0x000000000FFFC020L});
-    public static final BitSet FOLLOW_ruleDataExpr_in_ruleDataFunction15545 = new BitSet(new long[]{0x0000002000400000L});
-    public static final BitSet FOLLOW_22_in_ruleDataFunction15556 = new BitSet(new long[]{0x00000016000003D0L,0x000000000FFFC020L});
-    public static final BitSet FOLLOW_ruleDataExpr_in_ruleDataFunction15577 = new BitSet(new long[]{0x0000002000400000L});
-    public static final BitSet FOLLOW_37_in_ruleDataFunction15589 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleTrapExpr_in_entryRuleTrapExpr15625 = new BitSet(new long[]{0x0000000000000000L});
-    public static final BitSet FOLLOW_EOF_in_entryRuleTrapExpr15635 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleSigExpr_in_ruleTrapExpr15681 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleSigExpr_in_entryRuleSigExpr15715 = new BitSet(new long[]{0x0000000000000000L});
-    public static final BitSet FOLLOW_EOF_in_entryRuleSigExpr15725 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleSigExprAND_in_ruleSigExpr15771 = new BitSet(new long[]{0x0000000000000002L,0x0000000000008000L});
-    public static final BitSet FOLLOW_79_in_ruleSigExpr15782 = new BitSet(new long[]{0x0000001000000010L,0x0000000000010000L});
-    public static final BitSet FOLLOW_ruleSigExprAND_in_ruleSigExpr15803 = new BitSet(new long[]{0x0000000000000002L,0x0000000000008000L});
-    public static final BitSet FOLLOW_ruleSigExprAND_in_entryRuleSigExprAND15841 = new BitSet(new long[]{0x0000000000000000L});
-    public static final BitSet FOLLOW_EOF_in_entryRuleSigExprAND15851 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleSigExprUnary_in_ruleSigExprAND15897 = new BitSet(new long[]{0x0000000000000002L,0x0000000000004000L});
-    public static final BitSet FOLLOW_78_in_ruleSigExprAND15908 = new BitSet(new long[]{0x0000001000000010L,0x0000000000010000L});
-    public static final BitSet FOLLOW_ruleSigExprUnary_in_ruleSigExprAND15929 = new BitSet(new long[]{0x0000000000000002L,0x0000000000004000L});
-    public static final BitSet FOLLOW_ruleSigExprUnary_in_entryRuleSigExprUnary15967 = new BitSet(new long[]{0x0000000000000000L});
-    public static final BitSet FOLLOW_EOF_in_entryRuleSigExprUnary15977 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_ESTERELID_in_ruleSigExprUnary16019 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_36_in_ruleSigExprUnary16041 = new BitSet(new long[]{0x0000001000000010L,0x0000000000010000L});
-    public static final BitSet FOLLOW_ruleSigExpr_in_ruleSigExprUnary16062 = new BitSet(new long[]{0x0000002000000000L});
-    public static final BitSet FOLLOW_37_in_ruleSigExprUnary16072 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_80_in_ruleSigExprUnary16090 = new BitSet(new long[]{0x0000001000000010L,0x0000000000010000L});
-    public static final BitSet FOLLOW_ruleSigExprUnary_in_ruleSigExprUnary16111 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleDelayExpr_in_entryRuleDelayExpr16148 = new BitSet(new long[]{0x0000000000000000L});
-    public static final BitSet FOLLOW_EOF_in_entryRuleDelayExpr16158 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleDelayEvent_in_ruleDelayExpr16204 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleDataExpr_in_ruleDelayExpr16232 = new BitSet(new long[]{0x0000010000000010L,0x0000000014000000L});
-    public static final BitSet FOLLOW_ruleDelayEvent_in_ruleDelayExpr16253 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleDelayEvent_in_entryRuleDelayEvent16290 = new BitSet(new long[]{0x0000000000000000L});
-    public static final BitSet FOLLOW_EOF_in_entryRuleDelayEvent16300 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_ESTERELID_in_ruleDelayEvent16344 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleTick_in_ruleDelayEvent16371 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_90_in_ruleDelayEvent16389 = new BitSet(new long[]{0x0000001000000000L});
-    public static final BitSet FOLLOW_36_in_ruleDelayEvent16399 = new BitSet(new long[]{0x0000001000000010L,0x0000000000010000L});
-    public static final BitSet FOLLOW_ruleSigExpr_in_ruleDelayEvent16421 = new BitSet(new long[]{0x0000002000000000L});
-    public static final BitSet FOLLOW_37_in_ruleDelayEvent16430 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_40_in_ruleDelayEvent16448 = new BitSet(new long[]{0x0000001000000010L,0x0000000000010000L});
-    public static final BitSet FOLLOW_ruleSigExpr_in_ruleDelayEvent16470 = new BitSet(new long[]{0x0000020000000000L});
-    public static final BitSet FOLLOW_41_in_ruleDelayEvent16479 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleChannelDescription_in_entryRuleChannelDescription16516 = new BitSet(new long[]{0x0000000000000000L});
-    public static final BitSet FOLLOW_EOF_in_entryRuleChannelDescription16526 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_18_in_ruleChannelDescription16562 = new BitSet(new long[]{0x0000000000000030L});
-    public static final BitSet FOLLOW_RULE_ESTERELID_in_ruleChannelDescription16580 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_BASETYPE_in_ruleChannelDescription16608 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_36_in_ruleChannelDescription16632 = new BitSet(new long[]{0x0000000000000030L});
-    public static final BitSet FOLLOW_RULE_ESTERELID_in_ruleChannelDescription16650 = new BitSet(new long[]{0x0000002000000000L});
-    public static final BitSet FOLLOW_RULE_BASETYPE_in_ruleChannelDescription16678 = new BitSet(new long[]{0x0000002000000000L});
-    public static final BitSet FOLLOW_37_in_ruleChannelDescription16694 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_42_in_ruleChannelDescription16712 = new BitSet(new long[]{0x00000016000003D0L,0x000000000FFFC020L});
-    public static final BitSet FOLLOW_ruleDataExpr_in_ruleChannelDescription16733 = new BitSet(new long[]{0x0000000000040000L});
-    public static final BitSet FOLLOW_18_in_ruleChannelDescription16743 = new BitSet(new long[]{0x0000000000000030L});
-    public static final BitSet FOLLOW_RULE_ESTERELID_in_ruleChannelDescription16761 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_BASETYPE_in_ruleChannelDescription16789 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleSignal_in_entryRuleSignal16832 = new BitSet(new long[]{0x0000000000000000L});
-    public static final BitSet FOLLOW_EOF_in_entryRuleSignal16842 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_ESTERELID_in_ruleSignal16884 = new BitSet(new long[]{0x0000041000040002L});
-    public static final BitSet FOLLOW_ruleChannelDescription_in_ruleSignal16910 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleTick_in_entryRuleTick16948 = new BitSet(new long[]{0x0000000000000000L});
-    public static final BitSet FOLLOW_EOF_in_entryRuleTick16959 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_92_in_ruleTick16996 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleSensor_in_entryRuleSensor17035 = new BitSet(new long[]{0x0000000000000000L});
-    public static final BitSet FOLLOW_EOF_in_entryRuleSensor17045 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_ESTERELID_in_ruleSensor17088 = new BitSet(new long[]{0x0000000000040000L});
-    public static final BitSet FOLLOW_18_in_ruleSensor17103 = new BitSet(new long[]{0x0000000000000030L});
-    public static final BitSet FOLLOW_RULE_ESTERELID_in_ruleSensor17121 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_BASETYPE_in_ruleSensor17149 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_ESTERELID_in_ruleSensor17180 = new BitSet(new long[]{0x0000001000000000L});
-    public static final BitSet FOLLOW_36_in_ruleSensor17195 = new BitSet(new long[]{0x0000000000000030L});
-    public static final BitSet FOLLOW_RULE_ESTERELID_in_ruleSensor17213 = new BitSet(new long[]{0x0000002000000000L});
-    public static final BitSet FOLLOW_RULE_BASETYPE_in_ruleSensor17241 = new BitSet(new long[]{0x0000002000000000L});
-    public static final BitSet FOLLOW_37_in_ruleSensor17257 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_ESTERELID_in_ruleConstantRenaming10784 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000020L});
+    public static final BitSet FOLLOW_69_in_ruleConstantRenaming10794 = new BitSet(new long[]{0x0000000000000010L});
+    public static final BitSet FOLLOW_RULE_ESTERELID_in_ruleConstantRenaming10812 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleFunctionRenaming_in_entryRuleFunctionRenaming10848 = new BitSet(new long[]{0x0000000000000000L});
+    public static final BitSet FOLLOW_EOF_in_entryRuleFunctionRenaming10858 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_ESTERELID_in_ruleFunctionRenaming10901 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000020L});
+    public static final BitSet FOLLOW_69_in_ruleFunctionRenaming10911 = new BitSet(new long[]{0x0000000000000010L});
+    public static final BitSet FOLLOW_RULE_ESTERELID_in_ruleFunctionRenaming10929 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleSignalRenaming_in_entryRuleSignalRenaming10967 = new BitSet(new long[]{0x0000000000000000L});
+    public static final BitSet FOLLOW_EOF_in_entryRuleSignalRenaming10977 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_ESTERELID_in_ruleSignalRenaming11020 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000020L});
+    public static final BitSet FOLLOW_69_in_ruleSignalRenaming11030 = new BitSet(new long[]{0x0000000000000010L});
+    public static final BitSet FOLLOW_RULE_ESTERELID_in_ruleSignalRenaming11048 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleLocalSignalDecl_in_entryRuleLocalSignalDecl11084 = new BitSet(new long[]{0x0000000000000000L});
+    public static final BitSet FOLLOW_EOF_in_entryRuleLocalSignalDecl11094 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_70_in_ruleLocalSignalDecl11129 = new BitSet(new long[]{0x0000000000000010L});
+    public static final BitSet FOLLOW_ruleLocalSignalList_in_ruleLocalSignalDecl11150 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000080L});
+    public static final BitSet FOLLOW_71_in_ruleLocalSignalDecl11160 = new BitSet(new long[]{0xE8F8A90000000010L,0x000000000000375BL});
+    public static final BitSet FOLLOW_ruleStatement_in_ruleLocalSignalDecl11181 = new BitSet(new long[]{0x0000000000080000L});
+    public static final BitSet FOLLOW_19_in_ruleLocalSignalDecl11191 = new BitSet(new long[]{0x0000000000000002L,0x0000000000000040L});
+    public static final BitSet FOLLOW_70_in_ruleLocalSignalDecl11202 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleLocalSignalList_in_entryRuleLocalSignalList11240 = new BitSet(new long[]{0x0000000000000000L});
+    public static final BitSet FOLLOW_EOF_in_entryRuleLocalSignalList11250 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleSignal_in_ruleLocalSignalList11305 = new BitSet(new long[]{0x0000000000400002L});
+    public static final BitSet FOLLOW_22_in_ruleLocalSignalList11316 = new BitSet(new long[]{0x0000000000000010L});
+    public static final BitSet FOLLOW_ruleSignal_in_ruleLocalSignalList11337 = new BitSet(new long[]{0x0000000000400002L});
+    public static final BitSet FOLLOW_ruleSuspend_in_entryRuleSuspend11375 = new BitSet(new long[]{0x0000000000000000L});
+    public static final BitSet FOLLOW_EOF_in_entryRuleSuspend11385 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_72_in_ruleSuspend11420 = new BitSet(new long[]{0xE8F8A90000000010L,0x000000000000375BL});
+    public static final BitSet FOLLOW_ruleStatement_in_ruleSuspend11441 = new BitSet(new long[]{0x0000100000000000L});
+    public static final BitSet FOLLOW_44_in_ruleSuspend11451 = new BitSet(new long[]{0x00000116000003D0L,0x000000004FFFC020L});
+    public static final BitSet FOLLOW_ruleDelayExpr_in_ruleSuspend11472 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleSustain_in_entryRuleSustain11508 = new BitSet(new long[]{0x0000000000000000L});
+    public static final BitSet FOLLOW_EOF_in_entryRuleSustain11518 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_73_in_ruleSustain11553 = new BitSet(new long[]{0x0000000000000010L,0x0000000040000000L});
+    public static final BitSet FOLLOW_RULE_ESTERELID_in_ruleSustain11572 = new BitSet(new long[]{0x0000001000000002L});
+    public static final BitSet FOLLOW_ruleTick_in_ruleSustain11599 = new BitSet(new long[]{0x0000001000000002L});
+    public static final BitSet FOLLOW_36_in_ruleSustain11611 = new BitSet(new long[]{0x00000016000003D0L,0x000000000FFFC020L});
+    public static final BitSet FOLLOW_ruleDataExpr_in_ruleSustain11632 = new BitSet(new long[]{0x0000002000000000L});
+    public static final BitSet FOLLOW_37_in_ruleSustain11642 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleTrap_in_entryRuleTrap11680 = new BitSet(new long[]{0x0000000000000000L});
+    public static final BitSet FOLLOW_EOF_in_entryRuleTrap11690 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_74_in_ruleTrap11725 = new BitSet(new long[]{0x0000000000000010L});
+    public static final BitSet FOLLOW_ruleTrapDeclList_in_ruleTrap11746 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000080L});
+    public static final BitSet FOLLOW_71_in_ruleTrap11756 = new BitSet(new long[]{0xE8F8A90000000010L,0x000000000000375BL});
+    public static final BitSet FOLLOW_ruleStatement_in_ruleTrap11777 = new BitSet(new long[]{0x0000000000080000L,0x0000000000000800L});
+    public static final BitSet FOLLOW_ruleTrapHandlerList_in_ruleTrap11798 = new BitSet(new long[]{0x0000000000080000L});
+    public static final BitSet FOLLOW_19_in_ruleTrap11809 = new BitSet(new long[]{0x0000000000000002L,0x0000000000000400L});
+    public static final BitSet FOLLOW_74_in_ruleTrap11820 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleTrapDeclList_in_entryRuleTrapDeclList11858 = new BitSet(new long[]{0x0000000000000000L});
+    public static final BitSet FOLLOW_EOF_in_entryRuleTrapDeclList11868 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleTrapDecl_in_ruleTrapDeclList11914 = new BitSet(new long[]{0x0000000000400002L});
+    public static final BitSet FOLLOW_22_in_ruleTrapDeclList11925 = new BitSet(new long[]{0x0000000000000010L});
+    public static final BitSet FOLLOW_ruleTrapDecl_in_ruleTrapDeclList11946 = new BitSet(new long[]{0x0000000000400002L});
+    public static final BitSet FOLLOW_ruleTrapDecl_in_entryRuleTrapDecl11984 = new BitSet(new long[]{0x0000000000000000L});
+    public static final BitSet FOLLOW_EOF_in_entryRuleTrapDecl11994 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_ESTERELID_in_ruleTrapDecl12036 = new BitSet(new long[]{0x0000041000040002L});
+    public static final BitSet FOLLOW_ruleChannelDescription_in_ruleTrapDecl12062 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleTrapHandlerList_in_entryRuleTrapHandlerList12099 = new BitSet(new long[]{0x0000000000000000L});
+    public static final BitSet FOLLOW_EOF_in_entryRuleTrapHandlerList12109 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleTrapHandler_in_ruleTrapHandlerList12155 = new BitSet(new long[]{0x0000000000000002L,0x0000000000000800L});
+    public static final BitSet FOLLOW_ruleTrapHandler_in_ruleTrapHandlerList12176 = new BitSet(new long[]{0x0000000000000002L,0x0000000000000800L});
+    public static final BitSet FOLLOW_ruleTrapHandler_in_entryRuleTrapHandler12213 = new BitSet(new long[]{0x0000000000000000L});
+    public static final BitSet FOLLOW_EOF_in_entryRuleTrapHandler12223 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_75_in_ruleTrapHandler12258 = new BitSet(new long[]{0x0000001000000010L,0x0000000000010000L});
+    public static final BitSet FOLLOW_ruleTrapExpr_in_ruleTrapHandler12279 = new BitSet(new long[]{0x0000200000000000L});
+    public static final BitSet FOLLOW_45_in_ruleTrapHandler12289 = new BitSet(new long[]{0xE8F8A90000000010L,0x000000000000375BL});
+    public static final BitSet FOLLOW_ruleStatement_in_ruleTrapHandler12310 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleVariable_in_entryRuleVariable12346 = new BitSet(new long[]{0x0000000000000000L});
+    public static final BitSet FOLLOW_EOF_in_entryRuleVariable12356 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_76_in_ruleVariable12391 = new BitSet(new long[]{0x0000000000000010L});
+    public static final BitSet FOLLOW_ruleVariableDecl_in_ruleVariable12412 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000080L});
+    public static final BitSet FOLLOW_71_in_ruleVariable12422 = new BitSet(new long[]{0xE8F8A90000000010L,0x000000000000375BL});
+    public static final BitSet FOLLOW_ruleStatement_in_ruleVariable12443 = new BitSet(new long[]{0x0000000000080000L});
+    public static final BitSet FOLLOW_19_in_ruleVariable12453 = new BitSet(new long[]{0x0000000000000002L,0x0000000000001000L});
+    public static final BitSet FOLLOW_76_in_ruleVariable12464 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleVariableDecl_in_entryRuleVariableDecl12502 = new BitSet(new long[]{0x0000000000000000L});
+    public static final BitSet FOLLOW_EOF_in_entryRuleVariableDecl12512 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleVariableList_in_ruleVariableDecl12558 = new BitSet(new long[]{0x0000000000040000L});
+    public static final BitSet FOLLOW_18_in_ruleVariableDecl12568 = new BitSet(new long[]{0x0000000000000030L});
+    public static final BitSet FOLLOW_RULE_ESTERELID_in_ruleVariableDecl12586 = new BitSet(new long[]{0x0000000000400002L});
+    public static final BitSet FOLLOW_RULE_BASETYPE_in_ruleVariableDecl12614 = new BitSet(new long[]{0x0000000000400002L});
+    public static final BitSet FOLLOW_22_in_ruleVariableDecl12640 = new BitSet(new long[]{0x0000000000000010L});
+    public static final BitSet FOLLOW_ruleVariableList_in_ruleVariableDecl12661 = new BitSet(new long[]{0x0000000000040000L});
+    public static final BitSet FOLLOW_18_in_ruleVariableDecl12671 = new BitSet(new long[]{0x0000000000000030L});
+    public static final BitSet FOLLOW_RULE_ESTERELID_in_ruleVariableDecl12689 = new BitSet(new long[]{0x0000000000400002L});
+    public static final BitSet FOLLOW_RULE_BASETYPE_in_ruleVariableDecl12717 = new BitSet(new long[]{0x0000000000400002L});
+    public static final BitSet FOLLOW_ruleVariableList_in_entryRuleVariableList12761 = new BitSet(new long[]{0x0000000000000000L});
+    public static final BitSet FOLLOW_EOF_in_entryRuleVariableList12771 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_ESTERELID_in_ruleVariableList12813 = new BitSet(new long[]{0x0000040000400002L});
+    public static final BitSet FOLLOW_42_in_ruleVariableList12829 = new BitSet(new long[]{0x00000016000003D0L,0x000000000FFFC020L});
+    public static final BitSet FOLLOW_ruleDataExpr_in_ruleVariableList12850 = new BitSet(new long[]{0x0000000000400002L});
+    public static final BitSet FOLLOW_22_in_ruleVariableList12872 = new BitSet(new long[]{0x0000000000000010L});
+    public static final BitSet FOLLOW_RULE_ESTERELID_in_ruleVariableList12889 = new BitSet(new long[]{0x0000040000400002L});
+    public static final BitSet FOLLOW_42_in_ruleVariableList12905 = new BitSet(new long[]{0x00000016000003D0L,0x000000000FFFC020L});
+    public static final BitSet FOLLOW_ruleDataExpr_in_ruleVariableList12926 = new BitSet(new long[]{0x0000000000400002L});
+    public static final BitSet FOLLOW_ruleWeakAbort_in_entryRuleWeakAbort12966 = new BitSet(new long[]{0x0000000000000000L});
+    public static final BitSet FOLLOW_EOF_in_entryRuleWeakAbort12976 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_77_in_ruleWeakAbort13011 = new BitSet(new long[]{0x0000080000000000L});
+    public static final BitSet FOLLOW_43_in_ruleWeakAbort13021 = new BitSet(new long[]{0xE8F8A90000000010L,0x000000000000375BL});
+    public static final BitSet FOLLOW_ruleStatement_in_ruleWeakAbort13042 = new BitSet(new long[]{0x0000100000000000L});
+    public static final BitSet FOLLOW_44_in_ruleWeakAbort13052 = new BitSet(new long[]{0x00004116000003D0L,0x000000004FFFC020L});
+    public static final BitSet FOLLOW_ruleWeakAbortBody_in_ruleWeakAbort13073 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleWeakAbortBody_in_entryRuleWeakAbortBody13109 = new BitSet(new long[]{0x0000000000000000L});
+    public static final BitSet FOLLOW_EOF_in_entryRuleWeakAbortBody13119 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleWeakAbortInstance_in_ruleWeakAbortBody13166 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleWeakAbortCase_in_ruleWeakAbortBody13193 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleWeakAbortEnd_in_entryRuleWeakAbortEnd13229 = new BitSet(new long[]{0x0000000000000000L});
+    public static final BitSet FOLLOW_EOF_in_entryRuleWeakAbortEnd13240 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_19_in_ruleWeakAbortEnd13278 = new BitSet(new long[]{0x0000080000000002L,0x0000000000002000L});
+    public static final BitSet FOLLOW_77_in_ruleWeakAbortEnd13293 = new BitSet(new long[]{0x0000080000000000L});
+    public static final BitSet FOLLOW_43_in_ruleWeakAbortEnd13308 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleWeakAbortInstance_in_entryRuleWeakAbortInstance13350 = new BitSet(new long[]{0x0000000000000000L});
+    public static final BitSet FOLLOW_EOF_in_entryRuleWeakAbortInstance13360 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleDelayExpr_in_ruleWeakAbortInstance13406 = new BitSet(new long[]{0x0000200000000002L});
+    public static final BitSet FOLLOW_45_in_ruleWeakAbortInstance13417 = new BitSet(new long[]{0xE8F8A90000000010L,0x000000000000375BL});
+    public static final BitSet FOLLOW_ruleStatement_in_ruleWeakAbortInstance13438 = new BitSet(new long[]{0x0000000000080000L});
+    public static final BitSet FOLLOW_ruleWeakAbortEnd_in_ruleWeakAbortInstance13459 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleWeakAbortCase_in_entryRuleWeakAbortCase13497 = new BitSet(new long[]{0x0000000000000000L});
+    public static final BitSet FOLLOW_EOF_in_entryRuleWeakAbortCase13507 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleAbortCaseSingle_in_ruleWeakAbortCase13553 = new BitSet(new long[]{0x0000400000080000L});
+    public static final BitSet FOLLOW_ruleAbortCaseSingle_in_ruleWeakAbortCase13574 = new BitSet(new long[]{0x0000400000080000L});
+    public static final BitSet FOLLOW_ruleWeakAbortEnd_in_ruleWeakAbortCase13596 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleDataExpr_in_entryRuleDataExpr13632 = new BitSet(new long[]{0x0000000000000000L});
+    public static final BitSet FOLLOW_EOF_in_entryRuleDataExpr13642 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleDataUnaryExpr_in_ruleDataExpr13690 = new BitSet(new long[]{0x0000000600000002L,0x0000000001FFC020L});
+    public static final BitSet FOLLOW_ruleDataOp_in_ruleDataExpr13720 = new BitSet(new long[]{0x00000016000003D0L,0x000000000FFFC020L});
+    public static final BitSet FOLLOW_ruleDataExpr_in_ruleDataExpr13741 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleDataOp_in_ruleDataExpr13772 = new BitSet(new long[]{0x00000016000003D0L,0x000000000FFFC020L});
+    public static final BitSet FOLLOW_ruleDataExpr_in_ruleDataExpr13793 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleDataOp_in_entryRuleDataOp13831 = new BitSet(new long[]{0x0000000000000000L});
+    public static final BitSet FOLLOW_EOF_in_entryRuleDataOp13842 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_78_in_ruleDataOp13880 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_79_in_ruleDataOp13899 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_80_in_ruleDataOp13918 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_81_in_ruleDataOp13937 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_82_in_ruleDataOp13956 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_83_in_ruleDataOp13975 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_84_in_ruleDataOp13994 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_85_in_ruleDataOp14013 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_33_in_ruleDataOp14032 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_86_in_ruleDataOp14051 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_34_in_ruleDataOp14070 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_87_in_ruleDataOp14089 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_69_in_ruleDataOp14108 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_88_in_ruleDataOp14127 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleDataUnaryExpr_in_entryRuleDataUnaryExpr14167 = new BitSet(new long[]{0x0000000000000000L});
+    public static final BitSet FOLLOW_EOF_in_entryRuleDataUnaryExpr14177 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleDataValueFloat_in_ruleDataUnaryExpr14224 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleDataValueBoolean_in_ruleDataUnaryExpr14251 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleDataValueInt_in_ruleDataUnaryExpr14278 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleDataValueString_in_ruleDataUnaryExpr14305 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleDataValueID_in_ruleDataUnaryExpr14332 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleDataBlock_in_ruleDataUnaryExpr14359 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleDataCurrent_in_ruleDataUnaryExpr14386 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleDataPre_in_ruleDataUnaryExpr14413 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleDataTrap_in_ruleDataUnaryExpr14440 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleDataFunction_in_ruleDataUnaryExpr14467 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleDataValueID_in_entryRuleDataValueID14502 = new BitSet(new long[]{0x0000000000000000L});
+    public static final BitSet FOLLOW_EOF_in_entryRuleDataValueID14512 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_ESTERELID_in_ruleDataValueID14553 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleDataValueFloat_in_entryRuleDataValueFloat14593 = new BitSet(new long[]{0x0000000000000000L});
+    public static final BitSet FOLLOW_EOF_in_entryRuleDataValueFloat14603 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_FLOAT_in_ruleDataValueFloat14644 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleDataValueBoolean_in_entryRuleDataValueBoolean14684 = new BitSet(new long[]{0x0000000000000000L});
+    public static final BitSet FOLLOW_EOF_in_entryRuleDataValueBoolean14694 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_BOOLEAN_in_ruleDataValueBoolean14735 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleDataValueInt_in_entryRuleDataValueInt14775 = new BitSet(new long[]{0x0000000000000000L});
+    public static final BitSet FOLLOW_EOF_in_entryRuleDataValueInt14785 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_INT_in_ruleDataValueInt14826 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleDataValueString_in_entryRuleDataValueString14866 = new BitSet(new long[]{0x0000000000000000L});
+    public static final BitSet FOLLOW_EOF_in_entryRuleDataValueString14876 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_STRING_in_ruleDataValueString14917 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleDataBlock_in_entryRuleDataBlock14957 = new BitSet(new long[]{0x0000000000000000L});
+    public static final BitSet FOLLOW_EOF_in_entryRuleDataBlock14967 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_36_in_ruleDataBlock15002 = new BitSet(new long[]{0x00000016000003D0L,0x000000000FFFC020L});
+    public static final BitSet FOLLOW_ruleDataExpr_in_ruleDataBlock15023 = new BitSet(new long[]{0x0000002000000000L});
+    public static final BitSet FOLLOW_37_in_ruleDataBlock15033 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleDataCurrent_in_entryRuleDataCurrent15069 = new BitSet(new long[]{0x0000000000000000L});
+    public static final BitSet FOLLOW_EOF_in_entryRuleDataCurrent15079 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_89_in_ruleDataCurrent15114 = new BitSet(new long[]{0x0000000000000010L,0x0000000040000000L});
+    public static final BitSet FOLLOW_RULE_ESTERELID_in_ruleDataCurrent15133 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleTick_in_ruleDataCurrent15160 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleDataPre_in_entryRuleDataPre15197 = new BitSet(new long[]{0x0000000000000000L});
+    public static final BitSet FOLLOW_EOF_in_entryRuleDataPre15207 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_90_in_ruleDataPre15242 = new BitSet(new long[]{0x0000001000000000L});
+    public static final BitSet FOLLOW_36_in_ruleDataPre15252 = new BitSet(new long[]{0x0000000000000000L,0x0000000002000000L});
+    public static final BitSet FOLLOW_89_in_ruleDataPre15262 = new BitSet(new long[]{0x0000000000000010L,0x0000000040000000L});
+    public static final BitSet FOLLOW_RULE_ESTERELID_in_ruleDataPre15281 = new BitSet(new long[]{0x0000002000000000L});
+    public static final BitSet FOLLOW_ruleTick_in_ruleDataPre15308 = new BitSet(new long[]{0x0000002000000000L});
+    public static final BitSet FOLLOW_37_in_ruleDataPre15319 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleDataTrap_in_entryRuleDataTrap15355 = new BitSet(new long[]{0x0000000000000000L});
+    public static final BitSet FOLLOW_EOF_in_entryRuleDataTrap15365 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_91_in_ruleDataTrap15400 = new BitSet(new long[]{0x0000000000000010L});
+    public static final BitSet FOLLOW_RULE_ESTERELID_in_ruleDataTrap15418 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleDataFunction_in_entryRuleDataFunction15454 = new BitSet(new long[]{0x0000000000000000L});
+    public static final BitSet FOLLOW_EOF_in_entryRuleDataFunction15464 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_ESTERELID_in_ruleDataFunction15507 = new BitSet(new long[]{0x0000001000000000L});
+    public static final BitSet FOLLOW_36_in_ruleDataFunction15517 = new BitSet(new long[]{0x00000016000003D0L,0x000000000FFFC020L});
+    public static final BitSet FOLLOW_ruleDataExpr_in_ruleDataFunction15538 = new BitSet(new long[]{0x0000002000400000L});
+    public static final BitSet FOLLOW_22_in_ruleDataFunction15549 = new BitSet(new long[]{0x00000016000003D0L,0x000000000FFFC020L});
+    public static final BitSet FOLLOW_ruleDataExpr_in_ruleDataFunction15570 = new BitSet(new long[]{0x0000002000400000L});
+    public static final BitSet FOLLOW_37_in_ruleDataFunction15582 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleTrapExpr_in_entryRuleTrapExpr15618 = new BitSet(new long[]{0x0000000000000000L});
+    public static final BitSet FOLLOW_EOF_in_entryRuleTrapExpr15628 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleSigExpr_in_ruleTrapExpr15674 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleSigExpr_in_entryRuleSigExpr15708 = new BitSet(new long[]{0x0000000000000000L});
+    public static final BitSet FOLLOW_EOF_in_entryRuleSigExpr15718 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleSigExprAND_in_ruleSigExpr15764 = new BitSet(new long[]{0x0000000000000002L,0x0000000000008000L});
+    public static final BitSet FOLLOW_79_in_ruleSigExpr15775 = new BitSet(new long[]{0x0000001000000010L,0x0000000000010000L});
+    public static final BitSet FOLLOW_ruleSigExprAND_in_ruleSigExpr15796 = new BitSet(new long[]{0x0000000000000002L,0x0000000000008000L});
+    public static final BitSet FOLLOW_ruleSigExprAND_in_entryRuleSigExprAND15834 = new BitSet(new long[]{0x0000000000000000L});
+    public static final BitSet FOLLOW_EOF_in_entryRuleSigExprAND15844 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleSigExprUnary_in_ruleSigExprAND15890 = new BitSet(new long[]{0x0000000000000002L,0x0000000000004000L});
+    public static final BitSet FOLLOW_78_in_ruleSigExprAND15901 = new BitSet(new long[]{0x0000001000000010L,0x0000000000010000L});
+    public static final BitSet FOLLOW_ruleSigExprUnary_in_ruleSigExprAND15922 = new BitSet(new long[]{0x0000000000000002L,0x0000000000004000L});
+    public static final BitSet FOLLOW_ruleSigExprUnary_in_entryRuleSigExprUnary15960 = new BitSet(new long[]{0x0000000000000000L});
+    public static final BitSet FOLLOW_EOF_in_entryRuleSigExprUnary15970 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_ESTERELID_in_ruleSigExprUnary16012 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_36_in_ruleSigExprUnary16034 = new BitSet(new long[]{0x0000001000000010L,0x0000000000010000L});
+    public static final BitSet FOLLOW_ruleSigExpr_in_ruleSigExprUnary16055 = new BitSet(new long[]{0x0000002000000000L});
+    public static final BitSet FOLLOW_37_in_ruleSigExprUnary16065 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_80_in_ruleSigExprUnary16083 = new BitSet(new long[]{0x0000001000000010L,0x0000000000010000L});
+    public static final BitSet FOLLOW_ruleSigExprUnary_in_ruleSigExprUnary16104 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleDelayExpr_in_entryRuleDelayExpr16141 = new BitSet(new long[]{0x0000000000000000L});
+    public static final BitSet FOLLOW_EOF_in_entryRuleDelayExpr16151 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleDelayEvent_in_ruleDelayExpr16197 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleDataExpr_in_ruleDelayExpr16225 = new BitSet(new long[]{0x0000010000000010L,0x0000000044000000L});
+    public static final BitSet FOLLOW_ruleDelayEvent_in_ruleDelayExpr16246 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleDelayEvent_in_entryRuleDelayEvent16283 = new BitSet(new long[]{0x0000000000000000L});
+    public static final BitSet FOLLOW_EOF_in_entryRuleDelayEvent16293 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_ESTERELID_in_ruleDelayEvent16337 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleTick_in_ruleDelayEvent16364 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_90_in_ruleDelayEvent16382 = new BitSet(new long[]{0x0000001000000000L});
+    public static final BitSet FOLLOW_36_in_ruleDelayEvent16392 = new BitSet(new long[]{0x0000001000000010L,0x0000000000010000L});
+    public static final BitSet FOLLOW_ruleSigExpr_in_ruleDelayEvent16413 = new BitSet(new long[]{0x0000002000000000L});
+    public static final BitSet FOLLOW_37_in_ruleDelayEvent16423 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_40_in_ruleDelayEvent16441 = new BitSet(new long[]{0x0000001000000010L,0x0000000000010000L});
+    public static final BitSet FOLLOW_ruleSigExpr_in_ruleDelayEvent16462 = new BitSet(new long[]{0x0000020000000000L});
+    public static final BitSet FOLLOW_41_in_ruleDelayEvent16472 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleChannelDescription_in_entryRuleChannelDescription16509 = new BitSet(new long[]{0x0000000000000000L});
+    public static final BitSet FOLLOW_EOF_in_entryRuleChannelDescription16519 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_18_in_ruleChannelDescription16555 = new BitSet(new long[]{0x0000000000000030L,0x0000000010000000L});
+    public static final BitSet FOLLOW_ruleChannelType_in_ruleChannelDescription16576 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_36_in_ruleChannelDescription16594 = new BitSet(new long[]{0x0000000000000030L,0x0000000010000000L});
+    public static final BitSet FOLLOW_ruleChannelType_in_ruleChannelDescription16615 = new BitSet(new long[]{0x0000002000000000L});
+    public static final BitSet FOLLOW_37_in_ruleChannelDescription16625 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_42_in_ruleChannelDescription16643 = new BitSet(new long[]{0x00000016000003D0L,0x000000000FFFC020L});
+    public static final BitSet FOLLOW_ruleDataExpr_in_ruleChannelDescription16664 = new BitSet(new long[]{0x0000000000040000L});
+    public static final BitSet FOLLOW_18_in_ruleChannelDescription16674 = new BitSet(new long[]{0x0000000000000030L,0x0000000010000000L});
+    public static final BitSet FOLLOW_ruleChannelType_in_ruleChannelDescription16695 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleChannelType_in_entryRuleChannelType16732 = new BitSet(new long[]{0x0000000000000000L});
+    public static final BitSet FOLLOW_EOF_in_entryRuleChannelType16742 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_ESTERELID_in_ruleChannelType16785 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_BASETYPE_in_ruleChannelType16813 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_92_in_ruleChannelType16836 = new BitSet(new long[]{0x0000000000000030L});
+    public static final BitSet FOLLOW_RULE_ESTERELID_in_ruleChannelType16854 = new BitSet(new long[]{0x0000000000000000L,0x0000000020000000L});
+    public static final BitSet FOLLOW_RULE_BASETYPE_in_ruleChannelType16882 = new BitSet(new long[]{0x0000000000000000L,0x0000000020000000L});
+    public static final BitSet FOLLOW_93_in_ruleChannelType16898 = new BitSet(new long[]{0x0000000000000010L});
+    public static final BitSet FOLLOW_RULE_ESTERELID_in_ruleChannelType16916 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleSignal_in_entryRuleSignal16953 = new BitSet(new long[]{0x0000000000000000L});
+    public static final BitSet FOLLOW_EOF_in_entryRuleSignal16963 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_ESTERELID_in_ruleSignal17005 = new BitSet(new long[]{0x0000041000040002L});
+    public static final BitSet FOLLOW_ruleChannelDescription_in_ruleSignal17031 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleTick_in_entryRuleTick17069 = new BitSet(new long[]{0x0000000000000000L});
+    public static final BitSet FOLLOW_EOF_in_entryRuleTick17080 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_94_in_ruleTick17117 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleSensor_in_entryRuleSensor17156 = new BitSet(new long[]{0x0000000000000000L});
+    public static final BitSet FOLLOW_EOF_in_entryRuleSensor17166 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_ESTERELID_in_ruleSensor17209 = new BitSet(new long[]{0x0000000000040000L});
+    public static final BitSet FOLLOW_18_in_ruleSensor17224 = new BitSet(new long[]{0x0000000000000030L});
+    public static final BitSet FOLLOW_RULE_ESTERELID_in_ruleSensor17242 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_BASETYPE_in_ruleSensor17270 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_ESTERELID_in_ruleSensor17301 = new BitSet(new long[]{0x0000001000000000L});
+    public static final BitSet FOLLOW_36_in_ruleSensor17316 = new BitSet(new long[]{0x0000000000000030L});
+    public static final BitSet FOLLOW_RULE_ESTERELID_in_ruleSensor17334 = new BitSet(new long[]{0x0000002000000000L});
+    public static final BitSet FOLLOW_RULE_BASETYPE_in_ruleSensor17362 = new BitSet(new long[]{0x0000002000000000L});
+    public static final BitSet FOLLOW_37_in_ruleSensor17378 = new BitSet(new long[]{0x0000000000000002L});
 
 }

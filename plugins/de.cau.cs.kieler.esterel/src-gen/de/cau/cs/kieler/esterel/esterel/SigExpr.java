@@ -2,6 +2,7 @@
  * <copyright>
  * </copyright>
  *
+
  */
 package de.cau.cs.kieler.esterel.esterel;
 
@@ -23,7 +24,7 @@ import org.eclipse.emf.common.util.EList;
  * @model
  * @generated
  */
-public interface SigExpr extends TrapExpr, DelayEvent
+public interface SigExpr extends TrapExpr
 {
   /**
    * Returns the value of the '<em><b>And Expr</b></em>' containment reference list.

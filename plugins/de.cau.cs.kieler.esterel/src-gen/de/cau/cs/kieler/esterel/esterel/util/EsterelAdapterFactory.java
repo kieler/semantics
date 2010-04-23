@@ -2,6 +2,7 @@
  * <copyright>
  * </copyright>
  *
+
  */
 package de.cau.cs.kieler.esterel.esterel.util;
 
@@ -581,6 +582,11 @@ public class EsterelAdapterFactory extends AdapterFactoryImpl
       public Adapter caseChannelDescription(ChannelDescription object)
       {
         return createChannelDescriptionAdapter();
+      }
+      @Override
+      public Adapter caseChannelType(ChannelType object)
+      {
+        return createChannelTypeAdapter();
       }
       @Override
       public Adapter caseSignal(Signal object)
@@ -2165,6 +2171,21 @@ public class EsterelAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createChannelDescriptionAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.esterel.esterel.ChannelType <em>Channel Type</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.cau.cs.kieler.esterel.esterel.ChannelType
+   * @generated
+   */
+  public Adapter createChannelTypeAdapter()
   {
     return null;
   }

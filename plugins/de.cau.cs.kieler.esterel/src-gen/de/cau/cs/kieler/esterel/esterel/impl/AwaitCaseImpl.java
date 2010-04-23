@@ -2,6 +2,7 @@
  * <copyright>
  * </copyright>
  *
+
  */
 package de.cau.cs.kieler.esterel.esterel.impl;
 
@@ -11,15 +12,12 @@ import de.cau.cs.kieler.esterel.esterel.EsterelPackage;
 
 import java.util.Collection;
 
-import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 
 import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
-
-import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
@@ -32,7 +30,6 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * The following features are implemented:
  * <ul>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.AwaitCaseImpl#getCases <em>Cases</em>}</li>
- *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.AwaitCaseImpl#getEnd <em>End</em>}</li>
  * </ul>
  * </p>
  *
@@ -49,26 +46,6 @@ public class AwaitCaseImpl extends AwaitBodyImpl implements AwaitCase
    * @ordered
    */
   protected EList<AbortCaseSingle> cases;
-
-  /**
-   * The default value of the '{@link #getEnd() <em>End</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getEnd()
-   * @generated
-   * @ordered
-   */
-  protected static final String END_EDEFAULT = null;
-
-  /**
-   * The cached value of the '{@link #getEnd() <em>End</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getEnd()
-   * @generated
-   * @ordered
-   */
-  protected String end = END_EDEFAULT;
 
   /**
    * <!-- begin-user-doc -->
@@ -110,29 +87,6 @@ public class AwaitCaseImpl extends AwaitBodyImpl implements AwaitCase
    * <!-- end-user-doc -->
    * @generated
    */
-  public String getEnd()
-  {
-    return end;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public void setEnd(String newEnd)
-  {
-    String oldEnd = end;
-    end = newEnd;
-    if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.AWAIT_CASE__END, oldEnd, end));
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   @Override
   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
   {
@@ -156,8 +110,6 @@ public class AwaitCaseImpl extends AwaitBodyImpl implements AwaitCase
     {
       case EsterelPackage.AWAIT_CASE__CASES:
         return getCases();
-      case EsterelPackage.AWAIT_CASE__END:
-        return getEnd();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -177,9 +129,6 @@ public class AwaitCaseImpl extends AwaitBodyImpl implements AwaitCase
         getCases().clear();
         getCases().addAll((Collection<? extends AbortCaseSingle>)newValue);
         return;
-      case EsterelPackage.AWAIT_CASE__END:
-        setEnd((String)newValue);
-        return;
     }
     super.eSet(featureID, newValue);
   }
@@ -197,9 +146,6 @@ public class AwaitCaseImpl extends AwaitBodyImpl implements AwaitCase
       case EsterelPackage.AWAIT_CASE__CASES:
         getCases().clear();
         return;
-      case EsterelPackage.AWAIT_CASE__END:
-        setEnd(END_EDEFAULT);
-        return;
     }
     super.eUnset(featureID);
   }
@@ -216,27 +162,8 @@ public class AwaitCaseImpl extends AwaitBodyImpl implements AwaitCase
     {
       case EsterelPackage.AWAIT_CASE__CASES:
         return cases != null && !cases.isEmpty();
-      case EsterelPackage.AWAIT_CASE__END:
-        return END_EDEFAULT == null ? end != null : !END_EDEFAULT.equals(end);
     }
     return super.eIsSet(featureID);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public String toString()
-  {
-    if (eIsProxy()) return super.toString();
-
-    StringBuffer result = new StringBuffer(super.toString());
-    result.append(" (end: ");
-    result.append(end);
-    result.append(')');
-    return result.toString();
   }
 
 } //AwaitCaseImpl

@@ -2,6 +2,7 @@
  * <copyright>
  * </copyright>
  *
+
  */
 package de.cau.cs.kieler.esterel.esterel;
 
@@ -933,6 +934,15 @@ public interface EsterelFactory extends EFactory
    * @generated
    */
   ChannelDescription createChannelDescription();
+
+  /**
+   * Returns a new object of class '<em>Channel Type</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Channel Type</em>'.
+   * @generated
+   */
+  ChannelType createChannelType();
 
   /**
    * Returns a new object of class '<em>Signal</em>'.

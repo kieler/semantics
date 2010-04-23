@@ -2,10 +2,12 @@
  * <copyright>
  * </copyright>
  *
+
  */
 package de.cau.cs.kieler.esterel.esterel.impl;
 
 import de.cau.cs.kieler.esterel.esterel.ChannelDescription;
+import de.cau.cs.kieler.esterel.esterel.ChannelType;
 import de.cau.cs.kieler.esterel.esterel.DataExpr;
 import de.cau.cs.kieler.esterel.esterel.EsterelPackage;
 
@@ -35,24 +37,14 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 public class ChannelDescriptionImpl extends MinimalEObjectImpl.Container implements ChannelDescription
 {
   /**
-   * The default value of the '{@link #getType() <em>Type</em>}' attribute.
+   * The cached value of the '{@link #getType() <em>Type</em>}' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @see #getType()
    * @generated
    * @ordered
    */
-  protected static final String TYPE_EDEFAULT = null;
-
-  /**
-   * The cached value of the '{@link #getType() <em>Type</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getType()
-   * @generated
-   * @ordered
-   */
-  protected String type = TYPE_EDEFAULT;
+  protected ChannelType type;
 
   /**
    * The cached value of the '{@link #getDataExpr() <em>Data Expr</em>}' containment reference.
@@ -90,7 +82,7 @@ public class ChannelDescriptionImpl extends MinimalEObjectImpl.Container impleme
    * <!-- end-user-doc -->
    * @generated
    */
-  public String getType()
+  public ChannelType getType()
   {
     return type;
   }
@@ -100,12 +92,37 @@ public class ChannelDescriptionImpl extends MinimalEObjectImpl.Container impleme
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setType(String newType)
+  public NotificationChain basicSetType(ChannelType newType, NotificationChain msgs)
   {
-    String oldType = type;
+    ChannelType oldType = type;
     type = newType;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.CHANNEL_DESCRIPTION__TYPE, oldType, type));
+    {
+      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, EsterelPackage.CHANNEL_DESCRIPTION__TYPE, oldType, newType);
+      if (msgs == null) msgs = notification; else msgs.add(notification);
+    }
+    return msgs;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setType(ChannelType newType)
+  {
+    if (newType != type)
+    {
+      NotificationChain msgs = null;
+      if (type != null)
+        msgs = ((InternalEObject)type).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.CHANNEL_DESCRIPTION__TYPE, null, msgs);
+      if (newType != null)
+        msgs = ((InternalEObject)newType).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.CHANNEL_DESCRIPTION__TYPE, null, msgs);
+      msgs = basicSetType(newType, msgs);
+      if (msgs != null) msgs.dispatch();
+    }
+    else if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.CHANNEL_DESCRIPTION__TYPE, newType, newType));
   }
 
   /**
@@ -166,6 +183,8 @@ public class ChannelDescriptionImpl extends MinimalEObjectImpl.Container impleme
   {
     switch (featureID)
     {
+      case EsterelPackage.CHANNEL_DESCRIPTION__TYPE:
+        return basicSetType(null, msgs);
       case EsterelPackage.CHANNEL_DESCRIPTION__DATA_EXPR:
         return basicSetDataExpr(null, msgs);
     }
@@ -201,7 +220,7 @@ public class ChannelDescriptionImpl extends MinimalEObjectImpl.Container impleme
     switch (featureID)
     {
       case EsterelPackage.CHANNEL_DESCRIPTION__TYPE:
-        setType((String)newValue);
+        setType((ChannelType)newValue);
         return;
       case EsterelPackage.CHANNEL_DESCRIPTION__DATA_EXPR:
         setDataExpr((DataExpr)newValue);
@@ -221,7 +240,7 @@ public class ChannelDescriptionImpl extends MinimalEObjectImpl.Container impleme
     switch (featureID)
     {
       case EsterelPackage.CHANNEL_DESCRIPTION__TYPE:
-        setType(TYPE_EDEFAULT);
+        setType((ChannelType)null);
         return;
       case EsterelPackage.CHANNEL_DESCRIPTION__DATA_EXPR:
         setDataExpr((DataExpr)null);
@@ -241,28 +260,11 @@ public class ChannelDescriptionImpl extends MinimalEObjectImpl.Container impleme
     switch (featureID)
     {
       case EsterelPackage.CHANNEL_DESCRIPTION__TYPE:
-        return TYPE_EDEFAULT == null ? type != null : !TYPE_EDEFAULT.equals(type);
+        return type != null;
       case EsterelPackage.CHANNEL_DESCRIPTION__DATA_EXPR:
         return dataExpr != null;
     }
     return super.eIsSet(featureID);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public String toString()
-  {
-    if (eIsProxy()) return super.toString();
-
-    StringBuffer result = new StringBuffer(super.toString());
-    result.append(" (type: ");
-    result.append(type);
-    result.append(')');
-    return result.toString();
   }
 
 } //ChannelDescriptionImpl

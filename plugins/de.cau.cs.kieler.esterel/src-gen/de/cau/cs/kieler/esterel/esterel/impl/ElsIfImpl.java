@@ -2,6 +2,7 @@
  * <copyright>
  * </copyright>
  *
+
  */
 package de.cau.cs.kieler.esterel.esterel.impl;
 
@@ -27,7 +28,7 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  * The following features are implemented:
  * <ul>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.ElsIfImpl#getExpr <em>Expr</em>}</li>
- *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.ElsIfImpl#getThen <em>Then</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.ElsIfImpl#getThenPart <em>Then Part</em>}</li>
  * </ul>
  * </p>
  *
@@ -46,14 +47,14 @@ public class ElsIfImpl extends MinimalEObjectImpl.Container implements ElsIf
   protected DataExpr expr;
 
   /**
-   * The cached value of the '{@link #getThen() <em>Then</em>}' containment reference.
+   * The cached value of the '{@link #getThenPart() <em>Then Part</em>}' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getThen()
+   * @see #getThenPart()
    * @generated
    * @ordered
    */
-  protected ThenPart then;
+  protected ThenPart thenPart;
 
   /**
    * <!-- begin-user-doc -->
@@ -129,9 +130,9 @@ public class ElsIfImpl extends MinimalEObjectImpl.Container implements ElsIf
    * <!-- end-user-doc -->
    * @generated
    */
-  public ThenPart getThen()
+  public ThenPart getThenPart()
   {
-    return then;
+    return thenPart;
   }
 
   /**
@@ -139,13 +140,13 @@ public class ElsIfImpl extends MinimalEObjectImpl.Container implements ElsIf
    * <!-- end-user-doc -->
    * @generated
    */
-  public NotificationChain basicSetThen(ThenPart newThen, NotificationChain msgs)
+  public NotificationChain basicSetThenPart(ThenPart newThenPart, NotificationChain msgs)
   {
-    ThenPart oldThen = then;
-    then = newThen;
+    ThenPart oldThenPart = thenPart;
+    thenPart = newThenPart;
     if (eNotificationRequired())
     {
-      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, EsterelPackage.ELS_IF__THEN, oldThen, newThen);
+      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, EsterelPackage.ELS_IF__THEN_PART, oldThenPart, newThenPart);
       if (msgs == null) msgs = notification; else msgs.add(notification);
     }
     return msgs;
@@ -156,20 +157,20 @@ public class ElsIfImpl extends MinimalEObjectImpl.Container implements ElsIf
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setThen(ThenPart newThen)
+  public void setThenPart(ThenPart newThenPart)
   {
-    if (newThen != then)
+    if (newThenPart != thenPart)
     {
       NotificationChain msgs = null;
-      if (then != null)
-        msgs = ((InternalEObject)then).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.ELS_IF__THEN, null, msgs);
-      if (newThen != null)
-        msgs = ((InternalEObject)newThen).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.ELS_IF__THEN, null, msgs);
-      msgs = basicSetThen(newThen, msgs);
+      if (thenPart != null)
+        msgs = ((InternalEObject)thenPart).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.ELS_IF__THEN_PART, null, msgs);
+      if (newThenPart != null)
+        msgs = ((InternalEObject)newThenPart).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.ELS_IF__THEN_PART, null, msgs);
+      msgs = basicSetThenPart(newThenPart, msgs);
       if (msgs != null) msgs.dispatch();
     }
     else if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.ELS_IF__THEN, newThen, newThen));
+      eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.ELS_IF__THEN_PART, newThenPart, newThenPart));
   }
 
   /**
@@ -184,8 +185,8 @@ public class ElsIfImpl extends MinimalEObjectImpl.Container implements ElsIf
     {
       case EsterelPackage.ELS_IF__EXPR:
         return basicSetExpr(null, msgs);
-      case EsterelPackage.ELS_IF__THEN:
-        return basicSetThen(null, msgs);
+      case EsterelPackage.ELS_IF__THEN_PART:
+        return basicSetThenPart(null, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
@@ -202,8 +203,8 @@ public class ElsIfImpl extends MinimalEObjectImpl.Container implements ElsIf
     {
       case EsterelPackage.ELS_IF__EXPR:
         return getExpr();
-      case EsterelPackage.ELS_IF__THEN:
-        return getThen();
+      case EsterelPackage.ELS_IF__THEN_PART:
+        return getThenPart();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -221,8 +222,8 @@ public class ElsIfImpl extends MinimalEObjectImpl.Container implements ElsIf
       case EsterelPackage.ELS_IF__EXPR:
         setExpr((DataExpr)newValue);
         return;
-      case EsterelPackage.ELS_IF__THEN:
-        setThen((ThenPart)newValue);
+      case EsterelPackage.ELS_IF__THEN_PART:
+        setThenPart((ThenPart)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -241,8 +242,8 @@ public class ElsIfImpl extends MinimalEObjectImpl.Container implements ElsIf
       case EsterelPackage.ELS_IF__EXPR:
         setExpr((DataExpr)null);
         return;
-      case EsterelPackage.ELS_IF__THEN:
-        setThen((ThenPart)null);
+      case EsterelPackage.ELS_IF__THEN_PART:
+        setThenPart((ThenPart)null);
         return;
     }
     super.eUnset(featureID);
@@ -260,8 +261,8 @@ public class ElsIfImpl extends MinimalEObjectImpl.Container implements ElsIf
     {
       case EsterelPackage.ELS_IF__EXPR:
         return expr != null;
-      case EsterelPackage.ELS_IF__THEN:
-        return then != null;
+      case EsterelPackage.ELS_IF__THEN_PART:
+        return thenPart != null;
     }
     return super.eIsSet(featureID);
   }

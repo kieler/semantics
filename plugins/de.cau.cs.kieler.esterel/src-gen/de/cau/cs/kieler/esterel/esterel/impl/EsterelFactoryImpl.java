@@ -2,6 +2,7 @@
  * <copyright>
  * </copyright>
  *
+
  */
 package de.cau.cs.kieler.esterel.esterel.impl;
 
@@ -168,6 +169,7 @@ public class EsterelFactoryImpl extends EFactoryImpl implements EsterelFactory
       case EsterelPackage.DELAY_EXPR: return createDelayExpr();
       case EsterelPackage.DELAY_EVENT: return createDelayEvent();
       case EsterelPackage.CHANNEL_DESCRIPTION: return createChannelDescription();
+      case EsterelPackage.CHANNEL_TYPE: return createChannelType();
       case EsterelPackage.SIGNAL: return createSignal();
       case EsterelPackage.SENSOR: return createSensor();
       case EsterelPackage.INPUT: return createInput();
@@ -1292,6 +1294,17 @@ public class EsterelFactoryImpl extends EFactoryImpl implements EsterelFactory
   {
     ChannelDescriptionImpl channelDescription = new ChannelDescriptionImpl();
     return channelDescription;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public ChannelType createChannelType()
+  {
+    ChannelTypeImpl channelType = new ChannelTypeImpl();
+    return channelType;
   }
 
   /**

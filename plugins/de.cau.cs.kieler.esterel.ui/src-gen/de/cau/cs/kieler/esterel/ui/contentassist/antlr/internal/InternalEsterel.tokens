@@ -22,6 +22,7 @@ RULE_ESTEREL_SL_COMMENT=10
 '>'=23
 '||'=51
 'abort'=55
+'with'=92
 ';'=37
 'return'=41
 'await'=59
@@ -29,7 +30,7 @@ RULE_ESTEREL_SL_COMMENT=10
 'sensor'=42
 '+'=28
 'procedure'=50
-'=>'=91
+'=>'=93
 'pre'=89
 'elsif'=68
 '.'=18
@@ -80,9 +81,10 @@ RULE_ESTEREL_SL_COMMENT=10
 'copymodule'=79
 'nothing'=73
 '<='=24
-'positive'=92
+'positive'=94
 '<'=22
 'upto'=60
+'combine'=91
 '*'=30
 'or'=20
 '['=52

@@ -2,6 +2,7 @@
  * <copyright>
  * </copyright>
  *
+
  */
 package de.cau.cs.kieler.esterel.esterel;
 
@@ -15,9 +16,9 @@ package de.cau.cs.kieler.esterel.esterel;
  * The following features are supported:
  * <ul>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.IfTest#getExpr <em>Expr</em>}</li>
- *   <li>{@link de.cau.cs.kieler.esterel.esterel.IfTest#getThen <em>Then</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.esterel.esterel.IfTest#getThenPart <em>Then Part</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.IfTest#getElseIf <em>Else If</em>}</li>
- *   <li>{@link de.cau.cs.kieler.esterel.esterel.IfTest#getElse <em>Else</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.esterel.esterel.IfTest#getElsePart <em>Else Part</em>}</li>
  * </ul>
  * </p>
  *
@@ -54,30 +55,30 @@ public interface IfTest extends Statement
   void setExpr(DataExpr value);
 
   /**
-   * Returns the value of the '<em><b>Then</b></em>' containment reference.
+   * Returns the value of the '<em><b>Then Part</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Then</em>' containment reference isn't clear,
+   * If the meaning of the '<em>Then Part</em>' containment reference isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Then</em>' containment reference.
-   * @see #setThen(ThenPart)
-   * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getIfTest_Then()
+   * @return the value of the '<em>Then Part</em>' containment reference.
+   * @see #setThenPart(ThenPart)
+   * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getIfTest_ThenPart()
    * @model containment="true"
    * @generated
    */
-  ThenPart getThen();
+  ThenPart getThenPart();
 
   /**
-   * Sets the value of the '{@link de.cau.cs.kieler.esterel.esterel.IfTest#getThen <em>Then</em>}' containment reference.
+   * Sets the value of the '{@link de.cau.cs.kieler.esterel.esterel.IfTest#getThenPart <em>Then Part</em>}' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Then</em>' containment reference.
-   * @see #getThen()
+   * @param value the new value of the '<em>Then Part</em>' containment reference.
+   * @see #getThenPart()
    * @generated
    */
-  void setThen(ThenPart value);
+  void setThenPart(ThenPart value);
 
   /**
    * Returns the value of the '<em><b>Else If</b></em>' containment reference.
@@ -106,29 +107,29 @@ public interface IfTest extends Statement
   void setElseIf(ElsIfPart value);
 
   /**
-   * Returns the value of the '<em><b>Else</b></em>' containment reference.
+   * Returns the value of the '<em><b>Else Part</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Else</em>' containment reference isn't clear,
+   * If the meaning of the '<em>Else Part</em>' containment reference isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Else</em>' containment reference.
-   * @see #setElse(ElsePart)
-   * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getIfTest_Else()
+   * @return the value of the '<em>Else Part</em>' containment reference.
+   * @see #setElsePart(ElsePart)
+   * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getIfTest_ElsePart()
    * @model containment="true"
    * @generated
    */
-  ElsePart getElse();
+  ElsePart getElsePart();
 
   /**
-   * Sets the value of the '{@link de.cau.cs.kieler.esterel.esterel.IfTest#getElse <em>Else</em>}' containment reference.
+   * Sets the value of the '{@link de.cau.cs.kieler.esterel.esterel.IfTest#getElsePart <em>Else Part</em>}' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Else</em>' containment reference.
-   * @see #getElse()
+   * @param value the new value of the '<em>Else Part</em>' containment reference.
+   * @see #getElsePart()
    * @generated
    */
-  void setElse(ElsePart value);
+  void setElsePart(ElsePart value);
 
 } // IfTest

@@ -2,6 +2,7 @@
  * <copyright>
  * </copyright>
  *
+
  */
 package de.cau.cs.kieler.esterel.esterel;
 
@@ -16,7 +17,7 @@ import org.eclipse.emf.ecore.EObject;
  * The following features are supported:
  * <ul>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.ElsIf#getExpr <em>Expr</em>}</li>
- *   <li>{@link de.cau.cs.kieler.esterel.esterel.ElsIf#getThen <em>Then</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.esterel.esterel.ElsIf#getThenPart <em>Then Part</em>}</li>
  * </ul>
  * </p>
  *
@@ -53,29 +54,29 @@ public interface ElsIf extends EObject
   void setExpr(DataExpr value);
 
   /**
-   * Returns the value of the '<em><b>Then</b></em>' containment reference.
+   * Returns the value of the '<em><b>Then Part</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Then</em>' containment reference isn't clear,
+   * If the meaning of the '<em>Then Part</em>' containment reference isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Then</em>' containment reference.
-   * @see #setThen(ThenPart)
-   * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getElsIf_Then()
+   * @return the value of the '<em>Then Part</em>' containment reference.
+   * @see #setThenPart(ThenPart)
+   * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getElsIf_ThenPart()
    * @model containment="true"
    * @generated
    */
-  ThenPart getThen();
+  ThenPart getThenPart();
 
   /**
-   * Sets the value of the '{@link de.cau.cs.kieler.esterel.esterel.ElsIf#getThen <em>Then</em>}' containment reference.
+   * Sets the value of the '{@link de.cau.cs.kieler.esterel.esterel.ElsIf#getThenPart <em>Then Part</em>}' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Then</em>' containment reference.
-   * @see #getThen()
+   * @param value the new value of the '<em>Then Part</em>' containment reference.
+   * @see #getThenPart()
    * @generated
    */
-  void setThen(ThenPart value);
+  void setThenPart(ThenPart value);
 
 } // ElsIf

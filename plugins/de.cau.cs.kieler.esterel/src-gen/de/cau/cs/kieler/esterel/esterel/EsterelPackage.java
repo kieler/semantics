@@ -2,6 +2,7 @@
  * <copyright>
  * </copyright>
  *
+
  */
 package de.cau.cs.kieler.esterel.esterel;
 
@@ -1034,13 +1035,22 @@ public interface EsterelPackage extends EPackage
   int AWAIT_BODY = 28;
 
   /**
+   * The feature id for the '<em><b>End</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int AWAIT_BODY__END = 0;
+
+  /**
    * The number of structural features of the '<em>Await Body</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int AWAIT_BODY_FEATURE_COUNT = 0;
+  int AWAIT_BODY_FEATURE_COUNT = 1;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.esterel.esterel.impl.AwaitInstanceImpl <em>Await Instance</em>}' class.
@@ -1053,13 +1063,40 @@ public interface EsterelPackage extends EPackage
   int AWAIT_INSTANCE = 29;
 
   /**
+   * The feature id for the '<em><b>End</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int AWAIT_INSTANCE__END = AWAIT_BODY__END;
+
+  /**
+   * The feature id for the '<em><b>Delay</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int AWAIT_INSTANCE__DELAY = AWAIT_BODY_FEATURE_COUNT + 0;
+
+  /**
+   * The feature id for the '<em><b>Statement</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int AWAIT_INSTANCE__STATEMENT = AWAIT_BODY_FEATURE_COUNT + 1;
+
+  /**
    * The number of structural features of the '<em>Await Instance</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int AWAIT_INSTANCE_FEATURE_COUNT = AWAIT_BODY_FEATURE_COUNT + 0;
+  int AWAIT_INSTANCE_FEATURE_COUNT = AWAIT_BODY_FEATURE_COUNT + 2;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.esterel.esterel.impl.AwaitCaseImpl <em>Await Case</em>}' class.
@@ -1072,6 +1109,15 @@ public interface EsterelPackage extends EPackage
   int AWAIT_CASE = 30;
 
   /**
+   * The feature id for the '<em><b>End</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int AWAIT_CASE__END = AWAIT_BODY__END;
+
+  /**
    * The feature id for the '<em><b>Cases</b></em>' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -1081,22 +1127,13 @@ public interface EsterelPackage extends EPackage
   int AWAIT_CASE__CASES = AWAIT_BODY_FEATURE_COUNT + 0;
 
   /**
-   * The feature id for the '<em><b>End</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int AWAIT_CASE__END = AWAIT_BODY_FEATURE_COUNT + 1;
-
-  /**
    * The number of structural features of the '<em>Await Case</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int AWAIT_CASE_FEATURE_COUNT = AWAIT_BODY_FEATURE_COUNT + 2;
+  int AWAIT_CASE_FEATURE_COUNT = AWAIT_BODY_FEATURE_COUNT + 1;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.esterel.esterel.impl.DoImpl <em>Do</em>}' class.
@@ -1118,13 +1155,22 @@ public interface EsterelPackage extends EPackage
   int DO__STATEMENT = STATEMENT_FEATURE_COUNT + 0;
 
   /**
-   * The feature id for the '<em><b>End</b></em>' containment reference.
+   * The feature id for the '<em><b>End Up</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int DO__END = STATEMENT_FEATURE_COUNT + 1;
+  int DO__END_UP = STATEMENT_FEATURE_COUNT + 1;
+
+  /**
+   * The feature id for the '<em><b>End Watch</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int DO__END_WATCH = STATEMENT_FEATURE_COUNT + 2;
 
   /**
    * The number of structural features of the '<em>Do</em>' class.
@@ -1133,7 +1179,7 @@ public interface EsterelPackage extends EPackage
    * @generated
    * @ordered
    */
-  int DO_FEATURE_COUNT = STATEMENT_FEATURE_COUNT + 2;
+  int DO_FEATURE_COUNT = STATEMENT_FEATURE_COUNT + 3;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.esterel.esterel.impl.DoUptoImpl <em>Do Upto</em>}' class.
@@ -1387,13 +1433,13 @@ public interface EsterelPackage extends EPackage
   int IF_TEST__EXPR = STATEMENT_FEATURE_COUNT + 0;
 
   /**
-   * The feature id for the '<em><b>Then</b></em>' containment reference.
+   * The feature id for the '<em><b>Then Part</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int IF_TEST__THEN = STATEMENT_FEATURE_COUNT + 1;
+  int IF_TEST__THEN_PART = STATEMENT_FEATURE_COUNT + 1;
 
   /**
    * The feature id for the '<em><b>Else If</b></em>' containment reference.
@@ -1405,13 +1451,13 @@ public interface EsterelPackage extends EPackage
   int IF_TEST__ELSE_IF = STATEMENT_FEATURE_COUNT + 2;
 
   /**
-   * The feature id for the '<em><b>Else</b></em>' containment reference.
+   * The feature id for the '<em><b>Else Part</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int IF_TEST__ELSE = STATEMENT_FEATURE_COUNT + 3;
+  int IF_TEST__ELSE_PART = STATEMENT_FEATURE_COUNT + 3;
 
   /**
    * The number of structural features of the '<em>If Test</em>' class.
@@ -1470,13 +1516,13 @@ public interface EsterelPackage extends EPackage
   int ELS_IF__EXPR = 0;
 
   /**
-   * The feature id for the '<em><b>Then</b></em>' containment reference.
+   * The feature id for the '<em><b>Then Part</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int ELS_IF__THEN = 1;
+  int ELS_IF__THEN_PART = 1;
 
   /**
    * The number of structural features of the '<em>Els If</em>' class.
@@ -2112,22 +2158,22 @@ public interface EsterelPackage extends EPackage
   int CONSTANT_RENAMING = 62;
 
   /**
-   * The feature id for the '<em><b>Value</b></em>' attribute.
+   * The feature id for the '<em><b>New Name</b></em>' reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int CONSTANT_RENAMING__VALUE = 0;
+  int CONSTANT_RENAMING__NEW_NAME = 0;
 
   /**
-   * The feature id for the '<em><b>New Name</b></em>' attribute.
+   * The feature id for the '<em><b>Old Name</b></em>' reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int CONSTANT_RENAMING__NEW_NAME = 1;
+  int CONSTANT_RENAMING__OLD_NAME = 1;
 
   /**
    * The number of structural features of the '<em>Constant Renaming</em>' class.
@@ -3648,31 +3694,13 @@ public interface EsterelPackage extends EPackage
   int SIG_EXPR = 95;
 
   /**
-   * The feature id for the '<em><b>Signal</b></em>' reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int SIG_EXPR__SIGNAL = TRAP_EXPR_FEATURE_COUNT + 0;
-
-  /**
-   * The feature id for the '<em><b>Tick</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int SIG_EXPR__TICK = TRAP_EXPR_FEATURE_COUNT + 1;
-
-  /**
    * The feature id for the '<em><b>And Expr</b></em>' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int SIG_EXPR__AND_EXPR = TRAP_EXPR_FEATURE_COUNT + 2;
+  int SIG_EXPR__AND_EXPR = TRAP_EXPR_FEATURE_COUNT + 0;
 
   /**
    * The number of structural features of the '<em>Sig Expr</em>' class.
@@ -3681,7 +3709,7 @@ public interface EsterelPackage extends EPackage
    * @generated
    * @ordered
    */
-  int SIG_EXPR_FEATURE_COUNT = TRAP_EXPR_FEATURE_COUNT + 3;
+  int SIG_EXPR_FEATURE_COUNT = TRAP_EXPR_FEATURE_COUNT + 1;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.esterel.esterel.impl.SigExprANDImpl <em>Sig Expr AND</em>}' class.
@@ -3759,31 +3787,13 @@ public interface EsterelPackage extends EPackage
   int DELAY_EXPR = 98;
 
   /**
-   * The feature id for the '<em><b>Statement</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int DELAY_EXPR__STATEMENT = AWAIT_INSTANCE_FEATURE_COUNT + 0;
-
-  /**
-   * The feature id for the '<em><b>End</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int DELAY_EXPR__END = AWAIT_INSTANCE_FEATURE_COUNT + 1;
-
-  /**
    * The feature id for the '<em><b>Event</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int DELAY_EXPR__EVENT = AWAIT_INSTANCE_FEATURE_COUNT + 2;
+  int DELAY_EXPR__EVENT = 0;
 
   /**
    * The feature id for the '<em><b>Expr</b></em>' containment reference.
@@ -3792,7 +3802,7 @@ public interface EsterelPackage extends EPackage
    * @generated
    * @ordered
    */
-  int DELAY_EXPR__EXPR = AWAIT_INSTANCE_FEATURE_COUNT + 3;
+  int DELAY_EXPR__EXPR = 1;
 
   /**
    * The number of structural features of the '<em>Delay Expr</em>' class.
@@ -3801,7 +3811,7 @@ public interface EsterelPackage extends EPackage
    * @generated
    * @ordered
    */
-  int DELAY_EXPR_FEATURE_COUNT = AWAIT_INSTANCE_FEATURE_COUNT + 4;
+  int DELAY_EXPR_FEATURE_COUNT = 2;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.esterel.esterel.impl.DelayEventImpl <em>Delay Event</em>}' class.
@@ -3832,13 +3842,31 @@ public interface EsterelPackage extends EPackage
   int DELAY_EVENT__TICK = 1;
 
   /**
+   * The feature id for the '<em><b>Pre Sig Expr</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int DELAY_EVENT__PRE_SIG_EXPR = 2;
+
+  /**
+   * The feature id for the '<em><b>Block Sig Expr</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int DELAY_EVENT__BLOCK_SIG_EXPR = 3;
+
+  /**
    * The number of structural features of the '<em>Delay Event</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int DELAY_EVENT_FEATURE_COUNT = 2;
+  int DELAY_EVENT_FEATURE_COUNT = 4;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.esterel.esterel.impl.ChannelDescriptionImpl <em>Channel Description</em>}' class.
@@ -3851,7 +3879,7 @@ public interface EsterelPackage extends EPackage
   int CHANNEL_DESCRIPTION = 100;
 
   /**
-   * The feature id for the '<em><b>Type</b></em>' attribute.
+   * The feature id for the '<em><b>Type</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
@@ -3878,6 +3906,43 @@ public interface EsterelPackage extends EPackage
   int CHANNEL_DESCRIPTION_FEATURE_COUNT = 2;
 
   /**
+   * The meta object id for the '{@link de.cau.cs.kieler.esterel.esterel.impl.ChannelTypeImpl <em>Channel Type</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see de.cau.cs.kieler.esterel.esterel.impl.ChannelTypeImpl
+   * @see de.cau.cs.kieler.esterel.esterel.impl.EsterelPackageImpl#getChannelType()
+   * @generated
+   */
+  int CHANNEL_TYPE = 101;
+
+  /**
+   * The feature id for the '<em><b>Type</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int CHANNEL_TYPE__TYPE = 0;
+
+  /**
+   * The feature id for the '<em><b>Func</b></em>' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int CHANNEL_TYPE__FUNC = 1;
+
+  /**
+   * The number of structural features of the '<em>Channel Type</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int CHANNEL_TYPE_FEATURE_COUNT = 2;
+
+  /**
    * The meta object id for the '{@link de.cau.cs.kieler.esterel.esterel.impl.SignalImpl <em>Signal</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -3885,7 +3950,7 @@ public interface EsterelPackage extends EPackage
    * @see de.cau.cs.kieler.esterel.esterel.impl.EsterelPackageImpl#getSignal()
    * @generated
    */
-  int SIGNAL = 101;
+  int SIGNAL = 102;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -3922,7 +3987,7 @@ public interface EsterelPackage extends EPackage
    * @see de.cau.cs.kieler.esterel.esterel.impl.EsterelPackageImpl#getSensor()
    * @generated
    */
-  int SENSOR = 102;
+  int SENSOR = 103;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -3959,7 +4024,7 @@ public interface EsterelPackage extends EPackage
    * @see de.cau.cs.kieler.esterel.esterel.impl.EsterelPackageImpl#getInput()
    * @generated
    */
-  int INPUT = 103;
+  int INPUT = 104;
 
   /**
    * The feature id for the '<em><b>Signal</b></em>' containment reference list.
@@ -3987,7 +4052,7 @@ public interface EsterelPackage extends EPackage
    * @see de.cau.cs.kieler.esterel.esterel.impl.EsterelPackageImpl#getOutput()
    * @generated
    */
-  int OUTPUT = 104;
+  int OUTPUT = 105;
 
   /**
    * The feature id for the '<em><b>Signal</b></em>' containment reference list.
@@ -4015,7 +4080,7 @@ public interface EsterelPackage extends EPackage
    * @see de.cau.cs.kieler.esterel.esterel.impl.EsterelPackageImpl#getInputOutput()
    * @generated
    */
-  int INPUT_OUTPUT = 105;
+  int INPUT_OUTPUT = 106;
 
   /**
    * The feature id for the '<em><b>Signal</b></em>' containment reference list.
@@ -4043,7 +4108,7 @@ public interface EsterelPackage extends EPackage
    * @see de.cau.cs.kieler.esterel.esterel.impl.EsterelPackageImpl#getReturn()
    * @generated
    */
-  int RETURN = 106;
+  int RETURN = 107;
 
   /**
    * The feature id for the '<em><b>Signal</b></em>' containment reference list.
@@ -4071,7 +4136,7 @@ public interface EsterelPackage extends EPackage
    * @see de.cau.cs.kieler.esterel.esterel.impl.EsterelPackageImpl#getRelation()
    * @generated
    */
-  int RELATION = 107;
+  int RELATION = 108;
 
   /**
    * The feature id for the '<em><b>Relation</b></em>' containment reference list.
@@ -4099,25 +4164,16 @@ public interface EsterelPackage extends EPackage
    * @see de.cau.cs.kieler.esterel.esterel.impl.EsterelPackageImpl#getParallel()
    * @generated
    */
-  int PARALLEL = 108;
+  int PARALLEL = 109;
 
   /**
-   * The feature id for the '<em><b>Left</b></em>' containment reference.
+   * The feature id for the '<em><b>List</b></em>' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int PARALLEL__LEFT = STATEMENT_FEATURE_COUNT + 0;
-
-  /**
-   * The feature id for the '<em><b>Right</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int PARALLEL__RIGHT = STATEMENT_FEATURE_COUNT + 1;
+  int PARALLEL__LIST = STATEMENT_FEATURE_COUNT + 0;
 
   /**
    * The number of structural features of the '<em>Parallel</em>' class.
@@ -4126,7 +4182,7 @@ public interface EsterelPackage extends EPackage
    * @generated
    * @ordered
    */
-  int PARALLEL_FEATURE_COUNT = STATEMENT_FEATURE_COUNT + 2;
+  int PARALLEL_FEATURE_COUNT = STATEMENT_FEATURE_COUNT + 1;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.esterel.esterel.impl.SequenceImpl <em>Sequence</em>}' class.
@@ -4136,25 +4192,16 @@ public interface EsterelPackage extends EPackage
    * @see de.cau.cs.kieler.esterel.esterel.impl.EsterelPackageImpl#getSequence()
    * @generated
    */
-  int SEQUENCE = 109;
+  int SEQUENCE = 110;
 
   /**
-   * The feature id for the '<em><b>Left</b></em>' containment reference.
+   * The feature id for the '<em><b>List</b></em>' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int SEQUENCE__LEFT = STATEMENT_FEATURE_COUNT + 0;
-
-  /**
-   * The feature id for the '<em><b>Right</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int SEQUENCE__RIGHT = STATEMENT_FEATURE_COUNT + 1;
+  int SEQUENCE__LIST = STATEMENT_FEATURE_COUNT + 0;
 
   /**
    * The number of structural features of the '<em>Sequence</em>' class.
@@ -4163,7 +4210,7 @@ public interface EsterelPackage extends EPackage
    * @generated
    * @ordered
    */
-  int SEQUENCE_FEATURE_COUNT = STATEMENT_FEATURE_COUNT + 2;
+  int SEQUENCE_FEATURE_COUNT = STATEMENT_FEATURE_COUNT + 1;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.esterel.esterel.impl.LocalSignalImpl <em>Local Signal</em>}' class.
@@ -4173,7 +4220,7 @@ public interface EsterelPackage extends EPackage
    * @see de.cau.cs.kieler.esterel.esterel.impl.EsterelPackageImpl#getLocalSignal()
    * @generated
    */
-  int LOCAL_SIGNAL = 110;
+  int LOCAL_SIGNAL = 111;
 
   /**
    * The feature id for the '<em><b>Signal</b></em>' containment reference list.
@@ -4969,6 +5016,17 @@ public interface EsterelPackage extends EPackage
   EClass getAwaitBody();
 
   /**
+   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.esterel.esterel.AwaitBody#getEnd <em>End</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>End</em>'.
+   * @see de.cau.cs.kieler.esterel.esterel.AwaitBody#getEnd()
+   * @see #getAwaitBody()
+   * @generated
+   */
+  EAttribute getAwaitBody_End();
+
+  /**
    * Returns the meta object for class '{@link de.cau.cs.kieler.esterel.esterel.AwaitInstance <em>Await Instance</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -4977,6 +5035,28 @@ public interface EsterelPackage extends EPackage
    * @generated
    */
   EClass getAwaitInstance();
+
+  /**
+   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.esterel.esterel.AwaitInstance#getDelay <em>Delay</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Delay</em>'.
+   * @see de.cau.cs.kieler.esterel.esterel.AwaitInstance#getDelay()
+   * @see #getAwaitInstance()
+   * @generated
+   */
+  EReference getAwaitInstance_Delay();
+
+  /**
+   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.esterel.esterel.AwaitInstance#getStatement <em>Statement</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Statement</em>'.
+   * @see de.cau.cs.kieler.esterel.esterel.AwaitInstance#getStatement()
+   * @see #getAwaitInstance()
+   * @generated
+   */
+  EReference getAwaitInstance_Statement();
 
   /**
    * Returns the meta object for class '{@link de.cau.cs.kieler.esterel.esterel.AwaitCase <em>Await Case</em>}'.
@@ -5000,17 +5080,6 @@ public interface EsterelPackage extends EPackage
   EReference getAwaitCase_Cases();
 
   /**
-   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.esterel.esterel.AwaitCase#getEnd <em>End</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>End</em>'.
-   * @see de.cau.cs.kieler.esterel.esterel.AwaitCase#getEnd()
-   * @see #getAwaitCase()
-   * @generated
-   */
-  EAttribute getAwaitCase_End();
-
-  /**
    * Returns the meta object for class '{@link de.cau.cs.kieler.esterel.esterel.Do <em>Do</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -5032,15 +5101,26 @@ public interface EsterelPackage extends EPackage
   EReference getDo_Statement();
 
   /**
-   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.esterel.esterel.Do#getEnd <em>End</em>}'.
+   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.esterel.esterel.Do#getEndUp <em>End Up</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>End</em>'.
-   * @see de.cau.cs.kieler.esterel.esterel.Do#getEnd()
+   * @return the meta object for the containment reference '<em>End Up</em>'.
+   * @see de.cau.cs.kieler.esterel.esterel.Do#getEndUp()
    * @see #getDo()
    * @generated
    */
-  EReference getDo_End();
+  EReference getDo_EndUp();
+
+  /**
+   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.esterel.esterel.Do#getEndWatch <em>End Watch</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>End Watch</em>'.
+   * @see de.cau.cs.kieler.esterel.esterel.Do#getEndWatch()
+   * @see #getDo()
+   * @generated
+   */
+  EReference getDo_EndWatch();
 
   /**
    * Returns the meta object for class '{@link de.cau.cs.kieler.esterel.esterel.DoUpto <em>Do Upto</em>}'.
@@ -5255,15 +5335,15 @@ public interface EsterelPackage extends EPackage
   EReference getIfTest_Expr();
 
   /**
-   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.esterel.esterel.IfTest#getThen <em>Then</em>}'.
+   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.esterel.esterel.IfTest#getThenPart <em>Then Part</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>Then</em>'.
-   * @see de.cau.cs.kieler.esterel.esterel.IfTest#getThen()
+   * @return the meta object for the containment reference '<em>Then Part</em>'.
+   * @see de.cau.cs.kieler.esterel.esterel.IfTest#getThenPart()
    * @see #getIfTest()
    * @generated
    */
-  EReference getIfTest_Then();
+  EReference getIfTest_ThenPart();
 
   /**
    * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.esterel.esterel.IfTest#getElseIf <em>Else If</em>}'.
@@ -5277,15 +5357,15 @@ public interface EsterelPackage extends EPackage
   EReference getIfTest_ElseIf();
 
   /**
-   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.esterel.esterel.IfTest#getElse <em>Else</em>}'.
+   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.esterel.esterel.IfTest#getElsePart <em>Else Part</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>Else</em>'.
-   * @see de.cau.cs.kieler.esterel.esterel.IfTest#getElse()
+   * @return the meta object for the containment reference '<em>Else Part</em>'.
+   * @see de.cau.cs.kieler.esterel.esterel.IfTest#getElsePart()
    * @see #getIfTest()
    * @generated
    */
-  EReference getIfTest_Else();
+  EReference getIfTest_ElsePart();
 
   /**
    * Returns the meta object for class '{@link de.cau.cs.kieler.esterel.esterel.ElsIfPart <em>Els If Part</em>}'.
@@ -5330,15 +5410,15 @@ public interface EsterelPackage extends EPackage
   EReference getElsIf_Expr();
 
   /**
-   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.esterel.esterel.ElsIf#getThen <em>Then</em>}'.
+   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.esterel.esterel.ElsIf#getThenPart <em>Then Part</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>Then</em>'.
-   * @see de.cau.cs.kieler.esterel.esterel.ElsIf#getThen()
+   * @return the meta object for the containment reference '<em>Then Part</em>'.
+   * @see de.cau.cs.kieler.esterel.esterel.ElsIf#getThenPart()
    * @see #getElsIf()
    * @generated
    */
-  EReference getElsIf_Then();
+  EReference getElsIf_ThenPart();
 
   /**
    * Returns the meta object for class '{@link de.cau.cs.kieler.esterel.esterel.ThenPart <em>Then Part</em>}'.
@@ -5837,26 +5917,26 @@ public interface EsterelPackage extends EPackage
   EClass getConstantRenaming();
 
   /**
-   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.esterel.esterel.ConstantRenaming#getValue <em>Value</em>}'.
+   * Returns the meta object for the reference '{@link de.cau.cs.kieler.esterel.esterel.ConstantRenaming#getNewName <em>New Name</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Value</em>'.
-   * @see de.cau.cs.kieler.esterel.esterel.ConstantRenaming#getValue()
-   * @see #getConstantRenaming()
-   * @generated
-   */
-  EAttribute getConstantRenaming_Value();
-
-  /**
-   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.esterel.esterel.ConstantRenaming#getNewName <em>New Name</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>New Name</em>'.
+   * @return the meta object for the reference '<em>New Name</em>'.
    * @see de.cau.cs.kieler.esterel.esterel.ConstantRenaming#getNewName()
    * @see #getConstantRenaming()
    * @generated
    */
-  EAttribute getConstantRenaming_NewName();
+  EReference getConstantRenaming_NewName();
+
+  /**
+   * Returns the meta object for the reference '{@link de.cau.cs.kieler.esterel.esterel.ConstantRenaming#getOldName <em>Old Name</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the reference '<em>Old Name</em>'.
+   * @see de.cau.cs.kieler.esterel.esterel.ConstantRenaming#getOldName()
+   * @see #getConstantRenaming()
+   * @generated
+   */
+  EReference getConstantRenaming_OldName();
 
   /**
    * Returns the meta object for class '{@link de.cau.cs.kieler.esterel.esterel.FunctionRenaming <em>Function Renaming</em>}'.
@@ -6846,28 +6926,6 @@ public interface EsterelPackage extends EPackage
   EClass getDelayExpr();
 
   /**
-   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.esterel.esterel.DelayExpr#getStatement <em>Statement</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>Statement</em>'.
-   * @see de.cau.cs.kieler.esterel.esterel.DelayExpr#getStatement()
-   * @see #getDelayExpr()
-   * @generated
-   */
-  EReference getDelayExpr_Statement();
-
-  /**
-   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.esterel.esterel.DelayExpr#getEnd <em>End</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>End</em>'.
-   * @see de.cau.cs.kieler.esterel.esterel.DelayExpr#getEnd()
-   * @see #getDelayExpr()
-   * @generated
-   */
-  EAttribute getDelayExpr_End();
-
-  /**
    * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.esterel.esterel.DelayExpr#getEvent <em>Event</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -6922,6 +6980,28 @@ public interface EsterelPackage extends EPackage
   EAttribute getDelayEvent_Tick();
 
   /**
+   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.esterel.esterel.DelayEvent#getPreSigExpr <em>Pre Sig Expr</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Pre Sig Expr</em>'.
+   * @see de.cau.cs.kieler.esterel.esterel.DelayEvent#getPreSigExpr()
+   * @see #getDelayEvent()
+   * @generated
+   */
+  EReference getDelayEvent_PreSigExpr();
+
+  /**
+   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.esterel.esterel.DelayEvent#getBlockSigExpr <em>Block Sig Expr</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Block Sig Expr</em>'.
+   * @see de.cau.cs.kieler.esterel.esterel.DelayEvent#getBlockSigExpr()
+   * @see #getDelayEvent()
+   * @generated
+   */
+  EReference getDelayEvent_BlockSigExpr();
+
+  /**
    * Returns the meta object for class '{@link de.cau.cs.kieler.esterel.esterel.ChannelDescription <em>Channel Description</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -6932,15 +7012,15 @@ public interface EsterelPackage extends EPackage
   EClass getChannelDescription();
 
   /**
-   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.esterel.esterel.ChannelDescription#getType <em>Type</em>}'.
+   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.esterel.esterel.ChannelDescription#getType <em>Type</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Type</em>'.
+   * @return the meta object for the containment reference '<em>Type</em>'.
    * @see de.cau.cs.kieler.esterel.esterel.ChannelDescription#getType()
    * @see #getChannelDescription()
    * @generated
    */
-  EAttribute getChannelDescription_Type();
+  EReference getChannelDescription_Type();
 
   /**
    * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.esterel.esterel.ChannelDescription#getDataExpr <em>Data Expr</em>}'.
@@ -6952,6 +7032,38 @@ public interface EsterelPackage extends EPackage
    * @generated
    */
   EReference getChannelDescription_DataExpr();
+
+  /**
+   * Returns the meta object for class '{@link de.cau.cs.kieler.esterel.esterel.ChannelType <em>Channel Type</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Channel Type</em>'.
+   * @see de.cau.cs.kieler.esterel.esterel.ChannelType
+   * @generated
+   */
+  EClass getChannelType();
+
+  /**
+   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.esterel.esterel.ChannelType#getType <em>Type</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Type</em>'.
+   * @see de.cau.cs.kieler.esterel.esterel.ChannelType#getType()
+   * @see #getChannelType()
+   * @generated
+   */
+  EAttribute getChannelType_Type();
+
+  /**
+   * Returns the meta object for the reference '{@link de.cau.cs.kieler.esterel.esterel.ChannelType#getFunc <em>Func</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the reference '<em>Func</em>'.
+   * @see de.cau.cs.kieler.esterel.esterel.ChannelType#getFunc()
+   * @see #getChannelType()
+   * @generated
+   */
+  EReference getChannelType_Func();
 
   /**
    * Returns the meta object for class '{@link de.cau.cs.kieler.esterel.esterel.Signal <em>Signal</em>}'.
@@ -7089,26 +7201,15 @@ public interface EsterelPackage extends EPackage
   EClass getParallel();
 
   /**
-   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.esterel.esterel.Parallel#getLeft <em>Left</em>}'.
+   * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.esterel.esterel.Parallel#getList <em>List</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>Left</em>'.
-   * @see de.cau.cs.kieler.esterel.esterel.Parallel#getLeft()
+   * @return the meta object for the containment reference list '<em>List</em>'.
+   * @see de.cau.cs.kieler.esterel.esterel.Parallel#getList()
    * @see #getParallel()
    * @generated
    */
-  EReference getParallel_Left();
-
-  /**
-   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.esterel.esterel.Parallel#getRight <em>Right</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>Right</em>'.
-   * @see de.cau.cs.kieler.esterel.esterel.Parallel#getRight()
-   * @see #getParallel()
-   * @generated
-   */
-  EReference getParallel_Right();
+  EReference getParallel_List();
 
   /**
    * Returns the meta object for class '{@link de.cau.cs.kieler.esterel.esterel.Sequence <em>Sequence</em>}'.
@@ -7121,26 +7222,15 @@ public interface EsterelPackage extends EPackage
   EClass getSequence();
 
   /**
-   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.esterel.esterel.Sequence#getLeft <em>Left</em>}'.
+   * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.esterel.esterel.Sequence#getList <em>List</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>Left</em>'.
-   * @see de.cau.cs.kieler.esterel.esterel.Sequence#getLeft()
+   * @return the meta object for the containment reference list '<em>List</em>'.
+   * @see de.cau.cs.kieler.esterel.esterel.Sequence#getList()
    * @see #getSequence()
    * @generated
    */
-  EReference getSequence_Left();
-
-  /**
-   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.esterel.esterel.Sequence#getRight <em>Right</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>Right</em>'.
-   * @see de.cau.cs.kieler.esterel.esterel.Sequence#getRight()
-   * @see #getSequence()
-   * @generated
-   */
-  EReference getSequence_Right();
+  EReference getSequence_List();
 
   /**
    * Returns the meta object for class '{@link de.cau.cs.kieler.esterel.esterel.LocalSignal <em>Local Signal</em>}'.
@@ -7829,6 +7919,14 @@ public interface EsterelPackage extends EPackage
     EClass AWAIT_BODY = eINSTANCE.getAwaitBody();
 
     /**
+     * The meta object literal for the '<em><b>End</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute AWAIT_BODY__END = eINSTANCE.getAwaitBody_End();
+
+    /**
      * The meta object literal for the '{@link de.cau.cs.kieler.esterel.esterel.impl.AwaitInstanceImpl <em>Await Instance</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -7837,6 +7935,22 @@ public interface EsterelPackage extends EPackage
      * @generated
      */
     EClass AWAIT_INSTANCE = eINSTANCE.getAwaitInstance();
+
+    /**
+     * The meta object literal for the '<em><b>Delay</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference AWAIT_INSTANCE__DELAY = eINSTANCE.getAwaitInstance_Delay();
+
+    /**
+     * The meta object literal for the '<em><b>Statement</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference AWAIT_INSTANCE__STATEMENT = eINSTANCE.getAwaitInstance_Statement();
 
     /**
      * The meta object literal for the '{@link de.cau.cs.kieler.esterel.esterel.impl.AwaitCaseImpl <em>Await Case</em>}' class.
@@ -7857,14 +7971,6 @@ public interface EsterelPackage extends EPackage
     EReference AWAIT_CASE__CASES = eINSTANCE.getAwaitCase_Cases();
 
     /**
-     * The meta object literal for the '<em><b>End</b></em>' attribute feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EAttribute AWAIT_CASE__END = eINSTANCE.getAwaitCase_End();
-
-    /**
      * The meta object literal for the '{@link de.cau.cs.kieler.esterel.esterel.impl.DoImpl <em>Do</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -7883,12 +7989,20 @@ public interface EsterelPackage extends EPackage
     EReference DO__STATEMENT = eINSTANCE.getDo_Statement();
 
     /**
-     * The meta object literal for the '<em><b>End</b></em>' containment reference feature.
+     * The meta object literal for the '<em><b>End Up</b></em>' containment reference feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EReference DO__END = eINSTANCE.getDo_End();
+    EReference DO__END_UP = eINSTANCE.getDo_EndUp();
+
+    /**
+     * The meta object literal for the '<em><b>End Watch</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference DO__END_WATCH = eINSTANCE.getDo_EndWatch();
 
     /**
      * The meta object literal for the '{@link de.cau.cs.kieler.esterel.esterel.impl.DoUptoImpl <em>Do Upto</em>}' class.
@@ -8067,12 +8181,12 @@ public interface EsterelPackage extends EPackage
     EReference IF_TEST__EXPR = eINSTANCE.getIfTest_Expr();
 
     /**
-     * The meta object literal for the '<em><b>Then</b></em>' containment reference feature.
+     * The meta object literal for the '<em><b>Then Part</b></em>' containment reference feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EReference IF_TEST__THEN = eINSTANCE.getIfTest_Then();
+    EReference IF_TEST__THEN_PART = eINSTANCE.getIfTest_ThenPart();
 
     /**
      * The meta object literal for the '<em><b>Else If</b></em>' containment reference feature.
@@ -8083,12 +8197,12 @@ public interface EsterelPackage extends EPackage
     EReference IF_TEST__ELSE_IF = eINSTANCE.getIfTest_ElseIf();
 
     /**
-     * The meta object literal for the '<em><b>Else</b></em>' containment reference feature.
+     * The meta object literal for the '<em><b>Else Part</b></em>' containment reference feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EReference IF_TEST__ELSE = eINSTANCE.getIfTest_Else();
+    EReference IF_TEST__ELSE_PART = eINSTANCE.getIfTest_ElsePart();
 
     /**
      * The meta object literal for the '{@link de.cau.cs.kieler.esterel.esterel.impl.ElsIfPartImpl <em>Els If Part</em>}' class.
@@ -8127,12 +8241,12 @@ public interface EsterelPackage extends EPackage
     EReference ELS_IF__EXPR = eINSTANCE.getElsIf_Expr();
 
     /**
-     * The meta object literal for the '<em><b>Then</b></em>' containment reference feature.
+     * The meta object literal for the '<em><b>Then Part</b></em>' containment reference feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EReference ELS_IF__THEN = eINSTANCE.getElsIf_Then();
+    EReference ELS_IF__THEN_PART = eINSTANCE.getElsIf_ThenPart();
 
     /**
      * The meta object literal for the '{@link de.cau.cs.kieler.esterel.esterel.impl.ThenPartImpl <em>Then Part</em>}' class.
@@ -8553,20 +8667,20 @@ public interface EsterelPackage extends EPackage
     EClass CONSTANT_RENAMING = eINSTANCE.getConstantRenaming();
 
     /**
-     * The meta object literal for the '<em><b>Value</b></em>' attribute feature.
+     * The meta object literal for the '<em><b>New Name</b></em>' reference feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute CONSTANT_RENAMING__VALUE = eINSTANCE.getConstantRenaming_Value();
+    EReference CONSTANT_RENAMING__NEW_NAME = eINSTANCE.getConstantRenaming_NewName();
 
     /**
-     * The meta object literal for the '<em><b>New Name</b></em>' attribute feature.
+     * The meta object literal for the '<em><b>Old Name</b></em>' reference feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute CONSTANT_RENAMING__NEW_NAME = eINSTANCE.getConstantRenaming_NewName();
+    EReference CONSTANT_RENAMING__OLD_NAME = eINSTANCE.getConstantRenaming_OldName();
 
     /**
      * The meta object literal for the '{@link de.cau.cs.kieler.esterel.esterel.impl.FunctionRenamingImpl <em>Function Renaming</em>}' class.
@@ -9385,22 +9499,6 @@ public interface EsterelPackage extends EPackage
     EClass DELAY_EXPR = eINSTANCE.getDelayExpr();
 
     /**
-     * The meta object literal for the '<em><b>Statement</b></em>' containment reference feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference DELAY_EXPR__STATEMENT = eINSTANCE.getDelayExpr_Statement();
-
-    /**
-     * The meta object literal for the '<em><b>End</b></em>' attribute feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EAttribute DELAY_EXPR__END = eINSTANCE.getDelayExpr_End();
-
-    /**
      * The meta object literal for the '<em><b>Event</b></em>' containment reference feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -9443,6 +9541,22 @@ public interface EsterelPackage extends EPackage
     EAttribute DELAY_EVENT__TICK = eINSTANCE.getDelayEvent_Tick();
 
     /**
+     * The meta object literal for the '<em><b>Pre Sig Expr</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference DELAY_EVENT__PRE_SIG_EXPR = eINSTANCE.getDelayEvent_PreSigExpr();
+
+    /**
+     * The meta object literal for the '<em><b>Block Sig Expr</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference DELAY_EVENT__BLOCK_SIG_EXPR = eINSTANCE.getDelayEvent_BlockSigExpr();
+
+    /**
      * The meta object literal for the '{@link de.cau.cs.kieler.esterel.esterel.impl.ChannelDescriptionImpl <em>Channel Description</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -9453,12 +9567,12 @@ public interface EsterelPackage extends EPackage
     EClass CHANNEL_DESCRIPTION = eINSTANCE.getChannelDescription();
 
     /**
-     * The meta object literal for the '<em><b>Type</b></em>' attribute feature.
+     * The meta object literal for the '<em><b>Type</b></em>' containment reference feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute CHANNEL_DESCRIPTION__TYPE = eINSTANCE.getChannelDescription_Type();
+    EReference CHANNEL_DESCRIPTION__TYPE = eINSTANCE.getChannelDescription_Type();
 
     /**
      * The meta object literal for the '<em><b>Data Expr</b></em>' containment reference feature.
@@ -9467,6 +9581,32 @@ public interface EsterelPackage extends EPackage
      * @generated
      */
     EReference CHANNEL_DESCRIPTION__DATA_EXPR = eINSTANCE.getChannelDescription_DataExpr();
+
+    /**
+     * The meta object literal for the '{@link de.cau.cs.kieler.esterel.esterel.impl.ChannelTypeImpl <em>Channel Type</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.esterel.esterel.impl.ChannelTypeImpl
+     * @see de.cau.cs.kieler.esterel.esterel.impl.EsterelPackageImpl#getChannelType()
+     * @generated
+     */
+    EClass CHANNEL_TYPE = eINSTANCE.getChannelType();
+
+    /**
+     * The meta object literal for the '<em><b>Type</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute CHANNEL_TYPE__TYPE = eINSTANCE.getChannelType_Type();
+
+    /**
+     * The meta object literal for the '<em><b>Func</b></em>' reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference CHANNEL_TYPE__FUNC = eINSTANCE.getChannelType_Func();
 
     /**
      * The meta object literal for the '{@link de.cau.cs.kieler.esterel.esterel.impl.SignalImpl <em>Signal</em>}' class.
@@ -9589,20 +9729,12 @@ public interface EsterelPackage extends EPackage
     EClass PARALLEL = eINSTANCE.getParallel();
 
     /**
-     * The meta object literal for the '<em><b>Left</b></em>' containment reference feature.
+     * The meta object literal for the '<em><b>List</b></em>' containment reference list feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EReference PARALLEL__LEFT = eINSTANCE.getParallel_Left();
-
-    /**
-     * The meta object literal for the '<em><b>Right</b></em>' containment reference feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference PARALLEL__RIGHT = eINSTANCE.getParallel_Right();
+    EReference PARALLEL__LIST = eINSTANCE.getParallel_List();
 
     /**
      * The meta object literal for the '{@link de.cau.cs.kieler.esterel.esterel.impl.SequenceImpl <em>Sequence</em>}' class.
@@ -9615,20 +9747,12 @@ public interface EsterelPackage extends EPackage
     EClass SEQUENCE = eINSTANCE.getSequence();
 
     /**
-     * The meta object literal for the '<em><b>Left</b></em>' containment reference feature.
+     * The meta object literal for the '<em><b>List</b></em>' containment reference list feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EReference SEQUENCE__LEFT = eINSTANCE.getSequence_Left();
-
-    /**
-     * The meta object literal for the '<em><b>Right</b></em>' containment reference feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference SEQUENCE__RIGHT = eINSTANCE.getSequence_Right();
+    EReference SEQUENCE__LIST = eINSTANCE.getSequence_List();
 
     /**
      * The meta object literal for the '{@link de.cau.cs.kieler.esterel.esterel.impl.LocalSignalImpl <em>Local Signal</em>}' class.

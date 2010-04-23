@@ -2,6 +2,7 @@
  * <copyright>
  * </copyright>
  *
+
  */
 package de.cau.cs.kieler.esterel.esterel.util;
 
@@ -819,7 +820,6 @@ public class EsterelSwitch<T>
         SigExpr sigExpr = (SigExpr)theEObject;
         T result = caseSigExpr(sigExpr);
         if (result == null) result = caseTrapExpr(sigExpr);
-        if (result == null) result = caseDelayEvent(sigExpr);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -841,8 +841,6 @@ public class EsterelSwitch<T>
       {
         DelayExpr delayExpr = (DelayExpr)theEObject;
         T result = caseDelayExpr(delayExpr);
-        if (result == null) result = caseAwaitInstance(delayExpr);
-        if (result == null) result = caseAwaitBody(delayExpr);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -857,6 +855,13 @@ public class EsterelSwitch<T>
       {
         ChannelDescription channelDescription = (ChannelDescription)theEObject;
         T result = caseChannelDescription(channelDescription);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case EsterelPackage.CHANNEL_TYPE:
+      {
+        ChannelType channelType = (ChannelType)theEObject;
+        T result = caseChannelType(channelType);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -2554,6 +2559,22 @@ public class EsterelSwitch<T>
    * @generated
    */
   public T caseChannelDescription(ChannelDescription object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Channel Type</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Channel Type</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseChannelType(ChannelType object)
   {
     return null;
   }

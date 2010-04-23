@@ -2,6 +2,7 @@
  * <copyright>
  * </copyright>
  *
+
  */
 package de.cau.cs.kieler.esterel.esterel;
 
@@ -27,30 +28,30 @@ import org.eclipse.emf.ecore.EObject;
 public interface ChannelDescription extends EObject
 {
   /**
-   * Returns the value of the '<em><b>Type</b></em>' attribute.
+   * Returns the value of the '<em><b>Type</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Type</em>' attribute isn't clear,
+   * If the meaning of the '<em>Type</em>' containment reference isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Type</em>' attribute.
-   * @see #setType(String)
+   * @return the value of the '<em>Type</em>' containment reference.
+   * @see #setType(ChannelType)
    * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getChannelDescription_Type()
-   * @model
+   * @model containment="true"
    * @generated
    */
-  String getType();
+  ChannelType getType();
 
   /**
-   * Sets the value of the '{@link de.cau.cs.kieler.esterel.esterel.ChannelDescription#getType <em>Type</em>}' attribute.
+   * Sets the value of the '{@link de.cau.cs.kieler.esterel.esterel.ChannelDescription#getType <em>Type</em>}' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Type</em>' attribute.
+   * @param value the new value of the '<em>Type</em>' containment reference.
    * @see #getType()
    * @generated
    */
-  void setType(String value);
+  void setType(ChannelType value);
 
   /**
    * Returns the value of the '<em><b>Data Expr</b></em>' containment reference.

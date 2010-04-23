@@ -132,17 +132,25 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="body" eType="#//AwaitBody"
         containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="AwaitBody"/>
-  <eClassifiers xsi:type="ecore:EClass" name="AwaitInstance" eSuperTypes="#//AwaitBody"/>
+  <eClassifiers xsi:type="ecore:EClass" name="AwaitBody">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="end" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="AwaitInstance" eSuperTypes="#//AwaitBody">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="delay" eType="#//DelayExpr"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="statement" eType="#//Statement"
+        containment="true"/>
+  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="AwaitCase" eSuperTypes="#//AwaitBody">
     <eStructuralFeatures xsi:type="ecore:EReference" name="cases" upperBound="-1"
         eType="#//AbortCaseSingle" containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="end" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Do" eSuperTypes="#//Statement">
     <eStructuralFeatures xsi:type="ecore:EReference" name="statement" eType="#//Statement"
         containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="end" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EObject"
+    <eStructuralFeatures xsi:type="ecore:EReference" name="endUp" eType="#//DoUpto"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="endWatch" eType="#//DoWatching"
         containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="DoUpto">
@@ -180,11 +188,11 @@
   <eClassifiers xsi:type="ecore:EClass" name="IfTest" eSuperTypes="#//Statement">
     <eStructuralFeatures xsi:type="ecore:EReference" name="expr" eType="#//DataExpr"
         containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="then" eType="#//ThenPart"
+    <eStructuralFeatures xsi:type="ecore:EReference" name="thenPart" eType="#//ThenPart"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="elseIf" eType="#//ElsIfPart"
         containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="else" eType="#//ElsePart"
+    <eStructuralFeatures xsi:type="ecore:EReference" name="elsePart" eType="#//ElsePart"
         containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ElsIfPart">
@@ -194,7 +202,7 @@
   <eClassifiers xsi:type="ecore:EClass" name="ElsIf">
     <eStructuralFeatures xsi:type="ecore:EReference" name="expr" eType="#//DataExpr"
         containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="then" eType="#//ThenPart"
+    <eStructuralFeatures xsi:type="ecore:EReference" name="thenPart" eType="#//ThenPart"
         containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ThenPart">
@@ -280,8 +288,8 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="oldName" eType="#//Type"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ConstantRenaming">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="newName" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="newName" eType="#//Constant"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="oldName" eType="#//Constant"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="FunctionRenaming">
     <eStructuralFeatures xsi:type="ecore:EReference" name="newName" eType="#//Function"/>
@@ -426,7 +434,7 @@
         eType="#//DataExpr" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="TrapExpr"/>
-  <eClassifiers xsi:type="ecore:EClass" name="SigExpr" eSuperTypes="#//TrapExpr #//DelayEvent">
+  <eClassifiers xsi:type="ecore:EClass" name="SigExpr" eSuperTypes="#//TrapExpr">
     <eStructuralFeatures xsi:type="ecore:EReference" name="andExpr" upperBound="-1"
         eType="#//SigExprAND" containment="true"/>
   </eClassifiers>
@@ -439,10 +447,7 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="sigExpr" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EObject"
         containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="DelayExpr" eSuperTypes="#//AwaitInstance">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="statement" eType="#//Statement"
-        containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="end" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  <eClassifiers xsi:type="ecore:EClass" name="DelayExpr">
     <eStructuralFeatures xsi:type="ecore:EReference" name="event" eType="#//DelayEvent"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="expr" eType="#//DataExpr"
@@ -451,11 +456,20 @@
   <eClassifiers xsi:type="ecore:EClass" name="DelayEvent">
     <eStructuralFeatures xsi:type="ecore:EReference" name="signal" eType="#//Signal"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="tick" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="preSigExpr" eType="#//SigExpr"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="blockSigExpr" eType="#//SigExpr"
+        containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ChannelDescription">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="type" eType="#//ChannelType"
+        containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="dataExpr" eType="#//DataExpr"
         containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ChannelType">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="func" eType="#//Function"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Signal">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
@@ -475,15 +489,11 @@
         eType="#//RelationType" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Parallel" eSuperTypes="#//Statement">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="left" eType="#//Statement"
-        containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="right" eType="#//Statement"
+    <eStructuralFeatures xsi:type="ecore:EReference" name="list" upperBound="-1" eType="#//Statement"
         containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Sequence" eSuperTypes="#//Statement">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="left" eType="#//Statement"
-        containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="right" eType="#//Statement"
+    <eStructuralFeatures xsi:type="ecore:EReference" name="list" upperBound="-1" eType="#//Statement"
         containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="LocalSignal" eSuperTypes="#//LocalSignalList">

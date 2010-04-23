@@ -6,9 +6,9 @@
  */
 package de.cau.cs.kieler.esterel.esterel.impl;
 
-import de.cau.cs.kieler.esterel.esterel.DataPre;
+import de.cau.cs.kieler.esterel.esterel.ChannelType;
 import de.cau.cs.kieler.esterel.esterel.EsterelPackage;
-import de.cau.cs.kieler.esterel.esterel.Signal;
+import de.cau.cs.kieler.esterel.esterel.Function;
 
 import org.eclipse.emf.common.notify.Notification;
 
@@ -16,59 +16,60 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
 /**
  * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Data Pre</b></em>'.
+ * An implementation of the model object '<em><b>Channel Type</b></em>'.
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.DataPreImpl#getSignal <em>Signal</em>}</li>
- *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.DataPreImpl#getTick <em>Tick</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.ChannelTypeImpl#getType <em>Type</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.ChannelTypeImpl#getFunc <em>Func</em>}</li>
  * </ul>
  * </p>
  *
  * @generated
  */
-public class DataPreImpl extends DataUnaryExprImpl implements DataPre
+public class ChannelTypeImpl extends MinimalEObjectImpl.Container implements ChannelType
 {
   /**
-   * The cached value of the '{@link #getSignal() <em>Signal</em>}' reference.
+   * The default value of the '{@link #getType() <em>Type</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getSignal()
+   * @see #getType()
    * @generated
    * @ordered
    */
-  protected Signal signal;
+  protected static final String TYPE_EDEFAULT = null;
 
   /**
-   * The default value of the '{@link #getTick() <em>Tick</em>}' attribute.
+   * The cached value of the '{@link #getType() <em>Type</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getTick()
+   * @see #getType()
    * @generated
    * @ordered
    */
-  protected static final String TICK_EDEFAULT = null;
+  protected String type = TYPE_EDEFAULT;
 
   /**
-   * The cached value of the '{@link #getTick() <em>Tick</em>}' attribute.
+   * The cached value of the '{@link #getFunc() <em>Func</em>}' reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getTick()
+   * @see #getFunc()
    * @generated
    * @ordered
    */
-  protected String tick = TICK_EDEFAULT;
+  protected Function func;
 
   /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    */
-  protected DataPreImpl()
+  protected ChannelTypeImpl()
   {
     super();
   }
@@ -81,7 +82,7 @@ public class DataPreImpl extends DataUnaryExprImpl implements DataPre
   @Override
   protected EClass eStaticClass()
   {
-    return EsterelPackage.Literals.DATA_PRE;
+    return EsterelPackage.Literals.CHANNEL_TYPE;
   }
 
   /**
@@ -89,19 +90,42 @@ public class DataPreImpl extends DataUnaryExprImpl implements DataPre
    * <!-- end-user-doc -->
    * @generated
    */
-  public Signal getSignal()
+  public String getType()
   {
-    if (signal != null && signal.eIsProxy())
+    return type;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setType(String newType)
+  {
+    String oldType = type;
+    type = newType;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.CHANNEL_TYPE__TYPE, oldType, type));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Function getFunc()
+  {
+    if (func != null && func.eIsProxy())
     {
-      InternalEObject oldSignal = (InternalEObject)signal;
-      signal = (Signal)eResolveProxy(oldSignal);
-      if (signal != oldSignal)
+      InternalEObject oldFunc = (InternalEObject)func;
+      func = (Function)eResolveProxy(oldFunc);
+      if (func != oldFunc)
       {
         if (eNotificationRequired())
-          eNotify(new ENotificationImpl(this, Notification.RESOLVE, EsterelPackage.DATA_PRE__SIGNAL, oldSignal, signal));
+          eNotify(new ENotificationImpl(this, Notification.RESOLVE, EsterelPackage.CHANNEL_TYPE__FUNC, oldFunc, func));
       }
     }
-    return signal;
+    return func;
   }
 
   /**
@@ -109,9 +133,9 @@ public class DataPreImpl extends DataUnaryExprImpl implements DataPre
    * <!-- end-user-doc -->
    * @generated
    */
-  public Signal basicGetSignal()
+  public Function basicGetFunc()
   {
-    return signal;
+    return func;
   }
 
   /**
@@ -119,35 +143,12 @@ public class DataPreImpl extends DataUnaryExprImpl implements DataPre
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setSignal(Signal newSignal)
+  public void setFunc(Function newFunc)
   {
-    Signal oldSignal = signal;
-    signal = newSignal;
+    Function oldFunc = func;
+    func = newFunc;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.DATA_PRE__SIGNAL, oldSignal, signal));
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public String getTick()
-  {
-    return tick;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public void setTick(String newTick)
-  {
-    String oldTick = tick;
-    tick = newTick;
-    if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.DATA_PRE__TICK, oldTick, tick));
+      eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.CHANNEL_TYPE__FUNC, oldFunc, func));
   }
 
   /**
@@ -160,11 +161,11 @@ public class DataPreImpl extends DataUnaryExprImpl implements DataPre
   {
     switch (featureID)
     {
-      case EsterelPackage.DATA_PRE__SIGNAL:
-        if (resolve) return getSignal();
-        return basicGetSignal();
-      case EsterelPackage.DATA_PRE__TICK:
-        return getTick();
+      case EsterelPackage.CHANNEL_TYPE__TYPE:
+        return getType();
+      case EsterelPackage.CHANNEL_TYPE__FUNC:
+        if (resolve) return getFunc();
+        return basicGetFunc();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -179,11 +180,11 @@ public class DataPreImpl extends DataUnaryExprImpl implements DataPre
   {
     switch (featureID)
     {
-      case EsterelPackage.DATA_PRE__SIGNAL:
-        setSignal((Signal)newValue);
+      case EsterelPackage.CHANNEL_TYPE__TYPE:
+        setType((String)newValue);
         return;
-      case EsterelPackage.DATA_PRE__TICK:
-        setTick((String)newValue);
+      case EsterelPackage.CHANNEL_TYPE__FUNC:
+        setFunc((Function)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -199,11 +200,11 @@ public class DataPreImpl extends DataUnaryExprImpl implements DataPre
   {
     switch (featureID)
     {
-      case EsterelPackage.DATA_PRE__SIGNAL:
-        setSignal((Signal)null);
+      case EsterelPackage.CHANNEL_TYPE__TYPE:
+        setType(TYPE_EDEFAULT);
         return;
-      case EsterelPackage.DATA_PRE__TICK:
-        setTick(TICK_EDEFAULT);
+      case EsterelPackage.CHANNEL_TYPE__FUNC:
+        setFunc((Function)null);
         return;
     }
     super.eUnset(featureID);
@@ -219,10 +220,10 @@ public class DataPreImpl extends DataUnaryExprImpl implements DataPre
   {
     switch (featureID)
     {
-      case EsterelPackage.DATA_PRE__SIGNAL:
-        return signal != null;
-      case EsterelPackage.DATA_PRE__TICK:
-        return TICK_EDEFAULT == null ? tick != null : !TICK_EDEFAULT.equals(tick);
+      case EsterelPackage.CHANNEL_TYPE__TYPE:
+        return TYPE_EDEFAULT == null ? type != null : !TYPE_EDEFAULT.equals(type);
+      case EsterelPackage.CHANNEL_TYPE__FUNC:
+        return func != null;
     }
     return super.eIsSet(featureID);
   }
@@ -238,10 +239,10 @@ public class DataPreImpl extends DataUnaryExprImpl implements DataPre
     if (eIsProxy()) return super.toString();
 
     StringBuffer result = new StringBuffer(super.toString());
-    result.append(" (tick: ");
-    result.append(tick);
+    result.append(" (type: ");
+    result.append(type);
     result.append(')');
     return result.toString();
   }
 
-} //DataPreImpl
+} //ChannelTypeImpl
