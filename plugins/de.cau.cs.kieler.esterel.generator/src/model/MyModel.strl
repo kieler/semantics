@@ -1,30 +1,32 @@
-module ABRO:
-input A, B, R;
-output O;
-loop
-[
-  await A
-  ||
-  await B
-];
-emit O;
-run ABRO2;
-emit A;
-pause;
-each R
-end module
+% todo: make correct syntax highlighting for comments
 
-module ABRO2:
-input A, B, R;
-output O;
-loop
-[
-  await A
-  ||
-  await B
-];
-emit O;
-emit A;
-pause;
-each R
+module test : 
+input A,B,E;
+input C := 0 : combine int with func1; % todo: allow standard operators like +,*
+
+function func1 (a,b): integer ; 
+procedure proc1 (a,b)(c,d); % todo: two lists are not distinguishable
+
+await [A and (not B or C)]; % todo: allow tick in expressions
+await tick;
+
+% todo precedence rules for value expressions and boolean expressions are wrong
+if(?C=27 and 33 > 20 or not 20 > 44) then emit A else emit B end if;
+
+% todo precedence rules for arithmetic expressions are wrong
+emit C(27 + 5 * ?B);
+
+if(func1(?C,?B)<5) then halt else nothing end if;
+
+var v1, v2 : integer % todo: variable definitions are not transformed
+in 
+call :=func1(?B,?C); % todo: the := is veeery wrong
+%call proc1(v1,v2)(v1,v2); % todo: does not work! (only expects functions)
+end var;
+
+signal E,F in
+emit E
+end signal;
+
+
 end module
