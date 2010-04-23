@@ -1,0 +1,30 @@
+module ABRO:
+input A, B, R;
+output O;
+loop
+[
+  await A
+  ||
+  await B
+];
+emit O;
+run ABRO2;
+emit A;
+pause;
+each R
+end module
+
+module ABRO2:
+input A, B, R;
+output O;
+loop
+[
+  await A
+  ||
+  await B
+];
+emit O;
+emit A;
+pause;
+each R
+end module

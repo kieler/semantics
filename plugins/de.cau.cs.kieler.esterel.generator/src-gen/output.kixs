@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="ASCII"?>
+<synccharts:Region xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:synccharts="http://kieler.cs.cau.de/synccharts" xsi:schemaLocation="http://kieler.cs.cau.de/synccharts file:/D:/Workspace/de.cau.cs.kieler.esterel.generator/bin/model/synccharts.ecore">
+  <innerStates isInitial="true">
+    <regions>
+      <innerStates isInitial="true">
+        <outgoingTransitions triggersAndEffects="#" isImmediate="true" targetState="//@innerStates.0/@regions.0/@innerStates.1"/>
+      </innerStates>
+      <innerStates type="CONDITIONAL">
+        <outgoingTransitions triggersAndEffects="#" isImmediate="true" priority="1" targetState="//@innerStates.0/@regions.0/@innerStates.2"/>
+        <outgoingTransitions triggersAndEffects="#" isImmediate="true" priority="2" targetState="//@innerStates.0/@regions.0/@innerStates.3"/>
+      </innerStates>
+      <innerStates label="ABRO">
+        <signals name="A" isInput="true"/>
+        <signals name="B" isInput="true"/>
+        <signals name="R" isInput="true"/>
+        <signals name="O" isOutput="true"/>
+        <regions>
+          <innerStates label="Loop_Each" isInitial="true" isFinal="true">
+            <regions>
+              <innerStates label="Sequence" isInitial="true">
+                <regions>
+                  <innerStates isInitial="true">
+                    <outgoingTransitions triggersAndEffects="#" isImmediate="true" targetState="//@innerStates.0/@regions.0/@innerStates.2/@regions.0/@innerStates.0/@regions.0/@innerStates.0/@regions.0/@innerStates.4"/>
+                  </innerStates>
+                  <innerStates label="Pause" isFinal="true">
+                    <regions>
+                      <innerStates isInitial="true">
+                        <outgoingTransitions type="STRONGABORT" targetState="//@innerStates.0/@regions.0/@innerStates.2/@regions.0/@innerStates.0/@regions.0/@innerStates.0/@regions.0/@innerStates.1/@regions.0/@innerStates.1"/>
+                      </innerStates>
+                      <innerStates isFinal="true"/>
+                    </regions>
+                  </innerStates>
+                  <innerStates label="Emit">
+                    <regions>
+                      <innerStates isInitial="true">
+                        <outgoingTransitions triggersAndEffects="# / A" isImmediate="true" targetState="//@innerStates.0/@regions.0/@innerStates.2/@regions.0/@innerStates.0/@regions.0/@innerStates.0/@regions.0/@innerStates.2/@regions.0/@innerStates.1"/>
+                      </innerStates>
+                      <innerStates isFinal="true"/>
+                    </regions>
+                    <outgoingTransitions type="NORMALTERMINATION" targetState="//@innerStates.0/@regions.0/@innerStates.2/@regions.0/@innerStates.0/@regions.0/@innerStates.0/@regions.0/@innerStates.1"/>
+                  </innerStates>
+                  <innerStates label="Unknown_Statement" type="TEXTUAL" bodyText="de.cau.cs.kieler.esterel.esterel.impl.RunImpl@2d59a3">
+                    <outgoingTransitions type="NORMALTERMINATION" targetState="//@innerStates.0/@regions.0/@innerStates.2/@regions.0/@innerStates.0/@regions.0/@innerStates.0/@regions.0/@innerStates.2"/>
+                  </innerStates>
+                  <innerStates label="Parallel">
+                    <regions>
+                      <innerStates label="Await" isInitial="true" isFinal="true">
+                        <regions>
+                          <innerStates isInitial="true">
+                            <outgoingTransitions triggersAndEffects="A" priority="1" type="STRONGABORT" targetState="//@innerStates.0/@regions.0/@innerStates.2/@regions.0/@innerStates.0/@regions.0/@innerStates.0/@regions.0/@innerStates.4/@regions.0/@innerStates.0/@regions.0/@innerStates.1"/>
+                          </innerStates>
+                          <innerStates isFinal="true"/>
+                        </regions>
+                      </innerStates>
+                    </regions>
+                    <regions>
+                      <innerStates label="Await" isInitial="true" isFinal="true">
+                        <regions>
+                          <innerStates isInitial="true">
+                            <outgoingTransitions triggersAndEffects="B" priority="1" type="STRONGABORT" targetState="//@innerStates.0/@regions.0/@innerStates.2/@regions.0/@innerStates.0/@regions.0/@innerStates.0/@regions.0/@innerStates.4/@regions.1/@innerStates.0/@regions.0/@innerStates.1"/>
+                          </innerStates>
+                          <innerStates isFinal="true"/>
+                        </regions>
+                      </innerStates>
+                    </regions>
+                    <outgoingTransitions type="NORMALTERMINATION" targetState="//@innerStates.0/@regions.0/@innerStates.2/@regions.0/@innerStates.0/@regions.0/@innerStates.0/@regions.0/@innerStates.5"/>
+                  </innerStates>
+                  <innerStates label="Emit">
+                    <regions>
+                      <innerStates isInitial="true">
+                        <outgoingTransitions triggersAndEffects="# / O" isImmediate="true" targetState="//@innerStates.0/@regions.0/@innerStates.2/@regions.0/@innerStates.0/@regions.0/@innerStates.0/@regions.0/@innerStates.5/@regions.0/@innerStates.1"/>
+                      </innerStates>
+                      <innerStates isFinal="true"/>
+                    </regions>
+                    <outgoingTransitions type="NORMALTERMINATION" targetState="//@innerStates.0/@regions.0/@innerStates.2/@regions.0/@innerStates.0/@regions.0/@innerStates.0/@regions.0/@innerStates.3"/>
+                  </innerStates>
+                </regions>
+                <outgoingTransitions triggersAndEffects="R" type="STRONGABORT" targetState="//@innerStates.0/@regions.0/@innerStates.2/@regions.0/@innerStates.0/@regions.0/@innerStates.0"/>
+              </innerStates>
+            </regions>
+          </innerStates>
+        </regions>
+      </innerStates>
+      <innerStates label="ABRO2">
+        <signals name="A" isInput="true"/>
+        <signals name="B" isInput="true"/>
+        <signals name="R" isInput="true"/>
+        <signals name="O" isOutput="true"/>
+        <regions>
+          <innerStates label="Loop_Each" isInitial="true" isFinal="true">
+            <regions>
+              <innerStates label="Sequence" isInitial="true">
+                <regions>
+                  <innerStates isInitial="true">
+                    <outgoingTransitions triggersAndEffects="#" isImmediate="true" targetState="//@innerStates.0/@regions.0/@innerStates.3/@regions.0/@innerStates.0/@regions.0/@innerStates.0/@regions.0/@innerStates.3"/>
+                  </innerStates>
+                  <innerStates label="Pause" isFinal="true">
+                    <regions>
+                      <innerStates isInitial="true">
+                        <outgoingTransitions type="STRONGABORT" targetState="//@innerStates.0/@regions.0/@innerStates.3/@regions.0/@innerStates.0/@regions.0/@innerStates.0/@regions.0/@innerStates.1/@regions.0/@innerStates.1"/>
+                      </innerStates>
+                      <innerStates isFinal="true"/>
+                    </regions>
+                  </innerStates>
+                  <innerStates label="Emit">
+                    <regions>
+                      <innerStates isInitial="true">
+                        <outgoingTransitions triggersAndEffects="# / A" isImmediate="true" targetState="//@innerStates.0/@regions.0/@innerStates.3/@regions.0/@innerStates.0/@regions.0/@innerStates.0/@regions.0/@innerStates.2/@regions.0/@innerStates.1"/>
+                      </innerStates>
+                      <innerStates isFinal="true"/>
+                    </regions>
+                    <outgoingTransitions type="NORMALTERMINATION" targetState="//@innerStates.0/@regions.0/@innerStates.3/@regions.0/@innerStates.0/@regions.0/@innerStates.0/@regions.0/@innerStates.1"/>
+                  </innerStates>
+                  <innerStates label="Parallel">
+                    <regions>
+                      <innerStates label="Await" isInitial="true" isFinal="true">
+                        <regions>
+                          <innerStates isInitial="true">
+                            <outgoingTransitions triggersAndEffects="A" priority="1" type="STRONGABORT" targetState="//@innerStates.0/@regions.0/@innerStates.3/@regions.0/@innerStates.0/@regions.0/@innerStates.0/@regions.0/@innerStates.3/@regions.0/@innerStates.0/@regions.0/@innerStates.1"/>
+                          </innerStates>
+                          <innerStates isFinal="true"/>
+                        </regions>
+                      </innerStates>
+                    </regions>
+                    <regions>
+                      <innerStates label="Await" isInitial="true" isFinal="true">
+                        <regions>
+                          <innerStates isInitial="true">
+                            <outgoingTransitions triggersAndEffects="B" priority="1" type="STRONGABORT" targetState="//@innerStates.0/@regions.0/@innerStates.3/@regions.0/@innerStates.0/@regions.0/@innerStates.0/@regions.0/@innerStates.3/@regions.1/@innerStates.0/@regions.0/@innerStates.1"/>
+                          </innerStates>
+                          <innerStates isFinal="true"/>
+                        </regions>
+                      </innerStates>
+                    </regions>
+                    <outgoingTransitions type="NORMALTERMINATION" targetState="//@innerStates.0/@regions.0/@innerStates.3/@regions.0/@innerStates.0/@regions.0/@innerStates.0/@regions.0/@innerStates.4"/>
+                  </innerStates>
+                  <innerStates label="Emit">
+                    <regions>
+                      <innerStates isInitial="true">
+                        <outgoingTransitions triggersAndEffects="# / O" isImmediate="true" targetState="//@innerStates.0/@regions.0/@innerStates.3/@regions.0/@innerStates.0/@regions.0/@innerStates.0/@regions.0/@innerStates.4/@regions.0/@innerStates.1"/>
+                      </innerStates>
+                      <innerStates isFinal="true"/>
+                    </regions>
+                    <outgoingTransitions type="NORMALTERMINATION" targetState="//@innerStates.0/@regions.0/@innerStates.3/@regions.0/@innerStates.0/@regions.0/@innerStates.0/@regions.0/@innerStates.2"/>
+                  </innerStates>
+                </regions>
+                <outgoingTransitions triggersAndEffects="R" type="STRONGABORT" targetState="//@innerStates.0/@regions.0/@innerStates.3/@regions.0/@innerStates.0/@regions.0/@innerStates.0"/>
+              </innerStates>
+            </regions>
+          </innerStates>
+        </regions>
+      </innerStates>
+    </regions>
+  </innerStates>
+</synccharts:Region>
