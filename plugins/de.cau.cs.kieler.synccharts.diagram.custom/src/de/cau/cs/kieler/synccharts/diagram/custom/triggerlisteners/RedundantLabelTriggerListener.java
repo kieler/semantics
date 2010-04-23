@@ -49,25 +49,6 @@ import de.cau.cs.kieler.synccharts.diagram.edit.parts.TransitionPriorityEditPart
  */
 public class RedundantLabelTriggerListener extends TriggerListener {
 
-    // private static NotificationFilter FILTER;
-    //
-    // {
-    // NotificationFilter eventType = NotificationFilter
-    // .createEventTypeFilter(Notification.ADD);
-    // eventType = eventType.or(NotificationFilter
-    // .createEventTypeFilter(Notification.ADD_MANY));
-    // eventType = eventType.or(NotificationFilter
-    // .createEventTypeFilter(Notification.REMOVE));
-    // eventType = eventType.or(NotificationFilter
-    // .createEventTypeFilter(Notification.REMOVE_MANY));
-    // NotificationFilter.RESOURCE_LOADED.or(eventType)
-    //
-    // NotificationFilter notifierType =
-    // NotificationFilter.createNotifierTypeFilter(SyncchartsPackage.);
-    //        
-    // FILTER = eventType;
-    // }
-
     /**
      * Creates a new RedundantLabelTriggerListener.
      * 
