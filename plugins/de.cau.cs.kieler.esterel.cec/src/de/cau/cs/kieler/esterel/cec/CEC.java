@@ -33,9 +33,15 @@ import de.cau.cs.kieler.core.util.KonsoleExec;
  * @author ctr
  * 
  */
-public class CEC {
+public final class CEC {
 
-    /** all modules that are part of the CEC. The names match the names of the executables, but the */
+    private CEC() {
+    }
+
+    /**
+     * all modules that are part of the CEC. The names match the names of the executables, excluding
+     * special characters like "-".
+     */
     public enum MODULE {
         /** */
         ASTGRC("astgrc"),
@@ -84,7 +90,7 @@ public class CEC {
 
         private String cmd;
 
-        private MODULE(String c) {
+        private MODULE(final String c) {
             this.cmd = c;
         }
 
@@ -94,6 +100,21 @@ public class CEC {
         }
     }
 
+    private static final int INIT_TIME = 500;
+    private static final int TIMEOUT = 500;
+    private static final int STEP_TIME = 500;
+
+    /**
+     * Execute single CEC module.
+     * 
+     * @param module
+     *            name of the module
+     * @param input
+     *            input stream for the compilation
+     * @return result of the compilation
+     * @throws KielerException
+     *             thrown for any execution error
+     */
     public static InputStream exec(final MODULE module, final InputStream input)
             throws KielerException {
         Bundle[] fragments = Platform.getFragments(Activator.getDefault().getBundle());
@@ -112,7 +133,7 @@ public class CEC {
 
         String cmd = path + "cec-" + module;
 
-        return KonsoleExec.exec(cmd, input, 500, 100, 10);
+        return KonsoleExec.exec(cmd, input, INIT_TIME, TIMEOUT, STEP_TIME);
     }
 
     /**
@@ -121,13 +142,17 @@ public class CEC {
      * 
      * @param strlFile
      *            name of the input File.
+     * @param outFile
+     *            output file for the C code
      * @return URI of the generated C file
      * @throws IOException
+     *             if file cannot be read/written
      * @throws KielerException
+     *             thrown if compiler can not be executed or for compilation errors
      */
-    public static URI run(URI strlFile) throws IOException, KielerException {
+    public static URI run(final URI strlFile, final File outFile) throws IOException,
+            KielerException {
 
-        File outFile = File.createTempFile("strl", ".c");
         InputStream strl = new FileInputStream(strlFile.getPath());
         InputStream ast = exec(MODULE.STRLXML, strl);
         InputStream exp = exec(MODULE.EXPANDMODULE, ast);
@@ -146,6 +171,23 @@ public class CEC {
         out.flush();
         out.close();
         return outFile.toURI();
+    }
+
+    /**
+     * Compile Esterel file to C. This is directly derived from the CEC script with the default
+     * values.
+     * 
+     * @param strlFile
+     *            name of the input File.
+     * @return URI of the generated C file
+     * @throws IOException
+     *             if file cannot be read/written
+     * @throws KielerException
+     *             thrown if compiler can not be executed or for compilation errors
+     */
+    public static URI run(final URI strlFile) throws IOException, KielerException {
+        File outFile = File.createTempFile("strl", ".c");
+        return run(strlFile, outFile);
     }
 
 }
