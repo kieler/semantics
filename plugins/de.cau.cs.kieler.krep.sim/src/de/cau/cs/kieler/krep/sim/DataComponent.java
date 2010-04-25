@@ -87,7 +87,7 @@ import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyTypeString;
  * @author ctr
  * 
  */
-public final class DataComponent  extends AbstractAutomatedProducer {
+public final class DataComponent extends AbstractAutomatedProducer {
 
     private static final String[] SUPPORTED_FILES = { "kasm", "klp", "strl" };
 
@@ -527,7 +527,9 @@ public final class DataComponent  extends AbstractAutomatedProducer {
         Bundle[] fragments = Platform.getFragments(Activator.getDefault().getBundle());
 
         if (fragments == null || fragments.length != 1) {
-            throw new KiemInitializationException("strl2kasm compiler not found", false, null);
+            throw new KiemInitializationException(
+                    "strl2kasm compiler not found, it seems that yout platform is not supported",
+                    false, null);
         }
         Bundle compiler = fragments[0];
 
