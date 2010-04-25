@@ -120,7 +120,9 @@ public final class CEC {
         Bundle[] fragments = Platform.getFragments(Activator.getDefault().getBundle());
 
         if (fragments.length != 1) {
-            throw new KielerException("cec native fragment not found", null);
+            throw new KielerException(
+                    "cec native fragment not found, it seems that your platform is not supported by the CEC",
+                    null);
         }
         Bundle compiler = fragments[0];
 
