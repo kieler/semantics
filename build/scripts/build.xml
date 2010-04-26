@@ -323,7 +323,7 @@
 
         <!-- for proper source feature generation PDE needs to get a super feature containing
              the "to be build" feature and the related "to be generated" source feature;
-             therefore we generate the artificial feature de.cau.cs.kieler.buildHelper,
+             therefore we generate the artificial feature ${feature}.buildHelper,
              and add our feature to be build (${feature});
              in case we do want to have a source feature we must add the source feature
              containment reference, too;
@@ -341,20 +341,20 @@
                 </filterchain>
         </loadfile>
 
-        <mkdir dir="${basedir}/features/de.cau.cs.kieler.buildHelper" />
-        <mkdir dir="${basedir}/features/de.cau.cs.kieler.buildHelper/sourceTemplateFeature" />
-        <delete file="${basedir}/features/de.cau.cs.kieler.buildHelper/*" />
-        <delete file="${basedir}/features/de.cau.cs.kieler.buildHelper/sourceTemplateFeature/*" />
+        <mkdir dir="${basedir}/features/${feature}.buildHelper" />
+        <mkdir dir="${basedir}/features/${feature}.buildHelper/sourceTemplateFeature" />
+        <delete file="${basedir}/features/${feature}.buildHelper/*" />
+        <delete file="${basedir}/features/${feature}.buildHelper/sourceTemplateFeature/*" />
 	
         <!-- dump out the artificial super feature depending on the demand of a soure feature
              (generate.sourcefeature is set) -->
         <if>
             <isset property="generate.sourcefeature" />
             <then>
-                <concat destfile="${basedir}/features/de.cau.cs.kieler.buildHelper/feature.xml">&lt;feature id=&quot;de.cau.cs.kieler.buildHelper&quot; version=&quot;1.0.0&quot; &gt;${line.separator}    &lt;includes id=&quot;${featureParam}&quot; /&gt;${line.separator}    &lt;includes id=&quot;${featureParam}.source&quot; /&gt;${line.separator}&lt;/feature&gt;</concat>
+                <concat destfile="${basedir}/features/${feature}.buildHelper/feature.xml">&lt;feature id=&quot;${feature}.buildHelper&quot; version=&quot;1.0.0&quot; &gt;${line.separator}    &lt;includes id=&quot;${feature}&quot; /&gt;${line.separator}    &lt;includes id=&quot;${feature}.source&quot; /&gt;${line.separator}&lt;/feature&gt;</concat>
             </then>
             <else>
-                <concat destfile="${basedir}/features/de.cau.cs.kieler.buildHelper/feature.xml">&lt;feature id=&quot;de.cau.cs.kieler.buildHelper&quot; version=&quot;1.0.0&quot; &gt;${line.separator}    &lt;includes id=&quot;${featureParam}&quot; /&gt;${line.separator}&lt;/feature&gt;</concat>
+                <concat destfile="${basedir}/features/${feature}.buildHelper/feature.xml">&lt;feature id=&quot;${feature}.buildHelper&quot; version=&quot;1.0.0&quot; &gt;${line.separator}    &lt;includes id=&quot;${feature}&quot; /&gt;${line.separator}&lt;/feature&gt;</concat>
             </else>
         </if>
 
@@ -362,7 +362,7 @@
              as generate.feature must be declared there!
              (will have no effect on ${feature}) -->
         <copy file="${basedir}/features/${feature}/build.properties"
-              tofile="${basedir}/features/de.cau.cs.kieler.buildHelper/build.properties" overwrite="true" />
+              tofile="${basedir}/features/${feature}.buildHelper/build.properties" overwrite="true" />
 
         <tstamp />
         <!-- <tstamp> provides ${DSTAMP} and ${TSTAMP}, they're not declared explicitly -->
@@ -374,7 +374,7 @@
         <ant antfile="${genericTargets}" target="generateScript">
             <property name="type" value="feature"/>
             <!--property name="id" value="${feature}"/-->
-            <property name="id" value="de.cau.cs.kieler.buildHelper"/>
+            <property name="id" value="${feature}.buildHelper"/>
         </ant>
 
         <if>
@@ -609,6 +609,7 @@
                     <property name="updateJar.omitRootfiles" value="true" />
                     <target name="clean" />
                     <target name="build.update.jar" />
+                    <target name="gather.bin.parts" />
                 </ant>
             </then>
         </if>
@@ -679,7 +680,7 @@
         </ant>
         
         <delete>
-            <fileset dir="${basedir}/update-site/plugins/" includes="${plugin}*.jar" />
+            <fileset dir="${basedir}/update-site/plugins/" includes="${plugin}*.jar" excludes="${plugin}.source*.jar" />
         </delete>
     </target>
     
