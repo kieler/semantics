@@ -6,3 +6,4 @@ Bundle-Version: 0.1.0.qualifier
 Fragment-Host: de.cau.cs.kieler.esterel.cec;bundle-version="0.1.0"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-Vendor: Christian-Albrechts-Universität zu Kiel
+Eclipse-PlatformFilter: (& (osgi.os=macosx) (osgi.arch=x86_64))
