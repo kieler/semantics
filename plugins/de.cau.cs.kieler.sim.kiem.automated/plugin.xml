@@ -13,14 +13,6 @@
       </content>
    </extension>
    
-   <extension
-         point="de.cau.cs.kieler.sim.kiem.json.datacomponent">
-      <content
-            class="de.cau.cs.kieler.sim.kiem.automated.data.AutoTestComponent"
-            id="de.cau.cs.kieler.sim.kiem.automated.testComp"
-            name="Trace Compare">
-      </content>
-   </extension>
    
 
 </plugin>
