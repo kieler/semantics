@@ -882,7 +882,7 @@
   <plugin
       name="SyncCharts Diagram Editor"
       provider="Christian-Albrechts-Universit√§t zu Kiel"
-      version="0.1.0.qualifier"
+      version="0.2.0.qualifier"
       printingEnabled="true">
     <requiredPlugins>org.eclipse.draw2d</requiredPlugins>
     <requiredPlugins>de.cau.cs.kieler.core.ui</requiredPlugins>
