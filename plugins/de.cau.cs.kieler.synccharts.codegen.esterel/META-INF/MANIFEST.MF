@@ -4,7 +4,7 @@ Bundle-Name: de.cau.cs.kieler.synccharts.codegen.esterel
 Bundle-SymbolicName: de.cau.cs.kieler.synccharts.codegen.esterel;singleton:=true
 Bundle-Version: 0.1.0.qualifier
 Bundle-Activator: de.cau.cs.kieler.synccharts.codegen.esterel.Activator
-Bundle-Vendor: Christian-Albrechts Universität zu Kiel
+Bundle-Vendor: Christian-Albrechts-Universität zu Kiel
 Require-Bundle: org.eclipse.emf.mwe.utils;bundle-version="1.0.0",
  org.eclipse.ui;bundle-version="3.5.2",
  org.eclipse.core.runtime,
