@@ -88,7 +88,7 @@ public class ActionLabelParseCommand extends AbstractCommand {
         if (domain == null) {
             // this is very evil, because then the element is not contained
             // by any resource, especially not by the diagram model
-            Status myStatus = new Status(IStatus.ERROR, Activator.PLUGIN_ID,
+            Status myStatus = new Status(IStatus.ERROR, LabelParserBridgePlugin.PLUGIN_ID,
                     "Parser failed to parse the action string \""
                             + theNewString
                             + "\"! The action object is not part of the model "
@@ -123,7 +123,7 @@ public class ActionLabelParseCommand extends AbstractCommand {
         try {
             parse();
         } catch (Exception e) {
-            Status myStatus = new Status(IStatus.ERROR, Activator.PLUGIN_ID,
+            Status myStatus = new Status(IStatus.ERROR, LabelParserBridgePlugin.PLUGIN_ID,
                     "Error parsing the action string. ", e);
             StatusManager.getManager().handle(myStatus, StatusManager.SHOW);
         }

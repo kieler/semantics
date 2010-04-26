@@ -514,15 +514,6 @@
         	      <test property="org.eclipse.core.resources.extension" value="kixs"/>
                </and>
                <instanceof value="de.cau.cs.kieler.synccharts.diagram.navigator.SyncchartsDomainNavigatorItem"/>
-               <and>
-                  <instanceof
-                        value="org.eclipse.core.resources.IFile">
-                  </instanceof>
-                  <test
-                        property="org.eclipse.core.resources.extension"
-                        value="kits">
-                  </test>
-               </and>
             </or>
          </triggerPoints>
          <possibleChildren>
@@ -538,10 +529,11 @@
             </or>
          </enablement>
       </actionProvider>
-      <commonWizard
-            menuGroupId="de.cau.cs.kieler"
-            type="new"
-            wizardId="de.cau.cs.kieler.synccharts.diagram.part.SyncchartsCreationWizardID">
+      
+      <commonWizard 
+             menuGroupId="de.cau.cs.kieler"
+             type="new"
+             wizardId="de.cau.cs.kieler.synccharts.diagram.part.SyncchartsCreationWizardID">
          <enablement>
             <or>
                <adapt
@@ -551,7 +543,8 @@
                      type="org.eclipse.core.resources.IFolder">
                </adapt>
             </or></enablement>
-      </commonWizard>
+     </commonWizard>
+      
    </extension>
    
 	   <extension point="org.eclipse.ui.navigator.linkHelper" id="navigator-linkhelper">

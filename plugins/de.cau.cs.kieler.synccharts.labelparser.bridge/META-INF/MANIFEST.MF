@@ -3,7 +3,7 @@ Bundle-ManifestVersion: 2
 Bundle-Name: Labelparser Bridge to GMF
 Bundle-SymbolicName: de.cau.cs.kieler.synccharts.labelparser.bridge;singleton:=true
 Bundle-Version: 0.2.0.qualifier
-Bundle-Activator: de.cau.cs.kieler.synccharts.labelparser.bridge.Activator
+Bundle-Activator: de.cau.cs.kieler.synccharts.labelparser.bridge.LabelParserBridgePlugin
 Bundle-Vendor: Christian-Albrechts-Universität zu Kiel
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,

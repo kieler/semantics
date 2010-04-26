@@ -76,11 +76,13 @@ public class TriggerListenerChangedTrigger extends FireOnceTriggerListener {
                         ActionLabelProcessorWrapper.PARSE));
                 // serialize the action again so that the user
                 // gets feedback on what the machine thinks the label looks like
-                cc.append(actionLabelProcessor.getProcessActionCommand(action,
-                        ActionLabelProcessorWrapper.SERIALIZE));
+                if (LabelParserBridgePlugin.doAutomaticSerialization()) {
+                    cc.append(actionLabelProcessor.getProcessActionCommand(
+                            action, ActionLabelProcessorWrapper.SERIALIZE));
+                }
             } catch (Exception e) {
                 Status myStatus = new Status(IStatus.ERROR,
-                        Activator.PLUGIN_ID, "", e);
+                        LabelParserBridgePlugin.PLUGIN_ID, "", e);
                 StatusManager.getManager().handle(myStatus, StatusManager.SHOW);
             }
         }

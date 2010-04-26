@@ -831,6 +831,11 @@
             title="Transition"
             description="Create new Transition"
             genLinks="//@diagram/@links.0"/>
+        <entries
+            xsi:type="gmfgen:ToolEntry"
+            title="Region"
+            description="Create a new Region"
+            genNodes="//@diagram/@childNodes.0"/>
       </groups>
     </palette>
     <preferences
@@ -881,7 +886,7 @@
   </diagram>
   <plugin
       name="SyncCharts Diagram Editor"
-      provider="Christian-Albrechts-Universit√§t zu Kiel"
+      provider="Christian-Albrechts-Universität zu Kiel"
       version="0.2.0.qualifier"
       printingEnabled="true">
     <requiredPlugins>org.eclipse.draw2d</requiredPlugins>

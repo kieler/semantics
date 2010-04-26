@@ -47,7 +47,8 @@ public class StateSuspendEditPart extends ShapeCompartmentEditPart {
      * @generated
      */
     public IFigure createFigure() {
-        ResizableCompartmentFigure result = (ResizableCompartmentFigure) super.createFigure();
+        ResizableCompartmentFigure result = (ResizableCompartmentFigure) super
+                .createFigure();
         result.setTitleVisibility(false);
 
         Object border = result.getBorder();
@@ -73,11 +74,16 @@ public class StateSuspendEditPart extends ShapeCompartmentEditPart {
      */
     protected void createDefaultEditPolicies() {
         super.createDefaultEditPolicies();
-        installEditPolicy(EditPolicy.PRIMARY_DRAG_ROLE, new ResizableCompartmentEditPolicy());
-        installEditPolicy(EditPolicyRoles.SEMANTIC_ROLE, new StateSuspendItemSemanticEditPolicy());
-        installEditPolicy(EditPolicyRoles.CREATION_ROLE, new CreationEditPolicy());
-        installEditPolicy(EditPolicyRoles.DRAG_DROP_ROLE, new DragDropEditPolicy());
-        installEditPolicy(EditPolicyRoles.CANONICAL_ROLE, new StateSuspendCanonicalEditPolicy());
+        installEditPolicy(EditPolicy.PRIMARY_DRAG_ROLE,
+                new ResizableCompartmentEditPolicy());
+        installEditPolicy(EditPolicyRoles.SEMANTIC_ROLE,
+                new StateSuspendItemSemanticEditPolicy());
+        installEditPolicy(EditPolicyRoles.CREATION_ROLE,
+                new CreationEditPolicy());
+        installEditPolicy(EditPolicyRoles.DRAG_DROP_ROLE,
+                new DragDropEditPolicy());
+        installEditPolicy(EditPolicyRoles.CANONICAL_ROLE,
+                new StateSuspendCanonicalEditPolicy());
     }
 
     /**

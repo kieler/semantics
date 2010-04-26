@@ -268,6 +268,16 @@ public class Messages extends NLS {
     /**
      * @generated
      */
+    public static String Region3CreationTool_title;
+
+    /**
+     * @generated
+     */
+    public static String Region3CreationTool_desc;
+
+    /**
+     * @generated
+     */
     public static String StateSignalEditPart_title;
 
     /**

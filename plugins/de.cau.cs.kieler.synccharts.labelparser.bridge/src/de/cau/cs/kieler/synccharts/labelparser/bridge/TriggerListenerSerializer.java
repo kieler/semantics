@@ -21,21 +21,28 @@ public class TriggerListenerSerializer extends FireOnceTriggerListener {
     private ActionLabelProcessorWrapper actionLabelProcessor = new ActionLabelProcessorWrapper();
 
     public TriggerListenerSerializer() {
-        super(NotificationFilter.createFeatureFilter(SyncchartsPackage.eINSTANCE.getAction_Delay())
-                .or(
-                        NotificationFilter.createFeatureFilter(SyncchartsPackage.eINSTANCE
+        super(NotificationFilter.createFeatureFilter(
+                SyncchartsPackage.eINSTANCE.getAction_Delay()).or(
+                NotificationFilter
+                        .createFeatureFilter(SyncchartsPackage.eINSTANCE
                                 .getAction_Effects())).or(
-                        NotificationFilter.createFeatureFilter(SyncchartsPackage.eINSTANCE
+                NotificationFilter
+                        .createFeatureFilter(SyncchartsPackage.eINSTANCE
                                 .getAction_IsImmediate())).or(
-                        NotificationFilter.createFeatureFilter(SyncchartsPackage.eINSTANCE
+                NotificationFilter
+                        .createFeatureFilter(SyncchartsPackage.eINSTANCE
                                 .getAction_Trigger())));
     }
 
     @Override
-    protected Command trigger(TransactionalEditingDomain domain, Notification notification) {
+    protected Command trigger(TransactionalEditingDomain domain,
+            Notification notification) {
         Action action = (Action) notification.getNotifier();
-        return actionLabelProcessor.getProcessActionCommand(action,
-                ActionLabelProcessorWrapper.SERIALIZE);
+        if (LabelParserBridgePlugin.doAutomaticSerialization()) {
+            return actionLabelProcessor.getProcessActionCommand(action,
+                    ActionLabelProcessorWrapper.SERIALIZE);
+        }
+        return null;
     }
 
 }

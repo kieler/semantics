@@ -24,6 +24,58 @@ public class «getClassName()»«EXPAND extendsList»«EXPAND implementsList» {
 		setPreferenceStore(«getDiagram().editorGen.plugin.getActivatorQualifiedClassName()».getInstance().getPreferenceStore());
 	}
 	
+	«REM»soh: adding optional enabling and disabling of automated serialization in labelparser«ENDREM»
+	«IF gmfgen::StandardPreferencePages::General = kind-»
+	//soh: adding optional enabling and disabling of automated serialization in labelparser
+    «EXPAND xpt::Common::generatedMemberComment»
+   	private String AUTO_SERIALIZE_LABEL = "Perform automated serialization";
+	
+	«EXPAND xpt::Common::generatedMemberComment»
+    private static String AUTO_SERIALIZE_PREF = de.cau.cs.kieler.synccharts.labelparser.bridge.LabelParserBridgePlugin.AUTO_SERIALIZE;
+	
+	«EXPAND xpt::Common::generatedMemberComment»
+    private static org.eclipse.jface.preference.IPreferenceStore LABEL_PARSER_STORE = de.cau.cs.kieler.synccharts.labelparser.bridge.LabelParserBridgePlugin
+            .getDefault().getPreferenceStore();
+	
+	«EXPAND xpt::Common::generatedMemberComment»
+   	private org.eclipse.gmf.runtime.common.ui.preferences.CheckBoxFieldEditor autoSerializeEditor = null;
+	
+	«EXPAND xpt::Common::generatedMemberComment»
+    private static final String AUTO_SERIALIZE_TOOLTIP = "Automatic Serialization of expressions causes labels to be displayed "
+            + "how the parser interprets them. However this deletes all custom formatting "
+            + "e.g. line breaks.";
+	
+	«EXPAND xpt::Common::generatedMemberComment»
+	@Override
+   	protected void addFields(org.eclipse.swt.widgets.Composite composite) {
+        super.addFields(composite);
+        
+        // automated serialization
+        autoSerializeEditor = new org.eclipse.gmf.runtime.common.ui.preferences.CheckBoxFieldEditor(AUTO_SERIALIZE_PREF,
+                AUTO_SERIALIZE_LABEL, composite);
+
+        boolean value = true;
+        if (LABEL_PARSER_STORE.contains(AUTO_SERIALIZE_PREF)) {
+            value = LABEL_PARSER_STORE.getBoolean(AUTO_SERIALIZE_PREF);
+        }
+        autoSerializeEditor.getCheckbox().setSelection(value);
+        autoSerializeEditor.getCheckbox().setToolTipText(AUTO_SERIALIZE_TOOLTIP);
+    }
+        
+    «EXPAND xpt::Common::generatedMemberComment»
+    @Override
+    public boolean performOk() {
+        boolean result = super.performOk();
+        boolean value = autoSerializeEditor.getBooleanValue();
+
+        LABEL_PARSER_STORE.setValue(AUTO_SERIALIZE_PREF, value);
+
+        return result;
+    }
+	
+	«ENDIF-»
+	
+	
 	«IF gmfgen::StandardPreferencePages::Connections = kind-»
 	«REM»temporary spline code until GMF feature is committed«ENDREM»
 	«EXPAND xpt::Common::generatedMemberComment»

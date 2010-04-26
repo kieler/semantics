@@ -24,18 +24,20 @@ import org.osgi.framework.BundleContext;
  * 
  * @kieler.rating 2010-01-19 proposed yellow proposed by haf
  */
-public class Activator extends AbstractUIPlugin {
+public class LabelParserBridgePlugin extends AbstractUIPlugin {
 
     /** The plug-in ID. */
     public static final String PLUGIN_ID = "de.cau.cs.kieler.synccharts.labelparser.bridge";
 
     // The shared instance
-    private static Activator plugin;
+    private static LabelParserBridgePlugin plugin;
+
+    public static final String AUTO_SERIALIZE = "LABELPARSER_AUTO_SERIALIZE";
 
     /**
      * The default constructor.
      */
-    public Activator() {
+    public LabelParserBridgePlugin() {
     }
 
     /*
@@ -65,8 +67,17 @@ public class Activator extends AbstractUIPlugin {
      * 
      * @return the shared instance
      */
-    public static Activator getDefault() {
+    public static LabelParserBridgePlugin getDefault() {
         return plugin;
     }
 
+    /**
+     * Retrieves the value from the preference store indicating whether or not
+     * parsed labels should be serialized automatically.
+     * 
+     * @return true if the automatic serialization is enabled
+     */
+    public static boolean doAutomaticSerialization() {
+        return getDefault().getPreferenceStore().getBoolean(AUTO_SERIALIZE);
+    }
 }
