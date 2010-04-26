@@ -105,4 +105,32 @@
          version="0.0.0"
          fragment="true"/>
 
+   <plugin
+         id="de.cau.cs.kieler.esterel.cec.linux.x86_64"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         fragment="true"/>
+
+   <plugin
+         id="de.cau.cs.kieler.esterel.cec.macosx.x86"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         fragment="true"/>
+
+   <plugin
+         id="de.cau.cs.kieler.esterel.cec.macosx.x86_64"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         fragment="true"/>
+
+   <plugin
+         id="de.cau.cs.kieler.esterel.cec.solaris.sparc"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         fragment="true"/>
+
 </feature>
