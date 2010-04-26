@@ -846,6 +846,19 @@ _case __LABEL__: (void) 0;						\
 // The following is compiled conditionally depending on _SC_valSigInt_SIZE.
 // <application>.c must define _SC_valSigInt_SIZE if valued signals are used.
 
+#ifdef _SC_valSigInt_SIZE
+//! At beginning of initial tick:
+//! Initialize valued signals (-1 is for "undefined").
+#define _declindex static int _i;
+
+#define _setValInit						        \
+  for (_i = 0; _i < _SC_valSigInt_SIZE; _i++) 		                \
+    //valSigInt[_i] = -1;
+
+#else     // #ifdef _SC_valSigInt_SIZE
+#define _declindex
+#define _setValInit
+#endif
 
 //// MY CODE FOR TESTING ///////////////////////
 
