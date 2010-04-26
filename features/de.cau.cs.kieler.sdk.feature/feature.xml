@@ -243,11 +243,11 @@ litigation.
          version="0.0.0"/>
 
    <includes
-         id="de.cau.cs.kieler.esterel_extended"
+         id="de.cau.cs.kieler.esterel.extended"
          version="0.0.0"/>
 
    <includes
-         id="de.cau.cs.kieler.esterel_extended.source"
+         id="de.cau.cs.kieler.esterel.extended.source"
          version="0.0.0"/>
 
    <includes
