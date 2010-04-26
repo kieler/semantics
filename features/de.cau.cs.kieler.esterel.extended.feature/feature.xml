@@ -76,7 +76,7 @@
    <plugin
          id="de.cau.cs.kieler.esterel.cec.linux.x86"
          os="linux"
-         arch="x86,x86_64"
+         arch="x86"
          download-size="0"
          install-size="0"
          version="0.0.0"
@@ -107,6 +107,8 @@
 
    <plugin
          id="de.cau.cs.kieler.esterel.cec.linux.x86_64"
+         os="linux"
+         arch="x86_64"
          download-size="0"
          install-size="0"
          version="0.0.0"
@@ -114,6 +116,8 @@
 
    <plugin
          id="de.cau.cs.kieler.esterel.cec.macosx.x86"
+         os="macosx"
+         arch="x86"
          download-size="0"
          install-size="0"
          version="0.0.0"
@@ -121,6 +125,8 @@
 
    <plugin
          id="de.cau.cs.kieler.esterel.cec.macosx.x86_64"
+         os="macosx"
+         arch="x86_64"
          download-size="0"
          install-size="0"
          version="0.0.0"
@@ -128,6 +134,8 @@
 
    <plugin
          id="de.cau.cs.kieler.esterel.cec.solaris.sparc"
+         os="solaris"
+         arch="sparc"
          download-size="0"
          install-size="0"
          version="0.0.0"
