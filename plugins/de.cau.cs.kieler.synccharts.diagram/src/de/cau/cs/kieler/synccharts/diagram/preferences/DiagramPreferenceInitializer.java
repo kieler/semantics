@@ -66,8 +66,6 @@ public class DiagramPreferenceInitializer extends AbstractPreferenceInitializer 
         // added by customized template (CHSCH)
         store.setDefault(SplineConnection.PREF_SPLINE_MODE,
                 SplineConnection.SPLINE_CUBIC);
-        // added by customized template (SOH)
-        store.setDefault(LabelParserBridgePlugin.AUTO_SERIALIZE, true);
 
     }
 

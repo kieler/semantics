@@ -21,7 +21,8 @@ public class DiagramGeneralPreferencePage extends DiagramsPreferencePage {
                 .getPreferenceStore());
     }
 
-    //soh: adding optional enabling and disabling of automated serialization in labelparser
+    // soh: adding optional enabling and disabling of automated serialization in
+    // labelparser
     /**
      * @generated
      */
@@ -60,12 +61,9 @@ public class DiagramGeneralPreferencePage extends DiagramsPreferencePage {
         // automated serialization
         autoSerializeEditor = new CheckBoxFieldEditor(AUTO_SERIALIZE_PREF,
                 AUTO_SERIALIZE_LABEL, composite);
-
-        boolean value = true;
-        if (LABEL_PARSER_STORE.contains(AUTO_SERIALIZE_PREF)) {
-            value = LABEL_PARSER_STORE.getBoolean(AUTO_SERIALIZE_PREF);
-        }
-        autoSerializeEditor.getCheckbox().setSelection(value);
+        LABEL_PARSER_STORE.setDefault(AUTO_SERIALIZE_PREF, true);
+        autoSerializeEditor.setPreferenceStore(LABEL_PARSER_STORE);
+        autoSerializeEditor.load();
         autoSerializeEditor.getCheckbox()
                 .setToolTipText(AUTO_SERIALIZE_TOOLTIP);
     }
@@ -76,10 +74,7 @@ public class DiagramGeneralPreferencePage extends DiagramsPreferencePage {
     @Override
     public boolean performOk() {
         boolean result = super.performOk();
-        boolean value = autoSerializeEditor.getBooleanValue();
-
-        LABEL_PARSER_STORE.setValue(AUTO_SERIALIZE_PREF, value);
-
+        autoSerializeEditor.store();
         return result;
     }
 
