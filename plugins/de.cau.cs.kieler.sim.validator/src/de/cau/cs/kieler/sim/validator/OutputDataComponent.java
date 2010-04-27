@@ -1,10 +1,14 @@
 package de.cau.cs.kieler.sim.validator;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
+import java.io.PrintWriter;
+import java.io.Reader;
 import java.util.LinkedList;
 
 import de.cau.cs.kieler.sim.kiem.IJSONObjectDataComponent;
@@ -88,8 +92,17 @@ public class OutputDataComponent extends JSONObjectDataComponent implements
                         null);
             }
             try {
-                is = new ObjectInputStream(inputStream);
-                data = (LinkedList<String>) is.readObject();
+                BufferedReader br = new BufferedReader(new InputStreamReader(inputStream));
+                data = new LinkedList<String>();
+                while (true) {
+                   String line = br.readLine();
+                   if (line == null) {
+                       break;
+                   }
+                   data.add(line);
+                }
+                //is = new ObjectInputStream(inputStream);
+                //data = (LinkedList<String>) is.readObject();
             } catch (Exception e) {
                 throw new KiemInitializationException("Cannot open training data file.", false, e);
             }
@@ -124,14 +137,21 @@ public class OutputDataComponent extends JSONObjectDataComponent implements
     public void wrapup() throws KiemInitializationException {
         if (ValidatorPlugin.getTrainingModeProperty()) {
             if (outputStream != null) {
-                try {
-                    ObjectOutputStream os = new ObjectOutputStream(outputStream);
-                    os.writeObject(data);
-                    outputStream.flush();
-                    outputStream.close();
-                } catch (IOException e) {
-                    throw new KiemInitializationException("Cannot close file.", false, e);
-                }
+//                try {
+                    PrintWriter pw = new PrintWriter(outputStream);
+                    for (int c = 0; c < data.size(); c ++) {
+                        String line = data.get(c);
+                        pw.println(line); 
+                    }
+                    pw.flush();
+                    pw.close();
+                    //ObjectOutputStream os = new ObjectOutputStream(outputStream);
+                    //os.writeObject(data.toString());
+                    //outputStream.flush();
+                    //outputStream.close();
+//                } catch (IOException e) {
+//                    throw new KiemInitializationException("Cannot close file.", false, e);
+//                }
             }
         } else {
             try {
