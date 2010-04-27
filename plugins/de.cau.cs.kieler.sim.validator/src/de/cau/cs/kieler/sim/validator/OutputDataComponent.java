@@ -37,7 +37,8 @@ public class OutputDataComponent extends JSONObjectDataComponent implements
     public void initialize() throws KiemInitializationException {
         if (ValidatorPlugin.getTrainingModeProperty()) {
             boolean alreadyExists = ValidatorPlugin.existsInputFileWithExtension(".vout", 1);
-            if (alreadyExists) {
+            if (alreadyExists && !ValidatorPlugin.isAsked()) {
+                ValidatorPlugin.setAsked(true);
                 try {
                     final Shell shell = Display.getCurrent().getShells()[0];
                     boolean b = MessageDialog.openQuestion(shell, "Existing Training File",
@@ -60,7 +61,8 @@ public class OutputDataComponent extends JSONObjectDataComponent implements
         } else {
             inputStream = ValidatorPlugin.openInputFileWithExtension(".vout", 1);
             ObjectInputStream is;
-            if (inputStream == null) {
+            if (inputStream == null && !ValidatorPlugin.isAsked()) {
+                ValidatorPlugin.setAsked(true);
                 try {
                     final Shell shell = Display.getCurrent().getShells()[0];
                     boolean b = MessageDialog
@@ -138,6 +140,8 @@ public class OutputDataComponent extends JSONObjectDataComponent implements
                 throw new KiemInitializationException("Cannot close file.", false, e);
             }
         }
+        // ask again for next execution run
+        ValidatorPlugin.setAsked(false);
     }
 
     // -------------------------------------------------------------------------

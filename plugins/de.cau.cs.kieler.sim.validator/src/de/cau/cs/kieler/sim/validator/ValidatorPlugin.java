@@ -60,7 +60,31 @@ public class ValidatorPlugin extends AbstractUIPlugin {
 
     /** The static kiem properties for both components. */
     private static KiemProperty[] kiemProperties;
+    
+    /** The asked flag is reset every execution and saves the users opinion. */
+    private static boolean asked;
 
+    // -------------------------------------------------------------------------
+    
+    /**
+     * Checks whether asked is true.
+     * 
+     * @return true, if is asked
+     */
+    public static boolean isAsked() {
+        return asked;
+    }
+
+    /**
+     * Sets the asked.
+     * 
+     * @param askedParam
+     *            the new asked
+     */
+    public static void setAsked(boolean askedParam) {
+        asked = askedParam;
+    }
+    
     // -------------------------------------------------------------------------
 
     /**

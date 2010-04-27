@@ -36,7 +36,8 @@ public class InputDataComponent extends JSONObjectDataComponent implements IJSON
     public void initialize() throws KiemInitializationException {
         if (ValidatorPlugin.getTrainingModeProperty()) {
             boolean alreadyExists = ValidatorPlugin.existsInputFileWithExtension(".vin", 1);
-            if (alreadyExists) {
+            if (alreadyExists && !ValidatorPlugin.isAsked()) {
+                ValidatorPlugin.setAsked(true);
                 try {
                     final Shell shell = Display.getCurrent().getShells()[0];
                     boolean b = MessageDialog.openQuestion(shell, "Existing Training File", "There already exists a training data file for model '"
@@ -58,7 +59,8 @@ public class InputDataComponent extends JSONObjectDataComponent implements IJSON
         } else {
             inputStream = ValidatorPlugin.openInputFileWithExtension(".vin", 1);
             ObjectInputStream is;
-            if (inputStream == null) {
+            if (inputStream == null && !ValidatorPlugin.isAsked()) {
+                ValidatorPlugin.setAsked(true);
                 try {
                     final Shell shell = Display.getCurrent().getShells()[0];
                     boolean b = MessageDialog.openQuestion(shell, "No Training File", "No training data file was found for model '"
@@ -124,6 +126,8 @@ public class InputDataComponent extends JSONObjectDataComponent implements IJSON
                 throw new KiemInitializationException("Cannot close file.", false, e);
             }
         }
+        // ask again for next execution run
+        ValidatorPlugin.setAsked(false);
     }
 
     /*
