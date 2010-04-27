@@ -27,22 +27,23 @@ public class OutputDataComponent extends JSONObjectDataComponent implements
     OutputStream outputStream;
     InputStream inputStream;
     LinkedList<String> data;
-    
+
     public OutputDataComponent() {
         // TODO Auto-generated constructor stub
     }
 
     // -------------------------------------------------------------------------
-    
+
     public void initialize() throws KiemInitializationException {
         if (ValidatorPlugin.getTrainingModeProperty()) {
             boolean alreadyExists = ValidatorPlugin.existsInputFileWithExtension(".vout", 1);
             if (alreadyExists) {
                 try {
                     final Shell shell = Display.getCurrent().getShells()[0];
-                    boolean b = MessageDialog.openQuestion(shell, "Existing Training File", "There already exists a training data file for model '"
-                            + ValidatorPlugin.getInputModel() + "'"
-                            + ". Do you want to switch the training mode off now?");
+                    boolean b = MessageDialog.openQuestion(shell, "Existing Training File",
+                            "There already exists a training data file for model '"
+                                    + ValidatorPlugin.getInputModel() + "'"
+                                    + ". Do you want to switch the training mode off now?");
                     if (b) {
                         ValidatorPlugin.setTrainingModeProperty(false);
                         // call initialize again
@@ -53,7 +54,7 @@ public class OutputDataComponent extends JSONObjectDataComponent implements
                     // hide error if no GUI
                 }
             }
-            
+
             outputStream = ValidatorPlugin.openOutputFileWithExtension(".vout");
             data = new LinkedList<String>();
         } else {
@@ -62,9 +63,14 @@ public class OutputDataComponent extends JSONObjectDataComponent implements
             if (inputStream == null) {
                 try {
                     final Shell shell = Display.getCurrent().getShells()[0];
-                    boolean b = MessageDialog.openQuestion(shell, "No Training File", "No training data file was found for model '"
-                            + ValidatorPlugin.getInputModel() + "'"
-                            + ". Do you want to switch the validation to traning mode first?");
+                    boolean b = MessageDialog
+                            .openQuestion(
+                                    shell,
+                                    "No Training File",
+                                    "No training data file was found for model '"
+                                            + ValidatorPlugin.getInputModel()
+                                            + "'"
+                                            + ". Do you want to switch the validation to traning mode first?");
                     if (b) {
                         ValidatorPlugin.setTrainingModeProperty(true);
                         // call initialize again
@@ -76,7 +82,8 @@ public class OutputDataComponent extends JSONObjectDataComponent implements
                 }
             }
             if (inputStream == null) {
-                throw new KiemInitializationException("Cannot open training data file.", false, null);
+                throw new KiemInitializationException("Cannot open training data file.", false,
+                        null);
             }
             try {
                 is = new ObjectInputStream(inputStream);
@@ -88,7 +95,7 @@ public class OutputDataComponent extends JSONObjectDataComponent implements
     }
 
     // -------------------------------------------------------------------------
-    
+
     /**
      * Provide properties.
      * 
@@ -97,9 +104,9 @@ public class OutputDataComponent extends JSONObjectDataComponent implements
     public KiemProperty[] provideProperties() {
         return ValidatorPlugin.provideProperties();
     }
-    
+
     // -------------------------------------------------------------------------
-    
+
     public boolean isObserver() {
         return true;
     }
@@ -138,16 +145,19 @@ public class OutputDataComponent extends JSONObjectDataComponent implements
     public JSONObject step(JSONObject jSONObject) throws KiemExecutionException {
         JSONObject returnData = null;
         if (ValidatorPlugin.getTrainingModeProperty()) {
-            data.add(jSONObject.toString());
+            data.add(ValidatorPlugin.sort(jSONObject).toString());
         } else {
             if (data.size() > 0) {
-                    String compareData = data.get(0);
-                    if (!jSONObject.toString().equals(compareData)) {
-                        throw new KiemExecutionException("Data validation failed. Current data differs from trained data. \n\n Trained data: \n"+compareData+" \n\n Current data: \n"+jSONObject.toString() , true, null);
-                    }
+                String compareData = data.get(0);
+                jSONObject = ValidatorPlugin.sort(jSONObject);
+                if (!jSONObject.toString().equals(compareData)) {
+                    throw new KiemExecutionException(
+                            "Data validation failed. Current data differs from trained data. \n\n Trained data: \n"
+                                    + compareData + " \n\n Current data: \n"
+                                    + jSONObject.toString(), true, null);
+                }
                 data.remove(0);
-            }
-            else {
+            } else {
                 // suggest to stop
                 throw new KiemExecutionException("End of trained trace.", true, false, true, null);
             }
@@ -155,12 +165,11 @@ public class OutputDataComponent extends JSONObjectDataComponent implements
         return returnData;
     }
 
-
     // -------------------------------------------------------------------------
 
     public KiemEvent provideEventOfInterest() {
-        int[] events = {KiemEvent.KIEMPROPERTY_CHANGE};
-        KiemEvent event = new KiemEvent(events); 
+        int[] events = { KiemEvent.KIEMPROPERTY_CHANGE };
+        KiemEvent event = new KiemEvent(events);
         return event;
     }
 
@@ -173,5 +182,4 @@ public class OutputDataComponent extends JSONObjectDataComponent implements
         ValidatorPlugin.setTrainingModeProperty(training);
     }
 
-    
 }

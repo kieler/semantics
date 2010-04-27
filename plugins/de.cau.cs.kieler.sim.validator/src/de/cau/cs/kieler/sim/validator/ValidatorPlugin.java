@@ -18,6 +18,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URL;
+import java.util.Iterator;
 import java.util.StringTokenizer;
 import org.eclipse.core.runtime.Path;
 
@@ -35,6 +36,8 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramEditor;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import de.cau.cs.kieler.sim.kiem.KiemPlugin;
 import de.cau.cs.kieler.sim.kiem.internal.AbstractDataComponent;
@@ -401,7 +404,7 @@ public class ValidatorPlugin extends AbstractUIPlugin {
         return exists;
     }
 
-        /**
+    /**
      * Open input file with extension.
      * 
      * @param extension
@@ -430,4 +433,29 @@ public class ValidatorPlugin extends AbstractUIPlugin {
         return file;
     }
 
+    /**
+     * Sort.
+     * 
+     * @param jSONObject
+     *            the j son object
+     * @return the jSON object
+     */
+    public static JSONObject sort(JSONObject jSONObject) {
+        JSONObject jSONObject2 = new JSONObject();
+        Iterator<String> iterator = jSONObject.sortedKeys();
+        if (iterator.hasNext()) {
+            try {
+                String key = iterator.next();
+                Object val;
+                val = jSONObject.get(key);
+                if (val instanceof JSONObject) {
+                    val = sort((JSONObject) val);
+                }
+                jSONObject2.accumulate(key, val);
+            } catch (JSONException e) {
+                // skip this
+            }
+        }
+        return jSONObject2;
+    }
 }
