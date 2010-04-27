@@ -465,9 +465,10 @@ public class ValidatorPlugin extends AbstractUIPlugin {
      * @return the jSON object
      */
     public static JSONObject sort(JSONObject jSONObject) {
+//        return jSONObject;
         JSONObject jSONObject2 = new JSONObject();
         Iterator<String> iterator = jSONObject.sortedKeys();
-        if (iterator.hasNext()) {
+        while (iterator.hasNext()) {
             try {
                 String key = iterator.next();
                 Object val;

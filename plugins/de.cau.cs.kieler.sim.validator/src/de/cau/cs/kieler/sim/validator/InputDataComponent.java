@@ -110,11 +110,11 @@ public class InputDataComponent extends JSONObjectDataComponent implements IJSON
     }
 
     public boolean isObserver() {
-        return ValidatorPlugin.getTrainingModeProperty();
+        return true; //ValidatorPlugin.getTrainingModeProperty();
     }
 
     public boolean isProducer() {
-        return !ValidatorPlugin.getTrainingModeProperty();
+        return true; //!ValidatorPlugin.getTrainingModeProperty();
     }
 
     public void wrapup() throws KiemInitializationException {

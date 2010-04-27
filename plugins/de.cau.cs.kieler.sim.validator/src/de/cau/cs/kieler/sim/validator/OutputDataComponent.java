@@ -191,6 +191,17 @@ public class OutputDataComponent extends JSONObjectDataComponent implements
 
     // -------------------------------------------------------------------------
 
+    /*
+     * (non-Javadoc)
+     * 
+     * @see de.cau.cs.kieler.sim.kiem.internal.AbstractDataComponent#isDeltaObserver()
+     */
+    public boolean isDeltaObserver() {
+        return false;
+    }
+    
+    // -------------------------------------------------------------------------
+
     public KiemEvent provideEventOfInterest() {
         int[] events = { KiemEvent.KIEMPROPERTY_CHANGE };
         KiemEvent event = new KiemEvent(events);
