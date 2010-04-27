@@ -128,12 +128,13 @@ public final class CEC {
 
         String path;
         try {
-            path = FileLocator.toFileURL(FileLocator.find(compiler, new Path(""), null)).getPath();
+            path = FileLocator.getBundleFile(compiler).getAbsolutePath();
+            //path = FileLocator.toFileURL(FileLocator.find(compiler, new Path(""), null)).getPath();
         } catch (IOException e) {
             throw new KielerException("cec compiler not found", e);
         }
 
-        String cmd = path + "cec-" + module;
+        String cmd = path + File.separator + "cec-" + module;
 
         return KonsoleExec.exec(cmd, input, INIT_TIME, TIMEOUT, STEP_TIME);
     }
