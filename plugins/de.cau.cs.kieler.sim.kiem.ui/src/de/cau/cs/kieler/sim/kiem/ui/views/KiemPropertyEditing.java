@@ -161,7 +161,7 @@ public class KiemPropertyEditing extends EditingSupport {
             boolean valueChanged = !(newValue.equals(oldValue));
             getViewer().update(element, null);
             if (valueChanged) {
-                parent.getKIEMInstance().setDirty(true);
+                parent.setDirty(true);
                 KiemPlugin.getDefault().getEventManager().notify(
                         new KiemEvent(KiemEvent.KIEMPROPERTY_CHANGE));
             }

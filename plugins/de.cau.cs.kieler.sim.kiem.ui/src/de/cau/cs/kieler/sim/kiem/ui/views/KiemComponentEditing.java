@@ -151,7 +151,7 @@ public class KiemComponentEditing extends EditingSupport {
         // update the table view
         parent.updateView(true);
         // modified
-        parent.getKIEMInstance().setDirty(true);
+        parent.setDirty(true);
         // check for a single enabled master, because we could just have
         // enabled a master where there may be already an enabled one
         parent.getKIEMInstance().checkForSingleEnabledMaster(false, dataComponentWrapper);
