@@ -218,24 +218,24 @@ litigation.
    </url>
 
    <requires>
-      <import feature="de.cau.cs.kieler.sim.kiem" version="0.1.0.qualifier"/>
-      <import feature="de.cau.cs.kieler.sim.ptolemy" version="0.1.0.qualifier"/>
-      <import feature="de.cau.cs.kieler.synccharts" version="0.1.0.qualifier"/>
-      <import feature="de.cau.cs.kieler.viewmanagement" version="0.1.0.qualifier"/>
+      <import feature="de.cau.cs.kieler.sim.kiem" version="0.1.0" match="greaterOrEqual"/>
+      <import feature="de.cau.cs.kieler.sim.ptolemy" version="0.1.0" match="greaterOrEqual"/>
+      <import feature="de.cau.cs.kieler.synccharts" version="0.1.0" match="greaterOrEqual"/>
+      <import feature="de.cau.cs.kieler.viewmanagement" version="0.1.0" match="greaterOrEqual"/>
    </requires>
 
    <plugin
          id="de.cau.cs.kieler.synccharts.sim.ptolemy"
          download-size="0"
          install-size="0"
-         version="0.1.0.qualifier"
+         version="0.0.0"
          unpack="false"/>
 
    <plugin
          id="de.cau.cs.kieler.synccharts.viewmanagement"
          download-size="0"
          install-size="0"
-         version="0.1.0.qualifier"
+         version="0.0.0"
          unpack="false"/>
 
 </feature>
