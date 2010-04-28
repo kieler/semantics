@@ -109,13 +109,6 @@ This Agreement is governed by the laws of the State of New York and the intellec
       <update label="KIELER nightly builds Update Site" url="http://rtsys.informatik.uni-kiel.de/~kieler/updatesite/nightly/"/>
    </url>
 
-   <requires>
-      <import plugin="org.antlr.runtime"/>
-      <import plugin="org.eclipse.ui" version="3.5.0" match="greaterOrEqual"/>
-      <import plugin="org.eclipse.ui.editors" version="3.5.0" match="greaterOrEqual"/>
-      <import plugin="org.eclipse.ui.ide" version="3.5.0" match="greaterOrEqual"/>
-   </requires>
-
    <plugin
          id="de.cau.cs.kieler.esterel"
          download-size="0"

@@ -219,12 +219,9 @@ litigation.
    </url>
 
    <requires>
-      <import plugin="de.cau.cs.kieler.kiml.layout"/>
-      <import plugin="de.cau.cs.kieler.ksbase"/>
-      <import plugin="org.eclipse.uml2" version="3.0.0" match="greaterOrEqual"/>
-      <import plugin="org.eclipse.uml2.uml" version="3.0.0" match="greaterOrEqual"/>
-      <import plugin="org.eclipse.core.runtime" version="3.5.0" match="greaterOrEqual"/>
-      <import plugin="org.eclipse.ui" version="3.5.0" match="greaterOrEqual"/>
+      <import feature="org.eclipse.uml2" version="3.0.1.v200908281330" match="greaterOrEqual"/>
+      <import feature="org.eclipse.uml2.diagram" version="0.9.0.v200906190654" match="greaterOrEqual"/>
+      <import feature="de.cau.cs.kieler.kiml" version="0.1.0" match="greaterOrEqual"/>
    </requires>
 
    <plugin
