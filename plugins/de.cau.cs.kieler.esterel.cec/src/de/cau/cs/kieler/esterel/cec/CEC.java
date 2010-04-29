@@ -20,7 +20,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URI;
 import org.eclipse.core.runtime.FileLocator;
-import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
 import org.osgi.framework.Bundle;
 
@@ -120,16 +119,16 @@ public final class CEC {
         Bundle[] fragments = Platform.getFragments(Activator.getDefault().getBundle());
 
         if (fragments.length != 1) {
-            throw new KielerException(
-                    "cec native fragment not found, it seems that your platform is not supported by the CEC",
-                    null);
+            throw new KielerException("cec native fragment not found, "
+                    + "it seems that your platform is not supported by the CEC", null);
         }
         Bundle compiler = fragments[0];
 
         String path;
         try {
             path = FileLocator.getBundleFile(compiler).getAbsolutePath();
-            //path = FileLocator.toFileURL(FileLocator.find(compiler, new Path(""), null)).getPath();
+            // path = FileLocator.toFileURL(FileLocator.find(compiler, new Path(""),
+            // null)).getPath();
         } catch (IOException e) {
             throw new KielerException("cec compiler not found", e);
         }
