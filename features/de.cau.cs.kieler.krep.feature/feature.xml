@@ -297,7 +297,7 @@ litigation.
    <plugin
          id="de.cau.cs.kieler.krep.compiler.strl2kasm.win32.x86"
          os="win32"
-         arch="x86"
+         arch="x86,x86_64"
          download-size="0"
          install-size="0"
          version="0.0.0"
