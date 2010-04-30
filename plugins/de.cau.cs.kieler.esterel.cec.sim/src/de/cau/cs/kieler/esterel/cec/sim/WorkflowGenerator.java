@@ -23,7 +23,6 @@ import org.eclipse.emf.mwe.core.issues.Issues;
 import org.eclipse.emf.mwe.core.issues.IssuesImpl;
 import org.eclipse.emf.mwe.core.issues.MWEDiagnostic;
 import org.eclipse.emf.mwe.core.monitor.NullProgressMonitor;
-import org.eclipse.emf.mwe.internal.core.Workflow;
 import org.eclipse.emf.mwe.utils.Reader;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IWorkbenchPage;
@@ -45,7 +44,7 @@ import de.cau.cs.kieler.esterel.esterel.Program;
  * Generate interface code (A_data.c) for an Esterel module A.strl.
  * 
  * @author ctr
- *
+ * 
  */
 public class WorkflowGenerator {
 
@@ -64,14 +63,13 @@ public class WorkflowGenerator {
         IWorkbenchPage activePage = PlatformUI.getWorkbench().getActiveWorkbenchWindow()
                 .getActivePage();
         editor = activePage.getActiveEditor();
-       // outPath = part2Location(editor);
+        // outPath = part2Location(editor);
         uriString = null;
         if (editor instanceof XtextEditor) {
             XtextEditor xtextEditor = (XtextEditor) editor;
 
             if (xtextEditor.getDocument() instanceof XtextDocument) {
-                IUnitOfWork<IParseResult, XtextResource> work 
-                = new IUnitOfWork<IParseResult, XtextResource>() {
+                IUnitOfWork<IParseResult, XtextResource> work = new IUnitOfWork<IParseResult, XtextResource>() {
 
                     public IParseResult exec(final XtextResource state) throws Exception {
                         return state.getParseResult();
@@ -79,9 +77,9 @@ public class WorkflowGenerator {
                 };
                 result = xtextEditor.getDocument().readOnly(work);
 
-                 myModel = (Program) result.getRootASTElement();
-                 uri = myModel.eResource().getURI();
-                 uriString = uri.toString();
+                myModel = (Program) result.getRootASTElement();
+                uri = myModel.eResource().getURI();
+                uriString = uri.toString();
             }
         }
     }
@@ -104,24 +102,28 @@ public class WorkflowGenerator {
         // Outlet
         Outlet outlet = new Outlet();
         outlet.setPath(path);
-        
+
         // Generator
         Generator generator = new Generator();
         generator.addMetaModel(metaModel);
         generator.addOutlet(outlet);
 
-        generator.setExpand("de::cau::cs::kieler::esterel::cec::sim::templates::Data::main FOR model");
+        generator
+                .setExpand("de::cau::cs::kieler::esterel::cec::sim::templates::Data::main FOR model");
 
-        Workflow workflow = new Workflow();
+        //Workflow workflow = new Workflow();
 
-        workflow.addComponent(emfReader);
-        workflow.addComponent(generator);
+       // workflow.addComponent(emfReader);
+        //workflow.addComponent(generator);
 
         WorkflowContext wfx = new WorkflowContextDefaultImpl();
         Issues issues = new IssuesImpl();
         NullProgressMonitor monitor = new NullProgressMonitor();
 
-        workflow.invoke(wfx, monitor, issues);
+        emfReader.invoke(wfx, monitor, issues);
+        generator.invoke(wfx, monitor, issues);
+
+        //workflow.invoke(wfx, monitor, issues);
 
         StringBuffer issue = new StringBuffer(generator.getLogMessage() + "\n");
         for (MWEDiagnostic s : issues.getIssues()) {
