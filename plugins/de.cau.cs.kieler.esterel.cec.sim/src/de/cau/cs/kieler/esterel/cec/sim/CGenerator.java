@@ -1,8 +1,20 @@
+/*
+ * KIELER - Kiel Integrated Environment for Layout Eclipse Rich Client
+ *
+ * http://www.informatik.uni-kiel.de/rtsys/kieler/
+ * 
+ * Copyright 2009 by
+ * + Christian-Albrechts-University of Kiel
+ *   + Department of Computer Science
+ *     + Real-Time and Embedded Systems Group
+ * 
+ * This code is provided under the terms of the Eclipse Public License (EPL).
+ * See the file epl-v10.html for the license text.
+ */
 package de.cau.cs.kieler.esterel.cec.sim;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URI;
 
 import org.eclipse.core.commands.AbstractHandler;
@@ -36,6 +48,7 @@ public class CGenerator extends AbstractHandler implements IHandler {
 
     private static final String ESTEREL_LANGUAGE = "de.cau.cs.kieler.esterel.Esterel";
 
+    /** {@inheritDoc}*/
     public Object execute(final ExecutionEvent event) throws ExecutionException {
 
         IWorkbench workbench = PlatformUI.getWorkbench();
@@ -75,7 +88,7 @@ public class CGenerator extends AbstractHandler implements IHandler {
 
         // compile Esterel to C
         Job genC = new Job("generate C code") {
-            public IStatus run(IProgressMonitor monitor) {
+            public IStatus run(final IProgressMonitor monitor) {
                 try {
                     CEC.run(strlFile, cFile);
                 } catch (IOException e) {
@@ -83,7 +96,8 @@ public class CGenerator extends AbstractHandler implements IHandler {
                     StatusManager.getManager().handle(myStatus, StatusManager.SHOW);
                     return Status.OK_STATUS;
                 } catch (KielerException e) {
-                    Status myStatus = new Status(IStatus.ERROR, Activator.PLUGIN_ID, "Internal Error", e);
+                    Status myStatus = new Status(IStatus.ERROR, Activator.PLUGIN_ID,
+                            "Internal Error", e);
                     StatusManager.getManager().handle(myStatus, StatusManager.SHOW);
                     return Status.OK_STATUS;
                 }
@@ -91,7 +105,7 @@ public class CGenerator extends AbstractHandler implements IHandler {
             }
         };
         genC.schedule();
-        
+
         return null;
     }
 }

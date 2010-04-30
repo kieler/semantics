@@ -22,7 +22,6 @@ import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.net.URL;
 import java.util.LinkedList;
-import java.util.List;
 
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.Path;
@@ -63,294 +62,250 @@ import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyTypeFile;
  */
 public class DataComponent extends JSONObjectDataComponent {
 
-	private static final String ESTEREL_LANGUAGE = "de.cau.cs.kieler.esterel.Esterel";
+    private static final String ESTEREL_LANGUAGE = "de.cau.cs.kieler.esterel.Esterel";
 
-	private Program myModel;
-	private Process process = null;
-	private PrintWriter toEsterel;
-	private BufferedReader fromEsterel;
-	private BufferedReader error;
-	/*private String outPath;
-	private boolean validation;
-	private String fileLocation;*/
-	private File strlFile=null;
-	private File dataFile=null;
-	private File simFile=null;
-	
-	private LinkedList<String> outputs;
+    private Program myModel;
+    private Process process = null;
+    private PrintWriter toEsterel;
+    private BufferedReader fromEsterel;
+    private BufferedReader error;
+    /*
+     * private String outPath; private boolean validation; private String fileLocation;
+     */
+    private File strlFile = null;
+    private File dataFile = null;
+    private File simFile = null;
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public void initialize() throws KiemInitializationException {
+    private LinkedList<String> outputs;
 
-	}
+    /**
+     * {@inheritDoc}
+     */
+    public void initialize() throws KiemInitializationException {
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public JSONObject step(final JSONObject jSONObject)
-			throws KiemExecutionException {
-		if (process == null) {
-			throw new KiemExecutionException(
-					"No esterel simulation is running", true, null);
-		}
-		JSONObject out = null;
-		try {
+    }
 
-			toEsterel.write(jSONObject.toString() + "\n");
-			toEsterel.flush();
-			while (error.ready()) {
-				System.out.print(error.read());
-			}
+    /**
+     * {@inheritDoc}
+     */
+    public JSONObject step(final JSONObject jSONObject) throws KiemExecutionException {
+        if (process == null) {
+            throw new KiemExecutionException("No esterel simulation is running", true, null);
+        }
+        JSONObject out = null;
+        try {
 
-			String receivedMessage = fromEsterel.readLine();
-			
-			// print and delete debug information
-			out = new JSONObject(receivedMessage);
-			for(String o:outputs){
-				if(!out.has(o)){
-					out.accumulate(o, JSONSignalValues.newValue(false));
-				}
-			}
-		} catch (IOException e) {
-			System.err.println(e.getMessage());
-			process.destroy();
-		} catch (JSONException e) {
-			e.printStackTrace();
-			process.destroy();
-		}
+            toEsterel.write(jSONObject.toString() + "\n");
+            toEsterel.flush();
+            while (error.ready()) {
+                System.out.print(error.read());
+            }
 
-		return out;
-	}
+            String receivedMessage = fromEsterel.readLine();
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public boolean isObserver() {
-		return true;
-	}
+            // print and delete debug information
+            out = new JSONObject(receivedMessage);
+            for (String o : outputs) {
+                if (!out.has(o)) {
+                    out.accumulate(o, JSONSignalValues.newValue(false));
+                }
+            }
+        } catch (IOException e) {
+            System.err.println(e.getMessage());
+            process.destroy();
+        } catch (JSONException e) {
+            e.printStackTrace();
+            process.destroy();
+        }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public boolean isProducer() {
-		return true;
-	}
+        return out;
+    }
 
-	@Override
-	public KiemProperty[] provideProperties() {
-		final int nProperties = 1;
-		KiemProperty[] properties = new KiemProperty[nProperties];
-		KiemPropertyTypeFile compilerFile = new KiemPropertyTypeFile();
-		properties[0] = new KiemProperty("compiler", compilerFile, "gcc");
+    /**
+     * {@inheritDoc}
+     */
+    public boolean isObserver() {
+        return true;
+    }
 
-		return properties;
-	}
+    /**
+     * {@inheritDoc}
+     */
+    public boolean isProducer() {
+        return true;
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public void wrapup() throws KiemInitializationException {
-		if (process != null) {
-			process.destroy();
-		}
-		
-		if(strlFile!=null && strlFile.exists()){
-			strlFile.delete();
-		}
-		if(dataFile!=null && dataFile.exists()){
-			dataFile.delete();
-		}
-		if(simFile!=null && simFile.exists()){
-			simFile.delete();
-		}
-		strlFile=null;
-		dataFile=null;
-		simFile=null;
-	}
+    @Override
+    public KiemProperty[] provideProperties() {
+        final int nProperties = 1;
+        KiemProperty[] properties = new KiemProperty[nProperties];
+        KiemPropertyTypeFile compilerFile = new KiemPropertyTypeFile();
+        properties[0] = new KiemProperty("compiler", compilerFile, "gcc");
 
-	@Override
-	public JSONObject provideInitialVariables()
-			throws KiemInitializationException {
-		try {
-			// get active editor
-			IWorkbench workbench = PlatformUI.getWorkbench();
-			IWorkbenchPage page = null;
-			if (workbench != null) {
-				IWorkbenchWindow window = workbench.getActiveWorkbenchWindow();
-				if (window != null) {
-					page = window.getActivePage();
-				}
-			}
-			if (page == null) {
-				throw new KiemInitializationException("Cannot get active page",
-						true, null);
-			}
+        return properties;
+    }
 
-			IEditorPart editor = page.getActiveEditor();
-			if (editor == null) {
-				throw new KiemInitializationException(
-						"No active editor selected!", true, null);
-			}
+    /**
+     * {@inheritDoc}
+     */
+    public void wrapup() throws KiemInitializationException {
+        if (process != null) {
+            process.destroy();
+        }
 
-			if (editor instanceof XtextEditor) {
-				XtextEditor xtextEditor = (XtextEditor) editor;
+        if (strlFile != null && strlFile.exists()) {
+            strlFile.delete();
+        }
+        if (dataFile != null && dataFile.exists()) {
+            dataFile.delete();
+        }
+        if (simFile != null && simFile.exists()) {
+            simFile.delete();
+        }
+        strlFile = null;
+        dataFile = null;
+        simFile = null;
+    }
 
-				if (xtextEditor.getDocument() instanceof XtextDocument
-						&& xtextEditor.getLanguageName().equals(
-								ESTEREL_LANGUAGE)) {
-					IUnitOfWork<IParseResult, XtextResource> work = new IUnitOfWork<IParseResult, XtextResource>() {
+    @Override
+    public JSONObject provideInitialVariables() throws KiemInitializationException {
+        try {
+            // get active editor
+            IWorkbench workbench = PlatformUI.getWorkbench();
+            IWorkbenchPage page = null;
+            if (workbench != null) {
+                IWorkbenchWindow window = workbench.getActiveWorkbenchWindow();
+                if (window != null) {
+                    page = window.getActivePage();
+                }
+            }
+            if (page == null) {
+                throw new KiemInitializationException("Cannot get active page", true, null);
+            }
 
-						public IParseResult exec(XtextResource state)
-								throws Exception {
-							return state.getParseResult();
-						}
-					};
-					IParseResult result = xtextEditor.getDocument().readOnly(
-							work);
+            IEditorPart editor = page.getActiveEditor();
+            if (editor == null) {
+                throw new KiemInitializationException("No active editor selected!", true, null);
+            }
 
-					myModel = (Program) result.getRootASTElement();
-				}
-			}
+            if (editor instanceof XtextEditor) {
+                XtextEditor xtextEditor = (XtextEditor) editor;
 
-			if (myModel==null) {
-				throw new KiemInitializationException(
-						"Cannot simulate active editor using the CEC", true, null);
-			}
+                if (xtextEditor.getDocument() instanceof XtextDocument
+                        && xtextEditor.getLanguageName().equals(ESTEREL_LANGUAGE)) {
+                    IUnitOfWork<IParseResult, XtextResource> work 
+                    = new IUnitOfWork<IParseResult, XtextResource>() {
 
-			FileEditorInput input = (FileEditorInput) editor.getEditorInput();
+                        /** parse Esterel code to retrieve IO*/
+                        public IParseResult exec(final XtextResource state) throws Exception {
+                            return state.getParseResult();
+                        }
+                    };
+                    IParseResult result = xtextEditor.getDocument().readOnly(work);
 
-			// compile Esterel to C
-			URL output = CEC.run(input.getURI()).toURL();
-			strlFile= new File(output.getPath());
-			// generate data.c
-			URL data = generateData();
-			dataFile= new File(data.getPath());
-			
-			// compile C code
-			Bundle bundle = Platform
-					.getBundle("de.cau.cs.kieler.esterel.cec.sim");
+                    myModel = (Program) result.getRootASTElement();
+                }
+            }
 
-			URL bundleLocation = FileLocator.toFileURL(FileLocator.find(bundle,
-					new Path("simulation"), null));
+            if (myModel == null) {
+                throw new KiemInitializationException(
+                        "Cannot simulate active editor using the CEC", true, null);
+            }
 
-			File executable = File.createTempFile("sim", "");
-			simFile = executable;
-			String compiler = (getProperties()[0]).getValue();
-			String compile = compiler + " " + output.getPath() + " "
-					+ data.getPath() + " " + bundleLocation.getPath()
-					+ "cJSON.c " + "-I " + bundleLocation.getPath() + " "
-					+ "-lm -o " + executable;
-			process = Runtime.getRuntime().exec(compile);
-			InputStream stderr = process.getErrorStream();
-			InputStreamReader isr = new InputStreamReader(stderr);
-			BufferedReader br = new BufferedReader(isr);
-			String line = null;
-			String errorString = "";
-			while ((line = br.readLine()) != null) {
-				errorString += "\n" + line;
+            FileEditorInput input = (FileEditorInput) editor.getEditorInput();
 
-			}
+            // compile Esterel to C
+            URL output = CEC.run(input.getURI()).toURL();
+            strlFile = new File(output.getPath());
+            // generate data.c
+            URL data = generateData();
+            dataFile = new File(data.getPath());
 
-			int exitValue = process.waitFor();
+            // compile C code
+            Bundle bundle = Platform.getBundle("de.cau.cs.kieler.esterel.cec.sim");
 
-			if (exitValue != 0) {
-				throw new KiemInitializationException("could not compile",
-						true, new Exception(errorString));
-			}
+            URL bundleLocation = FileLocator.toFileURL(FileLocator.find(bundle, new Path(
+                    "simulation"), null));
 
-			// run
-			process = Runtime.getRuntime().exec(executable.getPath());
+            File executable = File.createTempFile("sim", "");
+            simFile = executable;
+            String compiler = (getProperties()[0]).getValue();
+            String compile = compiler + " " + output.getPath() + " " + data.getPath() + " "
+                    + bundleLocation.getPath() + "cJSON.c " + "-I " + bundleLocation.getPath()
+                    + " " + "-lm -o " + executable;
+            process = Runtime.getRuntime().exec(compile);
+            InputStream stderr = process.getErrorStream();
+            InputStreamReader isr = new InputStreamReader(stderr);
+            BufferedReader br = new BufferedReader(isr);
+            String line = null;
+            String errorString = "";
+            while ((line = br.readLine()) != null) {
+                errorString += "\n" + line;
 
-			toEsterel = new PrintWriter(new OutputStreamWriter(process
-					.getOutputStream()));
-			fromEsterel = new BufferedReader(new InputStreamReader(process
-					.getInputStream()));
-			error = new BufferedReader(new InputStreamReader(process
-					.getErrorStream()));
+            }
 
-		} catch (IOException e) {
-			throw new KiemInitializationException(
-					"Error compiling Esterel file", true, e);
-		} catch (KielerException e) {
-			throw new KiemInitializationException(
-					"Error compiling Esterel file", true, e);
-		} catch (InterruptedException e) {
-			throw new KiemInitializationException("Error running Esterel file",
-					true, e);
-		}
-		outputs = new LinkedList<String>();
-		JSONObject res = new JSONObject();
-		try {
-			if (myModel != null) {
-				for (Module mod : myModel.getModule()) {
-					for (SignalDecl sig : mod.getModInt().getIntSignalDecl()) {
-						if (sig instanceof Input) {
-							for (Signal s : sig.getSignal()) {
-								res.accumulate(s.getName(), JSONSignalValues
-										.newValue(true));
-							}
-						}
-						if (sig instanceof Output) {
-							for (Signal s : sig.getSignal()) {
-								res.accumulate(s.getName(), JSONSignalValues
-										.newValue(true));
-								outputs.add(s.getName());
-							}
-						}
-					}
-				}
-			}
-		} catch (JSONException e) {
-			// ignore
-		}
-		return res;
-	}
+            int exitValue = process.waitFor();
 
-	/**
-	 * @return
-	 * @throws KiemInitializationException
-	 */
-	private URL generateData() throws KiemInitializationException {
-		File data;
-		try {
-			data = File.createTempFile("data", ".c");
+            if (exitValue != 0) {
+                throw new KiemInitializationException("could not compile", true, new Exception(
+                        errorString));
+            }
 
-			WorkflowGenerator wg = new WorkflowGenerator();
-			wg.invokeWorkflow(data.getPath(), data.getName());
-			return data.toURI().toURL();
-		} catch (IOException e) {
-			throw new KiemInitializationException("Error creating data file",
-					true, e);
+            // run
+            process = Runtime.getRuntime().exec(executable.getPath());
 
-		}
-	}
+            toEsterel = new PrintWriter(new OutputStreamWriter(process.getOutputStream()));
+            fromEsterel = new BufferedReader(new InputStreamReader(process.getInputStream()));
+            error = new BufferedReader(new InputStreamReader(process.getErrorStream()));
 
-	public List<KiemProperty> produceInformation() {
-		return null;
-	}
+        } catch (IOException e) {
+            throw new KiemInitializationException("Error compiling Esterel file", true, e);
+        } catch (KielerException e) {
+            throw new KiemInitializationException("Error compiling Esterel file", true, e);
+        } catch (InterruptedException e) {
+            throw new KiemInitializationException("Error running Esterel file", true, e);
+        }
+        outputs = new LinkedList<String>();
+        JSONObject res = new JSONObject();
+        try {
+            if (myModel != null) {
+                for (Module mod : myModel.getModule()) {
+                    for (SignalDecl sig : mod.getModInt().getIntSignalDecl()) {
+                        if (sig instanceof Input) {
+                            for (Signal s : sig.getSignal()) {
+                                res.accumulate(s.getName(), JSONSignalValues.newValue(true));
+                            }
+                        }
+                        if (sig instanceof Output) {
+                            for (Signal s : sig.getSignal()) {
+                                res.accumulate(s.getName(), JSONSignalValues.newValue(true));
+                                outputs.add(s.getName());
+                            }
+                        }
+                    }
+                }
+            }
+        } catch (JSONException e) {
+            // ignore
+        }
+        return res;
+    }
 
-	public String[] getSupportedExtensions() {
-		String[] test = { "strl" };
-		return test;
-	}
+    /**
+     * @return
+     * @throws KiemInitializationException
+     */
+    private URL generateData() throws KiemInitializationException {
+        File data;
+        try {
+            data = File.createTempFile("data", ".c");
 
-	/*public void setParameters(List<KiemProperty> properties)
-			throws KiemInitializationException {
-		validation = true;
-		for (KiemProperty p : properties) {
-			if (p.getKey().equals(MODEL_FILE)) {
-				fileLocation = p.getValue();
-			}
-		}
-	}
+            WorkflowGenerator wg = new WorkflowGenerator();
+            wg.invokeWorkflow(data.getPath());
+            return data.toURI().toURL();
+        } catch (IOException e) {
+            throw new KiemInitializationException("Error creating data file", true, e);
 
-	public int wantsMoreRuns() {
-		return 0;
-	}
-
-	public int wantsMoreSteps() {
-		return 0;
-	}*/
+        }
+    }
 }
