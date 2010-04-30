@@ -167,11 +167,14 @@ public final class CEC {
         InputStream c = exec(MODULE.SCFGC, scfg);
 
         FileWriter out = new FileWriter(outFile);
-        while (c.available() > 0) {
-            out.append(new String(Character.toChars(c.read())));
+        try {
+            while (c.available() > 0) {
+                out.append(new String(Character.toChars(c.read())));
+            }
+            out.flush();
+        } finally {
+            out.close();
         }
-        out.flush();
-        out.close();
         return outFile.toURI();
     }
 
