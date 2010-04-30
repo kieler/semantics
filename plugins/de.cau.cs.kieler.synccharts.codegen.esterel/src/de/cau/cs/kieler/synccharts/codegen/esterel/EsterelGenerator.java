@@ -16,7 +16,6 @@ package de.cau.cs.kieler.synccharts.codegen.esterel;
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
-import org.eclipse.core.commands.IHandler;
 
 /**
  * @author ctr
@@ -24,7 +23,7 @@ import org.eclipse.core.commands.IHandler;
  *         Generate Esterel from a SyncChart.
  * 
  */
-public class EsterelGenerator extends AbstractHandler implements IHandler {
+public class EsterelGenerator extends AbstractHandler {
 
     private WorkflowGenerator wf = new WorkflowGenerator();
 
