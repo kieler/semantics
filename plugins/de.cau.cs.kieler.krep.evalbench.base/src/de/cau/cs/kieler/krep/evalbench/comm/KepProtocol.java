@@ -20,11 +20,10 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import de.cau.cs.kieler.krep.evalbench.program.IAssembler;
 
 /**
- * Implementation of the communication protocol interface that uses the KEP protocol.
- * For details on the processors see Xin's or Malte's theses.
+ * Implementation of the communication protocol interface that uses the KEP protocol. For details on
+ * the processors see Xin's or Malte's theses.
  * 
- * @kieler.rating 2010-02-05 yellow 
- *   review by cmot, msp
+ * @kieler.rating 2010-02-05 yellow review by cmot, msp
  * 
  * @author msp
  */
@@ -464,9 +463,9 @@ public class KepProtocol extends CommunicationProtocol {
                 if (((outputStatus[b] >> (index % BYTE_LEN)) & 1) == 1) {
                     s.setPresent(true);
                     outputs.add(s);
-                }else{
+                } else {
                     s.setPresent(false);
-                    outputs.add(s);     
+                    outputs.add(s);
                 }
             }
             if (s.isValued()) {
