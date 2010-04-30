@@ -50,8 +50,27 @@ end module
 
 «DEFINE SignalType FOR Signal»
 «IF type != ValueType::PURE» «IF initialValue.length>0»:= «initialValue.asInteger()»«ENDIF-» : «IF this.combineOperator!=CombineOperator::NONE» combine«ENDIF» integer 
-«IF combineOperator!=CombineOperator::NONE» with *«ENDIF»
+«IF combineOperator!=CombineOperator::NONE» with «EXPAND CombineOperator FOR combineOperator»«ENDIF»
 «ENDIF-»
+«ENDDEFINE»
+
+«DEFINE Types FOR ValueType»
+  «IF this==ValueType::BOOL» boolean
+  «ELSEIF  this==ValueType::UNSIGNED-» integer
+  «ELSEIF  this==ValueType::INTEGER-» integer
+  «ELSEIF  this==ValueType::FLOAT-» float
+  «ENDIF-»
+«ENDDEFINE»
+
+
+«DEFINE CombineOperator FOR CombineOperator»
+  «IF this==CombineOperator::ADD» +
+  «ELSEIF  this==CombineOperator::MULT-» *
+  «ELSEIF  this==CombineOperator::MAX-» max
+  «ELSEIF  this==CombineOperator::MIN-» min
+  «ELSEIF  this==CombineOperator::OR-» or
+  «ELSEIF  this==CombineOperator::AND-» and
+  «ENDIF-»
 «ENDDEFINE»
 
 «DEFINE Star FOR synccharts::State-»
