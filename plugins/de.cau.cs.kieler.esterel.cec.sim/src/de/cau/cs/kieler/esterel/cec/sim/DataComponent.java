@@ -64,19 +64,17 @@ public class DataComponent extends JSONObjectDataComponent {
 
     private static final String ESTEREL_LANGUAGE = "de.cau.cs.kieler.esterel.Esterel";
 
-    private Program myModel;
+    private Program myModel = null;
     private Process process = null;
-    private PrintWriter toEsterel;
-    private BufferedReader fromEsterel;
-    private BufferedReader error;
-    /*
-     * private String outPath; private boolean validation; private String fileLocation;
-     */
+    private PrintWriter toEsterel = null;
+    private BufferedReader fromEsterel = null;
+    private BufferedReader error = null;
+ 
     private File strlFile = null;
     private File dataFile = null;
     private File simFile = null;
 
-    private LinkedList<String> outputs;
+    private LinkedList<String> outputs = null;
 
     /**
      * {@inheritDoc}
@@ -152,19 +150,24 @@ public class DataComponent extends JSONObjectDataComponent {
         if (process != null) {
             process.destroy();
         }
+        boolean ok = true;
 
         if (strlFile != null && strlFile.exists()) {
-            strlFile.delete();
+            ok &= strlFile.delete();
         }
         if (dataFile != null && dataFile.exists()) {
-            dataFile.delete();
+            ok &= dataFile.delete();
         }
         if (simFile != null && simFile.exists()) {
-            simFile.delete();
+            ok &= simFile.delete();
         }
         strlFile = null;
         dataFile = null;
         simFile = null;
+
+        if (ok) {
+            throw new KiemInitializationException("Could not delete temp files", false, null);
+        }
     }
 
     @Override
@@ -193,10 +196,9 @@ public class DataComponent extends JSONObjectDataComponent {
 
                 if (xtextEditor.getDocument() instanceof XtextDocument
                         && xtextEditor.getLanguageName().equals(ESTEREL_LANGUAGE)) {
-                    IUnitOfWork<IParseResult, XtextResource> work 
-                    = new IUnitOfWork<IParseResult, XtextResource>() {
+                    IUnitOfWork<IParseResult, XtextResource> work = new IUnitOfWork<IParseResult, XtextResource>() {
 
-                        /** parse Esterel code to retrieve IO*/
+                        /** parse Esterel code to retrieve IO */
                         public IParseResult exec(final XtextResource state) throws Exception {
                             return state.getParseResult();
                         }
@@ -238,9 +240,9 @@ public class DataComponent extends JSONObjectDataComponent {
             InputStreamReader isr = new InputStreamReader(stderr);
             BufferedReader br = new BufferedReader(isr);
             String line = null;
-            String errorString = "";
+            StringBuilder errorString = new StringBuilder();
             while ((line = br.readLine()) != null) {
-                errorString += "\n" + line;
+                errorString.append("\n" + line);
 
             }
 
@@ -248,7 +250,7 @@ public class DataComponent extends JSONObjectDataComponent {
 
             if (exitValue != 0) {
                 throw new KiemInitializationException("could not compile", true, new Exception(
-                        errorString));
+                        errorString.toString()));
             }
 
             // run
