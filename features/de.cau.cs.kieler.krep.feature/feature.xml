@@ -428,7 +428,7 @@ litigation.
          fragment="true"/>
 
    <plugin
-         id="de.cau.cs.kieler.krep.compiler.strl2kasm.linux.86_64"
+         id="de.cau.cs.kieler.krep.compiler.strl2kasm.linux.x86_64"
          os="linux"
          arch="x86_64"
          download-size="0"
