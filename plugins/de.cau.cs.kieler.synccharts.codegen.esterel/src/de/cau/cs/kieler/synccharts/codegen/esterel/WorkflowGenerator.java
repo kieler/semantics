@@ -1,3 +1,16 @@
+/*
+ * KIELER - Kiel Integrated Environment for Layout Eclipse Rich Client
+ *
+ * http://www.informatik.uni-kiel.de/rtsys/kieler/
+ * 
+ * Copyright 2009 by
+ * + Christian-Albrechts-University of Kiel
+ *   + Department of Computer Science
+ *     + Real-Time and Embedded Systems Group
+ * 
+ * This code is provided under the terms of the Eclipse Public License (EPL).
+ * See the file epl-v10.html for the license text.
+ */
 package de.cau.cs.kieler.synccharts.codegen.esterel;
 
 import org.eclipse.core.runtime.IStatus;
@@ -27,28 +40,28 @@ import de.cau.cs.kieler.synccharts.SyncchartsPackage;
 /**
  * @author ctr
  * 
- * Workflow to generate Esterel from SyncCharts.
+ *         Workflow to generate Esterel from SyncCharts.
  */
 public class WorkflowGenerator {
 
-    EObject myModel = null;
-    String outPath = null;
-    String uriString = null;
-    IEditorPart editor = null;
-    URI uri = null;
+    private EObject myModel = null;
+    private String outPath = null;
+    private String uriString = null;
+    private IEditorPart editor = null;
+    private URI uri = null;
 
-    private String part2Location(final IEditorPart editor) {
+    private String part2Location(final IEditorPart ed) {
         String out = null;
 
-        final FileEditorInput uri = (FileEditorInput) editor.getEditorInput();
-        final String outName = uri.getName();
-        out = uri.getURI().getRawPath().replace(outName, "");
+        final FileEditorInput uri2 = (FileEditorInput) ed.getEditorInput();
+        final String outName = uri2.getName();
+        out = uri2.getURI().getRawPath().replace(outName, "");
 
         return out;
     }
 
     /**
-     * Start the Esterel code generation for the active editor. 
+     * Start the Esterel code generation for the active editor.
      */
     public void invokeWorkflow() {
         final IWorkbenchPage activePage = PlatformUI.getWorkbench().getActiveWorkbenchWindow()
@@ -87,10 +100,6 @@ public class WorkflowGenerator {
 
         esterelGenerator.setExpand("templates::esterel::main FOR model");
 
-       // final WorkflowComponent workflow = new Workflow();
-
-       // workflow.addComponent(emfReader);
-        //workflow.addComponent(esterelGenerator);
 
         final WorkflowContext wfx = new WorkflowContextDefaultImpl();
         final Issues issues = new IssuesImpl();
