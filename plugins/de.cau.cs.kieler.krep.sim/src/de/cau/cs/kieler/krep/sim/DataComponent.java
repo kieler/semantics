@@ -71,8 +71,6 @@ import de.cau.cs.kieler.krep.evalbench.program.ParseException;
 import de.cau.cs.kieler.krep.evalbench.ui.views.AssemblerView;
 import de.cau.cs.kieler.krep.evalbench.ui.views.ConnectionView;
 import de.cau.cs.kieler.sim.kiem.automated.AbstractAutomatedProducer;
-import de.cau.cs.kieler.sim.kiem.automated.IAutomatedProducer;
-import de.cau.cs.kieler.sim.kiem.JSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.JSONSignalValues;
 import de.cau.cs.kieler.sim.kiem.KiemExecutionException;
 import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
