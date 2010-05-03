@@ -10,6 +10,10 @@ String getFileNameOfActiveEditor():
  JAVA de.cau.cs.kieler.ksbase.ui.utils.TransformationUtils.getFileNameOfActiveEditor()
 ;
 
+Void debug(Object object):
+ JAVA de.cau.cs.kieler.synccharts.diagram.custom.commands.Utils.debug(java.lang.Object)
+;
+
 /////////////////////////
 // Copy, cut and Paste //
 /////////////////////////
@@ -48,6 +52,10 @@ Region getRegionFromClipboard():
 
 Transition getTransitionFromClipboard():
  JAVA de.cau.cs.kieler.synccharts.diagram.custom.commands.Utils.getTransitionFromClipboard()
+;
+
+List[Transition] getTransitionsFromClipboard():
+ JAVA de.cau.cs.kieler.synccharts.diagram.custom.commands.Utils.getTransitionsFromClipboard()
 ;
 
 List[State] getStatesFromClipboard():
@@ -159,10 +167,39 @@ Void tryPastingStatesIntoState(State target):
  tryPastingRegionsIntoState(target))
 ;
 
-// try regions into state if fails... nothing can be done
+// try regions into state
 Void tryPastingRegionsIntoState(State target):
  let regions = getRegionsFromClipboard():
- (regions != null ? target.regions.addAll(regions) : null)
+ (regions != null ? target.regions.addAll(regions) 
+ : 
+ tryPastingTransitionIntoState(target))
+;
+
+// try transition as self transition on state
+Void tryPastingTransitionIntoState(State target):
+ let trans = getTransitionFromClipboard():
+ (trans != null ? 
+  (target.outgoingTransitions.add(trans) ->
+  trans.setTargetState(target))
+  :
+  tryPastingTransitionsIntoState(target)
+ )
+;
+
+// try transitions as self transitions on state
+Void tryPastingTransitionsIntoState(State target):
+ let trans = getTransitionsFromClipboard():
+ (trans != null ? 
+  (trans.addSelfloopToState(target))
+  :
+  null
+ )
+;
+
+// add a transition to a state as self loop
+Void addSelfloopToState(Transition trans, State target):
+ trans.setTargetState(target) ->
+ target.outgoingTransitions.add(trans)
 ;
 
 // paste into a list of states
@@ -202,19 +239,57 @@ Void tryPastingTransitionBetweenStates(List[State] states):
  ((trans != null && states.size == 2 && (source.parentRegion == target.parentRegion)) ?
  (source.outgoingTransitions.add(trans) ->
  trans.setTargetState(target)) :
+ tryPastingTransitionsBetweenStates(states)
+ )
+;
+
+Void tryPastingTransitionsBetweenStates(List[State] states):
+ let trans = getTransitionsFromClipboard():
+ let source = states.get(0):
+ let target = states.get(1):
+ ((trans != null && states.size == 2 && (source.parentRegion == target.parentRegion)) ?
+ trans.addTransitionBetweenStates(source, target)
+ :
  null)
+;
+
+Void addTransitionBetweenStates(Transition trans, State source, State target):
+ trans.setTargetState(target) ->
+ source.outgoingTransitions.add(trans)
 ;
 
 // replace the selected transition with the one in clipboard
 Void paste(Transition target):
+ tryPastingTransitionOnTransition(target)
+;
+
+Void tryPastingTransitionOnTransition(Transition target):
  let trans = getTransitionFromClipboard():
+ let source = target.sourceState:
+ let dest = target.targetState:
  (trans != null ?
-  (trans.setSourceState(target.sourceState) ->
-  trans.setTargetState(target.targetState) ->
-  target.sourceState.outgoingTransitions.remove(target) ->
+  (trans.setSourceState(source) ->
+  trans.setTargetState(dest) ->
+  source.outgoingTransitions.remove(target) ->
   setSelection(trans))
   :
-  null 
+  tryPastingTransitionsOnTransition(target)
  )
 ;
- 
+
+Void tryPastingTransitionsOnTransition(Transition target):
+ let trans = getTransitionsFromClipboard():
+ let source = target.sourceState:
+ let dest = target.targetState:
+ (trans != null ?
+  (source.outgoingTransitions.remove(target) ->
+  trans.connectStates(source, dest))
+  :
+  null
+ )
+;
+
+Void connectStates(Transition trans, State source, State target):
+ source.outgoingTransitions.add(trans) ->
+ trans.setTargetState(target)
+;

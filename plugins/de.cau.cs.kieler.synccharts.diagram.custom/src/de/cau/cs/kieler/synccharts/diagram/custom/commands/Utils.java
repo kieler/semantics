@@ -51,6 +51,8 @@ public final class Utils {
     private static volatile Collection<Region> regionsClipBoard = null;
     /** Clipboard for copy and paste. */
     private static volatile EObject transitionClipBoard = null;
+    /** Clipboard for copy and paste. */
+    private static volatile Collection<Transition> transitionsClipBoard = null;
 
     /**
      * Remove a region from its parent state if its not the root region.
@@ -84,15 +86,14 @@ public final class Utils {
     public static void cutObject(final Object object) {
         objectToClipboard(object);
         if (object instanceof EObject) {
-            EObject o = EcoreUtil.copy((EObject) object);
-            if (o instanceof State) {
-                State s = (State) o;
+            if (object instanceof State) {
+                State s = (State) object;
                 removeStateFromParent(s);
-            } else if (o instanceof Region) {
-                Region r = (Region) o;
+            } else if (object instanceof Region) {
+                Region r = (Region) object;
                 removeRegionFromParent(r);
-            } else if (o instanceof Transition) {
-                Transition t = (Transition) o;
+            } else if (object instanceof Transition) {
+                Transition t = (Transition) object;
                 t.getSourceState().getOutgoingTransitions().remove(t);
             }
         } else if (object instanceof List<?>) {
@@ -102,6 +103,9 @@ public final class Utils {
                     removeStateFromParent((State) o);
                 } else if (o instanceof Region) {
                     removeRegionFromParent((Region) o);
+                } else if (o instanceof Transition) {
+                    Transition t = (Transition) o;
+                    t.getSourceState().getOutgoingTransitions().remove(t);
                 }
             }
         }
@@ -167,6 +171,14 @@ public final class Utils {
                     }
                 }
                 regionsClipBoard = EcoreUtil.copyAll(coll);
+            } else if (list.get(0) instanceof Transition) {
+                Collection<Transition> coll = new LinkedList<Transition>();
+                for (Object o : list) {
+                    if (o instanceof Transition) {
+                        coll.add((Transition) o);
+                    }
+                }
+                transitionsClipBoard = EcoreUtil.copyAll(coll);
             }
         }
     }
@@ -180,6 +192,7 @@ public final class Utils {
         regionClipBoard = null;
         regionsClipBoard = null;
         transitionClipBoard = null;
+        transitionsClipBoard = null;
     }
 
     /**
@@ -266,8 +279,44 @@ public final class Utils {
         }
         return null;
     }
-    
-	public final static EObject copy(Object state){
-		return EcoreUtil.copy((EObject) state);
-	}
+
+    /**
+     * Get a transition from the clipboard.
+     * 
+     * @return the transition
+     */
+    public static List<Transition> getTransitionsFromClipboard() {
+        if (transitionsClipBoard != null && !transitionsClipBoard.isEmpty()) {
+            Collection<Transition> transitions = EcoreUtil
+                    .copyAll(transitionsClipBoard);
+
+            List<Transition> dummy = new LinkedList<Transition>();
+            for (Transition transition : transitions) {
+                dummy.add(transition);
+            }
+            return dummy;
+        }
+        return null;
+    }
+
+    /**
+     * Copy the object.
+     * 
+     * @param object
+     *            the object
+     * @return the copy
+     */
+    public final static EObject copy(final Object object) {
+        return EcoreUtil.copy((EObject) object);
+    }
+
+    /**
+     * Debug output for xtend code.
+     * 
+     * @param object
+     *            the message
+     */
+    public final static void debug(final Object object) {
+        System.out.println("COPY AND PASTE DEBUG: " + object.toString());
+    }
 }
