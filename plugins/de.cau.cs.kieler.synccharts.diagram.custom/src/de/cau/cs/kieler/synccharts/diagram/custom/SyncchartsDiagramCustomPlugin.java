@@ -237,35 +237,30 @@ public class SyncchartsDiagramCustomPlugin extends AbstractUIPlugin implements
     /**
      * {@inheritDoc}
      */
-    @Override
     public void partActivated(IWorkbenchPart part) {
     }
 
     /**
      * {@inheritDoc}
      */
-    @Override
     public void partBroughtToTop(IWorkbenchPart part) {
     }
 
     /**
      * {@inheritDoc}
      */
-    @Override
     public void partClosed(IWorkbenchPart part) {
     }
 
     /**
      * {@inheritDoc}
      */
-    @Override
     public void partDeactivated(IWorkbenchPart part) {
     }
 
     /**
      * {@inheritDoc}
      */
-    @Override
     public void partOpened(IWorkbenchPart part) {
         RedundantLabelTriggerListener.hideRedundantLabels();
     }
