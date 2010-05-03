@@ -16,6 +16,9 @@ package de.cau.cs.kieler.synccharts.diagram.custom.triggerlisteners;
 import java.util.Collection;
 import java.util.List;
 
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EObject;
@@ -23,13 +26,12 @@ import org.eclipse.emf.transaction.NotificationFilter;
 import org.eclipse.emf.transaction.TransactionalEditingDomain;
 import org.eclipse.emf.transaction.TriggerListener;
 import org.eclipse.gef.EditPart;
-import org.eclipse.gef.GraphicalEditPart;
 import org.eclipse.gmf.runtime.diagram.ui.editparts.DiagramEditPart;
 import org.eclipse.gmf.runtime.diagram.ui.parts.IDiagramWorkbenchPart;
 import org.eclipse.gmf.runtime.notation.View;
 import org.eclipse.ui.IEditorPart;
+import org.eclipse.ui.progress.WorkbenchJob;
 
-import de.cau.cs.kieler.core.model.util.ModelingUtil;
 import de.cau.cs.kieler.synccharts.Region;
 import de.cau.cs.kieler.synccharts.State;
 import de.cau.cs.kieler.synccharts.SyncchartsPackage;
@@ -37,6 +39,7 @@ import de.cau.cs.kieler.synccharts.Transition;
 import de.cau.cs.kieler.synccharts.diagram.custom.SyncchartsDiagramCustomPlugin;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.RegionIdEditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.TransitionPriorityEditPart;
+import de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditor;
 
 /**
  * This class is responsible for hiding redundant labels.
@@ -81,7 +84,7 @@ public class RedundantLabelTriggerListener extends TriggerListener {
      * 
      */
     public static void hideRedundantLabels() {
-        new RedundantLabelTriggerListener().trigger(null, null);
+        new RedundantLabelTriggerListener().performCleanup();
     }
 
     /**
@@ -90,55 +93,95 @@ public class RedundantLabelTriggerListener extends TriggerListener {
     @Override
     protected Command trigger(TransactionalEditingDomain domain,
             Notification notification) {
-        IEditorPart part = SyncchartsDiagramCustomPlugin.instance
-                .getActiveEditorPart();
-        VisibilityManager.reset(part);
+        performCleanup();
+        return null;
+    }
+
+    private static WorkbenchJob job;
+
+    private static boolean waiting = false;
+
+    private static final int JOB_DELAY = 1000;
+
+    private void performCleanup() {
+        try {
+            if (waiting) {
+                job.cancel();
+            }
+            job = new WorkbenchJob("Redundant Label Cleanup") {
+                @Override
+                public IStatus runInUIThread(final IProgressMonitor monitor) {
+                    waiting = false;
+
+                    IEditorPart part = SyncchartsDiagramCustomPlugin.instance
+                            .getActiveEditorPart();
+
+                    if (part instanceof SyncchartsDiagramEditor) {
+                        VisibilityManager.reset(part);
+                        clean(part);
+                    } else {
+                        List<IEditorPart> list = SyncchartsDiagramCustomPlugin.instance
+                                .getOpenSyncchartsEditors();
+                        if (!list.isEmpty()) {
+                            for (IEditorPart part2 : list) {
+                                VisibilityManager.reset(part2);
+                                clean(part2);
+                            }
+                        }
+                    }
+
+                    return Status.OK_STATUS;
+                }
+            };
+            waiting = true;
+            job.schedule(JOB_DELAY);
+        } catch (RuntimeException e0) {
+            e0.printStackTrace();
+        }
+    }
+
+    /**
+     * Cleanup one particular editor.
+     * 
+     * @param part
+     *            the editor part
+     */
+    private void clean(IEditorPart part) {
         if (part instanceof IDiagramWorkbenchPart) {
             DiagramEditPart dep = ((IDiagramWorkbenchPart) part)
                     .getDiagramEditPart();
             Collection<?> editParts = dep.getViewer().getEditPartRegistry()
                     .values();
             for (Object o : editParts) {
-                if (o instanceof EditPart) {
-                    EditPart editPart = (EditPart) o;
-                    Object model = editPart.getModel();
-                    if (model instanceof View) {
-                        EObject eObject = ((View) model).getElement();
-                        if (eObject instanceof Transition) {
-                            Transition trans = (Transition) eObject;
-                            State parent = trans.getSourceState();
-                            if (parent != null
-                                    && parent.getOutgoingTransitions() != null
-                                    && parent.getOutgoingTransitions().size() == 1) {
-                                List<EditPart> parts = ModelingUtil
-                                        .getEditParts(dep, trans);
-                                for (EditPart edPart : parts) {
-                                    if (edPart instanceof TransitionPriorityEditPart) {
-                                        VisibilityManager.hide(part,
-                                                (GraphicalEditPart) edPart);
-                                    }
-                                }
-                            }
-                        } else if (eObject instanceof Region) {
-                            Region region = (Region) eObject;
-                            State parent = region.getParentState();
-                            if (parent != null && parent.getRegions() != null
-                                    && parent.getRegions().size() == 1) {
-                                List<EditPart> parts = ModelingUtil
-                                        .getEditParts(dep, region);
-                                for (EditPart edPart : parts) {
-                                    if (edPart instanceof RegionIdEditPart) {
-                                        VisibilityManager.hide(part,
-                                                (GraphicalEditPart) edPart);
-                                    }
-                                }
+                if (o instanceof TransitionPriorityEditPart
+                        || o instanceof RegionIdEditPart) {
+                    EObject obj = ((View) ((EditPart) o).getModel())
+                            .getElement();
+                    if (o instanceof TransitionPriorityEditPart) {
+                        Transition trans = (Transition) obj;
+                        TransitionPriorityEditPart editPart = (TransitionPriorityEditPart) o;
+
+                        int outgoing = trans.getSourceState() == null ? 0
+                                : trans.getSourceState()
+                                        .getOutgoingTransitions().size();
+                        if (outgoing == 1) {
+                            VisibilityManager.hide(part, editPart);
+                            continue;
+                        }
+                    } else if (o instanceof RegionIdEditPart) {
+                        RegionIdEditPart editPart = (RegionIdEditPart) o;
+                        Region region = (Region) obj;
+                        State parent = region.getParentState();
+                        if (parent != null) {
+                            int regions = parent.getRegions().size();
+                            if (regions == 1) {
+                                VisibilityManager.hide(part, editPart);
+                                continue;
                             }
                         }
                     }
                 }
             }
         }
-        return null;
     }
-
 }

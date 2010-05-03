@@ -21,6 +21,9 @@ import org.eclipse.gef.GraphicalEditPart;
 import org.eclipse.ui.IWorkbenchPart;
 
 /**
+ * This class is responsible for hiding and showing transition priority and
+ * region id labels.
+ * 
  * @author soh
  */
 public class VisibilityManager {
@@ -53,10 +56,9 @@ public class VisibilityManager {
             parts = new HashMap<GraphicalEditPart, Boolean>();
             instance.map.put(editor, parts);
         }
-        Boolean dummy = parts.remove(editPart);
-        if (dummy == null) {
-            parts.put(editPart, setVisible(editPart, false));
-        }
+        parts.remove(editPart);
+
+        parts.put(editPart, setVisible(editPart, false));
     }
 
     /**
@@ -66,7 +68,7 @@ public class VisibilityManager {
      *            the editor
      */
     public static void reset(final IWorkbenchPart editor) {
-        HashMap<GraphicalEditPart, Boolean> parts = instance.map.get(editor);
+        HashMap<GraphicalEditPart, Boolean> parts = instance.map.remove(editor);
 
         if (parts != null) {
             Iterator<GraphicalEditPart> iter = parts.keySet().iterator();
@@ -74,7 +76,6 @@ public class VisibilityManager {
                 GraphicalEditPart part = iter.next();
                 setVisible(part, true);
             }
-            instance.map.remove(editor);
         }
     }
 
