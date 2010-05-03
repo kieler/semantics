@@ -27,7 +27,6 @@ import org.eclipse.emf.transaction.TransactionalEditingDomain;
 import org.eclipse.emf.transaction.TriggerListener;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gmf.runtime.diagram.ui.editparts.DiagramEditPart;
-import org.eclipse.gmf.runtime.diagram.ui.parts.IDiagramWorkbenchPart;
 import org.eclipse.gmf.runtime.notation.View;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.progress.WorkbenchJob;
@@ -117,13 +116,13 @@ public class RedundantLabelTriggerListener extends TriggerListener {
                             .getActiveEditorPart();
 
                     if (part instanceof SyncchartsDiagramEditor) {
-                        VisibilityManager.reset(part);
-                        clean(part);
+                        VisibilityManager.reset((SyncchartsDiagramEditor) part);
+                        clean((SyncchartsDiagramEditor) part);
                     } else {
-                        List<IEditorPart> list = SyncchartsDiagramCustomPlugin.instance
+                        List<SyncchartsDiagramEditor> list = SyncchartsDiagramCustomPlugin.instance
                                 .getOpenSyncchartsEditors();
                         if (!list.isEmpty()) {
-                            for (IEditorPart part2 : list) {
+                            for (SyncchartsDiagramEditor part2 : list) {
                                 VisibilityManager.reset(part2);
                                 clean(part2);
                             }
@@ -146,38 +145,33 @@ public class RedundantLabelTriggerListener extends TriggerListener {
      * @param part
      *            the editor part
      */
-    private void clean(IEditorPart part) {
-        if (part instanceof IDiagramWorkbenchPart) {
-            DiagramEditPart dep = ((IDiagramWorkbenchPart) part)
-                    .getDiagramEditPart();
-            Collection<?> editParts = dep.getViewer().getEditPartRegistry()
-                    .values();
-            for (Object o : editParts) {
-                if (o instanceof TransitionPriorityEditPart
-                        || o instanceof RegionIdEditPart) {
-                    EObject obj = ((View) ((EditPart) o).getModel())
-                            .getElement();
-                    if (o instanceof TransitionPriorityEditPart) {
-                        Transition trans = (Transition) obj;
-                        TransitionPriorityEditPart editPart = (TransitionPriorityEditPart) o;
+    private void clean(SyncchartsDiagramEditor part) {
+        DiagramEditPart dep = part.getDiagramEditPart();
+        Collection<?> editParts = dep.getViewer().getEditPartRegistry()
+                .values();
+        for (Object o : editParts) {
+            if (o instanceof TransitionPriorityEditPart
+                    || o instanceof RegionIdEditPart) {
+                EObject obj = ((View) ((EditPart) o).getModel()).getElement();
+                if (o instanceof TransitionPriorityEditPart) {
+                    Transition trans = (Transition) obj;
+                    TransitionPriorityEditPart editPart = (TransitionPriorityEditPart) o;
 
-                        int outgoing = trans.getSourceState() == null ? 0
-                                : trans.getSourceState()
-                                        .getOutgoingTransitions().size();
-                        if (outgoing == 1) {
+                    int outgoing = trans.getSourceState() == null ? 0 : trans
+                            .getSourceState().getOutgoingTransitions().size();
+                    if (outgoing == 1) {
+                        VisibilityManager.hide(part, editPart);
+                        continue;
+                    }
+                } else if (o instanceof RegionIdEditPart) {
+                    RegionIdEditPart editPart = (RegionIdEditPart) o;
+                    Region region = (Region) obj;
+                    State parent = region.getParentState();
+                    if (parent != null) {
+                        int regions = parent.getRegions().size();
+                        if (regions == 1) {
                             VisibilityManager.hide(part, editPart);
                             continue;
-                        }
-                    } else if (o instanceof RegionIdEditPart) {
-                        RegionIdEditPart editPart = (RegionIdEditPart) o;
-                        Region region = (Region) obj;
-                        State parent = region.getParentState();
-                        if (parent != null) {
-                            int regions = parent.getRegions().size();
-                            if (regions == 1) {
-                                VisibilityManager.hide(part, editPart);
-                                continue;
-                            }
                         }
                     }
                 }

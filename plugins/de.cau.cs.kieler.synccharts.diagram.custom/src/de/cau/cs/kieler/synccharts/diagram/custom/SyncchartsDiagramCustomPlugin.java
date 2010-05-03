@@ -163,8 +163,8 @@ public class SyncchartsDiagramCustomPlugin extends AbstractUIPlugin implements
      * 
      * @return the list of open synccharts editors.
      */
-    public List<IEditorPart> getOpenSyncchartsEditors() {
-        List<IEditorPart> result = new LinkedList<IEditorPart>();
+    public List<SyncchartsDiagramEditor> getOpenSyncchartsEditors() {
+        List<SyncchartsDiagramEditor> result = new LinkedList<SyncchartsDiagramEditor>();
         IWorkbench workbench = getWorkbench();
         if (workbench != null) {
             IWorkbenchWindow window = workbench.getActiveWorkbenchWindow();
@@ -176,7 +176,7 @@ public class SyncchartsDiagramCustomPlugin extends AbstractUIPlugin implements
                         IEditorPart part = ref.getEditor(false);
                         if (part != null
                                 && part instanceof SyncchartsDiagramEditor) {
-                            result.add(part);
+                            result.add((SyncchartsDiagramEditor) part);
                         }
                     }
                 }

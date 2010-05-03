@@ -16,8 +16,19 @@ package de.cau.cs.kieler.synccharts.diagram.custom.triggerlisteners;
 import java.util.HashMap;
 import java.util.Iterator;
 
-import org.eclipse.draw2d.IFigure;
+import org.eclipse.core.commands.ExecutionException;
+import org.eclipse.core.runtime.IAdaptable;
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
+import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.transaction.TransactionalEditingDomain;
+import org.eclipse.emf.workspace.AbstractEMFOperation;
 import org.eclipse.gef.GraphicalEditPart;
+import org.eclipse.gmf.runtime.diagram.core.util.ViewUtil;
+import org.eclipse.gmf.runtime.diagram.ui.parts.IDiagramWorkbenchPart;
+import org.eclipse.gmf.runtime.emf.core.util.PackageUtil;
+import org.eclipse.gmf.runtime.notation.View;
 import org.eclipse.ui.IWorkbenchPart;
 
 /**
@@ -49,16 +60,18 @@ public class VisibilityManager {
      * @param editPart
      *            the edit part
      */
-    public static void hide(final IWorkbenchPart editor,
+    public static void hide(final IDiagramWorkbenchPart editor,
             final GraphicalEditPart editPart) {
         HashMap<GraphicalEditPart, Boolean> parts = instance.map.get(editor);
+        TransactionalEditingDomain domain = editor.getDiagramEditPart()
+                .getEditingDomain();
         if (parts == null) {
             parts = new HashMap<GraphicalEditPart, Boolean>();
             instance.map.put(editor, parts);
         }
         parts.remove(editPart);
 
-        parts.put(editPart, setVisible(editPart, false));
+        parts.put(editPart, setVisible(editPart, false, domain));
     }
 
     /**
@@ -67,14 +80,16 @@ public class VisibilityManager {
      * @param editor
      *            the editor
      */
-    public static void reset(final IWorkbenchPart editor) {
+    public static void reset(final IDiagramWorkbenchPart editor) {
         HashMap<GraphicalEditPart, Boolean> parts = instance.map.remove(editor);
+        TransactionalEditingDomain domain = editor.getDiagramEditPart()
+                .getEditingDomain();
 
         if (parts != null) {
             Iterator<GraphicalEditPart> iter = parts.keySet().iterator();
             while (iter.hasNext()) {
                 GraphicalEditPart part = iter.next();
-                setVisible(part, true);
+                setVisible(part, true, domain);
             }
         }
     }
@@ -87,13 +102,15 @@ public class VisibilityManager {
      * @param editPart
      *            the edit part
      */
-    public static void reset(final IWorkbenchPart editor,
+    public static void reset(final IDiagramWorkbenchPart editor,
             final GraphicalEditPart editPart) {
         HashMap<GraphicalEditPart, Boolean> parts = instance.map.get(editor);
+        TransactionalEditingDomain domain = editor.getDiagramEditPart()
+                .getEditingDomain();
 
         if (parts != null && parts.containsKey(editPart)) {
             parts.remove(editPart);
-            setVisible(editPart, true);
+            setVisible(editPart, true, domain);
         }
     }
 
@@ -104,12 +121,31 @@ public class VisibilityManager {
      *            the part to change the visibility for
      * @param b
      *            true if the part should be visible
+     * @param domain
+     *            the editing domain
      * @return the visibility of the edit part
      */
-    private static Boolean setVisible(GraphicalEditPart editPart, boolean b) {
-        IFigure figure = editPart.getFigure();
-        figure.setVisible(b);
+    private static Boolean setVisible(final GraphicalEditPart editPart,
+            final boolean b, final TransactionalEditingDomain domain) {
+        try {
+            AbstractEMFOperation op = new AbstractEMFOperation(domain,
+                    "Redundant Label Cleanup") {
+
+                @Override
+                protected IStatus doExecute(IProgressMonitor monitor,
+                        IAdaptable info) throws ExecutionException {
+                    View view = (View) editPart.getModel();
+
+                    ViewUtil.setStructuralFeatureValue(view,
+                            (EStructuralFeature) PackageUtil
+                                    .getElement("notation.View.visible"), b);
+                    return Status.OK_STATUS;
+                }
+            };
+            op.execute(null, null);
+        } catch (ExecutionException e0) {
+            e0.printStackTrace();
+        }
         return b;
     }
-
 }
