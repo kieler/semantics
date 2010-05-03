@@ -14,6 +14,8 @@
 package de.cau.cs.kieler.synccharts.diagram.custom.triggerlisteners;
 
 import java.util.Collection;
+import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -111,24 +113,27 @@ public class RedundantLabelTriggerListener extends TriggerListener {
                 @Override
                 public IStatus runInUIThread(final IProgressMonitor monitor) {
                     waiting = false;
+                    try {
+                        IEditorPart part = SyncchartsDiagramCustomPlugin.instance
+                                .getActiveEditorPart();
 
-                    IEditorPart part = SyncchartsDiagramCustomPlugin.instance
-                            .getActiveEditorPart();
-
-                    if (part instanceof SyncchartsDiagramEditor) {
-                        VisibilityManager.reset((SyncchartsDiagramEditor) part);
-                        clean((SyncchartsDiagramEditor) part);
-                    } else {
-                        List<SyncchartsDiagramEditor> list = SyncchartsDiagramCustomPlugin.instance
-                                .getOpenSyncchartsEditors();
-                        if (!list.isEmpty()) {
-                            for (SyncchartsDiagramEditor part2 : list) {
-                                VisibilityManager.reset(part2);
-                                clean(part2);
+                        if (part instanceof SyncchartsDiagramEditor) {
+                            VisibilityManager
+                                    .reset((SyncchartsDiagramEditor) part);
+                            clean((SyncchartsDiagramEditor) part);
+                        } else {
+                            List<SyncchartsDiagramEditor> list = SyncchartsDiagramCustomPlugin.instance
+                                    .getOpenSyncchartsEditors();
+                            if (!list.isEmpty()) {
+                                for (SyncchartsDiagramEditor part2 : list) {
+                                    VisibilityManager.reset(part2);
+                                    clean(part2);
+                                }
                             }
                         }
+                    } catch (RuntimeException e0) {
+                        e0.printStackTrace();
                     }
-
                     return Status.OK_STATUS;
                 }
             };
@@ -145,11 +150,17 @@ public class RedundantLabelTriggerListener extends TriggerListener {
      * @param part
      *            the editor part
      */
-    private void clean(SyncchartsDiagramEditor part) {
+    private void clean(final SyncchartsDiagramEditor part) {
         DiagramEditPart dep = part.getDiagramEditPart();
         Collection<?> editParts = dep.getViewer().getEditPartRegistry()
                 .values();
+        List<Object> list = new LinkedList<Object>();
         for (Object o : editParts) {
+            list.add(o);
+        }
+        Iterator<?> iter = list.iterator();
+        while (iter.hasNext()) {
+            Object o = iter.next();
             if (o instanceof TransitionPriorityEditPart
                     || o instanceof RegionIdEditPart) {
                 EObject obj = ((View) ((EditPart) o).getModel()).getElement();
