@@ -1,14 +1,18 @@
 import synccharts;
+import eproxy;
 
 transform(Region region) :
+    dump("DOING transformRegion") ->
 	selectReferenceMacroStates(region).expandMacroState() -> region
 ;
 
 transform(State state) :
+    dump("DOING transformState") ->
 	selectReferenceMacroStates(state).expandMacroState() -> state
 ;
 
 selectReferenceMacroStates(Region region) :
+    dump("DOING selectReferenceMacroStates(Region region)") ->
 	region.eAllContents.typeSelect(State).select(state|state.type==StateType::REFERENCE)
 	;
 	
@@ -20,9 +24,13 @@ selectReferenceMacroStates(State state) :
  * are transformed to a "legacy mode"*/
 expandMacroState(State target) :
     let referencedState = target.bodyReference :
+    dump("DOING expandMacroState(State target) for " + target.label + " with bodyReference" + target.bodyReference) ->
     State.isInstance(referencedState) ?
+    //referencedState.eIsProxy() ?
+        
         target.expandMacroStateWithSyncchartStateReference()
-        : target;
+        : target.analyze();
+        
 
 /*expand a given referenceMacroState which has a bodyReference to a SyncChart State*/
 State expandMacroStateWithSyncchartStateReference (State referencingState):
@@ -31,6 +39,7 @@ State expandMacroStateWithSyncchartStateReference (State referencingState):
     let referencedExpandedState = transform(referencedState) :
     let regions = referencedState.regions :
     let newName = getExpandedStateName(referencingState, referencedState) :
+    dump("expandMacroStateWithSyncchartStateReference "+newName + " "+referencedState.label) ->
     referencingState.regions.addAll(regions) ->
     referencingState.setLabel(newName) ->
     referencingState.changeTypeToNormal() ->
@@ -73,9 +82,19 @@ Signal getSignalForName(State state, String name) :
                 getSignalForName(state.parentRegion.parentState, name) :
                 null);
 
+Void dump(String name) :
+	JAVA de.cau.cs.kieler.synccharts.diagram.custom.commands.Utils.dump(java.lang.String)
+;
+
 State copyState(Object object) :
-    (State) copy(object);
+    let state = (State) copy(object) :
+    dump("copyState(Object object) "+state) ->
+    state;
     
 Object copy(Object object) :
 	JAVA de.cau.cs.kieler.synccharts.diagram.custom.commands.Utils.copy(java.lang.Object)
+;
+
+Object analyze(Object object) :
+    JAVA de.cau.cs.kieler.synccharts.diagram.custom.commands.Utils.analyze(java.lang.Object)
 ;

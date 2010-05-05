@@ -319,4 +319,13 @@ public final class Utils {
     public final static void debug(final Object object) {
         System.out.println("COPY AND PASTE DEBUG: " + object.toString());
     }
+    
+    
+    public final static void dump(String aString) {
+        System.out.println(aString);
+    }
+
+    public final static EObject analyze(Object object){
+        return (EObject) object;
+    }
 }

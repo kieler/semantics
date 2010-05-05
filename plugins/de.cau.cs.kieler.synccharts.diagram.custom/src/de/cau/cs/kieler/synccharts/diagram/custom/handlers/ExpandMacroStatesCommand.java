@@ -20,14 +20,24 @@ import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.expressions.EvaluationContext;
 import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.emf.common.command.AbstractCommand;
+import org.eclipse.emf.common.command.CommandStack;
+import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.mwe.core.WorkflowContext;
 import org.eclipse.emf.mwe.core.WorkflowContextDefaultImpl;
 import org.eclipse.emf.mwe.core.issues.Issues;
 import org.eclipse.emf.mwe.core.issues.IssuesImpl;
+import org.eclipse.emf.mwe.core.issues.MWEDiagnostic;
 import org.eclipse.emf.mwe.core.monitor.NullProgressMonitor;
 import org.eclipse.emf.mwe.internal.core.Workflow;
 import org.eclipse.emf.mwe.utils.Reader;
 import org.eclipse.emf.mwe.utils.Writer;
+import org.eclipse.emf.transaction.TransactionalEditingDomain;
+import org.eclipse.gmf.runtime.emf.core.GMFEditingDomainFactory;
 import org.eclipse.xtend.XtendComponent;
 import org.eclipse.xtend.typesystem.emf.EmfMetaModel;
 
@@ -92,7 +102,7 @@ public class ExpandMacroStatesCommand extends AbstractHandler {
                     if (o instanceof org.eclipse.core.internal.resources.File) {
                         IPath path = ((org.eclipse.core.internal.resources.File) o).getFullPath();
                         try {
-                            IPath expDiagram = expandMacroStates(path);
+                            expandMacroStates(path);
                         } catch (RuntimeException e0) {
                             e0.printStackTrace();
                             return null;
@@ -104,40 +114,134 @@ public class ExpandMacroStatesCommand extends AbstractHandler {
         return null;
     }
 
-    private IPath expandMacroStates(final IPath path) {
-        IPath target = (IPath) path.clone();
-        target = target.removeFileExtension();
-        String filename = target.lastSegment() + "_EXPANDED.kixs";
-        target = target.removeLastSegments(1).append(filename);
+    private void expandMacroStates(final IPath path) {
+        URI domainModelURI = URI.createPlatformResourceURI(path.toOSString(),
+                true);
 
-        Workflow workflow = new Workflow();
-        WorkflowContext wfx = new WorkflowContextDefaultImpl();
-        NullProgressMonitor monitor = new NullProgressMonitor();
-        Issues issues = new IssuesImpl();
-
-        // Meta model
-        EmfMetaModel metaModel = new EmfMetaModel(SyncchartsPackage.eINSTANCE);
-
-        Reader xmiReader = new Reader();
-        xmiReader.setUri(path.toString());
-        xmiReader.setModelSlot("model");
-        workflow.addComponent(xmiReader);
-
-        XtendComponent transformation = new XtendComponent();
-        transformation.addMetaModel(metaModel);
-        transformation.setInvoke("transformations::expandReferenceStates::transform(model)");
-        transformation.setOutputSlot("transformedModel");
-        workflow.addComponent(transformation);
-
-        Writer writer = new Writer();
-        writer.setUri(target.toString());
-        writer.setModelSlot("transformedModel");
-        workflow.addComponent(writer);
-
-        workflow.invoke(wfx, monitor, issues);
+        TransactionalEditingDomain editingDomain = GMFEditingDomainFactory.INSTANCE
+                .createEditingDomain();
+//        ResourceSet resourceSet = editingDomain.getResourceSet();
         
-        System.out.println("Issues: \n" + issues);
+//        Resource resource = resourceSet.createResource(domainModelURI);
+
+        ExpandCommand command = new ExpandCommand(path);
+        CommandStack stack = editingDomain.getCommandStack();
+        stack.execute(command);
         
-        return target;
+//        IPath target = (IPath) path.clone();
+//        target = target.removeFileExtension();
+//        String filename = target.lastSegment() + "_EXPANDED.kixs";
+//        target = target.removeLastSegments(1).append(filename);
+//
+//        Workflow workflow = new Workflow();
+//        WorkflowContext wfx = new WorkflowContextDefaultImpl();
+//        NullProgressMonitor monitor = new NullProgressMonitor();
+//        Issues issues = new IssuesImpl();
+//
+//        // Meta model
+//        EmfMetaModel metaModel = new EmfMetaModel(SyncchartsPackage.eINSTANCE);
+//
+//        Reader xmiReader = new Reader();
+//        xmiReader.setUri(path.toOSString());
+//        xmiReader.setModelSlot("model");
+//        workflow.addComponent(xmiReader);
+//        
+//
+//        XtendComponent transformation = new XtendComponent();
+//        transformation.addMetaModel(metaModel);
+//        transformation.setInvoke("transformations::expandReferenceStates::transform(model)");
+//        transformation.setOutputSlot("transformedModel");
+//        workflow.addComponent(transformation);
+//        
+//        Writer writer = new Writer();
+//        writer.setUri(target.toOSString());
+//        writer.setModelSlot("transformedModel");
+//        workflow.addComponent(writer);
+//
+//        workflow.invoke(wfx, monitor, issues);
+//        
+//        System.out.println("Issues: \n" + issues);
+//        for (MWEDiagnostic s : issues.getIssues()) {
+//            System.out.println(s);
+//        }
+//        for (MWEDiagnostic s : issues.getInfos()) {
+//            System.out.println(s);
+//        }
+//        for (MWEDiagnostic s : issues.getWarnings()) {
+//            System.out.println(s);
+//        }
+//        for (MWEDiagnostic s : issues.getErrors()) {
+//            System.out.println(s);
+//        }
+//        
+//        return target;
+    }
+    
+    private class ExpandCommand extends AbstractCommand{
+        IPath target;
+        Workflow workflow;
+        WorkflowContext wfx;
+        NullProgressMonitor monitor;
+        Issues issues;
+        EmfMetaModel metaModel;
+        Reader xmiReader;
+        XtendComponent transformation;
+        Writer writer;
+        
+        
+        public ExpandCommand(IPath path){
+            target = (IPath) path.clone();
+            target = target.removeFileExtension();
+            String filename = target.lastSegment() + "_EXPANDED.kixs";
+            target = target.removeLastSegments(1).append(filename);
+
+            workflow = new Workflow();
+            wfx = new WorkflowContextDefaultImpl();
+            monitor = new NullProgressMonitor();
+            issues = new IssuesImpl();
+
+            // Meta model
+            // MINE
+            //metaModel = new EmfMetaModel(SyncchartsPackage.eINSTANCE);
+            // CMOTs
+            metaModel = new EmfMetaModel(de.cau.cs.kieler.synccharts.SyncchartsPackage.eINSTANCE);
+            
+            xmiReader = new Reader();
+            xmiReader.setUri(path.toOSString());
+            xmiReader.setModelSlot("model");
+            workflow.addComponent(xmiReader);
+            
+
+            transformation = new XtendComponent();
+            transformation.addMetaModel(metaModel);
+            transformation.setInvoke("transformations::expandReferenceStates::transform(model)");
+            transformation.setOutputSlot("transformedModel");
+            workflow.addComponent(transformation);
+            
+            writer = new Writer();
+            writer.setUri(target.toOSString());
+            writer.setModelSlot("transformedModel");
+            workflow.addComponent(writer);
+        }
+
+        @Override
+        public void execute() {
+            // TODO Auto-generated method stub
+            workflow.invoke(wfx, monitor, issues);
+            System.out.println(issues);
+            
+        }
+
+        @Override
+        public void redo() {
+            // TODO Auto-generated method stub
+            
+        }
+        
+        @Override
+        protected boolean prepare() {
+            return true;
+        }
+        
     }
 }
