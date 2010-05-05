@@ -112,13 +112,13 @@ Void tryPastingStatesIntoRegion(Region target):
   tryPastingRegionsIntoRegion(target))
 ;
 
-// try regions into region if fails ... nothing can be done
+// try regions into region
 Void tryPastingRegionsIntoRegion(Region target):
  let regions = getRegionsFromClipboard():
  (regions != null ?
   pasteRegionsIntoRegion(regions, target)
  : 
-  null)
+  tryPastingTransitionIntoRegion(target))
 ;
 
 // if root region create new state and paste into else replace
@@ -131,6 +131,45 @@ Void pasteRegionsIntoRegion(List[Region] regions, Region target):
  (dummy.regions.addAll(regions) ->
   target.innerStates.add(dummy) ->
   dummy.setLabel(getFileNameOfActiveEditor()))
+;
+
+// try pasting a transition into a region by creating two dummy states
+Void tryPastingTransitionIntoRegion(Region target):
+ let trans = getTransitionFromClipboard():
+ (trans != null ?
+  pasteTransitionIntoRegion(target, trans)
+  :
+  tryPastingTransitionsIntoRegion(target)
+  )
+;
+
+// create two dummy states in region and connect with transition
+Void pasteTransitionIntoRegion(Region target, Transition trans):
+ let srcDummy = new State :
+ let destDummy = new State :
+ target.innerStates.add(srcDummy) ->
+ target.innerStates.add(destDummy) ->
+ trans.setSourceState(srcDummy) ->
+ trans.setTargetState(destDummy)
+;
+
+// create two dummy states and paste all transitions between them
+Void tryPastingTransitionsIntoRegion(Region target):
+ let transList = getTransitionsFromClipboard():
+ (transList != null ?
+  pasteTransitionsIntoRegion(target, transList)
+  :
+  null)
+;
+
+// create two dummy states and paste all transitions between them
+Void pasteTransitionsIntoRegion(Region target, List[Transition] transList):
+ let srcDummy = new State :
+ let destDummy = new State :
+ target.innerStates.add(srcDummy) ->
+ target.innerStates.add(destDummy) ->
+ transList.setSourceState(srcDummy) ->
+ transList.setTargetState(destDummy)
 ;
 
 // paste into state
