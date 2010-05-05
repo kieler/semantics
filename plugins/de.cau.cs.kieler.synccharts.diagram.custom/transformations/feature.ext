@@ -181,11 +181,32 @@ Void paste(State target):
 // try state into state if fails try region into state
 Void tryPastingStateIntoState(State target):
  let state = getStateFromClipboard():
- (state != null ? (state.outgoingTransitions.addAll(target.outgoingTransitions) ->
- target.parentRegion.innerStates.add(state) ->
- target.parentRegion.innerStates.remove(target))
+ (state != null ? (
+  replaceState(target, state)
+ )
  : 
  tryPastingRegionIntoState(target))
+;
+
+// replace the old state with the new one
+Void replaceState(State oldState, State replacement):
+ oldState.parentRegion.innerStates.outgoingTransitions.fixReference(oldState, replacement) ->
+ oldState.parentRegion.innerStates.add(replacement) ->
+ oldState.parentRegion.innerStates.remove(oldState)
+;
+
+// fix all transitions to and from the old state to reference the replacement instead
+Void fixReference(Transition trans, State oldTarget, State newTarget):
+ (trans.targetState == oldTarget ?
+ trans.setTargetState(newTarget)
+ :
+ null
+ ) ->
+ (trans.sourceState == oldTarget ?
+ trans.setSourceState(newTarget)
+ :
+ null
+ )
 ;
 
 // try region into state if fails try states into state
@@ -229,7 +250,7 @@ Void tryPastingTransitionIntoState(State target):
 Void tryPastingTransitionsIntoState(State target):
  let trans = getTransitionsFromClipboard():
  (trans != null ? 
-  (trans.addSelfloopToState(target))
+  trans.addSelfloopToState(target)
   :
   null
  )
@@ -247,30 +268,46 @@ Void paste(List[State] states):
  setSelection(states.get(0).parentRegion)
 ;
 
+// replace each state with the one in clipboard
 Void tryPastingStateIntoStates(List[State] states):
  let state = getStateFromClipboard():
  (state != null ?
-  (states.get(0).parentRegion.innerStates.add(state) ->
-  states.removeStateFromRegion())
+  (states.replaceEachState())
  :
   tryPastingStatesIntoStates(states)
  )
 ;
 
+// replace each state with the one in clipboard
+Void replaceEachState(State target):
+ let state = getStateFromClipboard():
+ replaceState(target, state)
+;
+
+// replace each state from the selection with the ones in clipboard
 Void tryPastingStatesIntoStates(List[State] targets):
  let states = getStatesFromClipboard():
  (states != null ?
-  (targets.get(0).parentRegion.innerStates.addAll(states) ->
-  targets.removeStateFromRegion())
+  targets.replaceEach()
  :
- tryPastingTransitionBetweenStates(targets)
+  tryPastingTransitionBetweenStates(targets)
  )
 ;
 
+// replace each state from the selection with the ones in clipboard
+Void replaceEach(State target):
+ let states = getStatesFromClipboard():
+ let targetRegion = target.parentRegion:
+ target.removeStateFromRegion() ->
+ targetRegion.innerStates.addAll(states)
+;
+
+// remove a state from the region
 Void removeStateFromRegion(State state):
  state.parentRegion.innerStates.remove(state)
 ;
 
+// connect two states with the transition in clipboard
 Void tryPastingTransitionBetweenStates(List[State] states):
  let trans = getTransitionFromClipboard():
  let source = states.get(0):
