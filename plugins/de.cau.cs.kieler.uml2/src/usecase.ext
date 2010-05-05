@@ -20,9 +20,7 @@ let use = new UseCase:
 use.subject.add(sub)->
 sub.ownedUseCase.add(use)->
 m.packagedElement.add(sub)->
-addActorToUseCase(use)->
-writeToJava(sub)->
-writeToJava(use)
+addActorToUseCase(use)
 ;
 
 /*
@@ -40,11 +38,7 @@ asso.memberEnd.add(mem)->
 asso.ownedEnd.add(own)->
 asso.ownedEnd.add(mem)->
 u.getModel().packagedElement.add(actor)->
-u.getModel().packagedElement.add(asso)->
-writeToJava(asso)->
-writeToJava(actor)//->
-//writeToJava(own)->
-//writeToJava(mem)
+u.getModel().packagedElement.add(asso)
 ;
 
 /*
@@ -53,8 +47,7 @@ writeToJava(actor)//->
 Void addUseCasetoSubject(Component c):
 let use = new UseCase:
 use.subject.add(c)->
-c.ownedUseCase.add(use)->
-writeToJava(use)
+c.ownedUseCase.add(use)
 ;
 
 /*
@@ -72,11 +65,7 @@ asso.memberEnd.add(mem)->
 asso.ownedEnd.add(own)->
 asso.ownedEnd.add(mem)->
 a.getModel().packagedElement.add(use)->
-a.getModel().packagedElement.add(asso)->
-writeToJava(use)->
-writeToJava(asso)//->
-//writeToJava(own)->
-//writeToJava(mem)
+a.getModel().packagedElement.add(asso)
 ;
 
 /*
@@ -88,9 +77,7 @@ let gen = new Generalization:
 gen.setGeneral(a)->
 gen.setSpecific(act)->
 act.generalization.add(gen)->
-a.getModel().packagedElement.add(act)->
-writeToJava(act)->
-writeToJava(gen)
+a.getModel().packagedElement.add(act)
 ;
 
 /*
@@ -99,7 +86,7 @@ writeToJava(gen)
 Void addUseCaseExtension(UseCase u):
 let use = new UseCase:
 let ext = new Extend:
-let sub = u.owner:
+let sub = (Component)u.owner:
 ext.setExtendedCase(u)->
 ext.setExtension(use)->
 use.extend.add(ext)->
@@ -107,9 +94,7 @@ if (sub == u.getModel()) then
 u.getModel().packagedElement.add(use)
 else
 use.subject.add((Component)sub)->
-sub.ownedUseCase.add(use)->
-writeToJava(use)->
-writeToJava(ext)
+sub.ownedUseCase.add(use)
 ;
 
 /*
@@ -118,7 +103,7 @@ writeToJava(ext)
 Void addUseCaseGeneralization(UseCase u):
 let use = new UseCase:
 let gen = new Generalization:
-let sub = u.owner:
+let sub = (Component)u.owner:
 gen.setGeneral(u)->
 gen.setSpecific(use)->
 use.generalization.add(gen)->
@@ -126,9 +111,7 @@ if (sub == u.getModel()) then
 sub.getModel().packagedElement.add(use)
 else
 use.subject.add(sub)->
-sub.ownedUseCase.add(use)->
-writeToJava(gen)->
-writeToJava(use)
+sub.ownedUseCase.add(use)
 ;
 
 /*
@@ -137,7 +120,7 @@ writeToJava(use)
 Void addUseCaseInclusion(UseCase u):
 let use = new UseCase:
 let inc = new Include:
-let sub = u.owner:
+let sub = (Component)u.owner:
 inc.setIncludingCase(use)->
 inc.setAddition(u)->
 use.include.add(inc)->
@@ -145,9 +128,7 @@ if (sub == u.getModel()) then
 u.getModel().packagedElement.add(use)
 else 
 use.subject.add(sub)->
-sub.ownedUseCase.add(use)->
-writeToJava(use)->
-writeToJava(inc)
+sub.ownedUseCase.add(use)
 ;
 
 /*
@@ -157,9 +138,8 @@ Void inclusionToExtend(Include i):
 let ext = new Extend:
 ext.setExtendedCase(i.addition)->
 ext.setExtension(i.includingCase)->
-i.owner.extend.add(ext)->
-i.destroy()->
-writeToJava(ext)
+((UseCase)i.owner).extend.add(ext)->
+i.destroy()
 ;
 
 /*
@@ -167,11 +147,10 @@ writeToJava(ext)
 */
 Void extendToInclusion(Extend e):
 let inc = new Include:
-inc.setIncludingCase(e.owner)->
+inc.setIncludingCase(((UseCase)e.owner))->
 inc.setAddition(e.extendedCase)->
-e.owner.include.add(inc)->
-e.destroy()->
-writeToJava(inc)
+((UseCase)e.owner).include.add(inc)->
+e.destroy()
 ;
 
 /*
@@ -180,10 +159,9 @@ writeToJava(inc)
 Void extendToGeneralization(Extend e):
 let gen = new Generalization:
 gen.setGeneral(e.extendedCase)->
-gen.setSpecific(e.owner)->
-e.owner.generalization.add(gen)->
-e.destroy()->
-writeToJava(gen)
+gen.setSpecific(((UseCase)e.owner))->
+((UseCase)e.owner).generalization.add(gen)->
+e.destroy()
 ;
 
 /*
@@ -193,9 +171,8 @@ Void includeToGeneralization(Include i):
 let gen = new Generalization:
 gen.setGeneral(i.addition)->
 gen.setSpecific(i.includingCase)->
-i.owner.generalization.add(gen)->
-i.destroy()->
-writeToJava(gen)
+((UseCase)i.owner).generalization.add(gen)->
+i.destroy()
 ;
 
 /*
@@ -203,8 +180,7 @@ writeToJava(gen)
 */
 Void addExtensionPointToUseCase(UseCase u):
 let e = new Extension:
-u.ownedElement.add(e)->
-writeToJava(e)
+u.ownedElement.add(e)
 ;
 
 /*
@@ -214,12 +190,4 @@ Void addConstraintToExtension(Extend e):
 let con = new Constraint:
 con.constrainedElement.add(e)->
 e.getModel().packagedElement.add(con)
-//writeToJava(con)
-;
-
-/*
-* Invoking a java method that temporary stores the given Element
-*/
-Void writeToJava(Element e): null // haf: commented out because it adds explicit dependency to Papyrus
-//JAVA de.cau.cs.rtprak.group04.papyrus.sbe.DiagramUpdater.cache(org.eclipse.emf.ecore.EModelElement)
 ;
