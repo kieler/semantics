@@ -658,15 +658,15 @@
         <echo message="STARTING p2 stuff" />
 
 
-        <replaceregexp file="${basedir}/assemble.de.cau.cs.kieler.buildHelper.p2.xml"
-                 match=".*de\.cau\.cs\.kieler\.buildHelper_.*"
+        <replaceregexp file="${basedir}/assemble.${feature}.buildHelper.p2.xml"
+                 match=".*${feature}\.buildHelper_.*"
                  replace="" byline="true" />
-        <!-- replace file="${basedir}/assemble.de.cau.cs.kieler.buildHelper.p2.xml"
+        <!-- replace file="${basedir}/assemble.${feature}.buildHelper.p2.xml"
                  token="		&lt;customGather dir=&quot;features/de.cau.cs.kieler.buildHelper/&quot; projectName=&quot;de.cau.cs.kieler.buildHelper_1.0.0&quot; propertyName=&quot;feature.base&quot; propertyValue=&quot;$${eclipse.base}&quot; subFolder=&quot;/features&quot; /&gt;"
                  value="" / -->
 
         <!-- ant antfile="assemble.${feature}.p2.xml" / -->
-        <ant antfile="assemble.de.cau.cs.kieler.buildHelper.p2.xml" />
+        <ant antfile="assemble.${feature}.buildHelper.p2.xml" />
     </target>
     
     <!-- =========================================================================================== -->
