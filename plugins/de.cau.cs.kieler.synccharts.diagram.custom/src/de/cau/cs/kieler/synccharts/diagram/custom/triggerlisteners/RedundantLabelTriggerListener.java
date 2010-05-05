@@ -116,21 +116,65 @@ public class RedundantLabelTriggerListener extends TriggerListener {
                     try {
                         IEditorPart part = SyncchartsDiagramCustomPlugin.instance
                                 .getActiveEditorPart();
+                        IProgressMonitor dummyMonitor = new IProgressMonitor() {
+
+                            @Override
+                            public void worked(int work) {
+                            }
+
+                            @Override
+                            public void subTask(String name) {
+                            }
+
+                            @Override
+                            public void setTaskName(String name) {
+                            }
+
+                            @Override
+                            public void setCanceled(boolean value) {
+                            }
+
+                            @Override
+                            public boolean isCanceled() {
+                                return false;
+                            }
+
+                            @Override
+                            public void internalWorked(double work) {
+                            }
+
+                            @Override
+                            public void done() {
+                            }
+
+                            @Override
+                            public void beginTask(String name, int totalWork) {
+                            }
+                        };
 
                         if (part instanceof SyncchartsDiagramEditor) {
+                            boolean save = !part.isDirty();
                             VisibilityManager
                                     .reset((SyncchartsDiagramEditor) part);
                             clean((SyncchartsDiagramEditor) part);
+                            if (save) {
+                                part.doSave(dummyMonitor);
+                            }
                         } else {
                             List<SyncchartsDiagramEditor> list = SyncchartsDiagramCustomPlugin.instance
                                     .getOpenSyncchartsEditors();
                             if (!list.isEmpty()) {
                                 for (SyncchartsDiagramEditor part2 : list) {
+                                    boolean save = !part2.isDirty();
                                     VisibilityManager.reset(part2);
                                     clean(part2);
+                                    if (save) {
+                                        part2.doSave(dummyMonitor);
+                                    }
                                 }
                             }
                         }
+
                     } catch (RuntimeException e0) {
                         e0.printStackTrace();
                     }
