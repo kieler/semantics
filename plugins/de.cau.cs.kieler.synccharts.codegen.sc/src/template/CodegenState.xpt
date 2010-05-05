@@ -3,7 +3,6 @@
 «EXTENSION template::Helper»
 
 «DEFINE state FOR State-»
-	«IF !this.isFinal-»
 		«IF !isSimpleHierarchical(this)-»
 			L_«getStateNameByFlag(this, 3)-»:
 		«ENDIF-»
@@ -21,7 +20,6 @@
 		«ELSE-»
 			«EXPAND stateWithMoreTransitions FOR this»
 		«ENDIF-»
-	«ENDIF-»
 «ENDDEFINE»
 
 «DEFINE stateWithRegions FOR State-»
@@ -82,6 +80,7 @@
 			«EXPAND CodegenMisc::callJSONState-»
 		«ENDIF»
 		«IF this.isFinal-»
+			«EXPAND CodegenMisc::callJSONState-»
 			TERM;
 		«ELSE-»
 			«EXPAND onEntry FOR this-»

@@ -167,9 +167,9 @@ public class Graph {
         // add Edge
         if (list) {
             if (!adjacencyList.get(i).contains(j)) {
-                if (adjacencyList.get(j).contains(i)) {
-                    cycleProblems.add(i);
-                }
+//                if (adjacencyList.get(j).contains(i)) {
+//                    cycleProblems.add(i);
+//                }
                 numberOfEdges++;
                 adjacencyList.get(i).add(j);
             }
@@ -320,7 +320,7 @@ public class Graph {
             }
             if (source == -1) { // the graph is not acyclic
                 // break the cycle and set a new source
-                source = breakCycle();
+                // source = breakCycle();
             }
             predecessorList[source] = -1;
             // remove all predecessor dependencies of source

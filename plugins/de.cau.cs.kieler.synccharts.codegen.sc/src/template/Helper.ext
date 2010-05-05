@@ -82,6 +82,10 @@ cached List getStateSignals(State state):
 	JAVA template.Helper.getStateSignals(de.cau.cs.kieler.synccharts.State)
 ;
 
+cached int getHighestPriority(State state):
+	computeThreadPriorities(state).size
+;
+
 boolean hasDependentState(Transition transition):
 	JAVA template.Helper.hasDependentState(de.cau.cs.kieler.synccharts.Transition)
 ;

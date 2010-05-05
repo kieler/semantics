@@ -95,10 +95,10 @@ public final class Helper {
         for (ArrayList<StatePlusTransition> spt : optimzedSortedStates) {
             printStatePlusTransitionList(spt);
         }
-        for (StatePlusTransition spt : sortedStates) {
-            System.out.println(spt.getState().getId() + " - "
-                    + getRealOptimizedThreadPriority(spt.getState()));
-        }
+//        for (StatePlusTransition spt : sortedStates) {
+//            System.out.println(spt.getState().getId() + " - "
+//                    + getRealOptimizedThreadPriority(spt.getState()));
+//        }
         return sortedStates;
     }
 
@@ -273,6 +273,14 @@ public final class Helper {
         } else {
             return (!getDependencyOwner(transition).isEmpty());
         }
+    }
+    
+    /**
+     * Returns the number of computed Threads without optimization of priorities.
+     * @return max threads
+     */
+    public static int getMaxPriority() {
+        return sortedStates.size();
     }
 
     private static String getStateNameAnyID(final State state) {
@@ -817,7 +825,7 @@ public final class Helper {
         // outgoing transition put its signals to the source state ones
         for (Transition targetTrans : transition.getTargetState().getOutgoingTransitions()) {
             if (isImmediateTransition(targetTrans)
-                    && !transition.getSourceState().equals(targetTrans.getSourceState())) {
+                    && !transition.getSourceState().equals(targetTrans.getTargetState())) {
                 System.out.println(targetTrans);
                 fillEffectSignals(targetTrans);
             }
@@ -926,6 +934,12 @@ public final class Helper {
                     return true;
                 }
             }
+//            if (isSignalDependent(transition)) {
+//                return true;
+//            }
+//            else if (hasDependentState(transition)) {
+//                return true;
+//            } 
         }
 
         // else {

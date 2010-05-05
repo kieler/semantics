@@ -3,20 +3,18 @@
 «EXTENSION template::Helper»
 
 «DEFINE getRealThreadPriority FOR State-»
-	«getRealOptimizedThreadPriority(this)-»
 	«REM»
-	«getRealThreadPriority(this)-»
+	«getRealOptimizedThreadPriority(this)-»
 	«ENDREM»
+	«getRealThreadPriority(this)-»
 «ENDDEFINE»
 
 «DEFINE getWeakThreadPriority FOR State-»
-	«getOptimizedWeakThreadPriority(this)-» 
 	«REM»
-	«getWeakThreadPriority(this)-»
+	«getOptimizedWeakThreadPriority(this)-» 
 	«ENDREM»
+	«getWeakThreadPriority(this)-»
 «ENDDEFINE»
-
-getOptimizedWeakThreadPriority
 
 «DEFINE priorityReduction FOR Action-»
 	«IF this.eRootContainer.metaType == Transition-»
@@ -42,10 +40,10 @@ getOptimizedWeakThreadPriority
 «ENDDEFINE»
 
 «DEFINE transitionPrio FOR Transition-»
-	«IF getRealOptimizedThreadPriority(this.targetState) < getRealOptimizedThreadPriority(this.sourceState)-»
+	«IF getRealOptimizedThreadPriority(this.targetState) != getRealOptimizedThreadPriority(this.sourceState)-»
+	«ENDIF-»
 		/* priority after transition */
 		PRIO(«EXPAND getRealThreadPriority FOR this.targetState»);
-	«ENDIF-»
 	«REM»
 	«ENDREM»
 «ENDDEFINE»
@@ -54,10 +52,10 @@ getOptimizedWeakThreadPriority
 	«REM»
 	PRIO(«EXPAND getRealThreadPriority FOR this.targetState-»);
 	«ENDREM»
-	«IF this.sourceState.outgoingTransitions.size > 1-»
+	«IF this.sourceState.outgoingTransitions.size > 1 && hasDependentState(this)-»
+	«ENDIF-»
 		/* priority to source */
 		PRIO(«getSmallestThreadPriority(this.sourceState)»);
-	«ENDIF-»
 «ENDDEFINE»
 
 «DEFINE mainThreadPrio FOR State-»

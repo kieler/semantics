@@ -76,6 +76,7 @@ public class Beautifier {
         line = line.replaceAll("\\}" + seperator, "}\n");
         line = line.replaceAll("\\*\\/" + seperator, "*/\n");
         line = line.replaceAll("h\"" + seperator, "h\"\n");
+        line = line.replaceAll("c\"" + seperator, "c\"\n");
         line = line.replaceAll(">" + seperator, ">\n");
         line = line.replaceAll(";\\}", ";\n}");
         line = line.replaceAll("\t", "");
