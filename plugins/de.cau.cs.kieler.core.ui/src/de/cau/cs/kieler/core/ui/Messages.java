@@ -41,10 +41,6 @@ public final class Messages extends NLS {
     public static String ModelErrorHandler_MarkerError;
     public static String ModelErrorHandler_MarkerCreationError;
     public static String DoubleFieldEditor_doubleBounds;
-    public static String ExperimentalDialog_experimentalFeature;
-    public static String ExperimentalDialog_regarded;
-    public static String ExperimentalDialog_using;
-    public static String ExperimentalDialog_Warning;
     public static String TextViewer_2;
 
     static {
