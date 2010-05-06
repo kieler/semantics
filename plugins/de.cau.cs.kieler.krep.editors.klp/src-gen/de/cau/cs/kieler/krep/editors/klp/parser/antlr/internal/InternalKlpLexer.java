@@ -10,6 +10,7 @@ import java.util.Stack;
 import java.util.List;
 import java.util.ArrayList;
 
+@SuppressWarnings("all")
 public class InternalKlpLexer extends Lexer {
     public static final int RULE_ID=4;
     public static final int RULE_ANY_OTHER=13;

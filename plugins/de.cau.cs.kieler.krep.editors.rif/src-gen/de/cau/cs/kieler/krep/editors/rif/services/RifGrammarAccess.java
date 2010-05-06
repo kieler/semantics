@@ -36,12 +36,12 @@ public class RifGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cStatusParserRuleCall_10 = (RuleCall)cGroup.eContents().get(10);
 		
 		//Trace:
-		//  INPUTS inputs+=decl* "@#" OUTPUTS outputs+=decl* "@#" LOCALS local+=decl* "@#" tick+=Tick
-		//  + Status?;
+		//  INPUTS inputs+=decl* "@#" OUTPUTS outputs+=decl* "@#" LOCALS local+=decl*
+		//  "@#" tick+=Tick+ Status?;
 		public ParserRule getRule() { return rule; }
 
-		//INPUTS inputs+=decl* "@#" OUTPUTS outputs+=decl* "@#" LOCALS local+=decl* "@#" tick+=Tick
-		//+ Status?
+		//INPUTS inputs+=decl* "@#" OUTPUTS outputs+=decl* "@#" LOCALS local+=decl* "@#"
+		//tick+=Tick+ Status?
 		public Group getGroup() { return cGroup; }
 
 		//INPUTS
@@ -159,7 +159,8 @@ public class RifGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cLocalDataParserRuleCall_7_0 = (RuleCall)cLocalAssignment_7.eContents().get(0);
 		
 		//Tick:
-		//  {Tick} "#step" nr=INT input+=Data* "#outs" output+=Data* "#locs" local+=Data*;
+		//  {Tick} "#step" nr=INT input+=Data* "#outs" output+=Data* "#locs" local+=Data*
+		//;
 		public ParserRule getRule() { return rule; }
 
 		//{Tick} "#step" nr=INT input+=Data* "#outs" output+=Data* "#locs" local+=Data*
@@ -213,28 +214,10 @@ public class RifGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cFalseFKeyword_2_0 = (Keyword)cFalseAssignment_2.eContents().get(0);
 		
 		//Data:
-		//  val=INT|true="T"|false="F"; 
-		//
-		//      
-		//          
-		//           
-		//        
-		//        
-		//   / *     Bool returns ecore::EInt: 'T' {$=1} 
-		//        | false?='F' 
-		//        ;* /
+		//  val=INT|true="T"|false="F";
 		public ParserRule getRule() { return rule; }
 
-		//val=INT|true="T"|false="F" 
-		//
-		//      
-		//          
-		//           
-		//        
-		//        
-		//   / *     Bool returns ecore::EInt: 'T' {$=1} 
-		//        | false?='F' 
-		//        ;* /
+		//val=INT|true="T"|false="F"
 		public Alternatives getAlternatives() { return cAlternatives; }
 
 		//val=INT
@@ -267,12 +250,12 @@ public class RifGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cINTTerminalRuleCall_5 = (RuleCall)cGroup.eContents().get(5);
 		private final Keyword cSecondKeyword_6 = (Keyword)cGroup.eContents().get(6);
 		
-		//Status returns ecore::EString:
-		//  "The" "execution" "lasted" INT "." INT "second."; 
-		//        
-		//   / *     Bool returns ecore::EInt: 'T' {$=1} 
+		/// *     Bool returns ecore::EInt: 'T' {$=1} 
 		//        | false?='F' 
 		//        ;* /
+		//
+		//Status returns ecore::EString:
+		//  "The" "execution" "lasted" INT "." INT "second.";
 		public ParserRule getRule() { return rule; }
 
 		//"The" "execution" "lasted" INT "." INT "second."
@@ -329,8 +312,8 @@ public class RifGrammarAccess extends AbstractGrammarElementFinder {
 
 	
 	//Trace:
-	//  INPUTS inputs+=decl* "@#" OUTPUTS outputs+=decl* "@#" LOCALS local+=decl* "@#" tick+=Tick
-	//  + Status?;
+	//  INPUTS inputs+=decl* "@#" OUTPUTS outputs+=decl* "@#" LOCALS local+=decl*
+	//  "@#" tick+=Tick+ Status?;
 	public TraceElements getTraceAccess() {
 		return (pTrace != null) ? pTrace : (pTrace = new TraceElements());
 	}
@@ -360,7 +343,8 @@ public class RifGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//Tick:
-	//  {Tick} "#step" nr=INT input+=Data* "#outs" output+=Data* "#locs" local+=Data*;
+	//  {Tick} "#step" nr=INT input+=Data* "#outs" output+=Data* "#locs" local+=Data*
+	//;
 	public TickElements getTickAccess() {
 		return (pTick != null) ? pTick : (pTick = new TickElements());
 	}
@@ -370,16 +354,7 @@ public class RifGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//Data:
-	//  val=INT|true="T"|false="F"; 
-	//
-	//      
-	//          
-	//           
-	//        
-	//        
-	//   / *     Bool returns ecore::EInt: 'T' {$=1} 
-	//        | false?='F' 
-	//        ;* /
+	//  val=INT|true="T"|false="F";
 	public DataElements getDataAccess() {
 		return (pData != null) ? pData : (pData = new DataElements());
 	}
@@ -388,12 +363,12 @@ public class RifGrammarAccess extends AbstractGrammarElementFinder {
 		return getDataAccess().getRule();
 	}
 
-	//Status returns ecore::EString:
-	//  "The" "execution" "lasted" INT "." INT "second."; 
-	//        
-	//   / *     Bool returns ecore::EInt: 'T' {$=1} 
+	/// *     Bool returns ecore::EInt: 'T' {$=1} 
 	//        | false?='F' 
 	//        ;* /
+	//
+	//Status returns ecore::EString:
+	//  "The" "execution" "lasted" INT "." INT "second.";
 	public StatusElements getStatusAccess() {
 		return (pStatus != null) ? pStatus : (pStatus = new StatusElements());
 	}
@@ -427,8 +402,9 @@ public class RifGrammarAccess extends AbstractGrammarElementFinder {
 	} 
 
 	//terminal STRING:
-	//  "\"" ("\\" ("b" | "t" | "n" | "f" | "r" | "\"" | "\'" | "\\") | !("\\" | "\""))* "\"" | "\'" ("\\" ("b" |
-	//  "t" | "n" | "f" | "r" | "\"" | "\'" | "\\") | !("\\" | "\'"))* "\'";
+	//  "\"" ("\\" ("b" | "t" | "n" | "f" | "r" | "\"" | "\'" | "\\") | !("\\" | "\""
+	//  ))* "\"" | "\'" ("\\" ("b" | "t" | "n" | "f" | "r" | "\"" | "\'" | "\\") | !(
+	//  "\\" | "\'"))* "\'";
 	public TerminalRule getSTRINGRule() {
 		return (tSTRING != null) ? tSTRING : (tSTRING = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "STRING"));
 	} 

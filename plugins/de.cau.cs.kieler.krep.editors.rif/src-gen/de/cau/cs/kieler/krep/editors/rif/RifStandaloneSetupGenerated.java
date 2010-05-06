@@ -1,3 +1,4 @@
+
 package de.cau.cs.kieler.krep.editors.rif;
 
 import org.eclipse.emf.ecore.EPackage;
@@ -10,11 +11,7 @@ import com.google.inject.Injector;
 /**
  * Generated from StandaloneSetup.xpt!
  */
-public class RifStandaloneSetup implements ISetup {
-
-	public static void doSetup() {
-		new RifStandaloneSetup().createInjectorAndDoEMFRegistration();
-	}
+public class RifStandaloneSetupGenerated implements ISetup {
 
 	public Injector createInjectorAndDoEMFRegistration() {
 		// register default ePackages

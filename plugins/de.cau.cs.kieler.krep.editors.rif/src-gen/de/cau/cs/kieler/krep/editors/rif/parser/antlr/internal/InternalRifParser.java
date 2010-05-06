@@ -21,6 +21,7 @@ import java.util.Stack;
 import java.util.List;
 import java.util.ArrayList;
 
+@SuppressWarnings("all")
 public class InternalRifParser extends AbstractInternalAntlrParser {
     public static final String[] tokenNames = new String[] {
         "<invalid>", "<EOR>", "<DOWN>", "<UP>", "RULE_INPUTS", "RULE_OUTPUTS", "RULE_LOCALS", "RULE_STRING", "RULE_INT", "RULE_WS", "RULE_COMMENT", "'@#'", "':'", "'bool'", "'int'", "'#step'", "'#outs'", "'#locs'", "'T'", "'F'", "'The'", "'execution'", "'lasted'", "'.'", "'second.'"
@@ -120,7 +121,7 @@ public class InternalRifParser extends AbstractInternalAntlrParser {
         EObject lv_tick_9_0 = null;
 
 
-         @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
+         EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
             // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:91:6: ( ( RULE_INPUTS ( (lv_inputs_1_0= ruledecl ) )* '@#' RULE_OUTPUTS ( (lv_outputs_4_0= ruledecl ) )* '@#' RULE_LOCALS ( (lv_local_7_0= ruledecl ) )* '@#' ( (lv_tick_9_0= ruleTick ) )+ ( ruleStatus )? ) )
@@ -461,7 +462,7 @@ public class InternalRifParser extends AbstractInternalAntlrParser {
         AntlrDatatypeRuleToken lv_type_2_0 = null;
 
 
-         @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
+         EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
             // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:234:6: ( ( ( (lv_name_0_0= RULE_STRING ) ) ':' ( (lv_type_2_0= ruleType ) ) ) )
@@ -724,7 +725,7 @@ public class InternalRifParser extends AbstractInternalAntlrParser {
         EObject lv_local_7_0 = null;
 
 
-         @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
+         EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
             // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:345:6: ( ( () '#step' ( (lv_nr_2_0= RULE_INT ) ) ( (lv_input_3_0= ruleData ) )* '#outs' ( (lv_output_5_0= ruleData ) )* '#locs' ( (lv_local_7_0= ruleData ) )* ) )
@@ -1022,7 +1023,7 @@ public class InternalRifParser extends AbstractInternalAntlrParser {
         Token lv_true_1_0=null;
         Token lv_false_2_0=null;
 
-         @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
+         EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
             // ../de.cau.cs.kieler.krep.editors.rif/src-gen/de/cau/cs/kieler/krep/editors/rif/parser/antlr/internal/InternalRif.g:487:6: ( ( ( (lv_val_0_0= RULE_INT ) ) | ( (lv_true_1_0= 'T' ) ) | ( (lv_false_2_0= 'F' ) ) ) )

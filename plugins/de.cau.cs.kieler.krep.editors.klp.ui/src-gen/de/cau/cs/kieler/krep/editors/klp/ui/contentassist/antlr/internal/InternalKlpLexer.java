@@ -10,6 +10,7 @@ import java.util.Stack;
 import java.util.List;
 import java.util.ArrayList;
 
+@SuppressWarnings("all")
 public class InternalKlpLexer extends Lexer {
     public static final int RULE_ID=4;
     public static final int RULE_ANY_OTHER=13;
@@ -990,10 +991,10 @@ public class InternalKlpLexer extends Lexer {
     public final void mRULE_INT() throws RecognitionException {
         try {
             int _type = RULE_INT;
-            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:2125:10: ( ( '+' | '-' )? ( RULE_DIGIT )+ )
-            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:2125:12: ( '+' | '-' )? ( RULE_DIGIT )+
+            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:2489:10: ( ( '+' | '-' )? ( RULE_DIGIT )+ )
+            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:2489:12: ( '+' | '-' )? ( RULE_DIGIT )+
             {
-            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:2125:12: ( '+' | '-' )?
+            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:2489:12: ( '+' | '-' )?
             int alt1=2;
             int LA1_0 = input.LA(1);
 
@@ -1020,7 +1021,7 @@ public class InternalKlpLexer extends Lexer {
 
             }
 
-            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:2125:23: ( RULE_DIGIT )+
+            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:2489:23: ( RULE_DIGIT )+
             int cnt2=0;
             loop2:
             do {
@@ -1034,7 +1035,7 @@ public class InternalKlpLexer extends Lexer {
 
                 switch (alt2) {
             	case 1 :
-            	    // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:2125:23: RULE_DIGIT
+            	    // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:2489:23: RULE_DIGIT
             	    {
             	    mRULE_DIGIT(); 
 
@@ -1064,8 +1065,8 @@ public class InternalKlpLexer extends Lexer {
     public final void mRULE_ID() throws RecognitionException {
         try {
             int _type = RULE_ID;
-            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:2127:9: ( ( RULE_LETTER | '_' ) ( RULE_LETTER | RULE_DIGIT | '_' )* )
-            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:2127:11: ( RULE_LETTER | '_' ) ( RULE_LETTER | RULE_DIGIT | '_' )*
+            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:2491:9: ( ( RULE_LETTER | '_' ) ( RULE_LETTER | RULE_DIGIT | '_' )* )
+            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:2491:11: ( RULE_LETTER | '_' ) ( RULE_LETTER | RULE_DIGIT | '_' )*
             {
             if ( (input.LA(1)>='A' && input.LA(1)<='Z')||input.LA(1)=='_'||(input.LA(1)>='a' && input.LA(1)<='z') ) {
                 input.consume();
@@ -1077,7 +1078,7 @@ public class InternalKlpLexer extends Lexer {
                 recover(mse);    throw mse;
             }
 
-            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:2127:29: ( RULE_LETTER | RULE_DIGIT | '_' )*
+            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:2491:29: ( RULE_LETTER | RULE_DIGIT | '_' )*
             loop3:
             do {
                 int alt3=2;
@@ -1125,8 +1126,8 @@ public class InternalKlpLexer extends Lexer {
     public final void mRULE_WS() throws RecognitionException {
         try {
             int _type = RULE_WS;
-            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:2129:9: ( ( '\\t' | ' ' | '\\r' | '\\n' ) )
-            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:2129:11: ( '\\t' | ' ' | '\\r' | '\\n' )
+            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:2493:9: ( ( '\\t' | ' ' | '\\r' | '\\n' ) )
+            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:2493:11: ( '\\t' | ' ' | '\\r' | '\\n' )
             {
             if ( (input.LA(1)>='\t' && input.LA(1)<='\n')||input.LA(1)=='\r'||input.LA(1)==' ' ) {
                 input.consume();
@@ -1152,11 +1153,11 @@ public class InternalKlpLexer extends Lexer {
     public final void mRULE_COMMENT() throws RecognitionException {
         try {
             int _type = RULE_COMMENT;
-            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:2131:14: ( '#' ( options {greedy=false; } : . )* '\\n' )
-            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:2131:16: '#' ( options {greedy=false; } : . )* '\\n'
+            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:2495:14: ( '#' ( options {greedy=false; } : . )* '\\n' )
+            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:2495:16: '#' ( options {greedy=false; } : . )* '\\n'
             {
             match('#'); 
-            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:2131:20: ( options {greedy=false; } : . )*
+            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:2495:20: ( options {greedy=false; } : . )*
             loop4:
             do {
                 int alt4=2;
@@ -1172,7 +1173,7 @@ public class InternalKlpLexer extends Lexer {
 
                 switch (alt4) {
             	case 1 :
-            	    // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:2131:48: .
+            	    // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:2495:48: .
             	    {
             	    matchAny(); 
 
@@ -1199,8 +1200,8 @@ public class InternalKlpLexer extends Lexer {
     public final void mRULE_DIGIT() throws RecognitionException {
         try {
             int _type = RULE_DIGIT;
-            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:2133:12: ( '0' .. '9' )
-            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:2133:14: '0' .. '9'
+            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:2497:12: ( '0' .. '9' )
+            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:2497:14: '0' .. '9'
             {
             matchRange('0','9'); 
 
@@ -1217,8 +1218,8 @@ public class InternalKlpLexer extends Lexer {
     public final void mRULE_LETTER() throws RecognitionException {
         try {
             int _type = RULE_LETTER;
-            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:2135:13: ( ( 'a' .. 'z' | 'A' .. 'Z' ) )
-            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:2135:15: ( 'a' .. 'z' | 'A' .. 'Z' )
+            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:2499:13: ( ( 'a' .. 'z' | 'A' .. 'Z' ) )
+            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:2499:15: ( 'a' .. 'z' | 'A' .. 'Z' )
             {
             if ( (input.LA(1)>='A' && input.LA(1)<='Z')||(input.LA(1)>='a' && input.LA(1)<='z') ) {
                 input.consume();
@@ -1244,10 +1245,10 @@ public class InternalKlpLexer extends Lexer {
     public final void mRULE_STRING() throws RecognitionException {
         try {
             int _type = RULE_STRING;
-            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:2137:13: ( ( '\"' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )* '\"' | '\\'' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\\'' ) ) )* '\\'' ) )
-            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:2137:15: ( '\"' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )* '\"' | '\\'' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\\'' ) ) )* '\\'' )
+            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:2501:13: ( ( '\"' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )* '\"' | '\\'' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\\'' ) ) )* '\\'' ) )
+            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:2501:15: ( '\"' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )* '\"' | '\\'' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\\'' ) ) )* '\\'' )
             {
-            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:2137:15: ( '\"' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )* '\"' | '\\'' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\\'' ) ) )* '\\'' )
+            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:2501:15: ( '\"' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )* '\"' | '\\'' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\\'' ) ) )* '\\'' )
             int alt7=2;
             int LA7_0 = input.LA(1);
 
@@ -1259,16 +1260,16 @@ public class InternalKlpLexer extends Lexer {
             }
             else {
                 NoViableAltException nvae =
-                    new NoViableAltException("2137:15: ( '\"' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )* '\"' | '\\'' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\\'' ) ) )* '\\'' )", 7, 0, input);
+                    new NoViableAltException("2501:15: ( '\"' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )* '\"' | '\\'' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\\'' ) ) )* '\\'' )", 7, 0, input);
 
                 throw nvae;
             }
             switch (alt7) {
                 case 1 :
-                    // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:2137:16: '\"' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )* '\"'
+                    // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:2501:16: '\"' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )* '\"'
                     {
                     match('\"'); 
-                    // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:2137:20: ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )*
+                    // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:2501:20: ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )*
                     loop5:
                     do {
                         int alt5=3;
@@ -1284,7 +1285,7 @@ public class InternalKlpLexer extends Lexer {
 
                         switch (alt5) {
                     	case 1 :
-                    	    // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:2137:21: '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' )
+                    	    // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:2501:21: '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' )
                     	    {
                     	    match('\\'); 
                     	    if ( input.LA(1)=='\"'||input.LA(1)=='\''||input.LA(1)=='\\'||input.LA(1)=='b'||input.LA(1)=='f'||input.LA(1)=='n'||input.LA(1)=='r'||input.LA(1)=='t' ) {
@@ -1301,7 +1302,7 @@ public class InternalKlpLexer extends Lexer {
                     	    }
                     	    break;
                     	case 2 :
-                    	    // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:2137:62: ~ ( ( '\\\\' | '\"' ) )
+                    	    // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:2501:62: ~ ( ( '\\\\' | '\"' ) )
                     	    {
                     	    if ( (input.LA(1)>='\u0000' && input.LA(1)<='!')||(input.LA(1)>='#' && input.LA(1)<='[')||(input.LA(1)>=']' && input.LA(1)<='\uFFFE') ) {
                     	        input.consume();
@@ -1327,10 +1328,10 @@ public class InternalKlpLexer extends Lexer {
                     }
                     break;
                 case 2 :
-                    // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:2137:82: '\\'' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\\'' ) ) )* '\\''
+                    // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:2501:82: '\\'' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\\'' ) ) )* '\\''
                     {
                     match('\''); 
-                    // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:2137:87: ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\\'' ) ) )*
+                    // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:2501:87: ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\\'' ) ) )*
                     loop6:
                     do {
                         int alt6=3;
@@ -1346,7 +1347,7 @@ public class InternalKlpLexer extends Lexer {
 
                         switch (alt6) {
                     	case 1 :
-                    	    // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:2137:88: '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' )
+                    	    // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:2501:88: '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' )
                     	    {
                     	    match('\\'); 
                     	    if ( input.LA(1)=='\"'||input.LA(1)=='\''||input.LA(1)=='\\'||input.LA(1)=='b'||input.LA(1)=='f'||input.LA(1)=='n'||input.LA(1)=='r'||input.LA(1)=='t' ) {
@@ -1363,7 +1364,7 @@ public class InternalKlpLexer extends Lexer {
                     	    }
                     	    break;
                     	case 2 :
-                    	    // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:2137:129: ~ ( ( '\\\\' | '\\'' ) )
+                    	    // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:2501:129: ~ ( ( '\\\\' | '\\'' ) )
                     	    {
                     	    if ( (input.LA(1)>='\u0000' && input.LA(1)<='&')||(input.LA(1)>='(' && input.LA(1)<='[')||(input.LA(1)>=']' && input.LA(1)<='\uFFFE') ) {
                     	        input.consume();
@@ -1405,12 +1406,12 @@ public class InternalKlpLexer extends Lexer {
     public final void mRULE_ML_COMMENT() throws RecognitionException {
         try {
             int _type = RULE_ML_COMMENT;
-            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:2139:17: ( '/*' ( options {greedy=false; } : . )* '*/' )
-            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:2139:19: '/*' ( options {greedy=false; } : . )* '*/'
+            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:2503:17: ( '/*' ( options {greedy=false; } : . )* '*/' )
+            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:2503:19: '/*' ( options {greedy=false; } : . )* '*/'
             {
             match("/*"); 
 
-            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:2139:24: ( options {greedy=false; } : . )*
+            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:2503:24: ( options {greedy=false; } : . )*
             loop8:
             do {
                 int alt8=2;
@@ -1435,7 +1436,7 @@ public class InternalKlpLexer extends Lexer {
 
                 switch (alt8) {
             	case 1 :
-            	    // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:2139:52: .
+            	    // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:2503:52: .
             	    {
             	    matchAny(); 
 
@@ -1463,12 +1464,12 @@ public class InternalKlpLexer extends Lexer {
     public final void mRULE_SL_COMMENT() throws RecognitionException {
         try {
             int _type = RULE_SL_COMMENT;
-            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:2141:17: ( '//' (~ ( ( '\\n' | '\\r' ) ) )* ( ( '\\r' )? '\\n' )? )
-            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:2141:19: '//' (~ ( ( '\\n' | '\\r' ) ) )* ( ( '\\r' )? '\\n' )?
+            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:2505:17: ( '//' (~ ( ( '\\n' | '\\r' ) ) )* ( ( '\\r' )? '\\n' )? )
+            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:2505:19: '//' (~ ( ( '\\n' | '\\r' ) ) )* ( ( '\\r' )? '\\n' )?
             {
             match("//"); 
 
-            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:2141:24: (~ ( ( '\\n' | '\\r' ) ) )*
+            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:2505:24: (~ ( ( '\\n' | '\\r' ) ) )*
             loop9:
             do {
                 int alt9=2;
@@ -1481,7 +1482,7 @@ public class InternalKlpLexer extends Lexer {
 
                 switch (alt9) {
             	case 1 :
-            	    // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:2141:24: ~ ( ( '\\n' | '\\r' ) )
+            	    // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:2505:24: ~ ( ( '\\n' | '\\r' ) )
             	    {
             	    if ( (input.LA(1)>='\u0000' && input.LA(1)<='\t')||(input.LA(1)>='\u000B' && input.LA(1)<='\f')||(input.LA(1)>='\u000E' && input.LA(1)<='\uFFFE') ) {
             	        input.consume();
@@ -1502,7 +1503,7 @@ public class InternalKlpLexer extends Lexer {
                 }
             } while (true);
 
-            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:2141:40: ( ( '\\r' )? '\\n' )?
+            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:2505:40: ( ( '\\r' )? '\\n' )?
             int alt11=2;
             int LA11_0 = input.LA(1);
 
@@ -1511,9 +1512,9 @@ public class InternalKlpLexer extends Lexer {
             }
             switch (alt11) {
                 case 1 :
-                    // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:2141:41: ( '\\r' )? '\\n'
+                    // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:2505:41: ( '\\r' )? '\\n'
                     {
-                    // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:2141:41: ( '\\r' )?
+                    // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:2505:41: ( '\\r' )?
                     int alt10=2;
                     int LA10_0 = input.LA(1);
 
@@ -1522,7 +1523,7 @@ public class InternalKlpLexer extends Lexer {
                     }
                     switch (alt10) {
                         case 1 :
-                            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:2141:41: '\\r'
+                            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:2505:41: '\\r'
                             {
                             match('\r'); 
 
@@ -1552,8 +1553,8 @@ public class InternalKlpLexer extends Lexer {
     public final void mRULE_ANY_OTHER() throws RecognitionException {
         try {
             int _type = RULE_ANY_OTHER;
-            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:2143:16: ( . )
-            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:2143:18: .
+            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:2507:16: ( . )
+            // ../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g:2507:18: .
             {
             matchAny(); 
 

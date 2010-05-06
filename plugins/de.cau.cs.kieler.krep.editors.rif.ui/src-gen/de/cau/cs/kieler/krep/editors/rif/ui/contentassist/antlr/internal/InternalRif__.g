@@ -22,25 +22,25 @@ T22 : 'second.' ;
 T23 : 'T' ;
 T24 : 'F' ;
 
-// $ANTLR src "../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/ui/contentassist/antlr/internal/InternalRif.g" 1106
+// $ANTLR src "../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/ui/contentassist/antlr/internal/InternalRif.g" 1426
 RULE_INT : '-'? ('0'..'9')+;
 
-// $ANTLR src "../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/ui/contentassist/antlr/internal/InternalRif.g" 1108
+// $ANTLR src "../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/ui/contentassist/antlr/internal/InternalRif.g" 1428
 RULE_INPUTS : '#@inputs';
 
-// $ANTLR src "../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/ui/contentassist/antlr/internal/InternalRif.g" 1110
+// $ANTLR src "../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/ui/contentassist/antlr/internal/InternalRif.g" 1430
 RULE_OUTPUTS : '#@outputs';
 
-// $ANTLR src "../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/ui/contentassist/antlr/internal/InternalRif.g" 1112
+// $ANTLR src "../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/ui/contentassist/antlr/internal/InternalRif.g" 1432
 RULE_LOCALS : '#@locals';
 
-// $ANTLR src "../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/ui/contentassist/antlr/internal/InternalRif.g" 1114
+// $ANTLR src "../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/ui/contentassist/antlr/internal/InternalRif.g" 1434
 RULE_STRING : ('"' ('\\' ('b'|'t'|'n'|'f'|'r'|'"'|'\''|'\\')|~(('\\'|'"')))* '"'|'\'' ('\\' ('b'|'t'|'n'|'f'|'r'|'"'|'\''|'\\')|~(('\\'|'\'')))* '\'');
 
-// $ANTLR src "../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/ui/contentassist/antlr/internal/InternalRif.g" 1116
+// $ANTLR src "../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/ui/contentassist/antlr/internal/InternalRif.g" 1436
 RULE_WS : ('\t'|' '|'\r'|'\n');
 
-// $ANTLR src "../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/ui/contentassist/antlr/internal/InternalRif.g" 1118
+// $ANTLR src "../de.cau.cs.kieler.krep.editors.rif.ui/src-gen/de/cau/cs/kieler/krep/editors/rif/ui/contentassist/antlr/internal/InternalRif.g" 1438
 RULE_COMMENT : '# ' ( options {greedy=false;} : . )*'\n';
 
 

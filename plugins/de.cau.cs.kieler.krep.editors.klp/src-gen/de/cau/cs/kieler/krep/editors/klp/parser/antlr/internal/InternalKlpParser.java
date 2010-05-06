@@ -22,6 +22,7 @@ import java.util.Stack;
 import java.util.List;
 import java.util.ArrayList;
 
+@SuppressWarnings("all")
 public class InternalKlpParser extends AbstractInternalAntlrParser {
     public static final String[] tokenNames = new String[] {
         "<invalid>", "<EOR>", "<DOWN>", "<UP>", "RULE_ID", "RULE_INT", "RULE_DIGIT", "RULE_LETTER", "RULE_WS", "RULE_COMMENT", "RULE_STRING", "RULE_ML_COMMENT", "RULE_SL_COMMENT", "RULE_ANY_OTHER", "':'", "'SETCLK'", "'SETPC'", "'PRIO'", "'DONE'", "'JMP'", "'pre'", "'('", "')'", "'INPUT'", "'OUTPUT'", "'LOCAL'", "'ADD'", "'IADD'", "'SUB'", "'MUL'", "'DIV'", "'AND'", "'OR'", "'XOR'", "'LT'", "'LE'", "'EQ'", "'GE'", "'GT'", "'NEQ'", "'ISUB'", "'IMUL'", "'IDIV'", "'IAND'", "'IOR'", "'IXOR'", "'ILT'", "'ILE'", "'IEQ'", "'IGE'", "'IGT'", "'INEQ'", "'JT'", "'JF'", "'JZ'", "'JNZ'", "'CVMOV'", "'VCMOV'", "'VVMOV'", "'CCMOV'", "'IVMOV'", "'ICMOV'"
@@ -118,7 +119,7 @@ public class InternalKlpParser extends AbstractInternalAntlrParser {
         EObject lv_instructions_0_0 = null;
 
 
-         @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
+         EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
             // ../de.cau.cs.kieler.krep.editors.klp/src-gen/de/cau/cs/kieler/krep/editors/klp/parser/antlr/internal/InternalKlp.g:92:6: ( ( (lv_instructions_0_0= ruleLine ) )* )
@@ -241,7 +242,7 @@ public class InternalKlpParser extends AbstractInternalAntlrParser {
         EObject lv_instruction_2_0 = null;
 
 
-         @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
+         EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
             // ../de.cau.cs.kieler.krep.editors.klp/src-gen/de/cau/cs/kieler/krep/editors/klp/parser/antlr/internal/InternalKlp.g:139:6: ( ( ( ( (lv_labels_0_0= RULE_ID ) ) ':' )* ( (lv_instruction_2_0= ruleInstruction ) ) ) )
@@ -428,7 +429,7 @@ public class InternalKlpParser extends AbstractInternalAntlrParser {
         EObject this_Move_8 = null;
 
 
-         @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
+         EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
             // ../de.cau.cs.kieler.krep.editors.klp/src-gen/de/cau/cs/kieler/krep/editors/klp/parser/antlr/internal/InternalKlp.g:214:6: ( (this_Decl_0= ruleDecl | this_SetClk_1= ruleSetClk | this_SetPC_2= ruleSetPC | this_Prio_3= rulePrio | this_Done_4= ruleDone | this_Binop_5= ruleBinop | this_Jmp_6= ruleJmp | this_CJmp_7= ruleCJmp | this_Move_8= ruleMove ) )
@@ -745,7 +746,7 @@ public class InternalKlpParser extends AbstractInternalAntlrParser {
         EObject lv_reg_1_0 = null;
 
 
-         @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
+         EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
             // ../de.cau.cs.kieler.krep.editors.klp/src-gen/de/cau/cs/kieler/krep/editors/klp/parser/antlr/internal/InternalKlp.g:326:6: ( ( ( (lv_scope_0_0= ruleScope ) ) ( (lv_reg_1_0= ruleReg ) ) ) )
@@ -893,7 +894,7 @@ public class InternalKlpParser extends AbstractInternalAntlrParser {
         EObject lv_clk_2_0 = null;
 
 
-         @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
+         EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
             // ../de.cau.cs.kieler.krep.editors.klp/src-gen/de/cau/cs/kieler/krep/editors/klp/parser/antlr/internal/InternalKlp.g:397:6: ( ( 'SETCLK' ( (lv_reg_1_0= ruleReg ) ) ( (lv_clk_2_0= ruleReg ) ) ) )
@@ -1045,7 +1046,7 @@ public class InternalKlpParser extends AbstractInternalAntlrParser {
         EObject lv_label_2_0 = null;
 
 
-         @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
+         EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
             // ../de.cau.cs.kieler.krep.editors.klp/src-gen/de/cau/cs/kieler/krep/editors/klp/parser/antlr/internal/InternalKlp.g:472:6: ( ( 'SETPC' ( (lv_reg_1_0= ruleReg ) ) ( (lv_label_2_0= ruleLabel ) ) ) )
@@ -1196,7 +1197,7 @@ public class InternalKlpParser extends AbstractInternalAntlrParser {
         EObject lv_reg_1_0 = null;
 
 
-         @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
+         EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
             // ../de.cau.cs.kieler.krep.editors.klp/src-gen/de/cau/cs/kieler/krep/editors/klp/parser/antlr/internal/InternalKlp.g:547:6: ( ( 'PRIO' ( (lv_reg_1_0= ruleReg ) )? ( (lv_prio_2_0= RULE_INT ) ) ) )
@@ -1354,7 +1355,7 @@ public class InternalKlpParser extends AbstractInternalAntlrParser {
         EObject lv_pc_1_0 = null;
 
 
-         @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
+         EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
             // ../de.cau.cs.kieler.krep.editors.klp/src-gen/de/cau/cs/kieler/krep/editors/klp/parser/antlr/internal/InternalKlp.g:622:6: ( ( 'DONE' ( (lv_pc_1_0= ruleLabel ) ) ) )
@@ -1475,7 +1476,7 @@ public class InternalKlpParser extends AbstractInternalAntlrParser {
         EObject lv_arg2_3_0 = null;
 
 
-         @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
+         EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
             // ../de.cau.cs.kieler.krep.editors.klp/src-gen/de/cau/cs/kieler/krep/editors/klp/parser/antlr/internal/InternalKlp.g:673:6: ( ( ( (lv_op_0_0= ruleOperator ) ) ( (lv_to_1_0= ruleReg ) ) ( (lv_arg1_2_0= ruleRead ) ) ( ( (lv_arg2_3_0= ruleRead ) ) | ( (lv_val_4_0= RULE_INT ) ) ) ) )
@@ -1758,7 +1759,7 @@ public class InternalKlpParser extends AbstractInternalAntlrParser {
         EObject lv_label_1_0 = null;
 
 
-         @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
+         EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
             // ../de.cau.cs.kieler.krep.editors.klp/src-gen/de/cau/cs/kieler/krep/editors/klp/parser/antlr/internal/InternalKlp.g:817:6: ( ( 'JMP' ( (lv_label_1_0= ruleLabel ) ) ) )
@@ -1876,7 +1877,7 @@ public class InternalKlpParser extends AbstractInternalAntlrParser {
         EObject lv_label_2_0 = null;
 
 
-         @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
+         EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
             // ../de.cau.cs.kieler.krep.editors.klp/src-gen/de/cau/cs/kieler/krep/editors/klp/parser/antlr/internal/InternalKlp.g:868:6: ( ( ( (lv_cond_0_0= ruleJumpKind ) ) ( (lv_reg_1_0= ruleRead ) ) ( (lv_label_2_0= ruleLabel ) ) ) )
@@ -2063,7 +2064,7 @@ public class InternalKlpParser extends AbstractInternalAntlrParser {
         EObject lv_from_2_0 = null;
 
 
-         @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
+         EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
             // ../de.cau.cs.kieler.krep.editors.klp/src-gen/de/cau/cs/kieler/krep/editors/klp/parser/antlr/internal/InternalKlp.g:963:6: ( ( ( (lv_type_0_0= ruleMoveKind ) ) ( (lv_to_1_0= ruleReg ) ) ( ( (lv_from_2_0= ruleRead ) ) | ( (lv_val_3_0= RULE_INT ) ) ) ) )
@@ -2309,7 +2310,7 @@ public class InternalKlpParser extends AbstractInternalAntlrParser {
 
         Token lv_name_0_0=null;
 
-         @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
+         EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
             // ../de.cau.cs.kieler.krep.editors.klp/src-gen/de/cau/cs/kieler/krep/editors/klp/parser/antlr/internal/InternalKlp.g:1083:6: ( ( (lv_name_0_0= RULE_ID ) ) )
@@ -2409,7 +2410,7 @@ public class InternalKlpParser extends AbstractInternalAntlrParser {
 
         Token lv_name_0_0=null;
 
-         @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
+         EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
             // ../de.cau.cs.kieler.krep.editors.klp/src-gen/de/cau/cs/kieler/krep/editors/klp/parser/antlr/internal/InternalKlp.g:1130:6: ( ( (lv_name_0_0= RULE_ID ) ) )
@@ -2513,7 +2514,7 @@ public class InternalKlpParser extends AbstractInternalAntlrParser {
         EObject lv_reg_4_0 = null;
 
 
-         @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
+         EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
             // ../de.cau.cs.kieler.krep.editors.klp/src-gen/de/cau/cs/kieler/krep/editors/klp/parser/antlr/internal/InternalKlp.g:1177:6: ( ( ( ( (lv_pre_0_0= 'pre' ) ) '(' ( (lv_reg_2_0= ruleReg ) ) ')' ) | ( (lv_reg_4_0= ruleReg ) ) ) )

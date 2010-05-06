@@ -56,34 +56,34 @@ T59 : '(' ;
 T60 : ')' ;
 T61 : 'pre' ;
 
-// $ANTLR src "../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g" 2125
+// $ANTLR src "../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g" 2489
 RULE_INT : ('+'|'-')? RULE_DIGIT+;
 
-// $ANTLR src "../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g" 2127
+// $ANTLR src "../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g" 2491
 RULE_ID : (RULE_LETTER|'_') (RULE_LETTER|RULE_DIGIT|'_')*;
 
-// $ANTLR src "../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g" 2129
+// $ANTLR src "../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g" 2493
 RULE_WS : ('\t'|' '|'\r'|'\n');
 
-// $ANTLR src "../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g" 2131
+// $ANTLR src "../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g" 2495
 RULE_COMMENT : '#' ( options {greedy=false;} : . )*'\n';
 
-// $ANTLR src "../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g" 2133
+// $ANTLR src "../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g" 2497
 RULE_DIGIT : '0'..'9';
 
-// $ANTLR src "../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g" 2135
+// $ANTLR src "../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g" 2499
 RULE_LETTER : ('a'..'z'|'A'..'Z');
 
-// $ANTLR src "../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g" 2137
+// $ANTLR src "../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g" 2501
 RULE_STRING : ('"' ('\\' ('b'|'t'|'n'|'f'|'r'|'"'|'\''|'\\')|~(('\\'|'"')))* '"'|'\'' ('\\' ('b'|'t'|'n'|'f'|'r'|'"'|'\''|'\\')|~(('\\'|'\'')))* '\'');
 
-// $ANTLR src "../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g" 2139
+// $ANTLR src "../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g" 2503
 RULE_ML_COMMENT : '/*' ( options {greedy=false;} : . )*'*/';
 
-// $ANTLR src "../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g" 2141
+// $ANTLR src "../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g" 2505
 RULE_SL_COMMENT : '//' ~(('\n'|'\r'))* ('\r'? '\n')?;
 
-// $ANTLR src "../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g" 2143
+// $ANTLR src "../de.cau.cs.kieler.krep.editors.klp.ui/src-gen/de/cau/cs/kieler/krep/editors/klp/ui/contentassist/antlr/internal/InternalKlp.g" 2507
 RULE_ANY_OTHER : .;
 
 

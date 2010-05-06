@@ -1,3 +1,4 @@
+
 package de.cau.cs.kieler.krep.editors.klp;
 
 import org.eclipse.emf.ecore.EPackage;
@@ -10,11 +11,7 @@ import com.google.inject.Injector;
 /**
  * Generated from StandaloneSetup.xpt!
  */
-public class KlpStandaloneSetup implements ISetup {
-
-	public static void doSetup() {
-		new KlpStandaloneSetup().createInjectorAndDoEMFRegistration();
-	}
+public class KlpStandaloneSetupGenerated implements ISetup {
 
 	public Injector createInjectorAndDoEMFRegistration() {
 		org.eclipse.xtext.common.TerminalsStandaloneSetup.doSetup();

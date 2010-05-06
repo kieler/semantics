@@ -475,28 +475,10 @@ public class KlpGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cRegRegParserRuleCall_1_0 = (RuleCall)cRegAssignment_1.eContents().get(0);
 		
 		//Read returns klp::Read:
-		//  pre?="pre" "(" reg=Reg ")"|reg=Reg; 
-		//      
-		//     
-		//            
-		//         
-		//      
-		// 
-		/// *------------------------------------------------------------------
-		// * LEXER RULES
-		// *------------------------------------------------------------------* /
+		//  pre?="pre" "(" reg=Reg ")"|reg=Reg;
 		public ParserRule getRule() { return rule; }
 
-		//pre?="pre" "(" reg=Reg ")"|reg=Reg 
-		//      
-		//     
-		//            
-		//         
-		//      
-		// 
-		/// *------------------------------------------------------------------
-		// * LEXER RULES
-		// *------------------------------------------------------------------* /
+		//pre?="pre" "(" reg=Reg ")"|reg=Reg
 		public Alternatives getAlternatives() { return cAlternatives; }
 
 		//pre?="pre" "(" reg=Reg ")"
@@ -621,16 +603,18 @@ public class KlpGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cIneqINEQKeyword_25_0 = (Keyword)cIneqEnumLiteralDeclaration_25.eContents().get(0);
 		
 		//enum Operator returns klp::Operator:
-		//  add="ADD" | iadd="IADD" | sub="SUB" | mul="MUL" | div="DIV" | and="AND" | or="OR" | xor="XOR" |
-		//  lt="LT" | le="LE" | eq="EQ" | ge="GE" | gt="GT" | neq="NEQ" | isub="ISUB" | imul="IMUL" | idiv=
-		//  "IDIV" | iand="IAND" | ior="IOR" | ixor="IXOR" | ilt="ILT" | ile="ILE" | ieq="IEQ" | ige="IGE"
-		//  | igt="IGT" | ineq="INEQ";
+		//  add="ADD" | iadd="IADD" | sub="SUB" | mul="MUL" | div="DIV" | and="AND" | or=
+		//  "OR" | xor="XOR" | lt="LT" | le="LE" | eq="EQ" | ge="GE" | gt="GT" | neq=
+		//  "NEQ" | isub="ISUB" | imul="IMUL" | idiv="IDIV" | iand="IAND" | ior="IOR" |
+		//  ixor="IXOR" | ilt="ILT" | ile="ILE" | ieq="IEQ" | ige="IGE" | igt="IGT" |
+		//  ineq="INEQ";
 		public EnumRule getRule() { return rule; }
 
-		//add="ADD" | iadd="IADD" | sub="SUB" | mul="MUL" | div="DIV" | and="AND" | or="OR" | xor="XOR" |
-		//lt="LT" | le="LE" | eq="EQ" | ge="GE" | gt="GT" | neq="NEQ" | isub="ISUB" | imul="IMUL" | idiv=
-		//"IDIV" | iand="IAND" | ior="IOR" | ixor="IXOR" | ilt="ILT" | ile="ILE" | ieq="IEQ" | ige="IGE"
-		//| igt="IGT" | ineq="INEQ"
+		//add="ADD" | iadd="IADD" | sub="SUB" | mul="MUL" | div="DIV" | and="AND" | or=
+		//"OR" | xor="XOR" | lt="LT" | le="LE" | eq="EQ" | ge="GE" | gt="GT" | neq="NEQ"
+		//| isub="ISUB" | imul="IMUL" | idiv="IDIV" | iand="IAND" | ior="IOR" | ixor=
+		//"IXOR" | ilt="ILT" | ile="ILE" | ieq="IEQ" | ige="IGE" | igt="IGT" | ineq=
+		//"INEQ"
 		public Alternatives getAlternatives() { return cAlternatives; }
 
 		//add="ADD"
@@ -851,12 +835,12 @@ public class KlpGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cIcmovICMOVKeyword_5_0 = (Keyword)cIcmovEnumLiteralDeclaration_5.eContents().get(0);
 		
 		//enum MoveKind returns klp::MoveKind:
-		//  cmov="CVMOV" | vcmov="VCMOV" | vvmov="VVMOV" | ccmov="CCMOV" | ivmov="IVMOV" | icmov=
-		//  "ICMOV";
+		//  cmov="CVMOV" | vcmov="VCMOV" | vvmov="VVMOV" | ccmov="CCMOV" | ivmov="IVMOV"
+		//  | icmov="ICMOV";
 		public EnumRule getRule() { return rule; }
 
-		//cmov="CVMOV" | vcmov="VCMOV" | vvmov="VVMOV" | ccmov="CCMOV" | ivmov="IVMOV" | icmov=
-		//"ICMOV"
+		//cmov="CVMOV" | vcmov="VCMOV" | vvmov="VVMOV" | ccmov="CCMOV" | ivmov="IVMOV" |
+		//icmov="ICMOV"
 		public Alternatives getAlternatives() { return cAlternatives; }
 
 		//cmov="CVMOV"
@@ -1094,10 +1078,11 @@ public class KlpGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//enum Operator returns klp::Operator:
-	//  add="ADD" | iadd="IADD" | sub="SUB" | mul="MUL" | div="DIV" | and="AND" | or="OR" | xor="XOR" |
-	//  lt="LT" | le="LE" | eq="EQ" | ge="GE" | gt="GT" | neq="NEQ" | isub="ISUB" | imul="IMUL" | idiv=
-	//  "IDIV" | iand="IAND" | ior="IOR" | ixor="IXOR" | ilt="ILT" | ile="ILE" | ieq="IEQ" | ige="IGE"
-	//  | igt="IGT" | ineq="INEQ";
+	//  add="ADD" | iadd="IADD" | sub="SUB" | mul="MUL" | div="DIV" | and="AND" | or=
+	//  "OR" | xor="XOR" | lt="LT" | le="LE" | eq="EQ" | ge="GE" | gt="GT" | neq=
+	//  "NEQ" | isub="ISUB" | imul="IMUL" | idiv="IDIV" | iand="IAND" | ior="IOR" |
+	//  ixor="IXOR" | ilt="ILT" | ile="ILE" | ieq="IEQ" | ige="IGE" | igt="IGT" |
+	//  ineq="INEQ";
 	public OperatorElements getOperatorAccess() {
 		return (unknownRuleOperator != null) ? unknownRuleOperator : (unknownRuleOperator = new OperatorElements());
 	}
@@ -1117,8 +1102,8 @@ public class KlpGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//enum MoveKind returns klp::MoveKind:
-	//  cmov="CVMOV" | vcmov="VCMOV" | vvmov="VVMOV" | ccmov="CCMOV" | ivmov="IVMOV" | icmov=
-	//  "ICMOV";
+	//  cmov="CVMOV" | vcmov="VCMOV" | vvmov="VVMOV" | ccmov="CCMOV" | ivmov="IVMOV"
+	//  | icmov="ICMOV";
 	public MoveKindElements getMoveKindAccess() {
 		return (unknownRuleMoveKind != null) ? unknownRuleMoveKind : (unknownRuleMoveKind = new MoveKindElements());
 	}
@@ -1128,16 +1113,7 @@ public class KlpGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//Read returns klp::Read:
-	//  pre?="pre" "(" reg=Reg ")"|reg=Reg; 
-	//      
-	//     
-	//            
-	//         
-	//      
-	// 
-	/// *------------------------------------------------------------------
-	// * LEXER RULES
-	// *------------------------------------------------------------------* /
+	//  pre?="pre" "(" reg=Reg ")"|reg=Reg;
 	public ReadElements getReadAccess() {
 		return (pRead != null) ? pRead : (pRead = new ReadElements());
 	}
@@ -1146,12 +1122,12 @@ public class KlpGrammarAccess extends AbstractGrammarElementFinder {
 		return getReadAccess().getRule();
 	}
 
-	//terminal INT returns ecore::EInt:
-	//  ("+" | "-")? DIGIT+; 
-	// 
 	/// *------------------------------------------------------------------
 	// * LEXER RULES
 	// *------------------------------------------------------------------* /
+	//
+	//terminal INT returns ecore::EInt:
+	//  ("+" | "-")? DIGIT+;
 	public TerminalRule getINTRule() {
 		return (tINT != null) ? tINT : (tINT = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "INT"));
 	} 
@@ -1187,8 +1163,9 @@ public class KlpGrammarAccess extends AbstractGrammarElementFinder {
 	} 
 
 	//terminal STRING:
-	//  "\"" ("\\" ("b" | "t" | "n" | "f" | "r" | "\"" | "\'" | "\\") | !("\\" | "\""))* "\"" | "\'" ("\\" ("b" |
-	//  "t" | "n" | "f" | "r" | "\"" | "\'" | "\\") | !("\\" | "\'"))* "\'";
+	//  "\"" ("\\" ("b" | "t" | "n" | "f" | "r" | "\"" | "\'" | "\\") | !("\\" | "\""
+	//  ))* "\"" | "\'" ("\\" ("b" | "t" | "n" | "f" | "r" | "\"" | "\'" | "\\") | !(
+	//  "\\" | "\'"))* "\'";
 	public TerminalRule getSTRINGRule() {
 		return gaTerminals.getSTRINGRule();
 	} 

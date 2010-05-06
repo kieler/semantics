@@ -10,6 +10,7 @@ import java.util.Stack;
 import java.util.List;
 import java.util.ArrayList;
 
+@SuppressWarnings("all")
 public class InternalRifLexer extends Lexer {
     public static final int RULE_OUTPUTS=5;
     public static final int RULE_INPUTS=4;
