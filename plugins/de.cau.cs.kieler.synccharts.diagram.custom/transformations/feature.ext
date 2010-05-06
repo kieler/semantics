@@ -601,7 +601,7 @@ Void tryPastingRegionOnTransition(Transition target):
  (region != null ?
   pasteRegionOnTransition(target, region, target.sourceState)
  :
-  null
+  tryPastingStatesOnTransition(target)
  )
 ;
 
@@ -610,6 +610,40 @@ Void pasteRegionOnTransition(Transition target, Region region, State transKeeper
  let dummyState = new State:
  dummyState.regions.add(region) ->
  pasteStateOnTransition(target, dummyState, transKeeper)
+;
+
+// try pasting states on transition by encapsulating in region and state
+Void tryPastingStatesOnTransition(Transition target):
+ let states = getStatesFromClipboard():
+ (states != null ?
+  pasteStatesOnTransition(target, states, target.sourceState)
+ :
+  tryPastingRegionsOnTransition(target)
+ )
+;
+
+// encapsulate states in region and paste on transition
+Void pasteStatesOnTransition(Transition target, List[State] states, State transKeeper):
+ let region = new Region:
+ region.innerStates.addAll(states) ->
+ pasteRegionOnTransition(target, region, transKeeper)
+;
+
+// try pasting regions on transition by encapsulating in state
+Void tryPastingRegionsOnTransition(Transition target):
+ let regions = getRegionsFromClipboard():
+ (regions != null ?
+  pasteRegionsOnTransition(target, regions, target.sourceState)
+ :
+  null
+ )
+;
+
+// encapsulate regions in state and paste on transition
+Void pasteRegionsOnTransition(Transition target, List[Region] regions, State transKeeper):
+ let state = new State:
+ state.regions.addAll(regions) ->
+ pasteStateOnTransition(target, state, transKeeper)
 ;
 
 /////////////////////////////////////////
@@ -690,6 +724,26 @@ Void tryPastingRegionOntoStateTransition(State state, Transition trans):
  let region = getRegionFromClipboard():
  (region != null ?
   pasteRegionOnTransition(trans, region, state)
+ :
+  tryPastingStatesOntoStateTransition(state, trans)
+ )
+;
+
+// insert states into a transition by encapsulating
+Void tryPastingStatesOntoStateTransition(State state, Transition trans):
+ let states = getStatesFromClipboard():
+ (states != null ?
+  pasteStatesOnTransition(trans, states, state)
+ :
+  tryPastingRegionsOntoStateTransition(state, trans)
+ )
+;
+
+// insert regions into a transition by encapsulating
+Void tryPastingRegionsOntoStateTransition(State state, Transition trans):
+ let regions = getRegionsFromClipboard():
+ (regions != null ?
+  pasteRegionsOnTransition(trans, regions, state)
  :
   null
  )
