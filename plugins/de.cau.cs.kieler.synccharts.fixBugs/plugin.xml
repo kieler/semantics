@@ -38,6 +38,9 @@
                <transformationCommand
                      transformationId="de.cau.cs.kieler.synccharts.fixBugs.fixID">
                </transformationCommand>
+               <transformationCommand
+                     transformationId="de.cau.cs.kieler.synccharts.fixBugs.fixWhiteSpaces">
+               </transformationCommand>
             </menuContribution>
             <menuContribution
                   locationURI="popup:org.eclipse.gmf.runtime.diagram.ui.DiagramEditorContextMenu?after=addGroup">
@@ -55,6 +58,9 @@
                </transformationCommand>
                <transformationCommand
                      transformationId="de.cau.cs.kieler.synccharts.fixBugs.fixID">
+               </transformationCommand>
+               <transformationCommand
+                     transformationId="de.cau.cs.kieler.synccharts.fixBugs.fixWhiteSpaces">
                </transformationCommand>
             </menuContribution>
          </menus>
@@ -83,6 +89,11 @@
                   name="Fix IDs"
                   transformation="fixIDs"
                   transformationId="de.cau.cs.kieler.synccharts.fixBugs.fixID">
+            </transformation>
+            <transformation
+                  name="Fix Whitespaces"
+                  transformation="fixWhiteSpaces"
+                  transformationId="de.cau.cs.kieler.synccharts.fixBugs.fixWhiteSpaces">
             </transformation>
          </transformations>
       </configuration>

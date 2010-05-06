@@ -82,3 +82,20 @@ Void fixIDs(State state):
  state.setId(generateRandomId()) ->
  state.regions.fixIDs()
 ;
+
+Void fixWhiteSpaces(Region region):
+ region.innerStates.fixWhiteSpaces()
+;
+
+Void fixWhiteSpaces(State state):
+ state.outgoingTransitions.fixWhiteSpaces() ->
+ state.entryActions.fixWhiteSpaces() ->
+ state.exitActions.fixWhiteSpaces() ->
+ state.suspensionTrigger.fixWhiteSpaces() ->
+ state.innerActions.fixWhiteSpaces() ->
+ state.regions.fixWhiteSpaces()
+;
+
+Void fixWhiteSpaces(Action action):
+ action.triggersAndEffects.replaceAll(" " , "")
+;
