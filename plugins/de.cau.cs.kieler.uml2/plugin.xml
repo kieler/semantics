@@ -109,7 +109,7 @@
    <extension
          point="de.cau.cs.kieler.ksbase.configurations">
       <configuration
-            TransformationFile="src/features.ext"
+            TransformationFile="src/activity.ext"
             checkVisibility="true"
             contextId="org.eclipse.uml2.diagram.activity.ui.diagramContext"
             editorId="org.eclipse.uml2.diagram.activity.part.UMLDiagramEditorID"
@@ -165,7 +165,7 @@
        </menus>
       </configuration>
       <configuration
-            TransformationFile="src/features.ext"
+            TransformationFile="src/statem.ext"
             checkVisibility="true"
             contextId="org.eclipse.uml2.diagram.statemachine.ui.diagramContext"
             editorId="org.eclipse.uml2.diagram.statemachine.part.UMLDiagramEditorID"
@@ -187,7 +187,7 @@
          </menus>
       </configuration>
       <configuration
-            TransformationFile="usecase.ext"
+            TransformationFile="src/usecase.ext"
             contextId="org.eclipse.papyrus.diagram.clazz.ui.diagramContext"
             editorId="org.eclipse.papyrus.diagram.clazz.part.UMLDiagramEditorID"
             packageName="org.eclipse.uml2.uml.UMLPackage">
