@@ -1,3 +1,4 @@
+
 package de.cau.cs.kieler.synccharts.interfacedeclparser;
 
 import org.eclipse.emf.ecore.EPackage;
@@ -10,11 +11,7 @@ import com.google.inject.Injector;
 /**
  * Generated from StandaloneSetup.xpt!
  */
-public class InterfaceDeclStandaloneSetup implements ISetup {
-
-	public static void doSetup() {
-		new InterfaceDeclStandaloneSetup().createInjectorAndDoEMFRegistration();
-	}
+public class InterfaceDeclStandaloneSetupGenerated implements ISetup {
 
 	public Injector createInjectorAndDoEMFRegistration() {
 		org.eclipse.xtext.common.TerminalsStandaloneSetup.doSetup();

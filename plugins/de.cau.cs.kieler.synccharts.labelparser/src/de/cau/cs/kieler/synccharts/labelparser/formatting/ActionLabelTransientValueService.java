@@ -96,4 +96,10 @@ public class ActionLabelTransientValueService implements
             return false;
     }
 
+	@Override
+	public boolean isCheckElementsIndividually(EObject owner,
+			EStructuralFeature feature) {
+		return false;
+	}
+
 }
