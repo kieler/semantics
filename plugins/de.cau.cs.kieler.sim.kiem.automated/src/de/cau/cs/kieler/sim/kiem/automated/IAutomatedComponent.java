@@ -31,6 +31,10 @@ public interface IAutomatedComponent {
     String MODEL_FILE = "Model file";
     /** Identifier for the iteration. */
     String ITERATION = "Iteration";
+    /** Identifier for any file type support. */
+    String ANY_TYPE = "*.*";
+    /** Identifier for any file type support. */
+    String[] ANY_TYPE_ARRAY = { ANY_TYPE };
 
     /**
      * Give the component information. This at least contains the following
@@ -56,6 +60,8 @@ public interface IAutomatedComponent {
      * However it will still be part of the execution. Thus it isn't necessary
      * for components to return something here if another component in the
      * schedule returns a list of extensions.
+     * 
+     * Example: types = {"kixs", "strl}; types = IAutomatedComponent.ANY_TYPE;
      * 
      * @return the list of supported model file extensions
      */

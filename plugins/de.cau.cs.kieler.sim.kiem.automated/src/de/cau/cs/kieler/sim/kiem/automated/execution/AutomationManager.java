@@ -317,7 +317,8 @@ public final class AutomationManager implements StatusListener {
 
         for (IPath model : modelFiles) {
 
-            if (supportedFiles.contains(model.getFileExtension().trim())) {
+            if (supportedFiles.contains(IAutomatedComponent.ANY_TYPE)
+                    || supportedFiles.contains(model.getFileExtension().trim())) {
                 worstResult = ResultStatus.DONE;
                 firstModelFirstRun = executeModelFile(properties, results,
                         executionFile, firstModelFirstRun, model, headless);

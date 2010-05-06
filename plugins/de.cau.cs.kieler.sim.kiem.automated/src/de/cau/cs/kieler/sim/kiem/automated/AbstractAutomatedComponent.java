@@ -47,6 +47,8 @@ public abstract class AbstractAutomatedComponent extends
      * Subclasses should override this to indicate which type of file they
      * support.
      * 
+     * Example: types = {"kixs", "strl}; types = IAutomatedComponent.ANY_TYPE;
+     * 
      * @return null
      */
     public String[] getSupportedExtensions() {
