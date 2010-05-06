@@ -396,11 +396,11 @@ Void inputSignalTransformationNewSignals(List[Signal] inputSignalList,
 
 
 //adds "local" to a name (until it is unique)
-String getUniqueName(String name, List[Signal] signalList):
-   let newName = name + "local":
-   (signalList.select(e|e.name.matches(newName)).size > 0) ?
-      getUniqueName(newName, signalList): newName
-;      
+//String getUniqueName(String name, List[Signal] signalList):
+//   let newName = name + "local":
+//   (signalList.select(e|e.name.matches(newName)).size > 0) ?
+//      getUniqueName(newName, signalList): newName
+//;      
 
 //-----------------------------------------------------------------------------
 
