@@ -681,7 +681,7 @@ Void tryPastingTransitionsOnTransitions(List[Transition] targets):
  (transList != null ?
   targets.replaceWithTransitions()
   :
-  null
+  tryPastingStatesOnTransition(targets)
  )
 ;
 
@@ -695,9 +695,27 @@ Void replaceWithTransitions(Transition target):
  transList.setSourceState(source)
 ;
 
+// try insert the state in each transition
+Void tryPastingStatesOnTransition(List[Transition] targets):
+ let state = getStateFromClipboard():
+ (state != null ?
+  targets.pasteStateInClipboardIntoTransition()
+ :
+  null
+ )
+;
+
+// insert the state into the transition
+Void pasteStateInClipboardIntoTransition(Transition target):
+ let state = getStateFromClipboard():
+ pasteStateOnTransition(target, state, target.sourceState)
+;
+
 //////////////////////
 // Mixed targets    //
 //////////////////////
+
+// *** State and Transition selected ***
 
 // a state and a transition selected in any order
 Void paste(Transition trans, State state):
