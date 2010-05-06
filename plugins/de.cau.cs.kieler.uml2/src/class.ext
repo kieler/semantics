@@ -1,0 +1,10 @@
+import uml;
+
+Void addInterfaceImplementation(Interface source):
+let clazz = new Class:
+let reali = new InterfaceRealization:
+reali.supplier.add(source) ->
+reali.client.add(clazz) ->
+clazz.interfaceRealization.add(reali) ->
+((Model)source.eContainer).packagedElement.add(clazz)
+;
