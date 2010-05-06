@@ -52,19 +52,19 @@ Void fixDummyStates(Region rootRegion):
 ;
 
 Void fixDummyStates(State state):
- (state.outgoingTransitions.size == 1 &&
-  state.outgoingTransitions.get(0).triggersAndEffects.matches("") ?
+ ((state.outgoingTransitions.size == 1 &&
+  state.outgoingTransitions.get(0).triggersAndEffects.matches("") &&
+  state.outgoingTransitions.get(0).isImmediate) ?
   replaceState(state, state.outgoingTransitions.get(0).targetState)
  :
-  null
- ) ->
- state.regions.fixDummyStates()
+   state.regions.fixDummyStates()
+ )
 ;
 
 Void replaceState(State old, State replacement):
- //let incoming = getIncomingTransitions(old):
+ let incoming = getIncomingTransitions(old):
  replacement.setIsInitial(old.isInitial) ->
- //incoming.setTargetState(replacement) ->
+ incoming.setTargetState(replacement) ->
  old.parentRegion.innerStates.remove(old)
 ;
 

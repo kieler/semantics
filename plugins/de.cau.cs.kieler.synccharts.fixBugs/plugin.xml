@@ -80,7 +80,7 @@
                   transformationId="de.cau.cs.kieler.synccharts.fixBugs.fixDummyStates">
             </transformation>
             <transformation
-                  name="fix IDs"
+                  name="Fix IDs"
                   transformation="fixIDs"
                   transformationId="de.cau.cs.kieler.synccharts.fixBugs.fixID">
             </transformation>
