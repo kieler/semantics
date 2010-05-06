@@ -1,0 +1,84 @@
+import synccharts;
+import utilities;
+
+String generateRandomId():
+ JAVA de.cau.cs.kieler.synccharts.fixbugs.Activator.generateRandomId()
+;
+
+Void fixAllBugs(Region rootRegion):
+ fixTransitionPriorities(rootRegion) ->
+ fixConditionalOutgoingImmediate(rootRegion) ->
+ fixDummyStates(rootRegion) ->
+ fixIDs(rootRegion)
+;
+
+Void fixTransitionPriorities(Region rootRegion):
+ rootRegion.innerStates.fixTransitionPriorities()
+;
+
+Void fixTransitionPriorities(State state):
+ state.outgoingTransitions.fixPriority() ->
+ state.regions.fixTransitionPriorities()
+;
+
+Void fixPriority(Transition trans):
+ (trans.priority == 0 ?
+  trans.sourceState.outgoingTransitions.incrementPriority()
+ :
+  null
+ )
+;
+
+Void incrementPriority(Transition trans):
+ let prio = trans.priority:
+ trans.setPriority(prio + 1)
+;
+
+Void fixConditionalOutgoingImmediate(Region rootRegion):
+ rootRegion.innerStates.fixConditionalOutgoingImmediate()
+;
+
+Void fixConditionalOutgoingImmediate(State state):
+ (state.type == StateType::CONDITIONAL ?
+  state.outgoingTransitions.setIsImmediate(true)
+ :
+  null
+ ) ->
+ state.regions.fixConditionalOutgoingImmediate()
+;
+
+Void fixDummyStates(Region rootRegion):
+ rootRegion.innerStates.fixDummyStates()
+;
+
+Void fixDummyStates(State state):
+ (state.outgoingTransitions.size == 1 &&
+  state.outgoingTransitions.get(0).triggersAndEffects.matches("") ?
+  replaceState(state, state.outgoingTransitions.get(0).targetState)
+ :
+  null
+ ) ->
+ state.regions.fixDummyStates()
+;
+
+Void replaceState(State old, State replacement):
+ //let incoming = getIncomingTransitions(old):
+ replacement.setIsInitial(old.isInitial) ->
+ //incoming.setTargetState(replacement) ->
+ old.parentRegion.innerStates.remove(old)
+;
+
+List[Transition] getIncomingTransitions(State state):
+ let parent = state.parentRegion:
+ parent.innerStates.outgoingTransitions.select(e|e.targetState == state)
+;
+
+Void fixIDs(Region region):
+ region.setId(generateRandomId()) ->
+ region.innerStates.fixIDs()
+;
+
+Void fixIDs(State state):
+ state.setId(generateRandomId()) ->
+ state.regions.fixIDs()
+;

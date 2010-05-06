@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            locationURI="menu:de.cau.cs.kieler">
+         <menu
+               id="de.cau.cs.kieler.synccharts.fixBugs"
+               label="FixBugs">
+         </menu>
+      </menuContribution>
+   </extension>
+      <extension
+         point="de.cau.cs.kieler.ksbase.configurations">
+      <configuration
+            TransformationFile="transformations/feature2.ext"
+            checkVisibility="false"
+            contextId="de.cau.cs.kieler.synccharts.diagram.ui.diagramContext"
+            editorId="de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorID"
+            packageName="de.cau.cs.kieler.synccharts.SyncchartsPackage">
+         <menus>
+            <menuContribution
+                  locationURI="menu:de.cau.cs.kieler.synccharts.fixBugs">
+               <transformationCommand
+                     transformationId="de.cau.cs.kieler.synccharts.fixAllBugs">
+               </transformationCommand>
+               <transformationCommand
+                     transformationId="de.cau.cs.kieler.synccharts.fixBugs.fixTransitionPriorities">
+               </transformationCommand>
+               <transformationCommand
+                     transformationId="de.cau.cs.kieler.synccharts.fixBugs.conditionalOutgoing">
+               </transformationCommand>
+               <transformationCommand
+                     transformationId="de.cau.cs.kieler.synccharts.fixBugs.fixDummyStates">
+               </transformationCommand>
+               <transformationCommand
+                     transformationId="de.cau.cs.kieler.synccharts.fixBugs.fixID">
+               </transformationCommand>
+            </menuContribution>
+            <menuContribution
+                  locationURI="popup:org.eclipse.gmf.runtime.diagram.ui.DiagramEditorContextMenu?after=addGroup">
+               <transformationCommand
+                     transformationId="de.cau.cs.kieler.synccharts.fixAllBugs">
+               </transformationCommand>
+               <transformationCommand
+                     transformationId="de.cau.cs.kieler.synccharts.fixBugs.conditionalOutgoing">
+               </transformationCommand>
+               <transformationCommand
+                     transformationId="de.cau.cs.kieler.synccharts.fixBugs.fixDummyStates">
+               </transformationCommand>
+               <transformationCommand
+                     transformationId="de.cau.cs.kieler.synccharts.fixBugs.fixTransitionPriorities">
+               </transformationCommand>
+               <transformationCommand
+                     transformationId="de.cau.cs.kieler.synccharts.fixBugs.fixID">
+               </transformationCommand>
+            </menuContribution>
+         </menus>
+         <transformations>
+            <transformation
+                  name="Fix all bugs"
+                  transformation="fixAllBugs"
+                  transformationId="de.cau.cs.kieler.synccharts.fixAllBugs">
+            </transformation>
+            <transformation
+                  name="Fix Transition Priorities"
+                  transformation="fixTransitionPriorities"
+                  transformationId="de.cau.cs.kieler.synccharts.fixBugs.fixTransitionPriorities">
+            </transformation>
+            <transformation
+                  name="Fix Conditional Outgoing Transitions"
+                  transformation="fixConditionalOutgoingImmediate"
+                  transformationId="de.cau.cs.kieler.synccharts.fixBugs.conditionalOutgoing">
+            </transformation>
+            <transformation
+                  name="Remove Dummy States"
+                  transformation="fixDummyStates"
+                  transformationId="de.cau.cs.kieler.synccharts.fixBugs.fixDummyStates">
+            </transformation>
+            <transformation
+                  name="fix IDs"
+                  transformation="fixIDs"
+                  transformationId="de.cau.cs.kieler.synccharts.fixBugs.fixID">
+            </transformation>
+         </transformations>
+      </configuration>
+   </extension>
+
+</plugin>
