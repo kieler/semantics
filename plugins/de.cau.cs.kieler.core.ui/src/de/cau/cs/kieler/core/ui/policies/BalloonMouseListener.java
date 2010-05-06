@@ -110,7 +110,9 @@ public class BalloonMouseListener implements DragTracker {
      */
     public void mouseDown(final MouseEvent mouseEvent,
             final EditPartViewer viewer) {
-        contribution.run();
+        if (mouseEvent.button == 1) {
+            contribution.run();
+        }
     }
 
     /**
