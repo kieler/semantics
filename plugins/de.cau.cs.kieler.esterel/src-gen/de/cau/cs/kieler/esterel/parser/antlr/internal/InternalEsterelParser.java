@@ -21,6 +21,7 @@ import java.util.Stack;
 import java.util.List;
 import java.util.ArrayList;
 
+@SuppressWarnings("all")
 public class InternalEsterelParser extends AbstractInternalAntlrParser {
     public static final String[] tokenNames = new String[] {
         "<invalid>", "<EOR>", "<DOWN>", "<UP>", "RULE_ESTERELID", "RULE_BASETYPE", "RULE_INT", "RULE_STRING", "RULE_FLOAT", "RULE_BOOLEAN", "RULE_ESTEREL_SL_COMMENT", "RULE_ESTEREL_ML_COMMENT", "RULE_ID", "RULE_ML_COMMENT", "RULE_SL_COMMENT", "RULE_WS", "RULE_ANY_OTHER", "'module'", "':'", "'end'", "'.'", "'input'", "','", "';'", "'output'", "'inputoutput'", "'return'", "'sensor'", "'relation'", "'=>'", "'#'", "'type'", "'constant'", "'='", "'-'", "'function'", "'('", "')'", "'procedure'", "'||'", "'['", "']'", "':='", "'abort'", "'when'", "'do'", "'case'", "'await'", "'upto'", "'watching'", "'timeout'", "'emit'", "'every'", "'exit'", "'halt'", "'if'", "'elsif'", "'then'", "'else'", "'loop'", "'each'", "'nothing'", "'pause'", "'present'", "'positive'", "'repeat'", "'times'", "'run'", "'copymodule'", "'/'", "'signal'", "'in'", "'suspend'", "'sustain'", "'trap'", "'handle'", "'var'", "'weak'", "'and'", "'or'", "'not'", "'<'", "'>'", "'<='", "'>='", "'<>'", "'+'", "'*'", "'mod'", "'?'", "'pre'", "'??'", "'combine'", "'with'", "'tick'"
@@ -128,7 +129,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
         EObject lv_module_1_0 = null;
 
 
-         @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
+         EObject temp=null; setCurrentLookahead(); resetLookahead(); 
         		HiddenTokens myHiddenTokenState = ((XtextTokenStream)input).setHiddenTokens("RULE_ESTEREL_SL_COMMENT", "RULE_ESTEREL_ML_COMMENT", "RULE_WS");
             
         try {
@@ -299,7 +300,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
         EObject lv_modBody_4_0 = null;
 
 
-         @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
+         EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
             // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:172:6: ( ( 'module' ( (lv_name_1_0= RULE_ESTERELID ) ) ':' ( (lv_modInt_3_0= ruleModuleInterface ) )? ( (lv_modBody_4_0= ruleModuleBody ) ) ruleEndModule ) )
@@ -624,7 +625,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
         EObject lv_statement_0_0 = null;
 
 
-         @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
+         EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
             // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:317:6: ( ( (lv_statement_0_0= ruleStatement ) ) )
@@ -740,7 +741,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
         EObject lv_intProcedureDecl_6_0 = null;
 
 
-         @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
+         EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
             // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:364:6: ( ( ( (lv_intSignalDecl_0_0= ruleSignalDecl ) ) | ( (lv_intTypeDecl_1_0= ruleTypeDecl ) ) | ( (lv_intSensorDecl_2_0= ruleSensorDecl ) ) | ( (lv_intConstantDecl_3_0= ruleConstantDecl ) ) | ( (lv_intRelationDecl_4_0= ruleRelationDecl ) ) | ( (lv_intFunctionDecl_5_0= ruleFunctionDecl ) ) | ( (lv_intProcedureDecl_6_0= ruleProcedureDecl ) ) )+ )
@@ -1174,7 +1175,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
         EObject lv_signal_22_0 = null;
 
 
-         @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
+         EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
             // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:561:6: ( ( ( () 'input' ( (lv_signal_2_0= ruleSignal ) ) ( ',' ( (lv_signal_4_0= ruleSignal ) ) )* ';' ) | ( () 'output' ( (lv_signal_8_0= ruleSignal ) ) ( ',' ( (lv_signal_10_0= ruleSignal ) ) )* ';' ) | ( () 'inputoutput' ( (lv_signal_14_0= ruleSignal ) ) ( ',' ( (lv_signal_16_0= ruleSignal ) ) )* ';' ) | ( () 'return' ( (lv_signal_20_0= ruleSignal ) ) ( ',' ( (lv_signal_22_0= ruleSignal ) ) )* ';' ) ) )
@@ -1822,7 +1823,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
         EObject lv_sensor_3_0 = null;
 
 
-         @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
+         EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
             // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:871:6: ( ( 'sensor' ( (lv_sensor_1_0= ruleSensor ) ) ( ',' ( (lv_sensor_3_0= ruleSensor ) ) )* ';' ) )
@@ -2006,7 +2007,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
         EObject lv_relation_4_0 = null;
 
 
-         @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
+         EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
             // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:954:6: ( ( () 'relation' ( (lv_relation_2_0= ruleRelationType ) ) ( ',' ( (lv_relation_4_0= ruleRelationType ) ) )* ';' ) )
@@ -2206,7 +2207,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
         EObject this_RelationIncompatibility_1 = null;
 
 
-         @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
+         EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
             // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:1048:6: ( (this_RelationImplication_0= ruleRelationImplication | this_RelationIncompatibility_1= ruleRelationIncompatibility ) )
@@ -2337,7 +2338,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
         Token lv_type_1_0=null;
 
-         @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
+         EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
             // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:1090:6: ( ( ( ( RULE_ESTERELID ) ) ( (lv_type_1_0= '=>' ) ) ( ( RULE_ESTERELID ) ) ) )
@@ -2483,7 +2484,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
         Token lv_type_1_0=null;
 
-         @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
+         EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
             // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:1162:6: ( ( ( ( RULE_ESTERELID ) ) ( (lv_type_1_0= '#' ) ) ( ( RULE_ESTERELID ) ) ( '#' ( ( RULE_ESTERELID ) ) )* ) )
@@ -2682,7 +2683,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
         EObject lv_type_3_0 = null;
 
 
-         @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
+         EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
             // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:1252:6: ( ( 'type' ( (lv_type_1_0= ruleType ) ) ( ',' ( (lv_type_3_0= ruleType ) ) )* ';' ) )
@@ -2863,7 +2864,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
         Token lv_name_0_0=null;
 
-         @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
+         EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
             // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:1335:6: ( ( (lv_name_0_0= RULE_ESTERELID ) ) )
@@ -2966,7 +2967,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
         EObject lv_constant_3_0 = null;
 
 
-         @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
+         EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
             // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:1382:6: ( ( 'constant' ( (lv_constant_1_0= ruleOneTypeConstantDecl ) ) ( ',' ( (lv_constant_3_0= ruleOneTypeConstantDecl ) ) )* ';' ) )
@@ -3152,7 +3153,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
         EObject lv_constant_2_0 = null;
 
 
-         @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
+         EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
             // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:1465:6: ( ( ( (lv_constant_0_0= ruleConstant ) ) ( ',' ( (lv_constant_2_0= ruleConstant ) ) )* ':' ( ( (lv_type_4_0= RULE_ESTERELID ) ) | ( (lv_type_5_0= RULE_BASETYPE ) ) ) ) )
@@ -3429,7 +3430,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
         AntlrDatatypeRuleToken lv_value_2_0 = null;
 
 
-         @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
+         EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
             // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:1593:6: ( ( ( (lv_name_0_0= RULE_ESTERELID ) ) ( '=' ( (lv_value_2_0= ruleConstantValue ) ) )? ) )
@@ -3806,7 +3807,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
         EObject lv_function_3_0 = null;
 
 
-         @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
+         EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
             // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:1736:6: ( ( 'function' ( (lv_function_1_0= ruleFunction ) ) ( ',' ( (lv_function_3_0= ruleFunction ) ) )* ';' ) )
@@ -3993,7 +3994,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
         Token lv_type_7_0=null;
         Token lv_type_8_0=null;
 
-         @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
+         EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
             // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:1819:6: ( ( ( (lv_name_0_0= RULE_ESTERELID ) ) '(' ( ( ( (lv_idList_2_1= RULE_ESTERELID | lv_idList_2_2= RULE_BASETYPE ) ) ) ( ',' ( ( (lv_idList_4_1= RULE_ESTERELID | lv_idList_4_2= RULE_BASETYPE ) ) ) )* )? ')' ':' ( ( (lv_type_7_0= RULE_ESTERELID ) ) | ( (lv_type_8_0= RULE_BASETYPE ) ) ) ) )
@@ -4429,7 +4430,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
         EObject lv_procedure_3_0 = null;
 
 
-         @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
+         EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
             // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:2027:6: ( ( 'procedure' ( (lv_procedure_1_0= ruleProcedure ) ) ( ',' ( (lv_procedure_3_0= ruleProcedure ) ) )* ';' ) )
@@ -4618,7 +4619,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
         Token lv_idList_9_1=null;
         Token lv_idList_9_2=null;
 
-         @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
+         EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
             // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:2110:6: ( ( ( (lv_name_0_0= RULE_ESTERELID ) ) '(' ( ( ( (lv_idList_2_1= RULE_ESTERELID | lv_idList_2_2= RULE_BASETYPE ) ) ) ( ',' ( ( (lv_idList_4_1= RULE_ESTERELID | lv_idList_4_2= RULE_BASETYPE ) ) ) )* )? ')' '(' ( ( ( (lv_idList_7_1= RULE_ESTERELID | lv_idList_7_2= RULE_BASETYPE ) ) ) ( ',' ( ( (lv_idList_9_1= RULE_ESTERELID | lv_idList_9_2= RULE_BASETYPE ) ) ) )* )? ')' ) )
@@ -5177,7 +5178,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
         EObject lv_list_3_0 = null;
 
 
-         @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
+         EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
             // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:2373:6: ( (this_Sequence_0= ruleSequence ( () '||' ( (lv_list_3_0= ruleSequence ) ) )* ) )
@@ -5389,7 +5390,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
         EObject this_WeakAbort_21 = null;
 
 
-         @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
+         EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
             // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:2449:6: ( (this_Abort_0= ruleAbort | this_Assignment_1= ruleAssignment | this_Await_2= ruleAwait | this_Block_3= ruleBlock | this_Do_4= ruleDo | this_Emit_5= ruleEmit | this_EveryDo_6= ruleEveryDo | this_Exit_7= ruleExit | this_Halt_8= ruleHalt | this_IfTest_9= ruleIfTest | this_LocalSignalDecl_10= ruleLocalSignalDecl | this_Loop_11= ruleLoop | this_Nothing_12= ruleNothing | this_Pause_13= rulePause | this_Present_14= rulePresent | this_Repeat_15= ruleRepeat | this_Run_16= ruleRun | this_Suspend_17= ruleSuspend | this_Sustain_18= ruleSustain | this_Trap_19= ruleTrap | this_Variable_20= ruleVariable | this_WeakAbort_21= ruleWeakAbort ) )
@@ -5959,7 +5960,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
         EObject lv_list_3_0 = null;
 
 
-         @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
+         EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
             // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:2691:6: ( (this_AtomicStatement_0= ruleAtomicStatement ( () ';' ( (lv_list_3_0= ruleAtomicStatement ) ) )* ( ';' )? ) )
@@ -6156,7 +6157,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
         EObject lv_statement_1_0 = null;
 
 
-         @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
+         EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
             // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:2771:6: ( ( '[' ( (lv_statement_1_0= ruleStatement ) ) ']' ) )
@@ -6275,7 +6276,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
         EObject lv_expr_2_0 = null;
 
 
-         @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
+         EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
             // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:2826:6: ( ( ( (lv_variable_0_0= RULE_ESTERELID ) ) ':=' ( (lv_expr_2_0= ruleDataExpr ) ) ) )
@@ -6424,7 +6425,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
         EObject lv_body_3_0 = null;
 
 
-         @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
+         EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
             // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:2901:6: ( ( 'abort' ( (lv_statement_1_0= ruleStatement ) ) 'when' ( (lv_body_3_0= ruleAbortBody ) ) ) )
@@ -6580,7 +6581,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
         EObject this_AbortCase_1 = null;
 
 
-         @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
+         EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
             // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:2980:6: ( (this_AbortInstance_0= ruleAbortInstance | this_AbortCase_1= ruleAbortCase ) )
@@ -6808,7 +6809,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
         AntlrDatatypeRuleToken lv_end_3_0 = null;
 
 
-         @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
+         EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
             // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3057:6: ( ( ( (lv_delay_0_0= ruleDelayExpr ) ) ( 'do' ( (lv_statement_2_0= ruleStatement ) ) ( (lv_end_3_0= ruleAbortEnd ) ) )? ) )
@@ -7015,7 +7016,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
         AntlrDatatypeRuleToken lv_end_2_0 = null;
 
 
-         @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
+         EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
             // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3156:6: ( ( ( (lv_cases_0_0= ruleAbortCaseSingle ) ) ( (lv_cases_1_0= ruleAbortCaseSingle ) )* ( (lv_end_2_0= ruleAbortEnd ) ) ) )
@@ -7217,7 +7218,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
         EObject lv_statement_3_0 = null;
 
 
-         @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
+         EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
             // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3251:6: ( ( 'case' ( (lv_delay_1_0= ruleDelayExpr ) ) ( 'do' ( (lv_statement_3_0= ruleStatement ) ) )? ) )
@@ -7388,7 +7389,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
         EObject lv_body_1_0 = null;
 
 
-         @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
+         EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
             // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3330:6: ( ( 'await' ( (lv_body_1_0= ruleAwaitBody ) ) ) )
@@ -7504,7 +7505,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
         EObject this_AwaitCase_1 = null;
 
 
-         @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
+         EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
             // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3381:6: ( (this_AwaitInstance_0= ruleAwaitInstance | this_AwaitCase_1= ruleAwaitCase ) )
@@ -7732,7 +7733,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
         AntlrDatatypeRuleToken lv_end_3_0 = null;
 
 
-         @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
+         EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
             // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3458:6: ( ( ( (lv_delay_0_0= ruleDelayExpr ) ) ( 'do' ( (lv_statement_2_0= ruleStatement ) ) ( (lv_end_3_0= ruleAwaitEnd ) ) )? ) )
@@ -7939,7 +7940,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
         AntlrDatatypeRuleToken lv_end_2_0 = null;
 
 
-         @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
+         EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
             // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3557:6: ( ( ( (lv_cases_0_0= ruleAbortCaseSingle ) ) ( (lv_cases_1_0= ruleAbortCaseSingle ) )* ( (lv_end_2_0= ruleAwaitEnd ) ) ) )
@@ -8143,7 +8144,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
         EObject lv_endWatch_3_0 = null;
 
 
-         @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
+         EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
             // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3652:6: ( ( 'do' ( (lv_statement_1_0= ruleStatement ) ) ( ( (lv_endUp_2_0= ruleDoUpto ) ) | ( (lv_endWatch_3_0= ruleDoWatching ) ) ) ) )
@@ -8361,7 +8362,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
         EObject lv_expr_1_0 = null;
 
 
-         @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
+         EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
             // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3752:6: ( ( 'upto' ( (lv_expr_1_0= ruleDelayExpr ) ) ) )
@@ -8477,7 +8478,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
         EObject lv_end_2_0 = null;
 
 
-         @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
+         EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
             // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3803:6: ( ( 'watching' ( (lv_delay_1_0= ruleDelayExpr ) ) ( (lv_end_2_0= ruleDoWatchingEnd ) )? ) )
@@ -8638,7 +8639,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
         EObject lv_statement_1_0 = null;
 
 
-         @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
+         EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
             // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3878:6: ( ( 'timeout' ( (lv_statement_1_0= ruleStatement ) ) 'end' ( 'timeout' )? ) )
@@ -8779,7 +8780,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
         EObject lv_expr_4_0 = null;
 
 
-         @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
+         EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
             // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:3937:6: ( ( 'emit' ( ( ( RULE_ESTERELID ) ) | ( (lv_tick_2_0= ruleTick ) ) ) ( '(' ( (lv_expr_4_0= ruleDataExpr ) ) ')' )? ) )
@@ -9010,7 +9011,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
         EObject lv_statement_3_0 = null;
 
 
-         @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
+         EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
             // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4035:6: ( ( 'every' ( (lv_delay_1_0= ruleDelayExpr ) ) 'do' ( (lv_statement_3_0= ruleStatement ) ) 'end' ( 'every' )? ) )
@@ -9189,7 +9190,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
         EObject lv_dataExpr_3_0 = null;
 
 
-         @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
+         EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
             // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4122:6: ( ( 'exit' ( ( RULE_ESTERELID ) ) ( '(' ( (lv_dataExpr_3_0= ruleDataExpr ) ) ')' )? ) )
@@ -9347,7 +9348,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
     public final EObject ruleHalt() throws RecognitionException {
         EObject current = null;
 
-         @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
+         EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
             // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4195:6: ( ( 'halt' () ) )
@@ -9447,7 +9448,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
         EObject lv_elsePart_4_0 = null;
 
 
-         @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
+         EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
             // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4233:6: ( ( 'if' ( (lv_expr_1_0= ruleDataExpr ) ) ( (lv_thenPart_2_0= ruleThenPart ) )? ( (lv_elseIf_3_0= ruleElsIfPart ) )? ( (lv_elsePart_4_0= ruleElsePart ) )? 'end' ( 'if' )? ) )
@@ -9729,7 +9730,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
         EObject lv_elsif_1_0 = null;
 
 
-         @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
+         EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
             // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4364:6: ( ( ( (lv_elsif_0_0= ruleElsIf ) ) ( (lv_elsif_1_0= ruleElsIf ) )* ) )
@@ -9895,7 +9896,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
         EObject lv_thenPart_2_0 = null;
 
 
-         @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
+         EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
             // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4435:6: ( ( 'elsif' ( (lv_expr_1_0= ruleDataExpr ) ) ( (lv_thenPart_2_0= ruleThenPart ) )? ) )
@@ -10056,7 +10057,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
         EObject lv_statement_1_0 = null;
 
 
-         @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
+         EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
             // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4510:6: ( ( 'then' ( (lv_statement_1_0= ruleStatement ) ) ) )
@@ -10170,7 +10171,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
         EObject lv_statement_1_0 = null;
 
 
-         @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
+         EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
             // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4561:6: ( ( 'else' ( (lv_statement_1_0= ruleStatement ) ) ) )
@@ -10286,7 +10287,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
         EObject lv_end_3_0 = null;
 
 
-         @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
+         EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
             // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4612:6: ( ( 'loop' ( (lv_body_1_0= ruleLoopBody ) ) ( ruleEndLoop | ( (lv_end_3_0= ruleLoopEach ) ) ) ) )
@@ -10574,7 +10575,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
         EObject this_LoopDelay_1 = null;
 
 
-         @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
+         EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
             // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4723:6: ( ( 'each' this_LoopDelay_1= ruleLoopDelay ) )
@@ -10663,7 +10664,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
         EObject lv_delay_0_0 = null;
 
 
-         @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
+         EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
             // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4759:6: ( ( (lv_delay_0_0= ruleDelayExpr ) ) )
@@ -10767,7 +10768,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
         EObject lv_statement_0_0 = null;
 
 
-         @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
+         EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
             // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4806:6: ( ( (lv_statement_0_0= ruleStatement ) ) )
@@ -10868,7 +10869,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
     public final EObject ruleNothing() throws RecognitionException {
         EObject current = null;
 
-         @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
+         EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
             // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4853:6: ( ( 'nothing' () ) )
@@ -10959,7 +10960,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
     public final EObject rulePause() throws RecognitionException {
         EObject current = null;
 
-         @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
+         EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
             // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4891:6: ( ( 'pause' () ) )
@@ -11055,7 +11056,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
         EObject lv_elsePart_2_0 = null;
 
 
-         @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
+         EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
             // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:4929:6: ( ( 'present' ( (lv_body_1_0= rulePresentBody ) ) ( (lv_elsePart_2_0= ruleElsePart ) )? 'end' ( 'present' )? ) )
@@ -11243,7 +11244,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
         EObject this_PresentCaseList_1 = null;
 
 
-         @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
+         EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
             // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5012:6: ( (this_PresentEventBody_0= rulePresentEventBody | this_PresentCaseList_1= rulePresentCaseList ) )
@@ -11367,7 +11368,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
         EObject lv_thenPart_1_0 = null;
 
 
-         @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
+         EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
             // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5054:6: ( ( ( (lv_event_0_0= rulePresentEvent ) ) ( (lv_thenPart_1_0= ruleThenPart ) )? ) )
@@ -11526,7 +11527,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
         EObject lv_case_1_0 = null;
 
 
-         @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
+         EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
             // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5125:6: ( ( ( (lv_case_0_0= rulePresentCase ) ) ( (lv_case_1_0= rulePresentCase ) )* ) )
@@ -11692,7 +11693,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
         EObject lv_statement_3_0 = null;
 
 
-         @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
+         EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
             // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5196:6: ( ( 'case' ( (lv_event_1_0= rulePresentEvent ) ) ( 'do' ( (lv_statement_3_0= ruleStatement ) ) )? ) )
@@ -11865,7 +11866,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
         EObject lv_expression_2_0 = null;
 
 
-         @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
+         EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
             // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5275:6: ( ( ( (lv_expression_0_0= ruleSigExpr ) ) | ( '[' ( (lv_expression_2_0= ruleSigExpr ) ) ']' ) ) )
@@ -12054,7 +12055,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
         EObject lv_statement_4_0 = null;
 
 
-         @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
+         EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
             // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5355:6: ( ( ( (lv_positive_0_0= 'positive' ) )? 'repeat' ( (lv_dataExpr_2_0= ruleDataExpr ) ) 'times' ( (lv_statement_4_0= ruleStatement ) ) 'end' ( 'repeat' )? ) )
@@ -12279,7 +12280,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
         EObject lv_list_8_0 = null;
 
 
-         @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
+         EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
             // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5463:6: ( ( ( 'run' ( (lv_module_1_0= ruleModuleRenaming ) ) ( '[' ( (lv_list_3_0= ruleRenamingList ) ) ']' )? ) | ( 'copymodule' ( (lv_module_6_0= ruleModuleRenaming ) ) ( '[' ( (lv_list_8_0= ruleRenamingList ) ) ']' )? ) ) )
@@ -12593,7 +12594,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
         Token lv_renamed_1_0=null;
         Token lv_newName_2_0=null;
 
-         @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
+         EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
             // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5607:6: ( ( ( ( RULE_ESTERELID ) ) ( ( (lv_renamed_1_0= '/' ) ) ( (lv_newName_2_0= RULE_ESTERELID ) ) )? ) )
@@ -12770,7 +12771,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
         EObject lv_list_2_0 = null;
 
 
-         @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
+         EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
             // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5689:6: ( ( ( (lv_list_0_0= ruleRenaming ) ) ( ';' ( (lv_list_2_0= ruleRenaming ) ) )* ) )
@@ -12958,7 +12959,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
         EObject lv_renaming_15_0 = null;
 
 
-         @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
+         EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
             // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:5764:6: ( ( ( 'type' ( (lv_renaming_1_0= ruleTypeRenaming ) ) ( ',' ( (lv_renaming_3_0= ruleTypeRenaming ) ) )* ) | ( 'constant' ( (lv_renaming_5_0= ruleConstantRenaming ) ) ( ',' ( (lv_renaming_7_0= ruleConstantRenaming ) ) )* ) | ( 'function' ( (lv_renaming_9_0= ruleFunctionRenaming ) ) ( ',' ( (lv_renaming_11_0= ruleFunctionRenaming ) ) )* ) | ( 'signal' ( (lv_renaming_13_0= ruleSignalRenaming ) ) ( ',' ( (lv_renaming_15_0= ruleSignalRenaming ) ) )* ) ) )
@@ -13521,7 +13522,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
     public final EObject ruleTypeRenaming() throws RecognitionException {
         EObject current = null;
 
-         @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
+         EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
             // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6014:6: ( ( ( ( RULE_ESTERELID ) ) '/' ( ( RULE_ESTERELID ) ) ) )
@@ -13640,7 +13641,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
     public final EObject ruleConstantRenaming() throws RecognitionException {
         EObject current = null;
 
-         @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
+         EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
             // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6069:6: ( ( ( ( RULE_ESTERELID ) ) '/' ( ( RULE_ESTERELID ) ) ) )
@@ -13759,7 +13760,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
     public final EObject ruleFunctionRenaming() throws RecognitionException {
         EObject current = null;
 
-         @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
+         EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
             // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6124:6: ( ( ( ( RULE_ESTERELID ) ) '/' ( ( RULE_ESTERELID ) ) ) )
@@ -13878,7 +13879,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
     public final EObject ruleSignalRenaming() throws RecognitionException {
         EObject current = null;
 
-         @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
+         EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
             // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6181:6: ( ( ( ( RULE_ESTERELID ) ) '/' ( ( RULE_ESTERELID ) ) ) )
@@ -14002,7 +14003,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
         EObject lv_statement_3_0 = null;
 
 
-         @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
+         EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
             // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6236:6: ( ( 'signal' ( (lv_signalList_1_0= ruleLocalSignalList ) ) 'in' ( (lv_statement_3_0= ruleStatement ) ) 'end' ( 'signal' )? ) )
@@ -14183,7 +14184,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
         EObject lv_signal_3_0 = null;
 
 
-         @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
+         EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
             // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6323:6: ( ( () ( (lv_signal_1_0= ruleSignal ) ) ( ',' ( (lv_signal_3_0= ruleSignal ) ) )* ) )
@@ -14375,7 +14376,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
         EObject lv_delay_3_0 = null;
 
 
-         @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
+         EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
             // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6409:6: ( ( 'suspend' ( (lv_statement_1_0= ruleStatement ) ) 'when' ( (lv_delay_3_0= ruleDelayExpr ) ) ) )
@@ -14531,7 +14532,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
         EObject lv_dataExpr_4_0 = null;
 
 
-         @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
+         EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
             // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6488:6: ( ( 'sustain' ( ( ( RULE_ESTERELID ) ) | ( (lv_tick_2_0= ruleTick ) ) ) ( '(' ( (lv_dataExpr_4_0= ruleDataExpr ) ) ')' )? ) )
@@ -14764,7 +14765,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
         EObject lv_trapHandlerList_4_0 = null;
 
 
-         @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
+         EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
             // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6586:6: ( ( 'trap' ( (lv_trapDeclList_1_0= ruleTrapDeclList ) ) 'in' ( (lv_statement_3_0= ruleStatement ) ) ( (lv_trapHandlerList_4_0= ruleTrapHandlerList ) )? 'end' ( 'trap' )? ) )
@@ -14992,7 +14993,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
         EObject lv_trapDecl_2_0 = null;
 
 
-         @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
+         EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
             // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6697:6: ( ( ( (lv_trapDecl_0_0= ruleTrapDecl ) ) ( ',' ( (lv_trapDecl_2_0= ruleTrapDecl ) ) )* ) )
@@ -15167,7 +15168,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
         EObject lv_channelDesc_1_0 = null;
 
 
-         @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
+         EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
             // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6772:6: ( ( ( (lv_name_0_0= RULE_ESTERELID ) ) ( (lv_channelDesc_1_0= ruleChannelDescription ) )? ) )
@@ -15323,7 +15324,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
         EObject lv_trapHandler_1_0 = null;
 
 
-         @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
+         EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
             // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6843:6: ( ( ( (lv_trapHandler_0_0= ruleTrapHandler ) ) ( (lv_trapHandler_1_0= ruleTrapHandler ) )* ) )
@@ -15489,7 +15490,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
         EObject lv_statement_3_0 = null;
 
 
-         @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
+         EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
             // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6914:6: ( ( 'handle' ( (lv_trapExpr_1_0= ruleTrapExpr ) ) 'do' ( (lv_statement_3_0= ruleStatement ) ) ) )
@@ -15645,7 +15646,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
         EObject lv_statement_3_0 = null;
 
 
-         @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
+         EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
             // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:6993:6: ( ( 'var' ( (lv_varDecl_1_0= ruleVariableDecl ) ) 'in' ( (lv_statement_3_0= ruleStatement ) ) 'end' ( 'var' )? ) )
@@ -15830,7 +15831,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
         EObject lv_varList_6_0 = null;
 
 
-         @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
+         EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
             // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7080:6: ( ( ( (lv_varList_0_0= ruleVariableList ) ) ':' ( ( (lv_type_2_0= RULE_ESTERELID ) ) | ( (lv_type_3_0= RULE_BASETYPE ) ) ) ( () ',' ( (lv_varList_6_0= ruleVariableList ) ) ':' ( ( (lv_type_8_0= RULE_ESTERELID ) ) | ( (lv_type_9_0= RULE_BASETYPE ) ) ) )* ) )
@@ -16233,7 +16234,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
         EObject lv_expression_7_0 = null;
 
 
-         @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
+         EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
             // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7277:6: ( ( ( (lv_variable_0_0= RULE_ESTERELID ) ) ( ':=' ( (lv_expression_2_0= ruleDataExpr ) ) )? ( () ',' ( (lv_variable_5_0= RULE_ESTERELID ) ) ( ':=' ( (lv_expression_7_0= ruleDataExpr ) ) )? )* ) )
@@ -16538,7 +16539,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
         EObject lv_weakAbortBody_4_0 = null;
 
 
-         @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
+         EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
             // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7424:6: ( ( 'weak' 'abort' ( (lv_statement_2_0= ruleStatement ) ) 'when' ( (lv_weakAbortBody_4_0= ruleWeakAbortBody ) ) ) )
@@ -16698,7 +16699,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
         EObject this_WeakAbortCase_1 = null;
 
 
-         @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
+         EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
             // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7507:6: ( (this_WeakAbortInstance_0= ruleWeakAbortInstance | this_WeakAbortCase_1= ruleWeakAbortCase ) )
@@ -16949,7 +16950,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
         AntlrDatatypeRuleToken lv_end_3_0 = null;
 
 
-         @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
+         EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
             // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7590:6: ( ( ( (lv_delay_0_0= ruleDelayExpr ) ) ( 'do' ( (lv_statement_2_0= ruleStatement ) ) ( (lv_end_3_0= ruleWeakAbortEnd ) ) )? ) )
@@ -17156,7 +17157,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
         AntlrDatatypeRuleToken lv_end_2_0 = null;
 
 
-         @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
+         EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
             // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7689:6: ( ( ( (lv_cases_0_0= ruleAbortCaseSingle ) ) ( (lv_cases_1_0= ruleAbortCaseSingle ) )* ( (lv_end_2_0= ruleWeakAbortEnd ) ) ) )
@@ -17364,7 +17365,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
         EObject lv_expr_5_0 = null;
 
 
-         @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
+         EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
             // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:7784:6: ( ( (this_DataUnaryExpr_0= ruleDataUnaryExpr ( () ( (lv_op_2_0= ruleDataOp ) ) ( (lv_right_3_0= ruleDataExpr ) ) )? ) | ( ( (lv_op_4_0= ruleDataOp ) ) ( (lv_expr_5_0= ruleDataExpr ) ) ) ) )
@@ -18006,7 +18007,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
         EObject this_DataFunction_9 = null;
 
 
-         @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
+         EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
             // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8049:6: ( (this_DataValueFloat_0= ruleDataValueFloat | this_DataValueBoolean_1= ruleDataValueBoolean | this_DataValueInt_2= ruleDataValueInt | this_DataValueString_3= ruleDataValueString | this_DataValueID_4= ruleDataValueID | this_DataBlock_5= ruleDataBlock | this_DataCurrent_6= ruleDataCurrent | this_DataPre_7= ruleDataPre | this_DataTrap_8= ruleDataTrap | this_DataFunction_9= ruleDataFunction ) )
@@ -18315,7 +18316,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
         Token lv_value_0_0=null;
 
-         @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
+         EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
             // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8171:6: ( ( (lv_value_0_0= RULE_ESTERELID ) ) )
@@ -18415,7 +18416,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
         Token lv_value_0_0=null;
 
-         @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
+         EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
             // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8218:6: ( ( (lv_value_0_0= RULE_FLOAT ) ) )
@@ -18515,7 +18516,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
         Token lv_value_0_0=null;
 
-         @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
+         EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
             // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8265:6: ( ( (lv_value_0_0= RULE_BOOLEAN ) ) )
@@ -18615,7 +18616,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
         Token lv_value_0_0=null;
 
-         @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
+         EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
             // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8312:6: ( ( (lv_value_0_0= RULE_INT ) ) )
@@ -18715,7 +18716,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
         Token lv_value_0_0=null;
 
-         @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
+         EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
             // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8359:6: ( ( (lv_value_0_0= RULE_STRING ) ) )
@@ -18816,7 +18817,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
         EObject lv_dataExpr_1_0 = null;
 
 
-         @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
+         EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
             // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8406:6: ( ( '(' ( (lv_dataExpr_1_0= ruleDataExpr ) ) ')' ) )
@@ -18934,7 +18935,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
         AntlrDatatypeRuleToken lv_tick_2_0 = null;
 
 
-         @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
+         EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
             // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8461:6: ( ( '?' ( ( ( RULE_ESTERELID ) ) | ( (lv_tick_2_0= ruleTick ) ) ) ) )
@@ -19102,7 +19103,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
         AntlrDatatypeRuleToken lv_tick_4_0 = null;
 
 
-         @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
+         EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
             // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8527:6: ( ( 'pre' '(' '?' ( ( ( RULE_ESTERELID ) ) | ( (lv_tick_4_0= ruleTick ) ) ) ')' ) )
@@ -19279,7 +19280,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
     public final EObject ruleDataTrap() throws RecognitionException {
         EObject current = null;
 
-         @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
+         EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
             // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8605:6: ( ( '??' ( ( RULE_ESTERELID ) ) ) )
@@ -19381,7 +19382,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
         EObject lv_dataExpr_4_0 = null;
 
 
-         @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
+         EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
             // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8646:6: ( ( ( ( RULE_ESTERELID ) ) '(' ( (lv_dataExpr_2_0= ruleDataExpr ) ) ( ',' ( (lv_dataExpr_4_0= ruleDataExpr ) ) )* ')' ) )
@@ -19585,7 +19586,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
         EObject this_SigExpr_0 = null;
 
 
-         @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
+         EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
             // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8743:6: (this_SigExpr_0= ruleSigExpr )
@@ -19666,7 +19667,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
         EObject lv_andExpr_2_0 = null;
 
 
-         @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
+         EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
             // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8775:6: ( ( ( (lv_andExpr_0_0= ruleSigExprAND ) ) ( 'or' ( (lv_andExpr_2_0= ruleSigExprAND ) ) )* ) )
@@ -19842,7 +19843,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
         EObject lv_unaExpr_2_0 = null;
 
 
-         @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
+         EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
             // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8850:6: ( ( ( (lv_unaExpr_0_0= ruleSigExprUnary ) ) ( 'and' ( (lv_unaExpr_2_0= ruleSigExprUnary ) ) )* ) )
@@ -20019,7 +20020,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
         EObject lv_sigExpr_5_0 = null;
 
 
-         @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
+         EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
             // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:8925:6: ( ( ( (lv_expr_0_0= RULE_ESTERELID ) ) | ( '(' ( (lv_sigExpr_2_0= ruleSigExpr ) ) ')' ) | ( 'not' ( (lv_sigExpr_5_0= ruleSigExprUnary ) ) ) ) )
@@ -20267,7 +20268,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
         EObject lv_event_2_0 = null;
 
 
-         @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
+         EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
             // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9034:6: ( ( ( (lv_event_0_0= ruleDelayEvent ) ) | ( ( (lv_expr_1_0= ruleDataExpr ) ) ( (lv_event_2_0= ruleDelayEvent ) ) ) ) )
@@ -20556,7 +20557,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
         EObject lv_blockSigExpr_7_0 = null;
 
 
-         @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
+         EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
             // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9130:6: ( ( ( ( ( RULE_ESTERELID ) ) | ( (lv_tick_1_0= ruleTick ) ) ) | ( 'pre' '(' ( (lv_preSigExpr_4_0= ruleSigExpr ) ) ')' ) | ( '[' ( (lv_blockSigExpr_7_0= ruleSigExpr ) ) ']' ) ) )
@@ -20872,7 +20873,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
         EObject lv_type_8_0 = null;
 
 
-         @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
+         EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
             // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9262:6: ( ( ( ':' ( (lv_type_1_0= ruleChannelType ) ) ) | ( '(' ( (lv_type_3_0= ruleChannelType ) ) ')' ) | ( ':=' ( (lv_dataExpr_6_0= ruleDataExpr ) ) ':' ( (lv_type_8_0= ruleChannelType ) ) ) ) )
@@ -21171,7 +21172,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
         Token lv_type_3_0=null;
         Token lv_type_4_0=null;
 
-         @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
+         EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
             // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9403:6: ( ( ( ( (lv_type_0_0= RULE_ESTERELID ) ) | ( (lv_type_1_0= RULE_BASETYPE ) ) ) | ( 'combine' ( ( (lv_type_3_0= RULE_ESTERELID ) ) | ( (lv_type_4_0= RULE_BASETYPE ) ) ) 'with' ( ( RULE_ESTERELID ) ) ) ) )
@@ -21504,7 +21505,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
         EObject lv_channel_1_0 = null;
 
 
-         @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
+         EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
             // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9547:6: ( ( ( (lv_name_0_0= RULE_ESTERELID ) ) ( (lv_channel_1_0= ruleChannelDescription ) )? ) )
@@ -21735,7 +21736,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
         Token lv_type_6_0=null;
         Token lv_type_7_0=null;
 
-         @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
+         EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
             // ../de.cau.cs.kieler.esterel/src-gen/de/cau/cs/kieler/esterel/parser/antlr/internal/InternalEsterel.g:9647:6: ( ( ( ( (lv_name_0_0= RULE_ESTERELID ) ) ':' ( ( (lv_type_2_0= RULE_ESTERELID ) ) | ( (lv_type_3_0= RULE_BASETYPE ) ) ) ) | ( ( (lv_name_4_0= RULE_ESTERELID ) ) '(' ( ( (lv_type_6_0= RULE_ESTERELID ) ) | ( (lv_type_7_0= RULE_BASETYPE ) ) ) ')' ) ) )

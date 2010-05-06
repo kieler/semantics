@@ -10,11 +10,11 @@ import org.eclipse.xtext.validation.ComposedChecks;
 @ComposedChecks(validators= {org.eclipse.xtext.validation.ImportUriValidator.class})
 public class AbstractEsterelJavaValidator extends AbstractDeclarativeValidator {
 
-    @Override
-    protected List<EPackage> getEPackages() {
-        List<EPackage> result = new ArrayList<EPackage>();
-        result.add(de.cau.cs.kieler.esterel.esterel.EsterelPackage.eINSTANCE);
-        return result;
-    }
+@Override
+	protected List<EPackage> getEPackages() {
+	    List<EPackage> result = new ArrayList<EPackage>();
+	    result.add(de.cau.cs.kieler.esterel.esterel.EsterelPackage.eINSTANCE);
+		return result;
+	}
 
 }

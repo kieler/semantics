@@ -1,3 +1,4 @@
+
 package de.cau.cs.kieler.esterel;
 
 import org.eclipse.emf.ecore.EPackage;
@@ -10,11 +11,7 @@ import com.google.inject.Injector;
 /**
  * Generated from StandaloneSetup.xpt!
  */
-public class EsterelStandaloneSetup implements ISetup {
-
-	public static void doSetup() {
-		new EsterelStandaloneSetup().createInjectorAndDoEMFRegistration();
-	}
+public class EsterelStandaloneSetupGenerated implements ISetup {
 
 	public Injector createInjectorAndDoEMFRegistration() {
 		org.eclipse.xtext.common.TerminalsStandaloneSetup.doSetup();
