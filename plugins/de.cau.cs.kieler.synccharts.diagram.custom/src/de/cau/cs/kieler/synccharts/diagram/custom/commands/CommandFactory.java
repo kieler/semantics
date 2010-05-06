@@ -229,13 +229,18 @@ public class CommandFactory {
                     String[] array = { "List[Transition]" };
                     possibleMappings.add(array);
                 }
-                possibleMappings.add(pureMapping.toArray(new String[pureMapping
-                        .size()]));
+
+                if (label.equals("Paste")) {
+                    possibleMappings.add(pureMapping
+                            .toArray(new String[pureMapping.size()]));
+                } else {
+                    String[] array = { "List[Object]" };
+                    possibleMappings.add(array);
+                }
 
                 for (String[] s : possibleMappings) {
                     List<Object> mappedSelection = framework
                             .createParameterMapping(selection, s);
-
                     if (mappedSelection != null
                             && result
                                     .initalize(editor, mappedSelection, label

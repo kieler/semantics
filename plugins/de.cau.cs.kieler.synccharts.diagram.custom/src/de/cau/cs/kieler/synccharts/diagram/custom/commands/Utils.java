@@ -155,32 +155,83 @@ public final class Utils {
             List<?> list = (List<?>) object;
 
             if (list.get(0) instanceof State) {
-                Collection<State> coll = new LinkedList<State>();
-                for (Object o : list) {
-                    if (o instanceof State) {
-                        State state = (State) o;
-                        coll.add(state);
-                    }
-                }
-                statesClipBoard = EcoreUtil.copyAll(coll);
+                statesToClipboard(list);
             } else if (list.get(0) instanceof Region) {
-                Collection<Region> coll = new LinkedList<Region>();
-                for (Object o : list) {
-                    if (o instanceof Region) {
-                        coll.add((Region) o);
-                    }
-                }
-                regionsClipBoard = EcoreUtil.copyAll(coll);
+                regionsToClipboard(list);
             } else if (list.get(0) instanceof Transition) {
-                Collection<Transition> coll = new LinkedList<Transition>();
-                for (Object o : list) {
-                    if (o instanceof Transition) {
-                        coll.add((Transition) o);
-                    }
-                }
-                transitionsClipBoard = EcoreUtil.copyAll(coll);
+                transitionsToClipboard(list);
             }
         }
+    }
+
+    /**
+     * Copy pure transition list to clipboard. If state is encountered copy
+     * state list instead.
+     * 
+     * @param list
+     *            the list that should be added to clipboard
+     */
+    private static void transitionsToClipboard(List<?> list) {
+        Collection<Transition> coll = new LinkedList<Transition>();
+        boolean foundState = false;
+        for (Object o : list) {
+            if (o instanceof Transition) {
+                coll.add((Transition) o);
+            } else if (o instanceof State) {
+                foundState = true;
+                break;
+            }
+        }
+        if (foundState) {
+            statesToClipboard(list);
+        } else {
+            transitionsClipBoard = EcoreUtil.copyAll(coll);
+        }
+    }
+
+    /**
+     * Copy pure region list to clipboard. If state is encountered copy state
+     * list instead.
+     * 
+     * @param list
+     *            the list that should be added to clipboard
+     */
+    private static void regionsToClipboard(List<?> list) {
+        Collection<Region> coll = new LinkedList<Region>();
+        boolean foundState = false;
+        for (Object o : list) {
+            if (o instanceof Region) {
+                coll.add((Region) o);
+            } else if (o instanceof State) {
+                foundState = true;
+                break;
+            }
+        }
+        if (foundState) {
+            statesToClipboard(list);
+        } else {
+            regionsClipBoard = EcoreUtil.copyAll(coll);
+        }
+    }
+
+    /**
+     * Copy state list to clipboard and clear of all substates.
+     * 
+     * @param list
+     *            the list that should be added to clipboard
+     */
+    private static void statesToClipboard(final List<?> list) {
+        Collection<State> coll = new LinkedList<State>();
+        for (Object o : list) {
+            if (o instanceof State) {
+                State state = (State) o;
+                State parent = state.getParentRegion().getParentState();
+                if (parent == null || !list.contains(parent)) {
+                    coll.add(state);
+                }
+            }
+        }
+        statesClipBoard = EcoreUtil.copyAll(coll);
     }
 
     /**
@@ -319,13 +370,12 @@ public final class Utils {
     public final static void debug(final Object object) {
         System.out.println("COPY AND PASTE DEBUG: " + object.toString());
     }
-    
-    
+
     public final static void dump(String aString) {
         System.out.println(aString);
     }
 
-    public final static EObject analyze(Object object){
+    public final static EObject analyze(Object object) {
         return (EObject) object;
     }
 }
