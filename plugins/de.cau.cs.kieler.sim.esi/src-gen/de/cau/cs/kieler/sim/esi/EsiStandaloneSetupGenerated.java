@@ -1,4 +1,5 @@
-package de.cau.cs.kieler.quartz.editor;
+
+package de.cau.cs.kieler.sim.esi;
 
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.xtext.ISetup;
@@ -10,11 +11,7 @@ import com.google.inject.Injector;
 /**
  * Generated from StandaloneSetup.xpt!
  */
-public class QuartzStandaloneSetup implements ISetup {
-
-	public static void doSetup() {
-		new QuartzStandaloneSetup().createInjectorAndDoEMFRegistration();
-	}
+public class EsiStandaloneSetupGenerated implements ISetup {
 
 	public Injector createInjectorAndDoEMFRegistration() {
 		// register default ePackages
@@ -33,18 +30,20 @@ public class QuartzStandaloneSetup implements ISetup {
 	}
 	
 	public Injector createInjector() {
-		return Guice.createInjector(new de.cau.cs.kieler.quartz.editor.QuartzRuntimeModule());
+		return Guice.createInjector(new de.cau.cs.kieler.sim.esi.EsiRuntimeModule());
 	}
 	
 	public void register(Injector injector) {
-	if (!EPackage.Registry.INSTANCE.containsKey("http://www.cau.de/cs/kieler/quartz/editor/Quartz")) {
-		EPackage.Registry.INSTANCE.put("http://www.cau.de/cs/kieler/quartz/editor/Quartz", de.cau.cs.kieler.quartz.editor.quartz.QuartzPackage.eINSTANCE);
+	if (!EPackage.Registry.INSTANCE.containsKey("http://www.cau.de/cs/kieler/sim/esi/Esi")) {
+		EPackage.Registry.INSTANCE.put("http://www.cau.de/cs/kieler/sim/esi/Esi", de.cau.cs.kieler.sim.esi.esi.EsiPackage.eINSTANCE);
 	}
 
 		org.eclipse.xtext.resource.IResourceFactory resourceFactory = injector.getInstance(org.eclipse.xtext.resource.IResourceFactory.class);
 		org.eclipse.xtext.resource.IResourceServiceProvider serviceProvider = injector.getInstance(org.eclipse.xtext.resource.IResourceServiceProvider.class);
-		Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().put("qrz", resourceFactory);
-		org.eclipse.xtext.resource.IResourceServiceProvider.Registry.INSTANCE.getExtensionToFactoryMap().put("qrz", serviceProvider);
+		Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().put("esi", resourceFactory);
+		org.eclipse.xtext.resource.IResourceServiceProvider.Registry.INSTANCE.getExtensionToFactoryMap().put("esi", serviceProvider);
+		Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().put("eso", resourceFactory);
+		org.eclipse.xtext.resource.IResourceServiceProvider.Registry.INSTANCE.getExtensionToFactoryMap().put("eso", serviceProvider);
 		
 
 

@@ -149,15 +149,7 @@ public class EsiGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cRightParenthesisKeyword_1_2 = (Keyword)cGroup_1.eContents().get(2);
 		
 		//signal:
-		//  name=ID (valued?="(" val=NUM ")")?;  
-		//
-		//     
-		//             
-		//   
-		//               
-		/// *------------------------------------------------------------------
-		// * LEXER RULES
-		// *------------------------------------------------------------------* /
+		//  name=ID (valued?="(" val=NUM ")")?;
 		public ParserRule getRule() { return rule; }
 
 		//name=ID (valued?="(" val=NUM ")")?
@@ -244,15 +236,7 @@ public class EsiGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//signal:
-	//  name=ID (valued?="(" val=NUM ")")?;  
-	//
-	//     
-	//             
-	//   
-	//               
-	/// *------------------------------------------------------------------
-	// * LEXER RULES
-	// *------------------------------------------------------------------* /
+	//  name=ID (valued?="(" val=NUM ")")?;
 	public SignalElements getSignalAccess() {
 		return (pSignal != null) ? pSignal : (pSignal = new SignalElements());
 	}
@@ -261,12 +245,12 @@ public class EsiGrammarAccess extends AbstractGrammarElementFinder {
 		return getSignalAccess().getRule();
 	}
 
-	//terminal ID:
-	//  (Letter | "_") (Letter | Digit | "_")*; 
-	//               
 	/// *------------------------------------------------------------------
 	// * LEXER RULES
 	// *------------------------------------------------------------------* /
+	//
+	//terminal ID:
+	//  (Letter | "_") (Letter | Digit | "_")*;
 	public TerminalRule getIDRule() {
 		return (tID != null) ? tID : (tID = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "ID"));
 	} 

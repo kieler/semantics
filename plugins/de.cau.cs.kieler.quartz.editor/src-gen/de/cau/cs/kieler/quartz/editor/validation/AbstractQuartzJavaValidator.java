@@ -10,11 +10,11 @@ import org.eclipse.xtext.validation.ComposedChecks;
 @ComposedChecks(validators= {org.eclipse.xtext.validation.ImportUriValidator.class})
 public class AbstractQuartzJavaValidator extends AbstractDeclarativeValidator {
 
-    @Override
-    protected List<EPackage> getEPackages() {
-        List<EPackage> result = new ArrayList<EPackage>();
-        result.add(de.cau.cs.kieler.quartz.editor.quartz.QuartzPackage.eINSTANCE);
-        return result;
-    }
+@Override
+	protected List<EPackage> getEPackages() {
+	    List<EPackage> result = new ArrayList<EPackage>();
+	    result.add(de.cau.cs.kieler.quartz.editor.quartz.QuartzPackage.eINSTANCE);
+		return result;
+	}
 
 }

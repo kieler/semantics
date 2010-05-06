@@ -179,12 +179,12 @@ public class QuartzGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cSemicolonKeyword_1_6 = (Keyword)cGroup_1.eContents().get(6);
 		
 		//MacroDef:
-		//  "macro" name=QName "(" args=QNameList ")" "=" expr=UtyExpr ";"|"macro" name=QName "(" ")"
-		//  "=" expr=UtyExpr ";";
+		//  "macro" name=QName "(" args=QNameList ")" "=" expr=UtyExpr ";"|"macro"
+		//  name=QName "(" ")" "=" expr=UtyExpr ";";
 		public ParserRule getRule() { return rule; }
 
-		//"macro" name=QName "(" args=QNameList ")" "=" expr=UtyExpr ";"|"macro" name=QName "(" ")"
-		//"=" expr=UtyExpr ";"
+		//"macro" name=QName "(" args=QNameList ")" "=" expr=UtyExpr ";"|"macro"
+		//name=QName "(" ")" "=" expr=UtyExpr ";"
 		public Alternatives getAlternatives() { return cAlternatives; }
 
 		//"macro" name=QName "(" args=QNameList ")" "=" expr=UtyExpr ";"
@@ -268,14 +268,7 @@ public class QuartzGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cStmtLocStmtParserRuleCall_5_0 = (RuleCall)cStmtAssignment_5.eContents().get(0);
 		
 		//QModule:
-		//  "module" name=Name "(" intf=InterfaceList ")" stmt=LocStmt?; 
-		//
-		//              // obs+=ObservedSpecList*;
-		//
-		////ObservedSpecList : //"satisfies" "{" "observer" "(" InterfaceList ")" "{" stmts=LocStmt "}" proofs=ProofGoalList "}" 
-		//                  //| "satisfies" "{" "observer" "(" InterfaceList ")" "{" stmts=LocStmt "}" "}" 
-		//                 // | 
-		//                 //"satisfies" "{" ProofGoalList "}" ;
+		//  "module" name=Name "(" intf=InterfaceList ")" stmt=LocStmt?;
 		public ParserRule getRule() { return rule; }
 
 		//"module" name=Name "(" intf=InterfaceList ")" stmt=LocStmt?
@@ -314,13 +307,16 @@ public class QuartzGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cIdAssignment = (Assignment)rule.eContents().get(1);
 		private final RuleCall cIdIDTerminalRuleCall_0 = (RuleCall)cIdAssignment.eContents().get(0);
 		
-		//Name:
-		//  id=ID; // obs+=ObservedSpecList*;
+		//// obs+=ObservedSpecList*;
 		//
 		////ObservedSpecList : //"satisfies" "{" "observer" "(" InterfaceList ")" "{" stmts=LocStmt "}" proofs=ProofGoalList "}" 
 		//                  //| "satisfies" "{" "observer" "(" InterfaceList ")" "{" stmts=LocStmt "}" "}" 
 		//                 // | 
 		//                 //"satisfies" "{" ProofGoalList "}" ;
+		//
+		//
+		//Name:
+		//  id=ID;
 		public ParserRule getRule() { return rule; }
 
 		//id=ID
@@ -429,42 +425,19 @@ public class QuartzGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cDimsDimListParserRuleCall_1_0 = (RuleCall)cDimsAssignment_1.eContents().get(0);
 		
 		//QType:
-		//  ("bool"|"real"|"bv"|"bv" "{" ta=UtyExpr "}"|"nat"|"nat" "{" tb=UtyExpr "}"|"int"|"int"
-		//  "{" tc=UtyExpr "}") dims=DimList?; 
-		//        
-		//    
-		//            
-		//            
-		//                  
-		//            
-		//                  
-		//            
-		//                  
-		//          //| "(" QTypeList ")"
+		//  ("bool" //| "(" QTypeList ")"
+		//|"real"|"bv"|"bv" "{" ta=UtyExpr "}"|"nat"|"nat" "{" tb=UtyExpr "}"|"int"|"int"
+		//  "{" tc=UtyExpr "}") dims=DimList?;
 		public ParserRule getRule() { return rule; }
 
-		//("bool"|"real"|"bv"|"bv" "{" ta=UtyExpr "}"|"nat"|"nat" "{" tb=UtyExpr "}"|"int"|"int"
-		//"{" tc=UtyExpr "}") dims=DimList?   
-		//            
-		//            
-		//                  
-		//            
-		//                  
-		//            
-		//                  
-		//          //| "(" QTypeList ")"
+		//("bool" //| "(" QTypeList ")"
+		//|"real"|"bv"|"bv" "{" ta=UtyExpr "}"|"nat"|"nat" "{" tb=UtyExpr "}"|"int"|"int"
+		//"{" tc=UtyExpr "}") dims=DimList?
 		public Group getGroup() { return cGroup; }
 
-		//"bool"|"real"|"bv"|"bv" "{" ta=UtyExpr "}"|"nat"|"nat" "{" tb=UtyExpr "}"|"int"|"int"
-		//"{" tc=UtyExpr "}"   
-		//            
-		//            
-		//                  
-		//            
-		//                  
-		//            
-		//                  
-		//          //| "(" QTypeList ")"
+		//"bool" //| "(" QTypeList ")"
+		//|"real"|"bv"|"bv" "{" ta=UtyExpr "}"|"nat"|"nat" "{" tb=UtyExpr "}"|"int"|"int"
+		//"{" tc=UtyExpr "}"
 		public Alternatives getAlternatives_0() { return cAlternatives_0; }
 
 		//"bool"
@@ -518,8 +491,7 @@ public class QuartzGrammarAccess extends AbstractGrammarElementFinder {
 		//"int"
 		public Keyword getIntKeyword_0_6() { return cIntKeyword_0_6; }
 
-		//"int" "{" tc=UtyExpr "}"         
-		//          //| "(" QTypeList ")"
+		//"int" "{" tc=UtyExpr "}"
 		public Group getGroup_0_7() { return cGroup_0_7; }
 
 		//"int"
@@ -534,8 +506,7 @@ public class QuartzGrammarAccess extends AbstractGrammarElementFinder {
 		//UtyExpr
 		public RuleCall getTcUtyExprParserRuleCall_0_7_2_0() { return cTcUtyExprParserRuleCall_0_7_2_0; }
 
-		//"}"   
-		//          //| "(" QTypeList ")"
+		//"}"
 		public Keyword getRightCurlyBracketKeyword_0_7_3() { return cRightCurlyBracketKeyword_0_7_3; }
 
 		//dims=DimList?
@@ -926,12 +897,7 @@ public class QuartzGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cRightCurlyBracketKeyword_3 = (Keyword)cGroup.eContents().get(3);
 		
 		//AssumeList:
-		//  "with" "{" QNameList "}"; 
-		//
-		//          
-		//
-		////ProofGoalList : (name+=QName (":" "assume" expr+=UtyExpr ";" (goals+=ProofGoalList)?   ))+;          
-		//               //| (ver+=VerifTask)? (ctrl+=ControlList)? ":" "assert" expr+=UtyExpr ass+=AssumeList? ";"))+;
+		//  "with" "{" QNameList "}";
 		public ParserRule getRule() { return rule; }
 
 		//"with" "{" QNameList "}"
@@ -963,11 +929,12 @@ public class QuartzGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cExprUtyExprParserRuleCall_3_0 = (RuleCall)cExprAssignment_3.eContents().get(0);
 		private final Keyword cSemicolonKeyword_4 = (Keyword)cGroup.eContents().get(4);
 		
-		//FixpointEqList:
-		//  (("mu"|"nu") name+=QName "=" expr+=UtyExpr ";")*; 
-		//
 		////ProofGoalList : (name+=QName (":" "assume" expr+=UtyExpr ";" (goals+=ProofGoalList)?   ))+;          
 		//               //| (ver+=VerifTask)? (ctrl+=ControlList)? ":" "assert" expr+=UtyExpr ass+=AssumeList? ";"))+;
+		//
+		//
+		//FixpointEqList:
+		//  (("mu"|"nu") name+=QName "=" expr+=UtyExpr ";")*;
 		public ParserRule getRule() { return rule; }
 
 		//(("mu"|"nu") name+=QName "=" expr+=UtyExpr ";")*
@@ -1317,84 +1284,33 @@ public class QuartzGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cRightParenthesisKeyword_54_2 = (Keyword)cGroup_54.eContents().get(2);
 		
 		//UtyExpr:
-		//  "instant"|"inside"|"terminate"|"true"|"false"|BVCONST|OCTCONST|HEXCONST|NATCONST
-		//  |REALCONST|QName|op=NOT expr=UtyExpr|"+" UtyExpr|"-" UtyExpr|"abs" "(" UtyExpr ")"|
-		//  "sat" "{" UtyExpr "}" "(" t7=UtyExpr ")"|"der" "(" UtyExpr ")"|"reverse" "(" UtyExpr ")"|"{"
-		//  UtyExpr "::" expr=UtyExpr "}"|"next" "(" UtyExpr ")"|"nat2bv" "(" UtyExpr ")"|"int2bv" "("
-		//  UtyExpr ")"|"arr2bv" "(" QName ")"|"tup2bv" "(" UtyExpr ")"|"bv2nat" "(" UtyExpr ")"|
-		//  "bv2int" "(" UtyExpr ")"|"nat2real" "(" UtyExpr ")"|"int2real" "(" UtyExpr ")"|"sin" "("
-		//  UtyExpr ")"|"cos" "(" UtyExpr ")"|"exp" "(" UtyExpr "," expr=UtyExpr ")"|"log" "(" UtyExpr
-		//  "," expr=UtyExpr ")"|"sizeOf" "(" UtyExpr ")"|"forall" Generic expr=UtyExpr|"exists"
-		//  Generic expr=UtyExpr|"sum" Generic expr=UtyExpr|"X" UtyExpr|"G" UtyExpr|"F" UtyExpr|
-		//  "PA" UtyExpr|"PF" UtyExpr|"PSX" UtyExpr|"PMX" UtyExpr|"E" UtyExpr|"A" UtyExpr|"[]"
-		//  UtyExpr|"<>" UtyExpr|"[:]" UtyExpr|"<:>" UtyExpr|"mu" name=QName "." expr=UtyExpr|"nu"
-		//  name=QName "." expr=UtyExpr|"fixpoints" FixpointEqList "in" expr2=UtyExpr|"forall"
-		//  name=QName ":" type=QType "." expr=UtyExpr|"exists" name=QName ":" type=QType "." expr=
-		//  UtyExpr|"(" UtyExpr ")"; 
-		//
-		//    
-		//            
-		//            
-		//            
-		//            
-		//            
-		//            
-		//            
-		//            
-		//            
-		//            
-		//        //  | UtyExpr EQU UtyExpr
-		//          // | UtyExpr XOR UtyExpr
-		//          // | UtyExpr IMP UtyExpr
-		//         //  | UtyExpr OR UtyExpr
-		//         //  | UtyExpr AND UtyExpr
-		//               
-		//        //  | UtyExpr "<" UtyExpr
-		//         //  | UtyExpr "<=" UtyExpr
-		//         //  | UtyExpr ">" UtyExpr
-		//         //  | UtyExpr ">=" UtyExpr
-		//        //  | UtyExpr "==" UtyExpr
-		//         //  | UtyExpr "!=" UtyExpr
-		//         //  | UtyExpr "-" UtyExpr
-		//         //  | UtyExpr "+" UtyExpr
-		//        //   | UtyExpr "%" UtyExpr
-		//        //   | UtyExpr "/" UtyExpr
-		//        //   | UtyExpr "*" UtyExpr
-		//               
-		//              
-		//                  
-		//                        
-		//                  
-		//         // | UtyExpr "{" UtyExpr "}"
-		//         // | UtyExpr "@" UtyExpr
-		//         //  | UtyExpr "{" UtyExpr ":" UtyExpr "}"
-		//         //  | UtyExpr "{" UtyExpr ":" "}"
-		//         //  | UtyExpr "{" ":" UtyExpr "}"
-		//                   
-		//                    
-		//        //  | UtyExpr UtyExprSelectList
-		//         //  | UtyExpr "." UtyExpr
-		//          // | "(" OptUtyExpr "," tl=OptUtyExprList ")"
-		//          // | "(" UtyExpr "?" tm=UtyExpr ":" s=UtyExpr ")"
-		//           //| QName "(" OptUtyExprList ")"
-		//                   
-		//                  
-		//                  
-		//                  
-		//                  
-		//                  
-		//                  
-		//                  
-		//                  
-		//                  
-		//                  
-		//                      
-		//                      
-		//                  
-		//                
-		//                
-		//                
-		// / *         | "[" UtyExpr "SU" expr=UtyExpr "]"
+		//  "instant" //  | UtyExpr EQU UtyExpr
+		//            // | UtyExpr XOR UtyExpr
+		//            // | UtyExpr IMP UtyExpr
+		//           //  | UtyExpr OR UtyExpr
+		//           //  | UtyExpr AND UtyExpr
+		//  //  | UtyExpr "<" UtyExpr
+		//           //  | UtyExpr "<=" UtyExpr
+		//           //  | UtyExpr ">" UtyExpr
+		//           //  | UtyExpr ">=" UtyExpr
+		//          //  | UtyExpr "==" UtyExpr
+		//           //  | UtyExpr "!=" UtyExpr
+		//           //  | UtyExpr "-" UtyExpr
+		//           //  | UtyExpr "+" UtyExpr
+		//          //   | UtyExpr "%" UtyExpr
+		//          //   | UtyExpr "/" UtyExpr
+		//          //   | UtyExpr "*" UtyExpr
+		//  // | UtyExpr "{" UtyExpr "}"
+		//           // | UtyExpr "@" UtyExpr
+		//           //  | UtyExpr "{" UtyExpr ":" UtyExpr "}"
+		//           //  | UtyExpr "{" UtyExpr ":" "}"
+		//           //  | UtyExpr "{" ":" UtyExpr "}"
+		//  //  | UtyExpr UtyExprSelectList
+		//           //  | UtyExpr "." UtyExpr
+		//            // | "(" OptUtyExpr "," tl=OptUtyExprList ")"
+		//            // | "(" UtyExpr "?" tm=UtyExpr ":" s=UtyExpr ")"
+		//             //| QName "(" OptUtyExprList ")"
+		//  / *         | "[" UtyExpr "SU" expr=UtyExpr "]"
 		//          | "[" UtyExpr "SB" expr=UtyExpr "]"
 		//          | "[" UtyExpr "SW" expr=UtyExpr "]"
 		//          | "[" UtyExpr "WU" expr=UtyExpr "]"
@@ -1405,42 +1321,30 @@ public class QuartzGrammarAccess extends AbstractGrammarElementFinder {
 		//          | "[" UtyExpr "PSW" expr=UtyExpr "]"
 		//          | "[" UtyExpr "PMU" expr=UtyExpr "]"
 		//          | "[" UtyExpr "PMB" expr=UtyExpr "]"
-		//          | "[" UtyExpr "PMW" expr=UtyExpr "]"* /
+		//          | "[" UtyExpr "PMW" expr=UtyExpr "]"* /|"inside"|"terminate"|"true"|
+		//  "false"|BVCONST|OCTCONST|HEXCONST|NATCONST|REALCONST|QName|op=NOT
+		//  expr=UtyExpr|"+" UtyExpr|"-" UtyExpr|"abs" "(" UtyExpr ")"|"sat" "{" UtyExpr
+		//  "}" "(" t7=UtyExpr ")"|"der" "(" UtyExpr ")"|"reverse" "(" UtyExpr ")"|"{"
+		//  UtyExpr "::" expr=UtyExpr "}"|"next" "(" UtyExpr ")"|"nat2bv" "(" UtyExpr ")"
+		//  |"int2bv" "(" UtyExpr ")"|"arr2bv" "(" QName ")"|"tup2bv" "(" UtyExpr ")"|
+		//  "bv2nat" "(" UtyExpr ")"|"bv2int" "(" UtyExpr ")"|"nat2real" "(" UtyExpr ")"|
+		//  "int2real" "(" UtyExpr ")"|"sin" "(" UtyExpr ")"|"cos" "(" UtyExpr ")"|"exp"
+		//  "(" UtyExpr "," expr=UtyExpr ")"|"log" "(" UtyExpr "," expr=UtyExpr ")"|
+		//  "sizeOf" "(" UtyExpr ")"|"forall" Generic expr=UtyExpr|"exists" Generic
+		//  expr=UtyExpr|"sum" Generic expr=UtyExpr|"X" UtyExpr|"G" UtyExpr|"F" UtyExpr|
+		//  "PA" UtyExpr|"PF" UtyExpr|"PSX" UtyExpr|"PMX" UtyExpr|"E" UtyExpr|"A" UtyExpr
+		//  |"[]" UtyExpr|"<>" UtyExpr|"[:]" UtyExpr|"<:>" UtyExpr|"mu" name=QName "."
+		//  expr=UtyExpr|"nu" name=QName "." expr=UtyExpr|"fixpoints" FixpointEqList "in"
+		//  expr2=UtyExpr|"forall" name=QName ":" type=QType "." expr=UtyExpr|"exists"
+		//  name=QName ":" type=QType "." expr=UtyExpr|"(" UtyExpr ")";
 		public ParserRule getRule() { return rule; }
 
-		//"instant"|"inside"|"terminate"|"true"|"false"|BVCONST|OCTCONST|HEXCONST|NATCONST
-		//|REALCONST|QName|op=NOT expr=UtyExpr|"+" UtyExpr|"-" UtyExpr|"abs" "(" UtyExpr ")"|
-		//"sat" "{" UtyExpr "}" "(" t7=UtyExpr ")"|"der" "(" UtyExpr ")"|"reverse" "(" UtyExpr ")"|"{"
-		//UtyExpr "::" expr=UtyExpr "}"|"next" "(" UtyExpr ")"|"nat2bv" "(" UtyExpr ")"|"int2bv" "("
-		//UtyExpr ")"|"arr2bv" "(" QName ")"|"tup2bv" "(" UtyExpr ")"|"bv2nat" "(" UtyExpr ")"|
-		//"bv2int" "(" UtyExpr ")"|"nat2real" "(" UtyExpr ")"|"int2real" "(" UtyExpr ")"|"sin" "("
-		//UtyExpr ")"|"cos" "(" UtyExpr ")"|"exp" "(" UtyExpr "," expr=UtyExpr ")"|"log" "(" UtyExpr
-		//"," expr=UtyExpr ")"|"sizeOf" "(" UtyExpr ")"|"forall" Generic expr=UtyExpr|"exists"
-		//Generic expr=UtyExpr|"sum" Generic expr=UtyExpr|"X" UtyExpr|"G" UtyExpr|"F" UtyExpr|
-		//"PA" UtyExpr|"PF" UtyExpr|"PSX" UtyExpr|"PMX" UtyExpr|"E" UtyExpr|"A" UtyExpr|"[]"
-		//UtyExpr|"<>" UtyExpr|"[:]" UtyExpr|"<:>" UtyExpr|"mu" name=QName "." expr=UtyExpr|"nu"
-		//name=QName "." expr=UtyExpr|"fixpoints" FixpointEqList "in" expr2=UtyExpr|"forall"
-		//name=QName ":" type=QType "." expr=UtyExpr|"exists" name=QName ":" type=QType "." expr=
-		//UtyExpr|"(" UtyExpr ")" 
-		//
-		//    
-		//            
-		//            
-		//            
-		//            
-		//            
-		//            
-		//            
-		//            
-		//            
-		//            
-		//        //  | UtyExpr EQU UtyExpr
+		//"instant" //  | UtyExpr EQU UtyExpr
 		//          // | UtyExpr XOR UtyExpr
 		//          // | UtyExpr IMP UtyExpr
 		//         //  | UtyExpr OR UtyExpr
 		//         //  | UtyExpr AND UtyExpr
-		//               
-		//        //  | UtyExpr "<" UtyExpr
+		////  | UtyExpr "<" UtyExpr
 		//         //  | UtyExpr "<=" UtyExpr
 		//         //  | UtyExpr ">" UtyExpr
 		//         //  | UtyExpr ">=" UtyExpr
@@ -1451,41 +1355,17 @@ public class QuartzGrammarAccess extends AbstractGrammarElementFinder {
 		//        //   | UtyExpr "%" UtyExpr
 		//        //   | UtyExpr "/" UtyExpr
 		//        //   | UtyExpr "*" UtyExpr
-		//               
-		//              
-		//                  
-		//                        
-		//                  
-		//         // | UtyExpr "{" UtyExpr "}"
+		//// | UtyExpr "{" UtyExpr "}"
 		//         // | UtyExpr "@" UtyExpr
 		//         //  | UtyExpr "{" UtyExpr ":" UtyExpr "}"
 		//         //  | UtyExpr "{" UtyExpr ":" "}"
 		//         //  | UtyExpr "{" ":" UtyExpr "}"
-		//                   
-		//                    
-		//        //  | UtyExpr UtyExprSelectList
+		////  | UtyExpr UtyExprSelectList
 		//         //  | UtyExpr "." UtyExpr
 		//          // | "(" OptUtyExpr "," tl=OptUtyExprList ")"
 		//          // | "(" UtyExpr "?" tm=UtyExpr ":" s=UtyExpr ")"
 		//           //| QName "(" OptUtyExprList ")"
-		//                   
-		//                  
-		//                  
-		//                  
-		//                  
-		//                  
-		//                  
-		//                  
-		//                  
-		//                  
-		//                  
-		//                      
-		//                      
-		//                  
-		//                
-		//                
-		//                
-		// / *         | "[" UtyExpr "SU" expr=UtyExpr "]"
+		/// *         | "[" UtyExpr "SU" expr=UtyExpr "]"
 		//          | "[" UtyExpr "SB" expr=UtyExpr "]"
 		//          | "[" UtyExpr "SW" expr=UtyExpr "]"
 		//          | "[" UtyExpr "WU" expr=UtyExpr "]"
@@ -1496,7 +1376,22 @@ public class QuartzGrammarAccess extends AbstractGrammarElementFinder {
 		//          | "[" UtyExpr "PSW" expr=UtyExpr "]"
 		//          | "[" UtyExpr "PMU" expr=UtyExpr "]"
 		//          | "[" UtyExpr "PMB" expr=UtyExpr "]"
-		//          | "[" UtyExpr "PMW" expr=UtyExpr "]"* /
+		//          | "[" UtyExpr "PMW" expr=UtyExpr "]"* /|"inside"|"terminate"|"true"|
+		//"false"|BVCONST|OCTCONST|HEXCONST|NATCONST|REALCONST|QName|op=NOT expr=UtyExpr|
+		//"+" UtyExpr|"-" UtyExpr|"abs" "(" UtyExpr ")"|"sat" "{" UtyExpr "}" "("
+		//t7=UtyExpr ")"|"der" "(" UtyExpr ")"|"reverse" "(" UtyExpr ")"|"{" UtyExpr "::"
+		//expr=UtyExpr "}"|"next" "(" UtyExpr ")"|"nat2bv" "(" UtyExpr ")"|"int2bv" "("
+		//UtyExpr ")"|"arr2bv" "(" QName ")"|"tup2bv" "(" UtyExpr ")"|"bv2nat" "("
+		//UtyExpr ")"|"bv2int" "(" UtyExpr ")"|"nat2real" "(" UtyExpr ")"|"int2real" "("
+		//UtyExpr ")"|"sin" "(" UtyExpr ")"|"cos" "(" UtyExpr ")"|"exp" "(" UtyExpr ","
+		//expr=UtyExpr ")"|"log" "(" UtyExpr "," expr=UtyExpr ")"|"sizeOf" "(" UtyExpr
+		//")"|"forall" Generic expr=UtyExpr|"exists" Generic expr=UtyExpr|"sum" Generic
+		//expr=UtyExpr|"X" UtyExpr|"G" UtyExpr|"F" UtyExpr|"PA" UtyExpr|"PF" UtyExpr|
+		//"PSX" UtyExpr|"PMX" UtyExpr|"E" UtyExpr|"A" UtyExpr|"[]" UtyExpr|"<>" UtyExpr|
+		//"[:]" UtyExpr|"<:>" UtyExpr|"mu" name=QName "." expr=UtyExpr|"nu" name=QName
+		//"." expr=UtyExpr|"fixpoints" FixpointEqList "in" expr2=UtyExpr|"forall"
+		//name=QName ":" type=QType "." expr=UtyExpr|"exists" name=QName ":" type=QType
+		//"." expr=UtyExpr|"(" UtyExpr ")"
 		public Alternatives getAlternatives() { return cAlternatives; }
 
 		//"instant"
@@ -1529,26 +1424,10 @@ public class QuartzGrammarAccess extends AbstractGrammarElementFinder {
 		//REALCONST
 		public RuleCall getREALCONSTTerminalRuleCall_9() { return cREALCONSTTerminalRuleCall_9; }
 
-		//QName   
-		//        //  | UtyExpr EQU UtyExpr
-		//          // | UtyExpr XOR UtyExpr
-		//          // | UtyExpr IMP UtyExpr
-		//         //  | UtyExpr OR UtyExpr
-		//         //  | UtyExpr AND UtyExpr
+		//QName
 		public RuleCall getQNameParserRuleCall_10() { return cQNameParserRuleCall_10; }
 
-		//op=NOT expr=UtyExpr     
-		//        //  | UtyExpr "<" UtyExpr
-		//         //  | UtyExpr "<=" UtyExpr
-		//         //  | UtyExpr ">" UtyExpr
-		//         //  | UtyExpr ">=" UtyExpr
-		//        //  | UtyExpr "==" UtyExpr
-		//         //  | UtyExpr "!=" UtyExpr
-		//         //  | UtyExpr "-" UtyExpr
-		//         //  | UtyExpr "+" UtyExpr
-		//        //   | UtyExpr "%" UtyExpr
-		//        //   | UtyExpr "/" UtyExpr
-		//        //   | UtyExpr "*" UtyExpr
+		//op=NOT expr=UtyExpr
 		public Group getGroup_11() { return cGroup_11; }
 
 		//op=NOT
@@ -1557,32 +1436,10 @@ public class QuartzGrammarAccess extends AbstractGrammarElementFinder {
 		//NOT
 		public RuleCall getOpNOTParserRuleCall_11_0_0() { return cOpNOTParserRuleCall_11_0_0; }
 
-		//expr=UtyExpr   
-		//        //  | UtyExpr "<" UtyExpr
-		//         //  | UtyExpr "<=" UtyExpr
-		//         //  | UtyExpr ">" UtyExpr
-		//         //  | UtyExpr ">=" UtyExpr
-		//        //  | UtyExpr "==" UtyExpr
-		//         //  | UtyExpr "!=" UtyExpr
-		//         //  | UtyExpr "-" UtyExpr
-		//         //  | UtyExpr "+" UtyExpr
-		//        //   | UtyExpr "%" UtyExpr
-		//        //   | UtyExpr "/" UtyExpr
-		//        //   | UtyExpr "*" UtyExpr
+		//expr=UtyExpr
 		public Assignment getExprAssignment_11_1() { return cExprAssignment_11_1; }
 
-		//UtyExpr 
-		//        //  | UtyExpr "<" UtyExpr
-		//         //  | UtyExpr "<=" UtyExpr
-		//         //  | UtyExpr ">" UtyExpr
-		//         //  | UtyExpr ">=" UtyExpr
-		//        //  | UtyExpr "==" UtyExpr
-		//         //  | UtyExpr "!=" UtyExpr
-		//         //  | UtyExpr "-" UtyExpr
-		//         //  | UtyExpr "+" UtyExpr
-		//        //   | UtyExpr "%" UtyExpr
-		//        //   | UtyExpr "/" UtyExpr
-		//        //   | UtyExpr "*" UtyExpr
+		//UtyExpr
 		public RuleCall getExprUtyExprParserRuleCall_11_1_0() { return cExprUtyExprParserRuleCall_11_1_0; }
 
 		//"+" UtyExpr
@@ -1645,12 +1502,7 @@ public class QuartzGrammarAccess extends AbstractGrammarElementFinder {
 		//")"
 		public Keyword getRightParenthesisKeyword_15_6() { return cRightParenthesisKeyword_15_6; }
 
-		//"der" "(" UtyExpr ")"         
-		//         // | UtyExpr "{" UtyExpr "}"
-		//         // | UtyExpr "@" UtyExpr
-		//         //  | UtyExpr "{" UtyExpr ":" UtyExpr "}"
-		//         //  | UtyExpr "{" UtyExpr ":" "}"
-		//         //  | UtyExpr "{" ":" UtyExpr "}"
+		//"der" "(" UtyExpr ")"
 		public Group getGroup_16() { return cGroup_16; }
 
 		//"der"
@@ -1662,12 +1514,7 @@ public class QuartzGrammarAccess extends AbstractGrammarElementFinder {
 		//UtyExpr
 		public RuleCall getUtyExprParserRuleCall_16_2() { return cUtyExprParserRuleCall_16_2; }
 
-		//")"   
-		//         // | UtyExpr "{" UtyExpr "}"
-		//         // | UtyExpr "@" UtyExpr
-		//         //  | UtyExpr "{" UtyExpr ":" UtyExpr "}"
-		//         //  | UtyExpr "{" UtyExpr ":" "}"
-		//         //  | UtyExpr "{" ":" UtyExpr "}"
+		//")"
 		public Keyword getRightParenthesisKeyword_16_3() { return cRightParenthesisKeyword_16_3; }
 
 		//"reverse" "(" UtyExpr ")"
@@ -1685,12 +1532,7 @@ public class QuartzGrammarAccess extends AbstractGrammarElementFinder {
 		//")"
 		public Keyword getRightParenthesisKeyword_17_3() { return cRightParenthesisKeyword_17_3; }
 
-		//"{" UtyExpr "::" expr=UtyExpr "}"           
-		//        //  | UtyExpr UtyExprSelectList
-		//         //  | UtyExpr "." UtyExpr
-		//          // | "(" OptUtyExpr "," tl=OptUtyExprList ")"
-		//          // | "(" UtyExpr "?" tm=UtyExpr ":" s=UtyExpr ")"
-		//           //| QName "(" OptUtyExprList ")"
+		//"{" UtyExpr "::" expr=UtyExpr "}"
 		public Group getGroup_18() { return cGroup_18; }
 
 		//"{"
@@ -1708,12 +1550,7 @@ public class QuartzGrammarAccess extends AbstractGrammarElementFinder {
 		//UtyExpr
 		public RuleCall getExprUtyExprParserRuleCall_18_3_0() { return cExprUtyExprParserRuleCall_18_3_0; }
 
-		//"}"   
-		//        //  | UtyExpr UtyExprSelectList
-		//         //  | UtyExpr "." UtyExpr
-		//          // | "(" OptUtyExpr "," tl=OptUtyExprList ")"
-		//          // | "(" UtyExpr "?" tm=UtyExpr ":" s=UtyExpr ")"
-		//           //| QName "(" OptUtyExprList ")"
+		//"}"
 		public Keyword getRightCurlyBracketKeyword_18_4() { return cRightCurlyBracketKeyword_18_4; }
 
 		//"next" "(" UtyExpr ")"
@@ -1974,19 +1811,7 @@ public class QuartzGrammarAccess extends AbstractGrammarElementFinder {
 		//UtyExpr
 		public RuleCall getExprUtyExprParserRuleCall_34_2_0() { return cExprUtyExprParserRuleCall_34_2_0; }
 
-		//"sum" Generic expr=UtyExpr       
-		// / *         | "[" UtyExpr "SU" expr=UtyExpr "]"
-		//          | "[" UtyExpr "SB" expr=UtyExpr "]"
-		//          | "[" UtyExpr "SW" expr=UtyExpr "]"
-		//          | "[" UtyExpr "WU" expr=UtyExpr "]"
-		//          | "[" UtyExpr "WB" expr=UtyExpr "]"
-		//          | "[" UtyExpr "WW" expr=UtyExpr "]"
-		//          | "[" UtyExpr "PSU" expr=UtyExpr "]"
-		//          | "[" UtyExpr "PSB" expr=UtyExpr "]"
-		//          | "[" UtyExpr "PSW" expr=UtyExpr "]"
-		//          | "[" UtyExpr "PMU" expr=UtyExpr "]"
-		//          | "[" UtyExpr "PMB" expr=UtyExpr "]"
-		//          | "[" UtyExpr "PMW" expr=UtyExpr "]"* /
+		//"sum" Generic expr=UtyExpr
 		public Group getGroup_35() { return cGroup_35; }
 
 		//"sum"
@@ -1995,34 +1820,10 @@ public class QuartzGrammarAccess extends AbstractGrammarElementFinder {
 		//Generic
 		public RuleCall getGenericParserRuleCall_35_1() { return cGenericParserRuleCall_35_1; }
 
-		//expr=UtyExpr   
-		// / *         | "[" UtyExpr "SU" expr=UtyExpr "]"
-		//          | "[" UtyExpr "SB" expr=UtyExpr "]"
-		//          | "[" UtyExpr "SW" expr=UtyExpr "]"
-		//          | "[" UtyExpr "WU" expr=UtyExpr "]"
-		//          | "[" UtyExpr "WB" expr=UtyExpr "]"
-		//          | "[" UtyExpr "WW" expr=UtyExpr "]"
-		//          | "[" UtyExpr "PSU" expr=UtyExpr "]"
-		//          | "[" UtyExpr "PSB" expr=UtyExpr "]"
-		//          | "[" UtyExpr "PSW" expr=UtyExpr "]"
-		//          | "[" UtyExpr "PMU" expr=UtyExpr "]"
-		//          | "[" UtyExpr "PMB" expr=UtyExpr "]"
-		//          | "[" UtyExpr "PMW" expr=UtyExpr "]"* /
+		//expr=UtyExpr
 		public Assignment getExprAssignment_35_2() { return cExprAssignment_35_2; }
 
-		//UtyExpr 
-		// / *         | "[" UtyExpr "SU" expr=UtyExpr "]"
-		//          | "[" UtyExpr "SB" expr=UtyExpr "]"
-		//          | "[" UtyExpr "SW" expr=UtyExpr "]"
-		//          | "[" UtyExpr "WU" expr=UtyExpr "]"
-		//          | "[" UtyExpr "WB" expr=UtyExpr "]"
-		//          | "[" UtyExpr "WW" expr=UtyExpr "]"
-		//          | "[" UtyExpr "PSU" expr=UtyExpr "]"
-		//          | "[" UtyExpr "PSB" expr=UtyExpr "]"
-		//          | "[" UtyExpr "PSW" expr=UtyExpr "]"
-		//          | "[" UtyExpr "PMU" expr=UtyExpr "]"
-		//          | "[" UtyExpr "PMB" expr=UtyExpr "]"
-		//          | "[" UtyExpr "PMW" expr=UtyExpr "]"* /
+		//UtyExpr
 		public RuleCall getExprUtyExprParserRuleCall_35_2_0() { return cExprUtyExprParserRuleCall_35_2_0; }
 
 		//"X" UtyExpr
@@ -2311,18 +2112,7 @@ public class QuartzGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cUtyExprParserRuleCall_4_2 = (RuleCall)cGroup_4.eContents().get(2);
 		private final Keyword cRightParenthesisKeyword_4_3 = (Keyword)cGroup_4.eContents().get(3);
 		
-		//UtyAction:
-		//  "emit" "next"? "(" UtyExpr ")"|"next" "(" UtyExpr ")" "=" t2=UtyExpr|"der" "(" UtyExpr ")"
-		//  "<-" t4=UtyExpr|"assume" "(" UtyExpr ")"|"assert" "(" UtyExpr ")"; 
-		//
-		//            
-		//            //| UtyExpr "=" t1=UtyExpr
-		//                         
-		//            //| UtyExpr "<-" t3=UtyExpr
-		//                         
-		//                    
-		//                    
-		//            //| RELEASECAN "(" UtyExpr ")"
+		////| RELEASECAN "(" UtyExpr ")"
 		//           / *  | "release" "(" UtyExpr ")"
 		//            | "constrainS" "(" UtyExpr ")"
 		//            | "constrainM" "(" UtyExpr ")"
@@ -2333,33 +2123,22 @@ public class QuartzGrammarAccess extends AbstractGrammarElementFinder {
 		//            | "constrainSME" "(" UtyExpr ")"* /
 		//            //| QName ":" "assume" "(" expr=UtyExpr ")"
 		//            // | QName ":" "assert" "(" expr=UtyExpr ")"
+		//
+		//
+		//UtyAction:
+		//  "emit" "next"? "(" UtyExpr ")" //| UtyExpr "=" t1=UtyExpr
+		//  //| UtyExpr "<-" t3=UtyExpr
+		//|"next" "(" UtyExpr ")" "=" t2=UtyExpr|"der" "(" UtyExpr ")" "<-" t4=UtyExpr|
+		//  "assume" "(" UtyExpr ")"|"assert" "(" UtyExpr ")";
 		public ParserRule getRule() { return rule; }
 
-		//"emit" "next"? "(" UtyExpr ")"|"next" "(" UtyExpr ")" "=" t2=UtyExpr|"der" "(" UtyExpr ")"
-		//"<-" t4=UtyExpr|"assume" "(" UtyExpr ")"|"assert" "(" UtyExpr ")" 
-		//
-		//            
-		//            //| UtyExpr "=" t1=UtyExpr
-		//                         
-		//            //| UtyExpr "<-" t3=UtyExpr
-		//                         
-		//                    
-		//                    
-		//            //| RELEASECAN "(" UtyExpr ")"
-		//           / *  | "release" "(" UtyExpr ")"
-		//            | "constrainS" "(" UtyExpr ")"
-		//            | "constrainM" "(" UtyExpr ")"
-		//            | "constrainE" "(" UtyExpr ")"
-		//            | "constrainSM" "(" UtyExpr ")"
-		//            | "constrainSE" "(" UtyExpr ")"
-		//            | "constrainME" "(" UtyExpr ")"
-		//            | "constrainSME" "(" UtyExpr ")"* /
-		//            //| QName ":" "assume" "(" expr=UtyExpr ")"
-		//            // | QName ":" "assert" "(" expr=UtyExpr ")"
+		//"emit" "next"? "(" UtyExpr ")" //| UtyExpr "=" t1=UtyExpr
+		////| UtyExpr "<-" t3=UtyExpr
+		//|"next" "(" UtyExpr ")" "=" t2=UtyExpr|"der" "(" UtyExpr ")" "<-" t4=UtyExpr|
+		//"assume" "(" UtyExpr ")"|"assert" "(" UtyExpr ")"
 		public Alternatives getAlternatives() { return cAlternatives; }
 
-		//"emit" "next"? "(" UtyExpr ")"           
-		//            //| UtyExpr "=" t1=UtyExpr
+		//"emit" "next"? "(" UtyExpr ")"
 		public Group getGroup_0() { return cGroup_0; }
 
 		//"emit"
@@ -2374,12 +2153,10 @@ public class QuartzGrammarAccess extends AbstractGrammarElementFinder {
 		//UtyExpr
 		public RuleCall getUtyExprParserRuleCall_0_3() { return cUtyExprParserRuleCall_0_3; }
 
-		//")"   
-		//            //| UtyExpr "=" t1=UtyExpr
+		//")"
 		public Keyword getRightParenthesisKeyword_0_4() { return cRightParenthesisKeyword_0_4; }
 
-		//"next" "(" UtyExpr ")" "=" t2=UtyExpr             
-		//            //| UtyExpr "<-" t3=UtyExpr
+		//"next" "(" UtyExpr ")" "=" t2=UtyExpr
 		public Group getGroup_1() { return cGroup_1; }
 
 		//"next"
@@ -2397,12 +2174,10 @@ public class QuartzGrammarAccess extends AbstractGrammarElementFinder {
 		//"="
 		public Keyword getEqualsSignKeyword_1_4() { return cEqualsSignKeyword_1_4; }
 
-		//t2=UtyExpr   
-		//            //| UtyExpr "<-" t3=UtyExpr
+		//t2=UtyExpr
 		public Assignment getT2Assignment_1_5() { return cT2Assignment_1_5; }
 
-		//UtyExpr 
-		//            //| UtyExpr "<-" t3=UtyExpr
+		//UtyExpr
 		public RuleCall getT2UtyExprParserRuleCall_1_5_0() { return cT2UtyExprParserRuleCall_1_5_0; }
 
 		//"der" "(" UtyExpr ")" "<-" t4=UtyExpr
@@ -2444,18 +2219,7 @@ public class QuartzGrammarAccess extends AbstractGrammarElementFinder {
 		//")"
 		public Keyword getRightParenthesisKeyword_3_3() { return cRightParenthesisKeyword_3_3; }
 
-		//"assert" "(" UtyExpr ")"         
-		//            //| RELEASECAN "(" UtyExpr ")"
-		//           / *  | "release" "(" UtyExpr ")"
-		//            | "constrainS" "(" UtyExpr ")"
-		//            | "constrainM" "(" UtyExpr ")"
-		//            | "constrainE" "(" UtyExpr ")"
-		//            | "constrainSM" "(" UtyExpr ")"
-		//            | "constrainSE" "(" UtyExpr ")"
-		//            | "constrainME" "(" UtyExpr ")"
-		//            | "constrainSME" "(" UtyExpr ")"* /
-		//            //| QName ":" "assume" "(" expr=UtyExpr ")"
-		//            // | QName ":" "assert" "(" expr=UtyExpr ")"
+		//"assert" "(" UtyExpr ")"
 		public Group getGroup_4() { return cGroup_4; }
 
 		//"assert"
@@ -2467,18 +2231,7 @@ public class QuartzGrammarAccess extends AbstractGrammarElementFinder {
 		//UtyExpr
 		public RuleCall getUtyExprParserRuleCall_4_2() { return cUtyExprParserRuleCall_4_2; }
 
-		//")"   
-		//            //| RELEASECAN "(" UtyExpr ")"
-		//           / *  | "release" "(" UtyExpr ")"
-		//            | "constrainS" "(" UtyExpr ")"
-		//            | "constrainM" "(" UtyExpr ")"
-		//            | "constrainE" "(" UtyExpr ")"
-		//            | "constrainSM" "(" UtyExpr ")"
-		//            | "constrainSE" "(" UtyExpr ")"
-		//            | "constrainME" "(" UtyExpr ")"
-		//            | "constrainSME" "(" UtyExpr ")"* /
-		//            //| QName ":" "assume" "(" expr=UtyExpr ")"
-		//            // | QName ":" "assert" "(" expr=UtyExpr ")"
+		//")"
 		public Keyword getRightParenthesisKeyword_4_3() { return cRightParenthesisKeyword_4_3; }
 	}
 
@@ -2816,40 +2569,24 @@ public class QuartzGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cLocStmtParserRuleCall_14 = (RuleCall)cAlternatives.eContents().get(14);
 		
 		//AtomicStmt:
-		//  "nothing" ";"|UtyAction ";"|NamedStmt|"weak"? "immediate"? "abort" AtomicStmt "when"
-		//  expr=dUtyExprs|"immediate"? ("during"|"final") AtomicStmt "do" t03=AtomicStmt|
-		//  "abstract" AtomicStmt|"case" case_list "default" t15=AtomicStmt|"choose" Generic t23=
-		//  AtomicStmt|"do" AtomicStmt "while" t06=dUtyExprs|"for" Generic ("do" ("||"|"&&"|"|||"|
-		//  "&&&"|OR|AND))? t=AtomicStmt|"if" dUtyExpr t13=AtomicStmt "else" t14=AtomicStmt|"let"
-		//  "(" QName "=" expr=UtyExpr ")" t24=AtomicStmt|"loop" AtomicStmt|"while" dUtyExpr t07=
-		//  AtomicStmt|LocStmt; 
-		//
-		//    
-		//        
-		//       
-		//                
-		//                  
-		//        
-		//            
-		//   // | "choose" AtomicStmt "else" t16=AtomicStmt
+		//  "nothing" ";" // | "choose" AtomicStmt "else" t16=AtomicStmt
+		//|UtyAction ";"|NamedStmt|"weak"? "immediate"? "abort" AtomicStmt "when"
+		//  expr=dUtyExprs|"immediate"? ("during"|"final") AtomicStmt "do" t03=AtomicStmt
+		//  |"abstract" AtomicStmt|"case" case_list "default" t15=AtomicStmt|"choose"
+		//  Generic t23=AtomicStmt|"do" AtomicStmt "while" t06=dUtyExprs|"for" Generic (
+		//  "do" ("||"|"&&"|"|||"|"&&&"|OR|AND))? t=AtomicStmt|"if" dUtyExpr
+		//  t13=AtomicStmt "else" t14=AtomicStmt|"let" "(" QName "=" expr=UtyExpr ")"
+		//  t24=AtomicStmt|"loop" AtomicStmt|"while" dUtyExpr t07=AtomicStmt|LocStmt;
 		public ParserRule getRule() { return rule; }
 
-		//"nothing" ";"|UtyAction ";"|NamedStmt|"weak"? "immediate"? "abort" AtomicStmt "when"
+		//"nothing" ";" // | "choose" AtomicStmt "else" t16=AtomicStmt
+		//|UtyAction ";"|NamedStmt|"weak"? "immediate"? "abort" AtomicStmt "when"
 		//expr=dUtyExprs|"immediate"? ("during"|"final") AtomicStmt "do" t03=AtomicStmt|
-		//"abstract" AtomicStmt|"case" case_list "default" t15=AtomicStmt|"choose" Generic t23=
-		//AtomicStmt|"do" AtomicStmt "while" t06=dUtyExprs|"for" Generic ("do" ("||"|"&&"|"|||"|
-		//"&&&"|OR|AND))? t=AtomicStmt|"if" dUtyExpr t13=AtomicStmt "else" t14=AtomicStmt|"let"
-		//"(" QName "=" expr=UtyExpr ")" t24=AtomicStmt|"loop" AtomicStmt|"while" dUtyExpr t07=
-		//AtomicStmt|LocStmt 
-		//
-		//    
-		//        
-		//       
-		//                
-		//                  
-		//        
-		//            
-		//   // | "choose" AtomicStmt "else" t16=AtomicStmt
+		//"abstract" AtomicStmt|"case" case_list "default" t15=AtomicStmt|"choose"
+		//Generic t23=AtomicStmt|"do" AtomicStmt "while" t06=dUtyExprs|"for" Generic (
+		//"do" ("||"|"&&"|"|||"|"&&&"|OR|AND))? t=AtomicStmt|"if" dUtyExpr t13=AtomicStmt
+		//"else" t14=AtomicStmt|"let" "(" QName "=" expr=UtyExpr ")" t24=AtomicStmt|
+		//"loop" AtomicStmt|"while" dUtyExpr t07=AtomicStmt|LocStmt
 		public Alternatives getAlternatives() { return cAlternatives; }
 
 		//"nothing" ";"
@@ -2933,8 +2670,7 @@ public class QuartzGrammarAccess extends AbstractGrammarElementFinder {
 		//AtomicStmt
 		public RuleCall getAtomicStmtParserRuleCall_5_1() { return cAtomicStmtParserRuleCall_5_1; }
 
-		//"case" case_list "default" t15=AtomicStmt         
-		//   // | "choose" AtomicStmt "else" t16=AtomicStmt
+		//"case" case_list "default" t15=AtomicStmt
 		public Group getGroup_6() { return cGroup_6; }
 
 		//"case"
@@ -2946,12 +2682,10 @@ public class QuartzGrammarAccess extends AbstractGrammarElementFinder {
 		//"default"
 		public Keyword getDefaultKeyword_6_2() { return cDefaultKeyword_6_2; }
 
-		//t15=AtomicStmt   
-		//   // | "choose" AtomicStmt "else" t16=AtomicStmt
+		//t15=AtomicStmt
 		public Assignment getT15Assignment_6_3() { return cT15Assignment_6_3; }
 
-		//AtomicStmt 
-		//   // | "choose" AtomicStmt "else" t16=AtomicStmt
+		//AtomicStmt
 		public RuleCall getT15AtomicStmtParserRuleCall_6_3_0() { return cT15AtomicStmtParserRuleCall_6_3_0; }
 
 		//"choose" Generic t23=AtomicStmt
@@ -3150,48 +2884,22 @@ public class QuartzGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cT10AtomicStmtParserRuleCall_3_3_0 = (RuleCall)cT10Assignment_3_3.eContents().get(0);
 		
 		//NamedStmt:
-		//  (QName ":")? "pause" ";"|(QName ":")? "halt" ";"|QName ":" name=QName "(" exprs=
-		//  OptUtyExprList ")" ";"|(QName "," name=QName ":")? "every" expr=dUtyExpr t10=AtomicStmt; 
-		//     
-		//       
-		//
-		//            
-		//             
-		//                   
-		//    // | QName "(" exprs=OptUtyExprList ")" ";"
-		//     // | (QName ":")? "immediate"? "await" expr=dUtyExprs
-		//    //  | (QName ":")? "weak"? "immediate"? "suspend" stmt=Stmt "when" ts=dUtyExprs
-		//    //  | (QName ":")? "each" expr=dUtyExpr t08=Stmt
-		//    //  | (QName ":")? "immediate"? "always" stmt=Stmt
-		//                    
-		//         // tokens
-		//         / *--------- comments and whitespaces --------------------- * / 
-		//      / *      | [` ` `\t`  `\012`]  { Token lexbuf}         (* skip whitespace   *)
-		//      | [`\n` `\r`]         { UtyExprs.ParsedLineNo := (!UtyExprs.ParsedLineNo)+1;
-		//                              Token lexbuf}* /
-		//      / * ---- boolean operators ------- * /
+		//  (QName ":")? "pause" ";" // | QName "(" exprs=OptUtyExprList ")" ";"
+		//       // | (QName ":")? "immediate"? "await" expr=dUtyExprs
+		//      //  | (QName ":")? "weak"? "immediate"? "suspend" stmt=Stmt "when" ts=dUtyExprs
+		//      //  | (QName ":")? "each" expr=dUtyExpr t08=Stmt
+		//      //  | (QName ":")? "immediate"? "always" stmt=Stmt
+		//|(QName ":")? "halt" ";"|QName ":" name=QName "(" exprs=OptUtyExprList ")" ";"|(
+		//  QName "," name=QName ":")? "every" expr=dUtyExpr t10=AtomicStmt;
 		public ParserRule getRule() { return rule; }
 
-		//(QName ":")? "pause" ";"|(QName ":")? "halt" ";"|QName ":" name=QName "(" exprs=
-		//OptUtyExprList ")" ";"|(QName "," name=QName ":")? "every" expr=dUtyExpr t10=AtomicStmt 
-		//     
-		//       
-		//
-		//            
-		//             
-		//                   
-		//    // | QName "(" exprs=OptUtyExprList ")" ";"
+		//(QName ":")? "pause" ";" // | QName "(" exprs=OptUtyExprList ")" ";"
 		//     // | (QName ":")? "immediate"? "await" expr=dUtyExprs
 		//    //  | (QName ":")? "weak"? "immediate"? "suspend" stmt=Stmt "when" ts=dUtyExprs
 		//    //  | (QName ":")? "each" expr=dUtyExpr t08=Stmt
 		//    //  | (QName ":")? "immediate"? "always" stmt=Stmt
-		//                    
-		//         // tokens
-		//         / *--------- comments and whitespaces --------------------- * / 
-		//      / *      | [` ` `\t`  `\012`]  { Token lexbuf}         (* skip whitespace   *)
-		//      | [`\n` `\r`]         { UtyExprs.ParsedLineNo := (!UtyExprs.ParsedLineNo)+1;
-		//                              Token lexbuf}* /
-		//      / * ---- boolean operators ------- * /
+		//|(QName ":")? "halt" ";"|QName ":" name=QName "(" exprs=OptUtyExprList ")" ";"|(
+		//QName "," name=QName ":")? "every" expr=dUtyExpr t10=AtomicStmt
 		public Alternatives getAlternatives() { return cAlternatives; }
 
 		//(QName ":")? "pause" ";"
@@ -3230,12 +2938,7 @@ public class QuartzGrammarAccess extends AbstractGrammarElementFinder {
 		//";"
 		public Keyword getSemicolonKeyword_1_2() { return cSemicolonKeyword_1_2; }
 
-		//QName ":" name=QName "(" exprs=OptUtyExprList ")" ";"               
-		//    // | QName "(" exprs=OptUtyExprList ")" ";"
-		//     // | (QName ":")? "immediate"? "await" expr=dUtyExprs
-		//    //  | (QName ":")? "weak"? "immediate"? "suspend" stmt=Stmt "when" ts=dUtyExprs
-		//    //  | (QName ":")? "each" expr=dUtyExpr t08=Stmt
-		//    //  | (QName ":")? "immediate"? "always" stmt=Stmt
+		//QName ":" name=QName "(" exprs=OptUtyExprList ")" ";"
 		public Group getGroup_2() { return cGroup_2; }
 
 		//QName
@@ -3262,12 +2965,7 @@ public class QuartzGrammarAccess extends AbstractGrammarElementFinder {
 		//")"
 		public Keyword getRightParenthesisKeyword_2_5() { return cRightParenthesisKeyword_2_5; }
 
-		//";"   
-		//    // | QName "(" exprs=OptUtyExprList ")" ";"
-		//     // | (QName ":")? "immediate"? "await" expr=dUtyExprs
-		//    //  | (QName ":")? "weak"? "immediate"? "suspend" stmt=Stmt "when" ts=dUtyExprs
-		//    //  | (QName ":")? "each" expr=dUtyExpr t08=Stmt
-		//    //  | (QName ":")? "immediate"? "always" stmt=Stmt
+		//";"
 		public Keyword getSemicolonKeyword_2_6() { return cSemicolonKeyword_2_6; }
 
 		//(QName "," name=QName ":")? "every" expr=dUtyExpr t10=AtomicStmt
@@ -3313,23 +3011,18 @@ public class QuartzGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cExclamationMarkKeyword_0 = (Keyword)cAlternatives.eContents().get(0);
 		private final Keyword cNotKeyword_1 = (Keyword)cAlternatives.eContents().get(1);
 		
-		//NOT returns ecore::EString:
-		//  "!"|"not"; 
-		//         // tokens
+		//// tokens
 		//         / *--------- comments and whitespaces --------------------- * / 
 		//      / *      | [` ` `\t`  `\012`]  { Token lexbuf}         (* skip whitespace   *)
 		//      | [`\n` `\r`]         { UtyExprs.ParsedLineNo := (!UtyExprs.ParsedLineNo)+1;
 		//                              Token lexbuf}* /
 		//      / * ---- boolean operators ------- * /
+		//
+		//NOT returns ecore::EString:
+		//  "!"|"not";
 		public ParserRule getRule() { return rule; }
 
-		//"!"|"not" 
-		//         // tokens
-		//         / *--------- comments and whitespaces --------------------- * / 
-		//      / *      | [` ` `\t`  `\012`]  { Token lexbuf}         (* skip whitespace   *)
-		//      | [`\n` `\r`]         { UtyExprs.ParsedLineNo := (!UtyExprs.ParsedLineNo)+1;
-		//                              Token lexbuf}* /
-		//      / * ---- boolean operators ------- * /
+		//"!"|"not"
 		public Alternatives getAlternatives() { return cAlternatives; }
 
 		//"!"
@@ -3547,8 +3240,8 @@ public class QuartzGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//MacroDef:
-	//  "macro" name=QName "(" args=QNameList ")" "=" expr=UtyExpr ";"|"macro" name=QName "(" ")"
-	//  "=" expr=UtyExpr ";";
+	//  "macro" name=QName "(" args=QNameList ")" "=" expr=UtyExpr ";"|"macro"
+	//  name=QName "(" ")" "=" expr=UtyExpr ";";
 	public MacroDefElements getMacroDefAccess() {
 		return (pMacroDef != null) ? pMacroDef : (pMacroDef = new MacroDefElements());
 	}
@@ -3558,14 +3251,7 @@ public class QuartzGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//QModule:
-	//  "module" name=Name "(" intf=InterfaceList ")" stmt=LocStmt?; 
-	//
-	//              // obs+=ObservedSpecList*;
-	//
-	////ObservedSpecList : //"satisfies" "{" "observer" "(" InterfaceList ")" "{" stmts=LocStmt "}" proofs=ProofGoalList "}" 
-	//                  //| "satisfies" "{" "observer" "(" InterfaceList ")" "{" stmts=LocStmt "}" "}" 
-	//                 // | 
-	//                 //"satisfies" "{" ProofGoalList "}" ;
+	//  "module" name=Name "(" intf=InterfaceList ")" stmt=LocStmt?;
 	public QModuleElements getQModuleAccess() {
 		return (pQModule != null) ? pQModule : (pQModule = new QModuleElements());
 	}
@@ -3574,13 +3260,16 @@ public class QuartzGrammarAccess extends AbstractGrammarElementFinder {
 		return getQModuleAccess().getRule();
 	}
 
-	//Name:
-	//  id=ID; // obs+=ObservedSpecList*;
+	//// obs+=ObservedSpecList*;
 	//
 	////ObservedSpecList : //"satisfies" "{" "observer" "(" InterfaceList ")" "{" stmts=LocStmt "}" proofs=ProofGoalList "}" 
 	//                  //| "satisfies" "{" "observer" "(" InterfaceList ")" "{" stmts=LocStmt "}" "}" 
 	//                 // | 
 	//                 //"satisfies" "{" ProofGoalList "}" ;
+	//
+	//
+	//Name:
+	//  id=ID;
 	public NameElements getNameAccess() {
 		return (pName != null) ? pName : (pName = new NameElements());
 	}
@@ -3620,18 +3309,9 @@ public class QuartzGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//QType:
-	//  ("bool"|"real"|"bv"|"bv" "{" ta=UtyExpr "}"|"nat"|"nat" "{" tb=UtyExpr "}"|"int"|"int"
-	//  "{" tc=UtyExpr "}") dims=DimList?; 
-	//        
-	//    
-	//            
-	//            
-	//                  
-	//            
-	//                  
-	//            
-	//                  
-	//          //| "(" QTypeList ")"
+	//  ("bool" //| "(" QTypeList ")"
+	//|"real"|"bv"|"bv" "{" ta=UtyExpr "}"|"nat"|"nat" "{" tb=UtyExpr "}"|"int"|"int"
+	//  "{" tc=UtyExpr "}") dims=DimList?;
 	public QTypeElements getQTypeAccess() {
 		return (pQType != null) ? pQType : (pQType = new QTypeElements());
 	}
@@ -3741,12 +3421,7 @@ public class QuartzGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//AssumeList:
-	//  "with" "{" QNameList "}"; 
-	//
-	//          
-	//
-	////ProofGoalList : (name+=QName (":" "assume" expr+=UtyExpr ";" (goals+=ProofGoalList)?   ))+;          
-	//               //| (ver+=VerifTask)? (ctrl+=ControlList)? ":" "assert" expr+=UtyExpr ass+=AssumeList? ";"))+;
+	//  "with" "{" QNameList "}";
 	public AssumeListElements getAssumeListAccess() {
 		return (pAssumeList != null) ? pAssumeList : (pAssumeList = new AssumeListElements());
 	}
@@ -3755,11 +3430,12 @@ public class QuartzGrammarAccess extends AbstractGrammarElementFinder {
 		return getAssumeListAccess().getRule();
 	}
 
-	//FixpointEqList:
-	//  (("mu"|"nu") name+=QName "=" expr+=UtyExpr ";")*; 
-	//
 	////ProofGoalList : (name+=QName (":" "assume" expr+=UtyExpr ";" (goals+=ProofGoalList)?   ))+;          
 	//               //| (ver+=VerifTask)? (ctrl+=ControlList)? ":" "assert" expr+=UtyExpr ass+=AssumeList? ";"))+;
+	//
+	//
+	//FixpointEqList:
+	//  (("mu"|"nu") name+=QName "=" expr+=UtyExpr ";")*;
 	public FixpointEqListElements getFixpointEqListAccess() {
 		return (pFixpointEqList != null) ? pFixpointEqList : (pFixpointEqList = new FixpointEqListElements());
 	}
@@ -3799,84 +3475,33 @@ public class QuartzGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//UtyExpr:
-	//  "instant"|"inside"|"terminate"|"true"|"false"|BVCONST|OCTCONST|HEXCONST|NATCONST
-	//  |REALCONST|QName|op=NOT expr=UtyExpr|"+" UtyExpr|"-" UtyExpr|"abs" "(" UtyExpr ")"|
-	//  "sat" "{" UtyExpr "}" "(" t7=UtyExpr ")"|"der" "(" UtyExpr ")"|"reverse" "(" UtyExpr ")"|"{"
-	//  UtyExpr "::" expr=UtyExpr "}"|"next" "(" UtyExpr ")"|"nat2bv" "(" UtyExpr ")"|"int2bv" "("
-	//  UtyExpr ")"|"arr2bv" "(" QName ")"|"tup2bv" "(" UtyExpr ")"|"bv2nat" "(" UtyExpr ")"|
-	//  "bv2int" "(" UtyExpr ")"|"nat2real" "(" UtyExpr ")"|"int2real" "(" UtyExpr ")"|"sin" "("
-	//  UtyExpr ")"|"cos" "(" UtyExpr ")"|"exp" "(" UtyExpr "," expr=UtyExpr ")"|"log" "(" UtyExpr
-	//  "," expr=UtyExpr ")"|"sizeOf" "(" UtyExpr ")"|"forall" Generic expr=UtyExpr|"exists"
-	//  Generic expr=UtyExpr|"sum" Generic expr=UtyExpr|"X" UtyExpr|"G" UtyExpr|"F" UtyExpr|
-	//  "PA" UtyExpr|"PF" UtyExpr|"PSX" UtyExpr|"PMX" UtyExpr|"E" UtyExpr|"A" UtyExpr|"[]"
-	//  UtyExpr|"<>" UtyExpr|"[:]" UtyExpr|"<:>" UtyExpr|"mu" name=QName "." expr=UtyExpr|"nu"
-	//  name=QName "." expr=UtyExpr|"fixpoints" FixpointEqList "in" expr2=UtyExpr|"forall"
-	//  name=QName ":" type=QType "." expr=UtyExpr|"exists" name=QName ":" type=QType "." expr=
-	//  UtyExpr|"(" UtyExpr ")"; 
-	//
-	//    
-	//            
-	//            
-	//            
-	//            
-	//            
-	//            
-	//            
-	//            
-	//            
-	//            
-	//        //  | UtyExpr EQU UtyExpr
-	//          // | UtyExpr XOR UtyExpr
-	//          // | UtyExpr IMP UtyExpr
-	//         //  | UtyExpr OR UtyExpr
-	//         //  | UtyExpr AND UtyExpr
-	//               
-	//        //  | UtyExpr "<" UtyExpr
-	//         //  | UtyExpr "<=" UtyExpr
-	//         //  | UtyExpr ">" UtyExpr
-	//         //  | UtyExpr ">=" UtyExpr
-	//        //  | UtyExpr "==" UtyExpr
-	//         //  | UtyExpr "!=" UtyExpr
-	//         //  | UtyExpr "-" UtyExpr
-	//         //  | UtyExpr "+" UtyExpr
-	//        //   | UtyExpr "%" UtyExpr
-	//        //   | UtyExpr "/" UtyExpr
-	//        //   | UtyExpr "*" UtyExpr
-	//               
-	//              
-	//                  
-	//                        
-	//                  
-	//         // | UtyExpr "{" UtyExpr "}"
-	//         // | UtyExpr "@" UtyExpr
-	//         //  | UtyExpr "{" UtyExpr ":" UtyExpr "}"
-	//         //  | UtyExpr "{" UtyExpr ":" "}"
-	//         //  | UtyExpr "{" ":" UtyExpr "}"
-	//                   
-	//                    
-	//        //  | UtyExpr UtyExprSelectList
-	//         //  | UtyExpr "." UtyExpr
-	//          // | "(" OptUtyExpr "," tl=OptUtyExprList ")"
-	//          // | "(" UtyExpr "?" tm=UtyExpr ":" s=UtyExpr ")"
-	//           //| QName "(" OptUtyExprList ")"
-	//                   
-	//                  
-	//                  
-	//                  
-	//                  
-	//                  
-	//                  
-	//                  
-	//                  
-	//                  
-	//                  
-	//                      
-	//                      
-	//                  
-	//                
-	//                
-	//                
-	// / *         | "[" UtyExpr "SU" expr=UtyExpr "]"
+	//  "instant" //  | UtyExpr EQU UtyExpr
+	//            // | UtyExpr XOR UtyExpr
+	//            // | UtyExpr IMP UtyExpr
+	//           //  | UtyExpr OR UtyExpr
+	//           //  | UtyExpr AND UtyExpr
+	//  //  | UtyExpr "<" UtyExpr
+	//           //  | UtyExpr "<=" UtyExpr
+	//           //  | UtyExpr ">" UtyExpr
+	//           //  | UtyExpr ">=" UtyExpr
+	//          //  | UtyExpr "==" UtyExpr
+	//           //  | UtyExpr "!=" UtyExpr
+	//           //  | UtyExpr "-" UtyExpr
+	//           //  | UtyExpr "+" UtyExpr
+	//          //   | UtyExpr "%" UtyExpr
+	//          //   | UtyExpr "/" UtyExpr
+	//          //   | UtyExpr "*" UtyExpr
+	//  // | UtyExpr "{" UtyExpr "}"
+	//           // | UtyExpr "@" UtyExpr
+	//           //  | UtyExpr "{" UtyExpr ":" UtyExpr "}"
+	//           //  | UtyExpr "{" UtyExpr ":" "}"
+	//           //  | UtyExpr "{" ":" UtyExpr "}"
+	//  //  | UtyExpr UtyExprSelectList
+	//           //  | UtyExpr "." UtyExpr
+	//            // | "(" OptUtyExpr "," tl=OptUtyExprList ")"
+	//            // | "(" UtyExpr "?" tm=UtyExpr ":" s=UtyExpr ")"
+	//             //| QName "(" OptUtyExprList ")"
+	//  / *         | "[" UtyExpr "SU" expr=UtyExpr "]"
 	//          | "[" UtyExpr "SB" expr=UtyExpr "]"
 	//          | "[" UtyExpr "SW" expr=UtyExpr "]"
 	//          | "[" UtyExpr "WU" expr=UtyExpr "]"
@@ -3887,7 +3512,22 @@ public class QuartzGrammarAccess extends AbstractGrammarElementFinder {
 	//          | "[" UtyExpr "PSW" expr=UtyExpr "]"
 	//          | "[" UtyExpr "PMU" expr=UtyExpr "]"
 	//          | "[" UtyExpr "PMB" expr=UtyExpr "]"
-	//          | "[" UtyExpr "PMW" expr=UtyExpr "]"* /
+	//          | "[" UtyExpr "PMW" expr=UtyExpr "]"* /|"inside"|"terminate"|"true"|
+	//  "false"|BVCONST|OCTCONST|HEXCONST|NATCONST|REALCONST|QName|op=NOT
+	//  expr=UtyExpr|"+" UtyExpr|"-" UtyExpr|"abs" "(" UtyExpr ")"|"sat" "{" UtyExpr
+	//  "}" "(" t7=UtyExpr ")"|"der" "(" UtyExpr ")"|"reverse" "(" UtyExpr ")"|"{"
+	//  UtyExpr "::" expr=UtyExpr "}"|"next" "(" UtyExpr ")"|"nat2bv" "(" UtyExpr ")"
+	//  |"int2bv" "(" UtyExpr ")"|"arr2bv" "(" QName ")"|"tup2bv" "(" UtyExpr ")"|
+	//  "bv2nat" "(" UtyExpr ")"|"bv2int" "(" UtyExpr ")"|"nat2real" "(" UtyExpr ")"|
+	//  "int2real" "(" UtyExpr ")"|"sin" "(" UtyExpr ")"|"cos" "(" UtyExpr ")"|"exp"
+	//  "(" UtyExpr "," expr=UtyExpr ")"|"log" "(" UtyExpr "," expr=UtyExpr ")"|
+	//  "sizeOf" "(" UtyExpr ")"|"forall" Generic expr=UtyExpr|"exists" Generic
+	//  expr=UtyExpr|"sum" Generic expr=UtyExpr|"X" UtyExpr|"G" UtyExpr|"F" UtyExpr|
+	//  "PA" UtyExpr|"PF" UtyExpr|"PSX" UtyExpr|"PMX" UtyExpr|"E" UtyExpr|"A" UtyExpr
+	//  |"[]" UtyExpr|"<>" UtyExpr|"[:]" UtyExpr|"<:>" UtyExpr|"mu" name=QName "."
+	//  expr=UtyExpr|"nu" name=QName "." expr=UtyExpr|"fixpoints" FixpointEqList "in"
+	//  expr2=UtyExpr|"forall" name=QName ":" type=QType "." expr=UtyExpr|"exists"
+	//  name=QName ":" type=QType "." expr=UtyExpr|"(" UtyExpr ")";
 	public UtyExprElements getUtyExprAccess() {
 		return (pUtyExpr != null) ? pUtyExpr : (pUtyExpr = new UtyExprElements());
 	}
@@ -3896,18 +3536,7 @@ public class QuartzGrammarAccess extends AbstractGrammarElementFinder {
 		return getUtyExprAccess().getRule();
 	}
 
-	//UtyAction:
-	//  "emit" "next"? "(" UtyExpr ")"|"next" "(" UtyExpr ")" "=" t2=UtyExpr|"der" "(" UtyExpr ")"
-	//  "<-" t4=UtyExpr|"assume" "(" UtyExpr ")"|"assert" "(" UtyExpr ")"; 
-	//
-	//            
-	//            //| UtyExpr "=" t1=UtyExpr
-	//                         
-	//            //| UtyExpr "<-" t3=UtyExpr
-	//                         
-	//                    
-	//                    
-	//            //| RELEASECAN "(" UtyExpr ")"
+	////| RELEASECAN "(" UtyExpr ")"
 	//           / *  | "release" "(" UtyExpr ")"
 	//            | "constrainS" "(" UtyExpr ")"
 	//            | "constrainM" "(" UtyExpr ")"
@@ -3918,6 +3547,13 @@ public class QuartzGrammarAccess extends AbstractGrammarElementFinder {
 	//            | "constrainSME" "(" UtyExpr ")"* /
 	//            //| QName ":" "assume" "(" expr=UtyExpr ")"
 	//            // | QName ":" "assert" "(" expr=UtyExpr ")"
+	//
+	//
+	//UtyAction:
+	//  "emit" "next"? "(" UtyExpr ")" //| UtyExpr "=" t1=UtyExpr
+	//  //| UtyExpr "<-" t3=UtyExpr
+	//|"next" "(" UtyExpr ")" "=" t2=UtyExpr|"der" "(" UtyExpr ")" "<-" t4=UtyExpr|
+	//  "assume" "(" UtyExpr ")"|"assert" "(" UtyExpr ")";
 	public UtyActionElements getUtyActionAccess() {
 		return (pUtyAction != null) ? pUtyAction : (pUtyAction = new UtyActionElements());
 	}
@@ -3997,22 +3633,14 @@ public class QuartzGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//AtomicStmt:
-	//  "nothing" ";"|UtyAction ";"|NamedStmt|"weak"? "immediate"? "abort" AtomicStmt "when"
-	//  expr=dUtyExprs|"immediate"? ("during"|"final") AtomicStmt "do" t03=AtomicStmt|
-	//  "abstract" AtomicStmt|"case" case_list "default" t15=AtomicStmt|"choose" Generic t23=
-	//  AtomicStmt|"do" AtomicStmt "while" t06=dUtyExprs|"for" Generic ("do" ("||"|"&&"|"|||"|
-	//  "&&&"|OR|AND))? t=AtomicStmt|"if" dUtyExpr t13=AtomicStmt "else" t14=AtomicStmt|"let"
-	//  "(" QName "=" expr=UtyExpr ")" t24=AtomicStmt|"loop" AtomicStmt|"while" dUtyExpr t07=
-	//  AtomicStmt|LocStmt; 
-	//
-	//    
-	//        
-	//       
-	//                
-	//                  
-	//        
-	//            
-	//   // | "choose" AtomicStmt "else" t16=AtomicStmt
+	//  "nothing" ";" // | "choose" AtomicStmt "else" t16=AtomicStmt
+	//|UtyAction ";"|NamedStmt|"weak"? "immediate"? "abort" AtomicStmt "when"
+	//  expr=dUtyExprs|"immediate"? ("during"|"final") AtomicStmt "do" t03=AtomicStmt
+	//  |"abstract" AtomicStmt|"case" case_list "default" t15=AtomicStmt|"choose"
+	//  Generic t23=AtomicStmt|"do" AtomicStmt "while" t06=dUtyExprs|"for" Generic (
+	//  "do" ("||"|"&&"|"|||"|"&&&"|OR|AND))? t=AtomicStmt|"if" dUtyExpr
+	//  t13=AtomicStmt "else" t14=AtomicStmt|"let" "(" QName "=" expr=UtyExpr ")"
+	//  t24=AtomicStmt|"loop" AtomicStmt|"while" dUtyExpr t07=AtomicStmt|LocStmt;
 	public AtomicStmtElements getAtomicStmtAccess() {
 		return (pAtomicStmt != null) ? pAtomicStmt : (pAtomicStmt = new AtomicStmtElements());
 	}
@@ -4022,26 +3650,13 @@ public class QuartzGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//NamedStmt:
-	//  (QName ":")? "pause" ";"|(QName ":")? "halt" ";"|QName ":" name=QName "(" exprs=
-	//  OptUtyExprList ")" ";"|(QName "," name=QName ":")? "every" expr=dUtyExpr t10=AtomicStmt; 
-	//     
-	//       
-	//
-	//            
-	//             
-	//                   
-	//    // | QName "(" exprs=OptUtyExprList ")" ";"
-	//     // | (QName ":")? "immediate"? "await" expr=dUtyExprs
-	//    //  | (QName ":")? "weak"? "immediate"? "suspend" stmt=Stmt "when" ts=dUtyExprs
-	//    //  | (QName ":")? "each" expr=dUtyExpr t08=Stmt
-	//    //  | (QName ":")? "immediate"? "always" stmt=Stmt
-	//                    
-	//         // tokens
-	//         / *--------- comments and whitespaces --------------------- * / 
-	//      / *      | [` ` `\t`  `\012`]  { Token lexbuf}         (* skip whitespace   *)
-	//      | [`\n` `\r`]         { UtyExprs.ParsedLineNo := (!UtyExprs.ParsedLineNo)+1;
-	//                              Token lexbuf}* /
-	//      / * ---- boolean operators ------- * /
+	//  (QName ":")? "pause" ";" // | QName "(" exprs=OptUtyExprList ")" ";"
+	//       // | (QName ":")? "immediate"? "await" expr=dUtyExprs
+	//      //  | (QName ":")? "weak"? "immediate"? "suspend" stmt=Stmt "when" ts=dUtyExprs
+	//      //  | (QName ":")? "each" expr=dUtyExpr t08=Stmt
+	//      //  | (QName ":")? "immediate"? "always" stmt=Stmt
+	//|(QName ":")? "halt" ";"|QName ":" name=QName "(" exprs=OptUtyExprList ")" ";"|(
+	//  QName "," name=QName ":")? "every" expr=dUtyExpr t10=AtomicStmt;
 	public NamedStmtElements getNamedStmtAccess() {
 		return (pNamedStmt != null) ? pNamedStmt : (pNamedStmt = new NamedStmtElements());
 	}
@@ -4050,14 +3665,15 @@ public class QuartzGrammarAccess extends AbstractGrammarElementFinder {
 		return getNamedStmtAccess().getRule();
 	}
 
-	//NOT returns ecore::EString:
-	//  "!"|"not"; 
-	//         // tokens
+	//// tokens
 	//         / *--------- comments and whitespaces --------------------- * / 
 	//      / *      | [` ` `\t`  `\012`]  { Token lexbuf}         (* skip whitespace   *)
 	//      | [`\n` `\r`]         { UtyExprs.ParsedLineNo := (!UtyExprs.ParsedLineNo)+1;
 	//                              Token lexbuf}* /
 	//      / * ---- boolean operators ------- * /
+	//
+	//NOT returns ecore::EString:
+	//  "!"|"not";
 	public NOTElements getNOTAccess() {
 		return (pNOT != null) ? pNOT : (pNOT = new NOTElements());
 	}
@@ -4117,15 +3733,16 @@ public class QuartzGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//terminal BVCONST:
-	//  "0b"; 
-	//
-	//      // ('0' | '1')+;
+	//  "0b";
 	public TerminalRule getBVCONSTRule() {
 		return (tBVCONST != null) ? tBVCONST : (tBVCONST = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "BVCONST"));
 	} 
 
+	//// ('0' | '1')+;
+	//
+	//
 	//terminal OCTCONST:
-	//  "0o" "0".."7"+;   // ('0' | '1')+;
+	//  "0o" "0".."7"+;
 	public TerminalRule getOCTCONSTRule() {
 		return (tOCTCONST != null) ? tOCTCONST : (tOCTCONST = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "OCTCONST"));
 	} 

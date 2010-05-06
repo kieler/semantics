@@ -10,6 +10,7 @@ import java.util.Stack;
 import java.util.List;
 import java.util.ArrayList;
 
+@SuppressWarnings("all")
 public class InternalQuartzLexer extends Lexer {
     public static final int T114=114;
     public static final int T115=115;

@@ -21,6 +21,7 @@ import java.util.Stack;
 import java.util.List;
 import java.util.ArrayList;
 
+@SuppressWarnings("all")
 public class InternalQuartzParser extends AbstractInternalAntlrParser {
     public static final String[] tokenNames = new String[] {
         "<invalid>", "<EOR>", "<DOWN>", "<UP>", "RULE_ID", "RULE_BVCONST", "RULE_OCTCONST", "RULE_HEXCONST", "RULE_NATCONST", "RULE_REALCONST", "RULE_ML_COMMENT", "RULE_SL_COMMENT", "RULE_WS", "'package'", "';'", "'import'", "'.'", "'.*'", "'macro'", "'('", "')'", "'='", "'module'", "','", "'event'", "'mem'", "'bool'", "'real'", "'bv'", "'{'", "'}'", "'nat'", "'int'", "'['", "']'", "'?'", "'!'", "'mu'", "'nu'", "'_'", "'instant'", "'inside'", "'terminate'", "'true'", "'false'", "'+'", "'-'", "'abs'", "'sat'", "'der'", "'reverse'", "'::'", "'next'", "'nat2bv'", "'int2bv'", "'arr2bv'", "'tup2bv'", "'bv2nat'", "'bv2int'", "'nat2real'", "'int2real'", "'sin'", "'cos'", "'exp'", "'log'", "'sizeOf'", "'forall'", "'exists'", "'sum'", "'X'", "'G'", "'F'", "'PA'", "'PF'", "'PSX'", "'PMX'", "'E'", "'A'", "'[]'", "'<>'", "'[:]'", "'<:>'", "'fixpoints'", "'in'", "':'", "'emit'", "'<-'", "'assume'", "'assert'", "'do'", "'..'", "'||'", "'|||'", "'&&'", "'&&&'", "'nothing'", "'weak'", "'immediate'", "'abort'", "'when'", "'during'", "'final'", "'abstract'", "'case'", "'default'", "'choose'", "'while'", "'for'", "'if'", "'else'", "'let'", "'loop'", "'pause'", "'halt'", "'every'", "'not'", "'&'", "'and'", "'|'", "'or'"
@@ -122,7 +123,7 @@ public class InternalQuartzParser extends AbstractInternalAntlrParser {
         EObject lv_module_3_0 = null;
 
 
-         @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
+         EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
             // ../de.cau.cs.kieler.quartz.editor/src-gen/de/cau/cs/kieler/quartz/editor/parser/antlr/internal/InternalQuartz.g:91:6: ( ( (this_PackagePath_0= rulePackagePath )? ( (lv_imports_1_0= ruleImportList ) )? ( (lv_macros_2_0= ruleMacroDef ) )* ( (lv_module_3_0= ruleQModule ) ) ) )
@@ -361,7 +362,7 @@ public class InternalQuartzParser extends AbstractInternalAntlrParser {
         EObject this_PointedName_1 = null;
 
 
-         @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
+         EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
             // ../de.cau.cs.kieler.quartz.editor/src-gen/de/cau/cs/kieler/quartz/editor/parser/antlr/internal/InternalQuartz.g:195:6: ( ( 'package' this_PointedName_1= rulePointedName ';' ) )
@@ -454,7 +455,7 @@ public class InternalQuartzParser extends AbstractInternalAntlrParser {
         EObject lv_imp_1_0 = null;
 
 
-         @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
+         EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
             // ../de.cau.cs.kieler.quartz.editor/src-gen/de/cau/cs/kieler/quartz/editor/parser/antlr/internal/InternalQuartz.g:235:6: ( ( 'import' ( (lv_imp_1_0= rulePointedName ) ) ';' )+ )
@@ -597,7 +598,7 @@ public class InternalQuartzParser extends AbstractInternalAntlrParser {
         EObject lv_name_2_0 = null;
 
 
-         @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
+         EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
             // ../de.cau.cs.kieler.quartz.editor/src-gen/de/cau/cs/kieler/quartz/editor/parser/antlr/internal/InternalQuartz.g:290:6: ( ( ( (lv_id_0_0= RULE_ID ) ) ( '.' ( (lv_name_2_0= rulePointedName ) ) )* ( (lv_all_3_0= '.*' ) ) ) )
@@ -805,7 +806,7 @@ public class InternalQuartzParser extends AbstractInternalAntlrParser {
         EObject lv_expr_13_0 = null;
 
 
-         @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
+         EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
             // ../de.cau.cs.kieler.quartz.editor/src-gen/de/cau/cs/kieler/quartz/editor/parser/antlr/internal/InternalQuartz.g:386:6: ( ( ( 'macro' ( (lv_name_1_0= ruleQName ) ) '(' ( (lv_args_3_0= ruleQNameList ) ) ')' '=' ( (lv_expr_6_0= ruleUtyExpr ) ) ';' ) | ( 'macro' ( (lv_name_9_0= ruleQName ) ) '(' ')' '=' ( (lv_expr_13_0= ruleUtyExpr ) ) ';' ) ) )
@@ -1171,7 +1172,7 @@ public class InternalQuartzParser extends AbstractInternalAntlrParser {
         EObject lv_stmt_5_0 = null;
 
 
-         @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
+         EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
             // ../de.cau.cs.kieler.quartz.editor/src-gen/de/cau/cs/kieler/quartz/editor/parser/antlr/internal/InternalQuartz.g:570:6: ( ( 'module' ( (lv_name_1_0= ruleName ) ) '(' ( (lv_intf_3_0= ruleInterfaceList ) ) ')' ( (lv_stmt_5_0= ruleLocStmt ) )? ) )
@@ -1375,7 +1376,7 @@ public class InternalQuartzParser extends AbstractInternalAntlrParser {
 
         Token lv_id_0_0=null;
 
-         @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
+         EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
             // ../de.cau.cs.kieler.quartz.editor/src-gen/de/cau/cs/kieler/quartz/editor/parser/antlr/internal/InternalQuartz.g:677:6: ( ( (lv_id_0_0= RULE_ID ) ) )
@@ -1476,7 +1477,7 @@ public class InternalQuartzParser extends AbstractInternalAntlrParser {
         EObject this_Name_0 = null;
 
 
-         @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
+         EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
             // ../de.cau.cs.kieler.quartz.editor/src-gen/de/cau/cs/kieler/quartz/editor/parser/antlr/internal/InternalQuartz.g:724:6: (this_Name_0= ruleName )
@@ -1557,7 +1558,7 @@ public class InternalQuartzParser extends AbstractInternalAntlrParser {
         EObject lv_names_2_0 = null;
 
 
-         @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
+         EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
             // ../de.cau.cs.kieler.quartz.editor/src-gen/de/cau/cs/kieler/quartz/editor/parser/antlr/internal/InternalQuartz.g:756:6: ( ( ( (lv_name_0_0= ruleQName ) ) ( ',' ( (lv_names_2_0= ruleQName ) ) )* ) )
@@ -1848,7 +1849,7 @@ public class InternalQuartzParser extends AbstractInternalAntlrParser {
         EObject lv_dims_17_0 = null;
 
 
-         @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
+         EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
             // ../de.cau.cs.kieler.quartz.editor/src-gen/de/cau/cs/kieler/quartz/editor/parser/antlr/internal/InternalQuartz.g:867:6: ( ( ( 'bool' | 'real' | 'bv' | ( 'bv' '{' ( (lv_ta_5_0= ruleUtyExpr ) ) '}' ) | 'nat' | ( 'nat' '{' ( (lv_tb_10_0= ruleUtyExpr ) ) '}' ) | 'int' | ( 'int' '{' ( (lv_tc_15_0= ruleUtyExpr ) ) '}' ) ) ( (lv_dims_17_0= ruleDimList ) )? ) )
@@ -2277,7 +2278,7 @@ public class InternalQuartzParser extends AbstractInternalAntlrParser {
         EObject lv_expr_1_0 = null;
 
 
-         @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
+         EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
             // ../de.cau.cs.kieler.quartz.editor/src-gen/de/cau/cs/kieler/quartz/editor/parser/antlr/internal/InternalQuartz.g:1051:6: ( ( '[' ( (lv_expr_1_0= ruleUtyExpr ) ) ']' )+ )
@@ -2418,7 +2419,7 @@ public class InternalQuartzParser extends AbstractInternalAntlrParser {
         EObject this_QName_2 = null;
 
 
-         @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
+         EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
             // ../de.cau.cs.kieler.quartz.editor/src-gen/de/cau/cs/kieler/quartz/editor/parser/antlr/internal/InternalQuartz.g:1106:6: ( ( ( '?' | '!' )? this_QName_2= ruleQName ) )
@@ -2539,7 +2540,7 @@ public class InternalQuartzParser extends AbstractInternalAntlrParser {
         EObject lv_names_2_0 = null;
 
 
-         @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
+         EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
             // ../de.cau.cs.kieler.quartz.editor/src-gen/de/cau/cs/kieler/quartz/editor/parser/antlr/internal/InternalQuartz.g:1147:6: ( (this_InOutName_0= ruleInOutName ( ',' ( (lv_names_2_0= ruleInOutName ) ) )* ) )
@@ -2694,7 +2695,7 @@ public class InternalQuartzParser extends AbstractInternalAntlrParser {
         EObject lv_names_0_0 = null;
 
 
-         @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
+         EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
             // ../de.cau.cs.kieler.quartz.editor/src-gen/de/cau/cs/kieler/quartz/editor/parser/antlr/internal/InternalQuartz.g:1207:6: ( ( ( (lv_names_0_0= ruleInOutName ) ) ',' )+ )
@@ -2833,7 +2834,7 @@ public class InternalQuartzParser extends AbstractInternalAntlrParser {
         EObject lv_names_3_0 = null;
 
 
-         @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
+         EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
             // ../de.cau.cs.kieler.quartz.editor/src-gen/de/cau/cs/kieler/quartz/editor/parser/antlr/internal/InternalQuartz.g:1258:6: ( ( ( ( ( ruleStorage )? ( (lv_type_1_0= ruleQType ) ) ) | 'event' ) ( (lv_names_3_0= ruleInOutNameList ) ) ) )
@@ -3057,7 +3058,7 @@ public class InternalQuartzParser extends AbstractInternalAntlrParser {
         EObject lv_interfaces_2_0 = null;
 
 
-         @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
+         EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
             // ../de.cau.cs.kieler.quartz.editor/src-gen/de/cau/cs/kieler/quartz/editor/parser/antlr/internal/InternalQuartz.g:1336:6: ( ( ( (lv_intf_0_0= ruleInterface ) ) ( ',' ( (lv_interfaces_2_0= ruleInterface ) ) )* ) )
@@ -3233,7 +3234,7 @@ public class InternalQuartzParser extends AbstractInternalAntlrParser {
         EObject lv_expr_4_0 = null;
 
 
-         @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
+         EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
             // ../de.cau.cs.kieler.quartz.editor/src-gen/de/cau/cs/kieler/quartz/editor/parser/antlr/internal/InternalQuartz.g:1417:6: ( ( ( 'mu' | 'nu' ) ( (lv_name_2_0= ruleQName ) ) '=' ( (lv_expr_4_0= ruleUtyExpr ) ) ';' )* )
@@ -3445,7 +3446,7 @@ public class InternalQuartzParser extends AbstractInternalAntlrParser {
         EObject lv_tk_1_0 = null;
 
 
-         @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
+         EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
             // ../de.cau.cs.kieler.quartz.editor/src-gen/de/cau/cs/kieler/quartz/editor/parser/antlr/internal/InternalQuartz.g:1505:6: ( ( '_' | ( (lv_tk_1_0= ruleUtyExpr ) ) ) )
@@ -3587,7 +3588,7 @@ public class InternalQuartzParser extends AbstractInternalAntlrParser {
         EObject lv_exprs_2_0 = null;
 
 
-         @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
+         EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
             // ../de.cau.cs.kieler.quartz.editor/src-gen/de/cau/cs/kieler/quartz/editor/parser/antlr/internal/InternalQuartz.g:1557:6: ( (this_OptUtyExpr_0= ruleOptUtyExpr ( ',' ( (lv_exprs_2_0= ruleOptUtyExpr ) ) )* )? )
@@ -3865,7 +3866,7 @@ public class InternalQuartzParser extends AbstractInternalAntlrParser {
         EObject this_UtyExpr_161 = null;
 
 
-         @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
+         EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
             // ../de.cau.cs.kieler.quartz.editor/src-gen/de/cau/cs/kieler/quartz/editor/parser/antlr/internal/InternalQuartz.g:1619:6: ( ( 'instant' | 'inside' | 'terminate' | 'true' | 'false' | RULE_BVCONST | RULE_OCTCONST | RULE_HEXCONST | RULE_NATCONST | RULE_REALCONST | this_QName_10= ruleQName | ( ( (lv_op_11_0= ruleNOT ) ) ( (lv_expr_12_0= ruleUtyExpr ) ) ) | ( '+' this_UtyExpr_14= ruleUtyExpr ) | ( '-' this_UtyExpr_16= ruleUtyExpr ) | ( 'abs' '(' this_UtyExpr_19= ruleUtyExpr ')' ) | ( 'sat' '{' this_UtyExpr_23= ruleUtyExpr '}' '(' ( (lv_t7_26_0= ruleUtyExpr ) ) ')' ) | ( 'der' '(' this_UtyExpr_30= ruleUtyExpr ')' ) | ( 'reverse' '(' this_UtyExpr_34= ruleUtyExpr ')' ) | ( '{' this_UtyExpr_37= ruleUtyExpr '::' ( (lv_expr_39_0= ruleUtyExpr ) ) '}' ) | ( 'next' '(' this_UtyExpr_43= ruleUtyExpr ')' ) | ( 'nat2bv' '(' this_UtyExpr_47= ruleUtyExpr ')' ) | ( 'int2bv' '(' this_UtyExpr_51= ruleUtyExpr ')' ) | ( 'arr2bv' '(' this_QName_55= ruleQName ')' ) | ( 'tup2bv' '(' this_UtyExpr_59= ruleUtyExpr ')' ) | ( 'bv2nat' '(' this_UtyExpr_63= ruleUtyExpr ')' ) | ( 'bv2int' '(' this_UtyExpr_67= ruleUtyExpr ')' ) | ( 'nat2real' '(' this_UtyExpr_71= ruleUtyExpr ')' ) | ( 'int2real' '(' this_UtyExpr_75= ruleUtyExpr ')' ) | ( 'sin' '(' this_UtyExpr_79= ruleUtyExpr ')' ) | ( 'cos' '(' this_UtyExpr_83= ruleUtyExpr ')' ) | ( 'exp' '(' this_UtyExpr_87= ruleUtyExpr ',' ( (lv_expr_89_0= ruleUtyExpr ) ) ')' ) | ( 'log' '(' this_UtyExpr_93= ruleUtyExpr ',' ( (lv_expr_95_0= ruleUtyExpr ) ) ')' ) | ( 'sizeOf' '(' this_UtyExpr_99= ruleUtyExpr ')' ) | ( 'forall' this_Generic_102= ruleGeneric ( (lv_expr_103_0= ruleUtyExpr ) ) ) | ( 'exists' this_Generic_105= ruleGeneric ( (lv_expr_106_0= ruleUtyExpr ) ) ) | ( 'sum' this_Generic_108= ruleGeneric ( (lv_expr_109_0= ruleUtyExpr ) ) ) | ( 'X' this_UtyExpr_111= ruleUtyExpr ) | ( 'G' this_UtyExpr_113= ruleUtyExpr ) | ( 'F' this_UtyExpr_115= ruleUtyExpr ) | ( 'PA' this_UtyExpr_117= ruleUtyExpr ) | ( 'PF' this_UtyExpr_119= ruleUtyExpr ) | ( 'PSX' this_UtyExpr_121= ruleUtyExpr ) | ( 'PMX' this_UtyExpr_123= ruleUtyExpr ) | ( 'E' this_UtyExpr_125= ruleUtyExpr ) | ( 'A' this_UtyExpr_127= ruleUtyExpr ) | ( '[]' this_UtyExpr_129= ruleUtyExpr ) | ( '<>' this_UtyExpr_131= ruleUtyExpr ) | ( '[:]' this_UtyExpr_133= ruleUtyExpr ) | ( '<:>' this_UtyExpr_135= ruleUtyExpr ) | ( 'mu' ( (lv_name_137_0= ruleQName ) ) '.' ( (lv_expr_139_0= ruleUtyExpr ) ) ) | ( 'nu' ( (lv_name_141_0= ruleQName ) ) '.' ( (lv_expr_143_0= ruleUtyExpr ) ) ) | ( 'fixpoints' this_FixpointEqList_145= ruleFixpointEqList 'in' ( (lv_expr2_147_0= ruleUtyExpr ) ) ) | ( 'forall' ( (lv_name_149_0= ruleQName ) ) ':' ( (lv_type_151_0= ruleQType ) ) '.' ( (lv_expr_153_0= ruleUtyExpr ) ) ) | ( 'exists' ( (lv_name_155_0= ruleQName ) ) ':' ( (lv_type_157_0= ruleQType ) ) '.' ( (lv_expr_159_0= ruleUtyExpr ) ) ) | ( '(' this_UtyExpr_161= ruleUtyExpr ')' ) ) )
@@ -6417,7 +6418,7 @@ public class InternalQuartzParser extends AbstractInternalAntlrParser {
         EObject this_UtyExpr_23 = null;
 
 
-         @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
+         EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
             // ../de.cau.cs.kieler.quartz.editor/src-gen/de/cau/cs/kieler/quartz/editor/parser/antlr/internal/InternalQuartz.g:2948:6: ( ( ( 'emit' ( 'next' )? '(' this_UtyExpr_3= ruleUtyExpr ')' ) | ( 'next' '(' this_UtyExpr_7= ruleUtyExpr ')' '=' ( (lv_t2_10_0= ruleUtyExpr ) ) ) | ( 'der' '(' this_UtyExpr_13= ruleUtyExpr ')' '<-' ( (lv_t4_16_0= ruleUtyExpr ) ) ) | ( 'assume' '(' this_UtyExpr_19= ruleUtyExpr ')' ) | ( 'assert' '(' this_UtyExpr_23= ruleUtyExpr ')' ) ) )
@@ -6802,7 +6803,7 @@ public class InternalQuartzParser extends AbstractInternalAntlrParser {
         EObject lv_stmt_2_0 = null;
 
 
-         @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
+         EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
             // ../de.cau.cs.kieler.quartz.editor/src-gen/de/cau/cs/kieler/quartz/editor/parser/antlr/internal/InternalQuartz.g:3140:6: ( ( ( (lv_exp_0_0= ruledUtyExpr ) ) 'do' ( (lv_stmt_2_0= ruleStmt ) ) )* )
@@ -6970,7 +6971,7 @@ public class InternalQuartzParser extends AbstractInternalAntlrParser {
         EObject this_UtyExpr_1 = null;
 
 
-         @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
+         EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
             // ../de.cau.cs.kieler.quartz.editor/src-gen/de/cau/cs/kieler/quartz/editor/parser/antlr/internal/InternalQuartz.g:3215:6: ( ( '(' this_UtyExpr_1= ruleUtyExpr ')' ) )
@@ -7063,7 +7064,7 @@ public class InternalQuartzParser extends AbstractInternalAntlrParser {
         EObject this_dUtyExpr_0 = null;
 
 
-         @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
+         EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
             // ../de.cau.cs.kieler.quartz.editor/src-gen/de/cau/cs/kieler/quartz/editor/parser/antlr/internal/InternalQuartz.g:3255:6: ( (this_dUtyExpr_0= ruledUtyExpr ';' ) )
@@ -7156,7 +7157,7 @@ public class InternalQuartzParser extends AbstractInternalAntlrParser {
         EObject lv_t5_5_0 = null;
 
 
-         @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
+         EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
             // ../de.cau.cs.kieler.quartz.editor/src-gen/de/cau/cs/kieler/quartz/editor/parser/antlr/internal/InternalQuartz.g:3291:6: ( ( '(' this_QName_1= ruleQName '=' ( (lv_t6_3_0= ruleUtyExpr ) ) '..' ( (lv_t5_5_0= ruleUtyExpr ) ) ')' ) )
@@ -7331,7 +7332,7 @@ public class InternalQuartzParser extends AbstractInternalAntlrParser {
         EObject lv_stmt_3_0 = null;
 
 
-         @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
+         EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
             // ../de.cau.cs.kieler.quartz.editor/src-gen/de/cau/cs/kieler/quartz/editor/parser/antlr/internal/InternalQuartz.g:3387:6: ( ( '{' ( ( (lv_locals_1_0= ruleInterfaceList ) ) ';' )* ( (lv_stmt_3_0= ruleStmt ) ) '}' ) )
@@ -7513,7 +7514,7 @@ public class InternalQuartzParser extends AbstractInternalAntlrParser {
         EObject lv_s_0_0 = null;
 
 
-         @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
+         EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
             // ../de.cau.cs.kieler.quartz.editor/src-gen/de/cau/cs/kieler/quartz/editor/parser/antlr/internal/InternalQuartz.g:3470:6: ( ( (lv_s_0_0= ruleAtomicStmt ) )+ )
@@ -7642,7 +7643,7 @@ public class InternalQuartzParser extends AbstractInternalAntlrParser {
         EObject lv_right_7_0 = null;
 
 
-         @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
+         EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
             // ../de.cau.cs.kieler.quartz.editor/src-gen/de/cau/cs/kieler/quartz/editor/parser/antlr/internal/InternalQuartz.g:3517:6: ( ( ( (lv_left_0_0= ruleSeqStmt ) ) ( ( '||' | '|||' | ruleOR | '&&' | '&&&' | ruleAND ) ( (lv_right_7_0= ruleSeqStmt ) ) )* ) )
@@ -7966,7 +7967,7 @@ public class InternalQuartzParser extends AbstractInternalAntlrParser {
         EObject this_LocStmt_57 = null;
 
 
-         @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
+         EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
             // ../de.cau.cs.kieler.quartz.editor/src-gen/de/cau/cs/kieler/quartz/editor/parser/antlr/internal/InternalQuartz.g:3609:6: ( ( ( 'nothing' ';' ) | (this_UtyAction_2= ruleUtyAction ';' ) | this_NamedStmt_4= ruleNamedStmt | ( ( 'weak' )? ( 'immediate' )? 'abort' this_AtomicStmt_8= ruleAtomicStmt 'when' ( (lv_expr_10_0= ruledUtyExprs ) ) ) | ( ( 'immediate' )? ( 'during' | 'final' ) this_AtomicStmt_14= ruleAtomicStmt 'do' ( (lv_t03_16_0= ruleAtomicStmt ) ) ) | ( 'abstract' this_AtomicStmt_18= ruleAtomicStmt ) | ( 'case' this_case_list_20= rulecase_list 'default' ( (lv_t15_22_0= ruleAtomicStmt ) ) ) | ( 'choose' this_Generic_24= ruleGeneric ( (lv_t23_25_0= ruleAtomicStmt ) ) ) | ( 'do' this_AtomicStmt_27= ruleAtomicStmt 'while' ( (lv_t06_29_0= ruledUtyExprs ) ) ) | ( 'for' this_Generic_31= ruleGeneric ( 'do' ( '||' | '&&' | '|||' | '&&&' | ruleOR | ruleAND ) )? ( (lv_t_39_0= ruleAtomicStmt ) ) ) | ( 'if' this_dUtyExpr_41= ruledUtyExpr ( (lv_t13_42_0= ruleAtomicStmt ) ) 'else' ( (lv_t14_44_0= ruleAtomicStmt ) ) ) | ( 'let' '(' this_QName_47= ruleQName '=' ( (lv_expr_49_0= ruleUtyExpr ) ) ')' ( (lv_t24_51_0= ruleAtomicStmt ) ) ) | ( 'loop' this_AtomicStmt_53= ruleAtomicStmt ) | ( 'while' this_dUtyExpr_55= ruledUtyExpr ( (lv_t07_56_0= ruleAtomicStmt ) ) ) | this_LocStmt_57= ruleLocStmt ) )
@@ -9202,7 +9203,7 @@ public class InternalQuartzParser extends AbstractInternalAntlrParser {
         EObject lv_t10_21_0 = null;
 
 
-         @SuppressWarnings("unused") EObject temp=null; setCurrentLookahead(); resetLookahead(); 
+         EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
             // ../de.cau.cs.kieler.quartz.editor/src-gen/de/cau/cs/kieler/quartz/editor/parser/antlr/internal/InternalQuartz.g:4166:6: ( ( ( (this_QName_0= ruleQName ':' )? 'pause' ';' ) | ( (this_QName_4= ruleQName ':' )? 'halt' ';' ) | (this_QName_8= ruleQName ':' ( (lv_name_10_0= ruleQName ) ) '(' ( (lv_exprs_12_0= ruleOptUtyExprList ) ) ')' ';' ) | ( (this_QName_15= ruleQName ',' ( (lv_name_17_0= ruleQName ) ) ':' )? 'every' ( (lv_expr_20_0= ruledUtyExpr ) ) ( (lv_t10_21_0= ruleAtomicStmt ) ) ) ) )

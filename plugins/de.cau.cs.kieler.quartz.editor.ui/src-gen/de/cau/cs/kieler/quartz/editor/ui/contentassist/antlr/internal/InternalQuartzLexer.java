@@ -10,6 +10,7 @@ import java.util.Stack;
 import java.util.List;
 import java.util.ArrayList;
 
+@SuppressWarnings("all")
 public class InternalQuartzLexer extends Lexer {
     public static final int T114=114;
     public static final int T115=115;
@@ -2149,8 +2150,8 @@ public class InternalQuartzLexer extends Lexer {
     public final void mRULE_BVCONST() throws RecognitionException {
         try {
             int _type = RULE_BVCONST;
-            // ../de.cau.cs.kieler.quartz.editor.ui/src-gen/de/cau/cs/kieler/quartz/editor/ui/contentassist/antlr/internal/InternalQuartz.g:10732:14: ( '0b' )
-            // ../de.cau.cs.kieler.quartz.editor.ui/src-gen/de/cau/cs/kieler/quartz/editor/ui/contentassist/antlr/internal/InternalQuartz.g:10732:16: '0b'
+            // ../de.cau.cs.kieler.quartz.editor.ui/src-gen/de/cau/cs/kieler/quartz/editor/ui/contentassist/antlr/internal/InternalQuartz.g:14693:14: ( '0b' )
+            // ../de.cau.cs.kieler.quartz.editor.ui/src-gen/de/cau/cs/kieler/quartz/editor/ui/contentassist/antlr/internal/InternalQuartz.g:14693:16: '0b'
             {
             match("0b"); 
 
@@ -2168,12 +2169,12 @@ public class InternalQuartzLexer extends Lexer {
     public final void mRULE_OCTCONST() throws RecognitionException {
         try {
             int _type = RULE_OCTCONST;
-            // ../de.cau.cs.kieler.quartz.editor.ui/src-gen/de/cau/cs/kieler/quartz/editor/ui/contentassist/antlr/internal/InternalQuartz.g:10734:15: ( '0o' ( '0' .. '7' )+ )
-            // ../de.cau.cs.kieler.quartz.editor.ui/src-gen/de/cau/cs/kieler/quartz/editor/ui/contentassist/antlr/internal/InternalQuartz.g:10734:17: '0o' ( '0' .. '7' )+
+            // ../de.cau.cs.kieler.quartz.editor.ui/src-gen/de/cau/cs/kieler/quartz/editor/ui/contentassist/antlr/internal/InternalQuartz.g:14695:15: ( '0o' ( '0' .. '7' )+ )
+            // ../de.cau.cs.kieler.quartz.editor.ui/src-gen/de/cau/cs/kieler/quartz/editor/ui/contentassist/antlr/internal/InternalQuartz.g:14695:17: '0o' ( '0' .. '7' )+
             {
             match("0o"); 
 
-            // ../de.cau.cs.kieler.quartz.editor.ui/src-gen/de/cau/cs/kieler/quartz/editor/ui/contentassist/antlr/internal/InternalQuartz.g:10734:22: ( '0' .. '7' )+
+            // ../de.cau.cs.kieler.quartz.editor.ui/src-gen/de/cau/cs/kieler/quartz/editor/ui/contentassist/antlr/internal/InternalQuartz.g:14695:22: ( '0' .. '7' )+
             int cnt1=0;
             loop1:
             do {
@@ -2187,7 +2188,7 @@ public class InternalQuartzLexer extends Lexer {
 
                 switch (alt1) {
             	case 1 :
-            	    // ../de.cau.cs.kieler.quartz.editor.ui/src-gen/de/cau/cs/kieler/quartz/editor/ui/contentassist/antlr/internal/InternalQuartz.g:10734:23: '0' .. '7'
+            	    // ../de.cau.cs.kieler.quartz.editor.ui/src-gen/de/cau/cs/kieler/quartz/editor/ui/contentassist/antlr/internal/InternalQuartz.g:14695:23: '0' .. '7'
             	    {
             	    matchRange('0','7'); 
 
@@ -2217,12 +2218,12 @@ public class InternalQuartzLexer extends Lexer {
     public final void mRULE_HEXCONST() throws RecognitionException {
         try {
             int _type = RULE_HEXCONST;
-            // ../de.cau.cs.kieler.quartz.editor.ui/src-gen/de/cau/cs/kieler/quartz/editor/ui/contentassist/antlr/internal/InternalQuartz.g:10736:15: ( '0x' ( '0' .. '9' | 'A' .. 'F' )+ )
-            // ../de.cau.cs.kieler.quartz.editor.ui/src-gen/de/cau/cs/kieler/quartz/editor/ui/contentassist/antlr/internal/InternalQuartz.g:10736:17: '0x' ( '0' .. '9' | 'A' .. 'F' )+
+            // ../de.cau.cs.kieler.quartz.editor.ui/src-gen/de/cau/cs/kieler/quartz/editor/ui/contentassist/antlr/internal/InternalQuartz.g:14697:15: ( '0x' ( '0' .. '9' | 'A' .. 'F' )+ )
+            // ../de.cau.cs.kieler.quartz.editor.ui/src-gen/de/cau/cs/kieler/quartz/editor/ui/contentassist/antlr/internal/InternalQuartz.g:14697:17: '0x' ( '0' .. '9' | 'A' .. 'F' )+
             {
             match("0x"); 
 
-            // ../de.cau.cs.kieler.quartz.editor.ui/src-gen/de/cau/cs/kieler/quartz/editor/ui/contentassist/antlr/internal/InternalQuartz.g:10736:22: ( '0' .. '9' | 'A' .. 'F' )+
+            // ../de.cau.cs.kieler.quartz.editor.ui/src-gen/de/cau/cs/kieler/quartz/editor/ui/contentassist/antlr/internal/InternalQuartz.g:14697:22: ( '0' .. '9' | 'A' .. 'F' )+
             int cnt2=0;
             loop2:
             do {
@@ -2275,10 +2276,10 @@ public class InternalQuartzLexer extends Lexer {
     public final void mRULE_NATCONST() throws RecognitionException {
         try {
             int _type = RULE_NATCONST;
-            // ../de.cau.cs.kieler.quartz.editor.ui/src-gen/de/cau/cs/kieler/quartz/editor/ui/contentassist/antlr/internal/InternalQuartz.g:10738:15: ( ( '0' .. '9' )* )
-            // ../de.cau.cs.kieler.quartz.editor.ui/src-gen/de/cau/cs/kieler/quartz/editor/ui/contentassist/antlr/internal/InternalQuartz.g:10738:17: ( '0' .. '9' )*
+            // ../de.cau.cs.kieler.quartz.editor.ui/src-gen/de/cau/cs/kieler/quartz/editor/ui/contentassist/antlr/internal/InternalQuartz.g:14699:15: ( ( '0' .. '9' )* )
+            // ../de.cau.cs.kieler.quartz.editor.ui/src-gen/de/cau/cs/kieler/quartz/editor/ui/contentassist/antlr/internal/InternalQuartz.g:14699:17: ( '0' .. '9' )*
             {
-            // ../de.cau.cs.kieler.quartz.editor.ui/src-gen/de/cau/cs/kieler/quartz/editor/ui/contentassist/antlr/internal/InternalQuartz.g:10738:17: ( '0' .. '9' )*
+            // ../de.cau.cs.kieler.quartz.editor.ui/src-gen/de/cau/cs/kieler/quartz/editor/ui/contentassist/antlr/internal/InternalQuartz.g:14699:17: ( '0' .. '9' )*
             loop3:
             do {
                 int alt3=2;
@@ -2291,7 +2292,7 @@ public class InternalQuartzLexer extends Lexer {
 
                 switch (alt3) {
             	case 1 :
-            	    // ../de.cau.cs.kieler.quartz.editor.ui/src-gen/de/cau/cs/kieler/quartz/editor/ui/contentassist/antlr/internal/InternalQuartz.g:10738:18: '0' .. '9'
+            	    // ../de.cau.cs.kieler.quartz.editor.ui/src-gen/de/cau/cs/kieler/quartz/editor/ui/contentassist/antlr/internal/InternalQuartz.g:14699:18: '0' .. '9'
             	    {
             	    matchRange('0','9'); 
 
@@ -2317,10 +2318,10 @@ public class InternalQuartzLexer extends Lexer {
     public final void mRULE_REALCONST() throws RecognitionException {
         try {
             int _type = RULE_REALCONST;
-            // ../de.cau.cs.kieler.quartz.editor.ui/src-gen/de/cau/cs/kieler/quartz/editor/ui/contentassist/antlr/internal/InternalQuartz.g:10740:16: ( ( '+' | '-' )? ( '0' .. '9' )+ '.' ( '0' .. '9' )+ ( 'e' ( '+' | '-' )? ( '0' .. '9' )+ )? )
-            // ../de.cau.cs.kieler.quartz.editor.ui/src-gen/de/cau/cs/kieler/quartz/editor/ui/contentassist/antlr/internal/InternalQuartz.g:10740:18: ( '+' | '-' )? ( '0' .. '9' )+ '.' ( '0' .. '9' )+ ( 'e' ( '+' | '-' )? ( '0' .. '9' )+ )?
+            // ../de.cau.cs.kieler.quartz.editor.ui/src-gen/de/cau/cs/kieler/quartz/editor/ui/contentassist/antlr/internal/InternalQuartz.g:14701:16: ( ( '+' | '-' )? ( '0' .. '9' )+ '.' ( '0' .. '9' )+ ( 'e' ( '+' | '-' )? ( '0' .. '9' )+ )? )
+            // ../de.cau.cs.kieler.quartz.editor.ui/src-gen/de/cau/cs/kieler/quartz/editor/ui/contentassist/antlr/internal/InternalQuartz.g:14701:18: ( '+' | '-' )? ( '0' .. '9' )+ '.' ( '0' .. '9' )+ ( 'e' ( '+' | '-' )? ( '0' .. '9' )+ )?
             {
-            // ../de.cau.cs.kieler.quartz.editor.ui/src-gen/de/cau/cs/kieler/quartz/editor/ui/contentassist/antlr/internal/InternalQuartz.g:10740:18: ( '+' | '-' )?
+            // ../de.cau.cs.kieler.quartz.editor.ui/src-gen/de/cau/cs/kieler/quartz/editor/ui/contentassist/antlr/internal/InternalQuartz.g:14701:18: ( '+' | '-' )?
             int alt4=2;
             int LA4_0 = input.LA(1);
 
@@ -2347,7 +2348,7 @@ public class InternalQuartzLexer extends Lexer {
 
             }
 
-            // ../de.cau.cs.kieler.quartz.editor.ui/src-gen/de/cau/cs/kieler/quartz/editor/ui/contentassist/antlr/internal/InternalQuartz.g:10740:29: ( '0' .. '9' )+
+            // ../de.cau.cs.kieler.quartz.editor.ui/src-gen/de/cau/cs/kieler/quartz/editor/ui/contentassist/antlr/internal/InternalQuartz.g:14701:29: ( '0' .. '9' )+
             int cnt5=0;
             loop5:
             do {
@@ -2361,7 +2362,7 @@ public class InternalQuartzLexer extends Lexer {
 
                 switch (alt5) {
             	case 1 :
-            	    // ../de.cau.cs.kieler.quartz.editor.ui/src-gen/de/cau/cs/kieler/quartz/editor/ui/contentassist/antlr/internal/InternalQuartz.g:10740:30: '0' .. '9'
+            	    // ../de.cau.cs.kieler.quartz.editor.ui/src-gen/de/cau/cs/kieler/quartz/editor/ui/contentassist/antlr/internal/InternalQuartz.g:14701:30: '0' .. '9'
             	    {
             	    matchRange('0','9'); 
 
@@ -2378,7 +2379,7 @@ public class InternalQuartzLexer extends Lexer {
             } while (true);
 
             match('.'); 
-            // ../de.cau.cs.kieler.quartz.editor.ui/src-gen/de/cau/cs/kieler/quartz/editor/ui/contentassist/antlr/internal/InternalQuartz.g:10740:45: ( '0' .. '9' )+
+            // ../de.cau.cs.kieler.quartz.editor.ui/src-gen/de/cau/cs/kieler/quartz/editor/ui/contentassist/antlr/internal/InternalQuartz.g:14701:45: ( '0' .. '9' )+
             int cnt6=0;
             loop6:
             do {
@@ -2392,7 +2393,7 @@ public class InternalQuartzLexer extends Lexer {
 
                 switch (alt6) {
             	case 1 :
-            	    // ../de.cau.cs.kieler.quartz.editor.ui/src-gen/de/cau/cs/kieler/quartz/editor/ui/contentassist/antlr/internal/InternalQuartz.g:10740:46: '0' .. '9'
+            	    // ../de.cau.cs.kieler.quartz.editor.ui/src-gen/de/cau/cs/kieler/quartz/editor/ui/contentassist/antlr/internal/InternalQuartz.g:14701:46: '0' .. '9'
             	    {
             	    matchRange('0','9'); 
 
@@ -2408,7 +2409,7 @@ public class InternalQuartzLexer extends Lexer {
                 cnt6++;
             } while (true);
 
-            // ../de.cau.cs.kieler.quartz.editor.ui/src-gen/de/cau/cs/kieler/quartz/editor/ui/contentassist/antlr/internal/InternalQuartz.g:10740:57: ( 'e' ( '+' | '-' )? ( '0' .. '9' )+ )?
+            // ../de.cau.cs.kieler.quartz.editor.ui/src-gen/de/cau/cs/kieler/quartz/editor/ui/contentassist/antlr/internal/InternalQuartz.g:14701:57: ( 'e' ( '+' | '-' )? ( '0' .. '9' )+ )?
             int alt9=2;
             int LA9_0 = input.LA(1);
 
@@ -2417,10 +2418,10 @@ public class InternalQuartzLexer extends Lexer {
             }
             switch (alt9) {
                 case 1 :
-                    // ../de.cau.cs.kieler.quartz.editor.ui/src-gen/de/cau/cs/kieler/quartz/editor/ui/contentassist/antlr/internal/InternalQuartz.g:10740:58: 'e' ( '+' | '-' )? ( '0' .. '9' )+
+                    // ../de.cau.cs.kieler.quartz.editor.ui/src-gen/de/cau/cs/kieler/quartz/editor/ui/contentassist/antlr/internal/InternalQuartz.g:14701:58: 'e' ( '+' | '-' )? ( '0' .. '9' )+
                     {
                     match('e'); 
-                    // ../de.cau.cs.kieler.quartz.editor.ui/src-gen/de/cau/cs/kieler/quartz/editor/ui/contentassist/antlr/internal/InternalQuartz.g:10740:62: ( '+' | '-' )?
+                    // ../de.cau.cs.kieler.quartz.editor.ui/src-gen/de/cau/cs/kieler/quartz/editor/ui/contentassist/antlr/internal/InternalQuartz.g:14701:62: ( '+' | '-' )?
                     int alt7=2;
                     int LA7_0 = input.LA(1);
 
@@ -2447,7 +2448,7 @@ public class InternalQuartzLexer extends Lexer {
 
                     }
 
-                    // ../de.cau.cs.kieler.quartz.editor.ui/src-gen/de/cau/cs/kieler/quartz/editor/ui/contentassist/antlr/internal/InternalQuartz.g:10740:73: ( '0' .. '9' )+
+                    // ../de.cau.cs.kieler.quartz.editor.ui/src-gen/de/cau/cs/kieler/quartz/editor/ui/contentassist/antlr/internal/InternalQuartz.g:14701:73: ( '0' .. '9' )+
                     int cnt8=0;
                     loop8:
                     do {
@@ -2461,7 +2462,7 @@ public class InternalQuartzLexer extends Lexer {
 
                         switch (alt8) {
                     	case 1 :
-                    	    // ../de.cau.cs.kieler.quartz.editor.ui/src-gen/de/cau/cs/kieler/quartz/editor/ui/contentassist/antlr/internal/InternalQuartz.g:10740:74: '0' .. '9'
+                    	    // ../de.cau.cs.kieler.quartz.editor.ui/src-gen/de/cau/cs/kieler/quartz/editor/ui/contentassist/antlr/internal/InternalQuartz.g:14701:74: '0' .. '9'
                     	    {
                     	    matchRange('0','9'); 
 
@@ -2497,8 +2498,8 @@ public class InternalQuartzLexer extends Lexer {
     public final void mRULE_ID() throws RecognitionException {
         try {
             int _type = RULE_ID;
-            // ../de.cau.cs.kieler.quartz.editor.ui/src-gen/de/cau/cs/kieler/quartz/editor/ui/contentassist/antlr/internal/InternalQuartz.g:10742:9: ( ( 'a' .. 'z' | 'A' .. 'Z' ) ( ( '_' )? ( 'a' .. 'z' | 'A' .. 'Z' | '0' .. '9' ) )* )
-            // ../de.cau.cs.kieler.quartz.editor.ui/src-gen/de/cau/cs/kieler/quartz/editor/ui/contentassist/antlr/internal/InternalQuartz.g:10742:11: ( 'a' .. 'z' | 'A' .. 'Z' ) ( ( '_' )? ( 'a' .. 'z' | 'A' .. 'Z' | '0' .. '9' ) )*
+            // ../de.cau.cs.kieler.quartz.editor.ui/src-gen/de/cau/cs/kieler/quartz/editor/ui/contentassist/antlr/internal/InternalQuartz.g:14703:9: ( ( 'a' .. 'z' | 'A' .. 'Z' ) ( ( '_' )? ( 'a' .. 'z' | 'A' .. 'Z' | '0' .. '9' ) )* )
+            // ../de.cau.cs.kieler.quartz.editor.ui/src-gen/de/cau/cs/kieler/quartz/editor/ui/contentassist/antlr/internal/InternalQuartz.g:14703:11: ( 'a' .. 'z' | 'A' .. 'Z' ) ( ( '_' )? ( 'a' .. 'z' | 'A' .. 'Z' | '0' .. '9' ) )*
             {
             if ( (input.LA(1)>='A' && input.LA(1)<='Z')||(input.LA(1)>='a' && input.LA(1)<='z') ) {
                 input.consume();
@@ -2510,7 +2511,7 @@ public class InternalQuartzLexer extends Lexer {
                 recover(mse);    throw mse;
             }
 
-            // ../de.cau.cs.kieler.quartz.editor.ui/src-gen/de/cau/cs/kieler/quartz/editor/ui/contentassist/antlr/internal/InternalQuartz.g:10742:31: ( ( '_' )? ( 'a' .. 'z' | 'A' .. 'Z' | '0' .. '9' ) )*
+            // ../de.cau.cs.kieler.quartz.editor.ui/src-gen/de/cau/cs/kieler/quartz/editor/ui/contentassist/antlr/internal/InternalQuartz.g:14703:31: ( ( '_' )? ( 'a' .. 'z' | 'A' .. 'Z' | '0' .. '9' ) )*
             loop11:
             do {
                 int alt11=2;
@@ -2523,9 +2524,9 @@ public class InternalQuartzLexer extends Lexer {
 
                 switch (alt11) {
             	case 1 :
-            	    // ../de.cau.cs.kieler.quartz.editor.ui/src-gen/de/cau/cs/kieler/quartz/editor/ui/contentassist/antlr/internal/InternalQuartz.g:10742:32: ( '_' )? ( 'a' .. 'z' | 'A' .. 'Z' | '0' .. '9' )
+            	    // ../de.cau.cs.kieler.quartz.editor.ui/src-gen/de/cau/cs/kieler/quartz/editor/ui/contentassist/antlr/internal/InternalQuartz.g:14703:32: ( '_' )? ( 'a' .. 'z' | 'A' .. 'Z' | '0' .. '9' )
             	    {
-            	    // ../de.cau.cs.kieler.quartz.editor.ui/src-gen/de/cau/cs/kieler/quartz/editor/ui/contentassist/antlr/internal/InternalQuartz.g:10742:32: ( '_' )?
+            	    // ../de.cau.cs.kieler.quartz.editor.ui/src-gen/de/cau/cs/kieler/quartz/editor/ui/contentassist/antlr/internal/InternalQuartz.g:14703:32: ( '_' )?
             	    int alt10=2;
             	    int LA10_0 = input.LA(1);
 
@@ -2534,7 +2535,7 @@ public class InternalQuartzLexer extends Lexer {
             	    }
             	    switch (alt10) {
             	        case 1 :
-            	            // ../de.cau.cs.kieler.quartz.editor.ui/src-gen/de/cau/cs/kieler/quartz/editor/ui/contentassist/antlr/internal/InternalQuartz.g:10742:32: '_'
+            	            // ../de.cau.cs.kieler.quartz.editor.ui/src-gen/de/cau/cs/kieler/quartz/editor/ui/contentassist/antlr/internal/InternalQuartz.g:14703:32: '_'
             	            {
             	            match('_'); 
 
@@ -2576,12 +2577,12 @@ public class InternalQuartzLexer extends Lexer {
     public final void mRULE_ML_COMMENT() throws RecognitionException {
         try {
             int _type = RULE_ML_COMMENT;
-            // ../de.cau.cs.kieler.quartz.editor.ui/src-gen/de/cau/cs/kieler/quartz/editor/ui/contentassist/antlr/internal/InternalQuartz.g:10744:17: ( '/*' ( options {greedy=false; } : . )* '*/' )
-            // ../de.cau.cs.kieler.quartz.editor.ui/src-gen/de/cau/cs/kieler/quartz/editor/ui/contentassist/antlr/internal/InternalQuartz.g:10744:19: '/*' ( options {greedy=false; } : . )* '*/'
+            // ../de.cau.cs.kieler.quartz.editor.ui/src-gen/de/cau/cs/kieler/quartz/editor/ui/contentassist/antlr/internal/InternalQuartz.g:14705:17: ( '/*' ( options {greedy=false; } : . )* '*/' )
+            // ../de.cau.cs.kieler.quartz.editor.ui/src-gen/de/cau/cs/kieler/quartz/editor/ui/contentassist/antlr/internal/InternalQuartz.g:14705:19: '/*' ( options {greedy=false; } : . )* '*/'
             {
             match("/*"); 
 
-            // ../de.cau.cs.kieler.quartz.editor.ui/src-gen/de/cau/cs/kieler/quartz/editor/ui/contentassist/antlr/internal/InternalQuartz.g:10744:24: ( options {greedy=false; } : . )*
+            // ../de.cau.cs.kieler.quartz.editor.ui/src-gen/de/cau/cs/kieler/quartz/editor/ui/contentassist/antlr/internal/InternalQuartz.g:14705:24: ( options {greedy=false; } : . )*
             loop12:
             do {
                 int alt12=2;
@@ -2606,7 +2607,7 @@ public class InternalQuartzLexer extends Lexer {
 
                 switch (alt12) {
             	case 1 :
-            	    // ../de.cau.cs.kieler.quartz.editor.ui/src-gen/de/cau/cs/kieler/quartz/editor/ui/contentassist/antlr/internal/InternalQuartz.g:10744:52: .
+            	    // ../de.cau.cs.kieler.quartz.editor.ui/src-gen/de/cau/cs/kieler/quartz/editor/ui/contentassist/antlr/internal/InternalQuartz.g:14705:52: .
             	    {
             	    matchAny(); 
 
@@ -2634,12 +2635,12 @@ public class InternalQuartzLexer extends Lexer {
     public final void mRULE_SL_COMMENT() throws RecognitionException {
         try {
             int _type = RULE_SL_COMMENT;
-            // ../de.cau.cs.kieler.quartz.editor.ui/src-gen/de/cau/cs/kieler/quartz/editor/ui/contentassist/antlr/internal/InternalQuartz.g:10746:17: ( '//' (~ ( ( '\\n' | '\\r' ) ) )* ( ( '\\r' )? '\\n' )? )
-            // ../de.cau.cs.kieler.quartz.editor.ui/src-gen/de/cau/cs/kieler/quartz/editor/ui/contentassist/antlr/internal/InternalQuartz.g:10746:19: '//' (~ ( ( '\\n' | '\\r' ) ) )* ( ( '\\r' )? '\\n' )?
+            // ../de.cau.cs.kieler.quartz.editor.ui/src-gen/de/cau/cs/kieler/quartz/editor/ui/contentassist/antlr/internal/InternalQuartz.g:14707:17: ( '//' (~ ( ( '\\n' | '\\r' ) ) )* ( ( '\\r' )? '\\n' )? )
+            // ../de.cau.cs.kieler.quartz.editor.ui/src-gen/de/cau/cs/kieler/quartz/editor/ui/contentassist/antlr/internal/InternalQuartz.g:14707:19: '//' (~ ( ( '\\n' | '\\r' ) ) )* ( ( '\\r' )? '\\n' )?
             {
             match("//"); 
 
-            // ../de.cau.cs.kieler.quartz.editor.ui/src-gen/de/cau/cs/kieler/quartz/editor/ui/contentassist/antlr/internal/InternalQuartz.g:10746:24: (~ ( ( '\\n' | '\\r' ) ) )*
+            // ../de.cau.cs.kieler.quartz.editor.ui/src-gen/de/cau/cs/kieler/quartz/editor/ui/contentassist/antlr/internal/InternalQuartz.g:14707:24: (~ ( ( '\\n' | '\\r' ) ) )*
             loop13:
             do {
                 int alt13=2;
@@ -2652,7 +2653,7 @@ public class InternalQuartzLexer extends Lexer {
 
                 switch (alt13) {
             	case 1 :
-            	    // ../de.cau.cs.kieler.quartz.editor.ui/src-gen/de/cau/cs/kieler/quartz/editor/ui/contentassist/antlr/internal/InternalQuartz.g:10746:24: ~ ( ( '\\n' | '\\r' ) )
+            	    // ../de.cau.cs.kieler.quartz.editor.ui/src-gen/de/cau/cs/kieler/quartz/editor/ui/contentassist/antlr/internal/InternalQuartz.g:14707:24: ~ ( ( '\\n' | '\\r' ) )
             	    {
             	    if ( (input.LA(1)>='\u0000' && input.LA(1)<='\t')||(input.LA(1)>='\u000B' && input.LA(1)<='\f')||(input.LA(1)>='\u000E' && input.LA(1)<='\uFFFE') ) {
             	        input.consume();
@@ -2673,7 +2674,7 @@ public class InternalQuartzLexer extends Lexer {
                 }
             } while (true);
 
-            // ../de.cau.cs.kieler.quartz.editor.ui/src-gen/de/cau/cs/kieler/quartz/editor/ui/contentassist/antlr/internal/InternalQuartz.g:10746:40: ( ( '\\r' )? '\\n' )?
+            // ../de.cau.cs.kieler.quartz.editor.ui/src-gen/de/cau/cs/kieler/quartz/editor/ui/contentassist/antlr/internal/InternalQuartz.g:14707:40: ( ( '\\r' )? '\\n' )?
             int alt15=2;
             int LA15_0 = input.LA(1);
 
@@ -2682,9 +2683,9 @@ public class InternalQuartzLexer extends Lexer {
             }
             switch (alt15) {
                 case 1 :
-                    // ../de.cau.cs.kieler.quartz.editor.ui/src-gen/de/cau/cs/kieler/quartz/editor/ui/contentassist/antlr/internal/InternalQuartz.g:10746:41: ( '\\r' )? '\\n'
+                    // ../de.cau.cs.kieler.quartz.editor.ui/src-gen/de/cau/cs/kieler/quartz/editor/ui/contentassist/antlr/internal/InternalQuartz.g:14707:41: ( '\\r' )? '\\n'
                     {
-                    // ../de.cau.cs.kieler.quartz.editor.ui/src-gen/de/cau/cs/kieler/quartz/editor/ui/contentassist/antlr/internal/InternalQuartz.g:10746:41: ( '\\r' )?
+                    // ../de.cau.cs.kieler.quartz.editor.ui/src-gen/de/cau/cs/kieler/quartz/editor/ui/contentassist/antlr/internal/InternalQuartz.g:14707:41: ( '\\r' )?
                     int alt14=2;
                     int LA14_0 = input.LA(1);
 
@@ -2693,7 +2694,7 @@ public class InternalQuartzLexer extends Lexer {
                     }
                     switch (alt14) {
                         case 1 :
-                            // ../de.cau.cs.kieler.quartz.editor.ui/src-gen/de/cau/cs/kieler/quartz/editor/ui/contentassist/antlr/internal/InternalQuartz.g:10746:41: '\\r'
+                            // ../de.cau.cs.kieler.quartz.editor.ui/src-gen/de/cau/cs/kieler/quartz/editor/ui/contentassist/antlr/internal/InternalQuartz.g:14707:41: '\\r'
                             {
                             match('\r'); 
 
@@ -2723,10 +2724,10 @@ public class InternalQuartzLexer extends Lexer {
     public final void mRULE_WS() throws RecognitionException {
         try {
             int _type = RULE_WS;
-            // ../de.cau.cs.kieler.quartz.editor.ui/src-gen/de/cau/cs/kieler/quartz/editor/ui/contentassist/antlr/internal/InternalQuartz.g:10748:9: ( ( ' ' | '\\t' | '\\r' | '\\n' )+ )
-            // ../de.cau.cs.kieler.quartz.editor.ui/src-gen/de/cau/cs/kieler/quartz/editor/ui/contentassist/antlr/internal/InternalQuartz.g:10748:11: ( ' ' | '\\t' | '\\r' | '\\n' )+
+            // ../de.cau.cs.kieler.quartz.editor.ui/src-gen/de/cau/cs/kieler/quartz/editor/ui/contentassist/antlr/internal/InternalQuartz.g:14709:9: ( ( ' ' | '\\t' | '\\r' | '\\n' )+ )
+            // ../de.cau.cs.kieler.quartz.editor.ui/src-gen/de/cau/cs/kieler/quartz/editor/ui/contentassist/antlr/internal/InternalQuartz.g:14709:11: ( ' ' | '\\t' | '\\r' | '\\n' )+
             {
-            // ../de.cau.cs.kieler.quartz.editor.ui/src-gen/de/cau/cs/kieler/quartz/editor/ui/contentassist/antlr/internal/InternalQuartz.g:10748:11: ( ' ' | '\\t' | '\\r' | '\\n' )+
+            // ../de.cau.cs.kieler.quartz.editor.ui/src-gen/de/cau/cs/kieler/quartz/editor/ui/contentassist/antlr/internal/InternalQuartz.g:14709:11: ( ' ' | '\\t' | '\\r' | '\\n' )+
             int cnt16=0;
             loop16:
             do {
@@ -2778,7 +2779,284 @@ public class InternalQuartzLexer extends Lexer {
     public void mTokens() throws RecognitionException {
         // ../de.cau.cs.kieler.quartz.editor.ui/src-gen/de/cau/cs/kieler/quartz/editor/ui/contentassist/antlr/internal/InternalQuartz.g:1:8: ( T13 | T14 | T15 | T16 | T17 | T18 | T19 | T20 | T21 | T22 | T23 | T24 | T25 | T26 | T27 | T28 | T29 | T30 | T31 | T32 | T33 | T34 | T35 | T36 | T37 | T38 | T39 | T40 | T41 | T42 | T43 | T44 | T45 | T46 | T47 | T48 | T49 | T50 | T51 | T52 | T53 | T54 | T55 | T56 | T57 | T58 | T59 | T60 | T61 | T62 | T63 | T64 | T65 | T66 | T67 | T68 | T69 | T70 | T71 | T72 | T73 | T74 | T75 | T76 | T77 | T78 | T79 | T80 | T81 | T82 | T83 | T84 | T85 | T86 | T87 | T88 | T89 | T90 | T91 | T92 | T93 | T94 | T95 | T96 | T97 | T98 | T99 | T100 | T101 | T102 | T103 | T104 | T105 | T106 | T107 | T108 | T109 | T110 | T111 | T112 | T113 | T114 | T115 | T116 | T117 | T118 | T119 | RULE_BVCONST | RULE_OCTCONST | RULE_HEXCONST | RULE_NATCONST | RULE_REALCONST | RULE_ID | RULE_ML_COMMENT | RULE_SL_COMMENT | RULE_WS )
         int alt17=116;
-        alt17 = dfa17.predict(input);
+        switch ( input.LA(1) ) {
+        case 'e':
+            {
+            alt17=1;
+            }
+            break;
+        case 'm':
+            {
+            alt17=2;
+            }
+            break;
+        case 'b':
+            {
+            alt17=3;
+            }
+            break;
+        case 'r':
+            {
+            alt17=4;
+            }
+            break;
+        case 'n':
+            {
+            alt17=6;
+            }
+            break;
+        case 'i':
+            {
+            alt17=7;
+            }
+            break;
+        case '?':
+            {
+            alt17=8;
+            }
+            break;
+        case '!':
+            {
+            alt17=9;
+            }
+            break;
+        case '_':
+            {
+            alt17=12;
+            }
+            break;
+        case 't':
+            {
+            alt17=15;
+            }
+            break;
+        case 'f':
+            {
+            alt17=17;
+            }
+            break;
+        case '|':
+            {
+            alt17=18;
+            }
+            break;
+        case '&':
+            {
+            alt17=20;
+            }
+            break;
+        case 'd':
+            {
+            alt17=22;
+            }
+            break;
+        case 'a':
+            {
+            alt17=26;
+            }
+            break;
+        case 'o':
+            {
+            alt17=28;
+            }
+            break;
+        case 'p':
+            {
+            alt17=29;
+            }
+            break;
+        case ';':
+            {
+            alt17=30;
+            }
+            break;
+        case '.':
+            {
+            alt17=32;
+            }
+            break;
+        case '(':
+            {
+            alt17=34;
+            }
+            break;
+        case ')':
+            {
+            alt17=35;
+            }
+            break;
+        case '=':
+            {
+            alt17=36;
+            }
+            break;
+        case ',':
+            {
+            alt17=38;
+            }
+            break;
+        case '{':
+            {
+            alt17=39;
+            }
+            break;
+        case '}':
+            {
+            alt17=40;
+            }
+            break;
+        case '[':
+            {
+            alt17=41;
+            }
+            break;
+        case ']':
+            {
+            alt17=42;
+            }
+            break;
+        case '+':
+            {
+            alt17=43;
+            }
+            break;
+        case '-':
+            {
+            alt17=44;
+            }
+            break;
+        case 's':
+            {
+            alt17=46;
+            }
+            break;
+        case ':':
+            {
+            alt17=49;
+            }
+            break;
+        case 'c':
+            {
+            alt17=60;
+            }
+            break;
+        case 'l':
+            {
+            alt17=62;
+            }
+            break;
+        case 'X':
+            {
+            alt17=67;
+            }
+            break;
+        case 'G':
+            {
+            alt17=68;
+            }
+            break;
+        case 'F':
+            {
+            alt17=69;
+            }
+            break;
+        case 'P':
+            {
+            alt17=70;
+            }
+            break;
+        case 'E':
+            {
+            alt17=74;
+            }
+            break;
+        case 'A':
+            {
+            alt17=75;
+            }
+            break;
+        case '<':
+            {
+            alt17=77;
+            }
+            break;
+        case 'w':
+            {
+            alt17=90;
+            }
+            break;
+        case 'h':
+            {
+            alt17=105;
+            }
+            break;
+        case '0':
+            {
+            alt17=108;
+            }
+            break;
+        case '1':
+        case '2':
+        case '3':
+        case '4':
+        case '5':
+        case '6':
+        case '7':
+        case '8':
+        case '9':
+            {
+            alt17=111;
+            }
+            break;
+        case 'B':
+        case 'C':
+        case 'D':
+        case 'H':
+        case 'I':
+        case 'J':
+        case 'K':
+        case 'L':
+        case 'M':
+        case 'N':
+        case 'O':
+        case 'Q':
+        case 'R':
+        case 'S':
+        case 'T':
+        case 'U':
+        case 'V':
+        case 'W':
+        case 'Y':
+        case 'Z':
+        case 'g':
+        case 'j':
+        case 'k':
+        case 'q':
+        case 'u':
+        case 'v':
+        case 'x':
+        case 'y':
+        case 'z':
+            {
+            alt17=113;
+            }
+            break;
+        case '/':
+            {
+            alt17=114;
+            }
+            break;
+        case '\t':
+        case '\n':
+        case '\r':
+        case ' ':
+            {
+            alt17=116;
+            }
+            break;
+        default:
+            alt17=111;}
+
         switch (alt17) {
             case 1 :
                 // ../de.cau.cs.kieler.quartz.editor.ui/src-gen/de/cau/cs/kieler/quartz/editor/ui/contentassist/antlr/internal/InternalQuartz.g:1:10: T13
@@ -3598,534 +3876,6 @@ public class InternalQuartzLexer extends Lexer {
     }
 
 
-    protected DFA17 dfa17 = new DFA17(this);
-    static final String DFA17_eotS =
-        "\1\55\6\56\3\uffff\2\56\1\112\1\114\4\56\1\uffff\1\130\6\uffff\1"+
-        "\133\1\uffff\1\135\1\136\1\56\1\143\2\56\1\151\1\152\1\153\1\56"+
-        "\1\160\1\161\1\uffff\2\56\2\55\4\uffff\4\56\1\u0082\3\56\1\u0087"+
-        "\3\56\1\u008c\2\56\1\u0091\1\56\1\u0094\6\56\1\u009d\1\uffff\1\u009f"+
-        "\1\uffff\2\56\1\u00a3\4\56\1\u00a9\1\56\11\uffff\3\56\2\uffff\5"+
-        "\56\3\uffff\1\u00b6\1\u00b7\2\56\5\uffff\3\56\5\uffff\1\56\1\u00c0"+
-        "\3\56\1\uffff\1\u00c4\3\56\1\uffff\3\56\1\u00cd\1\uffff\1\u00cf"+
-        "\1\56\1\u00d2\1\56\1\uffff\2\56\1\uffff\6\56\1\u00de\4\uffff\2\56"+
-        "\1\u00e1\1\uffff\1\u00e2\1\56\1\u00e5\2\56\1\uffff\2\56\1\u00eb"+
-        "\1\u00ec\1\56\1\u00ee\1\u00ef\3\56\1\u00f3\1\u00f4\2\uffff\1\u00f5"+
-        "\1\u00f6\6\56\1\uffff\1\56\1\u00fe\1\u00ff\1\uffff\4\56\1\u0104"+
-        "\1\u0105\2\56\1\uffff\1\56\1\uffff\1\u010a\1\56\1\uffff\5\56\1\u0112"+
-        "\5\56\1\uffff\2\56\2\uffff\2\56\1\uffff\5\56\2\uffff\1\56\2\uffff"+
-        "\1\56\1\u0123\1\u0124\4\uffff\1\u0125\1\56\1\u0127\1\u0128\1\u0129"+
-        "\1\u012a\1\56\2\uffff\1\56\1\u012d\2\56\2\uffff\4\56\1\uffff\7\56"+
-        "\1\uffff\2\56\1\u013d\1\u013e\5\56\1\u0144\2\56\1\u0147\3\56\3\uffff"+
-        "\1\u014b\4\uffff\1\u014c\1\u014d\1\uffff\1\u014e\1\u014f\2\56\1"+
-        "\u0152\2\56\1\u0155\1\u0156\2\56\1\u0159\1\56\1\u015b\1\56\2\uffff"+
-        "\1\u015d\1\u015e\1\56\1\u0160\1\56\1\uffff\1\u0162\1\u0163\1\uffff"+
-        "\1\56\1\u0165\1\u0166\5\uffff\1\u0167\1\56\1\uffff\1\u0169\1\56"+
-        "\2\uffff\1\u016b\1\56\1\uffff\1\56\1\uffff\1\56\2\uffff\1\u016f"+
-        "\1\uffff\1\56\2\uffff\1\u0171\3\uffff\1\u0172\1\uffff\1\u0173\1"+
-        "\uffff\3\56\1\uffff\1\u0177\3\uffff\1\u0178\1\u0179\1\u017a\4\uffff";
-    static final String DFA17_eofS =
-        "\u017b\uffff";
-    static final String DFA17_minS =
-        "\1\11\1\154\1\141\1\157\1\145\1\141\1\146\3\uffff\1\145\1\141\1"+
-        "\174\1\46\1\145\1\142\1\162\1\141\1\uffff\1\52\6\uffff\1\72\1\uffff"+
-        "\2\60\1\141\1\72\1\141\1\145\3\60\1\101\2\60\1\55\1\145\1\141\2"+
-        "\56\2\uffff\1\52\1\uffff\1\145\2\151\1\163\1\60\1\155\1\144\1\143"+
-        "\1\60\1\157\1\141\1\164\1\60\1\164\1\170\1\60\1\155\1\60\1\162\1"+
-        "\165\1\160\1\156\1\154\1\162\1\174\1\uffff\1\46\1\uffff\1\162\1"+
-        "\146\1\60\1\144\1\162\1\157\1\163\1\60\1\143\11\uffff\1\164\1\155"+
-        "\1\156\2\uffff\1\163\1\157\1\163\1\147\1\164\3\uffff\2\60\2\130"+
-        "\5\uffff\1\145\1\141\1\154\5\uffff\1\156\1\60\1\163\1\164\1\145"+
-        "\1\uffff\1\60\1\165\1\162\1\151\1\uffff\2\154\1\145\1\60\1\uffff"+
-        "\1\60\1\164\1\60\1\151\1\uffff\1\145\1\157\1\uffff\1\155\1\145\1"+
-        "\62\1\160\1\141\1\163\1\60\4\uffff\1\151\1\141\1\60\1\uffff\1\60"+
-        "\1\62\1\60\1\162\1\145\1\uffff\1\163\1\153\2\60\1\145\2\60\1\157"+
-        "\1\145\1\160\2\60\2\uffff\2\60\1\156\1\154\1\153\2\164\1\171\1\uffff"+
-        "\1\164\2\60\1\uffff\1\154\1\157\1\156\1\141\2\60\1\162\1\142\1\uffff"+
-        "\1\151\1\uffff\1\60\1\142\1\uffff\1\144\1\141\1\144\1\162\1\151"+
-        "\1\60\1\142\1\157\1\154\1\145\1\154\1\uffff\1\156\1\165\2\uffff"+
-        "\1\142\1\162\1\uffff\1\164\1\162\1\155\1\145\1\141\2\uffff\1\117"+
-        "\2\uffff\1\163\2\60\4\uffff\1\60\1\145\4\60\1\163\2\uffff\1\145"+
-        "\1\60\2\164\2\uffff\1\163\1\145\1\166\1\156\1\uffff\1\145\1\166"+
-        "\1\145\1\156\1\151\1\164\1\156\1\uffff\1\166\1\151\2\60\1\154\1"+
-        "\147\1\154\1\166\1\141\1\60\1\164\1\145\1\60\1\147\1\146\1\145\3"+
-        "\uffff\1\60\4\uffff\2\60\1\uffff\2\60\1\145\1\141\1\60\1\147\1\141"+
-        "\2\60\1\164\1\141\1\60\1\141\1\60\1\156\2\uffff\2\60\1\164\1\60"+
-        "\1\143\1\uffff\2\60\1\uffff\1\145\2\60\5\uffff\1\60\1\154\1\uffff"+
-        "\1\60\1\154\2\uffff\1\60\1\164\1\uffff\1\164\1\uffff\1\164\2\uffff"+
-        "\1\60\1\uffff\1\164\2\uffff\1\60\3\uffff\1\60\1\uffff\1\60\1\uffff"+
-        "\2\145\1\163\1\uffff\1\60\3\uffff\3\60\4\uffff";
-    static final String DFA17_maxS =
-        "\1\175\1\170\1\165\1\166\1\145\1\165\1\156\3\uffff\1\165\1\157\1"+
-        "\174\1\46\1\165\1\163\1\162\1\141\1\uffff\1\56\6\uffff\1\135\1\uffff"+
-        "\2\71\1\165\1\72\2\157\3\172\1\123\2\172\1\76\1\150\1\141\1\170"+
-        "\1\71\2\uffff\1\57\1\uffff\1\145\1\160\1\151\1\163\1\172\1\155\1"+
-        "\144\1\143\1\172\1\157\1\166\1\164\1\172\1\164\1\170\1\172\1\160"+
-        "\1\172\1\162\1\165\1\160\1\170\1\154\1\162\1\174\1\uffff\1\46\1"+
-        "\uffff\2\162\1\172\1\144\1\162\2\163\1\172\1\165\11\uffff\1\164"+
-        "\1\155\1\172\2\uffff\1\163\1\157\1\163\1\157\1\164\3\uffff\2\172"+
-        "\2\130\5\uffff\1\151\1\141\1\154\5\uffff\1\162\1\172\1\163\1\164"+
-        "\1\145\1\uffff\1\172\1\165\1\162\1\156\1\uffff\2\154\1\145\1\172"+
-        "\1\uffff\1\172\1\164\1\172\1\164\1\uffff\1\145\1\157\1\uffff\1\155"+
-        "\1\145\1\62\1\160\1\141\1\163\1\172\4\uffff\1\151\1\141\1\172\1"+
-        "\uffff\1\172\1\62\1\172\1\162\1\165\1\uffff\1\163\1\153\2\172\1"+
-        "\145\2\172\1\157\1\145\1\160\2\172\2\uffff\2\172\1\156\1\154\1\153"+
-        "\2\164\1\171\1\uffff\1\164\2\172\1\uffff\1\154\1\157\1\156\1\141"+
-        "\2\172\2\162\1\uffff\1\151\1\uffff\1\172\1\162\1\uffff\1\144\1\141"+
-        "\1\144\1\162\1\151\1\172\1\142\1\157\1\154\1\145\1\154\1\uffff\1"+
-        "\156\1\165\2\uffff\1\142\1\162\1\uffff\1\164\1\162\1\155\1\145\1"+
-        "\141\2\uffff\1\117\2\uffff\1\163\2\172\4\uffff\1\172\1\145\4\172"+
-        "\1\163\2\uffff\1\145\1\172\2\164\2\uffff\1\163\1\145\1\166\1\156"+
-        "\1\uffff\1\145\1\166\1\145\1\156\1\151\1\164\1\156\1\uffff\1\166"+
-        "\1\151\2\172\1\154\1\147\1\154\1\166\1\141\1\172\1\164\1\145\1\172"+
-        "\1\147\1\146\1\145\3\uffff\1\172\4\uffff\2\172\1\uffff\2\172\1\145"+
-        "\1\141\1\172\1\147\1\141\2\172\1\164\1\141\1\172\1\141\1\172\1\156"+
-        "\2\uffff\2\172\1\164\1\172\1\143\1\uffff\2\172\1\uffff\1\145\2\172"+
-        "\5\uffff\1\172\1\154\1\uffff\1\172\1\154\2\uffff\1\172\1\164\1\uffff"+
-        "\1\164\1\uffff\1\164\2\uffff\1\172\1\uffff\1\164\2\uffff\1\172\3"+
-        "\uffff\1\172\1\uffff\1\172\1\uffff\2\145\1\163\1\uffff\1\172\3\uffff"+
-        "\3\172\4\uffff";
-    static final String DFA17_acceptS =
-        "\7\uffff\1\10\1\11\1\14\10\uffff\1\36\1\uffff\1\42\1\43\1\44\1\46"+
-        "\1\47\1\50\1\uffff\1\52\21\uffff\1\157\1\161\1\uffff\1\164\31\uffff"+
-        "\1\33\1\uffff\1\31\11\uffff\1\153\1\130\1\40\1\116\1\114\1\51\1"+
-        "\160\1\53\1\54\3\uffff\1\61\1\122\5\uffff\1\103\1\104\1\105\4\uffff"+
-        "\1\112\1\113\1\124\1\117\1\115\3\uffff\1\154\1\156\1\155\1\162\1"+
-        "\163\5\uffff\1\12\4\uffff\1\5\4\uffff\1\13\4\uffff\1\121\2\uffff"+
-        "\1\144\7\uffff\1\23\1\22\1\25\1\24\3\uffff\1\127\5\uffff\1\34\14"+
-        "\uffff\1\106\1\107\10\uffff\1\75\3\uffff\1\2\10\uffff\1\6\1\uffff"+
-        "\1\30\2\uffff\1\7\13\uffff\1\143\2\uffff\1\57\1\32\2\uffff\1\55"+
-        "\5\uffff\1\56\1\102\1\uffff\1\73\1\74\3\uffff\1\76\1\146\1\110\1"+
-        "\111\7\uffff\1\123\1\145\4\uffff\1\3\1\4\4\uffff\1\62\7\uffff\1"+
-        "\20\20\uffff\1\137\1\147\1\135\1\uffff\1\132\1\151\1\1\1\152\2\uffff"+
-        "\1\41\17\uffff\1\27\1\21\5\uffff\1\134\2\uffff\1\150\3\uffff\1\142"+
-        "\1\101\1\45\1\70\1\67\2\uffff\1\63\2\uffff\1\64\1\16\2\uffff\1\37"+
-        "\1\uffff\1\66\1\uffff\1\100\1\26\1\uffff\1\65\1\uffff\1\126\1\125"+
-        "\1\uffff\1\77\1\141\1\60\1\uffff\1\131\1\uffff\1\15\3\uffff\1\140"+
-        "\1\uffff\1\35\1\71\1\72\3\uffff\1\136\1\133\1\17\1\120";
-    static final String DFA17_specialS =
-        "\u017b\uffff}>";
-    static final String[] DFA17_transitionS = {
-            "\2\60\2\uffff\1\60\22\uffff\1\60\1\10\4\uffff\1\15\1\uffff\1"+
-            "\24\1\25\1\uffff\1\34\1\27\1\35\1\23\1\57\1\53\11\54\1\37\1"+
-            "\22\1\50\1\26\1\uffff\1\7\1\uffff\1\47\3\56\1\46\1\44\1\43\10"+
-            "\56\1\45\7\56\1\42\2\56\1\32\1\uffff\1\33\1\uffff\1\11\1\uffff"+
-            "\1\17\1\3\1\40\1\16\1\1\1\13\1\56\1\52\1\6\2\56\1\41\1\2\1\5"+
-            "\1\20\1\21\1\56\1\4\1\36\1\12\2\56\1\51\3\56\1\30\1\14\1\31",
-            "\1\64\1\63\10\uffff\1\61\1\uffff\1\62",
-            "\1\70\3\uffff\1\66\11\uffff\1\67\5\uffff\1\65",
-            "\1\72\6\uffff\1\71",
-            "\1\73",
-            "\1\74\3\uffff\1\77\11\uffff\1\76\5\uffff\1\75",
-            "\1\102\6\uffff\1\101\1\100",
-            "",
-            "",
-            "",
-            "\1\103\14\uffff\1\104\2\uffff\1\105",
-            "\1\107\7\uffff\1\106\5\uffff\1\110",
-            "\1\111",
-            "\1\113",
-            "\1\116\11\uffff\1\117\5\uffff\1\115",
-            "\1\122\13\uffff\1\120\3\uffff\1\121\1\123",
-            "\1\124",
-            "\1\125",
-            "",
-            "\1\126\3\uffff\1\127",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "\1\131\42\uffff\1\132",
-            "",
-            "\12\134",
-            "\12\134",
-            "\1\137\7\uffff\1\141\13\uffff\1\140",
-            "\1\142",
-            "\1\146\6\uffff\1\145\6\uffff\1\144",
-            "\1\150\11\uffff\1\147",
-            "\12\56\7\uffff\32\56\4\uffff\1\56\1\uffff\32\56",
-            "\12\56\7\uffff\32\56\4\uffff\1\56\1\uffff\32\56",
-            "\12\56\7\uffff\32\56\4\uffff\1\56\1\uffff\32\56",
-            "\1\154\4\uffff\1\155\6\uffff\1\157\5\uffff\1\156",
-            "\12\56\7\uffff\32\56\4\uffff\1\56\1\uffff\32\56",
-            "\12\56\7\uffff\32\56\4\uffff\1\56\1\uffff\32\56",
-            "\1\162\14\uffff\1\163\3\uffff\1\164",
-            "\1\166\2\uffff\1\165",
-            "\1\167",
-            "\1\134\1\uffff\12\54\50\uffff\1\170\14\uffff\1\172\10\uffff"+
-            "\1\171",
-            "\1\134\1\uffff\12\54",
-            "",
-            "",
-            "\1\173\4\uffff\1\174",
-            "",
-            "\1\175",
-            "\1\177\6\uffff\1\176",
-            "\1\u0080",
-            "\1\u0081",
-            "\12\56\7\uffff\32\56\4\uffff\1\56\1\uffff\32\56",
-            "\1\u0083",
-            "\1\u0084",
-            "\1\u0085",
-            "\2\56\1\u0086\7\56\7\uffff\32\56\4\uffff\1\56\1\uffff\32\56",
-            "\1\u0088",
-            "\1\u0089\24\uffff\1\u008a",
-            "\1\u008b",
-            "\12\56\7\uffff\32\56\4\uffff\1\56\1\uffff\32\56",
-            "\1\u008d",
-            "\1\u008e",
-            "\12\56\7\uffff\32\56\4\uffff\1\56\1\uffff\22\56\1\u0090\1\u008f"+
-            "\6\56",
-            "\1\u0092\2\uffff\1\u0093",
-            "\12\56\7\uffff\32\56\4\uffff\1\56\1\uffff\32\56",
-            "\1\u0095",
-            "\1\u0096",
-            "\1\u0097",
-            "\1\u0099\11\uffff\1\u0098",
-            "\1\u009a",
-            "\1\u009b",
-            "\1\u009c",
-            "",
-            "\1\u009e",
-            "",
-            "\1\u00a0",
-            "\1\u00a1\13\uffff\1\u00a2",
-            "\12\56\7\uffff\32\56\4\uffff\1\56\1\uffff\32\56",
-            "\1\u00a4",
-            "\1\u00a5",
-            "\1\u00a7\3\uffff\1\u00a6",
-            "\1\u00a8",
-            "\12\56\7\uffff\32\56\4\uffff\1\56\1\uffff\32\56",
-            "\1\u00ab\21\uffff\1\u00aa",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "\1\u00ac",
-            "\1\u00ad",
-            "\1\u00af\13\uffff\1\u00ae",
-            "",
-            "",
-            "\1\u00b0",
-            "\1\u00b1",
-            "\1\u00b2",
-            "\1\u00b4\7\uffff\1\u00b3",
-            "\1\u00b5",
-            "",
-            "",
-            "",
-            "\12\56\7\uffff\32\56\4\uffff\1\56\1\uffff\32\56",
-            "\12\56\7\uffff\32\56\4\uffff\1\56\1\uffff\32\56",
-            "\1\u00b8",
-            "\1\u00b9",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "\1\u00ba\3\uffff\1\u00bb",
-            "\1\u00bc",
-            "\1\u00bd",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "\1\u00be\3\uffff\1\u00bf",
-            "\12\56\7\uffff\32\56\4\uffff\1\56\1\uffff\32\56",
-            "\1\u00c1",
-            "\1\u00c2",
-            "\1\u00c3",
-            "",
-            "\12\56\7\uffff\32\56\4\uffff\1\56\1\uffff\32\56",
-            "\1\u00c5",
-            "\1\u00c6",
-            "\1\u00c7\4\uffff\1\u00c8",
-            "",
-            "\1\u00c9",
-            "\1\u00ca",
-            "\1\u00cb",
-            "\2\56\1\u00cc\7\56\7\uffff\32\56\4\uffff\1\56\1\uffff\32\56",
-            "",
-            "\12\56\7\uffff\32\56\4\uffff\1\56\1\uffff\7\56\1\u00ce\22\56",
-            "\1\u00d0",
-            "\2\56\1\u00d1\7\56\7\uffff\32\56\4\uffff\1\56\1\uffff\32\56",
-            "\1\u00d3\12\uffff\1\u00d4",
-            "",
-            "\1\u00d5",
-            "\1\u00d6",
-            "",
-            "\1\u00d7",
-            "\1\u00d8",
-            "\1\u00d9",
-            "\1\u00da",
-            "\1\u00db",
-            "\1\u00dc",
-            "\12\56\7\uffff\32\56\4\uffff\1\56\1\uffff\1\u00dd\31\56",
-            "",
-            "",
-            "",
-            "",
-            "\1\u00df",
-            "\1\u00e0",
-            "\12\56\7\uffff\32\56\4\uffff\1\56\1\uffff\32\56",
-            "",
-            "\12\56\7\uffff\32\56\4\uffff\1\56\1\uffff\32\56",
-            "\1\u00e3",
-            "\12\56\7\uffff\32\56\4\uffff\1\56\1\uffff\23\56\1\u00e4\6\56",
-            "\1\u00e6",
-            "\1\u00e7\17\uffff\1\u00e8",
-            "",
-            "\1\u00e9",
-            "\1\u00ea",
-            "\12\56\7\uffff\32\56\4\uffff\1\56\1\uffff\32\56",
-            "\12\56\7\uffff\32\56\4\uffff\1\56\1\uffff\32\56",
-            "\1\u00ed",
-            "\12\56\7\uffff\32\56\4\uffff\1\56\1\uffff\32\56",
-            "\12\56\7\uffff\32\56\4\uffff\1\56\1\uffff\32\56",
-            "\1\u00f0",
-            "\1\u00f1",
-            "\1\u00f2",
-            "\12\56\7\uffff\32\56\4\uffff\1\56\1\uffff\32\56",
-            "\12\56\7\uffff\32\56\4\uffff\1\56\1\uffff\32\56",
-            "",
-            "",
-            "\12\56\7\uffff\32\56\4\uffff\1\56\1\uffff\32\56",
-            "\12\56\7\uffff\32\56\4\uffff\1\56\1\uffff\32\56",
-            "\1\u00f7",
-            "\1\u00f8",
-            "\1\u00f9",
-            "\1\u00fa",
-            "\1\u00fb",
-            "\1\u00fc",
-            "",
-            "\1\u00fd",
-            "\12\56\7\uffff\32\56\4\uffff\1\56\1\uffff\32\56",
-            "\12\56\7\uffff\32\56\4\uffff\1\56\1\uffff\32\56",
-            "",
-            "\1\u0100",
-            "\1\u0101",
-            "\1\u0102",
-            "\1\u0103",
-            "\12\56\7\uffff\32\56\4\uffff\1\56\1\uffff\32\56",
-            "\12\56\7\uffff\32\56\4\uffff\1\56\1\uffff\32\56",
-            "\1\u0106",
-            "\1\u0108\17\uffff\1\u0107",
-            "",
-            "\1\u0109",
-            "",
-            "\12\56\7\uffff\32\56\4\uffff\1\56\1\uffff\32\56",
-            "\1\u010c\17\uffff\1\u010b",
-            "",
-            "\1\u010d",
-            "\1\u010e",
-            "\1\u010f",
-            "\1\u0110",
-            "\1\u0111",
-            "\12\56\7\uffff\32\56\4\uffff\1\56\1\uffff\32\56",
-            "\1\u0113",
-            "\1\u0114",
-            "\1\u0115",
-            "\1\u0116",
-            "\1\u0117",
-            "",
-            "\1\u0118",
-            "\1\u0119",
-            "",
-            "",
-            "\1\u011a",
-            "\1\u011b",
-            "",
-            "\1\u011c",
-            "\1\u011d",
-            "\1\u011e",
-            "\1\u011f",
-            "\1\u0120",
-            "",
-            "",
-            "\1\u0121",
-            "",
-            "",
-            "\1\u0122",
-            "\12\56\7\uffff\32\56\4\uffff\1\56\1\uffff\32\56",
-            "\12\56\7\uffff\32\56\4\uffff\1\56\1\uffff\32\56",
-            "",
-            "",
-            "",
-            "",
-            "\12\56\7\uffff\32\56\4\uffff\1\56\1\uffff\32\56",
-            "\1\u0126",
-            "\12\56\7\uffff\32\56\4\uffff\1\56\1\uffff\32\56",
-            "\12\56\7\uffff\32\56\4\uffff\1\56\1\uffff\32\56",
-            "\12\56\7\uffff\32\56\4\uffff\1\56\1\uffff\32\56",
-            "\12\56\7\uffff\32\56\4\uffff\1\56\1\uffff\32\56",
-            "\1\u012b",
-            "",
-            "",
-            "\1\u012c",
-            "\12\56\7\uffff\32\56\4\uffff\1\56\1\uffff\32\56",
-            "\1\u012e",
-            "\1\u012f",
-            "",
-            "",
-            "\1\u0130",
-            "\1\u0131",
-            "\1\u0132",
-            "\1\u0133",
-            "",
-            "\1\u0134",
-            "\1\u0135",
-            "\1\u0136",
-            "\1\u0137",
-            "\1\u0138",
-            "\1\u0139",
-            "\1\u013a",
-            "",
-            "\1\u013b",
-            "\1\u013c",
-            "\12\56\7\uffff\32\56\4\uffff\1\56\1\uffff\32\56",
-            "\12\56\7\uffff\32\56\4\uffff\1\56\1\uffff\32\56",
-            "\1\u013f",
-            "\1\u0140",
-            "\1\u0141",
-            "\1\u0142",
-            "\1\u0143",
-            "\12\56\7\uffff\32\56\4\uffff\1\56\1\uffff\32\56",
-            "\1\u0145",
-            "\1\u0146",
-            "\12\56\7\uffff\32\56\4\uffff\1\56\1\uffff\32\56",
-            "\1\u0148",
-            "\1\u0149",
-            "\1\u014a",
-            "",
-            "",
-            "",
-            "\12\56\7\uffff\32\56\4\uffff\1\56\1\uffff\32\56",
-            "",
-            "",
-            "",
-            "",
-            "\12\56\7\uffff\32\56\4\uffff\1\56\1\uffff\32\56",
-            "\12\56\7\uffff\32\56\4\uffff\1\56\1\uffff\32\56",
-            "",
-            "\12\56\7\uffff\32\56\4\uffff\1\56\1\uffff\32\56",
-            "\12\56\7\uffff\32\56\4\uffff\1\56\1\uffff\32\56",
-            "\1\u0150",
-            "\1\u0151",
-            "\12\56\7\uffff\32\56\4\uffff\1\56\1\uffff\32\56",
-            "\1\u0153",
-            "\1\u0154",
-            "\12\56\7\uffff\32\56\4\uffff\1\56\1\uffff\32\56",
-            "\12\56\7\uffff\32\56\4\uffff\1\56\1\uffff\32\56",
-            "\1\u0157",
-            "\1\u0158",
-            "\12\56\7\uffff\32\56\4\uffff\1\56\1\uffff\32\56",
-            "\1\u015a",
-            "\12\56\7\uffff\32\56\4\uffff\1\56\1\uffff\32\56",
-            "\1\u015c",
-            "",
-            "",
-            "\12\56\7\uffff\32\56\4\uffff\1\56\1\uffff\32\56",
-            "\12\56\7\uffff\32\56\4\uffff\1\56\1\uffff\32\56",
-            "\1\u015f",
-            "\12\56\7\uffff\32\56\4\uffff\1\56\1\uffff\32\56",
-            "\1\u0161",
-            "",
-            "\12\56\7\uffff\32\56\4\uffff\1\56\1\uffff\32\56",
-            "\12\56\7\uffff\32\56\4\uffff\1\56\1\uffff\32\56",
-            "",
-            "\1\u0164",
-            "\12\56\7\uffff\32\56\4\uffff\1\56\1\uffff\32\56",
-            "\12\56\7\uffff\32\56\4\uffff\1\56\1\uffff\32\56",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "\12\56\7\uffff\32\56\4\uffff\1\56\1\uffff\32\56",
-            "\1\u0168",
-            "",
-            "\12\56\7\uffff\32\56\4\uffff\1\56\1\uffff\32\56",
-            "\1\u016a",
-            "",
-            "",
-            "\12\56\7\uffff\32\56\4\uffff\1\56\1\uffff\32\56",
-            "\1\u016c",
-            "",
-            "\1\u016d",
-            "",
-            "\1\u016e",
-            "",
-            "",
-            "\12\56\7\uffff\32\56\4\uffff\1\56\1\uffff\32\56",
-            "",
-            "\1\u0170",
-            "",
-            "",
-            "\12\56\7\uffff\32\56\4\uffff\1\56\1\uffff\32\56",
-            "",
-            "",
-            "",
-            "\12\56\7\uffff\32\56\4\uffff\1\56\1\uffff\32\56",
-            "",
-            "\12\56\7\uffff\32\56\4\uffff\1\56\1\uffff\32\56",
-            "",
-            "\1\u0174",
-            "\1\u0175",
-            "\1\u0176",
-            "",
-            "\12\56\7\uffff\32\56\4\uffff\1\56\1\uffff\32\56",
-            "",
-            "",
-            "",
-            "\12\56\7\uffff\32\56\4\uffff\1\56\1\uffff\32\56",
-            "\12\56\7\uffff\32\56\4\uffff\1\56\1\uffff\32\56",
-            "\12\56\7\uffff\32\56\4\uffff\1\56\1\uffff\32\56",
-            "",
-            "",
-            "",
-            ""
-    };
-
-    static final short[] DFA17_eot = DFA.unpackEncodedString(DFA17_eotS);
-    static final short[] DFA17_eof = DFA.unpackEncodedString(DFA17_eofS);
-    static final char[] DFA17_min = DFA.unpackEncodedStringToUnsignedChars(DFA17_minS);
-    static final char[] DFA17_max = DFA.unpackEncodedStringToUnsignedChars(DFA17_maxS);
-    static final short[] DFA17_accept = DFA.unpackEncodedString(DFA17_acceptS);
-    static final short[] DFA17_special = DFA.unpackEncodedString(DFA17_specialS);
-    static final short[][] DFA17_transition;
-
-    static {
-        int numStates = DFA17_transitionS.length;
-        DFA17_transition = new short[numStates][];
-        for (int i=0; i<numStates; i++) {
-            DFA17_transition[i] = DFA.unpackEncodedString(DFA17_transitionS[i]);
-        }
-    }
-
-    class DFA17 extends DFA {
-
-        public DFA17(BaseRecognizer recognizer) {
-            this.recognizer = recognizer;
-            this.decisionNumber = 17;
-            this.eot = DFA17_eot;
-            this.eof = DFA17_eof;
-            this.min = DFA17_min;
-            this.max = DFA17_max;
-            this.accept = DFA17_accept;
-            this.special = DFA17_special;
-            this.transition = DFA17_transition;
-        }
-        public String getDescription() {
-            return "1:1: Tokens : ( T13 | T14 | T15 | T16 | T17 | T18 | T19 | T20 | T21 | T22 | T23 | T24 | T25 | T26 | T27 | T28 | T29 | T30 | T31 | T32 | T33 | T34 | T35 | T36 | T37 | T38 | T39 | T40 | T41 | T42 | T43 | T44 | T45 | T46 | T47 | T48 | T49 | T50 | T51 | T52 | T53 | T54 | T55 | T56 | T57 | T58 | T59 | T60 | T61 | T62 | T63 | T64 | T65 | T66 | T67 | T68 | T69 | T70 | T71 | T72 | T73 | T74 | T75 | T76 | T77 | T78 | T79 | T80 | T81 | T82 | T83 | T84 | T85 | T86 | T87 | T88 | T89 | T90 | T91 | T92 | T93 | T94 | T95 | T96 | T97 | T98 | T99 | T100 | T101 | T102 | T103 | T104 | T105 | T106 | T107 | T108 | T109 | T110 | T111 | T112 | T113 | T114 | T115 | T116 | T117 | T118 | T119 | RULE_BVCONST | RULE_OCTCONST | RULE_HEXCONST | RULE_NATCONST | RULE_REALCONST | RULE_ID | RULE_ML_COMMENT | RULE_SL_COMMENT | RULE_WS );";
-        }
-    }
  
 
 }
