@@ -717,7 +717,7 @@ Void tryPastingRegionOnTransitions(List[Transition] targets):
  (region != null ?
   targets.pasteRegionInClipboardIntoTransition()
  :
-  null
+  tryPastingStatesOnTransitions(targets)
  )
 ;
 
@@ -726,6 +726,44 @@ Void pasteRegionInClipboardIntoTransition(Transition target):
  let region = getRegionFromClipboard():
  let dummyState = new State:
  dummyState.regions.add(region) ->
+ pasteStateOnTransition(target, dummyState, target.sourceState)
+;
+
+// try inserting all states in clipboard into each transition
+Void tryPastingStatesOnTransitions(List[Transition] targets):
+ let states = getStatesFromClipboard():
+ (states != null ?
+  targets.pasteStatesInClipboardIntoTransition()
+ :
+  tryPastingRegionsOnTransitions(targets)
+ )
+;
+
+// encapsulate states in state and region and insert into transition
+Void pasteStatesInClipboardIntoTransition(Transition target):
+ let states = getStatesFromClipboard():
+ let dummyRegion = new Region:
+ let dummyState = new State:
+ dummyState.regions.add(dummyRegion) ->
+ dummyRegion.innerStates.addAll(states) ->
+ pasteStateOnTransition(target, dummyState, target.sourceState)
+;
+
+// encapsulate regions in state and add to each transition
+Void tryPastingRegionsOnTransitions(List[Transition] targets):
+ let regions = getRegionsFromClipboard():
+ (regions != null ?
+  targets.pasteRegionsInClipboardIntoTransition()
+ :
+  null
+ )
+;
+
+// encapsulate regions in clipboard into state and add to transition
+Void pasteRegionsInClipboardIntoTransition(Transition target):
+ let regions = getRegionsFromClipboard():
+ let dummyState = new State:
+ dummyState.regions.addAll(regions) ->
  pasteStateOnTransition(target, dummyState, target.sourceState)
 ;
 
