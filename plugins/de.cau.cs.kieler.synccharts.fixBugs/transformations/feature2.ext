@@ -153,3 +153,33 @@ Void fixWhiteSpaces(State state):
 Void fixWhiteSpacesInAction(Action action):
  action.triggersAndEffects.replaceAll(" " , "")
 ;
+
+Void fixNormalTerminations(Region region):
+ region.innerStates.fixNormalTerminations()
+;
+
+Void fixNormalTerminations(State state):
+ state.outgoingTransitions.select(e|e.type == TransitionType::NORMALTERMINATION).fixTransitionType() ->
+ state.regions.fixNormalTerminations()
+;
+
+Void fixTransitionType(Transition trans):
+ (trans.sourceState.regions.isEmpty ?
+  trans.setType(TransitionType::WEAKABORT)
+ : 
+  (removeTriggerFromString(trans) ->
+  trans.setTrigger(null))
+ )
+;
+
+Void removeTriggerFromString(Transition trans):
+ (trans.triggersAndEffects != null ?
+  ((trans.effects.isEmpty ?
+   trans.setTriggersAndEffects(null)
+  :
+   trans.setTriggersAndEffects("/" + trans.triggersAndEffects.split("/").get(1)) 
+  ))
+ :
+  null
+ )
+;

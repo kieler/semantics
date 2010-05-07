@@ -41,6 +41,9 @@
                <transformationCommand
                      transformationId="de.cau.cs.kieler.synccharts.fixBugs.fixWhiteSpaces">
                </transformationCommand>
+               <transformationCommand
+                     transformationId="de.cau.cs.kieler.synccharts.fixBugs.fixNormalTerminationTrigger">
+               </transformationCommand>
             </menuContribution>
             <menuContribution
                   locationURI="popup:org.eclipse.gmf.runtime.diagram.ui.DiagramEditorContextMenu?after=addGroup">
@@ -61,6 +64,9 @@
                </transformationCommand>
                <transformationCommand
                      transformationId="de.cau.cs.kieler.synccharts.fixBugs.fixWhiteSpaces">
+               </transformationCommand>
+               <transformationCommand
+                     transformationId="de.cau.cs.kieler.synccharts.fixBugs.fixNormalTerminationTrigger">
                </transformationCommand>
             </menuContribution>
          </menus>
@@ -94,6 +100,11 @@
                   name="Fix Whitespaces"
                   transformation="fixWhiteSpaces"
                   transformationId="de.cau.cs.kieler.synccharts.fixBugs.fixWhiteSpaces">
+            </transformation>
+            <transformation
+                  name="Fix Normal Terminations"
+                  transformation="fixNormalTerminations"
+                  transformationId="de.cau.cs.kieler.synccharts.fixBugs.fixNormalTerminationTrigger">
             </transformation>
          </transformations>
       </configuration>
