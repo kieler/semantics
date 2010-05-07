@@ -147,13 +147,13 @@ public class EsterelFormatter extends AbstractDeclarativeFormatter {
 		c.setLinewrap().before(f.getAbortAccess().getWhenKeyword_2());
 		c.setIndentation(f.getAbortAccess().getAbortKeyword_0(), f
 				.getAbortAccess().getWhenKeyword_2());
-		c.setLinewrap().before(f.getAbortEndAccess().getEndKeyword_0());
+	//	c.setLinewrap().before(f.getAbortEndAccess().getEndKeyword_0());
 		c.setLinewrap().before(f.getAbortCaseSingleAccess().getCaseKeyword_0());
 		c.setIndentation(f.getAbortCaseSingleAccess().getDoKeyword_2_0(), f
 				.getAbortCaseSingleAccess().getGroup_2());
 		c.setLinewrap().before(f.getAbortInstanceAccess().getDoKeyword_1_0());
-		c.setIndentation(f.getAbortInstanceAccess().getDoKeyword_1_0(), f
-				.getAbortInstanceAccess().getEndAssignment_1_2());
+//		c.setIndentation(f.getAbortInstanceAccess().getDoKeyword_1_0(), f
+//				.getAbortInstanceAccess().getEndAssignment_1_2());
 		// TODO AbortBody
 		// ==> Await <==
 		c.setLinewrap().before(f.getAwaitAccess().getAwaitKeyword_0());
