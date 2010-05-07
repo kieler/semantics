@@ -81,7 +81,7 @@
                   transformationId="de.cau.cs.kieler.synccharts.fixBugs.conditionalOutgoing">
             </transformation>
             <transformation
-                  name="Remove Dummy States"
+                  name="Fix Dummy States"
                   transformation="fixDummyStates"
                   transformationId="de.cau.cs.kieler.synccharts.fixBugs.fixDummyStates">
             </transformation>

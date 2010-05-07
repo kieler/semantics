@@ -16,5 +16,5 @@
 /**
  * A couple of sample KSBasE fixbugs features for the synccharts editor.
  */
-package de.cau.cs.kieler.synccharts.fixbugs;
+package de.cau.cs.kieler.synccharts.fixBugs;
 

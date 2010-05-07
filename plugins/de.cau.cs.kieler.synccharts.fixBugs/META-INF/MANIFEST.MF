@@ -3,11 +3,10 @@ Bundle-ManifestVersion: 2
 Bundle-Name: FixBugs
 Bundle-SymbolicName: de.cau.cs.kieler.synccharts.fixBugs;singleton:=true
 Bundle-Version: 0.2.0.qualifier
-Bundle-Activator: de.cau.cs.kieler.synccharts.fixbugs.Activator
+Bundle-Activator: de.cau.cs.kieler.synccharts.fixBugs.Activator
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  de.cau.cs.kieler.synccharts;bundle-version="0.2.0",
- de.cau.cs.kieler.synccharts.ksbase;bundle-version="0.1.0",
  de.cau.cs.kieler.ksbase;bundle-version="0.1.0"
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
