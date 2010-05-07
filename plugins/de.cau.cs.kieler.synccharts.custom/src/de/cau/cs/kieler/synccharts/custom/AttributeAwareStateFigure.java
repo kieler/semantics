@@ -117,7 +117,10 @@ public class AttributeAwareStateFigure extends AttributeAwareSwitchFigure {
         setDefaultFigure(normalFigure);
 
         // Add all conditional figures to the list
+        // note: the order in this list is crucial. Add most special cases first.
         addConditionalFigure(conditionalFigure, COND_CONDITIONAL);
+        addConditionalFigure(initialFinalFigure, COND_INITIAL_FINAL);
+        addConditionalFigure(initialFinalFigure, COND_SIMPLE_INITIAL_FINAL);
         addConditionalFigure(initialFigure, COND_SIMPLE_INITIAL);
         addConditionalFigure(initialFigure, COND_INITIAL);
         addConditionalFigure(finalFigure, COND_SIMPLE_FINAL);
@@ -125,9 +128,6 @@ public class AttributeAwareStateFigure extends AttributeAwareSwitchFigure {
         addConditionalFigure(referenceFigure, COND_REFERENCE);
         addConditionalFigure(textualfigure, COND_TEXTUAL);
         addConditionalFigure(normalFigure, COND_SIMPLE);
-
-        addConditionalFigure(initialFinalFigure, COND_INITIAL_FINAL);
-        addConditionalFigure(initialFinalFigure, COND_SIMPLE_INITIAL_FINAL);
     }
 
     /**
@@ -136,11 +136,11 @@ public class AttributeAwareStateFigure extends AttributeAwareSwitchFigure {
      * @return a figure for states that are both final and initial
      */
     private IFigure createInitialFinalFigure() {
-        RoundedRectangle figure = new RoundedRectangle();
+        RoundedRectangle figure = new DoubleRoundedRectangle();
         figure.setCornerDimensions(new Dimension(StateLayout.MIN_WIDTH,
                 StateLayout.MIN_HEIGHT));
         figure.setFill(false);
-        figure.setLineWidth(INIT_LINE_WIDTH * 2);
+        figure.setLineWidth(INIT_LINE_WIDTH);
         figure.setForegroundColor(ColorConstants.black);
         return figure;
     }
