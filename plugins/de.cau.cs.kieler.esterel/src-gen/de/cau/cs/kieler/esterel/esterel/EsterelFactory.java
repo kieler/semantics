@@ -305,6 +305,15 @@ public interface EsterelFactory extends EFactory
   AwaitCase createAwaitCase();
 
   /**
+   * Returns a new object of class '<em>Proc Call</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Proc Call</em>'.
+   * @generated
+   */
+  ProcCall createProcCall();
+
+  /**
    * Returns a new object of class '<em>Do</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -728,6 +737,15 @@ public interface EsterelFactory extends EFactory
   VariableList createVariableList();
 
   /**
+   * Returns a new object of class '<em>Variable Single</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Variable Single</em>'.
+   * @generated
+   */
+  VariableSingle createVariableSingle();
+
+  /**
    * Returns a new object of class '<em>Weak Abort</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -771,6 +789,33 @@ public interface EsterelFactory extends EFactory
    * @generated
    */
   DataExpr createDataExpr();
+
+  /**
+   * Returns a new object of class '<em>Data Mult</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Data Mult</em>'.
+   * @generated
+   */
+  DataMult createDataMult();
+
+  /**
+   * Returns a new object of class '<em>Data Equation</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Data Equation</em>'.
+   * @generated
+   */
+  DataEquation createDataEquation();
+
+  /**
+   * Returns a new object of class '<em>Data Minus</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Data Minus</em>'.
+   * @generated
+   */
+  DataMinus createDataMinus();
 
   /**
    * Returns a new object of class '<em>Data Unary Expr</em>'.
@@ -1032,6 +1077,15 @@ public interface EsterelFactory extends EFactory
    * @generated
    */
   LocalSignal createLocalSignal();
+
+  /**
+   * Returns a new object of class '<em>Data Tick</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Data Tick</em>'.
+   * @generated
+   */
+  DataTick createDataTick();
 
   /**
    * Returns the package supported by this factory.

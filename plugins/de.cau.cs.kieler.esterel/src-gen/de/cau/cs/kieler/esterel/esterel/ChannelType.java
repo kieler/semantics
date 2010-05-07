@@ -17,6 +17,7 @@ import org.eclipse.emf.ecore.EObject;
  * <ul>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.ChannelType#getType <em>Type</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.ChannelType#getFunc <em>Func</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.esterel.esterel.ChannelType#getOp <em>Op</em>}</li>
  * </ul>
  * </p>
  *
@@ -77,5 +78,31 @@ public interface ChannelType extends EObject
    * @generated
    */
   void setFunc(Function value);
+
+  /**
+   * Returns the value of the '<em><b>Op</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Op</em>' attribute isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Op</em>' attribute.
+   * @see #setOp(String)
+   * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getChannelType_Op()
+   * @model
+   * @generated
+   */
+  String getOp();
+
+  /**
+   * Sets the value of the '{@link de.cau.cs.kieler.esterel.esterel.ChannelType#getOp <em>Op</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Op</em>' attribute.
+   * @see #getOp()
+   * @generated
+   */
+  void setOp(String value);
 
 } // ChannelType

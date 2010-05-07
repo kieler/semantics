@@ -90,7 +90,9 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Procedure">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="idList" unique="false"
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="idList1" unique="false"
+        upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="idList2" unique="false"
         upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Statement"/>
@@ -109,9 +111,7 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="body" eType="#//AbortBody"
         containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="AbortBody">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="end" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="AbortBody"/>
   <eClassifiers xsi:type="ecore:EClass" name="AbortInstance" eSuperTypes="#//AbortBody">
     <eStructuralFeatures xsi:type="ecore:EReference" name="delay" eType="#//DelayExpr"
         containment="true"/>
@@ -144,6 +144,13 @@
   <eClassifiers xsi:type="ecore:EClass" name="AwaitCase" eSuperTypes="#//AwaitBody">
     <eStructuralFeatures xsi:type="ecore:EReference" name="cases" upperBound="-1"
         eType="#//AbortCaseSingle" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ProcCall" eSuperTypes="#//Statement">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="proc" eType="#//Procedure"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="varList" unique="false"
+        upperBound="-1" eType="#//VariableSingle"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="expr" upperBound="-1" eType="#//DataExpr"
+        containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Do" eSuperTypes="#//Statement">
     <eStructuralFeatures xsi:type="ecore:EReference" name="statement" eType="#//Statement"
@@ -363,10 +370,14 @@
         containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="VariableList">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="variable" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="expression" eType="#//DataExpr"
-        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="variable" upperBound="-1"
+        eType="#//VariableSingle" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="left" eType="#//VariableList"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="VariableSingle">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="expression" eType="#//DataExpr"
         containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="WeakAbort" eSuperTypes="#//Statement">
@@ -389,15 +400,20 @@
         eType="#//AbortCaseSingle" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="DataExpr">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="left" eType="#//DataUnaryExpr"
+    <eStructuralFeatures xsi:type="ecore:EReference" name="left" eType="#//DataMult"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="op" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="right" eType="#//DataExpr"
-        containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="expr" eType="#//DataExpr"
+    <eStructuralFeatures xsi:type="ecore:EReference" name="right" eType="#//DataMult"
         containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="DataUnaryExpr" eSuperTypes="#//DataExpr"/>
+  <eClassifiers xsi:type="ecore:EClass" name="DataMult" eSuperTypes="#//DataExpr"/>
+  <eClassifiers xsi:type="ecore:EClass" name="DataEquation" eSuperTypes="#//DataMult"/>
+  <eClassifiers xsi:type="ecore:EClass" name="DataMinus" eSuperTypes="#//DataEquation">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="pre" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="expr" eType="#//DataUnaryExpr"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="DataUnaryExpr"/>
   <eClassifiers xsi:type="ecore:EClass" name="DataValueID" eSuperTypes="#//DataUnaryExpr">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
@@ -470,6 +486,7 @@
   <eClassifiers xsi:type="ecore:EClass" name="ChannelType">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="func" eType="#//Function"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="op" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Signal">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
@@ -500,4 +517,5 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="signal" upperBound="-1"
         eType="#//Signal" containment="true"/>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="DataTick" eSuperTypes="#//DataUnaryExpr"/>
 </ecore:EPackage>

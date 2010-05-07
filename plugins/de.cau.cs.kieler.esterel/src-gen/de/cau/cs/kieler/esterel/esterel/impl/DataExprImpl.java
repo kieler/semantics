@@ -6,7 +6,7 @@
 package de.cau.cs.kieler.esterel.esterel.impl;
 
 import de.cau.cs.kieler.esterel.esterel.DataExpr;
-import de.cau.cs.kieler.esterel.esterel.DataUnaryExpr;
+import de.cau.cs.kieler.esterel.esterel.DataMult;
 import de.cau.cs.kieler.esterel.esterel.EsterelPackage;
 
 import org.eclipse.emf.common.notify.Notification;
@@ -28,7 +28,6 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.DataExprImpl#getLeft <em>Left</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.DataExprImpl#getOp <em>Op</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.DataExprImpl#getRight <em>Right</em>}</li>
- *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.DataExprImpl#getExpr <em>Expr</em>}</li>
  * </ul>
  * </p>
  *
@@ -44,7 +43,7 @@ public class DataExprImpl extends MinimalEObjectImpl.Container implements DataEx
    * @generated
    * @ordered
    */
-  protected DataUnaryExpr left;
+  protected DataMult left;
 
   /**
    * The default value of the '{@link #getOp() <em>Op</em>}' attribute.
@@ -74,17 +73,7 @@ public class DataExprImpl extends MinimalEObjectImpl.Container implements DataEx
    * @generated
    * @ordered
    */
-  protected DataExpr right;
-
-  /**
-   * The cached value of the '{@link #getExpr() <em>Expr</em>}' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getExpr()
-   * @generated
-   * @ordered
-   */
-  protected DataExpr expr;
+  protected DataMult right;
 
   /**
    * <!-- begin-user-doc -->
@@ -112,7 +101,7 @@ public class DataExprImpl extends MinimalEObjectImpl.Container implements DataEx
    * <!-- end-user-doc -->
    * @generated
    */
-  public DataUnaryExpr getLeft()
+  public DataMult getLeft()
   {
     return left;
   }
@@ -122,9 +111,9 @@ public class DataExprImpl extends MinimalEObjectImpl.Container implements DataEx
    * <!-- end-user-doc -->
    * @generated
    */
-  public NotificationChain basicSetLeft(DataUnaryExpr newLeft, NotificationChain msgs)
+  public NotificationChain basicSetLeft(DataMult newLeft, NotificationChain msgs)
   {
-    DataUnaryExpr oldLeft = left;
+    DataMult oldLeft = left;
     left = newLeft;
     if (eNotificationRequired())
     {
@@ -139,7 +128,7 @@ public class DataExprImpl extends MinimalEObjectImpl.Container implements DataEx
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setLeft(DataUnaryExpr newLeft)
+  public void setLeft(DataMult newLeft)
   {
     if (newLeft != left)
     {
@@ -183,7 +172,7 @@ public class DataExprImpl extends MinimalEObjectImpl.Container implements DataEx
    * <!-- end-user-doc -->
    * @generated
    */
-  public DataExpr getRight()
+  public DataMult getRight()
   {
     return right;
   }
@@ -193,9 +182,9 @@ public class DataExprImpl extends MinimalEObjectImpl.Container implements DataEx
    * <!-- end-user-doc -->
    * @generated
    */
-  public NotificationChain basicSetRight(DataExpr newRight, NotificationChain msgs)
+  public NotificationChain basicSetRight(DataMult newRight, NotificationChain msgs)
   {
-    DataExpr oldRight = right;
+    DataMult oldRight = right;
     right = newRight;
     if (eNotificationRequired())
     {
@@ -210,7 +199,7 @@ public class DataExprImpl extends MinimalEObjectImpl.Container implements DataEx
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setRight(DataExpr newRight)
+  public void setRight(DataMult newRight)
   {
     if (newRight != right)
     {
@@ -231,54 +220,6 @@ public class DataExprImpl extends MinimalEObjectImpl.Container implements DataEx
    * <!-- end-user-doc -->
    * @generated
    */
-  public DataExpr getExpr()
-  {
-    return expr;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public NotificationChain basicSetExpr(DataExpr newExpr, NotificationChain msgs)
-  {
-    DataExpr oldExpr = expr;
-    expr = newExpr;
-    if (eNotificationRequired())
-    {
-      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, EsterelPackage.DATA_EXPR__EXPR, oldExpr, newExpr);
-      if (msgs == null) msgs = notification; else msgs.add(notification);
-    }
-    return msgs;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public void setExpr(DataExpr newExpr)
-  {
-    if (newExpr != expr)
-    {
-      NotificationChain msgs = null;
-      if (expr != null)
-        msgs = ((InternalEObject)expr).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.DATA_EXPR__EXPR, null, msgs);
-      if (newExpr != null)
-        msgs = ((InternalEObject)newExpr).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.DATA_EXPR__EXPR, null, msgs);
-      msgs = basicSetExpr(newExpr, msgs);
-      if (msgs != null) msgs.dispatch();
-    }
-    else if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.DATA_EXPR__EXPR, newExpr, newExpr));
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   @Override
   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
   {
@@ -288,8 +229,6 @@ public class DataExprImpl extends MinimalEObjectImpl.Container implements DataEx
         return basicSetLeft(null, msgs);
       case EsterelPackage.DATA_EXPR__RIGHT:
         return basicSetRight(null, msgs);
-      case EsterelPackage.DATA_EXPR__EXPR:
-        return basicSetExpr(null, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
@@ -310,8 +249,6 @@ public class DataExprImpl extends MinimalEObjectImpl.Container implements DataEx
         return getOp();
       case EsterelPackage.DATA_EXPR__RIGHT:
         return getRight();
-      case EsterelPackage.DATA_EXPR__EXPR:
-        return getExpr();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -327,16 +264,13 @@ public class DataExprImpl extends MinimalEObjectImpl.Container implements DataEx
     switch (featureID)
     {
       case EsterelPackage.DATA_EXPR__LEFT:
-        setLeft((DataUnaryExpr)newValue);
+        setLeft((DataMult)newValue);
         return;
       case EsterelPackage.DATA_EXPR__OP:
         setOp((String)newValue);
         return;
       case EsterelPackage.DATA_EXPR__RIGHT:
-        setRight((DataExpr)newValue);
-        return;
-      case EsterelPackage.DATA_EXPR__EXPR:
-        setExpr((DataExpr)newValue);
+        setRight((DataMult)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -353,16 +287,13 @@ public class DataExprImpl extends MinimalEObjectImpl.Container implements DataEx
     switch (featureID)
     {
       case EsterelPackage.DATA_EXPR__LEFT:
-        setLeft((DataUnaryExpr)null);
+        setLeft((DataMult)null);
         return;
       case EsterelPackage.DATA_EXPR__OP:
         setOp(OP_EDEFAULT);
         return;
       case EsterelPackage.DATA_EXPR__RIGHT:
-        setRight((DataExpr)null);
-        return;
-      case EsterelPackage.DATA_EXPR__EXPR:
-        setExpr((DataExpr)null);
+        setRight((DataMult)null);
         return;
     }
     super.eUnset(featureID);
@@ -384,8 +315,6 @@ public class DataExprImpl extends MinimalEObjectImpl.Container implements DataEx
         return OP_EDEFAULT == null ? op != null : !OP_EDEFAULT.equals(op);
       case EsterelPackage.DATA_EXPR__RIGHT:
         return right != null;
-      case EsterelPackage.DATA_EXPR__EXPR:
-        return expr != null;
     }
     return super.eIsSet(featureID);
   }

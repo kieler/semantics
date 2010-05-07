@@ -5,6 +5,8 @@
  */
 package de.cau.cs.kieler.esterel.esterel;
 
+import org.eclipse.emf.common.util.EList;
+
 import org.eclipse.emf.ecore.EObject;
 
 /**
@@ -16,7 +18,6 @@ import org.eclipse.emf.ecore.EObject;
  * The following features are supported:
  * <ul>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.VariableList#getVariable <em>Variable</em>}</li>
- *   <li>{@link de.cau.cs.kieler.esterel.esterel.VariableList#getExpression <em>Expression</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.VariableList#getLeft <em>Left</em>}</li>
  * </ul>
  * </p>
@@ -28,56 +29,20 @@ import org.eclipse.emf.ecore.EObject;
 public interface VariableList extends EObject
 {
   /**
-   * Returns the value of the '<em><b>Variable</b></em>' attribute.
+   * Returns the value of the '<em><b>Variable</b></em>' containment reference list.
+   * The list contents are of type {@link de.cau.cs.kieler.esterel.esterel.VariableSingle}.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Variable</em>' attribute isn't clear,
+   * If the meaning of the '<em>Variable</em>' containment reference list isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Variable</em>' attribute.
-   * @see #setVariable(String)
+   * @return the value of the '<em>Variable</em>' containment reference list.
    * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getVariableList_Variable()
-   * @model
-   * @generated
-   */
-  String getVariable();
-
-  /**
-   * Sets the value of the '{@link de.cau.cs.kieler.esterel.esterel.VariableList#getVariable <em>Variable</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Variable</em>' attribute.
-   * @see #getVariable()
-   * @generated
-   */
-  void setVariable(String value);
-
-  /**
-   * Returns the value of the '<em><b>Expression</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Expression</em>' containment reference isn't clear,
-   * there really should be more of a description here...
-   * </p>
-   * <!-- end-user-doc -->
-   * @return the value of the '<em>Expression</em>' containment reference.
-   * @see #setExpression(DataExpr)
-   * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getVariableList_Expression()
    * @model containment="true"
    * @generated
    */
-  DataExpr getExpression();
-
-  /**
-   * Sets the value of the '{@link de.cau.cs.kieler.esterel.esterel.VariableList#getExpression <em>Expression</em>}' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Expression</em>' containment reference.
-   * @see #getExpression()
-   * @generated
-   */
-  void setExpression(DataExpr value);
+  EList<VariableSingle> getVariable();
 
   /**
    * Returns the value of the '<em><b>Left</b></em>' containment reference.

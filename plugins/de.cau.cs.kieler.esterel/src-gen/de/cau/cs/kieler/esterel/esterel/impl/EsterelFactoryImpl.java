@@ -98,6 +98,7 @@ public class EsterelFactoryImpl extends EFactoryImpl implements EsterelFactory
       case EsterelPackage.AWAIT_BODY: return createAwaitBody();
       case EsterelPackage.AWAIT_INSTANCE: return createAwaitInstance();
       case EsterelPackage.AWAIT_CASE: return createAwaitCase();
+      case EsterelPackage.PROC_CALL: return createProcCall();
       case EsterelPackage.DO: return createDo();
       case EsterelPackage.DO_UPTO: return createDoUpto();
       case EsterelPackage.DO_WATCHING: return createDoWatching();
@@ -145,11 +146,15 @@ public class EsterelFactoryImpl extends EFactoryImpl implements EsterelFactory
       case EsterelPackage.VARIABLE: return createVariable();
       case EsterelPackage.VARIABLE_DECL: return createVariableDecl();
       case EsterelPackage.VARIABLE_LIST: return createVariableList();
+      case EsterelPackage.VARIABLE_SINGLE: return createVariableSingle();
       case EsterelPackage.WEAK_ABORT: return createWeakAbort();
       case EsterelPackage.WEAK_ABORT_BODY: return createWeakAbortBody();
       case EsterelPackage.WEAK_ABORT_INSTANCE: return createWeakAbortInstance();
       case EsterelPackage.WEAK_ABORT_CASE: return createWeakAbortCase();
       case EsterelPackage.DATA_EXPR: return createDataExpr();
+      case EsterelPackage.DATA_MULT: return createDataMult();
+      case EsterelPackage.DATA_EQUATION: return createDataEquation();
+      case EsterelPackage.DATA_MINUS: return createDataMinus();
       case EsterelPackage.DATA_UNARY_EXPR: return createDataUnaryExpr();
       case EsterelPackage.DATA_VALUE_ID: return createDataValueID();
       case EsterelPackage.DATA_VALUE_FLOAT: return createDataValueFloat();
@@ -179,6 +184,7 @@ public class EsterelFactoryImpl extends EFactoryImpl implements EsterelFactory
       case EsterelPackage.PARALLEL: return createParallel();
       case EsterelPackage.SEQUENCE: return createSequence();
       case EsterelPackage.LOCAL_SIGNAL: return createLocalSignal();
+      case EsterelPackage.DATA_TICK: return createDataTick();
       default:
         throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
     }
@@ -523,6 +529,17 @@ public class EsterelFactoryImpl extends EFactoryImpl implements EsterelFactory
   {
     AwaitCaseImpl awaitCase = new AwaitCaseImpl();
     return awaitCase;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public ProcCall createProcCall()
+  {
+    ProcCallImpl procCall = new ProcCallImpl();
+    return procCall;
   }
 
   /**
@@ -1047,6 +1064,17 @@ public class EsterelFactoryImpl extends EFactoryImpl implements EsterelFactory
    * <!-- end-user-doc -->
    * @generated
    */
+  public VariableSingle createVariableSingle()
+  {
+    VariableSingleImpl variableSingle = new VariableSingleImpl();
+    return variableSingle;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public WeakAbort createWeakAbort()
   {
     WeakAbortImpl weakAbort = new WeakAbortImpl();
@@ -1095,6 +1123,39 @@ public class EsterelFactoryImpl extends EFactoryImpl implements EsterelFactory
   {
     DataExprImpl dataExpr = new DataExprImpl();
     return dataExpr;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public DataMult createDataMult()
+  {
+    DataMultImpl dataMult = new DataMultImpl();
+    return dataMult;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public DataEquation createDataEquation()
+  {
+    DataEquationImpl dataEquation = new DataEquationImpl();
+    return dataEquation;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public DataMinus createDataMinus()
+  {
+    DataMinusImpl dataMinus = new DataMinusImpl();
+    return dataMinus;
   }
 
   /**
@@ -1414,6 +1475,17 @@ public class EsterelFactoryImpl extends EFactoryImpl implements EsterelFactory
   {
     LocalSignalImpl localSignal = new LocalSignalImpl();
     return localSignal;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public DataTick createDataTick()
+  {
+    DataTickImpl dataTick = new DataTickImpl();
+    return dataTick;
   }
 
   /**

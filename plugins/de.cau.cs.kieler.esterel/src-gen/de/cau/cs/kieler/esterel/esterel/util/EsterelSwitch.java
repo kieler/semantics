@@ -322,6 +322,14 @@ public class EsterelSwitch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
+      case EsterelPackage.PROC_CALL:
+      {
+        ProcCall procCall = (ProcCall)theEObject;
+        T result = caseProcCall(procCall);
+        if (result == null) result = caseStatement(procCall);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
       case EsterelPackage.DO:
       {
         Do do_ = (Do)theEObject;
@@ -671,6 +679,13 @@ public class EsterelSwitch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
+      case EsterelPackage.VARIABLE_SINGLE:
+      {
+        VariableSingle variableSingle = (VariableSingle)theEObject;
+        T result = caseVariableSingle(variableSingle);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
       case EsterelPackage.WEAK_ABORT:
       {
         WeakAbort weakAbort = (WeakAbort)theEObject;
@@ -709,11 +724,37 @@ public class EsterelSwitch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
+      case EsterelPackage.DATA_MULT:
+      {
+        DataMult dataMult = (DataMult)theEObject;
+        T result = caseDataMult(dataMult);
+        if (result == null) result = caseDataExpr(dataMult);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case EsterelPackage.DATA_EQUATION:
+      {
+        DataEquation dataEquation = (DataEquation)theEObject;
+        T result = caseDataEquation(dataEquation);
+        if (result == null) result = caseDataMult(dataEquation);
+        if (result == null) result = caseDataExpr(dataEquation);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case EsterelPackage.DATA_MINUS:
+      {
+        DataMinus dataMinus = (DataMinus)theEObject;
+        T result = caseDataMinus(dataMinus);
+        if (result == null) result = caseDataEquation(dataMinus);
+        if (result == null) result = caseDataMult(dataMinus);
+        if (result == null) result = caseDataExpr(dataMinus);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
       case EsterelPackage.DATA_UNARY_EXPR:
       {
         DataUnaryExpr dataUnaryExpr = (DataUnaryExpr)theEObject;
         T result = caseDataUnaryExpr(dataUnaryExpr);
-        if (result == null) result = caseDataExpr(dataUnaryExpr);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -722,7 +763,6 @@ public class EsterelSwitch<T>
         DataValueID dataValueID = (DataValueID)theEObject;
         T result = caseDataValueID(dataValueID);
         if (result == null) result = caseDataUnaryExpr(dataValueID);
-        if (result == null) result = caseDataExpr(dataValueID);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -731,7 +771,6 @@ public class EsterelSwitch<T>
         DataValueFloat dataValueFloat = (DataValueFloat)theEObject;
         T result = caseDataValueFloat(dataValueFloat);
         if (result == null) result = caseDataUnaryExpr(dataValueFloat);
-        if (result == null) result = caseDataExpr(dataValueFloat);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -740,7 +779,6 @@ public class EsterelSwitch<T>
         DataValueBoolean dataValueBoolean = (DataValueBoolean)theEObject;
         T result = caseDataValueBoolean(dataValueBoolean);
         if (result == null) result = caseDataUnaryExpr(dataValueBoolean);
-        if (result == null) result = caseDataExpr(dataValueBoolean);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -749,7 +787,6 @@ public class EsterelSwitch<T>
         DataValueInt dataValueInt = (DataValueInt)theEObject;
         T result = caseDataValueInt(dataValueInt);
         if (result == null) result = caseDataUnaryExpr(dataValueInt);
-        if (result == null) result = caseDataExpr(dataValueInt);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -758,7 +795,6 @@ public class EsterelSwitch<T>
         DataValueString dataValueString = (DataValueString)theEObject;
         T result = caseDataValueString(dataValueString);
         if (result == null) result = caseDataUnaryExpr(dataValueString);
-        if (result == null) result = caseDataExpr(dataValueString);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -767,7 +803,6 @@ public class EsterelSwitch<T>
         DataBlock dataBlock = (DataBlock)theEObject;
         T result = caseDataBlock(dataBlock);
         if (result == null) result = caseDataUnaryExpr(dataBlock);
-        if (result == null) result = caseDataExpr(dataBlock);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -776,7 +811,6 @@ public class EsterelSwitch<T>
         DataCurrent dataCurrent = (DataCurrent)theEObject;
         T result = caseDataCurrent(dataCurrent);
         if (result == null) result = caseDataUnaryExpr(dataCurrent);
-        if (result == null) result = caseDataExpr(dataCurrent);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -785,7 +819,6 @@ public class EsterelSwitch<T>
         DataPre dataPre = (DataPre)theEObject;
         T result = caseDataPre(dataPre);
         if (result == null) result = caseDataUnaryExpr(dataPre);
-        if (result == null) result = caseDataExpr(dataPre);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -794,7 +827,6 @@ public class EsterelSwitch<T>
         DataTrap dataTrap = (DataTrap)theEObject;
         T result = caseDataTrap(dataTrap);
         if (result == null) result = caseDataUnaryExpr(dataTrap);
-        if (result == null) result = caseDataExpr(dataTrap);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -803,7 +835,6 @@ public class EsterelSwitch<T>
         DataFunction dataFunction = (DataFunction)theEObject;
         T result = caseDataFunction(dataFunction);
         if (result == null) result = caseDataUnaryExpr(dataFunction);
-        if (result == null) result = caseDataExpr(dataFunction);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -939,6 +970,14 @@ public class EsterelSwitch<T>
         LocalSignal localSignal = (LocalSignal)theEObject;
         T result = caseLocalSignal(localSignal);
         if (result == null) result = caseLocalSignalList(localSignal);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case EsterelPackage.DATA_TICK:
+      {
+        DataTick dataTick = (DataTick)theEObject;
+        T result = caseDataTick(dataTick);
+        if (result == null) result = caseDataUnaryExpr(dataTick);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -1438,6 +1477,22 @@ public class EsterelSwitch<T>
    * @generated
    */
   public T caseAwaitCase(AwaitCase object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Proc Call</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Proc Call</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseProcCall(ProcCall object)
   {
     return null;
   }
@@ -2195,6 +2250,22 @@ public class EsterelSwitch<T>
   }
 
   /**
+   * Returns the result of interpreting the object as an instance of '<em>Variable Single</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Variable Single</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseVariableSingle(VariableSingle object)
+  {
+    return null;
+  }
+
+  /**
    * Returns the result of interpreting the object as an instance of '<em>Weak Abort</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
@@ -2270,6 +2341,54 @@ public class EsterelSwitch<T>
    * @generated
    */
   public T caseDataExpr(DataExpr object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Data Mult</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Data Mult</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseDataMult(DataMult object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Data Equation</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Data Equation</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseDataEquation(DataEquation object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Data Minus</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Data Minus</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseDataMinus(DataMinus object)
   {
     return null;
   }
@@ -2734,6 +2853,22 @@ public class EsterelSwitch<T>
    * @generated
    */
   public T caseLocalSignal(LocalSignal object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Data Tick</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Data Tick</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseDataTick(DataTick object)
   {
     return null;
   }

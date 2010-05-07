@@ -18,7 +18,8 @@ import org.eclipse.emf.ecore.EObject;
  * The following features are supported:
  * <ul>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.Procedure#getName <em>Name</em>}</li>
- *   <li>{@link de.cau.cs.kieler.esterel.esterel.Procedure#getIdList <em>Id List</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.esterel.esterel.Procedure#getIdList1 <em>Id List1</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.esterel.esterel.Procedure#getIdList2 <em>Id List2</em>}</li>
  * </ul>
  * </p>
  *
@@ -55,19 +56,35 @@ public interface Procedure extends EObject
   void setName(String value);
 
   /**
-   * Returns the value of the '<em><b>Id List</b></em>' attribute list.
+   * Returns the value of the '<em><b>Id List1</b></em>' attribute list.
    * The list contents are of type {@link java.lang.String}.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Id List</em>' attribute list isn't clear,
+   * If the meaning of the '<em>Id List1</em>' attribute list isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Id List</em>' attribute list.
-   * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getProcedure_IdList()
+   * @return the value of the '<em>Id List1</em>' attribute list.
+   * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getProcedure_IdList1()
    * @model unique="false"
    * @generated
    */
-  EList<String> getIdList();
+  EList<String> getIdList1();
+
+  /**
+   * Returns the value of the '<em><b>Id List2</b></em>' attribute list.
+   * The list contents are of type {@link java.lang.String}.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Id List2</em>' attribute list isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Id List2</em>' attribute list.
+   * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getProcedure_IdList2()
+   * @model unique="false"
+   * @generated
+   */
+  EList<String> getIdList2();
 
 } // Procedure

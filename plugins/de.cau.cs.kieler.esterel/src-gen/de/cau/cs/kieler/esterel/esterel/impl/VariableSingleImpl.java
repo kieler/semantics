@@ -5,38 +5,34 @@
  */
 package de.cau.cs.kieler.esterel.esterel.impl;
 
+import de.cau.cs.kieler.esterel.esterel.DataExpr;
 import de.cau.cs.kieler.esterel.esterel.EsterelPackage;
-import de.cau.cs.kieler.esterel.esterel.Procedure;
-
-import java.util.Collection;
+import de.cau.cs.kieler.esterel.esterel.VariableSingle;
 
 import org.eclipse.emf.common.notify.Notification;
-
-import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.common.notify.NotificationChain;
 
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
-import org.eclipse.emf.ecore.util.EDataTypeEList;
-
 /**
  * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Procedure</b></em>'.
+ * An implementation of the model object '<em><b>Variable Single</b></em>'.
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.ProcedureImpl#getName <em>Name</em>}</li>
- *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.ProcedureImpl#getIdList1 <em>Id List1</em>}</li>
- *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.ProcedureImpl#getIdList2 <em>Id List2</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.VariableSingleImpl#getName <em>Name</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.VariableSingleImpl#getExpression <em>Expression</em>}</li>
  * </ul>
  * </p>
  *
  * @generated
  */
-public class ProcedureImpl extends MinimalEObjectImpl.Container implements Procedure
+public class VariableSingleImpl extends MinimalEObjectImpl.Container implements VariableSingle
 {
   /**
    * The default value of the '{@link #getName() <em>Name</em>}' attribute.
@@ -59,31 +55,21 @@ public class ProcedureImpl extends MinimalEObjectImpl.Container implements Proce
   protected String name = NAME_EDEFAULT;
 
   /**
-   * The cached value of the '{@link #getIdList1() <em>Id List1</em>}' attribute list.
+   * The cached value of the '{@link #getExpression() <em>Expression</em>}' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getIdList1()
+   * @see #getExpression()
    * @generated
    * @ordered
    */
-  protected EList<String> idList1;
-
-  /**
-   * The cached value of the '{@link #getIdList2() <em>Id List2</em>}' attribute list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getIdList2()
-   * @generated
-   * @ordered
-   */
-  protected EList<String> idList2;
+  protected DataExpr expression;
 
   /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    */
-  protected ProcedureImpl()
+  protected VariableSingleImpl()
   {
     super();
   }
@@ -96,7 +82,7 @@ public class ProcedureImpl extends MinimalEObjectImpl.Container implements Proce
   @Override
   protected EClass eStaticClass()
   {
-    return EsterelPackage.Literals.PROCEDURE;
+    return EsterelPackage.Literals.VARIABLE_SINGLE;
   }
 
   /**
@@ -119,7 +105,7 @@ public class ProcedureImpl extends MinimalEObjectImpl.Container implements Proce
     String oldName = name;
     name = newName;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.PROCEDURE__NAME, oldName, name));
+      eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.VARIABLE_SINGLE__NAME, oldName, name));
   }
 
   /**
@@ -127,13 +113,9 @@ public class ProcedureImpl extends MinimalEObjectImpl.Container implements Proce
    * <!-- end-user-doc -->
    * @generated
    */
-  public EList<String> getIdList1()
+  public DataExpr getExpression()
   {
-    if (idList1 == null)
-    {
-      idList1 = new EDataTypeEList<String>(String.class, this, EsterelPackage.PROCEDURE__ID_LIST1);
-    }
-    return idList1;
+    return expression;
   }
 
   /**
@@ -141,13 +123,53 @@ public class ProcedureImpl extends MinimalEObjectImpl.Container implements Proce
    * <!-- end-user-doc -->
    * @generated
    */
-  public EList<String> getIdList2()
+  public NotificationChain basicSetExpression(DataExpr newExpression, NotificationChain msgs)
   {
-    if (idList2 == null)
+    DataExpr oldExpression = expression;
+    expression = newExpression;
+    if (eNotificationRequired())
     {
-      idList2 = new EDataTypeEList<String>(String.class, this, EsterelPackage.PROCEDURE__ID_LIST2);
+      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, EsterelPackage.VARIABLE_SINGLE__EXPRESSION, oldExpression, newExpression);
+      if (msgs == null) msgs = notification; else msgs.add(notification);
     }
-    return idList2;
+    return msgs;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setExpression(DataExpr newExpression)
+  {
+    if (newExpression != expression)
+    {
+      NotificationChain msgs = null;
+      if (expression != null)
+        msgs = ((InternalEObject)expression).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.VARIABLE_SINGLE__EXPRESSION, null, msgs);
+      if (newExpression != null)
+        msgs = ((InternalEObject)newExpression).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.VARIABLE_SINGLE__EXPRESSION, null, msgs);
+      msgs = basicSetExpression(newExpression, msgs);
+      if (msgs != null) msgs.dispatch();
+    }
+    else if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.VARIABLE_SINGLE__EXPRESSION, newExpression, newExpression));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
+  {
+    switch (featureID)
+    {
+      case EsterelPackage.VARIABLE_SINGLE__EXPRESSION:
+        return basicSetExpression(null, msgs);
+    }
+    return super.eInverseRemove(otherEnd, featureID, msgs);
   }
 
   /**
@@ -160,12 +182,10 @@ public class ProcedureImpl extends MinimalEObjectImpl.Container implements Proce
   {
     switch (featureID)
     {
-      case EsterelPackage.PROCEDURE__NAME:
+      case EsterelPackage.VARIABLE_SINGLE__NAME:
         return getName();
-      case EsterelPackage.PROCEDURE__ID_LIST1:
-        return getIdList1();
-      case EsterelPackage.PROCEDURE__ID_LIST2:
-        return getIdList2();
+      case EsterelPackage.VARIABLE_SINGLE__EXPRESSION:
+        return getExpression();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -175,22 +195,16 @@ public class ProcedureImpl extends MinimalEObjectImpl.Container implements Proce
    * <!-- end-user-doc -->
    * @generated
    */
-  @SuppressWarnings("unchecked")
   @Override
   public void eSet(int featureID, Object newValue)
   {
     switch (featureID)
     {
-      case EsterelPackage.PROCEDURE__NAME:
+      case EsterelPackage.VARIABLE_SINGLE__NAME:
         setName((String)newValue);
         return;
-      case EsterelPackage.PROCEDURE__ID_LIST1:
-        getIdList1().clear();
-        getIdList1().addAll((Collection<? extends String>)newValue);
-        return;
-      case EsterelPackage.PROCEDURE__ID_LIST2:
-        getIdList2().clear();
-        getIdList2().addAll((Collection<? extends String>)newValue);
+      case EsterelPackage.VARIABLE_SINGLE__EXPRESSION:
+        setExpression((DataExpr)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -206,14 +220,11 @@ public class ProcedureImpl extends MinimalEObjectImpl.Container implements Proce
   {
     switch (featureID)
     {
-      case EsterelPackage.PROCEDURE__NAME:
+      case EsterelPackage.VARIABLE_SINGLE__NAME:
         setName(NAME_EDEFAULT);
         return;
-      case EsterelPackage.PROCEDURE__ID_LIST1:
-        getIdList1().clear();
-        return;
-      case EsterelPackage.PROCEDURE__ID_LIST2:
-        getIdList2().clear();
+      case EsterelPackage.VARIABLE_SINGLE__EXPRESSION:
+        setExpression((DataExpr)null);
         return;
     }
     super.eUnset(featureID);
@@ -229,12 +240,10 @@ public class ProcedureImpl extends MinimalEObjectImpl.Container implements Proce
   {
     switch (featureID)
     {
-      case EsterelPackage.PROCEDURE__NAME:
+      case EsterelPackage.VARIABLE_SINGLE__NAME:
         return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
-      case EsterelPackage.PROCEDURE__ID_LIST1:
-        return idList1 != null && !idList1.isEmpty();
-      case EsterelPackage.PROCEDURE__ID_LIST2:
-        return idList2 != null && !idList2.isEmpty();
+      case EsterelPackage.VARIABLE_SINGLE__EXPRESSION:
+        return expression != null;
     }
     return super.eIsSet(featureID);
   }
@@ -252,12 +261,8 @@ public class ProcedureImpl extends MinimalEObjectImpl.Container implements Proce
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (name: ");
     result.append(name);
-    result.append(", idList1: ");
-    result.append(idList1);
-    result.append(", idList2: ");
-    result.append(idList2);
     result.append(')');
     return result.toString();
   }
 
-} //ProcedureImpl
+} //VariableSingleImpl

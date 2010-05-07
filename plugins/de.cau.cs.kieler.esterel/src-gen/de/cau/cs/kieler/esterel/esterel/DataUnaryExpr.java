@@ -5,6 +5,7 @@
  */
 package de.cau.cs.kieler.esterel.esterel;
 
+import org.eclipse.emf.ecore.EObject;
 
 /**
  * <!-- begin-user-doc -->
@@ -16,6 +17,6 @@ package de.cau.cs.kieler.esterel.esterel;
  * @model
  * @generated
  */
-public interface DataUnaryExpr extends DataExpr
+public interface DataUnaryExpr extends EObject
 {
 } // DataUnaryExpr

@@ -104,8 +104,8 @@ ProcedureDecl:
 
 Procedure:
 	name=EsterelID 
-	"(" (idList+=(EsterelID|BaseType) ("," idList+=(EsterelID|BaseType))*)? ")"
-	"(" (idList+=(EsterelID|BaseType) ("," idList+=(EsterelID|BaseType))*)? ")";
+	"(" (idList1+=(EsterelID|BaseType) ("," idList1+=(EsterelID|BaseType))*)? ")"
+	"(" (idList2+=(EsterelID|BaseType) ("," idList2+=(EsterelID|BaseType))*)? ")";
 
 // ==============================================
 // ===            B.4 Statements              ===
@@ -119,6 +119,7 @@ AtomicStatement returns Statement:
 	|	Assignment
 	|	Await
 	|	Block
+	|	ProcCall
 	|	Do
 	|	Emit
 	|	EveryDo
@@ -155,15 +156,12 @@ Abort:
 
 AbortBody:
 	AbortInstance | AbortCase;
-		
-AbortEnd:
-	"end" "abort"?;
 
 AbortInstance:
-	delay=DelayExpr ("do" statement=Statement end=AbortEnd)?; 
+	delay=DelayExpr ("do" statement=Statement "end" "abort"?)?; 
 	
 AbortCase:
-	cases+=AbortCaseSingle (cases+=AbortCaseSingle)* end=AbortEnd;
+	cases+=AbortCaseSingle (cases+=AbortCaseSingle)* "end" "abort"?;
 	
 AbortCaseSingle:
 	"case" delay=DelayExpr ("do" statement=Statement)?;
@@ -183,6 +181,12 @@ AwaitInstance:
 	
 AwaitCase:
 	cases+=AbortCaseSingle (cases+=AbortCaseSingle)* end=AwaitEnd;
+	
+// --> B.4.4 call: Procedure Call
+ProcCall:
+	"call" proc=[Procedure|EsterelID] 
+	"(" varList+=[VariableSingle|EsterelID] ("," varList+=[VariableSingle|EsterelID] )* ")" 
+	"(" expr+=DataExpr ("," expr+=DataExpr)* ")";
 	
 // --> B.4.5 do-upto: Conditional Iteration (deprecated)
 // --> B.4.6 do-watching: Strong Preemption (deprecated)
@@ -359,8 +363,11 @@ VariableDecl:
 	({VariableDecl.left=current}"," varList=VariableList ":" (type=EsterelID | type=BaseType))*;
 	
 VariableList:
-	variable=EsterelID (":=" expression=DataExpr)? 
-	({VariableList.left=current} "," variable=EsterelID (":=" expression=DataExpr)?)*;
+	variable+=VariableSingle 
+	({VariableList.left=current} "," variable+=VariableSingle)*;
+	
+VariableSingle:
+	name=EsterelID (":=" expression=DataExpr)? ;	
 
 // --> B.4.25 weak abort: Weak Preemption
 WeakAbort:
@@ -385,8 +392,18 @@ WeakAbortCase:
 
 // --> B.3.1 Data Expressions
 DataExpr:
-	(DataUnaryExpr ( {DataExpr.left=current} op=DataOp  right=DataExpr)?)
-	|	(op=DataOp  expr=DataExpr);
+	DataMult ({DataExpr.left=current} (op="+"|op="-"|op="or")  right=DataMult)*;
+	//(DataUnaryExpr ( {DataExpr.left=current} op=DataOp  right=DataExpr)?)
+	//|	(op=DataOp  expr=DataExpr);
+
+DataMult:
+	DataEquation ({DataMult.left=current} (op="*"|op="/"|op="mod"|op="and")  right=DataEquation)*;
+
+DataEquation:
+	DataMinus ((op="<"|op=">"|op="<="|op=">="|op="<>"|op="=") right=DataMinus)?;
+
+DataMinus:
+	(pre="-"|pre="not")? expr=DataUnaryExpr;
 
 DataOp:
 	"and"
@@ -405,7 +422,8 @@ DataOp:
 	|	"mod";	
 
 DataUnaryExpr:
-	DataValueFloat
+	{DataTick}Tick
+	| DataValueFloat
 	| DataValueBoolean
 	| DataValueInt
 	| DataValueString
@@ -414,7 +432,8 @@ DataUnaryExpr:
 	| DataCurrent
 	| DataPre
 	| DataTrap
-	| DataFunction;
+	| DataFunction
+;
 		
 DataValueID:
 	value = EsterelID;
@@ -487,7 +506,7 @@ ChannelDescription:
 	
 ChannelType:
 	(type=EsterelID | type=BaseType)
-	| ("combine" (type=EsterelID | type=BaseType) "with" func=[Function|EsterelID])
+	| ("combine" (type=EsterelID | type=BaseType) "with" (func=[Function|EsterelID]|op=DataOp))
 	;
 	
 Signal:

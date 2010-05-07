@@ -233,6 +233,11 @@ public class EsterelAdapterFactory extends AdapterFactoryImpl
         return createAwaitCaseAdapter();
       }
       @Override
+      public Adapter caseProcCall(ProcCall object)
+      {
+        return createProcCallAdapter();
+      }
+      @Override
       public Adapter caseDo(Do object)
       {
         return createDoAdapter();
@@ -468,6 +473,11 @@ public class EsterelAdapterFactory extends AdapterFactoryImpl
         return createVariableListAdapter();
       }
       @Override
+      public Adapter caseVariableSingle(VariableSingle object)
+      {
+        return createVariableSingleAdapter();
+      }
+      @Override
       public Adapter caseWeakAbort(WeakAbort object)
       {
         return createWeakAbortAdapter();
@@ -491,6 +501,21 @@ public class EsterelAdapterFactory extends AdapterFactoryImpl
       public Adapter caseDataExpr(DataExpr object)
       {
         return createDataExprAdapter();
+      }
+      @Override
+      public Adapter caseDataMult(DataMult object)
+      {
+        return createDataMultAdapter();
+      }
+      @Override
+      public Adapter caseDataEquation(DataEquation object)
+      {
+        return createDataEquationAdapter();
+      }
+      @Override
+      public Adapter caseDataMinus(DataMinus object)
+      {
+        return createDataMinusAdapter();
       }
       @Override
       public Adapter caseDataUnaryExpr(DataUnaryExpr object)
@@ -636,6 +661,11 @@ public class EsterelAdapterFactory extends AdapterFactoryImpl
       public Adapter caseLocalSignal(LocalSignal object)
       {
         return createLocalSignalAdapter();
+      }
+      @Override
+      public Adapter caseDataTick(DataTick object)
+      {
+        return createDataTickAdapter();
       }
       @Override
       public Adapter defaultCase(EObject object)
@@ -1120,6 +1150,21 @@ public class EsterelAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createAwaitCaseAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.esterel.esterel.ProcCall <em>Proc Call</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.cau.cs.kieler.esterel.esterel.ProcCall
+   * @generated
+   */
+  public Adapter createProcCallAdapter()
   {
     return null;
   }
@@ -1830,6 +1875,21 @@ public class EsterelAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.esterel.esterel.VariableSingle <em>Variable Single</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.cau.cs.kieler.esterel.esterel.VariableSingle
+   * @generated
+   */
+  public Adapter createVariableSingleAdapter()
+  {
+    return null;
+  }
+
+  /**
    * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.esterel.esterel.WeakAbort <em>Weak Abort</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
@@ -1900,6 +1960,51 @@ public class EsterelAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createDataExprAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.esterel.esterel.DataMult <em>Data Mult</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.cau.cs.kieler.esterel.esterel.DataMult
+   * @generated
+   */
+  public Adapter createDataMultAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.esterel.esterel.DataEquation <em>Data Equation</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.cau.cs.kieler.esterel.esterel.DataEquation
+   * @generated
+   */
+  public Adapter createDataEquationAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.esterel.esterel.DataMinus <em>Data Minus</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.cau.cs.kieler.esterel.esterel.DataMinus
+   * @generated
+   */
+  public Adapter createDataMinusAdapter()
   {
     return null;
   }
@@ -2335,6 +2440,21 @@ public class EsterelAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createLocalSignalAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.esterel.esterel.DataTick <em>Data Tick</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.cau.cs.kieler.esterel.esterel.DataTick
+   * @generated
+   */
+  public Adapter createDataTickAdapter()
   {
     return null;
   }

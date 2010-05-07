@@ -76,7 +76,8 @@
     </genClasses>
     <genClasses ecoreClass="Esterel.ecore#//Procedure">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Esterel.ecore#//Procedure/name"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Esterel.ecore#//Procedure/idList"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Esterel.ecore#//Procedure/idList1"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Esterel.ecore#//Procedure/idList2"/>
     </genClasses>
     <genClasses ecoreClass="Esterel.ecore#//Statement"/>
     <genClasses ecoreClass="Esterel.ecore#//Block">
@@ -90,9 +91,7 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//Abort/statement"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//Abort/body"/>
     </genClasses>
-    <genClasses ecoreClass="Esterel.ecore#//AbortBody">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Esterel.ecore#//AbortBody/end"/>
-    </genClasses>
+    <genClasses ecoreClass="Esterel.ecore#//AbortBody"/>
     <genClasses ecoreClass="Esterel.ecore#//AbortInstance">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//AbortInstance/delay"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//AbortInstance/statement"/>
@@ -116,6 +115,11 @@
     </genClasses>
     <genClasses ecoreClass="Esterel.ecore#//AwaitCase">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//AwaitCase/cases"/>
+    </genClasses>
+    <genClasses ecoreClass="Esterel.ecore#//ProcCall">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Esterel.ecore#//ProcCall/proc"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Esterel.ecore#//ProcCall/varList"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//ProcCall/expr"/>
     </genClasses>
     <genClasses ecoreClass="Esterel.ecore#//Do">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//Do/statement"/>
@@ -280,9 +284,12 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//VariableDecl/left"/>
     </genClasses>
     <genClasses ecoreClass="Esterel.ecore#//VariableList">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Esterel.ecore#//VariableList/variable"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//VariableList/expression"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//VariableList/variable"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//VariableList/left"/>
+    </genClasses>
+    <genClasses ecoreClass="Esterel.ecore#//VariableSingle">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Esterel.ecore#//VariableSingle/name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//VariableSingle/expression"/>
     </genClasses>
     <genClasses ecoreClass="Esterel.ecore#//WeakAbort">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//WeakAbort/statement"/>
@@ -302,7 +309,12 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//DataExpr/left"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Esterel.ecore#//DataExpr/op"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//DataExpr/right"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//DataExpr/expr"/>
+    </genClasses>
+    <genClasses ecoreClass="Esterel.ecore#//DataMult"/>
+    <genClasses ecoreClass="Esterel.ecore#//DataEquation"/>
+    <genClasses ecoreClass="Esterel.ecore#//DataMinus">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Esterel.ecore#//DataMinus/pre"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//DataMinus/expr"/>
     </genClasses>
     <genClasses ecoreClass="Esterel.ecore#//DataUnaryExpr"/>
     <genClasses ecoreClass="Esterel.ecore#//DataValueID">
@@ -366,6 +378,7 @@
     <genClasses ecoreClass="Esterel.ecore#//ChannelType">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Esterel.ecore#//ChannelType/type"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Esterel.ecore#//ChannelType/func"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Esterel.ecore#//ChannelType/op"/>
     </genClasses>
     <genClasses ecoreClass="Esterel.ecore#//Signal">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Esterel.ecore#//Signal/name"/>
@@ -391,5 +404,6 @@
     <genClasses ecoreClass="Esterel.ecore#//LocalSignal">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//LocalSignal/signal"/>
     </genClasses>
+    <genClasses ecoreClass="Esterel.ecore#//DataTick"/>
   </genPackages>
 </genmodel:GenModel>

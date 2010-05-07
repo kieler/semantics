@@ -5,18 +5,25 @@
  */
 package de.cau.cs.kieler.esterel.esterel.impl;
 
-import de.cau.cs.kieler.esterel.esterel.DataExpr;
 import de.cau.cs.kieler.esterel.esterel.EsterelPackage;
 import de.cau.cs.kieler.esterel.esterel.VariableList;
+import de.cau.cs.kieler.esterel.esterel.VariableSingle;
+
+import java.util.Collection;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
+
+import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
+
+import org.eclipse.emf.ecore.util.EObjectContainmentEList;
+import org.eclipse.emf.ecore.util.InternalEList;
 
 /**
  * <!-- begin-user-doc -->
@@ -26,7 +33,6 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  * The following features are implemented:
  * <ul>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.VariableListImpl#getVariable <em>Variable</em>}</li>
- *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.VariableListImpl#getExpression <em>Expression</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.VariableListImpl#getLeft <em>Left</em>}</li>
  * </ul>
  * </p>
@@ -36,34 +42,14 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 public class VariableListImpl extends MinimalEObjectImpl.Container implements VariableList
 {
   /**
-   * The default value of the '{@link #getVariable() <em>Variable</em>}' attribute.
+   * The cached value of the '{@link #getVariable() <em>Variable</em>}' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @see #getVariable()
    * @generated
    * @ordered
    */
-  protected static final String VARIABLE_EDEFAULT = null;
-
-  /**
-   * The cached value of the '{@link #getVariable() <em>Variable</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getVariable()
-   * @generated
-   * @ordered
-   */
-  protected String variable = VARIABLE_EDEFAULT;
-
-  /**
-   * The cached value of the '{@link #getExpression() <em>Expression</em>}' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getExpression()
-   * @generated
-   * @ordered
-   */
-  protected DataExpr expression;
+  protected EList<VariableSingle> variable;
 
   /**
    * The cached value of the '{@link #getLeft() <em>Left</em>}' containment reference.
@@ -101,70 +87,13 @@ public class VariableListImpl extends MinimalEObjectImpl.Container implements Va
    * <!-- end-user-doc -->
    * @generated
    */
-  public String getVariable()
+  public EList<VariableSingle> getVariable()
   {
+    if (variable == null)
+    {
+      variable = new EObjectContainmentEList<VariableSingle>(VariableSingle.class, this, EsterelPackage.VARIABLE_LIST__VARIABLE);
+    }
     return variable;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public void setVariable(String newVariable)
-  {
-    String oldVariable = variable;
-    variable = newVariable;
-    if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.VARIABLE_LIST__VARIABLE, oldVariable, variable));
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public DataExpr getExpression()
-  {
-    return expression;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public NotificationChain basicSetExpression(DataExpr newExpression, NotificationChain msgs)
-  {
-    DataExpr oldExpression = expression;
-    expression = newExpression;
-    if (eNotificationRequired())
-    {
-      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, EsterelPackage.VARIABLE_LIST__EXPRESSION, oldExpression, newExpression);
-      if (msgs == null) msgs = notification; else msgs.add(notification);
-    }
-    return msgs;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public void setExpression(DataExpr newExpression)
-  {
-    if (newExpression != expression)
-    {
-      NotificationChain msgs = null;
-      if (expression != null)
-        msgs = ((InternalEObject)expression).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.VARIABLE_LIST__EXPRESSION, null, msgs);
-      if (newExpression != null)
-        msgs = ((InternalEObject)newExpression).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.VARIABLE_LIST__EXPRESSION, null, msgs);
-      msgs = basicSetExpression(newExpression, msgs);
-      if (msgs != null) msgs.dispatch();
-    }
-    else if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.VARIABLE_LIST__EXPRESSION, newExpression, newExpression));
   }
 
   /**
@@ -225,8 +154,8 @@ public class VariableListImpl extends MinimalEObjectImpl.Container implements Va
   {
     switch (featureID)
     {
-      case EsterelPackage.VARIABLE_LIST__EXPRESSION:
-        return basicSetExpression(null, msgs);
+      case EsterelPackage.VARIABLE_LIST__VARIABLE:
+        return ((InternalEList<?>)getVariable()).basicRemove(otherEnd, msgs);
       case EsterelPackage.VARIABLE_LIST__LEFT:
         return basicSetLeft(null, msgs);
     }
@@ -245,8 +174,6 @@ public class VariableListImpl extends MinimalEObjectImpl.Container implements Va
     {
       case EsterelPackage.VARIABLE_LIST__VARIABLE:
         return getVariable();
-      case EsterelPackage.VARIABLE_LIST__EXPRESSION:
-        return getExpression();
       case EsterelPackage.VARIABLE_LIST__LEFT:
         return getLeft();
     }
@@ -258,16 +185,15 @@ public class VariableListImpl extends MinimalEObjectImpl.Container implements Va
    * <!-- end-user-doc -->
    * @generated
    */
+  @SuppressWarnings("unchecked")
   @Override
   public void eSet(int featureID, Object newValue)
   {
     switch (featureID)
     {
       case EsterelPackage.VARIABLE_LIST__VARIABLE:
-        setVariable((String)newValue);
-        return;
-      case EsterelPackage.VARIABLE_LIST__EXPRESSION:
-        setExpression((DataExpr)newValue);
+        getVariable().clear();
+        getVariable().addAll((Collection<? extends VariableSingle>)newValue);
         return;
       case EsterelPackage.VARIABLE_LIST__LEFT:
         setLeft((VariableList)newValue);
@@ -287,10 +213,7 @@ public class VariableListImpl extends MinimalEObjectImpl.Container implements Va
     switch (featureID)
     {
       case EsterelPackage.VARIABLE_LIST__VARIABLE:
-        setVariable(VARIABLE_EDEFAULT);
-        return;
-      case EsterelPackage.VARIABLE_LIST__EXPRESSION:
-        setExpression((DataExpr)null);
+        getVariable().clear();
         return;
       case EsterelPackage.VARIABLE_LIST__LEFT:
         setLeft((VariableList)null);
@@ -310,30 +233,11 @@ public class VariableListImpl extends MinimalEObjectImpl.Container implements Va
     switch (featureID)
     {
       case EsterelPackage.VARIABLE_LIST__VARIABLE:
-        return VARIABLE_EDEFAULT == null ? variable != null : !VARIABLE_EDEFAULT.equals(variable);
-      case EsterelPackage.VARIABLE_LIST__EXPRESSION:
-        return expression != null;
+        return variable != null && !variable.isEmpty();
       case EsterelPackage.VARIABLE_LIST__LEFT:
         return left != null;
     }
     return super.eIsSet(featureID);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public String toString()
-  {
-    if (eIsProxy()) return super.toString();
-
-    StringBuffer result = new StringBuffer(super.toString());
-    result.append(" (variable: ");
-    result.append(variable);
-    result.append(')');
-    return result.toString();
   }
 
 } //VariableListImpl
