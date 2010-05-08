@@ -110,71 +110,16 @@ public class ExpandMacroStatesCommand extends AbstractHandler {
     }
 
     private void expandMacroStates(final IPath path) {
-        URI domainModelURI = URI.createPlatformResourceURI(path.toOSString(),
-                true);
 
         TransactionalEditingDomain editingDomain = GMFEditingDomainFactory.INSTANCE
                 .createEditingDomain();
-        // ResourceSet resourceSet = editingDomain.getResourceSet();
-
-        // Resource resource = resourceSet.createResource(domainModelURI);
 
         ExpandCommand command = new ExpandCommand(path);
         CommandStack stack = editingDomain.getCommandStack();
         stack.execute(command);
-
-        // IPath target = (IPath) path.clone();
-        // target = target.removeFileExtension();
-        // String filename = target.lastSegment() + "_EXPANDED.kixs";
-        // target = target.removeLastSegments(1).append(filename);
-        //
-        // Workflow workflow = new Workflow();
-        // WorkflowContext wfx = new WorkflowContextDefaultImpl();
-        // NullProgressMonitor monitor = new NullProgressMonitor();
-        // Issues issues = new IssuesImpl();
-        //
-        // // Meta model
-        // EmfMetaModel metaModel = new
-        // EmfMetaModel(SyncchartsPackage.eINSTANCE);
-        //
-        // Reader xmiReader = new Reader();
-        // xmiReader.setUri(path.toOSString());
-        // xmiReader.setModelSlot("model");
-        // workflow.addComponent(xmiReader);
-        //        
-        //
-        // XtendComponent transformation = new XtendComponent();
-        // transformation.addMetaModel(metaModel);
-        // transformation.setInvoke("transformations::expandReferenceStates::transform(model)");
-        // transformation.setOutputSlot("transformedModel");
-        // workflow.addComponent(transformation);
-        //        
-        // Writer writer = new Writer();
-        // writer.setUri(target.toOSString());
-        // writer.setModelSlot("transformedModel");
-        // workflow.addComponent(writer);
-        //
-        // workflow.invoke(wfx, monitor, issues);
-        //        
-        // System.out.println("Issues: \n" + issues);
-        // for (MWEDiagnostic s : issues.getIssues()) {
-        // System.out.println(s);
-        // }
-        // for (MWEDiagnostic s : issues.getInfos()) {
-        // System.out.println(s);
-        // }
-        // for (MWEDiagnostic s : issues.getWarnings()) {
-        // System.out.println(s);
-        // }
-        // for (MWEDiagnostic s : issues.getErrors()) {
-        // System.out.println(s);
-        // }
-        //        
-        // return target;
     }
 
     private class ExpandCommand extends AbstractCommand {
-        IPath target;
         Workflow workflow;
         WorkflowContext wfx;
         NullProgressMonitor monitor;
@@ -185,10 +130,14 @@ public class ExpandMacroStatesCommand extends AbstractHandler {
         Writer writer;
 
         public ExpandCommand(IPath path) {
-            target = (IPath) path.clone();
-            target = target.removeFileExtension();
-            String filename = target.lastSegment() + "_EXPANDED.kixs";
-            target = target.removeLastSegments(1).append(filename);
+            URI sourceURI = URI.createPlatformResourceURI(path.toOSString(), true);
+            
+            String newFilename = path.removeFileExtension().lastSegment() + "_EXPANDED.kixs";
+            URI targetURI = URI.createPlatformResourceURI(path.removeLastSegments(1)
+                                                        .append(newFilename).toOSString(), true);
+            
+            System.out.println("SOURCE: " +sourceURI);
+            System.out.println("TARGET: " +targetURI);
 
             workflow = new Workflow();
             wfx = new WorkflowContextDefaultImpl();
@@ -196,14 +145,11 @@ public class ExpandMacroStatesCommand extends AbstractHandler {
             issues = new IssuesImpl();
 
             // Meta model
-            // MINE
-            // metaModel = new EmfMetaModel(SyncchartsPackage.eINSTANCE);
-            // CMOTs
             metaModel = new EmfMetaModel(
                     de.cau.cs.kieler.synccharts.SyncchartsPackage.eINSTANCE);
 
             xmiReader = new Reader();
-            xmiReader.setUri(path.toOSString());
+            xmiReader.setUri(sourceURI.toString());
             xmiReader.setModelSlot("model");
             workflow.addComponent(xmiReader);
 
@@ -215,21 +161,18 @@ public class ExpandMacroStatesCommand extends AbstractHandler {
             workflow.addComponent(transformation);
 
             writer = new Writer();
-            writer.setUri(target.toOSString());
+            writer.setUri(targetURI.toString());
             writer.setModelSlot("transformedModel");
             workflow.addComponent(writer);
         }
 
         public void execute() {
-            // TODO Auto-generated method stub
             workflow.invoke(wfx, monitor, issues);
             System.out.println(issues);
 
         }
 
         public void redo() {
-            // TODO Auto-generated method stub
-
         }
 
         @Override

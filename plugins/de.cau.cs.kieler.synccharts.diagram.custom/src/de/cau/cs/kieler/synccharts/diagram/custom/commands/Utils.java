@@ -374,7 +374,14 @@ public final class Utils {
     public final static void dump(String aString) {
         System.out.println(aString);
     }
-
+    
+    /**
+     * Pseudo-method, allows setting breakpoints for analysing objects.
+     * 
+     * @param object
+     *            the object
+     * @return the object passed as param, casted to EObject
+     */
     public final static EObject analyze(Object object) {
         return (EObject) object;
     }
