@@ -7,6 +7,7 @@
     <!-- default definitions: may be overwritten while calling this script if necessary -->    
     <property name="baseLocation"          location="${system.baseLocation}" />
     <property name="baseDeltaPackLocation" location="${system.baseDeltaPackLocation}" />
+    <property name="externalLibraries"     location="${system.externalLibraries}" />
     <property name="eclipseLocation"       location="${system.eclipseLocation}" />
     <property name="eclipseConfig"         location="${scriptdir}/.eclipse" />
     <property name="eclipseWorkspace"      location="${scriptdir}/.eclipseWorkspace" />
@@ -129,7 +130,7 @@
         <mkdir dir="${build.basedir}" />
 
         <java classname="org.eclipse.equinox.launcher.Main" fork="true" failonerror="true">
-            <jvmarg value="-Xmx512m"/> 
+            <jvmarg value="-Xmx1024m"/> 
             <arg line="-configuration ${eclipseConfig}" />
             <arg line="-data ${eclipseWorkspace}" />
             <arg line="-application org.eclipse.ant.core.antRunner" />
@@ -171,7 +172,7 @@
                 <!-- the product which should be build -->
             <arg value="-Dbasename=${basename}" />
                 <!-- the name of RCA's zip file, ziped top folder & launcher determined of product's basename -->
-            <arg value="-DpluginPath=${baseDeltaPackLocation}:${pluginPath}" />
+            <arg value="-DpluginPath=${baseDeltaPackLocation}:${externalLibraries}:${pluginPath}" />
                 <!-- a list of source folders seperated by ':'
                      each folder should contain the subfolders 'features' and 'plugins'
                      can be relative (to ${basedir})
@@ -661,7 +662,7 @@
         <replaceregexp file="${basedir}/assemble.${feature}.buildHelper.p2.xml"
                  match=".*${feature}\.buildHelper_.*"
                  replace="" byline="true" />
-        <!-- replace file="${basedir}/assemble.${feature}.buildHelper.p2.xml"
+        <!-- replace file="${basedir}/assemble.de.cau.cs.kieler.buildHelper.p2.xml"
                  token="		&lt;customGather dir=&quot;features/de.cau.cs.kieler.buildHelper/&quot; projectName=&quot;de.cau.cs.kieler.buildHelper_1.0.0&quot; propertyName=&quot;feature.base&quot; propertyValue=&quot;$${eclipse.base}&quot; subFolder=&quot;/features&quot; /&gt;"
                  value="" / -->
 
