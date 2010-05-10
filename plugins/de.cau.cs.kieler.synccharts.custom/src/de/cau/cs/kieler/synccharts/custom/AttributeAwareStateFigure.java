@@ -117,7 +117,8 @@ public class AttributeAwareStateFigure extends AttributeAwareSwitchFigure {
         setDefaultFigure(normalFigure);
 
         // Add all conditional figures to the list
-        // note: the order in this list is crucial. Add most special cases first.
+        // note: the order in this list is crucial. Add most special cases
+        // first.
         addConditionalFigure(conditionalFigure, COND_CONDITIONAL);
         addConditionalFigure(initialFinalFigure, COND_INITIAL_FINAL);
         addConditionalFigure(initialFinalFigure, COND_SIMPLE_INITIAL_FINAL);
@@ -140,7 +141,8 @@ public class AttributeAwareStateFigure extends AttributeAwareSwitchFigure {
         figure.setCornerDimensions(new Dimension(StateLayout.MIN_WIDTH,
                 StateLayout.MIN_HEIGHT));
         figure.setFill(false);
-        figure.setLineWidth(INIT_LINE_WIDTH);
+        // figure.setLineWidth(2);
+        figure.setLineWidthFloat(2.25f);
         figure.setForegroundColor(ColorConstants.black);
         return figure;
     }
