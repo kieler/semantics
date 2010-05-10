@@ -18,9 +18,9 @@ Require-Bundle: org.eclipse.xtext,
  org.eclipse.xtext.util,
  org.eclipse.emf.ecore,
  org.eclipse.emf.common,
- org.antlr.runtime
-Import-Package: de.cau.cs.kieler.core,
- org.apache.log4j
+ org.antlr.runtime,
+ de.cau.cs.kieler.core;bundle-version="0.3.0",
+ org.apache.log4j;bundle-version="1.2.15"
 Export-Package: de.cau.cs.kieler.synccharts.interfacedeclparser,
  de.cau.cs.kieler.synccharts.interfacedeclparser.interfaceDecl,
  de.cau.cs.kieler.synccharts.interfacedeclparser.interfaceDecl.impl,
