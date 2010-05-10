@@ -13,6 +13,7 @@ Void addSuccessorStates(List[State] states):
  states.addSuccessorState()
 ;
 
+
 //Adds a predecessor to the given state
 Void addPredecessorState(State target):
 let source = new State:

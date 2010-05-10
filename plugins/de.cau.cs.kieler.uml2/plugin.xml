@@ -188,8 +188,8 @@
       </configuration>
       <configuration
             TransformationFile="src/usecase.ext"
-            contextId="org.eclipse.papyrus.diagram.clazz.ui.diagramContext"
-            editorId="org.eclipse.papyrus.diagram.clazz.part.UMLDiagramEditorID"
+            contextId="org.eclipse.uml2.diagram.usecase.ui.diagramContext"
+            editorId="org.eclipse.uml2.diagram.usecase.part.UMLDiagramEditorID"
             packageName="org.eclipse.uml2.uml.UMLPackage">
          <menus>
             <menuContribution
