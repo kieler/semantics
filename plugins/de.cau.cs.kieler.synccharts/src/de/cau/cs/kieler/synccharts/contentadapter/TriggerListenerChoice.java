@@ -45,7 +45,9 @@ public class TriggerListenerChoice extends FireOnceTriggerListener {
             oldStateType = (StateType)notification.getOldValue();
         }
         if(notification.getFeature().equals(SyncchartsPackage.eINSTANCE.getRegion_InnerStates())){
-            state = (State)notification.getNewValue();
+            if(notification.getNewValue() instanceof State){
+                state = (State)notification.getNewValue();
+            }
             // state might be null if a state is removed and not added
             if(state != null){
                 newStateType = state.getType();
