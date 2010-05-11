@@ -243,7 +243,7 @@ public class CommandFactory {
                             .createParameterMapping(selection, s);
                     if (mappedSelection != null
                             && result
-                                    .initalize(editor, mappedSelection, label
+                                    .initialize(editor, mappedSelection, label
                                             .toLowerCase(), FILE_PATH, MODEL,
                                             framework)) {
                         break;
@@ -252,7 +252,7 @@ public class CommandFactory {
             } else {
                 List<Object> list = new LinkedList<Object>();
                 list.add(selection.get(0));
-                result.initalize(editor, list, label.toLowerCase(), FILE_PATH,
+                result.initialize(editor, list, label.toLowerCase(), FILE_PATH,
                         MODEL, framework);
             }
         }
