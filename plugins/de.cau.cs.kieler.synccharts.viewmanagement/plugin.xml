@@ -22,6 +22,11 @@
             class="de.cau.cs.kieler.synccharts.viewmanagement.ActiveStateHighlightCombination"
             name="Active State Highlight">
       </combination>
+      <combination
+            class="de.cau.cs.kieler.synccharts.viewmanagement.ActiveStateFocusCombination"
+            description="Collapses non-active states and shows only active in the focus."
+            name="Active State Focus/Context">
+      </combination>
    </extension>
    <extension
          point="de.cau.cs.kieler.sim.kiem.json.datacomponent">
