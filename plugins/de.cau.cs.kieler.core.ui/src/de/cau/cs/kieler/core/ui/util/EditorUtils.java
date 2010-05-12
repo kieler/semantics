@@ -14,6 +14,7 @@
  *****************************************************************************/
 package de.cau.cs.kieler.core.ui.util;
 
+import org.eclipse.core.runtime.Assert;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IEditorReference;
 import org.eclipse.ui.PlatformUI;
@@ -38,9 +39,9 @@ public final class EditorUtils {
      * @author haf
      * 
      * @return the last open active editor, maybe null if there is no open
-     *         editor
+     *         editor or called from non-UI thread
      */
-    static IEditorPart getLastActiveEditor() {
+    public static IEditorPart getLastActiveEditor() {
         IEditorPart editor = null;
         try {
             editor = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage()
