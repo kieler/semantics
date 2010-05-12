@@ -75,8 +75,7 @@
           keyboardShortcut="M1+R T"
           name="Set Transition Target"
           transformation="rerouteTransitionTarget"
-          transformationId="de.cau.cs.kieler.ksbase.rerouteTarget"
-          validation="isNoRootState">
+          transformationId="de.cau.cs.kieler.ksbase.rerouteTarget">
        </transformation>
        <transformation
              tooltip="Set the transition source to the selected state"
@@ -84,8 +83,7 @@
              keyboardShortcut="M1+R J"
              name="Set Transition Source"
              transformation="rerouteTransitionSource"
-             transformationId="de.cau.cs.kieler.ksbase.rerouteSource"
-             validation="isNoRootState">
+             transformationId="de.cau.cs.kieler.ksbase.rerouteSource">
     	</transformation>
        <transformation
              tooltip="Add a region with an initial state "

@@ -85,15 +85,23 @@ Void addSelfLoop(State state):
 //Reroutes the target of the given transition
 //to the given state
 Void rerouteTransitionTarget(Transition t, State target):
-t.setTargetState(target)
+ t.setTargetState(target)
+;
+
+Void rerouteTransitionTarget(State target, Transition t):
+ rerouteTransitionTarget(t, target)
 ;
 
 //Reroutes the source of the given transition
 //to the given state
 Void rerouteTransitionSource(Transition t, State source):
-t.sourceState.outgoingTransitions.remove(t) ->
-t.setSourceState(source) ->
-source.outgoingTransitions.add(t)
+ //t.sourceState.outgoingTransitions.remove(t) ->
+ t.setSourceState(source) //->
+ //source.outgoingTransitions.add(t)
+;
+
+Void rerouteTransitionSource(State source, Transition t):
+ rerouteTransitionSource(t, source)
 ;
 
 //Adds a parallel region to the given state
