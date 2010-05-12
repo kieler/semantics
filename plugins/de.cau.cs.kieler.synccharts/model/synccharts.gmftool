@@ -16,10 +16,6 @@
           xsi:type="gmftool:CreationTool"
           title="Transition"
           description="Create new Transition"/>
-      <tools
-          xsi:type="gmftool:CreationTool"
-          title="Region"
-          description="Create a new Region"/>
     </tools>
   </palette>
 </gmftool:ToolRegistry>
