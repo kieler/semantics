@@ -20,6 +20,7 @@ import java.util.List;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.notify.Notification;
@@ -116,33 +117,7 @@ public class RedundantLabelTriggerListener extends TriggerListener {
                     try {
                         IEditorPart part = SyncchartsDiagramCustomPlugin.instance
                                 .getActiveEditorPart();
-                        IProgressMonitor dummyMonitor = new IProgressMonitor() {
-
-                            public void worked(int work) {
-                            }
-
-                            public void subTask(String name) {
-                            }
-
-                            public void setTaskName(String name) {
-                            }
-
-                            public void setCanceled(boolean value) {
-                            }
-
-                            public boolean isCanceled() {
-                                return false;
-                            }
-
-                            public void internalWorked(double work) {
-                            }
-
-                            public void done() {
-                            }
-
-                            public void beginTask(String name, int totalWork) {
-                            }
-                        };
+                        IProgressMonitor dummyMonitor = new NullProgressMonitor(); 
 
                         if (part instanceof SyncchartsDiagramEditor) {
                             boolean save = !part.isDirty();
