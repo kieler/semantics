@@ -50,6 +50,12 @@
                   label="Remove Problem Markers"
                   mnemonic="r"
                   style="push">
+               <visibleWhen
+                     checkEnabled="false">
+                  <reference
+                        definitionId="de.cau.cs.kieler.expression.gmfDiagram">
+                  </reference>
+               </visibleWhen>
             </command>
             <command
                   commandId="de.cau.cs.kieler.core.ui.command.zoom"
@@ -57,6 +63,12 @@
                   mnemonic="z"
                   style="push"
                   tooltip="Zoom the current diagram such that all contents fit into the current view.">
+               <visibleWhen
+                     checkEnabled="false">
+                  <reference
+                        definitionId="de.cau.cs.kieler.expression.gmfDiagram">
+                  </reference>
+               </visibleWhen>
             </command>
          </menu>
       </menuContribution>
