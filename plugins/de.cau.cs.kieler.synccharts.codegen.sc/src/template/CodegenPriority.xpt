@@ -27,9 +27,9 @@
 
 «DEFINE realPrio FOR State-»
 	«IF !this.regions.isEmpty && this.outgoingTransitions.exists(t|t.type != TransitionType::STRONGABORT) && this.outgoingTransitions.exists(t|t.type == TransitionType::STRONGABORT)-»
+	«ENDIF-»
 		/* priority real */
 		PRIO(«EXPAND getRealThreadPriority FOR this»);
-	«ENDIF-»
 «ENDDEFINE»
 
 «DEFINE weakPrio FOR State-»

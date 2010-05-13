@@ -19,9 +19,7 @@
 «ENDDEFINE»
 
 «DEFINE init FOR Region-»
-	«debug("max int " + getHighestPriority(this.innerStates.first()).toString())»
-		/* «getHighestPriority(this.innerStates.first())» */
-	#define _SC_ID_MAX  80           // Highest thread id in use;
+	#define _SC_ID_MAX «getHighestPriority(this.innerStates.first())» // Highest thread id in use;
 	#include "misc.h"
 	#include "sc.h"
 	extern void JSONstate(char*);

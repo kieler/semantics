@@ -172,6 +172,8 @@
 		!
 	«ELSEIF this == OperatorType::EQ»
 		==
+	«ELSEIF this == OperatorType::NE»
+		!=
 	«ELSEIF this == OperatorType::LT»
 		<
 	«ELSEIF this == OperatorType::GT»
