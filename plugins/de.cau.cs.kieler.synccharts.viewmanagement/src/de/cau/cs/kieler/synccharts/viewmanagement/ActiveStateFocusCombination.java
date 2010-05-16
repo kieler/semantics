@@ -30,6 +30,7 @@ import de.cau.cs.kieler.viewmanagement.RunLogic;
 import de.cau.cs.kieler.viewmanagement.TriggerEventObject;
 import de.cau.cs.kieler.viewmanagement.effects.CompartmentCollapseExpandEffect;
 import de.cau.cs.kieler.viewmanagement.effects.LayoutEffect;
+import de.cau.cs.kieler.viewmanagement.effects.ZoomEffect;
 
 /**
  * A Viewmanagement Combination that reacts on StateActivityTriggers and then
@@ -44,6 +45,8 @@ public class ActiveStateFocusCombination extends ACombination {
     /** The single instance of this plug-in. */
     private static ActiveStateFocusCombination instance;
 
+    long time = -1;
+    
     /**
      * Instantiates a new StateCombination.
      */
@@ -82,6 +85,7 @@ public class ActiveStateFocusCombination extends ACombination {
 
     @Override
     public boolean evaluate(TriggerEventObject triggerEvent) {
+        time = System.currentTimeMillis();
         if (rootEditPart == null && StateActivityObserver.INSTANCE != null) {
             rootEditPart = StateActivityObserver.INSTANCE.getRootEditPart();
         }
@@ -186,9 +190,12 @@ public class ActiveStateFocusCombination extends ACombination {
         } finally{
             currentEffects.clear();
         }
-        // then perform automatic layout
-        LayoutEffect layoutEffect = new LayoutEffect();
-        layoutEffect.execute();
+        System.out.println("Collapse: "+(System.currentTimeMillis()-time)+"ms");
+        time = System.currentTimeMillis();
+        //then perform automatic layout
+        new LayoutEffect().execute();
+        new ZoomEffect().execute();
+        System.out.println("Layout: "+(System.currentTimeMillis()-time)+"ms");
     }
 
     @Override
@@ -206,8 +213,8 @@ public class ActiveStateFocusCombination extends ACombination {
             config.getFirst().undo();
         }
         // then perform automatic layout
-        LayoutEffect layoutEffect = new LayoutEffect();
-        layoutEffect.execute();
+        new LayoutEffect().execute();
+        new ZoomEffect().execute();
     }
 
 }
