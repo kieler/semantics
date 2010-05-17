@@ -13,11 +13,19 @@
  */
 package de.cau.cs.kieler.core.model;
 
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.ILog;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.ui.internal.statushandlers.StatusHandlerDescriptor;
+import org.eclipse.ui.internal.statushandlers.StatusHandlerRegistry;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
+import org.eclipse.ui.statushandlers.AbstractStatusHandler;
 import org.osgi.framework.BundleContext;
+
+import de.cau.cs.kieler.core.model.util.ModelErrorHandler;
+import de.cau.cs.kieler.core.ui.errorhandler.GenericErrorHandler;
+import de.cau.cs.kieler.core.ui.errorhandler.GenericErrorHandler.StatusListener;
 
 /**
  * The activator class controls the plug-in life cycle.
@@ -32,6 +40,8 @@ public class CoreModelPlugin extends AbstractUIPlugin {
     /** The shared instance. **/
     private static CoreModelPlugin plugin;
 
+    private static ModelErrorHandler handler;
+
     /** Logging instance. **/
     private ILog logger;
 
@@ -42,20 +52,24 @@ public class CoreModelPlugin extends AbstractUIPlugin {
         logger = null;
     }
 
-
     /**
      * {@inheritDoc}
      */
+    @Override
     public void start(final BundleContext context) throws Exception {
         super.start(context);
         plugin = this;
         logger = getLog();
+        handler = new ModelErrorHandler();
+        addErrorListener(handler);
     }
 
     /**
      * {@inheritDoc}
      */
+    @Override
     public void stop(final BundleContext context) throws Exception {
+        removeErrorListener(handler);
         plugin = null;
         super.stop(context);
     }
@@ -77,7 +91,8 @@ public class CoreModelPlugin extends AbstractUIPlugin {
      */
     public void logWarning(final String message) {
         if (logger != null) {
-            logger.log(new Status(IStatus.WARNING, CoreModelPlugin.PLUGIN_ID, message));
+            logger.log(new Status(IStatus.WARNING, CoreModelPlugin.PLUGIN_ID,
+                    message));
         }
     }
 
@@ -89,7 +104,8 @@ public class CoreModelPlugin extends AbstractUIPlugin {
      */
     public void logError(final String message) {
         if (logger != null) {
-            logger.log(new Status(IStatus.ERROR, CoreModelPlugin.PLUGIN_ID, message));
+            logger.log(new Status(IStatus.ERROR, CoreModelPlugin.PLUGIN_ID,
+                    message));
         }
     }
 
@@ -101,8 +117,55 @@ public class CoreModelPlugin extends AbstractUIPlugin {
      */
     public void logInfo(final String message) {
         if (logger != null) {
-            logger.log(new Status(IStatus.INFO, CoreModelPlugin.PLUGIN_ID, message));
+            logger.log(new Status(IStatus.INFO, CoreModelPlugin.PLUGIN_ID,
+                    message));
         }
     }
 
+    /**
+     * Getter for KIELERs generic error handler.
+     * 
+     * @return the error handler or null
+     */
+    public static GenericErrorHandler getErrorHandler() {
+        try {
+            StatusHandlerDescriptor desc = StatusHandlerRegistry.getDefault()
+                    .getDefaultHandlerDescriptor();
+            if (desc != null) {
+                AbstractStatusHandler handler = desc.getStatusHandler();
+                if (handler instanceof GenericErrorHandler) {
+                    return (GenericErrorHandler) handler;
+                }
+            }
+        } catch (CoreException e0) {
+            e0.printStackTrace();
+        }
+        return null;
+    }
+
+    /**
+     * Add a new listener to the generic error handler.
+     * 
+     * @param listener
+     *            the new listener
+     */
+    public static void addErrorListener(final StatusListener listener) {
+        GenericErrorHandler handler = getErrorHandler();
+        if (handler != null) {
+            handler.addListener(listener);
+        }
+    }
+
+    /**
+     * Remove a listener from the generic error handler.
+     * 
+     * @param listener
+     *            the new listener
+     */
+    public static void removeErrorListener(final StatusListener listener) {
+        GenericErrorHandler handler = getErrorHandler();
+        if (handler != null) {
+            handler.removeListener(listener);
+        }
+    }
 }

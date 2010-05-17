@@ -11,7 +11,7 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.core.ui.errorhandler;
+package de.cau.cs.kieler.core.model.util;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -34,6 +34,7 @@ import de.cau.cs.kieler.core.KielerException;
 import de.cau.cs.kieler.core.KielerModelException;
 import de.cau.cs.kieler.core.ui.CoreUIPlugin;
 import de.cau.cs.kieler.core.ui.Messages;
+import de.cau.cs.kieler.core.ui.errorhandler.GenericErrorHandler.StatusListener;
 
 /**
  * A StatusHandler that displays error messages for KielerModelException Status
@@ -43,12 +44,15 @@ import de.cau.cs.kieler.core.ui.Messages;
  * 
  * @author haf
  */
-public class ModelErrorHandler extends GenericErrorHandler {
+public class ModelErrorHandler implements StatusListener {
 
     private static Map<EObject, List<IMarker>> markers = new HashMap<EObject, List<IMarker>>();
 
-    @Override
-    public void handle(final StatusAdapter statusAdapter, final int style) {
+    /**
+     * 
+     * {@inheritDoc}
+     */
+    public int reroute(final StatusAdapter statusAdapter, final int style) {
         Throwable e = statusAdapter.getStatus().getException();
 
         // Show problem markers
@@ -57,7 +61,7 @@ public class ModelErrorHandler extends GenericErrorHandler {
             if (modelObject instanceof EObject) {
                 try {
                     addMarker(e.getMessage(), (EObject) modelObject);
-                    return;
+                    return StatusManager.LOG;
                 } catch (KielerException e1) {
                     /*will go on in next case */
                     Status debugStatus = new Status(IStatus.ERROR,
@@ -72,9 +76,10 @@ public class ModelErrorHandler extends GenericErrorHandler {
         /*
          * Handle the error the classic way by using a popup of the Status Manager.
          */
-        super.handle(statusAdapter, style);
+        // super.handle(statusAdapter, style);
         // System.out.println(e.getMessage());
         // e.printStackTrace();
+        return StatusListener.DONT_CARE;
     }
 
     /**
@@ -142,6 +147,5 @@ public class ModelErrorHandler extends GenericErrorHandler {
         } catch (Exception e) { /* nothing */
         }
     }
-    
 
 }

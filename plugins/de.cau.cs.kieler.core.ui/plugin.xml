@@ -270,7 +270,7 @@
             productId="de.cau.cs.kieler.core.ui.product">
       </statusHandlerProductBinding>
       <statusHandler
-            class="de.cau.cs.kieler.core.ui.errorhandler.ModelErrorHandler"
+            class="de.cau.cs.kieler.core.ui.errorhandler.GenericErrorHandler"
             id="de.cau.cs.kieler.core.ui.statusHandler">
       </statusHandler>
    </extension>
