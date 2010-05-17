@@ -14,7 +14,6 @@
 package de.cau.cs.kieler.core.model.util;
 
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -30,13 +29,15 @@ import org.eclipse.xtend.typesystem.emf.check.CheckRegistry;
 import de.cau.cs.kieler.core.ui.handler.RemoveMarkerHandler;
 
 /**
+ * Handler for managing the error markers and check files.
+ * 
  * @author soh
  */
 public final class MarkerHandler extends AbstractHandler {
 
     private static Map<EPackage, Object> packages = new HashMap<EPackage, Object>();
 
-    private static List<CheckFile> checkFiles = new LinkedList<CheckFile>();
+    private static Map<String, CheckFile> checkFiles = new HashMap<String, CheckFile>();
 
     /**
      * {@inheritDoc}
@@ -79,7 +80,7 @@ public final class MarkerHandler extends AbstractHandler {
 
         register(checkFile);
 
-        checkFiles.add(checkFile);
+        checkFiles.put(file, checkFile);
         packages.put(ePackage, null);
     }
 
@@ -105,10 +106,38 @@ public final class MarkerHandler extends AbstractHandler {
     }
 
     /**
+     * Remove a checkfile from the list.
+     * 
+     * @param file
+     *            the file url
+     */
+    public static void removeCheck(final String file) {
+        CheckFile checkFile = checkFiles.remove(file);
+        if (checkFile != null) {
+            EValidator.Registry.INSTANCE.remove(checkFile.ePackage);
+            restoreChecks(checkFile.ePackage);
+        }
+    }
+
+    /**
+     * Restore the checks for a certain epackage.
+     * 
+     * @param ePackage
+     *            the package.
+     */
+    public static void restoreChecks(final EPackage ePackage) {
+        for (CheckFile file : checkFiles.values()) {
+            if (file.ePackage == ePackage) {
+                register(file);
+            }
+        }
+    }
+
+    /**
      * Restore all checks.
      */
     public static void restoreChecks() {
-        for (CheckFile file : checkFiles) {
+        for (CheckFile file : checkFiles.values()) {
             register(file);
         }
     }
@@ -118,18 +147,22 @@ public final class MarkerHandler extends AbstractHandler {
      * 
      * @author soh
      */
-    private static class CheckFile {
+    private static final class CheckFile {
+
+        private CheckFile() {
+
+        }
 
         /** The package. */
-        EPackage ePackage;
+        private EPackage ePackage;
 
         /** The path to the file. */
-        String file;
+        private String file;
 
         /** ???. */
-        boolean isWrapExistingValidator;
+        private boolean isWrapExistingValidator;
 
         /** ???. */
-        List<String> referencedEPackageNsURIs;
+        private List<String> referencedEPackageNsURIs;
     }
 }
