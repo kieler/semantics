@@ -134,9 +134,12 @@ public class RefactoringListener implements IRefactoringHistoryListener {
     private List<File> executeOperation(final IPath path, final OP op,
             final String newName) {
         List<File> result = new LinkedList<File>();
-        if (path.getFileExtension().equals(MODEL_EXTENSION)) {
-            findRec(result, Platform.getLocation().toFile(), path, op, newName);
-
+        if (path != null) {
+            String ext = path.getFileExtension();
+            if (ext != null && ext.equals(MODEL_EXTENSION)) {
+                findRec(result, Platform.getLocation().toFile(), path, op,
+                        newName);
+            }
         }
         return result;
     }
