@@ -47,7 +47,8 @@ import org.eclipse.swt.graphics.RGB;
  * 
  * @author cmahoney
  */
-public class DiagramPopupBarPolicy extends PopupBarPolicy implements PaletteListener {
+public class DiagramPopupBarPolicy extends PopupBarPolicy implements
+        PaletteListener {
 
     /**
      * Holds the last active palette tool.
@@ -92,13 +93,12 @@ public class DiagramPopupBarPolicy extends PopupBarPolicy implements PaletteList
         }
     }
 
-    /*
-     * (non-Javadoc)
+    /**
      * 
-     * @see org.eclipse.gef.palette.PaletteListener#activeToolChanged(org.eclipse.gef.ui.palette.PaletteViewer,
-     *      org.eclipse.gef.palette.ToolEntry)
+     * {@inheritDoc}
      */
-    public void activeToolChanged(PaletteViewer palette, ToolEntry tool) {
+    public void activeToolChanged(final PaletteViewer palette,
+            final ToolEntry tool) {
         if (!(tool instanceof SelectionToolEntry)) {
             theLastTool = tool;
         }
@@ -177,9 +177,11 @@ public class DiagramPopupBarPolicy extends PopupBarPolicy implements PaletteList
      * @param palContainer
      *            the <code>PaletteContainer</code>
      */
-    protected void fillWithPaletteToolsInContainer(PaletteContainer palContainer) {
+    @SuppressWarnings("restriction")
+    protected void fillWithPaletteToolsInContainer(
+            final PaletteContainer palContainer) {
         if (palContainer != null) {
-            List theEntries = palContainer.getChildren();
+            List<?> theEntries = palContainer.getChildren();
             int isz = theEntries.size();
             for (int i = 0; i < isz; i++) {
                 PaletteEntry theEntry = (PaletteEntry) theEntries.get(i);
@@ -221,7 +223,7 @@ public class DiagramPopupBarPolicy extends PopupBarPolicy implements PaletteList
         return ((getHost().getViewer().getControl().getStyle() & SWT.MIRRORED) != 0);
     }
 
-    private Image convert(Image srcImage) {
+    private Image convert(final Image srcImage) {
         int height = srcImage.getBounds().height;
         int width = srcImage.getBounds().width;
 
@@ -262,8 +264,8 @@ public class DiagramPopupBarPolicy extends PopupBarPolicy implements PaletteList
                 .getPaletteViewer();
 
         if (paletteViewer != null) {
-            for (Iterator iter = paletteViewer.getPaletteRoot().getChildren()
-                    .iterator(); iter.hasNext();) {
+            for (Iterator<?> iter = paletteViewer.getPaletteRoot()
+                    .getChildren().iterator(); iter.hasNext();) {
                 Object child = iter.next();
                 if (child instanceof PaletteDrawer) {
                     PaletteDrawer drawer = (PaletteDrawer) child;

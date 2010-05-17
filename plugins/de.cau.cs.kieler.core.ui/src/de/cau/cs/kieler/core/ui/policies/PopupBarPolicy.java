@@ -844,8 +844,9 @@ public class PopupBarPolicy extends DiagramAssistantEditPolicy {
     }
 
     @Override
-    protected void showDiagramAssistant(Point referencePoint) {
-
+    protected void showDiagramAssistant(final Point referencePoint) {
+        Point refPoint = referencePoint;
+        // System.out.println(refPoint);
         // already have a one
         if (getBalloon() != null && getBalloon().getParent() != null) {
             return;
@@ -868,11 +869,12 @@ public class PopupBarPolicy extends DiagramAssistantEditPolicy {
         IFigure layer = getLayer(LayerConstants.HANDLE_LAYER);
         layer.add(getBalloon());
 
-        if (referencePoint == null) {
-            referencePoint = getHostFigure().getBounds().getCenter();
+        if (refPoint == null) {
+            refPoint = getHostFigure().getBounds().getCenter();
         }
 
-        Point thePoint = getBalloonPosition(referencePoint);
+        Point thePoint = getBalloonPosition(refPoint);
+        // System.out.println(" " + thePoint);
 
         getBalloon().setLocation(thePoint);
 
@@ -910,7 +912,7 @@ public class PopupBarPolicy extends DiagramAssistantEditPolicy {
      *            current mouse location.
      * @return Point
      */
-    private Point getBalloonPosition(Point referencePoint) {
+    private Point getBalloonPosition(final Point referencePoint) {
         Point thePoint = new Point();
         boolean atMouse = getIsDisplayAtMouseHoverLocation();
         if (atMouse) {
