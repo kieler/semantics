@@ -43,7 +43,7 @@ import de.cau.cs.kieler.synccharts.SyncchartsPackage;
 public class AttributeAwareStateFigure extends AttributeAwareSwitchFigure {
 
     /** line width for initial states. */
-    private static final int INIT_LINE_WIDTH = 4;
+    private static final float INIT_LINE_WIDTH = 4.0f;
 
     private static final ICondition<EObject> COND_NORMAL = new FeatureValueCondition(
             SyncchartsPackage.eINSTANCE.getState_Type(), StateType.NORMAL);
@@ -157,7 +157,7 @@ public class AttributeAwareStateFigure extends AttributeAwareSwitchFigure {
         figure.setCornerDimensions(new Dimension(StateLayout.MIN_WIDTH,
                 StateLayout.MIN_HEIGHT));
         figure.setFill(false);
-        figure.setLineWidth(1);
+        figure.setLineWidthFloat(1.0f);
         figure.setForegroundColor(ColorConstants.black);
         return figure;
     }
@@ -172,7 +172,7 @@ public class AttributeAwareStateFigure extends AttributeAwareSwitchFigure {
         figure.setCornerDimensions(new Dimension(StateLayout.MIN_WIDTH,
                 StateLayout.MIN_HEIGHT));
         figure.setFill(false);
-        figure.setLineWidth(INIT_LINE_WIDTH);
+        figure.setLineWidthFloat(INIT_LINE_WIDTH);
         figure.setForegroundColor(ColorConstants.black);
         return figure;
     }
@@ -187,7 +187,7 @@ public class AttributeAwareStateFigure extends AttributeAwareSwitchFigure {
         figure.setCornerDimensions(new Dimension(StateLayout.MIN_WIDTH,
                 StateLayout.MIN_HEIGHT));
         figure.setFill(false);
-        figure.setLineWidth(1);
+        figure.setLineWidthFloat(1.0f);
         figure.setForegroundColor(ColorConstants.black);
         return figure;
     }
