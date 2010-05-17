@@ -38,22 +38,21 @@ public final class MarkerHandler extends AbstractHandler {
 
     private static List<CheckFile> checkFiles = new LinkedList<CheckFile>();
 
-    private MarkerHandler() {
-
-    }
-
     /**
      * {@inheritDoc}
      */
     public Object execute(final ExecutionEvent event) throws ExecutionException {
+        System.out.println(event);
+
         Command command = event.getCommand();
         boolean oldValue = HandlerUtil.toggleCommandState(command);
+
         if (oldValue) {
-            MarkerHandler.deregisterChecks();
+            deregisterChecks();
             ModelErrorHandler.disable();
             RemoveMarkerHandler.removeMarkers();
         } else {
-            MarkerHandler.restoreChecks();
+            restoreChecks();
             ModelErrorHandler.enabled();
         }
         return null;
