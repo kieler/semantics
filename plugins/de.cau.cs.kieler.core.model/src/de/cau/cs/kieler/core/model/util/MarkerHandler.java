@@ -42,8 +42,6 @@ public final class MarkerHandler extends AbstractHandler {
      * {@inheritDoc}
      */
     public Object execute(final ExecutionEvent event) throws ExecutionException {
-        System.out.println(event);
-
         Command command = event.getCommand();
         boolean oldValue = HandlerUtil.toggleCommandState(command);
 
