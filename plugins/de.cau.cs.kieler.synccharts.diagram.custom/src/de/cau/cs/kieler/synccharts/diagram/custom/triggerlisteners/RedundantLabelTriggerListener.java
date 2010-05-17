@@ -54,6 +54,22 @@ import de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditor;
  */
 public class RedundantLabelTriggerListener extends TriggerListener {
 
+    private static boolean hideAll = false;
+
+    /**
+     * Hide all transition labels.
+     */
+    public static void hideAll() {
+        hideAll = true;
+    }
+
+    /**
+     * Only hide redundant labels.
+     */
+    public static void hideRedundant() {
+        hideAll = false;
+    }
+
     /**
      * Creates a new RedundantLabelTriggerListener.
      * 
@@ -117,7 +133,7 @@ public class RedundantLabelTriggerListener extends TriggerListener {
                     try {
                         IEditorPart part = SyncchartsDiagramCustomPlugin.instance
                                 .getActiveEditorPart();
-                        IProgressMonitor dummyMonitor = new NullProgressMonitor(); 
+                        IProgressMonitor dummyMonitor = new NullProgressMonitor();
 
                         if (part instanceof SyncchartsDiagramEditor) {
                             boolean save = !part.isDirty();
@@ -181,7 +197,7 @@ public class RedundantLabelTriggerListener extends TriggerListener {
 
                     int outgoing = trans.getSourceState() == null ? 0 : trans
                             .getSourceState().getOutgoingTransitions().size();
-                    if (outgoing == 1) {
+                    if (hideAll || outgoing == 1) {
                         VisibilityManager.hide(part, editPart);
                         continue;
                     }

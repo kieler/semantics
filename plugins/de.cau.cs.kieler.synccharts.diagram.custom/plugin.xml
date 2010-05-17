@@ -122,6 +122,16 @@
                id="de.cau.cs.kieler.core.ui.expandMacroStates"
                name="Expand reference-macrostates">
          </command>
+         <command
+               categoryId="de.cau.cs.kieler"
+               defaultHandler="de.cau.cs.kieler.synccharts.diagram.custom.handlers.ToggleTransitionLabelHandler"
+               id="de.cau.cs.kieler.synccharts.diagram.custom.hideTransitionLabels"
+               name="Hide Transition Priority Labels">
+            <state
+                  class="org.eclipse.ui.handlers.RegistryToggleState:false"
+                  id="org.eclipse.ui.commands.toggleState">
+            </state>
+         </command>
    </extension>
    
    <extension
@@ -302,6 +312,13 @@
             </command>
          </menu>
       </menuContribution>
+            <menuContribution
+                  locationURI="menu:de.cau.cs.kieler">
+               <command
+                     commandId="de.cau.cs.kieler.synccharts.diagram.custom.hideTransitionLabels"
+                     style="toggle">
+               </command>
+            </menuContribution>
    </extension>
    <extension
          point="org.eclipse.core.expressions.definitions">
