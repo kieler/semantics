@@ -39,24 +39,37 @@ public class RemoveMarkerHandler extends AbstractHandler {
      * {@inheritDoc}
      */
     public Object execute(final ExecutionEvent event) throws ExecutionException {
+        removeMarkers();
+        return null;
+    }
+
+    /**
+     * Remove all syncchart diagnostic problem markers.
+     */
+    public static void removeMarkers() {
         // get currently opened file
-        IEditorInput input = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage()
-                .getActiveEditor().getEditorInput();
+        IEditorInput input = PlatformUI.getWorkbench()
+                .getActiveWorkbenchWindow().getActivePage().getActiveEditor()
+                .getEditorInput();
         if (input instanceof FileEditorInput) {
             try {
-                IMarker[] markers = ((FileEditorInput) input).getFile().findMarkers(
-                        "de.cau.cs.kieler.synccharts.diagram.diagnostic", true,
-                        IResource.DEPTH_INFINITE);
+                // FIXME: more generic solution needed
+                IMarker[] markers = ((FileEditorInput) input)
+                        .getFile()
+                        .findMarkers(
+                                "de.cau.cs.kieler.synccharts.diagram.diagnostic",
+                                true, IResource.DEPTH_INFINITE);
                 for (int i = 0; i < markers.length; i++) {
                     markers[i].delete();
                 }
             } catch (Exception e) {
-                Status myStatus = new Status(IStatus.ERROR, CoreUIPlugin.PLUGIN_ID,
-                        "Some Problem markers could not be removed: " + e.getClass().getName(), e);
+                Status myStatus = new Status(IStatus.ERROR,
+                        CoreUIPlugin.PLUGIN_ID,
+                        "Some Problem markers could not be removed: "
+                                + e.getClass().getName(), e);
                 StatusManager.getManager().handle(myStatus, StatusManager.SHOW);
             }
         }
-        return null;
     }
 
 }

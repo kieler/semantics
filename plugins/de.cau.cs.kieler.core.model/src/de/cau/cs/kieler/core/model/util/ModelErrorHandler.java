@@ -48,15 +48,44 @@ public class ModelErrorHandler implements StatusListener {
 
     private static Map<EObject, List<IMarker>> markers = new HashMap<EObject, List<IMarker>>();
 
+    private static boolean enabled = true;
+
+    /**
+     * Enable the error handler.
+     */
+    public static void enabled() {
+        if (!enabled) {
+            enabled = true;
+        }
+    }
+
+    /**
+     * Disable the error handler.
+     */
+    public static void disable() {
+        if (enabled) {
+            enabled = false;
+        }
+    }
+
+    /**
+     * Check whether the error handler is enabled.
+     * 
+     * @return true if it is
+     */
+    public static boolean isEnabled() {
+        return enabled;
+    }
+
     /**
      * 
      * {@inheritDoc}
      */
     public int reroute(final StatusAdapter statusAdapter, final int style) {
         Throwable e = statusAdapter.getStatus().getException();
-
         // Show problem markers
-        if (e instanceof KielerModelException && style == StatusManager.SHOW) {
+        if (enabled && e instanceof KielerModelException
+                && style == StatusManager.SHOW) {
             Object modelObject = ((KielerModelException) e).getModelObject();
             if (modelObject instanceof EObject) {
                 try {

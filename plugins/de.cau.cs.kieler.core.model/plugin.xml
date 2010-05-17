@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.ui.commands">
+      <command
+            categoryId="de.cau.cs.kieler"
+            defaultHandler="de.cau.cs.kieler.core.model.util.MarkerHandler"
+            description="Toggles the Problem Markers."
+            id="de.cau.cs.kieler.core.model.toggleProblemMarkers"
+            name="Show Problem Markers">
+         <state
+               class="org.eclipse.ui.handlers.RegistryToggleState:true"
+               id="org.eclipse.ui.commands.toggleState">
+         </state>
+      </command>
+   </extension>
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            locationURI="menu:de.cau.cs.kieler">
+         <command
+               commandId="de.cau.cs.kieler.core.model.toggleProblemMarkers"
+               style="toggle">
+         </command>
+      </menuContribution>
+   </extension>
+
+</plugin>

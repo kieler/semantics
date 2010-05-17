@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Model
-Bundle-SymbolicName: de.cau.cs.kieler.core.model
+Bundle-SymbolicName: de.cau.cs.kieler.core.model;singleton:=true
 Bundle-Version: 0.2.0.qualifier
 Bundle-Activator: de.cau.cs.kieler.core.model.CoreModelPlugin
 Require-Bundle: org.eclipse.ui,
