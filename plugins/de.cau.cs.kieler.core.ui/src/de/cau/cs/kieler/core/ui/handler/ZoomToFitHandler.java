@@ -93,8 +93,10 @@ public class ZoomToFitHandler extends AbstractHandler {
             ZoomManager zoomManager = ((RenderedDiagramRootEditPart) diagramEditPart.getRoot())
                     .getZoomManager();
             Viewport viewport = zoomManager.getViewport();
-            viewport.getUpdateManager().performUpdate();
-            viewport.setViewLocation(viewport.getHorizontalRangeModel().getValue(), viewport
+            //viewport.getUpdateManager().performUpdate();
+            //viewport.setViewLocation(viewport.getHorizontalRangeModel().getValue(), viewport
+            //        .getVerticalRangeModel().getMinimum());
+            viewport.setViewLocation(viewport.getHorizontalRangeModel().getMinimum(), viewport
                     .getVerticalRangeModel().getMinimum());
         }
     }

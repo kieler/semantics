@@ -541,6 +541,7 @@ public class StateActivityObserver extends JSONObjectDataComponent implements
         // }
         try {
             ActiveStateHighlightCombination.getInstance().undoEffects();
+            ActiveStateFocusCombination.getInstance().undoEffects();
         } catch (Exception e) {
         }
         try {
