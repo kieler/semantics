@@ -38,9 +38,11 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.common.util.WrappedException;
 import org.eclipse.emf.ecore.EObject;
@@ -53,11 +55,13 @@ import org.eclipse.gmf.runtime.diagram.core.services.ViewService;
 import org.eclipse.gmf.runtime.emf.commands.core.command.AbstractTransactionalCommand;
 import org.eclipse.gmf.runtime.emf.core.GMFEditingDomainFactory;
 import org.eclipse.gmf.runtime.notation.Diagram;
+import org.eclipse.gmf.runtime.notation.View;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PartInitException;
+import org.eclipse.ui.progress.WorkbenchJob;
 
 import de.cau.cs.kieler.kiml.ui.layout.DiagramLayoutManager;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.RegionEditPart;
@@ -80,6 +84,9 @@ public class ReInitDiagramCommand extends AbstractHandler {
     /** File extension for model files. */
     private static final String MODEL_EXTENSION = "kixs";
 
+    /** Delay for the auto layout. */
+    private static final long AUTO_LAYOUT_DELAY = 1000;
+
     /**
      * 
      * {@inheritDoc}
@@ -89,6 +96,7 @@ public class ReInitDiagramCommand extends AbstractHandler {
     public void setEnabled(Object evaluationContext) {
         if (evaluationContext instanceof EvaluationContext) {
             EvaluationContext evalContext = (EvaluationContext) evaluationContext;
+
             // get list of selected files
             Object defVar = evalContext.getDefaultVariable();
             if (defVar instanceof Iterable<?>) {
@@ -96,13 +104,20 @@ public class ReInitDiagramCommand extends AbstractHandler {
                 Iterator<?> iter = iterable.iterator();
                 while (iter.hasNext()) {
                     Object o = iter.next();
+                    IPath path = null;
                     if (o instanceof org.eclipse.core.internal.resources.File) {
-                        IPath path = ((org.eclipse.core.internal.resources.File) o)
+                        path = ((org.eclipse.core.internal.resources.File) o)
                                 .getFullPath();
-                        if (path.getFileExtension().equals(MODEL_EXTENSION)) {
-                            super.setBaseEnabled(true);
-                            return;
-                        }
+                    } else if (o instanceof EditPart) {
+                        EditPart eObj = (EditPart) o;
+                        URI uri = ((View) eObj.getModel()).getElement()
+                                .eResource().getURI();
+                        path = Path.fromOSString(uri.toPlatformString(true));
+                    }
+                    if (path != null
+                            && path.getFileExtension().equals(MODEL_EXTENSION)) {
+                        super.setBaseEnabled(true);
+                        return;
                     }
                 }
             }
@@ -126,9 +141,17 @@ public class ReInitDiagramCommand extends AbstractHandler {
                 Iterator<?> iter = iterable.iterator();
                 while (iter.hasNext()) {
                     Object o = iter.next();
+                    IPath path = null;
                     if (o instanceof org.eclipse.core.internal.resources.File) {
-                        IPath path = ((org.eclipse.core.internal.resources.File) o)
+                        path = ((org.eclipse.core.internal.resources.File) o)
                                 .getFullPath();
+                    } else if (o instanceof EditPart) {
+                        EditPart eObj = (EditPart) o;
+                        URI uri = ((View) eObj.getModel()).getElement()
+                                .eResource().getURI();
+                        path = Path.fromOSString(uri.toPlatformString(true));
+                    }
+                    if (path != null) {
                         try {
                             reinitialize(path);
                         } catch (RuntimeException e0) {
@@ -185,12 +208,24 @@ public class ReInitDiagramCommand extends AbstractHandler {
             // kidsFile = getPartner(kixsFile)
             // addDiagramSetup(kidsFile)
 
-            // perform auto layout
-            IEditorPart editor = getActiveEditor();
-            EditPart part = null;
-            if (editor != null) {
-                DiagramLayoutManager.layout(editor, part, false, true);
-            }
+            WorkbenchJob job = new WorkbenchJob("") {
+
+                @Override
+                public IStatus runInUIThread(final IProgressMonitor monitor) {
+                    // perform auto layout
+                    IEditorPart editor = getActiveEditor();
+                    EditPart part = null;
+                    if (editor != null) {
+                        DiagramLayoutManager.layout(editor, part, false, true);
+                    }
+                    return new Status(IStatus.OK,
+                            "de.cau.cs.kieler.synccharts.diagram.custom",
+                            "Done");
+                }
+            };
+
+            job.schedule(AUTO_LAYOUT_DELAY);
+
         }
     }
 
