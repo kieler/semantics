@@ -88,13 +88,13 @@ public final class Helper {
         sortedStates.clear();
         fillStateSignalList(state);
         fillDependencyList(state);
-        printDependencyList();
+//        printDependencyList();
         fillSortedThreadList();
         fillOptimizedStates(state);
-        printStatePlusTransitionList(sortedStates);
-        for (ArrayList<StatePlusTransition> spt : optimzedSortedStates) {
-            printStatePlusTransitionList(spt);
-        }
+//        printStatePlusTransitionList(sortedStates);
+//        for (ArrayList<StatePlusTransition> spt : optimzedSortedStates) {
+//            printStatePlusTransitionList(spt);
+//        }
 //        for (StatePlusTransition spt : sortedStates) {
 //            System.out.println(spt.getState().getId() + " - "
 //                    + getRealOptimizedThreadPriority(spt.getState()));
@@ -176,7 +176,6 @@ public final class Helper {
      *             for error handling
      */
     public static void error(final String s) throws KiemInitializationException {
-        System.out.println("hier");
         throw new KiemInitializationException("Error while generating SC code", true,
                 new Exception(s));
     }
@@ -826,7 +825,7 @@ public final class Helper {
         for (Transition targetTrans : transition.getTargetState().getOutgoingTransitions()) {
             if (isImmediateTransition(targetTrans)
                     && !transition.getSourceState().equals(targetTrans.getTargetState())) {
-                System.out.println(targetTrans);
+//                System.out.println(targetTrans);
                 fillEffectSignals(targetTrans);
             }
         }

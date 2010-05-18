@@ -19,8 +19,10 @@
 «DEFINE priorityReduction FOR Action-»
 	«IF this.eRootContainer.metaType == Transition-»
 		«IF hasDependentState((Transition)this.eRootContainer)-»
-		/* priority reduction */
-		PRIO(«EXPAND getRealThreadPriority FOR ((Transition)this.eRootContainer).targetState»);
+			«IF (boolean)(GLOBALVAR sim)-»
+				/* priority reduction */
+			«ENDIF-»
+			PRIO(«EXPAND getRealThreadPriority FOR ((Transition)this.eRootContainer).targetState»);
 		«ENDIF-»
 	«ENDIF-»
 «ENDDEFINE»
@@ -28,13 +30,17 @@
 «DEFINE realPrio FOR State-»
 	«IF !this.regions.isEmpty && this.outgoingTransitions.exists(t|t.type != TransitionType::STRONGABORT) && this.outgoingTransitions.exists(t|t.type == TransitionType::STRONGABORT)-»
 	«ENDIF-»
+	«IF (boolean)(GLOBALVAR sim)-»
 		/* priority real */
-		PRIO(«EXPAND getRealThreadPriority FOR this»);
+	«ENDIF-»
+	PRIO(«EXPAND getRealThreadPriority FOR this»);
 «ENDDEFINE»
 
 «DEFINE weakPrio FOR State-»
 	«IF !this.regions.isEmpty && this.outgoingTransitions.exists(t|t.type != TransitionType::STRONGABORT) && this.outgoingTransitions.exists(t|t.type == TransitionType::STRONGABORT)-»
-		/* priority weak */
+		«IF (boolean)(GLOBALVAR sim)-»
+			/* priority weak */
+		«ENDIF-»
 		PRIO(« EXPAND getWeakThreadPriority FOR this»);
 	«ENDIF-»
 «ENDDEFINE»
@@ -42,19 +48,18 @@
 «DEFINE transitionPrio FOR Transition-»
 	«IF getRealOptimizedThreadPriority(this.targetState) != getRealOptimizedThreadPriority(this.sourceState)-»
 	«ENDIF-»
+	«IF (boolean)(GLOBALVAR sim)-»
 		/* priority after transition */
-		PRIO(«EXPAND getRealThreadPriority FOR this.targetState»);
-	«REM»
-	«ENDREM»
+	«ENDIF-»
+	PRIO(«EXPAND getRealThreadPriority FOR this.targetState»);
 «ENDDEFINE»
 
 «DEFINE sourcePrio FOR Transition-»
-	«REM»
-	PRIO(«EXPAND getRealThreadPriority FOR this.targetState-»);
-	«ENDREM»
 	«IF this.sourceState.outgoingTransitions.size > 1 && hasDependentState(this)-»
 	«ENDIF-»
-		/* priority to source */
+		«IF (boolean)(GLOBALVAR sim)-»
+			/* priority to source */
+		«ENDIF-»
 		PRIO(«getSmallestThreadPriority(this.sourceState)»);
 «ENDDEFINE»
 

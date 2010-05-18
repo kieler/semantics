@@ -19,7 +19,12 @@
 «ENDDEFINE»
 
 «DEFINE init FOR Region-»
-	#define _SC_ID_MAX «getHighestPriority(this.innerStates.first())» // Highest thread id in use;
+	«IF getHighestPriority(this.innerStates.first()) > 31-»
+		#define _SC_ID_MAX  «getHighestPriority(this.innerStates.first())» // Highest thread id in use;
+	«ENDIF-»
+	«IF allSignals(this.innerStates.first()).size > 31-»
+		#define _SC_SIG_MAX «allSignals(this.innerStates.first()).size» // Highest signal id in use;
+	«ENDIF-»
 	#include "misc.h"
 	#include "sc.h"
 	extern void JSONstate(char*);

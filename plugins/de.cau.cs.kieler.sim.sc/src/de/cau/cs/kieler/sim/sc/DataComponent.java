@@ -208,8 +208,8 @@ public class DataComponent extends AbstractAutomatedProducer {
             process.destroy();
         }
 
-        // System.out.println("incoming " + out.toString());
-        // System.out.println("outgoing " + jSONObject.toString());
+//        System.out.println("incoming " + out.toString());
+//        System.out.println("outgoing " + jSONObject.toString());
         return out;
     }
 

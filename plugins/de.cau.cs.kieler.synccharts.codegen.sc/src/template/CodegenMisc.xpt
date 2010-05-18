@@ -100,7 +100,7 @@
 
 «DEFINE getIntegerSignalValue FOR Signal-»
 	«IF this.initialValue != null-»
-		«this.initialValue-»
+		«this.initialValue.replaceAll("\"","")-»
 	«ELSE-»
 		0
 	«ENDIF-»
