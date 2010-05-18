@@ -94,8 +94,6 @@ public class ZoomToFitHandler extends AbstractHandler {
                     .getZoomManager();
             Viewport viewport = zoomManager.getViewport();
             //viewport.getUpdateManager().performUpdate();
-            //viewport.setViewLocation(viewport.getHorizontalRangeModel().getValue(), viewport
-            //        .getVerticalRangeModel().getMinimum());
             viewport.setViewLocation(viewport.getHorizontalRangeModel().getMinimum(), viewport
                     .getVerticalRangeModel().getMinimum());
         }
