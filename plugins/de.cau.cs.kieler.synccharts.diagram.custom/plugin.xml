@@ -132,6 +132,16 @@
                   id="org.eclipse.ui.commands.toggleState">
             </state>
          </command>
+         <command
+               categoryId="de.cau.cs.kieler"
+               defaultHandler="de.cau.cs.kieler.synccharts.diagram.custom.handlers.DrawingToolHandler"
+               id="de.cau.cs.kieler.synccharts.diagram.custom.toggleDrawingMode"
+               name="Activate Drawing Mode">
+            <state
+                  class="org.eclipse.ui.handlers.RegistryToggleState:false"
+                  id="org.eclipse.ui.commands.toggleState">
+            </state>
+         </command>
    </extension>
    
    <extension
@@ -316,6 +326,14 @@
                   locationURI="menu:de.cau.cs.kieler">
                <command
                      commandId="de.cau.cs.kieler.synccharts.diagram.custom.hideTransitionLabels"
+                     style="toggle">
+               </command>
+            </menuContribution>
+            <menuContribution
+                  locationURI="toolbar:de.cau.cs.kieler">
+               <command
+                     commandId="de.cau.cs.kieler.synccharts.diagram.custom.toggleDrawingMode"
+                     icon="icons/palette_view.gif"
                      style="toggle">
                </command>
             </menuContribution>

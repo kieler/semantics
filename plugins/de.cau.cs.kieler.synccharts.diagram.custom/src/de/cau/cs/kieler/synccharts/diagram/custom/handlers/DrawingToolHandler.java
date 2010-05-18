@@ -19,38 +19,23 @@ import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.ui.handlers.HandlerUtil;
 
-import de.cau.cs.kieler.synccharts.diagram.custom.triggerlisteners.RedundantLabelTriggerListener;
+import de.cau.cs.kieler.core.model.util.MarkerHandler;
 
 /**
- * Handler for toggling between hiding all labels and only handling the
- * redundant ones.
+ * Handler class for toggling between drawing mode and normal mode.
  * 
  * @author soh
  */
-public class ToggleTransitionLabelHandler extends AbstractHandler {
-
-    /**
-     * Toggle between hiding all labels and just the redundant ones.
-     * 
-     * @param b
-     *            true if all transition priority labels should be hidden.
-     */
-    public static void hideAll(final boolean b) {
-        if (b) {
-            RedundantLabelTriggerListener.hideAll();
-        } else {
-            RedundantLabelTriggerListener.hideRedundant();
-        }
-        RedundantLabelTriggerListener.hideRedundantLabels();
-    }
+public class DrawingToolHandler extends AbstractHandler {
 
     /**
      * {@inheritDoc}
      */
-    public Object execute(final ExecutionEvent event) throws ExecutionException {
+    public Object execute(ExecutionEvent event) throws ExecutionException {
         Command command = event.getCommand();
         boolean oldValue = HandlerUtil.toggleCommandState(command);
-        hideAll(!oldValue);
+        ToggleTransitionLabelHandler.hideAll(!oldValue);
+        MarkerHandler.setEnabled(oldValue);
         return null;
     }
 

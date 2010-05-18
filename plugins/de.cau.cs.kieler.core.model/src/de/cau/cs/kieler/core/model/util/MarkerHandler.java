@@ -45,16 +45,26 @@ public final class MarkerHandler extends AbstractHandler {
     public Object execute(final ExecutionEvent event) throws ExecutionException {
         Command command = event.getCommand();
         boolean oldValue = HandlerUtil.toggleCommandState(command);
+        setEnabled(!oldValue);
 
-        if (oldValue) {
+        return null;
+    }
+
+    /**
+     * Enable or disable the hiding of problem markers.
+     * 
+     * @param b
+     *            true if markers should be visible, false if not
+     */
+    public static void setEnabled(final boolean b) {
+        if (b) {
+            restoreChecks();
+            ModelErrorHandler.enabled();
+        } else {
             deregisterChecks();
             ModelErrorHandler.disable();
             RemoveMarkerHandler.removeMarkers();
-        } else {
-            restoreChecks();
-            ModelErrorHandler.enabled();
         }
-        return null;
     }
 
     /**
