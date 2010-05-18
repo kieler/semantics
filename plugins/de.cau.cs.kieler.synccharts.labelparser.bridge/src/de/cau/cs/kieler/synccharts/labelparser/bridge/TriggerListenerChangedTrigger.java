@@ -9,7 +9,7 @@ import org.eclipse.emf.transaction.NotificationFilter;
 import org.eclipse.emf.transaction.TransactionalEditingDomain;
 import org.eclipse.ui.statushandlers.StatusManager;
 
-import de.cau.cs.kieler.core.ui.errorhandler.ModelErrorHandler;
+import de.cau.cs.kieler.core.model.util.ModelErrorHandler;
 import de.cau.cs.kieler.synccharts.Action;
 import de.cau.cs.kieler.synccharts.SyncchartsPackage;
 import de.cau.cs.kieler.synccharts.contentadapter.FireOnceTriggerListener;
