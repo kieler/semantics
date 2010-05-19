@@ -39,6 +39,8 @@ import org.eclipse.ltk.core.refactoring.history.RefactoringHistoryEvent;
 import org.eclipse.ltk.core.refactoring.resource.DeleteResourcesDescriptor;
 import org.eclipse.ltk.core.refactoring.resource.MoveResourcesDescriptor;
 import org.eclipse.ltk.core.refactoring.resource.RenameResourceDescriptor;
+import org.eclipse.swt.widgets.Shell;
+import org.eclipse.ui.PlatformUI;
 
 /**
  * This class listens to refactoring events like delete, move, rename and
@@ -60,7 +62,7 @@ public class RefactoringListener implements IRefactoringHistoryListener {
      * 
      * @author soh
      */
-    private enum OP {
+    public enum OP {
         /** Indicates a delete action. */
         DELETE,
 
@@ -75,21 +77,25 @@ public class RefactoringListener implements IRefactoringHistoryListener {
      * {@inheritDoc}
      */
     public void historyNotification(final RefactoringHistoryEvent event) {
-        RefactoringDescriptor desc = event.getDescriptor().requestDescriptor(
-                null);
-        if (desc instanceof RenameResourceDescriptor) {
-            RenameResourceDescriptor renameDesc = (RenameResourceDescriptor) desc;
-            renameFile(renameDesc);
-        }
+        try {
+            RefactoringDescriptor desc = event.getDescriptor()
+                    .requestDescriptor(null);
+            if (desc instanceof RenameResourceDescriptor) {
+                RenameResourceDescriptor renameDesc = (RenameResourceDescriptor) desc;
+                renameFile(renameDesc);
+            }
 
-        if (desc instanceof DeleteResourcesDescriptor) {
-            DeleteResourcesDescriptor deleteDesc = (DeleteResourcesDescriptor) desc;
-            deleteFile(deleteDesc);
-        }
+            if (desc instanceof DeleteResourcesDescriptor) {
+                DeleteResourcesDescriptor deleteDesc = (DeleteResourcesDescriptor) desc;
+                deleteFile(deleteDesc);
+            }
 
-        if (desc instanceof MoveResourcesDescriptor) {
-            MoveResourcesDescriptor moveDesc = (MoveResourcesDescriptor) desc;
-            moveFile(moveDesc);
+            if (desc instanceof MoveResourcesDescriptor) {
+                MoveResourcesDescriptor moveDesc = (MoveResourcesDescriptor) desc;
+                moveFile(moveDesc);
+            }
+        } catch (RuntimeException e0) {
+            e0.printStackTrace();
         }
 
         try {
@@ -110,13 +116,30 @@ public class RefactoringListener implements IRefactoringHistoryListener {
      */
     private void deleteFile(final DeleteResourcesDescriptor deleteDesc) {
         IPath[] locations = deleteDesc.getResourcePaths();
+        final List<File> affectedFiles = new LinkedList<File>();
 
         for (IPath path : locations) {
-            // File partner = getPartner(path);
-            // if (partner != null) {
-            // partner.delete();
-            // }
-            executeOperation(path, OP.DELETE, null);
+            affectedFiles.addAll(executeOperation(path, OP.DELETE, null));
+        }
+
+        if (!affectedFiles.isEmpty()) {
+            PlatformUI.getWorkbench().getDisplay().syncExec(new Runnable() {
+
+                public void run() {
+                    Shell shell = PlatformUI.getWorkbench()
+                            .getActiveWorkbenchWindow().getShell();
+
+                    AffectedFileSelectionDialog dialog = new AffectedFileSelectionDialog(
+                            shell, affectedFiles, OP.DELETE);
+                    List<File> deletedFiles = dialog.openDialog();
+
+                    if (deletedFiles != null) {
+                        for (File file : deletedFiles) {
+                            file.delete();
+                        }
+                    }
+                }
+            });
         }
     }
 
@@ -185,7 +208,7 @@ public class RefactoringListener implements IRefactoringHistoryListener {
                     if (s.contains(model.toFile().getName())) {
                         switch (op) {
                         case DELETE:
-                            root.delete();
+                            // root.delete();
                             done = true;
                             break;
                         case RENAME:
