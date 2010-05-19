@@ -249,7 +249,7 @@ public class DiagramPopupBarPolicy extends PopupBarPolicy implements
                 .createFromImageData(srcImageData).createImage(
                         srcImage.getDevice());
 
-        imagesToBeDisposed.add(convertedImage);
+        getImagesToBeDisposed().add(convertedImage);
 
         return convertedImage;
     }

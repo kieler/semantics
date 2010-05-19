@@ -73,16 +73,16 @@ public class PopupBarPolicy extends DiagramAssistantEditPolicy {
     private class PopupBarDescriptor {
 
         /** The action button tooltip. */
-        private String _tooltip = new String();
+        private String theTooltip = new String();
 
         /** The image for the button. */
-        private Image _icon = null;
+        private Image theIcon = null;
 
         /** The typeinfo used to create the Request for the command. */
-        private IElementType _elementType;
+        private IElementType theElementType;
 
         /** The DracgTracker / Tool associatd with the popup bar button. */
-        private DragTracker _dragTracker = null;
+        private DragTracker theDragTracker = null;
 
         /**
          * constructor.
@@ -94,10 +94,10 @@ public class PopupBarPolicy extends DiagramAssistantEditPolicy {
          */
         public PopupBarDescriptor(final String s, final Image i,
                 final IElementType elementType, final DragTracker theTracker) {
-            _tooltip = s;
-            _icon = i;
-            _dragTracker = theTracker;
-            _elementType = elementType;
+            theTooltip = s;
+            theIcon = i;
+            theDragTracker = theTracker;
+            theElementType = elementType;
 
         }
 
@@ -106,8 +106,9 @@ public class PopupBarPolicy extends DiagramAssistantEditPolicy {
          * 
          * @return element type
          */
+        @SuppressWarnings("unused")
         public final IElementType getElementtype() {
-            return _elementType;
+            return theElementType;
         }
 
         /**
@@ -116,7 +117,7 @@ public class PopupBarPolicy extends DiagramAssistantEditPolicy {
          * @return Image
          */
         public final Image getIcon() {
-            return _icon;
+            return theIcon;
         }
 
         /**
@@ -125,7 +126,7 @@ public class PopupBarPolicy extends DiagramAssistantEditPolicy {
          * @return drag tracker
          */
         public final DragTracker getDragTracker() {
-            return _dragTracker;
+            return theDragTracker;
         }
 
         /**
@@ -134,7 +135,7 @@ public class PopupBarPolicy extends DiagramAssistantEditPolicy {
          * @return string
          */
         public final String getToolTip() {
-            return _tooltip;
+            return theTooltip;
         }
 
     } // end PopupBarDescriptor
@@ -151,11 +152,17 @@ public class PopupBarPolicy extends DiagramAssistantEditPolicy {
          */
         private boolean myMouseOver = false;
 
+        /** The disabled image. */
         private Image myDisabledImage = null;
 
         /** The dragTracker CreationTool associated with the handle. * */
         private DragTracker myDragTracker = null;
 
+        /**
+         * Getter for the disabled image.
+         * 
+         * @return
+         */
         private Image getDisabledImage() {
             if (myDisabledImage != null) {
                 return myDisabledImage;
@@ -169,14 +176,14 @@ public class PopupBarPolicy extends DiagramAssistantEditPolicy {
             myDisabledImage = new Image(Display.getCurrent(), theImage,
                     SWT.IMAGE_DISABLE);
             if (imagesToBeDisposed == null) {
-                imagesToBeDisposed = new ArrayList();
+                imagesToBeDisposed = new ArrayList<Image>();
             }
             imagesToBeDisposed.add(myDisabledImage);
             return myDisabledImage;
         }
 
         /**
-         * cnostructor.
+         * cnostructor. [sic!]
          * 
          * @param tracker
          * @param theImage
@@ -276,6 +283,9 @@ public class PopupBarPolicy extends DiagramAssistantEditPolicy {
             super.handleMousePressed(event);
         }
 
+        /**
+         * Calculate the enablement.
+         */
         private void calculateEnabled() {
             if ((myDragTracker != null)
                     && (myDragTracker instanceof AbstractPopupBarTool)) {
@@ -306,9 +316,11 @@ public class PopupBarPolicy extends DiagramAssistantEditPolicy {
         }
     }
 
+    /** The image for the plus sign. */
     private static final Image IMAGE_POPUPBAR_PLUS = DiagramUIPluginImages
             .get(DiagramUIPluginImages.IMG_POPUPBAR_PLUS);
 
+    /** The image for the popup bar. */
     private static final Image IMAGE_POPUPBAR = DiagramUIPluginImages
             .get(DiagramUIPluginImages.IMG_POPUPBAR);
 
@@ -320,11 +332,20 @@ public class PopupBarPolicy extends DiagramAssistantEditPolicy {
      */
     private class RoundedRectangleWithTail extends RoundedRectangle {
 
+        /** The tail image. */
         private Image myTailImage = null;
 
+        /** True if it is initial. */
         private boolean bIsInit = false;
 
-        private int myCornerDimension = 6;
+        /** The corner dimension. */
+        private static final int MY_CORNER_DIMENSION = 6;
+
+        /** The shift width. */
+        private static final int SHIFT_WIDTH = 3;
+
+        /** The offset on the x axis. */
+        private static final int X_OFFSET = 6;
 
         /**
          * constructor.
@@ -346,25 +367,27 @@ public class PopupBarPolicy extends DiagramAssistantEditPolicy {
          */
         @Override
         public void paintFigure(final Graphics graphics) {
-            int shiftWidth = 3;
             Image theTail = getTail();
             Rectangle theBounds = this.getBounds().getCopy();
             theBounds.height -= theTail.getBounds().height;
-            theBounds.height -= shiftWidth; // shift slight above cursor
-            theBounds.x += shiftWidth; // shift slight to right of cursor
-            theBounds.width -= (shiftWidth + 1); // otherwise rhs is clipped
+            theBounds.height -= SHIFT_WIDTH; // shift slight above cursor
+            theBounds.x += SHIFT_WIDTH; // shift slight to right of cursor
+            theBounds.width -= (SHIFT_WIDTH + 1); // otherwise rhs is clipped
 
             // fill the round rectangle first since it is opaque
-            graphics.fillRoundRectangle(theBounds, myCornerDimension,
-                    myCornerDimension);
-            graphics.drawRoundRectangle(theBounds, myCornerDimension,
-                    myCornerDimension);
-
-            graphics.drawImage(theTail, theBounds.x + 6, theBounds.y
+            graphics.fillRoundRectangle(theBounds, MY_CORNER_DIMENSION,
+                    MY_CORNER_DIMENSION);
+            graphics.drawRoundRectangle(theBounds, MY_CORNER_DIMENSION,
+                    MY_CORNER_DIMENSION);
+            graphics.drawImage(theTail, theBounds.x + X_OFFSET, theBounds.y
                     + theBounds.height - 1);
-
         }
 
+        /**
+         * Get the tail for the image.
+         * 
+         * @return the tail image
+         */
         private Image getTail() {
             if (!bIsInit) {
                 if (getIsDisplayAtMouseHoverLocation() && !isHostConnection()) {
@@ -378,12 +401,9 @@ public class PopupBarPolicy extends DiagramAssistantEditPolicy {
                         bIsInit = true;
                     }
                 }
-
             }
             return myTailImage;
-
         }
-
     }
 
     /**
@@ -397,13 +417,15 @@ public class PopupBarPolicy extends DiagramAssistantEditPolicy {
     }
 
     /**
-     * Adds the popup bar after a delay.
+     * 
+     * {@inheritDoc}
      */
     @Override
     public void mouseHover(final MouseEvent me) {
         // if the cursor is inside the popup bar
         // or the keyboar triggred activation
         // then we do not want to deactivate
+
         if (!isDiagramAssistant(me.getSource())) {
             setAvoidHidingDiagramAssistant(false);
         }
@@ -417,11 +439,11 @@ public class PopupBarPolicy extends DiagramAssistantEditPolicy {
     }
 
     /**
-     * @see org.eclipse.draw2d.MouseMotionListener#mouseMoved(org.eclipse.draw2d.MouseEvent)
+     * 
+     * {@inheritDoc}
      */
     @Override
     public void mouseMoved(final MouseEvent me) {
-
         if (getIsDisplayAtMouseHoverLocation()) {
             Object srcObj = me.getSource();
             if ((srcObj != null) && srcObj.equals(getHostFigure())) {
@@ -452,8 +474,16 @@ public class PopupBarPolicy extends DiagramAssistantEditPolicy {
      */
     private class OwnerMovedListener implements FigureListener {
 
+        /** The last position of the popup bar. */
         private Point myPopupBarLastPosition = new Point(0, 0);
 
+        /**
+         * Determine whether the position of the popup bar was changed.
+         * 
+         * @param theBounds
+         *            the new bounds
+         * @return true if it has changed
+         */
         boolean hasPositionChanged(final Rectangle theBounds) {
             if (theBounds.x != myPopupBarLastPosition.x) {
                 return true;
@@ -495,13 +525,15 @@ public class PopupBarPolicy extends DiagramAssistantEditPolicy {
      */
     private class PopupBarMouseListener extends MouseListener.Stub {
 
+        /** Mouse Button 3 constant. */
+        private static final int MOUSE_3 = 3;
+
         /**
          * @see org.eclipse.draw2d.MouseListener#mousePressed(org.eclipse.draw2d.MouseEvent)
          */
         @Override
         public void mousePressed(final MouseEvent me) {
-            if (3 == me.button) // context menu, hide the popup bar
-            {
+            if (MOUSE_3 == me.button) { // context menu, hide the popup bar
                 hideDiagramAssistant();
             }
             super.mousePressed(me);
@@ -520,36 +552,49 @@ public class PopupBarPolicy extends DiagramAssistantEditPolicy {
     /** Y postion offset from shape where the balloon top begin. */
     private static final int BALLOON_Y_OFFSET = 10;
 
-    /** Y postion offset from shape where the balloon top begin. */
+    /** X postion offset from shape where the balloon top begin. */
     private static final double BALLOON_X_OFFSET_RHS = 0.65;
-
+    /** X postion offset from shape where the balloon top begin. */
     private static final double BALLOON_X_OFFSET_LHS = 0.25;
 
-    /** Y postion offset from shape where the balloon top begin. */
+    /** The action height. */
     private static final int ACTION_WIDTH_HGT = 30;
 
+    /** X position offset from balloon where the action starts. */
     private static final int ACTION_BUTTON_START_X = 5;
 
+    /** Y position offset from balloon where the action starts. */
     private static final int ACTION_BUTTON_START_Y = 5;
 
+    /** The right margin of actions. */
     private static final int ACTION_MARGIN_RIGHT = 10;
 
     /** popup bar bits. */
     private static final int POPUPBAR_ACTIVATEONHOVER = 0x01;
-    /* Display the action when hovering.*/
+    /** Display the action when hovering. */
     private static final int POPUPBAR_MOVE_FIGURE = 0x02;
-    /* Ignore the first figureMoved event when creating elements inside a shape via a popup bar.*/
+    /**
+     * Ignore the first figureMoved event when creating elements inside a shape
+     * via a popup bar.
+     */
     private static final int POPUPBAR_DISPLAYATMOUSEHOVERLOCATION = 0x04;
-    /* Display the popup bar at the mouse location used by diagrams and machine edit parts.*/
+    /**
+     * Display the popup bar at the mouse location used by diagrams and machine
+     * edit parts.
+     */
     private static final int POPUPBAR_ONDIAGRAMACTIVATED = 0x10;
-    /* For popup bars on diagram and machine edit parts, where we POPUPBAR_DISPLAYATMOUSEHOVERLOCATION,
-     *  don't display popup bar until user clicks on surface.*/
+    /**
+     * For popup bars on diagram and machine edit parts, where we
+     * POPUPBAR_DISPLAYATMOUSEHOVERLOCATION, don't display popup bar until user
+     * clicks on surface.
+     */
     private static final int POPUPBAR_HOST_IS_CONNECTION = 0x20;
-    /* For popup bars on connection edit parts.*/
+    /** For popup bars on connection edit parts. */
 
     /** Bit field for the actrionbar associated bits. */
     private int myPopupBarFlags = POPUPBAR_ACTIVATEONHOVER;
 
+    /** Offset percentage. */
     private double myBallonOffsetPercent = BALLOON_X_OFFSET_RHS;
 
     /** the figure used to surround the action buttons. */
@@ -559,7 +604,16 @@ public class PopupBarPolicy extends DiagramAssistantEditPolicy {
     private List<PopupBarDescriptor> myPopupBarDescriptors = new ArrayList<PopupBarDescriptor>();
 
     /** Images created that must be deleted when popup bar is removed. */
-    protected List<Image> imagesToBeDisposed = null;
+    private List<Image> imagesToBeDisposed = null;
+
+    /**
+     * Getter for the list.
+     * 
+     * @return the list
+     */
+    protected List<Image> getImagesToBeDisposed() {
+        return imagesToBeDisposed;
+    }
 
     /** mouse keys listener for the owner shape. */
     private PopupBarMouseListener myMouseKeyListener = new PopupBarMouseListener();
@@ -569,6 +623,15 @@ public class PopupBarPolicy extends DiagramAssistantEditPolicy {
 
     /** flag for whether mouse cursor within shape. */
 
+    /**
+     * Set a flag.
+     * 
+     * @param bit
+     *            the flag to set
+     * @param b
+     *            the new value
+     * 
+     */
     private void setFlag(final int bit, final boolean b) {
         if (b) {
             myPopupBarFlags |= bit;
@@ -578,14 +641,32 @@ public class PopupBarPolicy extends DiagramAssistantEditPolicy {
 
     }
 
+    /**
+     * Getter for a flag.
+     * 
+     * @param bit
+     *            the flag to get
+     * @return true if the flag is set
+     */
     private boolean getFlag(final int bit) {
         return ((myPopupBarFlags & bit) > 0);
     }
 
+    /**
+     * Set the flag.
+     * 
+     * @param bVal
+     *            the new value of the flag
+     */
     private void setPopupBarOnDiagramActivated(final boolean bVal) {
         setFlag(POPUPBAR_ONDIAGRAMACTIVATED, bVal);
     }
 
+    /**
+     * Getter for the flag.
+     * 
+     * @return the flag
+     */
     private boolean getPopupBarOnDiagramActivated() {
         return getFlag(POPUPBAR_ONDIAGRAMACTIVATED);
     }
@@ -618,9 +699,9 @@ public class PopupBarPolicy extends DiagramAssistantEditPolicy {
      */
     protected void populatePopupBars() {
         fillPopupBarDescriptors();
-        List types = ModelingAssistantService.getInstance()
+        List<?> types = ModelingAssistantService.getInstance()
                 .getTypesForPopupBar(getHost());
-        for (Iterator iter = types.iterator(); iter.hasNext();) {
+        for (Iterator<?> iter = types.iterator(); iter.hasNext();) {
             Object type = iter.next();
             if (type instanceof IElementType) {
                 addPopupBarDescriptor((IElementType) type, IconService
@@ -638,6 +719,11 @@ public class PopupBarPolicy extends DiagramAssistantEditPolicy {
         // subclasses can override.
     }
 
+    /**
+     * Determine whether the selection tool is active.
+     * 
+     * @return true if it is
+     */
     private boolean isSelectionToolActive() {
         // getViewer calls getParent so check for null
         if (getHost().getParent() != null && getHost().isActive()) {
@@ -668,9 +754,8 @@ public class PopupBarPolicy extends DiagramAssistantEditPolicy {
                 return isSelectionToolActive();
             }
             return false;
-        } else {
-            return isSelectionToolActive();
         }
+        return isSelectionToolActive();
 
     }
 
@@ -678,9 +763,13 @@ public class PopupBarPolicy extends DiagramAssistantEditPolicy {
      * allows plugins to add their own popup bar tools and tips.
      * 
      * @param elementType
+     *            the element type
      * @param theImage
+     *            the image
      * @param theTracker
+     *            the tracker
      * @param theTip
+     *            the tool tip
      */
     protected void addPopupBarDescriptor(final IElementType elementType,
             final Image theImage, final DragTracker theTracker,
@@ -696,8 +785,11 @@ public class PopupBarPolicy extends DiagramAssistantEditPolicy {
      * adds popup bar descriptor.
      * 
      * @param elementType
+     *            the element type
      * @param theImage
+     *            the image
      * @param theTracker
+     *            the tracker
      */
     protected void addPopupBarDescriptor(final IElementType elementType,
             final Image theImage, final DragTracker theTracker) {
@@ -714,7 +806,9 @@ public class PopupBarPolicy extends DiagramAssistantEditPolicy {
      * tool to be used.
      * 
      * @param elementType
+     *            the element type
      * @param theImage
+     *            the image
      */
     protected void addPopupBarDescriptor(final IElementType elementType,
             final Image theImage) {
@@ -725,9 +819,14 @@ public class PopupBarPolicy extends DiagramAssistantEditPolicy {
     }
 
     /**
+     * Add a new descriptor.
+     * 
      * @param elementType
+     *            the element type
      * @param theImage
+     *            the image
      * @param theTip
+     *            the tool tip
      */
     protected void addPopupBarDescriptor(final IElementType elementType,
             final Image theImage, final String theTip) {
@@ -743,7 +842,9 @@ public class PopupBarPolicy extends DiagramAssistantEditPolicy {
      * method used primarily to add UnspecifiedTypeCreationTool.
      * 
      * @param elementType
+     *            the element type
      * @param theImage
+     *            the image
      * @param theRequest
      *            the create request to be used
      */
@@ -831,13 +932,20 @@ public class PopupBarPolicy extends DiagramAssistantEditPolicy {
         return getBalloon() != null;
     }
 
+    /**
+     * Get the current balloon.
+     * 
+     * @return the balloon
+     */
     private IFigure getBalloon() {
         return myBalloon;
     }
 
     /**
+     * Create a new figure for the balloon.
      * 
-     * @return
+     * 
+     * @return a figure for the balloon
      */
     protected IFigure createPopupBarFigure() {
         return new RoundedRectangleWithTail();
@@ -846,7 +954,6 @@ public class PopupBarPolicy extends DiagramAssistantEditPolicy {
     @Override
     protected void showDiagramAssistant(final Point referencePoint) {
         Point refPoint = referencePoint;
-        // System.out.println(refPoint);
         // already have a one
         if (getBalloon() != null && getBalloon().getParent() != null) {
             return;
@@ -874,7 +981,6 @@ public class PopupBarPolicy extends DiagramAssistantEditPolicy {
         }
 
         Point thePoint = getBalloonPosition(refPoint);
-        // System.out.println(" " + thePoint);
 
         getBalloon().setLocation(thePoint);
 
@@ -897,6 +1003,7 @@ public class PopupBarPolicy extends DiagramAssistantEditPolicy {
      * setter for the IsDisplayAtMouseHoverLocation.
      * 
      * @param bVal
+     *            the new value
      */
     protected void setIsDisplayAtMouseHoverLocation(final boolean bVal) {
         setFlag(POPUPBAR_DISPLAYATMOUSEHOVERLOCATION, bVal);
@@ -913,12 +1020,19 @@ public class PopupBarPolicy extends DiagramAssistantEditPolicy {
      * @return Point
      */
     private Point getBalloonPosition(final Point referencePoint) {
+        int hostUpperX = getHostFigure().getBounds().x;
+        int hostUpperY = getHostFigure().getBounds().y;
+        int hostLowerX = getHostFigure().getBounds().width + hostUpperX;
+        int hostLowerY = getHostFigure().getBounds().height + hostUpperY;
         Point thePoint = new Point();
+        thePoint.setLocation(referencePoint);
+        getHostFigure().translateToAbsolute(thePoint);
+        getBalloon().translateToRelative(thePoint);
+
         boolean atMouse = getIsDisplayAtMouseHoverLocation();
-        if (atMouse) {
-            thePoint.setLocation(referencePoint);
-            getHostFigure().translateToAbsolute(thePoint);
-            getBalloon().translateToRelative(thePoint);
+        if (atMouse
+                || (thePoint.x >= hostUpperX && thePoint.x <= hostLowerX
+                        && thePoint.y >= hostUpperY && thePoint.y <= hostLowerY)) {
 
             // shift the ballon so it is above the cursor.
             thePoint.y -= ACTION_WIDTH_HGT;
@@ -986,8 +1100,9 @@ public class PopupBarPolicy extends DiagramAssistantEditPolicy {
         this.myPopupBarDescriptors.clear();
 
         if (imagesToBeDisposed != null) {
-            for (Iterator iter = imagesToBeDisposed.iterator(); iter.hasNext();) {
-                ((Image) iter.next()).dispose();
+            for (Iterator<Image> iter = imagesToBeDisposed.iterator(); iter
+                    .hasNext();) {
+                iter.next().dispose();
             }
             imagesToBeDisposed.clear();
         }
