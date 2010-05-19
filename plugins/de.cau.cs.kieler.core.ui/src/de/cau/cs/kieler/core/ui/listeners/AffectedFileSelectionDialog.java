@@ -29,24 +29,45 @@ import org.eclipse.ui.dialogs.ListSelectionDialog;
 import de.cau.cs.kieler.core.ui.listeners.RefactoringListener.OP;
 
 /**
+ * Dialog for selecting the files affected by a refactoring operation.
+ * 
  * @author soh
  */
 public class AffectedFileSelectionDialog implements IStructuredContentProvider,
         ILabelProvider {
 
+    /** The shell where to display the dialog. */
     private Shell shell;
 
+    /** The list of affected files. */
     private List<File> affectedFiles;
 
+    /** The operation for displaying text. */
     private OP operation;
 
+    /**
+     * 
+     * Creates a new AffectedFileSelectionDialog.
+     * 
+     * @param theShell
+     *            the shell
+     * @param files
+     *            the files
+     * @param theOP
+     *            the operation
+     */
     public AffectedFileSelectionDialog(final Shell theShell,
-            final List<File> files, OP theOP) {
+            final List<File> files, final OP theOP) {
         shell = theShell;
         affectedFiles = files;
         operation = theOP;
     }
 
+    /**
+     * Open the list selection dialog.
+     * 
+     * @return the list of files selected by the user
+     */
     public List<File> openDialog() {
         ListSelectionDialog dialog = new ListSelectionDialog(shell,
                 affectedFiles, this, this, getMessage());
@@ -66,11 +87,19 @@ public class AffectedFileSelectionDialog implements IStructuredContentProvider,
         return null;
     }
 
+    /**
+     * Create a message for each operation.
+     * 
+     * @return the message
+     */
     private String getMessage() {
         switch (operation) {
         case DELETE:
             return "The following files are affected by "
                     + "the deletion and should be deleted as well.";
+        case MOVE:
+        case RENAME:
+            return "Select affected files.";
 
         }
         return "";
@@ -79,6 +108,7 @@ public class AffectedFileSelectionDialog implements IStructuredContentProvider,
     /**
      * {@inheritDoc}
      */
+    @SuppressWarnings("unchecked")
     public Object[] getElements(final Object inputElement) {
         List<File> input = new LinkedList<File>();
         if (inputElement instanceof List<?>) {
