@@ -54,6 +54,7 @@ import de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditor;
  */
 public class RedundantLabelTriggerListener extends TriggerListener {
 
+    /** true if all labels should be hidden. */
     private static boolean hideAll = false;
 
     /**
@@ -109,18 +110,27 @@ public class RedundantLabelTriggerListener extends TriggerListener {
      * {@inheritDoc}
      */
     @Override
-    protected Command trigger(TransactionalEditingDomain domain,
-            Notification notification) {
+    protected Command trigger(final TransactionalEditingDomain domain,
+            final Notification notification) {
         performCleanup();
         return null;
     }
 
+    /** The currently running cleanup job. */
     private static WorkbenchJob job;
 
+    /** True if a job is waiting. */
     private static boolean waiting = false;
 
+    /** The delay of the job. */
     private static final int JOB_DELAY = 1000;
 
+    /** The last active editor. */
+    private static SyncchartsDiagramEditor lastActive;
+
+    /**
+     * Cleanup all labels.
+     */
     private void performCleanup() {
         try {
             if (waiting) {
@@ -137,9 +147,9 @@ public class RedundantLabelTriggerListener extends TriggerListener {
 
                         if (part instanceof SyncchartsDiagramEditor) {
                             boolean save = !part.isDirty();
-                            VisibilityManager
-                                    .reset((SyncchartsDiagramEditor) part);
-                            clean((SyncchartsDiagramEditor) part);
+                            lastActive = (SyncchartsDiagramEditor) part;
+                            VisibilityManager.reset(lastActive);
+                            clean(lastActive);
                             if (save) {
                                 part.doSave(dummyMonitor);
                             }
@@ -148,11 +158,13 @@ public class RedundantLabelTriggerListener extends TriggerListener {
                                     .getOpenSyncchartsEditors();
                             if (!list.isEmpty()) {
                                 for (SyncchartsDiagramEditor part2 : list) {
-                                    boolean save = !part2.isDirty();
-                                    VisibilityManager.reset(part2);
-                                    clean(part2);
-                                    if (save) {
-                                        part2.doSave(dummyMonitor);
+                                    if (part2 == lastActive) {
+                                        boolean save = !part2.isDirty();
+                                        VisibilityManager.reset(part2);
+                                        clean(part2);
+                                        if (save) {
+                                            part2.doSave(dummyMonitor);
+                                        }
                                     }
                                 }
                             }
