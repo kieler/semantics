@@ -207,7 +207,7 @@ public class RefactoringListener implements IRefactoringHistoryListener {
             for (File file : root.listFiles()) {
                 findRec(result, file, model, op, newName);
             }
-        } else if (root.getPath().endsWith(DIAGRAM_EXTENSION)) {
+        } else if (root.getPath().endsWith("." + DIAGRAM_EXTENSION)) {
             // found relevant file
             try {
                 InputStream is = new FileInputStream(root);
