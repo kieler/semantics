@@ -93,7 +93,7 @@ public class ReInitDiagramCommand extends AbstractHandler {
      */
     @Override
     @SuppressWarnings("restriction")
-    public void setEnabled(Object evaluationContext) {
+    public void setEnabled(final Object evaluationContext) {
         if (evaluationContext instanceof EvaluationContext) {
             EvaluationContext evalContext = (EvaluationContext) evaluationContext;
 
@@ -109,9 +109,19 @@ public class ReInitDiagramCommand extends AbstractHandler {
                         path = ((org.eclipse.core.internal.resources.File) o)
                                 .getFullPath();
                     } else if (o instanceof EditPart) {
-                        EditPart eObj = (EditPart) o;
-                        URI uri = ((View) eObj.getModel()).getElement()
-                                .eResource().getURI();
+                        EditPart editPart = (EditPart) o;
+                        EObject eObj = ((View) editPart.getModel())
+                                .getElement();
+                        if (eObj == null) {
+                            super.setBaseEnabled(false);
+                            return;
+                        }
+                        Resource res = eObj.eResource();
+                        if (res == null) {
+                            super.setBaseEnabled(false);
+                            return;
+                        }
+                        URI uri = res.getURI();
                         path = Path.fromOSString(uri.toPlatformString(true));
                     }
                     if (path != null
