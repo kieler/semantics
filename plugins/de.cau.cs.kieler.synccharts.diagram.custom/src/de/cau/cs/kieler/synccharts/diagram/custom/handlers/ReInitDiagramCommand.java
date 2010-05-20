@@ -56,11 +56,13 @@ import org.eclipse.gmf.runtime.emf.commands.core.command.AbstractTransactionalCo
 import org.eclipse.gmf.runtime.emf.core.GMFEditingDomainFactory;
 import org.eclipse.gmf.runtime.notation.Diagram;
 import org.eclipse.gmf.runtime.notation.View;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PartInitException;
+import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.progress.WorkbenchJob;
 
 import de.cau.cs.kieler.kiml.ui.layout.DiagramLayoutManager;
@@ -192,6 +194,32 @@ public class ReInitDiagramCommand extends AbstractHandler {
     }
 
     /**
+     * Get the user selection of the affected files.
+     * 
+     * @param affectedFiles
+     *            the affected files.
+     * @return the selected files
+     */
+    private List<IPath> getUserSelection(final List<IPath> affectedFiles) {
+        final List<IPath> result = new LinkedList<IPath>();
+        PlatformUI.getWorkbench().getDisplay().syncExec(new Runnable() {
+
+            public void run() {
+                Shell shell = PlatformUI.getWorkbench()
+                        .getActiveWorkbenchWindow().getShell();
+
+                AffectedFileSelectionDialog dialog = new AffectedFileSelectionDialog(
+                        shell, affectedFiles);
+                List<IPath> results = dialog.openDialog();
+                if (results != null) {
+                    result.addAll(results);
+                }
+            }
+        });
+        return result;
+    }
+
+    /**
      * Reinitialize the diagram file.
      * 
      * @param path
@@ -200,7 +228,9 @@ public class ReInitDiagramCommand extends AbstractHandler {
     private void reinitialize(final IPath path) {
         List<IPath> partners = getPartners(path);
 
-        for (IPath partner : partners) {
+        List<IPath> selection = getUserSelection(partners);
+
+        for (IPath partner : selection) {
             IPath kixsPath = path.getFileExtension().equals(MODEL_EXTENSION) ? path
                     : partner;
             IPath kidsPath = path.getFileExtension().equals(DIAGRAM_EXTENSION) ? path
@@ -325,7 +355,7 @@ public class ReInitDiagramCommand extends AbstractHandler {
             for (File file : root.listFiles()) {
                 findRec(result, file, model);
             }
-        } else if (root.getPath().endsWith(DIAGRAM_EXTENSION)) {
+        } else if (root.getPath().endsWith("." + DIAGRAM_EXTENSION)) {
             // found relevant file
             try {
                 InputStream is = new FileInputStream(root);
