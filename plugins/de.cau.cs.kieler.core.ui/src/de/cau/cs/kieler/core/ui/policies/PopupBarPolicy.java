@@ -1038,17 +1038,22 @@ public class PopupBarPolicy extends DiagramAssistantEditPolicy {
             thePoint.y -= ACTION_WIDTH_HGT;
             adjustToFitInViewport(thePoint);
         } else {
-            Dimension theoffset = new Dimension();
-            Rectangle rcBounds = getHostFigure().getBounds().getCopy();
+            if (thePoint.x < getHostFigure().getBounds().width) {
+                thePoint.x = referencePoint.x;
+                thePoint.y -= ACTION_WIDTH_HGT;
+            } else {
+                Dimension theoffset = new Dimension();
+                Rectangle rcBounds = getHostFigure().getBounds().getCopy();
 
-            getHostFigure().translateToAbsolute(rcBounds);
-            getBalloon().translateToRelative(rcBounds);
+                getHostFigure().translateToAbsolute(rcBounds);
+                getBalloon().translateToRelative(rcBounds);
 
-            theoffset.height = -(BALLOON_Y_OFFSET + ACTION_WIDTH_HGT);
-            theoffset.width = (int) (rcBounds.width * myBallonOffsetPercent);
+                theoffset.height = -(BALLOON_Y_OFFSET + ACTION_WIDTH_HGT);
+                theoffset.width = (int) (rcBounds.width * myBallonOffsetPercent);
 
-            thePoint.x = rcBounds.x + theoffset.width;
-            thePoint.y = rcBounds.y + theoffset.height;
+                thePoint.x = rcBounds.x + theoffset.width;
+                thePoint.y = rcBounds.y + theoffset.height;
+            }
             adjustToFitInViewport(thePoint);
         }
         return thePoint;
