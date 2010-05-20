@@ -48,8 +48,6 @@ import org.osgi.framework.Bundle;
 
 import com.google.inject.Injector;
 
-import de.cau.cs.kieler.dataflow.codegen.LustreGenerator;
-import de.cau.cs.kieler.dataflow.diagram.part.DataflowDiagramEditor;
 import de.cau.cs.kieler.krep.compiler.main.Ec2klp;
 import de.cau.cs.kieler.krep.editors.klp.KlpStandaloneSetup;
 import de.cau.cs.kieler.krep.editors.klp.klp.KLP;
@@ -313,9 +311,10 @@ public final class DataComponent extends AbstractAutomatedProducer {
 
                     IFile file = input.getFile();
                     String name = editor.getEditorInput().getName();
-                    if (editor instanceof DataflowDiagramEditor) {
-                        data2klp(name, file);
-                    } else if (file.getFileExtension().equals("klp")) {
+                    //if (editor instanceof DataflowDiagramEditor) {
+                    //    data2klp(name, file);
+                    //} else 
+                    if (file.getFileExtension().equals("klp")) {
                         klp2klp(name, file);
                     } else if (file.getFileExtension().equals("kasm")) {
                         kasm2kep(name, file);
@@ -324,8 +323,8 @@ public final class DataComponent extends AbstractAutomatedProducer {
                     }
                 }
             }
-        } catch (IOException e) {
-            throw new KiemInitializationException("Assembler file not found", true, e);
+        //} catch (IOException e) {
+        //    throw new KiemInitializationException("Assembler file not found", true, e);
         } catch (ParseException e) {
             assembler = null;
             throw new KiemInitializationException("Cannot parse assembler file", true, e);
@@ -413,7 +412,7 @@ public final class DataComponent extends AbstractAutomatedProducer {
      * @throws FileNotFoundException
      * @throws ParseException
      */
-    private void data2klp(final String name, final IFile file) throws IOException,
+    /*private void data2klp(final String name, final IFile file) throws IOException,
             KiemInitializationException, ParseException {
         String workspace = file.getWorkspace().getRoot().getLocation().toOSString();
 
@@ -456,7 +455,7 @@ public final class DataComponent extends AbstractAutomatedProducer {
         }
         KLP model = (KLP) parseResult.getRootASTElement();
         klpAsm.assemble(name, model);
-    }
+    }*/
 
     /**
      * @param name
