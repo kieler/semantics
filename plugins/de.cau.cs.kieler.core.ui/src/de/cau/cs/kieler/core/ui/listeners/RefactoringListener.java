@@ -123,24 +123,43 @@ public class RefactoringListener implements IRefactoringHistoryListener {
         }
 
         if (!affectedFiles.isEmpty()) {
-            PlatformUI.getWorkbench().getDisplay().syncExec(new Runnable() {
+            List<File> deletedFiles = getUserSelection(affectedFiles, OP.DELETE);
 
-                public void run() {
-                    Shell shell = PlatformUI.getWorkbench()
-                            .getActiveWorkbenchWindow().getShell();
-
-                    AffectedFileSelectionDialog dialog = new AffectedFileSelectionDialog(
-                            shell, affectedFiles, OP.DELETE);
-                    List<File> deletedFiles = dialog.openDialog();
-
-                    if (deletedFiles != null) {
-                        for (File file : deletedFiles) {
-                            file.delete();
-                        }
-                    }
+            if (!deletedFiles.isEmpty()) {
+                for (File file : deletedFiles) {
+                    file.delete();
                 }
-            });
+            }
         }
+    }
+
+    /**
+     * Get the user selection of the affected files.
+     * 
+     * @param affectedFiles
+     *            the affected files.
+     * @param op
+     *            the operation
+     * @return the selected files
+     */
+    private List<File> getUserSelection(final List<File> affectedFiles,
+            final OP op) {
+        final List<File> result = new LinkedList<File>();
+        PlatformUI.getWorkbench().getDisplay().syncExec(new Runnable() {
+
+            public void run() {
+                Shell shell = PlatformUI.getWorkbench()
+                        .getActiveWorkbenchWindow().getShell();
+
+                AffectedFileSelectionDialog dialog = new AffectedFileSelectionDialog(
+                        shell, affectedFiles, op);
+                List<File> results = dialog.openDialog();
+                if (results != null) {
+                    result.addAll(results);
+                }
+            }
+        });
+        return result;
     }
 
     /**
@@ -190,6 +209,7 @@ public class RefactoringListener implements IRefactoringHistoryListener {
             }
         } else if (root.getPath().endsWith(DIAGRAM_EXTENSION)) {
             // found relevant file
+            System.out.println(root);
             try {
                 InputStream is = new FileInputStream(root);
                 InputStreamReader isr = new InputStreamReader(is);
@@ -269,7 +289,10 @@ public class RefactoringListener implements IRefactoringHistoryListener {
 
         for (IPath path : src) {
             List<File> list = executeOperation(path, OP.MOVE, null);
-            for (File partner : list) {
+
+            List<File> selection = getUserSelection(list, OP.MOVE);
+
+            for (File partner : selection) {
                 if (partner != null) {
                     IPath srcName = path.removeFileExtension();
                     String name = srcName.segment(srcName.segmentCount() - 1);

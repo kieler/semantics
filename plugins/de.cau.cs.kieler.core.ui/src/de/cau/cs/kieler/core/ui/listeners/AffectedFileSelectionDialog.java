@@ -98,6 +98,8 @@ public class AffectedFileSelectionDialog implements IStructuredContentProvider,
             return "The following files are affected by "
                     + "the deletion and should be deleted as well.";
         case MOVE:
+            return "The following files are affected by the move "
+                    + "and should be moved as well.";
         case RENAME:
             return "Select affected files.";
 
