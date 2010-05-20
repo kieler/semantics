@@ -578,14 +578,14 @@ public final class DataComponent extends AbstractAutomatedProducer {
             InputStream stdout = p.getInputStream();
             InputStream stderr = p.getErrorStream();
             OutputStream stdin = p.getOutputStream();
-            StringBuffer debug = new StringBuffer(name + ":\n");
+            //StringBuffer debug = new StringBuffer(name + ":\n");
 
             while (input.available() > 0) {
                 int r = input.read();
                 stdin.write(r);
-                debug.append(Character.toChars(r));
+                //debug.append(Character.toChars(r));
             }
-            Activator.debug(debug.toString());
+            //Activator.debug(debug.toString());
             stdin.close();
 
             int time = 0;
