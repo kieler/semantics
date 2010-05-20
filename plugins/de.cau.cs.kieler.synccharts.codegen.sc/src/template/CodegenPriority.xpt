@@ -28,12 +28,12 @@
 «ENDDEFINE»
 
 «DEFINE realPrio FOR State-»
-	«IF !this.regions.isEmpty && this.outgoingTransitions.exists(t|t.type != TransitionType::STRONGABORT) && this.outgoingTransitions.exists(t|t.type == TransitionType::STRONGABORT)-»
-	«ENDIF-»
+	«IF this.outgoingTransitions.exists(t|t.type != TransitionType::STRONGABORT) && this.outgoingTransitions.exists(t|t.type == TransitionType::STRONGABORT) || this.outgoingTransitions.exists(t|t.type != TransitionType::NORMALTERMINATION)-»
 	«IF (boolean)(GLOBALVAR sim)-»
 		/* priority real */
 	«ENDIF-»
 	PRIO(«EXPAND getRealThreadPriority FOR this»);
+	«ENDIF-»
 «ENDDEFINE»
 
 «DEFINE weakPrio FOR State-»
@@ -47,15 +47,19 @@
 
 «DEFINE transitionPrio FOR Transition-»
 	«IF getRealOptimizedThreadPriority(this.targetState) != getRealOptimizedThreadPriority(this.sourceState)-»
-	«ENDIF-»
+	«IF isSignalDependent() || hasDependentState()»
+	«ENDIF»
 	«IF (boolean)(GLOBALVAR sim)-»
 		/* priority after transition */
 	«ENDIF-»
 	PRIO(«EXPAND getRealThreadPriority FOR this.targetState»);
+	«ENDIF-»
 «ENDDEFINE»
 
 «DEFINE sourcePrio FOR Transition-»
-	«IF this.sourceState.outgoingTransitions.size > 1 && hasDependentState(this)-»
+	«REM» && hasDependentState(this)
+	«ENDREM»
+	«IF this.sourceState.outgoingTransitions.size > 1-»
 	«ENDIF-»
 		«IF (boolean)(GLOBALVAR sim)-»
 			/* priority to source */
