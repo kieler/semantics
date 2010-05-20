@@ -209,7 +209,6 @@ public class RefactoringListener implements IRefactoringHistoryListener {
             }
         } else if (root.getPath().endsWith(DIAGRAM_EXTENSION)) {
             // found relevant file
-            System.out.println(root);
             try {
                 InputStream is = new FileInputStream(root);
                 InputStreamReader isr = new InputStreamReader(is);
