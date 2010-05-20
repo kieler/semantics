@@ -37,7 +37,7 @@ import org.eclipse.ui.IWorkbenchPart;
  * 
  * @author soh
  */
-public class VisibilityManager {
+public final class VisibilityManager {
 
     /** Map containing all highlighting effects and highlighted edit parts. */
     private HashMap<IWorkbenchPart, HashMap<GraphicalEditPart, Boolean>> map;
@@ -132,8 +132,8 @@ public class VisibilityManager {
                     "Redundant Label Cleanup") {
 
                 @Override
-                protected IStatus doExecute(IProgressMonitor monitor,
-                        IAdaptable info) throws ExecutionException {
+                protected IStatus doExecute(final IProgressMonitor monitor,
+                        final IAdaptable info) throws ExecutionException {
                     View view = (View) editPart.getModel();
 
                     ViewUtil.setStructuralFeatureValue(view,

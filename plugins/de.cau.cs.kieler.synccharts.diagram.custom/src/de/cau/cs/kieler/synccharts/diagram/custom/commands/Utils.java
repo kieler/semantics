@@ -171,7 +171,7 @@ public final class Utils {
      * @param list
      *            the list that should be added to clipboard
      */
-    private static void transitionsToClipboard(List<?> list) {
+    private static void transitionsToClipboard(final List<?> list) {
         Collection<Transition> coll = new LinkedList<Transition>();
         boolean foundState = false;
         for (Object o : list) {
@@ -196,7 +196,7 @@ public final class Utils {
      * @param list
      *            the list that should be added to clipboard
      */
-    private static void regionsToClipboard(List<?> list) {
+    private static void regionsToClipboard(final List<?> list) {
         Collection<Region> coll = new LinkedList<Region>();
         boolean foundState = false;
         for (Object o : list) {
@@ -357,7 +357,7 @@ public final class Utils {
      *            the object
      * @return the copy
      */
-    public final static EObject copy(final Object object) {
+    public static EObject copy(final Object object) {
         return EcoreUtil.copy((EObject) object);
     }
 
@@ -367,14 +367,19 @@ public final class Utils {
      * @param object
      *            the message
      */
-    public final static void debug(final Object object) {
+    public static void debug(final Object object) {
         System.out.println("COPY AND PASTE DEBUG: " + object.toString());
     }
 
-    public final static void dump(String aString) {
+    /**
+     * 
+     * @param aString
+     *            the string to print
+     */
+    public static void dump(final String aString) {
         System.out.println(aString);
     }
-    
+
     /**
      * Pseudo-method, allows setting breakpoints for analysing objects.
      * 
@@ -382,7 +387,7 @@ public final class Utils {
      *            the object
      * @return the object passed as param, casted to EObject
      */
-    public final static EObject analyze(Object object) {
+    public static EObject analyze(final Object object) {
         return (EObject) object;
     }
 }

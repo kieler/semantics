@@ -43,8 +43,8 @@ public class CutCopyPasteHandler extends AbstractGlobalActionHandlerProvider {
     }
 
     /**
-     * Returns a global action handler that supports global image operations
-     * (cut, copy, and paste).
+     * 
+     * {@inheritDoc}
      */
     @Override
     public IGlobalActionHandler getGlobalActionHandler(
@@ -67,21 +67,21 @@ public class CutCopyPasteHandler extends AbstractGlobalActionHandlerProvider {
                         /**
                          * @see org.eclipse.ui.IPartListener#partActivated(IWorkbenchPart)
                          */
-                        public void partActivated(IWorkbenchPart part) {
+                        public void partActivated(final IWorkbenchPart part) {
                             // Do nothing
                         }
 
                         /**
                          * @see org.eclipse.ui.IPartListener#partBroughtToTop(IWorkbenchPart)
                          */
-                        public void partBroughtToTop(IWorkbenchPart part) {
+                        public void partBroughtToTop(final IWorkbenchPart part) {
                             // Do nothing
                         }
 
                         /**
                          * @see org.eclipse.ui.IPartListener#partClosed(IWorkbenchPart)
                          */
-                        public void partClosed(IWorkbenchPart part) {
+                        public void partClosed(final IWorkbenchPart part) {
                             /* Remove the cache associated with the part */
                             if (part != null && part == localPart
                                     && getHandlerList().containsKey(part)) {
@@ -95,14 +95,14 @@ public class CutCopyPasteHandler extends AbstractGlobalActionHandlerProvider {
                         /**
                          * @see org.eclipse.ui.IPartListener#partDeactivated(IWorkbenchPart)
                          */
-                        public void partDeactivated(IWorkbenchPart part) {
+                        public void partDeactivated(final IWorkbenchPart part) {
                             // Do nothing
                         }
 
                         /**
                          * @see org.eclipse.ui.IPartListener#partOpened(IWorkbenchPart)
                          */
-                        public void partOpened(IWorkbenchPart part) {
+                        public void partOpened(final IWorkbenchPart part) {
                             // Do nothing
                         }
                     });

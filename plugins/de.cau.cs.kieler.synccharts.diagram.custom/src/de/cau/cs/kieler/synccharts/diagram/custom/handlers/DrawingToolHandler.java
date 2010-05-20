@@ -31,7 +31,7 @@ public class DrawingToolHandler extends AbstractHandler {
     /**
      * {@inheritDoc}
      */
-    public Object execute(ExecutionEvent event) throws ExecutionException {
+    public Object execute(final ExecutionEvent event) throws ExecutionException {
         Command command = event.getCommand();
         boolean oldValue = HandlerUtil.toggleCommandState(command);
         ToggleTransitionLabelHandler.hideAll(!oldValue);

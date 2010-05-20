@@ -38,10 +38,11 @@ import org.eclipse.xtend.typesystem.emf.EmfMetaModel;
 
 /**
  * A command that expands all referenceMacroStates in a given file <name>[.kixs]
- * and writes the expanded superstate to a new file <name>_EXPANDED.kixs
+ * and writes the expanded superstate to a new file <name>_EXPANDED.kixs.
  * 
  * @author abl
  */
+@SuppressWarnings("restriction")
 public class ExpandMacroStatesCommand extends AbstractHandler {
 
     /** File extension for model files. */
@@ -52,8 +53,7 @@ public class ExpandMacroStatesCommand extends AbstractHandler {
      * {@inheritDoc}
      */
     @Override
-    @SuppressWarnings("restriction")
-    public void setEnabled(Object evaluationContext) {
+    public void setEnabled(final Object evaluationContext) {
         if (evaluationContext instanceof EvaluationContext) {
             EvaluationContext evalContext = (EvaluationContext) evaluationContext;
             // get list of selected files
@@ -80,7 +80,6 @@ public class ExpandMacroStatesCommand extends AbstractHandler {
     /**
      * {@inheritDoc}
      */
-    @SuppressWarnings("restriction")
     public Object execute(final ExecutionEvent event) throws ExecutionException {
         // get the selection
         Object object = event.getApplicationContext();
@@ -119,6 +118,10 @@ public class ExpandMacroStatesCommand extends AbstractHandler {
         stack.execute(command);
     }
 
+    /**
+     * 
+     * @author abl
+     */
     private class ExpandCommand extends AbstractCommand {
         Workflow workflow;
         WorkflowContext wfx;
@@ -129,15 +132,18 @@ public class ExpandMacroStatesCommand extends AbstractHandler {
         XtendComponent transformation;
         Writer writer;
 
-        public ExpandCommand(IPath path) {
-            URI sourceURI = URI.createPlatformResourceURI(path.toOSString(), true);
-            
-            String newFilename = path.removeFileExtension().lastSegment() + "_EXPANDED.kixs";
-            URI targetURI = URI.createPlatformResourceURI(path.removeLastSegments(1)
-                                                        .append(newFilename).toOSString(), true);
-            
-            System.out.println("SOURCE: " +sourceURI);
-            System.out.println("TARGET: " +targetURI);
+        public ExpandCommand(final IPath path) {
+            URI sourceURI = URI.createPlatformResourceURI(path.toOSString(),
+                    true);
+
+            String newFilename = path.removeFileExtension().lastSegment()
+                    + "_EXPANDED.kixs";
+            URI targetURI = URI.createPlatformResourceURI(path
+                    .removeLastSegments(1).append(newFilename).toOSString(),
+                    true);
+
+            System.out.println("SOURCE: " + sourceURI);
+            System.out.println("TARGET: " + targetURI);
 
             workflow = new Workflow();
             wfx = new WorkflowContextDefaultImpl();

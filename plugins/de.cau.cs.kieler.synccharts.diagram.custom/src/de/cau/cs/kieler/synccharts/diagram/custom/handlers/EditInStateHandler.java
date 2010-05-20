@@ -14,6 +14,7 @@
 package de.cau.cs.kieler.synccharts.diagram.custom.handlers;
 
 import java.util.Iterator;
+
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
@@ -27,7 +28,6 @@ import org.eclipse.gmf.runtime.diagram.ui.editparts.ITextAwareEditPart;
 import org.eclipse.gmf.runtime.diagram.ui.editparts.ShapeCompartmentEditPart;
 import org.eclipse.gmf.runtime.diagram.ui.editparts.ShapeNodeEditPart;
 import org.eclipse.gmf.runtime.diagram.ui.requests.RequestConstants;
-import org.eclipse.gmf.runtime.emf.type.core.IElementType;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.swt.widgets.Display;
@@ -37,9 +37,6 @@ import de.cau.cs.kieler.synccharts.diagram.edit.parts.State2EditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateEditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateInterfaceDeclaration2EditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateInterfaceDeclarationEditPart;
-import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateOnEntryAction2EditPart;
-import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateOnEntryActionEditPart;
-import de.cau.cs.kieler.synccharts.diagram.providers.SyncchartsElementTypes;
 
 /**
  * Handles edit requests for model elements.
@@ -122,7 +119,8 @@ public class EditInStateHandler extends AbstractHandler implements IHandler {
         // insert a given string in case editPart supports it
         if (editPart instanceof ITextAwareEditPart && insertIfEmpty != null) {
             IParser p = ((ITextAwareEditPart) editPart).getParser();
-            // only edit if empty, other behaviors like append would also be possible 
+            // only edit if empty, other behaviors like append would also be
+            // possible
             if (p.getEditString(editPart, 0).length() == 0) {
                 ICommand c = p.getParseCommand(editPart, insertIfEmpty, 0);
                 try {

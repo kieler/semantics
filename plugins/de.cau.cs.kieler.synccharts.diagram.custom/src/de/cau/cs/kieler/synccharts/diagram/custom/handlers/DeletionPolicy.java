@@ -41,11 +41,7 @@ public class DeletionPolicy extends DeletionPolicyProvider {
             return false;
         } else if (editPart instanceof StateEditPart) {
             return false;
-        } else /*if (editPart instanceof StateSignal2EditPart) {
-               return false;
-               } else if (editPart instanceof StateSignalEditPart) {
-               return false;
-               } else */if (editPart instanceof TransitionEditPart) {
+        } else if (editPart instanceof TransitionEditPart) {
             return false;
         }
         return true;

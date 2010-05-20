@@ -97,10 +97,11 @@ public class CutCopyPasteSupportHandler extends DiagramGlobalActionHandler {
     }
 
     /**
-     * @see org.eclipse.gmf.runtime.common.ui.action.AbstractGlobalActionHandler#canHandle(IGlobalActionContext)
+     * 
+     * {@inheritDoc}
      */
     @Override
-    public boolean canHandle(IGlobalActionContext cntxt) {
+    public boolean canHandle(final IGlobalActionContext cntxt) {
 
         /* Check if the active part is a IDiagramWorkbenchPart */
         IWorkbenchPart part = cntxt.getActivePart();
@@ -148,7 +149,7 @@ public class CutCopyPasteSupportHandler extends DiagramGlobalActionHandler {
      *            the selection
      * @return true if the selection can be cut/copied
      */
-    private boolean canKsbaseCopy(IStructuredSelection sel) {
+    private boolean canKsbaseCopy(final IStructuredSelection sel) {
         boolean result = true;
 
         canKsbaseCopy = result;
@@ -163,20 +164,19 @@ public class CutCopyPasteSupportHandler extends DiagramGlobalActionHandler {
      *            the selection
      * @return true if the selection can be used
      */
-    private boolean canKsbasePaste(IStructuredSelection sel) {
+    private boolean canKsbasePaste(final IStructuredSelection sel) {
         boolean result = true;
 
         canKsbasePaste = result;
         return result;
     }
 
-    /*
-     * (non-Javadoc)
+    /**
      * 
-     * @see org.eclipse.gmf.runtime.diagram.ui.providers.DiagramGlobalActionHandler#canPaste(org.eclipse.gmf.runtime.common.ui.services.action.global.IGlobalActionContext)
+     * {@inheritDoc}
      */
     @Override
-    protected boolean canPaste(IGlobalActionContext cntxt) {
+    protected boolean canPaste(final IGlobalActionContext cntxt) {
         if (!AWTClipboardHelper.getInstance().isImageCopySupported()) {
             return super.canPaste(cntxt);
         }
@@ -185,12 +185,9 @@ public class CutCopyPasteSupportHandler extends DiagramGlobalActionHandler {
         return AWTClipboardHelper.getInstance().hasCustomData();
     }
 
-    /*
-     * (non-Javadoc)
+    /**
      * 
-     * @see org.eclipse.gmf.runtime.diagram.ui.providers.DiagramGlobalActionHandler#getCopyCommand(org.eclipse.gmf.runtime.common.ui.services.action.global.IGlobalActionContext,
-     *      org.eclipse.gmf.runtime.diagram.ui.parts.IDiagramWorkbenchPart,
-     *      boolean)
+     * {@inheritDoc}
      */
     @Override
     protected ICommand getCopyCommand(final IGlobalActionContext cntxt,
@@ -223,8 +220,8 @@ public class CutCopyPasteSupportHandler extends DiagramGlobalActionHandler {
 
             @Override
             protected CommandResult doUndoWithResult(
-                    IProgressMonitor progressMonitor, IAdaptable info)
-                    throws ExecutionException {
+                    final IProgressMonitor progressMonitor,
+                    final IAdaptable info) throws ExecutionException {
 
                 return isUndoable ? CommandResult.newOKCommandResult() : super
                         .doUndoWithResult(progressMonitor, info);
@@ -232,22 +229,22 @@ public class CutCopyPasteSupportHandler extends DiagramGlobalActionHandler {
 
             @Override
             protected CommandResult doRedoWithResult(
-                    IProgressMonitor progressMonitor, IAdaptable info)
-                    throws ExecutionException {
+                    final IProgressMonitor progressMonitor,
+                    final IAdaptable info) throws ExecutionException {
 
                 return isUndoable ? CommandResult.newOKCommandResult() : super
                         .doRedoWithResult(progressMonitor, info);
             }
 
             @Override
-            public void addContext(IUndoContext context) {
+            public void addContext(final IUndoContext context) {
                 if (isUndoable) {
                     super.addContext(context);
                 }
             }
 
             @Override
-            public void removeContext(IUndoContext context) {
+            public void removeContext(final IUndoContext context) {
                 if (isUndoable) {
                     super.removeContext(context);
                 }
@@ -256,11 +253,8 @@ public class CutCopyPasteSupportHandler extends DiagramGlobalActionHandler {
     }
 
     /**
-     * Getter for the cut command.
      * 
-     * @param cntxt
-     * @param diagramPart
-     * @return
+     * {@inheritDoc}
      */
     @Override
     protected ICommand getCutCommand(final IGlobalActionContext cntxt,
@@ -318,8 +312,12 @@ public class CutCopyPasteSupportHandler extends DiagramGlobalActionHandler {
                 .buildPasteCommand(part, getListFromSelection(sel));
     }
 
+    /**
+     * 
+     * {@inheritDoc}
+     */
     @Override
-    public ICommand getCommand(IGlobalActionContext cntxt) {
+    public ICommand getCommand(final IGlobalActionContext cntxt) {
         if (cntxt.getActionId().equals(GlobalActionId.PASTE)) {
             if (canKsbasePaste) {
                 ISelection sel = cntxt.getSelection();
@@ -337,10 +335,9 @@ public class CutCopyPasteSupportHandler extends DiagramGlobalActionHandler {
         return super.getCommand(cntxt);
     }
 
-    /*
-     * (non-Javadoc)
+    /**
      * 
-     * @see org.eclipse.gmf.runtime.diagram.ui.providers.DiagramGlobalActionHandler#createPasteViewRequest()
+     * {@inheritDoc}
      */
     @Override
     protected PasteViewRequest createPasteViewRequest() {

@@ -27,7 +27,7 @@ import de.cau.cs.kieler.viewmanagement.effects.ShapeHighlightEffect;
  * 
  * @author soh
  */
-public class HighlightingManager {
+public final class HighlightingManager {
 
     /** Map containing all highlighting effects and highlighted edit parts. */
     private HashMap<IWorkbenchPart, HashMap<EditPart, ShapeHighlightEffect>> map;

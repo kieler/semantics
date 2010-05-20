@@ -60,7 +60,7 @@ import de.cau.cs.kieler.synccharts.diagram.custom.SyncchartsDiagramCustomPlugin;
  * 
  * @author soh
  */
-public class CommandFactory {
+public final class CommandFactory {
 
     /** The transformation file. */
     private static final String FILE = "/transformations/feature.ext";
@@ -68,14 +68,19 @@ public class CommandFactory {
     /** The base package of the underlying meta model. */
     private static final String MODEL = "de.cau.cs.kieler.synccharts.SyncchartsPackage";
 
-    /** The transformation framework. */
-    private static final ITransformationFramework framework = new XtendTransformationFramework();
+    /** The transformation FRAMEWORK. */
+    private static final ITransformationFramework FRAMEWORK = new XtendTransformationFramework();
 
     /** The path of the transformation file. */
-    private static String FILE_PATH = null;
+    private static String filePath = null;
 
     /** The last selection. */
     private static List<EObject> lastSelection;
+
+    /** Constructor. */
+    private CommandFactory() {
+
+    }
 
     /**
      * Build a new copy command.
@@ -181,7 +186,7 @@ public class CommandFactory {
                 // Set delete on exit flag, so the files will be cleaned when
                 // exiting
                 // eclipse
-                FILE_PATH = file.getAbsolutePath();
+                filePath = file.getAbsolutePath();
                 file.deleteOnExit();
             }
         } catch (IOException e0) {
@@ -239,21 +244,19 @@ public class CommandFactory {
                 }
 
                 for (String[] s : possibleMappings) {
-                    List<Object> mappedSelection = framework
+                    List<Object> mappedSelection = FRAMEWORK
                             .createParameterMapping(selection, s);
                     if (mappedSelection != null
-                            && result
-                                    .initialize(editor, mappedSelection, label
-                                            .toLowerCase(), FILE_PATH, MODEL,
-                                            framework)) {
+                            && result.initialize(editor, mappedSelection, label
+                                    .toLowerCase(), filePath, MODEL, FRAMEWORK)) {
                         break;
                     }
                 }
             } else {
                 List<Object> list = new LinkedList<Object>();
                 list.add(selection.get(0));
-                result.initialize(editor, list, label.toLowerCase(), FILE_PATH,
-                        MODEL, framework);
+                result.initialize(editor, list, label.toLowerCase(), filePath,
+                        MODEL, FRAMEWORK);
             }
         }
 
@@ -282,7 +285,7 @@ public class CommandFactory {
          * @param labelParam
          */
         public TransformationCommandWithAutoLayout(
-                TransactionalEditingDomain domain, String labelParam) {
+                final TransactionalEditingDomain domain, final String labelParam) {
             super(domain, labelParam, null);
             this.label = labelParam;
         }
@@ -352,7 +355,7 @@ public class CommandFactory {
      * @param editorPart
      *            the editor
      */
-    private static void refreshEditPolicies(IEditorPart editorPart) {
+    private static void refreshEditPolicies(final IEditorPart editorPart) {
         if (editorPart instanceof IDiagramWorkbenchPart) {
             IDiagramWorkbenchPart part = (IDiagramWorkbenchPart) editorPart;
             if (lastSelection != null) {
@@ -374,7 +377,7 @@ public class CommandFactory {
      * @param sel
      *            the element
      */
-    private static void refreshPolicy(EObject sel) {
+    private static void refreshPolicy(final EObject sel) {
         EditPart editPart = ModelingUtil.getEditPart(sel);
         // get all registered edit parts in order to get transitions as well
         Collection<?> parts = editPart.getViewer().getEditPartRegistry()

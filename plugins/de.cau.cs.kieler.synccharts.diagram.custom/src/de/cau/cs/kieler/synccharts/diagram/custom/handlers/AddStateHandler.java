@@ -47,48 +47,54 @@ import de.cau.cs.kieler.synccharts.diagram.providers.SyncchartsElementTypes;
  */
 public class AddStateHandler extends AbstractHandler implements IHandler {
 
-    /** last compartment to which a state was added */
+    /** last compartment to which a state was added. */
     private GraphicalEditPart lastEditCompartment;
-    /** view adapter for the last edited compartment */
+    /** view adapter for the last edited compartment. */
     private IAdaptable stateViewAdapter;
-    
-    /* (non-Javadoc)
-     * @see org.eclipse.core.commands.IHandler#execute(org.eclipse.core.commands.ExecutionEvent)
+
+    /**
+     * 
+     * {@inheritDoc}
      */
-    public Object execute(ExecutionEvent event) throws ExecutionException {
+    public Object execute(final ExecutionEvent event) throws ExecutionException {
         lastEditCompartment = null;
-        IStructuredSelection selection = (IStructuredSelection)HandlerUtil.getActiveMenuSelection(event);
-        if (selection == null)
-            selection = (IStructuredSelection)HandlerUtil.getCurrentSelection(event);
+        IStructuredSelection selection = (IStructuredSelection) HandlerUtil
+                .getActiveMenuSelection(event);
+        if (selection == null) {
+            selection = (IStructuredSelection) HandlerUtil
+                    .getCurrentSelection(event);
+        }
         if (selection != null) {
-            
+
             // add a state to each selected region
             Iterator<?> selectionIter = selection.iterator();
             while (selectionIter.hasNext()) {
                 Object nextObj = selectionIter.next();
                 if (nextObj instanceof RegionEditPart
                         || nextObj instanceof Region2EditPart) {
-                    addState((GraphicalEditPart)nextObj);
-                }
-                else if (nextObj instanceof RegionStateCompartmentEditPart) {
-                    EditPart parent = ((EditPart)nextObj).getParent();
+                    addState((GraphicalEditPart) nextObj);
+                } else if (nextObj instanceof RegionStateCompartmentEditPart) {
+                    EditPart parent = ((EditPart) nextObj).getParent();
                     if (parent instanceof RegionEditPart
                             || parent instanceof Region2EditPart) {
-                        addState((GraphicalEditPart)parent);
+                        addState((GraphicalEditPart) parent);
                     }
                 }
             }
-            
+
             if (lastEditCompartment != null) {
                 // set the new State into edit mode
                 final EditPartViewer viewer = lastEditCompartment.getViewer();
-                final EditPart elementPart = (EditPart) viewer.getEditPartRegistry()
-                        .get(stateViewAdapter.getAdapter(View.class));
+                final EditPart elementPart = (EditPart) viewer
+                        .getEditPartRegistry().get(
+                                stateViewAdapter.getAdapter(View.class));
                 if (elementPart != null) {
                     Display.getCurrent().asyncExec(new Runnable() {
                         public void run() {
-                            viewer.setSelection(new StructuredSelection(elementPart));
-                            Request der = new Request(RequestConstants.REQ_DIRECT_EDIT);
+                            viewer.setSelection(new StructuredSelection(
+                                    elementPart));
+                            Request der = new Request(
+                                    RequestConstants.REQ_DIRECT_EDIT);
                             elementPart.performRequest(der);
                         }
                     });
@@ -97,39 +103,43 @@ public class AddStateHandler extends AbstractHandler implements IHandler {
         }
         return null;
     }
-    
+
     /**
      * Adds a state to the given region.
      * 
-     * @param regionEditPart region to which a state shall be added
+     * @param regionEditPart
+     *            region to which a state shall be added
      */
-    private void addState(GraphicalEditPart regionEditPart) {
-        IElementType elementType = regionEditPart instanceof RegionEditPart
-                ? SyncchartsElementTypes.State_2001
+    private void addState(final GraphicalEditPart regionEditPart) {
+        IElementType elementType = regionEditPart instanceof RegionEditPart ? SyncchartsElementTypes.State_2001
                 : SyncchartsElementTypes.State_3002;
-        
+
         // find the region compartment
         GraphicalEditPart compartment = null;
         Iterator<?> compartmentIter = regionEditPart.getChildren().iterator();
         while (compartmentIter.hasNext()) {
-            EditPart editPart = (EditPart)compartmentIter.next();
+            EditPart editPart = (EditPart) compartmentIter.next();
             if (editPart instanceof RegionStateCompartmentEditPart) {
-                compartment = (GraphicalEditPart)editPart;
+                compartment = (GraphicalEditPart) editPart;
                 break;
             }
         }
-        
-        // The diagram root does not have a compartment, but holds the state itself
+
+        // The diagram root does not have a compartment, but holds the state
+        // itself
         if (compartment == null) {
             compartment = regionEditPart;
         }
-        
+
         // create the new State
-        CreateViewRequest stateRequest = CreateViewRequestFactory.getCreateShapeRequest(
-                elementType, regionEditPart.getDiagramPreferencesHint());
+        CreateViewRequest stateRequest = CreateViewRequestFactory
+                .getCreateShapeRequest(elementType, regionEditPart
+                        .getDiagramPreferencesHint());
         Command createStateCmd = compartment.getCommand(stateRequest);
-        stateViewAdapter = (IAdaptable)((List<?>)stateRequest.getNewObject()).get(0);
-        compartment.getDiagramEditDomain().getDiagramCommandStack().execute(createStateCmd);
+        stateViewAdapter = (IAdaptable) ((List<?>) stateRequest.getNewObject())
+                .get(0);
+        compartment.getDiagramEditDomain().getDiagramCommandStack().execute(
+                createStateCmd);
         lastEditCompartment = compartment;
     }
 

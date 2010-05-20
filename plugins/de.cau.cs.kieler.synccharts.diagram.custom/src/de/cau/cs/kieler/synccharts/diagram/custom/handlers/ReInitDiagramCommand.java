@@ -363,7 +363,7 @@ public class ReInitDiagramCommand extends AbstractHandler {
     }
 
     /**
-     * Get the file object to a given path
+     * Get the file object to a given path.
      * 
      * @param path
      *            the path
@@ -380,7 +380,7 @@ public class ReInitDiagramCommand extends AbstractHandler {
     }
 
     /**
-     * Reinitialize the diagram from a given kixs file
+     * Reinitialize the diagram from a given kixs file.
      * 
      * @param kixsPath
      *            the source file.
@@ -460,13 +460,13 @@ public class ReInitDiagramCommand extends AbstractHandler {
 
             @Override
             protected CommandResult doExecuteWithResult(
-                    IProgressMonitor monitor, IAdaptable info)
+                    final IProgressMonitor monitor, final IAdaptable info)
                     throws ExecutionException {
                 int diagramVID = SyncchartsVisualIDRegistry
                         .getDiagramVisualID(diagramRoot);
                 if (diagramVID != RegionEditPart.VISUAL_ID) {
-                    return CommandResult
-                            .newErrorCommandResult(Messages.SyncchartsNewDiagramFileWizard_IncorrectRootError);
+                    String msg = Messages.SyncchartsNewDiagramFileWizard_IncorrectRootError;
+                    return CommandResult.newErrorCommandResult(msg);
                 }
                 Diagram diagram = ViewService.createDiagram(diagramRoot,
                         RegionEditPart.MODEL_ID,
@@ -505,7 +505,11 @@ public class ReInitDiagramCommand extends AbstractHandler {
         /** The semaphore to wait in. */
         private Semaphore sem = new Semaphore(0);
 
-        public void worked(int work) {
+        /**
+         * 
+         * {@inheritDoc}
+         */
+        public void worked(final int work) {
         }
 
         /**
@@ -519,27 +523,55 @@ public class ReInitDiagramCommand extends AbstractHandler {
             }
         }
 
-        public void subTask(String name) {
+        /**
+         * 
+         * {@inheritDoc}
+         */
+        public void subTask(final String name) {
         }
 
-        public void setTaskName(String name) {
+        /**
+         * 
+         * {@inheritDoc}
+         */
+        public void setTaskName(final String name) {
         }
 
-        public void setCanceled(boolean value) {
+        /**
+         * 
+         * {@inheritDoc}
+         */
+        public void setCanceled(final boolean value) {
         }
 
+        /**
+         * 
+         * {@inheritDoc}
+         */
         public boolean isCanceled() {
             return false;
         }
 
-        public void internalWorked(double work) {
+        /**
+         * 
+         * {@inheritDoc}
+         */
+        public void internalWorked(final double work) {
         }
 
+        /**
+         * 
+         * {@inheritDoc}
+         */
         public void done() {
             sem.release();
         }
 
-        public void beginTask(String name, int totalWork) {
+        /**
+         * 
+         * {@inheritDoc}
+         */
+        public void beginTask(final String name, final int totalWork) {
         }
     }
 }

@@ -45,6 +45,8 @@ import de.cau.cs.kieler.synccharts.diagram.custom.triggerlisteners.RedundantLabe
 import de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditor;
 
 /**
+ * The main plugin class.
+ * 
  * @author soh
  */
 public class SyncchartsDiagramCustomPlugin extends AbstractUIPlugin implements
@@ -237,31 +239,31 @@ public class SyncchartsDiagramCustomPlugin extends AbstractUIPlugin implements
     /**
      * {@inheritDoc}
      */
-    public void partActivated(IWorkbenchPart part) {
+    public void partActivated(final IWorkbenchPart part) {
     }
 
     /**
      * {@inheritDoc}
      */
-    public void partBroughtToTop(IWorkbenchPart part) {
+    public void partBroughtToTop(final IWorkbenchPart part) {
     }
 
     /**
      * {@inheritDoc}
      */
-    public void partClosed(IWorkbenchPart part) {
+    public void partClosed(final IWorkbenchPart part) {
     }
 
     /**
      * {@inheritDoc}
      */
-    public void partDeactivated(IWorkbenchPart part) {
+    public void partDeactivated(final IWorkbenchPart part) {
     }
 
     /**
      * {@inheritDoc}
      */
-    public void partOpened(IWorkbenchPart part) {
+    public void partOpened(final IWorkbenchPart part) {
         RedundantLabelTriggerListener.hideRedundantLabels();
     }
 }
