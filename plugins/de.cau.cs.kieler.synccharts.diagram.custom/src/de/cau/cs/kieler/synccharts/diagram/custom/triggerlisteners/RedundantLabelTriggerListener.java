@@ -153,7 +153,14 @@ public class RedundantLabelTriggerListener extends TriggerListener {
                             if (save) {
                                 part.doSave(dummyMonitor);
                             }
-                        } else {
+                        }
+
+                        /* Removed since this is annoying
+                        FIXME: find a way to only apply this to visible
+                        editors, not open or ones that have focus just
+                        the ones the user can actually see
+                         
+                        else {
                             List<SyncchartsDiagramEditor> list = SyncchartsDiagramCustomPlugin.instance
                                     .getOpenSyncchartsEditors();
                             if (!list.isEmpty()) {
@@ -169,6 +176,7 @@ public class RedundantLabelTriggerListener extends TriggerListener {
                                 }
                             }
                         }
+                        */
 
                     } catch (RuntimeException e0) {
                         e0.printStackTrace();
