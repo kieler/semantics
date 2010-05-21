@@ -31,6 +31,7 @@ import org.eclipse.gmf.runtime.notation.View;
 import org.eclipse.swt.graphics.Color;
 
 import de.cau.cs.kieler.core.ui.figures.IAttributeAwareFigure;
+import de.cau.cs.kieler.core.ui.figures.RoundedRectangleFigure;
 import de.cau.cs.kieler.synccharts.custom.AttributeAwareStateFigure;
 import de.cau.cs.kieler.synccharts.custom.StateLayout;
 import de.cau.cs.kieler.synccharts.diagram.edit.policies.State2ItemSemanticEditPolicy;
@@ -126,11 +127,6 @@ public class State2EditPart extends ShapeNodeEditPart {
      * @generated
      */
     protected boolean addFixedChild(EditPart childEditPart) {
-        if (childEditPart instanceof StateInterfaceDeclaration2EditPart) {
-            ((StateInterfaceDeclaration2EditPart) childEditPart)
-                    .setLabel(getPrimaryShape().getFigureInterfaceDeclFigure());
-            return true;
-        }
         if (childEditPart instanceof StateBodyText2EditPart) {
             ((StateBodyText2EditPart) childEditPart).setLabel(getPrimaryShape()
                     .getFigureBodyTextFigure());
@@ -141,6 +137,11 @@ public class State2EditPart extends ShapeNodeEditPart {
                     .getFigureStateNameFigure());
             return true;
         }
+        if (childEditPart instanceof StateInterfaceDeclaration2EditPart) {
+            ((StateInterfaceDeclaration2EditPart) childEditPart)
+                    .setLabel(getPrimaryShape().getFigureInterfaceDeclFigure());
+            return true;
+        }
         return false;
     }
 
@@ -148,13 +149,13 @@ public class State2EditPart extends ShapeNodeEditPart {
      * @generated
      */
     protected boolean removeFixedChild(EditPart childEditPart) {
-        if (childEditPart instanceof StateInterfaceDeclaration2EditPart) {
-            return true;
-        }
         if (childEditPart instanceof StateBodyText2EditPart) {
             return true;
         }
         if (childEditPart instanceof StateLabel2EditPart) {
+            return true;
+        }
+        if (childEditPart instanceof StateInterfaceDeclaration2EditPart) {
             return true;
         }
         return false;
@@ -191,7 +192,9 @@ public class State2EditPart extends ShapeNodeEditPart {
      * @generated
      */
     protected NodeFigure createNodePlate() {
-        DefaultSizeNodeFigure result = new DefaultSizeNodeFigure(20, 20);
+        RoundedRectangleFigure result = new RoundedRectangleFigure();
+        result.setCornerDimensions(new Dimension(StateLayout.MIN_WIDTH,
+                StateLayout.MIN_HEIGHT));
         return result;
     }
 
