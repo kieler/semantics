@@ -165,7 +165,6 @@ public class SlidableRoundedRectangleAnchor extends SlidableAnchor {
                         arcW, arcH));
         for (int i = 0; i < ellipseIntersections.size(); ++i) {
             Point point = ellipseIntersections.getPoint(i);
-            System.out.println("Intersection TopLeft: " + point);
             if (point.x <= rectX + arcW / 2 && point.y <= rectY + arcH / 2) {
                 intersections.addPoint(point);
             }
@@ -177,7 +176,6 @@ public class SlidableRoundedRectangleAnchor extends SlidableAnchor {
                         - arcW, rectY, arcW, arcH));
         for (int i = 0; i < ellipseIntersections.size(); ++i) {
             Point point = ellipseIntersections.getPoint(i);
-            System.out.println("Intersection TopRight: " + point);
             if (point.x >= rectX + rectW - arcW / 2
                     && point.y <= rectY + arcH / 2) {
                 intersections.addPoint(point);
@@ -190,7 +188,6 @@ public class SlidableRoundedRectangleAnchor extends SlidableAnchor {
                         + rectH - arcH, arcW, arcH));
         for (int i = 0; i < ellipseIntersections.size(); ++i) {
             Point point = ellipseIntersections.getPoint(i);
-            System.out.println("Intersection BottomLeft: " + point);
             if (point.x <= rectX + arcW / 2
                     && point.y >= rectY + rectH - arcH / 2) {
                 intersections.addPoint(point);
@@ -203,21 +200,12 @@ public class SlidableRoundedRectangleAnchor extends SlidableAnchor {
                         - arcW, rectY + rectH - arcH, arcW, arcH));
         for (int i = 0; i < ellipseIntersections.size(); ++i) {
             Point point = ellipseIntersections.getPoint(i);
-            System.out.println("Intersection BottomRight: " + point);
             if (point.x >= rectX + rectW - arcW / 2
                     && point.y >= rectY + rectH - arcH / 2) {
                 intersections.addPoint(point);
             }
         }
-
-        System.out.println("Origin  : " + line.getOrigin());
-        System.out.println("Terminus: " + line.getTerminus());
-
-        for (int i = 0; i < intersections.size(); ++i) {
-            System.out.println("Intersection Candidate: "
-                    + intersections.getPoint(i));
-        }
-
+        
         // this should always be true
         if (intersections.size() == 2) {
             // order the list so the point that is closer to the origin comes
@@ -234,11 +222,6 @@ public class SlidableRoundedRectangleAnchor extends SlidableAnchor {
             } else {
                 intersections.removePoint(1);
             }
-        }
-
-        if (intersections.size() > 0) {
-            System.out
-                    .println("Intersection: " + intersections.getFirstPoint());
         }
 
         return intersections;
