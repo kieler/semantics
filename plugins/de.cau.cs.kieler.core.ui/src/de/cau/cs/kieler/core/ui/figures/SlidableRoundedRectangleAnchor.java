@@ -83,9 +83,12 @@ public class SlidableRoundedRectangleAnchor extends SlidableAnchor {
         Rectangle rect = getBox();
         Dimension dimension = ((IRoundedRectangleAnchorableFigure) getOwner())
                 .getCornerDimensions();
+        PrecisionRectangle corner = new PrecisionRectangle(new Rectangle(0, 0,
+                dimension.width, dimension.height));
+        getOwner().translateToAbsolute(corner);
         return getLineIntersectionsWithRoundedRectangle(new LineSeg(
                 ownReference, foreignReference), rect.x, rect.y, rect.width,
-                rect.height, dimension.width, dimension.height);
+                rect.height, corner.width, corner.height);
     }
 
     /**
@@ -162,7 +165,8 @@ public class SlidableRoundedRectangleAnchor extends SlidableAnchor {
                         arcW, arcH));
         for (int i = 0; i < ellipseIntersections.size(); ++i) {
             Point point = ellipseIntersections.getPoint(i);
-            if (point.x < rectX + arcW / 2 && point.y < rectY + arcH / 2) {
+            System.out.println("Intersection TopLeft: " + point);
+            if (point.x <= rectX + arcW / 2 && point.y <= rectY + arcH / 2) {
                 intersections.addPoint(point);
             }
         }
@@ -173,8 +177,9 @@ public class SlidableRoundedRectangleAnchor extends SlidableAnchor {
                         - arcW, rectY, arcW, arcH));
         for (int i = 0; i < ellipseIntersections.size(); ++i) {
             Point point = ellipseIntersections.getPoint(i);
-            if (point.x > rectX + rectW - arcW / 2
-                    && point.y < rectY + arcH / 2) {
+            System.out.println("Intersection TopRight: " + point);
+            if (point.x >= rectX + rectW - arcW / 2
+                    && point.y <= rectY + arcH / 2) {
                 intersections.addPoint(point);
             }
         }
@@ -185,8 +190,9 @@ public class SlidableRoundedRectangleAnchor extends SlidableAnchor {
                         + rectH - arcH, arcW, arcH));
         for (int i = 0; i < ellipseIntersections.size(); ++i) {
             Point point = ellipseIntersections.getPoint(i);
-            if (point.x < rectX + arcW / 2
-                    && point.y > rectY + rectH - arcH / 2) {
+            System.out.println("Intersection BottomLeft: " + point);
+            if (point.x <= rectX + arcW / 2
+                    && point.y >= rectY + rectH - arcH / 2) {
                 intersections.addPoint(point);
             }
         }
@@ -197,10 +203,42 @@ public class SlidableRoundedRectangleAnchor extends SlidableAnchor {
                         - arcW, rectY + rectH - arcH, arcW, arcH));
         for (int i = 0; i < ellipseIntersections.size(); ++i) {
             Point point = ellipseIntersections.getPoint(i);
-            if (point.x > rectX + rectW - arcW / 2
-                    && point.y > rectY + rectH - arcH / 2) {
+            System.out.println("Intersection BottomRight: " + point);
+            if (point.x >= rectX + rectW - arcW / 2
+                    && point.y >= rectY + rectH - arcH / 2) {
                 intersections.addPoint(point);
             }
+        }
+
+        System.out.println("Origin  : " + line.getOrigin());
+        System.out.println("Terminus: " + line.getTerminus());
+
+        for (int i = 0; i < intersections.size(); ++i) {
+            System.out.println("Intersection Candidate: "
+                    + intersections.getPoint(i));
+        }
+
+        // this should always be true
+        if (intersections.size() == 2) {
+            // order the list so the point that is closer to the origin comes
+            // first
+            Point point1 = intersections.getLastPoint();
+            Point point2 = intersections.getFirstPoint();
+            int deltaX1 = point1.x - line.getTerminus().x;
+            int deltaY1 = point1.y - line.getTerminus().y;
+            int deltaX2 = point2.x - line.getTerminus().x;
+            int deltaY2 = point2.y - line.getTerminus().y;
+            if (deltaX1 * deltaX1 + deltaY1 * deltaY1 < deltaX2 * deltaX2
+                    + deltaY2 * deltaY2) {
+                intersections.removePoint(0);
+            } else {
+                intersections.removePoint(1);
+            }
+        }
+
+        if (intersections.size() > 0) {
+            System.out
+                    .println("Intersection: " + intersections.getFirstPoint());
         }
 
         return intersections;

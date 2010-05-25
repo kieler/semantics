@@ -26,7 +26,8 @@ import org.eclipse.gmf.runtime.gef.ui.figures.NodeFigure;
  * 
  * @author mri
  */
-public class RoundedRectangleFigure extends NodeFigure implements IRoundedRectangleAnchorableFigure {
+public class RoundedRectangleFigure extends NodeFigure implements
+        IRoundedRectangleAnchorableFigure {
 
     /** the default corner radius. */
     private static final int DEFAULT_CORNER_RADIUS = 8;
@@ -46,8 +47,8 @@ public class RoundedRectangleFigure extends NodeFigure implements IRoundedRectan
      * {@inheritDoc}
      */
     protected void paintFigure(final Graphics g) {
-        Rectangle r = Rectangle.SINGLETON.setBounds(getBounds());
-        g.drawRoundRectangle(r, corner.width, corner.height);
+        //Rectangle r = Rectangle.SINGLETON.setBounds(getBounds());
+        //g.drawRoundRectangle(r, corner.width, corner.height);
     }
 
     /**
