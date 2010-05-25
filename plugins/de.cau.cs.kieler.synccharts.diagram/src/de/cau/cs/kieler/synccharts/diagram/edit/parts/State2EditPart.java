@@ -127,9 +127,9 @@ public class State2EditPart extends ShapeNodeEditPart {
      * @generated
      */
     protected boolean addFixedChild(EditPart childEditPart) {
-        if (childEditPart instanceof StateLabel2EditPart) {
-            ((StateLabel2EditPart) childEditPart).setLabel(getPrimaryShape()
-                    .getFigureStateNameFigure());
+        if (childEditPart instanceof StateInterfaceDeclaration2EditPart) {
+            ((StateInterfaceDeclaration2EditPart) childEditPart)
+                    .setLabel(getPrimaryShape().getFigureInterfaceDeclFigure());
             return true;
         }
         if (childEditPart instanceof StateBodyText2EditPart) {
@@ -137,9 +137,9 @@ public class State2EditPart extends ShapeNodeEditPart {
                     .getFigureBodyTextFigure());
             return true;
         }
-        if (childEditPart instanceof StateInterfaceDeclaration2EditPart) {
-            ((StateInterfaceDeclaration2EditPart) childEditPart)
-                    .setLabel(getPrimaryShape().getFigureInterfaceDeclFigure());
+        if (childEditPart instanceof StateLabel2EditPart) {
+            ((StateLabel2EditPart) childEditPart).setLabel(getPrimaryShape()
+                    .getFigureStateNameFigure());
             return true;
         }
         return false;
@@ -149,13 +149,13 @@ public class State2EditPart extends ShapeNodeEditPart {
      * @generated
      */
     protected boolean removeFixedChild(EditPart childEditPart) {
-        if (childEditPart instanceof StateLabel2EditPart) {
+        if (childEditPart instanceof StateInterfaceDeclaration2EditPart) {
             return true;
         }
         if (childEditPart instanceof StateBodyText2EditPart) {
             return true;
         }
-        if (childEditPart instanceof StateInterfaceDeclaration2EditPart) {
+        if (childEditPart instanceof StateLabel2EditPart) {
             return true;
         }
         return false;
@@ -192,9 +192,9 @@ public class State2EditPart extends ShapeNodeEditPart {
      * @generated
      */
     protected NodeFigure createNodePlate() {
-
-        DefaultSizeNodeFigure result = new DefaultSizeNodeFigure(20, 20);
-
+        RoundedRectangleFigure result = new RoundedRectangleFigure();
+        result.setCornerDimensions(new Dimension(StateLayout.MIN_WIDTH,
+                StateLayout.MIN_HEIGHT));
         return result;
     }
 

@@ -125,6 +125,11 @@ public class StateEditPart extends ShapeNodeEditPart {
      * @generated
      */
     protected boolean addFixedChild(EditPart childEditPart) {
+        if (childEditPart instanceof StateBodyTextEditPart) {
+            ((StateBodyTextEditPart) childEditPart).setLabel(getPrimaryShape()
+                    .getFigureBodyTextFigure());
+            return true;
+        }
         if (childEditPart instanceof StateLabelEditPart) {
             ((StateLabelEditPart) childEditPart).setLabel(getPrimaryShape()
                     .getFigureStateNameFigure());
@@ -135,11 +140,6 @@ public class StateEditPart extends ShapeNodeEditPart {
                     .setLabel(getPrimaryShape().getFigureInterfaceDeclFigure());
             return true;
         }
-        if (childEditPart instanceof StateBodyTextEditPart) {
-            ((StateBodyTextEditPart) childEditPart).setLabel(getPrimaryShape()
-                    .getFigureBodyTextFigure());
-            return true;
-        }
         return false;
     }
 
@@ -147,13 +147,13 @@ public class StateEditPart extends ShapeNodeEditPart {
      * @generated
      */
     protected boolean removeFixedChild(EditPart childEditPart) {
+        if (childEditPart instanceof StateBodyTextEditPart) {
+            return true;
+        }
         if (childEditPart instanceof StateLabelEditPart) {
             return true;
         }
         if (childEditPart instanceof StateInterfaceDeclarationEditPart) {
-            return true;
-        }
-        if (childEditPart instanceof StateBodyTextEditPart) {
             return true;
         }
         return false;
@@ -190,9 +190,9 @@ public class StateEditPart extends ShapeNodeEditPart {
      * @generated
      */
     protected NodeFigure createNodePlate() {
-
-        DefaultSizeNodeFigure result = new DefaultSizeNodeFigure(20, 20);
-
+        RoundedRectangleFigure result = new RoundedRectangleFigure();
+        result.setCornerDimensions(new Dimension(StateLayout.MIN_WIDTH,
+                StateLayout.MIN_HEIGHT));
         return result;
     }
 
