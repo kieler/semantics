@@ -127,14 +127,14 @@ public class State2EditPart extends ShapeNodeEditPart {
      * @generated
      */
     protected boolean addFixedChild(EditPart childEditPart) {
-        if (childEditPart instanceof StateBodyText2EditPart) {
-            ((StateBodyText2EditPart) childEditPart).setLabel(getPrimaryShape()
-                    .getFigureBodyTextFigure());
-            return true;
-        }
         if (childEditPart instanceof StateLabel2EditPart) {
             ((StateLabel2EditPart) childEditPart).setLabel(getPrimaryShape()
                     .getFigureStateNameFigure());
+            return true;
+        }
+        if (childEditPart instanceof StateBodyText2EditPart) {
+            ((StateBodyText2EditPart) childEditPart).setLabel(getPrimaryShape()
+                    .getFigureBodyTextFigure());
             return true;
         }
         if (childEditPart instanceof StateInterfaceDeclaration2EditPart) {
@@ -149,10 +149,10 @@ public class State2EditPart extends ShapeNodeEditPart {
      * @generated
      */
     protected boolean removeFixedChild(EditPart childEditPart) {
-        if (childEditPart instanceof StateBodyText2EditPart) {
+        if (childEditPart instanceof StateLabel2EditPart) {
             return true;
         }
-        if (childEditPart instanceof StateLabel2EditPart) {
+        if (childEditPart instanceof StateBodyText2EditPart) {
             return true;
         }
         if (childEditPart instanceof StateInterfaceDeclaration2EditPart) {
@@ -192,9 +192,9 @@ public class State2EditPart extends ShapeNodeEditPart {
      * @generated
      */
     protected NodeFigure createNodePlate() {
-        RoundedRectangleFigure result = new RoundedRectangleFigure();
-        result.setCornerDimensions(new Dimension(StateLayout.MIN_WIDTH,
-                StateLayout.MIN_HEIGHT));
+
+        DefaultSizeNodeFigure result = new DefaultSizeNodeFigure(20, 20);
+
         return result;
     }
 

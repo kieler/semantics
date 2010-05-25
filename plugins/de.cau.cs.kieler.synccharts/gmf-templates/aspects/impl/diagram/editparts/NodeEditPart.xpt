@@ -64,12 +64,12 @@
 «DEFINE createNodePlate FOR gmfgen::GenNode-»
 	«EXPAND xpt::Common::generatedMemberComment»
 	protected org.eclipse.gmf.runtime.gef.ui.figures.NodeFigure createNodePlate() {
-		«IF editPartClassName = "StateEditPart" or editPartClassName = "State2EditPart"-»
+		«REM»«IF editPartClassName = "StateEditPart" or editPartClassName = "State2EditPart"-»
 		de.cau.cs.kieler.core.ui.figures.RoundedRectangleFigure result = new de.cau.cs.kieler.core.ui.figures.RoundedRectangleFigure();
 		result.setCornerDimensions(new org.eclipse.draw2d.geometry.Dimension(de.cau.cs.kieler.synccharts.custom.StateLayout.MIN_WIDTH, de.cau.cs.kieler.synccharts.custom.StateLayout.MIN_HEIGHT));
-		«ELSE-»
+		«ELSE-»«ENDREM»
 		org.eclipse.gmf.runtime.gef.ui.figures.DefaultSizeNodeFigure result = new org.eclipse.gmf.runtime.gef.ui.figures.DefaultSizeNodeFigure(«IF getDiagram().isPixelMapMode()»«defaultSizeWidth(viewmap, 20)», «defaultSizeHeight(viewmap, 20)»«ELSE»getMapMode().DPtoLP(«defaultSizeWidth(viewmap, 20)»), getMapMode().DPtoLP(«defaultSizeHeight(viewmap, 20)»)«ENDIF»);
-		«ENDIF-»
+		«REM»«ENDIF-»«ENDREM»
 		«EXPAND setupNodePlate-»
 		return result;
 	}

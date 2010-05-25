@@ -174,7 +174,9 @@ public class Region2EditPart extends ShapeNodeEditPart {
      * @generated
      */
     protected NodeFigure createNodePlate() {
+
         DefaultSizeNodeFigure result = new DefaultSizeNodeFigure(20, 20);
+
         return result;
     }
 

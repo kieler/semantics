@@ -190,9 +190,9 @@ public class StateEditPart extends ShapeNodeEditPart {
      * @generated
      */
     protected NodeFigure createNodePlate() {
-        RoundedRectangleFigure result = new RoundedRectangleFigure();
-        result.setCornerDimensions(new Dimension(StateLayout.MIN_WIDTH,
-                StateLayout.MIN_HEIGHT));
+
+        DefaultSizeNodeFigure result = new DefaultSizeNodeFigure(20, 20);
+
         return result;
     }
 
