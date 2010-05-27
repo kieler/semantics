@@ -318,7 +318,6 @@ public final class MapAnimations {
             // Get the resource from examples folder
 
             url = FileLocator.find(Activator.getDefault().getBundle(), new Path(path), null);
-
             if (url != null) {
                 // System.out.println("Bundleentry: " + url.toExternalForm());
                 // setSVGFile(url);
@@ -331,11 +330,13 @@ public final class MapAnimations {
             // svgCanvas.loadSVGDocument(url.toExternalForm());
         } else {
             try {
-                System.out.println(URI.createFileURI(filename).toString());
+                URI svgURI = URI.createURI(filename); // createFileURI will not work if prefix "file:/" is there
+                //System.out.println(URI.createFileURI(filename).toString());
                 // KevComposite.getInstance().setSVGFile(url);
                 // svgCanvas.loadSVGDocument(URI.createFileURI(filename).toString());
-                Activator.getKevView().getComposite().setSVGFile(
-                        new URL(URI.createFileURI(filename).toString()));
+                //Activator.getKevView().getComposite().setSVGFile(
+                //        new URL(URI.createFileURI(filename).toString()));
+                Activator.getKevView().getComposite().setSVGFile(new URL(svgURI.toString()));
             } catch (Exception e) {
                 Activator.reportInfoMessage("File not found or file has wrong format: " + filename);
             }
