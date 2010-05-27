@@ -25,5 +25,32 @@
          </command>
       </menuContribution>
    </extension>
+   <extension
+         point="org.eclipse.ui.preferencePages">
+      <page
+            category="de.cau.cs.kieler"
+            class="de.cau.cs.kieler.core.model.preferences.ValidationManagerPreferencePage"
+            id="de.cau.cs.kieler.core.model.validationManager"
+            name="Validation Manager">
+      </page>
+   </extension>
+   <extension
+         point="org.eclipse.ui.actionSets">
+      <actionSet
+            id="de.cau.cs.kieler.core.model.validateActionSet"
+            label="validate"
+            visible="true">
+         <action
+               class="de.cau.cs.kieler.core.model.preferences.ValidationPullDownAction"
+               icon="icons/validate.gif"
+               id="de.cau.cs.kieler.core.model.validateAction"
+               label="validate"
+               pulldown="true"
+               retarget="false"
+               style="pulldown"
+               toolbarPath="de.cau.cs.kieler">
+         </action>
+      </actionSet>
+   </extension>
 
 </plugin>

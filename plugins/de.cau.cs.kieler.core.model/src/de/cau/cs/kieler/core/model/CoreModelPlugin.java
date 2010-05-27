@@ -32,6 +32,7 @@ import de.cau.cs.kieler.core.ui.errorhandler.GenericErrorHandler.StatusListener;
  * 
  * @author mim
  */
+@SuppressWarnings("restriction")
 public class CoreModelPlugin extends AbstractUIPlugin {
 
     /** The plug-in ID. **/
@@ -40,7 +41,7 @@ public class CoreModelPlugin extends AbstractUIPlugin {
     /** The shared instance. **/
     private static CoreModelPlugin plugin;
 
-    private static ModelErrorHandler handler;
+    private static ModelErrorHandler errorHandler;
 
     /** Logging instance. **/
     private ILog logger;
@@ -60,8 +61,9 @@ public class CoreModelPlugin extends AbstractUIPlugin {
         super.start(context);
         plugin = this;
         logger = getLog();
-        handler = new ModelErrorHandler();
-        addErrorListener(handler);
+        errorHandler = new ModelErrorHandler();
+        addErrorListener(errorHandler);
+
     }
 
     /**
@@ -69,7 +71,7 @@ public class CoreModelPlugin extends AbstractUIPlugin {
      */
     @Override
     public void stop(final BundleContext context) throws Exception {
-        removeErrorListener(handler);
+        removeErrorListener(errorHandler);
         plugin = null;
         super.stop(context);
     }
@@ -123,9 +125,9 @@ public class CoreModelPlugin extends AbstractUIPlugin {
     }
 
     /**
-     * Getter for KIELERs generic error handler.
+     * Getter for KIELERs generic error errorHandler.
      * 
-     * @return the error handler or null
+     * @return the error errorHandler or null
      */
     public static GenericErrorHandler getErrorHandler() {
         try {
@@ -144,7 +146,7 @@ public class CoreModelPlugin extends AbstractUIPlugin {
     }
 
     /**
-     * Add a new listener to the generic error handler.
+     * Add a new listener to the generic error errorHandler.
      * 
      * @param listener
      *            the new listener
@@ -157,7 +159,7 @@ public class CoreModelPlugin extends AbstractUIPlugin {
     }
 
     /**
-     * Remove a listener from the generic error handler.
+     * Remove a listener from the generic error errorHandler.
      * 
      * @param listener
      *            the new listener
