@@ -24,7 +24,7 @@ import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
 
 import de.cau.cs.kieler.core.model.CoreModelPlugin;
-import de.cau.cs.kieler.core.model.util.MarkerHandler;
+import de.cau.cs.kieler.core.model.util.CheckFileManager;
 
 /**
  * @author soh
@@ -47,11 +47,11 @@ public class ValidationManagerPreferencePage extends FieldEditorPreferencePage
      */
     @Override
     protected void createFieldEditors() {
-        Set<String> files = MarkerHandler.getRegisteredFiles();
+        Set<String> files = CheckFileManager.getRegisteredFiles();
 
         for (String file : files) {
             BooleanFieldEditor enablementFE = new BooleanFieldEditor(
-                    MarkerHandler.PREFERENCE_PREFIX + file, file,
+                    CheckFileManager.PREFERENCE_PREFIX + file, file,
                     getFieldEditorParent());
             super.addField(enablementFE);
             editors.add(enablementFE);
@@ -59,6 +59,10 @@ public class ValidationManagerPreferencePage extends FieldEditorPreferencePage
 
     }
 
+    /**
+     * 
+     * {@inheritDoc}
+     */
     @Override
     public boolean performOk() {
         if (!super.performOk()) {
@@ -68,9 +72,9 @@ public class ValidationManagerPreferencePage extends FieldEditorPreferencePage
         for (BooleanFieldEditor bfe : editors) {
             String key = bfe.getLabelText();
             Boolean value = bfe.getBooleanValue();
-            MarkerHandler.setEnabled(key, value);
+            CheckFileManager.setEnabled(key, value);
         }
-        MarkerHandler.refreshChecks();
+        CheckFileManager.refreshChecks();
         return true;
     }
 
@@ -79,16 +83,16 @@ public class ValidationManagerPreferencePage extends FieldEditorPreferencePage
      */
     public void init(final IWorkbench workbench) {
         setPreferenceStore(CoreModelPlugin.getDefault().getPreferenceStore());
-        Set<String> files = MarkerHandler.getRegisteredFiles();
+        Set<String> files = CheckFileManager.getRegisteredFiles();
         IPreferenceStore store = getPreferenceStore();
 
         for (String file : files) {
-            String key = MarkerHandler.PREFERENCE_PREFIX + file;
-            Boolean value = MarkerHandler.isEnabled(file);
+            String key = CheckFileManager.PREFERENCE_PREFIX + file;
+            Boolean value = CheckFileManager.isEnabled(file);
             if (store.contains(key)) {
                 Boolean storeValue = store.getBoolean(key);
                 if (value != storeValue) {
-                    MarkerHandler.setEnabled(file, storeValue);
+                    CheckFileManager.setEnabled(file, storeValue);
                 }
             } else {
                 store.setValue(key, value);

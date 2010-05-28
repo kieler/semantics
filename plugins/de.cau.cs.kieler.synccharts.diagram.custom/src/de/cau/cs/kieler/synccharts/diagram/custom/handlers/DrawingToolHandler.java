@@ -19,7 +19,7 @@ import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.ui.handlers.HandlerUtil;
 
-import de.cau.cs.kieler.core.model.util.MarkerHandler;
+import de.cau.cs.kieler.core.model.util.CheckFileManager;
 
 /**
  * Handler class for toggling between drawing mode and normal mode.
@@ -35,7 +35,8 @@ public class DrawingToolHandler extends AbstractHandler {
         Command command = event.getCommand();
         boolean oldValue = HandlerUtil.toggleCommandState(command);
         ToggleTransitionLabelHandler.hideAll(!oldValue);
-        MarkerHandler.setEnabled(oldValue);
+        CheckFileManager.setEnabled(oldValue);
+        CheckFileManager.validate();
         return null;
     }
 

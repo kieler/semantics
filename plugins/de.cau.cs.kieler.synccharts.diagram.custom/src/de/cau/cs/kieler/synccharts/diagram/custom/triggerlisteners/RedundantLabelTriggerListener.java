@@ -180,6 +180,7 @@ public class RedundantLabelTriggerListener extends TriggerListener {
 
                     } catch (RuntimeException e0) {
                         e0.printStackTrace();
+                        throw e0;
                     }
                     return Status.OK_STATUS;
                 }
@@ -188,6 +189,7 @@ public class RedundantLabelTriggerListener extends TriggerListener {
             job.schedule(JOB_DELAY);
         } catch (RuntimeException e0) {
             e0.printStackTrace();
+            throw e0;
         }
     }
 

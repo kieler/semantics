@@ -15,25 +15,26 @@ package de.cau.cs.kieler.core.model.preferences;
 
 import java.util.Set;
 
-import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramEditor;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.IMenuCreator;
 import org.eclipse.jface.preference.IPreferenceStore;
+import org.eclipse.jface.util.IPropertyChangeListener;
+import org.eclipse.jface.util.PropertyChangeEvent;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.DisposeEvent;
+import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
-import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.IWorkbenchWindowPulldownDelegate2;
-import org.eclipse.ui.PlatformUI;
 
 import de.cau.cs.kieler.core.model.CoreModelPlugin;
-import de.cau.cs.kieler.core.model.util.MarkerHandler;
+import de.cau.cs.kieler.core.model.util.CheckFileManager;
 
 /**
  * @author soh
@@ -87,11 +88,11 @@ public class ValidationPullDownAction extends Action implements
      * @param fMenu2
      */
     private void fillMenu(final Menu fMenu2) {
-        Set<String> files = MarkerHandler.getRegisteredFiles();
+        Set<String> files = CheckFileManager.getRegisteredFiles();
 
         for (String file : files) {
-            CheckFileMenuItem item = new CheckFileMenuItem(file, MarkerHandler
-                    .isEnabled(file));
+            CheckFileMenuItem item = new CheckFileMenuItem(file,
+                    CheckFileManager.isEnabled(file));
             item.getMenuItem(fMenu2);
         }
     }
@@ -117,13 +118,7 @@ public class ValidationPullDownAction extends Action implements
      * {@inheritDoc}
      */
     public void run(final IAction action) {
-        IEditorPart part = PlatformUI.getWorkbench().getActiveWorkbenchWindow()
-                .getActivePage().getActiveEditor();
-
-        if (part != null && part instanceof DiagramEditor) {
-            DiagramEditor editor = (DiagramEditor) part;
-
-        }
+        CheckFileManager.validate();
     }
 
     /**
@@ -137,7 +132,8 @@ public class ValidationPullDownAction extends Action implements
      * 
      * @author soh
      */
-    private static class CheckFileMenuItem implements SelectionListener {
+    private static class CheckFileMenuItem implements SelectionListener,
+            IPropertyChangeListener, DisposeListener {
 
         private String file;
 
@@ -157,11 +153,20 @@ public class ValidationPullDownAction extends Action implements
             this.value = valueParam;
         }
 
+        /**
+         * Create a new menu item for the given check file.
+         * 
+         * @param parent
+         *            the parent menu
+         * @return the menu item
+         */
         public MenuItem getMenuItem(final Menu parent) {
             result = new MenuItem(parent, SWT.CHECK);
             result.setText(file);
             result.setSelection(value);
             result.addSelectionListener(this);
+            CheckFileManager.addListener(this);
+            result.addDisposeListener(this);
             return result;
         }
 
@@ -175,7 +180,27 @@ public class ValidationPullDownAction extends Action implements
          * {@inheritDoc}
          */
         public void widgetSelected(final SelectionEvent e) {
-            MarkerHandler.setEnabled(file, result.getSelection());
+            CheckFileManager.setEnabled(file, result.getSelection());
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        public void propertyChange(final PropertyChangeEvent event) {
+            if (event.getProperty().contains(file)) {
+
+                boolean newValue = (Boolean) event.getNewValue();
+                if (newValue != result.getSelection()) {
+                    result.setSelection(newValue);
+                }
+            }
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        public void widgetDisposed(final DisposeEvent e) {
+            CheckFileManager.removeListener(this);
         }
     }
 }

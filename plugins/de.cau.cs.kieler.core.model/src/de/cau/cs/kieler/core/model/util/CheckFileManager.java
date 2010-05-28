@@ -14,6 +14,7 @@
 package de.cau.cs.kieler.core.model.util;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -26,7 +27,10 @@ import org.eclipse.core.runtime.preferences.IEclipsePreferences;
 import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EValidator;
+import org.eclipse.jface.action.Action;
 import org.eclipse.jface.preference.IPreferenceStore;
+import org.eclipse.jface.util.IPropertyChangeListener;
+import org.eclipse.jface.util.PropertyChangeEvent;
 import org.eclipse.ui.handlers.HandlerUtil;
 import org.eclipse.xtend.typesystem.emf.check.CheckRegistry;
 
@@ -38,9 +42,9 @@ import de.cau.cs.kieler.core.ui.handler.RemoveMarkerHandler;
  * 
  * @author soh
  */
-public final class MarkerHandler extends AbstractHandler {
+public final class CheckFileManager extends AbstractHandler {
 
-    private static Map<EPackage, Object> packages = new HashMap<EPackage, Object>();
+    private static Map<EPackage, Action> packages = new HashMap<EPackage, Action>();
 
     private static Map<String, CheckFile> checkFiles = new HashMap<String, CheckFile>();
 
@@ -54,7 +58,7 @@ public final class MarkerHandler extends AbstractHandler {
         Command command = event.getCommand();
         boolean oldValue = HandlerUtil.toggleCommandState(command);
         setEnabled(!oldValue);
-
+        validate();
         return null;
     }
 
@@ -141,7 +145,9 @@ public final class MarkerHandler extends AbstractHandler {
     public static void registerCheckFile(final EPackage ePackage,
             final String file, final boolean isWrapExistingValidator,
             final List<String> referencedEPackageNsURIs) {
-        packages.put(ePackage, null);
+        if (!packages.containsKey(ePackage)) {
+            packages.put(ePackage, null);
+        }
 
         IPreferenceStore store = CoreModelPlugin.getDefault()
                 .getPreferenceStore();
@@ -167,6 +173,29 @@ public final class MarkerHandler extends AbstractHandler {
         register(checkFile);
         checkFile.setEnabled(value);
         refreshChecks();
+    }
+
+    /**
+     * Register a validate action with the given ePackage.
+     * 
+     * @param ePackage
+     *            the package
+     * @param action
+     *            the validate action
+     */
+    public static void registerValidateAction(final EPackage ePackage,
+            final Action action) {
+        packages.put(ePackage, action);
+    }
+
+    /**
+     * Run all validate actions.
+     * 
+     */
+    public static void validate() {
+        for (Action action : packages.values()) {
+            action.run();
+        }
     }
 
     /**
@@ -272,6 +301,50 @@ public final class MarkerHandler extends AbstractHandler {
         }
     }
 
+    /** The list of listeners to be notified of visibility changes. */
+    private static Set<IPropertyChangeListener> listeners = new HashSet<IPropertyChangeListener>();
+
+    /**
+     * Notify listeners of a property change.
+     * 
+     * @param file
+     *            the file
+     * @param oldValue
+     *            the old value
+     * @param newValue
+     *            the new value
+     */
+    private static void firePropertyChangedEvent(final String file,
+            final boolean oldValue, final boolean newValue) {
+        PropertyChangeEvent event = new PropertyChangeEvent(
+                CoreModelPlugin.PLUGIN_ID, PREFERENCE_PREFIX + file, oldValue,
+                newValue);
+
+        for (IPropertyChangeListener listener : listeners) {
+            listener.propertyChange(event);
+        }
+    }
+
+    /**
+     * Registers a new listener on the manager.
+     * 
+     * @param listener
+     *            the listener
+     */
+    public static void addListener(final IPropertyChangeListener listener) {
+        listeners.add(listener);
+    }
+
+    /**
+     * Removes a listener from the manager.
+     * 
+     * @param listener
+     *            the listener
+     */
+    public static void removeListener(final IPropertyChangeListener listener) {
+        listeners.remove(listener);
+    }
+
     /**
      * Stores all the information about a checkfile.
      * 
@@ -290,9 +363,11 @@ public final class MarkerHandler extends AbstractHandler {
          *            true if it should be visible
          */
         public void setEnabled(final boolean enabledParam) {
+            boolean oldValue = enabled;
             enabled = enabledParam;
             new InstanceScope().getNode(CoreModelPlugin.PLUGIN_ID).putBoolean(
                     PREFERENCE_PREFIX + file, enabled);
+            firePropertyChangedEvent(file, oldValue, enabled);
         }
 
         /** The package. */

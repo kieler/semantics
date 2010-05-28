@@ -39,10 +39,13 @@ import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
+import de.cau.cs.kieler.core.model.util.CheckFileManager;
 import de.cau.cs.kieler.core.model.util.ModelingUtil;
+import de.cau.cs.kieler.synccharts.SyncchartsPackage;
 import de.cau.cs.kieler.synccharts.Transition;
 import de.cau.cs.kieler.synccharts.diagram.custom.triggerlisteners.RedundantLabelTriggerListener;
 import de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditor;
+import de.cau.cs.kieler.synccharts.diagram.part.ValidateAction;
 
 /**
  * The main plugin class.
@@ -67,6 +70,9 @@ public class SyncchartsDiagramCustomPlugin extends AbstractUIPlugin implements
                 window.addPageListener(this);
                 IWorkbenchPage page = window.getActivePage();
                 if (page != null) {
+                    CheckFileManager.registerValidateAction(
+                            SyncchartsPackage.eINSTANCE, new ValidateAction(
+                                    page));
                     RedundantLabelTriggerListener.hideRedundantLabels();
                     page.addSelectionListener(this);
                     page.addPartListener(this);
@@ -134,6 +140,8 @@ public class SyncchartsDiagramCustomPlugin extends AbstractUIPlugin implements
      */
     public void pageOpened(final IWorkbenchPage page) {
         if (page != null) {
+            CheckFileManager.registerValidateAction(
+                    SyncchartsPackage.eINSTANCE, new ValidateAction(page));
             RedundantLabelTriggerListener.hideRedundantLabels();
             page.addSelectionListener(this);
             page.addPartListener(this);
@@ -229,6 +237,8 @@ public class SyncchartsDiagramCustomPlugin extends AbstractUIPlugin implements
             window.addPageListener(this);
             IWorkbenchPage page = window.getActivePage();
             if (page != null) {
+                CheckFileManager.registerValidateAction(
+                        SyncchartsPackage.eINSTANCE, new ValidateAction(page));
                 RedundantLabelTriggerListener.hideRedundantLabels();
                 page.addSelectionListener(this);
                 page.addPartListener(this);

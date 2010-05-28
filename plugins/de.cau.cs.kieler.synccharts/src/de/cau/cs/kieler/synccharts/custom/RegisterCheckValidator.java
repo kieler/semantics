@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import org.eclipse.ui.IStartup;
 
-import de.cau.cs.kieler.core.model.util.MarkerHandler;
+import de.cau.cs.kieler.core.model.util.CheckFileManager;
 import de.cau.cs.kieler.synccharts.SyncchartsPackage;
 
 /**
@@ -28,11 +28,12 @@ public class RegisterCheckValidator implements IStartup {
      */
     public static void registerChecks() {
         // normal SyncChart checks
-        MarkerHandler.registerCheckFile(SyncchartsPackage.eINSTANCE,
-                "model/SyncchartsChecks.chk", false, new ArrayList());
+        CheckFileManager.registerCheckFile(SyncchartsPackage.eINSTANCE,
+                "model/SyncchartsChecks.chk", false, new ArrayList<String>());
 
         // additional checks for KLEPTO simulation restrictions
-        MarkerHandler.registerCheckFile(SyncchartsPackage.eINSTANCE,
-                "model/SyncchartsKleptoChecks.chk", true, new ArrayList());
+        CheckFileManager.registerCheckFile(SyncchartsPackage.eINSTANCE,
+                "model/SyncchartsKleptoChecks.chk", true,
+                new ArrayList<String>());
     }
 }
