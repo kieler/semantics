@@ -213,7 +213,7 @@ public class SyncchartsSimDataComponent extends JSONObjectDataComponent {
      * @throws KiemInitializationException
      *             the kiem initialization exception
      */
-    public IStatus Model2ModelTransformation(KielerProgressMonitor monitor)
+    public IStatus model2ModelTransform(KielerProgressMonitor monitor)
             throws KiemInitializationException {
         monitor.begin("Model2Model transformation", 4);
         try {
@@ -250,7 +250,6 @@ public class SyncchartsSimDataComponent extends JSONObjectDataComponent {
             // workflow
             WorkflowContext wfx = new WorkflowContextDefaultImpl();
             Issues issues = new org.eclipse.emf.mwe.core.issues.IssuesImpl();
-            NullProgressMonitor nullMonitor = new NullProgressMonitor();
             M2MProgressMonitor m2mMonitor = new M2MProgressMonitor(monitor, 3);
 
             workflow.addComponent(emfReader);
@@ -525,7 +524,7 @@ public class SyncchartsSimDataComponent extends JSONObjectDataComponent {
                         public void run(final IProgressMonitor monitor) {
                             try {
                                 status
-                                        .set(Model2ModelTransformation(new KielerProgressMonitor(
+                                        .set(model2ModelTransform(new KielerProgressMonitor(
                                                 monitor)));
                             } catch (KiemInitializationException e) {
                                 transformationError = true;
