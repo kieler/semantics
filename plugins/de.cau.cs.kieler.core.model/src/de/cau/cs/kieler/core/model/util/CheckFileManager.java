@@ -194,7 +194,9 @@ public final class CheckFileManager extends AbstractHandler {
      */
     public static void validate() {
         for (Action action : packages.values()) {
-            action.run();
+            if (action != null) {
+                action.run();
+            }
         }
     }
 
