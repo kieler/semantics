@@ -17,6 +17,7 @@ import org.eclipse.emf.mwe.utils.Reader;
 import org.eclipse.emf.mwe.utils.Writer;
 import org.eclipse.xtend.XtendComponent;
 import org.eclipse.xtend.typesystem.emf.EmfMetaModel;
+import org.eclipse.xtend.util.stdlib.ExtIssueReporter;
 
 import de.cau.cs.kieler.core.KielerException;
 import de.cau.cs.kieler.core.model.CoreModelPlugin;
@@ -71,6 +72,7 @@ public class XtendTransformationUtil {
             EmfMetaModel metaModel1 = new EmfMetaModel(modelPackage1);
             EmfMetaModel metaModel2 = new EmfMetaModel(modelPackage2);
 
+            
             // XtendComponent
             XtendComponent xtendComponent = new XtendComponent();
             xtendComponent.addMetaModel(metaModel1);
@@ -80,10 +82,14 @@ public class XtendTransformationUtil {
 
             // workflow
             WorkflowContext wfx = new WorkflowContextDefaultImpl();
+            // register Issues component that allows to pass informations, warnings or errors
+            // back to the application
+            ExtIssueReporter issueReporter = new ExtIssueReporter();
             Issues issues = new org.eclipse.emf.mwe.core.issues.IssuesImpl();
             M2MProgressMonitor m2mMonitor = new M2MProgressMonitor(monitor, 3);
 
             workflow.addComponent(emfReader);
+            workflow.addComponent(issueReporter);
             workflow.addComponent(xtendComponent);
             workflow.addComponent(emfWriter);
             // workflow.invoke(wfx, (ProgressMonitor)monitor.subTask(80),
