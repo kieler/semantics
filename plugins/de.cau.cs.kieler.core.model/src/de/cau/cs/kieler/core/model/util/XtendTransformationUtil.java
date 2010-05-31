@@ -1,3 +1,16 @@
+/*
+ * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
+ *
+ * http://www.informatik.uni-kiel.de/rtsys/kieler/
+ *
+ * Copyright 2010 by
+ * + Christian-Albrechts-University of Kiel
+ *   + Department of Computer Science
+ *     + Real-Time and Embedded Systems Group
+ *
+ * This code is provided under the terms of the Eclipse Public License (EPL).
+ * See the file epl-v10.html for the license text.
+ */
 package de.cau.cs.kieler.core.model.util;
 
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -28,8 +41,6 @@ import de.cau.cs.kieler.core.ui.util.MonitoredOperation;
 public class XtendTransformationUtil {
 
     /**
-     * Transform KIELER SimpleRailCtrl model into a semantically equivalent
-     * Ptolemy model. <BR>
      * This transformation uses the Xtend transformation language.
      * 
      * @param progressBar
@@ -54,13 +65,6 @@ public class XtendTransformationUtil {
             // specified in XSD
             emfReader.getResourceSet().getLoadOptions().put(
                     XMIResource.OPTION_RECORD_UNKNOWN_FEATURE, true);
-//             emfReader.getResourceSet().getResourceFactoryRegistry().getExtensionToFactoryMap().put(
-//               Resource.Factory.Registry.DEFAULT_EXTENSION, new ptolemy.Moml.util.MomlResourceFactoryImpl());
-
-            // DO NOT USE THE SAME INPUT RESOUCRCE SET
-            // OTHERWISE WE MAY CHANGE THE INPUT MODEL!
-            // emfReader.setResourceSet(this.getInputResourceSet());
-            // emfReader.setResourceSet(ptolemyModel.getResourceSet());
 
             // EMF Writer for target model
             Writer emfWriter = new Writer();
@@ -72,7 +76,6 @@ public class XtendTransformationUtil {
             EmfMetaModel metaModel1 = new EmfMetaModel(modelPackage1);
             EmfMetaModel metaModel2 = new EmfMetaModel(modelPackage2);
 
-            
             // XtendComponent
             XtendComponent xtendComponent = new XtendComponent();
             xtendComponent.addMetaModel(metaModel1);
@@ -96,14 +99,6 @@ public class XtendTransformationUtil {
             // issues);
             workflow.invoke(wfx, m2mMonitor, issues);
 
-            /*
-             * System.out.print(xtendComponent.getLogMessage());
-             * System.out.print(issues.getInfos());
-             * System.out.print(issues.getIssues());
-             * System.out.print(issues.getWarnings());
-             * System.out.print(issues.getErrors().toString());
-             */
-            
             IStatus status = new XtendStatus(issues);
             monitor.done();
             return status;
@@ -111,7 +106,7 @@ public class XtendTransformationUtil {
             return new Status(
                     IStatus.ERROR,
                     CoreModelPlugin.PLUGIN_ID,
-                    "Error at model-to-model Xtend transformation. Workflow interrupted. Make sure the input is a *.moml file.",
+                    "Error at model-to-model Xtend transformation. Workflow interrupted. Make sure the input is correct file type.",
                     wie);
         } catch (Exception e) {
             return new Status(IStatus.ERROR, CoreModelPlugin.PLUGIN_ID,
