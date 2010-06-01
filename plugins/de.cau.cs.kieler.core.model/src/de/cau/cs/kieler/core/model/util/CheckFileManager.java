@@ -44,7 +44,23 @@ import de.cau.cs.kieler.core.ui.handler.RemoveMarkerHandler;
  */
 public final class CheckFileManager extends AbstractHandler {
 
-    private static Map<EPackage, Action> packages = new HashMap<EPackage, Action>();
+    /**
+     * Factory for creating the validate actions used in the validation.
+     * 
+     * @author soh
+     */
+    public static interface IActionFactory {
+
+        /**
+         * Get the validate action for the given ePackage.
+         * 
+         * @return the action
+         */
+        Action getAction();
+
+    }
+
+    private static Map<EPackage, IActionFactory> packages = new HashMap<EPackage, IActionFactory>();
 
     private static Map<String, CheckFile> checkFiles = new HashMap<String, CheckFile>();
 
@@ -184,7 +200,7 @@ public final class CheckFileManager extends AbstractHandler {
      *            the validate action
      */
     public static void registerValidateAction(final EPackage ePackage,
-            final Action action) {
+            final IActionFactory action) {
         packages.put(ePackage, action);
     }
 
@@ -193,9 +209,9 @@ public final class CheckFileManager extends AbstractHandler {
      * 
      */
     public static void validate() {
-        for (Action action : packages.values()) {
+        for (IActionFactory action : packages.values()) {
             if (action != null) {
-                action.run();
+                action.getAction().run();
             }
         }
     }
@@ -245,7 +261,14 @@ public final class CheckFileManager extends AbstractHandler {
      */
     public static void restoreChecks(final EPackage ePackage) {
         for (CheckFile file : checkFiles.values()) {
-            if (ePackage == null || file.ePackage == ePackage) {
+            if ((ePackage == null || file.ePackage == ePackage)
+                    && !file.isWrapExistingValidator) {
+                register(file);
+            }
+        }
+        for (CheckFile file : checkFiles.values()) {
+            if ((ePackage == null || file.ePackage == ePackage)
+                    && file.isWrapExistingValidator) {
                 register(file);
             }
         }

@@ -23,6 +23,7 @@ import org.eclipse.gef.EditPart;
 import org.eclipse.gmf.runtime.diagram.ui.editparts.DiagramEditPart;
 import org.eclipse.gmf.runtime.diagram.ui.parts.IDiagramWorkbenchPart;
 import org.eclipse.gmf.runtime.notation.View;
+import org.eclipse.jface.action.Action;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.swt.widgets.Display;
@@ -41,6 +42,7 @@ import org.osgi.framework.BundleContext;
 
 import de.cau.cs.kieler.core.model.util.CheckFileManager;
 import de.cau.cs.kieler.core.model.util.ModelingUtil;
+import de.cau.cs.kieler.core.model.util.CheckFileManager.IActionFactory;
 import de.cau.cs.kieler.synccharts.SyncchartsPackage;
 import de.cau.cs.kieler.synccharts.Transition;
 import de.cau.cs.kieler.synccharts.diagram.custom.triggerlisteners.RedundantLabelTriggerListener;
@@ -58,6 +60,16 @@ public class SyncchartsDiagramCustomPlugin extends AbstractUIPlugin implements
     /** The current instance of the plugin. */
     public static SyncchartsDiagramCustomPlugin instance = null;
 
+    private static void registerValidateAction(final IWorkbenchPage page) {
+        CheckFileManager.registerValidateAction(SyncchartsPackage.eINSTANCE,
+                new IActionFactory() {
+
+                    public Action getAction() {
+                        return new ValidateAction(page);
+                    }
+                });
+    }
+
     /**
      * Register the listener.
      */
@@ -70,9 +82,7 @@ public class SyncchartsDiagramCustomPlugin extends AbstractUIPlugin implements
                 window.addPageListener(this);
                 IWorkbenchPage page = window.getActivePage();
                 if (page != null) {
-                    CheckFileManager.registerValidateAction(
-                            SyncchartsPackage.eINSTANCE, new ValidateAction(
-                                    page));
+                    registerValidateAction(page);
                     RedundantLabelTriggerListener.hideRedundantLabels();
                     page.addSelectionListener(this);
                     page.addPartListener(this);
@@ -140,8 +150,7 @@ public class SyncchartsDiagramCustomPlugin extends AbstractUIPlugin implements
      */
     public void pageOpened(final IWorkbenchPage page) {
         if (page != null) {
-            CheckFileManager.registerValidateAction(
-                    SyncchartsPackage.eINSTANCE, new ValidateAction(page));
+            registerValidateAction(page);
             RedundantLabelTriggerListener.hideRedundantLabels();
             page.addSelectionListener(this);
             page.addPartListener(this);
@@ -237,8 +246,7 @@ public class SyncchartsDiagramCustomPlugin extends AbstractUIPlugin implements
             window.addPageListener(this);
             IWorkbenchPage page = window.getActivePage();
             if (page != null) {
-                CheckFileManager.registerValidateAction(
-                        SyncchartsPackage.eINSTANCE, new ValidateAction(page));
+                registerValidateAction(page);
                 RedundantLabelTriggerListener.hideRedundantLabels();
                 page.addSelectionListener(this);
                 page.addPartListener(this);
