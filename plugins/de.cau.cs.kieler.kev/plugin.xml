@@ -51,5 +51,15 @@
             name="KEV Elevator Simulation">
       </content>
    </extension>
+   <extension
+         point="org.eclipse.ui.editors">
+      <editor
+            class="de.cau.cs.kieler.kev.editor.KevProxyEditor"
+            default="false"
+            extensions="mapping"
+            id="de.cau.cs.kieler.kev.proxyEditor"
+            name="KEV Proxy Editor">
+      </editor>
+   </extension>
 
 </plugin>
