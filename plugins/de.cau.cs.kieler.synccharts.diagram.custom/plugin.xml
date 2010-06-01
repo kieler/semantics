@@ -327,6 +327,16 @@
                <command
                      commandId="de.cau.cs.kieler.synccharts.diagram.custom.hideTransitionLabels"
                      style="toggle">
+                  <visibleWhen
+                        checkEnabled="false">
+                     <with
+                           variable="activeEditor">
+                        <test
+                              forcePluginActivation="false"
+                              property="de.cau.cs.kieler.synccharts.activeSyncchartsEditor">
+                        </test>
+                     </with>
+                  </visibleWhen>
                </command>
             </menuContribution>
             <menuContribution
@@ -335,6 +345,16 @@
                      commandId="de.cau.cs.kieler.synccharts.diagram.custom.toggleDrawingMode"
                      icon="icons/palette_view.gif"
                      style="toggle">
+                  <visibleWhen
+                        checkEnabled="false">
+                     <with
+                           variable="activeEditor">
+                        <test
+                              forcePluginActivation="false"
+                              property="de.cau.cs.kieler.synccharts.activeSyncchartsEditor">
+                        </test>
+                     </with>
+                  </visibleWhen>
                </command>
             </menuContribution>
    </extension>
@@ -516,6 +536,16 @@
          <triggerListener
                class="de.cau.cs.kieler.synccharts.diagram.custom.triggerlisteners.RedundantLabelTriggerListener">
          </triggerListener>
+      </extension>
+      <extension
+            point="org.eclipse.core.expressions.propertyTesters">
+         <propertyTester
+               class="de.cau.cs.kieler.synccharts.diagram.custom.handlers.SyncchartsPropertyTester"
+               id="de.cau.cs.kieler.synccharts.activeSyncchartsEditor"
+               namespace="de.cau.cs.kieler.synccharts"
+               properties="activeSyncchartsEditor"
+               type="org.eclipse.ui.IEditorPart">
+         </propertyTester>
       </extension>
     <!--
       <extension
