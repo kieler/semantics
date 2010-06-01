@@ -188,12 +188,13 @@
       </configuration>
       <configuration
             TransformationFile="src/usecase.ext"
+            checkVisibility="true"
             contextId="org.eclipse.uml2.diagram.usecase.ui.diagramContext"
             editorId="org.eclipse.uml2.diagram.usecase.part.UMLDiagramEditorID"
             packageName="org.eclipse.uml2.uml.UMLPackage">
          <menus>
             <menuContribution
-                  locationURI="popup:de.cau.cs.kieler">
+                  locationURI="menu:de.cau.cs.kieler">
                <transformationCommand
                      transformationId="de.cau.cs.kieler.uml2.usecase.startUp">
                </transformationCommand>
@@ -229,9 +230,6 @@
                </transformationCommand>
                <transformationCommand
                      transformationId="de.cau.cs.kieler.uml2.usecase.includeToGeneralization">
-               </transformationCommand>
-               <transformationCommand
-                     transformationId="de.cau.cs.kieler.uml2.usecase.addExtensionPointToUseCase">
                </transformationCommand>
                <transformationCommand
                      transformationId="de.cau.cs.kieler.uml2.usecase.addConstraintToExtension">
@@ -298,11 +296,6 @@
                   name="IncludeToGeneralization"
                   transformation="includeToGeneralization"
                   transformationId="de.cau.cs.kieler.uml2.usecase.includeToGeneralization">
-            </transformation>
-            <transformation
-                  name="AddExtensionPointToUseCase"
-                  transformation="addExtensionPointToUseCase"
-                  transformationId="de.cau.cs.kieler.uml2.usecase.addExtensionPointToUseCase">
             </transformation>
             <transformation
                   name="AddConstraintToExtension"

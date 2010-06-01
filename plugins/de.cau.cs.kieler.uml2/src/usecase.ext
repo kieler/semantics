@@ -176,14 +176,6 @@ i.destroy()
 ;
 
 /*
-* Adds a new ExtensionPoint to an existion UseCase 
-*/
-Void addExtensionPointToUseCase(UseCase u):
-let e = new Extension:
-u.ownedElement.add(e)
-;
-
-/*
 * Adds a new Constraint to an existing Extend connection
 */
 Void addConstraintToExtension(Extend e):
