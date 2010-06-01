@@ -18,6 +18,19 @@
               commandId="de.cau.cs.kieler.esterel.basicTransformation"
               label="Esterel to SyncChart Transformation"
               style="push">
+           <visibleWhen
+                 checkEnabled="false">
+              <iterate>
+                 <adapt
+                       type="org.eclipse.core.resources.IResource">
+                    <test
+                          forcePluginActivation="false"
+                          property="org.eclipse.core.resources.name"
+                          value="*.strl">
+                    </test>
+                 </adapt>
+              </iterate>
+           </visibleWhen>
         </command>
      </menuContribution>
   </extension>
