@@ -31,6 +31,7 @@ import org.eclipse.xtend.XtendComponent;
 import org.eclipse.xtend.typesystem.emf.EmfMetaModel;
 import org.eclipse.xtend.util.stdlib.ExtIssueReporter;
 
+import de.cau.cs.kieler.annotations.AnnotationsPackage;
 import de.cau.cs.kieler.core.KielerException;
 import de.cau.cs.kieler.core.model.CoreModelPlugin;
 import de.cau.cs.kieler.core.model.ui.M2MProgressMonitor;
@@ -89,6 +90,9 @@ public class XtendTransformationUtil {
                     + "(inputmodel)");
             xtendComponent.setOutputSlot("outputmodel");
 
+            // add the Annotations Metamodel by default
+            xtendComponent.addMetaModel(new EmfMetaModel(AnnotationsPackage.eINSTANCE));
+            
             // workflow
             WorkflowContext wfx = new WorkflowContextDefaultImpl();
             // register Issues component that allows to pass informations,
