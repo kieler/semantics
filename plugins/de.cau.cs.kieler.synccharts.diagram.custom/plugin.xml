@@ -359,7 +359,7 @@
                     <test
                           forcePluginActivation="false"
                           property="org.eclipse.core.resources.name"
-                          value="*.kids">
+                          value="*.kixs">
                     </test>
                  </adapt>
               </iterate>
