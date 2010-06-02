@@ -25,7 +25,7 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="annotations" upperBound="-1"
         eType="#//Annotation" containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Annotation" eSuperTypes="#//NamedObject #//Annotatable"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Annotation" eSuperTypes="#//NamedObject"/>
   <eClassifiers xsi:type="ecore:EClass" name="StringAnnotation" eSuperTypes="#//Annotation">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" lowerBound="1" eType="ecore:EDataType platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EString"/>
   </eClassifiers>
@@ -39,7 +39,7 @@
   <eClassifiers xsi:type="ecore:EClass" name="IntAnnotation" eSuperTypes="#//Annotation">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" lowerBound="1" eType="ecore:EDataType platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EInt"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="FloatAnnotation" eSuperTypes="#//Annotation #//Annotatable">
+  <eClassifiers xsi:type="ecore:EClass" name="FloatAnnotation" eSuperTypes="#//Annotation">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" lowerBound="1" eType="ecore:EDataType platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EFloat"/>
   </eClassifiers>
 </ecore:EPackage>

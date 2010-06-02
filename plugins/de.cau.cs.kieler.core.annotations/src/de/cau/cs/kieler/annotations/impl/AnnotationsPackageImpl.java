@@ -374,13 +374,11 @@ public class AnnotationsPackageImpl extends EPackageImpl implements AnnotationsP
         // Add supertypes to classes
         namedObjectEClass.getESuperTypes().add(this.getAnnotatable());
         annotationEClass.getESuperTypes().add(this.getNamedObject());
-        annotationEClass.getESuperTypes().add(this.getAnnotatable());
         stringAnnotationEClass.getESuperTypes().add(this.getAnnotation());
         referenceAnnotationEClass.getESuperTypes().add(this.getAnnotation());
         booleanAnnotationEClass.getESuperTypes().add(this.getAnnotation());
         intAnnotationEClass.getESuperTypes().add(this.getAnnotation());
         floatAnnotationEClass.getESuperTypes().add(this.getAnnotation());
-        floatAnnotationEClass.getESuperTypes().add(this.getAnnotatable());
 
         // Initialize classes and features; add operations and parameters
         initEClass(namedObjectEClass, NamedObject.class, "NamedObject", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
