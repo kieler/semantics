@@ -313,6 +313,38 @@
                   label="Reinitialize diagram from model"
                   style="push"
                   tooltip="Reinitialize the diagram for the selected kixs file overwriting the olds kids file.">
+               <visibleWhen
+                     checkEnabled="false">
+                  <or>
+                     <with
+                           variable="activeEditor">
+                        <test
+                              forcePluginActivation="false"
+                              property="de.cau.cs.kieler.synccharts.activeSyncchartsEditor">
+                        </test>
+                     </with>
+                     <iterate>
+                 <adapt
+                       type="org.eclipse.core.resources.IResource">
+                    <test
+                          forcePluginActivation="false"
+                          property="org.eclipse.core.resources.name"
+                          value="*.kids">
+                    </test>
+                 </adapt>
+              </iterate>
+              <iterate>
+                 <adapt
+                       type="org.eclipse.core.resources.IResource">
+                    <test
+                          forcePluginActivation="false"
+                          property="org.eclipse.core.resources.name"
+                          value="*.kixs">
+                    </test>
+                 </adapt>
+              </iterate>
+                  </or>
+               </visibleWhen>
             </command>
             <command
                   commandId="de.cau.cs.kieler.core.ui.expandMacroStates"
