@@ -351,6 +351,19 @@
                   label="Expand reference-macrostates"
                   style="push"
                   tooltip="Expand reference-macrostates">
+               <visibleWhen
+                     checkEnabled="false">
+                                          <iterate>
+                 <adapt
+                       type="org.eclipse.core.resources.IResource">
+                    <test
+                          forcePluginActivation="false"
+                          property="org.eclipse.core.resources.name"
+                          value="*.kids">
+                    </test>
+                 </adapt>
+              </iterate>
+               </visibleWhen>
             </command>
          </menu>
       </menuContribution>
