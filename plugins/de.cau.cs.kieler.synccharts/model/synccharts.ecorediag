@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<notation:Diagram xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:klayoutdata="http://kieler.cs.cau.de/KLayoutData" xmlns:layoutoptions="http://kieler.cs.cau.de/LayoutOptions" xmlns:notation="http://www.eclipse.org/gmf/runtime/1.0.2/notation" xmi:id="_wv4xsHqYEd6nBdJEKpuS9w" type="EcoreTools" measurementUnit="Pixel">
+<notation:Diagram xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:notation="http://www.eclipse.org/gmf/runtime/1.0.2/notation" xmi:id="_wv4xsHqYEd6nBdJEKpuS9w" type="EcoreTools" measurementUnit="Pixel">
   <children xmi:type="notation:Node" xmi:id="_wwi5AHqYEd6nBdJEKpuS9w" type="1001">
     <children xmi:type="notation:Node" xmi:id="_wwnxgHqYEd6nBdJEKpuS9w" type="4001"/>
     <children xmi:type="notation:Node" xmi:id="_wwoYkHqYEd6nBdJEKpuS9w" type="5001">
@@ -636,9 +636,6 @@
     <layoutConstraint xmi:type="notation:Bounds" xmi:id="_npmY8plgEd63J_2UEGiVkQ" x="976" y="1252"/>
   </children>
   <styles xmi:type="notation:DiagramStyle" xmi:id="_wv4xsXqYEd6nBdJEKpuS9w"/>
-  <styles xmi:type="layoutoptions:LayoutOptionStyle" xmi:id="_VUFxkFv9Ed-X8_wk1OIt1w">
-    <options xmi:type="klayoutdata:KFloatOption" xmi:id="_VUGYoFv9Ed-X8_wk1OIt1w" key="de.cau.cs.kieler.kiml.ogdf.option.pageRatio" value="0.1"/>
-  </styles>
   <element xmi:type="ecore:EPackage" href="synccharts.ecore#/"/>
   <edges xmi:type="notation:Edge" xmi:id="_wyA4oHqYEd6nBdJEKpuS9w" type="3002" source="_wwi5AHqYEd6nBdJEKpuS9w" target="_wxbp0HqYEd6nBdJEKpuS9w">
     <children xmi:type="notation:Node" xmi:id="_wyBfsHqYEd6nBdJEKpuS9w" type="4011">
