@@ -1,3 +1,16 @@
+/*
+ * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
+ *
+ * http://www.informatik.uni-kiel.de/rtsys/kieler/
+ * 
+ * Copyright 2010 by
+ * + Christian-Albrechts-University of Kiel
+ *   + Department of Computer Science
+ *     + Real-Time and Embedded Systems Group
+ * 
+ * This code is provided under the terms of the Eclipse Public License (EPL).
+ * See the file epl-v10.html for the license text.
+ */
 package de.cau.cs.kieler.core.model.util;
 
 import java.util.LinkedList;
@@ -45,12 +58,13 @@ public class XtendStatus implements IStatus {
             MWEDiagnostic[] tempDiags = myIssues.getErrors();
             for (int i = 0; i < tempDiags.length; i++) {
                 MWEDiagnostic diagnostic = tempDiags[i];
-                IStatus status = new Status(IStatus.ERROR, CoreModelPlugin.PLUGIN_ID,
-                        "Error: " + diagnostic.getMessage(), diagnostic
+                IStatus status = new Status(IStatus.ERROR,
+                        CoreModelPlugin.PLUGIN_ID, "Error: "
+                                + diagnostic.getMessage(), diagnostic
                                 .getException());
                 myStatus.add(status);
                 severity = IStatus.ERROR;
-                if(firstException == null){
+                if (firstException == null) {
                     firstException = diagnostic.getException();
                 }
             }
@@ -58,11 +72,12 @@ public class XtendStatus implements IStatus {
             tempDiags = myIssues.getWarnings();
             for (int i = 0; i < tempDiags.length; i++) {
                 MWEDiagnostic diagnostic = tempDiags[i];
-                IStatus status = new Status(IStatus.WARNING, CoreModelPlugin.PLUGIN_ID,
-                        "Warning: " + diagnostic.getMessage(), diagnostic
+                IStatus status = new Status(IStatus.WARNING,
+                        CoreModelPlugin.PLUGIN_ID, "Warning: "
+                                + diagnostic.getMessage(), diagnostic
                                 .getException());
                 myStatus.add(status);
-                if(firstException == null){
+                if (firstException == null) {
                     firstException = diagnostic.getException();
                 }
                 if (severity != IStatus.ERROR) {
@@ -73,11 +88,12 @@ public class XtendStatus implements IStatus {
             tempDiags = myIssues.getInfos();
             for (int i = 0; i < tempDiags.length; i++) {
                 MWEDiagnostic diagnostic = tempDiags[i];
-                IStatus status = new Status(IStatus.INFO, CoreModelPlugin.PLUGIN_ID,
-                        "Info: " + diagnostic.getMessage(), diagnostic
+                IStatus status = new Status(IStatus.INFO,
+                        CoreModelPlugin.PLUGIN_ID, "Info: "
+                                + diagnostic.getMessage(), diagnostic
                                 .getException());
                 myStatus.add(status);
-                if(firstException == null){
+                if (firstException == null) {
                     firstException = diagnostic.getException();
                 }
                 if (severity != IStatus.ERROR && severity != IStatus.WARNING) {
@@ -111,20 +127,20 @@ public class XtendStatus implements IStatus {
      * {@inheritDoc}
      */
     public String getMessage() {
-        if(severity== IStatus.OK){
+        if (severity == IStatus.OK) {
             return "Model-to-model transformation successfully done.";
         }
         StringBuffer msg = new StringBuffer();
-        if(severity == IStatus.WARNING){
+        if (severity == IStatus.WARNING) {
             msg.append("Info");
         }
-        if(severity == IStatus.WARNING){
+        if (severity == IStatus.WARNING) {
             msg.append("Warning");
         }
-        if(severity == IStatus.ERROR){
+        if (severity == IStatus.ERROR) {
             msg.append("Error");
         }
-        if(getChildren().length > 1){
+        if (getChildren().length > 1) {
             msg.append("s");
         }
         msg.append(" in an Xtend model-to-model transformation.");

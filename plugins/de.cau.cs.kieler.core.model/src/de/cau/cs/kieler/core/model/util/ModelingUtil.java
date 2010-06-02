@@ -145,7 +145,12 @@ public final class ModelingUtil {
      * Finds an editpart given a starting editpart and an EObject. Won't find
      * connections.
      * 
+     * @param epBegin
+     *            where to begin looking
+     * @param theElement
+     *            the element to look for
      * @author haf
+     * @return the editPart that was found or null
      **/
     private static EditPart findEditPart(final EditPart epBegin,
             final EObject theElement) {
@@ -320,9 +325,8 @@ public final class ModelingUtil {
                 }
             }
             return eo;
-        } else {
-            return null;
         }
+        return null;
     }
 
     /**

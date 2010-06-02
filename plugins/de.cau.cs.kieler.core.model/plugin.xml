@@ -14,6 +14,11 @@
                id="org.eclipse.ui.commands.toggleState">
          </state>
       </command>
+      <command
+            defaultHandler="de.cau.cs.kieler.core.model.handlers.ValidateActionHandler"
+            id="de.cau.cs.kieler.core.model.validate"
+            name="validate">
+      </command>
    </extension>
    <extension
          point="org.eclipse.ui.menus">
@@ -34,6 +39,28 @@
             </visibleWhen>
          </command>
       </menuContribution>
+      <menuContribution
+            locationURI="toolbar:de.cau.cs.kieler">
+         <command
+               commandId="de.cau.cs.kieler.core.model.validate"
+               icon="icons/validate.gif"
+               style="pulldown">
+            <visibleWhen
+                  checkEnabled="false">
+               <with
+                     variable="activeEditor">
+                  <test
+                        forcePluginActivation="false"
+                        property="de.cau.cs.kieler.core.model.isDiagramEditor">
+                  </test>
+               </with>
+            </visibleWhen>
+         </command>
+      </menuContribution>
+      <menuContribution
+            class="de.cau.cs.kieler.core.model.ui.ValidationMenuContributionFactory"
+            locationURI="menu:de.cau.cs.kieler.core.model.validate">
+      </menuContribution>
    </extension>
    <extension
          point="org.eclipse.ui.preferencePages">
@@ -43,24 +70,6 @@
             id="de.cau.cs.kieler.core.model.validationManager"
             name="Validation Manager">
       </page>
-   </extension>
-   <extension
-         point="org.eclipse.ui.actionSets">
-      <actionSet
-            id="de.cau.cs.kieler.core.model.validateActionSet"
-            label="validate"
-            visible="true">
-         <action
-               class="de.cau.cs.kieler.core.model.preferences.ValidationPullDownAction"
-               icon="icons/validate.gif"
-               id="de.cau.cs.kieler.core.model.validateAction"
-               label="validate"
-               pulldown="true"
-               retarget="false"
-               style="pulldown"
-               toolbarPath="de.cau.cs.kieler">
-         </action>
-      </actionSet>
    </extension>
    <extension
          point="org.eclipse.core.expressions.propertyTesters">

@@ -46,8 +46,10 @@ import de.cau.cs.kieler.core.ui.errorhandler.GenericErrorHandler.StatusListener;
  */
 public class ModelErrorHandler implements StatusListener {
 
+    /** The map of markers. */
     private static Map<EObject, List<IMarker>> markers = new HashMap<EObject, List<IMarker>>();
 
+    /** True if the error handler is enabled and should add markers. */
     private static boolean enabled = true;
 
     /**

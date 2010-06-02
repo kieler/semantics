@@ -20,7 +20,6 @@ import java.util.Map;
 import org.eclipse.emf.common.command.AbstractCommand;
 import org.eclipse.emf.common.util.ECollections;
 import org.eclipse.emf.common.util.EList;
-import org.eclipse.emf.ecore.EObject;
 
 /**
  * Command to sort an EList using a given Comparator.
@@ -34,7 +33,7 @@ public class SortCommand<T> extends AbstractCommand {
 
     private EList<T> list;
     private Comparator<T> comparator;
-    Map<T, Integer> oldIndices = new HashMap<T, Integer>();
+    private Map<T, Integer> oldIndices = new HashMap<T, Integer>();
 
     /**
      * Constructor, taking the list to sort and the comparator to use for

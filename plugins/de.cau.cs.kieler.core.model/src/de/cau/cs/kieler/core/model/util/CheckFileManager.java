@@ -60,8 +60,13 @@ public final class CheckFileManager extends AbstractHandler {
 
     }
 
+    /**
+     * Contains all registered packages with a factory for creating validate
+     * actions.
+     */
     private static Map<EPackage, IActionFactory> packages = new HashMap<EPackage, IActionFactory>();
 
+    /** Maps the path of a check file to the internal checkfile objects. */
     private static Map<String, CheckFile> checkFiles = new HashMap<String, CheckFile>();
 
     /** Prefix for the preference store. */
@@ -377,6 +382,11 @@ public final class CheckFileManager extends AbstractHandler {
      */
     private static final class CheckFile {
 
+        /**
+         * 
+         * Does nothing.
+         * 
+         */
         private CheckFile() {
 
         }

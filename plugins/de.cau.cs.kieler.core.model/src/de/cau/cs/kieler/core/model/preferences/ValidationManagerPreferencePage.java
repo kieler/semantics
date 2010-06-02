@@ -32,6 +32,7 @@ import de.cau.cs.kieler.core.model.util.CheckFileManager;
 public class ValidationManagerPreferencePage extends FieldEditorPreferencePage
         implements IWorkbenchPreferencePage {
 
+    /** The list of field editors. */
     private List<BooleanFieldEditor> editors = new LinkedList<BooleanFieldEditor>();
 
     /**

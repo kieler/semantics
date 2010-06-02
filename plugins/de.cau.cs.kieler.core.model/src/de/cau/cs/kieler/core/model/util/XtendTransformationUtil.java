@@ -18,7 +18,6 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EPackage;
-import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.xmi.XMIResource;
 import org.eclipse.emf.mwe.core.WorkflowContext;
@@ -38,20 +37,26 @@ import de.cau.cs.kieler.core.model.ui.M2MProgressMonitor;
 import de.cau.cs.kieler.core.ui.KielerProgressMonitor;
 import de.cau.cs.kieler.core.ui.util.MonitoredOperation;
 
+/**
+ * FIXME: Fix checkstyle warnings.
+ * 
+ * @author ???
+ */
 public class XtendTransformationUtil {
 
     /**
      * This transformation uses the Xtend transformation language.
      * 
-     * @param progressBar
+     * @param monitor
      *            if true a progress bar is displayed
      * 
      * @return true, if m2m transformation was successful
      * 
      */
-    public static IStatus model2ModelTransform(KielerProgressMonitor monitor, String xtendFile,
-            String startFunction, URI inputModelURI, URI outputModelURI, EPackage modelPackage1,
-            EPackage modelPackage2) throws KielerException {
+    public static IStatus model2ModelTransform(KielerProgressMonitor monitor,
+            String xtendFile, String startFunction, URI inputModelURI,
+            URI outputModelURI, EPackage modelPackage1, EPackage modelPackage2)
+            throws KielerException {
         monitor.begin("Model2Model transformation", 4);
         try {
             // Workflow
@@ -80,12 +85,14 @@ public class XtendTransformationUtil {
             XtendComponent xtendComponent = new XtendComponent();
             xtendComponent.addMetaModel(metaModel1);
             xtendComponent.addMetaModel(metaModel2);
-            xtendComponent.setInvoke(xtendFile + "::" + startFunction + "(inputmodel)");
+            xtendComponent.setInvoke(xtendFile + "::" + startFunction
+                    + "(inputmodel)");
             xtendComponent.setOutputSlot("outputmodel");
 
             // workflow
             WorkflowContext wfx = new WorkflowContextDefaultImpl();
-            // register Issues component that allows to pass informations, warnings or errors
+            // register Issues component that allows to pass informations,
+            // warnings or errors
             // back to the application
             ExtIssueReporter issueReporter = new ExtIssueReporter();
             Issues issues = new org.eclipse.emf.mwe.core.issues.IssuesImpl();
@@ -116,15 +123,17 @@ public class XtendTransformationUtil {
         }
     }
 
-    public static IStatus model2ModelTransform(final String xtendFile, final String startFunction,
-            final URI inputModelURI, final URI outputModelURI, final EPackage modelPackage1,
+    public static IStatus model2ModelTransform(final String xtendFile,
+            final String startFunction, final URI inputModelURI,
+            final URI outputModelURI, final EPackage modelPackage1,
             final EPackage modelPackage2) throws KielerException {
         MonitoredOperation monitoredOperation = new MonitoredOperation() {
             @Override
             protected IStatus execute(IProgressMonitor monitor) {
                 try {
-                    return XtendTransformationUtil.model2ModelTransform(new KielerProgressMonitor(
-                            monitor), xtendFile, startFunction, inputModelURI, outputModelURI,
+                    return XtendTransformationUtil.model2ModelTransform(
+                            new KielerProgressMonitor(monitor), xtendFile,
+                            startFunction, inputModelURI, outputModelURI,
                             modelPackage1, modelPackage2);
                 } catch (KielerException e) {
                     return new Status(IStatus.ERROR, CoreModelPlugin.PLUGIN_ID,

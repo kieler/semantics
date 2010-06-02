@@ -31,6 +31,7 @@ public class KielerModelPropertyTester extends PropertyTester {
             final Object[] args, final Object expectedValue) {
         if (property.equals("isDiagramEditor")
                 && receiver instanceof DiagramEditor) {
+            // editor might have markers and validation action
             return true;
         }
         return false;
