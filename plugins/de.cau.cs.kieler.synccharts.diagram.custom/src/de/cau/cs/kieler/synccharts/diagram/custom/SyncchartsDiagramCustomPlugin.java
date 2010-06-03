@@ -107,8 +107,8 @@ public class SyncchartsDiagramCustomPlugin extends AbstractUIPlugin implements
             Iterator<?> iter = selection.iterator();
             if (part instanceof IDiagramWorkbenchPart) {
                 HighlightingManager.reset(part);
-                DiagramEditPart dep = ((IDiagramWorkbenchPart) part)
-                        .getDiagramEditPart();
+                IDiagramWorkbenchPart dwp = (IDiagramWorkbenchPart) part;
+                DiagramEditPart dep = dwp.getDiagramEditPart();
                 while (iter.hasNext()) {
                     Object o = iter.next();
                     if (o instanceof EditPart) {

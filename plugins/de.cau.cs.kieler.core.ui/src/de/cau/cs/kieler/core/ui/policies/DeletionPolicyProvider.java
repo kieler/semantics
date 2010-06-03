@@ -44,27 +44,7 @@ public class DeletionPolicyProvider extends AbstractProvider implements
      */
     public void createEditPolicies(final EditPart editPart) {
         editPart.installEditPolicy(EditPolicy.COMPONENT_ROLE,
-                new ComponentEditPolicy() {
-                    @Override
-                    public Command getCommand(final Request request) {
-                        Command result = super.getCommand(request);
-                        // If the user presses the delete key, don't delete
-                        if (request instanceof GroupRequestViaKeyboard
-                                && RequestConstants.REQ_DELETE.equals(request
-                                        .getType())) {
-                            GroupRequestViaKeyboard req = (GroupRequestViaKeyboard) request;
-
-                            if (isUnremovableEditPart(editPart)) {
-                                result = UnexecutableCommand.INSTANCE;
-                            } else {
-                                result = super.createDeleteSemanticCommand(req);
-                            }
-                        }
-
-                        return result;
-                    }
-
-                });
+                new KielerComponentEditPolicy(editPart));
     }
 
     /**
@@ -75,7 +55,8 @@ public class DeletionPolicyProvider extends AbstractProvider implements
      *            the edit part
      * @return true if the edit part should not be removed.
      */
-    public boolean isUnremovableEditPart(final EditPart editPart) {
+    protected boolean isUnremovableEditPart(
+            @SuppressWarnings("unused") final EditPart editPart) {
         return false;
     }
 
@@ -90,4 +71,58 @@ public class DeletionPolicyProvider extends AbstractProvider implements
         return operation instanceof CreateEditPoliciesOperation;
     }
 
+    /**
+     * The policy to be applied to the edit parts for controlling deletion
+     * behaviour. Other classes may extend this to provide their own
+     * implementation.
+     * 
+     * @author soh
+     */
+    protected class KielerComponentEditPolicy extends ComponentEditPolicy {
+
+        /** The edit part to operate on. */
+        private EditPart editPart;
+
+        /**
+         * Getter for the edit part.
+         * 
+         * @return the edit part
+         */
+        protected EditPart getEditPart() {
+            return editPart;
+        }
+
+        /**
+         * Creates a new policy saving the edit part along with it.
+         * 
+         * @param editPartParam
+         *            the edit part
+         */
+        public KielerComponentEditPolicy(final EditPart editPartParam) {
+            this.editPart = editPartParam;
+        }
+
+        @Override
+        public Command getCommand(final Request request) {
+            Command result = super.getCommand(request);
+
+            // If the user presses the delete key, don't delete
+            if (request instanceof GroupRequestViaKeyboard
+                    && RequestConstants.REQ_DELETE.equals(request.getType())) {
+                GroupRequestViaKeyboard req = (GroupRequestViaKeyboard) request;
+
+                if (isUnremovableEditPart(editPart)) {
+                    // edit part should not be touched
+                    result = UnexecutableCommand.INSTANCE;
+                } else {
+                    // create a semantic delete request rather than delete from
+                    // diagram
+                    result = super.createDeleteSemanticCommand(req);
+                }
+            }
+
+            return result;
+        }
+
+    }
 }
