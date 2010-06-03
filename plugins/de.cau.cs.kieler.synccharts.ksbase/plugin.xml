@@ -142,6 +142,13 @@
              transformationId="de.cau.cs.kieler.ksbase.addSingleSuc"
              validation="isNoRootState">
        </transformation>
+       <transformation
+             icon="icons/quickfix_obj.gif"
+             name="Optimize"
+             tooltip="Optimize the current Synccharts.\n\nThis can be configured through the preference page."
+             transformation="optimizeSelected"
+             transformationId="de.cau.cs.kieler.ksbase.optimize">
+       </transformation>
 			</transformations>
 			<menus>
 				<menuContribution locationURI="menu:de.cau.cs.kieler">
@@ -191,6 +198,9 @@
            transformationId="de.cau.cs.kieler.ksbase.downgradeState">
      </transformationCommand>
 					<transformationCommand transformationId="de.cau.cs.kieler.ksbase.flip"></transformationCommand>
+     <transformationCommand
+           transformationId="de.cau.cs.kieler.ksbase.optimize">
+     </transformationCommand>
 				</menuContribution>
     <menuContribution
           locationURI="popup:org.eclipse.gmf.runtime.diagram.ui.DiagramEditorContextMenu?after=addGroup">
@@ -273,6 +283,15 @@
 
 			</menus>
 		</configuration>
+ </extension>
+ <extension
+       point="org.eclipse.ui.preferencePages">
+    <page
+          category="de.cau.cs.kieler.synccharts.diagram.general"
+          class="de.cau.cs.kieler.synccharts.ksbase.preferences.OptimizationPreferencePage"
+          id="de.cau.cs.kieler.synccharts.ksbase.optimizePage"
+          name="Optimization">
+    </page>
  </extension>
 
 </plugin>

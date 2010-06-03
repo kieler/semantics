@@ -21,18 +21,18 @@ import org.osgi.framework.BundleContext;
  * 
  * @author Michael Matzen - mim AT informatik.uni-kiel.de
  */
-public class Activator extends AbstractUIPlugin {
+public class SyncchartsKsbasePlugin extends AbstractUIPlugin {
 
     /** The plug-in ID. **/
     public static final String PLUGIN_ID = "de.cau.cs.kieler.synccharts.ksbase";
 
     /** The shared instance. **/
-    private static Activator plugin;
+    private static SyncchartsKsbasePlugin plugin;
 
     /**
      * The constructor.
      */
-    public Activator() {
+    public SyncchartsKsbasePlugin() {
     }
 
     /**
@@ -47,7 +47,7 @@ public class Activator extends AbstractUIPlugin {
      */
     public void start(final BundleContext context) throws Exception {
         super.start(context);
-        Activator.setDefault(this);
+        SyncchartsKsbasePlugin.setDefault(this);
     }
 
     /**
@@ -60,7 +60,7 @@ public class Activator extends AbstractUIPlugin {
      *             When stopping this plug-in fails.
      */
     public void stop(final BundleContext context) throws Exception {
-        Activator.setDefault(null);
+        SyncchartsKsbasePlugin.setDefault(null);
         super.stop(context);
     }
 
@@ -69,7 +69,7 @@ public class Activator extends AbstractUIPlugin {
      * 
      * @return the shared instance
      */
-    public static Activator getDefault() {
+    public static SyncchartsKsbasePlugin getDefault() {
         return plugin;
     }
     
@@ -77,7 +77,7 @@ public class Activator extends AbstractUIPlugin {
      * Sets the shared instance.
      * @param value The new shared instance value
      */
-    public static void setDefault(final Activator value) { 
+    public static void setDefault(final SyncchartsKsbasePlugin value) { 
         plugin = value;
     }
 }

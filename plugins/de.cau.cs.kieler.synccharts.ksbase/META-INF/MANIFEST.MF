@@ -3,7 +3,7 @@ Bundle-ManifestVersion: 2
 Bundle-Name: KSBasE for SyncCharts
 Bundle-SymbolicName: de.cau.cs.kieler.synccharts.ksbase;singleton:=true
 Bundle-Version: 0.2.0.qualifier
-Bundle-Activator: de.cau.cs.kieler.synccharts.ksbase.Activator
+Bundle-Activator: de.cau.cs.kieler.synccharts.ksbase.SyncchartsKsbasePlugin
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  de.cau.cs.kieler.synccharts,
