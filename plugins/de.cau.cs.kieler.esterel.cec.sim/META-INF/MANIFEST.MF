@@ -7,7 +7,6 @@ Bundle-Activator: de.cau.cs.kieler.esterel.cec.sim.Activator
 Bundle-Vendor: Christian-Albrechts-Universität zu Kiel
 Require-Bundle: org.eclipse.gmf.runtime.diagram.ui;bundle-version="1.2.0",
  de.cau.cs.kieler.sim.kiem;bundle-version="0.1.0",
- de.cau.cs.kieler.dataflow.diagram;bundle-version="0.1.0",
  org.eclipse.xtext;bundle-version="0.7.2",
  org.eclipse.emf.edit.ui;bundle-version="2.5.0",
  org.json;bundle-version="0.1.0",
