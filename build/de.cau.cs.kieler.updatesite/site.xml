@@ -18,12 +18,6 @@
    <feature url="features/de.cau.cs.kieler.kiml.source_0.2.0.qualifier.jar" id="de.cau.cs.kieler.kiml.source" version="0.2.0.qualifier">
       <category name="KIELER sources"/>
    </feature>
-   <feature url="features/de.cau.cs.kieler.dataflow_0.1.1.qualifier.jar" id="de.cau.cs.kieler.dataflow" version="0.1.1.qualifier">
-      <category name="KIELER"/>
-   </feature>
-   <feature url="features/de.cau.cs.kieler.dataflow.source_0.1.1.qualifier.jar" id="de.cau.cs.kieler.dataflow.source" version="0.1.1.qualifier">
-      <category name="KIELER sources"/>
-   </feature>
    <feature url="features/de.cau.cs.kieler.synccharts_0.2.0.qualifier.jar" id="de.cau.cs.kieler.synccharts" version="0.2.0.qualifier">
       <category name="KIELER"/>
    </feature>
