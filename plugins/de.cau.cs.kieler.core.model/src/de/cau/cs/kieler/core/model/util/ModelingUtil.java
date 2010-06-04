@@ -15,13 +15,10 @@ package de.cau.cs.kieler.core.model.util;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 
-import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EClassifier;
@@ -48,7 +45,6 @@ public final class ModelingUtil {
     private ModelingUtil() {
     }
 
-    private static Map<EObject, List<IMarker>> markers = new HashMap<EObject, List<IMarker>>();
 
     /**
      * Find an GEF EditPart that corresponds to an semantic model EObject.
