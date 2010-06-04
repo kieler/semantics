@@ -14,6 +14,7 @@
  *****************************************************************************/
 package de.cau.cs.kieler.synccharts.ksbase.util;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -37,21 +38,75 @@ import de.cau.cs.kieler.synccharts.ksbase.SyncchartsKsbasePlugin;
  */
 public final class OptimizeUtils {
 
+    /** Preference Prefix. */
     public static final String PREFIX = "_OPTIMIZE_";
+    /** Identifier for fixing the state and region ids. */
     public static final String FIX_IDS = "fixIDs";
+    /** Identifier for fixing the transition priorities. */
     public static final String FIX_TRANSITION_PRIORITIES = "fixTransitionPriorities";
+    /** Identifier for fixing transitions leaving conditional states. */
     public static final String FIX_CONDITIONAL_OUTGOING_IMMEDIATE = "fixConditionalOutgoingImmediate";
+    /** Identifier for fixing transition types. */
+    public static final String FIX_TRANSITION_TYPES = "fixTransitionTypes";
+    /** Identifier for removing dummy states. */
     public static final String REMOVE_DUMMY_STATES = "removeDummyStates";
+    /** Identifier for removing white space from trigger and effects. */
     public static final String REMOVE_WHITE_SPACES = "removeWhiteSpaces";
+    /** Identifier for removing dummy regions. */
     public static final String REMOVE_DUMMY_REGIONS = "removeDummyRegions";
 
-    public static String[] keys = { PREFIX + FIX_IDS,
-            PREFIX + FIX_TRANSITION_PRIORITIES,
-            PREFIX + FIX_CONDITIONAL_OUTGOING_IMMEDIATE,
-            PREFIX + REMOVE_DUMMY_STATES, PREFIX + REMOVE_WHITE_SPACES,
-            PREFIX + REMOVE_DUMMY_REGIONS };
+    /**
+     * Contains the identifiers for all optimizations that are required to have
+     * a valid syncchart. Register new optimizations here.
+     * 
+     */
+    private static final String[] REQUIRED_KEYS = { FIX_IDS,
+            FIX_TRANSITION_PRIORITIES, FIX_TRANSITION_TYPES,
+            FIX_CONDITIONAL_OUTGOING_IMMEDIATE };
 
+    /**
+     * Contains the identifiers for all optimizations that improve a syncchart
+     * but are not required.
+     */
+    private static final String[] OPTIONAL_KEYS = { REMOVE_DUMMY_STATES,
+            REMOVE_WHITE_SPACES, REMOVE_DUMMY_REGIONS };
+
+    /** Contains the list of all available keys. */
+    private static List<String> keys = null;
+
+    /** The preference store. */
     private static IPreferenceStore store = null;
+
+    /** Cached region and state ids. */
+    private static List<UniqueStringCache> caches = new LinkedList<UniqueStringCache>();
+
+    /**
+     * 
+     * Dummy.
+     * 
+     */
+    private OptimizeUtils() {
+
+    }
+
+    /**
+     * Initialize the list of keys.
+     * 
+     * @return the list of keys
+     */
+    public static List<String> getKeys() {
+        if (keys == null) {
+            keys = new ArrayList<String>(REQUIRED_KEYS.length
+                    + OPTIONAL_KEYS.length);
+            for (String s : REQUIRED_KEYS) {
+                keys.add(PREFIX + s);
+            }
+            for (String s : OPTIONAL_KEYS) {
+                keys.add(PREFIX + s);
+            }
+        }
+        return keys;
+    }
 
     /**
      * Save the configuration in the preference store back to the persistent
@@ -82,23 +137,12 @@ public final class OptimizeUtils {
             store = SyncchartsKsbasePlugin.getDefault().getPreferenceStore();
             IEclipsePreferences prefs = new InstanceScope()
                     .getNode(SyncchartsKsbasePlugin.PLUGIN_ID);
-            for (String key : keys) {
+            for (String key : getKeys()) {
                 boolean value = prefs.getBoolean(key, true);
                 store.setValue(key, value);
             }
         }
     }
-
-    /**
-     * 
-     * Dummy.
-     * 
-     */
-    private OptimizeUtils() {
-
-    }
-
-    private static List<UniqueStringCache> caches = new LinkedList<UniqueStringCache>();
 
     /**
      * Debug output for xtend code.
@@ -116,6 +160,14 @@ public final class OptimizeUtils {
      */
     public static List<State> getStateList() {
         return new LinkedList<State>();
+    }
+
+    /**
+     * 
+     * @return a new list of regions
+     */
+    public static List<Region> getRegionList() {
+        return new LinkedList<Region>();
     }
 
     /**
@@ -251,6 +303,8 @@ public final class OptimizeUtils {
             return "Fix transition priorities (REQUIRED)";
         } else if (key.equals(PREFIX + FIX_CONDITIONAL_OUTGOING_IMMEDIATE)) {
             return "Fix transitions leaving conditional states (REQUIRED)";
+        } else if (key.equals(PREFIX + FIX_TRANSITION_TYPES)) {
+            return "Fix transition types (REQUIRED)";
         } else if (key.equals(PREFIX + REMOVE_DUMMY_STATES)) {
             return "Remove redundant states";
         } else if (key.equals(PREFIX + REMOVE_DUMMY_REGIONS)) {
@@ -281,6 +335,9 @@ public final class OptimizeUtils {
             return "Removes empty regions with no variables and signals.";
         } else if (key.equals(PREFIX + REMOVE_WHITE_SPACES)) {
             return "Removes white spaces from trigger and effects string as they are redundant.";
+        } else if (key.equals(PREFIX + FIX_TRANSITION_TYPES)) {
+            return "Transitions leaving simple states must be WEAKABORT.\n"
+                    + "Transitions without trigger leaving complex states must be NORMALTERMINATION.";
         }
         return key;
     }

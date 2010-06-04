@@ -48,7 +48,7 @@ public class OptimizationPreferencePage extends FieldEditorPreferencePage
     @Override
     protected void createFieldEditors() {
         try {
-            String[] keys = OptimizeUtils.keys;
+            List<String> keys = OptimizeUtils.getKeys();
 
             for (String key : keys) {
                 Composite parent = getFieldEditorParent();

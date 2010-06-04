@@ -145,7 +145,7 @@
        <transformation
              icon="icons/quickfix_obj.gif"
              name="Optimize"
-             tooltip="Optimize the current Synccharts.\n\nThis can be configured through the preference page."
+             tooltip="Optimize the current Synccharts. This can be configured through the preference page."
              transformation="optimizeSelected"
              transformationId="de.cau.cs.kieler.ksbase.optimize">
        </transformation>

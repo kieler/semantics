@@ -313,6 +313,10 @@ List[State] getStateList():
  JAVA de.cau.cs.kieler.synccharts.ksbase.util.OptimizeUtils.getStateList()
 ;
 
+List[Region] getRegionList():
+ JAVA de.cau.cs.kieler.synccharts.ksbase.util.OptimizeUtils.getRegionList()
+;
+ 
 Void debug(Object object):
  JAVA de.cau.cs.kieler.synccharts.ksbase.util.OptimizeUtils.debug(java.lang.Object)
 ;
@@ -321,63 +325,147 @@ Boolean isEnabled(String key):
  JAVA de.cau.cs.kieler.synccharts.ksbase.util.OptimizeUtils.isEnabled(java.lang.String)
 ;
 
-// runs all optimizations
-Void fixAllBugs(State state):
- fixAllBugs(state.parentRegion)
+Boolean isSimpleState(State state):
+  state.regions.isEmpty &&
+  state.suspensionTrigger == null &&
+  state.entryActions.isEmpty &&
+  state.exitActions.isEmpty &&
+  state.innerActions.isEmpty
 ;
 
-// runs all optimizations
-Void fixAllBugs(Region rootRegion):
- fixIDs(rootRegion) ->
- fixTransitionPriorities(rootRegion) ->
- fixConditionalOutgoingImmediate(rootRegion) ->
- fixDummyStates(rootRegion) ->
- fixWhiteSpaces(rootRegion) ->
- removeRedundantRegions(rootRegion)
-;
-
-// runs only selected optimizations
 Void optimizeSelected(State state):
  optimizeSelected(state.parentRegion)
 ;
 
-// runs only selected optimizations
 Void optimizeSelected(Region rootRegion):
- (if (isEnabled("fixIDs")) then
-   fixIDs(rootRegion)) ->
- (if (isEnabled("fixTransitionPriorities")) then 
-   fixTransitionPriorities(rootRegion)) ->
- (if (isEnabled("fixConditionalOutgoingImmediate")) then
-   fixConditionalOutgoingImmediate(rootRegion)) ->
- (if (isEnabled("removeDummyStates")) then
-   fixDummyStates(rootRegion)) ->
- (if (isEnabled("removeWhiteSpaces")) then
-   fixWhiteSpaces(rootRegion)) ->
- (if (isEnabled("removeDummyRegions")) then
-   removeRedundantRegions(rootRegion))
+ let fixTransitionPrios = isEnabled("fixTransitionPriorities"):
+ let fixCondOutgoing = isEnabled("fixConditionalOutgoingImmediate"):
+ let fixIDs = isEnabled("fixIDs"):
+ let fixTransitionTypes = isEnabled("fixTransitionTypes"):
+ let removeDummyStates = isEnabled("removeDummyStates"):
+ let removeDummyRegions = isEnabled("removeDummyRegions"):
+ let removeWhiteSpaces = isEnabled("removeWhiteSpaces"):
+ let statesToRemove = getStateList():
+ let regionsToRemove = getRegionList():
+ clearIDCache() ->
+ optimizeRec(rootRegion, 
+             fixTransitionPrios, 
+             fixCondOutgoing,
+             fixIDs,
+             fixTransitionTypes,
+             removeDummyStates,
+             removeDummyRegions,
+             removeWhiteSpaces,
+             statesToRemove,
+             regionsToRemove) ->
+ (if (removeDummyStates) then
+   statesToRemove.removeStateFromRegion()) ->
+ (if (removeDummyRegions) then 
+   regionsToRemove.removeRegionFromState())
 ;
 
-// === begin fix priorities ===
+Void removeStateFromRegion(State state):
+ state.parentRegion.innerStates.remove(state)
+;
+
+Void removeRegionFromState(Region region):
+ if (region.parentState != null) then
+   region.parentState.regions.remove(region)
+;
+
+Void optimizeRec(Region region, 
+                 Boolean fixTransitionPrios, 
+                 Boolean fixCondOutgoing,
+                 Boolean fixIDs,
+                 Boolean fixTransitionTypes,
+                 Boolean removeDummyStates,
+                 Boolean removeDummyRegions,
+                 Boolean removeWhiteSpaces,
+                 List[State] statesToRemove,
+                 List[Region] regionsToRemove):
+ (if (fixIDs) then
+    generateRegionId(region)) ->
+ (if (region.innerStates.isEmpty) then
+   (if (removeDummyRegions &&
+       region.signals.isEmpty &&
+       region.variables.isEmpty) then
+       regionsToRemove.add(region))
+ else
+ region.innerStates.optimizeRec(fixTransitionPrios, 
+                                fixCondOutgoing,
+                                fixIDs,
+                                fixTransitionTypes,
+                                removeDummyStates,
+                                removeDummyRegions,
+                                removeWhiteSpaces,
+                                statesToRemove,
+                                regionsToRemove)
+ )
+;
+
+Void optimizeRec(State state, 
+                 Boolean fixTransitionPrios, 
+                 Boolean fixCondOutgoing,
+                 Boolean fixIDs,
+                 Boolean fixTransitionTypes,
+                 Boolean removeDummyStates,
+                 Boolean removeDummyRegions,
+                 Boolean removeWhiteSpaces,
+                 List[State] statesToRemove,
+                 List[Region] regionsToRemove):
+ (if (fixTransitionPrios || fixTransitionTypes) then 
+   state.outgoingTransitions.fixTransition(fixTransitionPrios, 
+                                           fixTransitionTypes)) ->
+ (if (fixCondOutgoing
+       && state.type == StateType::CONDITIONAL) then
+       // transitions leaving a conditional state must be immediate
+       state.outgoingTransitions.setIsImmediate(true)) ->
+ (if (fixIDs) then
+    state.setId(state.label) ->
+    generateStateId(state)) ->
+ (if (removeWhiteSpaces) then
+  (state.outgoingTransitions.fixWhiteSpacesInAction() ->
+   state.entryActions.fixWhiteSpacesInAction() ->
+   state.exitActions.fixWhiteSpacesInAction() ->
+   state.suspensionTrigger.fixWhiteSpacesInAction() ->
+   state.innerActions.fixWhiteSpacesInAction())
+  ) ->
+ (if (removeDummyStates) then
+   state.fixDummyState(statesToRemove)) ->
+ state.regions.optimizeRec(fixTransitionPrios, 
+                           fixCondOutgoing,
+                           fixIDs,
+                           fixTransitionTypes,
+                           removeDummyStates,
+                           removeDummyRegions,
+                           removeWhiteSpaces,
+                           statesToRemove,
+                           regionsToRemove)
+;
+
+// === begin WhiteSpaces ===
+// Transition Triggers and effects should not contain whitespaces
+
+Void fixWhiteSpacesInAction(Action action):
+ action.triggersAndEffects.replaceAll(" " , "")
+;
+
+// === end WhiteSpaces ===
+
+// === begin fix transitions ===
+// transitions leaving simple states have to be weak aborts
+// normal terminations may not have a trigger
 // fix the transition priorities:
 // current convention is priorities starting with 1
 // older synccharts may have 0 as lowest priority
 
-
-Void fixTransitionPriorities(Region rootRegion):
- rootRegion.innerStates.fixTransitionPriorities()
-;
-
-Void fixTransitionPriorities(State state):
- state.outgoingTransitions.fixPriority() ->
- state.regions.fixTransitionPriorities()
-;
-
-Void fixPriority(Transition trans):
- (trans.priority == 0 ?
-  trans.sourceState.outgoingTransitions.incrementPriority()
- :
-  null
- )
+Void fixTransition(Transition trans, 
+                   Boolean fixTransitionPrios, 
+                   Boolean fixTransitionTypes):
+ (if (fixTransitionPrios && trans.priority == 0) then
+  trans.sourceState.outgoingTransitions.incrementPriority()) ->
+ (if (fixTransitionTypes) then
+  trans.fixTransitionType())
 ;
 
 Void incrementPriority(Transition trans):
@@ -385,142 +473,13 @@ Void incrementPriority(Transition trans):
  trans.setPriority(prio + 1)
 ;
 
-// === end fix priorities ===
-
-
-// === begin conditional outgoing immediate ===
-// transitions leaving a conditional state must be immediate
-
-Void fixConditionalOutgoingImmediate(Region rootRegion):
- rootRegion.innerStates.fixConditionalOutgoingImmediate()
-;
-
-Void fixConditionalOutgoingImmediate(State state):
- (state.type == StateType::CONDITIONAL ?
-  state.outgoingTransitions.setIsImmediate(true)
- :
-  null
- ) ->
- state.regions.fixConditionalOutgoingImmediate()
-;
-
-// === end conditional outgoing immediate ===
-
-// === begin dummy states ===
-// removes redundant states
-
-Void fixDummyStates(Region rootRegion):
- let list = getStateList():
- rootRegion.innerStates.fixDummyStatesRec(list) ->
- list.removeStateFromRegion()
-;
-
-Void fixDummyStates(State state):
- fixDummyStates(state.parentRegion)
-;
-
-Void removeStateFromRegion(State state):
- state.parentRegion.innerStates.remove(state)
-;
-
-Void fixDummyStatesRec(Region rootRegion, List[State] list):
- rootRegion.innerStates.fixDummyStatesRec(list)
-;
-
-Void fixDummyStatesRec(State state, List[State] list):
- let trans = state.outgoingTransitions:
- 
- (trans.size == 1 &&
-  (trans.get(0).triggersAndEffects == null || 
-  trans.get(0).triggersAndEffects.matches("")) &&
-  trans.get(0).isImmediate &&
-  state.regions.isEmpty &&
-  state.suspensionTrigger == null &&
-  state.entryActions.isEmpty &&
-  state.exitActions.isEmpty &&
-  state.innerActions.isEmpty ?
-  (replaceState(state, trans.get(0).targetState) ->
-  list.add(state)) 
- :
-   state.regions.fixDummyStatesRec(list)
- )
-;
-
-Void replaceState(State old, State replacement):
- let incoming = getIncomingTransitions(old):
- replacement.setIsInitial(old.isInitial) ->
- incoming.setTargetState(replacement)
-;
-
-List[Transition] getIncomingTransitions(State state):
- let parent = state.parentRegion:
- parent.innerStates.outgoingTransitions.select(e|e.targetState == state)
-;
-
-// === end dummy states ===
-
-// === begin IDs ===
-// each state and region must have a unique ID
-
-Void fixIDs(Region rootRegion):
- fixIDsRec(rootRegion) ->
- clearIDCache()
-;
-
-Void fixIDs(State state):
- fixIDs(state.parentRegion)
-;
-
-Void fixIDsRec(Region region):
- generateRegionId(region) ->
- region.innerStates.fixIDsRec()
-;
-
-Void fixIDsRec(State state):
- state.setId(state.label) ->
- generateStateId(state) ->
- state.regions.fixIDsRec()
-;
-
-// === end IDs ===
-
-// === begin WhiteSpaces ===
-// Transition Triggers and effects should not contain whitespaces
-
-Void fixWhiteSpaces(Region region):
- region.innerStates.fixWhiteSpaces() ->
- region
-;
-
-Void fixWhiteSpaces(State state):
- state.outgoingTransitions.fixWhiteSpacesInAction() ->
- state.entryActions.fixWhiteSpacesInAction() ->
- state.exitActions.fixWhiteSpacesInAction() ->
- state.suspensionTrigger.fixWhiteSpacesInAction() ->
- state.innerActions.fixWhiteSpacesInAction() ->
- state.regions.fixWhiteSpaces() ->
- state
-;
-
-Void fixWhiteSpacesInAction(Action action):
- action.triggersAndEffects.replaceAll(" " , "")
-;
-
-Void fixNormalTerminations(Region region):
- region.innerStates.fixNormalTerminations()
-;
-
-Void fixNormalTerminations(State state):
- state.outgoingTransitions.select(e|e.type == TransitionType::NORMALTERMINATION).fixTransitionType() ->
- state.regions.fixNormalTerminations()
-;
-
 Void fixTransitionType(Transition trans):
- (trans.sourceState.regions.isEmpty ?
+ (if (trans.sourceState.isSimpleState()) then
   trans.setType(TransitionType::WEAKABORT)
- : 
-  (removeTriggerFromString(trans) ->
-  trans.setTrigger(null))
+  else (if (trans.type == TransitionType::NORMALTERMINATION) then
+    (removeTriggerFromString(trans) ->
+     trans.setTrigger(null))
+  )
  )
 ;
 
@@ -536,26 +495,36 @@ Void removeTriggerFromString(Transition trans):
  )
 ;
 
-// === end WhiteSpaces ===
+// === end fix transitions ===
 
-// === begin Dummy Regions ===
-// removes redundant regions
+// === begin dummy states ===
+// removes redundant states
 
-Void removeRedundantRegions(Region rootRegion):
- rootRegion.innerStates.recRemoveRedundantRegions()
+Void fixDummyState(State state, List[State] list):
+ let trans = state.outgoingTransitions:
+ 
+ (if (trans.size == 1 &&
+  (trans.get(0).triggersAndEffects == null || 
+  trans.get(0).triggersAndEffects.matches("") ||
+  trans.get(0).triggersAndEffects.matches("# /")) &&
+  trans.get(0).isImmediate &&
+  state.isSimpleState()) then
+  (replaceState(state, trans.get(0).targetState) ->
+  list.add(state)))
 ;
 
-Void recRemoveRedundantRegions(State state):
- state.regions.recRemoveRedundantRegions()
+Void replaceState(State old, State replacement):
+ let incoming = getIncomingTransitions(old):
+ replacement.setIsInitial(old.isInitial) ->
+ (if (replacement.isInitial && replacement.type == StateType::CONDITIONAL) then
+   replacement.setType(StateType::NORMAL) ->
+   replacement.setLabel(old.label)) ->
+ incoming.setTargetState(replacement)
 ;
 
-Void recRemoveRedundantRegions(Region region):
- if (region.innerStates.isEmpty) then
-   (if (region.signals.isEmpty &&
-       region.variables.isEmpty) then
-       region.parentState.regions.remove(region))
-   else
-     region.innerStates.recRemoveRedundantRegions()
+List[Transition] getIncomingTransitions(State state):
+ let parent = state.parentRegion:
+ parent.innerStates.outgoingTransitions.select(e|e.targetState == state)
 ;
 
-// === end Dummy Regions ===
+// === end dummy states ===
