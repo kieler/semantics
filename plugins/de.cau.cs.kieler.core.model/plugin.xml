@@ -49,10 +49,16 @@
                   checkEnabled="false">
                <with
                      variable="activeEditor">
-                  <test
-                        forcePluginActivation="false"
-                        property="de.cau.cs.kieler.core.model.isDiagramEditor">
-                  </test>
+                  <and>
+                     <test
+                           forcePluginActivation="false"
+                           property="de.cau.cs.kieler.core.model.isDiagramEditor">
+                     </test>
+                     <test
+                           forcePluginActivation="false"
+                           property="de.cau.cs.kieler.core.model.hasValidateAction">
+                     </test>
+                  </and>
                </with>
             </visibleWhen>
          </command>
@@ -78,6 +84,13 @@
             id="de.cau.cs.kieler.core.model.isDiagramEditor"
             namespace="de.cau.cs.kieler.core.model"
             properties="isDiagramEditor"
+            type="org.eclipse.ui.IEditorPart">
+      </propertyTester>
+      <propertyTester
+            class="de.cau.cs.kieler.core.model.util.KielerModelPropertyTester"
+            id="de.cau.cs.kieler.core.model.hasValidateAction"
+            namespace="de.cau.cs.kieler.core.model"
+            properties="hasValidateAction"
             type="org.eclipse.ui.IEditorPart">
       </propertyTester>
    </extension>

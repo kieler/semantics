@@ -25,12 +25,18 @@ import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences;
 import org.eclipse.core.runtime.preferences.InstanceScope;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EValidator;
+import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramEditor;
+import org.eclipse.gmf.runtime.notation.View;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.util.IPropertyChangeListener;
 import org.eclipse.jface.util.PropertyChangeEvent;
+import org.eclipse.ui.IEditorPart;
+import org.eclipse.ui.IWorkbenchPage;
+import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.handlers.HandlerUtil;
 import org.eclipse.xtend.typesystem.emf.check.CheckRegistry;
 
@@ -107,6 +113,62 @@ public final class ValidationManager extends AbstractHandler {
      */
     public static Set<String> getRegisteredFiles() {
         return checkFiles.keySet();
+    }
+
+    /**
+     * Get all files registered for a specific ePackage.
+     * 
+     * @param ePackage
+     *            the package
+     * @return the files
+     */
+    public static Set<String> getRegisteredFiles(final EPackage ePackage) {
+        Set<String> result = new HashSet<String>();
+        for (CheckFile file : checkFiles.values()) {
+            if (file.ePackage == ePackage) {
+                result.add(file.file);
+            }
+        }
+        return result;
+    }
+
+    /**
+     * Get the Epackage of the file.
+     * 
+     * @param file
+     *            the file
+     * @return the package
+     */
+    public static EPackage getEPackage(final String file) {
+        EPackage result = null;
+        CheckFile checkFile = checkFiles.get(file);
+        if (checkFile != null) {
+            result = checkFile.ePackage;
+        }
+        return result;
+    }
+
+    /**
+     * Get the ePackage for the currently active editor.
+     * 
+     * @return the package
+     */
+    public static EPackage getEPackage() {
+        EPackage ePackage = null;
+        IWorkbenchPage page = PlatformUI.getWorkbench()
+                .getActiveWorkbenchWindow().getActivePage();
+        if (page != null) {
+            IEditorPart ed = page.getActiveEditor();
+            if (ed != null && ed instanceof DiagramEditor) {
+                DiagramEditor diagEd = (DiagramEditor) ed;
+                Object obj = diagEd.getDiagramEditPart().getModel();
+                if (obj != null && obj instanceof View) {
+                    EObject eObj = ((View) obj).getElement();
+                    ePackage = eObj.eClass().getEPackage();
+                }
+            }
+        }
+        return ePackage;
     }
 
     /**

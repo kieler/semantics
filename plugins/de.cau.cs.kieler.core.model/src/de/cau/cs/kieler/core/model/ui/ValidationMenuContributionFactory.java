@@ -15,6 +15,7 @@ package de.cau.cs.kieler.core.model.ui;
 
 import java.util.Set;
 
+import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.jface.action.IContributionItem;
 import org.eclipse.jface.action.IContributionManager;
 import org.eclipse.jface.util.IPropertyChangeListener;
@@ -208,7 +209,11 @@ public class ValidationMenuContributionFactory extends
          * {@inheritDoc}
          */
         public boolean isVisible() {
-            return true;
+            EPackage ePackage = ValidationManager.getEPackage();
+            if (ePackage == null) {
+                return false;
+            }
+            return ValidationManager.getEPackage(file) == ePackage;
         }
 
         /**

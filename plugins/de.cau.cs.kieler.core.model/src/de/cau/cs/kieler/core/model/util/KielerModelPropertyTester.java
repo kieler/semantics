@@ -14,6 +14,7 @@
 package de.cau.cs.kieler.core.model.util;
 
 import org.eclipse.core.expressions.PropertyTester;
+import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramEditor;
 
 /**
@@ -33,6 +34,11 @@ public class KielerModelPropertyTester extends PropertyTester {
                 && receiver instanceof DiagramEditor) {
             // editor might have markers and validation action
             return true;
+        }
+        if (property.equals("hasValidateAction")
+                && receiver instanceof DiagramEditor) {
+            EPackage ePackage = ValidationManager.getEPackage();
+            return !ValidationManager.getRegisteredFiles(ePackage).isEmpty();
         }
         return false;
     }
