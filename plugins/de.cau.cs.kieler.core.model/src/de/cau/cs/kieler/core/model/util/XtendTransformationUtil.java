@@ -48,6 +48,7 @@ import de.cau.cs.kieler.core.ui.util.MonitoredOperation;
  * @author haf
  * @kieler.rating 2010-06-04 proposed yellow proposed by haf
  */
+@SuppressWarnings("restriction")
 public final class XtendTransformationUtil {
 
     private XtendTransformationUtil() {
