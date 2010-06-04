@@ -100,9 +100,9 @@ public class ExecutePtolemyModel {
         // System.out.print("Adding Ptolemy to classpath ...");
         // try {
         // DynamicClasspath.addFile("D:\\Studium_SVN\\ptIIplugin\\ptolemy");
-        // System.out.println(" done!");
+        // SyncchartsSimPtolemyPlugin.DEBUG(" done!");
         // } catch (IOException e) {
-        // System.out.println(" failed!");
+        // SyncchartsSimPtolemyPlugin.DEBUG(" failed!");
         // e.printStackTrace();
         // }
         this.PtolemyModel = PtolemyModel;
@@ -143,7 +143,7 @@ public class ExecutePtolemyModel {
             String signalName = kielerIOList.get(c).getSignalName();
             // remove quotation marks
             signalName = signalName.replaceAll("'", "");
-            System.out.print(">>>" + signalName);
+                System.out.print(">>>" + signalName);
             keyArray[c] = signalName;
         }
 
@@ -274,12 +274,12 @@ public class ExecutePtolemyModel {
         ModelOutput modelOutput;
 
         public PresentTokenListener(ModelOutput modelOutput) {
-            System.out.println("+++++++++++++++PresentTokenListener");
+                SyncchartsSimPtolemyPlugin.DEBUG("+++++++++++++++PresentTokenListener");
             this.modelOutput = modelOutput;
         }
 
         public void portEvent(IOPortEvent event) {
-            System.out.println("+++++++++++++++PORT EVENT");
+                SyncchartsSimPtolemyPlugin.DEBUG("+++++++++++++++PORT EVENT");
             this.modelOutput.present = true;
         }
 
@@ -385,7 +385,7 @@ public class ExecutePtolemyModel {
     @SuppressWarnings("unchecked")
     private String searchForActiveStates(List<InstantiableNamedObj> children, String activeStateName) {
 
-        System.out.println("-------------------");
+            SyncchartsSimPtolemyPlugin.DEBUG("-------------------");
 
         // if no further children
         if (children == null)
@@ -394,7 +394,7 @@ public class ExecutePtolemyModel {
             return "";
 
         String activeStates = "";
-        System.out.println("   ACTIVE:" + activeStateName);
+            SyncchartsSimPtolemyPlugin.DEBUG("   ACTIVE:" + activeStateName);
 
         // do recursively for children
         for (int c = 0; c < children.size(); c++) {
@@ -403,7 +403,7 @@ public class ExecutePtolemyModel {
             if (child instanceof State) {
                 State state = (State) child;
                 if (state.getName().equals(activeStateName)) {
-                    System.out.println("STATE (ACTIVE):" + state.getName());
+                        SyncchartsSimPtolemyPlugin.DEBUG("STATE (ACTIVE):" + state.getName());
                     // prepare for adding to the string
                     if (!activeStates.equals(""))
                         activeStates += ", ";
@@ -411,7 +411,7 @@ public class ExecutePtolemyModel {
                     activeStates += ((StringAttribute) (state.getAttribute("elementURIFragment")))
                             .getValueAsString();
                 } else {
-                    System.out.println("STATE (PASSIVE):" + state.getName());
+                        SyncchartsSimPtolemyPlugin.DEBUG("STATE (PASSIVE):" + state.getName());
                     continue;
                 }
             }
@@ -421,8 +421,8 @@ public class ExecutePtolemyModel {
 
                 // add modal models of the same hierarchy to the list
                 // modalModelTree.add(modalModel);
-                System.out.println("MODALMODEL:" + modalModel.getName());
-                System.out.println("         ->"
+                SyncchartsSimPtolemyPlugin.DEBUG("MODALMODEL:" + modalModel.getName());
+                SyncchartsSimPtolemyPlugin.DEBUG("         ->"
                         + modalModel.getController().currentState().getName());
 
                 // if it contains any more children...
@@ -436,15 +436,15 @@ public class ExecutePtolemyModel {
                 CompositeActor compositeActor = (CompositeActor) child;
 
                 String compositeActorName = compositeActor.getName();
-                System.out.println("COMPOSITE:" + compositeActorName);
+                SyncchartsSimPtolemyPlugin.DEBUG("COMPOSITE:" + compositeActorName);
 
                 if (activeStateName == null) {
-                    System.out.println("---> CALL INNER STATES (null)");
+                    SyncchartsSimPtolemyPlugin.DEBUG("---> CALL INNER STATES (null)");
                     // for active states only search deeper!
                     activeStates += searchForActiveStates(compositeActor.entityList(),
                             activeStateName);
                 } else if (compositeActorName.equals(activeStateName)) {
-                    System.out.println("---> CALL INNER STATES (name active)");
+                    SyncchartsSimPtolemyPlugin.DEBUG("---> CALL INNER STATES (name active)");
                     // for active states only search deeper!
                     activeStates += searchForActiveStates(compositeActor.entityList(),
                             activeStateName);
@@ -457,10 +457,10 @@ public class ExecutePtolemyModel {
                 // due to the complex hierarchy in moml-files
                 // this has to be set here!
                 // activeStateName = modalController.currentState().getName();
-                // System.out.println("  +ACTIVE:"+activeStateName);
+                // SyncchartsSimPtolemyPlugin.DEBUG("  +ACTIVE:"+activeStateName);
 
-                System.out.println("MODALCONTR:" + modalController.getName());
-                System.out.println("         ->" + modalController.currentState().getName());
+                SyncchartsSimPtolemyPlugin.DEBUG("MODALCONTR:" + modalController.getName());
+                SyncchartsSimPtolemyPlugin.DEBUG("         ->" + modalController.currentState().getName());
 
                 ModalController ctrl = modalController;
                 Director director = ctrl.getDirector();
@@ -470,11 +470,11 @@ public class ExecutePtolemyModel {
                 }
                 Transition transition = ctrl.getLastChosenTransition();
                 if (transition != null) {
-                    System.out.println("LAST CHOSEN TRANSITION:"
+                    SyncchartsSimPtolemyPlugin.DEBUG("LAST CHOSEN TRANSITION:"
                             + transition.getAttribute("EmfFragmentURI").toString());
 
                 } else {
-                    System.out.println("LAST CHOSEN TRANSITION == NULL");
+                    SyncchartsSimPtolemyPlugin.DEBUG("LAST CHOSEN TRANSITION == NULL");
                 }
 
                 // if it contains any more children...
@@ -509,16 +509,16 @@ public class ExecutePtolemyModel {
      * Execution initialize.
      */
     public synchronized void executionInitialize() throws KiemInitializationException {
-        System.out.println("#1");
+        SyncchartsSimPtolemyPlugin.DEBUG("#1");
         URI fileURI = URI.createFileURI(new File(PtolemyModel).getAbsolutePath());
-        System.out.println("#2");
+        SyncchartsSimPtolemyPlugin.DEBUG("#2");
         URI momlFile = fileURI;
-        System.out.println("#3");
+        SyncchartsSimPtolemyPlugin.DEBUG("#3");
 
         // create new MoML parser
         // make sure Ptolemy is in dependencies
         MoMLParser parser = new MoMLParser();
-        System.out.println("#4");
+        SyncchartsSimPtolemyPlugin.DEBUG("#4");
 
         // modalModelTree = new LinkedList<Object>();
         kielerIOList = new LinkedList<KielerIO>();
@@ -528,18 +528,18 @@ public class ExecutePtolemyModel {
         try {
             // parse
             ptolemyModel = parser.parse(null, new URL(momlFile.toString()));
-            System.out.println("#5");
+            SyncchartsSimPtolemyPlugin.DEBUG("#5");
 
             parser.reset();
 
             // now execute the model
             if (ptolemyModel != null && ptolemyModel instanceof CompositeActor) {
-                System.out.println("#6");
+                SyncchartsSimPtolemyPlugin.DEBUG("#6");
 
                 // check if the parsed model is of correct type
                 modelActor = ((CompositeActor) ptolemyModel);
 
-                System.out.println("#7");
+                SyncchartsSimPtolemyPlugin.DEBUG("#7");
 
                 // get the manager that manages execution
                 manager = modelActor.getManager();
@@ -560,7 +560,7 @@ public class ExecutePtolemyModel {
                     modelActor.setManager(manager);
                 }
 
-                System.out.println("#8");
+                SyncchartsSimPtolemyPlugin.DEBUG("#8");
 
                 // //go thru the model and add fill the modalModelList (Current States)
                 // fillModalModelTree(
@@ -570,18 +570,18 @@ public class ExecutePtolemyModel {
                 // go thru the model and add fill the kielerIOList (Inputs)
                 fillKielerIOList(kielerIOList, extracted());
 
-                System.out.println("#9");
+                SyncchartsSimPtolemyPlugin.DEBUG("#9");
 
                 // go thru the model and add fill the kielerCombine (Outputs)
                 fillModelOutputList(modelOutputList, extracted());
 
-                System.out.println("#10");
+                SyncchartsSimPtolemyPlugin.DEBUG("#10");
 
                 // run the model
                 if (manager != null) {
                     // run forest, run!
                     manager.initialize();
-                    System.out.println("#11");
+                    SyncchartsSimPtolemyPlugin.DEBUG("#11");
 
                 }
             }// end if

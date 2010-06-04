@@ -127,7 +127,7 @@ public class SyncchartsSimDataComponent extends JSONObjectDataComponent {
      * A flag that becomes true if the user was warned about unsaved changes during the simulation.
      */
     private boolean simulatingOldModelVersion;
-    
+
     // -------------------------------------------------------------------------
 
     /**
@@ -226,8 +226,8 @@ public class SyncchartsSimDataComponent extends JSONObjectDataComponent {
             emfReader.setModelSlot("emfmodel");
             // DO NOT USE THE SAME INPUT RESOUCRCE SET
             // OTHERWISE WE MAY CHANGE THE INPUT MODEL!
-            //emfReader.setResourceSet(this.getInputResourceSet());
-            //emfReader.setResourceSet(ptolemyModel.getResourceSet());
+            // emfReader.setResourceSet(this.getInputResourceSet());
+            // emfReader.setResourceSet(ptolemyModel.getResourceSet());
 
             // MOML writer
             MomlWriter momlWriter = new MomlWriter();
@@ -258,11 +258,11 @@ public class SyncchartsSimDataComponent extends JSONObjectDataComponent {
             // workflow.invoke(wfx, (ProgressMonitor)monitor.subTask(80), issues);
             workflow.invoke(wfx, m2mMonitor, issues);
 
-            System.out.print(xtendComponent.getLogMessage());
-            System.out.print(issues.getInfos());
-            System.out.print(issues.getIssues());
-            System.out.print(issues.getWarnings());
-            System.out.print(issues.getErrors().toString());
+            SyncchartsSimPtolemyPlugin.DEBUG(xtendComponent.getLogMessage());
+                SyncchartsSimPtolemyPlugin.DEBUG(issues.getInfos().toString());
+                SyncchartsSimPtolemyPlugin.DEBUG(issues.getIssues().toString());
+                SyncchartsSimPtolemyPlugin.DEBUG(issues.getWarnings().toString());
+                SyncchartsSimPtolemyPlugin.DEBUG(issues.getErrors().toString());
         } catch (Exception e) {
             monitor.done();
             e.printStackTrace();
@@ -290,7 +290,7 @@ public class SyncchartsSimDataComponent extends JSONObjectDataComponent {
         try {
             long newModelTimeStamp = this.getInputModelEObject(this.modelEditor).eResource()
                     .getTimeStamp();
-            //System.out.println("TIMESTAMP NEW " + newModelTimeStamp);
+            // SyncchartsSimPtolemyPlugin.DEBUG("TIMESTAMP NEW " + newModelTimeStamp);
 
             // check the dirty state of the editor containing the simulated model
             if (((newModelTimeStamp != modelTimeStamp) || modelEditor.isDirty())
@@ -307,7 +307,7 @@ public class SyncchartsSimDataComponent extends JSONObjectDataComponent {
             // editor might have been closed -> no problem
         }
 
-        System.out.println("Step in Ptolemy Model...");
+            SyncchartsSimPtolemyPlugin.DEBUG("Step in Ptolemy Model...");
 
         // the return object to construct
         JSONObject returnObj = new JSONObject();
@@ -336,7 +336,7 @@ public class SyncchartsSimDataComponent extends JSONObjectDataComponent {
         String[] presentSignals = PTOEXE.getModelOutputPresentSignals();
         for (int c = 0; c < presentSignals.length; c++) {
             String signalName = presentSignals[c];
-            System.out.println("Present:" + signalName);
+                SyncchartsSimPtolemyPlugin.DEBUG("Present:" + signalName);
             try {
                 JSONObject signalObject = JSONSignalValues.newValue(true);
                 try {
@@ -352,7 +352,7 @@ public class SyncchartsSimDataComponent extends JSONObjectDataComponent {
         String[] absentSignals = PTOEXE.getModelOutputAbsentSignals();
         for (int c = 0; c < absentSignals.length; c++) {
             String signalName = absentSignals[c];
-            System.out.println("Absent:" + signalName);
+                SyncchartsSimPtolemyPlugin.DEBUG("Absent:" + signalName);
             try {
                 JSONObject signalObject = JSONSignalValues.newValue(false);
                 try {
@@ -363,8 +363,8 @@ public class SyncchartsSimDataComponent extends JSONObjectDataComponent {
                 e.printStackTrace();
             }
         }
-        
-        System.out.println(returnObj.toString());
+
+            SyncchartsSimPtolemyPlugin.DEBUG(returnObj.toString());
 
         // the stateName is the second KIEM property
         String stateName = this.getProperties()[1].getValue();
@@ -399,16 +399,22 @@ public class SyncchartsSimDataComponent extends JSONObjectDataComponent {
             // prompt the user
             try {
                 final Shell shell = Display.getCurrent().getShells()[0];
-                MessageDialog.openWarning(shell, "Errors or Warnings exist", "'"
-                        + modelEditor.getEditorInput().getName() + "'"
-                        + " contains unsolved problems. Please check the Eclipse Problems View to fix these" +
-                        		".\n\nNote that while errors or simulation warnings exist, the" +
-                        		" execution of the model is rather unpredictable.");
+                MessageDialog
+                        .openWarning(
+                                shell,
+                                "Errors or Warnings exist",
+                                "'"
+                                        + modelEditor.getEditorInput().getName()
+                                        + "'"
+                                        + " contains unsolved problems. Please check the Eclipse Problems View to fix these"
+                                        + ".\n\nNote that while errors or simulation warnings exist, the"
+                                        + " execution of the model is rather unpredictable.");
             } catch (Exception e) {
-                //in case of an error here, do not start simulation
+                // in case of an error here, do not start simulation
                 throw new KiemInitializationException(
                         "Please fix all errors and KlePto simulation warnings listed "
-                                + "in the Eclipse Problems View before simulating.\n\n", false, null);
+                                + "in the Eclipse Problems View before simulating.\n\n", false,
+                        null);
             }
         }
         try {
@@ -512,7 +518,7 @@ public class SyncchartsSimDataComponent extends JSONObjectDataComponent {
 
         String ptolemyModelFile = ptolemyModel.getURI().toFileString();
 
-        System.out.println("Now creating Ptolemy Model ..." + ptolemyModel);
+            SyncchartsSimPtolemyPlugin.DEBUG("Now creating Ptolemy Model ..." + ptolemyModel);
 
         transformationCompleted = false;
         transformationError = false;
@@ -523,8 +529,7 @@ public class SyncchartsSimDataComponent extends JSONObjectDataComponent {
                     new IRunnableWithProgress() {
                         public void run(final IProgressMonitor monitor) {
                             try {
-                                status
-                                        .set(model2ModelTransform(new KielerProgressMonitor(
+                                status.set(model2ModelTransform(new KielerProgressMonitor(
                                                 monitor)));
                             } catch (KiemInitializationException e) {
                                 transformationError = true;
@@ -549,12 +554,12 @@ public class SyncchartsSimDataComponent extends JSONObjectDataComponent {
         }// end while
 
         if (!transformationError) {
-            System.out.println("Now loading Ptolemy Model..." + ptolemyModelFile);
+                SyncchartsSimPtolemyPlugin.DEBUG("Now loading Ptolemy Model..." + ptolemyModelFile);
             // load the Ptolemy Model
             PTOEXE = new ExecutePtolemyModel(ptolemyModelFile);
-            System.out.println("Now initializing Ptolemy Model...");
+                SyncchartsSimPtolemyPlugin.DEBUG("Now initializing Ptolemy Model...");
             PTOEXE.executionInitialize();
-            System.out.println("Now executing Ptolemy Model...");
+                SyncchartsSimPtolemyPlugin.DEBUG("Now executing Ptolemy Model...");
         }// end if
         else {
             throw new KiemInitializationException("Ptolemy Model could not be generated", true,
@@ -702,7 +707,7 @@ public class SyncchartsSimDataComponent extends JSONObjectDataComponent {
             simulatingOldModelVersion = false;
         }
 
-        System.out.println("TIMESTAMP" + modelTimeStamp);
+            SyncchartsSimPtolemyPlugin.DEBUG("TIMESTAMP" + modelTimeStamp);
 
     }
 

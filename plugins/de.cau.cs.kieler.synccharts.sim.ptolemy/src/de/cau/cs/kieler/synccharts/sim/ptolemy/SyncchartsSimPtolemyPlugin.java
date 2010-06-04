@@ -14,6 +14,10 @@ public class SyncchartsSimPtolemyPlugin extends Plugin {
 	// The shared instance
 	private static SyncchartsSimPtolemyPlugin plugin;
 	
+	/** The Constant DEBUG. If true print out debug information. */
+	public static final boolean DEBUG = false;
+
+	
 	/**
 	 * The constructor
 	 */
@@ -45,6 +49,12 @@ public class SyncchartsSimPtolemyPlugin extends Plugin {
 	 */
 	public static SyncchartsSimPtolemyPlugin getDefault() {
 		return plugin;
+	}
+	
+	public static void DEBUG(final String debugOutputText) {
+	    if (DEBUG) {
+	        System.out.println(debugOutputText);
+	    }
 	}
 
 }

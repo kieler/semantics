@@ -17,6 +17,8 @@ package de.cau.cs.kieler.synccharts.sim.ptolemy.oaw;
 import java.util.Hashtable;
 
 import de.cau.cs.kieler.synccharts.*;
+import de.cau.cs.kieler.synccharts.sim.ptolemy.SyncchartsSimPtolemyPlugin;
+
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.BasicEList;
 
@@ -39,7 +41,7 @@ public class XtendJava {
 	 * @param aString the a string
 	 */
 	public final static void dump(String aString) {
-		System.out.println(aString);
+		SyncchartsSimPtolemyPlugin.DEBUG(aString);
 	}
 
 	//-------------------------------------------------------------------------
@@ -178,11 +180,11 @@ public class XtendJava {
 	//2  == output, used in effects
 	//-1 == error, used in in expression AND effects
 	public final static int getPortType(Signal signal, Region region) {
-                System.out.println("Checking "+ region.getInnerStates().size()+" inner states for signal:"+signal.getName());
+	        SyncchartsSimPtolemyPlugin.DEBUG("Checking "+ region.getInnerStates().size()+" inner states for signal:"+signal.getName());
                 boolean isOutput = isOutputPort(signal, region);
-                System.out.println("Again Checking for signal:"+signal.getName());
+                SyncchartsSimPtolemyPlugin.DEBUG("Again Checking for signal:"+signal.getName());
                 boolean isInput = isInputPort(signal, region);
-                System.out.println("out:" + isOutput + ",  in:"+ isInput);
+                SyncchartsSimPtolemyPlugin.DEBUG("out:" + isOutput + ",  in:"+ isInput);
                 if (isOutput && isInput)
                         return -1;
                 else if (isInput)
@@ -279,11 +281,11 @@ public class XtendJava {
 			}
 		}
 		else if (expression instanceof SignalReference) {
-			System.out.println(((SignalReference)expression).getSignal().getName() + "==" + signal.getName());
+			SyncchartsSimPtolemyPlugin.DEBUG(((SignalReference)expression).getSignal().getName() + "==" + signal.getName());
 			SignalReference signalReference = (SignalReference)expression;
 			if (signalReference.getSignal() == signal)
 				return true;
-//			System.out.println("-> NO");
+//			SyncchartsSimPtolemyPlugin.DEBUG("-> NO");
 		}
 		return returnValue;
 	}
@@ -366,7 +368,7 @@ public class XtendJava {
 	}
 	
 private static final String translateOperator(String syncchartsOperator) {
-	System.out.println("OP   :   "+syncchartsOperator);
+	SyncchartsSimPtolemyPlugin.DEBUG("OP   :   "+syncchartsOperator);
 	syncchartsOperator = syncchartsOperator.trim();
 	if (syncchartsOperator.equalsIgnoreCase("EQ")) return "==";
 	if (syncchartsOperator.equalsIgnoreCase("LT")) return "<";
