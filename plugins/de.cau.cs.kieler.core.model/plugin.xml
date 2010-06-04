@@ -5,7 +5,7 @@
          point="org.eclipse.ui.commands">
       <command
             categoryId="de.cau.cs.kieler"
-            defaultHandler="de.cau.cs.kieler.core.model.util.CheckFileManager"
+            defaultHandler="de.cau.cs.kieler.core.model.util.ValidationManager"
             description="Toggles the Problem Markers."
             id="de.cau.cs.kieler.core.model.toggleProblemMarkers"
             name="Show Problem Markers">

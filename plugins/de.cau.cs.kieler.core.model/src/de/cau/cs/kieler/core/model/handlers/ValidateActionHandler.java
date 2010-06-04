@@ -17,7 +17,7 @@ import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 
-import de.cau.cs.kieler.core.model.util.CheckFileManager;
+import de.cau.cs.kieler.core.model.util.ValidationManager;
 
 /**
  * Handler for triggering the validate action in the checkfile manager.
@@ -30,7 +30,7 @@ public class ValidateActionHandler extends AbstractHandler {
      * {@inheritDoc}
      */
     public Object execute(final ExecutionEvent event) throws ExecutionException {
-        CheckFileManager.validate();
+        ValidationManager.validate();
         return null;
     }
 

@@ -42,7 +42,7 @@ import de.cau.cs.kieler.core.ui.handler.RemoveMarkerHandler;
  * 
  * @author soh
  */
-public final class CheckFileManager extends AbstractHandler {
+public final class ValidationManager extends AbstractHandler {
 
     /**
      * Factory for creating the validate actions used in the validation.

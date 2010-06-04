@@ -31,7 +31,7 @@ import org.eclipse.ui.menus.ExtensionContributionFactory;
 import org.eclipse.ui.menus.IContributionRoot;
 import org.eclipse.ui.services.IServiceLocator;
 
-import de.cau.cs.kieler.core.model.util.CheckFileManager;
+import de.cau.cs.kieler.core.model.util.ValidationManager;
 
 /**
  * This factory is responsible for creating the menu entries for the menu of the
@@ -58,11 +58,11 @@ public class ValidationMenuContributionFactory extends
      *            the menu
      */
     private void fillMenu(final IContributionRoot menu) {
-        Set<String> files = CheckFileManager.getRegisteredFiles();
+        Set<String> files = ValidationManager.getRegisteredFiles();
 
         for (String file : files) {
             CheckFileMenuItem item = new CheckFileMenuItem(file,
-                    CheckFileManager.isEnabled(file));
+                    ValidationManager.isEnabled(file));
             menu.addContributionItem(item, null);
         }
     }
@@ -109,7 +109,7 @@ public class ValidationMenuContributionFactory extends
          * {@inheritDoc}
          */
         public void widgetSelected(final SelectionEvent e) {
-            CheckFileManager.setEnabled(file, result.getSelection());
+            ValidationManager.setEnabled(file, result.getSelection());
         }
 
         /**
@@ -130,7 +130,7 @@ public class ValidationMenuContributionFactory extends
          */
         public void dispose() {
             result.dispose();
-            CheckFileManager.removeListener(this);
+            ValidationManager.removeListener(this);
         }
 
         /**
@@ -147,7 +147,7 @@ public class ValidationMenuContributionFactory extends
             result.setText(file);
             result.setSelection(value);
             result.addSelectionListener(this);
-            CheckFileManager.addListener(this);
+            ValidationManager.addListener(this);
         }
 
         /**

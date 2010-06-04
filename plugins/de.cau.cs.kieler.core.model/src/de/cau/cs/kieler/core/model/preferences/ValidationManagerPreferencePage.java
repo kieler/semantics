@@ -24,7 +24,7 @@ import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
 
 import de.cau.cs.kieler.core.model.CoreModelPlugin;
-import de.cau.cs.kieler.core.model.util.CheckFileManager;
+import de.cau.cs.kieler.core.model.util.ValidationManager;
 
 /**
  * @author soh
@@ -48,11 +48,11 @@ public class ValidationManagerPreferencePage extends FieldEditorPreferencePage
      */
     @Override
     protected void createFieldEditors() {
-        Set<String> files = CheckFileManager.getRegisteredFiles();
+        Set<String> files = ValidationManager.getRegisteredFiles();
 
         for (String file : files) {
             BooleanFieldEditor enablementFE = new BooleanFieldEditor(
-                    CheckFileManager.PREFERENCE_PREFIX + file, file,
+                    ValidationManager.PREFERENCE_PREFIX + file, file,
                     getFieldEditorParent());
             super.addField(enablementFE);
             editors.add(enablementFE);
@@ -73,9 +73,9 @@ public class ValidationManagerPreferencePage extends FieldEditorPreferencePage
         for (BooleanFieldEditor bfe : editors) {
             String key = bfe.getLabelText();
             Boolean value = bfe.getBooleanValue();
-            CheckFileManager.setEnabled(key, value);
+            ValidationManager.setEnabled(key, value);
         }
-        CheckFileManager.refreshChecks();
+        ValidationManager.refreshChecks();
         return true;
     }
 
@@ -84,16 +84,16 @@ public class ValidationManagerPreferencePage extends FieldEditorPreferencePage
      */
     public void init(final IWorkbench workbench) {
         setPreferenceStore(CoreModelPlugin.getDefault().getPreferenceStore());
-        Set<String> files = CheckFileManager.getRegisteredFiles();
+        Set<String> files = ValidationManager.getRegisteredFiles();
         IPreferenceStore store = getPreferenceStore();
 
         for (String file : files) {
-            String key = CheckFileManager.PREFERENCE_PREFIX + file;
-            Boolean value = CheckFileManager.isEnabled(file);
+            String key = ValidationManager.PREFERENCE_PREFIX + file;
+            Boolean value = ValidationManager.isEnabled(file);
             if (store.contains(key)) {
                 Boolean storeValue = store.getBoolean(key);
                 if (value != storeValue) {
-                    CheckFileManager.setEnabled(file, storeValue);
+                    ValidationManager.setEnabled(file, storeValue);
                 }
             } else {
                 store.setValue(key, value);

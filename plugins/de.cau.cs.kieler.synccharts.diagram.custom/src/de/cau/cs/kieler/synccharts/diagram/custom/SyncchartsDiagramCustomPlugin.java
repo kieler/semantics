@@ -40,9 +40,9 @@ import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
-import de.cau.cs.kieler.core.model.util.CheckFileManager;
+import de.cau.cs.kieler.core.model.util.ValidationManager;
 import de.cau.cs.kieler.core.model.util.ModelingUtil;
-import de.cau.cs.kieler.core.model.util.CheckFileManager.IActionFactory;
+import de.cau.cs.kieler.core.model.util.ValidationManager.IActionFactory;
 import de.cau.cs.kieler.synccharts.SyncchartsPackage;
 import de.cau.cs.kieler.synccharts.Transition;
 import de.cau.cs.kieler.synccharts.diagram.custom.triggerlisteners.RedundantLabelTriggerListener;
@@ -61,7 +61,7 @@ public class SyncchartsDiagramCustomPlugin extends AbstractUIPlugin implements
     public static SyncchartsDiagramCustomPlugin instance = null;
 
     private static void registerValidateAction(final IWorkbenchPage page) {
-        CheckFileManager.registerValidateAction(SyncchartsPackage.eINSTANCE,
+        ValidationManager.registerValidateAction(SyncchartsPackage.eINSTANCE,
                 new IActionFactory() {
 
                     public Action getAction() {
