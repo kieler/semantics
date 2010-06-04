@@ -24,6 +24,7 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.xmi.XMIResource;
+import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipse.emf.ecore.xml.type.AnyType;
 import org.eclipse.emf.mwe.core.WorkflowContext;
 import org.eclipse.emf.mwe.core.WorkflowContextDefaultImpl;
@@ -139,8 +140,8 @@ public final class XtendTransformationUtil {
         // obtain the unknown features of the input file
         Map<EObject, AnyType> unknownFeatures = new HashMap<EObject, AnyType>();
         for (Resource resource : emfReader.getResourceSet().getResources()) {
-            if (resource instanceof XMIResource) {
-                unknownFeatures.putAll(((XMIResource) resource).getEObjectToExtensionMap());
+            if (resource instanceof XMLResource) {
+                unknownFeatures.putAll(((XMLResource) resource).getEObjectToExtensionMap());
             }
         }
 

@@ -13,6 +13,10 @@
  */
 package de.cau.cs.kieler.core.model.util;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -20,7 +24,15 @@ import java.util.Map;
 
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
+import org.eclipse.emf.ecore.util.FeatureMap;
+import org.eclipse.emf.ecore.util.FeatureMap.Entry;
+import org.eclipse.emf.ecore.xmi.XMLResource;
+import org.eclipse.emf.ecore.xmi.impl.XMLResourceFactoryImpl;
 import org.eclipse.emf.ecore.xml.type.AnyType;
 import org.eclipse.emf.mwe.core.issues.Issues;
 import org.eclipse.emf.mwe.core.issues.MWEDiagnostic;
@@ -77,6 +89,7 @@ public class XtendStatus implements IStatus {
         if (children == null) {
             List<IStatus> myStatus = new LinkedList<IStatus>();
 
+            // add exception if there is one
             if (myException != null) {
                 IStatus status = new Status(IStatus.ERROR, CoreModelPlugin.PLUGIN_ID, "Exception "
                         + myException.getMessage(), myException);
@@ -87,6 +100,7 @@ public class XtendStatus implements IStatus {
                 }
             }
 
+            // add issues (Errors, Warnings, Infos)
             MWEDiagnostic[] tempDiags = myIssues.getErrors();
             for (int i = 0; i < tempDiags.length; i++) {
                 MWEDiagnostic diagnostic = tempDiags[i];
@@ -126,6 +140,21 @@ public class XtendStatus implements IStatus {
                     severity = IStatus.INFO;
                 }
             }
+
+            // add warnings about unknown features
+            Map<EObject, AnyType> unknownFeatures = getUnknownFeatures();
+            for (EObject targetObject : unknownFeatures.keySet()) {
+                IStatus status = new Status(IStatus.WARNING, CoreModelPlugin.PLUGIN_ID,
+                        "Unknown XML feature found in input. Unknown feature: \n"
+                                + serialize(unknownFeatures.get(targetObject)) + "\nfor Object\n"
+                                + targetObject.toString());
+                myStatus.add(status);
+
+                if (severity != IStatus.ERROR) {
+                    severity = IStatus.WARNING;
+                }
+            }
+
             children = new IStatus[myStatus.size()];
             children = myStatus.toArray(children);
         }
@@ -221,5 +250,64 @@ public class XtendStatus implements IStatus {
             myUnknownFeatures = new HashMap<EObject, AnyType>();
         }
         return myUnknownFeatures;
+    }
+
+    private String getString(final AnyType anyType) {
+        StringBuffer buffer = new StringBuffer();
+        buffer.append("(");
+        // buffer.append("Any: ");
+
+        buffer.append(getString(anyType.getAny()));
+        buffer.append(getString(anyType.getAnyAttribute()));
+        buffer.append(getString(anyType.getMixed()));
+        buffer.append(")");
+        return buffer.toString();
+    }
+
+    private String getString(final FeatureMap map) {
+        StringBuffer buffer = new StringBuffer();
+        for (Entry entry : map) {
+            buffer.append(entry.getEStructuralFeature().getName());
+            String val = "=\"" + entry.getValue() + "\" ";
+            if (entry.getValue() instanceof AnyType) {
+                // recursive call
+                val = " " + getString((AnyType) entry.getValue());
+            }
+            buffer.append(val + " ");
+        }
+        buffer.append(" ");
+        return buffer.toString();
+    }
+
+    private String serialize(AnyType anyType) {
+        // Create a resource set.
+        ResourceSet resourceSet = new ResourceSetImpl();
+
+        // Register the default resource factory -- only needed for stand-alone!
+        // this tells EMF to use XML to save the model
+        resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put(
+                Resource.Factory.Registry.DEFAULT_EXTENSION, new XMLResourceFactoryImpl());
+
+        // Get the URI of the model file.
+        URI fileURI = URI.createFileURI(new File("dummy.xml").getAbsolutePath());
+
+        // Create a resource for this file.
+        Resource resource = resourceSet.createResource(fileURI);
+
+        // Add the model objects to the contents.
+        resource.getContents().add(anyType);
+
+        HashMap options = new HashMap();
+        options.put(XMLResource.OPTION_EXTENDED_META_DATA, true);
+        
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+
+        // Save the contents of the resource to the file system.
+        try {
+            resource.save(outputStream, options); 
+        } catch (Exception e) {
+            return getString(anyType);
+        }
+        return outputStream.toString();
     }
 }
