@@ -13,11 +13,15 @@
  */
 package de.cau.cs.kieler.core.model.util;
 
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.xml.type.AnyType;
 import org.eclipse.emf.mwe.core.issues.Issues;
 import org.eclipse.emf.mwe.core.issues.MWEDiagnostic;
 
@@ -34,6 +38,9 @@ import de.cau.cs.kieler.core.model.CoreModelPlugin;
 public class XtendStatus implements IStatus {
 
     private Issues myIssues;
+    private Map<EObject, AnyType> myUnknownFeatures;
+    private String myLogMessage;
+    private Exception myException;
     private IStatus[] children;
     private int severity = IStatus.OK;
     private Throwable firstException = null;
@@ -44,9 +51,23 @@ public class XtendStatus implements IStatus {
      * 
      * @param issues
      *            the input diagnostic information
+     * @param logMessage
+     *            the logMessage of the Xtend components. Might carry detailed
+     *            information about where an error occured, including a stack
+     *            trace of the Xtend file.
+     * @param unknownFeatures
+     *            if the input file is an XMIResource, unknown features (not
+     *            specified XML elements) get recorded and can be passed to this
+     *            status
+     * @param e
+     *            an Exception occuring during transformation may be passed here
      */
-    public XtendStatus(final Issues issues) {
+    public XtendStatus(final Issues issues, final String logMessage,
+            final Map<EObject, AnyType> unknownFeatures, final Exception e) {
         this.myIssues = issues;
+        this.myUnknownFeatures = unknownFeatures;
+        this.myLogMessage = logMessage;
+        this.myException = e;
     }
 
     /**
@@ -56,13 +77,21 @@ public class XtendStatus implements IStatus {
         if (children == null) {
             List<IStatus> myStatus = new LinkedList<IStatus>();
 
+            if (myException != null) {
+                IStatus status = new Status(IStatus.ERROR, CoreModelPlugin.PLUGIN_ID, "Exception "
+                        + myException.getMessage(), myException);
+                myStatus.add(status);
+                severity = IStatus.ERROR;
+                if (firstException == null) {
+                    firstException = myException;
+                }
+            }
+
             MWEDiagnostic[] tempDiags = myIssues.getErrors();
             for (int i = 0; i < tempDiags.length; i++) {
                 MWEDiagnostic diagnostic = tempDiags[i];
-                IStatus status = new Status(IStatus.ERROR,
-                        CoreModelPlugin.PLUGIN_ID, "Error: "
-                                + diagnostic.getMessage(), diagnostic
-                                .getException());
+                IStatus status = new Status(IStatus.ERROR, CoreModelPlugin.PLUGIN_ID, "Error: "
+                        + diagnostic.getMessage(), diagnostic.getException());
                 myStatus.add(status);
                 severity = IStatus.ERROR;
                 if (firstException == null) {
@@ -73,10 +102,8 @@ public class XtendStatus implements IStatus {
             tempDiags = myIssues.getWarnings();
             for (int i = 0; i < tempDiags.length; i++) {
                 MWEDiagnostic diagnostic = tempDiags[i];
-                IStatus status = new Status(IStatus.WARNING,
-                        CoreModelPlugin.PLUGIN_ID, "Warning: "
-                                + diagnostic.getMessage(), diagnostic
-                                .getException());
+                IStatus status = new Status(IStatus.WARNING, CoreModelPlugin.PLUGIN_ID, "Warning: "
+                        + diagnostic.getMessage(), diagnostic.getException());
                 myStatus.add(status);
                 if (firstException == null) {
                     firstException = diagnostic.getException();
@@ -89,10 +116,8 @@ public class XtendStatus implements IStatus {
             tempDiags = myIssues.getInfos();
             for (int i = 0; i < tempDiags.length; i++) {
                 MWEDiagnostic diagnostic = tempDiags[i];
-                IStatus status = new Status(IStatus.INFO,
-                        CoreModelPlugin.PLUGIN_ID, "Info: "
-                                + diagnostic.getMessage(), diagnostic
-                                .getException());
+                IStatus status = new Status(IStatus.INFO, CoreModelPlugin.PLUGIN_ID, "Info: "
+                        + diagnostic.getMessage(), diagnostic.getException());
                 myStatus.add(status);
                 if (firstException == null) {
                     firstException = diagnostic.getException();
@@ -101,10 +126,8 @@ public class XtendStatus implements IStatus {
                     severity = IStatus.INFO;
                 }
             }
-
             children = new IStatus[myStatus.size()];
             children = myStatus.toArray(children);
-
         }
         return children;
 
@@ -132,7 +155,7 @@ public class XtendStatus implements IStatus {
             return "Model-to-model transformation successfully done.";
         }
         StringBuffer msg = new StringBuffer();
-        if (severity == IStatus.WARNING) {
+        if (severity == IStatus.INFO) {
             msg.append("Info");
         }
         if (severity == IStatus.WARNING) {
@@ -145,6 +168,7 @@ public class XtendStatus implements IStatus {
             msg.append("s");
         }
         msg.append(" in an Xtend model-to-model transformation.");
+        msg.append("\n Log Message: " + myLogMessage);
         return msg.toString();
     }
 
@@ -183,5 +207,19 @@ public class XtendStatus implements IStatus {
      */
     public boolean matches(final int severityMask) {
         return ((severity & severityMask) > 0);
+    }
+
+    /**
+     * If the input file is an XMIResource, unknown features (not specified XML
+     * elements) get recorded and can be passed to this status.
+     * 
+     * @return a map of unknown XML tags/attributes occured during the
+     *         transformation
+     */
+    public Map<EObject, AnyType> getUnknownFeatures() {
+        if (myUnknownFeatures == null) {
+            myUnknownFeatures = new HashMap<EObject, AnyType>();
+        }
+        return myUnknownFeatures;
     }
 }
