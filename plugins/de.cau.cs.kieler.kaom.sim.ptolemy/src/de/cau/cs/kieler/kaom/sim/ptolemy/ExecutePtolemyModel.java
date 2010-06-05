@@ -90,6 +90,18 @@ public class ExecutePtolemyModel {
 
     // the outer most actor
     private CompositeActor modelActor;
+    
+    private boolean recursive = false;
+
+    // -------------------------------------------------------------------------
+
+    public boolean isRecursive() {
+        return recursive;
+    }
+
+    public void setRecursive(boolean recursive) {
+        this.recursive = recursive;
+    }
 
     // -------------------------------------------------------------------------
 
@@ -162,7 +174,11 @@ public class ExecutePtolemyModel {
     public String[] getModelOutput() {
         String[] returnArray = new String[this.modelOutputList.size()];
         for (int c = 0; c < this.modelOutputList.size(); c++) {
-           returnArray[c] = this.modelOutputList.get(c).token.toString();
+           try {
+               returnArray[c] = this.modelOutputList.get(c).token.toString();
+           } catch(Exception e) {
+               // only get tokens that are readable
+           }
         }
         return returnArray;
     }
@@ -562,7 +578,7 @@ public class ExecutePtolemyModel {
                 KaomSimPtolemyPlugin.DEBUG("#9");
 
                 // go thru the model and add fill the kielerCombine (Outputs)
-                fillModelOutputList(modelOutputList, extracted(), true);
+                fillModelOutputList(modelOutputList, extracted(), this.isRecursive());
 
                 KaomSimPtolemyPlugin.DEBUG("#10");
 

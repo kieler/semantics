@@ -251,6 +251,8 @@ public class KaomSimDataComponent extends JSONObjectDataComponent {
 
         // contains the current state
         String currentState = "";
+        
+        PTOEXE.setRecursive(this.getProperties()[1].getValueAsBoolean());
 
         try {
             // set current input data
@@ -284,12 +286,12 @@ public class KaomSimDataComponent extends JSONObjectDataComponent {
         KaomSimPtolemyPlugin.DEBUG(returnObj.toString());
 
         // the stateName is the second KIEM property
-        String stateName = this.getProperties()[1].getValue();
+        //String stateName = this.getProperties()[1].getValue();
 
-        try {
-            returnObj.accumulate(stateName, currentState);
-        } catch (Exception e) {
-        }
+        //try {
+        //    returnObj.accumulate(stateName, currentState);
+        //} catch (Exception e) {
+        // }
         return returnObj;
     }
 
@@ -583,7 +585,7 @@ public class KaomSimDataComponent extends JSONObjectDataComponent {
     public KiemProperty[] provideProperties() {
         KiemProperty[] properties = new KiemProperty[2];
         properties[0] = new KiemProperty("Kaom Editor", new KiemPropertyTypeEditor(), "");
-        properties[1] = new KiemProperty("State Name", "state");
+        properties[1] = new KiemProperty("Recursive", false);
         return properties;
     }
 
