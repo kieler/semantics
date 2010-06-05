@@ -252,8 +252,6 @@ public class KaomSimDataComponent extends JSONObjectDataComponent {
         // contains the current state
         String currentState = "";
         
-        PTOEXE.setRecursive(this.getProperties()[1].getValueAsBoolean());
-
         try {
             // set current input data
             PTOEXE.setData(jSONObject);
@@ -297,6 +295,12 @@ public class KaomSimDataComponent extends JSONObjectDataComponent {
 
     // -------------------------------------------------------------------------
 
+    public boolean isRecursive() {
+       return this.getProperties()[1].getValueAsBoolean();
+    }
+
+    // -------------------------------------------------------------------------
+    
     public JSONObject provideInitialVariables() throws KiemInitializationException {
         JSONObject returnObj = new JSONObject();
 
@@ -504,6 +508,10 @@ public class KaomSimDataComponent extends JSONObjectDataComponent {
             // load the Ptolemy Model
             PTOEXE = new ExecutePtolemyModel(ptolemyModelFile);
                 KaomSimPtolemyPlugin.DEBUG("Now initializing Ptolemy Model...");
+                
+            // recursive deep data outputs
+            PTOEXE.setRecursive(this.isRecursive());
+            
             PTOEXE.executionInitialize();
                 KaomSimPtolemyPlugin.DEBUG("Now executing Ptolemy Model...");
         }// end if
