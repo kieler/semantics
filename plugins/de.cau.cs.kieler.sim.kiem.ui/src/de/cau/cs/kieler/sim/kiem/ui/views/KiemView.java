@@ -671,6 +671,7 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
         if (getAimedStepDurationTextField().isEnabled() != enabled) {
             getAimedStepDurationTextField().setEnabled(enabled);
         }
+        this.updateEnabled();
     }
 
     // -------------------------------------------------------------------------

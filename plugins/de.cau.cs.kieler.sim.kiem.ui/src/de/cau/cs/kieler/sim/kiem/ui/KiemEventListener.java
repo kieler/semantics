@@ -25,10 +25,10 @@ public class KiemEventListener implements IKiemEventListener {
                     KiemPlugin.getDefault().setDirty(true);
                 } else if (event.isEvent(KiemEvent.DISABLE_UI)) {
                     KiemView.getInstance().setAllEnabled(false);
-
+                    KiemView.getInstance().updateViewAsync();
                 } else if (event.isEvent(KiemEvent.ENABLE_UI)) {
                     KiemView.getInstance().setAllEnabled(true);
-
+                    KiemView.getInstance().updateViewAsync();
                 } else if (event.isEvent(KiemEvent.SAVE)) {
                     KiemPlugin.getDefault().setDirty(false);
                     KiemView.getInstance().setDirty(false);
@@ -45,7 +45,14 @@ public class KiemEventListener implements IKiemEventListener {
                             KiemView.getInstance().getViewSite().getShell());
                 } else if (event.isEvent(KiemEvent.STEP_INFO)) {
                     KiemView.getInstance().updateStepsAsync();
+                } else if (event.isEvent(KiemEvent.ERROR_STOP)) {
+//                    KiemView.getInstance().setAllEnabled(true);
+                    KiemView.getInstance().updateViewAsync();
+                } else if (event.isEvent(KiemEvent.ERROR_PAUSE)) {
+ //                   KiemView.getInstance().setAllEnabled(true);
+                    KiemView.getInstance().updateViewAsync();
                 }
+
             }
         });
 
@@ -54,7 +61,7 @@ public class KiemEventListener implements IKiemEventListener {
     public KiemEvent provideEventOfInterest() {
         int[] events = { KiemEvent.VIEW_REFRESH, KiemEvent.SET_DIRTY, KiemEvent.DISABLE_UI,
                 KiemEvent.ENABLE_UI, KiemEvent.SAVE, KiemEvent.LOAD, KiemEvent.CALL_FOR_SHELL,
-                KiemEvent.STEP_INFO };
+                KiemEvent.STEP_INFO, KiemEvent.ERROR_STOP, KiemEvent.ERROR_PAUSE };
         return new KiemEvent(events);
     }
 
