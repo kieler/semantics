@@ -117,7 +117,6 @@ public class DeletionPolicy extends DeletionPolicyProvider {
      * 
      * {@inheritDoc}
      */
-    @Override
     public boolean provides(final EditPart editPart) {
         for (Class<?> aClass : ALL_PARTS) {
             if (aClass.equals(editPart.getClass())) {
