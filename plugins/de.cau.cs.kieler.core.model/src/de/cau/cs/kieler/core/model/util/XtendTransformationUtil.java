@@ -13,6 +13,7 @@
  */
 package de.cau.cs.kieler.core.model.util;
 
+import java.net.UnknownHostException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -28,6 +29,7 @@ import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipse.emf.ecore.xml.type.AnyType;
 import org.eclipse.emf.mwe.core.WorkflowContext;
 import org.eclipse.emf.mwe.core.WorkflowContextDefaultImpl;
+import org.eclipse.emf.mwe.core.WorkflowInterruptedException;
 import org.eclipse.emf.mwe.core.issues.Issues;
 import org.eclipse.emf.mwe.internal.core.Workflow;
 import org.eclipse.emf.mwe.utils.Reader;
@@ -96,6 +98,7 @@ public final class XtendTransformationUtil {
         // specified in XSD
         emfReader.getResourceSet().getLoadOptions().put(XMIResource.OPTION_RECORD_UNKNOWN_FEATURE,
                 true);
+        emfReader.getResourceSet().getLoadOptions().put(XMLResource.OPTION_PROCESS_DANGLING_HREF_DISCARD, true);
 
         // EMF Writer for target model
         Writer emfWriter = new Writer();
@@ -135,6 +138,15 @@ public final class XtendTransformationUtil {
         Exception e = null;
         try {
             workflow.invoke(wfx, m2mMonitor, issues);
+        } catch (WorkflowInterruptedException we){
+            if(we.getMessage().contains("UnknownHostException")){
+                e = new KielerException("Failed loading Ptolemy file. " +
+                		"Could not resolve the Ptolemy DTD. Unfortunately the parser" +
+                		" currently requires an Internet connection.",we);
+            }
+            else{
+                e = we;
+            }
         } catch (Exception myE) {
             e = myE;
         }
