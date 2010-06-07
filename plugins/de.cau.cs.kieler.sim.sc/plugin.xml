@@ -11,14 +11,14 @@
    </extension>
    <extension
          point="de.cau.cs.kieler.sim.kiem.config.DefaultScheduleContributor">
-      <configurationFile
+      <executionFile
             file="execution/sc.execution">
          <editor
                id="de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorID"
                name="SyncChart Editor"
                priority="8">
          </editor>
-      </configurationFile>
+      </executionFile>
    </extension>
 
 </plugin>
