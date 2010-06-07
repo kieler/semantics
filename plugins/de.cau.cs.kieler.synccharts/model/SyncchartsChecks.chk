@@ -173,7 +173,7 @@ context Transition if (type == TransitionType::NORMALTERMINATION)
 
 context Transition if (type == TransitionType::STRONGABORT)
     ERROR "Strong aborts must have the highest priority!" :
-    (!sourceState.outgoingTransitions.exists(t|t.priority < this.priority || t.type == this.type)); 
+    (sourceState.outgoingTransitions.forAll(t|t.priority > this.priority || t.type == this.type)); 
 
 context Transition if (type == TransitionType::NORMALTERMINATION)
 	ERROR "Simple states may not have a normal termination transition" :
