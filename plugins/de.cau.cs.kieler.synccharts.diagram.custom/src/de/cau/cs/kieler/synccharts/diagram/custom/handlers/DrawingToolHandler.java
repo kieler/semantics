@@ -36,7 +36,6 @@ public class DrawingToolHandler extends AbstractHandler {
         boolean oldValue = HandlerUtil.toggleCommandState(command);
         ToggleTransitionLabelHandler.hideAll(!oldValue);
         ValidationManager.setEnabled(oldValue);
-        ValidationManager.validate();
         return null;
     }
 

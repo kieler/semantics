@@ -85,7 +85,6 @@ public final class ValidationManager extends AbstractHandler {
         Command command = event.getCommand();
         boolean oldValue = HandlerUtil.toggleCommandState(command);
         setEnabled(!oldValue);
-        validate();
         return null;
     }
 
@@ -99,6 +98,7 @@ public final class ValidationManager extends AbstractHandler {
         if (b) {
             enableAll();
             ModelErrorHandler.enabled();
+            validateActiveEditor();
         } else {
             disableAll();
             ModelErrorHandler.disable();
@@ -280,6 +280,17 @@ public final class ValidationManager extends AbstractHandler {
             if (action != null) {
                 action.getAction().run();
             }
+        }
+    }
+
+    /**
+     * Run the validate action of the currently active editor.
+     */
+    public static void validateActiveEditor() {
+        EPackage ePackage = getEPackage();
+        IActionFactory factory = packages.get(ePackage);
+        if (factory != null) {
+            factory.getAction().run();
         }
     }
 
