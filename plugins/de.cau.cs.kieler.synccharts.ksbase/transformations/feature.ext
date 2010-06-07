@@ -338,29 +338,15 @@ Void optimizeSelected(State state):
 ;
 
 Void optimizeSelected(Region rootRegion):
- let fixTransitionPrios = isEnabled("fixTransitionPriorities"):
- let fixCondOutgoing = isEnabled("fixConditionalOutgoingImmediate"):
- let fixIDs = isEnabled("fixIDs"):
- let fixTransitionTypes = isEnabled("fixTransitionTypes"):
- let removeDummyStates = isEnabled("removeDummyStates"):
- let removeDummyRegions = isEnabled("removeDummyRegions"):
- let removeWhiteSpaces = isEnabled("removeWhiteSpaces"):
  let statesToRemove = getStateList():
  let regionsToRemove = getRegionList():
  clearIDCache() ->
- optimizeRec(rootRegion, 
-             fixTransitionPrios, 
-             fixCondOutgoing,
-             fixIDs,
-             fixTransitionTypes,
-             removeDummyStates,
-             removeDummyRegions,
-             removeWhiteSpaces,
+ optimizeRec(rootRegion,
              statesToRemove,
              regionsToRemove) ->
- (if (removeDummyStates) then
+ (if isEnabled("removeDummyStates") then
    statesToRemove.removeStateFromRegion()) ->
- (if (removeDummyRegions) then 
+ (if isEnabled("removeDummyRegions") then 
    regionsToRemove.removeRegionFromState())
 ;
 
@@ -369,77 +355,59 @@ Void removeStateFromRegion(State state):
 ;
 
 Void removeRegionFromState(Region region):
- if (region.parentState != null) then
+ if region.parentState != null then
    region.parentState.regions.remove(region)
 ;
 
-Void optimizeRec(Region region, 
-                 Boolean fixTransitionPrios, 
-                 Boolean fixCondOutgoing,
-                 Boolean fixIDs,
-                 Boolean fixTransitionTypes,
-                 Boolean removeDummyStates,
-                 Boolean removeDummyRegions,
-                 Boolean removeWhiteSpaces,
+Void optimizeRec(Region region,
                  List[State] statesToRemove,
                  List[Region] regionsToRemove):
- (if (fixIDs) then
+ (if isEnabled("fixIDs") then
     generateRegionId(region)) ->
- (if (region.innerStates.isEmpty) then
-   (if (removeDummyRegions &&
+ (if region.innerStates.isEmpty 
+   then (if (isEnabled("removeDummyRegions") &&
        region.signals.isEmpty &&
        region.variables.isEmpty) then
        regionsToRemove.add(region))
- else
- region.innerStates.optimizeRec(fixTransitionPrios, 
-                                fixCondOutgoing,
-                                fixIDs,
-                                fixTransitionTypes,
-                                removeDummyStates,
-                                removeDummyRegions,
-                                removeWhiteSpaces,
-                                statesToRemove,
-                                regionsToRemove)
+   else
+    region.innerStates.optimizeRec(statesToRemove,
+                                   regionsToRemove)
  )
 ;
 
-Void optimizeRec(State state, 
-                 Boolean fixTransitionPrios, 
-                 Boolean fixCondOutgoing,
-                 Boolean fixIDs,
-                 Boolean fixTransitionTypes,
-                 Boolean removeDummyStates,
-                 Boolean removeDummyRegions,
-                 Boolean removeWhiteSpaces,
+Boolean isFixTransitionsEnabled():
+ isEnabled("removeTriggerFromNormalTermination") ||
+ isEnabled("fixTransitionTypeLeavingSimpleState") ||
+ isEnabled("fixTransitionPriorityBasedOnType") ||
+ isEnabled("fixTransitionPriorityIsZero")
+;
+
+Boolean isRemoveStatesEnabled():
+ isEnabled("removeDummyStates") || isEnabled("removeDeadEndConditionals")
+;
+
+Void optimizeRec(State state,
                  List[State] statesToRemove,
                  List[Region] regionsToRemove):
- (if (fixTransitionPrios || fixTransitionTypes) then 
-   state.outgoingTransitions.fixTransition(fixTransitionPrios, 
-                                           fixTransitionTypes)) ->
- (if (fixCondOutgoing
+ (if isFixTransitionsEnabled() then 
+   state.outgoingTransitions.sortBy(e|e.priority).fixTransitions()) ->
+ (if (isEnabled("fixConditionalOutgoingImmediate")
        && state.type == StateType::CONDITIONAL) then
        // transitions leaving a conditional state must be immediate
        state.outgoingTransitions.setIsImmediate(true)) ->
- (if (fixIDs) then
+ (if isEnabled("fixIDs") then
     state.setId(state.label) ->
     generateStateId(state)) ->
- (if (removeWhiteSpaces) then
+ (if isEnabled("removeWhiteSpaces") then
   (state.outgoingTransitions.fixWhiteSpacesInAction() ->
    state.entryActions.fixWhiteSpacesInAction() ->
    state.exitActions.fixWhiteSpacesInAction() ->
    state.suspensionTrigger.fixWhiteSpacesInAction() ->
    state.innerActions.fixWhiteSpacesInAction())
   ) ->
- (if (removeDummyStates) then
+ (if isRemoveStatesEnabled() then
    state.fixDummyState(statesToRemove)) ->
- state.regions.optimizeRec(fixTransitionPrios, 
-                           fixCondOutgoing,
-                           fixIDs,
-                           fixTransitionTypes,
-                           removeDummyStates,
-                           removeDummyRegions,
-                           removeWhiteSpaces,
-                           statesToRemove,
+ state.regions.optimizeRec(statesToRemove,
                            regionsToRemove)
 ;
 
@@ -459,13 +427,26 @@ Void fixWhiteSpacesInAction(Action action):
 // current convention is priorities starting with 1
 // older synccharts may have 0 as lowest priority
 
-Void fixTransition(Transition trans, 
-                   Boolean fixTransitionPrios, 
-                   Boolean fixTransitionTypes):
- (if (fixTransitionPrios && trans.priority == 0) then
-  trans.sourceState.outgoingTransitions.incrementPriority()) ->
- (if (fixTransitionTypes) then
-  trans.fixTransitionType())
+Void fixTransitions(List[Transition] trans):
+ trans.fixTransitionPriorityBasedOnType() ->
+ trans.fixTransitionPriorityIsZero() ->
+ trans.fixTransitionType()
+;
+
+Void fixTransitionPriorityBasedOnType(List[Transition] list):
+(if isEnabled("fixTransitionPriorityBasedOnType") then
+ list.select(e|e.type == TransitionType::NORMALTERMINATION).setPriority(list.size) ->
+ fixTransList(list)
+)
+;
+
+Void fixTransList(Object obj):
+ JAVA de.cau.cs.kieler.synccharts.ksbase.util.OptimizeUtils.fixTransList(java.lang.Object)
+;
+ 
+Void fixTransitionPriorityIsZero(Transition trans):
+ (if (isEnabled("fixTransitionPriorityIsZero") && trans.priority == 0) then
+  trans.sourceState.outgoingTransitions.incrementPriority())
 ;
 
 Void incrementPriority(Transition trans):
@@ -474,13 +455,13 @@ Void incrementPriority(Transition trans):
 ;
 
 Void fixTransitionType(Transition trans):
- (if (trans.sourceState.isSimpleState()) then
-  trans.setType(TransitionType::WEAKABORT)
-  else (if (trans.type == TransitionType::NORMALTERMINATION) then
-    (removeTriggerFromString(trans) ->
-     trans.setTrigger(null))
-  )
- )
+ (if (isEnabled("fixTransitionTypeLeavingSimpleState") &&
+      trans.sourceState.isSimpleState()) then
+  trans.setType(TransitionType::WEAKABORT)) ->
+ (if (isEnabled("removeTriggerFromNormalTermination") &&
+      trans.type == TransitionType::NORMALTERMINATION) then
+        (removeTriggerFromString(trans) ->
+         trans.setTrigger(null)))
 ;
 
 Void removeTriggerFromString(Transition trans):
@@ -503,22 +484,36 @@ Void removeTriggerFromString(Transition trans):
 Void fixDummyState(State state, List[State] list):
  let trans = state.outgoingTransitions:
  
- (if (trans.size == 1 &&
+ (if (isEnabled("removeDummyStates") &&
+   trans.size == 1 &&
   (trans.get(0).triggersAndEffects == null || 
   trans.get(0).triggersAndEffects.matches("") ||
   trans.get(0).triggersAndEffects.matches("# /")) &&
   trans.get(0).isImmediate &&
   state.isSimpleState()) then
   (replaceState(state, trans.get(0).targetState) ->
-  list.add(state)))
+  list.add(state))) ->
+ (if (isEnabled("removeDeadEndConditionals") &&
+      state.type == StateType::CONDITIONAL &&
+      trans.size == 0) then
+     (state.removeState() ->
+     list.add(state)))
+;
+
+Void removeState(State state):
+ let transList = state.getIncomingTransitions():
+ transList.removeTransition()
+;
+
+Void removeTransition(Transition trans):
+ trans.sourceState.outgoingTransitions.remove(trans)
 ;
 
 Void replaceState(State old, State replacement):
  let incoming = getIncomingTransitions(old):
  replacement.setIsInitial(old.isInitial) ->
  (if (replacement.isInitial && replacement.type == StateType::CONDITIONAL) then
-   replacement.setType(StateType::NORMAL) ->
-   replacement.setLabel(old.label)) ->
+   replacement.setType(StateType::NORMAL)) ->
  incoming.setTargetState(replacement)
 ;
 

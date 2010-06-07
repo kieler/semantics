@@ -15,6 +15,7 @@
 package de.cau.cs.kieler.synccharts.ksbase.util;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -27,6 +28,8 @@ import org.eclipse.jface.preference.IPreferenceStore;
 import de.cau.cs.kieler.synccharts.Region;
 import de.cau.cs.kieler.synccharts.State;
 import de.cau.cs.kieler.synccharts.SyncchartsPackage;
+import de.cau.cs.kieler.synccharts.Transition;
+import de.cau.cs.kieler.synccharts.TransitionType;
 import de.cau.cs.kieler.synccharts.contentadapter.SyncchartsContentUtil;
 import de.cau.cs.kieler.synccharts.contentadapter.UniqueStringCache;
 import de.cau.cs.kieler.synccharts.ksbase.SyncchartsKsbasePlugin;
@@ -42,18 +45,29 @@ public final class OptimizeUtils {
     public static final String PREFIX = "_OPTIMIZE_";
     /** Identifier for fixing the state and region ids. */
     public static final String FIX_IDS = "fixIDs";
-    /** Identifier for fixing the transition priorities. */
-    public static final String FIX_TRANSITION_PRIORITIES = "fixTransitionPriorities";
     /** Identifier for fixing transitions leaving conditional states. */
     public static final String FIX_CONDITIONAL_OUTGOING_IMMEDIATE = "fixConditionalOutgoingImmediate";
-    /** Identifier for fixing transition types. */
-    public static final String FIX_TRANSITION_TYPES = "fixTransitionTypes";
     /** Identifier for removing dummy states. */
     public static final String REMOVE_DUMMY_STATES = "removeDummyStates";
     /** Identifier for removing white space from trigger and effects. */
     public static final String REMOVE_WHITE_SPACES = "removeWhiteSpaces";
     /** Identifier for removing dummy regions. */
     public static final String REMOVE_DUMMY_REGIONS = "removeDummyRegions";
+    /** Identifier for removing dead ending conditionals. */
+    public static final String REMOVE_DEAD_END_CONDITIONALS = "removeDeadEndConditionals";
+    /** Identifier for fixing transitions with priority zero. */
+    public static final String FIX_TRANSITION_PRIORITY_IS_ZERO = "fixTransitionPriorityIsZero";
+    /** Identifier for fixing the transition priorities. */
+    public static final String FIX_TRANSITION_PRIORITY_BASED_ON_TYPE = "fixTransitionPriorityBasedOnType";
+    /**
+     * Identifier for fixing transition types of transitions leaving simple
+     * states.
+     */
+    public static final String FIX_TRANSITION_TYPES_LEAVING_SIMPLE_STATE = "fixTransitionTypeLeavingSimpleState";
+    /** Identifier for removing the trigger from normal termination transitions. */
+    public static final String REMOVE_TRIGGER_FROM_NORMAL_TERMINATION = "removeTriggerFromNormalTermination";
+    /** Identifier for turning normal terminations with trigger into weakaborts. */
+    public static final String NORMAL_TERMINATION_WITH_TRIGGER_TO_WEAK_ABORT = "normalTerminationWithTriggerToWeakAbort";
 
     /**
      * Contains the identifiers for all optimizations that are required to have
@@ -61,15 +75,19 @@ public final class OptimizeUtils {
      * 
      */
     private static final String[] REQUIRED_KEYS = { FIX_IDS,
-            FIX_TRANSITION_PRIORITIES, FIX_TRANSITION_TYPES,
-            FIX_CONDITIONAL_OUTGOING_IMMEDIATE };
+            FIX_TRANSITION_PRIORITY_IS_ZERO,
+            FIX_TRANSITION_PRIORITY_BASED_ON_TYPE,
+            // NORMAL_TERMINATION_WITH_TRIGGER_TO_WEAK_ABORT,
+            REMOVE_TRIGGER_FROM_NORMAL_TERMINATION,
+            FIX_CONDITIONAL_OUTGOING_IMMEDIATE, REMOVE_DEAD_END_CONDITIONALS };
 
     /**
      * Contains the identifiers for all optimizations that improve a syncchart
      * but are not required.
      */
     private static final String[] OPTIONAL_KEYS = { REMOVE_DUMMY_STATES,
-            REMOVE_WHITE_SPACES, REMOVE_DUMMY_REGIONS };
+            REMOVE_WHITE_SPACES, REMOVE_DUMMY_REGIONS,
+            FIX_TRANSITION_TYPES_LEAVING_SIMPLE_STATE };
 
     /** Contains the list of all available keys. */
     private static List<String> keys = null;
@@ -297,22 +315,32 @@ public final class OptimizeUtils {
      * @return the display name
      */
     public static String getDisplay(final String key) {
-        if (key.equals(PREFIX + FIX_IDS)) {
-            return "Fix state and region IDs (REQUIRED)";
-        } else if (key.equals(PREFIX + FIX_TRANSITION_PRIORITIES)) {
-            return "Fix transition priorities (REQUIRED)";
-        } else if (key.equals(PREFIX + FIX_CONDITIONAL_OUTGOING_IMMEDIATE)) {
-            return "Fix transitions leaving conditional states (REQUIRED)";
-        } else if (key.equals(PREFIX + FIX_TRANSITION_TYPES)) {
-            return "Fix transition types (REQUIRED)";
-        } else if (key.equals(PREFIX + REMOVE_DUMMY_STATES)) {
-            return "Remove redundant states";
-        } else if (key.equals(PREFIX + REMOVE_DUMMY_REGIONS)) {
-            return "Remove redundant regions";
-        } else if (key.equals(PREFIX + REMOVE_WHITE_SPACES)) {
-            return "Remove white spaces from trigger and effects";
+        String theKey = key.replaceFirst(PREFIX, "");
+        String result = theKey;
+        if (theKey.equals(FIX_IDS)) {
+            result = "Fix state and region IDs";
+        } else if (theKey.equals(FIX_TRANSITION_PRIORITY_IS_ZERO)) {
+            result = "Fix transitions with priority zero";
+        } else if (theKey.equals(FIX_CONDITIONAL_OUTGOING_IMMEDIATE)) {
+            result = "Fix transitions leaving conditional states";
+        } else if (theKey.equals(FIX_TRANSITION_TYPES_LEAVING_SIMPLE_STATE)) {
+            result = "Set transitions leaving simple states to WEAKABORT";
+        } else if (theKey.equals(REMOVE_DUMMY_STATES)) {
+            result = "Remove redundant states";
+        } else if (theKey.equals(REMOVE_DUMMY_REGIONS)) {
+            result = "Remove empty regions";
+        } else if (theKey.equals(REMOVE_WHITE_SPACES)) {
+            result = "Remove white spaces from trigger and effects";
+        } else if (theKey.equals(REMOVE_DEAD_END_CONDITIONALS)) {
+            result = "Remove dead end conditional states";
+        } else if (theKey.equals(FIX_TRANSITION_PRIORITY_BASED_ON_TYPE)) {
+            result = "Fix transition priorities based on their types";
+        } else if (theKey.equals(REMOVE_TRIGGER_FROM_NORMAL_TERMINATION)) {
+            result = "Remove trigger from NORMALTERMINATION transitions";
         }
-        return key;
+        return result
+                + (Arrays.asList(REQUIRED_KEYS).contains(theKey) ? " (REQUIRED)"
+                        : "");
     }
 
     /**
@@ -323,22 +351,55 @@ public final class OptimizeUtils {
      * @return the tooltip
      */
     public static String getTooltip(final String key) {
-        if (key.equals(PREFIX + FIX_IDS)) {
-            return "Generates unique IDs for each region and state.";
-        } else if (key.equals(PREFIX + FIX_TRANSITION_PRIORITIES)) {
-            return "Ensures that the lowest transition priority is 1.";
-        } else if (key.equals(PREFIX + FIX_CONDITIONAL_OUTGOING_IMMEDIATE)) {
-            return "Makes all transitions leaving conditional states immediate.";
-        } else if (key.equals(PREFIX + REMOVE_DUMMY_STATES)) {
-            return "Removes states that have no effect on the syncchart.";
-        } else if (key.equals(PREFIX + REMOVE_DUMMY_REGIONS)) {
-            return "Removes empty regions with no variables and signals.";
-        } else if (key.equals(PREFIX + REMOVE_WHITE_SPACES)) {
-            return "Removes white spaces from trigger and effects string as they are redundant.";
-        } else if (key.equals(PREFIX + FIX_TRANSITION_TYPES)) {
-            return "Transitions leaving simple states must be WEAKABORT.\n"
-                    + "Transitions without trigger leaving complex states must be NORMALTERMINATION.";
+        String theKey = key.replaceFirst(PREFIX, "");
+        String result = theKey;
+        if (theKey.equals(FIX_IDS)) {
+            result = "Each state and region requires a unique identifier."
+                    + " This transformation generates unique IDs for each region and state.";
+        } else if (theKey.equals(FIX_TRANSITION_PRIORITY_IS_ZERO)) {
+            result = "Ensures that the lowest transition priority is 1.";
+        } else if (theKey.equals(FIX_CONDITIONAL_OUTGOING_IMMEDIATE)) {
+            result = "Makes all transitions leaving conditional states immediate.";
+        } else if (theKey.equals(REMOVE_DUMMY_STATES)) {
+            result = "Removes states that have no effect on the syncchart. For a state"
+                    + " to be removed it must be simple state and all outgoing transitions"
+                    + " must be immediate and have no trigger or effect.";
+        } else if (theKey.equals(REMOVE_DUMMY_REGIONS)) {
+            result = "Removes empty regions with no variables and signals since"
+                    + " they have no effect on the syncchart.";
+        } else if (theKey.equals(REMOVE_WHITE_SPACES)) {
+            result = "Removes white spaces from trigger and effects string as they are redundant.";
+        } else if (theKey.equals(FIX_TRANSITION_TYPES_LEAVING_SIMPLE_STATE)) {
+            result = "Transitions leaving simple states should be WEAKABORT.";
+        } else if (theKey.equals(REMOVE_DEAD_END_CONDITIONALS)) {
+            result = "Conditional states without any outgoing transitions don't make sense.";
+        } else if (theKey.equals(FIX_TRANSITION_PRIORITY_BASED_ON_TYPE)) {
+            result = "STRONGABORTs must have the highest priority (lowest numerical value),"
+                    + " followed by WEAKABORTs. The NORMALTERMINATION must have the lowest"
+                    + " priority. This optimization ensures correct priorities while keeping"
+                    + " order within each type.";
+        } else if (theKey.equals(REMOVE_TRIGGER_FROM_NORMAL_TERMINATION)) {
+            result = "Transitions of type NORMALTERMINATION mustn't have a trigger"
+                    + " as they are triggered by final states in the source state being"
+                    + " reached.";
         }
-        return key;
+        return result;
+    }
+
+    public static void fixTransList(final Object object) {
+        if (object instanceof List<?>) {
+            List<Transition> list = (List<Transition>) object;
+            int prioCounter = 1;
+            for (Transition t : list) {
+                if (t.getType().equals(TransitionType.STRONGABORT)) {
+                    t.setPriority(prioCounter++);
+                }
+            }
+            for (Transition t : list) {
+                if (t.getType().equals(TransitionType.WEAKABORT)) {
+                    t.setPriority(prioCounter++);
+                }
+            }
+        }
     }
 }
