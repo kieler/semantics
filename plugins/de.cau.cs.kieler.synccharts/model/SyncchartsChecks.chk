@@ -150,6 +150,9 @@ context ValuedObject
 	
 // ================================================================================================
 // Transitions
+context Transition ERROR "Priorities have to be at least 1!" :
+    (priority == null) || (priority >= 1);
+
 context Transition if (isImmediate) ERROR "Immediate transitions must not have a delay!" :
 	(delay == null) || (delay == 1);
 	
@@ -171,6 +174,11 @@ context Transition if (type == TransitionType::NORMALTERMINATION)
 context Transition if (type == TransitionType::NORMALTERMINATION)
 	ERROR "Simple states may not have a normal termination transition" :
 	((sourceState.regions.size!=0)  || (sourceState.type == StateType::REFERENCE));
+
+context Transition if (type == TransitionType::STRONGABORT)
+    WARNING "Strong aborts on simple states doesn't make sense." :
+    ((sourceState.regions.size!=0)  || (sourceState.type == StateType::REFERENCE));
+
 
 context Transition if(sourceState.outgoingTransitions.size > 1) 
     ERROR "Priorities of outgoing transitions need to be distinct!" :
