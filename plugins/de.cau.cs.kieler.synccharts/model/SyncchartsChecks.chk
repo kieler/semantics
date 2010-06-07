@@ -69,6 +69,7 @@ context State if (interfaceDeclaration.length > 0)
   	(!this.signals.isEmpty) || (!this.regions.select(r | (!r.variables.isEmpty || !r.signals.isEmpty)).isEmpty);
    
 // Root state
+/*
 context State if (parentRegion == null || parentRegion.parentState == null)
   WARNING "Model has no inputs":
    (signals.exists(s | s.isInput));
@@ -76,6 +77,7 @@ context State if (parentRegion == null || parentRegion.parentState == null)
 context State if (parentRegion == null || parentRegion.parentState == null)
   WARNING "Model has no outputs":
    (signals.exists(s | s.isOutput));
+*/
 
 context State if (parentRegion == null || parentRegion.parentState == null)
   ERROR "The root state should have at least one Region containing at least one State! 
