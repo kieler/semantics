@@ -22,12 +22,43 @@ import org.eclipse.gmf.runtime.emf.type.core.requests.DestroyElementRequest;
 import org.eclipse.gmf.runtime.emf.type.core.requests.IEditCommandRequest;
 
 import de.cau.cs.kieler.core.ui.policies.DeletionPolicyProvider;
+import de.cau.cs.kieler.synccharts.diagram.edit.parts.Action2EditPart;
+import de.cau.cs.kieler.synccharts.diagram.edit.parts.Action3EditPart;
+import de.cau.cs.kieler.synccharts.diagram.edit.parts.Action4EditPart;
+import de.cau.cs.kieler.synccharts.diagram.edit.parts.ActionEditPart;
+import de.cau.cs.kieler.synccharts.diagram.edit.parts.ActionTriggersAndEffects2EditPart;
+import de.cau.cs.kieler.synccharts.diagram.edit.parts.ActionTriggersAndEffects3EditPart;
+import de.cau.cs.kieler.synccharts.diagram.edit.parts.ActionTriggersAndEffects4EditPart;
+import de.cau.cs.kieler.synccharts.diagram.edit.parts.ActionTriggersAndEffectsEditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.Region2EditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.RegionEditPart;
+import de.cau.cs.kieler.synccharts.diagram.edit.parts.RegionIdEditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.RegionStateCompartmentEditPart;
+import de.cau.cs.kieler.synccharts.diagram.edit.parts.SignalEditPart;
+import de.cau.cs.kieler.synccharts.diagram.edit.parts.SignalNameEditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.State2EditPart;
+import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateBodyText2EditPart;
+import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateBodyTextEditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateEditPart;
+import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateInterfaceDeclaration2EditPart;
+import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateInterfaceDeclarationEditPart;
+import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateLabel2EditPart;
+import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateLabelEditPart;
+import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateOnEntryAction2EditPart;
+import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateOnEntryActionEditPart;
+import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateOnExitAction2EditPart;
+import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateOnExitActionEditPart;
+import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateOnInsideAction2EditPart;
+import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateOnInsideActionEditPart;
+import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateRegionCompartment2EditPart;
+import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateRegionCompartmentEditPart;
+import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateSignal2EditPart;
+import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateSignalEditPart;
+import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateSuspend2EditPart;
+import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateSuspendEditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.TransitionEditPart;
+import de.cau.cs.kieler.synccharts.diagram.edit.parts.TransitionPriorityEditPart;
+import de.cau.cs.kieler.synccharts.diagram.edit.parts.TransitionTriggersAndEffectsEditPart;
 
 /**
  * This policy prevents deletion of edit parts that should not be deleted from a
@@ -37,6 +68,30 @@ import de.cau.cs.kieler.synccharts.diagram.edit.parts.TransitionEditPart;
  * @kieler.rating 2010-03-12 proposed yellow
  */
 public class DeletionPolicy extends DeletionPolicyProvider {
+
+    private static final Class<?>[] ALL_PARTS = { Action2EditPart.class,
+            Action3EditPart.class, Action4EditPart.class, ActionEditPart.class,
+            ActionTriggersAndEffects2EditPart.class,
+            ActionTriggersAndEffects3EditPart.class,
+            ActionTriggersAndEffects4EditPart.class,
+            ActionTriggersAndEffectsEditPart.class, Region2EditPart.class,
+            RegionEditPart.class, RegionIdEditPart.class,
+            RegionStateCompartmentEditPart.class, SignalEditPart.class,
+            SignalNameEditPart.class, State2EditPart.class,
+            StateBodyText2EditPart.class, StateBodyTextEditPart.class,
+            StateEditPart.class, StateInterfaceDeclaration2EditPart.class,
+            StateInterfaceDeclarationEditPart.class, StateLabel2EditPart.class,
+            StateLabelEditPart.class, StateOnEntryAction2EditPart.class,
+            StateOnEntryActionEditPart.class, StateOnExitAction2EditPart.class,
+            StateOnExitActionEditPart.class,
+            StateOnInsideAction2EditPart.class,
+            StateOnInsideActionEditPart.class,
+            StateRegionCompartment2EditPart.class,
+            StateRegionCompartmentEditPart.class, StateSignal2EditPart.class,
+            StateSignalEditPart.class, StateSuspend2EditPart.class,
+            StateSuspendEditPart.class, TransitionEditPart.class,
+            TransitionPriorityEditPart.class,
+            TransitionTriggersAndEffectsEditPart.class };
 
     /**
      * 
@@ -56,6 +111,20 @@ public class DeletionPolicy extends DeletionPolicyProvider {
             return false;
         }
         return true;
+    }
+
+    /**
+     * 
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean provides(final EditPart editPart) {
+        for (Class<?> aClass : ALL_PARTS) {
+            if (aClass.equals(editPart.getClass())) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**

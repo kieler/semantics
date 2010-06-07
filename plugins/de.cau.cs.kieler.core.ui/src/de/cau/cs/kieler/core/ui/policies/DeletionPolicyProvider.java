@@ -33,7 +33,7 @@ import org.eclipse.gmf.runtime.diagram.ui.services.editpolicy.IEditPolicyProvide
  * @author soh
  * @kieler.rating 2009-02-24 proposed yellow
  */
-public class DeletionPolicyProvider extends AbstractProvider implements
+public abstract class DeletionPolicyProvider extends AbstractProvider implements
         IEditPolicyProvider {
 
     /**
@@ -61,6 +61,18 @@ public class DeletionPolicyProvider extends AbstractProvider implements
     }
 
     /**
+     * Determine whether or not the edit policy is applicable for the edit part.
+     * 
+     * Extending classes should specify ALL editParts that concern them here,
+     * even the unremovable ones.
+     * 
+     * @param editPart
+     *            the edit part
+     * @return true
+     */
+    protected abstract boolean provides(final EditPart editPart);
+
+    /**
      * Checks if this edit policy provides an operation.
      * 
      * @param operation
@@ -68,7 +80,12 @@ public class DeletionPolicyProvider extends AbstractProvider implements
      * @return True if this edit policy provides the given operation
      */
     public boolean provides(final IOperation operation) {
-        return operation instanceof CreateEditPoliciesOperation;
+        boolean result = false;
+        if (operation instanceof CreateEditPoliciesOperation) {
+            CreateEditPoliciesOperation op = (CreateEditPoliciesOperation) operation;
+            result = provides(op.getEditPart());
+        }
+        return result;
     }
 
     /**
