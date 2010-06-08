@@ -111,6 +111,7 @@ public class ValidationMenuContributionFactory extends
          */
         public void widgetSelected(final SelectionEvent e) {
             ValidationManager.setEnabled(file, result.getSelection());
+            ValidationManager.validateActiveEditor();
         }
 
         /**

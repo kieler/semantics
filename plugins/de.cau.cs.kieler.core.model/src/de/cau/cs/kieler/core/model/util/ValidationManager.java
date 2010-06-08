@@ -224,10 +224,12 @@ public final class ValidationManager extends AbstractHandler {
      *            ???
      * @param referencedEPackageNsURIs
      *            ???
+     * @param tooltip
+     *            the tooltip to display
      */
     public static void registerCheckFile(final EPackage ePackage,
             final String file, final boolean isWrapExistingValidator,
-            final List<String> referencedEPackageNsURIs) {
+            final List<String> referencedEPackageNsURIs, final String tooltip) {
         if (!packages.containsKey(ePackage)) {
             packages.put(ePackage, null);
         }
@@ -252,10 +254,26 @@ public final class ValidationManager extends AbstractHandler {
         checkFile.file = file;
         checkFile.isWrapExistingValidator = isWrapExistingValidator;
         checkFile.referencedEPackageNsURIs = referencedEPackageNsURIs;
+        checkFile.tooltip = tooltip;
 
         register(checkFile);
         checkFile.setEnabled(value);
         refreshChecks();
+    }
+
+    /**
+     * Get the tooltip for the file.
+     * 
+     * @param file
+     *            the file
+     * @return the tooltip
+     */
+    public static String getTooltip(final String file) {
+        CheckFile checkfile = checkFiles.get(file);
+        if (checkfile != null) {
+            return checkfile.tooltip;
+        }
+        return "No tooltip available";
     }
 
     /**
@@ -489,6 +507,9 @@ public final class ValidationManager extends AbstractHandler {
 
         /** ???. */
         private List<String> referencedEPackageNsURIs;
+
+        /** A tooltip for display. */
+        private String tooltip;
 
         /** True if the file should be visible. */
         private boolean enabled = true;

@@ -20,6 +20,7 @@ import java.util.Set;
 import org.eclipse.jface.preference.BooleanFieldEditor;
 import org.eclipse.jface.preference.FieldEditorPreferencePage;
 import org.eclipse.jface.preference.IPreferenceStore;
+import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
 
@@ -51,11 +52,14 @@ public class ValidationManagerPreferencePage extends FieldEditorPreferencePage
         Set<String> files = ValidationManager.getRegisteredFiles();
 
         for (String file : files) {
+            Composite parent = getFieldEditorParent();
             BooleanFieldEditor enablementFE = new BooleanFieldEditor(
-                    ValidationManager.PREFERENCE_PREFIX + file, file,
-                    getFieldEditorParent());
+                    ValidationManager.PREFERENCE_PREFIX + file, file, parent);
             super.addField(enablementFE);
             editors.add(enablementFE);
+
+            String tooltip = ValidationManager.getTooltip(file);
+            enablementFE.getLabelControl(parent).setToolTipText(tooltip);
         }
 
     }
