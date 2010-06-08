@@ -389,7 +389,8 @@
                <command
                      commandId="de.cau.cs.kieler.synccharts.diagram.custom.toggleDrawingMode"
                      icon="icons/palette_view.gif"
-                     style="toggle">
+                     style="toggle"
+                     tooltip="Activates Drawing Mode. This disables all error markers and hides all transition priority labels.">
                   <visibleWhen
                         checkEnabled="false">
                      <with
