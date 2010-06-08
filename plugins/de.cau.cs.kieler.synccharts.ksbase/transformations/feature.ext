@@ -415,7 +415,7 @@ Void optimizeRec(State state,
 // Transition Triggers and effects should not contain whitespaces
 
 Void fixWhiteSpacesInAction(Action action):
- action.triggersAndEffects.replaceAll(" " , "")
+ action.setTriggersAndEffects(action.triggersAndEffects.replaceAll(" " , ""))
 ;
 
 // === end WhiteSpaces ===
