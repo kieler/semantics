@@ -296,35 +296,42 @@ rootRegion.innerStates.add(root)
 // Optimization and fixing of issues //
 ///////////////////////////////////////
 
-// Java escapes.
+// generate IDs
 Void generateStateId(State state):
  JAVA de.cau.cs.kieler.synccharts.ksbase.util.OptimizeUtils.generateStateId(de.cau.cs.kieler.synccharts.State)
 ;
-
 Void generateRegionId(Region region):
  JAVA de.cau.cs.kieler.synccharts.ksbase.util.OptimizeUtils.generateRegionId(de.cau.cs.kieler.synccharts.Region)
 ;
 
+// clear the cache for region and state ids
 Void clearIDCache():
  JAVA de.cau.cs.kieler.synccharts.ksbase.util.OptimizeUtils.clearCache()
 ;
 
+// get empty lists
 List[State] getStateList():
  JAVA de.cau.cs.kieler.synccharts.ksbase.util.OptimizeUtils.getStateList()
 ;
-
 List[Region] getRegionList():
  JAVA de.cau.cs.kieler.synccharts.ksbase.util.OptimizeUtils.getRegionList()
 ;
  
+// used for debug output
 Void debug(Object object):
  JAVA de.cau.cs.kieler.synccharts.ksbase.util.OptimizeUtils.debug(java.lang.Object)
 ;
 
+// determine whether or not an optimization is enabled
 Boolean isEnabled(String key):
  JAVA de.cau.cs.kieler.synccharts.ksbase.util.OptimizeUtils.isEnabled(java.lang.String)
 ;
 
+String getChoice(String key):
+ JAVA de.cau.cs.kieler.synccharts.ksbase.util.OptimizeUtils.getChoice(java.lang.String)
+;
+
+// check for simple state
 Boolean isSimpleState(State state):
   state.regions.isEmpty &&
   state.suspensionTrigger == null &&
@@ -333,10 +340,12 @@ Boolean isSimpleState(State state):
   state.innerActions.isEmpty
 ;
 
+// start from selected state
 Void optimizeSelected(State state):
  optimizeSelected(state.parentRegion)
 ;
 
+// start from selected region (root region is usually best)
 Void optimizeSelected(Region rootRegion):
  let statesToRemove = getStateList():
  let regionsToRemove = getRegionList():
@@ -344,37 +353,43 @@ Void optimizeSelected(Region rootRegion):
  optimizeRec(rootRegion,
              statesToRemove,
              regionsToRemove) ->
+ // remove redundant regions and states after optimization to avoid
+ // concurrent modification of lists
  (if isEnabled("removeDummyStates") then
    statesToRemove.removeStateFromRegion()) ->
  (if isEnabled("removeDummyRegions") then 
    regionsToRemove.removeRegionFromState())
 ;
 
+// remove methods
 Void removeStateFromRegion(State state):
  state.parentRegion.innerStates.remove(state)
 ;
-
 Void removeRegionFromState(Region region):
  if region.parentState != null then
    region.parentState.regions.remove(region)
 ;
 
+// optimize recursively
 Void optimizeRec(Region region,
                  List[State] statesToRemove,
                  List[Region] regionsToRemove):
  (if isEnabled("fixIDs") then
     generateRegionId(region)) ->
  (if region.innerStates.isEmpty 
+   // region empty, maybe remove it
    then (if (isEnabled("removeDummyRegions") &&
        region.signals.isEmpty &&
        region.variables.isEmpty) then
        regionsToRemove.add(region))
    else
+   // region not empty, go through states recursively
     region.innerStates.optimizeRec(statesToRemove,
                                    regionsToRemove)
  )
 ;
 
+// check if one of the transition fixes is enabled
 Boolean isFixTransitionsEnabled():
  isEnabled("removeTriggerFromNormalTermination") ||
  isEnabled("fixTransitionTypeLeavingSimpleState") ||
@@ -382,14 +397,17 @@ Boolean isFixTransitionsEnabled():
  isEnabled("fixTransitionPriorityIsZero")
 ;
 
+// check if one of the state removal options is enabled
 Boolean isRemoveStatesEnabled():
  isEnabled("removeDummyStates") || isEnabled("removeDeadEndConditionals")
 ;
 
+// optimize state recursively
 Void optimizeRec(State state,
                  List[State] statesToRemove,
                  List[Region] regionsToRemove):
  (if isFixTransitionsEnabled() then 
+   // fix transitions sorted by priority
    state.outgoingTransitions.sortBy(e|e.priority).fixTransitions()) ->
  (if (isEnabled("fixConditionalOutgoingImmediate")
        && state.type == StateType::CONDITIONAL) then
@@ -399,6 +417,7 @@ Void optimizeRec(State state,
     state.setId(state.label) ->
     generateStateId(state)) ->
  (if isEnabled("removeWhiteSpaces") then
+  // remove redundant white spaces from all actions
   (state.outgoingTransitions.fixWhiteSpacesInAction() ->
    state.entryActions.fixWhiteSpacesInAction() ->
    state.exitActions.fixWhiteSpacesInAction() ->
@@ -407,12 +426,13 @@ Void optimizeRec(State state,
   ) ->
  (if isRemoveStatesEnabled() then
    state.fixDummyState(statesToRemove)) ->
+ // recursion
  state.regions.optimizeRec(statesToRemove,
                            regionsToRemove)
 ;
 
 // === begin WhiteSpaces ===
-// Transition Triggers and effects should not contain whitespaces
+// action Triggers and effects should not contain whitespaces
 
 Void fixWhiteSpacesInAction(Action action):
  action.setTriggersAndEffects(action.triggersAndEffects.replaceAll(" " , ""))
@@ -435,15 +455,21 @@ Void fixTransitions(List[Transition] trans):
 
 Void fixTransitionPriorityBasedOnType(List[Transition] list):
 (if isEnabled("fixTransitionPriorityBasedOnType") then
+ (
+ // normal termination must have the lowest priority
  list.select(e|e.type == TransitionType::NORMALTERMINATION).setPriority(list.size) ->
+ // fix rest of the priorities in JAVA
  fixTransList(list)
+ )
 )
 ;
 
+// order the priorities by type, keeps order within the types as list was sorted earlier
 Void fixTransList(Object obj):
  JAVA de.cau.cs.kieler.synccharts.ksbase.util.OptimizeUtils.fixTransList(java.lang.Object)
 ;
  
+// increment all priorities if one has priority zero
 Void fixTransitionPriorityIsZero(Transition trans):
  (if (isEnabled("fixTransitionPriorityIsZero") && trans.priority == 0) then
   trans.sourceState.outgoingTransitions.incrementPriority())
@@ -455,13 +481,28 @@ Void incrementPriority(Transition trans):
 ;
 
 Void fixTransitionType(Transition trans):
- (if (isEnabled("fixTransitionTypeLeavingSimpleState") &&
-      trans.sourceState.isSimpleState()) then
-  trans.setType(TransitionType::WEAKABORT)) ->
- (if (isEnabled("removeTriggerFromNormalTermination") &&
-      trans.type == TransitionType::NORMALTERMINATION) then
-        (removeTriggerFromString(trans) ->
-         trans.setTrigger(null)))
+ let choice1 = getChoice("fixNormalTerminationLeavingComplexState"):
+ if trans.sourceState.isSimpleState() 
+ then
+ (
+  if isEnabled("fixTransitionTypeLeavingSimpleState") 
+   // transitions leaving simple states should be weakabort
+   then trans.setType(TransitionType::WEAKABORT)
+ ) 
+ else
+ (
+  if (trans.type == TransitionType::NORMALTERMINATION) then
+  (
+  // normal termination transitions can not have triggers
+  // normal termination transitions leaving simple states were
+  // already fixed earlier and will not be touched here
+   (if choice1.matches("removeTriggerFromNormalTermination") then
+    (removeTriggerFromString(trans) ->
+         trans.setTrigger(null))) ->
+   (if choice1.matches("turnNormalTerminationIntoWeakAbort") then 
+    trans.setType(TransitionType::WEAKABORT))
+  )
+ )
 ;
 
 Void removeTriggerFromString(Transition trans):

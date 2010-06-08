@@ -13,11 +13,11 @@
  */
 package de.cau.cs.kieler.synccharts.ksbase.preferences;
 
-import java.util.LinkedList;
 import java.util.List;
 
 import org.eclipse.jface.preference.BooleanFieldEditor;
 import org.eclipse.jface.preference.FieldEditorPreferencePage;
+import org.eclipse.jface.preference.RadioGroupFieldEditor;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
@@ -30,9 +30,6 @@ import de.cau.cs.kieler.synccharts.ksbase.util.OptimizeUtils;
  */
 public class OptimizationPreferencePage extends FieldEditorPreferencePage
         implements IWorkbenchPreferencePage {
-
-    /** The list of field editors. */
-    private List<BooleanFieldEditor> editors = new LinkedList<BooleanFieldEditor>();
 
     /**
      * Creates a KIELER preference page.
@@ -57,13 +54,37 @@ public class OptimizationPreferencePage extends FieldEditorPreferencePage
                 enablementFE.getDescriptionControl(parent).setToolTipText(
                         OptimizeUtils.getTooltip(key));
                 super.addField(enablementFE);
-                editors.add(enablementFE);
             }
+
+            List<String> choiceKeys = OptimizeUtils.getChoiceKeys();
+
+            for (String key : choiceKeys) {
+                Composite parent2 = getFieldEditorParent();
+                String label = OptimizeUtils.getDisplay(key);
+                int cols = 1;
+                String[][] input = getInput(key);
+                RadioGroupFieldEditor choiceFE = new RadioGroupFieldEditor(key,
+                        label, cols, input, parent2, true);
+                super.addField(choiceFE);
+            }
+
         } catch (RuntimeException e0) {
             e0.printStackTrace();
             throw e0;
         }
 
+    }
+
+    private String[][] getInput(final String key) {
+        List<String> options = OptimizeUtils.getChoices(key);
+        String choice = getPreferenceStore().getString(key);
+
+        String[][] input = new String[options.size()][2];
+        for (int i = 0; i < options.size(); i++) {
+            input[i][0] = OptimizeUtils.getDisplay(options.get(i));
+            input[i][1] = options.get(i);
+        }
+        return input;
     }
 
     /**

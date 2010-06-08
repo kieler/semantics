@@ -64,10 +64,21 @@ public final class OptimizeUtils {
      * states.
      */
     public static final String FIX_TRANSITION_TYPES_LEAVING_SIMPLE_STATE = "fixTransitionTypeLeavingSimpleState";
-    /** Identifier for removing the trigger from normal termination transitions. */
-    public static final String REMOVE_TRIGGER_FROM_NORMAL_TERMINATION = "removeTriggerFromNormalTermination";
     /** Identifier for turning normal terminations with trigger into weakaborts. */
     public static final String NORMAL_TERMINATION_WITH_TRIGGER_TO_WEAK_ABORT = "normalTerminationWithTriggerToWeakAbort";
+
+    /**
+     * Identifier for choosing what to do with normal terminations leaving
+     * complex states.
+     */
+    public static final String FIX_NORMAL_TERMINATION_LEAVING_COMPLEX_STATE = "fixNormalTerminationLeavingComplexState";
+    /** Identifier for removing the trigger from normal termination transitions. */
+    public static final String REMOVE_TRIGGER_FROM_NORMAL_TERMINATION = "removeTriggerFromNormalTermination";
+    /** Identifier for turning normal terminations into weak aborts. */
+    public static final String TURN_NORMAL_TERMINATION_INTO_WEAK_ABORT = "turnNormalTerminationIntoWeakAbort";
+
+    /** Identifier for doing nothing. */
+    public static final String DO_NOTHING = "doNothing";
 
     /**
      * Contains the identifiers for all optimizations that are required to have
@@ -77,8 +88,6 @@ public final class OptimizeUtils {
     private static final String[] REQUIRED_KEYS = { FIX_IDS,
             FIX_TRANSITION_PRIORITY_IS_ZERO,
             FIX_TRANSITION_PRIORITY_BASED_ON_TYPE,
-            // NORMAL_TERMINATION_WITH_TRIGGER_TO_WEAK_ABORT,
-            REMOVE_TRIGGER_FROM_NORMAL_TERMINATION,
             FIX_CONDITIONAL_OUTGOING_IMMEDIATE, REMOVE_DEAD_END_CONDITIONALS };
 
     /**
@@ -89,8 +98,16 @@ public final class OptimizeUtils {
             REMOVE_WHITE_SPACES, REMOVE_DUMMY_REGIONS,
             FIX_TRANSITION_TYPES_LEAVING_SIMPLE_STATE };
 
-    /** Contains the list of all available keys. */
+    /**
+     * Contains the identifiers for all optimizations that contain a choice.
+     */
+    private static final String[] CHOICE_KEYS = { FIX_NORMAL_TERMINATION_LEAVING_COMPLEX_STATE };
+
+    /** Contains the list of all available boolean keys. */
     private static List<String> keys = null;
+
+    /** Contains the list of all available choice keys. */
+    private static List<String> choiceKeys = null;
 
     /** The preference store. */
     private static IPreferenceStore store = null;
@@ -127,6 +144,41 @@ public final class OptimizeUtils {
     }
 
     /**
+     * Initialize the list of choice keys.
+     * 
+     * @return the list of choice keys
+     */
+    public static List<String> getChoiceKeys() {
+        if (choiceKeys == null) {
+            choiceKeys = new ArrayList<String>(CHOICE_KEYS.length);
+            for (String s : CHOICE_KEYS) {
+                choiceKeys.add(PREFIX + s);
+            }
+        }
+        return choiceKeys;
+    }
+
+    /**
+     * Get the choices for one the keys.
+     * 
+     * @param key
+     *            the key
+     * @return the choices.
+     */
+    public static List<String> getChoices(final String key) {
+        List<String> result = new ArrayList<String>();
+        result.add(DO_NOTHING);
+        String theKey = key.replaceFirst(PREFIX, "");
+
+        if (theKey.equals(FIX_NORMAL_TERMINATION_LEAVING_COMPLEX_STATE)) {
+            result.add(TURN_NORMAL_TERMINATION_INTO_WEAK_ABORT);
+            result.add(REMOVE_TRIGGER_FROM_NORMAL_TERMINATION);
+        }
+
+        return result;
+    }
+
+    /**
      * Save the configuration in the preference store back to the persistent
      * store.
      * 
@@ -139,6 +191,13 @@ public final class OptimizeUtils {
                 Boolean value = store.getBoolean(key);
                 if (value != null) {
                     prefs.putBoolean(key, value);
+                }
+            }
+
+            for (String key : choiceKeys) {
+                String value = store.getString(key);
+                if (value != null) {
+                    prefs.put(key, value);
                 }
             }
         }
@@ -157,6 +216,11 @@ public final class OptimizeUtils {
                     .getNode(SyncchartsKsbasePlugin.PLUGIN_ID);
             for (String key : getKeys()) {
                 boolean value = prefs.getBoolean(key, true);
+                store.setValue(key, value);
+            }
+
+            for (String key : getChoiceKeys()) {
+                String value = prefs.get(key, DO_NOTHING);
                 store.setValue(key, value);
             }
         }
@@ -308,6 +372,22 @@ public final class OptimizeUtils {
     }
 
     /**
+     * Get the chosen option for choices.
+     * 
+     * @param key
+     *            the key
+     * @return the chosen option
+     */
+    public static String getChoice(final String key) {
+        loadConfiguration();
+        String result = store.getString(PREFIX + key);
+        if (result != null) {
+            return result;
+        }
+        return DO_NOTHING;
+    }
+
+    /**
      * Getter for the displayable name of the optimization.
      * 
      * @param key
@@ -317,7 +397,9 @@ public final class OptimizeUtils {
     public static String getDisplay(final String key) {
         String theKey = key.replaceFirst(PREFIX, "");
         String result = theKey;
-        if (theKey.equals(FIX_IDS)) {
+        if (theKey.equals(DO_NOTHING)) {
+            result = "Do nothing";
+        } else if (theKey.equals(FIX_IDS)) {
             result = "Fix state and region IDs";
         } else if (theKey.equals(FIX_TRANSITION_PRIORITY_IS_ZERO)) {
             result = "Fix transitions with priority zero";
@@ -337,6 +419,10 @@ public final class OptimizeUtils {
             result = "Fix transition priorities based on their types";
         } else if (theKey.equals(REMOVE_TRIGGER_FROM_NORMAL_TERMINATION)) {
             result = "Remove trigger from NORMALTERMINATION transitions";
+        } else if (theKey.equals(TURN_NORMAL_TERMINATION_INTO_WEAK_ABORT)) {
+            result = "Turn NORMALTERMINATION transitions into WEAKABORT transitions";
+        } else if (theKey.equals(FIX_NORMAL_TERMINATION_LEAVING_COMPLEX_STATE)) {
+            result = "Fix NORMALTERMINATION transitions leaving a complex state";
         }
         return result
                 + (Arrays.asList(REQUIRED_KEYS).contains(theKey) ? " (REQUIRED)"
@@ -386,6 +472,13 @@ public final class OptimizeUtils {
         return result;
     }
 
+    /**
+     * Sort the priorities in a list of transitions.
+     * 
+     * @param object
+     *            the list of transitions
+     */
+    @SuppressWarnings("unchecked")
     public static void fixTransList(final Object object) {
         if (object instanceof List<?>) {
             List<Transition> list = (List<Transition>) object;
