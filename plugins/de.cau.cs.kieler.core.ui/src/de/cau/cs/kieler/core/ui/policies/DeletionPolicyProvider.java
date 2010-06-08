@@ -70,7 +70,10 @@ public abstract class DeletionPolicyProvider extends AbstractProvider implements
      *            the edit part
      * @return true
      */
-    protected abstract boolean provides(final EditPart editPart);
+    protected boolean provides(
+            @SuppressWarnings("unused") final EditPart editPart) {
+        return true;
+    }
 
     /**
      * Checks if this edit policy provides an operation.
