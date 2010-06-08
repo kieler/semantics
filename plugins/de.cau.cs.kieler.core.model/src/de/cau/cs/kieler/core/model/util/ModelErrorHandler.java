@@ -86,12 +86,13 @@ public class ModelErrorHandler implements StatusListener {
     public int reroute(final StatusAdapter statusAdapter, final int style) {
         Throwable e = statusAdapter.getStatus().getException();
         // Show problem markers
-        if (enabled && e instanceof KielerModelException
-                && style == StatusManager.SHOW) {
+        if (e instanceof KielerModelException && style == StatusManager.SHOW) {
             Object modelObject = ((KielerModelException) e).getModelObject();
             if (modelObject instanceof EObject) {
                 try {
-                    addMarker(e.getMessage(), (EObject) modelObject);
+                    if (enabled) {
+                        addMarker(e.getMessage(), (EObject) modelObject);
+                    }
                     return StatusManager.LOG;
                 } catch (KielerException e1) {
                     /*will go on in next case */
