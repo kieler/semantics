@@ -59,7 +59,8 @@ public class ValidationManagerPreferencePage extends FieldEditorPreferencePage
             editors.add(enablementFE);
 
             String tooltip = ValidationManager.getTooltip(file);
-            enablementFE.getLabelControl(parent).setToolTipText(tooltip);
+            enablementFE.getDescriptionControl(parent).setToolTipText(tooltip);
+
         }
 
     }

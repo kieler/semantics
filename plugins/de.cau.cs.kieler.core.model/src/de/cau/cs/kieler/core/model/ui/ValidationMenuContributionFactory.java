@@ -18,6 +18,7 @@ import java.util.Set;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.jface.action.IContributionItem;
 import org.eclipse.jface.action.IContributionManager;
+import org.eclipse.jface.preference.PreferenceDialog;
 import org.eclipse.jface.util.IPropertyChangeListener;
 import org.eclipse.jface.util.PropertyChangeEvent;
 import org.eclipse.swt.SWT;
@@ -27,7 +28,10 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.CoolBar;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.ToolBar;
+import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.dialogs.PreferencesUtil;
 import org.eclipse.ui.menus.ExtensionContributionFactory;
 import org.eclipse.ui.menus.IContributionRoot;
 import org.eclipse.ui.services.IServiceLocator;
@@ -66,6 +70,8 @@ public class ValidationMenuContributionFactory extends
                     ValidationManager.isEnabled(file));
             menu.addContributionItem(item, null);
         }
+
+        menu.addContributionItem(new GotoPreferencePageItem(), null);
     }
 
     /**
@@ -245,6 +251,98 @@ public class ValidationMenuContributionFactory extends
          * {@inheritDoc}
          */
         public void update(final String id) {
+        }
+    }
+
+    /**
+     * The menu item for opening the preference page of the validation manager.
+     * 
+     * @author soh
+     */
+    private static class GotoPreferencePageItem implements SelectionListener,
+            IContributionItem {
+
+        private MenuItem item;
+
+        public void update(final String id) {
+        }
+
+        public void update() {
+        }
+
+        public void setVisible(final boolean visible) {
+        }
+
+        public void setParent(final IContributionManager parent) {
+        }
+
+        public void saveWidgetState() {
+        }
+
+        public boolean isVisible() {
+            return true;
+        }
+
+        public boolean isSeparator() {
+            return false;
+        }
+
+        public boolean isGroupMarker() {
+            return false;
+        }
+
+        public boolean isEnabled() {
+            return true;
+        }
+
+        public boolean isDynamic() {
+            return false;
+        }
+
+        public boolean isDirty() {
+            return false;
+        }
+
+        public String getId() {
+            return "de.cau.cs.kieler.core.model.goToPreferencePage";
+        }
+
+        public void fill(final CoolBar parent, final int index) {
+        }
+
+        public void fill(final ToolBar parent, final int index) {
+        }
+
+        public void fill(final Menu parent, final int index) {
+            item = new MenuItem(parent, SWT.PUSH, index);
+            item.setText("Configure...");
+            item.addSelectionListener(this);
+        }
+
+        public void fill(final Composite parent) {
+        }
+
+        public void dispose() {
+            item.dispose();
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        public void widgetDefaultSelected(final SelectionEvent e) {
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        public void widgetSelected(final SelectionEvent e) {
+            Shell shell = PlatformUI.getWorkbench().getActiveWorkbenchWindow()
+                    .getShell();
+
+            PreferenceDialog dialog = PreferencesUtil.createPreferenceDialogOn(
+                    shell, "de.cau.cs.kieler.core.model.validationManager",
+                    null, null);
+            dialog.open();
         }
     }
 }
