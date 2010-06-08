@@ -14,6 +14,7 @@
  */
 package de.cau.cs.kieler.synccharts.labelparser.bridge;
 
+import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
@@ -49,6 +50,10 @@ public class LabelParserBridgePlugin extends AbstractUIPlugin {
     public void start(final BundleContext context) throws Exception {
         super.start(context);
         plugin = this;
+
+        boolean b = new InstanceScope().getNode(PLUGIN_ID).getBoolean(
+                AUTO_SERIALIZE, true);
+        getPreferenceStore().setValue(AUTO_SERIALIZE, b);
     }
 
     /*
@@ -60,6 +65,9 @@ public class LabelParserBridgePlugin extends AbstractUIPlugin {
     public void stop(final BundleContext context) throws Exception {
         plugin = null;
         super.stop(context);
+
+        boolean b = getPreferenceStore().getBoolean(AUTO_SERIALIZE);
+        new InstanceScope().getNode(PLUGIN_ID).putBoolean(AUTO_SERIALIZE, b);
     }
 
     /**
