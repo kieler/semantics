@@ -15,6 +15,16 @@ import de.cau.cs.kieler.synccharts.SyncchartsPackage;
 public class RegisterCheckValidator implements IStartup {
 
     /**
+     * Constant for accessing the synccharts checks in the validation manager.
+     */
+    public static final String SYNCCHARTS_CHECKS = "model/SyncchartsChecks.chk";
+
+    /**
+     * Constant for accessing the klepto checks in the validation manager.
+     */
+    public static final String SYNCCHARTS_KLEPTO_CHECKS = "model/SyncchartsKleptoChecks.chk";
+
+    /**
      * 
      * {@inheritDoc}
      */
@@ -29,11 +39,12 @@ public class RegisterCheckValidator implements IStartup {
     public static void registerChecks() {
         // normal SyncChart checks
         ValidationManager.registerCheckFile(SyncchartsPackage.eINSTANCE,
-                "model/SyncchartsChecks.chk", false, new ArrayList<String>());
+                SYNCCHARTS_CHECKS, false, new ArrayList<String>(),
+                "Checks whether the syncchart is valid.");
 
         // additional checks for KLEPTO simulation restrictions
         ValidationManager.registerCheckFile(SyncchartsPackage.eINSTANCE,
-                "model/SyncchartsKleptoChecks.chk", true,
-                new ArrayList<String>());
+                SYNCCHARTS_KLEPTO_CHECKS, true, new ArrayList<String>(),
+                "Check whether the syncchart can be simulated with Klepto.");
     }
 }
