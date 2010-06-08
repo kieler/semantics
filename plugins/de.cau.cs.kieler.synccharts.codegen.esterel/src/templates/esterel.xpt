@@ -57,7 +57,7 @@ end module
 «DEFINE Types FOR ValueType»
   «IF this==ValueType::BOOL» boolean
   «ELSEIF  this==ValueType::UNSIGNED-» integer
-  «ELSEIF  this==ValueType::INTEGER-» integer
+  «ELSEIF  this==ValueType::INT-» integer
   «ELSEIF  this==ValueType::FLOAT-» float
   «ENDIF-»
 «ENDDEFINE»
@@ -133,7 +133,7 @@ end module
  «ENDIF»
 «ENDDEFINE»
 
-«DEFINE Trigger FOR ComplexExpression»
+«DEFINE Trigger FOR OperatorExpression»
   «IF operator==OperatorType::PRE»
   pre(«EXPAND Trigger FOR subExpressions.first()»)
   «ELSEIF operator==OperatorType::VAL»
@@ -147,7 +147,7 @@ end module
 
 «DEFINE Effect FOR Emission»emit «signal.name»«IF newValue!=null»(«EXPAND Trigger FOR newValue»)«ENDIF»;«ENDDEFINE»
 «DEFINE Effect FOR Assignment»«variable» := «expression»;«ENDDEFINE»
-«DEFINE Effect FOR HostCode»«code»;«ENDDEFINE»
+«DEFINE Effect FOR TextualCode»«code»;«ENDDEFINE»
 «DEFINE Effect FOR Effect»//ERROR: unknown effect«ENDDEFINE»
 «REM» Trigger «ENDREM»
 «DEFINE Trigger FOR IntValue»«value»«ENDDEFINE»
@@ -156,7 +156,7 @@ end module
 «DEFINE Trigger FOR VariableReference»«variable.name»«ENDDEFINE»
 «DEFINE Trigger FOR SignalReference»«signal.name»«ENDDEFINE»
 
-«DEFINE Trigger FOR HostCode»«code»«ENDDEFINE»
+«DEFINE Trigger FOR TextualCode»«code»«ENDDEFINE»
 «DEFINE Trigger FOR synccharts::Expression»//ERROR: unknown expression«ENDDEFINE»
 
 «DEFINE Action FOR Action»
