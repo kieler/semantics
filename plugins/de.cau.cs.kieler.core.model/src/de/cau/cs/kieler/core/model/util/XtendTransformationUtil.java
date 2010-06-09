@@ -13,7 +13,6 @@
  */
 package de.cau.cs.kieler.core.model.util;
 
-import java.net.UnknownHostException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -23,6 +22,7 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.xmi.XMIResource;
 import org.eclipse.emf.ecore.xmi.XMLResource;
@@ -98,8 +98,18 @@ public final class XtendTransformationUtil {
         // specified in XSD
         emfReader.getResourceSet().getLoadOptions().put(XMIResource.OPTION_RECORD_UNKNOWN_FEATURE,
                 true);
-        emfReader.getResourceSet().getLoadOptions().put(XMLResource.OPTION_PROCESS_DANGLING_HREF_DISCARD, true);
-
+        // add parser option to avoid searching for DTDs online. This would require an
+        // online connection to execute the transformation
+        HashMap<String, Boolean> parserFeatures = new HashMap<String, Boolean>();
+        parserFeatures.put("http://xml.org/sax/features/validation", 
+                Boolean.FALSE);
+        parserFeatures.put("http://apache.org/xml/features/nonvalidating/load-dtd-grammar",
+                Boolean.FALSE); 
+        parserFeatures.put("http://apache.org/xml/features/nonvalidating/load-external-dtd",
+                Boolean.FALSE);
+        emfReader.getResourceSet().getLoadOptions().put(XMLResource.OPTION_PARSER_FEATURES,
+                parserFeatures);
+        
         // EMF Writer for target model
         Writer emfWriter = new Writer();
         emfWriter.setUri(outputModelURI.toString());
@@ -138,13 +148,12 @@ public final class XtendTransformationUtil {
         Exception e = null;
         try {
             workflow.invoke(wfx, m2mMonitor, issues);
-        } catch (WorkflowInterruptedException we){
-            if(we.getMessage().contains("UnknownHostException")){
-                e = new KielerException("Failed loading Ptolemy file. " +
-                		"Could not resolve the Ptolemy DTD. Unfortunately the parser" +
-                		" currently requires an Internet connection.",we);
-            }
-            else{
+        } catch (WorkflowInterruptedException we) {
+            if (we.getMessage().contains("UnknownHostException")) {
+                e = new KielerException("Failed loading Ptolemy file. "
+                        + "Could not resolve the Ptolemy DTD. Unfortunately the parser"
+                        + " currently requires an Internet connection.", we);
+            } else {
                 e = we;
             }
         } catch (Exception myE) {
