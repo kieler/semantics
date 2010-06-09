@@ -52,10 +52,10 @@ import org.eclipse.ui.PlatformUI;
 public class RefactoringListener implements IRefactoringHistoryListener {
 
     /** File extension for diagram files. */
-    private static final String DIAGRAM_EXTENSION = "kids"; //$NON-NLS-1$
+    private static final String[] DIAGRAM_EXTENSIONS = { "kids", "kaod" }; //$NON-NLS-1$
 
     /** File extension for model files. */
-    private static final String MODEL_EXTENSION = "kixs"; //$NON-NLS-1$
+    private static final String[] MODEL_EXTENSIONS = { "kixs", "kaom" }; //$NON-NLS-1$
 
     /**
      * Contains the different refactoring operations.
@@ -178,9 +178,11 @@ public class RefactoringListener implements IRefactoringHistoryListener {
         List<File> result = new LinkedList<File>();
         if (path != null) {
             String ext = path.getFileExtension();
-            if (ext != null && ext.equals(MODEL_EXTENSION)) {
-                findRec(result, Platform.getLocation().toFile(), path, op,
-                        newName);
+            for (int i = 0; i < MODEL_EXTENSIONS.length; i++) {
+                if (ext != null && ext.equals(MODEL_EXTENSIONS[i])) {
+                    findRec(result, Platform.getLocation().toFile(), path, op,
+                            newName, i);
+                }
             }
         }
         return result;
@@ -199,15 +201,18 @@ public class RefactoringListener implements IRefactoringHistoryListener {
      *            the operation
      * @param newName
      *            optionally the new name of the file
+     * @param index
+     *            the index in the model/diagram extension list to use
      */
     private void findRec(final List<File> result, final File root,
-            final IPath model, final OP op, final String newName) {
+            final IPath model, final OP op, final String newName,
+            final int index) {
         if (root.isDirectory()) {
             // recursively look through all files in the directory
             for (File file : root.listFiles()) {
-                findRec(result, file, model, op, newName);
+                findRec(result, file, model, op, newName, index);
             }
-        } else if (root.getPath().endsWith("." + DIAGRAM_EXTENSION)) {
+        } else if (root.getPath().endsWith("." + DIAGRAM_EXTENSIONS[index])) {
             // found relevant file
             try {
                 InputStream is = new FileInputStream(root);
@@ -288,6 +293,14 @@ public class RefactoringListener implements IRefactoringHistoryListener {
 
         for (IPath path : src) {
             List<File> list = executeOperation(path, OP.MOVE, null);
+            String pathExt = path.getFileExtension();
+            int index = -1;
+            for (int i = 0; i < MODEL_EXTENSIONS.length; i++) {
+                if (pathExt.equals(MODEL_EXTENSIONS[i])) {
+                    index = i;
+                    break;
+                }
+            }
 
             List<File> selection = getUserSelection(list, OP.MOVE);
 
@@ -296,7 +309,7 @@ public class RefactoringListener implements IRefactoringHistoryListener {
                     IPath srcName = path.removeFileExtension();
                     String name = srcName.segment(srcName.segmentCount() - 1);
                     name = dest.toOSString() + IPath.SEPARATOR + name + "." //$NON-NLS-1$
-                            + DIAGRAM_EXTENSION;
+                            + DIAGRAM_EXTENSIONS[index];
                     IPath newPath = Path.fromOSString(Platform.getLocation()
                             .toOSString()
                             + name);
