@@ -11,10 +11,9 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.synccharts.diagram.custom.handlers;
+package de.cau.cs.kieler.core.ui.commands;
 
 import java.io.BufferedReader;
-import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -29,20 +28,14 @@ import java.util.concurrent.Semaphore;
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
-import org.eclipse.core.commands.operations.OperationHistoryFactory;
 import org.eclipse.core.expressions.EvaluationContext;
-import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
-import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.common.util.WrappedException;
 import org.eclipse.emf.ecore.EObject;
@@ -50,44 +43,32 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.transaction.TransactionalEditingDomain;
 import org.eclipse.gef.EditPart;
-import org.eclipse.gmf.runtime.common.core.command.CommandResult;
-import org.eclipse.gmf.runtime.diagram.core.services.ViewService;
-import org.eclipse.gmf.runtime.emf.commands.core.command.AbstractTransactionalCommand;
 import org.eclipse.gmf.runtime.emf.core.GMFEditingDomainFactory;
-import org.eclipse.gmf.runtime.notation.Diagram;
 import org.eclipse.gmf.runtime.notation.View;
 import org.eclipse.swt.widgets.Shell;
-import org.eclipse.ui.IEditorPart;
-import org.eclipse.ui.IWorkbench;
-import org.eclipse.ui.IWorkbenchPage;
-import org.eclipse.ui.IWorkbenchWindow;
-import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
-import org.eclipse.ui.progress.WorkbenchJob;
-
-import de.cau.cs.kieler.kiml.ui.layout.DiagramLayoutManager;
-import de.cau.cs.kieler.synccharts.diagram.edit.parts.RegionEditPart;
-import de.cau.cs.kieler.synccharts.diagram.part.Messages;
-import de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorPlugin;
-import de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorUtil;
-import de.cau.cs.kieler.synccharts.diagram.part.SyncchartsVisualIDRegistry;
 
 /**
- * A command that reinitializes a diagram file from a given kixs file.
+ * A command that reinitializes a diagram file from a given model file.
  * 
  * @author soh
  * @kieler.rating 2010-03-01 proposed yellow
  */
-public class ReInitDiagramCommand extends AbstractHandler {
+public abstract class ReInitDiagramCommand extends AbstractHandler {
 
-    /** File extension for diagram files. */
-    private static final String DIAGRAM_EXTENSION = "kids";
+    /**
+     * Provides the file extension for the diagram file.
+     * 
+     * @return the file extension
+     */
+    protected abstract String getDiagramExtension();
 
-    /** File extension for model files. */
-    private static final String MODEL_EXTENSION = "kixs";
-
-    /** Delay for the auto layout. */
-    private static final long AUTO_LAYOUT_DELAY = 1000;
+    /**
+     * Provides the file extension for the model file.
+     * 
+     * @return the file extension
+     */
+    protected abstract String getModelExtension();
 
     /**
      * 
@@ -127,7 +108,8 @@ public class ReInitDiagramCommand extends AbstractHandler {
                         path = Path.fromOSString(uri.toPlatformString(true));
                     }
                     if (path != null
-                            && path.getFileExtension().equals(MODEL_EXTENSION)) {
+                            && path.getFileExtension().equals(
+                                    getModelExtension())) {
                         super.setBaseEnabled(true);
                         return;
                     }
@@ -182,7 +164,7 @@ public class ReInitDiagramCommand extends AbstractHandler {
     /**
      * Refresh the workspace.
      */
-    private void refreshWorkspace() {
+    protected void refreshWorkspace() {
         WaitUntilDoneMonitor monitor = new WaitUntilDoneMonitor();
         try {
             ResourcesPlugin.getWorkspace().getRoot().refreshLocal(
@@ -223,7 +205,7 @@ public class ReInitDiagramCommand extends AbstractHandler {
      * Reinitialize the diagram file.
      * 
      * @param path
-     *            the path of the kixs file
+     *            the path of the model file
      */
     private void reinitialize(final IPath path) {
         List<IPath> partners = getPartners(path);
@@ -231,10 +213,11 @@ public class ReInitDiagramCommand extends AbstractHandler {
         List<IPath> selection = getUserSelection(partners);
 
         for (IPath partner : selection) {
-            IPath kixsPath = path.getFileExtension().equals(MODEL_EXTENSION) ? path
-                    : partner;
-            IPath kidsPath = path.getFileExtension().equals(DIAGRAM_EXTENSION) ? path
-                    : partner;
+            performPreOperationActions(path, partners);
+            IPath kixsPath = path.getFileExtension()
+                    .equals(getModelExtension()) ? path : partner;
+            IPath kidsPath = path.getFileExtension().equals(
+                    getDiagramExtension()) ? path : partner;
             File kidsFile = getFile(kidsPath);
 
             // getDiagramSetup(kidsFile)
@@ -248,67 +231,33 @@ public class ReInitDiagramCommand extends AbstractHandler {
             // kidsFile = getPartner(kixsFile)
             // addDiagramSetup(kidsFile)
 
-            WorkbenchJob job = new WorkbenchJob("") {
-
-                @Override
-                public IStatus runInUIThread(final IProgressMonitor monitor) {
-                    // perform auto layout
-                    IEditorPart editor = getActiveEditor();
-                    EditPart part = null;
-                    if (editor != null) {
-                        DiagramLayoutManager.layout(editor, part, false, true);
-                    }
-                    return new Status(IStatus.OK,
-                            "de.cau.cs.kieler.synccharts.diagram.custom",
-                            "Done");
-                }
-            };
-
-            job.schedule(AUTO_LAYOUT_DELAY);
-
+            performPostOperationAction(path, partners);
         }
     }
 
     /**
-     * Get the active editor for the page.
+     * Perform actions after the reinit.
      * 
-     * @return the active editor.
+     * @param path
+     *            the file
+     * @param partners
+     *            the partner files
      */
-    private IEditorPart getActiveEditor() {
-        IEditorPart result = null;
-        IWorkbench workbench = SyncchartsDiagramEditorPlugin.getInstance()
-                .getWorkbench();
-        if (workbench != null) {
-            IWorkbenchWindow window = workbench.getActiveWorkbenchWindow();
-            if (window != null) {
-                IWorkbenchPage page = window.getActivePage();
-                if (page != null) {
-                    result = page.getActiveEditor();
-                }
-            }
-        }
-        return result;
+    protected void performPostOperationAction(final IPath path,
+            final List<IPath> partners) {
     }
 
-    // /**
-    // * Calculates the partner to a synccharts file.
-    // *
-    // * @param path
-    // * a file
-    // * @return the partner file
-    // * @throws IOException
-    // * if the partner file is not valid
-    // */
-    // private IPath getPartner(final IPath path) throws IOException {
-    // String ext = path.getFileExtension();
-    // String newExt = ext.equals("kixs") ? "kids" : "kixs";
-    // IPath partnerPath = path.removeFileExtension().addFileExtension(newExt);
-    // File result = getFile(partnerPath);
-    // if (result == null || (!result.exists() && newExt.equals("kixs"))) {
-    // throw new IOException("No kixs file.");
-    // }
-    // return partnerPath;
-    // }
+    /**
+     * Perform actions prior to the reinit.
+     * 
+     * @param path
+     *            the file
+     * @param partners
+     *            the partner files
+     */
+    protected void performPreOperationActions(final IPath path,
+            final List<IPath> partners) {
+    }
 
     /**
      * Execute a refactoring operation.
@@ -323,14 +272,14 @@ public class ReInitDiagramCommand extends AbstractHandler {
      */
     private List<IPath> getPartners(final IPath path) {
         List<File> files = new LinkedList<File>();
-        if (path.getFileExtension().equals(MODEL_EXTENSION)) {
+        if (path.getFileExtension().equals(getModelExtension())) {
             findRec(files, Platform.getLocation().toFile(), path);
         }
         List<IPath> result = new LinkedList<IPath>();
         for (File file : files) {
             if (file != null
                     && (!file.exists() || path.getFileExtension().equals(
-                            MODEL_EXTENSION))) {
+                            getModelExtension()))) {
                 IPath filePath = Path.fromOSString(file.getPath());
                 result.add(filePath.makeRelativeTo(Platform.getLocation()));
             }
@@ -355,7 +304,7 @@ public class ReInitDiagramCommand extends AbstractHandler {
             for (File file : root.listFiles()) {
                 findRec(result, file, model);
             }
-        } else if (root.getPath().endsWith("." + DIAGRAM_EXTENSION)) {
+        } else if (root.getPath().endsWith("." + getDiagramExtension())) {
             // found relevant file
             try {
                 InputStream is = new FileInputStream(root);
@@ -410,16 +359,17 @@ public class ReInitDiagramCommand extends AbstractHandler {
     }
 
     /**
-     * Reinitialize the diagram from a given kixs file.
+     * Reinitialize the diagram from a given model file.
      * 
-     * @param kixsPath
+     * @param modelPath
      *            the source file.
-     * @param kidsPath
+     * @param diagramPath
      *            the destination file.
      */
-    private void reinitializeDiagram(final IPath kixsPath, final IPath kidsPath) {
-        URI domainModelURI = URI.createPlatformResourceURI(kixsPath.toString(),
-                true);
+    private void reinitializeDiagram(final IPath modelPath,
+            final IPath diagramPath) {
+        URI domainModelURI = URI.createPlatformResourceURI(
+                modelPath.toString(), true);
 
         TransactionalEditingDomain editingDomain = GMFEditingDomainFactory.INSTANCE
                 .createEditingDomain();
@@ -437,7 +387,7 @@ public class ReInitDiagramCommand extends AbstractHandler {
             System.out.println("DiagramRoot is null.");
             return;
         }
-        createNewDiagram(diagramRoot, editingDomain, kidsPath);
+        createNewDiagram(diagramRoot, editingDomain, diagramPath);
     }
 
     /**
@@ -447,81 +397,13 @@ public class ReInitDiagramCommand extends AbstractHandler {
      *            the root element.
      * @param editingDomain
      *            the editing domain.
-     * @param kidsPath
+     * @param diagramPath
      *            the destination file
      * @return true if the creation was successful
      */
-    public boolean createNewDiagram(final EObject diagramRoot,
-            final TransactionalEditingDomain editingDomain, final IPath kidsPath) {
-        List<IFile> affectedFiles = new LinkedList<IFile>();
-        refreshWorkspace();
-
-        // get the destination file
-        IFile diagramFile = ResourcesPlugin.getWorkspace().getRoot().getFile(
-                kidsPath);
-        refreshWorkspace();
-
-        if (!diagramFile.exists()) {
-            // create a new file
-            byte[] buf = { 0 };
-            InputStream stream = new ByteArrayInputStream(buf);
-            try {
-                diagramFile.create(stream, true, null);
-                refreshWorkspace();
-                stream.close();
-            } catch (CoreException e0) {
-                e0.printStackTrace();
-            } catch (IOException e0) {
-                e0.printStackTrace();
-            }
-        }
-
-        SyncchartsDiagramEditorUtil.setCharset(diagramFile);
-        affectedFiles.add(diagramFile);
-        URI diagramModelURI = URI.createPlatformResourceURI(diagramFile
-                .getFullPath().toString(), true);
-        ResourceSet resourceSet = editingDomain.getResourceSet();
-        final Resource diagramResource = resourceSet
-                .createResource(diagramModelURI);
-        AbstractTransactionalCommand command = new AbstractTransactionalCommand(
-                editingDomain,
-                Messages.SyncchartsNewDiagramFileWizard_InitDiagramCommand,
-                affectedFiles) {
-
-            @Override
-            protected CommandResult doExecuteWithResult(
-                    final IProgressMonitor monitor, final IAdaptable info)
-                    throws ExecutionException {
-                int diagramVID = SyncchartsVisualIDRegistry
-                        .getDiagramVisualID(diagramRoot);
-                if (diagramVID != RegionEditPart.VISUAL_ID) {
-                    String msg = Messages.SyncchartsNewDiagramFileWizard_IncorrectRootError;
-                    return CommandResult.newErrorCommandResult(msg);
-                }
-                Diagram diagram = ViewService.createDiagram(diagramRoot,
-                        RegionEditPart.MODEL_ID,
-                        SyncchartsDiagramEditorPlugin.DIAGRAM_PREFERENCES_HINT);
-                diagramResource.getContents().add(diagram);
-                return CommandResult.newOKCommandResult();
-            }
-        };
-        try {
-            OperationHistoryFactory.getOperationHistory().execute(command,
-                    new NullProgressMonitor(), null);
-            diagramResource.save(SyncchartsDiagramEditorUtil.getSaveOptions());
-            SyncchartsDiagramEditorUtil.openDiagram(diagramResource);
-        } catch (ExecutionException e) {
-            SyncchartsDiagramEditorPlugin.getInstance().logError(
-                    "Unable to create model and diagram", e); //$NON-NLS-1$
-        } catch (IOException ex) {
-            SyncchartsDiagramEditorPlugin.getInstance().logError(
-                    "Save operation failed for: " + diagramModelURI, ex); //$NON-NLS-1$
-        } catch (PartInitException ex) {
-            SyncchartsDiagramEditorPlugin.getInstance().logError(
-                    "Unable to open editor", ex); //$NON-NLS-1$
-        }
-        return true;
-    }
+    protected abstract boolean createNewDiagram(final EObject diagramRoot,
+            final TransactionalEditingDomain editingDomain,
+            final IPath diagramPath);
 
     /**
      * A monitor that blocks the calling thread until the monitored thread is
@@ -530,7 +412,7 @@ public class ReInitDiagramCommand extends AbstractHandler {
      * @author soh
      * @kieler.rating 2010-03-01 proposed yellow
      */
-    public class WaitUntilDoneMonitor implements IProgressMonitor {
+    private static class WaitUntilDoneMonitor implements IProgressMonitor {
 
         /** The semaphore to wait in. */
         private Semaphore sem = new Semaphore(0);
