@@ -30,6 +30,10 @@
                   commandId="de.cau.cs.kieler.core.ui.bugReport"
                   style="push">
             </command>
+            <separator
+                  name="de.cau.cs.kieler.core.ui.separator2"
+                  visible="true">
+            </separator>
          </menu>
       </menuContribution>
       <menuContribution
@@ -70,6 +74,10 @@
                   </reference>
                </visibleWhen>
             </command>
+            <separator
+                  name="de.cau.cs.kieler.core.ui.separator1"
+                  visible="true">
+            </separator>
          </menu>
       </menuContribution>
       <group
