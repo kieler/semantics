@@ -38,6 +38,9 @@
                </with>
             </visibleWhen>
          </command>
+         <separator
+               name="de.cau.cs.kieler.core.model.separator3">
+         </separator>
       </menuContribution>
       <menuContribution
             locationURI="toolbar:de.cau.cs.kieler">
