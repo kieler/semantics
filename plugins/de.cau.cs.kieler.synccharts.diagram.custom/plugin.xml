@@ -555,7 +555,7 @@
       <extension
             point="org.eclipse.gmf.runtime.common.ui.services.action.globalActionHandlerProviders">
          <GlobalActionHandlerProvider
-               class="de.cau.cs.kieler.synccharts.diagram.custom.handlers.CutCopyPasteHandler"
+               class="de.cau.cs.kieler.synccharts.diagram.custom.handlers.SyncchartsCutCopyPasteHandlerProvider"
                id="de.cau.cs.kieler.synccharts.diagram.custom.CutCopyPasteHandler">
             <Priority
                   name="Lowest">

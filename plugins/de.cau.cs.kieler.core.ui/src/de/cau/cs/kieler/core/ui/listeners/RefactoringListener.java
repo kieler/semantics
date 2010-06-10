@@ -51,10 +51,10 @@ import org.eclipse.ui.PlatformUI;
  */
 public class RefactoringListener implements IRefactoringHistoryListener {
 
-    /** File extension for diagram files. */
+    /** File extensions for diagram files. */
     private static final String[] DIAGRAM_EXTENSIONS = { "kids", "kaod" }; //$NON-NLS-1$
 
-    /** File extension for model files. */
+    /** File extensions for model files. */
     private static final String[] MODEL_EXTENSIONS = { "kixs", "kaom" }; //$NON-NLS-1$
 
     /**

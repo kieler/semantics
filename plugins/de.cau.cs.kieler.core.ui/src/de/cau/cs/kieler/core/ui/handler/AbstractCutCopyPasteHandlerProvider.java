@@ -11,13 +11,14 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.synccharts.diagram.custom.handlers;
+package de.cau.cs.kieler.core.ui.handler;
 
 import java.util.Hashtable;
 
 import org.eclipse.gmf.runtime.common.ui.services.action.global.AbstractGlobalActionHandlerProvider;
 import org.eclipse.gmf.runtime.common.ui.services.action.global.IGlobalActionHandler;
 import org.eclipse.gmf.runtime.common.ui.services.action.global.IGlobalActionHandlerContext;
+import org.eclipse.gmf.runtime.diagram.ui.providers.DiagramGlobalActionHandler;
 import org.eclipse.ui.IPartListener;
 import org.eclipse.ui.IWorkbenchPart;
 
@@ -28,19 +29,27 @@ import org.eclipse.ui.IWorkbenchPart;
  * @author soh
  * @kieler.rating 2010-03-01 proposed yellow
  */
-public class CutCopyPasteHandler extends AbstractGlobalActionHandlerProvider {
+public abstract class AbstractCutCopyPasteHandlerProvider extends
+        AbstractGlobalActionHandlerProvider {
 
     /**
      * List for handlers.
      */
-    private Hashtable<IWorkbenchPart, CutCopyPasteSupportHandler> handlerList = new Hashtable<IWorkbenchPart, CutCopyPasteSupportHandler>();
+    private Hashtable<IWorkbenchPart, DiagramGlobalActionHandler> handlerList = new Hashtable<IWorkbenchPart, DiagramGlobalActionHandler>();
 
     /**
      * Creates a new instance.
      */
-    public CutCopyPasteHandler() {
+    public AbstractCutCopyPasteHandlerProvider() {
         super();
     }
+
+    /**
+     * Provides the actual handler.
+     * 
+     * @return the handler
+     */
+    protected abstract DiagramGlobalActionHandler getHandler();
 
     /**
      * 
@@ -51,8 +60,7 @@ public class CutCopyPasteHandler extends AbstractGlobalActionHandlerProvider {
             final IGlobalActionHandlerContext context) {
         /* Create the handler */
         if (!getHandlerList().containsKey(context.getActivePart())) {
-            getHandlerList().put(context.getActivePart(),
-                    new CutCopyPasteSupportHandler());
+            getHandlerList().put(context.getActivePart(), getHandler());
 
             /*
              * Register as a part listener so that the cache can be cleared when
@@ -116,7 +124,7 @@ public class CutCopyPasteHandler extends AbstractGlobalActionHandlerProvider {
      * 
      * @return Hashtable
      */
-    private Hashtable<IWorkbenchPart, CutCopyPasteSupportHandler> getHandlerList() {
+    private Hashtable<IWorkbenchPart, DiagramGlobalActionHandler> getHandlerList() {
         return handlerList;
     }
 

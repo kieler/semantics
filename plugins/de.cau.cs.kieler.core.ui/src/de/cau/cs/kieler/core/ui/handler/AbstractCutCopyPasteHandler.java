@@ -11,7 +11,7 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.synccharts.diagram.custom.handlers;
+package de.cau.cs.kieler.core.ui.handler;
 
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -39,18 +39,12 @@ import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.ui.IWorkbenchPart;
 
-import de.cau.cs.kieler.synccharts.diagram.custom.commands.CommandFactory;
-import de.cau.cs.kieler.synccharts.diagram.edit.parts.Region2EditPart;
-import de.cau.cs.kieler.synccharts.diagram.edit.parts.RegionEditPart;
-import de.cau.cs.kieler.synccharts.diagram.edit.parts.State2EditPart;
-import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateEditPart;
-import de.cau.cs.kieler.synccharts.diagram.edit.parts.TransitionEditPart;
-
 /**
  * @author soh
  */
 @SuppressWarnings("restriction")
-public class CutCopyPasteSupportHandler extends DiagramGlobalActionHandler {
+public abstract class AbstractCutCopyPasteHandler extends
+        DiagramGlobalActionHandler {
 
     /** buffered result of the last request for copy. */
     private boolean canKsbaseCopy;
@@ -60,7 +54,7 @@ public class CutCopyPasteSupportHandler extends DiagramGlobalActionHandler {
     /**
      * Constructor for CopyWithImageSupportGlobalActionHandler.
      */
-    public CutCopyPasteSupportHandler() {
+    public AbstractCutCopyPasteHandler() {
         super();
     }
 
@@ -71,30 +65,8 @@ public class CutCopyPasteSupportHandler extends DiagramGlobalActionHandler {
      *            the selection
      * @return true if only valid parts are in the selection
      */
-    private boolean isValidSelection(final IStructuredSelection selection) {
-        Iterator<?> iter = selection.iterator();
-
-        while (iter.hasNext()) {
-            Object object = iter.next();
-            if (object instanceof EditPart) {
-                EditPart editPart = (EditPart) object;
-                if (editPart instanceof State2EditPart) {
-                    continue;
-                } else if (editPart instanceof StateEditPart) {
-                    continue;
-                } else if (editPart instanceof RegionEditPart) {
-                    continue;
-                } else if (editPart instanceof Region2EditPart) {
-                    continue;
-                } else if (editPart instanceof TransitionEditPart) {
-                    continue;
-                }
-            }
-            return false;
-        }
-
-        return true;
-    }
+    protected abstract boolean isValidSelection(
+            final IStructuredSelection selection);
 
     /**
      * 
@@ -149,9 +121,8 @@ public class CutCopyPasteSupportHandler extends DiagramGlobalActionHandler {
      *            the selection
      * @return true if the selection can be cut/copied
      */
-    private boolean canKsbaseCopy(final IStructuredSelection sel) {
+    protected boolean canKsbaseCopy(final IStructuredSelection sel) {
         boolean result = true;
-
         canKsbaseCopy = result;
         return result;
     }
@@ -164,9 +135,8 @@ public class CutCopyPasteSupportHandler extends DiagramGlobalActionHandler {
      *            the selection
      * @return true if the selection can be used
      */
-    private boolean canKsbasePaste(final IStructuredSelection sel) {
+    protected boolean canKsbasePaste(final IStructuredSelection sel) {
         boolean result = true;
-
         canKsbasePaste = result;
         return result;
     }
@@ -278,9 +248,10 @@ public class CutCopyPasteSupportHandler extends DiagramGlobalActionHandler {
      *            the editor
      * @return the cut command
      */
-    private ICommand getKsBaseCutCommand(final IStructuredSelection sel,
+    protected ICommand getKsBaseCutCommand(final IStructuredSelection sel,
             final IDiagramWorkbenchPart part) {
-        return CommandFactory.buildCutCommand(part, getListFromSelection(sel));
+        return getCommandFactory().buildCutCommand(part,
+                getListFromSelection(sel));
     }
 
     /**
@@ -292,9 +263,10 @@ public class CutCopyPasteSupportHandler extends DiagramGlobalActionHandler {
      *            the editor
      * @return the copy command
      */
-    private ICommand getKsBaseCopyCommand(final IStructuredSelection sel,
+    protected ICommand getKsBaseCopyCommand(final IStructuredSelection sel,
             final IDiagramWorkbenchPart part) {
-        return CommandFactory.buildCopyCommand(part, getListFromSelection(sel));
+        return getCommandFactory().buildCopyCommand(part,
+                getListFromSelection(sel));
     }
 
     /**
@@ -306,11 +278,18 @@ public class CutCopyPasteSupportHandler extends DiagramGlobalActionHandler {
      *            the editor
      * @return the paste command
      */
-    private ICommand getKsbasePasteCommand(final IStructuredSelection sel,
+    protected ICommand getKsbasePasteCommand(final IStructuredSelection sel,
             final IDiagramWorkbenchPart part) {
-        return CommandFactory
-                .buildPasteCommand(part, getListFromSelection(sel));
+        return getCommandFactory().buildPasteCommand(part,
+                getListFromSelection(sel));
     }
+
+    /**
+     * Getter for the factory producing the commands.
+     * 
+     * @return the factory
+     */
+    protected abstract ICutCopyPasteCommandFactory getCommandFactory();
 
     /**
      * 
