@@ -42,7 +42,7 @@ import org.osgi.framework.BundleContext;
 
 import de.cau.cs.kieler.core.model.util.ValidationManager;
 import de.cau.cs.kieler.core.model.util.ModelingUtil;
-import de.cau.cs.kieler.core.model.util.ValidationManager.IActionFactory;
+import de.cau.cs.kieler.core.model.util.ValidationManager.IValidateActionFactory;
 import de.cau.cs.kieler.synccharts.SyncchartsPackage;
 import de.cau.cs.kieler.synccharts.Transition;
 import de.cau.cs.kieler.synccharts.diagram.custom.triggerlisteners.RedundantLabelTriggerListener;
@@ -62,9 +62,9 @@ public class SyncchartsDiagramCustomPlugin extends AbstractUIPlugin implements
 
     private static void registerValidateAction(final IWorkbenchPage page) {
         ValidationManager.registerValidateAction(SyncchartsPackage.eINSTANCE,
-                new IActionFactory() {
+                new IValidateActionFactory() {
 
-                    public Action getAction() {
+                    public Action getValidateAction() {
                         return new ValidateAction(page);
                     }
                 });

@@ -43,6 +43,7 @@ import de.cau.cs.kieler.core.model.util.ValidationManager;
  * validate action on the toolbar. Each action corresponds to a check file.
  * 
  * @author soh
+ * @kieler.rating 2010-06-11 proposed yellow soh
  */
 public class ValidationMenuContributionFactory extends
         ExtensionContributionFactory {
@@ -57,7 +58,8 @@ public class ValidationMenuContributionFactory extends
     }
 
     /**
-     * Fill the menu with entries.
+     * Fill the menu with entries for each of the CheckFiles. Add a button for
+     * directly going to the preference page at the bottom of the menu.
      * 
      * @param menu
      *            the menu
@@ -79,6 +81,7 @@ public class ValidationMenuContributionFactory extends
      * checkbox menu item that triggers enablement of the file.
      * 
      * @author soh
+     * @kieler.rating 2010-06-11 proposed yellow soh
      */
     private static class CheckFileMenuItem implements SelectionListener,
             IPropertyChangeListener, IContributionItem {
@@ -116,12 +119,14 @@ public class ValidationMenuContributionFactory extends
          * {@inheritDoc}
          */
         public void widgetSelected(final SelectionEvent e) {
+            // enable or disable the checkfile and trigger a validate
             ValidationManager.setEnabled(file, result.getSelection());
             ValidationManager.validateActiveEditor();
         }
 
         /**
-         * {@inheritDoc}
+         * Update the menu item when the underlying property is changed from
+         * somewhere else (e.g. the preference page).
          */
         public void propertyChange(final PropertyChangeEvent event) {
             if (event.getProperty().contains(file)) {
@@ -134,7 +139,8 @@ public class ValidationMenuContributionFactory extends
         }
 
         /**
-         * {@inheritDoc}
+         * Dispose of the menu item and deregister as listener since there is no
+         * menu item that needs to be notified of changes.
          */
         public void dispose() {
             result.dispose();
@@ -148,7 +154,8 @@ public class ValidationMenuContributionFactory extends
         }
 
         /**
-         * {@inheritDoc}
+         * Setup the menu item at the specified index in the menu. Also register
+         * the necessary listeners.
          */
         public void fill(final Menu parent, final int index) {
             result = new MenuItem(parent, SWT.CHECK, index);
@@ -213,10 +220,11 @@ public class ValidationMenuContributionFactory extends
         }
 
         /**
-         * {@inheritDoc}
+         * The Menu item should only be visible for editors that match the
+         * epackage of the checkfile.
          */
         public boolean isVisible() {
-            EPackage ePackage = ValidationManager.getEPackage();
+            EPackage ePackage = ValidationManager.getEPackageOfActiveEditor();
             if (ePackage == null) {
                 return false;
             }
@@ -258,10 +266,12 @@ public class ValidationMenuContributionFactory extends
      * The menu item for opening the preference page of the validation manager.
      * 
      * @author soh
+     * @kieler.rating 2010-06-11 proposed yellow soh
      */
     private static class GotoPreferencePageItem implements SelectionListener,
             IContributionItem {
 
+        /** The menu item that triggers the opening of the page. */
         private MenuItem item;
 
         public void update(final String id) {
@@ -313,6 +323,10 @@ public class ValidationMenuContributionFactory extends
         public void fill(final ToolBar parent, final int index) {
         }
 
+        /**
+         * 
+         * {@inheritDoc}
+         */
         public void fill(final Menu parent, final int index) {
             item = new MenuItem(parent, SWT.PUSH, index);
             item.setText("Configure...");
@@ -333,7 +347,8 @@ public class ValidationMenuContributionFactory extends
         }
 
         /**
-         * {@inheritDoc}
+         * Opens the preference dialog of the active workbench and goes directly
+         * to the page for the validation manager.
          */
         public void widgetSelected(final SelectionEvent e) {
             Shell shell = PlatformUI.getWorkbench().getActiveWorkbenchWindow()

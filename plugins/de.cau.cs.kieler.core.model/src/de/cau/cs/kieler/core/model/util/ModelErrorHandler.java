@@ -42,7 +42,10 @@ import de.cau.cs.kieler.core.ui.errorhandler.GenericErrorHandler.StatusListener;
  * exceptions and styles (BLOCK, LOG) are handled like the default Status
  * handler.
  * 
+ * enabling and disabling of markers and refactoring into a listener by soh
+ * 
  * @author haf
+ * @kieler.rating 2010-06-11 proposed yellow soh
  */
 public class ModelErrorHandler implements StatusListener {
 

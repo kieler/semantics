@@ -22,6 +22,7 @@ import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramEditor;
  * problem markers can be toggled.
  * 
  * @author soh
+ * @kieler.rating 2010-06-11 proposed yellow soh
  */
 public class KielerModelPropertyTester extends PropertyTester {
 
@@ -35,9 +36,11 @@ public class KielerModelPropertyTester extends PropertyTester {
             // editor might have markers and validation action
             return true;
         }
+        // determine whether the validation manager has any check files
+        // for the currenly active diagram editor.
         if (property.equals("hasValidateAction")
                 && receiver instanceof DiagramEditor) {
-            EPackage ePackage = ValidationManager.getEPackage();
+            EPackage ePackage = ValidationManager.getEPackageOfActiveEditor();
             return !ValidationManager.getRegisteredFiles(ePackage).isEmpty();
         }
         return false;

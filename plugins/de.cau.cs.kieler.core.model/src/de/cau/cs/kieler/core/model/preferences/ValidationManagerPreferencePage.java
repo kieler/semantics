@@ -28,7 +28,11 @@ import de.cau.cs.kieler.core.model.CoreModelPlugin;
 import de.cau.cs.kieler.core.model.util.ValidationManager;
 
 /**
+ * The preference page for configuring which CheckFile should be used to
+ * validate the different diagrams.
+ * 
  * @author soh
+ * @kieler.rating 2010-06-11 proposed yellow soh
  */
 public class ValidationManagerPreferencePage extends FieldEditorPreferencePage
         implements IWorkbenchPreferencePage {
@@ -37,7 +41,7 @@ public class ValidationManagerPreferencePage extends FieldEditorPreferencePage
     private List<BooleanFieldEditor> editors = new LinkedList<BooleanFieldEditor>();
 
     /**
-     * Creates a KIELER preference page.
+     * Creates a preference page.
      */
     public ValidationManagerPreferencePage() {
         super(GRID);
@@ -45,7 +49,7 @@ public class ValidationManagerPreferencePage extends FieldEditorPreferencePage
     }
 
     /**
-     * {@inheritDoc}
+     * Create a field editor for each of the available checkfiles.
      */
     @Override
     protected void createFieldEditors() {
@@ -58,11 +62,10 @@ public class ValidationManagerPreferencePage extends FieldEditorPreferencePage
             super.addField(enablementFE);
             editors.add(enablementFE);
 
+            // set the tool tip
             String tooltip = ValidationManager.getTooltip(file);
             enablementFE.getDescriptionControl(parent).setToolTipText(tooltip);
-
         }
-
     }
 
     /**
@@ -75,11 +78,13 @@ public class ValidationManagerPreferencePage extends FieldEditorPreferencePage
             return false;
         }
 
+        // write the values back to the validation manager
         for (BooleanFieldEditor bfe : editors) {
             String key = bfe.getLabelText();
             Boolean value = bfe.getBooleanValue();
             ValidationManager.setEnabled(key, value);
         }
+        // update the enabled/disabled checks
         ValidationManager.refreshChecks();
         return true;
     }
@@ -92,6 +97,7 @@ public class ValidationManagerPreferencePage extends FieldEditorPreferencePage
         Set<String> files = ValidationManager.getRegisteredFiles();
         IPreferenceStore store = getPreferenceStore();
 
+        // synchronize the preference store and the values in the manager
         for (String file : files) {
             String key = ValidationManager.PREFERENCE_PREFIX + file;
             Boolean value = ValidationManager.isEnabled(file);

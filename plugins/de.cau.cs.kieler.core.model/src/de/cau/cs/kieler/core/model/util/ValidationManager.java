@@ -44,9 +44,10 @@ import de.cau.cs.kieler.core.model.CoreModelPlugin;
 import de.cau.cs.kieler.core.ui.handler.RemoveMarkerHandler;
 
 /**
- * Handler for managing the error markers and check files.
+ * Handler for managing check files and validate actions.
  * 
  * @author soh
+ * @kieler.rating 2010-06-11 proposed yellow soh
  */
 public final class ValidationManager extends AbstractHandler {
 
@@ -54,15 +55,16 @@ public final class ValidationManager extends AbstractHandler {
      * Factory for creating the validate actions used in the validation.
      * 
      * @author soh
+     * @kieler.rating 2010-06-11 proposed yellow soh
      */
-    public static interface IActionFactory {
+    public static interface IValidateActionFactory {
 
         /**
          * Get the validate action for the given ePackage.
          * 
          * @return the action
          */
-        Action getAction();
+        Action getValidateAction();
 
     }
 
@@ -70,10 +72,13 @@ public final class ValidationManager extends AbstractHandler {
      * Contains all registered packages with a factory for creating validate
      * actions.
      */
-    private static Map<EPackage, IActionFactory> packages = new HashMap<EPackage, IActionFactory>();
+    private static Map<EPackage, IValidateActionFactory> packages = new HashMap<EPackage, IValidateActionFactory>();
 
     /** Maps the path of a check file to the internal checkfile objects. */
     private static Map<String, CheckFile> checkFiles = new HashMap<String, CheckFile>();
+
+    /** The list of listeners to be notified of visibility changes. */
+    private static Set<IPropertyChangeListener> listeners = new HashSet<IPropertyChangeListener>();
 
     /** Prefix for the preference store. */
     public static final String PREFERENCE_PREFIX = "_Checkfile_";
@@ -82,6 +87,7 @@ public final class ValidationManager extends AbstractHandler {
      * {@inheritDoc}
      */
     public Object execute(final ExecutionEvent event) throws ExecutionException {
+        // Enable or disable all checkfiles.
         Command command = event.getCommand();
         boolean oldValue = HandlerUtil.toggleCommandState(command);
         setEnabled(!oldValue);
@@ -153,7 +159,7 @@ public final class ValidationManager extends AbstractHandler {
      * 
      * @return the package
      */
-    public static EPackage getEPackage() {
+    public static EPackage getEPackageOfActiveEditor() {
         EPackage ePackage = null;
         IWorkbenchPage page = PlatformUI.getWorkbench()
                 .getActiveWorkbenchWindow().getActivePage();
@@ -221,7 +227,8 @@ public final class ValidationManager extends AbstractHandler {
      * @param file
      *            the file
      * @param isWrapExistingValidator
-     *            ???
+     *            True if the checkfile wraps around another checkfile and thus
+     *            has to be added after it.
      * @param referencedEPackageNsURIs
      *            ???
      * @param tooltip
@@ -234,13 +241,16 @@ public final class ValidationManager extends AbstractHandler {
             packages.put(ePackage, null);
         }
 
+        // determine whether or the file should be allowed to show its markers
         IPreferenceStore store = CoreModelPlugin.getDefault()
                 .getPreferenceStore();
         boolean value = true;
         String key = PREFERENCE_PREFIX + file;
         if (store.contains(key)) {
+            // try the preference store
             value = store.getBoolean(key);
         } else {
+            // if value not found try accessing the persistent memory on disc
             IEclipsePreferences prefs = new InstanceScope()
                     .getNode(CoreModelPlugin.PLUGIN_ID);
             value = prefs.getBoolean(key, true);
@@ -285,7 +295,7 @@ public final class ValidationManager extends AbstractHandler {
      *            the validate action
      */
     public static void registerValidateAction(final EPackage ePackage,
-            final IActionFactory action) {
+            final IValidateActionFactory action) {
         packages.put(ePackage, action);
     }
 
@@ -294,9 +304,9 @@ public final class ValidationManager extends AbstractHandler {
      * 
      */
     public static void validate() {
-        for (IActionFactory action : packages.values()) {
+        for (IValidateActionFactory action : packages.values()) {
             if (action != null) {
-                action.getAction().run();
+                action.getValidateAction().run();
             }
         }
     }
@@ -305,10 +315,10 @@ public final class ValidationManager extends AbstractHandler {
      * Run the validate action of the currently active editor.
      */
     public static void validateActiveEditor() {
-        EPackage ePackage = getEPackage();
-        IActionFactory factory = packages.get(ePackage);
+        EPackage ePackage = getEPackageOfActiveEditor();
+        IValidateActionFactory factory = packages.get(ePackage);
         if (factory != null) {
-            factory.getAction().run();
+            factory.getValidateAction().run();
         }
     }
 
@@ -356,6 +366,9 @@ public final class ValidationManager extends AbstractHandler {
      *            the package.
      */
     public static void restoreChecks(final EPackage ePackage) {
+        // make sure all check files that don't wrap around an
+        // existing check file are added first. Otherwise
+        // the wrapping checks can't be added
         for (CheckFile file : checkFiles.values()) {
             if ((ePackage == null || file.ePackage == ePackage)
                     && !file.isWrapExistingValidator) {
@@ -422,9 +435,6 @@ public final class ValidationManager extends AbstractHandler {
         }
     }
 
-    /** The list of listeners to be notified of visibility changes. */
-    private static Set<IPropertyChangeListener> listeners = new HashSet<IPropertyChangeListener>();
-
     /**
      * Notify listeners of a property change.
      * 
@@ -470,6 +480,7 @@ public final class ValidationManager extends AbstractHandler {
      * Stores all the information about a checkfile.
      * 
      * @author soh
+     * @kieler.rating 2010-06-11 proposed yellow soh
      */
     private static final class CheckFile {
 
@@ -502,7 +513,10 @@ public final class ValidationManager extends AbstractHandler {
         /** The path to the file. */
         private String file;
 
-        /** ???. */
+        /**
+         * True if the checkfile wraps around another checkfile and thus has to
+         * be added after it.
+         */
         private boolean isWrapExistingValidator;
 
         /** ???. */
