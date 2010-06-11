@@ -24,7 +24,6 @@ import org.eclipse.core.runtime.Platform;
 import org.osgi.framework.Bundle;
 
 import de.cau.cs.kieler.core.KielerException;
-import de.cau.cs.kieler.core.util.KonsoleExec;
 
 /**
  * Wrapper class to execute CEC executables.
