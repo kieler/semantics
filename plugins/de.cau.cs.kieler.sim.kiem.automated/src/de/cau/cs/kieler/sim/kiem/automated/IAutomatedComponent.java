@@ -71,9 +71,9 @@ public interface IAutomatedComponent {
      * Ask the component if it wants to do more runs. This causes the entire
      * execution to be executed again as many times as the components specified.
      * 
-     * @return the number of additional runs
+     * @return the number of additional iterations
      */
-    int wantsMoreRuns();
+    int getNumberOfAdditionalIterations();
 
     /**
      * Ask the component if it wants to do more steps. This causes the entire
@@ -81,6 +81,26 @@ public interface IAutomatedComponent {
      * 
      * @return the number of additional steps
      */
+    int getNumberOfAdditionalSteps();
+
+    /**
+     * Ask the component if it wants to do more runs. This causes the entire
+     * execution to be executed again as many times as the components specified.
+     * 
+     * @return the number of additional runs
+     * @deprecated use getNumberOfAdditionalIterations()
+     */
+    @Deprecated
+    int wantsMoreRuns();
+
+    /**
+     * Ask the component if it wants to do more steps. This causes the entire
+     * execution to perform at least as many steps as the components specified.
+     * 
+     * @return the number of additional steps
+     * @deprecated use getNumberOfAdditionalSteps()
+     */
+    @Deprecated
     int wantsMoreSteps();
 
 }

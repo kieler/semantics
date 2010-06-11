@@ -153,7 +153,7 @@ public final class AutomationManager implements StatusListener {
         int result = 0;
 
         for (IAutomatedComponent comp : getRelevantComponents()) {
-            result = Math.max(result, comp.wantsMoreRuns());
+            result = Math.max(result, comp.getNumberOfAdditionalIterations());
         }
 
         return result;
@@ -168,7 +168,7 @@ public final class AutomationManager implements StatusListener {
         int result = 0;
 
         for (IAutomatedComponent comp : getRelevantComponents()) {
-            result = Math.max(result, comp.wantsMoreSteps());
+            result = Math.max(result, comp.getNumberOfAdditionalSteps());
         }
 
         return result;

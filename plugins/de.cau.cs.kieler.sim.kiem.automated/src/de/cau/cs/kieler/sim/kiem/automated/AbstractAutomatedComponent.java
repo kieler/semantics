@@ -91,8 +91,34 @@ public abstract class AbstractAutomatedComponent extends
      * Subclasses should override this method.
      * 
      * @return 0
+     * @deprecated use getNumberOfAdditionalIterations()
      */
+    @Deprecated
     public int wantsMoreRuns() {
+        return 0;
+    }
+
+    /**
+     * The default implementation doesn't need any runs.
+     * 
+     * Subclasses should override this method.
+     * 
+     * @return 0
+     */
+    public int getNumberOfAdditionalIterations() {
+        return wantsMoreRuns();
+    }
+
+    /**
+     * The default implementation doesn't need any steps.
+     * 
+     * Subclasses should override this method.
+     * 
+     * @return 0
+     * @deprecated use getNumberOfAdditionalSteps()
+     */
+    @Deprecated
+    public int wantsMoreSteps() {
         return 0;
     }
 
@@ -103,8 +129,8 @@ public abstract class AbstractAutomatedComponent extends
      * 
      * @return 0
      */
-    public int wantsMoreSteps() {
-        return 0;
+    public int getNumberOfAdditionalSteps() {
+        return wantsMoreRuns();
     }
 
     /**
