@@ -15,6 +15,7 @@
 package de.cau.cs.kieler.synccharts.sim.ptolemy.oaw;
 
 import java.util.Hashtable;
+import java.util.LinkedList;
 
 import de.cau.cs.kieler.synccharts.*;
 import de.cau.cs.kieler.synccharts.sim.ptolemy.SyncchartsSimPtolemyPlugin;
@@ -30,7 +31,50 @@ import org.eclipse.emf.common.util.BasicEList;
  */
 public class XtendJava {
 
-	/** The hash table used to remember marked states. */
+    static LinkedList<Moml.EntityType> modalModels = null;
+    static LinkedList<String> portNames = null;
+
+    public final static void resetQueue2Delete() {
+        modalModels = null;
+        portNames = null;
+    }
+    
+    public final static int getQueueSize2Delete() {
+        if (modalModels == null) 
+            return 0;
+        else
+            return modalModels.size();
+    }
+    
+    public final static void enqueue2Delete(Moml.EntityType modalModel,
+                                            String portName) {
+        if (modalModels == null) {
+            modalModels = new LinkedList<Moml.EntityType>();
+            portNames   = new LinkedList<String>();
+        }
+        modalModels.push(modalModel);
+        portNames.push(portName);
+        System.out.println("BINCHEN"+modalModels.size());
+        System.out.println("BINCHEN"+portName);
+    }
+    
+    public final static String popPortName2Delete() {
+        if (portNames == null || portNames.size() > 0)
+            return (String)portNames.pop();
+        else
+            return null;
+    }
+
+    public final static Moml.EntityType popModalModel2Delete() {
+        if (modalModels == null || modalModels.size() > 0)
+            return (Moml.EntityType)modalModels.pop();
+        else
+            return null;
+    }
+    
+    // --------------------------------------------------------------------
+
+    /** The hash table used to remember marked states. */
 //	static Hashtable<Integer,Node> ht = new Hashtable<Integer,Node>();
 
 	//-------------------------------------------------------------------------

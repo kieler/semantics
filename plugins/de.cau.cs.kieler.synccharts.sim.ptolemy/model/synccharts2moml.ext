@@ -342,10 +342,20 @@ String getUniqueName(String name, List[Signal] signalList):
 //that are not used in emissions and auxiliary local signals that can be used in
 //emissions.
 //@author cmot, 01. Dec 2009
+//Addition (07.06.2010): Note that not-constructive synccharts must be prevented,
+//this are auxiliary signals that appear in a strong-abortion. These are not
+//allowed to appear inside the terminated state!!! (e.g. R in ABRO)
+
+//ATTENTION: this method can oly be used iff we remove ANY output port from modal model
+//actors whose connected/adjacent input ports appear in triggers of strong abortion transitions
+//This is because such a syncchart would not be constructive. Without this modification the
+//Ptolemy model cannot be simulated, because of in general Ptolemy cannot make any assumptions
+//about relations from outputs to inputs!
+
 
 //Main function should be called for the top most state
 Void inputSignalTransformation(State topState):
-  //get the input signals, for these local signals must be defined
+  //get the input signals, for these local auxiliary signals must be defined
   let inputSignalList = topState.signals.select(e|e.isInput):
   let signalList = topState.signals:
   //add parallel regions with new input signals (with the same names)
@@ -429,21 +439,21 @@ Void n2wState(List[synccharts::Region] regionList) :
 
 Void n2wTransition(List[synccharts::Transition] transitionList, synccharts::State state) :
   let transition = transitionList.first():
-  let complexExpression = new synccharts::ComplexExpression:
+  let operatorExpression = new synccharts::OperatorExpression:
   dump("TEST TRANSITION "+getURIFragment(transition)) ->
   (transitionList.withoutFirst().size > 0) ?
      n2wTransition(transitionList.withoutFirst(), state) : null ->
-   //add a new complex expression trigger (will be filled recusively)
-   complexExpression.setOperator(OperatorType::AND) ->
+   //add a new operator/complex expression trigger (will be filled recusively)
+   operatorExpression.setOperator(OperatorType::AND) ->
   (transition.type.toString().matches("NORMALTERMINATION") && (state.regions.size > 0)) ?
-    transition.setTrigger(complexExpression) : null ->
+    transition.setTrigger(operatorExpression) : null ->
   (transition.type.toString().matches("NORMALTERMINATION") && (state.regions.size > 0)) ?
     n2wBuildTriggerState(state.regions, 
   						 state.parentRegion.parentState,
   						 transition) : null ->
-  //test how many trigges are in, if only one delete AND if non, delete complexExpression
-  (complexExpression.subExpressions.size == 1) ?
-     transition.setTrigger(complexExpression.subExpressions.get(0)) : null ->
+  //test how many trigges are in, if only one delete AND if non, delete operatorExpression
+  (operatorExpression.subExpressions.size == 1) ?
+     transition.setTrigger(operatorExpression.subExpressions.get(0)) : null ->
   //modify the type from NORMALTERMINATION to WEAKABORT   
   (transition.type.toString().matches("NORMALTERMINATION")) ? 
     transition.setType(synccharts::TransitionType::WEAKABORT) : null
@@ -464,7 +474,7 @@ Void n2wBuildTriggerState(List[synccharts::Region] regionList,
    mainState.signals.add(regionSignal) ->
    //construct a new signal reference (for trigger) and add it
    signalReference.setSignal(regionSignal) ->
-   ((ComplexExpression)trigger).subExpressions.add(signalReference) ->
+   ((OperatorExpression)trigger).subExpressions.add(signalReference) ->
  
   (regionList.withoutFirst().size > 0) ?
   	 n2wBuildTriggerState(regionList.withoutFirst(), mainState, weakAbortTransition) : null ->
@@ -624,9 +634,14 @@ create EntityType this createBaseEntity(synccharts::Region mainRegion):
   	//REMOVED SINCE ONLY EXPERIMENTAL YET
     outputSignalTransformation(mainRegion.innerStates.get(0)) ->  	
   	
-  	//consider input signals that may be used in triggers 
+  	//consider input signals that may be used in outputs 
   	//REMOVED SINCE ONLY EXPERIMENTAL YET
-    inputSignalTransformation(mainRegion.innerStates.get(0)) ->  	
+    inputSignalTransformation(mainRegion.innerStates.get(0)) ->
+    //ATTENTION: this method can oly be used iff we remove ANY output port from modal model
+    //actors whose connected/adjacent input ports appear in triggers of strong abortion transitions
+    //This is because such a syncchart would not be constructive. Without this modification the
+    //Ptolemy model cannot be simulated, because of in general Ptolemy cannot make any assumptions
+    //about relations from outputs to inputs!
 
   	//normal termination preprocessing
     n2wRegion(mainRegion.innerStates) ->
@@ -655,6 +670,9 @@ create EntityType this createBaseEntity(synccharts::Region mainRegion):
     //add "this" EntityType so that IterateRegions is able to add 
     //new entities or properties
     
+    //finally delete output ports of modalmodels that appear in trigges of preemptive transitions!
+    this.entity.DeleteOutputPorts() ->
+
     //connect most top input signals
     ConnectTopmostInputSignals(this, this.entity) ->
 
@@ -664,38 +682,13 @@ create EntityType this createBaseEntity(synccharts::Region mainRegion):
 //  				"terminated"+outerStateURIHash) -> 
    				
    //post processing: reconsider priorities
-   ConsiderTransitionPriorities(this.entity)   
+   ConsiderTransitionPriorities(this.entity) 
+   
 ;
 
 
-// Termination ports are not needed on the toplevel, so these can be deleted.
-// This is done by iterating thru the list of all modalmodels (and their
-// controller).
-Void deleteModalModelPorts(List[EntityType] entityList, String portName) :
- 	let modalmodel = entityList.last() :
- 	let controller = (EntityType) modalmodel.entity.select
- 									(e|e.name.matches("_Controller")).first():
-	//debug output
- 	dump("DELETE "+portName +" IN " + modalmodel.name) ->
 
-	//delete port and links in modal model
-	modalmodel.port.remove(modalmodel.port.select(e|e.name.matches(portName))
-			  .first()) ->
-	modalmodel.relation.remove(modalmodel.relation
-			  .select(e|e.name.matches(portName+"Relation")).first()) ->
-	modalmodel.link.remove(modalmodel.link
-			  .select(e|e.relation.matches(portName+"Relation")).first()) ->
-	modalmodel.link.remove(modalmodel.link
-			  .select(e|e.relation.matches(portName+"Relation")).first()) ->
- 	
- 	//delete port in controller
- 	controller.port.remove(controller.port
- 			  .select(e|e.name.matches(portName)).first()) ->
 
-	//go thru the rest of the list, if any
- 	(entityList.size > 1) ?
- 		deleteModalModelPorts(entityList.withoutLast(), portName) : null	
-;	
 
 
 //-----------------------------------------------------------------------------
@@ -869,6 +862,165 @@ Void ConsiderTransitionPriorities_Relation(RelationType relation,
 				: null 								    										   	
 ;										   
 
+
+
+//-----------------------------------------------------------------------------
+//--        A U T O M A T I C - D E L E T E  O U T P U T   P O R T S         --
+//-----------------------------------------------------------------------------
+
+//ATTENTION: this method can oly be used iff we remove ANY output port from modal model
+//actors whose connected/adjacent input ports appear in triggers of strong abortion transitions
+//This is because such a syncchart would not be constructive. Without this modification the
+//Ptolemy model cannot be simulated, because of in general Ptolemy cannot make any assumptions
+//about relations from outputs to inputs!
+
+// call this method with the root region
+
+Void DeleteOutputPorts(EntityType entity) :
+    resetQueue2Delete() ->
+	DeleteOutputPorts(entity, null) ->
+	if (getQueueSize2Delete() > 0) then 
+		deleteModalModelPort()
+	else
+	  	null
+;
+
+
+Void DeleteOutputPorts(EntityType entity, EntityType modalModel) :
+    let entityClass = entity.class1:
+	switch {
+	  case (entityClass.matches("ptolemy.domains.modal.modal.ModalModel")) :
+			// if this is a region, go on with modal controller (typically there is just one per region)
+			// modalModel.entity.select(e|e.name.matches("_Controller")).first()
+		    entity.entity.DeleteOutputPorts(entity)
+	  case (entityClass.matches("ptolemy.domains.modal.modal.ModalController") && (modalModel != null)) :
+	  		// delete (output) ports for controller
+			 modalModel.port.select(p|p.name.endsWith("o")).DeleteOutputPorts2(modalModel)
+	  case (entityClass.matches("ptolemy.domains.modal.modal.Refinement")) :
+	        // do this recursively in all hierachy levels
+	        entity.entity.DeleteOutputPorts(null)
+	  default :
+	    	null
+	} 
+;
+
+
+cached Void DeleteOutputPorts2(PortType port, EntityType modalModel) :
+  // this statemet gets all transition relations, that have a property named guardExpression
+  // containing the specific port in question
+  // if this list is > 0 then the output port must be deleted!
+  let controller = (EntityType) modalModel.entity.select
+ 									(e|e.name.matches("_Controller")).first():
+  let transitions = controller.relation.select(r|r.name.contains("transition")) :
+  
+  dump("#### test #### " + port.name + ", " +  modalModel.name) ->
+  
+  transitions.DeleteOutputPorts3(port, modalModel)
+   
+ ;
+
+
+cached Void DeleteOutputPorts3(RelationType r, PortType port, EntityType modalModel) :
+    let portName = port.name.subString(0,port.name.length-1) :
+    let preemptiveTransition = r.property.select(p|p.name.matches("preemptive") && p.value.matches("true")) :
+    let foundExpression =      r.property.select(p|p.name.matches("guardExpression") && p.value.contains(portName)) : 
+ 	let controller = (EntityType) modalModel.entity.select(e|e.name.matches("_Controller")).first():	
+ 	
+ 	//dumpI(preemptiveTransition.size) ->
+ 	//dumpI(foundExpression.size) ->
+    if (preemptiveTransition.size > 0 
+    	 && foundExpression.size > 0) then
+		  //dump("DELETE >>> " + port.name) ->
+ 	      //modalModel.deleteModalModelPort(port.name)
+ 	      enqueue2Delete(modalModel, port.name)
+ 	      //controller.port.remove(controller.port
+ 		  //	  .select(e|e.name.matches(portName)).first()) 
+ 	else
+ 		null
+;
+
+
+Void deleteModalModelPort() :
+  let modalModel = popModalModel2Delete() :
+  let portName = popPortName2Delete() :
+  
+  dump("||||||||||| DELETE :" + modalModel.name + ", " + portName) ->
+  
+  deleteModalModelPort(modalModel, portName)
+  
+  ->
+  if (getQueueSize2Delete() > 0) then
+  	  deleteModalModelPort()
+  else
+      null
+; 
+
+
+// Termination ports are not needed on the toplevel, so these can be deleted.
+// This is done by iterating thru the list of all modalmodels (and their
+// controller).
+Void deleteModalModelPort(EntityType modalModel, String portName) :
+ 	let controller = (EntityType) modalModel.entity.select
+ 									(e|e.name.matches("_Controller")).first():
+	//debug output
+ 	dump("DELETE "+portName +" IN " + modalModel.name) ->
+ 	
+	//delete port and links in modal model
+	modalModel.relation.remove(modalModel.relation
+			  .select(e|e.name.matches(portName+"Relation")).first()) ->
+	modalModel.port.remove(modalModel.port.select(e|e.name.matches(portName))
+			  .first()) ->
+
+	modalModel.link.remove(modalModel.link
+			  .select(e|e.relation.matches(portName+"Relation")).first()) ->
+	modalModel.link.remove(modalModel.link
+			  .select(e|e.relation.matches(portName+"Relation")).first()) ->
+	modalModel.link.remove(modalModel.link
+			  .select(e|e.relation.matches(portName+"Relation")).first()) ->
+
+
+	//debug output
+ 	dump("DELETE "+portName +" IN " + controller.name) ->
+ 	
+ 	//delete port in controller
+ 	controller.port.remove(controller.port
+ 			  .select(e|e.name.matches(portName)).first())
+;
+
+
+Void enqueue2Delete(Moml::EntityType modalModel, String portName) :
+	JAVA de.cau.cs.kieler.synccharts.sim.ptolemy.oaw.XtendJava.enqueue2Delete(
+			 Moml.EntityType, java.lang.String) 
+;
+
+String popPortName2Delete() :
+	JAVA de.cau.cs.kieler.synccharts.sim.ptolemy.oaw.XtendJava.popPortName2Delete()
+;
+
+Moml::EntityType popModalModel2Delete() :
+	JAVA de.cau.cs.kieler.synccharts.sim.ptolemy.oaw.XtendJava.popModalModel2Delete()
+;
+
+Void resetQueue2Delete() :
+	JAVA de.cau.cs.kieler.synccharts.sim.ptolemy.oaw.XtendJava.resetQueue2Delete()
+;
+
+int getQueueSize2Delete() :
+	JAVA de.cau.cs.kieler.synccharts.sim.ptolemy.oaw.XtendJava.getQueueSize2Delete()
+;
+
+
+	//modalModel.port.remove(modalModel.port.select(e|e.name.matches(portName))
+	//		  .first()) ->
+	//modalModel.relation.remove(modalModel.relation
+	//		  .select(e|e.name.matches(portName+"Relation")).first()) ->
+	//modalModel.link.remove(modalModel.link
+	//		  .select(e|e.relation.matches(portName+"Relation")).first()) ->
+	//modalModel.link.remove(modalModel.link
+	//		  .select(e|e.relation.matches(portName+"Relation")).first()) ->
+ 	
+ 	//delete port in controller
+ 	
 
 //-----------------------------------------------------------------------------
 //--                 A U T O M A T I C - C O N N E N T I O N                 --
@@ -1289,12 +1441,16 @@ List[String] getMovedSignalNames():
 			 getMovedSignalNames()
 ;
 
+
+
 //Do some java console output for debugging purpose. 
 Void dump(String s) :
-	null
-//	JAVA de.cau.cs.kieler.synccharts.sim.ptolemy.oaw.XtendJava.dump(
-//			 java.lang.String)
+	JAVA de.cau.cs.kieler.synccharts.sim.ptolemy.oaw.XtendJava.dump(
+			 java.lang.String)
+//	null
 ;
+
+
 
 //Get URIFragment of an model element to identify it. 
 String getURIFragment(synccharts::State state) :
