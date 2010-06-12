@@ -439,7 +439,7 @@ Void n2wState(List[synccharts::Region] regionList) :
 
 Void n2wTransition(List[synccharts::Transition] transitionList, synccharts::State state) :
   let transition = transitionList.first():
-  let operatorExpression = new synccharts::OperatorExpression:
+  let operatorExpression = new synccharts::ComplexExpression:
   dump("TEST TRANSITION "+getURIFragment(transition)) ->
   (transitionList.withoutFirst().size > 0) ?
      n2wTransition(transitionList.withoutFirst(), state) : null ->
@@ -474,7 +474,7 @@ Void n2wBuildTriggerState(List[synccharts::Region] regionList,
    mainState.signals.add(regionSignal) ->
    //construct a new signal reference (for trigger) and add it
    signalReference.setSignal(regionSignal) ->
-   ((OperatorExpression)trigger).subExpressions.add(signalReference) ->
+   ((ComplexExpression)trigger).subExpressions.add(signalReference) ->
  
   (regionList.withoutFirst().size > 0) ?
   	 n2wBuildTriggerState(regionList.withoutFirst(), mainState, weakAbortTransition) : null ->
