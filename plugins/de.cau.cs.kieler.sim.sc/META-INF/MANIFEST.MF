@@ -14,10 +14,9 @@ Require-Bundle: org.eclipse.ui,
  de.cau.cs.kieler.synccharts.codegen.sc;bundle-version="0.0.1",
  de.cau.cs.kieler.sim.kiem.config;bundle-version="0.1.0",
  de.cau.cs.kieler.sim.kiem.automated;bundle-version="0.1.0",
- org.eclipse.xtext.ui.ecore;bundle-version="1.0.0"
+ org.eclipse.xtext.ui.ecore;bundle-version="1.0.0",
+ org.json,
+ de.cau.cs.kieler.synccharts
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
-Import-Package: de.cau.cs.kieler.synccharts,
- de.cau.cs.kieler.synccharts.codegen.sc,
- org.json
 Bundle-Vendor: Christian-Albrechts-University of Kiel

@@ -21,16 +21,9 @@ Require-Bundle: org.eclipse.ui,
  de.cau.cs.kieler.synccharts;bundle-version="0.1.0",
  de.cau.cs.kieler.synccharts.diagram;bundle-version="0.1.0",
  org.eclipse.gmf.runtime.diagram.ui;bundle-version="1.2.0",
- de.cau.cs.kieler.sim.syncsignalreset;bundle-version="0.1.0"
+ de.cau.cs.kieler.sim.syncsignalreset;bundle-version="0.1.0",
+ org.eclipse.ui.ide
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
-Import-Package: de.cau.cs.kieler.core,
- de.cau.cs.kieler.core.slimgraph,
- de.cau.cs.kieler.synccharts,
- de.cau.cs.kieler.synccharts.impl,
- org.eclipse.gmf.runtime.diagram.ui.resources.editor.parts,
- org.eclipse.gmf.runtime.notation,
- org.eclipse.ui.part
 Bundle-Vendor: Christian-Albrechts-University of Kiel
-Bundle-ClassPath: .
 Export-Package: de.cau.cs.kieler.synccharts.codegen.sc
