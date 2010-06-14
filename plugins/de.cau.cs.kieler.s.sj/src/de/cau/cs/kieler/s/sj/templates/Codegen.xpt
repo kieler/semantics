@@ -1,0 +1,7 @@
+«IMPORT s»
+
+«DEFINE main FOR Program-»
+	«FILE name + ".java"-»
+	/* generated SJ-code */
+	«ENDFILE»
+«ENDDEFINE»

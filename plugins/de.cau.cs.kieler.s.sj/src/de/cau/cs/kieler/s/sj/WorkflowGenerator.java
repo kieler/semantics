@@ -4,11 +4,6 @@ import java.io.File;
 
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.resource.Resource;
-import org.eclipse.emf.ecore.resource.ResourceSet;
-import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.mwe.core.WorkflowContext;
 import org.eclipse.emf.mwe.core.WorkflowContextDefaultImpl;
 import org.eclipse.emf.mwe.core.issues.Issues;
@@ -17,15 +12,7 @@ import org.eclipse.emf.mwe.core.issues.MWEDiagnostic;
 import org.eclipse.emf.mwe.core.monitor.NullProgressMonitor;
 import org.eclipse.emf.mwe.internal.core.Workflow;
 import org.eclipse.emf.mwe.utils.Reader;
-import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramEditor;
-import org.eclipse.gmf.runtime.notation.View;
-import org.eclipse.jface.dialogs.MessageDialog;
-import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IEditorPart;
-import org.eclipse.ui.IEditorSite;
-import org.eclipse.ui.IWorkbenchPage;
-import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.FileEditorInput;
 import org.eclipse.ui.statushandlers.StatusManager;
 import org.eclipse.xpand2.Generator;
@@ -33,16 +20,13 @@ import org.eclipse.xpand2.output.Outlet;
 import org.eclipse.xtend.expression.AbstractExpressionsUsingWorkflowComponent.GlobalVar;
 import org.eclipse.xtend.typesystem.emf.EmfMetaModel;
 
+import de.cau.cs.kieler.s.codegen.AbstractWorkflowGenerator;
 import de.cau.cs.kieler.s.s.Program;
 import de.cau.cs.kieler.s.s.SPackage;
 
-public class WorkflowGenerator {
+public class WorkflowGenerator extends AbstractWorkflowGenerator {
 
-    private EObject myModel = null;
-    private static String outPath = null;
-    private String uriString = null;
     private IEditorPart editor = null;
-    private URI uri = null;
 
     /**
      * The constructor sets the location in the KIELER workspace to save the sc
@@ -50,21 +34,7 @@ public class WorkflowGenerator {
      * variables for the EMF reader.
      */
     public WorkflowGenerator() {
-        // location for the sc file in the KIELER workspace
-        IWorkbenchPage activePage = PlatformUI.getWorkbench()
-                .getActiveWorkbenchWindow().getActivePage();
-        editor = activePage.getActiveEditor();
-        outPath = part2Location(editor);
-        uriString = null;
-        if (editor instanceof DiagramEditor) {
-            DiagramEditor diagramEditor = (DiagramEditor) editor;
-            checkForDirtyDiagram(diagramEditor);
-            View notationElement = ((View) diagramEditor.getDiagramEditPart()
-                    .getModel());
-            myModel = notationElement.getElement();
-            uri = myModel.eResource().getURI();
-            uriString = uri.toString();
-        }
+        super();
     }
 
     /**
@@ -75,13 +45,7 @@ public class WorkflowGenerator {
      *            the location of the given diagram file
      */
     public WorkflowGenerator(final String fileLocation) {
-        // location for the sc file in the KIELER workspace
-        uriString = fileLocation;
-        uri = URI.createURI(uriString);
-        ResourceSet resourceSet = new ResourceSetImpl();
-        Resource resource = resourceSet.getResource(uri, true);
-        Program rootProgram = (Program) resource.getContents().get(0);
-        myModel = rootProgram;
+        super(fileLocation);
     }
 
     /**
@@ -93,6 +57,7 @@ public class WorkflowGenerator {
      * @param path
      *            the path where the generated files should be written
      */
+    @Override
     public void invokeWorkflow(final boolean sim, final String path) {
         // EMF reader
         Reader emfReader = new Reader();
@@ -126,10 +91,10 @@ public class WorkflowGenerator {
         varSim.setName("sim");
         if (sim) {
             varSim.setValue(true);
-            generator.setExpand("template::SimCodegen::main FOR model");
+            generator.setExpand("templates::SimCodegen::main FOR model");
         } else {
             varSim.setValue(false);
-            generator.setExpand("template::Codegen::main FOR model");
+            generator.setExpand("templates::Codegen::main FOR model");
         }
         generator.addGlobalVar(varSim);
         generator.addGlobalVar(varName);
@@ -179,24 +144,6 @@ public class WorkflowGenerator {
         file.setExecutable(true);
     }
 
-    private static void checkForDirtyDiagram(final DiagramEditor diagramEditor) {
-        if (diagramEditor.isDirty()) {
-            final Shell shell = Display.getCurrent().getShells()[0];
-            boolean b = MessageDialog
-                    .openQuestion(
-                            shell,
-                            "Save Resource",
-                            "'"
-                                    + diagramEditor.getEditorInput().getName()
-                                    + "'"
-                                    + " has been modified. Save changes before simulating? (recommended)");
-            if (b) {
-                IEditorSite part = diagramEditor.getEditorSite();
-                part.getPage().saveEditor((IEditorPart) part.getPart(), false);
-            }
-        }
-    }
-
     private static String part2Location(final IEditorPart editor) {
         String out = null;
 
@@ -206,34 +153,4 @@ public class WorkflowGenerator {
 
         return out;
     }
-
-    /**
-     * Returns the model.
-     * 
-     * @return model
-     */
-    public EObject getModel() {
-        return myModel;
-    }
-
-    /**
-     * Returns the uri.
-     * 
-     * @return uri
-     */
-    public URI getURI() {
-        return uri;
-    }
-
-    /**
-     * Returns the name of the file.
-     * 
-     * @return filename
-     */
-    public String getFileName() {
-        String out = "";
-        out = uri.lastSegment().replace("." + uri.fileExtension(), "");
-        return out;
-    }
-
 }
