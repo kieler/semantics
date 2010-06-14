@@ -64,9 +64,6 @@ public class InterfaceDeclParser extends AbstractContentAssistParser {
 					put(grammarAccess.getSignalsAccess().getGroup(), "rule__Signals__Group__0");
 					put(grammarAccess.getSignalsAccess().getGroup_0(), "rule__Signals__Group_0__0");
 					put(grammarAccess.getSignalsAccess().getGroup_0_1(), "rule__Signals__Group_0_1__0");
-					put(grammarAccess.getRenamingsAccess().getGroup(), "rule__Renamings__Group__0");
-					put(grammarAccess.getRenamingsAccess().getGroup_0(), "rule__Renamings__Group_0__0");
-					put(grammarAccess.getRenamingsAccess().getGroup_0_1(), "rule__Renamings__Group_0_1__0");
 					put(grammarAccess.getInputSignalsAccess().getGroup(), "rule__InputSignals__Group__0");
 					put(grammarAccess.getInputSignalsAccess().getGroup_0(), "rule__InputSignals__Group_0__0");
 					put(grammarAccess.getInputSignalsAccess().getGroup_0_1(), "rule__InputSignals__Group_0_1__0");
@@ -102,13 +99,12 @@ public class InterfaceDeclParser extends AbstractContentAssistParser {
 					put(grammarAccess.getVariableAccess().getGroup_4(), "rule__Variable__Group_4__0");
 					put(grammarAccess.getVariableAccess().getGroup_5(), "rule__Variable__Group_5__0");
 					put(grammarAccess.getVariableAccess().getGroup_5_1(), "rule__Variable__Group_5_1__0");
-					put(grammarAccess.getRenamingAccess().getGroup(), "rule__Renaming__Group__0");
 					put(grammarAccess.getStateExtendAccess().getRegionsAssignment_0(), "rule__StateExtend__RegionsAssignment_0");
 					put(grammarAccess.getStateExtendAccess().getInOutputSignalsAssignment_1_2(), "rule__StateExtend__InOutputSignalsAssignment_1_2");
 					put(grammarAccess.getStateExtendAccess().getOutputSignalsAssignment_2_1(), "rule__StateExtend__OutputSignalsAssignment_2_1");
 					put(grammarAccess.getStateExtendAccess().getInputSignalsAssignment_3_1(), "rule__StateExtend__InputSignalsAssignment_3_1");
 					put(grammarAccess.getStateExtendAccess().getSignalsAssignment_4_1(), "rule__StateExtend__SignalsAssignment_4_1");
-					put(grammarAccess.getStateExtendAccess().getRenamingsAssignment_5_1(), "rule__StateExtend__RenamingsAssignment_5_1");
+					put(grammarAccess.getStateExtendAccess().getVariableAssignment_5_1(), "rule__StateExtend__VariableAssignment_5_1");
 					put(grammarAccess.getRegionSignalDecAccess().getRegionAssignment_0(), "rule__RegionSignalDec__RegionAssignment_0");
 					put(grammarAccess.getRegionSignalDecAccess().getVarsAssignment_2_0_1(), "rule__RegionSignalDec__VarsAssignment_2_0_1");
 					put(grammarAccess.getRegionSignalDecAccess().getVarsAssignment_2_0_2_1(), "rule__RegionSignalDec__VarsAssignment_2_0_2_1");
@@ -122,8 +118,6 @@ public class InterfaceDeclParser extends AbstractContentAssistParser {
 					put(grammarAccess.getVariablesAccess().getVarsAssignment_0_1_1(), "rule__Variables__VarsAssignment_0_1_1");
 					put(grammarAccess.getSignalsAccess().getSignalsAssignment_0_0(), "rule__Signals__SignalsAssignment_0_0");
 					put(grammarAccess.getSignalsAccess().getSignalsAssignment_0_1_1(), "rule__Signals__SignalsAssignment_0_1_1");
-					put(grammarAccess.getRenamingsAccess().getRenamingsAssignment_0_0(), "rule__Renamings__RenamingsAssignment_0_0");
-					put(grammarAccess.getRenamingsAccess().getRenamingsAssignment_0_1_1(), "rule__Renamings__RenamingsAssignment_0_1_1");
 					put(grammarAccess.getInputSignalsAccess().getSignalsAssignment_0_0(), "rule__InputSignals__SignalsAssignment_0_0");
 					put(grammarAccess.getInputSignalsAccess().getSignalsAssignment_0_1_1(), "rule__InputSignals__SignalsAssignment_0_1_1");
 					put(grammarAccess.getOutputSignalsAccess().getSignalsAssignment_0_0(), "rule__OutputSignals__SignalsAssignment_0_0");
@@ -170,8 +164,6 @@ public class InterfaceDeclParser extends AbstractContentAssistParser {
 					put(grammarAccess.getVariableAccess().getNameAssignment_5_0(), "rule__Variable__NameAssignment_5_0");
 					put(grammarAccess.getVariableAccess().getInitialValueAssignment_5_1_1(), "rule__Variable__InitialValueAssignment_5_1_1");
 					put(grammarAccess.getVariableAccess().getHostTypeAssignment_5_3(), "rule__Variable__HostTypeAssignment_5_3");
-					put(grammarAccess.getRenamingAccess().getOldIDAssignment_0(), "rule__Renaming__OldIDAssignment_0");
-					put(grammarAccess.getRenamingAccess().getNewIDAssignment_2(), "rule__Renaming__NewIDAssignment_2");
 				}
 			};
 		}
