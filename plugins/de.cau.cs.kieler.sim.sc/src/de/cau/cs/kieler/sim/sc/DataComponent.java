@@ -47,6 +47,13 @@ import de.cau.cs.kieler.synccharts.Signal;
 import de.cau.cs.kieler.synccharts.ValueType;
 import de.cau.cs.kieler.synccharts.codegen.sc.WorkflowGenerator;
 
+/**
+ * This is the data component to handle the communication between KIEM and the 
+ * external SC-Program.
+ * 
+ * @author Torsten Amende - tam(at)informatik(dot)uni-kiel(dot)de
+ * 
+ */
 public class DataComponent extends AbstractAutomatedProducer {
 
     private WorkflowGenerator wf = null;
@@ -87,21 +94,9 @@ public class DataComponent extends AbstractAutomatedProducer {
             if (!validation || (validation && newValidation)) {
                 // compile
                 String compiler = (getProperties()[0]).getValue();
-                String compile = compiler
-                        + " "
-                        + outPath
-                        + "sim.c "
-                        + outPath
-                        + "sim_data.c "
-                        + outPath
-                        + "misc.c "
-                        + bundleLocation
-                        + "cJSON.c "
-                        + "-I "
-                        + bundleLocation
-                        + " "
-                        + "-o "
-                        + outPath
+                String compile = compiler + " " + outPath + "sim.c " + outPath + "sim_data.c "
+                        + outPath + "misc.c " + bundleLocation + "cJSON.c " + "-I "
+                        + bundleLocation + " " + "-o " + outPath
                         + "simulation -lm -D_SC_NOTRACE -D_SC_SUPPRESS_ERROR_DETECT -D_SC_USE_PRE";
                 process = Runtime.getRuntime().exec(compile);
                 System.out.println(compile);
@@ -140,10 +135,11 @@ public class DataComponent extends AbstractAutomatedProducer {
             if (process != null) {
                 process.destroy();
             }
-            String error = "";
+            String compileError = "";
             if (!compiled) {
-                error = "No compiler found! Please select one in the \"SC simulation\" component in the Execution Manager";
-                throw new KiemInitializationException(error, true, null);
+                compileError = "No compiler found! Please select one in the"
+                        + "\"SC simulation\" component in the Execution Manager";
+                throw new KiemInitializationException(compileError, true, null);
             } else {
                 throw new KiemInitializationException("could not simulate", true, e);
             }
@@ -203,13 +199,12 @@ public class DataComponent extends AbstractAutomatedProducer {
                 out.put("state", "");
             }
         } catch (JSONException e) {
-            // TODO Auto-generated catch block
             System.err.println(e.getMessage());
             process.destroy();
         }
 
-//        System.out.println("incoming " + out.toString());
-//        System.out.println("outgoing " + jSONObject.toString());
+        // System.out.println("incoming " + out.toString());
+        // System.out.println("outgoing " + jSONObject.toString());
         return out;
     }
 
@@ -340,7 +335,7 @@ public class DataComponent extends AbstractAutomatedProducer {
         return out;
     }
 
-    private JSONObject boolToInt(JSONObject signals) {
+    private JSONObject boolToInt(final JSONObject signals) {
         JSONObject out = signals;
         Region myModel = (Region) (wf.getModel());
         List<Signal> signalList = myModel.getInnerStates().get(0).getSignals();
@@ -392,16 +387,26 @@ public class DataComponent extends AbstractAutomatedProducer {
         return out;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public List<KiemProperty> produceInformation() {
         return null;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public String[] getSupportedExtensions() {
-        String[] test = { "kixs" };
-        return test;
+        String[] out = { "kixs" };
+        return out;
     }
 
-    public void setParameters(List<KiemProperty> properties) throws KiemInitializationException {
+    /**
+     * {@inheritDoc}
+     */
+    public void setParameters(final List<KiemProperty> properties)
+            throws KiemInitializationException {
         validation = true;
         newValidation = true;
         for (KiemProperty p : properties) {
@@ -412,15 +417,20 @@ public class DataComponent extends AbstractAutomatedProducer {
                 if (Integer.parseInt(p.getValue()) > 0) {
                     newValidation = false;
                 }
-//                System.out.println("KEY - ITERATION: " + p.getValue());
             }
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public int wantsMoreRuns() {
         return 0;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public int wantsMoreSteps() {
         return 0;
     }
