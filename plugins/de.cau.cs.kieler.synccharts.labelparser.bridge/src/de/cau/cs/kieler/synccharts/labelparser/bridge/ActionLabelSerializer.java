@@ -27,6 +27,7 @@ import de.cau.cs.kieler.synccharts.Expression;
 import de.cau.cs.kieler.synccharts.FloatValue;
 import de.cau.cs.kieler.synccharts.HostCode;
 import de.cau.cs.kieler.synccharts.IntValue;
+import de.cau.cs.kieler.synccharts.OperatorExpression;
 import de.cau.cs.kieler.synccharts.OperatorType;
 import de.cau.cs.kieler.synccharts.SignalReference;
 import de.cau.cs.kieler.synccharts.VariableReference;
@@ -159,7 +160,7 @@ public final class ActionLabelSerializer {
                 sb.append(toString((Expression) subExpressions.get(0), true));
                 sb.append(" ");
             }
-            sb.append(((ComplexExpression) expression).getOperator().getLiteral());
+            sb.append(((OperatorExpression) expression).getOperator().getLiteral());
             sb.append(" ");
             if (subExpressions.size() > 1) {
                 sb.append(toString((Expression) subExpressions.get(1), true));
@@ -168,12 +169,12 @@ public final class ActionLabelSerializer {
                 }
             } else {
                 if ((isSubExpression && (subExpressions.get(0) instanceof ComplexExpression))
-                        || ((ComplexExpression) expression).getOperator().equals(OperatorType.PRE)) {
+                        || ((OperatorExpression) expression).getOperator().equals(OperatorType.PRE)) {
                     sb.append("(");
                 }
                 sb.append(toString((Expression) subExpressions.get(0), true));
                 if ((isSubExpression && (subExpressions.get(0) instanceof ComplexExpression))
-                        || ((ComplexExpression) expression).getOperator().equals(OperatorType.PRE)) {
+                        || ((OperatorExpression) expression).getOperator().equals(OperatorType.PRE)) {
                     sb.append(")");
                 }
             }

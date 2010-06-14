@@ -143,7 +143,7 @@ public class ActionLabelParseCommand extends AbstractCommand {
             action.setDelay(oldDelay);
             action.setIsImmediate(oldImmediate);
             action.setTrigger(oldTrigger);
-            action.setTriggersAndEffects(oldTriggersAndEffects);
+            action.setLabel(oldTriggersAndEffects);
             action.getEffects().clear();
             action.getEffects().addAll(oldEffects);
         }
@@ -174,9 +174,9 @@ public class ActionLabelParseCommand extends AbstractCommand {
         oldEffects.addAll(action.getEffects());
         oldDelay = action.getDelay();
         oldImmediate = action.isIsImmediate();
-        oldTriggersAndEffects = action.getTriggersAndEffects();
+        oldTriggersAndEffects = action.getLabel();
 
-        action.setTriggersAndEffects(newString);
+        action.setLabel(newString);
         // set some default values
         action.setTrigger(null);
         action.getEffects().clear();

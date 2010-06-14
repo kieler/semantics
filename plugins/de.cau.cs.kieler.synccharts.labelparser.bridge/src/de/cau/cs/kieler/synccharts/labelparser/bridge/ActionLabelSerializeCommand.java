@@ -42,10 +42,10 @@ public class ActionLabelSerializeCommand extends AbstractCommand {
             // if there is no new valid value, set the old value so that there
             // will be set
             // notifications in any case (required to trigger the parser again)
-            newLabel = action.getTriggersAndEffects();
+            newLabel = action.getLabel();
         }
-        oldLabel = action.getTriggersAndEffects();
-        action.setTriggersAndEffects(newLabel);
+        oldLabel = action.getLabel();
+        action.setLabel(newLabel);
     }
 
     public void redo() {
@@ -54,7 +54,7 @@ public class ActionLabelSerializeCommand extends AbstractCommand {
 
     @Override
     public void undo() {
-        action.setTriggersAndEffects(oldLabel);
+        action.setLabel(oldLabel);
     }
 
 }

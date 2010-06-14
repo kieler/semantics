@@ -27,7 +27,7 @@ public class TriggerListenerChangedTrigger extends FireOnceTriggerListener {
 
     public TriggerListenerChangedTrigger() {
         super(NotificationFilter.createFeatureFilter(
-                SyncchartsPackage.eINSTANCE.getAction_TriggersAndEffects()).or(
+                SyncchartsPackage.eINSTANCE.getAction_Label()).or(
                 NotificationFilter
                         .createFeatureFilter(SyncchartsPackage.eINSTANCE
                                 .getState_OutgoingTransitions())));
@@ -46,7 +46,7 @@ public class TriggerListenerChangedTrigger extends FireOnceTriggerListener {
         int type = notification.getEventType();
         if (type == Notification.SET
                 && feature.equals(SyncchartsPackage.eINSTANCE
-                        .getAction_TriggersAndEffects())) {
+                        .getAction_Label())) {
             action = (Action) notification.getNotifier();
             newLabel = notification.getNewStringValue();
             oldLabel = notification.getOldStringValue();
@@ -54,7 +54,7 @@ public class TriggerListenerChangedTrigger extends FireOnceTriggerListener {
                 && feature.equals(SyncchartsPackage.eINSTANCE
                         .getState_OutgoingTransitions())) {
             action = (Action) notification.getNewValue();
-            newLabel = action.getTriggersAndEffects();
+            newLabel = action.getLabel();
             oldLabel = null;
         }
         CompoundCommand cc = new CompoundCommand();
@@ -76,7 +76,7 @@ public class TriggerListenerChangedTrigger extends FireOnceTriggerListener {
                         ActionLabelProcessorWrapper.PARSE));
                 // serialize the action again so that the user
                 // gets feedback on what the machine thinks the label looks like
-                if (LabelParserBridgePlugin.doAutomaticSerialization()) {
+                if (LabelParserBridgePlugin.getDefault().doAutomaticSerialization()) {
                     cc.append(actionLabelProcessor.getProcessActionCommand(
                             action, ActionLabelProcessorWrapper.SERIALIZE));
                 }

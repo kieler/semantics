@@ -55,7 +55,7 @@ public class ActionLabelParseHandler extends AbstractHandler {
             Object rootView = rootEditPart.getModel();
             EObject rootModel = ((View) rootView).getElement();
             if (rootModel instanceof Region) {
-                if (LabelParserBridgePlugin.doAutomaticSerialization()) {
+                if (LabelParserBridgePlugin.getDefault().doAutomaticSerialization()) {
                     ActionLabelProcessorWrapper.processActionLabels(rootModel,
                             ActionLabelProcessorWrapper.SERIALIZE);
                 }

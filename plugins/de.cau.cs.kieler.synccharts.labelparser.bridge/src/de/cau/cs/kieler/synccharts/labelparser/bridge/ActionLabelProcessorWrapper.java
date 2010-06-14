@@ -222,7 +222,7 @@ public class ActionLabelProcessorWrapper {
             throws KielerModelException, IOException {
         if (parse == PARSE) {
             ActionLabelParseCommand cmd = new ActionLabelParseCommand(action,
-                    action.getTriggersAndEffects(), parser, injector);
+                    action.getLabel(), parser, injector);
             cmd.parse();
         } else {
 
@@ -230,7 +230,7 @@ public class ActionLabelProcessorWrapper {
             if (action.getTrigger() != null || !action.getEffects().isEmpty()) {
                 String newLabel = ActionLabelSerializer.toString(action);
                 if (newLabel != null) {
-                    action.setTriggersAndEffects(newLabel);
+                    action.setLabel(newLabel);
                 }
             }
         }
@@ -239,7 +239,7 @@ public class ActionLabelProcessorWrapper {
     Command getProcessActionCommand(final Action action, final boolean parse) {
         if (parse == PARSE) {
             return new ActionLabelParseCommand(action, action
-                    .getTriggersAndEffects(), parser, injector);
+                    .getLabel(), parser, injector);
         } else {
             return new ActionLabelSerializeCommand(action);
         }

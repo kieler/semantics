@@ -14,7 +14,6 @@
  */
 package de.cau.cs.kieler.synccharts.labelparser.bridge;
 
-import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
@@ -25,20 +24,18 @@ import org.osgi.framework.BundleContext;
  * 
  * @kieler.rating 2010-01-19 proposed yellow proposed by haf
  */
-public class LabelParserBridgePlugin extends AbstractUIPlugin {
+public class Activator extends AbstractUIPlugin {
 
     /** The plug-in ID. */
     public static final String PLUGIN_ID = "de.cau.cs.kieler.synccharts.labelparser.bridge";
 
     // The shared instance
-    private static LabelParserBridgePlugin plugin;
-
-    public static final String AUTO_SERIALIZE = "LABELPARSER_AUTO_SERIALIZE";
+    private static Activator plugin;
 
     /**
      * The default constructor.
      */
-    public LabelParserBridgePlugin() {
+    public Activator() {
     }
 
     /*
@@ -50,10 +47,6 @@ public class LabelParserBridgePlugin extends AbstractUIPlugin {
     public void start(final BundleContext context) throws Exception {
         super.start(context);
         plugin = this;
-
-        boolean b = new InstanceScope().getNode(PLUGIN_ID).getBoolean(
-                AUTO_SERIALIZE, true);
-        getPreferenceStore().setValue(AUTO_SERIALIZE, b);
     }
 
     /*
@@ -63,12 +56,7 @@ public class LabelParserBridgePlugin extends AbstractUIPlugin {
      */
     @Override
     public void stop(final BundleContext context) throws Exception {
-        boolean b = getPreferenceStore().getBoolean(AUTO_SERIALIZE);
-        new InstanceScope().getNode(PLUGIN_ID).putBoolean(AUTO_SERIALIZE, b);
-        
-    	plugin = null;
-        
-        
+        plugin = null;
         super.stop(context);
     }
 
@@ -77,23 +65,8 @@ public class LabelParserBridgePlugin extends AbstractUIPlugin {
      * 
      * @return the shared instance
      */
-    public static LabelParserBridgePlugin getDefault() {
+    public static Activator getDefault() {
         return plugin;
     }
 
-    /**
-     * Retrieves the value from the preference store indicating whether or not
-     * parsed labels should be serialized automatically.
-     * 
-     * @return true if the automatic serialization is enabled
-     */
-    public boolean doAutomaticSerialization() {
-        Boolean result = getPreferenceStore().getBoolean(AUTO_SERIALIZE);
-        if (result == null) {
-        	result = new InstanceScope().getNode(PLUGIN_ID).getBoolean(
-                    AUTO_SERIALIZE, true);
-            getPreferenceStore().setValue(AUTO_SERIALIZE, result);
-        }
-        return result;
-    }
 }

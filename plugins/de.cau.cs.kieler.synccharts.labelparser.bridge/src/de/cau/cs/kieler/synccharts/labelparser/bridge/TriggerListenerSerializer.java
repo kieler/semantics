@@ -38,7 +38,7 @@ public class TriggerListenerSerializer extends FireOnceTriggerListener {
     protected Command trigger(TransactionalEditingDomain domain,
             Notification notification) {
         Action action = (Action) notification.getNotifier();
-        if (LabelParserBridgePlugin.doAutomaticSerialization()) {
+        if (LabelParserBridgePlugin.getDefault().doAutomaticSerialization()) {
             return actionLabelProcessor.getProcessActionCommand(action,
                     ActionLabelProcessorWrapper.SERIALIZE);
         }

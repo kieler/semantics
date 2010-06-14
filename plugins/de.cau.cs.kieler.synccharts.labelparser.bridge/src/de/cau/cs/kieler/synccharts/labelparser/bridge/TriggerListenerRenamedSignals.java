@@ -45,7 +45,7 @@ public class TriggerListenerRenamedSignals extends FireOnceTriggerListener {
             // then re-parse it again (might be necessary if new Signals have
             // been introduced) Reparsing is done automatically by the
             // corresponding TriggerListener.
-            if (LabelParserBridgePlugin.doAutomaticSerialization()) {
+            if (LabelParserBridgePlugin.getDefault().doAutomaticSerialization()) {
                 cc.append(actionLabelProcessor
                         .getProcessAffectedActionLabelCommand(signal, null,
                                 ActionLabelProcessorWrapper.SERIALIZE));
