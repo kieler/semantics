@@ -1,0 +1,7 @@
+«IMPORT s»
+
+«DEFINE main FOR Program-»
+	«FILE name + ".c"-»
+	/* generated SC-code */
+	«ENDFILE»
+«ENDDEFINE»
