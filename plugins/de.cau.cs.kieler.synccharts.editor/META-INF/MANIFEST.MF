@@ -2,13 +2,14 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %pluginName
 Bundle-SymbolicName: de.cau.cs.kieler.synccharts.editor;singleton:=true
-Bundle-Version: 0.2.0.qualifier
+Bundle-Version: 0.1.0.qualifier
 Bundle-ClassPath: .
-Bundle-Activator: de.cau.cs.kieler.synccharts.presentation.SyncchartsEditorPlugin$Implementation
+Bundle-Activator: de.cau.cs.kieler.synccharts.editor.SyncchartsEditorPlugin$Implementation
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
-Export-Package: de.cau.cs.kieler.synccharts.presentation
+Export-Package: de.cau.cs.kieler.synccharts.editor,
+ de.cau.cs.kieler.synccharts.presentation
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.core.resources;visibility:=reexport,
  de.cau.cs.kieler.synccharts.edit;visibility:=reexport,
