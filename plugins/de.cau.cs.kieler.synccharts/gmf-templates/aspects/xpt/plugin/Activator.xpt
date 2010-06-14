@@ -1,0 +1,208 @@
+﻿«IMPORT 'http://www.eclipse.org/gmf/2009/GenModel'»
+
+«DEFINE Activator FOR gmfgen::GenPlugin-»
+«EXPAND xpt::Common::copyright FOR editorGen-»
+package «editorGen.editor.packageName»;
+
+«EXPAND xpt::Common::generatedClassComment»
+public class «activatorClassName» extends org.eclipse.ui.plugin.AbstractUIPlugin {
+
+	«EXPAND xpt::Common::generatedMemberComment»
+	public static final String ID = "«iD»"; //$NON-NLS-1$
+
+	«EXPAND xpt::Common::generatedMemberComment»
+	public static final org.eclipse.gmf.runtime.diagram.core.preferences.PreferencesHint DIAGRAM_PREFERENCES_HINT =
+			new org.eclipse.gmf.runtime.diagram.core.preferences.PreferencesHint(ID);
+
+	«EXPAND xpt::Common::generatedMemberComment»
+	private static «activatorClassName» instance;
+
+	«EXPAND xpt::Common::generatedMemberComment»
+	private org.eclipse.emf.edit.provider.ComposedAdapterFactory adapterFactory;	
+
+	«EXPAND xpt::Common::generatedMemberComment»
+	private «editorGen.diagram.getDocumentProviderQualifiedClassName()» documentProvider;
+
+	«EXPAND xpt::Common::generatedMemberComment»
+	public «activatorClassName»() {
+	}
+
+	«EXPAND xpt::Common::generatedMemberComment»
+	public void start(org.osgi.framework.BundleContext context) throws Exception {
+		super.start(context);
+		instance = this;
+		org.eclipse.gmf.runtime.diagram.core.preferences.PreferencesHint.registerPreferenceStore(DIAGRAM_PREFERENCES_HINT, getPreferenceStore());
+		adapterFactory = createAdapterFactory();
+		«REM»Custom change added here: Initialization of SyncCharts model listener for label parsing
+		     such that it gets activated at latest when diagram Editor opens up.«ENDREM»
+		//de.cau.cs.kieler.synccharts.labelparser.bridge.SyncchartsContentAdapter.init();
+	}
+
+	«EXPAND xpt::Common::generatedMemberComment»
+	public void stop(org.osgi.framework.BundleContext context) throws Exception {
+		adapterFactory.dispose();
+		adapterFactory = null;
+		instance = null;
+		super.stop(context);
+	}
+
+	«EXPAND xpt::Common::generatedMemberComment»
+	public static «activatorClassName» getInstance() {
+		return instance;
+	}
+
+	«EXPAND xpt::Common::generatedMemberComment»
+	protected org.eclipse.emf.edit.provider.ComposedAdapterFactory createAdapterFactory() {
+		java.util.List factories = new java.util.ArrayList();
+		fillItemProviderFactories(factories);
+		return new org.eclipse.emf.edit.provider.ComposedAdapterFactory(factories);
+	}
+
+	«EXPAND xpt::Common::generatedMemberComment»
+	protected void fillItemProviderFactories(java.util.List factories) {
+«EXPAND MetaModel::PopulateItemProviderFactories('factories') FOR editorGen-»
+		factories.add(new org.eclipse.emf.edit.provider.resource.ResourceItemProviderAdapterFactory());
+		factories.add(new org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory());
+	}
+
+	«EXPAND xpt::Common::generatedMemberComment»
+	public org.eclipse.emf.common.notify.AdapterFactory getItemProvidersAdapterFactory() {
+		return adapterFactory;
+	}
+
+	«EXPAND xpt::Common::generatedMemberComment»
+	public org.eclipse.jface.resource.ImageDescriptor getItemImageDescriptor(Object item) {
+		org.eclipse.emf.edit.provider.IItemLabelProvider labelProvider =
+				(org.eclipse.emf.edit.provider.IItemLabelProvider) adapterFactory.adapt(
+						item, org.eclipse.emf.edit.provider.IItemLabelProvider.class);
+		if (labelProvider != null) {
+			return org.eclipse.emf.edit.ui.provider.ExtendedImageRegistry.getInstance().getImageDescriptor(
+					labelProvider.getImage(item));
+		}
+		return null;
+	}
+
+	/**
+	 * Returns an image descriptor for the image file at the given
+	 * plug-in relative path.
+	 *
+	 * @generated
+	 * @param path the path
+	 * @return the image descriptor
+	 */
+	public static org.eclipse.jface.resource.ImageDescriptor getBundledImageDescriptor(String path) {
+		return org.eclipse.ui.plugin.AbstractUIPlugin.imageDescriptorFromPlugin(ID, path);
+	}
+
+	/**
+	 * Respects images residing in any plug-in. If path is relative,
+	 * then this bundle is looked up for the image, otherwise, for absolute 
+	 * path, first segment is taken as id of plug-in with image
+	 *
+	 * @generated
+	 * @param path the path to image, either absolute (with plug-in id as first segment), or relative for bundled images
+	 * @return the image descriptor
+	 */
+	public static org.eclipse.jface.resource.ImageDescriptor findImageDescriptor(String path) {
+		final org.eclipse.core.runtime.IPath p = new org.eclipse.core.runtime.Path(path);
+		if (p.isAbsolute() && p.segmentCount() > 1) {
+			return org.eclipse.ui.plugin.AbstractUIPlugin.imageDescriptorFromPlugin(
+					p.segment(0), p.removeFirstSegments(1).makeAbsolute().toString());
+		} else {
+			return getBundledImageDescriptor(p.makeAbsolute().toString());
+		} 
+	}
+
+	/**
+	 * Returns an image for the image file at the given plug-in relative path.
+	 * Client do not need to dispose this image. Images will be disposed automatically.
+	 *
+	 * @generated
+	 * @param path the path
+	 * @return image instance
+	 */
+	public org.eclipse.swt.graphics.Image getBundledImage(String path) {
+		org.eclipse.swt.graphics.Image image = getImageRegistry().get(path);
+		if (image == null) {
+			getImageRegistry().put(path, getBundledImageDescriptor(path));
+			image = getImageRegistry().get(path);
+		}
+		return image;
+	}
+
+	/**
+	 * Returns string from plug-in's resource bundle
+	 *
+	 * @generated
+	 */
+	public static String getString(String key) {
+		return org.eclipse.core.runtime.Platform.getResourceString(
+				getInstance().getBundle(), "%" + key); //$NON-NLS-1$
+	}
+
+	«EXPAND xpt::Common::generatedMemberComment»
+	public «editorGen.diagram.getDocumentProviderQualifiedClassName()» getDocumentProvider() {
+		if (documentProvider == null) {
+			documentProvider = new «editorGen.diagram.getDocumentProviderQualifiedClassName()»();
+		}
+		return documentProvider;
+	}
+
+	«EXPAND xpt::Common::generatedMemberComment»
+	public void logError(String error) {
+		logError(error, null);
+	}
+
+	«EXPAND xpt::Common::generatedMemberComment»
+	public void logError(String error, Throwable throwable) {
+		if (error == null && throwable != null) {
+			error = throwable.getMessage();
+		}
+		getLog().log(new org.eclipse.core.runtime.Status(
+				org.eclipse.core.runtime.IStatus.ERROR,
+				«activatorClassName».ID,
+				org.eclipse.core.runtime.IStatus.OK,
+				error, throwable));
+		debug(error, throwable);
+	}
+
+	«EXPAND xpt::Common::generatedMemberComment»
+	public void logInfo(String message) {
+		logInfo(message, null);
+	}
+
+	«EXPAND xpt::Common::generatedMemberComment»
+	public void logInfo(String message, Throwable throwable) {
+		if (message == null && throwable != null) {
+			message = throwable.getMessage();
+		}
+		getLog().log(new org.eclipse.core.runtime.Status(
+				org.eclipse.core.runtime.IStatus.INFO,
+				«activatorClassName».ID,
+				org.eclipse.core.runtime.IStatus.OK,
+				message, throwable));
+		debug(message, throwable);
+	}
+
+	«EXPAND xpt::Common::generatedMemberComment»
+	private void debug(String message, Throwable throwable) {
+		if (!isDebugging()) {
+			return;
+		}
+		if (message != null) {
+			System.err.println(message);
+		}
+		if (throwable != null) {
+			throwable.printStackTrace();
+		}
+	}
+	«EXPAND additions-»
+}
+«ENDDEFINE»
+
+// Perhaps, xpt:editor::Editor or some xpt::CommonCode would be better place for
+// this accessor.
+// XXX besides, consider using preference store directly, without a hint (see comment in Editor.xpt#getPreferencesHint)
+«DEFINE preferenceHintAccess FOR gmfgen::GenEditorGenerator»«plugin.getActivatorQualifiedClassName()».DIAGRAM_PREFERENCES_HINT«ENDDEFINE»
+
+«DEFINE additions FOR gmfgen::GenPlugin»«ENDDEFINE»

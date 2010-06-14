@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<?eclipse version="3.0"?>
+ 
+<!--
+ <copyright>
+ </copyright>
+
+ $Id$
+-->
+
+<plugin>
+   <extension-point id="triggerListener" name="Trigger Listener" schema="schema/triggerListener.exsd"/>
+
+
+   <extension
+         id="product"
+         point="org.eclipse.core.runtime.products">
+      <product
+            application="org.eclipse.ui.ide.workbench"
+            name="Synccharts">
+         <property
+               name="appName"
+               value="Synccharts">
+         </property>
+      </product>
+   </extension>
+   <extension
+         point="org.eclipse.xtend.typesystem.emf.checks">
+      <metaModel
+            nsURI="http://kieler.cs.cau.de/synccharts/0.2">
+         <checkFile
+               path="model/SyncchartsChecks.chk">
+         </checkFile>
+      </metaModel>
+   </extension>
+   <extension
+         point="org.eclipse.ui.startup">
+      <startup
+            class="de.cau.cs.kieler.synccharts.custom.RegisterCheckValidator">
+      </startup>
+   </extension>
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <package
+            uri="http://kieler.cs.cau.de/synccharts/0.2"
+            class="de.cau.cs.kieler.synccharts.SyncchartsPackage"
+            genModel="model/synccharts.genmodel"/>
+   </extension>
+   <extension
+         point="de.cau.cs.kieler.synccharts.triggerListener">
+      <triggerListener
+            class="de.cau.cs.kieler.synccharts.contentadapter.TriggerListenerIDs">
+      </triggerListener>
+      <triggerListener
+            class="de.cau.cs.kieler.synccharts.contentadapter.TriggerListenerPriorities">
+      </triggerListener>
+      <triggerListener
+            class="de.cau.cs.kieler.synccharts.contentadapter.TriggerListenerChoice">
+      </triggerListener>
+      <triggerListener
+            class="de.cau.cs.kieler.synccharts.contentadapter.TriggerListenerDebug">
+      </triggerListener>
+      <triggerListener
+            class="de.cau.cs.kieler.synccharts.contentadapter.TriggerListenerRecursiveAdd">
+      </triggerListener>
+   </extension>
+      <extension
+         point="org.eclipse.gmf.runtime.diagram.ui.editpolicyProviders">
+      <editpolicyProvider
+            class="de.cau.cs.kieler.core.ui.policies.BalloonPopupEditPolicyProvider">
+         <Priority
+               name="Lowest">
+         </Priority>
+      </editpolicyProvider>
+   </extension>
+
+</plugin>

@@ -1,0 +1,107 @@
+modeltype GMFGEN uses gmfgen('http://www.eclipse.org/gmf/2009/GenModel');
+
+transformation SyncChartsCustomization(inout gmfgen:GMFGEN);
+
+main() {
+	var model := gmfgen.rootObjects()![GenEditorGenerator];
+	
+	// we want to use custom codegen templates which are required for
+	// certain special features such as attribute aware figures 
+	model.dynamicTemplates :=true;
+	model.templateDirectory := "de.cau.cs.kieler.synccharts/gmf-templates";
+	model.sameFileForDiagramAndModel := false;
+	
+	model.domainFileExtension := "kixs"; // kieler textual syntax for SyncCharts, in this case XMI
+	model.diagramFileExtension := "kids"; // kieler diagram syntax for SyncCharts
+	
+	// some general plugin settings	
+	model.plugin.requiredPlugins += "de.cau.cs.kieler.core.ui";
+	model.plugin.requiredPlugins += "de.cau.cs.kieler.synccharts.custom";
+	model.plugin.requiredPlugins += "de.cau.cs.kieler.synccharts.labelparser.bridge";
+	model.plugin.version := "0.1.0.qualifier";
+	model.plugin.provider := "Christian-Albrechts-Universität zu Kiel";
+	model.plugin.name := "SyncCharts Diagram Editor";
+	model.plugin.printingEnabled := true;
+	
+	// enable model validation
+	model.diagram.liveValidationUIFeedback := true;
+	model.diagram.validationDecorators := true;
+	model.diagram.validationEnabled := true;
+	
+	// use our own category for the "new" wizard
+	model.diagram.creationWizardCategoryID := "de.cau.cs.kieler";
+	
+	// special settings for all compartments
+	model.diagram.allSubobjectsOfType(GenCompartment)[GenCompartment] ->map compartmentSettings();
+	
+	// set some default preferences
+	model.diagram.preferences := object GenDiagramPreferences{
+		showPopupBars := false;
+		rulerUnits := RulerUnits::CENTIMETERS;
+		gridSpacing := 0.5;
+	};
+
+	// set some default colors
+	model.diagram.preferences.lineColor := object GenConstantColor{name := DiagramColors::black;}; 
+	model.diagram.preferences.fillColor := object GenConstantColor{name := DiagramColors::white;};
+	model.diagram.preferences.fontColor := object GenConstantColor{name := DiagramColors::black;};
+	model.diagram.preferences.noteFillColor := object GenConstantColor{name := DiagramColors::yellow;};
+	model.diagram.preferences.noteLineColor := object GenConstantColor{name := DiagramColors::orange;};
+	
+	// customize state edit parts so it shows textwrap for the body text
+	model.diagram.topLevelNodes.allSubobjectsOfType(InnerClassViewmap)[InnerClassViewmap] -> map customizeTextWrap("FigureBodyTextFigure","StateFigure");
+	model.diagram.childNodes.allSubobjectsOfType(InnerClassViewmap)[InnerClassViewmap] -> map customizeTextWrap("FigureBodyTextFigure","StateFigure");
+		   
+    // customize state edit parts so it shows textwrap for the interface declaration
+    model.diagram.topLevelNodes.allSubobjectsOfType(InnerClassViewmap)[InnerClassViewmap] -> map customizeTextWrap("FigureInterfaceDeclFigure","StateFigure");
+    model.diagram.childNodes.allSubobjectsOfType(InnerClassViewmap)[InnerClassViewmap] -> map customizeTextWrap("FigureInterfaceDeclFigure","StateFigure");
+    
+    // customize state edit parts so it shows textwrap for the transition labels
+    model.diagram.links.allSubobjectsOfType(InnerClassViewmap)[InnerClassViewmap] -> map customizeTextWrap("FigureTransitionTriggersAndEffectsFigure","TransitionFigure");
+}
+
+mapping inout GenCompartment::compartmentSettings(){
+
+	// we want to be able to collapse all compartments
+	self.canCollapse := true;
+	// do not show compartments when they are empty
+	self.hideIfEmpty := true;
+	// don't use list layout (which determines not only a simple layouter but
+	// makes the compartment subclass a very different class that does not support
+	// any layout. Hence here we use a standard non-list compartment with
+	// a simple row or flow layout
+	self.listLayout := false;
+	// customize the title of the compartment according to its type	
+	self.needsTitle := false;
+	self.title := switch {
+		case (self.editPartClassName = "StateSignalEditPart")  "Signal:";
+		case (self.editPartClassName = "StateSignal2EditPart") "Signal:";
+//		case (self.editPartClassName = "StateVariableCompartmentEditPart")  "Variable:";
+//		case (self.editPartClassName = "StateVariableCompartment2EditPart") "Variable:";
+		case (self.editPartClassName = "StateOnEntryActionEditPart")  "OnEntryAction:";
+		case (self.editPartClassName = "StateOnEntryAction2EditPart") "OnEntryAction:";
+		case (self.editPartClassName = "StateOnInsideActionEditPart")  "OnInsideAction:";
+		case (self.editPartClassName = "StateOnInsideAction2EditPart") "OnInsideAction:";
+		case (self.editPartClassName = "StateOnExitActionEditPart")  "OnExitAction:";
+		case (self.editPartClassName = "StateOnExitAction2EditPart") "OnExitAction:";
+		case (self.editPartClassName = "StateSuspendEditPart")  "Suspend:";
+		case (self.editPartClassName = "StateSuspend2EditPart") "Suspend:";
+		case (self.editPartClassName = "StateRegionCompartmentEditPart")  "RegionCompartment";
+		case (self.editPartClassName = "StateRegionCompartment2EditPart") "RegionCompartment";
+		case (self.editPartClassName = "RegionStateCompartmentEditPart")  "StateCompartment";
+		else "";
+	};
+}
+
+mapping inout InnerClassViewmap::customizeTextWrap(in figureName:String, in parentFigureName:String){	
+	// customize the Interface Declaration Label from a State
+    if (self.className = parentFigureName) then {
+        var find := ("f").+(figureName).+(".setText(\"\");");
+        var pre := self.classBody.substringBefore(find);
+        // setting TextWrap to true enables multi line display and editing
+        var inject := find.+("f").+(figureName).+(".setTextWrap(true);\n");
+        var after := self.classBody.substringAfter(find);
+        self.classBody := pre.+(inject).+(after);
+    } endif;
+}
+
