@@ -48,51 +48,25 @@ public class TriggerListenerChangedRegion extends FireOnceTriggerListener {
      * 
      */
     public TriggerListenerChangedRegion() {
-        super(
-                NotificationFilter
-                        .createFeatureFilter(
-                                SyncchartsPackage.eINSTANCE
-                                        .getValuedObject_Name())
-                        .or(
-                                NotificationFilter
-                                        .createFeatureFilter(SyncchartsPackage.eINSTANCE
-                                                .getValuedObject_InitialValue()))
-                        .or(
-                                NotificationFilter
-                                        .createFeatureFilter(SyncchartsPackage.eINSTANCE
-                                                .getValuedObject_Type()))
-                        .or(
-                                NotificationFilter
-                                        .createFeatureFilter(SyncchartsPackage.eINSTANCE
-                                                .getSignal_CombineOperator()))
-                        .or(
-                                NotificationFilter
-                                        .createFeatureFilter(SyncchartsPackage.eINSTANCE
-                                                .getValuedObject_HostType()))
-                        .or(
-                                NotificationFilter
-                                        .createFeatureFilter(SyncchartsPackage.eINSTANCE
-                                                .getSignal_HostCombineOperator()))
-                        .or(
-                                NotificationFilter
-                                        .createFeatureFilter(
-                                                SyncchartsPackage.eINSTANCE
-                                                        .getRegion_Signals())
-                                        .and(
-                                                NotificationFilter
-                                                        .createEventTypeFilter(Notification.REMOVE)))
-                        .or(
-                                NotificationFilter
-                                        .createFeatureFilter(
-                                                SyncchartsPackage.eINSTANCE
-                                                        .getRegion_Variables())
-                                        .and(
-                                                NotificationFilter
-                                                        .createEventTypeFilter(Notification.REMOVE)))
-                        .or(
-                                NotificationFilter
-                                        .createFeatureFilter(SyncchartsPackage.eINSTANCE
-                                                .getRegion_Id())));
+        super(NotificationFilter.createFeatureFilter(
+                SyncchartsPackage.eINSTANCE.getValuedObject_Name()).or(
+                NotificationFilter.createFeatureFilter(SyncchartsPackage.eINSTANCE
+                        .getValuedObject_InitialValue())).or(
+                NotificationFilter.createFeatureFilter(SyncchartsPackage.eINSTANCE
+                        .getValuedObject_Type())).or(
+                NotificationFilter.createFeatureFilter(SyncchartsPackage.eINSTANCE
+                        .getSignal_CombineOperator())).or(
+                NotificationFilter.createFeatureFilter(SyncchartsPackage.eINSTANCE
+                        .getValuedObject_HostType())).or(
+                NotificationFilter.createFeatureFilter(SyncchartsPackage.eINSTANCE
+                        .getSignal_HostCombineOperator())).or(
+                NotificationFilter.createFeatureFilter(
+                        SyncchartsPackage.eINSTANCE.getScope_Signals()).and(
+                        NotificationFilter.createEventTypeFilter(Notification.REMOVE))).or(
+                NotificationFilter.createFeatureFilter(
+                        SyncchartsPackage.eINSTANCE.getScope_Variables()).and(
+                        NotificationFilter.createEventTypeFilter(Notification.REMOVE))).or(
+                NotificationFilter.createFeatureFilter(SyncchartsPackage.eINSTANCE.getScope_Id())));
     }
 
     /**
@@ -104,33 +78,35 @@ public class TriggerListenerChangedRegion extends FireOnceTriggerListener {
      * {@inheritDoc}
      */
     @Override
-    protected Command trigger(TransactionalEditingDomain domain,
-            Notification notification) {
+    protected Command trigger(TransactionalEditingDomain domain, Notification notification) {
         // System.out.println("RegionTrigger: " + notification);
 
         CompoundCommand cc = new CompoundCommand();
         // as a region name should be unique, the easiest way to react to an id
         // change, is just to replace the region's id within the interface
         // declaration string
-        if (notification.getFeature().equals(
-                SyncchartsPackage.eINSTANCE.getRegion_Id())
-                && notification.getOldValue() != null) {
-            Region r = (Region) notification.getNotifier();
-            if (r.getParentState() != null) {
-                State par = r.getParentState();
-                String ifdecl = par.getInterfaceDeclaration();
-                if (ifdecl != null) {
-                    ifdecl = ifdecl.replace(notification.getOldStringValue()
-                            + ":", notification.getNewStringValue() + ":");
-                }
+        if (notification.getFeature().equals(SyncchartsPackage.eINSTANCE.getScope_Id())
+        		&& notification.getOldValue() != null) {
+        	Object o = notification.getNotifier();
+        	if (o instanceof Region) {
+        		Region r = (Region) o;
+        		if (r.getParentState() != null) {
+        			State par = r.getParentState();
+        			String ifdecl = par.getInterfaceDeclaration();
+        			if (ifdecl != null) {
+        			ifdecl = ifdecl.replace(notification.getOldStringValue() + ":", notification
+        					.getNewStringValue()
+        					+ ":");
+        			cc.appendIfCanExecute(new SetCommand(domain, par, SyncchartsPackage.eINSTANCE
+        					.getScope_InterfaceDeclaration(), ifdecl));
+        			return cc;
+        			}
 
-                cc.appendIfCanExecute(new SetCommand(domain, par,
-                        SyncchartsPackage.eINSTANCE
-                                .getState_InterfaceDeclaration(), ifdecl));
-                return cc;
-            }
-            return null;
-        }
+        			
+        		}
+        	}
+        	return null;
+        } 
 
         // old value of region == null --> new region created, so stop here
         // in other case has to be a valued object, else return
@@ -158,7 +134,7 @@ public class TriggerListenerChangedRegion extends FireOnceTriggerListener {
                 // new variable was created
                 occuredChange = InterfaceDeclSerializeCommand.REGION_VARIABLE_NEW;
             } else if (notification.getFeature().equals(
-                    SyncchartsPackage.eINSTANCE.getRegion_Variables())) {
+                    SyncchartsPackage.eINSTANCE.getScope_Variables())) {
                 // variable was deleted
                 occuredChange = InterfaceDeclSerializeCommand.REGION_VARIABLE_DELETE;
             } else {
@@ -171,8 +147,8 @@ public class TriggerListenerChangedRegion extends FireOnceTriggerListener {
                     oldName = notification.getOldStringValue();
                 }
             }
-            cc.append(interfaceDeclProcessor.getSerializationCommand(parent,
-                    var, oldName, occuredChange));
+            cc.append(interfaceDeclProcessor.getSerializationCommand(parent, var, oldName,
+                    occuredChange));
         } else if (vo instanceof Signal) {
 
             // Signal
@@ -184,7 +160,7 @@ public class TriggerListenerChangedRegion extends FireOnceTriggerListener {
                             SyncchartsPackage.eINSTANCE.getValuedObject_Name())) {
                 occuredChange = InterfaceDeclSerializeCommand.REGION_SIGNAL_NEW;
             } else if (notification.getFeature().equals(
-                    SyncchartsPackage.eINSTANCE.getState_Signals())) {
+                    SyncchartsPackage.eINSTANCE.getScope_Signals())) {
                 occuredChange = InterfaceDeclSerializeCommand.REGION_SIGNAL_DELETE;
             } else {
                 occuredChange = InterfaceDeclSerializeCommand.REGION_SIGNAL;
@@ -195,8 +171,8 @@ public class TriggerListenerChangedRegion extends FireOnceTriggerListener {
                     oldName = notification.getOldStringValue();
                 }
             }
-            cc.append(interfaceDeclProcessor.getSerializationCommand(parent,
-                    sig, oldName, occuredChange));
+            cc.append(interfaceDeclProcessor.getSerializationCommand(parent, sig, oldName,
+                    occuredChange));
         }
 
         return cc;

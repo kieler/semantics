@@ -170,17 +170,7 @@ public class InterfaceDeclParserTests {
         }
     }
     
-    
-    @Test
-    public void testParseRenaming() throws Exception {
-        parse("renaming a/b;");
-        for (Renaming r : rootState.getRenamings()) {
-            if (r.getOldID().equals("a") && r.getNewID().equals("b"))
-                return;
-        }
-        throw new KielerException(
-                "There should be a renaming a/b, but there is not...");
-    }
+
 
     // TODO: this is not the way
     @Test

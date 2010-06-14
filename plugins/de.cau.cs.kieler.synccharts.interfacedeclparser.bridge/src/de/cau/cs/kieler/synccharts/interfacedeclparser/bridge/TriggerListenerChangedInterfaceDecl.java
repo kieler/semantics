@@ -40,7 +40,7 @@ public class TriggerListenerChangedInterfaceDecl extends FireOnceTriggerListener
      */
     public TriggerListenerChangedInterfaceDecl() {
         super(NotificationFilter.createFeatureFilter(SyncchartsPackage.eINSTANCE
-                .getState_InterfaceDeclaration()));
+                .getScope_InterfaceDeclaration()));
     }
 
     /**

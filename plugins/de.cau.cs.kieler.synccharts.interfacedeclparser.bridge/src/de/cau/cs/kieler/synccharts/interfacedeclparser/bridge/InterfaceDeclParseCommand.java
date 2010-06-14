@@ -44,7 +44,6 @@ import de.cau.cs.kieler.synccharts.interfacedeclparser.interfaceDecl.InOutputSig
 import de.cau.cs.kieler.synccharts.interfacedeclparser.interfaceDecl.InputSignals;
 import de.cau.cs.kieler.synccharts.interfacedeclparser.interfaceDecl.OutputSignals;
 import de.cau.cs.kieler.synccharts.interfacedeclparser.interfaceDecl.RegionSignalDec;
-import de.cau.cs.kieler.synccharts.interfacedeclparser.interfaceDecl.Renamings;
 import de.cau.cs.kieler.synccharts.interfacedeclparser.interfaceDecl.Signals;
 import de.cau.cs.kieler.synccharts.interfacedeclparser.interfaceDecl.StateExtend;
 import de.cau.cs.kieler.synccharts.interfacedeclparser.scoping.InterfaceDeclScopeProvider;
@@ -221,7 +220,6 @@ public class InterfaceDeclParseCommand extends AbstractCommand {
 
         if (parsedObject != null && parsedObject instanceof StateExtend) {
             injectSignalsAndVars(rootState, (StateExtend) parsedObject);
-            injectRenamings(rootState, (StateExtend) parsedObject);
         }
     }
 
@@ -341,26 +339,5 @@ public class InterfaceDeclParseCommand extends AbstractCommand {
             }
             currRegion.getVariables().addAll(newVars);
         }
-    }
-
-    /**
-     * Adds freshly created Renaming.
-     * 
-     * @param currentState
-     *            state being filled
-     * @param se
-     *            StateExtend object with parsed content
-     */
-    private void injectRenamings(final State currentState, final StateExtend se) {
-
-        // add renamings
-        List<Renaming> newRenamings = new LinkedList<Renaming>();
-        for (Renamings rens : se.getRenamings()) {
-            for (Renaming ren : rens.getRenamings()) {
-                newRenamings.add(ren);
-            }
-        }
-
-        currentState.getRenamings().addAll(newRenamings);
     }
 }

@@ -61,10 +61,10 @@ public class TriggerListenerChangedSignal extends FireOnceTriggerListener {
                 NotificationFilter.createFeatureFilter(SyncchartsPackage.eINSTANCE
                         .getSignal_IsOutput())).or(
                 NotificationFilter.createFeatureFilter(
-                        SyncchartsPackage.eINSTANCE.getState_Signals()).and(
+                        SyncchartsPackage.eINSTANCE.getScope_Signals()).and(
                         NotificationFilter.createEventTypeFilter(Notification.REMOVE))).or(
                 NotificationFilter.createFeatureFilter(
-                        SyncchartsPackage.eINSTANCE.getState_Signals()).and(
+                        SyncchartsPackage.eINSTANCE.getScope_Signals()).and(
                         NotificationFilter.createEventTypeFilter(Notification.ADD))));
     }
 
@@ -147,7 +147,7 @@ public class TriggerListenerChangedSignal extends FireOnceTriggerListener {
         } else if (notification.getFeature().equals(
                 SyncchartsPackage.eINSTANCE.getSignal_IsOutput())) {
             occuredChange = InterfaceDeclSerializeCommand.OUTPUT;
-        } else if (notification.getFeature().equals(SyncchartsPackage.eINSTANCE.getState_Signals())
+        } else if (notification.getFeature().equals(SyncchartsPackage.eINSTANCE.getScope_Signals())
                 && notification.getEventType() == Notification.REMOVE) {
             occuredChange = InterfaceDeclSerializeCommand.DELETE;
         }
