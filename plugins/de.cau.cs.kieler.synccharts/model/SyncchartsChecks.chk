@@ -66,7 +66,7 @@ context State if (signals.size>0)
 // TODO: verify those check conditions when variables work
 context Scope if (interfaceDeclaration.length() > 0)
   WARNING "The Interfacedeclaration is not empty but there are no signals and variables defined" :
-  	(!this.signals.isEmpty) || (!this.regions.select(r | (!r.variables.isEmpty || !r.signals.isEmpty)).isEmpty);
+  	(!this.signals.isEmpty) || (!this.variables.isEmpty);
    
 // Root state
 /*
