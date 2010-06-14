@@ -1,0 +1,90 @@
+import synccharts;
+//import annotations;
+import s;
+extension org::eclipse::xtend::util::stdlib::io;          // debug printouts
+//extension org::eclipse:xtend:::util::stdlib::counter;   // usage of counters 
+extension org::eclipse::xtend::util::stdlib::crossref;    // find elements that reference others
+//extension org::eclipse::xtend::util::stdlib::mixin;     // annotations
+//extension org::eclipse::xtend::util::stdlib::naming;    // help with qualified names
+extension org::eclipse::xtend::util::stdlib::cloning;     // copy model elements and whole trees
+//extension org::eclipse::xtend::util::stdlib::globalvar; // usage of global variables
+//extension org::eclipse::xtend::util::stdlib::uid;       // create unique identifiers from time
+extension org::eclipse::xtend::util::stdlib::tracing;     // create map between transformed objects
+extension org::eclipse::xtend::util::stdlib::issues;      // pass messages back to java (e.g. to UI)
+
+//-----------------------------------------------------------------------------
+//     SyncChart - 2 - S    TRANSFORMATION    
+//     @author: tam
+//-----------------------------------------------------------------------------
+  
+//Start Model Transformation here.
+create s::Program this transform(synccharts::Region root):
+	this.setName(root.innerStates.first().id) ->
+	this.setPriority(setIntValue(3)) ->
+	this.setStates(getAllStates(root.innerStates.first()))
+;
+
+// converts an int into an IntValue
+s::IntValue setIntValue(int vaule):
+	let intValue = new s::IntValue:
+		intValue.setValue(vaule)
+;
+
+// builds a state for s
+s::State buildState(String name, List[s::Signal] signals, List[s::Instruction] instructions):
+	let state = new s::State:
+		state.setName(name) ->
+		state.setSignals(signals) ->
+		state.setInstructions(instructions)
+;
+
+// adds a state to a list of states
+List[s::State] addStateToList(s::State state, List[s::State] states):
+	states.add(state)
+;
+
+// returns a list including all states of the SyncChart
+// the parameter has to be the root state of the SyncChart
+List[s::State] getAllStates(synccharts::State state):
+	let outList = {}:
+	let putState = state.transform():
+	putInstructions(putState, getStateInstructions(state)) ->
+	if state.regions.isEmpty 
+		then outList.add(putState)
+		else (
+			outList.add(putState) -> 
+			outList.addAll(state.regions.getStatesOfRegion())
+		)
+	->
+	outList
+;
+
+s::State putInstructions(s::State state, List[s::Instruction] instructions):
+	state.instructions.addAll(instructions)
+;
+
+List[s::Instruction] getStateInstructions(synccharts::State state):
+	let outList = {}:
+	// FORK Instructions is hierarchical
+	if !state.regions.isEmpty
+		then (
+			outList.add(new s::Pause)
+		) 
+		else (
+			{}
+		) ->
+		outList
+;
+
+// returns a list of all states of a region
+List[s::State] getStatesOfRegion(synccharts::Region region):
+	let outList = {}:
+	outList.addAll(region.innerStates.getAllStates()) ->
+	outList.addAll(region.innerStates.transform()) ->
+	outList
+;
+
+// transforms a SyncChart state into a S state
+create s::State this transform(synccharts::State state):
+	this.setName("L_" + state.id)
+;
