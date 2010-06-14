@@ -1,0 +1,30 @@
+import s;
+import utilities;
+
+Void addPrios(Program program):
+  program.states.addPrios()
+;
+
+Void addPrios(State state):
+  let instr = state.instructions:
+  instr.toString()
+;
+
+State getContinuationState(Instruction instr):
+  let parent = instr.eContainer:
+  parent.toString()
+;
+
+Void kernelExpand(Program program):
+  program.instructions.kernelExpand()
+;
+
+Void kernelExpand(Instruction instr):
+  let parent = instr.eContainer:
+  parent.toString()
+;
+
+Void kernelExpand(Halt instr):
+  let parent = instr.eContainer:
+  parent.toString()
+;

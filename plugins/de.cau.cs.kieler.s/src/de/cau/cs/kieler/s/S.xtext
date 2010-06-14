@@ -1,0 +1,144 @@
+grammar de.cau.cs.kieler.s.S with org.eclipse.xtext.common.Terminals
+
+//import 'http://kieler.cs.cau.de/annotations' as annotations
+
+generate s "http://www.cau.de/cs/kieler/s"
+
+Program :
+	'Synchronous Program' name = ID '(' priority=IntValue ')'
+	('Inputs' (signals += Signal) (',' signals += Signal)*';')?
+	('Outputs' (signals += Signal) (',' signals += Signal)*';')?
+	('Signals' (signals += Signal) (',' signals += Signal)*';')?
+	(states += State)+
+;
+
+Annotation:
+	key = ID
+	value = STRING
+;
+
+Annotatable:
+	State | Signal | Instruction;
+
+
+State:
+	name = ID ':'
+	(annotations += Annotation)? (',' annotations += Annotation)*
+	('SIGNALS' (signals+=Signal)* ';')? 
+	(instructions+=Instruction';')*
+;
+
+StateReference:
+	state = [State]
+;
+
+Signal:
+	name=ID ':' 
+	type = SignalType
+	('combine' combineFunction = [CombineFunction])?
+	(annotations += Annotation)? (',' annotations += Annotation)*
+;
+
+SignalReference :
+	signal = [Signal]
+;
+
+CombineFunction:
+	name=ID
+	type=SignalType
+;
+
+
+SignalType:
+	PrimitiveSignal | CustomSignal;
+  
+CustomSignal:
+  'CUSTOM' type = STRING;
+
+enum PrimitiveSignalType:
+	Pure='PURE' | Int='INT' | Bool='BOOL' | Float='FLOAT';
+	
+PrimitiveSignal:
+	type = PrimitiveSignalType
+	;
+  
+IntValue: 
+	value=INT;
+FloatValue:
+    value=Float ; 
+BooleanValue:
+    value=Boolean;
+    
+terminal Float: 
+	((INT"."INT | INT("."INT)?("e"|"E")("+")?INT))"f"? | INT"f";
+terminal Boolean: 
+	"true" | "false";
+	
+
+//---------------------------------------------------------------------
+//----------------------- List of S-Instructions ----------------------
+//---------------------------------------------------------------------
+Instruction:
+   Abort | Join | Pause | Term | Present | Goto | Fork | Forke | Emit | Await | Prio
+   ;
+
+Pause :
+	{Pause} 
+	'PAUSE''('')'
+	(annotations += Annotation)? (',' annotations += Annotation)*
+  ;
+  
+Term : 
+	{Term}
+	(annotations += Annotation)? (',' annotations += Annotation)*
+	'TERM''('')'
+  ;
+  
+Join : 
+	{Join}
+	(annotations += Annotation)? (',' annotations += Annotation)*
+	'JOIN''('')'
+  ;
+  
+Abort : 
+	{Abort}
+	(annotations += Annotation)? (',' annotations += Annotation)*
+	'ABORT''('')'
+  ;
+  
+Present : 
+	(annotations += Annotation)? (',' annotations += Annotation)*
+	'PRESENT''('signal=SignalReference')' '{'
+		(instructions += Instruction';')*
+	'}'
+  ;
+  
+Goto :
+	(annotations += Annotation)? (',' annotations += Annotation)*
+	'GOTO''('state=StateReference')'
+  ;
+  
+Fork :
+	(annotations += Annotation)? (',' annotations += Annotation)*
+	'FORK''('state=StateReference ',' priority=IntValue')'
+  ;
+  
+Forke :
+	(annotations += Annotation)? (',' annotations += Annotation)*
+	'FORKE''('state=StateReference')'
+  ;
+  
+Emit:
+	(annotations += Annotation)? (',' annotations += Annotation)*
+	'EMIT''('signal= SignalReference')'
+;
+
+Await:
+	(annotations += Annotation)? (',' annotations += Annotation)*
+	'AWAIT''('signal= SignalReference')'
+;
+
+Prio:
+	(annotations += Annotation)? (',' annotations += Annotation)*
+	'PRIO''('priority=IntValue')'
+;
