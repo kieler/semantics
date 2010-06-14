@@ -15,6 +15,8 @@ package de.cau.cs.kieler.synccharts.diagram.custom.triggerlisteners;
 
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
@@ -53,162 +55,166 @@ import de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditor;
  */
 public class RedundantLabelTriggerListener extends TriggerListener {
 
-	/** true if all labels should be hidden. */
-	private static boolean hideAll = false;
+    /** true if all labels should be hidden. */
+    private static boolean hideAll = false;
 
-	/**
-	 * Hide all transition labels.
-	 */
-	public static void hideAll() {
-		hideAll = true;
-	}
+    /**
+     * Hide all transition labels.
+     */
+    public static void hideAll() {
+        hideAll = true;
+    }
 
-	/**
-	 * Only hide redundant labels.
-	 */
-	public static void hideRedundant() {
-		hideAll = false;
-	}
+    /**
+     * Only hide redundant labels.
+     */
+    public static void hideRedundant() {
+        hideAll = false;
+    }
 
-	/**
-	 * Creates a new RedundantLabelTriggerListener.
-	 * 
-	 */
-	public RedundantLabelTriggerListener() {
-		super(
-				NotificationFilter.RESOURCE_LOADED
-						.or(NotificationFilter
-								.createFeatureFilter(
-										SyncchartsPackage.eINSTANCE
-												.getState_Regions())
-								.or(
-										NotificationFilter
-												.createFeatureFilter(SyncchartsPackage.eINSTANCE
-														.getState_OutgoingTransitions()))));
-	}
+    /**
+     * Creates a new RedundantLabelTriggerListener.
+     * 
+     */
+    public RedundantLabelTriggerListener() {
+        super(
+                NotificationFilter.RESOURCE_LOADED
+                        .or(NotificationFilter
+                                .createFeatureFilter(
+                                        SyncchartsPackage.eINSTANCE
+                                                .getState_Regions())
+                                .or(
+                                        NotificationFilter
+                                                .createFeatureFilter(SyncchartsPackage.eINSTANCE
+                                                        .getState_OutgoingTransitions()))));
+    }
 
-	/**
-	 * Creates a new RedundantLabelTriggerListener.
-	 * 
-	 * @param filter
-	 *            the filter
-	 */
-	public RedundantLabelTriggerListener(final NotificationFilter filter) {
-		super(filter);
-	}
+    /**
+     * Creates a new RedundantLabelTriggerListener.
+     * 
+     * @param filter
+     *            the filter
+     */
+    public RedundantLabelTriggerListener(final NotificationFilter filter) {
+        super(filter);
+    }
 
-	/**
-	 * Manually trigger the trigger listener.
-	 * 
-	 */
-	public static void hideRedundantLabels() {
-		new RedundantLabelTriggerListener().performCleanup();
-	}
+    /**
+     * Manually trigger the trigger listener.
+     * 
+     */
+    public static void hideRedundantLabels() {
+        new RedundantLabelTriggerListener().performCleanup();
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	protected Command trigger(final TransactionalEditingDomain domain,
-			final Notification notification) {
-		performCleanup();
-		return null;
-	}
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected Command trigger(final TransactionalEditingDomain domain,
+            final Notification notification) {
+        performCleanup();
+        return null;
+    }
 
-	/** The currently running cleanup job. */
-	private static WorkbenchJob job;
+    /** The currently running cleanup job. */
+    private static WorkbenchJob job;
 
-	/** True if a job is waiting. */
-	private static boolean waiting = false;
+    /** True if a job is waiting. */
+    private static boolean waiting = false;
 
-	/** The delay of the job. */
-	private static final int JOB_DELAY = 1000;
+    /** The delay of the job. */
+    private static final int JOB_DELAY = 1000;
 
-	/** The last active editor. */
-	private static SyncchartsDiagramEditor lastActive;
+    /** The last active editor. */
+    private static SyncchartsDiagramEditor lastActive;
 
-	/**
-	 * Cleanup all labels.
-	 */
-	private void performCleanup() {
-		try {
-			if (waiting) {
-				job.cancel();
-			}
-			job = new WorkbenchJob("Redundant Label Cleanup") {
-				@Override
-				public IStatus runInUIThread(final IProgressMonitor monitor) {
-					waiting = false;
-					try {
-						IEditorPart part = SyncchartsDiagramCustomPlugin
-								.getInstance().getActiveEditorPart();
-						IProgressMonitor dummyMonitor = new NullProgressMonitor();
+    /**
+     * Cleanup all labels.
+     */
+    private void performCleanup() {
+        try {
+            if (waiting) {
+                job.cancel();
+            }
+            job = new WorkbenchJob("Redundant Label Cleanup") {
+                @Override
+                public IStatus runInUIThread(final IProgressMonitor monitor) {
+                    waiting = false;
+                    try {
+                        IEditorPart part = SyncchartsDiagramCustomPlugin
+                                .getInstance().getActiveEditorPart();
+                        IProgressMonitor dummyMonitor = new NullProgressMonitor();
 
-						if (part instanceof SyncchartsDiagramEditor) {
-							boolean save = !part.isDirty();
-							lastActive = (SyncchartsDiagramEditor) part;
-							VisibilityManager.reset(lastActive);
-							clean(lastActive);
-							if (save) {
-								part.doSave(dummyMonitor);
-							}
-						}
-					} catch (RuntimeException e0) {
-						e0.printStackTrace();
-						throw e0;
-					}
-					return Status.OK_STATUS;
-				}
-			};
-			waiting = true;
-			job.schedule(JOB_DELAY);
-		} catch (RuntimeException e0) {
-			e0.printStackTrace();
-			throw e0;
-		}
-	}
+                        if (part instanceof SyncchartsDiagramEditor) {
+                            boolean save = !part.isDirty();
+                            lastActive = (SyncchartsDiagramEditor) part;
+                            VisibilityManager.reset(lastActive);
+                            clean(lastActive);
+                            if (save) {
+                                part.doSave(dummyMonitor);
+                            }
+                        }
+                    } catch (RuntimeException e0) {
+                        e0.printStackTrace();
+                        throw e0;
+                    }
+                    return Status.OK_STATUS;
+                }
+            };
+            waiting = true;
+            job.schedule(JOB_DELAY);
+        } catch (RuntimeException e0) {
+            e0.printStackTrace();
+            throw e0;
+        }
+    }
 
-	/**
-	 * Cleanup one particular editor.
-	 * 
-	 * @param part
-	 *            the editor part
-	 */
-	private void clean(final SyncchartsDiagramEditor part) {
-		DiagramEditPart dep = part.getDiagramEditPart();
-		Collection<?> editParts = dep.getViewer().getEditPartRegistry()
-				.values();
-		Iterator<?> iter = editParts.iterator();
-		while (iter.hasNext()) {
-			Object o = iter.next();
-			// test if it is one of the relevant edit parts
-			if (o instanceof TransitionPriorityEditPart
-					|| o instanceof RegionIdEditPart) {
-				// get the semantic element
-				EObject obj = ((View) ((EditPart) o).getModel()).getElement();
-				if (o instanceof TransitionPriorityEditPart) {
-					Transition trans = (Transition) obj;
-					TransitionPriorityEditPart editPart = (TransitionPriorityEditPart) o;
-					// test condition
-					int outgoing = trans.getSourceState() == null ? 0 : trans
-							.getSourceState().getOutgoingTransitions().size();
-					if (hideAll || outgoing == 1) {
-						VisibilityManager.hide(part, editPart);
-						continue;
-					}
-				} else if (o instanceof RegionIdEditPart) {
-					RegionIdEditPart editPart = (RegionIdEditPart) o;
-					Region region = (Region) obj;
-					State parent = region.getParentState();
-					if (parent != null) {
-						int regions = parent.getRegions().size();
-						if (regions == 1) {
-							VisibilityManager.hide(part, editPart);
-							continue;
-						}
-					}
-				}
-			}
-		}
-	}
+    /**
+     * Cleanup one particular editor.
+     * 
+     * @param part
+     *            the editor part
+     */
+    private void clean(final SyncchartsDiagramEditor part) {
+        DiagramEditPart dep = part.getDiagramEditPart();
+        Collection<?> editParts = dep.getViewer().getEditPartRegistry()
+                .values();
+        List<Object> list = new LinkedList<Object>();
+        for (Object o : editParts) {
+            list.add(o);
+        }
+        Iterator<?> iter = list.iterator();
+        while (iter.hasNext()) {
+            Object o = iter.next();
+            // test if it is one of the relevant edit parts
+            if (o instanceof TransitionPriorityEditPart
+                    || o instanceof RegionIdEditPart) {
+                // get the semantic element
+                EObject obj = ((View) ((EditPart) o).getModel()).getElement();
+                if (o instanceof TransitionPriorityEditPart) {
+                    Transition trans = (Transition) obj;
+                    TransitionPriorityEditPart editPart = (TransitionPriorityEditPart) o;
+                    // test condition
+                    int outgoing = trans.getSourceState() == null ? 0 : trans
+                            .getSourceState().getOutgoingTransitions().size();
+                    if (hideAll || outgoing == 1) {
+                        VisibilityManager.hide(part, editPart);
+                        continue;
+                    }
+                } else if (o instanceof RegionIdEditPart) {
+                    RegionIdEditPart editPart = (RegionIdEditPart) o;
+                    Region region = (Region) obj;
+                    State parent = region.getParentState();
+                    if (parent != null) {
+                        int regions = parent.getRegions().size();
+                        if (regions == 1) {
+                            VisibilityManager.hide(part, editPart);
+                            continue;
+                        }
+                    }
+                }
+            }
+        }
+    }
 }
