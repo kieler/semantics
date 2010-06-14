@@ -69,6 +69,7 @@ import de.cau.cs.kieler.synccharts.diagram.edit.parts.TransitionTriggersAndEffec
  */
 public class DeletionPolicy extends DeletionPolicyProvider {
 
+    /** All parts that belong to the synccharts editor. */
     private static final Class<?>[] ALL_PARTS = { Action2EditPart.class,
             Action3EditPart.class, Action4EditPart.class, ActionEditPart.class,
             ActionTriggersAndEffects2EditPart.class,

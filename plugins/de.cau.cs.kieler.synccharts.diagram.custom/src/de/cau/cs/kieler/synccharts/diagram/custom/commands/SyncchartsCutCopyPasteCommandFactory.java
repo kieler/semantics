@@ -13,17 +13,11 @@
  */
 package de.cau.cs.kieler.synccharts.diagram.custom.commands;
 
-import java.util.List;
-
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.emf.ecore.EObject;
-import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramEditor;
 import org.eclipse.ui.IEditorPart;
 import org.osgi.framework.Bundle;
 
-import de.cau.cs.kieler.core.model.transformation.ITransformationFramework;
 import de.cau.cs.kieler.kiml.ui.layout.DiagramLayoutManager;
-import de.cau.cs.kieler.ksbase.ui.handler.TransformationCommand;
 import de.cau.cs.kieler.ksbase.ui.utils.AbstractCutCopyPasteCommandFactory;
 import de.cau.cs.kieler.synccharts.Region;
 import de.cau.cs.kieler.synccharts.State;
@@ -34,6 +28,7 @@ import de.cau.cs.kieler.synccharts.diagram.custom.SyncchartsDiagramCustomPlugin;
  * Creates the cut, copy and paste commands from ksbase.
  * 
  * @author soh
+ * @kieler.rating 2010-06-14 proposed yellow
  */
 public class SyncchartsCutCopyPasteCommandFactory extends
         AbstractCutCopyPasteCommandFactory {
@@ -53,24 +48,29 @@ public class SyncchartsCutCopyPasteCommandFactory extends
      */
     @Override
     protected Bundle getBundle() {
-        return SyncchartsDiagramCustomPlugin.instance.getBundle();
+        return SyncchartsDiagramCustomPlugin.getInstance().getBundle();
     }
 
+    @Override
     protected Class<?>[] getTypes() {
         return TYPES;
     }
 
     /**
-     * {@inheritDoc}
+     * Perform actions after the operation. In this case refreshing the edit
+     * policies and performing an auto layout.
+     * 
+     * @param monitor
+     *            the progress monitor
      */
     @Override
-    protected void performPostOperationActions(IProgressMonitor monitor) {
-        SyncchartsDiagramCustomPlugin.instance.getDisplay().syncExec(
+    protected void performPostOperationActions(final IProgressMonitor monitor) {
+        SyncchartsDiagramCustomPlugin.getInstance().getDisplay().syncExec(
                 new Runnable() {
 
                     public void run() {
-                        IEditorPart editorPart = SyncchartsDiagramCustomPlugin.instance
-                                .getActiveEditorPart();
+                        IEditorPart editorPart = SyncchartsDiagramCustomPlugin
+                                .getInstance().getActiveEditorPart();
                         if (editorPart != null) {
                             refreshEditPolicies(editorPart);
 
@@ -96,13 +96,5 @@ public class SyncchartsCutCopyPasteCommandFactory extends
     @Override
     protected String getModel() {
         return MODEL;
-    }
-
-    @Override
-    protected void initializeTransformationCommand(TransformationCommand result,
-            DiagramEditor editor, List<EObject> selection, String label, String filePathParam,
-            String modelParam, ITransformationFramework framework) {
-        // TODO Auto-generated method stub
-        
     }
 }

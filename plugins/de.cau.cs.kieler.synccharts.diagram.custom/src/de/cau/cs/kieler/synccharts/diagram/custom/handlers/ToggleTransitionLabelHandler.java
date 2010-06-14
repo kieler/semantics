@@ -26,6 +26,7 @@ import de.cau.cs.kieler.synccharts.diagram.custom.triggerlisteners.RedundantLabe
  * redundant ones.
  * 
  * @author soh
+ * @kieler.rating 2010-06-14 proposed yellow
  */
 public class ToggleTransitionLabelHandler extends AbstractHandler {
 

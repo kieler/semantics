@@ -15,8 +15,6 @@ package de.cau.cs.kieler.synccharts.diagram.custom.triggerlisteners;
 
 import java.util.Collection;
 import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
@@ -51,6 +49,7 @@ import de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditor;
  * has one outgoing transition.
  * 
  * @author soh
+ * @kieler.rating 2010-06-14 proposed yellow
  */
 public class RedundantLabelTriggerListener extends TriggerListener {
 
@@ -141,8 +140,8 @@ public class RedundantLabelTriggerListener extends TriggerListener {
                 public IStatus runInUIThread(final IProgressMonitor monitor) {
                     waiting = false;
                     try {
-                        IEditorPart part = SyncchartsDiagramCustomPlugin.instance
-                                .getActiveEditorPart();
+                        IEditorPart part = SyncchartsDiagramCustomPlugin
+                                .getInstance().getActiveEditorPart();
                         IProgressMonitor dummyMonitor = new NullProgressMonitor();
 
                         if (part instanceof SyncchartsDiagramEditor) {
@@ -154,30 +153,6 @@ public class RedundantLabelTriggerListener extends TriggerListener {
                                 part.doSave(dummyMonitor);
                             }
                         }
-
-                        /* Removed since this is annoying
-                        FIXME: find a way to only apply this to visible
-                        editors, not open or ones that have focus just
-                        the ones the user can actually see
-                         
-                        else {
-                            List<SyncchartsDiagramEditor> list = SyncchartsDiagramCustomPlugin.instance
-                                    .getOpenSyncchartsEditors();
-                            if (!list.isEmpty()) {
-                                for (SyncchartsDiagramEditor part2 : list) {
-                                    if (part2 == lastActive) {
-                                        boolean save = !part2.isDirty();
-                                        VisibilityManager.reset(part2);
-                                        clean(part2);
-                                        if (save) {
-                                            part2.doSave(dummyMonitor);
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                        */
-
                     } catch (RuntimeException e0) {
                         e0.printStackTrace();
                         throw e0;
@@ -203,20 +178,18 @@ public class RedundantLabelTriggerListener extends TriggerListener {
         DiagramEditPart dep = part.getDiagramEditPart();
         Collection<?> editParts = dep.getViewer().getEditPartRegistry()
                 .values();
-        List<Object> list = new LinkedList<Object>();
-        for (Object o : editParts) {
-            list.add(o);
-        }
-        Iterator<?> iter = list.iterator();
+        Iterator<?> iter = editParts.iterator();
         while (iter.hasNext()) {
             Object o = iter.next();
+            // test if it is one of the relevant edit parts
             if (o instanceof TransitionPriorityEditPart
                     || o instanceof RegionIdEditPart) {
+                // get the semantic element
                 EObject obj = ((View) ((EditPart) o).getModel()).getElement();
                 if (o instanceof TransitionPriorityEditPart) {
                     Transition trans = (Transition) obj;
                     TransitionPriorityEditPart editPart = (TransitionPriorityEditPart) o;
-
+                    // test condition
                     int outgoing = trans.getSourceState() == null ? 0 : trans
                             .getSourceState().getOutgoingTransitions().size();
                     if (hideAll || outgoing == 1) {

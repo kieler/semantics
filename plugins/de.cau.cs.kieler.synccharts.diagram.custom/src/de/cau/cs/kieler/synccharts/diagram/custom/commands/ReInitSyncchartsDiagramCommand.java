@@ -18,7 +18,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.concurrent.Semaphore;
 
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.commands.operations.OperationHistoryFactory;
@@ -75,7 +74,8 @@ public class ReInitSyncchartsDiagramCommand extends ReInitDiagramCommand {
     private static final long AUTO_LAYOUT_DELAY = 1000;
 
     /**
-     * Perform actions after the reinit.
+     * Perform actions after the reinit. In this case an auto layout on the
+     * currenly active diagram.
      * 
      * @param path
      *            the file
@@ -124,7 +124,8 @@ public class ReInitSyncchartsDiagramCommand extends ReInitDiagramCommand {
     }
 
     /**
-     * Create a new diagram file from the given semantics model.
+     * Create a new diagram file from the given semantics model. This code is
+     * taken directly from the synccharts.diagram plugin.
      * 
      * @param diagramRoot
      *            the root element.
@@ -205,88 +206,6 @@ public class ReInitSyncchartsDiagramCommand extends ReInitDiagramCommand {
                     "Unable to open editor", ex); //$NON-NLS-1$
         }
         return true;
-    }
-
-    /**
-     * A monitor that blocks the calling thread until the monitored thread is
-     * done.
-     * 
-     * @author soh
-     * @kieler.rating 2010-03-01 proposed yellow
-     */
-    public class WaitUntilDoneMonitor implements IProgressMonitor {
-
-        /** The semaphore to wait in. */
-        private Semaphore sem = new Semaphore(0);
-
-        /**
-         * 
-         * {@inheritDoc}
-         */
-        public void worked(final int work) {
-        }
-
-        /**
-         * 
-         */
-        public void waitUntilDone() {
-            try {
-                sem.acquire();
-            } catch (InterruptedException e0) {
-                e0.printStackTrace();
-            }
-        }
-
-        /**
-         * 
-         * {@inheritDoc}
-         */
-        public void subTask(final String name) {
-        }
-
-        /**
-         * 
-         * {@inheritDoc}
-         */
-        public void setTaskName(final String name) {
-        }
-
-        /**
-         * 
-         * {@inheritDoc}
-         */
-        public void setCanceled(final boolean value) {
-        }
-
-        /**
-         * 
-         * {@inheritDoc}
-         */
-        public boolean isCanceled() {
-            return false;
-        }
-
-        /**
-         * 
-         * {@inheritDoc}
-         */
-        public void internalWorked(final double work) {
-        }
-
-        /**
-         * 
-         * {@inheritDoc}
-         */
-        public void done() {
-            sem.release();
-        }
-
-        /**
-         * 
-         * {@inheritDoc}
-         */
-        public void beginTask(final String name, final int totalWork) {
-        }
     }
 
     /**

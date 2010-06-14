@@ -28,12 +28,16 @@ import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateEditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.TransitionEditPart;
 
 /**
+ * Synccharts specific handler for the copy and paste operations. Determines
+ * whether or not a selection is valid and creates a command factory.
+ * 
  * @author soh
+ * @kieler.rating 2010-06-14 proposed yellow
  */
 public class SyncchartsCutCopyPasteHandler extends AbstractCutCopyPasteHandler {
 
     /**
-     * Constructor for CopyWithImageSupportGlobalActionHandler.
+     * Creates a new SyncchartsCutCopyPasteHandler.
      */
     public SyncchartsCutCopyPasteHandler() {
         super();
@@ -66,9 +70,10 @@ public class SyncchartsCutCopyPasteHandler extends AbstractCutCopyPasteHandler {
                     continue;
                 }
             }
+            // selection contains invalid parts, return.
             return false;
         }
-
+        // no invalid parts found
         return true;
     }
 

@@ -26,6 +26,7 @@ import de.cau.cs.kieler.viewmanagement.effects.ShapeHighlightEffect;
  * Manager for highlighting of edit parts.
  * 
  * @author soh
+ * @kieler.rating 2010-06-14 proposed yellow
  */
 public final class HighlightingManager {
 

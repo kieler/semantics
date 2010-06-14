@@ -27,7 +27,11 @@ import de.cau.cs.kieler.synccharts.State;
 import de.cau.cs.kieler.synccharts.Transition;
 
 /**
- * Utility class for synccharts ksbase.
+ * Utility class for cut, copy and paste. It holds the different clipboards
+ * where the copied objects are kept temporarily. It also provides methods to
+ * interact with the different clipboards.
+ * 
+ * TODO: create a generic super class for this
  * 
  * @author soh
  * @kieler.rating 2010-03-12 proposed yellow

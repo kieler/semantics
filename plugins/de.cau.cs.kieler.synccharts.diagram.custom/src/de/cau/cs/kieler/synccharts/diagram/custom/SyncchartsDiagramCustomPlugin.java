@@ -40,8 +40,8 @@ import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
-import de.cau.cs.kieler.core.model.util.ValidationManager;
 import de.cau.cs.kieler.core.model.util.ModelingUtil;
+import de.cau.cs.kieler.core.model.util.ValidationManager;
 import de.cau.cs.kieler.core.model.util.ValidationManager.IValidateActionFactory;
 import de.cau.cs.kieler.synccharts.SyncchartsPackage;
 import de.cau.cs.kieler.synccharts.Transition;
@@ -53,13 +53,29 @@ import de.cau.cs.kieler.synccharts.diagram.part.ValidateAction;
  * The main plugin class.
  * 
  * @author soh
+ * @kieler.rating 2010-06-14 proposed yellow
  */
 public class SyncchartsDiagramCustomPlugin extends AbstractUIPlugin implements
         ISelectionListener, IPageListener, IWindowListener, IPartListener {
 
     /** The current instance of the plugin. */
-    public static SyncchartsDiagramCustomPlugin instance = null;
+    private static SyncchartsDiagramCustomPlugin instance = null;
 
+    /**
+     * Getter for the instance.
+     * 
+     * @return the instance.
+     */
+    public static SyncchartsDiagramCustomPlugin getInstance() {
+        return instance;
+    }
+
+    /**
+     * Register the validate actions on the validation manager.
+     * 
+     * @param page
+     *            the page for the validate action.
+     */
     private static void registerValidateAction(final IWorkbenchPage page) {
         ValidationManager.registerValidateAction(SyncchartsPackage.eINSTANCE,
                 new IValidateActionFactory() {
@@ -115,6 +131,8 @@ public class SyncchartsDiagramCustomPlugin extends AbstractUIPlugin implements
                         EditPart editPart = (EditPart) o;
                         EObject obj = ((View) editPart.getModel()).getElement();
                         if (obj instanceof Transition) {
+                            // highlight all edit parts belonging to the
+                            // selected transition
                             List<EditPart> parts = ModelingUtil.getEditParts(
                                     dep, obj);
                             for (EditPart transEditPart : parts) {

@@ -36,6 +36,7 @@ import org.eclipse.ui.IWorkbenchPart;
  * region id labels.
  * 
  * @author soh
+ * @kieler.rating 2010-06-14 proposed yellow
  */
 public final class VisibilityManager {
 
