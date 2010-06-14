@@ -1,0 +1,564 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<?eclipse version="3.2"?>
+<plugin>
+
+   
+   <extension point="org.eclipse.ui.commands">
+	  <category name="SyncCharts" description="Commands related to SyncChart diagrams." id="org.eclipse.gmf.category.synccharts"/>
+	  <command
+         categoryId="org.eclipse.gmf.category.synccharts"
+         defaultHandler="de.cau.cs.kieler.synccharts.diagram.custom.handlers.AddToStateHandler"
+         description="Adds a new OnEntryAction"
+         id="de.cau.cs.kieler.synccharts.custom.contextMenu.addEntryAction"
+         name="Add OnEntryAction">
+      <commandParameter
+            id="de.cau.cs.kieler.synccharts.custom.parameters.type"
+            name="Type"
+            optional="false">
+      </commandParameter>
+	  </command>
+	  <command
+         categoryId="org.eclipse.gmf.category.synccharts"
+         defaultHandler="de.cau.cs.kieler.synccharts.diagram.custom.handlers.AddToStateHandler"
+         description="Adds a new OnInsideAction"
+         id="de.cau.cs.kieler.synccharts.custom.contextMenu.addInsideAction"
+         name="Add OnInsideAction">
+      <commandParameter
+            id="de.cau.cs.kieler.synccharts.custom.parameters.type"
+            name="Type"
+            optional="false">
+      </commandParameter>
+	  </command>
+	  <command
+         categoryId="org.eclipse.gmf.category.synccharts"
+         defaultHandler="de.cau.cs.kieler.synccharts.diagram.custom.handlers.AddToStateHandler"
+         description="Adds a new OnExitAction"
+         id="de.cau.cs.kieler.synccharts.custom.contextMenu.addExitAction"
+         name="Add OnExitAction">
+      <commandParameter
+            id="de.cau.cs.kieler.synccharts.custom.parameters.type"
+            name="Type"
+            optional="false">
+      </commandParameter>
+	  </command>
+	  <command
+         categoryId="org.eclipse.gmf.category.synccharts"
+         defaultHandler="de.cau.cs.kieler.synccharts.diagram.custom.handlers.AddToStateHandler"
+         description="Adds a new Signal"
+         id="de.cau.cs.kieler.synccharts.custom.contextMenu.addSignal"
+         name="Add Signal">
+      <commandParameter
+            id="de.cau.cs.kieler.synccharts.custom.parameters.type"
+            name="Type"
+            optional="false">
+      </commandParameter>
+	  </command>
+	  <command
+         categoryId="org.eclipse.gmf.category.synccharts"
+         defaultHandler="de.cau.cs.kieler.synccharts.diagram.custom.handlers.AddToStateHandler"
+         description="Adds a new Variable"
+         id="de.cau.cs.kieler.synccharts.custom.contextMenu.addVariable"
+         name="Add Variable">
+      <commandParameter
+            id="de.cau.cs.kieler.synccharts.custom.parameters.type"
+            name="Type"
+            optional="false">
+      </commandParameter>
+	  </command>
+	  <command
+         categoryId="org.eclipse.gmf.category.synccharts"
+         defaultHandler="de.cau.cs.kieler.synccharts.diagram.custom.handlers.AddToStateHandler"
+         description="Adds a new SuspensionTrigger"
+         id="de.cau.cs.kieler.synccharts.custom.contextMenu.addSuspensionTrigger"
+         name="Add SuspensionTrigger">
+      <commandParameter
+            id="de.cau.cs.kieler.synccharts.custom.parameters.type"
+            name="Type"
+            optional="false">
+      </commandParameter>
+	  </command>
+	  <command
+         categoryId="org.eclipse.gmf.category.synccharts"
+         defaultHandler="de.cau.cs.kieler.synccharts.diagram.custom.handlers.AddToStateHandler"
+         description="Adds a new Region"
+         id="de.cau.cs.kieler.synccharts.custom.contextMenu.addRegion"
+         name="Add Region">
+      <commandParameter
+            id="de.cau.cs.kieler.synccharts.custom.parameters.type"
+            name="Type"
+            optional="false">
+      </commandParameter>
+	  </command>
+	  <command
+         categoryId="org.eclipse.gmf.category.synccharts"
+         defaultHandler="de.cau.cs.kieler.synccharts.diagram.custom.handlers.AddStateHandler"
+         description="Adds a new State"
+         id="de.cau.cs.kieler.synccharts.custom.contextMenu.addState"
+         name="Add State">
+	  </command>
+   <command
+         categoryId="org.eclipse.gmf.category.synccharts"
+         defaultHandler="de.cau.cs.kieler.synccharts.diagram.custom.handlers.EditInStateHandler"
+         description="Edits the Interface Declaration"
+         id="de.cau.cs.kieler.synccharts.custom.contextMenu.editInterfaceDecl"
+         name="Edit InterfaceDeclaration">
+      <commandParameter
+            id="de.cau.cs.kieler.synccharts.custom.parameters.type"
+            name="Type"
+            optional="false">
+      </commandParameter>
+   </command>
+         <command
+            categoryId="de.cau.cs.kieler"
+            defaultHandler="de.cau.cs.kieler.synccharts.diagram.custom.commands.ReInitSyncchartsDiagramCommand"
+            description="Reinitialize the diagram for the selected kixs file overwriting the olds kids file."
+            id="de.cau.cs.kieler.synccharts.ui.reinitDiagram"
+            name="Reinitialize and save synccharts diagram">
+      </command>
+         <command
+               categoryId="de.cau.cs.kieler"
+               defaultHandler="de.cau.cs.kieler.synccharts.diagram.custom.handlers.ExpandMacroStatesCommand"
+               description="Expand reference-macrostates"
+               id="de.cau.cs.kieler.core.ui.expandMacroStates"
+               name="Expand reference-macrostates">
+         </command>
+         <command
+               categoryId="de.cau.cs.kieler"
+               defaultHandler="de.cau.cs.kieler.synccharts.diagram.custom.handlers.Synccharts_0_1_to_0_2_Handler"
+               id="de.cau.cs.kieler.synccharts.update_0_1_to_0_2"
+               name="Update v0.1 to v0.2">
+         </command>
+                              <command
+               categoryId="de.cau.cs.kieler"
+               defaultHandler="de.cau.cs.kieler.synccharts.diagram.custom.handlers.ToggleTransitionLabelHandler"
+               id="de.cau.cs.kieler.synccharts.diagram.custom.hideTransitionLabels"
+               name="Hide Transition Priority Labels">
+            <state
+                  class="org.eclipse.ui.handlers.RegistryToggleState:false"
+                  id="org.eclipse.ui.commands.toggleState">
+            </state>
+         </command>
+         <command
+               categoryId="de.cau.cs.kieler"
+               defaultHandler="de.cau.cs.kieler.synccharts.diagram.custom.handlers.DrawingToolHandler"
+               id="de.cau.cs.kieler.synccharts.diagram.custom.toggleDrawingMode"
+               name="Activate Drawing Mode">
+            <state
+                  class="org.eclipse.ui.handlers.RegistryToggleState:false"
+                  id="org.eclipse.ui.commands.toggleState">
+            </state>
+         </command>
+   </extension>
+   
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            locationURI="popup:org.eclipse.gmf.runtime.diagram.ui.DiagramEditorContextMenu?after=addGroup">
+         <command
+               commandId="de.cau.cs.kieler.synccharts.custom.contextMenu.addSignal"
+               icon="icons/obj16/Signal.gif"
+               label="Add Signal"
+               mnemonic="S"
+               style="push"
+               tooltip="Add a signal to the selected state, either input, output or a local signal.">
+            <visibleWhen
+                  checkEnabled="false">
+               <reference
+                     definitionId="de.cau.cs.kieler.synccharts.custom.expressions.statePart">
+               </reference>
+            </visibleWhen>
+            <parameter
+                  name="de.cau.cs.kieler.synccharts.custom.parameters.type"
+                  value="Signal">
+            </parameter>
+         </command>
+         <menu
+               id="customAddMenu"
+               label="Add Action/Suspension"
+               mnemonic="A">
+            <command
+                  commandId="de.cau.cs.kieler.synccharts.custom.contextMenu.addEntryAction"
+                  icon="icons/obj16/Action.gif"
+                  label="OnEntry Action"
+                  mnemonic="t"
+                  style="push"
+                  tooltip="OnEntry actions are executed when control enters the state">
+               <visibleWhen
+                     checkEnabled="false">
+                  <reference
+                        definitionId="de.cau.cs.kieler.synccharts.custom.expressions.statePart">
+                  </reference>
+               </visibleWhen>
+               <parameter
+                     name="de.cau.cs.kieler.synccharts.custom.parameters.type"
+                     value="OnEntryAction">
+               </parameter>
+            </command>
+            <command
+                  commandId="de.cau.cs.kieler.synccharts.custom.contextMenu.addInsideAction"
+                  icon="icons/obj16/Action.gif"
+                  label="OnInside Action"
+                  mnemonic="I"
+                  style="push"
+                  tooltip="OnInside actions are executed when control persists in the state">
+               <visibleWhen
+                     checkEnabled="false">
+                  <reference
+                        definitionId="de.cau.cs.kieler.synccharts.custom.expressions.statePart">
+                  </reference>
+               </visibleWhen>
+               <parameter
+                     name="de.cau.cs.kieler.synccharts.custom.parameters.type"
+                     value="OnInsideAction">
+               </parameter>
+            </command>
+            <command
+                  commandId="de.cau.cs.kieler.synccharts.custom.contextMenu.addExitAction"
+                  icon="icons/obj16/Action.gif"
+                  label="OnExit Action"
+                  mnemonic="x"
+                  style="push"
+                  tooltip="OnExit actions are executed when control leaves the state">
+               <visibleWhen
+                     checkEnabled="false">
+                  <reference
+                        definitionId="de.cau.cs.kieler.synccharts.custom.expressions.statePart">
+                  </reference>
+               </visibleWhen>
+               <parameter
+                     name="de.cau.cs.kieler.synccharts.custom.parameters.type"
+                     value="OnExitAction">
+               </parameter>
+            </command>
+            <command
+                  commandId="de.cau.cs.kieler.synccharts.custom.contextMenu.addSuspensionTrigger"
+                  icon="icons/obj16/Suspension.gif"
+                  label="Suspension Trigger"
+                  mnemonic="u"
+                  style="push"
+                  tooltip="When a suspension trigger is active, the contents of the state are suspended">
+               <visibleWhen
+                     checkEnabled="false">
+                  <reference
+                        definitionId="de.cau.cs.kieler.synccharts.custom.expressions.statePart">
+                  </reference>
+               </visibleWhen>
+               <parameter
+                     name="de.cau.cs.kieler.synccharts.custom.parameters.type"
+                     value="SuspensionTrigger">
+               </parameter>
+            </command>
+
+         </menu>
+         <command
+               commandId="de.cau.cs.kieler.synccharts.custom.contextMenu.editInterfaceDecl"
+               icon="icons/obj16/EditInterfaceDecl.gif"
+               label="Edit Interface Declaration"
+               style="push">
+            <parameter
+                  name="de.cau.cs.kieler.synccharts.custom.parameters.type"
+                  value="InterfaceDeclaration">
+            </parameter>
+            <visibleWhen
+                  checkEnabled="false">
+               <reference
+                     definitionId="de.cau.cs.kieler.synccharts.custom.expressions.statePart">
+               </reference>
+            </visibleWhen>
+         </command>
+        
+      </menuContribution>
+      <menuContribution
+            locationURI="popup:de.cau.cs.kieler">
+         <menu
+               id="compatSyncchartsEditing"
+               label="Compatibility SyncChart Edit Operations"
+               mnemonic="C"
+               tooltip="Edit Operations for SyncCharts that are only required if structure-based editing is not available">
+            <command
+                  commandId="de.cau.cs.kieler.synccharts.custom.contextMenu.addRegion"
+                  icon="icons/obj16/Region.gif"
+                  label="Add Region"
+                  mnemonic="R"
+                  style="push"
+                  tooltip="Add a region to the state, which is executed in parallel to other regions">
+               <visibleWhen
+                     checkEnabled="false">
+                  <reference
+                        definitionId="de.cau.cs.kieler.synccharts.custom.expressions.statePart">
+                  </reference>
+               </visibleWhen>
+               <parameter
+                     name="de.cau.cs.kieler.synccharts.custom.parameters.type"
+                     value="Region">
+               </parameter>
+            </command>
+            <command
+                  commandId="de.cau.cs.kieler.synccharts.custom.contextMenu.addState"
+                  icon="icons/obj16/State.gif"
+                  label="Add State"
+                  mnemonic="S"
+                  style="push"
+                  tooltip="Add a state to the selected region">
+               <visibleWhen
+                     checkEnabled="false">
+                  <reference
+                        definitionId="de.cau.cs.kieler.synccharts.custom.expressions.region">
+                  </reference>
+               </visibleWhen>
+            </command>
+         </menu>
+      </menuContribution>
+            <menuContribution
+            locationURI="popup:org.eclipse.ui.popup.any?after=additions">
+         <menu
+               id="de.cau.cs.kieler"
+               label="KIELER"
+               mnemonic="K">
+            <command
+                  commandId="de.cau.cs.kieler.synccharts.ui.reinitDiagram"
+                  label="Reinitialize and save synccharts diagram"
+                  style="push"
+                  tooltip="Reinitialize the diagram for the selected kixs file overwriting the olds kids file.">
+            </command>
+            <command
+                  commandId="de.cau.cs.kieler.core.ui.expandMacroStates"
+                  label="Expand reference-macrostates"
+                  style="push"
+                  tooltip="Expand reference-macrostates">
+            </command>
+            <command
+                  commandId="de.cau.cs.kieler.synccharts.update_0_1_to_0_2"
+                  label="Update v0.1 to v0.2"
+                  style="push">
+            </command>
+         </menu>
+      </menuContribution>
+            <menuContribution
+                  locationURI="menu:de.cau.cs.kieler">
+               <command
+                     commandId="de.cau.cs.kieler.synccharts.diagram.custom.hideTransitionLabels"
+                     style="toggle">
+                  <visibleWhen
+                        checkEnabled="false">
+                     <with
+                           variable="activeEditor">
+                        <test
+                              forcePluginActivation="false"
+                              property="de.cau.cs.kieler.synccharts.activeSyncchartsEditor">
+                        </test>
+                     </with>
+                  </visibleWhen>
+               </command>
+            </menuContribution>
+            <menuContribution
+                  locationURI="toolbar:de.cau.cs.kieler">
+               <command
+                     commandId="de.cau.cs.kieler.synccharts.diagram.custom.toggleDrawingMode"
+                     icon="icons/palette_view.gif"
+                     style="toggle"
+                     tooltip="Activates Drawing Mode. This disables all error markers and hides all transition priority labels.">
+                  <visibleWhen
+                        checkEnabled="false">
+                     <with
+                           variable="activeEditor">
+                        <test
+                              forcePluginActivation="false"
+                              property="de.cau.cs.kieler.synccharts.activeSyncchartsEditor">
+                        </test>
+                     </with>
+                  </visibleWhen>
+               </command>
+            </menuContribution>
+   </extension>
+   <extension
+         point="org.eclipse.core.expressions.definitions">
+      <definition
+            id="de.cau.cs.kieler.synccharts.custom.expressions.statePart">
+	       <iterate
+	             ifEmpty="false"
+	             operator="and">
+	          <or>
+	             <instanceof
+	                   value="de.cau.cs.kieler.synccharts.diagram.edit.parts.StateEditPart">
+	             </instanceof>
+	             <instanceof
+	                   value="de.cau.cs.kieler.synccharts.diagram.edit.parts.State2EditPart">
+	             </instanceof>
+	             <instanceof
+	                   value="de.cau.cs.kieler.synccharts.diagram.edit.parts.StateLabelEditPart">
+	             </instanceof>
+	             <instanceof
+	                   value="de.cau.cs.kieler.synccharts.diagram.edit.parts.StateLabel2EditPart">
+	             </instanceof>
+	             <instanceof
+	                   value="de.cau.cs.kieler.synccharts.diagram.edit.parts.StateRegionCompartmentEditPart">
+	             </instanceof>
+	             <instanceof
+	                   value="de.cau.cs.kieler.synccharts.diagram.edit.parts.StateRegionCompartment2EditPart">
+	             </instanceof>
+              <instanceof
+                    value="de.cau.cs.kieler.synccharts.diagram.edit.parts.StateOnEntryActionEditPart">
+              </instanceof>
+              <instanceof
+                    value="de.cau.cs.kieler.synccharts.diagram.edit.parts.StateOnEntryAction2EditPart">
+              </instanceof>
+              <instanceof
+                    value="de.cau.cs.kieler.synccharts.diagram.edit.parts.StateOnExitActionEditPart">
+              </instanceof>
+              <instanceof
+                    value="de.cau.cs.kieler.synccharts.diagram.edit.parts.StateOnExitAction2EditPart">
+              </instanceof>
+              <instanceof
+                    value="de.cau.cs.kieler.synccharts.diagram.edit.parts.StateOnInsideActionEditPart">
+              </instanceof>
+              <instanceof
+                    value="de.cau.cs.kieler.synccharts.diagram.edit.parts.StateOnInsideAction2EditPart">
+              </instanceof>
+              <instanceof
+                    value="de.cau.cs.kieler.synccharts.diagram.edit.parts.StateSignalEditPart">
+              </instanceof>
+              <instanceof
+                    value="de.cau.cs.kieler.synccharts.diagram.edit.parts.StateSignal2EditPart">
+              </instanceof>
+              <instanceof
+                    value="de.cau.cs.kieler.synccharts.diagram.edit.parts.StateSuspendEditPart">
+              </instanceof>
+              <instanceof
+                    value="de.cau.cs.kieler.synccharts.diagram.edit.parts.StateSuspend2EditPart">
+              </instanceof>
+	          </or>
+	       </iterate>
+      </definition>
+      <definition
+            id="de.cau.cs.kieler.synccharts.custom.expressions.region">
+         <iterate
+               ifEmpty="false"
+               operator="and">
+            <or>
+               <instanceof
+                     value="de.cau.cs.kieler.synccharts.diagram.edit.parts.RegionEditPart">
+               </instanceof>
+               <instanceof
+                     value="de.cau.cs.kieler.synccharts.diagram.edit.parts.Region2EditPart">
+               </instanceof>
+               <instanceof
+                     value="de.cau.cs.kieler.synccharts.diagram.edit.parts.RegionStateCompartmentEditPart">
+               </instanceof>
+            </or>
+         </iterate>
+      </definition>
+   </extension>
+   <extension
+         point="org.eclipse.ui.bindings">
+      <key
+            commandId="de.cau.cs.kieler.synccharts.custom.contextMenu.addSignal"
+            contextId="de.cau.cs.kieler.synccharts.diagram.ui.diagramContext"
+            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+            sequence="M1+R I">
+         <parameter
+               id="de.cau.cs.kieler.synccharts.custom.parameters.type"
+               value="Signal">
+         </parameter>
+      </key>
+   </extension>
+   <extension
+         point="de.cau.cs.kieler.kiml.layout.layoutInfo">
+      <option
+            class="de.cau.cs.kieler.synccharts.Region"
+            option="de.cau.cs.kieler.layout.options.diagramType"
+            value="de.cau.cs.kieler.layout.diagrams.stateMachine">
+      </option>
+      <option
+            class="de.cau.cs.kieler.synccharts.State"
+            option="de.cau.cs.kieler.layout.options.diagramType"
+            value="de.cau.cs.kieler.layout.diagrams.boxes">
+      </option>
+      <option
+            class="de.cau.cs.kieler.synccharts.Action"
+            option="de.cau.cs.kieler.layout.options.diagramType"
+            value="de.cau.cs.kieler.layout.diagrams.nolayout">
+      </option>
+      <option
+            class="de.cau.cs.kieler.synccharts.Signal"
+            option="de.cau.cs.kieler.layout.options.diagramType"
+            value="de.cau.cs.kieler.layout.diagrams.nolayout">
+      </option>
+      <option
+            class="de.cau.cs.kieler.synccharts.State"
+            option="de.cau.cs.kieler.layout.options.minSpacing"
+            value="1.0">
+      </option>
+      <option
+            class="de.cau.cs.kieler.synccharts.State"
+            option="de.cau.cs.kieler.layout.options.borderSpacing"
+            value="1.0">
+      </option>
+      <option
+            class="de.cau.cs.kieler.synccharts.State"
+            option="de.cau.cs.kieler.layout.options.fixedSize"
+            value="false">
+      </option>
+      <option
+            class="de.cau.cs.kieler.synccharts.State"
+            option="de.cau.cs.kieler.layout.options.expandNodes"
+            value="true">
+      </option>
+      <option
+            class="de.cau.cs.kieler.synccharts.Region"
+            option="de.cau.cs.kieler.layout.options.borderSpacing"
+            value="1.0">
+      </option>
+   </extension>
+      <extension
+         point="org.eclipse.gmf.runtime.diagram.ui.editpolicyProviders">
+      <editpolicyProvider
+            class="de.cau.cs.kieler.synccharts.diagram.custom.handlers.DeletionPolicy">
+         <Priority
+               name="Lowest">
+         </Priority>
+      </editpolicyProvider>
+   </extension>
+      <extension
+            point="org.eclipse.gmf.runtime.common.ui.services.action.globalActionHandlerProviders">
+         <GlobalActionHandlerProvider
+               class="de.cau.cs.kieler.synccharts.diagram.custom.handlers.SyncchartsCutCopyPasteHandlerProvider"
+               id="de.cau.cs.kieler.synccharts.diagram.custom.CutCopyPasteHandler">
+            <Priority
+                  name="Lowest">
+            </Priority>
+            <ViewId
+                  id="de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorID">
+               <ElementType
+                     class="org.eclipse.gmf.runtime.diagram.ui.editparts.IGraphicalEditPart">
+                  <GlobalActionId
+                        actionId="cut">
+                  </GlobalActionId>
+                  <GlobalActionId
+                        actionId="copy">
+                  </GlobalActionId>
+                  <GlobalActionId
+                        actionId="paste">
+                  </GlobalActionId>
+               </ElementType>
+            </ViewId>
+         </GlobalActionHandlerProvider>
+      </extension>
+      <extension
+            point="de.cau.cs.kieler.synccharts.triggerListener">
+         <triggerListener
+               class="de.cau.cs.kieler.synccharts.diagram.custom.triggerlisteners.RedundantLabelTriggerListener">
+         </triggerListener>
+      </extension>
+      <extension
+            point="org.eclipse.core.expressions.propertyTesters">
+         <propertyTester
+               class="de.cau.cs.kieler.synccharts.diagram.custom.handlers.SyncchartsPropertyTester"
+               id="de.cau.cs.kieler.synccharts.activeSyncchartsEditor"
+               namespace="de.cau.cs.kieler.synccharts"
+               properties="activeSyncchartsEditor"
+               type="org.eclipse.ui.IEditorPart">
+         </propertyTester>
+      </extension>
+
+</plugin>

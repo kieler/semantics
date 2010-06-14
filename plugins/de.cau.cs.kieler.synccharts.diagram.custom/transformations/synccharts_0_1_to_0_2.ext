@@ -1,0 +1,186 @@
+import synccharts01;
+import synccharts;
+import utilities;
+
+Void clear() :
+ JAVA de.cau.cs.kieler.synccharts.diagram.custom.update.Synccharts_0_1_to_0_2_Utils.clear()
+;
+
+Void putState(Object oldState, Object newState) :
+ JAVA de.cau.cs.kieler.synccharts.diagram.custom.update.Synccharts_0_1_to_0_2_Utils.addState(java.lang.Object, java.lang.Object)
+;
+
+Void putTransition(Object oldTargetState, Object newTransition) :
+ JAVA de.cau.cs.kieler.synccharts.diagram.custom.update.Synccharts_0_1_to_0_2_Utils.addTransition(java.lang.Object, java.lang.Object)
+;
+
+Object getState(Object oldState) :
+ JAVA de.cau.cs.kieler.synccharts.diagram.custom.update.Synccharts_0_1_to_0_2_Utils.getState(java.lang.Object)   
+;
+
+Object getTransition(Object oldTargetState) :
+ JAVA de.cau.cs.kieler.synccharts.diagram.custom.update.Synccharts_0_1_to_0_2_Utils.dequeue(java.lang.Object)
+;
+
+// entry point for the transformation, clear cached objects then start transforming
+synccharts::Region transform(synccharts01::Region root) :
+ clear() ->
+ transformRegion(root, null)
+;
+ 
+ 
+// transform a state 
+Void transformState(synccharts01::State state, synccharts::Region parent) :
+ let newState = new synccharts::State :
+ ((state != null) ? (
+  // add to parent
+  parent.innerStates.add(newState) ->
+  // copy properties
+  newState.setIsInitial(state.isInitial) ->
+  newState.setIsFinal(state.isFinal) ->
+  newState.setId(state.id) ->
+  newState.setLabel(state.label) ->
+  
+  // copy signals, transitions
+  // TODO: actions, suspension trigger, renamings
+  state.signals.transformSignal(newState) ->
+  state.outgoingTransitions.transform(newState, state) ->
+  
+  (if (state.bodyText != null) then
+  state.bodyText.transformStateBodyText(newState) ) ->
+  
+  (if (!state.entryActions.isEmpty) then 
+  state.entryActions.transform(newState.entryActions) ) ->
+  
+  (if (!state.exitActions.isEmpty) then 
+  state.exitActions.transform(newState.exitActions) ) ->
+  
+  (if (!state.innerActions.isEmpty) then 
+  state.innerActions.transform(newState.innerActions) ) ->
+  
+  // cache link between old and new state and resolve transitions
+  putState(state, newState) ->
+  resolveTransitions(state, newState) ->
+  
+  // recursively transform regions if necessary
+  ((state.regions.isEmpty) ? null : state.regions.transformRegion(newState))
+ ) : null)
+;
+
+Void transform(synccharts01::Action action, List[synccharts::Action] targetList, synccharts::Action dummy) :
+	let newAction = new synccharts::Action :
+	newAction.setDelay(action.delay) ->
+	newAction.setLabel(action.triggersAndEffects) ->
+	newAction.setIsImmediate(action.isImmediate) ->
+	newAction.setTrigger(transform(action.trigger))
+	// TODO: triggers, effects
+;
+
+Void transformStateBodyText(String bodyText, synccharts::State newState) :
+  let textualCode = new synccharts::TextualCode :
+  textualCode.setCode(bodyText) ->
+  newState.setBodyText(textualCode)
+;
+
+// resolve all unresolved transitions to a target state
+Void resolveTransitions(synccharts01::State oldState, synccharts::State newState) :
+ // dequeue transition from cached transitions
+ let trans = getTransition(oldState) :
+ let trans2 = (synccharts::Transition) trans:
+ (trans != null ?
+ // recursively call method, FIXME: better solution needed since might produce large stacks
+ resolveTransitions(oldState, newState)
+ :
+ null) ->
+ // set target
+ trans2.setTargetState(newState)
+;
+ 
+// transform a region 
+synccharts::Region transformRegion(synccharts01::Region region, synccharts::State parent) :
+ let newRegion = new synccharts::Region :
+  // add to parent state unless its the root region
+  ((parent != null) ? parent.regions.add(newRegion) : null) ->
+  
+  // copy properties
+  newRegion.setId(region.id) ->
+  newRegion.setLabel(region.id) ->
+  
+  // copy signals and variables, TODO: actions, suspension triggers, body text, renamings
+  region.signals.transform(newRegion) ->
+  region.variables.transform(newRegion) ->
+  ((region.innerStates.isEmpty) ? null : region.innerStates.transformState(newRegion)) ->
+  newRegion  
+;
+
+Void transform(synccharts01::Transition trans, synccharts::State newState, synccharts01::State oldState) :
+ let newTrans = new synccharts::Transition :
+ let target = getState(trans.targetState) :
+ let target2 = (synccharts::State) target :
+ (target2 != null ?
+  newTrans.setTargetState(target2) :
+  putTransition(trans.targetState, newTrans)
+  ) ->  
+  newState.outgoingTransitions.add(newTrans) ->
+  newTrans.setDelay(trans.delay) //->
+  //newTrans.setType(transform(trans.type))
+  //newTrans.effects.addAll(trans.effects.transformEffect())
+;
+
+synccharts::TransitionType transform(synccharts01::TransitionType oldType):
+  //TransitionType.
+;
+
+synccharts::Effect transformEffect(synccharts01::Assignment assignment):
+ let newAssignment = new synccharts::Assignment :
+ newAssignment.setVariable(transform(assignment.variable)) ->
+ newAssignment.setExpression(transform(assignment.expression))
+;
+
+synccharts::Effect transformEffect(synccharts01::Emission emission):
+ let newEmission = new synccharts::Emission :
+ newEmission.setNewValue(transform(emission.newValue))
+;
+
+Void transformSignal(synccharts01::Signal signal, synccharts::Scope scope) :
+ let newSignal = new synccharts::Signal :
+  scope.signals.add(newSignal) ->
+  newSignal.setHostCombineOperator(signal.hostCombineOperator) ->
+  newSignal.setHostType(signal.hostType) ->
+  newSignal.setInitialValue(signal.initialValue) ->
+  newSignal.setIsInput(signal.isInput) ->
+  newSignal.setIsOutput(signal.isOutput) ->
+  newSignal.setValue(signal.value) ->
+  newSignal.setName(signal.name)
+;
+
+Void transformVar(synccharts01::Variable variable, synccharts::Scope scope) :
+ let newVariable = new synccharts::Variable :
+  scope.variables.add(newVariable) ->
+  newVariable.setHostType(variable.hostType) ->
+  newVariable.setInitialValue(variable.initialValue) ->
+  newVariable.setValue(variable.value) ->
+  newVariable.setName(variable.name) ->
+  newVariable.setConst(false) ->
+  newVariable.setType(transformValueType(variable.type))
+;
+
+synccharts::CombineOperator transformOperator(synccharts01::CombineOperator op) :
+ op
+;
+
+synccharts::ValueType transformValueType(synccharts01::ValueType type) :
+ type
+;
+
+synccharts::ComplexExpression transform(synccharts01::ComplexExpression expr) :
+  let newExpr = new synccharts::ComplexExpression :
+  newExpr.subExpressions.addAll(expr.subExpressions.transform()) ->
+  newExpr
+;
+
+synccharts::SignalReference transform(synccharts01::SignalReference expr) :
+  let newExpr = new synccharts::SignalReference :
+  //newExpr.setSignal(resolve(expr.signal))
+  newExpr
+;
