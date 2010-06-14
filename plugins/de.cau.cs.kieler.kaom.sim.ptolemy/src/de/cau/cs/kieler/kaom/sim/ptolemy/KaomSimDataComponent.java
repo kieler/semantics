@@ -23,7 +23,9 @@ import java.net.URL;
 import java.util.StringTokenizer;
 
 import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IWorkspace;
 import org.eclipse.core.resources.IWorkspaceRoot;
+import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.Platform;
 //import org.eclipse.emf.common.EMFPlugin.EclipsePlugin;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
@@ -386,8 +388,14 @@ public class KaomSimDataComponent extends JSONObjectDataComponent {
         View notationElement = ((View) diagramEditor.getDiagramEditPart().getModel());
         EObject myModel = (EObject) notationElement.getElement();
         URI uri = myModel.eResource().getURI();
+        
+        IWorkspaceRoot myWorkspaceRoot = ResourcesPlugin.getWorkspace().getRoot();
+        
+        IPath path = new Path(uri.toPlatformString(false));
+        IFile file = myWorkspaceRoot.getFile(path);
 
-        return uri.toPlatformString(false);
+        return file.getLocationURI().getRawPath();
+        //return uri.toPlatformString(false);
     }
 
     // -------------------------------------------------------------------------
@@ -437,18 +445,11 @@ public class KaomSimDataComponent extends JSONObjectDataComponent {
 
         String ptolemyModelFile = null;
         try {
-            String modelInput = this.getInputModel().replaceAll(".kaom", "") + ".moml";
+            String modelInput = this.getInputModel();
             
             //FIXME: find a better and more generic way to convert file locations / URLs
 
-            URI fileURI = URI.createPlatformResourceURI(modelInput, true);
-            String platformPath = fileURI.toPlatformString(true);
-            
-            IWorkspaceRoot workspaceRoot = EcorePlugin.getWorkspaceRoot();
-            String workspace = workspaceRoot.getLocation().toOSString();
-            
-            URI fullUri = URI.createURI("file:/" + workspace+platformPath);
-            ptolemyModelFile = fullUri.toFileString();
+            ptolemyModelFile = modelInput.replaceAll(".kaom", "") + ".moml";
            
             // test file for actual existence
             File f = new File(ptolemyModelFile);
