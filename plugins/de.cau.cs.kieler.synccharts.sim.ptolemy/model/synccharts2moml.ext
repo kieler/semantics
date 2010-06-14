@@ -439,7 +439,7 @@ Void n2wState(List[synccharts::Region] regionList) :
 
 Void n2wTransition(List[synccharts::Transition] transitionList, synccharts::State state) :
   let transition = transitionList.first():
-  let operatorExpression = new synccharts::ComplexExpression:
+  let operatorExpression = new synccharts::OperatorExpression:
   dump("TEST TRANSITION "+getURIFragment(transition)) ->
   (transitionList.withoutFirst().size > 0) ?
      n2wTransition(transitionList.withoutFirst(), state) : null ->
@@ -474,7 +474,7 @@ Void n2wBuildTriggerState(List[synccharts::Region] regionList,
    mainState.signals.add(regionSignal) ->
    //construct a new signal reference (for trigger) and add it
    signalReference.setSignal(regionSignal) ->
-   ((ComplexExpression)trigger).subExpressions.add(signalReference) ->
+   ((OperatorExpression)trigger).subExpressions.add(signalReference) ->
  
   (regionList.withoutFirst().size > 0) ?
   	 n2wBuildTriggerState(regionList.withoutFirst(), mainState, weakAbortTransition) : null ->
@@ -1442,11 +1442,28 @@ List[String] getMovedSignalNames():
 ;
 
 
+//Do some java console output for debugging purpose. 
+Void P() :
+	JAVA de.cau.cs.kieler.synccharts.sim.ptolemy.oaw.XtendJava.P()
+//	null
+;
+
+//Do some java console output for debugging purpose. 
+Void V() :
+	JAVA de.cau.cs.kieler.synccharts.sim.ptolemy.oaw.XtendJava.V()
+//	null
+;
+
 
 //Do some java console output for debugging purpose. 
 Void dump(String s) :
 	JAVA de.cau.cs.kieler.synccharts.sim.ptolemy.oaw.XtendJava.dump(
 			 java.lang.String)
+//	null
+;
+Void dumpI(Integer s) :
+	JAVA de.cau.cs.kieler.synccharts.sim.ptolemy.oaw.XtendJava.dumpI(
+			 java.lang.Integer)
 //	null
 ;
 

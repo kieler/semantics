@@ -30,49 +30,68 @@ import org.eclipse.emf.common.util.BasicEList;
  * @author Christian Motika - cmot AT informatik.uni-kiel.de
  */
 public class XtendJava {
-
-    static LinkedList<Moml.EntityType> modalModels = null;
-    static LinkedList<String> portNames = null;
-
-    public final static void resetQueue2Delete() {
-        modalModels = null;
-        portNames = null;
-    }
     
-    public final static int getQueueSize2Delete() {
-        if (modalModels == null) 
-            return 0;
-        else
-            return modalModels.size();
-    }
-    
-    public final static void enqueue2Delete(Moml.EntityType modalModel,
-                                            String portName) {
-        if (modalModels == null) {
-            modalModels = new LinkedList<Moml.EntityType>();
-            portNames   = new LinkedList<String>();
+        static LinkedList<Moml.EntityType> modalModels = null;
+        static LinkedList<String> portNames = null;
+
+        public final static void resetQueue2Delete() {
+            modalModels = null;
+            portNames = null;
         }
-        modalModels.push(modalModel);
-        portNames.push(portName);
-    }
+        
+        public final static int getQueueSize2Delete() {
+            if (modalModels == null) 
+                return 0;
+            else
+                return modalModels.size();
+        }
+        
+        public final static void enqueue2Delete(Moml.EntityType modalModel,
+                                                String portName) {
+            if (modalModels == null) {
+                modalModels = new LinkedList<Moml.EntityType>();
+                portNames   = new LinkedList<String>();
+            }
+            modalModels.push(modalModel);
+            portNames.push(portName);
+            System.out.println("BINCHEN"+modalModels.size());
+            System.out.println("BINCHEN"+portName);
+        }
+        
+        public final static String popPortName2Delete() {
+            if (portNames == null || portNames.size() > 0)
+                return (String)portNames.pop();
+            else
+                return null;
+        }
     
-    public final static String popPortName2Delete() {
-        if (portNames == null || portNames.size() > 0)
-            return (String)portNames.pop();
-        else
-            return null;
-    }
-
-    public final static Moml.EntityType popModalModel2Delete() {
-        if (modalModels == null || modalModels.size() > 0)
-            return (Moml.EntityType)modalModels.pop();
-        else
-            return null;
-    }
+        public final static Moml.EntityType popModalModel2Delete() {
+            if (modalModels == null || modalModels.size() > 0)
+                return (Moml.EntityType)modalModels.pop();
+            else
+                return null;
+        }
+        
+        // --------------------------------------------------------------------
     
-    // --------------------------------------------------------------------
+        static int sem = 0;
+        
+        public synchronized final static void P() {
+            while (sem > 0) {
+                try {
+                    Thread.sleep(100);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+            sem++;
+        }
+        
+        public synchronized final static void V() {
+            sem--;
+        }
 
-    /** The hash table used to remember marked states. */
+	/** The hash table used to remember marked states. */
 //	static Hashtable<Integer,Node> ht = new Hashtable<Integer,Node>();
 
 	//-------------------------------------------------------------------------
@@ -85,6 +104,9 @@ public class XtendJava {
 	public final static void dump(String aString) {
 		SyncchartsSimPtolemyPlugin.DEBUG(aString);
 	}
+        public final static void dumpI(Integer anInteger) {
+            SyncchartsSimPtolemyPlugin.DEBUG(anInteger + "");
+    }
 
 	//-------------------------------------------------------------------------
 
@@ -313,9 +335,9 @@ public class XtendJava {
 	
 	private final static boolean isSignalInExpression(Signal signal, Expression expression) {
 		boolean returnValue = false;
-		if (expression instanceof ComplexExpression) {
-			ComplexExpression complexExpression = (ComplexExpression)expression;
-			EList<Expression> subExpressionList = complexExpression.getSubExpressions();
+		if (expression instanceof OperatorExpression) {
+			OperatorExpression operatorExpression = (OperatorExpression)expression;
+			EList<Expression> subExpressionList = operatorExpression.getSubExpressions();
 			for (int c = 0; c < subExpressionList.size(); c++) {
 				Expression subExpression = subExpressionList.get(c);
 				returnValue |= isSignalInExpression(signal, subExpression);
@@ -383,11 +405,11 @@ public class XtendJava {
 		if (expression instanceof Value) {
 			expressionString = ((Value)expression).toString();
 		}
-		else if (expression instanceof ComplexExpression) {
-			ComplexExpression complexExpression = (ComplexExpression)expression;
-			OperatorType operator = complexExpression.getOperator();
+		else if (expression instanceof OperatorExpression) {
+		        OperatorExpression operatorExpression = (OperatorExpression)expression;
+			OperatorType operator = operatorExpression.getOperator();
 			String operatorString = translateOperator(operator.getLiteral());
-			EList<Expression> subExpressionList = complexExpression.getSubExpressions();
+			EList<Expression> subExpressionList = operatorExpression.getSubExpressions();
 			expressionString += "(";
 			for (int c = 0; c < subExpressionList.size(); c++) {
 				Expression subExpression = subExpressionList.get(c);
@@ -401,7 +423,7 @@ public class XtendJava {
 			SignalReference signalReference = (SignalReference)expression;
 			String signalName = signalReference.getSignal().getName();
 			if (isLocal(signalReference.getSignal())) {
-				//local signal -> set input signal -> signali
+				//local signal -> set input signal -> signal i
 				signalName += "i";
 			}
 			expressionString += signalName + "_isPresent";
