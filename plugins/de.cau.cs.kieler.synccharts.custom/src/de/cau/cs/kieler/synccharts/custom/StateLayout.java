@@ -154,7 +154,7 @@ public class StateLayout extends AbstractTableLayout {
 			break;
 		case BODYTEXT:
 			isEmpty = state.getBodyText() == null
-					|| state.getBodyText().length() == 0;
+					|| state.getBodyText().getCode().length() == 0;
 			break;
 		case SIGNALS:
 			isEmpty = state.getSignals().size() == 0;
@@ -197,7 +197,7 @@ public class StateLayout extends AbstractTableLayout {
 		boolean containsInsideActions = state.getInnerActions().size() > 0;
 		boolean containsExitActions = state.getExitActions().size() > 0;
 		boolean containsSuspensionTrigger = state.getSuspensionTrigger() != null;
-		boolean containsBodyText = ! (state.getBodyText() == null || state.getBodyText().length() == 0);
+		boolean containsBodyText = ! (state.getBodyText() == null || state.getBodyText().getCode().length() == 0);
 
 		return (containsRegions || containsSignals || containsVariables
 				|| containsEntryActions || containsInsideActions
