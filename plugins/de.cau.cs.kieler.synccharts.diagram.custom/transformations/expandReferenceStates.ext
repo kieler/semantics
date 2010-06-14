@@ -36,16 +36,25 @@ expandMacroState(State target) :
 State expandMacroStateWithSyncchartStateReference (State referencingState):
     //let referencedState = referencingState.bodyReference.castToState():
     let referencedState = referencingState.bodyReference.copyState() :
+    let localSignals = referencedState.signals.select(e|e.isInput==false).select(e|e.isOutput==false) :
     let referencedExpandedState = transform(referencedState) :
     let regions = referencedState.regions :
     let newName = getExpandedStateName(referencingState, referencedState) :
     dump("expandMacroStateWithSyncchartStateReference "+newName + " "+referencedState.label) ->
     referencingState.regions.addAll(regions) ->
+    referencingState.signals.addAll(localSignals) ->
     referencingState.setLabel(newName) ->
     referencingState.changeTypeToNormal() ->
     referencingState.renamings.executeRenaming() ->
+    referencingState.removeAllRenamings() ->
     referencingState
 ;
+
+/*Copy the toplevel local signals from the source-state to the target-state.*/
+/*Void copyLocalSignals(State sourceState, State targetState) :
+    let localSignals = sourceState.signals.select(e|e.isInput==false).select(e|e.isOutput==false) ->
+    targetState.signals.addAll(localSignals)
+;*/
 
 getExpandedStateName(State referencingState, State referencedState) :
     referencingState.label + "_AT_" + referencedState.label;
@@ -57,6 +66,7 @@ changeTypeToNormal(State s) :
 State castToState(Object object) :
     (State) object;
 
+
 Void executeRenaming(Renaming renaming) :
     let referencingState = renaming.parentState :
     let oldID = renaming.oldID :
@@ -64,8 +74,25 @@ Void executeRenaming(Renaming renaming) :
     let newSignal = getSignalForName(referencingState, newID) :
     let signalReferences = referencingState.eAllContents.typeSelect(SignalReference).select(e|e.signal.name==oldID) :
     let emissions = referencingState.eAllContents.typeSelect(Emission).select(e|e.signal.name==oldID) :
+    dump("EXECUTERENAMING(renaming) "+ renaming) ->
     (signalReferences.size > 0 ? renameSignalReference(signalReferences, newSignal) : null) ->
-    (emissions.size > 0 ? renameEmission(emissions, newSignal) : null);
+    (emissions.size > 0 ? renameEmission(emissions, newSignal) : null)
+    ;
+    
+    
+/*Recursively removes all renamings of a given state.
+  ATM does not work the obvious way via:
+    state.renamings.deleteRenaming()
+  therefore use eAllcontent.typeSelect instead.
+  Might be changed to more efficient method.*/
+Void removeAllRenamings(State state) :
+    state.eAllContents.typeSelect(Renaming).deleteRenaming()
+    ;
+ 
+Void deleteRenaming(Renaming renaming) :
+    dump("DELETERENAMING(renaming) "+renaming) ->
+    renaming.verboseDelete()
+;
 
     
 Void renameSignalReference(List[SignalReference] signalReferences, Signal newSignal) :
@@ -86,6 +113,7 @@ Void dump(String name) :
 	JAVA de.cau.cs.kieler.synccharts.diagram.custom.commands.Utils.dump(java.lang.String)
 ;
 
+
 State copyState(Object object) :
     let state = (State) copy(object) :
     dump("copyState(Object object) "+state) ->
@@ -98,3 +126,10 @@ Object copy(Object object) :
 Object analyze(Object object) :
     JAVA de.cau.cs.kieler.synccharts.diagram.custom.commands.Utils.analyze(java.lang.Object)
 ;
+
+Void verboseDelete(emf::EObject eobject):
+    dump("DELETE(emf::EObject eobject) "+eobject) ->
+    eobject.delete();
+
+Void delete (emf::EObject eobject):
+    JAVA org.eclipse.emf.ecore.util.EcoreUtil.delete(org.eclipse.emf.ecore.EObject);
