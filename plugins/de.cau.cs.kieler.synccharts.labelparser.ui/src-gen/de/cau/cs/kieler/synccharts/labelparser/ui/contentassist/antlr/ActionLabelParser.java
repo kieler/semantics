@@ -47,6 +47,7 @@ public class ActionLabelParser extends AbstractContentAssistParser {
 					put(grammarAccess.getUnaryOperationAccess().getSubExpressionsAlternatives_1_0(), "rule__UnaryOperation__SubExpressionsAlternatives_1_0");
 					put(grammarAccess.getUnaryOrNormalExpressionAccess().getAlternatives(), "rule__UnaryOrNormalExpression__Alternatives");
 					put(grammarAccess.getParanthesedBooleanExpressionAccess().getAlternatives(), "rule__ParanthesedBooleanExpression__Alternatives");
+					put(grammarAccess.getExpressionAccess().getAlternatives(), "rule__Expression__Alternatives");
 					put(grammarAccess.getOperatorTypeAccess().getAlternatives(), "rule__OperatorType__Alternatives");
 					put(grammarAccess.getCompareOperatorAccess().getAlternatives(), "rule__CompareOperator__Alternatives");
 					put(grammarAccess.getPlusOperatorAccess().getAlternatives(), "rule__PlusOperator__Alternatives");
@@ -58,6 +59,12 @@ public class ActionLabelParser extends AbstractContentAssistParser {
 					put(grammarAccess.getEmissionAccess().getGroup_1_0(), "rule__Emission__Group_1_0__0");
 					put(grammarAccess.getEmissionAccess().getGroup_1_1(), "rule__Emission__Group_1_1__0");
 					put(grammarAccess.getAssignmentAccess().getGroup(), "rule__Assignment__Group__0");
+					put(grammarAccess.getSignalReferenceAccess().getGroup(), "rule__SignalReference__Group__0");
+					put(grammarAccess.getSignalReferenceAccess().getGroup_1(), "rule__SignalReference__Group_1__0");
+					put(grammarAccess.getSignalReferenceAccess().getGroup_1_1(), "rule__SignalReference__Group_1_1__0");
+					put(grammarAccess.getVariableReferenceAccess().getGroup(), "rule__VariableReference__Group__0");
+					put(grammarAccess.getVariableReferenceAccess().getGroup_1(), "rule__VariableReference__Group_1__0");
+					put(grammarAccess.getVariableReferenceAccess().getGroup_1_1(), "rule__VariableReference__Group_1_1__0");
 					put(grammarAccess.getValOperationAccess().getGroup(), "rule__ValOperation__Group__0");
 					put(grammarAccess.getParanthesedValueExpressionAccess().getGroup_5(), "rule__ParanthesedValueExpression__Group_5__0");
 					put(grammarAccess.getParanthesedValueExpressionAccess().getGroup_6(), "rule__ParanthesedValueExpression__Group_6__0");
@@ -90,8 +97,10 @@ public class ActionLabelParser extends AbstractContentAssistParser {
 					put(grammarAccess.getAssignmentAccess().getVariableAssignment_0(), "rule__Assignment__VariableAssignment_0");
 					put(grammarAccess.getAssignmentAccess().getExpressionAssignment_2_0(), "rule__Assignment__ExpressionAssignment_2_0");
 					put(grammarAccess.getAssignmentAccess().getExpressionAssignment_2_1(), "rule__Assignment__ExpressionAssignment_2_1");
-					put(grammarAccess.getSignalReferenceAccess().getSignalAssignment(), "rule__SignalReference__SignalAssignment");
-					put(grammarAccess.getVariableReferenceAccess().getVariableAssignment(), "rule__VariableReference__VariableAssignment");
+					put(grammarAccess.getSignalReferenceAccess().getSignalAssignment_0(), "rule__SignalReference__SignalAssignment_0");
+					put(grammarAccess.getSignalReferenceAccess().getSubExpressionsAssignment_1_1_0(), "rule__SignalReference__SubExpressionsAssignment_1_1_0");
+					put(grammarAccess.getVariableReferenceAccess().getVariableAssignment_0(), "rule__VariableReference__VariableAssignment_0");
+					put(grammarAccess.getVariableReferenceAccess().getSubExpressionsAssignment_1_1_0(), "rule__VariableReference__SubExpressionsAssignment_1_1_0");
 					put(grammarAccess.getSignalAccess().getNameAssignment(), "rule__Signal__NameAssignment");
 					put(grammarAccess.getVariableAccess().getNameAssignment(), "rule__Variable__NameAssignment");
 					put(grammarAccess.getIntValueAccess().getValueAssignment(), "rule__IntValue__ValueAssignment");
