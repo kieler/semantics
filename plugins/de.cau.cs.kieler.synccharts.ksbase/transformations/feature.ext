@@ -528,8 +528,9 @@ Void fixDummyState(State state, List[State] list):
  (if (isEnabled("removeDummyStates") &&
    trans.size == 1 &&
   (trans.get(0).triggersAndEffects == null || 
-  trans.get(0).triggersAndEffects.matches("") ||
-  trans.get(0).triggersAndEffects.matches("# /")) &&
+  trans.get(0).triggersAndEffects.trim().matches("") ||
+  trans.get(0).triggersAndEffects.trim().matches("# /") ||
+  trans.get(0).triggersAndEffects.trim().matches("#")) &&
   trans.get(0).isImmediate &&
   state.isSimpleState()) then
   (replaceState(state, trans.get(0).targetState) ->
