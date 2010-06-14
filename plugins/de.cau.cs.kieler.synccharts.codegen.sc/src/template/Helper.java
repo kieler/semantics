@@ -49,12 +49,14 @@ public final class Helper {
 
     private Helper() {
         /*
-         * To avoid the chekstyle warning we need a private constructor
+         * To avoid the checkstyle warning we need a private constructor
          */
     }
 
     private static ArrayList<Dependency> stateDependencies = new ArrayList<Dependency>();
     private static ArrayList<StatePlusTransition> sortedStates = new ArrayList<StatePlusTransition>();
+    // There is no good way to refactor this very long type
+    // SUPPRESS CHECKSTYLE NEXT LineLength
     private static ArrayList<ArrayList<StatePlusTransition>> optimzedSortedStates = new ArrayList<ArrayList<StatePlusTransition>>();
     private static ArrayList<StateAndSignals> stateSignalDependencies = new ArrayList<StateAndSignals>();
     private static ArrayList<StatePlusTransition> neighborStates = new ArrayList<StatePlusTransition>();
@@ -88,17 +90,17 @@ public final class Helper {
         sortedStates.clear();
         fillStateSignalList(state);
         fillDependencyList(state);
-//        printDependencyList();
+        // printDependencyList();
         fillSortedThreadList();
         fillOptimizedStates(state);
-//        printStatePlusTransitionList(sortedStates);
-//        for (ArrayList<StatePlusTransition> spt : optimzedSortedStates) {
-//            printStatePlusTransitionList(spt);
-//        }
-//        for (StatePlusTransition spt : sortedStates) {
-//            System.out.println(spt.getState().getId() + " - "
-//                    + getRealOptimizedThreadPriority(spt.getState()));
-//        }
+        // printStatePlusTransitionList(sortedStates);
+        // for (ArrayList<StatePlusTransition> spt : optimzedSortedStates) {
+        // printStatePlusTransitionList(spt);
+        // }
+        // for (StatePlusTransition spt : sortedStates) {
+        // System.out.println(spt.getState().getId() + " - "
+        // + getRealOptimizedThreadPriority(spt.getState()));
+        // }
         return sortedStates;
     }
 
@@ -273,15 +275,17 @@ public final class Helper {
             return (!getDependencyOwner(transition).isEmpty());
         }
     }
-    
+
     /**
      * Returns the number of computed Threads without optimization of priorities.
+     * 
      * @return max threads
      */
     public static int getMaxPriority() {
         return sortedStates.size();
     }
 
+    //TODO: implement!
     private static String getStateNameAnyID(final State state) {
         String out = "";
         return out;
@@ -497,6 +501,7 @@ public final class Helper {
     /*
      * useful for debugging
      */
+    @SuppressWarnings("unused")
     private static void printStatePlusTransitionList(final ArrayList<StatePlusTransition> list) {
         System.out.print("[");
         for (StatePlusTransition spt : list) {
@@ -504,7 +509,7 @@ public final class Helper {
             weakStrong = stateType2String(spt.getType());
             String transition = "";
             if (spt.getTransition() != null) {
-                transition = "+(" + spt.getTransition().getTriggersAndEffects() + ")";
+                transition = "+(" + spt.getTransition().getLabel() + ")";
             }
             System.out.print(spt.getState().getId() + transition + weakStrong + " , ");
         }
@@ -514,6 +519,7 @@ public final class Helper {
     /*
      * useful for debugging
      */
+    @SuppressWarnings("unused")
     private static void printDependencyList() {
         System.out.print("dependencyList: [ ");
         for (Dependency dependency : stateDependencies) {
@@ -553,12 +559,10 @@ public final class Helper {
             break;
         }
         if (dependency.getFirstState().getTransition() != null) {
-            firstTrans = "(" + dependency.getFirstState().getTransition().getTriggersAndEffects()
-                    + ")";
+            firstTrans = "(" + dependency.getFirstState().getTransition().getLabel() + ")";
         }
         if (dependency.getSecondState().getTransition() != null) {
-            secondTrans = "(" + dependency.getSecondState().getTransition().getTriggersAndEffects()
-                    + ")";
+            secondTrans = "(" + dependency.getSecondState().getTransition().getLabel() + ")";
         }
         firstState = dependency.getFirstState().getState().getId() + "+" + firstTrans;
         secondState = dependency.getSecondState().getState().getId() + "+" + secondTrans;
@@ -793,13 +797,13 @@ public final class Helper {
                 }
             }
         }
-        
+
         // put all effect signals from actions into the list
         State sourceState = transition.getSourceState();
         EList<Action> innerActions = sourceState.getInnerActions();
         for (Action action : innerActions) {
             EList<Effect> actionEffects = action.getEffects();
-            
+
             for (Effect effect : actionEffects) {
                 EObject eObject = effect;
                 boolean hasNext = true;
@@ -819,13 +823,13 @@ public final class Helper {
                 }
             }
         }
-        
+
         // if the target state has an immediate
         // outgoing transition put its signals to the source state ones
         for (Transition targetTrans : transition.getTargetState().getOutgoingTransitions()) {
             if (isImmediateTransition(targetTrans)
                     && !transition.getSourceState().equals(targetTrans.getTargetState())) {
-//                System.out.println(targetTrans);
+                // System.out.println(targetTrans);
                 fillEffectSignals(targetTrans);
             }
         }
@@ -933,12 +937,12 @@ public final class Helper {
                     return true;
                 }
             }
-//            if (isSignalDependent(transition)) {
-//                return true;
-//            }
-//            else if (hasDependentState(transition)) {
-//                return true;
-//            } 
+            // if (isSignalDependent(transition)) {
+            // return true;
+            // }
+            // else if (hasDependentState(transition)) {
+            // return true;
+            // }
         }
 
         // else {

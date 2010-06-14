@@ -1,7 +1,14 @@
+«REM»
+	Template file for misc.c and misc.h. Structure is straight forward. 
+«ENDREM»
+
 «IMPORT synccharts»
 
 «EXTENSION template::Helper»
 
+«REM»
+	Definition of functions for inputs and outputs.
+«ENDREM»
 «DEFINE staticHeader FOR Region-»
 «FILE innerStates.first().label+".h"»
 #ifndef _«innerStates.first().label.toUpperCase()»_H
@@ -9,10 +16,10 @@
   
   «FOREACH allSignals(this.innerStates.first()) AS signal-»
   	«IF ((Signal)signal).isInput-»
-  void «((Signal)signal).parentState.id»_I_«((Signal)signal).name»(«IF ((Signal)signal).type!=ValueType::PURE»int«ENDIF»);
+  void «((Signal)signal).parentScope.id»_I_«((Signal)signal).name»(«IF ((Signal)signal).type!=ValueType::PURE»int«ENDIF»);
   	«ENDIF-»
   	«IF ((Signal)signal).isOutput-»
-  void «((Signal)signal).parentState.id»_O_«((Signal)signal).name»(«IF ((Signal)signal).type!=ValueType::PURE»int«ENDIF»);
+  void «((Signal)signal).parentScope.id»_O_«((Signal)signal).name»(«IF ((Signal)signal).type!=ValueType::PURE»int«ENDIF»);
   	«ENDIF-»
   «ENDFOREACH-»
   
@@ -25,9 +32,37 @@
 
 «DEFINE main FOR Region-»
 	«FILE "misc.h"-»
+/*****************************************************************************/
+/* generated SC-code                                                         */
+/*****************************************************************************/
+/* KIELER - Kiel Integrated Environment for Layout Eclipse RichClient        */
+/*                                                                           */
+/* http://www.informatik.uni-kiel.de/rtsys/kieler/                           */
+/*                                                                           */
+/* Copyright 2009 by                                                         */
+/* + Christian-Albrechts-University of Kiel                                  */
+/*   + Department of Computer Science                                        */
+/*     + Real-Time and Embedded Systems Group                                */
+/*                                                                           */
+/* This code is provided under the terms of the Eclipse Public License (EPL).*/
+/*****************************************************************************/
 «EXPAND header FOR this-»
 	«ENDFILE-»
 	«FILE "misc.c"-»
+/*****************************************************************************/
+/* generated SC-code                                                         */
+/*****************************************************************************/
+/* KIELER - Kiel Integrated Environment for Layout Eclipse RichClient        */
+/*                                                                           */
+/* http://www.informatik.uni-kiel.de/rtsys/kieler/                           */
+/*                                                                           */
+/* Copyright 2009 by                                                         */
+/* + Christian-Albrechts-University of Kiel                                  */
+/*   + Department of Computer Science                                        */
+/*     + Real-Time and Embedded Systems Group                                */
+/*                                                                           */
+/* This code is provided under the terms of the Eclipse Public License (EPL).*/
+/*****************************************************************************/
 «EXPAND file FOR this-»
 	«ENDFILE-»
 «ENDDEFINE»

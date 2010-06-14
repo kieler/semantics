@@ -22,11 +22,14 @@ import de.cau.cs.kieler.synccharts.Transition;
 /**
  * A simple Class to compare Transitions.
  * 
- * @author tam
+ * @author Torsten Amende - tam(at)informatik(dot)uni-kiel(dot)de
  * 
  */
 public class CompareTransitions implements Comparator<Transition> {
 
+    /**
+     * {@inheritDoc}
+     */
     public int compare(final Transition t1, final Transition t2) {
         int out = 0;
         if (t1.getPriority() < t2.getPriority()) {

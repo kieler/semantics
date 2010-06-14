@@ -1,9 +1,17 @@
+«REM»
+	Template file for triggers and effects of transitions and actions. 
+«ENDREM»
+
 «IMPORT synccharts»
 
 «EXTENSION template::Helper»
 
+«REM»
+	Entry point for triggers. It will be distinguished if
+	the ritgger is simple or complex. Then the effects will be generated.
+«ENDREM»
 «DEFINE trigger FOR Action-»
-	«IF !(this.triggersAndEffects == null)-»
+	«IF !(this.label == null)-»
 		«IF !(this.trigger == null)-»
 			«IF (this.trigger.metaType == SignalReference)-»
 				«EXPAND simpleTrigger FOR this-»
@@ -32,11 +40,15 @@
 	}
 «ENDDEFINE»
 
+«REM»
+	This template distinguishes if the request is a boolean value, an expression or
+	a signal reference. 
+«ENDREM»
 «DEFINE ifRequest FOR Action-»
 	«IF (this.trigger.metaType == BooleanValue)-»
 		«EXPAND getValue FOR this.trigger-»
-	«ELSEIF this.trigger.metaType == ComplexExpression-»
-		«EXPAND complexExpression FOR ((ComplexExpression)this.trigger)-»
+	«ELSEIF this.trigger.metaType == OperatorExpression-»
+		«EXPAND complexExpression FOR ((OperatorExpression)this.trigger)-»
 	«ELSEIF this.trigger.metaType == SignalReference-»
 		PRESENT(sig_«((SignalReference)this.trigger).signal.name-»)
 	«ELSE-»
@@ -44,9 +56,12 @@
 	«ENDIF-»
 «ENDDEFINE»
 
+«REM»
+	Emission of int values, bool values or pure signals. 
+«ENDREM»
 «DEFINE effects FOR Action-»
 	«FOREACH this.effects AS effect-»
-		«IF ((Emission)effect).signal.type == ValueType::INTEGER-»
+		«IF ((Emission)effect).signal.type == ValueType::INT-»
 			«EXPAND valuedIntegerSignal FOR ((Emission)effect)-»
 		«ELSEIF ((Emission)effect).signal.type == ValueType::BOOL-»
 			«EXPAND valuedBooleanSignal FOR ((Emission)effect)-»
@@ -56,6 +71,9 @@
 	«ENDFOREACH-»
 «ENDDEFINE»
 
+«REM»
+	Valued integer signals with its combine functions 
+«ENDREM»
 «DEFINE valuedIntegerSignal FOR Emission-»
 	«IF this.signal.combineOperator == CombineOperator::NONE-»
 		EMITINT(«EXPAND signalAndValue FOR this-»);
@@ -79,6 +97,9 @@
 	«ENDIF»
 «ENDDEFINE»
 
+«REM»
+	Valued boolean signals with its combine functions 
+«ENDREM»
 «DEFINE valuedBooleanSignal FOR Emission-»
 	«IF this.signal.combineOperator == CombineOperator::NONE-»
 		EMITBOOL(«EXPAND signalAndValue FOR this-»);
@@ -97,7 +118,7 @@
 «ENDDEFINE»
 
 «DEFINE signalAndValue FOR Emission-»
-	«IF this.newValue.metaType == synccharts::ComplexExpression-»
+	«IF this.newValue.metaType == synccharts::OperatorExpression-»
 		sig_«this.signal.name», «EXPAND checkExpression FOR this.newValue-»
 	«ELSEIF this.newValue.metaType == synccharts::BooleanValue-»
 		sig_«this.signal.name», «EXPAND getValue FOR this.newValue-»
@@ -106,14 +127,18 @@
 	«ENDIF-»
 «ENDDEFINE»
 
-«DEFINE complexExpression FOR ComplexExpression-»
+«REM»
+	For complex expressions we have to distinguish what kind of operator the expression has.
+	The default case is <VAL> OP <VAL>.
+«ENDREM»
+«DEFINE complexExpression FOR OperatorExpression-»
 	«IF this.operator == OperatorType::PRE-»
 		«EXPAND preOperator FOR this.subExpressions.get(0)-»
 	«ELSEIF this.operator == OperatorType::NOT-»
 		«EXPAND syncChartsOpToCOp FOR this.operator-»
 		«EXPAND checkExpression FOR this.subExpressions.get(0)-»
 	«ELSEIF this.operator == OperatorType::VAL-»
-		«IF this.parentExpression.operator == OperatorType::PRE-»
+		«IF (this.eContainer.metaType == synccharts::OperatorExpression)-»
 			VALPRE(sig_«((SignalReference)this.subExpressions.get(0)).signal.name-»)
 		«ELSE-»
 			VAL(sig_«((SignalReference)this.subExpressions.get(0)).signal.name-»)
@@ -125,13 +150,19 @@
 	«ENDIF-»
 «ENDDEFINE»
 
+«REM»
+	simple signal reference 
+«ENDREM»
 «DEFINE signalReference FOR SignalReference-»
 	PRESENT(sig_«this.signal.name»)
 «ENDDEFINE»
 
+«REM»
+	Pre operator for signal references or complex types. 
+«ENDREM»
 «DEFINE preOperator FOR Expression-»
-	«IF this.metaType == ComplexExpression-»
-		«EXPAND complexExpression FOR (ComplexExpression) this-»
+	«IF this.metaType == OperatorExpression-»
+		«EXPAND complexExpression FOR (OperatorExpression) this-»
 	«ELSEIF this.metaType == SignalReference-»
 		PRESENTPRE(sig_«((SignalReference)this).signal.name-»)
 	«ELSE»
@@ -139,9 +170,12 @@
 	«ENDIF»
 «ENDDEFINE»
 
+«REM»
+	This checks if an expression is weather a complex expression or a signal reference. 
+«ENDREM»
 «DEFINE checkExpression FOR Expression-»
-	«IF this.metaType == ComplexExpression-»
-		(«EXPAND complexExpression FOR (ComplexExpression)this-»)
+	«IF this.metaType == OperatorExpression-»
+		(«EXPAND complexExpression FOR (OperatorExpression)this-»)
 	«ELSEIF this.metaType == SignalReference-»
 		«EXPAND signalReference FOR (SignalReference)this-»
 	«ELSE»
@@ -149,12 +183,16 @@
 	«ENDIF»
 «ENDDEFINE»
 
+«REM»
+	Returns the value of valued signals.
+«ENDREM»
 «DEFINE getValue FOR Expression-»
+	/* metatype:  «((Value)this).metaType» */
 	«IF ((Value)this).metaType == synccharts::IntValue-»
 		«((IntValue)this).value-»
 	«ELSEIF ((Value)this).metaType == synccharts::FloatValue-»
 		«((FloatValue)this).value-»
-	«ELSE-»
+	«ELSEIF((Value)this).metaType == synccharts::FloatValue-»
 		«IF ((BooleanValue)this).value-»
 			1
 		«ELSE-»
@@ -163,6 +201,9 @@
 	«ENDIF-»
 «ENDDEFINE»
 
+«REM»
+	Returns the C operator depending on the operator in the SyncCharts metamodel
+«ENDREM»
 «DEFINE syncChartsOpToCOp FOR OperatorType-»
 	«IF this == OperatorType::AND-»
 		&&
@@ -195,6 +236,9 @@
 	«ENDIF-»
 «ENDDEFINE»
 
+«REM»
+	This template handles the differend cases of aborting a state.
+«ENDREM»
 «DEFINE stateAbortion FOR Transition-»
 	«IF this.type != TransitionType::NORMALTERMINATION-»
 		«IF !(this.sourceState.regions.isEmpty)-»
@@ -213,4 +257,22 @@
 
 «DEFINE transitionWithoutTriggersAndEffects FOR Transition-»
 	GOTO(L_«getStateNameByFlag(this.targetState, 3)»);
+«ENDDEFINE»
+
+«REM»
+	Templates for delayed triggers 
+«ENDREM»
+«DEFINE delayedTrigger FOR Transition-»
+	«IF this.delay > 1-»
+		if (count_«getStateNameByFlag(this.targetState, 3)» < «this.delay») {
+			GOTO(L_afterCount_«getStateNameByFlag(this.targetState, 3)»);
+		}
+	«ENDIF-»
+«ENDDEFINE»
+
+«DEFINE delayedTriggerLabel FOR Transition-»
+	«IF this.delay > 1-»
+		L_afterCount_«getStateNameByFlag(this.targetState, 3)»:
+		count_«getStateNameByFlag(this.targetState, 3)»++;
+	«ENDIF-»
 «ENDDEFINE»

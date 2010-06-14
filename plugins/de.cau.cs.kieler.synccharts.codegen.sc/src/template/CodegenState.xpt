@@ -1,7 +1,14 @@
+«REM»
+	Template file for SyncChart states. 
+«ENDREM»
+
 «IMPORT synccharts»
 
 «EXTENSION template::Helper»
 
+«REM»
+	Defines the entry point of a state calls Xpand templated according to their structure. 
+«ENDREM»
 «DEFINE state FOR State-»
 		«IF !isSimpleHierarchical(this)-»
 			L_«getStateNameByFlag(this, 3)-»:
@@ -22,6 +29,9 @@
 		«ENDIF-»
 «ENDDEFINE»
 
+«REM»
+	For states with regions we need to generate FORK- and FORKE statements. 
+«ENDREM»
 «DEFINE stateWithRegions FOR State-»
 	«IF this.regions.size == 1-»
 		«IF !isSimpleHierarchical(this)-»
@@ -48,6 +58,9 @@
 	FORKE(L_«getStateNameByFlag(this, 3)»_main);
 «ENDDEFINE»
 
+«REM»
+	Defines if to return to the surface or depth of a state. 
+«ENDREM»
 «DEFINE returnTo FOR State-»
 	«IF !hasTransitionWithoutTrigger(this)-»
 		«IF hasImmediates(this)-»
@@ -58,6 +71,9 @@
 	«ENDIF-»
 «ENDDEFINE»
 
+«REM»
+	return to surface 
+«ENDREM»
 «DEFINE returnToIntern FOR State-»
 	«IF (this.regions.isEmpty)-»
 		GOTO(L_«getStateNameByFlag(this, 3)»_intern);
@@ -66,6 +82,9 @@
 	«ENDIF-»
 «ENDDEFINE»
 
+«REM»
+	return to depth 
+«ENDREM»
 «DEFINE returnToState FOR State-»
 	«IF (this.regions.isEmpty)-»
 		GOTO(L_«getStateNameByFlag(this, 3)»);
@@ -74,6 +93,10 @@
 	«ENDIF-»
 «ENDDEFINE»
 
+«REM»
+	Template for states without any transitions. For this 
+	states we need to generate a HALT or a TERM Statement.
+«ENDREM»
 «DEFINE stateWithoutTransition FOR State-»
 	«IF !isSimpleHierarchical(this)-»
 		«IF hasImmediates(this)-»
@@ -91,6 +114,9 @@
 	«ENDIF»
 «ENDDEFINE»
 
+«REM»
+	Distinguish if we need a label for a simple or hierarchical state. 
+«ENDREM»
 «DEFINE simpleOrHierarchical FOR State-»
 	«IF hasImmediates(this)-»
 		«IF !(this.regions.isEmpty)-»
@@ -101,6 +127,9 @@
 	«ENDIF»
 «ENDDEFINE»
 
+«REM»
+	Tests if a state with one transition has just signal references as trigger. 
+«ENDREM»
 «DEFINE stateWithOneTransition FOR State-»
 	«EXPAND CodegenMisc::callJSONState-»
 	«IF this.outgoingTransitions.first().trigger.metaType == SignalReference-»
@@ -110,6 +139,9 @@
 	«ENDIF»
 «ENDDEFINE»
 
+«REM»
+	Defines the structure of a state and the order of statements. 
+«ENDREM»
 «DEFINE stateWithMoreTransitions FOR State-»
 	«EXPAND immediateStrong FOR this-»
 	«IF hasImmediates(this)-»
@@ -139,6 +171,10 @@
 	«ENDIF-»
 «ENDDEFINE»
 
+«REM»
+	A non initial state without outgoing transitions has to be translated into
+	a HALT. For simulation this is replaes bei PAUSE -> GOTO. 
+«ENDREM»
 «DEFINE haltAssignment FOR State-»
 	«IF ((boolean)(GLOBALVAR sim)) || !this.innerActions.isEmpty-»
 		/* this should be HALT; but for simulation PAUSE and GOTO */
@@ -150,6 +186,9 @@
 	«ENDIF-»
 «ENDDEFINE»
 
+«REM»
+	Template to cover all immediate strong transitions. 
+«ENDREM»
 «DEFINE immediateStrong FOR State-»
 	«FOREACH sortTransitionPrios(this) AS outTrans-»
 		«IF (((Transition)outTrans).isImmediate && ((Transition)outTrans).type == TransitionType::STRONGABORT)-»
@@ -158,6 +197,9 @@
 	«ENDFOREACH-»
 «ENDDEFINE»
 
+«REM»
+	Template to cover all immediate weak transitions. 
+«ENDREM»
 «DEFINE immediateWeak FOR State-»
 	«FOREACH sortTransitionPrios(this) AS outTrans-»
 		«IF (((Transition)outTrans).isImmediate && ((Transition)outTrans).type != TransitionType::STRONGABORT)-»
@@ -166,6 +208,9 @@
 	«ENDFOREACH-»
 «ENDDEFINE»
 
+«REM»
+	Template to cover all strong transitions. 
+«ENDREM»
 «DEFINE allStrong FOR State-»
 	«FOREACH sortTransitionPrios(this) AS outTrans-»
 		«IF (((Transition)outTrans).type == TransitionType::STRONGABORT)-»
@@ -174,6 +219,9 @@
 	«ENDFOREACH-»
 «ENDDEFINE»
 
+«REM»
+	Template to cover all weak transitions. 
+«ENDREM»
 «DEFINE allWeak FOR State-»
 	«FOREACH sortTransitionPrios(this) AS outTrans-»
 		«IF (((Transition)outTrans).type == TransitionType::WEAKABORT)-»
@@ -182,6 +230,9 @@
 	«ENDFOREACH-»
 «ENDDEFINE»
 
+«REM»
+	Template to cover the normal termination. 
+«ENDREM»
 «DEFINE normal FOR State-»
 	«FOREACH sortTransitionPrios(this) AS outTrans-»
 		«IF (((Transition)outTrans).type == TransitionType::NORMALTERMINATION)-»
@@ -193,6 +244,9 @@
 	«ENDIF-»
 «ENDDEFINE»
 
+«REM»
+	Template to cover all on entry actions. 
+«ENDREM»
 «DEFINE onEntry FOR State-»
 	«IF !this.entryActions.isEmpty-»
 		«FOREACH this.entryActions AS onEntryAction-»
@@ -201,6 +255,9 @@
 	«ENDIF-»
 «ENDDEFINE»
 
+«REM»
+	Template to cover all on inside actions. 
+«ENDREM»
 «DEFINE onInside FOR State-»
 	«IF !this.innerActions.isEmpty-»
 		«FOREACH this.innerActions AS onInsideAction-»

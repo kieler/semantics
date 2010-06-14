@@ -17,7 +17,6 @@ package de.cau.cs.kieler.synccharts.codegen.sc;
 import java.util.ArrayList;
 
 import de.cau.cs.kieler.synccharts.Signal;
-import de.cau.cs.kieler.synccharts.State;
 
 /**
  * An implementation of a "triple" with a state, its trigger signals and effect signals.
@@ -74,8 +73,12 @@ public class StateAndSignals {
     public void setEffectSignals(final ArrayList<Signal> newEffectSignals) {
         this.effectSignals = newEffectSignals;
     }
-    
-    @Override
+
+    /**
+     * {@inheritDoc}
+     */
+    // CHECKSTYLEOFF Equals and HashCode
+    // I don't need hash code for this
     public boolean equals(final Object other) {
         if (other instanceof StateAndSignals) {
             StateAndSignals stateSig = (StateAndSignals) other;
@@ -87,6 +90,6 @@ public class StateAndSignals {
             return false;
         }
     }
-
+    // CHECKSTYLEON Equals and HashCode
 
 }

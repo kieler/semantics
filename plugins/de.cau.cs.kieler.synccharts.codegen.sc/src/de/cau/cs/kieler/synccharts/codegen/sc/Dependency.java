@@ -13,14 +13,12 @@
  */
 package de.cau.cs.kieler.synccharts.codegen.sc;
 
-import de.cau.cs.kieler.synccharts.State;
-
 /**
  * A dependency is a type which contains two tuples and a type. The tuples represents two states
  * (the first and the second one) and the type differentiates between control flow dependencies,
  * hierarchical dependencies and signal dependencies.
  * 
- * @author tam
+ * @author Torsten Amende - tam(at)informatik(dot)uni-kiel(dot)de
  * 
  */
 public class Dependency {
@@ -38,8 +36,8 @@ public class Dependency {
      * @param type
      *            type of the dependency
      */
-    public Dependency(final StatePlusTransition firstState,
-            final StatePlusTransition secondState, final int type) {
+    public Dependency(final StatePlusTransition firstState, final StatePlusTransition secondState,
+            final int type) {
         first = firstState;
         second = secondState;
         dependencyType = type;
@@ -111,7 +109,11 @@ public class Dependency {
         dependencyType = type;
     }
 
-    @Override
+    /**
+     * {@inheritDoc}
+     */
+    // CHECKSTYLEOFF Equals and HashCode
+    // I don't need hash code for this
     public boolean equals(final Object other) {
         if (other instanceof Dependency) {
             Dependency dep = (Dependency) other;
@@ -123,4 +125,5 @@ public class Dependency {
             return false;
         }
     }
+    // CHECKSTYLEON Equals and HashCode
 }

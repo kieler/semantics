@@ -1,7 +1,15 @@
+«REM»
+	Template file for regions. 
+«ENDREM»
+
 «IMPORT synccharts»
 
 «EXTENSION template::Helper»
 
+«REM»
+	For a region all inner states will be collected and the state templated will be
+	executed for them. 
+«ENDREM»
 «DEFINE region FOR Region-»
 	«IF this.parentState != null-»
 		«FOREACH sortStateControlFlow(this.innerStates.select(s|s.isInitial).first()) AS innerState-»

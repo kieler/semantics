@@ -31,9 +31,12 @@ public class StatePlusTransition {
     /**
      * Constructor, setting the fields.
      * 
-     * @param state the state
-     * @param type the type
-     * @param transition the transition
+     * @param state
+     *            the state
+     * @param type
+     *            the type
+     * @param transition
+     *            the transition
      */
     public StatePlusTransition(final State state, final int type, final Transition transition) {
         super();
@@ -41,9 +44,9 @@ public class StatePlusTransition {
         lokalType = type;
         lokalTransition = transition;
     }
-    
+
     /**
-     * Contructor without setting fields.
+     * Constructor without setting fields.
      */
     public StatePlusTransition() {
         super();
@@ -93,8 +96,12 @@ public class StatePlusTransition {
     public void setTransition(final Transition transition) {
         lokalTransition = transition;
     }
-    
-    @Override
+
+    /**
+     * {@inheritDoc}
+     */
+    // CHECKSTYLEOFF Equals and HashCode
+    // I don't need hash code for this
     public boolean equals(final Object other) {
         if (other instanceof StatePlusTransition) {
             StatePlusTransition statePlusTransition = (StatePlusTransition) other;
@@ -111,4 +118,5 @@ public class StatePlusTransition {
             return false;
         }
     }
+    // CHECKSTYLEON Equals and HashCode
 }

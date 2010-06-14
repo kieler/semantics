@@ -1,14 +1,33 @@
+«REM»
+	Template file for the main SC file. 
+«ENDREM»
 «IMPORT synccharts»
 
 «EXTENSION template::Helper»
 
+«REM»
+	The main template creates the file and starts the process of generating code.
+«ENDREM»
 «DEFINE main FOR Region-»
 	«IF this.innerStates.isEmpty-»
 		«error("There is no SyncChart to generate code for!")»
 	«ELSE-»
 		«computeThreadPriorities(this.innerStates.first())»
 		«FILE "sim.c"-»
-		/* generated SC-code */
+		/*****************************************************************************/
+		/* generated SC-code                                                         */
+		/*****************************************************************************/
+		/* KIELER - Kiel Integrated Environment for Layout Eclipse RichClient        */
+		/*                                                                           */
+		/* http://www.informatik.uni-kiel.de/rtsys/kieler/                           */
+		/*                                                                           */
+		/* Copyright 2009 by                                                         */
+		/* + Christian-Albrechts-University of Kiel                                  */
+		/*   + Department of Computer Science                                        */
+		/*     + Real-Time and Embedded Systems Group                                */
+		/*                                                                           */
+		/* This code is provided under the terms of the Eclipse Public License (EPL).*/
+		/*****************************************************************************/
 		«EXPAND init-»
 		«EXPAND start-»
 		«EXPAND finish-»
@@ -18,6 +37,10 @@
 	«ENDIF-»
 «ENDDEFINE»
 
+«REM»
+	The init template defines the initializatin in the SC file 
+	analogous to the SC Dokumentation.
+«ENDREM»
 «DEFINE init FOR Region-»
 	«IF getHighestPriority(this.innerStates.first()) > 31-»
 		#define _SC_ID_MAX  «getHighestPriority(this.innerStates.first())» // Highest thread id in use;
@@ -43,6 +66,9 @@
 	TICKSTART(«EXPAND CodegenPriority::mainThreadPrio FOR this.innerStates.first()-»);
 «ENDDEFINE»
 
+«REM»
+	Starting point for recursive parsing process of the SyncChart.
+«ENDREM»
 «DEFINE start FOR Region-»
 	«EXPAND CodegenRegion::region FOR this-»
 «ENDDEFINE»

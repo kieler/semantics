@@ -18,6 +18,7 @@ package de.cau.cs.kieler.synccharts.codegen.sc;
  * An enumerator class for enumerating adjacent vertices in a graph.
  * 
  * @author <a href="mailto:schnoor@ti.informatik.uni-kiel.de">Henning Schnoor</a>
+ * @author contributions by Torsten Amende - tam(at)informatik(dot)uni-kiel(dot)de
  * @version 1.0, 06/23/09
  */
 public class Enumerator {
@@ -42,15 +43,16 @@ public class Enumerator {
     /**
      * Constructs a new enumerator that enumerates the values of a given array of integers.
      * 
-     * @param values
-     *            the sequence of integers to be enumerated
+     * @param graph
+     *            the graph
      * 
-     * @exception IllegalArgumentException
-     *                if <code>i</code> is not between 0 and the number of vertices of this graph
+     * @param vertex
+     *            the vertex
+     * 
      */
-    public Enumerator(final Graph Gr, final int vertex) throws IllegalArgumentException {
+    public Enumerator(final Graph graph, final int vertex) {
 
-        g = Gr;
+        g = graph;
         if (vertex < 0 || vertex >= g.numberOfVertices()) {
             String errorMessage = "Illegal vertex number.";
 
@@ -84,10 +86,8 @@ public class Enumerator {
      * 
      * @return the next item in the enumeration.
      * 
-     * @exception IllegalArgumentException
-     *                if there is no further element to return
      */
-    public int next() throws IllegalArgumentException {
+    public int next() {
 
         for (int index = lastReturnedVertex + 1; index < g.numberOfVertices(); index++) {
             if (g.hasEdge(searchVertex, index)) {
@@ -97,7 +97,7 @@ public class Enumerator {
         }
 
         String errorMessage = "Empty enumerator.";
-		throw new IllegalArgumentException(errorMessage);
-	}
+        throw new IllegalArgumentException(errorMessage);
+    }
 
 }

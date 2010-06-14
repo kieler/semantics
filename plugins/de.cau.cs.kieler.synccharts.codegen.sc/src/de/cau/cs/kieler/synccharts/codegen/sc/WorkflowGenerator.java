@@ -1,8 +1,25 @@
+/*
+ * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
+ *
+ * http://www.informatik.uni-kiel.de/rtsys/kieler/
+ *
+ * Copyright 2009 by
+ * + Christian-Albrechts-University of Kiel
+ *   + Department of Computer Science
+ *     + Real-Time and Embedded Systems Group
+ *
+ * This code is provided under the terms of the Eclipse Public License (EPL).
+ * See the file epl-v10.html for the license text.
+ *
+ *****************************************************************************/
 package de.cau.cs.kieler.synccharts.codegen.sc;
 
 import java.io.File;
 import java.io.IOException;
 
+import org.eclipse.core.resources.IResource;
+import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.util.URI;
@@ -37,6 +54,15 @@ import org.eclipse.xtend.typesystem.emf.EmfMetaModel;
 import de.cau.cs.kieler.synccharts.Region;
 import de.cau.cs.kieler.synccharts.SyncchartsPackage;
 
+/**
+ * 
+ * The WorkflowGenerator starts the Xpand process of generating code. Variables will be set to
+ * define the out path of the generated files and the model for which to generate code.
+ * 
+ * @author Torsten Amende - tam(at)informatik(dot)uni-kiel(dot)de
+ * 
+ */
+@SuppressWarnings("restriction")
 public class WorkflowGenerator {
 
     private EObject myModel = null;
@@ -132,6 +158,7 @@ public class WorkflowGenerator {
         generator.addGlobalVar(varSim);
         generator.addGlobalVar(varName);
 
+        // There is no alternative for using the Workflow Class
         Workflow workflow = new Workflow();
 
         workflow.addComponent(emfReader);
@@ -166,6 +193,12 @@ public class WorkflowGenerator {
             StatusManager.getManager().handle(status, StatusManager.LOG);
         }
 
+        try {
+            ResourcesPlugin.getWorkspace().getRoot().refreshLocal(IResource.DEPTH_INFINITE, null);
+        } catch (CoreException e2) {
+            e2.printStackTrace();
+        }
+
         File file;
         if (sim) {
             file = new File(outPath + "sim.c");
@@ -183,7 +216,7 @@ public class WorkflowGenerator {
             e.printStackTrace();
         }
     }
-    
+
     private static void checkForDirtyDiagram(final DiagramEditor diagramEditor) {
         if (diagramEditor.isDirty()) {
             final Shell shell = Display.getCurrent().getShells()[0];
@@ -193,13 +226,17 @@ public class WorkflowGenerator {
             if (b) {
                 IEditorSite part = diagramEditor.getEditorSite();
                 part.getPage().saveEditor((IEditorPart) part.getPart(), false);
-            } 
+            }
         }
     }
 
     private static void beautifyFiles(final File file) {
         Beautifier simBeautifier = new Beautifier(file, file);
-        simBeautifier.bueatify();
+        try {
+            simBeautifier.bueatify();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private static String part2Location(final IEditorPart editor) {

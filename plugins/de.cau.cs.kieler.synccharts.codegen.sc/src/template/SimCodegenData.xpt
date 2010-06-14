@@ -1,49 +1,53 @@
+«REM»
+	Template file for the _data file.
+«ENDREM»
 «IMPORT synccharts»
 
 «EXTENSION template::Helper»
 
 «DEFINE main FOR Region-»
 	«FILE "sim_data.c"-»
-/* generated SC-code */
+/*****************************************************************************/
+/* generated SC-code                                                         */
+/*****************************************************************************/
+/* KIELER - Kiel Integrated Environment for Layout Eclipse RichClient        */
+/*                                                                           */
+/* http://www.informatik.uni-kiel.de/rtsys/kieler/                           */
+/*                                                                           */
+/* Copyright 2009 by                                                         */
+/* + Christian-Albrechts-University of Kiel                                  */
+/*   + Department of Computer Science                                        */
+/*     + Real-Time and Embedded Systems Group                                */
+/*                                                                           */
+/* This code is provided under the terms of the Eclipse Public License (EPL).*/
+/*****************************************************************************/
 	«EXPAND init-»
 	«EXPAND generateSetInputs-»
 	«EXPAND generatePrintOutputs-»
-	«REM»
-		«EXPAND CodegenMisc::generateReset-»
-	«ENDREM»
 	«EXPAND generateMain-»
 	«ENDFILE-»
 «ENDDEFINE»
 
 «DEFINE init FOR Region»
-#include <string.h>
-#include <stdlib.h>
-#include <stdio.h>
-
-#include "sc.c"
-#include "cJSON.h"
-#include "misc.h"
-
-cJSON* output = 0;
-cJSON* value = 0;
-cJSON* stateArray = 0;
-
-void JSONstate(char *state){
-	cJSON_AddItemToArray(stateArray, cJSON_CreateString(state));
-	if (cJSON_GetObjectItem(output, "state") == NULL){
-		cJSON_AddItemToObject(output, "state", stateArray);
+	#include <string.h>
+	#include <stdlib.h>
+	#include <stdio.h>
+	
+	#include "sc.c"
+	#include "cJSON.h"
+	#include "misc.h"
+	
+	cJSON* output = 0;
+	cJSON* value = 0;
+	cJSON* stateArray = 0;
+	
+	void JSONstate(char *state){
+		cJSON_AddItemToArray(stateArray, cJSON_CreateString(state));
+		if (cJSON_GetObjectItem(output, "state") == NULL){
+			cJSON_AddItemToObject(output, "state", stateArray);
+		}
 	}
-}
 
-/*
-void selectCid() {
-	int act;
-	_cid = 0;
-	for (act = active; act > 1; act >>= 1){
-		_cid++;
-	}
-}
-*/
 	«FOREACH allSignals(this.innerStates.first()) AS signal-»
 		«IF !((Signal)signal).isInput-»
 			«EXPAND CodegenMisc::generateOutputSignals FOR ((Signal)signal)»
@@ -77,7 +81,7 @@ void setInputs(){
 		value = cJSON_GetObjectItem(child, "value");
 		«EXPAND setSignalValue FOR (Signal)signal-»
 		if (present != NULL && present->type) {
-			«((Signal)signal).parentState.id»_I_«((Signal)signal).name»(«IF ((Signal)signal).type!=ValueType::PURE»valSigInt[sig_«((Signal)signal).name»]«ENDIF»);
+			«((Signal)signal).parentScope.id»_I_«((Signal)signal).name»(«IF ((Signal)signal).type!=ValueType::PURE»valSigInt[sig_«((Signal)signal).name»]«ENDIF»);
 		}
 	}
   	«ENDIF-»
@@ -92,7 +96,7 @@ void printOutputs(){
 «ENDDEFINE»
 
 «DEFINE setSignalValue FOR Signal-»
-	«IF this.type == ValueType::INTEGER || this.type == ValueType::BOOL-»
+	«IF this.type == ValueType::INT || this.type == ValueType::BOOL-»
 		if (value != NULL && value->type == 3) { 
 			valSigInt[sig_«this.name»] = value->valueint;
 		}

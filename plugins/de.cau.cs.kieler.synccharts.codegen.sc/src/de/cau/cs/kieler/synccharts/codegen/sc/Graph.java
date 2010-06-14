@@ -17,13 +17,11 @@ package de.cau.cs.kieler.synccharts.codegen.sc;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
-import javax.naming.ldap.SortControl;
-
 /**
  * An implementation of an unweighted, directed graph using an adjacency matrix or an adjacency list
  * for encoding the set of edges.
  * 
- * @author tam
+ * @author contributions by Torsten Amende - tam(at)informatik(dot)uni-kiel(dot)de
  */
 public class Graph {
 
@@ -65,8 +63,6 @@ public class Graph {
      */
     private ArrayList<ArrayList<Integer>> adjacencyList;
 
-    private ArrayList<Integer> cycleProblems;
-
     /**
      * Constructs a new unweighted, directed graph with <code>n</code> vertices and no edges. Use
      * <code>addEdge(int, int, int)</code> in order to add edges.
@@ -77,11 +73,9 @@ public class Graph {
      *            specifies if the graph is represented in a list or a matrix. If isList is true the
      *            representation is a list.
      * 
-     * @exception IllegalArgumentException
-     *                if <code>n</code> is less than zero
      * @see #addEdge(int, int)
      */
-    public Graph(final int n, final boolean isList) throws IllegalArgumentException {
+    public Graph(final int n, final boolean isList) {
 
         // adjacency list or adjacency matrix?
         list = isList;
@@ -98,9 +92,6 @@ public class Graph {
 
         // initially there are no edges
         numberOfEdges = 0;
-
-        // ArrayList for nodes in a cycle
-        cycleProblems = new ArrayList<Integer>();
 
         if (list) {
             adjacencyList = new ArrayList<ArrayList<Integer>>();
@@ -127,10 +118,8 @@ public class Graph {
      * 
      * @return an enumeration of all vertices that are adjacent to i
      * 
-     * @exception IllegalArgumentException
-     *                if i is an illegal vertex number
      */
-    public Enumerator enumerateAdjacentVertices(final int i) throws IllegalArgumentException {
+    public Enumerator enumerateAdjacentVertices(final int i) {
         return new Enumerator(this, i);
     }
 
@@ -146,12 +135,8 @@ public class Graph {
      * @param edgeType
      *            the type of an edge (STRONG_EDGE, WEAK_EDGE or NO_EDGE)
      * 
-     * @exception IllegalArgumentException
-     *                if <code>i</code> or <code>j</code> are not between 0 and the number of
-     *                vertices of this graph
      */
-    public void addEdge(final int i, final int j, final int edgeType)
-            throws IllegalArgumentException {
+    public void addEdge(final int i, final int j, final int edgeType) {
         // check the passed vertex indizes
         if (i < 0 || i >= numberOfVertices || j < 0 || j >= numberOfVertices) {
             String errorMessage = "Allows vertex indizes are 0.." + (numberOfVertices - 1) + ".";
@@ -160,16 +145,16 @@ public class Graph {
         }
 
         /*
-         * update the number of edges if there has been no edge between the passed vertices yet,
-         * only
+         * update the number of edges if there has been no edge between 
+         * the passed vertices yet
          */
 
         // add Edge
         if (list) {
             if (!adjacencyList.get(i).contains(j)) {
-//                if (adjacencyList.get(j).contains(i)) {
-//                    cycleProblems.add(i);
-//                }
+                // if (adjacencyList.get(j).contains(i)) {
+                // cycleProblems.add(i);
+                // }
                 numberOfEdges++;
                 adjacencyList.get(i).add(j);
             }
@@ -210,11 +195,8 @@ public class Graph {
      * @return true, if there is an edge between the vertices with the indices <code>i</code> and
      *         <code>j</code> within this graph, and<br>
      *         false, otherwise
-     * @exception IllegalArgumentException
-     *                if <code>i</code> or <code>j</code> are not between 0 and the number of
-     *                vertices of this graph
      */
-    public boolean hasEdge(final int i, final int j) throws IllegalArgumentException {
+    public boolean hasEdge(final int i, final int j) {
         // check the passed vertex indizes
         if (i < 0 || i >= numberOfVertices || j < 0 || j >= numberOfVertices) {
             String errorMessage = "Allowed vertex indizes are 0.." + (numberOfVertices - 1) + ".";
@@ -318,9 +300,9 @@ public class Graph {
                     break;
                 }
             }
-            if (source == -1) { // the graph is not acyclic
-                // break the cycle and set a new source
-                // source = breakCycle();
+            if (source == -1) {
+                String errorMessage = "Data cycle in SyncChart.";
+                throw new IllegalArgumentException(errorMessage);
             }
             predecessorList[source] = -1;
             // remove all predecessor dependencies of source
@@ -330,15 +312,5 @@ public class Graph {
             result.add(source);
         }
         return result;
-    }
-
-    private boolean hasNoIncomings(final int node) {
-        return adjacencyList.get(node).isEmpty();
-    }
-
-    private int breakCycle() {
-        int out = cycleProblems.get(0);
-        cycleProblems.remove(0);
-        return out;
     }
 }

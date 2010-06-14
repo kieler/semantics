@@ -1,7 +1,14 @@
+«REM»
+	A misc template file.
+«ENDREM»
+
 «IMPORT synccharts»
 
 «EXTENSION template::Helper»
 
+«REM»
+	Definition of the signaltype including all signals of the SyncChart. 
+«ENDREM»
 «DEFINE generateSigType FOR List-»
 	«IF !this.isEmpty-»
 		typedef enum {
@@ -12,6 +19,9 @@
 	«ENDIF-»
 «ENDDEFINE»
 
+«REM»
+	Definition of the signal array including all signals of the SyncChart. 
+«ENDREM»
 «DEFINE generateSigArray FOR List-»
 	const char *s2signame[] = {
 		«FOREACH this AS signal SEPARATOR ", "-»
@@ -20,46 +30,62 @@
 	};
 «ENDDEFINE»
 
+«REM»
+	URI to highlite states in the simulation. 
+«ENDREM»
 «DEFINE callJSONState FOR State-»
 	«IF (boolean)(GLOBALVAR sim)-»
 		JSONstate("«getURI()»");
 	«ENDIF-»
 «ENDDEFINE»
 
+«REM»
+	URI to highlite transitions in the simulation. 
+«ENDREM»
 «DEFINE callJSONTransition FOR Transition-»
 	«IF (boolean)(GLOBALVAR sim)-»
 		JSONstate("«getURI()»");
 	«ENDIF-»
 «ENDDEFINE»
 
+«REM»
+	Template for a function to set inputs. 
+«ENDREM»
 «DEFINE generateInputSignal FOR Signal-»
-	void «this.parentState.id»_I_«this.name»(«IF type!=ValueType::PURE»int val«ENDIF») {
+	void «this.parentScope.id»_I_«this.name»(«IF type!=ValueType::PURE»int val«ENDIF») {
 		signals = signals | (1 << sig_«this.name»);
 		«IF type!=ValueType::PURE»valSigInt[sig_«this.name»]=val;«ENDIF»
 	}
 «ENDDEFINE»
 
+«REM»
+	Template for a function that generates outputs. 
+«ENDREM»
 «DEFINE generateOutputSignals FOR Signal»
-	void «this.parentState.id»_O_«this.name»(int status){
+	void «this.parentScope.id»_O_«this.name»(int status){
 		value = cJSON_CreateObject();
 		cJSON_AddItemToObject(value, "present", status?cJSON_CreateTrue():cJSON_CreateFalse());
-		«IF this.type == ValueType::INTEGER-»
+		«IF this.type == ValueType::INT-»
 			cJSON_AddItemToObject(value, "value", cJSON_CreateNumber(VAL(sig_«this.name»)));
 		«ENDIF-»
 		cJSON_AddItemToObject(output, "«this.name»", value);
 	}
 «ENDDEFINE»
 
+«REM»
+	Template for a function that checks if a signal is set. For each signal it will be
+	generated an if statement.
+«ENDREM»
 «DEFINE generateCallOutputs FOR List-»
 	void callOutputs() {
 		«FOREACH this AS signal-»
 			«IF !((Signal)signal).isInput-»
 				«IF (boolean)(GLOBALVAR sim)-»
-					«((Signal)signal).parentState.id»_O_«((Signal)signal).name-»(signals & (1 << sig_«((Signal)signal).name-»));
+					«((Signal)signal).parentScope.id»_O_«((Signal)signal).name-»(signals & (1 << sig_«((Signal)signal).name-»));
 				«ELSE-»
 				  «IF ((Signal)signal).isOutput-»				  
 					if(signals & (1 << sig_«((Signal)signal).name-»)) {
-						«((Signal)signal).parentState.id»_O_«((Signal)signal).name-»(«IF ((Signal)signal).type!=ValueType::PURE»valSigInt[sig_«((Signal)signal).name»]«ENDIF»);
+						«((Signal)signal).parentScope.id»_O_«((Signal)signal).name-»(«IF ((Signal)signal).type!=ValueType::PURE»valSigInt[sig_«((Signal)signal).name»]«ENDIF»);
 					}	
 					«ENDIF-»				
 				«ENDIF-»
@@ -75,6 +101,10 @@
 	}
 «ENDDEFINE»
 
+«REM»
+	For local signals it is necessary to generate a SIGNAL statement at the beginning
+	of a thread. A thread for a region starts with an initial state of its region.
+«ENDREM»
 «DEFINE localSignals FOR State-»
 	«IF this.isInitial-»
 		«IF this.parentRegion.parentState.parentRegion.parentState != null-»
@@ -85,12 +115,15 @@
 	«ENDIF-»
 «ENDDEFINE»
 
+«REM»
+	Reset funktion which initializes the signals. 
+«ENDREM»
 «DEFINE generateInitialize FOR Region-»
 	int «((String)(GLOBALVAR name))»_reset() {
 		RESET();
 		/* initialize all valued integer signals */
 		«FOREACH allSignals(this.innerStates.first()) AS signal-»
-			«IF ((Signal)signal).type == ValueType::INTEGER-»
+			«IF ((Signal)signal).type == ValueType::INT-»
 				valSigInt[sig_«((Signal)signal).name»] = «EXPAND getIntegerSignalValue FOR (Signal)signal-»;
 			«ENDIF-»
 		«ENDFOREACH-»
@@ -98,6 +131,9 @@
 	}
 «ENDDEFINE»
 
+«REM»
+	Returns the Int value of a signal. 
+«ENDREM»
 «DEFINE getIntegerSignalValue FOR Signal-»
 	«IF this.initialValue != null-»
 		«this.initialValue.replaceAll("\"","")-»
@@ -106,6 +142,9 @@
 	«ENDIF-»
 «ENDDEFINE»
 
+«REM»
+	Returns the Bool value of a signal. 
+«ENDREM»
 «DEFINE getBooleanSignalValue FOR Signal-»
 	«IF this.initialValue != null-»
 		«IF this.initialValue == "true" || this.initialValue == "t" || this.initialValue == "1"-»

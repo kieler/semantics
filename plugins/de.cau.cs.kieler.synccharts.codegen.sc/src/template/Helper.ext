@@ -1,99 +1,124 @@
+/*
+ * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
+ *
+ * http://www.informatik.uni-kiel.de/rtsys/kieler/
+ *
+ * Copyright 2009 by
+ * + Christian-Albrechts-University of Kiel
+ *   + Department of Computer Science
+ *     + Real-Time and Embedded Systems Group
+ *
+ * This code is provided under the terms of the Eclipse Public License (EPL).
+ * See the file epl-v10.html for the license text.
+ *
+ *****************************************************************************/
+ 
+ /*
+  * This Xtend file provides some additional extensions for the SyncCharts
+  * metamodel.
+  *
+  */
+
 import synccharts;
 
-
-String builtString(List stateList): 
-	// is the list empty?
-	stateList.isEmpty ? "":
-	"id2b("
-	+ ((synccharts::State)stateList.first()).label
-	+ ") | "
-	+ builtString(stateList.withoutFirst())
-	+ builtString(((synccharts::State)stateList.first()).regions.innerStates.select(e|!(e.isFinal) && !(e.isInitial)))
-;
-
-String getChildrenSet(List stateList):
-	builtString(stateList).subString(0, builtString(stateList).length - 3)
-;
-	
+// Returns a sorted list of transition priorities.
 List sortTransitionPrios(State state):
 	state.outgoingTransitions.sortBy(e|e.priority)
 ;
 
+// Returns a sorted list of states.
 List sortStateControlFlow(State state):
 	JAVA template.Helper.sortStateControlFlow(de.cau.cs.kieler.synccharts.State)
 ;
 
+// Returns the URI of a state.
 cached String getURI(State state):
 	JAVA de.cau.cs.kieler.synccharts.codegen.sc.Activator.getUri(de.cau.cs.kieler.synccharts.State)
 ;
 
+// Returns the URI of a transition.
 cached String getURI(Transition transition):
 	JAVA de.cau.cs.kieler.synccharts.codegen.sc.Activator.getUri(de.cau.cs.kieler.synccharts.Transition)
 ;
 	
+// Returns the root state of a SyncChart.
 cached State getRootState(State s):
 	s.parentRegion.parentState == null ? s :
 	getRootState(s.parentRegion.parentState)
 ;
 
+// Returns the initial state of a region.
 State getInitialState(Region region):
 	region.innerStates.select(s|s.isInitial).first()
 ;
 
+// Returns a list of thread priorities.
 cached List computeThreadPriorities(State rootState):
 	JAVA template.Helper.computeThreadPriorities(de.cau.cs.kieler.synccharts.State)
 ;
 
+// Returns the thread priority of the main thread.
 cached int getMainTreadPriority(State rootState):
 	getRealThreadPriority(rootState)
 ;
 
+// Returns the thread priority of a state.
 int getRealThreadPriority(State state):
 	JAVA template.Helper.getRealThreadPriority(de.cau.cs.kieler.synccharts.State)
 ;
 
+// Returns the optimized thread priority of a state.
 int getRealOptimizedThreadPriority(State state):
 	JAVA template.Helper.getRealOptimizedThreadPriority(de.cau.cs.kieler.synccharts.State)
 ;
 
+// Returns the thread priority of a state represented as a weak state.
 int getWeakThreadPriority(State rootState):
 	JAVA template.Helper.getWeakThreadPriority(de.cau.cs.kieler.synccharts.State)
 ;
 
+// Returns the optimized thread priority of a state represented as a weak state.
 int getOptimizedWeakThreadPriority(State rootState):
 	JAVA template.Helper.getOptimizedWeakThreadPriority(de.cau.cs.kieler.synccharts.State)
 ;
 
+// Returns the smallest thread priority of a state.
 int getSmallestThreadPriority(State state):
 	JAVA template.Helper.getSmallestThreadPriority(de.cau.cs.kieler.synccharts.State)
 ;
 
-
+// Returns a list with all signals in the SyncChart.
 cached List allSignals(State state):
 	JAVA template.Helper.allSignals(de.cau.cs.kieler.synccharts.State)
 ;
 
 
+// Returns the first inital state.
 State getInitialState(State state):
 	state.regions.first().innerStates.select(s|s.isInitial).first()
 ;
 
+// Returns the signal list of a state.
 cached List getStateSignals(State state):
 	JAVA template.Helper.getStateSignals(de.cau.cs.kieler.synccharts.State)
 ;
 
+// Returns the size of the priority list.
 cached int getHighestPriority(State state):
 	computeThreadPriorities(state).size
 ;
 
+// Tests if a transition has signals of which other signals are dependend.
 boolean hasDependentState(Transition transition):
 	JAVA template.Helper.hasDependentState(de.cau.cs.kieler.synccharts.Transition)
 ;
 
+// Tests if a transition has signals that are dependend from other transitions.
 boolean isSignalDependent(Transition transition):
 	JAVA template.Helper.isSignalDependent(de.cau.cs.kieler.synccharts.Transition)
 ;
 
+// Returns the statename for labels.
 String getStateNameByFlag(State state, int flag):
 	JAVA template.Helper.getStateNameByFlag(de.cau.cs.kieler.synccharts.State, java.lang.Integer)
 ;
@@ -106,6 +131,7 @@ Void error(String s):
 	JAVA template.Helper.error(java.lang.String)
 ;
 
+// Tests if a state is hierarchical without transitions and actions.
 boolean isSimpleHierarchical(State state):
 	state.parentRegion.parentState == null &&
 	(state.regions.size == 1) &&
@@ -115,11 +141,13 @@ boolean isSimpleHierarchical(State state):
 	!state.parentRegion.innerStates.exists(s|s.outgoingTransitions.exists(t|t.targetState == state))
 ;
 
+// Tests if a state has any outgoing immediate transitions or entry actions.
 boolean hasImmediates(State state):
 	state.outgoingTransitions.exists(t|t.isImmediate) ||
 	(state.entryActions.size > 0)
 ;
 
+// Tests if a state has a transition without any triggers.
 boolean hasTransitionWithoutTrigger(State state):
 	state.outgoingTransitions.exists(t|t.trigger == null) &&
 	!state.outgoingTransitions.exists(t|t.type == TransitionType::NORMALTERMINATION)
