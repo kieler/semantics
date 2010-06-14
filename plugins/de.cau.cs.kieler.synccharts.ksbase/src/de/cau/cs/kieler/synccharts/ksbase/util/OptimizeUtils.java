@@ -304,7 +304,6 @@ public final class OptimizeUtils {
             String anonymousId = getUniqueString(region,
                     SyncchartsPackage.eINSTANCE.getScope_Id(), "_R");
             region.setId(anonymousId);
-            region.setLabel(anonymousId);
             return;
         } else if (region.getLabel() == null
                 || region.getLabel().trim().equals("")) {
