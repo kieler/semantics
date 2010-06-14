@@ -442,7 +442,7 @@ Void optimizeRec(State state,
 // action Triggers and effects should not contain whitespaces
 
 Void fixWhiteSpacesInAction(Action action):
- setLabel(action, action.label.replaceAll(" " , ""))
+ if (action != null) then setLabel(action, action.label.replaceAll(" " , ""))
 ;
 
 // === end WhiteSpaces ===
@@ -513,15 +513,12 @@ Void fixTransitionType(Transition trans):
 ;
 
 Void removeTriggerFromString(Transition trans):
- (trans.label != null ?
-  ((trans.effects.isEmpty ?
-   setLabel(trans, null)
-  :
-   setLabel(trans, "/" + trans.label.split("/").get(1)) 
-  ))
- :
-  null
- )
+ if (trans.label != null) then
+  (if (trans.effects.isEmpty) then
+     setLabel(trans, null)
+   else 
+     setLabel(trans, "/" + trans.label.split("/").get(1))
+  )
 ;
 
 // === end fix transitions ===
