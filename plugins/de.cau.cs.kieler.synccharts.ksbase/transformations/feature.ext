@@ -8,11 +8,10 @@ Void addSuccessorState(State source):
  source.parentRegion.innerStates.add(target) ->
  setSelection(target)
 ;
-
+ 
 Void addSuccessorStates(List[State] states):
  states.addSuccessorState()
 ;
-
 
 //Adds a predecessor to the given state
 Void addPredecessorState(State target):
@@ -85,23 +84,15 @@ Void addSelfLoop(State state):
 //Reroutes the target of the given transition
 //to the given state
 Void rerouteTransitionTarget(Transition t, State target):
- t.setTargetState(target)
-;
-
-Void rerouteTransitionTarget(State target, Transition t):
- rerouteTransitionTarget(t, target)
+t.setTargetState(target)
 ;
 
 //Reroutes the source of the given transition
 //to the given state
 Void rerouteTransitionSource(Transition t, State source):
- //t.sourceState.outgoingTransitions.remove(t) ->
- t.setSourceState(source) //->
- //source.outgoingTransitions.add(t)
-;
-
-Void rerouteTransitionSource(State source, Transition t):
- rerouteTransitionSource(t, source)
+t.sourceState.outgoingTransitions.remove(t) ->
+t.setSourceState(source) ->
+source.outgoingTransitions.add(t)
 ;
 
 //Adds a parallel region to the given state
@@ -208,6 +199,11 @@ Void addInitialState(Region target):
  createDefault(target)
 ;
 
+// Helper method to set the label on a transition
+Void setLabel(Action action, String label):
+ JAVA de.cau.cs.kieler.synccharts.ksbase.SyncchartsKsbasePlugin.setLabel(de.cau.cs.kieler.synccharts.Action, java.lang.String)
+;
+ 
 //Good ol' ABRO
 Void addABRO(Region rootRegion):
 let waitABToFinal = new Transition:
@@ -229,18 +225,26 @@ let sigA = new Signal:
 let sigB = new Signal:
 let sigR = new Signal:
 let sigO = new Signal:
+let sigAExpr = new SignalReference:
+let sigBExpr = new SignalReference:
+let sigOExpr = new Emission:
+let sigRExpr = new SignalReference:
 let root = new State:
 //ABRO Root State
 root.setLabel("ABRO") ->
 //ABRO Signal definition:
 sigA.setName("A") ->
 sigA.setIsInput(true) ->
+sigAExpr.setSignal(sigA) ->
 sigB.setName("B") ->
 sigB.setIsInput(true) ->
+sigBExpr.setSignal(sigB) ->
 sigR.setName("R") ->
 sigR.setIsInput(true) ->
+sigRExpr.setSignal(sigR) ->
 sigO.setName("O") ->
 sigO.setIsOutput(true) ->
+sigOExpr.setSignal(sigO) ->
 root.signals.add(sigA) ->
 root.signals.add(sigB) ->
 root.signals.add(sigR) ->
@@ -260,7 +264,8 @@ wAFinal.setIsFinal(true) ->
 wA.innerStates.add(wAFinal) ->
 wATrans.setSourceState(wAInitial) ->
 wATrans.setTargetState(wAFinal) ->
-wATrans.setTriggersAndEffects("A") ->
+//wATrans.setTrigger(sigAExpr) ->
+setLabel(wATrans, "A") ->
 waitAB.regions.add(wA) ->
 //Region for 'wait for b'
 wBInitial.setLabel("wB") ->
@@ -271,26 +276,28 @@ wBFinal.setIsFinal(true) ->
 wB.innerStates.add(wBFinal) ->
 wBTrans.setSourceState(wBInitial) ->
 wBTrans.setTargetState(wBFinal) ->
-wBTrans.setTriggersAndEffects("B") ->
+//wBTrans.setTrigger(sigBExpr) ->
+setLabel(wBTrans, "B") ->
 waitAB.regions.add(wB) ->
 //ABO final state
 ABOFinal.setLabel("done") ->
 waitABToFinal.setSourceState(waitAB) ->
 waitABToFinal.setTargetState(ABOFinal) ->
 waitABToFinal.setType(TransitionType::NORMALTERMINATION) ->
-waitABToFinal.setTriggersAndEffects("/O") ->
+//waitABToFinal.effects.add(sigOExpr) ->
+setLabel(waitABToFinal, "/O") ->
 ABORegion.innerStates.add(waitAB) ->
 ABORegion.innerStates.add(ABOFinal) ->
 ABO.regions.add(ABORegion)->
 reset.setSourceState(ABO) ->
 reset.setTargetState(ABO) ->
 reset.setType(TransitionType::STRONGABORT) ->
-reset.setTriggersAndEffects("R") ->
+//reset.setTrigger(sigRExpr) ->
+setLabel(reset, "R") ->
 innerRootRegion.innerStates.add(ABO) ->
 root.regions.add(innerRootRegion) ->
 rootRegion.innerStates.add(root)
 ;
-
 
 ///////////////////////////////////////
 // Optimization and fixing of issues //
@@ -399,7 +406,7 @@ Boolean isFixTransitionsEnabled():
 
 // check if one of the state removal options is enabled
 Boolean isRemoveStatesEnabled():
- isEnabled("removeDummyStates") || isEnabled("removeDeadEndConditionals")
+ (isEnabled("removeDummyStates") || isEnabled("removeDeadEndConditionals"))
 ;
 
 // optimize state recursively
@@ -435,7 +442,7 @@ Void optimizeRec(State state,
 // action Triggers and effects should not contain whitespaces
 
 Void fixWhiteSpacesInAction(Action action):
- action.setTriggersAndEffects(action.triggersAndEffects.replaceAll(" " , ""))
+ setLabel(action, action.label.replaceAll(" " , ""))
 ;
 
 // === end WhiteSpaces ===
@@ -506,11 +513,11 @@ Void fixTransitionType(Transition trans):
 ;
 
 Void removeTriggerFromString(Transition trans):
- (trans.triggersAndEffects != null ?
+ (trans.label != null ?
   ((trans.effects.isEmpty ?
-   trans.setTriggersAndEffects(null)
+   setLabel(trans, null)
   :
-   trans.setTriggersAndEffects("/" + trans.triggersAndEffects.split("/").get(1)) 
+   setLabel(trans, "/" + trans.label.split("/").get(1)) 
   ))
  :
   null
@@ -524,13 +531,13 @@ Void removeTriggerFromString(Transition trans):
 
 Void fixDummyState(State state, List[State] list):
  let trans = state.outgoingTransitions:
- 
  (if (isEnabled("removeDummyStates") &&
    trans.size == 1 &&
-  (trans.get(0).triggersAndEffects == null || 
-  trans.get(0).triggersAndEffects.trim().matches("") ||
-  trans.get(0).triggersAndEffects.trim().matches("# /") ||
-  trans.get(0).triggersAndEffects.trim().matches("#")) &&
+  (trans.get(0).label == null || 
+  trans.get(0).label.trim() == null ||
+  trans.get(0).label.trim().matches("") ||
+  trans.get(0).label.trim().matches("# /") ||
+  trans.get(0).label.trim().matches("#")) &&
   trans.get(0).isImmediate &&
   state.isSimpleState()) then
   (replaceState(state, trans.get(0).targetState) ->

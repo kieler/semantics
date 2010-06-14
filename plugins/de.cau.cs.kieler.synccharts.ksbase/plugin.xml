@@ -75,7 +75,8 @@
           keyboardShortcut="M1+R T"
           name="Set Transition Target"
           transformation="rerouteTransitionTarget"
-          transformationId="de.cau.cs.kieler.ksbase.rerouteTarget">
+          transformationId="de.cau.cs.kieler.ksbase.rerouteTarget"
+          validation="isNoRootState">
        </transformation>
        <transformation
              tooltip="Set the transition source to the selected state"
@@ -83,7 +84,8 @@
              keyboardShortcut="M1+R J"
              name="Set Transition Source"
              transformation="rerouteTransitionSource"
-             transformationId="de.cau.cs.kieler.ksbase.rerouteSource">
+             transformationId="de.cau.cs.kieler.ksbase.rerouteSource"
+             validation="isNoRootState">
     	</transformation>
        <transformation
              tooltip="Add a region with an initial state "
@@ -142,7 +144,7 @@
              transformationId="de.cau.cs.kieler.ksbase.addSingleSuc"
              validation="isNoRootState">
        </transformation>
-       <transformation
+              <transformation
              icon="icons/quickfix_obj.gif"
              name="Optimize"
              tooltip="Optimize the current Synccharts. This can be configured through the preference page."
@@ -198,7 +200,7 @@
            transformationId="de.cau.cs.kieler.ksbase.downgradeState">
      </transformationCommand>
 					<transformationCommand transformationId="de.cau.cs.kieler.ksbase.flip"></transformationCommand>
-     <transformationCommand
+				     <transformationCommand
            transformationId="de.cau.cs.kieler.ksbase.optimize">
      </transformationCommand>
 				</menuContribution>
@@ -284,7 +286,7 @@
 			</menus>
 		</configuration>
  </extension>
- <extension
+  <extension
        point="org.eclipse.ui.preferencePages">
     <page
           category="de.cau.cs.kieler.synccharts.diagram.general"

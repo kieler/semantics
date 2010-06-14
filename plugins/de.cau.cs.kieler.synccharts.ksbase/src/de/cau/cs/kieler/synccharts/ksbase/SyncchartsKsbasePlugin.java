@@ -16,6 +16,9 @@ package de.cau.cs.kieler.synccharts.ksbase;
 
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
+
+import de.cau.cs.kieler.synccharts.Action;
+import de.cau.cs.kieler.synccharts.Transition;
 /**
  * The activator class controls the plug-in life cycle.
  * 
@@ -79,5 +82,9 @@ public class SyncchartsKsbasePlugin extends AbstractUIPlugin {
      */
     public static void setDefault(final SyncchartsKsbasePlugin value) { 
         plugin = value;
+    }
+    
+    public static void setLabel(final Action trans, final String label) {
+    	trans.setLabel(label);
     }
 }
