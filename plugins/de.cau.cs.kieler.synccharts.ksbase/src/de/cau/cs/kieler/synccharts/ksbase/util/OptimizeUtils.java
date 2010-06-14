@@ -424,7 +424,7 @@ public final class OptimizeUtils {
         } else if (theKey.equals(TURN_NORMAL_TERMINATION_INTO_WEAK_ABORT)) {
             result = "Turn NORMALTERMINATION transitions into WEAKABORT transitions";
         } else if (theKey.equals(FIX_NORMAL_TERMINATION_LEAVING_COMPLEX_STATE)) {
-            result = "Fix NORMALTERMINATION transitions leaving a complex state";
+            result = "Fix NORMALTERMINATION transitions with trigger leaving a complex state";
         }
         return result
                 + (Arrays.asList(REQUIRED_KEYS).contains(theKey) ? " (REQUIRED)"
