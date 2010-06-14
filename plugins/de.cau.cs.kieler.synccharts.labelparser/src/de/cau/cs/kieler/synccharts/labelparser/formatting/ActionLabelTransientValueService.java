@@ -65,31 +65,7 @@ public class ActionLabelTransientValueService implements
                 || feature.equals(SyncchartsPackage.eINSTANCE
                 		.getTransition_TargetState())
              )
-             )
-                || (owner instanceof Action && (feature
-                        .equals(SyncchartsPackage.eINSTANCE
-                                .getAction_ParentStateEntryAction())
-                        || feature.equals(SyncchartsPackage.eINSTANCE
-                                .getAction_ParentStateExitAction())
-                        || feature.equals(SyncchartsPackage.eINSTANCE
-                                .getAction_ParentStateInnerAction())
-                        || feature.equals(SyncchartsPackage.eINSTANCE
-                                .getAction_ParentStateSuspension()) || feature
-                        .equals(SyncchartsPackage.eINSTANCE
-                                .getAction_TriggersAndEffects())))
-                || (owner instanceof Expression
-                        && (feature.equals(SyncchartsPackage.eINSTANCE
-                                .getExpression_ParentAction()))
-                        || feature.equals(SyncchartsPackage.eINSTANCE
-                                .getExpression_ParentAssignment())
-                        || feature.equals(SyncchartsPackage.eINSTANCE
-                                .getExpression_ParentEmisson()) || feature
-                        .equals(SyncchartsPackage.eINSTANCE
-                                .getExpression_ParentExpression()))
-                  || (owner instanceof Effect
-                                        && (feature.equals(SyncchartsPackage.eINSTANCE
-                                                .getEffect_ParentEAction())))
-                                                        
+             )                                                      
         )
             return true;
         else
@@ -98,6 +74,7 @@ public class ActionLabelTransientValueService implements
 
 	public boolean isCheckElementsIndividually(EObject owner,
 			EStructuralFeature feature) {
+		// TODO Auto-generated method stub
 		return false;
 	}
 
