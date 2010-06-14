@@ -36,6 +36,7 @@ import org.eclipse.gmf.runtime.diagram.ui.services.editpolicy.IEditPolicyProvide
  * @author soh
  * @kieler.rating 2009-02-23 proposed yellow
  */
+@SuppressWarnings("restriction")
 public class BalloonPopupEditPolicyProvider extends AbstractProvider implements
         IEditPolicyProvider {
 
@@ -72,7 +73,6 @@ public class BalloonPopupEditPolicyProvider extends AbstractProvider implements
      *            the edit part
      * @return true if it is a note
      */
-    @SuppressWarnings("restriction")
     private boolean isNote(final EditPart editPart) {
         if (editPart instanceof DescriptionCompartmentEditPart) {
             return true;
@@ -87,8 +87,9 @@ public class BalloonPopupEditPolicyProvider extends AbstractProvider implements
     }
 
     /**
+     * Get the contributions from the extending plugins.
      * 
-     * @return
+     * @return the list of contributions
      */
     private List<IBalloonContribution> getContributions() {
         if (contributions == null) {

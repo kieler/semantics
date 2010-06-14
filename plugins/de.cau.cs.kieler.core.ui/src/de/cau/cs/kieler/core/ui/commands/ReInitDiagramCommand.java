@@ -52,7 +52,7 @@ import org.eclipse.ui.PlatformUI;
  * A command that reinitializes a diagram file from a given model file.
  * 
  * @author soh
- * @kieler.rating 2010-03-01 proposed yellow
+ * @kieler.rating 2010-06-14 proposed yellow soh
  */
 public abstract class ReInitDiagramCommand extends AbstractHandler {
 
@@ -71,8 +71,11 @@ public abstract class ReInitDiagramCommand extends AbstractHandler {
     protected abstract String getModelExtension();
 
     /**
+     * Checks whether the selection consists of edit parts in files with the
+     * model extension or files with the model extension.
      * 
-     * {@inheritDoc}
+     * @param evaluationContext
+     *            the evaluation context
      */
     @Override
     @SuppressWarnings("restriction")
@@ -89,24 +92,29 @@ public abstract class ReInitDiagramCommand extends AbstractHandler {
                     Object o = iter.next();
                     IPath path = null;
                     if (o instanceof org.eclipse.core.internal.resources.File) {
+                        // selection is an a file
                         path = ((org.eclipse.core.internal.resources.File) o)
                                 .getFullPath();
                     } else if (o instanceof EditPart) {
                         EditPart editPart = (EditPart) o;
                         EObject eObj = ((View) editPart.getModel())
                                 .getElement();
+                        // no model element found for the edit part
                         if (eObj == null) {
                             super.setBaseEnabled(false);
                             return;
                         }
                         Resource res = eObj.eResource();
+                        // edit part doesn't belong to a resource
                         if (res == null) {
                             super.setBaseEnabled(false);
                             return;
                         }
                         URI uri = res.getURI();
+                        // set the path to the path of the file
                         path = Path.fromOSString(uri.toPlatformString(true));
                     }
+                    // check if file has the model extension
                     if (path != null
                             && path.getFileExtension().equals(
                                     getModelExtension())) {
@@ -136,6 +144,7 @@ public abstract class ReInitDiagramCommand extends AbstractHandler {
                 while (iter.hasNext()) {
                     Object o = iter.next();
                     IPath path = null;
+                    // perform same checks as in set enabled
                     if (o instanceof org.eclipse.core.internal.resources.File) {
                         path = ((org.eclipse.core.internal.resources.File) o)
                                 .getFullPath();
@@ -147,10 +156,11 @@ public abstract class ReInitDiagramCommand extends AbstractHandler {
                     }
                     if (path != null) {
                         try {
+                            // execute transformation
                             reinitialize(path);
                         } catch (RuntimeException e0) {
                             e0.printStackTrace();
-                            return null;
+                            throw e0;
                         }
                     }
                 }
@@ -214,13 +224,12 @@ public abstract class ReInitDiagramCommand extends AbstractHandler {
 
         for (IPath partner : selection) {
             performPreOperationActions(path, partners);
+
             IPath kixsPath = path.getFileExtension()
                     .equals(getModelExtension()) ? path : partner;
             IPath kidsPath = path.getFileExtension().equals(
                     getDiagramExtension()) ? path : partner;
             File kidsFile = getFile(kidsPath);
-
-            // getDiagramSetup(kidsFile)
 
             // delete old diagram file
             if (kidsFile != null) {
@@ -228,50 +237,49 @@ public abstract class ReInitDiagramCommand extends AbstractHandler {
             }
 
             reinitializeDiagram(kixsPath, kidsPath);
-            // kidsFile = getPartner(kixsFile)
-            // addDiagramSetup(kidsFile)
 
             performPostOperationAction(path, partners);
         }
     }
 
     /**
-     * Perform actions after the reinit.
+     * Perform actions after the reinit. Default implemenations does nothing.
+     * Subclasses may override.
      * 
      * @param path
      *            the file
      * @param partners
      *            the partner files
      */
+    @SuppressWarnings("unused")
     protected void performPostOperationAction(final IPath path,
             final List<IPath> partners) {
     }
 
     /**
-     * Perform actions prior to the reinit.
+     * Perform actions prior to the reinit. Default implemenations does nothing.
+     * Subclasses may override.
      * 
      * @param path
      *            the file
      * @param partners
      *            the partner files
      */
+    @SuppressWarnings("unused")
     protected void performPreOperationActions(final IPath path,
             final List<IPath> partners) {
     }
 
     /**
-     * Execute a refactoring operation.
+     * Get the partner files for a specific file.
      * 
      * @param path
-     *            the old path of the file that was refactored.
-     * @param op
-     *            the operation
-     * @param newName
-     *            optionally the new name of the file
-     * @return the list of files that link to the refactored file
+     *            the file
+     * @return the list of partners
      */
     private List<IPath> getPartners(final IPath path) {
         List<File> files = new LinkedList<File>();
+        // recursively search the workspace
         if (path.getFileExtension().equals(getModelExtension())) {
             findRec(files, Platform.getLocation().toFile(), path);
         }
@@ -280,6 +288,7 @@ public abstract class ReInitDiagramCommand extends AbstractHandler {
             if (file != null
                     && (!file.exists() || path.getFileExtension().equals(
                             getModelExtension()))) {
+                // convert the file to Ipath and add to list of results
                 IPath filePath = Path.fromOSString(file.getPath());
                 result.add(filePath.makeRelativeTo(Platform.getLocation()));
             }
@@ -391,7 +400,8 @@ public abstract class ReInitDiagramCommand extends AbstractHandler {
     }
 
     /**
-     * Create a new diagram file from the given semantics model.
+     * Create a new diagram file from the given semantics model. Subclasses must
+     * override this as it is specific for each different diagram type.
      * 
      * @param diagramRoot
      *            the root element.

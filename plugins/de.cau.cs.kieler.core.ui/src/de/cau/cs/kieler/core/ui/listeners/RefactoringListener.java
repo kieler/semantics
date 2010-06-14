@@ -51,10 +51,16 @@ import org.eclipse.ui.PlatformUI;
  */
 public class RefactoringListener implements IRefactoringHistoryListener {
 
-    /** File extensions for diagram files. */
+    /**
+     * File extensions for diagram files. Must be in same order as
+     * MODEL_EXTENSIONS. Add new extensions here.
+     */
     private static final String[] DIAGRAM_EXTENSIONS = { "kids", "kaod" }; //$NON-NLS-1$
 
-    /** File extensions for model files. */
+    /**
+     * File extensions for model files. Must be in same order as
+     * DIAGRAM_EXTENSIONS. Add new extensions here.
+     */
     private static final String[] MODEL_EXTENSIONS = { "kixs", "kaom" }; //$NON-NLS-1$
 
     /**
@@ -78,6 +84,7 @@ public class RefactoringListener implements IRefactoringHistoryListener {
      */
     public void historyNotification(final RefactoringHistoryEvent event) {
         try {
+            // decide which of the cases to take
             RefactoringDescriptor desc = event.getDescriptor()
                     .requestDescriptor(null);
             if (desc instanceof RenameResourceDescriptor) {
@@ -96,9 +103,11 @@ public class RefactoringListener implements IRefactoringHistoryListener {
             }
         } catch (RuntimeException e0) {
             e0.printStackTrace();
+            throw e0;
         }
 
         try {
+            // refresh workspace
             ResourcesPlugin.getWorkspace().getRoot().refreshLocal(
                     IResource.DEPTH_INFINITE, null);
         } catch (CoreException e0) {
@@ -122,6 +131,7 @@ public class RefactoringListener implements IRefactoringHistoryListener {
             affectedFiles.addAll(executeOperation(path, OP.DELETE, null));
         }
 
+        // found files, ask user for confirmation
         if (!affectedFiles.isEmpty()) {
             List<File> deletedFiles = getUserSelection(affectedFiles, OP.DELETE);
 
@@ -148,6 +158,8 @@ public class RefactoringListener implements IRefactoringHistoryListener {
         PlatformUI.getWorkbench().getDisplay().syncExec(new Runnable() {
 
             public void run() {
+                // open a dialog displaying the initially found files and
+                // ask the user which of them should be affected
                 Shell shell = PlatformUI.getWorkbench()
                         .getActiveWorkbenchWindow().getShell();
 
@@ -178,6 +190,8 @@ public class RefactoringListener implements IRefactoringHistoryListener {
         List<File> result = new LinkedList<File>();
         if (path != null) {
             String ext = path.getFileExtension();
+            // test the different model extensions and find which of them is
+            // applicable
             for (int i = 0; i < MODEL_EXTENSIONS.length; i++) {
                 if (ext != null && ext.equals(MODEL_EXTENSIONS[i])) {
                     findRec(result, Platform.getLocation().toFile(), path, op,
@@ -330,17 +344,5 @@ public class RefactoringListener implements IRefactoringHistoryListener {
         IPath location = renameDesc.getResourcePath();
         String newName = renameDesc.getNewName();
         executeOperation(location, OP.RENAME, newName);
-        // File partner = getPartner(location);
-        // if (partner != null) {
-        // String newPath = location.removeFileExtension().removeLastSegments(
-        // 1).addTrailingSeparator().toOSString()
-        // + newName;
-        // IPath newLocation = Path.fromOSString(Platform.getLocation()
-        // .toOSString()
-        // + newPath);
-        // IPath partnerPath = newLocation.removeFileExtension()
-        // .addFileExtension("kids");
-        // partner.renameTo(partnerPath.toFile());
-        // }
     }
 }

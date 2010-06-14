@@ -32,6 +32,7 @@ import de.cau.cs.kieler.core.ui.listeners.RefactoringListener.OP;
  * Dialog for selecting the files affected by a refactoring operation.
  * 
  * @author soh
+ * @kieler.rating 2010-06-14 proposed yellow soh
  */
 public class AffectedFileSelectionDialog implements IStructuredContentProvider,
         ILabelProvider {

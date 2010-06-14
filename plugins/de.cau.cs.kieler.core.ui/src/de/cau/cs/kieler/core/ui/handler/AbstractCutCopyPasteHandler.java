@@ -40,7 +40,12 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.ui.IWorkbenchPart;
 
 /**
+ * Abstract super class for all handlers concerning copy and paste on diagrams.
+ * It checks whether the selection can be handled by the given handler and
+ * creates the commands corresponding to the requests made by the UI.
+ * 
  * @author soh
+ * @kieler.rating 2010-06-14 proposed yellow soh
  */
 @SuppressWarnings("restriction")
 public abstract class AbstractCutCopyPasteHandler extends
@@ -52,14 +57,15 @@ public abstract class AbstractCutCopyPasteHandler extends
     private boolean canKsbasePaste;
 
     /**
-     * Constructor for CopyWithImageSupportGlobalActionHandler.
+     * Creates a new AbstractCutCopyPasteHandler.
      */
     public AbstractCutCopyPasteHandler() {
         super();
     }
 
     /**
-     * Checks whether the selection contains only valid parts.
+     * Checks whether the selection contains only valid parts. This must be
+     * implemented by the subclasses.
      * 
      * @param selection
      *            the selection
@@ -116,12 +122,14 @@ public abstract class AbstractCutCopyPasteHandler extends
 
     /**
      * Determine whether the current selection can be copied or cut by Ksbase.
+     * Subclasses may choose to override if they don't support all selections.
      * 
      * @param sel
      *            the selection
      * @return true if the selection can be cut/copied
      */
-    protected boolean canKsbaseCopy(final IStructuredSelection sel) {
+    protected boolean canKsbaseCopy(
+            @SuppressWarnings("unused") final IStructuredSelection sel) {
         boolean result = true;
         canKsbaseCopy = result;
         return result;
@@ -129,13 +137,16 @@ public abstract class AbstractCutCopyPasteHandler extends
 
     /**
      * Determine whether the current selection can be used as a target for
-     * pasting by Ksbase.
+     * pasting by Ksbase. Subclasses may choose to override if they don't
+     * support all selections.
+     * 
      * 
      * @param sel
      *            the selection
      * @return true if the selection can be used
      */
-    protected boolean canKsbasePaste(final IStructuredSelection sel) {
+    protected boolean canKsbasePaste(
+            @SuppressWarnings("unused") final IStructuredSelection sel) {
         boolean result = true;
         canKsbasePaste = result;
         return result;
@@ -240,7 +251,7 @@ public abstract class AbstractCutCopyPasteHandler extends
     }
 
     /**
-     * Getter for the Ksbase cut command.
+     * Gets the KsBase cut command from the registered command factory.
      * 
      * @param sel
      *            the selection
@@ -255,7 +266,7 @@ public abstract class AbstractCutCopyPasteHandler extends
     }
 
     /**
-     * Getter for the Ksbase copy command.
+     * Gets the KsBase copy command from the registered command factory.
      * 
      * @param sel
      *            the selection
@@ -270,7 +281,7 @@ public abstract class AbstractCutCopyPasteHandler extends
     }
 
     /**
-     * Getter for the Ksbase paste command.
+     * Gets the KsBase paste command from the registered command factory.
      * 
      * @param sel
      *            the selection

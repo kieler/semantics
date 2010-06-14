@@ -19,11 +19,19 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.part.ViewPart;
 
 /**
+ * A view displaying a simple browser to the new ticket inside the KIELER trac
+ * system. This is a temporary solution at best since external bug report
+ * tickets are not allowed. There is also a better solution using one of the
+ * bugtracker connectors provided by eclipse however I couldn't get any of those
+ * to work yet.
+ * 
  * @author soh
+ * @kieler.rating 2010-06-14 proposed yellow soh
  */
 public class BugReportView extends ViewPart {
 
     /** The url to the new ticket page. */
+    // SUPPRESS CHECKSTYLE NEXT LineLength
     private static final String TRAC_URL = "http://rtsys.informatik.uni-kiel.de/trac/kieler/newticket"; //$NON-NLS-1$
 
     /** The ID of this view. */

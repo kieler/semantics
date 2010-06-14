@@ -33,8 +33,9 @@ public abstract class AbstractCutCopyPasteHandlerProvider extends
         AbstractGlobalActionHandlerProvider {
 
     /**
-     * List for handlers.
+     * List of handlers.
      */
+    // SUPPRESS CHECKSTYLE NEXT LineLength
     private Hashtable<IWorkbenchPart, DiagramGlobalActionHandler> handlerList = new Hashtable<IWorkbenchPart, DiagramGlobalActionHandler>();
 
     /**

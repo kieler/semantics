@@ -30,6 +30,7 @@ import org.eclipse.ui.dialogs.ListSelectionDialog;
  * Dialog for selecting the files affected by a reinitialization operation.
  * 
  * @author soh
+ * @kieler.rating 2010-06-14 proposed yellow soh
  */
 public class AffectedFileSelectionDialog implements IStructuredContentProvider,
         ILabelProvider {
@@ -62,18 +63,21 @@ public class AffectedFileSelectionDialog implements IStructuredContentProvider,
     /**
      * Open the list selection dialog.
      * 
-     * @return the list of files selected by the user
+     * @return the list of files selected by the user or null if the user
+     *         clicked on Cancel
      */
     public List<IPath> openDialog() {
         ListSelectionDialog dialog = new ListSelectionDialog(shell,
                 affectedFiles, this, this, MESSAGE);
         dialog.setHelpAvailable(false);
+        // by default all files are selected
         dialog.setInitialElementSelections(affectedFiles);
 
+        // return list if user pressed OK, else return null
         if (dialog.open() == Dialog.OK) {
             Object[] result = dialog.getResult();
 
-            // convert result to the format
+            // convert result to the desired format
             List<IPath> output = new LinkedList<IPath>();
             for (Object o : result) {
                 output.add((IPath) o);

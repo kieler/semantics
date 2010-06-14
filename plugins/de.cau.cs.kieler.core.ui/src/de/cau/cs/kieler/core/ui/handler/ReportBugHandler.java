@@ -23,7 +23,10 @@ import org.eclipse.ui.PlatformUI;
 import de.cau.cs.kieler.core.ui.views.BugReportView;
 
 /**
+ * Handler for showing the bug report view.
+ * 
  * @author soh
+ * @kieler.rating 2010-06-14 proposed yellow soh
  */
 public class ReportBugHandler extends AbstractHandler {
 

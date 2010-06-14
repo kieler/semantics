@@ -20,7 +20,11 @@ import org.eclipse.gmf.runtime.common.core.command.ICommand;
 import org.eclipse.gmf.runtime.diagram.ui.parts.IDiagramWorkbenchPart;
 
 /**
+ * Interface for factories that provide the commands for cut, copy and paste on
+ * given selections inside a diagram.
+ * 
  * @author soh
+ * @kieler.rating 2010-06-14 proposed yellow soh
  */
 public interface ICutCopyPasteCommandFactory {
 

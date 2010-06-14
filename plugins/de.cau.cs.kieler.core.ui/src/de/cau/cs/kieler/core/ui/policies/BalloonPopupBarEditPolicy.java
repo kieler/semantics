@@ -34,18 +34,18 @@ import org.eclipse.swt.graphics.Image;
  */
 public class BalloonPopupBarEditPolicy extends DiagramPopupBarPolicy {
 
-    /** */
+    /** The edit part that the policy belongs to. */
     private EditPart editPart;
 
-    /** */
+    /** The list of contributions that should be applied to the edit part. */
     private List<IBalloonContribution> contributions;
 
-    /** */
+    /** The delay for showing the balloon. */
     private static final int DELAY = 200;
 
     /**
      * 
-     * Creates a new Policy2.java.
+     * Creates a new BalloonPopupBarEditPolicy.
      * 
      * @param contrib
      *            contributions
@@ -65,7 +65,7 @@ public class BalloonPopupBarEditPolicy extends DiagramPopupBarPolicy {
     @Override
     public void mouseHover(final MouseEvent me) {
         // if the cursor is inside the popup bar
-        // or the keyboar triggred activation
+        // or the keyboard triggred activation
         // then we do not want to deactivate
         if (!isDiagramAssistant(me.getSource())) {
             setAvoidHidingDiagramAssistant(false);

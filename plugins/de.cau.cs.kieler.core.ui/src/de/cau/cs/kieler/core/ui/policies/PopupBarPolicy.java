@@ -57,6 +57,9 @@ import org.eclipse.swt.widgets.Display;
  * Popup bars are esentially a cartoon balloon with buttons that are activated
  * during mouse hover over a shape.
  * 
+ * soh: Modified slightly for better balloon placement and customized contents
+ * of balloons.
+ * 
  * @author affrantz@us.ibm.com, cmahoney
  */
 @SuppressWarnings("restriction")
