@@ -18,7 +18,7 @@ context State if (type != StateType::NORMAL) WARNING "KLEPTO: Only normal states
 context State WARNING "KLEPTO: Exit actions cannot be simulated yet!" :
   exitActions.size == 0;
 
-context State WARNING "KLEPTO: Enty actions cannot be simulated yet!" :
+context State WARNING "KLEPTO: Entry actions cannot be simulated yet!" :
   entryActions.size == 0;
 
 context State WARNING "KLEPTO: Inner actions cannot be simulated yet!" :
