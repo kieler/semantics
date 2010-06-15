@@ -440,34 +440,53 @@ Void optimizeRec(State state,
                            regionsToRemove)
 ;
 
-List[Signal] getUnusedInputSignals(Scope scope):
- scope.signals.select(e|(e.isInput || !e.isOutput) && scope.eAllContents.typeSelect(SignalReference).select(reference|reference.signal.name == e.name).isEmpty)
+Boolean signalNotRead(Signal signal, Scope scope):
+ scope.eAllContents.typeSelect(SignalReference).select(reference|reference.signal.name.matches(signal.name)).isEmpty
 ;
 
-List[Signal] getUnusedOutputSignals(Scope scope):
- scope.signals.select(e|(e.isOutput || !e.isInput) && scope.eAllContents.typeSelect(Emission).select(emission|emission.signal.name == e.name).isEmpty)
+Boolean signalNotEmitted(Signal signal, Scope scope):
+ scope.eAllContents.typeSelect(Emission).select(emission|emission.signal.name.matches(signal.name)).isEmpty
 ;
 
-Set[Variable] getUnusedVariables(Scope scope):
- scope.variables.select(e|scope.eAllContents.typeSelect(VariableReference).select(reference|reference.variable.name == e.name).isEmpty).intersect(
- scope.variables.select(e|!e.const && scope.eAllContents.typeSelect(Assignment).select(assignment|assignment.variable.name == e.name).isEmpty))
+List[Signal] getUnReferencedSignals(Scope scope):
+ scope.signals.select(e|e.signalNotRead(scope) && e.signalNotEmitted(scope))
+;
+
+Boolean variableNotRead(Variable var, Scope scope):
+ scope.eAllContents.typeSelect(VariableReference).select(reference|reference.variable.name == var.name).isEmpty
+;
+
+Boolean variableNotWritten(Variable var, Scope scope):
+ scope.eAllContents.typeSelect(Assignment).select(assignment|assignment.variable.name == var.name).isEmpty
+;
+
+List[Variable] getUnusedVariables(Scope scope):
+ scope.variables.select(e|e.variableNotRead(scope) && (e.const || e.variableNotWritten(scope)))
 ;
 
 Void optimizeScope(Scope scope):
  (if (isEnabled("removeUnusedSignalsAndVariables")) then 
    (
-    scope.removeSignalsFromScope(scope.getUnusedInputSignals().union(scope.getUnusedOutputSignals())) ->
-    scope.removeVariablesFromScope(scope.getUnusedVariables())  
+    scope.removeSignalsFromScope(scope.getUnReferencedSignals()) ->
+    scope.removeVariablesFromScope(scope.getUnusedVariables())
    )
  )
 ;
 
-Void removeSignalsFromScope(Scope scope, Set[Signal] signals):
-  scope.signals.removeAll(signals)
+Void removeSignalsFromScope(Scope scope, List[Signal] signals):
+ if (signals != null && !signals.isEmpty) then signals.removeFromScope(scope)
 ;
 
-Void removeVariablesFromScope(Scope scope, Set[Variable] variables):
- scope.variables.removeAll(variables)
+Void removeFromScope(Signal signal, Scope scope):
+ scope.signals.remove(signal)
+;
+
+Void removeFromScope(Variable variable, Scope scope):
+ scope.variables.remove(variable)
+;
+
+Void removeVariablesFromScope(Scope scope, List[Variable] variables):
+ if (variables != null && !variables.isEmpty) then variables.removeFromScope(scope)
 ;
 
 // === begin WhiteSpaces ===

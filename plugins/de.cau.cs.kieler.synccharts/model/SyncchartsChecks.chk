@@ -29,14 +29,22 @@ context Scope
     this.getUnemittedSignals().isEmpty
     ;
 
-context Scope
-   WARNING "The following variables in this scope are never read: " + variables.select(e|eAllContents.typeSelect(VariableReference).select(reference|reference.variable.name == e.name).isEmpty).name :
-   variables.select(e|eAllContents.typeSelect(VariableReference).select(reference|reference.variable.name == e.name).isEmpty).isEmpty
+Boolean variableNotRead(Variable var, Scope scope):
+ scope.eAllContents.typeSelect(VariableReference).select(reference|reference.variable.name == var.name).isEmpty
+;
+
+Boolean variableNotWritten(Variable var, Scope scope):
+ scope.eAllContents.typeSelect(Assignment).select(assignment|assignment.variable.name == var.name).isEmpty
 ;
 
 context Scope
-    WARNING "The following variables in this scope never get a value assigned to them: " + variables.select(e|!e.const && eAllContents.typeSelect(Assignment).select(assignment|assignment.variable.name == e.name).isEmpty).name : 
-    variables.select(e|!e.const && eAllContents.typeSelect(Assignment).select(assignment|assignment.variable.name == e.name).isEmpty).isEmpty
+   WARNING "The following variables in this scope are never read: " + variables.select(e|e.variableNotRead(this)).name :
+   variables.select(e|e.variableNotRead(this)).isEmpty
+;
+
+context Scope
+    WARNING "The following variables in this scope never get a value assigned to them: " + variables.select(e|!e.const && e.variableNotWritten(this)).name : 
+    variables.select(e|!e.const && e.variableNotWritten(this)).isEmpty
 ;
 
 // ================================================================================================
