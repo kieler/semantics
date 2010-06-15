@@ -17,7 +17,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.ui.IEditorPart;
 import org.osgi.framework.Bundle;
 
-import de.cau.cs.kieler.kiml.ui.layout.DiagramLayoutManager;
+import de.cau.cs.kieler.kiml.ui.layout.EclipseLayoutServices;
 import de.cau.cs.kieler.ksbase.ui.utils.AbstractCutCopyPasteCommandFactory;
 import de.cau.cs.kieler.synccharts.Region;
 import de.cau.cs.kieler.synccharts.State;
@@ -74,8 +74,8 @@ public class SyncchartsCutCopyPasteCommandFactory extends
 						if (editorPart != null) {
 							refreshEditPolicies(editorPart);
 
-							DiagramLayoutManager.layout(editorPart, null, true,
-									false);
+							EclipseLayoutServices.getInstance().layout(editorPart, null,
+							        true, false);
 						}
 					}
 

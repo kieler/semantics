@@ -55,7 +55,7 @@ import org.eclipse.ui.statushandlers.StatusManager;
 import org.eclipse.ui.texteditor.ITextEditor;
 import org.eclipse.xtext.ui.core.editor.XtextEditor;
 
-import de.cau.cs.kieler.kiml.ui.layout.DiagramLayoutManager;
+import de.cau.cs.kieler.kiml.ui.layout.EclipseLayoutServices;
 import de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditor;
 import de.cau.cs.kieler.synccharts.textual.glue.Activator;
 
@@ -368,7 +368,7 @@ public class KitsSynchronizationListener implements IPartListener,
             IEditorPart editor = ((IEditorPart) part);
 
             try {// second arg is null as we want to layout the complete diagram
-                DiagramLayoutManager.layout(editor, null, true, false);
+                EclipseLayoutServices.getInstance().layout(editor, null, true, false);
 
             } catch (Exception layoutFailed) {
                 Status myStatus = new Status(

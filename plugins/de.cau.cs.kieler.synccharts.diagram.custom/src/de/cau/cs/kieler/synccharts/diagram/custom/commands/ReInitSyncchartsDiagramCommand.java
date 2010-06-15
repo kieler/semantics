@@ -49,7 +49,7 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.progress.WorkbenchJob;
 
 import de.cau.cs.kieler.core.ui.commands.ReInitDiagramCommand;
-import de.cau.cs.kieler.kiml.ui.layout.DiagramLayoutManager;
+import de.cau.cs.kieler.kiml.ui.layout.EclipseLayoutServices;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.RegionEditPart;
 import de.cau.cs.kieler.synccharts.diagram.part.Messages;
 import de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorPlugin;
@@ -93,7 +93,7 @@ public class ReInitSyncchartsDiagramCommand extends ReInitDiagramCommand {
 				IEditorPart editor = getActiveEditor();
 				EditPart part = null;
 				if (editor != null) {
-					DiagramLayoutManager.layout(editor, part, false, true);
+				    EclipseLayoutServices.getInstance().layout(editor, part, false, true);
 				}
 				return new Status(IStatus.OK,
 						"de.cau.cs.kieler.synccharts.diagram.custom", "Done");
