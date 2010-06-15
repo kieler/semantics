@@ -36,7 +36,7 @@
    <extension
          point="org.eclipse.ui.startup">
       <startup
-            class="de.cau.cs.kieler.synccharts.custom.RegisterCheckValidator">
+            class="de.cau.cs.kieler.synccharts.startup.RegisterCheckValidator">
       </startup>
    </extension>
    <extension point="org.eclipse.emf.ecore.generated_package">
