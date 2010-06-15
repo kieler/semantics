@@ -103,6 +103,9 @@ public class UpdateResourceFactoryImpl extends XMIResourceFactoryImpl {
         ExtensibleURIConverterImpl conv = new ExtensibleURIConverterImpl();
 
         try {
+            if (!conv.exists(uri, null)) {
+                return;
+            }
             InputStream is = conv.createInputStream(uri);
             BufferedReader reader = new BufferedReader(
                     new InputStreamReader(is));
