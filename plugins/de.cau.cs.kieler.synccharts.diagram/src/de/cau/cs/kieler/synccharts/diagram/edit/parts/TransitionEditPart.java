@@ -21,196 +21,196 @@ import de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorPlugin;
  * @generated
  */
 public class TransitionEditPart extends ConnectionNodeEditPart implements
-		ITreeBranchEditPart {
+        ITreeBranchEditPart {
 
-	/**
-	 * @generated
-	 */
-	public static final int VISUAL_ID = 4002;
+    /**
+     * @generated
+     */
+    public static final int VISUAL_ID = 4002;
 
-	/**
-	 * @generated
-	 */
-	public TransitionEditPart(View view) {
-		super(view);
-	}
+    /**
+     * @generated
+     */
+    public TransitionEditPart(View view) {
+        super(view);
+    }
 
-	/**
-	 * @generated
-	 */
-	protected void createDefaultEditPolicies() {
-		super.createDefaultEditPolicies();
-		installEditPolicy(EditPolicyRoles.SEMANTIC_ROLE,
-				new TransitionItemSemanticEditPolicy());
-	}
+    /**
+     * @generated
+     */
+    protected void createDefaultEditPolicies() {
+        super.createDefaultEditPolicies();
+        installEditPolicy(EditPolicyRoles.SEMANTIC_ROLE,
+                new TransitionItemSemanticEditPolicy());
+    }
 
-	/**
-	 * @generated
-	 */
-	protected boolean addFixedChild(EditPart childEditPart) {
-		if (childEditPart instanceof TransitionDelayEditPart) {
-			((TransitionDelayEditPart) childEditPart)
-					.setLabel(getPrimaryShape()
-							.getFigureTransitionTriggersAndEffectsFigure());
-			return true;
-		}
-		if (childEditPart instanceof TransitionPriorityEditPart) {
-			((TransitionPriorityEditPart) childEditPart)
-					.setLabel(getPrimaryShape()
-							.getFigureTransitionPriorityFigure());
-			return true;
-		}
-		return false;
-	}
+    /**
+     * @generated
+     */
+    protected boolean addFixedChild(EditPart childEditPart) {
+        if (childEditPart instanceof TransitionDelayEditPart) {
+            ((TransitionDelayEditPart) childEditPart)
+                    .setLabel(getPrimaryShape()
+                            .getFigureTransitionTriggersAndEffectsFigure());
+            return true;
+        }
+        if (childEditPart instanceof TransitionPriorityEditPart) {
+            ((TransitionPriorityEditPart) childEditPart)
+                    .setLabel(getPrimaryShape()
+                            .getFigureTransitionPriorityFigure());
+            return true;
+        }
+        return false;
+    }
 
-	/**
-	 * @generated
-	 */
-	protected void addChildVisual(EditPart childEditPart, int index) {
-		if (addFixedChild(childEditPart)) {
-			return;
-		}
-		super.addChildVisual(childEditPart, -1);
-	}
+    /**
+     * @generated
+     */
+    protected void addChildVisual(EditPart childEditPart, int index) {
+        if (addFixedChild(childEditPart)) {
+            return;
+        }
+        super.addChildVisual(childEditPart, -1);
+    }
 
-	/**
-	 * @generated
-	 */
-	protected boolean removeFixedChild(EditPart childEditPart) {
-		if (childEditPart instanceof TransitionDelayEditPart) {
-			return true;
-		}
-		if (childEditPart instanceof TransitionPriorityEditPart) {
-			return true;
-		}
-		return false;
-	}
+    /**
+     * @generated
+     */
+    protected boolean removeFixedChild(EditPart childEditPart) {
+        if (childEditPart instanceof TransitionDelayEditPart) {
+            return true;
+        }
+        if (childEditPart instanceof TransitionPriorityEditPart) {
+            return true;
+        }
+        return false;
+    }
 
-	/**
-	 * @generated
-	 */
-	protected void removeChildVisual(EditPart childEditPart) {
-		if (removeFixedChild(childEditPart)) {
-			return;
-		}
-		super.removeChildVisual(childEditPart);
-	}
+    /**
+     * @generated
+     */
+    protected void removeChildVisual(EditPart childEditPart) {
+        if (removeFixedChild(childEditPart)) {
+            return;
+        }
+        super.removeChildVisual(childEditPart);
+    }
 
-	/**
-	 * Creates figure for this edit part.
-	 * 
-	 * Body of this method does not depend on settings in generation model
-	 * so you may safely remove <i>generated</i> tag and modify it.
-	 * 
-	 * @generated
-	 */
+    /**
+     * Creates figure for this edit part.
+     * 
+     * Body of this method does not depend on settings in generation model
+     * so you may safely remove <i>generated</i> tag and modify it.
+     * 
+     * @generated
+     */
 
-	protected Connection createConnectionFigure() {
-		Connection figure = new TransitionFigure();
+    protected Connection createConnectionFigure() {
+        Connection figure = new TransitionFigure();
 
-		if (figure instanceof IAttributeAwareFigure) {
-			((IAttributeAwareFigure) figure).listenTo(this.getNotationView()
-					.getElement());
-		}
+        if (figure instanceof IAttributeAwareFigure) {
+            ((IAttributeAwareFigure) figure).listenTo(this.getNotationView()
+                    .getElement());
+        }
 
-		if (figure instanceof SplineConnection) {
-			((SplineConnection) figure)
-					.setSplineMode(SyncchartsDiagramEditorPlugin.getInstance()
-							.getPreferenceStore().getInt(
-									SplineConnection.PREF_SPLINE_MODE));
-		}
-		return figure;
-	}
+        if (figure instanceof SplineConnection) {
+            ((SplineConnection) figure)
+                    .setSplineMode(SyncchartsDiagramEditorPlugin.getInstance()
+                            .getPreferenceStore().getInt(
+                                    SplineConnection.PREF_SPLINE_MODE));
+        }
+        return figure;
+    }
 
-	/**
-	 * @generated
-	 */
-	public TransitionFigure getPrimaryShape() {
-		return (TransitionFigure) getFigure();
-	}
+    /**
+     * @generated
+     */
+    public TransitionFigure getPrimaryShape() {
+        return (TransitionFigure) getFigure();
+    }
 
-	/**
-	 * @generated
-	 */
-	public class TransitionFigure extends AttributeAwareTransitionFigure {
+    /**
+     * @generated
+     */
+    public class TransitionFigure extends AttributeAwareTransitionFigure {
 
-		/**
-		 * @generated
-		 */
-		private WrappingLabel fFigureTransitionTriggersAndEffectsFigure;
-		/**
-		 * @generated
-		 */
-		private WrappingLabel fFigureTransitionPriorityFigure;
+        /**
+         * @generated
+         */
+        private WrappingLabel fFigureTransitionTriggersAndEffectsFigure;
+        /**
+         * @generated
+         */
+        private WrappingLabel fFigureTransitionPriorityFigure;
 
-		/**
-		 * @generated
-		 */
-		public TransitionFigure() {
+        /**
+         * @generated
+         */
+        public TransitionFigure() {
 
-			createContents();
-		}
+            createContents();
+        }
 
-		/**
-		 * @generated
-		 */
-		private void createContents() {
+        /**
+         * @generated
+         */
+        private void createContents() {
 
-			fFigureTransitionTriggersAndEffectsFigure = new WrappingLabel();
-			fFigureTransitionTriggersAndEffectsFigure.setText("");
-			fFigureTransitionTriggersAndEffectsFigure.setTextWrap(true);
+            fFigureTransitionTriggersAndEffectsFigure = new WrappingLabel();
+            fFigureTransitionTriggersAndEffectsFigure.setText("");
+            fFigureTransitionTriggersAndEffectsFigure.setTextWrap(true);
 
-			this.add(fFigureTransitionTriggersAndEffectsFigure);
+            this.add(fFigureTransitionTriggersAndEffectsFigure);
 
-			fFigureTransitionPriorityFigure = new WrappingLabel();
-			fFigureTransitionPriorityFigure.setText("");
+            fFigureTransitionPriorityFigure = new WrappingLabel();
+            fFigureTransitionPriorityFigure.setText("");
 
-			fFigureTransitionPriorityFigure
-					.setFont(FFIGURETRANSITIONPRIORITYFIGURE_FONT);
+            fFigureTransitionPriorityFigure
+                    .setFont(FFIGURETRANSITIONPRIORITYFIGURE_FONT);
 
-			this.add(fFigureTransitionPriorityFigure);
+            this.add(fFigureTransitionPriorityFigure);
 
-		}
+        }
 
-		/**
-		 * @generated
-		 */
-		private boolean myUseLocalCoordinates = false;
+        /**
+         * @generated
+         */
+        private boolean myUseLocalCoordinates = false;
 
-		/**
-		 * @generated
-		 */
-		protected boolean useLocalCoordinates() {
-			return myUseLocalCoordinates;
-		}
+        /**
+         * @generated
+         */
+        protected boolean useLocalCoordinates() {
+            return myUseLocalCoordinates;
+        }
 
-		/**
-		 * @generated
-		 */
-		protected void setUseLocalCoordinates(boolean useLocalCoordinates) {
-			myUseLocalCoordinates = useLocalCoordinates;
-		}
+        /**
+         * @generated
+         */
+        protected void setUseLocalCoordinates(boolean useLocalCoordinates) {
+            myUseLocalCoordinates = useLocalCoordinates;
+        }
 
-		/**
-		 * @generated
-		 */
-		public WrappingLabel getFigureTransitionTriggersAndEffectsFigure() {
-			return fFigureTransitionTriggersAndEffectsFigure;
-		}
+        /**
+         * @generated
+         */
+        public WrappingLabel getFigureTransitionTriggersAndEffectsFigure() {
+            return fFigureTransitionTriggersAndEffectsFigure;
+        }
 
-		/**
-		 * @generated
-		 */
-		public WrappingLabel getFigureTransitionPriorityFigure() {
-			return fFigureTransitionPriorityFigure;
-		}
+        /**
+         * @generated
+         */
+        public WrappingLabel getFigureTransitionPriorityFigure() {
+            return fFigureTransitionPriorityFigure;
+        }
 
-	}
+    }
 
-	/**
-	 * @generated
-	 */
-	static final Font FFIGURETRANSITIONPRIORITYFIGURE_FONT = new Font(Display
-			.getCurrent(), "Sans", 7, SWT.NORMAL);
+    /**
+     * @generated
+     */
+    static final Font FFIGURETRANSITIONPRIORITYFIGURE_FONT = new Font(Display
+            .getCurrent(), "Sans", 7, SWT.NORMAL);
 
 }

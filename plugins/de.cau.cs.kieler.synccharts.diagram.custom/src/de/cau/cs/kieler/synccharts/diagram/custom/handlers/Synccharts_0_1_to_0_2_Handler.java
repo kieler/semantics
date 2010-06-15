@@ -30,12 +30,11 @@ import org.eclipse.emf.mwe.utils.Reader;
 import org.eclipse.emf.mwe.utils.Writer;
 import org.eclipse.xtend.XtendComponent;
 import org.eclipse.xtend.typesystem.emf.EmfMetaModel;
- 
+
 import de.cau.cs.kieler.synccharts.SyncchartsPackage;
 
 /**
- * Convert an old version 0.1 kixs file to a new version 0.2
- * kixs file.
+ * Convert an old version 0.1 kixs file to a new version 0.2 kixs file.
  * 
  * @author soh
  */
@@ -61,7 +60,8 @@ public class Synccharts_0_1_to_0_2_Handler extends AbstractHandler {
                 while (iter.hasNext()) {
                     Object o = iter.next();
                     if (o instanceof org.eclipse.core.internal.resources.File) {
-                        IPath path = ((org.eclipse.core.internal.resources.File) o).getFullPath();
+                        IPath path = ((org.eclipse.core.internal.resources.File) o)
+                                .getFullPath();
                         if (path.getFileExtension().equals(MODEL_EXTENSION)) {
                             super.setBaseEnabled(true);
                             return;
@@ -90,7 +90,8 @@ public class Synccharts_0_1_to_0_2_Handler extends AbstractHandler {
                 while (iter.hasNext()) {
                     Object o = iter.next();
                     if (o instanceof org.eclipse.core.internal.resources.File) {
-                        IPath path = ((org.eclipse.core.internal.resources.File) o).getFullPath();
+                        IPath path = ((org.eclipse.core.internal.resources.File) o)
+                                .getFullPath();
                         try {
                             IPath expDiagram = update(path);
                         } catch (RuntimeException e0) {
@@ -117,8 +118,9 @@ public class Synccharts_0_1_to_0_2_Handler extends AbstractHandler {
 
         // Meta model
         EmfMetaModel metaModel = new EmfMetaModel(SyncchartsPackage.eINSTANCE);
-        EmfMetaModel oldMetaModel = new EmfMetaModel(de.cau.cs.kieler.synccharts01.SyncchartsPackage.eINSTANCE);
-        
+        // EmfMetaModel oldMetaModel = new
+        // EmfMetaModel(de.cau.cs.kieler.synccharts01.SyncchartsPackage.eINSTANCE);
+
         Reader xmiReader = new Reader();
         xmiReader.setUri(path.toString());
         xmiReader.setModelSlot("model");
@@ -126,8 +128,9 @@ public class Synccharts_0_1_to_0_2_Handler extends AbstractHandler {
 
         XtendComponent transformation = new XtendComponent();
         transformation.addMetaModel(metaModel);
-        transformation.addMetaModel(oldMetaModel);
-        transformation.setInvoke("transformations::synccharts_0_1_to_0_2::transform(model)");
+        // transformation.addMetaModel(oldMetaModel);
+        transformation
+                .setInvoke("transformations::synccharts_0_1_to_0_2::transform(model)");
         transformation.setOutputSlot("transformedModel");
         workflow.addComponent(transformation);
 
@@ -137,9 +140,9 @@ public class Synccharts_0_1_to_0_2_Handler extends AbstractHandler {
         workflow.addComponent(writer);
 
         workflow.invoke(wfx, monitor, issues);
-        
+
         System.out.println("Issues: \n" + issues);
-        
+
         return target;
     }
 }
