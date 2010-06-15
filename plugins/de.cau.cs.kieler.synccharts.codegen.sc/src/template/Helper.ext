@@ -11,6 +11,8 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  *
+ * @author tam
+ *
  *****************************************************************************/
  
  /*
@@ -37,7 +39,7 @@ cached String getURI(State state):
 ;
 
 // Returns the URI of a transition.
-cached String getURI(Transition transition):
+cached String getFragmentURI(Transition transition):
 	JAVA de.cau.cs.kieler.synccharts.codegen.sc.Activator.getUri(de.cau.cs.kieler.synccharts.Transition)
 ;
 	
@@ -62,7 +64,8 @@ cached int getMainTreadPriority(State rootState):
 	getRealThreadPriority(rootState)
 ;
 
-// Returns the thread priority of a state.
+// Returns the thread priority of a state. The state is not represented as weak
+// or strong but by the real nature of the given state.
 int getRealThreadPriority(State state):
 	JAVA template.Helper.getRealThreadPriority(de.cau.cs.kieler.synccharts.State)
 ;
@@ -103,8 +106,13 @@ cached List getStateSignals(State state):
 	JAVA template.Helper.getStateSignals(de.cau.cs.kieler.synccharts.State)
 ;
 
-// Returns the size of the priority list.
+// Returns the highest priority of the priority list.
 cached int getHighestPriority(State state):
+	// The size of the list is the highest thread priority.
+	// We can not use the biggest element of the list because
+	// after the optimization of the priority numbers the biggest
+	// element is not the highest priority in the file.
+	// Thus the priority optimizer has to work.
 	computeThreadPriorities(state).size
 ;
 

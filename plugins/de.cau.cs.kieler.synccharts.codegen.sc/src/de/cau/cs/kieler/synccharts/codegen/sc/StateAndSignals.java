@@ -21,6 +21,8 @@ import de.cau.cs.kieler.synccharts.Signal;
 /**
  * An implementation of a "triple" with a state, its trigger signals and effect signals.
  * 
+ * @kieler.rating 2010-06-14 yellow
+ * 
  * @author tam
  * 
  */

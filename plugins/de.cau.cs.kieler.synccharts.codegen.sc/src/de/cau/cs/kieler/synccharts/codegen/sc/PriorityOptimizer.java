@@ -25,7 +25,9 @@ import java.util.ArrayList;
  * A class to optimize the priority numbers of a given SC-File.
  * The optimization includes only the reduction of used integers.
  * 
- * @author Torsten Amende - tam(at)informatik(dot)uni-kiel(dot)de
+ * @kieler.rating 2010-06-14 yellow
+ * 
+ * @author tam
  *
  */
 public class PriorityOptimizer {
@@ -67,6 +69,9 @@ public class PriorityOptimizer {
         return priorities.size() + 1;
     }
 
+    /*
+     * Adds the needed rules to the list of rules.
+     */
     private static void setRules() {
         lineReplacer.clearRules();
         for (Integer priority : priorities) {
@@ -85,6 +90,9 @@ public class PriorityOptimizer {
         }
     }
 
+    /*
+     * Inserts the computed priorities into the list of priorities. 
+     */
     private static void insertPriorities() throws IOException {
         BufferedReader in = new BufferedReader(new FileReader(file));
         String line = null;
@@ -96,6 +104,9 @@ public class PriorityOptimizer {
         }
     }
 
+    /*
+     * Inserts an integer into a sorted list.
+     */
     private static void addSort(final int add) {
         boolean added = false;
         for (int i = 0; i < priorities.size(); i++) {
@@ -110,6 +121,9 @@ public class PriorityOptimizer {
         }
     }
 
+    /*
+     * Returns the priority a String has a corresponding statement. 
+     */
     private static int getPriority(final String line) {
         String newLine = "";
         int out = 0;

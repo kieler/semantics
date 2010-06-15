@@ -7,7 +7,8 @@
 «EXTENSION template::Helper»
 
 «REM»
-	Definition of the signaltype including all signals of the SyncChart. 
+	Definition of the signaltype including all signals of the SyncChart.
+	The list is a list of signals. 
 «ENDREM»
 «DEFINE generateSigType FOR List-»
 	«IF !this.isEmpty-»
@@ -20,7 +21,8 @@
 «ENDDEFINE»
 
 «REM»
-	Definition of the signal array including all signals of the SyncChart. 
+	Definition of the signal array including all signals of the SyncChart.
+	The list is a list of signals. 
 «ENDREM»
 «DEFINE generateSigArray FOR List-»
 	const char *s2signame[] = {
@@ -44,7 +46,7 @@
 «ENDREM»
 «DEFINE callJSONTransition FOR Transition-»
 	«IF (boolean)(GLOBALVAR sim)-»
-		JSONstate("«getURI()»");
+		JSONstate("«getFragmentURI()»");
 	«ENDIF-»
 «ENDDEFINE»
 
@@ -75,6 +77,7 @@
 «REM»
 	Template for a function that checks if a signal is set. For each signal it will be
 	generated an if statement.
+	The list is a list of signals. 
 «ENDREM»
 «DEFINE generateCallOutputs FOR List-»
 	void callOutputs() {

@@ -42,7 +42,11 @@ import de.cau.cs.kieler.synccharts.codegen.sc.StatePlusTransition;
 /**
  * The Helper class provides some helping functions for the generation of code.
  * 
+ * @kieler.rating 2010-06-14 proposed yellow
+ * 
  * @author tam
+ * 
+ *         TODO: Discuss the usage of classes with just static variables (thread unsafe).
  * 
  */
 public final class Helper {
@@ -217,18 +221,20 @@ public final class Helper {
      * @param flag
      *            what kind of label is desired
      * @return unique label for a state
+     * 
+     *         TODO: Implement the cases LABEL_ANY_ID and LABEL_SHORTEST_HIERARCHIE
      */
     public static String getStateNameByFlag(final State state, final Integer flag) {
         String out = "";
         switch (flag) {
         case LABEL_ANY_ID:
-            out = getStateNameAnyID(state);
+            out = getStateNameCompleteHierarchie(state);
             break;
         case LABEL_COMPLETE_HIERARCHIE:
             out = getStateNameCompleteHierarchie(state);
             break;
         case LABEL_SHORTEST_HIERARCHIE:
-            out = getStateNameShortestHierarchie(state);
+            out = getStateNameCompleteHierarchie(state);
             break;
         default:
             out = getStateNameCompleteHierarchie(state);
@@ -285,12 +291,19 @@ public final class Helper {
         return sortedStates.size();
     }
 
-    //TODO: implement!
+    /*
+     * Returns a string with an globally unique id for a state.
+     */
+    // TODO: implement!
+    @SuppressWarnings("unused")
     private static String getStateNameAnyID(final State state) {
         String out = "";
         return out;
     }
 
+    /*
+     * Returns a string with the complete hierarchy of a state.
+     */
     private static String getStateNameCompleteHierarchie(final State state) {
         String regionPrefix = "";
         if (state.getParentRegion().getParentState() != null) {
@@ -306,11 +319,20 @@ public final class Helper {
         }
     }
 
+    /*
+     * Returns a string with the shortest possible hierarchy of a state without any duplicated
+     * strings as label.
+     */
+    // TODO: implement!
+    @SuppressWarnings("unused")
     private static String getStateNameShortestHierarchie(final State state) {
         String out = "";
         return out;
     }
 
+    /*
+     * Returns a list with all states that are signal dependent.
+     */
     private static ArrayList<StatePlusTransition> getSignalDependentStates(
             final Transition transition) {
         ArrayList<StatePlusTransition> out = new ArrayList<StatePlusTransition>();
@@ -325,6 +347,9 @@ public final class Helper {
         return out;
     }
 
+    /*
+     * Returns a list with states for which a transitions is signal dependent.
+     */
     private static ArrayList<StatePlusTransition> getDependencyOwner(final Transition transition) {
         ArrayList<StatePlusTransition> out = new ArrayList<StatePlusTransition>();
         for (Dependency dep : stateDependencies) {
@@ -338,6 +363,9 @@ public final class Helper {
         return out;
     }
 
+    /*
+     * Fills the list with signal dependencies for one state.
+     */
     private static void putSignalDependencies(final StatePlusTransition spt) {
         // get signals of the state
         ArrayList<Signal> stateTriggerSignals = new ArrayList<Signal>();
@@ -368,17 +396,20 @@ public final class Helper {
                     }
                 }
                 // one direction
-                if (!disjunkt(stateTriggerSignals, neighborEffectSignals)) {
+                if (!disjunct(stateTriggerSignals, neighborEffectSignals)) {
                     addSignalDependencies(spt, neighborSpt);
                 }
                 // other direction
-                if (!disjunkt(stateEffectSignals, neighborTriggerSignals)) {
+                if (!disjunct(stateEffectSignals, neighborTriggerSignals)) {
                     addSignalDependencies(neighborSpt, spt);
                 }
             }
         }
     }
 
+    /*
+     * Helper function to add a signal dependency to a list.
+     */
     private static void addSignalDependencies(final StatePlusTransition sptOne,
             final StatePlusTransition sptTwo) {
         addDependency(sptOne, sptTwo, SIGNAL_FLOW_EDGE);
@@ -395,7 +426,10 @@ public final class Helper {
         }
     }
 
-    private static boolean disjunkt(final List<Signal> firstList, final List<Signal> secondList) {
+    /*
+     * Checks if two lists of signals are disjunct.
+     */
+    private static boolean disjunct(final List<Signal> firstList, final List<Signal> secondList) {
         boolean out = true;
         if (firstList.isEmpty() || secondList.isEmpty()) {
             return out;
@@ -412,6 +446,9 @@ public final class Helper {
         return out;
     }
 
+    /*
+     * Returns the thread priority for a state depending on the state.
+     */
     private static int getThreadPriority(final State state, final boolean weak,
             final boolean smallest) {
         int out = 0;
@@ -425,6 +462,9 @@ public final class Helper {
         return out;
     }
 
+    /*
+     * Returns the index of a state from a list with StatePlusTransition objects.
+     */
     private static int getIndexWithoutTransition(final StatePlusTransition spt,
             final boolean smalest) {
         int out = 0;
@@ -440,6 +480,9 @@ public final class Helper {
         return out;
     }
 
+    /*
+     * Helper function to add all signals (recursive) into a list.
+     */
     private static void allSignalsHelp(final State state) {
         EList<Signal> tmp = state.getSignals();
         addSignalsToList(tmp);
@@ -452,6 +495,9 @@ public final class Helper {
         }
     }
 
+    /*
+     * Adds all signals of a given list to the global list of signals.
+     */
     private static void addSignalsToList(final List<Signal> signalList) {
         for (Signal signal : signalList) {
             if (!allSignals.contains(signal)) {
@@ -460,6 +506,9 @@ public final class Helper {
         }
     }
 
+    /*
+     * Helper function to sort a list of states by the control flow.
+     */
     private static List<State> sortStateControlFlowHelp(final List<State> out, final State state) {
         out.add(state);
         for (Transition transition : state.getOutgoingTransitions()) {
@@ -470,6 +519,9 @@ public final class Helper {
         return out;
     }
 
+    /*
+     * Puts the neighbor regions (and its ancestors) into a list.
+     */
     private static void getNeighborRegions(final State state) {
         if (state.getParentRegion().getParentState() != null) {
             for (Region region : state.getParentRegion().getParentState().getRegions()) {
@@ -481,6 +533,9 @@ public final class Helper {
         }
     }
 
+    /*
+     * Adds neighbor states to a list.
+     */
     private static void addNeighbors(final List<Region> regions) {
         for (Region region : regions) {
             for (State innerState : region.getInnerStates()) {
@@ -569,13 +624,18 @@ public final class Helper {
         System.out.print(firstState + firstWS + rel + secondState + secondWS + " , ");
     }
 
+    /*
+     * Returns a Dependency object for given states and types of edges of the dependency graph.
+     */
     private static Dependency builtDependency(final StatePlusTransition firstSpt,
             final StatePlusTransition secondSpt, final int edgeType) {
         Dependency out = new Dependency(firstSpt, secondSpt, edgeType);
         return out;
     }
 
-    // Build a list of all possible dependencies in the SyncChart.
+    /* 
+     * Build a list of all possible dependencies in the SyncChart.
+     */
     private static void fillDependencyList(final State state) {
         // fill transition priority dependencies
         EList<Transition> sortedTransitions = getSortedTransitions(state.getOutgoingTransitions());
@@ -660,6 +720,9 @@ public final class Helper {
 
     }
 
+    /*
+     * Fills a list with all dependencies of a SyncChart.
+     */
     private static void addAllDependencies(final StatePlusTransition sptOne,
             final StatePlusTransition sptTwo, final int dependency) {
         State stateOne = sptOne.getState();
@@ -694,6 +757,9 @@ public final class Helper {
         }
     }
 
+    /*
+     * Adds a dependency to the dependency list.
+     */
     private static void addDependency(final StatePlusTransition sptOne,
             final StatePlusTransition sptTwo, final int dependency) {
         Dependency put = builtDependency(sptOne, sptTwo, dependency);
@@ -702,6 +768,9 @@ public final class Helper {
         }
     }
 
+    /*
+     * Adds a dependencies to the dependency list.
+     */
     private static void addDependencies(final State state, final StatePlusTransition sptTwo,
             final int dependency) {
         if (state.getOutgoingTransitions().isEmpty()) {
@@ -716,6 +785,9 @@ public final class Helper {
         }
     }
 
+    /*
+     * Returns a list of transitions sorted by their transition priorities.
+     */
     private static EList<Transition> getSortedTransitions(final EList<Transition> transitions) {
         EList<Transition> out = transitions;
         CompareTransitions comparable = new CompareTransitions();
@@ -723,6 +795,9 @@ public final class Helper {
         return out;
     }
 
+    /*
+     * Returns a StatePlusTransition object for a given SyncChart state.
+     */
     private static StatePlusTransition getStateProperties(final State state) {
         StatePlusTransition out = new StatePlusTransition();
         int stateProperty = SIMPLE_STATE;
@@ -741,6 +816,9 @@ public final class Helper {
         return out;
     }
 
+    /*
+     * Used by a function for debugging only.
+     */
     private static String stateType2String(final int stateType) {
         String out = "";
         switch (stateType) {
@@ -756,6 +834,9 @@ public final class Helper {
         return out;
     }
 
+    /*
+     * Fills a list with all triggers of a transition.
+     */
     private static void fillTriggerSignals(final Transition transition) {
         EObject eObject = transition.getTrigger();
         // search for signals
@@ -776,6 +857,9 @@ public final class Helper {
         }
     }
 
+    /*
+     * Fills a list with all effects of a transition.
+     */
     private static void fillEffectSignals(final Transition transition) {
         EList<Effect> triggerEffectSignals = transition.getEffects();
         // put all effect signals from transition into the list
@@ -835,6 +919,9 @@ public final class Helper {
         }
     }
 
+    /*
+     * Fills a list of all signals (triggers and effects) for a state.
+     */
     private static void fillStateSignalList(final State state) {
         // every region
         for (Region region : state.getRegions()) {
@@ -869,6 +956,9 @@ public final class Helper {
         }
     }
 
+    /*
+     * Returns the depth of a state.
+     */
     private static int getDepth(final State state) {
         if (state.getParentRegion().getParentState() != null) {
             return getDepth(state.getParentRegion().getParentState()) + 1;
@@ -877,6 +967,9 @@ public final class Helper {
         }
     }
 
+    /*
+     * Returns a copy of a array list.
+     */
     private static ArrayList<Signal> copyFromList(final ArrayList<Signal> in) {
         ArrayList<Signal> out = new ArrayList<Signal>();
         for (Signal signal : in) {
@@ -885,6 +978,9 @@ public final class Helper {
         return out;
     }
 
+    /*
+     * Main function for filling the list of sorted threads. 
+     */
     private static void fillSortedThreadList() {
         // Build a unsorted list of all threads.
         ArrayList<StatePlusTransition> threadListUnsorted = new ArrayList<StatePlusTransition>();
@@ -927,6 +1023,9 @@ public final class Helper {
         }
     }
 
+    /*
+     * Returns true if a dependency of a SyncChart is necessary for the dependency graph.
+     */
     private static boolean isInnocentDependency(final Dependency dependency) {
         if (dependency.getDependencyType() != CONTROL_FLOW_EDGE) {
             return true;
@@ -971,12 +1070,26 @@ public final class Helper {
         return false;
     }
 
+    /*
+     * Returns if a transition is taken immediate.
+     */
     private static boolean isImmediateTransition(final Transition transition) {
         return (transition.isIsImmediate()
                 || transition.getType().equals(TransitionType.NORMALTERMINATION) || transition
                 .getSourceState().getType().equals(StateType.CONDITIONAL));
     }
+    
+    /*
+     * Starts the computation for optimized thread priorities.
+     */
+    private static void fillOptimizedStates(final State state) {
+        optimzedSortedStates.clear();
+        optimizeSortedStates(getRootState(state).getParentRegion());
+    }
 
+    /*
+     * See above.
+     */
     private static void optimizeSortedStates(final Region region) {
         ArrayList<ArrayList<StatePlusTransition>> regionSets;
         if (region.getParentState() == null) {
@@ -993,11 +1106,9 @@ public final class Helper {
         }
     }
 
-    private static void fillOptimizedStates(final State state) {
-        optimzedSortedStates.clear();
-        optimizeSortedStates(getRootState(state).getParentRegion());
-    }
-
+    /*
+     * Returns an optimized thread priority of a state.
+     */
     private static int getOptimizedPriority(final State state, final boolean weak) {
         int out = 0;
         StatePlusTransition spt;
@@ -1046,6 +1157,9 @@ public final class Helper {
         return out;
     }
 
+    /*
+     * Returns the biggest id of a list.
+     */
     @SuppressWarnings("unused")
     private static int getBiggestIDFromList(final ArrayList<StatePlusTransition> sptList) {
         int out = MAX_PRIO;
@@ -1058,6 +1172,9 @@ public final class Helper {
         return out;
     }
 
+    /*
+     * Returns the smallest id of a list.
+     */
     private static int getSmallestIDFromList(final ArrayList<StatePlusTransition> sptList) {
         int out = 0;
         for (StatePlusTransition spt : sptList) {
@@ -1069,6 +1186,9 @@ public final class Helper {
         return out;
     }
 
+    /*
+     * Returns true if a list of states contains a hierarchical state.
+     */
     private static boolean containsHierarchicalState(final ArrayList<StatePlusTransition> sptList) {
         for (StatePlusTransition spt : sptList) {
             if (isHieracrchical(spt.getState())) {
@@ -1082,6 +1202,9 @@ public final class Helper {
         return !state.getRegions().isEmpty();
     }
 
+    /*
+     * Returns a the list of states in which the given state is.
+     */
     private static ArrayList<StatePlusTransition> getListWithState(final StatePlusTransition spt) {
         for (ArrayList<StatePlusTransition> list : optimzedSortedStates) {
             for (int i = 0; i < list.size(); i++) {
@@ -1094,6 +1217,9 @@ public final class Helper {
         return null;
     }
 
+    /*
+     * Returns true if a list of of states contains a state that is signal dependent.
+     */
     private static boolean containsSignalDependency(final ArrayList<StatePlusTransition> sptList) {
         for (StatePlusTransition spt : sptList) {
 
@@ -1104,6 +1230,9 @@ public final class Helper {
         return false;
     }
 
+    /*
+     * Returns the root state of a SyncChart.
+     */
     private static State getRootState(final State state) {
         if (state.getParentRegion().getParentState() == null) {
             return state;
@@ -1112,6 +1241,9 @@ public final class Helper {
         }
     }
 
+    /*
+     * Returns a list of state lists sorted by depth first search.
+     */
     private static ArrayList<ArrayList<StatePlusTransition>> getStateSetsOfARegion(final State state) {
         ArrayList<ArrayList<StatePlusTransition>> out = new ArrayList<ArrayList<StatePlusTransition>>();
         // initialize states sorted by depth-first search
@@ -1132,6 +1264,9 @@ public final class Helper {
         return out;
     }
 
+    /*
+     * Adds a state represented as StatePlusTransition object into a given list.
+     */
     private static void addSptsToList(final State state,
             final ArrayList<StatePlusTransition> sptList) {
         if (state.getOutgoingTransitions().isEmpty()) {
@@ -1157,6 +1292,9 @@ public final class Helper {
         }
     }
 
+    /*
+     * Merges two array lists into one list.
+     */
     private static ArrayList<ArrayList<StatePlusTransition>> mergeTwoArrayLists(
             final ArrayList<ArrayList<StatePlusTransition>> one,
             final ArrayList<ArrayList<StatePlusTransition>> two) {
@@ -1175,6 +1313,9 @@ public final class Helper {
         return out;
     }
 
+    /*
+     * Determines a set of states with the same thread priority.
+     */
     private static void findPrioritySets(final State state,
             final ArrayList<StatePlusTransition> sptList, final ArrayList<State> notPut) {
         // System.out.println(state.getId());
@@ -1192,6 +1333,10 @@ public final class Helper {
         }
     }
 
+    /*
+     * Returns true if there exists a transition between the source state and target state
+     * of the given transition that has signal dependent states.
+     */
     private static boolean hasDependentStateForAll(final Transition transition) {
         State sourceState = transition.getSourceState();
         State targetState = transition.getTargetState();
@@ -1205,6 +1350,9 @@ public final class Helper {
         return false;
     }
 
+    /*
+     * Computes a list of states sorted by breadth-first search. 
+     */
     private static void getStatesSortedByDepth(final State state, final ArrayList<State> states,
             final ArrayList<State> notPut) {
         notPut.remove(state);
@@ -1219,7 +1367,7 @@ public final class Helper {
         }
     }
 
-    /**
+    /*
      * Returns the initial state of a given region.
      */
     private static State getInitialState(final Region region) {

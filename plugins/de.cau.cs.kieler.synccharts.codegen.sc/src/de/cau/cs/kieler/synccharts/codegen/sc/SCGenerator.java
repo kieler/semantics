@@ -23,7 +23,9 @@ import org.eclipse.core.commands.IHandler;
 /**
  * A simple class to invoke the process of generating SC-Code.
  * 
- * @author Torsten Amende - tam(at)informatik(dot)uni-kiel(dot)de
+ * @kieler.rating 2010-06-14 yellow
+ * 
+ * @author tam
  * 
  */
 public class SCGenerator extends AbstractHandler implements IHandler {

@@ -17,8 +17,10 @@ package de.cau.cs.kieler.synccharts.codegen.sc;
 /**
  * An enumerator class for enumerating adjacent vertices in a graph.
  * 
+ * @kieler.rating 2010-06-14 yellow
+ * 
  * @author <a href="mailto:schnoor@ti.informatik.uni-kiel.de">Henning Schnoor</a>
- * @author contributions by Torsten Amende - tam(at)informatik(dot)uni-kiel(dot)de
+ * @author contributions by tam
  * @version 1.0, 06/23/09
  */
 public class Enumerator {

@@ -17,11 +17,15 @@ package de.cau.cs.kieler.synccharts.codegen.sc;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
+import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
+
 /**
  * An implementation of an unweighted, directed graph using an adjacency matrix or an adjacency list
  * for encoding the set of edges.
  * 
- * @author contributions by Torsten Amende - tam(at)informatik(dot)uni-kiel(dot)de
+ * @kieler.rating 2010-06-14 proposed yellow
+ * 
+ * @author contributions by tam
  */
 public class Graph {
 
@@ -145,8 +149,7 @@ public class Graph {
         }
 
         /*
-         * update the number of edges if there has been no edge between 
-         * the passed vertices yet
+         * update the number of edges if there has been no edge between the passed vertices yet
          */
 
         // add Edge
@@ -301,8 +304,11 @@ public class Graph {
                 }
             }
             if (source == -1) {
-                String errorMessage = "Data cycle in SyncChart.";
-                throw new IllegalArgumentException(errorMessage);
+                String errorMessage = "Data cycle in SyncChart. Make shure that you did "
+                        + "not modeled a data cycle in concurrent regions";
+                KiemInitializationException ex;
+                ex = new KiemInitializationException(errorMessage, true, null);
+                throw new IllegalArgumentException(ex);
             }
             predecessorList[source] = -1;
             // remove all predecessor dependencies of source

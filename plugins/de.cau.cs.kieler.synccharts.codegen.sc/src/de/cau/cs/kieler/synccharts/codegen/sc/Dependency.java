@@ -18,7 +18,9 @@ package de.cau.cs.kieler.synccharts.codegen.sc;
  * (the first and the second one) and the type differentiates between control flow dependencies,
  * hierarchical dependencies and signal dependencies.
  * 
- * @author Torsten Amende - tam(at)informatik(dot)uni-kiel(dot)de
+ * @kieler.rating 2010-06-14 yellow
+ * 
+ * @author tam
  * 
  */
 public class Dependency {

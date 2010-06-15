@@ -17,6 +17,8 @@ package de.cau.cs.kieler.synccharts.codegen.sc;
 /**
  * A simple implementation of a tuple type.
  * 
+ * @kieler.rating 2010-06-14 yellow
+ * 
  * @author tam
  * 
  * @param <T>

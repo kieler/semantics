@@ -48,13 +48,14 @@ import de.cau.cs.kieler.synccharts.ValueType;
 import de.cau.cs.kieler.synccharts.codegen.sc.WorkflowGenerator;
 
 /**
- * This is the data component to handle the communication between KIEM and the 
- * external SC-Program.
+ * This is the data component to handle the communication between KIEM and the external SC-Program.
  * 
- * @author Torsten Amende - tam(at)informatik(dot)uni-kiel(dot)de
+ * @kieler.rating 2010-06-14 proposed yellow
+ * 
+ * @author tam
  * 
  */
-public class DataComponent extends AbstractAutomatedProducer {
+public class SCDataComponent extends AbstractAutomatedProducer {
 
     private WorkflowGenerator wf = null;
     private Process process = null;
@@ -62,11 +63,19 @@ public class DataComponent extends AbstractAutomatedProducer {
     private BufferedReader fromSC;
     private BufferedReader error;
     private String outPath;
+    // validation is true if the simulation is used for validation otherwise false
     private boolean validation;
+    // newValidation is false if it is not necessary to generate new sc-files
+    // - because the model has not changed for the validation - otherwise true
     private boolean newValidation;
     private String fileLocation;
 
     /**
+     * 
+     * This method fetches the location of the used sc- and header files. With the resulting files
+     * and the folder for the output files it starts the compilation of the program. After compiling
+     * a process with the execution of the resulting program is started.
+     * 
      * {@inheritDoc}
      */
     public void initialize() throws KiemInitializationException {
@@ -155,6 +164,10 @@ public class DataComponent extends AbstractAutomatedProducer {
 
     /**
      * {@inheritDoc}
+     * 
+     * The step method handles the communication between the generated sc program and KIEM. For
+     * communication JSON Strings are exchanged via std. I/O.
+     * 
      */
     public JSONObject step(final JSONObject jSONObject) throws KiemExecutionException {
         JSONObject out = null;
@@ -222,14 +235,6 @@ public class DataComponent extends AbstractAutomatedProducer {
         return true;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public String[] provideInterfaceKeys() {
-        String[] signals = getSignals();
-        return signals;
-    }
-
     @Override
     public KiemProperty[] provideProperties() {
         final int numberOfProperties = 3;
@@ -245,6 +250,10 @@ public class DataComponent extends AbstractAutomatedProducer {
     }
 
     /**
+     * 
+     * On stopping the simulation the sc process will be destroyed (if it was not closed normally).
+     * If the simulation files are generated into a temp folder it will be deleted.
+     * 
      * {@inheritDoc}
      */
     public void wrapup() throws KiemInitializationException {
@@ -263,6 +272,13 @@ public class DataComponent extends AbstractAutomatedProducer {
         }
     }
 
+    /**
+     * @return {@link JSONObject} the initial JSON object before the simulation could be started.
+     * 
+     * A path for the output files will be determined. A differentiation between simulation or
+     * validation will be made. After these initializations the codegen process will be started.
+     * 
+     */
     @Override
     public JSONObject provideInitialVariables() {
 
@@ -287,6 +303,7 @@ public class DataComponent extends AbstractAutomatedProducer {
                     + File.separator;
         }
 
+        // will be skipped if a validation is triggered once again for the same model.
         if (!validation || (validation && newValidation)) {
             if (validation) {
                 wf = new WorkflowGenerator(fileLocation);
@@ -297,6 +314,8 @@ public class DataComponent extends AbstractAutomatedProducer {
             // true sets the flag for simulation
             wf.invokeWorkflow(true, outPath);
         }
+        // if the if-statement above is skipped the wf object exists because it has been created
+        // at least for the first validation of a model.
         EObject myModel = wf.getModel();
         List<Signal> signalList = ((Region) myModel).getInnerStates().get(0).getSignals();
         for (int i = 0; i < signalList.size(); i++) {
@@ -309,6 +328,9 @@ public class DataComponent extends AbstractAutomatedProducer {
         return returnObj;
     }
 
+    /*
+     * Creates a random string of 16 letters/numbers.
+     */
     private static String randomString() {
         final int folderLength = 16;
         String allowedChars = "0123456789abcdefghijklmnopqrstuvwxyz";
@@ -322,6 +344,11 @@ public class DataComponent extends AbstractAutomatedProducer {
         return buffer.toString();
     }
 
+    /*
+     * Returns a list of signals of the model.
+     * Not used at the moment but might be useful later.
+     */
+    @SuppressWarnings("unused")
     private String[] getSignals() {
         Region myModel = (Region) (wf.getModel());
         List<String> tmp = new LinkedList<String>();
@@ -335,6 +362,12 @@ public class DataComponent extends AbstractAutomatedProducer {
         return out;
     }
 
+    /*
+     * Converts the inputs for true and false given by the user in the
+     * data table to valid true and false for SC
+     * 
+     * example: t, true, 1 = true
+     */
     private JSONObject boolToInt(final JSONObject signals) {
         JSONObject out = signals;
         Region myModel = (Region) (wf.getModel());
@@ -363,6 +396,9 @@ public class DataComponent extends AbstractAutomatedProducer {
         return out;
     }
 
+    /*
+     * Deletes a given folder.
+     */
     private boolean deleteFolder(final File dir) {
         if (dir.isDirectory()) {
             String[] entries = dir.list();
@@ -404,6 +440,9 @@ public class DataComponent extends AbstractAutomatedProducer {
 
     /**
      * {@inheritDoc}
+     * 
+     * Is called _before_ provideInitialVariables. Sets the flags for validation.
+     * 
      */
     public void setParameters(final List<KiemProperty> properties)
             throws KiemInitializationException {
@@ -419,19 +458,5 @@ public class DataComponent extends AbstractAutomatedProducer {
                 }
             }
         }
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public int wantsMoreRuns() {
-        return 0;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public int wantsMoreSteps() {
-        return 0;
     }
 }

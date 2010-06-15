@@ -59,7 +59,9 @@ import de.cau.cs.kieler.synccharts.SyncchartsPackage;
  * The WorkflowGenerator starts the Xpand process of generating code. Variables will be set to
  * define the out path of the generated files and the model for which to generate code.
  * 
- * @author Torsten Amende - tam(at)informatik(dot)uni-kiel(dot)de
+ * @kieler.rating 2010-06-14 yellow
+ * 
+ * @author tam
  * 
  */
 @SuppressWarnings("restriction")
@@ -217,6 +219,9 @@ public class WorkflowGenerator {
         }
     }
 
+    /*
+     * Checks if a SyncChart is in a dirty state and gives the option to safe it.
+     */
     private static void checkForDirtyDiagram(final DiagramEditor diagramEditor) {
         if (diagramEditor.isDirty()) {
             final Shell shell = Display.getCurrent().getShells()[0];
@@ -230,6 +235,9 @@ public class WorkflowGenerator {
         }
     }
 
+    /*
+     * Starts the beautifyer.
+     */
     private static void beautifyFiles(final File file) {
         Beautifier simBeautifier = new Beautifier(file, file);
         try {
@@ -239,6 +247,9 @@ public class WorkflowGenerator {
         }
     }
 
+    /*
+     * Returns the location string of a given IEditorPart.
+     */
     private static String part2Location(final IEditorPart editor) {
         String out = null;
 

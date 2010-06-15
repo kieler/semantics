@@ -27,7 +27,9 @@ import java.io.IOException;
  * A utility class to beautify the generated SC-code. After generating code the file will be read in
  * and written out by formating it with some rules.
  * 
- * @author Torsten Amende - tam(at)informatik(dot)uni-kiel(dot)de
+ * @kieler.rating 2010-06-14 yellow
+ * 
+ * @author tam
  * 
  */
 public class Beautifier {

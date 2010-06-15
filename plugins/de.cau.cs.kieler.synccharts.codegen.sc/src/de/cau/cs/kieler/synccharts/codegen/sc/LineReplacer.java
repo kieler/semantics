@@ -26,6 +26,8 @@ import java.util.ArrayList;
 /**
  * A class to replace lines by rules in text files.
  * 
+ * @kieler.rating 2010-06-14 proposed yellow
+ * 
  * @author tam
  * 
  */
@@ -147,9 +149,13 @@ public class LineReplacer {
             bw.newLine();
         }
         bw.close();
+        //FIXME: renaming does not work on windows?
         tempFile.renameTo(file);
     }
 
+    /*
+     * Replaces a given string if a rule from the list rules matches.
+     */
     private static String replaceLine(final String line) {
         String out = line;
         for (Tuple<String, Tuple<String, String>> rule : rules) {
