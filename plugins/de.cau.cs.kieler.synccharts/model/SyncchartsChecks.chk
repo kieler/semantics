@@ -1,5 +1,28 @@
 import synccharts;
 
+// ===========================================================================
+// Scopes
+
+context Scope
+   WARNING "The following signals in this scope are never read: " + signals.select(e|(e.isInput || !e.isOutput) && eAllContents.typeSelect(SignalReference).select(reference|reference.signal.name == e.name).isEmpty).name :
+   signals.select(e|(e.isInput || !e.isOutput) && eAllContents.typeSelect(SignalReference).select(reference|reference.signal.name == e.name).isEmpty).isEmpty
+;
+
+context Scope
+    WARNING "The following signals in this scope are never emitted: " + signals.select(e|(e.isOutput || !e.isInput) && eAllContents.typeSelect(Emission).select(emission|emission.signal.name == e.name).isEmpty).name : 
+    signals.select(e|(e.isOutput || !e.isInput) && eAllContents.typeSelect(Emission).select(emission|emission.signal.name == e.name).isEmpty).isEmpty
+;
+
+context Scope
+   WARNING "The following variables in this scope are never read: " + variables.select(e|eAllContents.typeSelect(VariableReference).select(reference|reference.variable.name == e.name).isEmpty).name :
+   variables.select(e|eAllContents.typeSelect(VariableReference).select(reference|reference.variable.name == e.name).isEmpty).isEmpty
+;
+
+context Scope
+    WARNING "The following variables in this scope never get a value assigned to them: " + variables.select(e|!e.const && eAllContents.typeSelect(Assignment).select(assignment|assignment.variable.name == e.name).isEmpty).name : 
+    variables.select(e|!e.const && eAllContents.typeSelect(Assignment).select(assignment|assignment.variable.name == e.name).isEmpty).isEmpty
+;
+
 // ================================================================================================
 // Pseudo States 
 context State if (type == StateType::CONDITIONAL) ERROR "Conditional states must not be initial or final!" :
@@ -130,19 +153,19 @@ context Signal
 	parentScope != null && parentScope.signals.forAll(s| (s.name != name) || (s == this))
 	;
 		
-context Signal if (isInput || (! isOutput && ! isInput))
+context Signal if (isInput || !isOutput)
 	WARNING "Signal never read." :
-	parentScope != null && parentScope.eAllContents.typeSelect(SignalReference).select(reference|reference.signal.name == this.name).size > 0
+	parentScope != null && !parentScope.eAllContents.typeSelect(SignalReference).select(reference|reference.signal.name == this.name).isEmpty
 	;
 	
-context Signal if (isOutput || (! isInput && ! isOutput))
+context Signal if (isOutput || !isInput)
 	WARNING "Signal never emitted." :
-	parentScope != null && parentScope.eAllContents.typeSelect(Emission).select(emission|emission.signal.name == this.name).size > 0
+	parentScope != null && !parentScope.eAllContents.typeSelect(Emission).select(emission|emission.signal.name == this.name).isEmpty
 	;
 	
 context Variable
-	ERROR "Variables need unique names in a Region declaration." :
-	parentScope != null && parentScope.signals.forAll(s| (s.name != name) || (s == this))
+	ERROR "Variables need unique names in a State or Region declaration." :
+	parentScope != null && parentScope.variables.forAll(s| (s.name != name) || (s == this))
 	;
 
 context ValuedObject
