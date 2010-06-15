@@ -35,7 +35,6 @@ import com.google.inject.Injector;
 
 import de.cau.cs.kieler.core.KielerModelException;
 import de.cau.cs.kieler.synccharts.Region;
-import de.cau.cs.kieler.synccharts.Renaming;
 import de.cau.cs.kieler.synccharts.Signal;
 import de.cau.cs.kieler.synccharts.State;
 import de.cau.cs.kieler.synccharts.SyncchartsFactory;
@@ -322,6 +321,9 @@ public class InterfaceDeclParseCommand extends AbstractCommand {
             }
         }
         currentState.getSignals().addAll(newSigs);
+        for (Signal s : newSigs) {
+            s.setParentScope(currentState);
+        }
 
         // add signals and vars to contained regions
         for (RegionSignalDec rsd : se.getRegions()) {
@@ -338,6 +340,9 @@ public class InterfaceDeclParseCommand extends AbstractCommand {
                 newVars.add(v);
             }
             currRegion.getVariables().addAll(newVars);
+            for (Variable v : newVars) {
+                v.setParentScope(currentState);
+            }
         }
     }
 }
