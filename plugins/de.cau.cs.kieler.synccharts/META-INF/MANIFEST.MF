@@ -19,7 +19,4 @@ Export-Package: de.cau.cs.kieler.synccharts,
  de.cau.cs.kieler.synccharts.contentadapter,
  de.cau.cs.kieler.synccharts.custom,
  de.cau.cs.kieler.synccharts.impl,
- de.cau.cs.kieler.synccharts.util,
- de.cau.cs.kieler.synccharts01,
- de.cau.cs.kieler.synccharts01.impl,
- de.cau.cs.kieler.synccharts01.util
+ de.cau.cs.kieler.synccharts.util
