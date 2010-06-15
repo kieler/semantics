@@ -67,6 +67,9 @@ public final class OptimizeUtils {
     /** Identifier for turning normal terminations with trigger into weakaborts. */
     public static final String NORMAL_TERMINATION_WITH_TRIGGER_TO_WEAK_ABORT = "normalTerminationWithTriggerToWeakAbort";
 
+    /** Identifier for removing signals and variables that are not used. */
+    public static final String REMOVE_UNUSED_SIGNALS_AND_VARIABLES = "removeUnusedSignalsAndVariables";
+
     /**
      * Identifier for choosing what to do with normal terminations leaving
      * complex states.
@@ -96,6 +99,7 @@ public final class OptimizeUtils {
      */
     private static final String[] OPTIONAL_KEYS = { REMOVE_DUMMY_STATES,
             REMOVE_WHITE_SPACES, REMOVE_DUMMY_REGIONS,
+            REMOVE_UNUSED_SIGNALS_AND_VARIABLES,
             FIX_TRANSITION_TYPES_LEAVING_SIMPLE_STATE };
 
     /**
@@ -215,7 +219,7 @@ public final class OptimizeUtils {
             IEclipsePreferences prefs = new InstanceScope()
                     .getNode(SyncchartsKsbasePlugin.PLUGIN_ID);
             for (String key : getKeys()) {
-                boolean value = prefs.getBoolean(key, true);
+                boolean value = prefs.getBoolean(key, false);
                 store.setValue(key, value);
             }
 
@@ -425,6 +429,8 @@ public final class OptimizeUtils {
             result = "Turn NORMALTERMINATION transitions into WEAKABORT transitions";
         } else if (theKey.equals(FIX_NORMAL_TERMINATION_LEAVING_COMPLEX_STATE)) {
             result = "Fix NORMALTERMINATION transitions with trigger leaving a complex state";
+        } else if (theKey.equals(REMOVE_UNUSED_SIGNALS_AND_VARIABLES)) {
+            result = "Remove unused signals and variables.";
         }
         return result
                 + (Arrays.asList(REQUIRED_KEYS).contains(theKey) ? " (REQUIRED)"
@@ -470,6 +476,10 @@ public final class OptimizeUtils {
             result = "Transitions of type NORMALTERMINATION mustn't have a trigger"
                     + " as they are triggered by final states in the source state being"
                     + " reached.";
+        } else if (theKey.equals(REMOVE_UNUSED_SIGNALS_AND_VARIABLES)) {
+            result = "Signals that are never emitted or referenced can never have "
+                    + "an impact on the current syncchart. The same goes for "
+                    + "non-constant variables that are never read or assigned a value.";
         }
         return result;
     }
