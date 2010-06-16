@@ -4,12 +4,12 @@
  *
  * $Id$
  */
-package de.cau.cs.kieler.core.expressions.provider;
+package de.cau.cs.kieler.expressions.provider;
 
 
-import de.cau.cs.kieler.core.expressions.ExpressionsFactory;
-import de.cau.cs.kieler.core.expressions.ExpressionsPackage;
-import de.cau.cs.kieler.core.expressions.Signal;
+import de.cau.cs.kieler.expressions.ExpressionsFactory;
+import de.cau.cs.kieler.expressions.ExpressionsPackage;
+import de.cau.cs.kieler.expressions.Signal;
 
 import java.util.Collection;
 import java.util.List;
@@ -30,7 +30,7 @@ import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 
 /**
- * This is the item provider adapter for a {@link de.cau.cs.kieler.core.expressions.Signal} object.
+ * This is the item provider adapter for a {@link de.cau.cs.kieler.expressions.Signal} object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
  * @generated

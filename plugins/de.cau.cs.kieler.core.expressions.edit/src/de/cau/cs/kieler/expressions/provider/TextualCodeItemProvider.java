@@ -4,19 +4,17 @@
  *
  * $Id$
  */
-package de.cau.cs.kieler.core.expressions.provider;
+package de.cau.cs.kieler.expressions.provider;
 
 
-import de.cau.cs.kieler.core.expressions.ExpressionsPackage;
-import de.cau.cs.kieler.core.expressions.ValuedObject;
+import de.cau.cs.kieler.expressions.ExpressionsPackage;
+import de.cau.cs.kieler.expressions.TextualCode;
 
 import java.util.Collection;
 import java.util.List;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
-
-import org.eclipse.emf.common.util.ResourceLocator;
 
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
@@ -26,17 +24,16 @@ import org.eclipse.emf.edit.provider.IItemPropertySource;
 import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
-import org.eclipse.emf.edit.provider.ItemProviderAdapter;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 
 /**
- * This is the item provider adapter for a {@link de.cau.cs.kieler.core.expressions.ValuedObject} object.
+ * This is the item provider adapter for a {@link de.cau.cs.kieler.expressions.TextualCode} object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
  * @generated
  */
-public class ValuedObjectItemProvider
-    extends ItemProviderAdapter
+public class TextualCodeItemProvider
+    extends ComplexExpressionItemProvider
     implements
         IEditingDomainItemProvider,
         IStructuredItemContentProvider,
@@ -49,7 +46,7 @@ public class ValuedObjectItemProvider
      * <!-- end-user-doc -->
      * @generated
      */
-    public ValuedObjectItemProvider(AdapterFactory adapterFactory) {
+    public TextualCodeItemProvider(AdapterFactory adapterFactory) {
         super(adapterFactory);
     }
 
@@ -64,28 +61,26 @@ public class ValuedObjectItemProvider
         if (itemPropertyDescriptors == null) {
             super.getPropertyDescriptors(object);
 
-            addNamePropertyDescriptor(object);
+            addCodePropertyDescriptor(object);
             addTypePropertyDescriptor(object);
-            addInitialValuePropertyDescriptor(object);
-            addHostTypePropertyDescriptor(object);
         }
         return itemPropertyDescriptors;
     }
 
     /**
-     * This adds a property descriptor for the Name feature.
+     * This adds a property descriptor for the Code feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    protected void addNamePropertyDescriptor(Object object) {
+    protected void addCodePropertyDescriptor(Object object) {
         itemPropertyDescriptors.add
             (createItemPropertyDescriptor
                 (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
                  getResourceLocator(),
-                 getString("_UI_ValuedObject_name_feature"),
-                 getString("_UI_PropertyDescriptor_description", "_UI_ValuedObject_name_feature", "_UI_ValuedObject_type"),
-                 ExpressionsPackage.Literals.VALUED_OBJECT__NAME,
+                 getString("_UI_TextualCode_code_feature"),
+                 getString("_UI_PropertyDescriptor_description", "_UI_TextualCode_code_feature", "_UI_TextualCode_type"),
+                 ExpressionsPackage.Literals.TEXTUAL_CODE__CODE,
                  true,
                  false,
                  false,
@@ -105,9 +100,9 @@ public class ValuedObjectItemProvider
             (createItemPropertyDescriptor
                 (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
                  getResourceLocator(),
-                 getString("_UI_ValuedObject_type_feature"),
-                 getString("_UI_PropertyDescriptor_description", "_UI_ValuedObject_type_feature", "_UI_ValuedObject_type"),
-                 ExpressionsPackage.Literals.VALUED_OBJECT__TYPE,
+                 getString("_UI_TextualCode_type_feature"),
+                 getString("_UI_PropertyDescriptor_description", "_UI_TextualCode_type_feature", "_UI_TextualCode_type"),
+                 ExpressionsPackage.Literals.TEXTUAL_CODE__TYPE,
                  true,
                  false,
                  false,
@@ -117,58 +112,14 @@ public class ValuedObjectItemProvider
     }
 
     /**
-     * This adds a property descriptor for the Initial Value feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    protected void addInitialValuePropertyDescriptor(Object object) {
-        itemPropertyDescriptors.add
-            (createItemPropertyDescriptor
-                (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-                 getResourceLocator(),
-                 getString("_UI_ValuedObject_initialValue_feature"),
-                 getString("_UI_PropertyDescriptor_description", "_UI_ValuedObject_initialValue_feature", "_UI_ValuedObject_type"),
-                 ExpressionsPackage.Literals.VALUED_OBJECT__INITIAL_VALUE,
-                 true,
-                 false,
-                 false,
-                 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
-                 null,
-                 null));
-    }
-
-    /**
-     * This adds a property descriptor for the Host Type feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    protected void addHostTypePropertyDescriptor(Object object) {
-        itemPropertyDescriptors.add
-            (createItemPropertyDescriptor
-                (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-                 getResourceLocator(),
-                 getString("_UI_ValuedObject_hostType_feature"),
-                 getString("_UI_PropertyDescriptor_description", "_UI_ValuedObject_hostType_feature", "_UI_ValuedObject_type"),
-                 ExpressionsPackage.Literals.VALUED_OBJECT__HOST_TYPE,
-                 true,
-                 false,
-                 false,
-                 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
-                 null,
-                 null));
-    }
-
-    /**
-     * This returns ValuedObject.gif.
+     * This returns TextualCode.gif.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
     @Override
     public Object getImage(Object object) {
-        return overlayImage(object, getResourceLocator().getImage("full/obj16/ValuedObject"));
+        return overlayImage(object, getResourceLocator().getImage("full/obj16/TextualCode"));
     }
 
     /**
@@ -179,10 +130,10 @@ public class ValuedObjectItemProvider
      */
     @Override
     public String getText(Object object) {
-        String label = ((ValuedObject)object).getName();
+        String label = ((TextualCode)object).getCode();
         return label == null || label.length() == 0 ?
-            getString("_UI_ValuedObject_type") :
-            getString("_UI_ValuedObject_type") + " " + label;
+            getString("_UI_TextualCode_type") :
+            getString("_UI_TextualCode_type") + " " + label;
     }
 
     /**
@@ -196,11 +147,9 @@ public class ValuedObjectItemProvider
     public void notifyChanged(Notification notification) {
         updateChildren(notification);
 
-        switch (notification.getFeatureID(ValuedObject.class)) {
-            case ExpressionsPackage.VALUED_OBJECT__NAME:
-            case ExpressionsPackage.VALUED_OBJECT__TYPE:
-            case ExpressionsPackage.VALUED_OBJECT__INITIAL_VALUE:
-            case ExpressionsPackage.VALUED_OBJECT__HOST_TYPE:
+        switch (notification.getFeatureID(TextualCode.class)) {
+            case ExpressionsPackage.TEXTUAL_CODE__CODE:
+            case ExpressionsPackage.TEXTUAL_CODE__TYPE:
                 fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
                 return;
         }
@@ -217,17 +166,6 @@ public class ValuedObjectItemProvider
     @Override
     protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object) {
         super.collectNewChildDescriptors(newChildDescriptors, object);
-    }
-
-    /**
-     * Return the resource locator for this item provider's resources.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public ResourceLocator getResourceLocator() {
-        return ExpressionsEditPlugin.INSTANCE;
     }
 
 }

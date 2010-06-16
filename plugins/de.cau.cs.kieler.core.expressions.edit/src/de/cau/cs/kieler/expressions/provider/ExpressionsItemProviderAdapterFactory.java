@@ -4,9 +4,9 @@
  *
  * $Id$
  */
-package de.cau.cs.kieler.core.expressions.provider;
+package de.cau.cs.kieler.expressions.provider;
 
-import de.cau.cs.kieler.core.expressions.util.ExpressionsAdapterFactory;
+import de.cau.cs.kieler.expressions.util.ExpressionsAdapterFactory;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -76,7 +76,7 @@ public class ExpressionsItemProviderAdapterFactory extends ExpressionsAdapterFac
     }
 
     /**
-     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.core.expressions.ComplexExpression} instances.
+     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.expressions.ComplexExpression} instances.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
@@ -84,7 +84,7 @@ public class ExpressionsItemProviderAdapterFactory extends ExpressionsAdapterFac
     protected ComplexExpressionItemProvider complexExpressionItemProvider;
 
     /**
-     * This creates an adapter for a {@link de.cau.cs.kieler.core.expressions.ComplexExpression}.
+     * This creates an adapter for a {@link de.cau.cs.kieler.expressions.ComplexExpression}.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
@@ -99,7 +99,7 @@ public class ExpressionsItemProviderAdapterFactory extends ExpressionsAdapterFac
     }
 
     /**
-     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.core.expressions.Expression} instances.
+     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.expressions.Expression} instances.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
@@ -107,7 +107,7 @@ public class ExpressionsItemProviderAdapterFactory extends ExpressionsAdapterFac
     protected ExpressionItemProvider expressionItemProvider;
 
     /**
-     * This creates an adapter for a {@link de.cau.cs.kieler.core.expressions.Expression}.
+     * This creates an adapter for a {@link de.cau.cs.kieler.expressions.Expression}.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
@@ -122,7 +122,7 @@ public class ExpressionsItemProviderAdapterFactory extends ExpressionsAdapterFac
     }
 
     /**
-     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.core.expressions.TextualCode} instances.
+     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.expressions.TextualCode} instances.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
@@ -130,7 +130,7 @@ public class ExpressionsItemProviderAdapterFactory extends ExpressionsAdapterFac
     protected TextualCodeItemProvider textualCodeItemProvider;
 
     /**
-     * This creates an adapter for a {@link de.cau.cs.kieler.core.expressions.TextualCode}.
+     * This creates an adapter for a {@link de.cau.cs.kieler.expressions.TextualCode}.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
@@ -145,7 +145,7 @@ public class ExpressionsItemProviderAdapterFactory extends ExpressionsAdapterFac
     }
 
     /**
-     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.core.expressions.Signal} instances.
+     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.expressions.Signal} instances.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
@@ -153,7 +153,7 @@ public class ExpressionsItemProviderAdapterFactory extends ExpressionsAdapterFac
     protected SignalItemProvider signalItemProvider;
 
     /**
-     * This creates an adapter for a {@link de.cau.cs.kieler.core.expressions.Signal}.
+     * This creates an adapter for a {@link de.cau.cs.kieler.expressions.Signal}.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
@@ -168,7 +168,7 @@ public class ExpressionsItemProviderAdapterFactory extends ExpressionsAdapterFac
     }
 
     /**
-     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.core.expressions.SignalReference} instances.
+     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.expressions.SignalReference} instances.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
@@ -176,7 +176,7 @@ public class ExpressionsItemProviderAdapterFactory extends ExpressionsAdapterFac
     protected SignalReferenceItemProvider signalReferenceItemProvider;
 
     /**
-     * This creates an adapter for a {@link de.cau.cs.kieler.core.expressions.SignalReference}.
+     * This creates an adapter for a {@link de.cau.cs.kieler.expressions.SignalReference}.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
@@ -191,7 +191,7 @@ public class ExpressionsItemProviderAdapterFactory extends ExpressionsAdapterFac
     }
 
     /**
-     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.core.expressions.ValuedObject} instances.
+     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.expressions.ValuedObject} instances.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
@@ -199,7 +199,7 @@ public class ExpressionsItemProviderAdapterFactory extends ExpressionsAdapterFac
     protected ValuedObjectItemProvider valuedObjectItemProvider;
 
     /**
-     * This creates an adapter for a {@link de.cau.cs.kieler.core.expressions.ValuedObject}.
+     * This creates an adapter for a {@link de.cau.cs.kieler.expressions.ValuedObject}.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
@@ -214,7 +214,7 @@ public class ExpressionsItemProviderAdapterFactory extends ExpressionsAdapterFac
     }
 
     /**
-     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.core.expressions.Variable} instances.
+     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.expressions.Variable} instances.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
@@ -222,7 +222,7 @@ public class ExpressionsItemProviderAdapterFactory extends ExpressionsAdapterFac
     protected VariableItemProvider variableItemProvider;
 
     /**
-     * This creates an adapter for a {@link de.cau.cs.kieler.core.expressions.Variable}.
+     * This creates an adapter for a {@link de.cau.cs.kieler.expressions.Variable}.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
@@ -237,7 +237,7 @@ public class ExpressionsItemProviderAdapterFactory extends ExpressionsAdapterFac
     }
 
     /**
-     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.core.expressions.VariableReference} instances.
+     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.expressions.VariableReference} instances.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
@@ -245,7 +245,7 @@ public class ExpressionsItemProviderAdapterFactory extends ExpressionsAdapterFac
     protected VariableReferenceItemProvider variableReferenceItemProvider;
 
     /**
-     * This creates an adapter for a {@link de.cau.cs.kieler.core.expressions.VariableReference}.
+     * This creates an adapter for a {@link de.cau.cs.kieler.expressions.VariableReference}.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
@@ -260,7 +260,7 @@ public class ExpressionsItemProviderAdapterFactory extends ExpressionsAdapterFac
     }
 
     /**
-     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.core.expressions.Value} instances.
+     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.expressions.Value} instances.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
@@ -268,7 +268,7 @@ public class ExpressionsItemProviderAdapterFactory extends ExpressionsAdapterFac
     protected ValueItemProvider valueItemProvider;
 
     /**
-     * This creates an adapter for a {@link de.cau.cs.kieler.core.expressions.Value}.
+     * This creates an adapter for a {@link de.cau.cs.kieler.expressions.Value}.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
@@ -283,7 +283,7 @@ public class ExpressionsItemProviderAdapterFactory extends ExpressionsAdapterFac
     }
 
     /**
-     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.core.expressions.IntValue} instances.
+     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.expressions.IntValue} instances.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
@@ -291,7 +291,7 @@ public class ExpressionsItemProviderAdapterFactory extends ExpressionsAdapterFac
     protected IntValueItemProvider intValueItemProvider;
 
     /**
-     * This creates an adapter for a {@link de.cau.cs.kieler.core.expressions.IntValue}.
+     * This creates an adapter for a {@link de.cau.cs.kieler.expressions.IntValue}.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
@@ -306,7 +306,7 @@ public class ExpressionsItemProviderAdapterFactory extends ExpressionsAdapterFac
     }
 
     /**
-     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.core.expressions.FloatValue} instances.
+     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.expressions.FloatValue} instances.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
@@ -314,7 +314,7 @@ public class ExpressionsItemProviderAdapterFactory extends ExpressionsAdapterFac
     protected FloatValueItemProvider floatValueItemProvider;
 
     /**
-     * This creates an adapter for a {@link de.cau.cs.kieler.core.expressions.FloatValue}.
+     * This creates an adapter for a {@link de.cau.cs.kieler.expressions.FloatValue}.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
@@ -329,7 +329,7 @@ public class ExpressionsItemProviderAdapterFactory extends ExpressionsAdapterFac
     }
 
     /**
-     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.core.expressions.BooleanValue} instances.
+     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.expressions.BooleanValue} instances.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
@@ -337,7 +337,7 @@ public class ExpressionsItemProviderAdapterFactory extends ExpressionsAdapterFac
     protected BooleanValueItemProvider booleanValueItemProvider;
 
     /**
-     * This creates an adapter for a {@link de.cau.cs.kieler.core.expressions.BooleanValue}.
+     * This creates an adapter for a {@link de.cau.cs.kieler.expressions.BooleanValue}.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
@@ -352,7 +352,7 @@ public class ExpressionsItemProviderAdapterFactory extends ExpressionsAdapterFac
     }
 
     /**
-     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.core.expressions.OperatorExpression} instances.
+     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.expressions.OperatorExpression} instances.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
@@ -360,7 +360,7 @@ public class ExpressionsItemProviderAdapterFactory extends ExpressionsAdapterFac
     protected OperatorExpressionItemProvider operatorExpressionItemProvider;
 
     /**
-     * This creates an adapter for a {@link de.cau.cs.kieler.core.expressions.OperatorExpression}.
+     * This creates an adapter for a {@link de.cau.cs.kieler.expressions.OperatorExpression}.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated

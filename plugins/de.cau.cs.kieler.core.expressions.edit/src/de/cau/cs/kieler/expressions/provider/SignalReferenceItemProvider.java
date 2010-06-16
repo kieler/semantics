@@ -4,10 +4,10 @@
  *
  * $Id$
  */
-package de.cau.cs.kieler.core.expressions.provider;
+package de.cau.cs.kieler.expressions.provider;
 
 
-import de.cau.cs.kieler.core.expressions.ExpressionsPackage;
+import de.cau.cs.kieler.expressions.ExpressionsPackage;
 
 import java.util.Collection;
 import java.util.List;
@@ -24,7 +24,7 @@ import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 
 /**
- * This is the item provider adapter for a {@link de.cau.cs.kieler.core.expressions.SignalReference} object.
+ * This is the item provider adapter for a {@link de.cau.cs.kieler.expressions.SignalReference} object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
  * @generated

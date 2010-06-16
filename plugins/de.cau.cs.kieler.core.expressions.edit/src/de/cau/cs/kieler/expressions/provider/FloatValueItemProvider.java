@@ -4,11 +4,11 @@
  *
  * $Id$
  */
-package de.cau.cs.kieler.core.expressions.provider;
+package de.cau.cs.kieler.expressions.provider;
 
 
-import de.cau.cs.kieler.core.expressions.ExpressionsPackage;
-import de.cau.cs.kieler.core.expressions.IntValue;
+import de.cau.cs.kieler.expressions.ExpressionsPackage;
+import de.cau.cs.kieler.expressions.FloatValue;
 
 import java.util.Collection;
 import java.util.List;
@@ -27,12 +27,12 @@ import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 
 /**
- * This is the item provider adapter for a {@link de.cau.cs.kieler.core.expressions.IntValue} object.
+ * This is the item provider adapter for a {@link de.cau.cs.kieler.expressions.FloatValue} object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
  * @generated
  */
-public class IntValueItemProvider
+public class FloatValueItemProvider
     extends ValueItemProvider
     implements
         IEditingDomainItemProvider,
@@ -46,7 +46,7 @@ public class IntValueItemProvider
      * <!-- end-user-doc -->
      * @generated
      */
-    public IntValueItemProvider(AdapterFactory adapterFactory) {
+    public FloatValueItemProvider(AdapterFactory adapterFactory) {
         super(adapterFactory);
     }
 
@@ -77,9 +77,9 @@ public class IntValueItemProvider
             (createItemPropertyDescriptor
                 (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
                  getResourceLocator(),
-                 getString("_UI_IntValue_value_feature"),
-                 getString("_UI_PropertyDescriptor_description", "_UI_IntValue_value_feature", "_UI_IntValue_type"),
-                 ExpressionsPackage.Literals.INT_VALUE__VALUE,
+                 getString("_UI_FloatValue_value_feature"),
+                 getString("_UI_PropertyDescriptor_description", "_UI_FloatValue_value_feature", "_UI_FloatValue_type"),
+                 ExpressionsPackage.Literals.FLOAT_VALUE__VALUE,
                  true,
                  false,
                  false,
@@ -89,14 +89,14 @@ public class IntValueItemProvider
     }
 
     /**
-     * This returns IntValue.gif.
+     * This returns FloatValue.gif.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
     @Override
     public Object getImage(Object object) {
-        return overlayImage(object, getResourceLocator().getImage("full/obj16/IntValue"));
+        return overlayImage(object, getResourceLocator().getImage("full/obj16/FloatValue"));
     }
 
     /**
@@ -107,11 +107,11 @@ public class IntValueItemProvider
      */
     @Override
     public String getText(Object object) {
-        Integer labelValue = ((IntValue)object).getValue();
+        Float labelValue = ((FloatValue)object).getValue();
         String label = labelValue == null ? null : labelValue.toString();
         return label == null || label.length() == 0 ?
-            getString("_UI_IntValue_type") :
-            getString("_UI_IntValue_type") + " " + label;
+            getString("_UI_FloatValue_type") :
+            getString("_UI_FloatValue_type") + " " + label;
     }
 
     /**
@@ -125,8 +125,8 @@ public class IntValueItemProvider
     public void notifyChanged(Notification notification) {
         updateChildren(notification);
 
-        switch (notification.getFeatureID(IntValue.class)) {
-            case ExpressionsPackage.INT_VALUE__VALUE:
+        switch (notification.getFeatureID(FloatValue.class)) {
+            case ExpressionsPackage.FLOAT_VALUE__VALUE:
                 fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
                 return;
         }

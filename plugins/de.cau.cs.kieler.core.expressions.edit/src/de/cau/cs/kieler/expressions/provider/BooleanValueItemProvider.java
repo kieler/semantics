@@ -4,8 +4,11 @@
  *
  * $Id$
  */
-package de.cau.cs.kieler.core.expressions.provider;
+package de.cau.cs.kieler.expressions.provider;
 
+
+import de.cau.cs.kieler.expressions.BooleanValue;
+import de.cau.cs.kieler.expressions.ExpressionsPackage;
 
 import java.util.Collection;
 import java.util.List;
@@ -13,24 +16,24 @@ import java.util.List;
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 
-import org.eclipse.emf.common.util.ResourceLocator;
-
+import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.IItemPropertySource;
 import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
-import org.eclipse.emf.edit.provider.ItemProviderAdapter;
+import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
+import org.eclipse.emf.edit.provider.ViewerNotification;
 
 /**
- * This is the item provider adapter for a {@link de.cau.cs.kieler.core.expressions.Expression} object.
+ * This is the item provider adapter for a {@link de.cau.cs.kieler.expressions.BooleanValue} object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
  * @generated
  */
-public class ExpressionItemProvider
-    extends ItemProviderAdapter
+public class BooleanValueItemProvider
+    extends ValueItemProvider
     implements
         IEditingDomainItemProvider,
         IStructuredItemContentProvider,
@@ -43,7 +46,7 @@ public class ExpressionItemProvider
      * <!-- end-user-doc -->
      * @generated
      */
-    public ExpressionItemProvider(AdapterFactory adapterFactory) {
+    public BooleanValueItemProvider(AdapterFactory adapterFactory) {
         super(adapterFactory);
     }
 
@@ -58,19 +61,42 @@ public class ExpressionItemProvider
         if (itemPropertyDescriptors == null) {
             super.getPropertyDescriptors(object);
 
+            addValuePropertyDescriptor(object);
         }
         return itemPropertyDescriptors;
     }
 
     /**
-     * This returns Expression.gif.
+     * This adds a property descriptor for the Value feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    protected void addValuePropertyDescriptor(Object object) {
+        itemPropertyDescriptors.add
+            (createItemPropertyDescriptor
+                (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+                 getResourceLocator(),
+                 getString("_UI_BooleanValue_value_feature"),
+                 getString("_UI_PropertyDescriptor_description", "_UI_BooleanValue_value_feature", "_UI_BooleanValue_type"),
+                 ExpressionsPackage.Literals.BOOLEAN_VALUE__VALUE,
+                 true,
+                 false,
+                 false,
+                 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+                 null,
+                 null));
+    }
+
+    /**
+     * This returns BooleanValue.gif.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
     @Override
     public Object getImage(Object object) {
-        return overlayImage(object, getResourceLocator().getImage("full/obj16/Expression"));
+        return overlayImage(object, getResourceLocator().getImage("full/obj16/BooleanValue"));
     }
 
     /**
@@ -81,7 +107,11 @@ public class ExpressionItemProvider
      */
     @Override
     public String getText(Object object) {
-        return getString("_UI_Expression_type");
+        Boolean labelValue = ((BooleanValue)object).getValue();
+        String label = labelValue == null ? null : labelValue.toString();
+        return label == null || label.length() == 0 ?
+            getString("_UI_BooleanValue_type") :
+            getString("_UI_BooleanValue_type") + " " + label;
     }
 
     /**
@@ -94,6 +124,12 @@ public class ExpressionItemProvider
     @Override
     public void notifyChanged(Notification notification) {
         updateChildren(notification);
+
+        switch (notification.getFeatureID(BooleanValue.class)) {
+            case ExpressionsPackage.BOOLEAN_VALUE__VALUE:
+                fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
+                return;
+        }
         super.notifyChanged(notification);
     }
 
@@ -107,17 +143,6 @@ public class ExpressionItemProvider
     @Override
     protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object) {
         super.collectNewChildDescriptors(newChildDescriptors, object);
-    }
-
-    /**
-     * Return the resource locator for this item provider's resources.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public ResourceLocator getResourceLocator() {
-        return ExpressionsEditPlugin.INSTANCE;
     }
 
 }

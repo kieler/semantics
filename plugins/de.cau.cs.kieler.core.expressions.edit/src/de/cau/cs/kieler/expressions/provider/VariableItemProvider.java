@@ -4,12 +4,12 @@
  *
  * $Id$
  */
-package de.cau.cs.kieler.core.expressions.provider;
+package de.cau.cs.kieler.expressions.provider;
 
 
-import de.cau.cs.kieler.core.expressions.ComplexExpression;
-import de.cau.cs.kieler.core.expressions.ExpressionsFactory;
-import de.cau.cs.kieler.core.expressions.ExpressionsPackage;
+import de.cau.cs.kieler.expressions.ExpressionsFactory;
+import de.cau.cs.kieler.expressions.ExpressionsPackage;
+import de.cau.cs.kieler.expressions.Variable;
 
 import java.util.Collection;
 import java.util.List;
@@ -19,22 +19,24 @@ import org.eclipse.emf.common.notify.Notification;
 
 import org.eclipse.emf.ecore.EStructuralFeature;
 
+import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.IItemPropertySource;
 import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
+import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 
 /**
- * This is the item provider adapter for a {@link de.cau.cs.kieler.core.expressions.ComplexExpression} object.
+ * This is the item provider adapter for a {@link de.cau.cs.kieler.expressions.Variable} object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
  * @generated
  */
-public class ComplexExpressionItemProvider
-    extends ExpressionItemProvider
+public class VariableItemProvider
+    extends ValuedObjectItemProvider
     implements
         IEditingDomainItemProvider,
         IStructuredItemContentProvider,
@@ -47,7 +49,7 @@ public class ComplexExpressionItemProvider
      * <!-- end-user-doc -->
      * @generated
      */
-    public ComplexExpressionItemProvider(AdapterFactory adapterFactory) {
+    public VariableItemProvider(AdapterFactory adapterFactory) {
         super(adapterFactory);
     }
 
@@ -62,8 +64,31 @@ public class ComplexExpressionItemProvider
         if (itemPropertyDescriptors == null) {
             super.getPropertyDescriptors(object);
 
+            addConstPropertyDescriptor(object);
         }
         return itemPropertyDescriptors;
+    }
+
+    /**
+     * This adds a property descriptor for the Const feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    protected void addConstPropertyDescriptor(Object object) {
+        itemPropertyDescriptors.add
+            (createItemPropertyDescriptor
+                (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+                 getResourceLocator(),
+                 getString("_UI_Variable_const_feature"),
+                 getString("_UI_PropertyDescriptor_description", "_UI_Variable_const_feature", "_UI_Variable_type"),
+                 ExpressionsPackage.Literals.VARIABLE__CONST,
+                 true,
+                 false,
+                 false,
+                 ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE,
+                 null,
+                 null));
     }
 
     /**
@@ -78,7 +103,7 @@ public class ComplexExpressionItemProvider
     public Collection<? extends EStructuralFeature> getChildrenFeatures(Object object) {
         if (childrenFeatures == null) {
             super.getChildrenFeatures(object);
-            childrenFeatures.add(ExpressionsPackage.Literals.COMPLEX_EXPRESSION__SUB_EXPRESSIONS);
+            childrenFeatures.add(ExpressionsPackage.Literals.VARIABLE__VALUE);
         }
         return childrenFeatures;
     }
@@ -97,14 +122,14 @@ public class ComplexExpressionItemProvider
     }
 
     /**
-     * This returns ComplexExpression.gif.
+     * This returns Variable.gif.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
     @Override
     public Object getImage(Object object) {
-        return overlayImage(object, getResourceLocator().getImage("full/obj16/ComplexExpression"));
+        return overlayImage(object, getResourceLocator().getImage("full/obj16/Variable"));
     }
 
     /**
@@ -115,7 +140,10 @@ public class ComplexExpressionItemProvider
      */
     @Override
     public String getText(Object object) {
-        return getString("_UI_ComplexExpression_type");
+        String label = ((Variable)object).getName();
+        return label == null || label.length() == 0 ?
+            getString("_UI_Variable_type") :
+            getString("_UI_Variable_type") + " " + label;
     }
 
     /**
@@ -129,8 +157,11 @@ public class ComplexExpressionItemProvider
     public void notifyChanged(Notification notification) {
         updateChildren(notification);
 
-        switch (notification.getFeatureID(ComplexExpression.class)) {
-            case ExpressionsPackage.COMPLEX_EXPRESSION__SUB_EXPRESSIONS:
+        switch (notification.getFeatureID(Variable.class)) {
+            case ExpressionsPackage.VARIABLE__CONST:
+                fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
+                return;
+            case ExpressionsPackage.VARIABLE__VALUE:
                 fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
                 return;
         }
@@ -150,52 +181,67 @@ public class ComplexExpressionItemProvider
 
         newChildDescriptors.add
             (createChildParameter
-                (ExpressionsPackage.Literals.COMPLEX_EXPRESSION__SUB_EXPRESSIONS,
+                (ExpressionsPackage.Literals.VARIABLE__VALUE,
                  ExpressionsFactory.eINSTANCE.createExpression()));
 
         newChildDescriptors.add
             (createChildParameter
-                (ExpressionsPackage.Literals.COMPLEX_EXPRESSION__SUB_EXPRESSIONS,
+                (ExpressionsPackage.Literals.VARIABLE__VALUE,
                  ExpressionsFactory.eINSTANCE.createComplexExpression()));
 
         newChildDescriptors.add
             (createChildParameter
-                (ExpressionsPackage.Literals.COMPLEX_EXPRESSION__SUB_EXPRESSIONS,
+                (ExpressionsPackage.Literals.VARIABLE__VALUE,
                  ExpressionsFactory.eINSTANCE.createTextualCode()));
 
         newChildDescriptors.add
             (createChildParameter
-                (ExpressionsPackage.Literals.COMPLEX_EXPRESSION__SUB_EXPRESSIONS,
+                (ExpressionsPackage.Literals.VARIABLE__VALUE,
+                 ExpressionsFactory.eINSTANCE.createValuedObject()));
+
+        newChildDescriptors.add
+            (createChildParameter
+                (ExpressionsPackage.Literals.VARIABLE__VALUE,
+                 ExpressionsFactory.eINSTANCE.createSignal()));
+
+        newChildDescriptors.add
+            (createChildParameter
+                (ExpressionsPackage.Literals.VARIABLE__VALUE,
                  ExpressionsFactory.eINSTANCE.createSignalReference()));
 
         newChildDescriptors.add
             (createChildParameter
-                (ExpressionsPackage.Literals.COMPLEX_EXPRESSION__SUB_EXPRESSIONS,
+                (ExpressionsPackage.Literals.VARIABLE__VALUE,
+                 ExpressionsFactory.eINSTANCE.createVariable()));
+
+        newChildDescriptors.add
+            (createChildParameter
+                (ExpressionsPackage.Literals.VARIABLE__VALUE,
                  ExpressionsFactory.eINSTANCE.createVariableReference()));
 
         newChildDescriptors.add
             (createChildParameter
-                (ExpressionsPackage.Literals.COMPLEX_EXPRESSION__SUB_EXPRESSIONS,
+                (ExpressionsPackage.Literals.VARIABLE__VALUE,
                  ExpressionsFactory.eINSTANCE.createValue()));
 
         newChildDescriptors.add
             (createChildParameter
-                (ExpressionsPackage.Literals.COMPLEX_EXPRESSION__SUB_EXPRESSIONS,
+                (ExpressionsPackage.Literals.VARIABLE__VALUE,
                  ExpressionsFactory.eINSTANCE.createIntValue()));
 
         newChildDescriptors.add
             (createChildParameter
-                (ExpressionsPackage.Literals.COMPLEX_EXPRESSION__SUB_EXPRESSIONS,
+                (ExpressionsPackage.Literals.VARIABLE__VALUE,
                  ExpressionsFactory.eINSTANCE.createFloatValue()));
 
         newChildDescriptors.add
             (createChildParameter
-                (ExpressionsPackage.Literals.COMPLEX_EXPRESSION__SUB_EXPRESSIONS,
+                (ExpressionsPackage.Literals.VARIABLE__VALUE,
                  ExpressionsFactory.eINSTANCE.createBooleanValue()));
 
         newChildDescriptors.add
             (createChildParameter
-                (ExpressionsPackage.Literals.COMPLEX_EXPRESSION__SUB_EXPRESSIONS,
+                (ExpressionsPackage.Literals.VARIABLE__VALUE,
                  ExpressionsFactory.eINSTANCE.createOperatorExpression()));
     }
 

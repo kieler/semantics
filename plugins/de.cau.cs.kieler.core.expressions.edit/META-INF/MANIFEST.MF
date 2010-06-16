@@ -8,7 +8,7 @@ Bundle-Activator: de.cau.cs.kieler.core.expressions.provider.ExpressionsEditPlug
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
-Export-Package: de.cau.cs.kieler.core.expressions.provider
+Export-Package: de.cau.cs.kieler.expressions.provider
 Require-Bundle: org.eclipse.core.runtime,
  de.cau.cs.kieler.core.expressions;visibility:=reexport,
  org.eclipse.emf.edit;visibility:=reexport

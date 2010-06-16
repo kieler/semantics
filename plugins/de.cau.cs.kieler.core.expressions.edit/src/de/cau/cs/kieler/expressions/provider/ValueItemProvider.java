@@ -4,11 +4,8 @@
  *
  * $Id$
  */
-package de.cau.cs.kieler.core.expressions.provider;
+package de.cau.cs.kieler.expressions.provider;
 
-
-import de.cau.cs.kieler.core.expressions.ExpressionsPackage;
-import de.cau.cs.kieler.core.expressions.FloatValue;
 
 import java.util.Collection;
 import java.util.List;
@@ -16,24 +13,21 @@ import java.util.List;
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 
-import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.IItemPropertySource;
 import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
-import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
-import org.eclipse.emf.edit.provider.ViewerNotification;
 
 /**
- * This is the item provider adapter for a {@link de.cau.cs.kieler.core.expressions.FloatValue} object.
+ * This is the item provider adapter for a {@link de.cau.cs.kieler.expressions.Value} object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
  * @generated
  */
-public class FloatValueItemProvider
-    extends ValueItemProvider
+public class ValueItemProvider
+    extends ExpressionItemProvider
     implements
         IEditingDomainItemProvider,
         IStructuredItemContentProvider,
@@ -46,7 +40,7 @@ public class FloatValueItemProvider
      * <!-- end-user-doc -->
      * @generated
      */
-    public FloatValueItemProvider(AdapterFactory adapterFactory) {
+    public ValueItemProvider(AdapterFactory adapterFactory) {
         super(adapterFactory);
     }
 
@@ -61,42 +55,19 @@ public class FloatValueItemProvider
         if (itemPropertyDescriptors == null) {
             super.getPropertyDescriptors(object);
 
-            addValuePropertyDescriptor(object);
         }
         return itemPropertyDescriptors;
     }
 
     /**
-     * This adds a property descriptor for the Value feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    protected void addValuePropertyDescriptor(Object object) {
-        itemPropertyDescriptors.add
-            (createItemPropertyDescriptor
-                (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-                 getResourceLocator(),
-                 getString("_UI_FloatValue_value_feature"),
-                 getString("_UI_PropertyDescriptor_description", "_UI_FloatValue_value_feature", "_UI_FloatValue_type"),
-                 ExpressionsPackage.Literals.FLOAT_VALUE__VALUE,
-                 true,
-                 false,
-                 false,
-                 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
-                 null,
-                 null));
-    }
-
-    /**
-     * This returns FloatValue.gif.
+     * This returns Value.gif.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
     @Override
     public Object getImage(Object object) {
-        return overlayImage(object, getResourceLocator().getImage("full/obj16/FloatValue"));
+        return overlayImage(object, getResourceLocator().getImage("full/obj16/Value"));
     }
 
     /**
@@ -107,11 +78,7 @@ public class FloatValueItemProvider
      */
     @Override
     public String getText(Object object) {
-        Float labelValue = ((FloatValue)object).getValue();
-        String label = labelValue == null ? null : labelValue.toString();
-        return label == null || label.length() == 0 ?
-            getString("_UI_FloatValue_type") :
-            getString("_UI_FloatValue_type") + " " + label;
+        return getString("_UI_Value_type");
     }
 
     /**
@@ -124,12 +91,6 @@ public class FloatValueItemProvider
     @Override
     public void notifyChanged(Notification notification) {
         updateChildren(notification);
-
-        switch (notification.getFeatureID(FloatValue.class)) {
-            case ExpressionsPackage.FLOAT_VALUE__VALUE:
-                fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
-                return;
-        }
         super.notifyChanged(notification);
     }
 

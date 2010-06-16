@@ -4,10 +4,12 @@
  *
  * $Id$
  */
-package de.cau.cs.kieler.core.expressions.provider;
+package de.cau.cs.kieler.expressions.provider;
 
 
-import de.cau.cs.kieler.core.expressions.ExpressionsPackage;
+import de.cau.cs.kieler.expressions.ExpressionsPackage;
+import de.cau.cs.kieler.expressions.OperatorExpression;
+import de.cau.cs.kieler.expressions.OperatorType;
 
 import java.util.Collection;
 import java.util.List;
@@ -22,14 +24,16 @@ import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.IItemPropertySource;
 import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
+import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
+import org.eclipse.emf.edit.provider.ViewerNotification;
 
 /**
- * This is the item provider adapter for a {@link de.cau.cs.kieler.core.expressions.VariableReference} object.
+ * This is the item provider adapter for a {@link de.cau.cs.kieler.expressions.OperatorExpression} object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
  * @generated
  */
-public class VariableReferenceItemProvider
+public class OperatorExpressionItemProvider
     extends ComplexExpressionItemProvider
     implements
         IEditingDomainItemProvider,
@@ -43,7 +47,7 @@ public class VariableReferenceItemProvider
      * <!-- end-user-doc -->
      * @generated
      */
-    public VariableReferenceItemProvider(AdapterFactory adapterFactory) {
+    public OperatorExpressionItemProvider(AdapterFactory adapterFactory) {
         super(adapterFactory);
     }
 
@@ -58,42 +62,42 @@ public class VariableReferenceItemProvider
         if (itemPropertyDescriptors == null) {
             super.getPropertyDescriptors(object);
 
-            addVariablePropertyDescriptor(object);
+            addOperatorPropertyDescriptor(object);
         }
         return itemPropertyDescriptors;
     }
 
     /**
-     * This adds a property descriptor for the Variable feature.
+     * This adds a property descriptor for the Operator feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    protected void addVariablePropertyDescriptor(Object object) {
+    protected void addOperatorPropertyDescriptor(Object object) {
         itemPropertyDescriptors.add
             (createItemPropertyDescriptor
                 (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
                  getResourceLocator(),
-                 getString("_UI_VariableReference_variable_feature"),
-                 getString("_UI_PropertyDescriptor_description", "_UI_VariableReference_variable_feature", "_UI_VariableReference_type"),
-                 ExpressionsPackage.Literals.VARIABLE_REFERENCE__VARIABLE,
+                 getString("_UI_OperatorExpression_operator_feature"),
+                 getString("_UI_PropertyDescriptor_description", "_UI_OperatorExpression_operator_feature", "_UI_OperatorExpression_type"),
+                 ExpressionsPackage.Literals.OPERATOR_EXPRESSION__OPERATOR,
                  true,
                  false,
-                 true,
-                 null,
+                 false,
+                 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
                  null,
                  null));
     }
 
     /**
-     * This returns VariableReference.gif.
+     * This returns OperatorExpression.gif.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
     @Override
     public Object getImage(Object object) {
-        return overlayImage(object, getResourceLocator().getImage("full/obj16/VariableReference"));
+        return overlayImage(object, getResourceLocator().getImage("full/obj16/OperatorExpression"));
     }
 
     /**
@@ -104,7 +108,11 @@ public class VariableReferenceItemProvider
      */
     @Override
     public String getText(Object object) {
-        return getString("_UI_VariableReference_type");
+        OperatorType labelValue = ((OperatorExpression)object).getOperator();
+        String label = labelValue == null ? null : labelValue.toString();
+        return label == null || label.length() == 0 ?
+            getString("_UI_OperatorExpression_type") :
+            getString("_UI_OperatorExpression_type") + " " + label;
     }
 
     /**
@@ -117,6 +125,12 @@ public class VariableReferenceItemProvider
     @Override
     public void notifyChanged(Notification notification) {
         updateChildren(notification);
+
+        switch (notification.getFeatureID(OperatorExpression.class)) {
+            case ExpressionsPackage.OPERATOR_EXPRESSION__OPERATOR:
+                fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
+                return;
+        }
         super.notifyChanged(notification);
     }
 

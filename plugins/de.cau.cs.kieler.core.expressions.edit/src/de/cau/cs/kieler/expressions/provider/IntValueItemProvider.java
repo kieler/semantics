@@ -4,11 +4,11 @@
  *
  * $Id$
  */
-package de.cau.cs.kieler.core.expressions.provider;
+package de.cau.cs.kieler.expressions.provider;
 
 
-import de.cau.cs.kieler.core.expressions.BooleanValue;
-import de.cau.cs.kieler.core.expressions.ExpressionsPackage;
+import de.cau.cs.kieler.expressions.ExpressionsPackage;
+import de.cau.cs.kieler.expressions.IntValue;
 
 import java.util.Collection;
 import java.util.List;
@@ -27,12 +27,12 @@ import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 
 /**
- * This is the item provider adapter for a {@link de.cau.cs.kieler.core.expressions.BooleanValue} object.
+ * This is the item provider adapter for a {@link de.cau.cs.kieler.expressions.IntValue} object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
  * @generated
  */
-public class BooleanValueItemProvider
+public class IntValueItemProvider
     extends ValueItemProvider
     implements
         IEditingDomainItemProvider,
@@ -46,7 +46,7 @@ public class BooleanValueItemProvider
      * <!-- end-user-doc -->
      * @generated
      */
-    public BooleanValueItemProvider(AdapterFactory adapterFactory) {
+    public IntValueItemProvider(AdapterFactory adapterFactory) {
         super(adapterFactory);
     }
 
@@ -77,9 +77,9 @@ public class BooleanValueItemProvider
             (createItemPropertyDescriptor
                 (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
                  getResourceLocator(),
-                 getString("_UI_BooleanValue_value_feature"),
-                 getString("_UI_PropertyDescriptor_description", "_UI_BooleanValue_value_feature", "_UI_BooleanValue_type"),
-                 ExpressionsPackage.Literals.BOOLEAN_VALUE__VALUE,
+                 getString("_UI_IntValue_value_feature"),
+                 getString("_UI_PropertyDescriptor_description", "_UI_IntValue_value_feature", "_UI_IntValue_type"),
+                 ExpressionsPackage.Literals.INT_VALUE__VALUE,
                  true,
                  false,
                  false,
@@ -89,14 +89,14 @@ public class BooleanValueItemProvider
     }
 
     /**
-     * This returns BooleanValue.gif.
+     * This returns IntValue.gif.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
     @Override
     public Object getImage(Object object) {
-        return overlayImage(object, getResourceLocator().getImage("full/obj16/BooleanValue"));
+        return overlayImage(object, getResourceLocator().getImage("full/obj16/IntValue"));
     }
 
     /**
@@ -107,11 +107,11 @@ public class BooleanValueItemProvider
      */
     @Override
     public String getText(Object object) {
-        Boolean labelValue = ((BooleanValue)object).getValue();
+        Integer labelValue = ((IntValue)object).getValue();
         String label = labelValue == null ? null : labelValue.toString();
         return label == null || label.length() == 0 ?
-            getString("_UI_BooleanValue_type") :
-            getString("_UI_BooleanValue_type") + " " + label;
+            getString("_UI_IntValue_type") :
+            getString("_UI_IntValue_type") + " " + label;
     }
 
     /**
@@ -125,8 +125,8 @@ public class BooleanValueItemProvider
     public void notifyChanged(Notification notification) {
         updateChildren(notification);
 
-        switch (notification.getFeatureID(BooleanValue.class)) {
-            case ExpressionsPackage.BOOLEAN_VALUE__VALUE:
+        switch (notification.getFeatureID(IntValue.class)) {
+            case ExpressionsPackage.INT_VALUE__VALUE:
                 fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
                 return;
         }

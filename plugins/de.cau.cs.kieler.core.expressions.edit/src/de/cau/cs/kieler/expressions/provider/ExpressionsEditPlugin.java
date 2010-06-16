@@ -4,7 +4,7 @@
  *
  * $Id$
  */
-package de.cau.cs.kieler.core.expressions.provider;
+package de.cau.cs.kieler.expressions.provider;
 
 import org.eclipse.emf.common.EMFPlugin;
 
