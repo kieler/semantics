@@ -1,4 +1,5 @@
 import synccharts;
+import expressions;
 
 // ================================================================================================
 // Additional restrictions for KLEPTO simulation

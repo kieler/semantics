@@ -6,8 +6,8 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.transaction.NotificationFilter;
 import org.eclipse.emf.transaction.TransactionalEditingDomain;
 
-import de.cau.cs.kieler.synccharts.SyncchartsPackage;
-import de.cau.cs.kieler.synccharts.ValuedObject;
+import de.cau.cs.kieler.expressions.ExpressionsPackage;
+import de.cau.cs.kieler.expressions.ValuedObject;
 import de.cau.cs.kieler.synccharts.contentadapter.FireOnceTriggerListener;
 
 /**
@@ -21,7 +21,7 @@ public class TriggerListenerRenamedSignals extends FireOnceTriggerListener {
 
     public TriggerListenerRenamedSignals() {
         super(NotificationFilter
-                .createFeatureFilter(SyncchartsPackage.eINSTANCE
+                .createFeatureFilter(ExpressionsPackage.eINSTANCE
                         .getValuedObject_Name()));
     }
 

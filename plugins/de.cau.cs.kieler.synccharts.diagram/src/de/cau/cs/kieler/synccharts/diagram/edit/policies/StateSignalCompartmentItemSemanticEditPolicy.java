@@ -23,7 +23,7 @@ public class StateSignalCompartmentItemSemanticEditPolicy extends
      * @generated
      */
     protected Command getCreateCommand(CreateElementRequest req) {
-        if (SyncchartsElementTypes.Signal_3011 == req.getElementType()) {
+        if (SyncchartsElementTypes.Signal_3021 == req.getElementType()) {
             return getGEFWrapper(new SignalCreateCommand(req));
         }
         return super.getCreateCommand(req);

@@ -9,6 +9,7 @@ import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.notify.AdapterFactory;
+import org.eclipse.emf.ecore.provider.EcoreItemProviderAdapterFactory;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
 import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
@@ -20,6 +21,8 @@ import org.eclipse.swt.graphics.Image;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
+import de.cau.cs.kieler.annotations.provider.AnnotationsItemProviderAdapterFactory;
+import de.cau.cs.kieler.expressions.provider.ExpressionsItemProviderAdapterFactory;
 import de.cau.cs.kieler.synccharts.provider.SyncchartsItemProviderAdapterFactory;
 
 /**
@@ -35,8 +38,7 @@ public class SyncchartsDiagramEditorPlugin extends AbstractUIPlugin {
     /**
      * @generated
      */
-    public static final PreferencesHint DIAGRAM_PREFERENCES_HINT = new PreferencesHint(
-            ID);
+    public static final PreferencesHint DIAGRAM_PREFERENCES_HINT = new PreferencesHint(ID);
 
     /**
      * @generated
@@ -65,8 +67,7 @@ public class SyncchartsDiagramEditorPlugin extends AbstractUIPlugin {
     public void start(BundleContext context) throws Exception {
         super.start(context);
         instance = this;
-        PreferencesHint.registerPreferenceStore(DIAGRAM_PREFERENCES_HINT,
-                getPreferenceStore());
+        PreferencesHint.registerPreferenceStore(DIAGRAM_PREFERENCES_HINT, getPreferenceStore());
         adapterFactory = createAdapterFactory();
 
         //de.cau.cs.kieler.synccharts.labelparser.bridge.SyncchartsContentAdapter.init();
@@ -103,6 +104,9 @@ public class SyncchartsDiagramEditorPlugin extends AbstractUIPlugin {
      */
     protected void fillItemProviderFactories(List factories) {
         factories.add(new SyncchartsItemProviderAdapterFactory());
+        factories.add(new AnnotationsItemProviderAdapterFactory());
+        factories.add(new ExpressionsItemProviderAdapterFactory());
+        factories.add(new EcoreItemProviderAdapterFactory());
         factories.add(new ResourceItemProviderAdapterFactory());
         factories.add(new ReflectiveItemProviderAdapterFactory());
     }
@@ -118,8 +122,8 @@ public class SyncchartsDiagramEditorPlugin extends AbstractUIPlugin {
      * @generated
      */
     public ImageDescriptor getItemImageDescriptor(Object item) {
-        IItemLabelProvider labelProvider = (IItemLabelProvider) adapterFactory
-                .adapt(item, IItemLabelProvider.class);
+        IItemLabelProvider labelProvider = (IItemLabelProvider) adapterFactory.adapt(item,
+                IItemLabelProvider.class);
         if (labelProvider != null) {
             return ExtendedImageRegistry.getInstance().getImageDescriptor(
                     labelProvider.getImage(item));
@@ -209,8 +213,8 @@ public class SyncchartsDiagramEditorPlugin extends AbstractUIPlugin {
             error = throwable.getMessage();
         }
         getLog().log(
-                new Status(IStatus.ERROR, SyncchartsDiagramEditorPlugin.ID,
-                        IStatus.OK, error, throwable));
+                new Status(IStatus.ERROR, SyncchartsDiagramEditorPlugin.ID, IStatus.OK, error,
+                        throwable));
         debug(error, throwable);
     }
 
@@ -229,8 +233,8 @@ public class SyncchartsDiagramEditorPlugin extends AbstractUIPlugin {
             message = throwable.getMessage();
         }
         getLog().log(
-                new Status(IStatus.INFO, SyncchartsDiagramEditorPlugin.ID,
-                        IStatus.OK, message, throwable));
+                new Status(IStatus.INFO, SyncchartsDiagramEditorPlugin.ID, IStatus.OK, message,
+                        throwable));
         debug(message, throwable);
     }
 

@@ -15,10 +15,10 @@ import org.eclipse.xtext.scoping.IScope;
 import org.eclipse.xtext.scoping.impl.AbstractDeclarativeScopeProvider;
 import org.eclipse.xtext.scoping.impl.SimpleScope;
 
+import de.cau.cs.kieler.expressions.Signal;
+import de.cau.cs.kieler.expressions.Variable;
 import de.cau.cs.kieler.synccharts.Region;
-import de.cau.cs.kieler.synccharts.Signal;
 import de.cau.cs.kieler.synccharts.State;
-import de.cau.cs.kieler.synccharts.Variable;
 
 /**
  * This class contains custom scoping description.

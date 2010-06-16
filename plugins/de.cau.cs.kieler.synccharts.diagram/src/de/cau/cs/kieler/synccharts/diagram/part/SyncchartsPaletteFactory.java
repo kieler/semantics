@@ -30,8 +30,7 @@ public class SyncchartsPaletteFactory {
      * @generated
      */
     private PaletteContainer createSynccharts1Group() {
-        PaletteGroup paletteContainer = new PaletteGroup(
-                Messages.Synccharts1Group_title);
+        PaletteGroup paletteContainer = new PaletteGroup(Messages.Synccharts1Group_title);
         paletteContainer.setId("createSynccharts1Group"); //$NON-NLS-1$
         paletteContainer.add(createState1CreationTool());
         paletteContainer.add(createTransition2CreationTool());
@@ -46,8 +45,7 @@ public class SyncchartsPaletteFactory {
         List/*<IElementType>*/types = new ArrayList/*<IElementType>*/(2);
         types.add(SyncchartsElementTypes.State_2002);
         types.add(SyncchartsElementTypes.State_3010);
-        NodeToolEntry entry = new NodeToolEntry(
-                Messages.State1CreationTool_title,
+        NodeToolEntry entry = new NodeToolEntry(Messages.State1CreationTool_title,
                 Messages.State1CreationTool_desc, types);
         entry.setId("createState1CreationTool"); //$NON-NLS-1$
         entry.setSmallIcon(SyncchartsElementTypes
@@ -62,8 +60,7 @@ public class SyncchartsPaletteFactory {
     private ToolEntry createTransition2CreationTool() {
         List/*<IElementType>*/types = new ArrayList/*<IElementType>*/(1);
         types.add(SyncchartsElementTypes.Transition_4002);
-        LinkToolEntry entry = new LinkToolEntry(
-                Messages.Transition2CreationTool_title,
+        LinkToolEntry entry = new LinkToolEntry(Messages.Transition2CreationTool_title,
                 Messages.Transition2CreationTool_desc, types);
         entry.setId("createTransition2CreationTool"); //$NON-NLS-1$
         entry.setSmallIcon(SyncchartsElementTypes
@@ -78,8 +75,7 @@ public class SyncchartsPaletteFactory {
     private ToolEntry createRegion3CreationTool() {
         List/*<IElementType>*/types = new ArrayList/*<IElementType>*/(1);
         types.add(SyncchartsElementTypes.Region_3009);
-        NodeToolEntry entry = new NodeToolEntry(
-                Messages.Region3CreationTool_title,
+        NodeToolEntry entry = new NodeToolEntry(Messages.Region3CreationTool_title,
                 Messages.Region3CreationTool_desc, types);
         entry.setId("createRegion3CreationTool"); //$NON-NLS-1$
         entry.setSmallIcon(SyncchartsElementTypes
@@ -101,8 +97,7 @@ public class SyncchartsPaletteFactory {
         /**
          * @generated
          */
-        private NodeToolEntry(String title, String description,
-                List elementTypes) {
+        private NodeToolEntry(String title, String description, List elementTypes) {
             super(title, description, null, null);
             this.elementTypes = elementTypes;
         }
@@ -130,8 +125,7 @@ public class SyncchartsPaletteFactory {
         /**
          * @generated
          */
-        private LinkToolEntry(String title, String description,
-                List relationshipTypes) {
+        private LinkToolEntry(String title, String description, List relationshipTypes) {
             super(title, description, null, null);
             this.relationshipTypes = relationshipTypes;
         }

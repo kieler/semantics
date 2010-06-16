@@ -14,14 +14,23 @@
 
 package de.cau.cs.kieler.synccharts.sim.ptolemy.oaw;
 
-import java.util.Hashtable;
 import java.util.LinkedList;
 
-import de.cau.cs.kieler.synccharts.*;
-import de.cau.cs.kieler.synccharts.sim.ptolemy.SyncchartsSimPtolemyPlugin;
-
-import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.BasicEList;
+import org.eclipse.emf.common.util.EList;
+
+import de.cau.cs.kieler.expressions.Expression;
+import de.cau.cs.kieler.expressions.OperatorExpression;
+import de.cau.cs.kieler.expressions.OperatorType;
+import de.cau.cs.kieler.expressions.Signal;
+import de.cau.cs.kieler.expressions.SignalReference;
+import de.cau.cs.kieler.expressions.Value;
+import de.cau.cs.kieler.synccharts.Effect;
+import de.cau.cs.kieler.synccharts.Emission;
+import de.cau.cs.kieler.synccharts.Region;
+import de.cau.cs.kieler.synccharts.State;
+import de.cau.cs.kieler.synccharts.Transition;
+import de.cau.cs.kieler.synccharts.sim.ptolemy.SyncchartsSimPtolemyPlugin;
 
 /**
  * The class XtendJava implements some Java escape code used in the model2model

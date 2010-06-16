@@ -18,9 +18,6 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.xtext.parsetree.reconstr.ITransientValueService;
 
-import de.cau.cs.kieler.synccharts.Action;
-import de.cau.cs.kieler.synccharts.Effect;
-import de.cau.cs.kieler.synccharts.Expression;
 import de.cau.cs.kieler.synccharts.SyncchartsPackage;
 import de.cau.cs.kieler.synccharts.Transition;
 

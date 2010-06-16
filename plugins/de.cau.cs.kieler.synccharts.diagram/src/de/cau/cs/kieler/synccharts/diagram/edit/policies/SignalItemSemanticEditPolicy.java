@@ -13,14 +13,13 @@ import de.cau.cs.kieler.synccharts.diagram.providers.SyncchartsElementTypes;
 /**
  * @generated
  */
-public class SignalItemSemanticEditPolicy extends
-        SyncchartsBaseItemSemanticEditPolicy {
+public class SignalItemSemanticEditPolicy extends SyncchartsBaseItemSemanticEditPolicy {
 
     /**
      * @generated
      */
     public SignalItemSemanticEditPolicy() {
-        super(SyncchartsElementTypes.Signal_3011);
+        super(SyncchartsElementTypes.Signal_3021);
     }
 
     /**
@@ -28,8 +27,8 @@ public class SignalItemSemanticEditPolicy extends
      */
     protected Command getDestroyElementCommand(DestroyElementRequest req) {
         View view = (View) getHost().getModel();
-        CompositeTransactionalCommand cmd = new CompositeTransactionalCommand(
-                getEditingDomain(), null);
+        CompositeTransactionalCommand cmd = new CompositeTransactionalCommand(getEditingDomain(),
+                null);
         cmd.setTransactionNestingEnabled(false);
         EAnnotation annotation = view.getEAnnotation("Shortcut"); //$NON-NLS-1$
         if (annotation == null) {

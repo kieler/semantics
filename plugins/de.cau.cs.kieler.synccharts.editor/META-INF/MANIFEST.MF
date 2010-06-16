@@ -12,8 +12,13 @@ Export-Package: de.cau.cs.kieler.synccharts.editor,
  de.cau.cs.kieler.synccharts.presentation
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.core.resources;visibility:=reexport,
+ de.cau.cs.kieler.synccharts;visibility:=reexport,
  de.cau.cs.kieler.synccharts.edit;visibility:=reexport,
  org.eclipse.emf.ecore.xmi;visibility:=reexport,
  org.eclipse.emf.edit.ui;visibility:=reexport,
- org.eclipse.ui.ide;visibility:=reexport
+ org.eclipse.ui.ide;visibility:=reexport,
+ de.cau.cs.kieler.core.annotations;bundle-version="0.1.0",
+ de.cau.cs.kieler.core.expressions;bundle-version="0.1.0",
+ de.cau.cs.kieler.core.annotations.edit;bundle-version="0.1.0",
+ de.cau.cs.kieler.core.expressions.edit;bundle-version="1.0.0"
 Bundle-ActivationPolicy: lazy

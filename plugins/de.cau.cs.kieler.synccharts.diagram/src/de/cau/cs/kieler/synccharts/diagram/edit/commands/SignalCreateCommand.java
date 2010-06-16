@@ -12,8 +12,9 @@ import org.eclipse.gmf.runtime.emf.type.core.requests.ConfigureRequest;
 import org.eclipse.gmf.runtime.emf.type.core.requests.CreateElementRequest;
 import org.eclipse.gmf.runtime.notation.View;
 
+import de.cau.cs.kieler.expressions.ExpressionsFactory;
+import de.cau.cs.kieler.expressions.Signal;
 import de.cau.cs.kieler.synccharts.Scope;
-import de.cau.cs.kieler.synccharts.Signal;
 import de.cau.cs.kieler.synccharts.SyncchartsFactory;
 
 /**
@@ -33,8 +34,7 @@ public class SignalCreateCommand extends EditElementCommand {
      * @generated
      */
     protected EObject getElementToEdit() {
-        EObject container = ((CreateElementRequest) getRequest())
-                .getContainer();
+        EObject container = ((CreateElementRequest) getRequest()).getContainer();
         if (container instanceof View) {
             container = ((View) container).getElement();
         }
@@ -52,9 +52,9 @@ public class SignalCreateCommand extends EditElementCommand {
     /**
      * @generated
      */
-    protected CommandResult doExecuteWithResult(IProgressMonitor monitor,
-            IAdaptable info) throws ExecutionException {
-        Signal newElement = SyncchartsFactory.eINSTANCE.createSignal();
+    protected CommandResult doExecuteWithResult(IProgressMonitor monitor, IAdaptable info)
+            throws ExecutionException {
+        Signal newElement = ExpressionsFactory.eINSTANCE.createSignal();
 
         Scope owner = (Scope) getElementToEdit();
         owner.getSignals().add(newElement);
@@ -68,17 +68,14 @@ public class SignalCreateCommand extends EditElementCommand {
     /**
      * @generated
      */
-    protected void doConfigure(Signal newElement, IProgressMonitor monitor,
-            IAdaptable info) throws ExecutionException {
-        IElementType elementType = ((CreateElementRequest) getRequest())
-                .getElementType();
-        ConfigureRequest configureRequest = new ConfigureRequest(
-                getEditingDomain(), newElement, elementType);
-        configureRequest.setClientContext(((CreateElementRequest) getRequest())
-                .getClientContext());
+    protected void doConfigure(Signal newElement, IProgressMonitor monitor, IAdaptable info)
+            throws ExecutionException {
+        IElementType elementType = ((CreateElementRequest) getRequest()).getElementType();
+        ConfigureRequest configureRequest = new ConfigureRequest(getEditingDomain(), newElement,
+                elementType);
+        configureRequest.setClientContext(((CreateElementRequest) getRequest()).getClientContext());
         configureRequest.addParameters(getRequest().getParameters());
-        ICommand configureCommand = elementType
-                .getEditCommand(configureRequest);
+        ICommand configureCommand = elementType.getEditCommand(configureRequest);
         if (configureCommand != null && configureCommand.canExecute()) {
             configureCommand.execute(monitor, info);
         }

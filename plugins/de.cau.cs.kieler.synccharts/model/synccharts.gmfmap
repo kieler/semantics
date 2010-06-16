@@ -84,7 +84,7 @@
             href="synccharts.ecore#//Scope/signals"/>
         <ownedChild>
           <domainMetaElement
-              href="synccharts.ecore#//Signal"/>
+              href="../../de.cau.cs.kieler.core.expressions/model/expressions.ecore#//Signal"/>
           <labelMappings
               xsi:type="gmfmap:FeatureLabelMapping"
               viewPattern="{0},"
@@ -93,7 +93,7 @@
             <diagramLabel
                 href="synccharts.gmfgraph#SignalName"/>
             <features
-                href="synccharts.ecore#//ValuedObject/name"/>
+                href="../../de.cau.cs.kieler.core.expressions/model/expressions.ecore#//ValuedObject/name"/>
           </labelMappings>
           <diagramNode
               href="synccharts.gmfgraph#InvisibleNode"/>
@@ -199,15 +199,15 @@
             href="synccharts.ecore#//Scope/bodyText"/>
         <ownedChild>
           <domainMetaElement
-              href="synccharts.ecore#//TextualCode"/>
+              href="../../de.cau.cs.kieler.core.expressions/model/expressions.ecore#//TextualCode"/>
           <labelMappings
               xsi:type="gmfmap:FeatureLabelMapping">
             <diagramLabel
                 href="synccharts.gmfgraph#BodyText"/>
             <features
-                href="synccharts.ecore#//TextualCode/code"/>
+                href="../../de.cau.cs.kieler.core.expressions/model/expressions.ecore#//TextualCode/code"/>
             <editableFeatures
-                href="synccharts.ecore#//TextualCode/code"/>
+                href="../../de.cau.cs.kieler.core.expressions/model/expressions.ecore#//TextualCode/code"/>
           </labelMappings>
           <diagramNode
               href="synccharts.gmfgraph#BodyText"/>

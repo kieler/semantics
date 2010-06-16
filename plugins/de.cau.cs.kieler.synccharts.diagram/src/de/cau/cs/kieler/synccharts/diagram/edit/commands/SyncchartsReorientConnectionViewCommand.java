@@ -13,8 +13,7 @@ import org.eclipse.gmf.runtime.notation.View;
 /**
  * @generated
  */
-public class SyncchartsReorientConnectionViewCommand extends
-        AbstractTransactionalCommand {
+public class SyncchartsReorientConnectionViewCommand extends AbstractTransactionalCommand {
 
     /**
      * @generated
@@ -24,8 +23,8 @@ public class SyncchartsReorientConnectionViewCommand extends
     /**
      * @generated
      */
-    public SyncchartsReorientConnectionViewCommand(
-            TransactionalEditingDomain editingDomain, String label) {
+    public SyncchartsReorientConnectionViewCommand(TransactionalEditingDomain editingDomain,
+            String label) {
         super(editingDomain, label, null);
     }
 
@@ -57,8 +56,7 @@ public class SyncchartsReorientConnectionViewCommand extends
     /**
      * @generated
      */
-    protected CommandResult doExecuteWithResult(
-            IProgressMonitor progressMonitor, IAdaptable info) {
+    protected CommandResult doExecuteWithResult(IProgressMonitor progressMonitor, IAdaptable info) {
         assert null != edgeAdaptor : "Null child in SyncchartsReorientConnectionViewCommand"; //$NON-NLS-1$
         Edge edge = (Edge) getEdgeAdaptor().getAdapter(Edge.class);
         assert null != edge : "Null edge in SyncchartsReorientConnectionViewCommand"; //$NON-NLS-1$

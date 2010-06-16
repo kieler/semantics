@@ -1,6 +1,9 @@
 import synccharts;
 import utilities;
 
+extension org::eclipse::xtend::util::stdlib::io;          // debug printouts
+extension de::cau::cs::kieler::ksbase::util::userdialogs; // functions to request values from user
+
 //Adds a successor to the given state 
 Void addSuccessorState(State source):
  let target = new State:
@@ -325,7 +328,8 @@ List[Region] getRegionList():
 ;
  
 // used for debug output
-Void debug(Object object):
+// FIXME: haf: a function "debug" is already defined by the io stdlib
+Void myDebug(Object object):
  JAVA de.cau.cs.kieler.synccharts.ksbase.util.OptimizeUtils.debug(java.lang.Object)
 ;
 
@@ -620,3 +624,22 @@ List[Transition] getIncomingTransitions(State state):
 ;
 
 // === end dummy states ===
+
+
+
+// === Refactoring functions ===
+// @author haf
+
+Void renameSignalVariable(State state):
+	let newName = getStringFromUser("Renaming Signal or Variable","A"):
+	let newInt = getIntFromUser("Enter Integer please!",5):
+	let newFloat = getRealFromUser("Enter Float please!",5.3):
+	let newBool = getBooleanFromUser("Enter Boolean please!"):
+	let list = getObjectFromListFromUser("Select one item please!",{"One","Two","Three"}):
+	info("renaming")
+;
+
+Boolean hasSignalsVariables(State scope):
+	(scope.signals.size > 0 || scope.variables.size > 0)
+;
+

@@ -39,9 +39,9 @@ import org.eclipse.xtext.resource.XtextResourceSet;
 import com.google.inject.Injector;
 
 import de.cau.cs.kieler.core.KielerModelException;
+import de.cau.cs.kieler.expressions.Expression;
 import de.cau.cs.kieler.synccharts.Action;
 import de.cau.cs.kieler.synccharts.Effect;
-import de.cau.cs.kieler.synccharts.Expression;
 import de.cau.cs.kieler.synccharts.labelparser.scoping.ActionLabelScopeProvider;
 
 /**

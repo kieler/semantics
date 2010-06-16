@@ -27,13 +27,14 @@ import org.junit.Test;
 import com.google.inject.Injector;
 
 import de.cau.cs.kieler.core.KielerException;
+import de.cau.cs.kieler.expressions.ExpressionsFactory;
+import de.cau.cs.kieler.expressions.Signal;
+import de.cau.cs.kieler.expressions.Variable;
 import de.cau.cs.kieler.synccharts.Action;
 import de.cau.cs.kieler.synccharts.Region;
-import de.cau.cs.kieler.synccharts.Signal;
 import de.cau.cs.kieler.synccharts.State;
 import de.cau.cs.kieler.synccharts.SyncchartsFactory;
 import de.cau.cs.kieler.synccharts.Transition;
-import de.cau.cs.kieler.synccharts.Variable;
 import de.cau.cs.kieler.synccharts.labelparser.ActionLabelStandaloneSetup;
 import de.cau.cs.kieler.synccharts.labelparser.bridge.ActionLabelParseCommand;
 
@@ -78,14 +79,14 @@ public class ParserSerializerTest {
 
         // Create one signal for each letter
         for (int i = A; i <= Z; i++) { // ASCII letters A to Z
-            Signal sig = SyncchartsFactory.eINSTANCE.createSignal();
+            Signal sig = ExpressionsFactory.eINSTANCE.createSignal();
             char[] letters = Character.toChars(i);
             String letter = String.copyValueOf(letters);
             sig.setName(letter);
             sig.setIsInput(true);
             rootState.getSignals().add(sig);
 
-            Variable var = SyncchartsFactory.eINSTANCE.createVariable();
+            Variable var = ExpressionsFactory.eINSTANCE.createVariable();
             var.setName("var" + letter);
             region.getVariables().add(var);
         }

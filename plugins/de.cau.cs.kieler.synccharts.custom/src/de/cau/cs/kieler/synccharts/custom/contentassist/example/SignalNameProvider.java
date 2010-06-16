@@ -5,7 +5,7 @@ import java.util.HashMap;
 
 import org.eclipse.emf.ecore.EObject;
 
-import de.cau.cs.kieler.synccharts.Signal;
+import de.cau.cs.kieler.expressions.Signal;
 import de.cau.cs.kieler.synccharts.State;
 import de.cau.cs.kieler.synccharts.Transition;
 import de.cau.cs.kieler.synccharts.custom.contentassist.providers.AbstractEObjectProvider;

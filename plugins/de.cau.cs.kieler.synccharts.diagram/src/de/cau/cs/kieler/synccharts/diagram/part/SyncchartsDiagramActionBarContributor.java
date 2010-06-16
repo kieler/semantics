@@ -13,8 +13,7 @@ import org.eclipse.ui.IWorkbenchPage;
 /**
  * @generated
  */
-public class SyncchartsDiagramActionBarContributor extends
-        DiagramActionBarContributor {
+public class SyncchartsDiagramActionBarContributor extends DiagramActionBarContributor {
 
     /**
      * @generated
@@ -39,8 +38,7 @@ public class SyncchartsDiagramActionBarContributor extends
         IMenuManager fileMenu = bars.getMenuManager().findMenuUsingPath(
                 IWorkbenchActionConstants.M_FILE);
         assert fileMenu != null;
-        IAction printPreviewAction = new RenderedPrintPreviewAction(
-                new EnhancedPrintActionHelper());
+        IAction printPreviewAction = new RenderedPrintPreviewAction(new EnhancedPrintActionHelper());
         fileMenu.insertBefore("print", printPreviewAction); //$NON-NLS-1$
         IMenuManager editMenu = bars.getMenuManager().findMenuUsingPath(
                 IWorkbenchActionConstants.M_EDIT);

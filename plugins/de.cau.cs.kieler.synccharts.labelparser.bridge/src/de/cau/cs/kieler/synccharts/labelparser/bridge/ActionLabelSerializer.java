@@ -17,20 +17,20 @@ package de.cau.cs.kieler.synccharts.labelparser.bridge;
 import java.util.Iterator;
 import java.util.List;
 
+import de.cau.cs.kieler.expressions.BooleanValue;
+import de.cau.cs.kieler.expressions.ComplexExpression;
+import de.cau.cs.kieler.expressions.Expression;
+import de.cau.cs.kieler.expressions.FloatValue;
+import de.cau.cs.kieler.expressions.IntValue;
+import de.cau.cs.kieler.expressions.OperatorExpression;
+import de.cau.cs.kieler.expressions.OperatorType;
+import de.cau.cs.kieler.expressions.SignalReference;
+import de.cau.cs.kieler.expressions.TextualCode;
+import de.cau.cs.kieler.expressions.VariableReference;
 import de.cau.cs.kieler.synccharts.Action;
 import de.cau.cs.kieler.synccharts.Assignment;
-import de.cau.cs.kieler.synccharts.BooleanValue;
-import de.cau.cs.kieler.synccharts.ComplexExpression;
 import de.cau.cs.kieler.synccharts.Effect;
 import de.cau.cs.kieler.synccharts.Emission;
-import de.cau.cs.kieler.synccharts.Expression;
-import de.cau.cs.kieler.synccharts.FloatValue;
-import de.cau.cs.kieler.synccharts.HostCode;
-import de.cau.cs.kieler.synccharts.IntValue;
-import de.cau.cs.kieler.synccharts.OperatorExpression;
-import de.cau.cs.kieler.synccharts.OperatorType;
-import de.cau.cs.kieler.synccharts.SignalReference;
-import de.cau.cs.kieler.synccharts.VariableReference;
 
 /**
  * Simple serializer for Action objects parsed by the Xtext parser. This class
@@ -93,8 +93,8 @@ public final class ActionLabelSerializer {
      * @return
      */
     private static String toString(final Effect effect) {
-        if (effect instanceof HostCode) {
-            return toString((HostCode) effect);
+        if (effect instanceof TextualCode) {
+            return toString((TextualCode) effect);
         }
         if (effect instanceof Assignment) {
             return toString((Assignment) effect);
@@ -105,7 +105,7 @@ public final class ActionLabelSerializer {
         return null;
     }
 
-    private static String toString(final HostCode hostCode) {
+    private static String toString(final TextualCode hostCode) {
         StringBuffer sb = new StringBuffer();
         sb.append("\"" + hostCode.getCode() + "\"");
         if (hostCode.getType() != null && hostCode.getType() != "") {
@@ -148,8 +148,8 @@ public final class ActionLabelSerializer {
         if (expression instanceof FloatValue) {
             return ((FloatValue) expression).getValue().toString();
         }
-        if (expression instanceof HostCode) {
-            return toString((HostCode) expression);
+        if (expression instanceof TextualCode) {
+            return toString((TextualCode) expression);
         }
         if (expression instanceof ComplexExpression) {
             List<Expression> subExpressions = ((ComplexExpression) expression).getSubExpressions();

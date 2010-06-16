@@ -16,6 +16,7 @@ import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.resource.ImageRegistry;
 import org.eclipse.swt.graphics.Image;
 
+import de.cau.cs.kieler.expressions.ExpressionsPackage;
 import de.cau.cs.kieler.synccharts.SyncchartsPackage;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.EntryActionEditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.ExitActionEditPart;
@@ -75,7 +76,8 @@ public class SyncchartsElementTypes extends ElementInitializers {
     /**
      * @generated
      */
-    public static final IElementType Signal_3011 = getElementType("de.cau.cs.kieler.synccharts.diagram.Signal_3011"); //$NON-NLS-1$
+    public static final IElementType Signal_3021 = getElementType("de.cau.cs.kieler.synccharts.diagram.Signal_3021"); //$NON-NLS-1$
+
     /**
      * @generated
      */
@@ -95,7 +97,8 @@ public class SyncchartsElementTypes extends ElementInitializers {
     /**
      * @generated
      */
-    public static final IElementType TextualCode_3020 = getElementType("de.cau.cs.kieler.synccharts.diagram.TextualCode_3020"); //$NON-NLS-1$
+    public static final IElementType TextualCode_3022 = getElementType("de.cau.cs.kieler.synccharts.diagram.TextualCode_3022"); //$NON-NLS-1$
+
     /**
      * @generated
      */
@@ -121,26 +124,22 @@ public class SyncchartsElementTypes extends ElementInitializers {
     /**
      * @generated
      */
-    private static ImageDescriptor getProvidedImageDescriptor(
-            ENamedElement element) {
+    private static ImageDescriptor getProvidedImageDescriptor(ENamedElement element) {
         if (element instanceof EStructuralFeature) {
             EStructuralFeature feature = ((EStructuralFeature) element);
             EClass eContainingClass = feature.getEContainingClass();
             EClassifier eType = feature.getEType();
             if (eContainingClass != null && !eContainingClass.isAbstract()) {
                 element = eContainingClass;
-            } else if (eType instanceof EClass
-                    && !((EClass) eType).isAbstract()) {
+            } else if (eType instanceof EClass && !((EClass) eType).isAbstract()) {
                 element = eType;
             }
         }
         if (element instanceof EClass) {
             EClass eClass = (EClass) element;
             if (!eClass.isAbstract()) {
-                return SyncchartsDiagramEditorPlugin.getInstance()
-                        .getItemImageDescriptor(
-                                eClass.getEPackage().getEFactoryInstance()
-                                        .create(eClass));
+                return SyncchartsDiagramEditorPlugin.getInstance().getItemImageDescriptor(
+                        eClass.getEPackage().getEFactoryInstance().create(eClass));
             }
         }
         // TODO : support structural features
@@ -220,7 +219,7 @@ public class SyncchartsElementTypes extends ElementInitializers {
 
             elements.put(State_3010, SyncchartsPackage.eINSTANCE.getState());
 
-            elements.put(Signal_3011, SyncchartsPackage.eINSTANCE.getSignal());
+            elements.put(Signal_3021, ExpressionsPackage.eINSTANCE.getSignal());
 
             elements.put(Action_3012, SyncchartsPackage.eINSTANCE.getAction());
 
@@ -230,11 +229,9 @@ public class SyncchartsElementTypes extends ElementInitializers {
 
             elements.put(Action_3018, SyncchartsPackage.eINSTANCE.getAction());
 
-            elements.put(TextualCode_3020, SyncchartsPackage.eINSTANCE
-                    .getTextualCode());
+            elements.put(TextualCode_3022, ExpressionsPackage.eINSTANCE.getTextualCode());
 
-            elements.put(Transition_4002, SyncchartsPackage.eINSTANCE
-                    .getTransition());
+            elements.put(Transition_4002, SyncchartsPackage.eINSTANCE.getTransition());
         }
         return (ENamedElement) elements.get(type);
     }
@@ -256,12 +253,12 @@ public class SyncchartsElementTypes extends ElementInitializers {
             KNOWN_ELEMENT_TYPES.add(State_2002);
             KNOWN_ELEMENT_TYPES.add(Region_3009);
             KNOWN_ELEMENT_TYPES.add(State_3010);
-            KNOWN_ELEMENT_TYPES.add(Signal_3011);
+            KNOWN_ELEMENT_TYPES.add(Signal_3021);
             KNOWN_ELEMENT_TYPES.add(Action_3012);
             KNOWN_ELEMENT_TYPES.add(Action_3014);
             KNOWN_ELEMENT_TYPES.add(Action_3016);
             KNOWN_ELEMENT_TYPES.add(Action_3018);
-            KNOWN_ELEMENT_TYPES.add(TextualCode_3020);
+            KNOWN_ELEMENT_TYPES.add(TextualCode_3022);
             KNOWN_ELEMENT_TYPES.add(Transition_4002);
         }
         return KNOWN_ELEMENT_TYPES.contains(elementType);
@@ -281,7 +278,7 @@ public class SyncchartsElementTypes extends ElementInitializers {
         case State2EditPart.VISUAL_ID:
             return State_3010;
         case SignalEditPart.VISUAL_ID:
-            return Signal_3011;
+            return Signal_3021;
         case EntryActionEditPart.VISUAL_ID:
             return Action_3012;
         case InnerActionEditPart.VISUAL_ID:
@@ -291,7 +288,7 @@ public class SyncchartsElementTypes extends ElementInitializers {
         case SuspensionTriggerEditPart.VISUAL_ID:
             return Action_3018;
         case TextualCodeEditPart.VISUAL_ID:
-            return TextualCode_3020;
+            return TextualCode_3022;
         case TransitionEditPart.VISUAL_ID:
             return Transition_4002;
         }

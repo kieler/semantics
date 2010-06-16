@@ -12,7 +12,9 @@ Require-Bundle: org.eclipse.emf.ecore;bundle-version="2.5.0";visibility:=reexpor
  org.eclipse.emf.transaction;bundle-version="1.3.0",
  de.cau.cs.kieler.core;bundle-version="0.2.0",
  de.cau.cs.kieler.core.model;bundle-version="0.1.0",
- de.cau.cs.kieler.core.ui;bundle-version="0.1.0"
+ de.cau.cs.kieler.core.ui;bundle-version="0.1.0",
+ de.cau.cs.kieler.core.expressions;bundle-version="0.1.0";visibility:=reexport,
+ de.cau.cs.kieler.core.annotations;bundle-version="0.1.0";visibility:=reexport
 Bundle-ActivationPolicy: lazy
 Import-Package: org.eclipse.ui
 Export-Package: de.cau.cs.kieler.synccharts,

@@ -13,6 +13,7 @@ import org.eclipse.gmf.runtime.emf.type.core.IElementType;
 import org.eclipse.gmf.runtime.emf.ui.services.parser.ParserHintAdapter;
 import org.eclipse.gmf.runtime.notation.View;
 
+import de.cau.cs.kieler.expressions.ExpressionsPackage;
 import de.cau.cs.kieler.synccharts.SyncchartsPackage;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.EntryActionLabelEditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.ExitActionLabelEditPart;
@@ -33,8 +34,7 @@ import de.cau.cs.kieler.synccharts.diagram.part.SyncchartsVisualIDRegistry;
 /**
  * @generated
  */
-public class SyncchartsParserProvider extends AbstractProvider implements
-        IParserProvider {
+public class SyncchartsParserProvider extends AbstractProvider implements IParserProvider {
 
     /**
      * @generated
@@ -46,8 +46,7 @@ public class SyncchartsParserProvider extends AbstractProvider implements
      */
     private IParser getStateLabel_5023Parser() {
         if (stateLabel_5023Parser == null) {
-            EAttribute[] features = new EAttribute[] { SyncchartsPackage.eINSTANCE
-                    .getScope_Label() };
+            EAttribute[] features = new EAttribute[] { SyncchartsPackage.eINSTANCE.getScope_Label() };
             MessageFormatParser parser = new MessageFormatParser(features);
             stateLabel_5023Parser = parser;
         }
@@ -68,8 +67,7 @@ public class SyncchartsParserProvider extends AbstractProvider implements
                     .getScope_InterfaceDeclaration() };
             EAttribute[] editableFeatures = new EAttribute[] { SyncchartsPackage.eINSTANCE
                     .getScope_InterfaceDeclaration() };
-            MessageFormatParser parser = new MessageFormatParser(features,
-                    editableFeatures);
+            MessageFormatParser parser = new MessageFormatParser(features, editableFeatures);
             stateInterfaceDeclaration_5029Parser = parser;
         }
         return stateInterfaceDeclaration_5029Parser;
@@ -85,12 +83,10 @@ public class SyncchartsParserProvider extends AbstractProvider implements
      */
     private IParser getRegionLabel_5022Parser() {
         if (regionLabel_5022Parser == null) {
-            EAttribute[] features = new EAttribute[] { SyncchartsPackage.eINSTANCE
-                    .getScope_Label() };
+            EAttribute[] features = new EAttribute[] { SyncchartsPackage.eINSTANCE.getScope_Label() };
             EAttribute[] editableFeatures = new EAttribute[] { SyncchartsPackage.eINSTANCE
                     .getScope_Label() };
-            MessageFormatParser parser = new MessageFormatParser(features,
-                    editableFeatures);
+            MessageFormatParser parser = new MessageFormatParser(features, editableFeatures);
             regionLabel_5022Parser = parser;
         }
         return regionLabel_5022Parser;
@@ -106,8 +102,7 @@ public class SyncchartsParserProvider extends AbstractProvider implements
      */
     private IParser getStateLabel_5021Parser() {
         if (stateLabel_5021Parser == null) {
-            EAttribute[] features = new EAttribute[] { SyncchartsPackage.eINSTANCE
-                    .getScope_Label() };
+            EAttribute[] features = new EAttribute[] { SyncchartsPackage.eINSTANCE.getScope_Label() };
             MessageFormatParser parser = new MessageFormatParser(features);
             stateLabel_5021Parser = parser;
         }
@@ -128,8 +123,7 @@ public class SyncchartsParserProvider extends AbstractProvider implements
                     .getScope_InterfaceDeclaration() };
             EAttribute[] editableFeatures = new EAttribute[] { SyncchartsPackage.eINSTANCE
                     .getScope_InterfaceDeclaration() };
-            MessageFormatParser parser = new MessageFormatParser(features,
-                    editableFeatures);
+            MessageFormatParser parser = new MessageFormatParser(features, editableFeatures);
             stateInterfaceDeclaration_5028Parser = parser;
         }
         return stateInterfaceDeclaration_5028Parser;
@@ -138,22 +132,22 @@ public class SyncchartsParserProvider extends AbstractProvider implements
     /**
      * @generated
      */
-    private IParser signalName_5014Parser;
+    private IParser signalName_5030Parser;
 
     /**
      * @generated
      */
-    private IParser getSignalName_5014Parser() {
-        if (signalName_5014Parser == null) {
-            EAttribute[] features = new EAttribute[] { SyncchartsPackage.eINSTANCE
+    private IParser getSignalName_5030Parser() {
+        if (signalName_5030Parser == null) {
+            EAttribute[] features = new EAttribute[] { ExpressionsPackage.eINSTANCE
                     .getValuedObject_Name() };
             MessageFormatParser parser = new MessageFormatParser(features);
             parser.setViewPattern("{0},"); //$NON-NLS-1$
             parser.setEditorPattern("{0}"); //$NON-NLS-1$
             parser.setEditPattern("{0}"); //$NON-NLS-1$
-            signalName_5014Parser = parser;
+            signalName_5030Parser = parser;
         }
-        return signalName_5014Parser;
+        return signalName_5030Parser;
     }
 
     /**
@@ -170,8 +164,7 @@ public class SyncchartsParserProvider extends AbstractProvider implements
                     .getAction_Label() };
             EAttribute[] editableFeatures = new EAttribute[] { SyncchartsPackage.eINSTANCE
                     .getAction_Label() };
-            MessageFormatParser parser = new MessageFormatParser(features,
-                    editableFeatures);
+            MessageFormatParser parser = new MessageFormatParser(features, editableFeatures);
             actionLabel_5024Parser = parser;
         }
         return actionLabel_5024Parser;
@@ -191,8 +184,7 @@ public class SyncchartsParserProvider extends AbstractProvider implements
                     .getAction_Label() };
             EAttribute[] editableFeatures = new EAttribute[] { SyncchartsPackage.eINSTANCE
                     .getAction_Label() };
-            MessageFormatParser parser = new MessageFormatParser(features,
-                    editableFeatures);
+            MessageFormatParser parser = new MessageFormatParser(features, editableFeatures);
             actionLabel_5025Parser = parser;
         }
         return actionLabel_5025Parser;
@@ -212,8 +204,7 @@ public class SyncchartsParserProvider extends AbstractProvider implements
                     .getAction_Label() };
             EAttribute[] editableFeatures = new EAttribute[] { SyncchartsPackage.eINSTANCE
                     .getAction_Label() };
-            MessageFormatParser parser = new MessageFormatParser(features,
-                    editableFeatures);
+            MessageFormatParser parser = new MessageFormatParser(features, editableFeatures);
             actionLabel_5026Parser = parser;
         }
         return actionLabel_5026Parser;
@@ -233,8 +224,7 @@ public class SyncchartsParserProvider extends AbstractProvider implements
                     .getAction_Label() };
             EAttribute[] editableFeatures = new EAttribute[] { SyncchartsPackage.eINSTANCE
                     .getAction_Label() };
-            MessageFormatParser parser = new MessageFormatParser(features,
-                    editableFeatures);
+            MessageFormatParser parser = new MessageFormatParser(features, editableFeatures);
             actionLabel_5027Parser = parser;
         }
         return actionLabel_5027Parser;
@@ -243,22 +233,21 @@ public class SyncchartsParserProvider extends AbstractProvider implements
     /**
      * @generated
      */
-    private IParser textualCode_3020Parser;
+    private IParser textualCode_3022Parser;
 
     /**
      * @generated
      */
-    private IParser getTextualCode_3020Parser() {
-        if (textualCode_3020Parser == null) {
-            EAttribute[] features = new EAttribute[] { SyncchartsPackage.eINSTANCE
+    private IParser getTextualCode_3022Parser() {
+        if (textualCode_3022Parser == null) {
+            EAttribute[] features = new EAttribute[] { ExpressionsPackage.eINSTANCE
                     .getTextualCode_Code() };
-            EAttribute[] editableFeatures = new EAttribute[] { SyncchartsPackage.eINSTANCE
+            EAttribute[] editableFeatures = new EAttribute[] { ExpressionsPackage.eINSTANCE
                     .getTextualCode_Code() };
-            MessageFormatParser parser = new MessageFormatParser(features,
-                    editableFeatures);
-            textualCode_3020Parser = parser;
+            MessageFormatParser parser = new MessageFormatParser(features, editableFeatures);
+            textualCode_3022Parser = parser;
         }
-        return textualCode_3020Parser;
+        return textualCode_3022Parser;
     }
 
     /**
@@ -275,8 +264,7 @@ public class SyncchartsParserProvider extends AbstractProvider implements
                     .getAction_Label() };
             EAttribute[] editableFeatures = new EAttribute[] { SyncchartsPackage.eINSTANCE
                     .getAction_Label() };
-            MessageFormatParser parser = new MessageFormatParser(features,
-                    editableFeatures);
+            MessageFormatParser parser = new MessageFormatParser(features, editableFeatures);
             transitionLabel_6003Parser = parser;
         }
         return transitionLabel_6003Parser;
@@ -296,8 +284,7 @@ public class SyncchartsParserProvider extends AbstractProvider implements
                     .getTransition_Priority() };
             EAttribute[] editableFeatures = new EAttribute[] { SyncchartsPackage.eINSTANCE
                     .getTransition_Priority() };
-            MessageFormatParser parser = new MessageFormatParser(features,
-                    editableFeatures);
+            MessageFormatParser parser = new MessageFormatParser(features, editableFeatures);
             transitionPriority_6004Parser = parser;
         }
         return transitionPriority_6004Parser;
@@ -319,7 +306,7 @@ public class SyncchartsParserProvider extends AbstractProvider implements
         case StateInterfaceDeclaration2EditPart.VISUAL_ID:
             return getStateInterfaceDeclaration_5028Parser();
         case SignalNameEditPart.VISUAL_ID:
-            return getSignalName_5014Parser();
+            return getSignalName_5030Parser();
         case EntryActionLabelEditPart.VISUAL_ID:
             return getActionLabel_5024Parser();
         case InnerActionLabelEditPart.VISUAL_ID:
@@ -329,7 +316,7 @@ public class SyncchartsParserProvider extends AbstractProvider implements
         case SuspensionTriggerLabelEditPart.VISUAL_ID:
             return getActionLabel_5027Parser();
         case TextualCodeEditPart.VISUAL_ID:
-            return getTextualCode_3020Parser();
+            return getTextualCode_3022Parser();
         case TransitionDelayEditPart.VISUAL_ID:
             return getTransitionLabel_6003Parser();
         case TransitionPriorityEditPart.VISUAL_ID:
@@ -342,10 +329,8 @@ public class SyncchartsParserProvider extends AbstractProvider implements
      * Utility method that consults ParserService
      * @generated
      */
-    public static IParser getParser(IElementType type, EObject object,
-            String parserHint) {
-        return ParserService.getInstance().getParser(
-                new HintAdapter(type, object, parserHint));
+    public static IParser getParser(IElementType type, EObject object, String parserHint) {
+        return ParserService.getInstance().getParser(new HintAdapter(type, object, parserHint));
     }
 
     /**

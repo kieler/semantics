@@ -28,5 +28,4 @@ import org.eclipse.emf.ecore.EObject;
  * @generated
  */
 public interface Effect extends EObject {
-
 } // Effect

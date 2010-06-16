@@ -12,15 +12,13 @@ import de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorPlugin;
 /**
  * @generated
  */
-public class SyncchartsDomainNavigatorLabelProvider implements
-        ICommonLabelProvider {
+public class SyncchartsDomainNavigatorLabelProvider implements ICommonLabelProvider {
 
     /**
      * @generated
      */
     private AdapterFactoryLabelProvider myAdapterFactoryLabelProvider = new AdapterFactoryLabelProvider(
-            SyncchartsDiagramEditorPlugin.getInstance()
-                    .getItemProvidersAdapterFactory());
+            SyncchartsDiagramEditorPlugin.getInstance().getItemProvidersAdapterFactory());
 
     /**
      * @generated
@@ -33,9 +31,8 @@ public class SyncchartsDomainNavigatorLabelProvider implements
      */
     public Image getImage(Object element) {
         if (element instanceof SyncchartsDomainNavigatorItem) {
-            return myAdapterFactoryLabelProvider
-                    .getImage(((SyncchartsDomainNavigatorItem) element)
-                            .getEObject());
+            return myAdapterFactoryLabelProvider.getImage(((SyncchartsDomainNavigatorItem) element)
+                    .getEObject());
         }
         return null;
     }
@@ -45,9 +42,8 @@ public class SyncchartsDomainNavigatorLabelProvider implements
      */
     public String getText(Object element) {
         if (element instanceof SyncchartsDomainNavigatorItem) {
-            return myAdapterFactoryLabelProvider
-                    .getText(((SyncchartsDomainNavigatorItem) element)
-                            .getEObject());
+            return myAdapterFactoryLabelProvider.getText(((SyncchartsDomainNavigatorItem) element)
+                    .getEObject());
         }
         return null;
     }

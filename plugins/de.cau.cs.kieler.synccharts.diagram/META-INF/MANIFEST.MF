@@ -41,5 +41,9 @@ Require-Bundle: org.eclipse.core.runtime,
  de.cau.cs.kieler.synccharts.edit;visibility:=reexport,
  org.eclipse.ocl.ecore;visibility:=reexport,
  org.eclipse.emf.validation;visibility:=reexport,
- org.eclipse.gef;visibility:=reexport
+ org.eclipse.gef;visibility:=reexport,
+ de.cau.cs.kieler.core.annotations;visibility:=reexport,
+ de.cau.cs.kieler.core.expressions;visibility:=reexport,
+ de.cau.cs.kieler.core.annotations.edit;visibility:=reexport,
+ de.cau.cs.kieler.core.expressions.edit;visibility:=reexport
 Eclipse-LazyStart: true

@@ -71,8 +71,7 @@ public class SuspensionTriggerEditPart extends ShapeNodeEditPart {
         LayoutEditPolicy lep = new LayoutEditPolicy() {
 
             protected EditPolicy createChildEditPolicy(EditPart child) {
-                EditPolicy result = child
-                        .getEditPolicy(EditPolicy.PRIMARY_DRAG_ROLE);
+                EditPolicy result = child.getEditPolicy(EditPolicy.PRIMARY_DRAG_ROLE);
                 if (result == null) {
                     result = new NonResizableEditPolicy();
                 }
@@ -97,8 +96,7 @@ public class SuspensionTriggerEditPart extends ShapeNodeEditPart {
         IFigure figure = new InvisibleFigure();
 
         if (figure instanceof IAttributeAwareFigure) {
-            ((IAttributeAwareFigure) figure).listenTo(this.getNotationView()
-                    .getElement());
+            ((IAttributeAwareFigure) figure).listenTo(this.getNotationView().getElement());
         }
         return primaryShape = figure;
     }
@@ -115,9 +113,8 @@ public class SuspensionTriggerEditPart extends ShapeNodeEditPart {
      */
     protected boolean addFixedChild(EditPart childEditPart) {
         if (childEditPart instanceof SuspensionTriggerLabelEditPart) {
-            ((SuspensionTriggerLabelEditPart) childEditPart)
-                    .setLabel(getPrimaryShape()
-                            .getFigureInvisibleFigureLabelFigure());
+            ((SuspensionTriggerLabelEditPart) childEditPart).setLabel(getPrimaryShape()
+                    .getFigureInvisibleFigureLabelFigure());
             return true;
         }
         return false;

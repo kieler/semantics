@@ -13,7 +13,10 @@
     <genClasses image="false" ecoreClass="annotations.ecore#//Annotatable">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference annotations.ecore#//Annotatable/annotations"/>
       <genOperations ecoreOperation="annotations.ecore#//Annotatable/getAnnotation">
-        <genParameters ecoreParameter="annotations.ecore#//Annotatable/getAnnotation/key"/>
+        <genParameters ecoreParameter="annotations.ecore#//Annotatable/getAnnotation/name"/>
+      </genOperations>
+      <genOperations ecoreOperation="annotations.ecore#//Annotatable/getAllAnnotations">
+        <genParameters ecoreParameter="annotations.ecore#//Annotatable/getAllAnnotations/name"/>
       </genOperations>
     </genClasses>
     <genClasses ecoreClass="annotations.ecore#//Annotation"/>

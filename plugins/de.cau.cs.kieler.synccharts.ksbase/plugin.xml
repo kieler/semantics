@@ -151,6 +151,14 @@
              transformation="optimizeSelected"
              transformationId="de.cau.cs.kieler.ksbase.optimize">
        </transformation>
+              <transformation
+                    keyboardShortcut="M1 + M2 + R"
+                    name="Rename a Signal or Variable (Refactor)"
+                    tooltip="Refactor the name of a Signal or Variable. Will change all references in the scope to the new name."
+                    transformation="renameSignalVariable"
+                    transformationId="de.cau.cs.kieler.synccharts.ksbase.renameSignalVariable"
+                    validation="hasSignalsVariables">
+              </transformation>
 			</transformations>
 			<menus>
 				<menuContribution locationURI="menu:de.cau.cs.kieler">
@@ -246,6 +254,9 @@
           <transformationCommand
                 transformationId="de.cau.cs.kieler.synccharts.ksbase.insertState">
           </transformationCommand>
+          <transformationCommand
+                transformationId="de.cau.cs.kieler.synccharts.ksbase.renameSignalVariable">
+          </transformationCommand>
     </menuContribution>
     <menuContribution
           locationURI="popupBar:any">
@@ -285,6 +296,7 @@
 
 			</menus>
 		</configuration>
+		
  </extension>
   <extension
        point="org.eclipse.ui.preferencePages">

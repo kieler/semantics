@@ -1,6 +1,15 @@
 /**
- * <copyright>
- * </copyright>
+ * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
+ * 
+ * http://www.informatik.uni-kiel.de/rtsys/kieler/
+ * 
+ * Copyright 2009 by
+ * + Christian-Albrechts-University of Kiel
+ *   + Department of Computer Science
+ *     + Real-Time and Embedded Systems Group
+ * 
+ * This code is provided under the terms of the Eclipse Public License (EPL).
+ * See the file epl-v10.html for the license text.
  *
  * $Id$
  */
@@ -25,453 +34,238 @@ import org.eclipse.emf.ecore.plugin.EcorePlugin;
  */
 public class SyncchartsFactoryImpl extends EFactoryImpl implements SyncchartsFactory {
     /**
-	 * Creates the default factory implementation.
-	 * <!-- begin-user-doc -->
+     * Creates the default factory implementation.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public static SyncchartsFactory init() {
-		try {
-			SyncchartsFactory theSyncchartsFactory = (SyncchartsFactory)EPackage.Registry.INSTANCE.getEFactory("http://kieler.cs.cau.de/synccharts/0.2"); 
-			if (theSyncchartsFactory != null) {
-				return theSyncchartsFactory;
-			}
-		}
-		catch (Exception exception) {
-			EcorePlugin.INSTANCE.log(exception);
-		}
-		return new SyncchartsFactoryImpl();
-	}
+        try {
+            SyncchartsFactory theSyncchartsFactory = (SyncchartsFactory)EPackage.Registry.INSTANCE.getEFactory("http://kieler.cs.cau.de/synccharts/0.2"); 
+            if (theSyncchartsFactory != null) {
+                return theSyncchartsFactory;
+            }
+        }
+        catch (Exception exception) {
+            EcorePlugin.INSTANCE.log(exception);
+        }
+        return new SyncchartsFactoryImpl();
+    }
 
     /**
-	 * Creates an instance of the factory.
-	 * <!-- begin-user-doc -->
+     * Creates an instance of the factory.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public SyncchartsFactoryImpl() {
-		super();
-	}
-
-    /**
-	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-	 * @generated
-	 */
-    @Override
-    public EObject create(EClass eClass) {
-		switch (eClass.getClassifierID()) {
-			case SyncchartsPackage.ACTION: return createAction();
-			case SyncchartsPackage.ASSIGNMENT: return createAssignment();
-			case SyncchartsPackage.COMPLEX_EXPRESSION: return createComplexExpression();
-			case SyncchartsPackage.EMISSION: return createEmission();
-			case SyncchartsPackage.EXPRESSION: return createExpression();
-			case SyncchartsPackage.TEXTUAL_CODE: return createTextualCode();
-			case SyncchartsPackage.REGION: return createRegion();
-			case SyncchartsPackage.SIGNAL: return createSignal();
-			case SyncchartsPackage.SIGNAL_REFERENCE: return createSignalReference();
-			case SyncchartsPackage.SUBSTITUTION: return createSubstitution();
-			case SyncchartsPackage.STATE: return createState();
-			case SyncchartsPackage.TRANSITION: return createTransition();
-			case SyncchartsPackage.VALUED_OBJECT: return createValuedObject();
-			case SyncchartsPackage.VARIABLE: return createVariable();
-			case SyncchartsPackage.VARIABLE_REFERENCE: return createVariableReference();
-			case SyncchartsPackage.VALUE: return createValue();
-			case SyncchartsPackage.INT_VALUE: return createIntValue();
-			case SyncchartsPackage.FLOAT_VALUE: return createFloatValue();
-			case SyncchartsPackage.BOOLEAN_VALUE: return createBooleanValue();
-			case SyncchartsPackage.OPERATOR_EXPRESSION: return createOperatorExpression();
-			default:
-				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
-		}
-	}
-
-    /**
-	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-	 * @generated
-	 */
-    @Override
-    public Object createFromString(EDataType eDataType, String initialValue) {
-		switch (eDataType.getClassifierID()) {
-			case SyncchartsPackage.COMBINE_OPERATOR:
-				return createCombineOperatorFromString(eDataType, initialValue);
-			case SyncchartsPackage.OPERATOR_TYPE:
-				return createOperatorTypeFromString(eDataType, initialValue);
-			case SyncchartsPackage.STATE_TYPE:
-				return createStateTypeFromString(eDataType, initialValue);
-			case SyncchartsPackage.TRANSITION_TYPE:
-				return createTransitionTypeFromString(eDataType, initialValue);
-			case SyncchartsPackage.VALUE_TYPE:
-				return createValueTypeFromString(eDataType, initialValue);
-			case SyncchartsPackage.PARSABLE:
-				return createParsableFromString(eDataType, initialValue);
-			default:
-				throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
-		}
-	}
-
-    /**
-	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-	 * @generated
-	 */
-    @Override
-    public String convertToString(EDataType eDataType, Object instanceValue) {
-		switch (eDataType.getClassifierID()) {
-			case SyncchartsPackage.COMBINE_OPERATOR:
-				return convertCombineOperatorToString(eDataType, instanceValue);
-			case SyncchartsPackage.OPERATOR_TYPE:
-				return convertOperatorTypeToString(eDataType, instanceValue);
-			case SyncchartsPackage.STATE_TYPE:
-				return convertStateTypeToString(eDataType, instanceValue);
-			case SyncchartsPackage.TRANSITION_TYPE:
-				return convertTransitionTypeToString(eDataType, instanceValue);
-			case SyncchartsPackage.VALUE_TYPE:
-				return convertValueTypeToString(eDataType, instanceValue);
-			case SyncchartsPackage.PARSABLE:
-				return convertParsableToString(eDataType, instanceValue);
-			default:
-				throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
-		}
-	}
+        super();
+    }
 
     /**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EObject create(EClass eClass) {
+        switch (eClass.getClassifierID()) {
+            case SyncchartsPackage.ACTION: return createAction();
+            case SyncchartsPackage.ASSIGNMENT: return createAssignment();
+            case SyncchartsPackage.EMISSION: return createEmission();
+            case SyncchartsPackage.REGION: return createRegion();
+            case SyncchartsPackage.SUBSTITUTION: return createSubstitution();
+            case SyncchartsPackage.STATE: return createState();
+            case SyncchartsPackage.TRANSITION: return createTransition();
+            default:
+                throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
+        }
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public Object createFromString(EDataType eDataType, String initialValue) {
+        switch (eDataType.getClassifierID()) {
+            case SyncchartsPackage.STATE_TYPE:
+                return createStateTypeFromString(eDataType, initialValue);
+            case SyncchartsPackage.TRANSITION_TYPE:
+                return createTransitionTypeFromString(eDataType, initialValue);
+            case SyncchartsPackage.PARSABLE:
+                return createParsableFromString(eDataType, initialValue);
+            default:
+                throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
+        }
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public String convertToString(EDataType eDataType, Object instanceValue) {
+        switch (eDataType.getClassifierID()) {
+            case SyncchartsPackage.STATE_TYPE:
+                return convertStateTypeToString(eDataType, instanceValue);
+            case SyncchartsPackage.TRANSITION_TYPE:
+                return convertTransitionTypeToString(eDataType, instanceValue);
+            case SyncchartsPackage.PARSABLE:
+                return convertParsableToString(eDataType, instanceValue);
+            default:
+                throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
+        }
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
      */
     public Action createAction() {
         ActionImpl action = new ActionImpl();
-        action.eAdapters().addAll(this.eAdapters());
         return action;
     }
 
     /**
-	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-	 * @generated
-	 */
-    public Assignment createAssignment() {
-		AssignmentImpl assignment = new AssignmentImpl();
-		return assignment;
-	}
-
-    /**
-	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-	 * @generated
-	 */
-    public ComplexExpression createComplexExpression() {
-		ComplexExpressionImpl complexExpression = new ComplexExpressionImpl();
-		return complexExpression;
-	}
-
-    /**
-	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-	 * @generated
-	 */
-    public Emission createEmission() {
-		EmissionImpl emission = new EmissionImpl();
-		return emission;
-	}
-
-    /**
-	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-	 * @generated
-	 */
-    public Expression createExpression() {
-		ExpressionImpl expression = new ExpressionImpl();
-		return expression;
-	}
-
-    /**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public TextualCode createTextualCode() {
-		TextualCodeImpl textualCode = new TextualCodeImpl();
-		return textualCode;
-	}
-
-				/**
-	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-	 * @generated
-	 */
-    public Region createRegion() {
-		RegionImpl region = new RegionImpl();
-		return region;
-	}
-
-    /**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
+     * @generated
      */
-    public Signal createSignal() {
-        SignalImpl signal = new SignalImpl();
-        signal.eAdapters().addAll(this.eAdapters());
-        return signal;
+    public Assignment createAssignment() {
+        AssignmentImpl assignment = new AssignmentImpl();
+        return assignment;
     }
 
     /**
-	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-	 * @generated
-	 */
-    public SignalReference createSignalReference() {
-		SignalReferenceImpl signalReference = new SignalReferenceImpl();
-		return signalReference;
-	}
-
-    /**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public Substitution createSubstitution() {
-		SubstitutionImpl substitution = new SubstitutionImpl();
-		return substitution;
-	}
-
-				/**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
+     * @generated
+     */
+    public Emission createEmission() {
+        EmissionImpl emission = new EmissionImpl();
+        return emission;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public Region createRegion() {
+        RegionImpl region = new RegionImpl();
+        return region;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public Substitution createSubstitution() {
+        SubstitutionImpl substitution = new SubstitutionImpl();
+        return substitution;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
      */
     public State createState() {
         StateImpl state = new StateImpl();
-        state.eAdapters().addAll(this.eAdapters());
         return state;
     }
 
     /**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
+     * @generated
      */
     public Transition createTransition() {
         TransitionImpl transition = new TransitionImpl();
-        transition.eAdapters().addAll(this.eAdapters());
         return transition;
     }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
-    public ValuedObject createValuedObject() {
-		ValuedObjectImpl valuedObject = new ValuedObjectImpl();
-		return valuedObject;
-	}
+     * @generated
+     */
+    public StateType createStateTypeFromString(EDataType eDataType, String initialValue) {
+        StateType result = StateType.get(initialValue);
+        if (result == null) throw new IllegalArgumentException("The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'");
+        return result;
+    }
 
     /**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
+     * @generated
      */
-    public Variable createVariable() {
-        VariableImpl variable = new VariableImpl();
-        variable.eAdapters().addAll(this.eAdapters());
-        return variable;
+    public String convertStateTypeToString(EDataType eDataType, Object instanceValue) {
+        return instanceValue == null ? null : instanceValue.toString();
     }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
-    public VariableReference createVariableReference() {
-		VariableReferenceImpl variableReference = new VariableReferenceImpl();
-		return variableReference;
-	}
-
-    /**
-	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-	 * @generated
-	 */
-    public Value createValue() {
-		ValueImpl value = new ValueImpl();
-		return value;
-	}
-
-    /**
-	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-	 * @generated
-	 */
-    public IntValue createIntValue() {
-		IntValueImpl intValue = new IntValueImpl();
-		return intValue;
-	}
-
-    /**
-	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-	 * @generated
-	 */
-    public FloatValue createFloatValue() {
-		FloatValueImpl floatValue = new FloatValueImpl();
-		return floatValue;
-	}
-
-    /**
-	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-	 * @generated
-	 */
-    public BooleanValue createBooleanValue() {
-		BooleanValueImpl booleanValue = new BooleanValueImpl();
-		return booleanValue;
-	}
-
-    /**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public OperatorExpression createOperatorExpression() {
-		OperatorExpressionImpl operatorExpression = new OperatorExpressionImpl();
-		return operatorExpression;
-	}
-
-				/**
-	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-	 * @generated
-	 */
-    public CombineOperator createCombineOperatorFromString(EDataType eDataType, String initialValue) {
-		CombineOperator result = CombineOperator.get(initialValue);
-		if (result == null) throw new IllegalArgumentException("The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'");
-		return result;
-	}
-
-    /**
-	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-	 * @generated
-	 */
-    public String convertCombineOperatorToString(EDataType eDataType, Object instanceValue) {
-		return instanceValue == null ? null : instanceValue.toString();
-	}
-
-    /**
-	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-	 * @generated
-	 */
-    public OperatorType createOperatorTypeFromString(EDataType eDataType, String initialValue) {
-		OperatorType result = OperatorType.get(initialValue);
-		if (result == null) throw new IllegalArgumentException("The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'");
-		return result;
-	}
-
-    /**
-	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-	 * @generated
-	 */
-    public String convertOperatorTypeToString(EDataType eDataType, Object instanceValue) {
-		return instanceValue == null ? null : instanceValue.toString();
-	}
-
-    /**
-	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-	 * @generated
-	 */
-    public StateType createStateTypeFromString(EDataType eDataType, String initialValue) {
-		StateType result = StateType.get(initialValue);
-		if (result == null) throw new IllegalArgumentException("The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'");
-		return result;
-	}
-
-    /**
-	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-	 * @generated
-	 */
-    public String convertStateTypeToString(EDataType eDataType, Object instanceValue) {
-		return instanceValue == null ? null : instanceValue.toString();
-	}
-
-    /**
-	 * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public TransitionType createTransitionTypeFromString(EDataType eDataType, String initialValue) {
-		TransitionType result = TransitionType.get(initialValue);
-		if (result == null) throw new IllegalArgumentException("The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'");
-		return result;
-	}
+        TransitionType result = TransitionType.get(initialValue);
+        if (result == null) throw new IllegalArgumentException("The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'");
+        return result;
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public String convertTransitionTypeToString(EDataType eDataType, Object instanceValue) {
-		return instanceValue == null ? null : instanceValue.toString();
-	}
+        return instanceValue == null ? null : instanceValue.toString();
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
-    public ValueType createValueTypeFromString(EDataType eDataType, String initialValue) {
-		ValueType result = ValueType.get(initialValue);
-		if (result == null) throw new IllegalArgumentException("The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'");
-		return result;
-	}
+     * @generated
+     */
+    public String createParsableFromString(EDataType eDataType, String initialValue) {
+        return (String)super.createFromString(eDataType, initialValue);
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
-    public String convertValueTypeToString(EDataType eDataType, Object instanceValue) {
-		return instanceValue == null ? null : instanceValue.toString();
-	}
+     * @generated
+     */
+    public String convertParsableToString(EDataType eDataType, Object instanceValue) {
+        return super.convertToString(eDataType, instanceValue);
+    }
 
     /**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public String createParsableFromString(EDataType eDataType, String initialValue) {
-		return (String)super.createFromString(eDataType, initialValue);
-	}
-
-				/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public String convertParsableToString(EDataType eDataType, Object instanceValue) {
-		return super.convertToString(eDataType, instanceValue);
-	}
-
-				/**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @generated
-	 */
+     * @generated
+     */
     public SyncchartsPackage getSyncchartsPackage() {
-		return (SyncchartsPackage)getEPackage();
-	}
+        return (SyncchartsPackage)getEPackage();
+    }
 
     /**
-	 * <!-- begin-user-doc -->
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-	 * @deprecated
-	 * @generated
-	 */
+     * @deprecated
+     * @generated
+     */
     @Deprecated
     public static SyncchartsPackage getPackage() {
-		return SyncchartsPackage.eINSTANCE;
-	}
+        return SyncchartsPackage.eINSTANCE;
+    }
 
 } //SyncchartsFactoryImpl

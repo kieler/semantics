@@ -18,11 +18,12 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.xtext.parsetree.reconstr.impl.DefaultTransientValueService;
 
-import de.cau.cs.kieler.synccharts.CombineOperator;
-import de.cau.cs.kieler.synccharts.Signal;
+import de.cau.cs.kieler.expressions.CombineOperator;
+import de.cau.cs.kieler.expressions.ExpressionsPackage;
+import de.cau.cs.kieler.expressions.Signal;
+import de.cau.cs.kieler.expressions.ValueType;
+import de.cau.cs.kieler.expressions.Variable;
 import de.cau.cs.kieler.synccharts.SyncchartsPackage;
-import de.cau.cs.kieler.synccharts.ValueType;
-import de.cau.cs.kieler.synccharts.Variable;
 
 /**
  * Overrides the DefaultTransientValueService to provide functionality for
@@ -37,6 +38,7 @@ public class InterfaceDeclTransientValueService extends
         DefaultTransientValueService {
 
     private static SyncchartsPackage sync = SyncchartsPackage.eINSTANCE;
+    private static ExpressionsPackage exp = ExpressionsPackage.eINSTANCE;
 
     /**
      * {@inheritDoc}
@@ -50,7 +52,7 @@ public class InterfaceDeclTransientValueService extends
             Variable var = (Variable) owner;
 
             // initial value
-            if (feature.equals(sync.getValuedObject_InitialValue())
+            if (feature.equals(exp.getValuedObject_InitialValue())
                     && ((var.getInitialValue() != null) && var
                             .getInitialValue().trim() != "")) {
                 return false;
@@ -61,23 +63,23 @@ public class InterfaceDeclTransientValueService extends
         if (owner instanceof Signal) {
             Signal sig = (Signal) owner;
 
-            if ((feature.equals(sync.getValuedObject_Type()) && sig.getType() != ValueType.PURE)
-                    || (feature.equals(sync.getSignal_CombineOperator()) && sig
+            if ((feature.equals(exp.getValuedObject_Type()) && sig.getType() != ValueType.PURE)
+                    || (feature.equals(exp.getSignal_CombineOperator()) && sig
                             .getCombineOperator() != CombineOperator.NONE)) {
                 // combine and type
                 return false;
-            } else if (feature.equals(sync.getValuedObject_InitialValue())
+            } else if (feature.equals(exp.getValuedObject_InitialValue())
                     && (sig.getInitialValue() != null)) {
                 // initial value
                 return false;
-            } else if ((feature.equals(sync.getValuedObject_HostType())
+            } else if ((feature.equals(exp.getValuedObject_HostType())
                     && sig.getHostType() != null && sig.getHostType().length() > 0)
-                    || (feature.equals(sync.getSignal_HostCombineOperator())
+                    || (feature.equals(exp.getSignal_HostCombineOperator())
                             && sig.getHostCombineOperator() != null && sig
                             .getHostCombineOperator().length() > 0)) {
                 // hosttype and hostcombine op
                 return false;
-            } else if (feature.equals(sync.getValuedObject_Name())) {
+            } else if (feature.equals(exp.getValuedObject_Name())) {
                 // name
                 return false;
             }

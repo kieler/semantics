@@ -17,34 +17,29 @@ public class SyncchartsDomainNavigatorItem extends PlatformObject {
      * @generated
      */
     static {
-        final Class[] supportedTypes = new Class[] { EObject.class,
-                IPropertySource.class };
-        Platform.getAdapterManager().registerAdapters(
-                new IAdapterFactory() {
+        final Class[] supportedTypes = new Class[] { EObject.class, IPropertySource.class };
+        Platform.getAdapterManager().registerAdapters(new IAdapterFactory() {
 
-                    public Object getAdapter(Object adaptableObject,
-                            Class adapterType) {
-                        if (adaptableObject instanceof de.cau.cs.kieler.synccharts.diagram.navigator.SyncchartsDomainNavigatorItem) {
-                            de.cau.cs.kieler.synccharts.diagram.navigator.SyncchartsDomainNavigatorItem domainNavigatorItem = (de.cau.cs.kieler.synccharts.diagram.navigator.SyncchartsDomainNavigatorItem) adaptableObject;
-                            EObject eObject = domainNavigatorItem.getEObject();
-                            if (adapterType == EObject.class) {
-                                return eObject;
-                            }
-                            if (adapterType == IPropertySource.class) {
-                                return domainNavigatorItem
-                                        .getPropertySourceProvider()
-                                        .getPropertySource(eObject);
-                            }
-                        }
-
-                        return null;
+            public Object getAdapter(Object adaptableObject, Class adapterType) {
+                if (adaptableObject instanceof de.cau.cs.kieler.synccharts.diagram.navigator.SyncchartsDomainNavigatorItem) {
+                    de.cau.cs.kieler.synccharts.diagram.navigator.SyncchartsDomainNavigatorItem domainNavigatorItem = (de.cau.cs.kieler.synccharts.diagram.navigator.SyncchartsDomainNavigatorItem) adaptableObject;
+                    EObject eObject = domainNavigatorItem.getEObject();
+                    if (adapterType == EObject.class) {
+                        return eObject;
                     }
-
-                    public Class[] getAdapterList() {
-                        return supportedTypes;
+                    if (adapterType == IPropertySource.class) {
+                        return domainNavigatorItem.getPropertySourceProvider().getPropertySource(
+                                eObject);
                     }
-                },
-                de.cau.cs.kieler.synccharts.diagram.navigator.SyncchartsDomainNavigatorItem.class);
+                }
+
+                return null;
+            }
+
+            public Class[] getAdapterList() {
+                return supportedTypes;
+            }
+        }, de.cau.cs.kieler.synccharts.diagram.navigator.SyncchartsDomainNavigatorItem.class);
     }
 
     /**
