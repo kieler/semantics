@@ -1,0 +1,17 @@
+grammar de.cau.cs.kieler.core.expressions.Expressions with org.eclipse.xtext.common.Terminals
+
+import "platform:/resource/de.cau.cs.kieler.core.expressions/model/expressions.ecore" as exp
+//import "expressions" as exp
+
+Expression returns exp::Expression:
+	SignalReference
+;	
+
+SignalReference returns exp::SignalReference:
+	signal = [exp::Signal]
+;
+
+
+
+	
+

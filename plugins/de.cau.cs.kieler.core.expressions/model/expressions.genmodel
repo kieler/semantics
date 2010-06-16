@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/de.cau.cs.kieler.core.expressions/src"
+    modelPluginID="de.cau.cs.kieler.core.expressions" modelName="Expressions" importerID="org.eclipse.emf.importer.ecore"
+    complianceLevel="5.0" copyrightFields="false">
+  <foreignModel>expressions.ecore</foreignModel>
+  <genPackages prefix="Expressions" basePackage="de.cau.cs.kieler.core" disposableProviderFactory="true"
+      ecorePackage="expressions.ecore#/">
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="expressions.ecore#//CombineOperator">
+      <genEnumLiterals ecoreEnumLiteral="expressions.ecore#//CombineOperator/NONE"/>
+      <genEnumLiterals ecoreEnumLiteral="expressions.ecore#//CombineOperator/ADD"/>
+      <genEnumLiterals ecoreEnumLiteral="expressions.ecore#//CombineOperator/MULT"/>
+      <genEnumLiterals ecoreEnumLiteral="expressions.ecore#//CombineOperator/MAX"/>
+      <genEnumLiterals ecoreEnumLiteral="expressions.ecore#//CombineOperator/MIN"/>
+      <genEnumLiterals ecoreEnumLiteral="expressions.ecore#//CombineOperator/OR"/>
+      <genEnumLiterals ecoreEnumLiteral="expressions.ecore#//CombineOperator/AND"/>
+      <genEnumLiterals ecoreEnumLiteral="expressions.ecore#//CombineOperator/HOST"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="expressions.ecore#//OperatorType">
+      <genEnumLiterals ecoreEnumLiteral="expressions.ecore#//OperatorType/EQ"/>
+      <genEnumLiterals ecoreEnumLiteral="expressions.ecore#//OperatorType/LT"/>
+      <genEnumLiterals ecoreEnumLiteral="expressions.ecore#//OperatorType/LEQ"/>
+      <genEnumLiterals ecoreEnumLiteral="expressions.ecore#//OperatorType/GT"/>
+      <genEnumLiterals ecoreEnumLiteral="expressions.ecore#//OperatorType/GEQ"/>
+      <genEnumLiterals ecoreEnumLiteral="expressions.ecore#//OperatorType/NOT"/>
+      <genEnumLiterals ecoreEnumLiteral="expressions.ecore#//OperatorType/VAL"/>
+      <genEnumLiterals ecoreEnumLiteral="expressions.ecore#//OperatorType/PRE"/>
+      <genEnumLiterals ecoreEnumLiteral="expressions.ecore#//OperatorType/NE"/>
+      <genEnumLiterals ecoreEnumLiteral="expressions.ecore#//OperatorType/AND"/>
+      <genEnumLiterals ecoreEnumLiteral="expressions.ecore#//OperatorType/OR"/>
+      <genEnumLiterals ecoreEnumLiteral="expressions.ecore#//OperatorType/ADD"/>
+      <genEnumLiterals ecoreEnumLiteral="expressions.ecore#//OperatorType/SUB"/>
+      <genEnumLiterals ecoreEnumLiteral="expressions.ecore#//OperatorType/MULT"/>
+      <genEnumLiterals ecoreEnumLiteral="expressions.ecore#//OperatorType/DIV"/>
+      <genEnumLiterals ecoreEnumLiteral="expressions.ecore#//OperatorType/MOD"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="expressions.ecore#//ValueType">
+      <genEnumLiterals ecoreEnumLiteral="expressions.ecore#//ValueType/PURE"/>
+      <genEnumLiterals ecoreEnumLiteral="expressions.ecore#//ValueType/BOOL"/>
+      <genEnumLiterals ecoreEnumLiteral="expressions.ecore#//ValueType/UNSIGNED"/>
+      <genEnumLiterals ecoreEnumLiteral="expressions.ecore#//ValueType/INT"/>
+      <genEnumLiterals ecoreEnumLiteral="expressions.ecore#//ValueType/FLOAT"/>
+      <genEnumLiterals ecoreEnumLiteral="expressions.ecore#//ValueType/HOST"/>
+    </genEnums>
+    <genClasses ecoreClass="expressions.ecore#//ComplexExpression">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference expressions.ecore#//ComplexExpression/subExpressions"/>
+    </genClasses>
+    <genClasses ecoreClass="expressions.ecore#//Expression"/>
+    <genClasses ecoreClass="expressions.ecore#//TextualCode">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute expressions.ecore#//TextualCode/code"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute expressions.ecore#//TextualCode/type"/>
+    </genClasses>
+    <genClasses ecoreClass="expressions.ecore#//Signal">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference expressions.ecore#//Signal/value"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute expressions.ecore#//Signal/isInput"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute expressions.ecore#//Signal/isOutput"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute expressions.ecore#//Signal/combineOperator"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute expressions.ecore#//Signal/hostCombineOperator"/>
+    </genClasses>
+    <genClasses ecoreClass="expressions.ecore#//SignalReference">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference expressions.ecore#//SignalReference/signal"/>
+    </genClasses>
+    <genClasses ecoreClass="expressions.ecore#//ValuedObject">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute expressions.ecore#//ValuedObject/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute expressions.ecore#//ValuedObject/type"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute expressions.ecore#//ValuedObject/initialValue"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute expressions.ecore#//ValuedObject/hostType"/>
+    </genClasses>
+    <genClasses ecoreClass="expressions.ecore#//Variable">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference expressions.ecore#//Variable/value"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute expressions.ecore#//Variable/const"/>
+    </genClasses>
+    <genClasses ecoreClass="expressions.ecore#//VariableReference">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference expressions.ecore#//VariableReference/variable"/>
+    </genClasses>
+    <genClasses ecoreClass="expressions.ecore#//Value"/>
+    <genClasses ecoreClass="expressions.ecore#//IntValue">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute expressions.ecore#//IntValue/value"/>
+    </genClasses>
+    <genClasses ecoreClass="expressions.ecore#//FloatValue">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute expressions.ecore#//FloatValue/value"/>
+    </genClasses>
+    <genClasses ecoreClass="expressions.ecore#//BooleanValue">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute expressions.ecore#//BooleanValue/value"/>
+    </genClasses>
+    <genClasses ecoreClass="expressions.ecore#//OperatorExpression">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute expressions.ecore#//OperatorExpression/operator"/>
+    </genClasses>
+  </genPackages>
+</genmodel:GenModel>
