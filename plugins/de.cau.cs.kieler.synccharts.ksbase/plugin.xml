@@ -114,7 +114,7 @@
              validation="isNoRootState">
        </transformation>
        <transformation
-             tooltip="Create a new region and move all existing regions to the new one"
+             tooltip="Create a new state and move all existing regions to the new one"
              icon="icons/encapsulate.gif"
              keyboardShortcut="M1+R E"
              name="Encapsulate Regions"
