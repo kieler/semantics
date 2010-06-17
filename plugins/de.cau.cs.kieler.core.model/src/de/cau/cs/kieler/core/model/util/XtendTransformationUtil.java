@@ -14,6 +14,7 @@
 package de.cau.cs.kieler.core.model.util;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -69,11 +70,8 @@ public final class XtendTransformationUtil {
      *            EMF URI for input model (may be a local resource URI)
      * @param outputModelURI
      *            EMF URI for output model
-     * @param modelPackage1
-     *            EPackage of first metamodel that need to be known to the
-     *            transformation
-     * @param modelPackage2
-     *            EPackage of second metamodel that need to be known to the
+     * @param involvedMetamodels
+     *            EPackages of metamodels that need to be known to the
      *            transformation
      * 
      * @return the Status about success and errors and warnings
@@ -84,7 +82,7 @@ public final class XtendTransformationUtil {
      */
     public static XtendStatus model2ModelTransform(final KielerProgressMonitor monitor,
             final String xtendFile, final String startFunction, final URI inputModelURI,
-            final URI outputModelURI, final EPackage modelPackage1, final EPackage modelPackage2) {
+            final URI outputModelURI, final List<EPackage> involvedMetamodels) {
         monitor.begin("Model2Model transformation", 2);
 
         // Workflow
@@ -116,20 +114,15 @@ public final class XtendTransformationUtil {
         emfWriter.setModelSlot("outputmodel");
         emfWriter.setResourceSet(new ResourceSetImpl());
 
-        // Meta models
-        EmfMetaModel metaModel1 = new EmfMetaModel(modelPackage1);
-        EmfMetaModel metaModel2 = new EmfMetaModel(modelPackage2);
-
         // XtendComponent
         XtendComponent xtendComponent = new XtendComponent();
-        xtendComponent.addMetaModel(metaModel1);
-        xtendComponent.addMetaModel(metaModel2);
         xtendComponent.setInvoke(xtendFile + "::" + startFunction + "(inputmodel)");
         xtendComponent.setOutputSlot("outputmodel");
 
-        // add the Annotations Metamodel by default
-        xtendComponent.addMetaModel(new EmfMetaModel(AnnotationsPackage.eINSTANCE));
-        xtendComponent.addMetaModel(new EmfMetaModel(ExpressionsPackage.eINSTANCE));
+        // add the Metamodels
+        for (EPackage ePackage : involvedMetamodels) {
+            xtendComponent.addMetaModel(new EmfMetaModel(ePackage));
+        }
 
         // workflow
         WorkflowContext wfx = new WorkflowContextDefaultImpl();
@@ -187,11 +180,8 @@ public final class XtendTransformationUtil {
      *            EMF URI for input model (may be a local resource URI)
      * @param outputModelURI
      *            EMF URI for output model
-     * @param modelPackage1
-     *            EPackage of first metamodel that need to be known to the
-     *            transformation
-     * @param modelPackage2
-     *            EPackage of second metamodel that need to be known to the
+     * @param involvedMetamodels
+     *            EPackages of metamodels that need to be known to the
      *            transformation
      * 
      * @throws KielerException
@@ -202,13 +192,13 @@ public final class XtendTransformationUtil {
      */
     public static XtendStatus model2ModelTransform(final String xtendFile,
             final String startFunction, final URI inputModelURI, final URI outputModelURI,
-            final EPackage modelPackage1, final EPackage modelPackage2) throws KielerException {
+            final List<EPackage> involvedMetamodels) throws KielerException {
         MonitoredOperation monitoredOperation = new MonitoredOperation() {
             @Override
             protected IStatus execute(final IProgressMonitor monitor) {
                 return XtendTransformationUtil.model2ModelTransform(new KielerProgressMonitor(
                         monitor), xtendFile, startFunction, inputModelURI, outputModelURI,
-                        modelPackage1, modelPackage2);
+                        involvedMetamodels);
             }
         };
         monitoredOperation.runMonitored();
