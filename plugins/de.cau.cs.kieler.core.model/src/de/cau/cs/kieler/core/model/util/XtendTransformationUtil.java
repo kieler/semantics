@@ -22,7 +22,6 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.resource.Resource;
-import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.xmi.XMIResource;
 import org.eclipse.emf.ecore.xmi.XMLResource;
@@ -43,6 +42,7 @@ import de.cau.cs.kieler.core.KielerException;
 import de.cau.cs.kieler.core.model.ui.M2MProgressMonitor;
 import de.cau.cs.kieler.core.ui.KielerProgressMonitor;
 import de.cau.cs.kieler.core.ui.util.MonitoredOperation;
+import de.cau.cs.kieler.expressions.ExpressionsPackage;
 
 /**
  * Utitlity class to conveniently execute Xtend transformations.
@@ -129,6 +129,7 @@ public final class XtendTransformationUtil {
 
         // add the Annotations Metamodel by default
         xtendComponent.addMetaModel(new EmfMetaModel(AnnotationsPackage.eINSTANCE));
+        xtendComponent.addMetaModel(new EmfMetaModel(ExpressionsPackage.eINSTANCE));
 
         // workflow
         WorkflowContext wfx = new WorkflowContextDefaultImpl();
