@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: de.cau.cs.kieler.s.ui
 Bundle-Vendor: My Company
-Bundle-Version: 1.0.0
+Bundle-Version: 0.1.0.qualifyer
 Bundle-SymbolicName: de.cau.cs.kieler.s.ui; singleton:=true
 Bundle-ActivationPolicy: lazy
 Require-Bundle: de.cau.cs.kieler.s;visibility:=reexport,
