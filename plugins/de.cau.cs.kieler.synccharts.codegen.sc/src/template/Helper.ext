@@ -22,6 +22,7 @@
   */
 
 import synccharts;
+import expressions;
 
 // Returns a sorted list of transition priorities.
 List sortTransitionPrios(State state):
@@ -157,6 +158,6 @@ boolean hasImmediates(State state):
 
 // Tests if a state has a transition without any triggers.
 boolean hasTransitionWithoutTrigger(State state):
-	state.outgoingTransitions.exists(t|t.trigger == null) &&
+	state.outgoingTransitions.exists(t|t. trigger == null) &&
 	!state.outgoingTransitions.exists(t|t.type == TransitionType::NORMALTERMINATION)
 ;

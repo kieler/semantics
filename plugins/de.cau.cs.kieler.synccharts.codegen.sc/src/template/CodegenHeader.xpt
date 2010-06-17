@@ -3,6 +3,7 @@
 «ENDREM»
 
 «IMPORT synccharts»
+«IMPORT expressions»
 
 «EXTENSION template::Helper»
 
@@ -16,10 +17,10 @@
   
   «FOREACH allSignals(this.innerStates.first()) AS signal-»
   	«IF ((Signal)signal).isInput-»
-  void «((Signal)signal).parentScope.id»_I_«((Signal)signal).name»(«IF ((Signal)signal).type!=ValueType::PURE»int«ENDIF»);
+  void «((Scope)((Signal)signal).eContainer).id»_I_«((Signal)signal).name»(«IF ((Signal)signal).type!=ValueType::PURE»int«ENDIF»);
   	«ENDIF-»
   	«IF ((Signal)signal).isOutput-»
-  void «((Signal)signal).parentScope.id»_O_«((Signal)signal).name»(«IF ((Signal)signal).type!=ValueType::PURE»int«ENDIF»);
+  void «((Scope)((Signal)signal).eContainer).id»_O_«((Signal)signal).name»(«IF ((Signal)signal).type!=ValueType::PURE»int«ENDIF»);
   	«ENDIF-»
   «ENDFOREACH-»
   

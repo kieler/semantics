@@ -3,6 +3,7 @@
 «ENDREM»
 
 «IMPORT synccharts»
+«IMPORT expressions»
 
 «EXTENSION template::Helper»
 
@@ -118,9 +119,9 @@
 «ENDDEFINE»
 
 «DEFINE signalAndValue FOR Emission-»
-	«IF this.newValue.metaType == synccharts::OperatorExpression-»
+	«IF this.newValue.metaType == expressions::OperatorExpression-»
 		sig_«this.signal.name», «EXPAND checkExpression FOR this.newValue-»
-	«ELSEIF this.newValue.metaType == synccharts::BooleanValue-»
+	«ELSEIF this.newValue.metaType == expressions::BooleanValue-»
 		sig_«this.signal.name», «EXPAND getValue FOR this.newValue-»
 	«ELSE-»
 		sig_«this.signal.name», «((IntValue)this.newValue).value-»
@@ -138,7 +139,7 @@
 		«EXPAND syncChartsOpToCOp FOR this.operator-»
 		«EXPAND checkExpression FOR this.subExpressions.get(0)-»
 	«ELSEIF this.operator == OperatorType::VAL-»
-		«IF (this.eContainer.metaType == synccharts::OperatorExpression)-»
+		«IF (this.eContainer.metaType == expressions::OperatorExpression)-»
 			VALPRE(sig_«((SignalReference)this.subExpressions.get(0)).signal.name-»)
 		«ELSE-»
 			VAL(sig_«((SignalReference)this.subExpressions.get(0)).signal.name-»)
@@ -188,11 +189,11 @@
 «ENDREM»
 «DEFINE getValue FOR Expression-»
 	/* metatype:  «((Value)this).metaType» */
-	«IF ((Value)this).metaType == synccharts::IntValue-»
+	«IF ((Value)this).metaType == expressions::IntValue-»
 		«((IntValue)this).value-»
-	«ELSEIF ((Value)this).metaType == synccharts::FloatValue-»
+	«ELSEIF ((Value)this).metaType == expressions::FloatValue-»
 		«((FloatValue)this).value-»
-	«ELSEIF((Value)this).metaType == synccharts::FloatValue-»
+	«ELSEIF((Value)this).metaType == expressions::FloatValue-»
 		«IF ((BooleanValue)this).value-»
 			1
 		«ELSE-»

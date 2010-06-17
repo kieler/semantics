@@ -4,6 +4,7 @@
 «ENDREM»
 
 «IMPORT synccharts»
+«IMPORT expressions»
 
 «EXTENSION template::Helper»
 
@@ -44,7 +45,7 @@ void setInputs(){
   «FOREACH allSignals(this.innerStates.first()) AS signal-»
   	«IF ((Signal)signal).isInput-»
     if ((1<<i) & rand) {
-      «((Signal)signal).parentScope.id»_I_«((Signal)signal).name»(«IF ((Signal)signal).type!=ValueType::PURE»random()«ENDIF»);
+      «((Scope)((Signal)signal).eContainer).id»_I_«((Signal)signal).name»(«IF ((Signal)signal).type!=ValueType::PURE»random()«ENDIF»);
     }
     i++;
   	«ENDIF-»

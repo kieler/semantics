@@ -3,6 +3,7 @@
 «ENDREM»
 
 «IMPORT synccharts»
+«IMPORT expressions»
 
 «EXTENSION template::Helper»
 
@@ -54,7 +55,7 @@
 	Template for a function to set inputs. 
 «ENDREM»
 «DEFINE generateInputSignal FOR Signal-»
-	void «this.parentScope.id»_I_«this.name»(«IF type!=ValueType::PURE»int val«ENDIF») {
+	void «((Scope)this.eContainer).id»_I_«this.name»(«IF type!=ValueType::PURE»int val«ENDIF») {
 		signals = signals | (1 << sig_«this.name»);
 		«IF type!=ValueType::PURE»valSigInt[sig_«this.name»]=val;«ENDIF»
 	}
@@ -64,7 +65,7 @@
 	Template for a function that generates outputs. 
 «ENDREM»
 «DEFINE generateOutputSignals FOR Signal»
-	void «this.parentScope.id»_O_«this.name»(int status){
+	void «((Scope)this.eContainer).id»_O_«this.name»(int status){
 		value = cJSON_CreateObject();
 		cJSON_AddItemToObject(value, "present", status?cJSON_CreateTrue():cJSON_CreateFalse());
 		«IF this.type == ValueType::INT-»
@@ -84,11 +85,11 @@
 		«FOREACH this AS signal-»
 			«IF !((Signal)signal).isInput-»
 				«IF (boolean)(GLOBALVAR sim)-»
-					«((Signal)signal).parentScope.id»_O_«((Signal)signal).name-»(signals & (1 << sig_«((Signal)signal).name-»));
+					«((Scope)((Signal)signal).eContainer).id»_O_«((Signal)signal).name-»(signals & (1 << sig_«((Signal)signal).name-»));
 				«ELSE-»
 				  «IF ((Signal)signal).isOutput-»				  
 					if(signals & (1 << sig_«((Signal)signal).name-»)) {
-						«((Signal)signal).parentScope.id»_O_«((Signal)signal).name-»(«IF ((Signal)signal).type!=ValueType::PURE»valSigInt[sig_«((Signal)signal).name»]«ENDIF»);
+						«((Scope)((Signal)signal).eContainer).id»_O_«((Signal)signal).name-»(«IF ((Signal)signal).type!=ValueType::PURE»valSigInt[sig_«((Signal)signal).name»]«ENDIF»);
 					}	
 					«ENDIF-»				
 				«ENDIF-»

@@ -2,6 +2,7 @@
 	Template file for the _data file.
 «ENDREM»
 «IMPORT synccharts»
+«IMPORT expressions»
 
 «EXTENSION template::Helper»
 
@@ -81,7 +82,7 @@ void setInputs(){
 		value = cJSON_GetObjectItem(child, "value");
 		«EXPAND setSignalValue FOR (Signal)signal-»
 		if (present != NULL && present->type) {
-			«((Signal)signal).parentScope.id»_I_«((Signal)signal).name»(«IF ((Signal)signal).type!=ValueType::PURE»valSigInt[sig_«((Signal)signal).name»]«ENDIF»);
+			«((Scope)((Signal)signal).eContainer).id»_I_«((Signal)signal).name»(«IF ((Signal)signal).type!=ValueType::PURE»valSigInt[sig_«((Signal)signal).name»]«ENDIF»);
 		}
 	}
   	«ENDIF-»

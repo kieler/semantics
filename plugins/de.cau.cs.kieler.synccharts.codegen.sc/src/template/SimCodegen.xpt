@@ -2,6 +2,7 @@
 	Template file for the main SC file. 
 «ENDREM»
 «IMPORT synccharts»
+«IMPORT expressions»
 
 «EXTENSION template::Helper»
 
