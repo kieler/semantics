@@ -5,7 +5,7 @@
       <ePackage href="http://www.eclipse.org/emf/2002/Ecore#/"/>
     </metamodelDeclarations>
     <metamodelDeclarations xsi:type="xtext:ReferencedMetamodel" alias="synccharts">
-      <ePackage href="http://kieler.cs.cau.de/synccharts/0.2#/"/>
+      <ePackage href="http://kieler.cs.cau.de/synccharts/0.2.1#/"/>
     </metamodelDeclarations>
     <metamodelDeclarations xsi:type="xtext:ReferencedMetamodel" alias="expressions">
       <ePackage href="http://kieler.cs.cau.de/expressions#/"/>
@@ -62,7 +62,7 @@
         <elements xsi:type="xtext:Assignment" feature="region" operator="=">
           <terminal xsi:type="xtext:CrossReference">
             <type metamodel="/0/@metamodelDeclarations.1">
-              <classifier xsi:type="ecore:EClass" href="http://kieler.cs.cau.de/synccharts/0.2#//Region"/>
+              <classifier xsi:type="ecore:EClass" href="http://kieler.cs.cau.de/synccharts/0.2.1#//Region"/>
             </type>
             <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.0"/>
           </terminal>

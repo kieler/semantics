@@ -44,7 +44,7 @@ Workflow {
 			}*/
 			
 			fragment = ecore.EcoreGeneratorFragment {
-			   referencedGenModels = "platform:/resource/de.cau.cs.kieler.synccharts/model/synccharts.genmodel"//, platform:/resource/de.cau.cs.kieler.core.expressions/model/expressions.genmodel, platform:/resource/de.cau.cs.kieler.core.annotations/model/annotations.genmodel"
+			   referencedGenModels = "platform:/resource/de.cau.cs.kieler.synccharts/model/synccharts.genmodel, platform:/resource/de.cau.cs.kieler.core.annotations/model/annotations.genmodel, platform:/resource/de.cau.cs.kieler.core.expressions/model/expressions.genmodel"
 			}
 			
 			fragment = parseTreeConstructor.ParseTreeConstructorFragment {}
