@@ -9,41 +9,41 @@ import org.eclipse.gmf.runtime.notation.View;
 import de.cau.cs.kieler.expressions.ExpressionsPackage;
 import de.cau.cs.kieler.synccharts.Region;
 import de.cau.cs.kieler.synccharts.SyncchartsPackage;
-import de.cau.cs.kieler.synccharts.diagram.edit.parts.EntryActionEditPart;
-import de.cau.cs.kieler.synccharts.diagram.edit.parts.EntryActionLabelEditPart;
-import de.cau.cs.kieler.synccharts.diagram.edit.parts.ExitActionEditPart;
-import de.cau.cs.kieler.synccharts.diagram.edit.parts.ExitActionLabelEditPart;
-import de.cau.cs.kieler.synccharts.diagram.edit.parts.InnerActionEditPart;
-import de.cau.cs.kieler.synccharts.diagram.edit.parts.InnerActionLabelEditPart;
+import de.cau.cs.kieler.synccharts.diagram.edit.parts.Action2EditPart;
+import de.cau.cs.kieler.synccharts.diagram.edit.parts.Action3EditPart;
+import de.cau.cs.kieler.synccharts.diagram.edit.parts.Action4EditPart;
+import de.cau.cs.kieler.synccharts.diagram.edit.parts.ActionEditPart;
+import de.cau.cs.kieler.synccharts.diagram.edit.parts.ActionLabel2EditPart;
+import de.cau.cs.kieler.synccharts.diagram.edit.parts.ActionLabel3EditPart;
+import de.cau.cs.kieler.synccharts.diagram.edit.parts.ActionLabel4EditPart;
+import de.cau.cs.kieler.synccharts.diagram.edit.parts.ActionLabelEditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.Region2EditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.RegionEditPart;
-import de.cau.cs.kieler.synccharts.diagram.edit.parts.RegionIdEditPart;
+import de.cau.cs.kieler.synccharts.diagram.edit.parts.RegionLabelEditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.RegionStateCompartmentEditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.SignalEditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.SignalNameEditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.State2EditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateEditPart;
-import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateEntryActionCompartment2EditPart;
-import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateEntryActionCompartmentEditPart;
-import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateExitActionCompartment2EditPart;
-import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateExitActionCompartmentEditPart;
-import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateInnerActionCompartment2EditPart;
-import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateInnerActionCompartmentEditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateInterfaceDeclaration2EditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateInterfaceDeclarationEditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateLabel2EditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateLabelEditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateRegionCompartment2EditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateRegionCompartmentEditPart;
-import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateSignalCompartment2EditPart;
-import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateSignalCompartmentEditPart;
-import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateSuspensionTriggerCompartment2EditPart;
-import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateSuspensionTriggerCompartmentEditPart;
-import de.cau.cs.kieler.synccharts.diagram.edit.parts.SuspensionTriggerEditPart;
-import de.cau.cs.kieler.synccharts.diagram.edit.parts.SuspensionTriggerLabelEditPart;
+import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateState10EditPart;
+import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateState2EditPart;
+import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateState3EditPart;
+import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateState4EditPart;
+import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateState5EditPart;
+import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateState6EditPart;
+import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateState7EditPart;
+import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateState8EditPart;
+import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateState9EditPart;
+import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateStateEditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.TextualCodeEditPart;
-import de.cau.cs.kieler.synccharts.diagram.edit.parts.TransitionDelayEditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.TransitionEditPart;
+import de.cau.cs.kieler.synccharts.diagram.edit.parts.TransitionLabelEditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.TransitionPriorityEditPart;
 
 /**
@@ -160,29 +160,29 @@ public class SyncchartsVisualIDRegistry {
                 return TextualCodeEditPart.VISUAL_ID;
             }
             break;
-        case StateSignalCompartmentEditPart.VISUAL_ID:
+        case StateStateEditPart.VISUAL_ID:
             if (ExpressionsPackage.eINSTANCE.getSignal().isSuperTypeOf(domainElement.eClass())) {
                 return SignalEditPart.VISUAL_ID;
             }
             break;
-        case StateEntryActionCompartmentEditPart.VISUAL_ID:
+        case StateState2EditPart.VISUAL_ID:
             if (SyncchartsPackage.eINSTANCE.getAction().isSuperTypeOf(domainElement.eClass())) {
-                return EntryActionEditPart.VISUAL_ID;
+                return ActionEditPart.VISUAL_ID;
             }
             break;
-        case StateInnerActionCompartmentEditPart.VISUAL_ID:
+        case StateState3EditPart.VISUAL_ID:
             if (SyncchartsPackage.eINSTANCE.getAction().isSuperTypeOf(domainElement.eClass())) {
-                return InnerActionEditPart.VISUAL_ID;
+                return Action2EditPart.VISUAL_ID;
             }
             break;
-        case StateExitActionCompartmentEditPart.VISUAL_ID:
+        case StateState4EditPart.VISUAL_ID:
             if (SyncchartsPackage.eINSTANCE.getAction().isSuperTypeOf(domainElement.eClass())) {
-                return ExitActionEditPart.VISUAL_ID;
+                return Action3EditPart.VISUAL_ID;
             }
             break;
-        case StateSuspensionTriggerCompartmentEditPart.VISUAL_ID:
+        case StateState5EditPart.VISUAL_ID:
             if (SyncchartsPackage.eINSTANCE.getAction().isSuperTypeOf(domainElement.eClass())) {
-                return SuspensionTriggerEditPart.VISUAL_ID;
+                return Action4EditPart.VISUAL_ID;
             }
             break;
         case StateRegionCompartmentEditPart.VISUAL_ID:
@@ -195,29 +195,29 @@ public class SyncchartsVisualIDRegistry {
                 return State2EditPart.VISUAL_ID;
             }
             break;
-        case StateSignalCompartment2EditPart.VISUAL_ID:
+        case StateState6EditPart.VISUAL_ID:
             if (ExpressionsPackage.eINSTANCE.getSignal().isSuperTypeOf(domainElement.eClass())) {
                 return SignalEditPart.VISUAL_ID;
             }
             break;
-        case StateEntryActionCompartment2EditPart.VISUAL_ID:
+        case StateState7EditPart.VISUAL_ID:
             if (SyncchartsPackage.eINSTANCE.getAction().isSuperTypeOf(domainElement.eClass())) {
-                return EntryActionEditPart.VISUAL_ID;
+                return ActionEditPart.VISUAL_ID;
             }
             break;
-        case StateInnerActionCompartment2EditPart.VISUAL_ID:
+        case StateState8EditPart.VISUAL_ID:
             if (SyncchartsPackage.eINSTANCE.getAction().isSuperTypeOf(domainElement.eClass())) {
-                return InnerActionEditPart.VISUAL_ID;
+                return Action2EditPart.VISUAL_ID;
             }
             break;
-        case StateExitActionCompartment2EditPart.VISUAL_ID:
+        case StateState9EditPart.VISUAL_ID:
             if (SyncchartsPackage.eINSTANCE.getAction().isSuperTypeOf(domainElement.eClass())) {
-                return ExitActionEditPart.VISUAL_ID;
+                return Action3EditPart.VISUAL_ID;
             }
             break;
-        case StateSuspensionTriggerCompartment2EditPart.VISUAL_ID:
+        case StateState10EditPart.VISUAL_ID:
             if (SyncchartsPackage.eINSTANCE.getAction().isSuperTypeOf(domainElement.eClass())) {
-                return SuspensionTriggerEditPart.VISUAL_ID;
+                return Action4EditPart.VISUAL_ID;
             }
             break;
         case StateRegionCompartment2EditPart.VISUAL_ID:
@@ -262,19 +262,19 @@ public class SyncchartsVisualIDRegistry {
             if (StateInterfaceDeclarationEditPart.VISUAL_ID == nodeVisualID) {
                 return true;
             }
-            if (StateSignalCompartmentEditPart.VISUAL_ID == nodeVisualID) {
+            if (StateStateEditPart.VISUAL_ID == nodeVisualID) {
                 return true;
             }
-            if (StateEntryActionCompartmentEditPart.VISUAL_ID == nodeVisualID) {
+            if (StateState2EditPart.VISUAL_ID == nodeVisualID) {
                 return true;
             }
-            if (StateInnerActionCompartmentEditPart.VISUAL_ID == nodeVisualID) {
+            if (StateState3EditPart.VISUAL_ID == nodeVisualID) {
                 return true;
             }
-            if (StateExitActionCompartmentEditPart.VISUAL_ID == nodeVisualID) {
+            if (StateState4EditPart.VISUAL_ID == nodeVisualID) {
                 return true;
             }
-            if (StateSuspensionTriggerCompartmentEditPart.VISUAL_ID == nodeVisualID) {
+            if (StateState5EditPart.VISUAL_ID == nodeVisualID) {
                 return true;
             }
             if (StateRegionCompartmentEditPart.VISUAL_ID == nodeVisualID) {
@@ -285,7 +285,7 @@ public class SyncchartsVisualIDRegistry {
             }
             break;
         case Region2EditPart.VISUAL_ID:
-            if (RegionIdEditPart.VISUAL_ID == nodeVisualID) {
+            if (RegionLabelEditPart.VISUAL_ID == nodeVisualID) {
                 return true;
             }
             if (RegionStateCompartmentEditPart.VISUAL_ID == nodeVisualID) {
@@ -299,19 +299,19 @@ public class SyncchartsVisualIDRegistry {
             if (StateInterfaceDeclaration2EditPart.VISUAL_ID == nodeVisualID) {
                 return true;
             }
-            if (StateSignalCompartment2EditPart.VISUAL_ID == nodeVisualID) {
+            if (StateState6EditPart.VISUAL_ID == nodeVisualID) {
                 return true;
             }
-            if (StateEntryActionCompartment2EditPart.VISUAL_ID == nodeVisualID) {
+            if (StateState7EditPart.VISUAL_ID == nodeVisualID) {
                 return true;
             }
-            if (StateInnerActionCompartment2EditPart.VISUAL_ID == nodeVisualID) {
+            if (StateState8EditPart.VISUAL_ID == nodeVisualID) {
                 return true;
             }
-            if (StateExitActionCompartment2EditPart.VISUAL_ID == nodeVisualID) {
+            if (StateState9EditPart.VISUAL_ID == nodeVisualID) {
                 return true;
             }
-            if (StateSuspensionTriggerCompartment2EditPart.VISUAL_ID == nodeVisualID) {
+            if (StateState10EditPart.VISUAL_ID == nodeVisualID) {
                 return true;
             }
             if (StateRegionCompartment2EditPart.VISUAL_ID == nodeVisualID) {
@@ -326,48 +326,48 @@ public class SyncchartsVisualIDRegistry {
                 return true;
             }
             break;
-        case EntryActionEditPart.VISUAL_ID:
-            if (EntryActionLabelEditPart.VISUAL_ID == nodeVisualID) {
+        case ActionEditPart.VISUAL_ID:
+            if (ActionLabelEditPart.VISUAL_ID == nodeVisualID) {
                 return true;
             }
             break;
-        case InnerActionEditPart.VISUAL_ID:
-            if (InnerActionLabelEditPart.VISUAL_ID == nodeVisualID) {
+        case Action2EditPart.VISUAL_ID:
+            if (ActionLabel2EditPart.VISUAL_ID == nodeVisualID) {
                 return true;
             }
             break;
-        case ExitActionEditPart.VISUAL_ID:
-            if (ExitActionLabelEditPart.VISUAL_ID == nodeVisualID) {
+        case Action3EditPart.VISUAL_ID:
+            if (ActionLabel3EditPart.VISUAL_ID == nodeVisualID) {
                 return true;
             }
             break;
-        case SuspensionTriggerEditPart.VISUAL_ID:
-            if (SuspensionTriggerLabelEditPart.VISUAL_ID == nodeVisualID) {
+        case Action4EditPart.VISUAL_ID:
+            if (ActionLabel4EditPart.VISUAL_ID == nodeVisualID) {
                 return true;
             }
             break;
-        case StateSignalCompartmentEditPart.VISUAL_ID:
+        case StateStateEditPart.VISUAL_ID:
             if (SignalEditPart.VISUAL_ID == nodeVisualID) {
                 return true;
             }
             break;
-        case StateEntryActionCompartmentEditPart.VISUAL_ID:
-            if (EntryActionEditPart.VISUAL_ID == nodeVisualID) {
+        case StateState2EditPart.VISUAL_ID:
+            if (ActionEditPart.VISUAL_ID == nodeVisualID) {
                 return true;
             }
             break;
-        case StateInnerActionCompartmentEditPart.VISUAL_ID:
-            if (InnerActionEditPart.VISUAL_ID == nodeVisualID) {
+        case StateState3EditPart.VISUAL_ID:
+            if (Action2EditPart.VISUAL_ID == nodeVisualID) {
                 return true;
             }
             break;
-        case StateExitActionCompartmentEditPart.VISUAL_ID:
-            if (ExitActionEditPart.VISUAL_ID == nodeVisualID) {
+        case StateState4EditPart.VISUAL_ID:
+            if (Action3EditPart.VISUAL_ID == nodeVisualID) {
                 return true;
             }
             break;
-        case StateSuspensionTriggerCompartmentEditPart.VISUAL_ID:
-            if (SuspensionTriggerEditPart.VISUAL_ID == nodeVisualID) {
+        case StateState5EditPart.VISUAL_ID:
+            if (Action4EditPart.VISUAL_ID == nodeVisualID) {
                 return true;
             }
             break;
@@ -381,28 +381,28 @@ public class SyncchartsVisualIDRegistry {
                 return true;
             }
             break;
-        case StateSignalCompartment2EditPart.VISUAL_ID:
+        case StateState6EditPart.VISUAL_ID:
             if (SignalEditPart.VISUAL_ID == nodeVisualID) {
                 return true;
             }
             break;
-        case StateEntryActionCompartment2EditPart.VISUAL_ID:
-            if (EntryActionEditPart.VISUAL_ID == nodeVisualID) {
+        case StateState7EditPart.VISUAL_ID:
+            if (ActionEditPart.VISUAL_ID == nodeVisualID) {
                 return true;
             }
             break;
-        case StateInnerActionCompartment2EditPart.VISUAL_ID:
-            if (InnerActionEditPart.VISUAL_ID == nodeVisualID) {
+        case StateState8EditPart.VISUAL_ID:
+            if (Action2EditPart.VISUAL_ID == nodeVisualID) {
                 return true;
             }
             break;
-        case StateExitActionCompartment2EditPart.VISUAL_ID:
-            if (ExitActionEditPart.VISUAL_ID == nodeVisualID) {
+        case StateState9EditPart.VISUAL_ID:
+            if (Action3EditPart.VISUAL_ID == nodeVisualID) {
                 return true;
             }
             break;
-        case StateSuspensionTriggerCompartment2EditPart.VISUAL_ID:
-            if (SuspensionTriggerEditPart.VISUAL_ID == nodeVisualID) {
+        case StateState10EditPart.VISUAL_ID:
+            if (Action4EditPart.VISUAL_ID == nodeVisualID) {
                 return true;
             }
             break;
@@ -417,7 +417,7 @@ public class SyncchartsVisualIDRegistry {
             }
             break;
         case TransitionEditPart.VISUAL_ID:
-            if (TransitionDelayEditPart.VISUAL_ID == nodeVisualID) {
+            if (TransitionLabelEditPart.VISUAL_ID == nodeVisualID) {
                 return true;
             }
             if (TransitionPriorityEditPart.VISUAL_ID == nodeVisualID) {

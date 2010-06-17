@@ -45,8 +45,8 @@ public class SyncchartsEditPartFactory implements EditPartFactory {
             case Region2EditPart.VISUAL_ID:
                 return new Region2EditPart(view);
 
-            case RegionIdEditPart.VISUAL_ID:
-                return new RegionIdEditPart(view);
+            case RegionLabelEditPart.VISUAL_ID:
+                return new RegionLabelEditPart(view);
 
             case State2EditPart.VISUAL_ID:
                 return new State2EditPart(view);
@@ -63,47 +63,47 @@ public class SyncchartsEditPartFactory implements EditPartFactory {
             case SignalNameEditPart.VISUAL_ID:
                 return new SignalNameEditPart(view);
 
-            case EntryActionEditPart.VISUAL_ID:
-                return new EntryActionEditPart(view);
+            case ActionEditPart.VISUAL_ID:
+                return new ActionEditPart(view);
 
-            case EntryActionLabelEditPart.VISUAL_ID:
-                return new EntryActionLabelEditPart(view);
+            case ActionLabelEditPart.VISUAL_ID:
+                return new ActionLabelEditPart(view);
 
-            case InnerActionEditPart.VISUAL_ID:
-                return new InnerActionEditPart(view);
+            case Action2EditPart.VISUAL_ID:
+                return new Action2EditPart(view);
 
-            case InnerActionLabelEditPart.VISUAL_ID:
-                return new InnerActionLabelEditPart(view);
+            case ActionLabel2EditPart.VISUAL_ID:
+                return new ActionLabel2EditPart(view);
 
-            case ExitActionEditPart.VISUAL_ID:
-                return new ExitActionEditPart(view);
+            case Action3EditPart.VISUAL_ID:
+                return new Action3EditPart(view);
 
-            case ExitActionLabelEditPart.VISUAL_ID:
-                return new ExitActionLabelEditPart(view);
+            case ActionLabel3EditPart.VISUAL_ID:
+                return new ActionLabel3EditPart(view);
 
-            case SuspensionTriggerEditPart.VISUAL_ID:
-                return new SuspensionTriggerEditPart(view);
+            case Action4EditPart.VISUAL_ID:
+                return new Action4EditPart(view);
 
-            case SuspensionTriggerLabelEditPart.VISUAL_ID:
-                return new SuspensionTriggerLabelEditPart(view);
+            case ActionLabel4EditPart.VISUAL_ID:
+                return new ActionLabel4EditPart(view);
 
             case TextualCodeEditPart.VISUAL_ID:
                 return new TextualCodeEditPart(view);
 
-            case StateSignalCompartmentEditPart.VISUAL_ID:
-                return new StateSignalCompartmentEditPart(view);
+            case StateStateEditPart.VISUAL_ID:
+                return new StateStateEditPart(view);
 
-            case StateEntryActionCompartmentEditPart.VISUAL_ID:
-                return new StateEntryActionCompartmentEditPart(view);
+            case StateState2EditPart.VISUAL_ID:
+                return new StateState2EditPart(view);
 
-            case StateInnerActionCompartmentEditPart.VISUAL_ID:
-                return new StateInnerActionCompartmentEditPart(view);
+            case StateState3EditPart.VISUAL_ID:
+                return new StateState3EditPart(view);
 
-            case StateExitActionCompartmentEditPart.VISUAL_ID:
-                return new StateExitActionCompartmentEditPart(view);
+            case StateState4EditPart.VISUAL_ID:
+                return new StateState4EditPart(view);
 
-            case StateSuspensionTriggerCompartmentEditPart.VISUAL_ID:
-                return new StateSuspensionTriggerCompartmentEditPart(view);
+            case StateState5EditPart.VISUAL_ID:
+                return new StateState5EditPart(view);
 
             case StateRegionCompartmentEditPart.VISUAL_ID:
                 return new StateRegionCompartmentEditPart(view);
@@ -111,20 +111,20 @@ public class SyncchartsEditPartFactory implements EditPartFactory {
             case RegionStateCompartmentEditPart.VISUAL_ID:
                 return new RegionStateCompartmentEditPart(view);
 
-            case StateSignalCompartment2EditPart.VISUAL_ID:
-                return new StateSignalCompartment2EditPart(view);
+            case StateState6EditPart.VISUAL_ID:
+                return new StateState6EditPart(view);
 
-            case StateEntryActionCompartment2EditPart.VISUAL_ID:
-                return new StateEntryActionCompartment2EditPart(view);
+            case StateState7EditPart.VISUAL_ID:
+                return new StateState7EditPart(view);
 
-            case StateInnerActionCompartment2EditPart.VISUAL_ID:
-                return new StateInnerActionCompartment2EditPart(view);
+            case StateState8EditPart.VISUAL_ID:
+                return new StateState8EditPart(view);
 
-            case StateExitActionCompartment2EditPart.VISUAL_ID:
-                return new StateExitActionCompartment2EditPart(view);
+            case StateState9EditPart.VISUAL_ID:
+                return new StateState9EditPart(view);
 
-            case StateSuspensionTriggerCompartment2EditPart.VISUAL_ID:
-                return new StateSuspensionTriggerCompartment2EditPart(view);
+            case StateState10EditPart.VISUAL_ID:
+                return new StateState10EditPart(view);
 
             case StateRegionCompartment2EditPart.VISUAL_ID:
                 return new StateRegionCompartment2EditPart(view);
@@ -132,8 +132,8 @@ public class SyncchartsEditPartFactory implements EditPartFactory {
             case TransitionEditPart.VISUAL_ID:
                 return new TransitionEditPart(view);
 
-            case TransitionDelayEditPart.VISUAL_ID:
-                return new TransitionDelayEditPart(view);
+            case TransitionLabelEditPart.VISUAL_ID:
+                return new TransitionLabelEditPart(view);
 
             case TransitionPriorityEditPart.VISUAL_ID:
                 return new TransitionPriorityEditPart(view);

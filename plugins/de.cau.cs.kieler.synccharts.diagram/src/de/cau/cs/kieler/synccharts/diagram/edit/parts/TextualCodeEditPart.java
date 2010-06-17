@@ -60,7 +60,7 @@ public class TextualCodeEditPart extends CompartmentEditPart implements ITextAwa
     /**
      * @generated
      */
-    public static final int VISUAL_ID = 3022;
+    public static final int VISUAL_ID = 3030;
 
     /**
      * @generated
@@ -299,7 +299,7 @@ public class TextualCodeEditPart extends CompartmentEditPart implements ITextAwa
         if (parser == null) {
             parser = SyncchartsParserProvider
                     .getParser(
-                            SyncchartsElementTypes.TextualCode_3022,
+                            SyncchartsElementTypes.TextualCode_3030,
                             getParserElement(),
                             SyncchartsVisualIDRegistry
                                     .getType(de.cau.cs.kieler.synccharts.diagram.edit.parts.TextualCodeEditPart.VISUAL_ID));

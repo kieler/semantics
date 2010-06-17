@@ -25,7 +25,7 @@ public class TransitionEditPart extends ConnectionNodeEditPart implements ITreeB
     /**
      * @generated
      */
-    public static final int VISUAL_ID = 4002;
+    public static final int VISUAL_ID = 4003;
 
     /**
      * @generated
@@ -46,8 +46,8 @@ public class TransitionEditPart extends ConnectionNodeEditPart implements ITreeB
      * @generated
      */
     protected boolean addFixedChild(EditPart childEditPart) {
-        if (childEditPart instanceof TransitionDelayEditPart) {
-            ((TransitionDelayEditPart) childEditPart).setLabel(getPrimaryShape()
+        if (childEditPart instanceof TransitionLabelEditPart) {
+            ((TransitionLabelEditPart) childEditPart).setLabel(getPrimaryShape()
                     .getFigureTransitionTriggersAndEffectsFigure());
             return true;
         }
@@ -73,7 +73,7 @@ public class TransitionEditPart extends ConnectionNodeEditPart implements ITreeB
      * @generated
      */
     protected boolean removeFixedChild(EditPart childEditPart) {
-        if (childEditPart instanceof TransitionDelayEditPart) {
+        if (childEditPart instanceof TransitionLabelEditPart) {
             return true;
         }
         if (childEditPart instanceof TransitionPriorityEditPart) {

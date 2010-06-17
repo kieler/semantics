@@ -28,7 +28,7 @@ public class Region2ItemSemanticEditPolicy extends SyncchartsBaseItemSemanticEdi
      * @generated
      */
     public Region2ItemSemanticEditPolicy() {
-        super(SyncchartsElementTypes.Region_3009);
+        super(SyncchartsElementTypes.Region_3023);
     }
 
     /**

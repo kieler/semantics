@@ -45,5 +45,6 @@ Require-Bundle: org.eclipse.core.runtime,
  de.cau.cs.kieler.core.annotations;visibility:=reexport,
  de.cau.cs.kieler.core.expressions;visibility:=reexport,
  de.cau.cs.kieler.core.annotations.edit;visibility:=reexport,
- de.cau.cs.kieler.core.expressions.edit;visibility:=reexport
+ de.cau.cs.kieler.core.expressions.edit;visibility:=reexport,
+ org.eclipse.emf.ecore.edit;visibility:=reexport
 Eclipse-LazyStart: true

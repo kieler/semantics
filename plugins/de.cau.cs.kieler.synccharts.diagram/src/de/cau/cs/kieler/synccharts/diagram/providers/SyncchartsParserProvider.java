@@ -15,18 +15,18 @@ import org.eclipse.gmf.runtime.notation.View;
 
 import de.cau.cs.kieler.expressions.ExpressionsPackage;
 import de.cau.cs.kieler.synccharts.SyncchartsPackage;
-import de.cau.cs.kieler.synccharts.diagram.edit.parts.EntryActionLabelEditPart;
-import de.cau.cs.kieler.synccharts.diagram.edit.parts.ExitActionLabelEditPart;
-import de.cau.cs.kieler.synccharts.diagram.edit.parts.InnerActionLabelEditPart;
-import de.cau.cs.kieler.synccharts.diagram.edit.parts.RegionIdEditPart;
+import de.cau.cs.kieler.synccharts.diagram.edit.parts.ActionLabel2EditPart;
+import de.cau.cs.kieler.synccharts.diagram.edit.parts.ActionLabel3EditPart;
+import de.cau.cs.kieler.synccharts.diagram.edit.parts.ActionLabel4EditPart;
+import de.cau.cs.kieler.synccharts.diagram.edit.parts.ActionLabelEditPart;
+import de.cau.cs.kieler.synccharts.diagram.edit.parts.RegionLabelEditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.SignalNameEditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateInterfaceDeclaration2EditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateInterfaceDeclarationEditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateLabel2EditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateLabelEditPart;
-import de.cau.cs.kieler.synccharts.diagram.edit.parts.SuspensionTriggerLabelEditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.TextualCodeEditPart;
-import de.cau.cs.kieler.synccharts.diagram.edit.parts.TransitionDelayEditPart;
+import de.cau.cs.kieler.synccharts.diagram.edit.parts.TransitionLabelEditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.TransitionPriorityEditPart;
 import de.cau.cs.kieler.synccharts.diagram.parsers.MessageFormatParser;
 import de.cau.cs.kieler.synccharts.diagram.part.SyncchartsVisualIDRegistry;
@@ -39,255 +39,255 @@ public class SyncchartsParserProvider extends AbstractProvider implements IParse
     /**
      * @generated
      */
-    private IParser stateLabel_5023Parser;
+    private IParser stateLabel_5039Parser;
 
     /**
      * @generated
      */
-    private IParser getStateLabel_5023Parser() {
-        if (stateLabel_5023Parser == null) {
+    private IParser getStateLabel_5039Parser() {
+        if (stateLabel_5039Parser == null) {
             EAttribute[] features = new EAttribute[] { SyncchartsPackage.eINSTANCE.getScope_Label() };
             MessageFormatParser parser = new MessageFormatParser(features);
-            stateLabel_5023Parser = parser;
+            stateLabel_5039Parser = parser;
         }
-        return stateLabel_5023Parser;
+        return stateLabel_5039Parser;
     }
 
     /**
      * @generated
      */
-    private IParser stateInterfaceDeclaration_5029Parser;
+    private IParser stateInterfaceDeclaration_5040Parser;
 
     /**
      * @generated
      */
-    private IParser getStateInterfaceDeclaration_5029Parser() {
-        if (stateInterfaceDeclaration_5029Parser == null) {
+    private IParser getStateInterfaceDeclaration_5040Parser() {
+        if (stateInterfaceDeclaration_5040Parser == null) {
             EAttribute[] features = new EAttribute[] { SyncchartsPackage.eINSTANCE
                     .getScope_InterfaceDeclaration() };
             EAttribute[] editableFeatures = new EAttribute[] { SyncchartsPackage.eINSTANCE
                     .getScope_InterfaceDeclaration() };
             MessageFormatParser parser = new MessageFormatParser(features, editableFeatures);
-            stateInterfaceDeclaration_5029Parser = parser;
+            stateInterfaceDeclaration_5040Parser = parser;
         }
-        return stateInterfaceDeclaration_5029Parser;
+        return stateInterfaceDeclaration_5040Parser;
     }
 
     /**
      * @generated
      */
-    private IParser regionLabel_5022Parser;
+    private IParser regionLabel_5038Parser;
 
     /**
      * @generated
      */
-    private IParser getRegionLabel_5022Parser() {
-        if (regionLabel_5022Parser == null) {
+    private IParser getRegionLabel_5038Parser() {
+        if (regionLabel_5038Parser == null) {
             EAttribute[] features = new EAttribute[] { SyncchartsPackage.eINSTANCE.getScope_Label() };
             EAttribute[] editableFeatures = new EAttribute[] { SyncchartsPackage.eINSTANCE
                     .getScope_Label() };
             MessageFormatParser parser = new MessageFormatParser(features, editableFeatures);
-            regionLabel_5022Parser = parser;
+            regionLabel_5038Parser = parser;
         }
-        return regionLabel_5022Parser;
+        return regionLabel_5038Parser;
     }
 
     /**
      * @generated
      */
-    private IParser stateLabel_5021Parser;
+    private IParser stateLabel_5036Parser;
 
     /**
      * @generated
      */
-    private IParser getStateLabel_5021Parser() {
-        if (stateLabel_5021Parser == null) {
+    private IParser getStateLabel_5036Parser() {
+        if (stateLabel_5036Parser == null) {
             EAttribute[] features = new EAttribute[] { SyncchartsPackage.eINSTANCE.getScope_Label() };
             MessageFormatParser parser = new MessageFormatParser(features);
-            stateLabel_5021Parser = parser;
+            stateLabel_5036Parser = parser;
         }
-        return stateLabel_5021Parser;
+        return stateLabel_5036Parser;
     }
 
     /**
      * @generated
      */
-    private IParser stateInterfaceDeclaration_5028Parser;
+    private IParser stateInterfaceDeclaration_5037Parser;
 
     /**
      * @generated
      */
-    private IParser getStateInterfaceDeclaration_5028Parser() {
-        if (stateInterfaceDeclaration_5028Parser == null) {
+    private IParser getStateInterfaceDeclaration_5037Parser() {
+        if (stateInterfaceDeclaration_5037Parser == null) {
             EAttribute[] features = new EAttribute[] { SyncchartsPackage.eINSTANCE
                     .getScope_InterfaceDeclaration() };
             EAttribute[] editableFeatures = new EAttribute[] { SyncchartsPackage.eINSTANCE
                     .getScope_InterfaceDeclaration() };
             MessageFormatParser parser = new MessageFormatParser(features, editableFeatures);
-            stateInterfaceDeclaration_5028Parser = parser;
+            stateInterfaceDeclaration_5037Parser = parser;
         }
-        return stateInterfaceDeclaration_5028Parser;
+        return stateInterfaceDeclaration_5037Parser;
     }
 
     /**
      * @generated
      */
-    private IParser signalName_5030Parser;
+    private IParser signalName_5031Parser;
 
     /**
      * @generated
      */
-    private IParser getSignalName_5030Parser() {
-        if (signalName_5030Parser == null) {
+    private IParser getSignalName_5031Parser() {
+        if (signalName_5031Parser == null) {
             EAttribute[] features = new EAttribute[] { ExpressionsPackage.eINSTANCE
                     .getValuedObject_Name() };
             MessageFormatParser parser = new MessageFormatParser(features);
             parser.setViewPattern("{0},"); //$NON-NLS-1$
             parser.setEditorPattern("{0}"); //$NON-NLS-1$
             parser.setEditPattern("{0}"); //$NON-NLS-1$
-            signalName_5030Parser = parser;
+            signalName_5031Parser = parser;
         }
-        return signalName_5030Parser;
+        return signalName_5031Parser;
     }
 
     /**
      * @generated
      */
-    private IParser actionLabel_5024Parser;
+    private IParser actionLabel_5032Parser;
 
     /**
      * @generated
      */
-    private IParser getActionLabel_5024Parser() {
-        if (actionLabel_5024Parser == null) {
+    private IParser getActionLabel_5032Parser() {
+        if (actionLabel_5032Parser == null) {
             EAttribute[] features = new EAttribute[] { SyncchartsPackage.eINSTANCE
                     .getAction_Label() };
             EAttribute[] editableFeatures = new EAttribute[] { SyncchartsPackage.eINSTANCE
                     .getAction_Label() };
             MessageFormatParser parser = new MessageFormatParser(features, editableFeatures);
-            actionLabel_5024Parser = parser;
+            actionLabel_5032Parser = parser;
         }
-        return actionLabel_5024Parser;
+        return actionLabel_5032Parser;
     }
 
     /**
      * @generated
      */
-    private IParser actionLabel_5025Parser;
+    private IParser actionLabel_5033Parser;
 
     /**
      * @generated
      */
-    private IParser getActionLabel_5025Parser() {
-        if (actionLabel_5025Parser == null) {
+    private IParser getActionLabel_5033Parser() {
+        if (actionLabel_5033Parser == null) {
             EAttribute[] features = new EAttribute[] { SyncchartsPackage.eINSTANCE
                     .getAction_Label() };
             EAttribute[] editableFeatures = new EAttribute[] { SyncchartsPackage.eINSTANCE
                     .getAction_Label() };
             MessageFormatParser parser = new MessageFormatParser(features, editableFeatures);
-            actionLabel_5025Parser = parser;
+            actionLabel_5033Parser = parser;
         }
-        return actionLabel_5025Parser;
+        return actionLabel_5033Parser;
     }
 
     /**
      * @generated
      */
-    private IParser actionLabel_5026Parser;
+    private IParser actionLabel_5034Parser;
 
     /**
      * @generated
      */
-    private IParser getActionLabel_5026Parser() {
-        if (actionLabel_5026Parser == null) {
+    private IParser getActionLabel_5034Parser() {
+        if (actionLabel_5034Parser == null) {
             EAttribute[] features = new EAttribute[] { SyncchartsPackage.eINSTANCE
                     .getAction_Label() };
             EAttribute[] editableFeatures = new EAttribute[] { SyncchartsPackage.eINSTANCE
                     .getAction_Label() };
             MessageFormatParser parser = new MessageFormatParser(features, editableFeatures);
-            actionLabel_5026Parser = parser;
+            actionLabel_5034Parser = parser;
         }
-        return actionLabel_5026Parser;
+        return actionLabel_5034Parser;
     }
 
     /**
      * @generated
      */
-    private IParser actionLabel_5027Parser;
+    private IParser actionLabel_5035Parser;
 
     /**
      * @generated
      */
-    private IParser getActionLabel_5027Parser() {
-        if (actionLabel_5027Parser == null) {
+    private IParser getActionLabel_5035Parser() {
+        if (actionLabel_5035Parser == null) {
             EAttribute[] features = new EAttribute[] { SyncchartsPackage.eINSTANCE
                     .getAction_Label() };
             EAttribute[] editableFeatures = new EAttribute[] { SyncchartsPackage.eINSTANCE
                     .getAction_Label() };
             MessageFormatParser parser = new MessageFormatParser(features, editableFeatures);
-            actionLabel_5027Parser = parser;
+            actionLabel_5035Parser = parser;
         }
-        return actionLabel_5027Parser;
+        return actionLabel_5035Parser;
     }
 
     /**
      * @generated
      */
-    private IParser textualCode_3022Parser;
+    private IParser textualCode_3030Parser;
 
     /**
      * @generated
      */
-    private IParser getTextualCode_3022Parser() {
-        if (textualCode_3022Parser == null) {
+    private IParser getTextualCode_3030Parser() {
+        if (textualCode_3030Parser == null) {
             EAttribute[] features = new EAttribute[] { ExpressionsPackage.eINSTANCE
                     .getTextualCode_Code() };
             EAttribute[] editableFeatures = new EAttribute[] { ExpressionsPackage.eINSTANCE
                     .getTextualCode_Code() };
             MessageFormatParser parser = new MessageFormatParser(features, editableFeatures);
-            textualCode_3022Parser = parser;
+            textualCode_3030Parser = parser;
         }
-        return textualCode_3022Parser;
+        return textualCode_3030Parser;
     }
 
     /**
      * @generated
      */
-    private IParser transitionLabel_6003Parser;
+    private IParser transitionLabel_6005Parser;
 
     /**
      * @generated
      */
-    private IParser getTransitionLabel_6003Parser() {
-        if (transitionLabel_6003Parser == null) {
+    private IParser getTransitionLabel_6005Parser() {
+        if (transitionLabel_6005Parser == null) {
             EAttribute[] features = new EAttribute[] { SyncchartsPackage.eINSTANCE
                     .getAction_Label() };
             EAttribute[] editableFeatures = new EAttribute[] { SyncchartsPackage.eINSTANCE
                     .getAction_Label() };
             MessageFormatParser parser = new MessageFormatParser(features, editableFeatures);
-            transitionLabel_6003Parser = parser;
+            transitionLabel_6005Parser = parser;
         }
-        return transitionLabel_6003Parser;
+        return transitionLabel_6005Parser;
     }
 
     /**
      * @generated
      */
-    private IParser transitionPriority_6004Parser;
+    private IParser transitionPriority_6006Parser;
 
     /**
      * @generated
      */
-    private IParser getTransitionPriority_6004Parser() {
-        if (transitionPriority_6004Parser == null) {
+    private IParser getTransitionPriority_6006Parser() {
+        if (transitionPriority_6006Parser == null) {
             EAttribute[] features = new EAttribute[] { SyncchartsPackage.eINSTANCE
                     .getTransition_Priority() };
             EAttribute[] editableFeatures = new EAttribute[] { SyncchartsPackage.eINSTANCE
                     .getTransition_Priority() };
             MessageFormatParser parser = new MessageFormatParser(features, editableFeatures);
-            transitionPriority_6004Parser = parser;
+            transitionPriority_6006Parser = parser;
         }
-        return transitionPriority_6004Parser;
+        return transitionPriority_6006Parser;
     }
 
     /**
@@ -296,31 +296,31 @@ public class SyncchartsParserProvider extends AbstractProvider implements IParse
     protected IParser getParser(int visualID) {
         switch (visualID) {
         case StateLabelEditPart.VISUAL_ID:
-            return getStateLabel_5023Parser();
+            return getStateLabel_5039Parser();
         case StateInterfaceDeclarationEditPart.VISUAL_ID:
-            return getStateInterfaceDeclaration_5029Parser();
-        case RegionIdEditPart.VISUAL_ID:
-            return getRegionLabel_5022Parser();
+            return getStateInterfaceDeclaration_5040Parser();
+        case RegionLabelEditPart.VISUAL_ID:
+            return getRegionLabel_5038Parser();
         case StateLabel2EditPart.VISUAL_ID:
-            return getStateLabel_5021Parser();
+            return getStateLabel_5036Parser();
         case StateInterfaceDeclaration2EditPart.VISUAL_ID:
-            return getStateInterfaceDeclaration_5028Parser();
+            return getStateInterfaceDeclaration_5037Parser();
         case SignalNameEditPart.VISUAL_ID:
-            return getSignalName_5030Parser();
-        case EntryActionLabelEditPart.VISUAL_ID:
-            return getActionLabel_5024Parser();
-        case InnerActionLabelEditPart.VISUAL_ID:
-            return getActionLabel_5025Parser();
-        case ExitActionLabelEditPart.VISUAL_ID:
-            return getActionLabel_5026Parser();
-        case SuspensionTriggerLabelEditPart.VISUAL_ID:
-            return getActionLabel_5027Parser();
+            return getSignalName_5031Parser();
+        case ActionLabelEditPart.VISUAL_ID:
+            return getActionLabel_5032Parser();
+        case ActionLabel2EditPart.VISUAL_ID:
+            return getActionLabel_5033Parser();
+        case ActionLabel3EditPart.VISUAL_ID:
+            return getActionLabel_5034Parser();
+        case ActionLabel4EditPart.VISUAL_ID:
+            return getActionLabel_5035Parser();
         case TextualCodeEditPart.VISUAL_ID:
-            return getTextualCode_3022Parser();
-        case TransitionDelayEditPart.VISUAL_ID:
-            return getTransitionLabel_6003Parser();
+            return getTextualCode_3030Parser();
+        case TransitionLabelEditPart.VISUAL_ID:
+            return getTransitionLabel_6005Parser();
         case TransitionPriorityEditPart.VISUAL_ID:
-            return getTransitionPriority_6004Parser();
+            return getTransitionPriority_6006Parser();
         }
         return null;
     }

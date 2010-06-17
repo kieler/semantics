@@ -32,7 +32,7 @@ public class StateRegionCompartmentCanonicalEditPolicy extends CanonicalEditPoli
     protected List getSemanticChildrenList() {
         View viewObject = (View) getHost().getModel();
         List result = new LinkedList();
-        for (Iterator it = SyncchartsDiagramUpdater.getStateRegionCompartment_7020SemanticChildren(
+        for (Iterator it = SyncchartsDiagramUpdater.getStateRegionCompartment_7033SemanticChildren(
                 viewObject).iterator(); it.hasNext();) {
             result.add(((SyncchartsNodeDescriptor) it.next()).getModelElement());
         }

@@ -15,7 +15,7 @@ public class ElementInitializers {
     /**
      * @generated
      */
-    public static void init_Transition_4002(Transition instance) {
+    public static void init_Transition_4003(Transition instance) {
         try {
             instance.setDelay(1);
             Object value_1 = SyncchartsOCLFactory.getExpression(

@@ -278,27 +278,27 @@ public class Messages extends NLS {
     /**
      * @generated
      */
-    public static String StateSignalCompartmentEditPart_title;
+    public static String StateStateEditPart_title;
 
     /**
      * @generated
      */
-    public static String StateEntryActionCompartmentEditPart_title;
+    public static String StateState2EditPart_title;
 
     /**
      * @generated
      */
-    public static String StateInnerActionCompartmentEditPart_title;
+    public static String StateState3EditPart_title;
 
     /**
      * @generated
      */
-    public static String StateExitActionCompartmentEditPart_title;
+    public static String StateState4EditPart_title;
 
     /**
      * @generated
      */
-    public static String StateSuspensionTriggerCompartmentEditPart_title;
+    public static String StateState5EditPart_title;
 
     /**
      * @generated
@@ -313,27 +313,27 @@ public class Messages extends NLS {
     /**
      * @generated
      */
-    public static String StateSignalCompartment2EditPart_title;
+    public static String StateState6EditPart_title;
 
     /**
      * @generated
      */
-    public static String StateEntryActionCompartment2EditPart_title;
+    public static String StateState7EditPart_title;
 
     /**
      * @generated
      */
-    public static String StateInnerActionCompartment2EditPart_title;
+    public static String StateState8EditPart_title;
 
     /**
      * @generated
      */
-    public static String StateExitActionCompartment2EditPart_title;
+    public static String StateState9EditPart_title;
 
     /**
      * @generated
      */
-    public static String StateSuspensionTriggerCompartment2EditPart_title;
+    public static String StateState10EditPart_title;
 
     /**
      * @generated
@@ -353,32 +353,32 @@ public class Messages extends NLS {
     /**
      * @generated
      */
-    public static String NavigatorGroupName_State_2002_incominglinks;
+    public static String NavigatorGroupName_State_2003_incominglinks;
 
     /**
      * @generated
      */
-    public static String NavigatorGroupName_State_2002_outgoinglinks;
+    public static String NavigatorGroupName_State_2003_outgoinglinks;
 
     /**
      * @generated
      */
-    public static String NavigatorGroupName_State_3010_incominglinks;
+    public static String NavigatorGroupName_State_3024_incominglinks;
 
     /**
      * @generated
      */
-    public static String NavigatorGroupName_State_3010_outgoinglinks;
+    public static String NavigatorGroupName_State_3024_outgoinglinks;
 
     /**
      * @generated
      */
-    public static String NavigatorGroupName_Transition_4002_target;
+    public static String NavigatorGroupName_Transition_4003_target;
 
     /**
      * @generated
      */
-    public static String NavigatorGroupName_Transition_4002_source;
+    public static String NavigatorGroupName_Transition_4003_source;
 
     /**
      * @generated

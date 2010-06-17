@@ -15,7 +15,6 @@ import org.eclipse.gmf.runtime.notation.View;
 import de.cau.cs.kieler.expressions.ExpressionsFactory;
 import de.cau.cs.kieler.expressions.Signal;
 import de.cau.cs.kieler.synccharts.Scope;
-import de.cau.cs.kieler.synccharts.SyncchartsFactory;
 
 /**
  * @generated

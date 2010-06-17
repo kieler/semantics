@@ -43,41 +43,41 @@ import org.eclipse.jface.preference.PreferenceConverter;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.FontData;
 
-import de.cau.cs.kieler.synccharts.diagram.edit.parts.EntryActionEditPart;
-import de.cau.cs.kieler.synccharts.diagram.edit.parts.EntryActionLabelEditPart;
-import de.cau.cs.kieler.synccharts.diagram.edit.parts.ExitActionEditPart;
-import de.cau.cs.kieler.synccharts.diagram.edit.parts.ExitActionLabelEditPart;
-import de.cau.cs.kieler.synccharts.diagram.edit.parts.InnerActionEditPart;
-import de.cau.cs.kieler.synccharts.diagram.edit.parts.InnerActionLabelEditPart;
+import de.cau.cs.kieler.synccharts.diagram.edit.parts.Action2EditPart;
+import de.cau.cs.kieler.synccharts.diagram.edit.parts.Action3EditPart;
+import de.cau.cs.kieler.synccharts.diagram.edit.parts.Action4EditPart;
+import de.cau.cs.kieler.synccharts.diagram.edit.parts.ActionEditPart;
+import de.cau.cs.kieler.synccharts.diagram.edit.parts.ActionLabel2EditPart;
+import de.cau.cs.kieler.synccharts.diagram.edit.parts.ActionLabel3EditPart;
+import de.cau.cs.kieler.synccharts.diagram.edit.parts.ActionLabel4EditPart;
+import de.cau.cs.kieler.synccharts.diagram.edit.parts.ActionLabelEditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.Region2EditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.RegionEditPart;
-import de.cau.cs.kieler.synccharts.diagram.edit.parts.RegionIdEditPart;
+import de.cau.cs.kieler.synccharts.diagram.edit.parts.RegionLabelEditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.RegionStateCompartmentEditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.SignalEditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.SignalNameEditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.State2EditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateEditPart;
-import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateEntryActionCompartment2EditPart;
-import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateEntryActionCompartmentEditPart;
-import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateExitActionCompartment2EditPart;
-import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateExitActionCompartmentEditPart;
-import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateInnerActionCompartment2EditPart;
-import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateInnerActionCompartmentEditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateInterfaceDeclaration2EditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateInterfaceDeclarationEditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateLabel2EditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateLabelEditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateRegionCompartment2EditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateRegionCompartmentEditPart;
-import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateSignalCompartment2EditPart;
-import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateSignalCompartmentEditPart;
-import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateSuspensionTriggerCompartment2EditPart;
-import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateSuspensionTriggerCompartmentEditPart;
-import de.cau.cs.kieler.synccharts.diagram.edit.parts.SuspensionTriggerEditPart;
-import de.cau.cs.kieler.synccharts.diagram.edit.parts.SuspensionTriggerLabelEditPart;
+import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateState10EditPart;
+import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateState2EditPart;
+import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateState3EditPart;
+import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateState4EditPart;
+import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateState5EditPart;
+import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateState6EditPart;
+import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateState7EditPart;
+import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateState8EditPart;
+import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateState9EditPart;
+import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateStateEditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.TextualCodeEditPart;
-import de.cau.cs.kieler.synccharts.diagram.edit.parts.TransitionDelayEditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.TransitionEditPart;
+import de.cau.cs.kieler.synccharts.diagram.edit.parts.TransitionLabelEditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.TransitionPriorityEditPart;
 import de.cau.cs.kieler.synccharts.diagram.part.SyncchartsVisualIDRegistry;
 
@@ -169,13 +169,13 @@ public class SyncchartsViewProvider extends AbstractProvider implements IViewPro
                 switch (visualID) {
                 case StateEditPart.VISUAL_ID:
                 case SignalEditPart.VISUAL_ID:
-                case EntryActionEditPart.VISUAL_ID:
+                case ActionEditPart.VISUAL_ID:
                 case TextualCodeEditPart.VISUAL_ID:
                 case Region2EditPart.VISUAL_ID:
                 case State2EditPart.VISUAL_ID:
-                case InnerActionEditPart.VISUAL_ID:
-                case ExitActionEditPart.VISUAL_ID:
-                case SuspensionTriggerEditPart.VISUAL_ID:
+                case Action2EditPart.VISUAL_ID:
+                case Action3EditPart.VISUAL_ID:
+                case Action4EditPart.VISUAL_ID:
                     if (domainElement == null
                             || visualID != SyncchartsVisualIDRegistry.getNodeVisualID(op
                                     .getContainerView(), domainElement)) {
@@ -189,10 +189,8 @@ public class SyncchartsViewProvider extends AbstractProvider implements IViewPro
         }
         return StateEditPart.VISUAL_ID == visualID || Region2EditPart.VISUAL_ID == visualID
                 || State2EditPart.VISUAL_ID == visualID || SignalEditPart.VISUAL_ID == visualID
-                || EntryActionEditPart.VISUAL_ID == visualID
-                || InnerActionEditPart.VISUAL_ID == visualID
-                || ExitActionEditPart.VISUAL_ID == visualID
-                || SuspensionTriggerEditPart.VISUAL_ID == visualID
+                || ActionEditPart.VISUAL_ID == visualID || Action2EditPart.VISUAL_ID == visualID
+                || Action3EditPart.VISUAL_ID == visualID || Action4EditPart.VISUAL_ID == visualID
                 || TextualCodeEditPart.VISUAL_ID == visualID;
     }
 
@@ -246,29 +244,29 @@ public class SyncchartsViewProvider extends AbstractProvider implements IViewPro
         }
         switch (visualID) {
         case StateEditPart.VISUAL_ID:
-            return createState_2002(domainElement, containerView, index, persisted, preferencesHint);
+            return createState_2003(domainElement, containerView, index, persisted, preferencesHint);
         case Region2EditPart.VISUAL_ID:
-            return createRegion_3009(domainElement, containerView, index, persisted,
+            return createRegion_3023(domainElement, containerView, index, persisted,
                     preferencesHint);
         case State2EditPart.VISUAL_ID:
-            return createState_3010(domainElement, containerView, index, persisted, preferencesHint);
+            return createState_3024(domainElement, containerView, index, persisted, preferencesHint);
         case SignalEditPart.VISUAL_ID:
-            return createSignal_3021(domainElement, containerView, index, persisted,
+            return createSignal_3025(domainElement, containerView, index, persisted,
                     preferencesHint);
-        case EntryActionEditPart.VISUAL_ID:
-            return createAction_3012(domainElement, containerView, index, persisted,
+        case ActionEditPart.VISUAL_ID:
+            return createAction_3026(domainElement, containerView, index, persisted,
                     preferencesHint);
-        case InnerActionEditPart.VISUAL_ID:
-            return createAction_3014(domainElement, containerView, index, persisted,
+        case Action2EditPart.VISUAL_ID:
+            return createAction_3027(domainElement, containerView, index, persisted,
                     preferencesHint);
-        case ExitActionEditPart.VISUAL_ID:
-            return createAction_3016(domainElement, containerView, index, persisted,
+        case Action3EditPart.VISUAL_ID:
+            return createAction_3028(domainElement, containerView, index, persisted,
                     preferencesHint);
-        case SuspensionTriggerEditPart.VISUAL_ID:
-            return createAction_3018(domainElement, containerView, index, persisted,
+        case Action4EditPart.VISUAL_ID:
+            return createAction_3029(domainElement, containerView, index, persisted,
                     preferencesHint);
         case TextualCodeEditPart.VISUAL_ID:
-            return createTextualCode_3022(domainElement, containerView, index, persisted,
+            return createTextualCode_3030(domainElement, containerView, index, persisted,
                     preferencesHint);
         }
         // can't happen, provided #provides(CreateNodeViewOperation) is correct
@@ -284,7 +282,7 @@ public class SyncchartsViewProvider extends AbstractProvider implements IViewPro
         String elementTypeHint = ((IHintedType) elementType).getSemanticHint();
         switch (SyncchartsVisualIDRegistry.getVisualID(elementTypeHint)) {
         case TransitionEditPart.VISUAL_ID:
-            return createTransition_4002(getSemanticElement(semanticAdapter), containerView, index,
+            return createTransition_4003(getSemanticElement(semanticAdapter), containerView, index,
                     persisted, preferencesHint);
         }
         // can never happen, provided #provides(CreateEdgeViewOperation) is correct
@@ -294,7 +292,7 @@ public class SyncchartsViewProvider extends AbstractProvider implements IViewPro
     /**
      * @generated
      */
-    public Node createState_2002(EObject domainElement, View containerView, int index,
+    public Node createState_2003(EObject domainElement, View containerView, int index,
             boolean persisted, PreferencesHint preferencesHint) {
         Shape node = NotationFactory.eINSTANCE.createShape();
         node.setLayoutConstraint(NotationFactory.eINSTANCE.createBounds());
@@ -327,21 +325,20 @@ public class SyncchartsViewProvider extends AbstractProvider implements IViewPro
         ViewUtil.setStructuralFeatureValue(node,
                 NotationPackage.eINSTANCE.getFillStyle_FillColor(), FigureUtilities
                         .RGBToInteger(fillRGB));
-        Node label5023 = createLabel(node, SyncchartsVisualIDRegistry
+        Node label5039 = createLabel(node, SyncchartsVisualIDRegistry
                 .getType(StateLabelEditPart.VISUAL_ID));
-        Node label5029 = createLabel(node, SyncchartsVisualIDRegistry
+        Node label5040 = createLabel(node, SyncchartsVisualIDRegistry
                 .getType(StateInterfaceDeclarationEditPart.VISUAL_ID));
-        createCompartment(node, SyncchartsVisualIDRegistry
-                .getType(StateSignalCompartmentEditPart.VISUAL_ID), true, false, false, false);
-        createCompartment(node, SyncchartsVisualIDRegistry
-                .getType(StateEntryActionCompartmentEditPart.VISUAL_ID), true, false, false, false);
-        createCompartment(node, SyncchartsVisualIDRegistry
-                .getType(StateInnerActionCompartmentEditPart.VISUAL_ID), true, false, false, false);
-        createCompartment(node, SyncchartsVisualIDRegistry
-                .getType(StateExitActionCompartmentEditPart.VISUAL_ID), true, false, false, false);
-        createCompartment(node, SyncchartsVisualIDRegistry
-                .getType(StateSuspensionTriggerCompartmentEditPart.VISUAL_ID), true, false, false,
-                false);
+        createCompartment(node, SyncchartsVisualIDRegistry.getType(StateStateEditPart.VISUAL_ID),
+                true, false, false, false);
+        createCompartment(node, SyncchartsVisualIDRegistry.getType(StateState2EditPart.VISUAL_ID),
+                true, false, false, false);
+        createCompartment(node, SyncchartsVisualIDRegistry.getType(StateState3EditPart.VISUAL_ID),
+                true, false, false, false);
+        createCompartment(node, SyncchartsVisualIDRegistry.getType(StateState4EditPart.VISUAL_ID),
+                true, false, false, false);
+        createCompartment(node, SyncchartsVisualIDRegistry.getType(StateState5EditPart.VISUAL_ID),
+                true, false, false, false);
         createCompartment(node, SyncchartsVisualIDRegistry
                 .getType(StateRegionCompartmentEditPart.VISUAL_ID), true, false, false, false);
         return node;
@@ -350,7 +347,7 @@ public class SyncchartsViewProvider extends AbstractProvider implements IViewPro
     /**
      * @generated
      */
-    public Node createRegion_3009(EObject domainElement, View containerView, int index,
+    public Node createRegion_3023(EObject domainElement, View containerView, int index,
             boolean persisted, PreferencesHint preferencesHint) {
         Shape node = NotationFactory.eINSTANCE.createShape();
         node.setLayoutConstraint(NotationFactory.eINSTANCE.createBounds());
@@ -382,8 +379,8 @@ public class SyncchartsViewProvider extends AbstractProvider implements IViewPro
         ViewUtil.setStructuralFeatureValue(node,
                 NotationPackage.eINSTANCE.getFillStyle_FillColor(), FigureUtilities
                         .RGBToInteger(fillRGB));
-        Node label5022 = createLabel(node, SyncchartsVisualIDRegistry
-                .getType(RegionIdEditPart.VISUAL_ID));
+        Node label5038 = createLabel(node, SyncchartsVisualIDRegistry
+                .getType(RegionLabelEditPart.VISUAL_ID));
         createCompartment(node, SyncchartsVisualIDRegistry
                 .getType(RegionStateCompartmentEditPart.VISUAL_ID), true, false, false, false);
         return node;
@@ -392,7 +389,7 @@ public class SyncchartsViewProvider extends AbstractProvider implements IViewPro
     /**
      * @generated
      */
-    public Node createState_3010(EObject domainElement, View containerView, int index,
+    public Node createState_3024(EObject domainElement, View containerView, int index,
             boolean persisted, PreferencesHint preferencesHint) {
         Shape node = NotationFactory.eINSTANCE.createShape();
         node.setLayoutConstraint(NotationFactory.eINSTANCE.createBounds());
@@ -424,21 +421,20 @@ public class SyncchartsViewProvider extends AbstractProvider implements IViewPro
         ViewUtil.setStructuralFeatureValue(node,
                 NotationPackage.eINSTANCE.getFillStyle_FillColor(), FigureUtilities
                         .RGBToInteger(fillRGB));
-        Node label5021 = createLabel(node, SyncchartsVisualIDRegistry
+        Node label5036 = createLabel(node, SyncchartsVisualIDRegistry
                 .getType(StateLabel2EditPart.VISUAL_ID));
-        Node label5028 = createLabel(node, SyncchartsVisualIDRegistry
+        Node label5037 = createLabel(node, SyncchartsVisualIDRegistry
                 .getType(StateInterfaceDeclaration2EditPart.VISUAL_ID));
-        createCompartment(node, SyncchartsVisualIDRegistry
-                .getType(StateSignalCompartment2EditPart.VISUAL_ID), true, false, false, false);
-        createCompartment(node, SyncchartsVisualIDRegistry
-                .getType(StateEntryActionCompartment2EditPart.VISUAL_ID), true, false, false, false);
-        createCompartment(node, SyncchartsVisualIDRegistry
-                .getType(StateInnerActionCompartment2EditPart.VISUAL_ID), true, false, false, false);
-        createCompartment(node, SyncchartsVisualIDRegistry
-                .getType(StateExitActionCompartment2EditPart.VISUAL_ID), true, false, false, false);
-        createCompartment(node, SyncchartsVisualIDRegistry
-                .getType(StateSuspensionTriggerCompartment2EditPart.VISUAL_ID), true, false, false,
-                false);
+        createCompartment(node, SyncchartsVisualIDRegistry.getType(StateState6EditPart.VISUAL_ID),
+                true, false, false, false);
+        createCompartment(node, SyncchartsVisualIDRegistry.getType(StateState7EditPart.VISUAL_ID),
+                true, false, false, false);
+        createCompartment(node, SyncchartsVisualIDRegistry.getType(StateState8EditPart.VISUAL_ID),
+                true, false, false, false);
+        createCompartment(node, SyncchartsVisualIDRegistry.getType(StateState9EditPart.VISUAL_ID),
+                true, false, false, false);
+        createCompartment(node, SyncchartsVisualIDRegistry.getType(StateState10EditPart.VISUAL_ID),
+                true, false, false, false);
         createCompartment(node, SyncchartsVisualIDRegistry
                 .getType(StateRegionCompartment2EditPart.VISUAL_ID), true, false, false, false);
         return node;
@@ -447,7 +443,7 @@ public class SyncchartsViewProvider extends AbstractProvider implements IViewPro
     /**
      * @generated
      */
-    public Node createSignal_3021(EObject domainElement, View containerView, int index,
+    public Node createSignal_3025(EObject domainElement, View containerView, int index,
             boolean persisted, PreferencesHint preferencesHint) {
         Shape node = NotationFactory.eINSTANCE.createShape();
         node.setLayoutConstraint(NotationFactory.eINSTANCE.createBounds());
@@ -479,7 +475,7 @@ public class SyncchartsViewProvider extends AbstractProvider implements IViewPro
         ViewUtil.setStructuralFeatureValue(node,
                 NotationPackage.eINSTANCE.getFillStyle_FillColor(), FigureUtilities
                         .RGBToInteger(fillRGB));
-        Node label5030 = createLabel(node, SyncchartsVisualIDRegistry
+        Node label5031 = createLabel(node, SyncchartsVisualIDRegistry
                 .getType(SignalNameEditPart.VISUAL_ID));
         return node;
     }
@@ -487,11 +483,11 @@ public class SyncchartsViewProvider extends AbstractProvider implements IViewPro
     /**
      * @generated
      */
-    public Node createAction_3012(EObject domainElement, View containerView, int index,
+    public Node createAction_3026(EObject domainElement, View containerView, int index,
             boolean persisted, PreferencesHint preferencesHint) {
         Shape node = NotationFactory.eINSTANCE.createShape();
         node.setLayoutConstraint(NotationFactory.eINSTANCE.createBounds());
-        node.setType(SyncchartsVisualIDRegistry.getType(EntryActionEditPart.VISUAL_ID));
+        node.setType(SyncchartsVisualIDRegistry.getType(ActionEditPart.VISUAL_ID));
         ViewUtil.insertChildView(containerView, node, index, persisted);
         node.setElement(domainElement);
         // initializeFromPreferences 
@@ -519,19 +515,19 @@ public class SyncchartsViewProvider extends AbstractProvider implements IViewPro
         ViewUtil.setStructuralFeatureValue(node,
                 NotationPackage.eINSTANCE.getFillStyle_FillColor(), FigureUtilities
                         .RGBToInteger(fillRGB));
-        Node label5024 = createLabel(node, SyncchartsVisualIDRegistry
-                .getType(EntryActionLabelEditPart.VISUAL_ID));
+        Node label5032 = createLabel(node, SyncchartsVisualIDRegistry
+                .getType(ActionLabelEditPart.VISUAL_ID));
         return node;
     }
 
     /**
      * @generated
      */
-    public Node createAction_3014(EObject domainElement, View containerView, int index,
+    public Node createAction_3027(EObject domainElement, View containerView, int index,
             boolean persisted, PreferencesHint preferencesHint) {
         Shape node = NotationFactory.eINSTANCE.createShape();
         node.setLayoutConstraint(NotationFactory.eINSTANCE.createBounds());
-        node.setType(SyncchartsVisualIDRegistry.getType(InnerActionEditPart.VISUAL_ID));
+        node.setType(SyncchartsVisualIDRegistry.getType(Action2EditPart.VISUAL_ID));
         ViewUtil.insertChildView(containerView, node, index, persisted);
         node.setElement(domainElement);
         // initializeFromPreferences 
@@ -559,19 +555,19 @@ public class SyncchartsViewProvider extends AbstractProvider implements IViewPro
         ViewUtil.setStructuralFeatureValue(node,
                 NotationPackage.eINSTANCE.getFillStyle_FillColor(), FigureUtilities
                         .RGBToInteger(fillRGB));
-        Node label5025 = createLabel(node, SyncchartsVisualIDRegistry
-                .getType(InnerActionLabelEditPart.VISUAL_ID));
+        Node label5033 = createLabel(node, SyncchartsVisualIDRegistry
+                .getType(ActionLabel2EditPart.VISUAL_ID));
         return node;
     }
 
     /**
      * @generated
      */
-    public Node createAction_3016(EObject domainElement, View containerView, int index,
+    public Node createAction_3028(EObject domainElement, View containerView, int index,
             boolean persisted, PreferencesHint preferencesHint) {
         Shape node = NotationFactory.eINSTANCE.createShape();
         node.setLayoutConstraint(NotationFactory.eINSTANCE.createBounds());
-        node.setType(SyncchartsVisualIDRegistry.getType(ExitActionEditPart.VISUAL_ID));
+        node.setType(SyncchartsVisualIDRegistry.getType(Action3EditPart.VISUAL_ID));
         ViewUtil.insertChildView(containerView, node, index, persisted);
         node.setElement(domainElement);
         // initializeFromPreferences 
@@ -599,19 +595,19 @@ public class SyncchartsViewProvider extends AbstractProvider implements IViewPro
         ViewUtil.setStructuralFeatureValue(node,
                 NotationPackage.eINSTANCE.getFillStyle_FillColor(), FigureUtilities
                         .RGBToInteger(fillRGB));
-        Node label5026 = createLabel(node, SyncchartsVisualIDRegistry
-                .getType(ExitActionLabelEditPart.VISUAL_ID));
+        Node label5034 = createLabel(node, SyncchartsVisualIDRegistry
+                .getType(ActionLabel3EditPart.VISUAL_ID));
         return node;
     }
 
     /**
      * @generated
      */
-    public Node createAction_3018(EObject domainElement, View containerView, int index,
+    public Node createAction_3029(EObject domainElement, View containerView, int index,
             boolean persisted, PreferencesHint preferencesHint) {
         Shape node = NotationFactory.eINSTANCE.createShape();
         node.setLayoutConstraint(NotationFactory.eINSTANCE.createBounds());
-        node.setType(SyncchartsVisualIDRegistry.getType(SuspensionTriggerEditPart.VISUAL_ID));
+        node.setType(SyncchartsVisualIDRegistry.getType(Action4EditPart.VISUAL_ID));
         ViewUtil.insertChildView(containerView, node, index, persisted);
         node.setElement(domainElement);
         // initializeFromPreferences 
@@ -639,15 +635,15 @@ public class SyncchartsViewProvider extends AbstractProvider implements IViewPro
         ViewUtil.setStructuralFeatureValue(node,
                 NotationPackage.eINSTANCE.getFillStyle_FillColor(), FigureUtilities
                         .RGBToInteger(fillRGB));
-        Node label5027 = createLabel(node, SyncchartsVisualIDRegistry
-                .getType(SuspensionTriggerLabelEditPart.VISUAL_ID));
+        Node label5035 = createLabel(node, SyncchartsVisualIDRegistry
+                .getType(ActionLabel4EditPart.VISUAL_ID));
         return node;
     }
 
     /**
      * @generated
      */
-    public Node createTextualCode_3022(EObject domainElement, View containerView, int index,
+    public Node createTextualCode_3030(EObject domainElement, View containerView, int index,
             boolean persisted, PreferencesHint preferencesHint) {
         Node node = NotationFactory.eINSTANCE.createNode();
         node.setLayoutConstraint(NotationFactory.eINSTANCE.createLocation());
@@ -660,7 +656,7 @@ public class SyncchartsViewProvider extends AbstractProvider implements IViewPro
     /**
      * @generated
      */
-    public Edge createTransition_4002(EObject domainElement, View containerView, int index,
+    public Edge createTransition_4003(EObject domainElement, View containerView, int index,
             boolean persisted, PreferencesHint preferencesHint) {
         Connector edge = NotationFactory.eINSTANCE.createConnector();
         edge.getStyles().add(NotationFactory.eINSTANCE.createFontStyle());
@@ -698,18 +694,18 @@ public class SyncchartsViewProvider extends AbstractProvider implements IViewPro
             ViewUtil.setStructuralFeatureValue(edge, NotationPackage.eINSTANCE
                     .getRoutingStyle_Routing(), routing);
         }
-        Node label6003 = createLabel(edge, SyncchartsVisualIDRegistry
-                .getType(TransitionDelayEditPart.VISUAL_ID));
-        label6003.setLayoutConstraint(NotationFactory.eINSTANCE.createLocation());
-        Location location6003 = (Location) label6003.getLayoutConstraint();
-        location6003.setX(0);
-        location6003.setY(40);
-        Node label6004 = createLabel(edge, SyncchartsVisualIDRegistry
+        Node label6005 = createLabel(edge, SyncchartsVisualIDRegistry
+                .getType(TransitionLabelEditPart.VISUAL_ID));
+        label6005.setLayoutConstraint(NotationFactory.eINSTANCE.createLocation());
+        Location location6005 = (Location) label6005.getLayoutConstraint();
+        location6005.setX(0);
+        location6005.setY(40);
+        Node label6006 = createLabel(edge, SyncchartsVisualIDRegistry
                 .getType(TransitionPriorityEditPart.VISUAL_ID));
-        label6004.setLayoutConstraint(NotationFactory.eINSTANCE.createLocation());
-        Location location6004 = (Location) label6004.getLayoutConstraint();
-        location6004.setX(0);
-        location6004.setY(60);
+        label6006.setLayoutConstraint(NotationFactory.eINSTANCE.createLocation());
+        Location location6006 = (Location) label6006.getLayoutConstraint();
+        location6006.setX(0);
+        location6006.setY(60);
         return edge;
     }
 

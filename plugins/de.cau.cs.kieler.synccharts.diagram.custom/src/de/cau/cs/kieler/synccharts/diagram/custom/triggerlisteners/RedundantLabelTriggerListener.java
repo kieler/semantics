@@ -39,7 +39,6 @@ import de.cau.cs.kieler.synccharts.State;
 import de.cau.cs.kieler.synccharts.SyncchartsPackage;
 import de.cau.cs.kieler.synccharts.Transition;
 import de.cau.cs.kieler.synccharts.diagram.custom.SyncchartsDiagramCustomPlugin;
-import de.cau.cs.kieler.synccharts.diagram.edit.parts.RegionIdEditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.TransitionPriorityEditPart;
 import de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditor;
 
@@ -185,6 +184,7 @@ public class RedundantLabelTriggerListener extends TriggerListener {
             list.add(o);
         }
         Iterator<?> iter = list.iterator();
+/* FIXME: EditPart names are broken 
         while (iter.hasNext()) {
             Object o = iter.next();
             // test if it is one of the relevant edit parts
@@ -213,8 +213,8 @@ public class RedundantLabelTriggerListener extends TriggerListener {
                             continue;
                         }
                     }
-                }
-            }
-        }
+                } 
+            } 
+        }*/
     }
 }

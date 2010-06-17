@@ -32,7 +32,7 @@ public class StateCanonicalEditPolicy extends CanonicalEditPolicy {
     protected List getSemanticChildrenList() {
         View viewObject = (View) getHost().getModel();
         List result = new LinkedList();
-        for (Iterator it = SyncchartsDiagramUpdater.getState_2002SemanticChildren(viewObject)
+        for (Iterator it = SyncchartsDiagramUpdater.getState_2003SemanticChildren(viewObject)
                 .iterator(); it.hasNext();) {
             result.add(((SyncchartsNodeDescriptor) it.next()).getModelElement());
         }

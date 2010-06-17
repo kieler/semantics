@@ -43,13 +43,13 @@ public class SyncchartsPaletteFactory {
      */
     private ToolEntry createState1CreationTool() {
         List/*<IElementType>*/types = new ArrayList/*<IElementType>*/(2);
-        types.add(SyncchartsElementTypes.State_2002);
-        types.add(SyncchartsElementTypes.State_3010);
+        types.add(SyncchartsElementTypes.State_2003);
+        types.add(SyncchartsElementTypes.State_3024);
         NodeToolEntry entry = new NodeToolEntry(Messages.State1CreationTool_title,
                 Messages.State1CreationTool_desc, types);
         entry.setId("createState1CreationTool"); //$NON-NLS-1$
         entry.setSmallIcon(SyncchartsElementTypes
-                .getImageDescriptor(SyncchartsElementTypes.State_2002));
+                .getImageDescriptor(SyncchartsElementTypes.State_2003));
         entry.setLargeIcon(entry.getSmallIcon());
         return entry;
     }
@@ -59,12 +59,12 @@ public class SyncchartsPaletteFactory {
      */
     private ToolEntry createTransition2CreationTool() {
         List/*<IElementType>*/types = new ArrayList/*<IElementType>*/(1);
-        types.add(SyncchartsElementTypes.Transition_4002);
+        types.add(SyncchartsElementTypes.Transition_4003);
         LinkToolEntry entry = new LinkToolEntry(Messages.Transition2CreationTool_title,
                 Messages.Transition2CreationTool_desc, types);
         entry.setId("createTransition2CreationTool"); //$NON-NLS-1$
         entry.setSmallIcon(SyncchartsElementTypes
-                .getImageDescriptor(SyncchartsElementTypes.Transition_4002));
+                .getImageDescriptor(SyncchartsElementTypes.Transition_4003));
         entry.setLargeIcon(entry.getSmallIcon());
         return entry;
     }
@@ -74,12 +74,12 @@ public class SyncchartsPaletteFactory {
      */
     private ToolEntry createRegion3CreationTool() {
         List/*<IElementType>*/types = new ArrayList/*<IElementType>*/(1);
-        types.add(SyncchartsElementTypes.Region_3009);
+        types.add(SyncchartsElementTypes.Region_3023);
         NodeToolEntry entry = new NodeToolEntry(Messages.Region3CreationTool_title,
                 Messages.Region3CreationTool_desc, types);
         entry.setId("createRegion3CreationTool"); //$NON-NLS-1$
         entry.setSmallIcon(SyncchartsElementTypes
-                .getImageDescriptor(SyncchartsElementTypes.Region_3009));
+                .getImageDescriptor(SyncchartsElementTypes.Region_3023));
         entry.setLargeIcon(entry.getSmallIcon());
         return entry;
     }

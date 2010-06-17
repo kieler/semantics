@@ -105,8 +105,8 @@ public class SyncchartsDiagramEditorPlugin extends AbstractUIPlugin {
     protected void fillItemProviderFactories(List factories) {
         factories.add(new SyncchartsItemProviderAdapterFactory());
         factories.add(new AnnotationsItemProviderAdapterFactory());
-        factories.add(new ExpressionsItemProviderAdapterFactory());
         factories.add(new EcoreItemProviderAdapterFactory());
+        factories.add(new ExpressionsItemProviderAdapterFactory());
         factories.add(new ResourceItemProviderAdapterFactory());
         factories.add(new ReflectiveItemProviderAdapterFactory());
     }

@@ -60,7 +60,7 @@ public class StateInterfaceDeclaration2EditPart extends CompartmentEditPart impl
     /**
      * @generated
      */
-    public static final int VISUAL_ID = 5028;
+    public static final int VISUAL_ID = 5037;
 
     /**
      * @generated
@@ -304,7 +304,7 @@ public class StateInterfaceDeclaration2EditPart extends CompartmentEditPart impl
         if (parser == null) {
             parser = SyncchartsParserProvider
                     .getParser(
-                            SyncchartsElementTypes.State_3010,
+                            SyncchartsElementTypes.State_3024,
                             getParserElement(),
                             SyncchartsVisualIDRegistry
                                     .getType(de.cau.cs.kieler.synccharts.diagram.edit.parts.StateInterfaceDeclaration2EditPart.VISUAL_ID));

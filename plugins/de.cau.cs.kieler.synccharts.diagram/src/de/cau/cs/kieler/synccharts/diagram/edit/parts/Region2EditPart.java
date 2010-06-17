@@ -38,7 +38,7 @@ public class Region2EditPart extends ShapeNodeEditPart {
     /**
      * @generated
      */
-    public static final int VISUAL_ID = 3009;
+    public static final int VISUAL_ID = 3023;
 
     /**
      * @generated
@@ -116,9 +116,9 @@ public class Region2EditPart extends ShapeNodeEditPart {
      * @generated
      */
     protected boolean addFixedChild(EditPart childEditPart) {
-        if (childEditPart instanceof RegionIdEditPart) {
-            ((RegionIdEditPart) childEditPart)
-                    .setLabel(getPrimaryShape().getFigureRegionIdFigure());
+        if (childEditPart instanceof RegionLabelEditPart) {
+            ((RegionLabelEditPart) childEditPart).setLabel(getPrimaryShape()
+                    .getFigureRegionIdFigure());
             return true;
         }
         return false;
@@ -128,7 +128,7 @@ public class Region2EditPart extends ShapeNodeEditPart {
      * @generated
      */
     protected boolean removeFixedChild(EditPart childEditPart) {
-        if (childEditPart instanceof RegionIdEditPart) {
+        if (childEditPart instanceof RegionLabelEditPart) {
             return true;
         }
         return false;
@@ -252,7 +252,7 @@ public class Region2EditPart extends ShapeNodeEditPart {
      */
     public EditPart getPrimaryChildEditPart() {
         return getChildBySemanticHint(SyncchartsVisualIDRegistry
-                .getType(RegionIdEditPart.VISUAL_ID));
+                .getType(RegionLabelEditPart.VISUAL_ID));
     }
 
     /**

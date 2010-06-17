@@ -119,7 +119,8 @@ public class AddToStateHandler extends AbstractHandler implements IHandler {
     private void addElement(ShapeNodeEditPart stateEditPart, String type) {
         Class<?> class1 = null, class2 = null;
         IElementType elementType = null;
-        if (type.equals(VAL_ENTRY_ACTION)) {
+ /* FIXME: names of EditParts are broken 
+  *      if (type.equals(VAL_ENTRY_ACTION)) {
         	class1 = StateEntryActionCompartmentEditPart.class;
             class2 = StateEntryActionCompartment2EditPart.class;
             elementType = SyncchartsElementTypes.Action_3012;
@@ -178,6 +179,6 @@ public class AddToStateHandler extends AbstractHandler implements IHandler {
             compartment.getDiagramEditDomain().getDiagramCommandStack().execute(createCmd);
             lastEditCompartment = compartment;
         }
-    }
+  */  } 
 
 }

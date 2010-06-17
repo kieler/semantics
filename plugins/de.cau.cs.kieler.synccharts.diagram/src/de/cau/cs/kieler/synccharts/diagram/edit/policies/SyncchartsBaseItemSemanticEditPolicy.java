@@ -298,14 +298,14 @@ public class SyncchartsBaseItemSemanticEditPolicy extends SemanticEditPolicy {
         /**
          * @generated
          */
-        public static boolean canCreateTransition_4002(State container, State source, State target) {
-            return canExistTransition_4002(container, source, target);
+        public static boolean canCreateTransition_4003(State container, State source, State target) {
+            return canExistTransition_4003(container, source, target);
         }
 
         /**
          * @generated
          */
-        public static boolean canExistTransition_4002(State container, State source, State target) {
+        public static boolean canExistTransition_4003(State container, State source, State target) {
             return true;
         }
     }

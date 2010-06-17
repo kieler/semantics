@@ -25,18 +25,18 @@ import de.cau.cs.kieler.synccharts.diagram.edit.parts.RegionEditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.RegionStateCompartmentEditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.State2EditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateEditPart;
-import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateEntryActionCompartment2EditPart;
-import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateEntryActionCompartmentEditPart;
-import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateExitActionCompartment2EditPart;
-import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateExitActionCompartmentEditPart;
-import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateInnerActionCompartment2EditPart;
-import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateInnerActionCompartmentEditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateRegionCompartment2EditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateRegionCompartmentEditPart;
-import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateSignalCompartment2EditPart;
-import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateSignalCompartmentEditPart;
-import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateSuspensionTriggerCompartment2EditPart;
-import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateSuspensionTriggerCompartmentEditPart;
+import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateState10EditPart;
+import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateState2EditPart;
+import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateState3EditPart;
+import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateState4EditPart;
+import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateState5EditPart;
+import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateState6EditPart;
+import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateState7EditPart;
+import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateState8EditPart;
+import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateState9EditPart;
+import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateStateEditPart;
 import de.cau.cs.kieler.synccharts.diagram.part.Messages;
 import de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorPlugin;
 
@@ -53,82 +53,82 @@ public class SyncchartsModelingAssistantProvider extends ModelingAssistantProvid
                 .getAdapter(IGraphicalEditPart.class);
         if (editPart instanceof StateEditPart) {
             ArrayList types = new ArrayList(1);
-            types.add(SyncchartsElementTypes.TextualCode_3022);
+            types.add(SyncchartsElementTypes.TextualCode_3030);
             return types;
         }
         if (editPart instanceof State2EditPart) {
             ArrayList types = new ArrayList(1);
-            types.add(SyncchartsElementTypes.TextualCode_3022);
+            types.add(SyncchartsElementTypes.TextualCode_3030);
             return types;
         }
-        if (editPart instanceof StateSignalCompartmentEditPart) {
+        if (editPart instanceof StateStateEditPart) {
             ArrayList types = new ArrayList(1);
-            types.add(SyncchartsElementTypes.Signal_3021);
+            types.add(SyncchartsElementTypes.Signal_3025);
             return types;
         }
-        if (editPart instanceof StateEntryActionCompartmentEditPart) {
+        if (editPart instanceof StateState2EditPart) {
             ArrayList types = new ArrayList(1);
-            types.add(SyncchartsElementTypes.Action_3012);
+            types.add(SyncchartsElementTypes.Action_3026);
             return types;
         }
-        if (editPart instanceof StateInnerActionCompartmentEditPart) {
+        if (editPart instanceof StateState3EditPart) {
             ArrayList types = new ArrayList(1);
-            types.add(SyncchartsElementTypes.Action_3014);
+            types.add(SyncchartsElementTypes.Action_3027);
             return types;
         }
-        if (editPart instanceof StateExitActionCompartmentEditPart) {
+        if (editPart instanceof StateState4EditPart) {
             ArrayList types = new ArrayList(1);
-            types.add(SyncchartsElementTypes.Action_3016);
+            types.add(SyncchartsElementTypes.Action_3028);
             return types;
         }
-        if (editPart instanceof StateSuspensionTriggerCompartmentEditPart) {
+        if (editPart instanceof StateState5EditPart) {
             ArrayList types = new ArrayList(1);
-            types.add(SyncchartsElementTypes.Action_3018);
+            types.add(SyncchartsElementTypes.Action_3029);
             return types;
         }
         if (editPart instanceof StateRegionCompartmentEditPart) {
             ArrayList types = new ArrayList(1);
-            types.add(SyncchartsElementTypes.Region_3009);
+            types.add(SyncchartsElementTypes.Region_3023);
             return types;
         }
         if (editPart instanceof RegionStateCompartmentEditPart) {
             ArrayList types = new ArrayList(1);
-            types.add(SyncchartsElementTypes.State_3010);
+            types.add(SyncchartsElementTypes.State_3024);
             return types;
         }
-        if (editPart instanceof StateSignalCompartment2EditPart) {
+        if (editPart instanceof StateState6EditPart) {
             ArrayList types = new ArrayList(1);
-            types.add(SyncchartsElementTypes.Signal_3021);
+            types.add(SyncchartsElementTypes.Signal_3025);
             return types;
         }
-        if (editPart instanceof StateEntryActionCompartment2EditPart) {
+        if (editPart instanceof StateState7EditPart) {
             ArrayList types = new ArrayList(1);
-            types.add(SyncchartsElementTypes.Action_3012);
+            types.add(SyncchartsElementTypes.Action_3026);
             return types;
         }
-        if (editPart instanceof StateInnerActionCompartment2EditPart) {
+        if (editPart instanceof StateState8EditPart) {
             ArrayList types = new ArrayList(1);
-            types.add(SyncchartsElementTypes.Action_3014);
+            types.add(SyncchartsElementTypes.Action_3027);
             return types;
         }
-        if (editPart instanceof StateExitActionCompartment2EditPart) {
+        if (editPart instanceof StateState9EditPart) {
             ArrayList types = new ArrayList(1);
-            types.add(SyncchartsElementTypes.Action_3016);
+            types.add(SyncchartsElementTypes.Action_3028);
             return types;
         }
-        if (editPart instanceof StateSuspensionTriggerCompartment2EditPart) {
+        if (editPart instanceof StateState10EditPart) {
             ArrayList types = new ArrayList(1);
-            types.add(SyncchartsElementTypes.Action_3018);
+            types.add(SyncchartsElementTypes.Action_3029);
             return types;
         }
         if (editPart instanceof StateRegionCompartment2EditPart) {
             ArrayList types = new ArrayList(1);
-            types.add(SyncchartsElementTypes.Region_3009);
+            types.add(SyncchartsElementTypes.Region_3023);
             return types;
         }
         if (editPart instanceof RegionEditPart) {
             ArrayList types = new ArrayList(1);
-            types.add(SyncchartsElementTypes.State_2002);
+            types.add(SyncchartsElementTypes.State_2003);
             return types;
         }
         return Collections.EMPTY_LIST;

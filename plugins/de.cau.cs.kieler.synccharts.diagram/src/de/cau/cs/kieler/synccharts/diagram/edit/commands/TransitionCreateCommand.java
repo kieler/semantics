@@ -68,7 +68,7 @@ public class TransitionCreateCommand extends EditElementCommand {
         if (getContainer() == null) {
             return false;
         }
-        return SyncchartsBaseItemSemanticEditPolicy.LinkConstraints.canCreateTransition_4002(
+        return SyncchartsBaseItemSemanticEditPolicy.LinkConstraints.canCreateTransition_4003(
                 getContainer(), getSource(), getTarget());
     }
 
@@ -85,7 +85,7 @@ public class TransitionCreateCommand extends EditElementCommand {
         getContainer().getOutgoingTransitions().add(newElement);
         newElement.setSourceState(getSource());
         newElement.setTargetState(getTarget());
-        SyncchartsElementTypes.init_Transition_4002(newElement);
+        SyncchartsElementTypes.init_Transition_4003(newElement);
         doConfigure(newElement, monitor, info);
         ((CreateElementRequest) getRequest()).setNewElement(newElement);
         return CommandResult.newOKCommandResult(newElement);

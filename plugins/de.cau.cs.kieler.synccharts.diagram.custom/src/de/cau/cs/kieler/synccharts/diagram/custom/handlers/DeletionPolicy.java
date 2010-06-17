@@ -22,42 +22,12 @@ import org.eclipse.gmf.runtime.emf.type.core.requests.DestroyElementRequest;
 import org.eclipse.gmf.runtime.emf.type.core.requests.IEditCommandRequest;
 
 import de.cau.cs.kieler.core.ui.policies.DeletionPolicyProvider;
-import de.cau.cs.kieler.synccharts.diagram.edit.parts.EntryActionEditPart;
-import de.cau.cs.kieler.synccharts.diagram.edit.parts.EntryActionLabelEditPart;
-import de.cau.cs.kieler.synccharts.diagram.edit.parts.ExitActionEditPart;
-import de.cau.cs.kieler.synccharts.diagram.edit.parts.ExitActionLabelEditPart;
-import de.cau.cs.kieler.synccharts.diagram.edit.parts.InnerActionEditPart;
-import de.cau.cs.kieler.synccharts.diagram.edit.parts.InnerActionLabelEditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.Region2EditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.RegionEditPart;
-import de.cau.cs.kieler.synccharts.diagram.edit.parts.RegionIdEditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.RegionStateCompartmentEditPart;
-import de.cau.cs.kieler.synccharts.diagram.edit.parts.SignalEditPart;
-import de.cau.cs.kieler.synccharts.diagram.edit.parts.SignalNameEditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.State2EditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateEditPart;
-import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateEntryActionCompartment2EditPart;
-import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateEntryActionCompartmentEditPart;
-import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateExitActionCompartment2EditPart;
-import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateExitActionCompartmentEditPart;
-import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateInnerActionCompartment2EditPart;
-import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateInnerActionCompartmentEditPart;
-import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateInterfaceDeclaration2EditPart;
-import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateInterfaceDeclarationEditPart;
-import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateLabel2EditPart;
-import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateLabelEditPart;
-import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateRegionCompartment2EditPart;
-import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateRegionCompartmentEditPart;
-import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateSignalCompartment2EditPart;
-import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateSignalCompartmentEditPart;
-import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateSuspensionTriggerCompartment2EditPart;
-import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateSuspensionTriggerCompartmentEditPart;
-import de.cau.cs.kieler.synccharts.diagram.edit.parts.SuspensionTriggerEditPart;
-import de.cau.cs.kieler.synccharts.diagram.edit.parts.SuspensionTriggerLabelEditPart;
-import de.cau.cs.kieler.synccharts.diagram.edit.parts.TextualCodeEditPart;
-import de.cau.cs.kieler.synccharts.diagram.edit.parts.TransitionDelayEditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.TransitionEditPart;
-import de.cau.cs.kieler.synccharts.diagram.edit.parts.TransitionPriorityEditPart;
 
 /**
  * This policy prevents deletion of edit parts that should not be deleted from a
@@ -69,7 +39,9 @@ import de.cau.cs.kieler.synccharts.diagram.edit.parts.TransitionPriorityEditPart
 public class DeletionPolicy extends DeletionPolicyProvider {
 
 	/** All parts that belong to the synccharts editor. */
-	private static final Class<?>[] ALL_PARTS = { EntryActionEditPart.class,
+	private static final Class<?>[] ALL_PARTS = { 
+	    /* FIXME: names of EditParts are broken
+	    EntryActionEditPart.class,
 			EntryActionLabelEditPart.class, ExitActionEditPart.class,
 			ExitActionLabelEditPart.class, InnerActionEditPart.class,
 			InnerActionLabelEditPart.class, Region2EditPart.class,
@@ -93,7 +65,9 @@ public class DeletionPolicy extends DeletionPolicyProvider {
 			SuspensionTriggerEditPart.class,
 			SuspensionTriggerLabelEditPart.class, TextualCodeEditPart.class,
 			TransitionDelayEditPart.class, TransitionEditPart.class,
-			TransitionPriorityEditPart.class };
+			TransitionPriorityEditPart.class 
+			*/
+			};
 
 	/**
 	 * 

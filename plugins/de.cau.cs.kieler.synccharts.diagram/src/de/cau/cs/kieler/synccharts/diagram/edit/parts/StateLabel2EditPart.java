@@ -59,7 +59,7 @@ public class StateLabel2EditPart extends CompartmentEditPart implements ITextAwa
     /**
      * @generated
      */
-    public static final int VISUAL_ID = 5021;
+    public static final int VISUAL_ID = 5036;
 
     /**
      * @generated
@@ -303,7 +303,7 @@ public class StateLabel2EditPart extends CompartmentEditPart implements ITextAwa
         if (parser == null) {
             parser = SyncchartsParserProvider
                     .getParser(
-                            SyncchartsElementTypes.State_3010,
+                            SyncchartsElementTypes.State_3024,
                             getParserElement(),
                             SyncchartsVisualIDRegistry
                                     .getType(de.cau.cs.kieler.synccharts.diagram.edit.parts.StateLabel2EditPart.VISUAL_ID));

@@ -45,7 +45,7 @@ public class State2EditPart extends ShapeNodeEditPart {
     /**
      * @generated
      */
-    public static final int VISUAL_ID = 3010;
+    public static final int VISUAL_ID = 3024;
 
     /**
      * @generated
@@ -278,7 +278,7 @@ public class State2EditPart extends ShapeNodeEditPart {
      */
     public List/*<org.eclipse.gmf.runtime.emf.type.core.IElementType>*/getMARelTypesOnSource() {
         List/*<org.eclipse.gmf.runtime.emf.type.core.IElementType>*/types = new ArrayList/*<org.eclipse.gmf.runtime.emf.type.core.IElementType>*/();
-        types.add(SyncchartsElementTypes.Transition_4002);
+        types.add(SyncchartsElementTypes.Transition_4003);
         return types;
     }
 
@@ -289,10 +289,10 @@ public class State2EditPart extends ShapeNodeEditPart {
             IGraphicalEditPart targetEditPart) {
         List/*<org.eclipse.gmf.runtime.emf.type.core.IElementType>*/types = new ArrayList/*<org.eclipse.gmf.runtime.emf.type.core.IElementType>*/();
         if (targetEditPart instanceof StateEditPart) {
-            types.add(SyncchartsElementTypes.Transition_4002);
+            types.add(SyncchartsElementTypes.Transition_4003);
         }
         if (targetEditPart instanceof de.cau.cs.kieler.synccharts.diagram.edit.parts.State2EditPart) {
-            types.add(SyncchartsElementTypes.Transition_4002);
+            types.add(SyncchartsElementTypes.Transition_4003);
         }
         return types;
     }
@@ -303,11 +303,11 @@ public class State2EditPart extends ShapeNodeEditPart {
     public List/*<org.eclipse.gmf.runtime.emf.type.core.IElementType>*/getMATypesForTarget(
             IElementType relationshipType) {
         List/*<org.eclipse.gmf.runtime.emf.type.core.IElementType>*/types = new ArrayList/*<org.eclipse.gmf.runtime.emf.type.core.IElementType>*/();
-        if (relationshipType == SyncchartsElementTypes.Transition_4002) {
-            types.add(SyncchartsElementTypes.State_2002);
+        if (relationshipType == SyncchartsElementTypes.Transition_4003) {
+            types.add(SyncchartsElementTypes.State_2003);
         }
-        if (relationshipType == SyncchartsElementTypes.Transition_4002) {
-            types.add(SyncchartsElementTypes.State_3010);
+        if (relationshipType == SyncchartsElementTypes.Transition_4003) {
+            types.add(SyncchartsElementTypes.State_3024);
         }
         return types;
     }
@@ -317,7 +317,7 @@ public class State2EditPart extends ShapeNodeEditPart {
      */
     public List/*<org.eclipse.gmf.runtime.emf.type.core.IElementType>*/getMARelTypesOnTarget() {
         List/*<org.eclipse.gmf.runtime.emf.type.core.IElementType>*/types = new ArrayList/*<org.eclipse.gmf.runtime.emf.type.core.IElementType>*/();
-        types.add(SyncchartsElementTypes.Transition_4002);
+        types.add(SyncchartsElementTypes.Transition_4003);
         return types;
     }
 
@@ -327,11 +327,11 @@ public class State2EditPart extends ShapeNodeEditPart {
     public List/*<org.eclipse.gmf.runtime.emf.type.core.IElementType>*/getMATypesForSource(
             IElementType relationshipType) {
         List/*<org.eclipse.gmf.runtime.emf.type.core.IElementType>*/types = new ArrayList/*<org.eclipse.gmf.runtime.emf.type.core.IElementType>*/();
-        if (relationshipType == SyncchartsElementTypes.Transition_4002) {
-            types.add(SyncchartsElementTypes.State_2002);
+        if (relationshipType == SyncchartsElementTypes.Transition_4003) {
+            types.add(SyncchartsElementTypes.State_2003);
         }
-        if (relationshipType == SyncchartsElementTypes.Transition_4002) {
-            types.add(SyncchartsElementTypes.State_3010);
+        if (relationshipType == SyncchartsElementTypes.Transition_4003) {
+            types.add(SyncchartsElementTypes.State_3024);
         }
         return types;
     }

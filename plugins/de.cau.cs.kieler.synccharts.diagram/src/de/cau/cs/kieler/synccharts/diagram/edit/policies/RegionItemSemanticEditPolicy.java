@@ -26,7 +26,7 @@ public class RegionItemSemanticEditPolicy extends SyncchartsBaseItemSemanticEdit
      * @generated
      */
     protected Command getCreateCommand(CreateElementRequest req) {
-        if (SyncchartsElementTypes.State_2002 == req.getElementType()) {
+        if (SyncchartsElementTypes.State_2003 == req.getElementType()) {
             return getGEFWrapper(new StateCreateCommand(req));
         }
         return super.getCreateCommand(req);
