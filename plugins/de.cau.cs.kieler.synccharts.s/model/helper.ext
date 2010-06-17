@@ -1,0 +1,48 @@
+import synccharts;
+import annotations;
+import expressions;
+import s;
+extension org::eclipse::xtend::util::stdlib::io;          // debug printouts
+extension org::eclipse::xtend::util::stdlib::crossref;    // find elements that reference others
+extension org::eclipse::xtend::util::stdlib::cloning;     // copy model elements and whole trees
+extension org::eclipse::xtend::util::stdlib::tracing;     // create map between transformed objects
+extension org::eclipse::xtend::util::stdlib::issues;      // pass messages back to java (e.g. to UI)
+
+// Returns the root initial state
+State getInitialState(synccharts::State state):
+	state.regions.first().innerStates.select(s|s.isInitial).first()
+;
+
+Boolean isRootState(synccharts::State state):
+	state.parentRegion.parentState == null
+;
+
+// Returns the name of 
+String getStatePathAsName(synccharts::State state):
+	if state.isRootState() then
+		""
+	else (
+		let regionString = getParentRegionString(state):
+		getStatePathAsName(state.parentRegion.parentState) + regionString + "_" + state.id
+	)
+;
+
+// Returns a String for a region if a state has more than one inner regions
+String getParentRegionString(synccharts::State state):
+	let region = state.parentRegion:
+	if region.parentState.regions.size == 1 then
+		""
+	else
+		"_" + region.id
+;
+
+// Returns the first inital state of a region
+synccharts::State getInitialState(synccharts::Region region):
+	region.innerStates.select(s|s.isInitial).first()
+;
+
+// converts an int into an IntValue
+s::IntValue setIntValue(int vaule):
+	let intValue = new s::IntValue:
+		intValue.setValue(vaule)
+;

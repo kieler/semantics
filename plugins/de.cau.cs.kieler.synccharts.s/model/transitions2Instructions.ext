@@ -1,0 +1,53 @@
+import synccharts;
+import annotations;
+import expressions;
+import s;
+extension org::eclipse::xtend::util::stdlib::io;          // debug printouts
+extension org::eclipse::xtend::util::stdlib::crossref;    // find elements that reference others
+extension org::eclipse::xtend::util::stdlib::cloning;     // copy model elements and whole trees
+extension org::eclipse::xtend::util::stdlib::tracing;     // create map between transformed objects
+extension org::eclipse::xtend::util::stdlib::issues;      // pass messages back to java (e.g. to UI)
+
+List[Instruction] getTransitionInstruction(Transition transition):
+	if transition.label == "" then(
+		info("1 >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>" + transition.label) ->
+		emptyTransition(transition))
+	else 
+		if transition.trigger == null then(
+			info("2 >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>" + transition.label) ->
+			triggerAndEffectTransition(transition))
+		else
+			info("3 >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>" + transition.label) ->
+			justTriggerTransition(transition)
+;
+
+List[Instruction] emptyTransition(Transition transition):
+	let out = {}:
+	let goto = new Goto:
+		goto.setState((s::State)transition.targetState.getSingleTraceTarget("S")) ->
+		out.add(goto) ->
+		out
+;
+
+List[Instruction] justTriggerTransition(Transition transition):
+	let out = {}:
+	let goto = new Goto:
+	let emit = Emit:
+	let signal = ((SignalReference)transition.trigger).signal:
+		goto.setState((s::State)transition.targetState.getSingleTraceTarget("S")) ->
+		goto
+;
+
+List[Instruction] triggerAndEffectTransition(Transition transition):
+	let out = {}:
+	out.add(transition.transform())
+;
+
+create s::Present this transform(Transition transition):
+	let goto = new Goto:
+	let signal = ((SignalReference)transition.trigger).signal:
+	let targetState = transition.targetState:
+		this.setSignal((s::Signal)(signal.getSingleTraceTarget("S")))->
+		goto.setState((s::State)targetState.getSingleTraceTarget("S")) ->
+		this.instructions.add(goto)
+;

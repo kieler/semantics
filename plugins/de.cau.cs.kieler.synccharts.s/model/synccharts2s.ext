@@ -1,5 +1,6 @@
 import synccharts;
-//import annotations;
+import annotations;
+import expressions;
 import s;
 extension org::eclipse::xtend::util::stdlib::io;          // debug printouts
 //extension org::eclipse:xtend:::util::stdlib::counter;   // usage of counters 
@@ -12,6 +13,13 @@ extension org::eclipse::xtend::util::stdlib::cloning;     // copy model elements
 extension org::eclipse::xtend::util::stdlib::tracing;     // create map between transformed objects
 extension org::eclipse::xtend::util::stdlib::issues;      // pass messages back to java (e.g. to UI)
 
+/////////////// local imports //////////////
+extension helper;
+extension transitions2Instructions;
+extension presentInstruction;
+extension haltInstruction;
+////////////////////////////////////////////
+
 //-----------------------------------------------------------------------------
 //     SyncChart - 2 - S    TRANSFORMATION    
 //     @author: tam
@@ -19,6 +27,7 @@ extension org::eclipse::xtend::util::stdlib::issues;      // pass messages back 
   
 //Start Model Transformation here.
 create s::Program this transform(synccharts::Region root):
+	addAllStatesToMappingList(root) ->
 	computeThreadPriorities(root.innerStates.first()) ->
 	this.setName(root.innerStates.first().id) ->
 	// TODO: mit echter main thread prio ersetzen
@@ -27,8 +36,27 @@ create s::Program this transform(synccharts::Region root):
 	this.setSignals(getStateSignals(root.innerStates.first()))
 ;
 
-//-------------- Computation of priorities --------------------------
-// Returns a list of thread priorities.
+
+// Initialize the mapping lists with all states.
+// After that you can use state.getSingleTraceTarget("S")
+// to geht the s::State from a synccharts::State
+// Start: ----------------------------------------------
+Void addAllStatesToMappingList(synccharts::Region region):
+	region.innerStates.addAllStatesToMappingList()
+;
+
+Void addAllStatesToMappingList(synccharts::State state):
+	if state.regions.isEmpty then
+		state.transform()
+	else (
+		state.transform() ->
+		state.regions.addAllStatesToMappingList()
+	)
+;
+// End: ------------------------------------------------
+
+// Computation of the priority list like is was done in codegen.sc.
+// Start: ----------------------------------------------
 cached List computeThreadPriorities(synccharts::State rootState):
 	JAVA Helper.computeThreadPriorities(de.cau.cs.kieler.synccharts.State)
 ;
@@ -46,19 +74,10 @@ cached int getMainTreadPriority(synccharts::State rootState):
 	else
 		getRealThreadPriority(rootState)
 ;
-
-// Returns the first inital state.
-State getInitialState(synccharts::State state):
-	state.regions.first().innerStates.select(s|s.isInitial).first()
-;
+// End: ------------------------------------------------
 
 //-------------------- - - - - - - ---------------------------------
 
-// converts an int into an IntValue
-s::IntValue setIntValue(int vaule):
-	let intValue = new s::IntValue:
-		intValue.setValue(vaule)
-;
 
 // builds a state for s
 s::State buildState(String name, List[s::Signal] signals, List[s::Instruction] instructions):
@@ -77,8 +96,8 @@ List[s::State] addStateToList(s::State state, List[s::State] states):
 // the parameter has to be the root state of the SyncChart
 List[s::State] getAllStates(synccharts::State state):
 	let outList = {}:
-	let putState = state.transform():
-		// add immediate transitions
+	let putState = (s::State)state.getSingleTraceTarget("S"):
+		putInstructions(putState, getStateInstructions(state)) ->
 		if state.regions.isEmpty then (
 			if state.parentRegion.parentState != null then
 				outList.add(putState)
@@ -97,7 +116,6 @@ List[s::State] getAllStates(synccharts::State state):
 			outList.addAll(state.regions.getStatesOfRegion())
 			)
 		->
-		putInstructions(putState, getStateInstructions(state)) ->
 		outList
 ;
 
@@ -105,32 +123,28 @@ s::State putInstructions(s::State state, List[s::Instruction] instructions):
 	state.instructions.addAll(instructions)
 ;
 
-/*
-s::State addImmediateStrongTransitions(s::State state, synccharts::State modelState, List[s::Instruction] instructions):
-	state.instructions.addAll(getImmediateTransitions(modelState))
-;
-
-List[s::Instruction] getImmediateTransitions(synccharts::State modelState):
-	let out = {}:
-		out.addAll(modelState.outgoingTransitions.forAll(t|t.isImmediate).builPresentInstruction) ->
-		out
-;
-
-s::Instruction builPresentInstruction(synccharts::Transitition transition):
-	let out = new s::Present:
-	let signal = new s::Signal:
-	out.setSignal(signal)
-;
-*/
-
 List[s::Instruction] getStateInstructions(synccharts::State state):
 	let outList = {}:
-	info("||||||||||||||||||||||" + state.id) ->
 		(
-		// Transitionen mit goto
-		if !state.outgoingTransitions.isEmpty then (
-			outList.addAll(state.outgoingTransitions.select(t|t.trigger != null).transform())
-			)
+		// TODO: # strong Transitions
+		// TODO: onEntry actions
+		// TODO: PRIO(weak)
+		// TODO: # weak Transitions
+		//////////// _intern ///////////
+		// TODO: PRIO(strong)
+		// TODO: normal termination
+		// TODO: Label for join?
+		// TODO: PAUSE
+		// TODO: host code?
+		// TODO: all strong transitions
+		// TODO: onInside actions
+		// TODO: PRIO(weak)
+		// TODO: all weak transitions
+		// TODO: GOTO(_intern)
+		
+		// All transitions with Trigger
+		if !state.outgoingTransitions.isEmpty then 
+			outList.addAll(state.outgoingTransitions.getTransitionInstruction())
 		else
 			null 
 		)
@@ -142,6 +156,7 @@ List[s::Instruction] getStateInstructions(synccharts::State state):
 List[s::State] getStatesOfRegion(synccharts::Region region):
 	let outList = {}:
 	outList.addAll(region.innerStates.getAllStates()) ->
+	// TODO: remove transform (not critical)
 	outList.addAll(region.innerStates.transform()) ->
 	outList
 ;
@@ -151,10 +166,13 @@ List[s::State] getStatesOfRegion(synccharts::Region region):
 // transforms a SyncChart state into a S state
 create s::State this transform(synccharts::State state):
 	createTrace(this,state,"SyncCharts","S") ->
+	createTrace(this,state,"SyncCharts","S_intern") ->
+	createTrace(this,state,"SyncCharts","S_main") ->
+	createTrace(this,state,"SyncCharts","S_main_intern") ->
 	if state.regions.isEmpty then
-		this.setName("L_" + state.id) 
+		this.setName("L" + getStatePathAsName(state)) 
 	else 
-		this.setName("L_main_" + state.id)
+		this.setName("L_main" + getStatePathAsName(state))
 	->
 	if !state.signals.isEmpty then
 		this.setSignals(state.signals.transform())
@@ -162,17 +180,8 @@ create s::State this transform(synccharts::State state):
 		null
 ;
 
-create s::Present this transform(synccharts::Transition transition):
-	let goto = new Goto:
-	let signal = ((SignalReference)transition.trigger).signal:
-	let targetState = transition.targetState:
-		this.setSignal((s::Signal)(signal.getSingleTraceTarget( "S")))->
-		goto.setState((s::State)targetState.getSingleTraceTarget("S")) ->
-		this.instructions.add(goto)
-;
-
 // Transforms a SyncCharts signal into a s Signal 
-create s::Signal this transform(synccharts::Signal signal):
+create s::Signal this transform(expressions::Signal signal):
 	let sigType = new PrimitiveSignalType:
 	createTrace(this,signal,"SyncCharts","S") ->
 	// TODO: auch für complex
@@ -183,9 +192,4 @@ create s::Signal this transform(synccharts::Signal signal):
 
 List[s::Signal] getStateSignals(synccharts::State state):
 	state.signals.transform()
-;
-
-// Returns the first inital state of a region
-synccharts::State getInitialState(synccharts::Region region):
-	region.innerStates.select(s|s.isInitial).first()
 ;
