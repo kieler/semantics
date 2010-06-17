@@ -7,11 +7,14 @@
     <metamodelDeclarations xsi:type="xtext:ReferencedMetamodel" alias="synccharts">
       <ePackage href="http://kieler.cs.cau.de/synccharts/0.2#/"/>
     </metamodelDeclarations>
+    <metamodelDeclarations xsi:type="xtext:ReferencedMetamodel" alias="expressions">
+      <ePackage href="http://kieler.cs.cau.de/expressions#/"/>
+    </metamodelDeclarations>
     <metamodelDeclarations xsi:type="xtext:GeneratedMetamodel" name="interfaceDecl">
       <ePackage href="http://www.cau.de/cs/kieler/synccharts/interfacedeclparser/InterfaceDecl#/"/>
     </metamodelDeclarations>
     <rules xsi:type="xtext:ParserRule" name="StateExtend">
-      <type metamodel="/0/@metamodelDeclarations.2">
+      <type metamodel="/0/@metamodelDeclarations.3">
         <classifier xsi:type="ecore:EClass" href="http://www.cau.de/cs/kieler/synccharts/interfacedeclparser/InterfaceDecl#//StateExtend"/>
       </type>
       <alternatives xsi:type="xtext:Alternatives" cardinality="+">
@@ -52,7 +55,7 @@
       </alternatives>
     </rules>
     <rules xsi:type="xtext:ParserRule" name="RegionSignalDec">
-      <type metamodel="/0/@metamodelDeclarations.2">
+      <type metamodel="/0/@metamodelDeclarations.3">
         <classifier xsi:type="ecore:EClass" href="http://www.cau.de/cs/kieler/synccharts/interfacedeclparser/InterfaceDecl#//RegionSignalDec"/>
       </type>
       <alternatives xsi:type="xtext:Group">
@@ -123,7 +126,7 @@
       </alternatives>
     </rules>
     <rules xsi:type="xtext:ParserRule" name="Variables">
-      <type metamodel="/0/@metamodelDeclarations.2">
+      <type metamodel="/0/@metamodelDeclarations.3">
         <classifier xsi:type="ecore:EClass" href="http://www.cau.de/cs/kieler/synccharts/interfacedeclparser/InterfaceDecl#//Variables"/>
       </type>
       <alternatives xsi:type="xtext:Group">
@@ -142,7 +145,7 @@
       </alternatives>
     </rules>
     <rules xsi:type="xtext:ParserRule" name="Signals">
-      <type metamodel="/0/@metamodelDeclarations.2">
+      <type metamodel="/0/@metamodelDeclarations.3">
         <classifier xsi:type="ecore:EClass" href="http://www.cau.de/cs/kieler/synccharts/interfacedeclparser/InterfaceDecl#//Signals"/>
       </type>
       <alternatives xsi:type="xtext:Group">
@@ -161,7 +164,7 @@
       </alternatives>
     </rules>
     <rules xsi:type="xtext:ParserRule" name="InputSignals">
-      <type metamodel="/0/@metamodelDeclarations.2">
+      <type metamodel="/0/@metamodelDeclarations.3">
         <classifier xsi:type="ecore:EClass" href="http://www.cau.de/cs/kieler/synccharts/interfacedeclparser/InterfaceDecl#//InputSignals"/>
       </type>
       <alternatives xsi:type="xtext:Group">
@@ -180,7 +183,7 @@
       </alternatives>
     </rules>
     <rules xsi:type="xtext:ParserRule" name="OutputSignals">
-      <type metamodel="/0/@metamodelDeclarations.2">
+      <type metamodel="/0/@metamodelDeclarations.3">
         <classifier xsi:type="ecore:EClass" href="http://www.cau.de/cs/kieler/synccharts/interfacedeclparser/InterfaceDecl#//OutputSignals"/>
       </type>
       <alternatives xsi:type="xtext:Group">
@@ -199,7 +202,7 @@
       </alternatives>
     </rules>
     <rules xsi:type="xtext:ParserRule" name="InOutputSignals">
-      <type metamodel="/0/@metamodelDeclarations.2">
+      <type metamodel="/0/@metamodelDeclarations.3">
         <classifier xsi:type="ecore:EClass" href="http://www.cau.de/cs/kieler/synccharts/interfacedeclparser/InterfaceDecl#//InOutputSignals"/>
       </type>
       <alternatives xsi:type="xtext:Group">
@@ -218,8 +221,8 @@
       </alternatives>
     </rules>
     <rules xsi:type="xtext:ParserRule" name="Signal">
-      <type metamodel="/0/@metamodelDeclarations.1">
-        <classifier xsi:type="ecore:EClass" href="http://kieler.cs.cau.de/synccharts/0.2#//Signal"/>
+      <type metamodel="/0/@metamodelDeclarations.2">
+        <classifier xsi:type="ecore:EClass" href="http://kieler.cs.cau.de/expressions#//Signal"/>
       </type>
       <alternatives xsi:type="xtext:Alternatives">
         <elements xsi:type="xtext:Assignment" feature="name" operator="=">
@@ -359,8 +362,8 @@
       </alternatives>
     </rules>
     <rules xsi:type="xtext:ParserRule" name="Variable">
-      <type metamodel="/0/@metamodelDeclarations.1">
-        <classifier xsi:type="ecore:EClass" href="http://kieler.cs.cau.de/synccharts/0.2#//Variable"/>
+      <type metamodel="/0/@metamodelDeclarations.2">
+        <classifier xsi:type="ecore:EClass" href="http://kieler.cs.cau.de/expressions#//Variable"/>
       </type>
       <alternatives xsi:type="xtext:Alternatives">
         <elements xsi:type="xtext:Assignment" feature="name" operator="=">
@@ -428,71 +431,71 @@
       </alternatives>
     </rules>
     <rules xsi:type="xtext:EnumRule" name="ValueType">
-      <type metamodel="/0/@metamodelDeclarations.1">
-        <classifier xsi:type="ecore:EEnum" href="http://kieler.cs.cau.de/synccharts/0.2#//ValueType"/>
+      <type metamodel="/0/@metamodelDeclarations.2">
+        <classifier xsi:type="ecore:EEnum" href="http://kieler.cs.cau.de/expressions#//ValueType"/>
       </type>
       <alternatives xsi:type="xtext:Alternatives">
         <elements xsi:type="xtext:EnumLiteralDeclaration">
-          <enumLiteral href="http://kieler.cs.cau.de/synccharts/0.2#//ValueType/PURE"/>
+          <enumLiteral href="http://kieler.cs.cau.de/expressions#//ValueType/PURE"/>
           <literal value="PURE"/>
         </elements>
         <elements xsi:type="xtext:EnumLiteralDeclaration">
-          <enumLiteral href="http://kieler.cs.cau.de/synccharts/0.2#//ValueType/BOOL"/>
+          <enumLiteral href="http://kieler.cs.cau.de/expressions#//ValueType/BOOL"/>
           <literal value="BOOL"/>
         </elements>
         <elements xsi:type="xtext:EnumLiteralDeclaration">
-          <enumLiteral href="http://kieler.cs.cau.de/synccharts/0.2#//ValueType/UNSIGNED"/>
+          <enumLiteral href="http://kieler.cs.cau.de/expressions#//ValueType/UNSIGNED"/>
           <literal value="UNSIGNED"/>
         </elements>
         <elements xsi:type="xtext:EnumLiteralDeclaration">
-          <enumLiteral href="http://kieler.cs.cau.de/synccharts/0.2#//ValueType/INT"/>
+          <enumLiteral href="http://kieler.cs.cau.de/expressions#//ValueType/INT"/>
           <literal value="INT"/>
         </elements>
         <elements xsi:type="xtext:EnumLiteralDeclaration">
-          <enumLiteral href="http://kieler.cs.cau.de/synccharts/0.2#//ValueType/FLOAT"/>
+          <enumLiteral href="http://kieler.cs.cau.de/expressions#//ValueType/FLOAT"/>
           <literal value="FLOAT"/>
         </elements>
         <elements xsi:type="xtext:EnumLiteralDeclaration">
-          <enumLiteral href="http://kieler.cs.cau.de/synccharts/0.2#//ValueType/HOST"/>
+          <enumLiteral href="http://kieler.cs.cau.de/expressions#//ValueType/HOST"/>
           <literal value="HOST"/>
         </elements>
       </alternatives>
     </rules>
     <rules xsi:type="xtext:EnumRule" name="CombineOperator">
-      <type metamodel="/0/@metamodelDeclarations.1">
-        <classifier xsi:type="ecore:EEnum" href="http://kieler.cs.cau.de/synccharts/0.2#//CombineOperator"/>
+      <type metamodel="/0/@metamodelDeclarations.2">
+        <classifier xsi:type="ecore:EEnum" href="http://kieler.cs.cau.de/expressions#//CombineOperator"/>
       </type>
       <alternatives xsi:type="xtext:Alternatives">
         <elements xsi:type="xtext:EnumLiteralDeclaration">
-          <enumLiteral href="http://kieler.cs.cau.de/synccharts/0.2#//CombineOperator/NONE"/>
+          <enumLiteral href="http://kieler.cs.cau.de/expressions#//CombineOperator/NONE"/>
           <literal value="NONE"/>
         </elements>
         <elements xsi:type="xtext:EnumLiteralDeclaration">
-          <enumLiteral href="http://kieler.cs.cau.de/synccharts/0.2#//CombineOperator/ADD"/>
+          <enumLiteral href="http://kieler.cs.cau.de/expressions#//CombineOperator/ADD"/>
           <literal value="+"/>
         </elements>
         <elements xsi:type="xtext:EnumLiteralDeclaration">
-          <enumLiteral href="http://kieler.cs.cau.de/synccharts/0.2#//CombineOperator/MULT"/>
+          <enumLiteral href="http://kieler.cs.cau.de/expressions#//CombineOperator/MULT"/>
           <literal value="*"/>
         </elements>
         <elements xsi:type="xtext:EnumLiteralDeclaration">
-          <enumLiteral href="http://kieler.cs.cau.de/synccharts/0.2#//CombineOperator/MAX"/>
+          <enumLiteral href="http://kieler.cs.cau.de/expressions#//CombineOperator/MAX"/>
           <literal value="max"/>
         </elements>
         <elements xsi:type="xtext:EnumLiteralDeclaration">
-          <enumLiteral href="http://kieler.cs.cau.de/synccharts/0.2#//CombineOperator/MIN"/>
+          <enumLiteral href="http://kieler.cs.cau.de/expressions#//CombineOperator/MIN"/>
           <literal value="min"/>
         </elements>
         <elements xsi:type="xtext:EnumLiteralDeclaration">
-          <enumLiteral href="http://kieler.cs.cau.de/synccharts/0.2#//CombineOperator/OR"/>
+          <enumLiteral href="http://kieler.cs.cau.de/expressions#//CombineOperator/OR"/>
           <literal value="or"/>
         </elements>
         <elements xsi:type="xtext:EnumLiteralDeclaration">
-          <enumLiteral href="http://kieler.cs.cau.de/synccharts/0.2#//CombineOperator/AND"/>
+          <enumLiteral href="http://kieler.cs.cau.de/expressions#//CombineOperator/AND"/>
           <literal value="and"/>
         </elements>
         <elements xsi:type="xtext:EnumLiteralDeclaration">
-          <enumLiteral href="http://kieler.cs.cau.de/synccharts/0.2#//CombineOperator/HOST"/>
+          <enumLiteral href="http://kieler.cs.cau.de/expressions#//CombineOperator/HOST"/>
           <literal value="host"/>
         </elements>
       </alternatives>

@@ -12,6 +12,7 @@ import de.cau.cs.kieler.synccharts.interfacedeclparser.services.InterfaceDeclGra
 
 import com.google.inject.Inject;
 
+@SuppressWarnings("all")
 public class InterfaceDeclParsetreeConstructor extends AbstractParseTreeConstructor {
 		
 	@Inject
@@ -50,18 +51,14 @@ protected class ThisRootNode extends RootToken {
  * //==============================================================================
  * // "Buckets" containing the Signals / Regions with Signals
  * //==============================================================================
- * 
- * 
  * StateExtend:
- *   (regions+=RegionSignalDec|"input" "output" inOutputSignals+=InOutputSignals|
- *   "output" outputSignals+=OutputSignals|"input" inputSignals+=InputSignals|
- *   "signal" signals+=Signals|"variable" variable+=Variables)+;
+ * 	(regions+=RegionSignalDec | "input" "output" inOutputSignals+=InOutputSignals | "output" outputSignals+=OutputSignals
+ * 	| "input" inputSignals+=InputSignals | "signal" signals+=Signals | "variable" variable+=Variables)+;
  *
  **/
 
-// (regions+=RegionSignalDec|"input" "output" inOutputSignals+=InOutputSignals|
-// "output" outputSignals+=OutputSignals|"input" inputSignals+=InputSignals|
-// "signal" signals+=Signals|"variable" variable+=Variables)+
+// (regions+=RegionSignalDec | "input" "output" inOutputSignals+=InOutputSignals | "output" outputSignals+=OutputSignals |
+// "input" inputSignals+=InputSignals | "signal" signals+=Signals | "variable" variable+=Variables)+
 protected class StateExtend_Alternatives extends AlternativesToken {
 
 	public StateExtend_Alternatives(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -618,16 +615,15 @@ protected class StateExtend_VariableAssignment_5_1 extends AssignmentToken  {
 /************ begin Rule RegionSignalDec ****************
  *
  * RegionSignalDec:
- *   region=[synccharts::Region] ":" ("var" vars+=Variable ("," vars+=Variable)*|
- *   "signal" signals+=Signal ("," signals+=Signal)*) ("," "var" vars+=Variable (
- *   "," vars+=Variable)*|"," "signal" signals+=Signal ("," signals+=Signal)*)*
- *   ";";
+ * 	region=[synccharts::Region] ":" ("var" vars+=Variable ("," vars+=Variable)* | "signal" signals+=Signal (","
+ * 	signals+=Signal)*) ("," "var" vars+=Variable ("," vars+=Variable)* | "," "signal" signals+=Signal (","
+ * 	signals+=Signal)*)* ";";
  *
  **/
 
-// region=[synccharts::Region] ":" ("var" vars+=Variable ("," vars+=Variable)*|
-// "signal" signals+=Signal ("," signals+=Signal)*) ("," "var" vars+=Variable (","
-// vars+=Variable)*|"," "signal" signals+=Signal ("," signals+=Signal)*)* ";"
+// region=[synccharts::Region] ":" ("var" vars+=Variable ("," vars+=Variable)* | "signal" signals+=Signal (","
+// signals+=Signal)*) ("," "var" vars+=Variable ("," vars+=Variable)* | "," "signal" signals+=Signal (","
+// signals+=Signal)*)* ";"
 protected class RegionSignalDec_Group extends GroupToken {
 	
 	public RegionSignalDec_Group(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -714,8 +710,7 @@ protected class RegionSignalDec_ColonKeyword_1 extends KeywordToken  {
 
 }
 
-// "var" vars+=Variable ("," vars+=Variable)*|"signal" signals+=Signal (","
-// signals+=Signal)*
+// "var" vars+=Variable ("," vars+=Variable)* | "signal" signals+=Signal ("," signals+=Signal)*
 protected class RegionSignalDec_Alternatives_2 extends AlternativesToken {
 
 	public RegionSignalDec_Alternatives_2(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -1107,8 +1102,7 @@ protected class RegionSignalDec_SignalsAssignment_2_1_2_1 extends AssignmentToke
 
 
 
-// ("," "var" vars+=Variable ("," vars+=Variable)*|"," "signal" signals+=Signal (
-// "," signals+=Signal)*)*
+// ("," "var" vars+=Variable ("," vars+=Variable)* | "," "signal" signals+=Signal ("," signals+=Signal)*)*
 protected class RegionSignalDec_Alternatives_3 extends AlternativesToken {
 
 	public RegionSignalDec_Alternatives_3(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -1576,7 +1570,7 @@ protected class RegionSignalDec_SemicolonKeyword_4 extends KeywordToken  {
 /************ begin Rule Variables ****************
  *
  * Variables:
- *   (vars+=Variable ("," vars+=Variable)*) ";";
+ * 	(vars+=Variable ("," vars+=Variable)*) ";";
  *
  **/
 
@@ -1799,7 +1793,7 @@ protected class Variables_SemicolonKeyword_1 extends KeywordToken  {
 /************ begin Rule Signals ****************
  *
  * Signals:
- *   (signals+=Signal ("," signals+=Signal)*) ";";
+ * 	(signals+=Signal ("," signals+=Signal)*) ";";
  *
  **/
 
@@ -2022,7 +2016,7 @@ protected class Signals_SemicolonKeyword_1 extends KeywordToken  {
 /************ begin Rule InputSignals ****************
  *
  * InputSignals:
- *   (signals+=Signal ("," signals+=Signal)*) ";";
+ * 	(signals+=Signal ("," signals+=Signal)*) ";";
  *
  **/
 
@@ -2245,7 +2239,7 @@ protected class InputSignals_SemicolonKeyword_1 extends KeywordToken  {
 /************ begin Rule OutputSignals ****************
  *
  * OutputSignals:
- *   (signals+=Signal ("," signals+=Signal)*) ";";
+ * 	(signals+=Signal ("," signals+=Signal)*) ";";
  *
  **/
 
@@ -2468,7 +2462,7 @@ protected class OutputSignals_SemicolonKeyword_1 extends KeywordToken  {
 /************ begin Rule InOutputSignals ****************
  *
  * InOutputSignals:
- *   (signals+=Signal ("," signals+=Signal)*) ";";
+ * 	(signals+=Signal ("," signals+=Signal)*) ";";
  *
  **/
 
@@ -2693,29 +2687,21 @@ protected class InOutputSignals_SemicolonKeyword_1 extends KeywordToken  {
  * //==============================================================================
  * // synccharts elements as needed
  * //==============================================================================
- * 
- * 
- * Signal returns synccharts::Signal:
- *   name=ID|name=ID ":" type=ValueType|name=ID (":=" initialValue=STRING_D)|
- *   name=ID (":=" initialValue=STRING_D) ":" type=ValueType|name=ID (":="
- *   initialValue=STRING_D) ("combine" type=ValueType "with"
- *   combineOperator=CombineOperator)|name=ID ":" hostType=STRING_S|name=ID (":="
- *   initialValue=STRING_D) ":" hostType=STRING_S|name=ID (":="
- *   initialValue=STRING_D) ("combine" hostType=STRING_S "with"
- *   hostCombineOperator=STRING_S)|name=ID ("combine" type=ValueType "with"
- *   combineOperator=CombineOperator)|name=ID ("combine" hostType=STRING_S "with"
- *   hostCombineOperator=STRING_S);
+ * Signal returns expressions::Signal:
+ * 	name=ID | name=ID ":" type=ValueType | name=ID (":=" initialValue=STRING_D) | name=ID (":=" initialValue=STRING_D) ":"
+ * 	type=ValueType | name=ID (":=" initialValue=STRING_D) ("combine" type=ValueType "with"
+ * 	combineOperator=CombineOperator) | name=ID ":" hostType=STRING_S | name=ID (":=" initialValue=STRING_D) ":"
+ * 	hostType=STRING_S | name=ID (":=" initialValue=STRING_D) ("combine" hostType=STRING_S "with"
+ * 	hostCombineOperator=STRING_S) | name=ID ("combine" type=ValueType "with" combineOperator=CombineOperator) | name=ID
+ * 	("combine" hostType=STRING_S "with" hostCombineOperator=STRING_S);
  *
  **/
 
-// name=ID|name=ID ":" type=ValueType|name=ID (":=" initialValue=STRING_D)|name=ID
-// (":=" initialValue=STRING_D) ":" type=ValueType|name=ID (":="
-// initialValue=STRING_D) ("combine" type=ValueType "with"
-// combineOperator=CombineOperator)|name=ID ":" hostType=STRING_S|name=ID (":="
-// initialValue=STRING_D) ":" hostType=STRING_S|name=ID (":="
-// initialValue=STRING_D) ("combine" hostType=STRING_S "with"
-// hostCombineOperator=STRING_S)|name=ID ("combine" type=ValueType "with"
-// combineOperator=CombineOperator)|name=ID ("combine" hostType=STRING_S "with"
+// name=ID | name=ID ":" type=ValueType | name=ID (":=" initialValue=STRING_D) | name=ID (":=" initialValue=STRING_D) ":"
+// type=ValueType | name=ID (":=" initialValue=STRING_D) ("combine" type=ValueType "with" combineOperator=CombineOperator)
+// | name=ID ":" hostType=STRING_S | name=ID (":=" initialValue=STRING_D) ":" hostType=STRING_S | name=ID (":="
+// initialValue=STRING_D) ("combine" hostType=STRING_S "with" hostCombineOperator=STRING_S) | name=ID ("combine"
+// type=ValueType "with" combineOperator=CombineOperator) | name=ID ("combine" hostType=STRING_S "with"
 // hostCombineOperator=STRING_S)
 protected class Signal_Alternatives extends AlternativesToken {
 
@@ -3225,8 +3211,7 @@ protected class Signal_TypeAssignment_3_3 extends AssignmentToken  {
 }
 
 
-// name=ID (":=" initialValue=STRING_D) ("combine" type=ValueType "with"
-// combineOperator=CombineOperator)
+// name=ID (":=" initialValue=STRING_D) ("combine" type=ValueType "with" combineOperator=CombineOperator)
 protected class Signal_Group_4 extends GroupToken {
 	
 	public Signal_Group_4(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -3799,8 +3784,7 @@ protected class Signal_HostTypeAssignment_6_3 extends AssignmentToken  {
 }
 
 
-// name=ID (":=" initialValue=STRING_D) ("combine" hostType=STRING_S "with"
-// hostCombineOperator=STRING_S)
+// name=ID (":=" initialValue=STRING_D) ("combine" hostType=STRING_S "with" hostCombineOperator=STRING_S)
 protected class Signal_Group_7 extends GroupToken {
 	
 	public Signal_Group_7(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -4458,16 +4442,14 @@ protected class Signal_HostCombineOperatorAssignment_9_1_3 extends AssignmentTok
 
 /************ begin Rule Variable ****************
  *
- * Variable returns synccharts::Variable:
- *   name=ID|name=ID ":" type=ValueType|name=ID (":=" initialValue=STRING_D)|
- *   name=ID (":=" initialValue=STRING_D) ":" type=ValueType|name=ID ":"
- *   hostType=STRING_S|name=ID (":=" initialValue=STRING_D) ":" hostType=STRING_S;
+ * Variable returns expressions::Variable:
+ * 	name=ID | name=ID ":" type=ValueType | name=ID (":=" initialValue=STRING_D) | name=ID (":=" initialValue=STRING_D) ":"
+ * 	type=ValueType | name=ID ":" hostType=STRING_S | name=ID (":=" initialValue=STRING_D) ":" hostType=STRING_S;
  *
  **/
 
-// name=ID|name=ID ":" type=ValueType|name=ID (":=" initialValue=STRING_D)|name=ID
-// (":=" initialValue=STRING_D) ":" type=ValueType|name=ID ":" hostType=STRING_S|
-// name=ID (":=" initialValue=STRING_D) ":" hostType=STRING_S
+// name=ID | name=ID ":" type=ValueType | name=ID (":=" initialValue=STRING_D) | name=ID (":=" initialValue=STRING_D) ":"
+// type=ValueType | name=ID ":" hostType=STRING_S | name=ID (":=" initialValue=STRING_D) ":" hostType=STRING_S
 protected class Variable_Alternatives extends AlternativesToken {
 
 	public Variable_Alternatives(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {

@@ -47,17 +47,13 @@ public class InterfaceDeclGrammarAccess extends AbstractGrammarElementFinder {
 		////==============================================================================
 		//// "Buckets" containing the Signals / Regions with Signals
 		////==============================================================================
-		//
-		//
 		//StateExtend:
-		//  (regions+=RegionSignalDec|"input" "output" inOutputSignals+=InOutputSignals|
-		//  "output" outputSignals+=OutputSignals|"input" inputSignals+=InputSignals|
-		//  "signal" signals+=Signals|"variable" variable+=Variables)+;
+		//	(regions+=RegionSignalDec | "input" "output" inOutputSignals+=InOutputSignals | "output" outputSignals+=OutputSignals
+		//	| "input" inputSignals+=InputSignals | "signal" signals+=Signals | "variable" variable+=Variables)+;
 		public ParserRule getRule() { return rule; }
 
-		//(regions+=RegionSignalDec|"input" "output" inOutputSignals+=InOutputSignals|
-		//"output" outputSignals+=OutputSignals|"input" inputSignals+=InputSignals|
-		//"signal" signals+=Signals|"variable" variable+=Variables)+
+		//(regions+=RegionSignalDec | "input" "output" inOutputSignals+=InOutputSignals | "output" outputSignals+=OutputSignals |
+		//"input" inputSignals+=InputSignals | "signal" signals+=Signals | "variable" variable+=Variables)+
 		public Alternatives getAlternatives() { return cAlternatives; }
 
 		//regions+=RegionSignalDec
@@ -176,15 +172,14 @@ public class InterfaceDeclGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cSemicolonKeyword_4 = (Keyword)cGroup.eContents().get(4);
 		
 		//RegionSignalDec:
-		//  region=[synccharts::Region] ":" ("var" vars+=Variable ("," vars+=Variable)*|
-		//  "signal" signals+=Signal ("," signals+=Signal)*) ("," "var" vars+=Variable (
-		//  "," vars+=Variable)*|"," "signal" signals+=Signal ("," signals+=Signal)*)*
-		//  ";";
+		//	region=[synccharts::Region] ":" ("var" vars+=Variable ("," vars+=Variable)* | "signal" signals+=Signal (","
+		//	signals+=Signal)*) ("," "var" vars+=Variable ("," vars+=Variable)* | "," "signal" signals+=Signal (","
+		//	signals+=Signal)*)* ";";
 		public ParserRule getRule() { return rule; }
 
-		//region=[synccharts::Region] ":" ("var" vars+=Variable ("," vars+=Variable)*|
-		//"signal" signals+=Signal ("," signals+=Signal)*) ("," "var" vars+=Variable (","
-		//vars+=Variable)*|"," "signal" signals+=Signal ("," signals+=Signal)*)* ";"
+		//region=[synccharts::Region] ":" ("var" vars+=Variable ("," vars+=Variable)* | "signal" signals+=Signal (","
+		//signals+=Signal)*) ("," "var" vars+=Variable ("," vars+=Variable)* | "," "signal" signals+=Signal (","
+		//signals+=Signal)*)* ";"
 		public Group getGroup() { return cGroup; }
 
 		//region=[synccharts::Region]
@@ -199,8 +194,7 @@ public class InterfaceDeclGrammarAccess extends AbstractGrammarElementFinder {
 		//":"
 		public Keyword getColonKeyword_1() { return cColonKeyword_1; }
 
-		//"var" vars+=Variable ("," vars+=Variable)*|"signal" signals+=Signal (","
-		//signals+=Signal)*
+		//"var" vars+=Variable ("," vars+=Variable)* | "signal" signals+=Signal ("," signals+=Signal)*
 		public Alternatives getAlternatives_2() { return cAlternatives_2; }
 
 		//"var" vars+=Variable ("," vars+=Variable)*
@@ -251,8 +245,7 @@ public class InterfaceDeclGrammarAccess extends AbstractGrammarElementFinder {
 		//Signal
 		public RuleCall getSignalsSignalParserRuleCall_2_1_2_1_0() { return cSignalsSignalParserRuleCall_2_1_2_1_0; }
 
-		//("," "var" vars+=Variable ("," vars+=Variable)*|"," "signal" signals+=Signal (
-		//"," signals+=Signal)*)*
+		//("," "var" vars+=Variable ("," vars+=Variable)* | "," "signal" signals+=Signal ("," signals+=Signal)*)*
 		public Alternatives getAlternatives_3() { return cAlternatives_3; }
 
 		//"," "var" vars+=Variable ("," vars+=Variable)*
@@ -326,7 +319,7 @@ public class InterfaceDeclGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cSemicolonKeyword_1 = (Keyword)cGroup.eContents().get(1);
 		
 		//Variables:
-		//  (vars+=Variable ("," vars+=Variable)*) ";";
+		//	(vars+=Variable ("," vars+=Variable)*) ";";
 		public ParserRule getRule() { return rule; }
 
 		//(vars+=Variable ("," vars+=Variable)*) ";"
@@ -370,7 +363,7 @@ public class InterfaceDeclGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cSemicolonKeyword_1 = (Keyword)cGroup.eContents().get(1);
 		
 		//Signals:
-		//  (signals+=Signal ("," signals+=Signal)*) ";";
+		//	(signals+=Signal ("," signals+=Signal)*) ";";
 		public ParserRule getRule() { return rule; }
 
 		//(signals+=Signal ("," signals+=Signal)*) ";"
@@ -414,7 +407,7 @@ public class InterfaceDeclGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cSemicolonKeyword_1 = (Keyword)cGroup.eContents().get(1);
 		
 		//InputSignals:
-		//  (signals+=Signal ("," signals+=Signal)*) ";";
+		//	(signals+=Signal ("," signals+=Signal)*) ";";
 		public ParserRule getRule() { return rule; }
 
 		//(signals+=Signal ("," signals+=Signal)*) ";"
@@ -458,7 +451,7 @@ public class InterfaceDeclGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cSemicolonKeyword_1 = (Keyword)cGroup.eContents().get(1);
 		
 		//OutputSignals:
-		//  (signals+=Signal ("," signals+=Signal)*) ";";
+		//	(signals+=Signal ("," signals+=Signal)*) ";";
 		public ParserRule getRule() { return rule; }
 
 		//(signals+=Signal ("," signals+=Signal)*) ";"
@@ -502,7 +495,7 @@ public class InterfaceDeclGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cSemicolonKeyword_1 = (Keyword)cGroup.eContents().get(1);
 		
 		//InOutputSignals:
-		//  (signals+=Signal ("," signals+=Signal)*) ";";
+		//	(signals+=Signal ("," signals+=Signal)*) ";";
 		public ParserRule getRule() { return rule; }
 
 		//(signals+=Signal ("," signals+=Signal)*) ";"
@@ -629,28 +622,20 @@ public class InterfaceDeclGrammarAccess extends AbstractGrammarElementFinder {
 		////==============================================================================
 		//// synccharts elements as needed
 		////==============================================================================
-		//
-		//
-		//Signal returns synccharts::Signal:
-		//  name=ID|name=ID ":" type=ValueType|name=ID (":=" initialValue=STRING_D)|
-		//  name=ID (":=" initialValue=STRING_D) ":" type=ValueType|name=ID (":="
-		//  initialValue=STRING_D) ("combine" type=ValueType "with"
-		//  combineOperator=CombineOperator)|name=ID ":" hostType=STRING_S|name=ID (":="
-		//  initialValue=STRING_D) ":" hostType=STRING_S|name=ID (":="
-		//  initialValue=STRING_D) ("combine" hostType=STRING_S "with"
-		//  hostCombineOperator=STRING_S)|name=ID ("combine" type=ValueType "with"
-		//  combineOperator=CombineOperator)|name=ID ("combine" hostType=STRING_S "with"
-		//  hostCombineOperator=STRING_S);
+		//Signal returns expressions::Signal:
+		//	name=ID | name=ID ":" type=ValueType | name=ID (":=" initialValue=STRING_D) | name=ID (":=" initialValue=STRING_D) ":"
+		//	type=ValueType | name=ID (":=" initialValue=STRING_D) ("combine" type=ValueType "with"
+		//	combineOperator=CombineOperator) | name=ID ":" hostType=STRING_S | name=ID (":=" initialValue=STRING_D) ":"
+		//	hostType=STRING_S | name=ID (":=" initialValue=STRING_D) ("combine" hostType=STRING_S "with"
+		//	hostCombineOperator=STRING_S) | name=ID ("combine" type=ValueType "with" combineOperator=CombineOperator) | name=ID
+		//	("combine" hostType=STRING_S "with" hostCombineOperator=STRING_S);
 		public ParserRule getRule() { return rule; }
 
-		//name=ID|name=ID ":" type=ValueType|name=ID (":=" initialValue=STRING_D)|name=ID
-		//(":=" initialValue=STRING_D) ":" type=ValueType|name=ID (":="
-		//initialValue=STRING_D) ("combine" type=ValueType "with"
-		//combineOperator=CombineOperator)|name=ID ":" hostType=STRING_S|name=ID (":="
-		//initialValue=STRING_D) ":" hostType=STRING_S|name=ID (":="
-		//initialValue=STRING_D) ("combine" hostType=STRING_S "with"
-		//hostCombineOperator=STRING_S)|name=ID ("combine" type=ValueType "with"
-		//combineOperator=CombineOperator)|name=ID ("combine" hostType=STRING_S "with"
+		//name=ID | name=ID ":" type=ValueType | name=ID (":=" initialValue=STRING_D) | name=ID (":=" initialValue=STRING_D) ":"
+		//type=ValueType | name=ID (":=" initialValue=STRING_D) ("combine" type=ValueType "with" combineOperator=CombineOperator)
+		//| name=ID ":" hostType=STRING_S | name=ID (":=" initialValue=STRING_D) ":" hostType=STRING_S | name=ID (":="
+		//initialValue=STRING_D) ("combine" hostType=STRING_S "with" hostCombineOperator=STRING_S) | name=ID ("combine"
+		//type=ValueType "with" combineOperator=CombineOperator) | name=ID ("combine" hostType=STRING_S "with"
 		//hostCombineOperator=STRING_S)
 		public Alternatives getAlternatives() { return cAlternatives; }
 
@@ -729,8 +714,7 @@ public class InterfaceDeclGrammarAccess extends AbstractGrammarElementFinder {
 		//ValueType
 		public RuleCall getTypeValueTypeEnumRuleCall_3_3_0() { return cTypeValueTypeEnumRuleCall_3_3_0; }
 
-		//name=ID (":=" initialValue=STRING_D) ("combine" type=ValueType "with"
-		//combineOperator=CombineOperator)
+		//name=ID (":=" initialValue=STRING_D) ("combine" type=ValueType "with" combineOperator=CombineOperator)
 		public Group getGroup_4() { return cGroup_4; }
 
 		//name=ID
@@ -820,8 +804,7 @@ public class InterfaceDeclGrammarAccess extends AbstractGrammarElementFinder {
 		//STRING_S
 		public RuleCall getHostTypeSTRING_STerminalRuleCall_6_3_0() { return cHostTypeSTRING_STerminalRuleCall_6_3_0; }
 
-		//name=ID (":=" initialValue=STRING_D) ("combine" hostType=STRING_S "with"
-		//hostCombineOperator=STRING_S)
+		//name=ID (":=" initialValue=STRING_D) ("combine" hostType=STRING_S "with" hostCombineOperator=STRING_S)
 		public Group getGroup_7() { return cGroup_7; }
 
 		//name=ID
@@ -969,15 +952,13 @@ public class InterfaceDeclGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cHostTypeAssignment_5_3 = (Assignment)cGroup_5.eContents().get(3);
 		private final RuleCall cHostTypeSTRING_STerminalRuleCall_5_3_0 = (RuleCall)cHostTypeAssignment_5_3.eContents().get(0);
 		
-		//Variable returns synccharts::Variable:
-		//  name=ID|name=ID ":" type=ValueType|name=ID (":=" initialValue=STRING_D)|
-		//  name=ID (":=" initialValue=STRING_D) ":" type=ValueType|name=ID ":"
-		//  hostType=STRING_S|name=ID (":=" initialValue=STRING_D) ":" hostType=STRING_S;
+		//Variable returns expressions::Variable:
+		//	name=ID | name=ID ":" type=ValueType | name=ID (":=" initialValue=STRING_D) | name=ID (":=" initialValue=STRING_D) ":"
+		//	type=ValueType | name=ID ":" hostType=STRING_S | name=ID (":=" initialValue=STRING_D) ":" hostType=STRING_S;
 		public ParserRule getRule() { return rule; }
 
-		//name=ID|name=ID ":" type=ValueType|name=ID (":=" initialValue=STRING_D)|name=ID
-		//(":=" initialValue=STRING_D) ":" type=ValueType|name=ID ":" hostType=STRING_S|
-		//name=ID (":=" initialValue=STRING_D) ":" hostType=STRING_S
+		//name=ID | name=ID ":" type=ValueType | name=ID (":=" initialValue=STRING_D) | name=ID (":=" initialValue=STRING_D) ":"
+		//type=ValueType | name=ID ":" hostType=STRING_S | name=ID (":=" initialValue=STRING_D) ":" hostType=STRING_S
 		public Alternatives getAlternatives() { return cAlternatives; }
 
 		//name=ID
@@ -1121,8 +1102,8 @@ public class InterfaceDeclGrammarAccess extends AbstractGrammarElementFinder {
 		private final EnumLiteralDeclaration cHOSTEnumLiteralDeclaration_5 = (EnumLiteralDeclaration)cAlternatives.eContents().get(5);
 		private final Keyword cHOSTHOSTKeyword_5_0 = (Keyword)cHOSTEnumLiteralDeclaration_5.eContents().get(0);
 		
-		//enum ValueType returns synccharts::ValueType:
-		//  PURE | BOOL | UNSIGNED | INT | FLOAT | HOST;
+		//enum ValueType returns expressions::ValueType:
+		//	PURE | BOOL | UNSIGNED | INT | FLOAT | HOST;
 		public EnumRule getRule() { return rule; }
 
 		//PURE | BOOL | UNSIGNED | INT | FLOAT | HOST
@@ -1185,13 +1166,11 @@ public class InterfaceDeclGrammarAccess extends AbstractGrammarElementFinder {
 		private final EnumLiteralDeclaration cHOSTEnumLiteralDeclaration_7 = (EnumLiteralDeclaration)cAlternatives.eContents().get(7);
 		private final Keyword cHOSTHostKeyword_7_0 = (Keyword)cHOSTEnumLiteralDeclaration_7.eContents().get(0);
 		
-		//enum CombineOperator returns synccharts::CombineOperator:
-		//  NONE | ADD="+" | MULT="*" | MAX="max" | MIN="min" | OR="or" | AND="and" |
-		//  HOST="host";
+		//enum CombineOperator returns expressions::CombineOperator:
+		//	NONE | ADD="+" | MULT="*" | MAX="max" | MIN="min" | OR="or" | AND="and" | HOST="host";
 		public EnumRule getRule() { return rule; }
 
-		//NONE | ADD="+" | MULT="*" | MAX="max" | MIN="min" | OR="or" | AND="and" | HOST=
-		//"host"
+		//NONE | ADD="+" | MULT="*" | MAX="max" | MIN="min" | OR="or" | AND="and" | HOST="host"
 		public Alternatives getAlternatives() { return cAlternatives; }
 
 		//NONE
@@ -1281,12 +1260,9 @@ public class InterfaceDeclGrammarAccess extends AbstractGrammarElementFinder {
 	////==============================================================================
 	//// "Buckets" containing the Signals / Regions with Signals
 	////==============================================================================
-	//
-	//
 	//StateExtend:
-	//  (regions+=RegionSignalDec|"input" "output" inOutputSignals+=InOutputSignals|
-	//  "output" outputSignals+=OutputSignals|"input" inputSignals+=InputSignals|
-	//  "signal" signals+=Signals|"variable" variable+=Variables)+;
+	//	(regions+=RegionSignalDec | "input" "output" inOutputSignals+=InOutputSignals | "output" outputSignals+=OutputSignals
+	//	| "input" inputSignals+=InputSignals | "signal" signals+=Signals | "variable" variable+=Variables)+;
 	public StateExtendElements getStateExtendAccess() {
 		return (pStateExtend != null) ? pStateExtend : (pStateExtend = new StateExtendElements());
 	}
@@ -1296,10 +1272,9 @@ public class InterfaceDeclGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//RegionSignalDec:
-	//  region=[synccharts::Region] ":" ("var" vars+=Variable ("," vars+=Variable)*|
-	//  "signal" signals+=Signal ("," signals+=Signal)*) ("," "var" vars+=Variable (
-	//  "," vars+=Variable)*|"," "signal" signals+=Signal ("," signals+=Signal)*)*
-	//  ";";
+	//	region=[synccharts::Region] ":" ("var" vars+=Variable ("," vars+=Variable)* | "signal" signals+=Signal (","
+	//	signals+=Signal)*) ("," "var" vars+=Variable ("," vars+=Variable)* | "," "signal" signals+=Signal (","
+	//	signals+=Signal)*)* ";";
 	public RegionSignalDecElements getRegionSignalDecAccess() {
 		return (pRegionSignalDec != null) ? pRegionSignalDec : (pRegionSignalDec = new RegionSignalDecElements());
 	}
@@ -1309,7 +1284,7 @@ public class InterfaceDeclGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//Variables:
-	//  (vars+=Variable ("," vars+=Variable)*) ";";
+	//	(vars+=Variable ("," vars+=Variable)*) ";";
 	public VariablesElements getVariablesAccess() {
 		return (pVariables != null) ? pVariables : (pVariables = new VariablesElements());
 	}
@@ -1319,7 +1294,7 @@ public class InterfaceDeclGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//Signals:
-	//  (signals+=Signal ("," signals+=Signal)*) ";";
+	//	(signals+=Signal ("," signals+=Signal)*) ";";
 	public SignalsElements getSignalsAccess() {
 		return (pSignals != null) ? pSignals : (pSignals = new SignalsElements());
 	}
@@ -1329,7 +1304,7 @@ public class InterfaceDeclGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//InputSignals:
-	//  (signals+=Signal ("," signals+=Signal)*) ";";
+	//	(signals+=Signal ("," signals+=Signal)*) ";";
 	public InputSignalsElements getInputSignalsAccess() {
 		return (pInputSignals != null) ? pInputSignals : (pInputSignals = new InputSignalsElements());
 	}
@@ -1339,7 +1314,7 @@ public class InterfaceDeclGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//OutputSignals:
-	//  (signals+=Signal ("," signals+=Signal)*) ";";
+	//	(signals+=Signal ("," signals+=Signal)*) ";";
 	public OutputSignalsElements getOutputSignalsAccess() {
 		return (pOutputSignals != null) ? pOutputSignals : (pOutputSignals = new OutputSignalsElements());
 	}
@@ -1349,7 +1324,7 @@ public class InterfaceDeclGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//InOutputSignals:
-	//  (signals+=Signal ("," signals+=Signal)*) ";";
+	//	(signals+=Signal ("," signals+=Signal)*) ";";
 	public InOutputSignalsElements getInOutputSignalsAccess() {
 		return (pInOutputSignals != null) ? pInOutputSignals : (pInOutputSignals = new InOutputSignalsElements());
 	}
@@ -1361,18 +1336,13 @@ public class InterfaceDeclGrammarAccess extends AbstractGrammarElementFinder {
 	////==============================================================================
 	//// synccharts elements as needed
 	////==============================================================================
-	//
-	//
-	//Signal returns synccharts::Signal:
-	//  name=ID|name=ID ":" type=ValueType|name=ID (":=" initialValue=STRING_D)|
-	//  name=ID (":=" initialValue=STRING_D) ":" type=ValueType|name=ID (":="
-	//  initialValue=STRING_D) ("combine" type=ValueType "with"
-	//  combineOperator=CombineOperator)|name=ID ":" hostType=STRING_S|name=ID (":="
-	//  initialValue=STRING_D) ":" hostType=STRING_S|name=ID (":="
-	//  initialValue=STRING_D) ("combine" hostType=STRING_S "with"
-	//  hostCombineOperator=STRING_S)|name=ID ("combine" type=ValueType "with"
-	//  combineOperator=CombineOperator)|name=ID ("combine" hostType=STRING_S "with"
-	//  hostCombineOperator=STRING_S);
+	//Signal returns expressions::Signal:
+	//	name=ID | name=ID ":" type=ValueType | name=ID (":=" initialValue=STRING_D) | name=ID (":=" initialValue=STRING_D) ":"
+	//	type=ValueType | name=ID (":=" initialValue=STRING_D) ("combine" type=ValueType "with"
+	//	combineOperator=CombineOperator) | name=ID ":" hostType=STRING_S | name=ID (":=" initialValue=STRING_D) ":"
+	//	hostType=STRING_S | name=ID (":=" initialValue=STRING_D) ("combine" hostType=STRING_S "with"
+	//	hostCombineOperator=STRING_S) | name=ID ("combine" type=ValueType "with" combineOperator=CombineOperator) | name=ID
+	//	("combine" hostType=STRING_S "with" hostCombineOperator=STRING_S);
 	public SignalElements getSignalAccess() {
 		return (pSignal != null) ? pSignal : (pSignal = new SignalElements());
 	}
@@ -1381,10 +1351,9 @@ public class InterfaceDeclGrammarAccess extends AbstractGrammarElementFinder {
 		return getSignalAccess().getRule();
 	}
 
-	//Variable returns synccharts::Variable:
-	//  name=ID|name=ID ":" type=ValueType|name=ID (":=" initialValue=STRING_D)|
-	//  name=ID (":=" initialValue=STRING_D) ":" type=ValueType|name=ID ":"
-	//  hostType=STRING_S|name=ID (":=" initialValue=STRING_D) ":" hostType=STRING_S;
+	//Variable returns expressions::Variable:
+	//	name=ID | name=ID ":" type=ValueType | name=ID (":=" initialValue=STRING_D) | name=ID (":=" initialValue=STRING_D) ":"
+	//	type=ValueType | name=ID ":" hostType=STRING_S | name=ID (":=" initialValue=STRING_D) ":" hostType=STRING_S;
 	public VariableElements getVariableAccess() {
 		return (pVariable != null) ? pVariable : (pVariable = new VariableElements());
 	}
@@ -1393,8 +1362,8 @@ public class InterfaceDeclGrammarAccess extends AbstractGrammarElementFinder {
 		return getVariableAccess().getRule();
 	}
 
-	//enum ValueType returns synccharts::ValueType:
-	//  PURE | BOOL | UNSIGNED | INT | FLOAT | HOST;
+	//enum ValueType returns expressions::ValueType:
+	//	PURE | BOOL | UNSIGNED | INT | FLOAT | HOST;
 	public ValueTypeElements getValueTypeAccess() {
 		return (unknownRuleValueType != null) ? unknownRuleValueType : (unknownRuleValueType = new ValueTypeElements());
 	}
@@ -1403,9 +1372,8 @@ public class InterfaceDeclGrammarAccess extends AbstractGrammarElementFinder {
 		return getValueTypeAccess().getRule();
 	}
 
-	//enum CombineOperator returns synccharts::CombineOperator:
-	//  NONE | ADD="+" | MULT="*" | MAX="max" | MIN="min" | OR="or" | AND="and" |
-	//  HOST="host";
+	//enum CombineOperator returns expressions::CombineOperator:
+	//	NONE | ADD="+" | MULT="*" | MAX="max" | MIN="min" | OR="or" | AND="and" | HOST="host";
 	public CombineOperatorElements getCombineOperatorAccess() {
 		return (unknownRuleCombineOperator != null) ? unknownRuleCombineOperator : (unknownRuleCombineOperator = new CombineOperatorElements());
 	}
@@ -1415,57 +1383,56 @@ public class InterfaceDeclGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//terminal STRING_D:
-	//  "\"" "\"" | "\"" ("\\" "\"" | !"\"")* ("\\" "\"" | !("\\" | "\"")) "\"";
+	//	"\"" "\"" | "\"" ("\\" "\"" | !"\"")* ("\\" "\"" | !("\\" | "\"")) "\"";
 	public TerminalRule getSTRING_DRule() {
 		return (tSTRING_D != null) ? tSTRING_D : (tSTRING_D = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "STRING_D"));
 	} 
 
 	//terminal STRING_S:
-	//  "\'" "\'" | "\'" ("\\" "\'" | !"\'")* ("\\" "\'" | !("\\" | "\'")) "\'";
+	//	"\'" "\'" | "\'" ("\\" "\'" | !"\'")* ("\\" "\'" | !("\\" | "\'")) "\'";
 	public TerminalRule getSTRING_SRule() {
 		return (tSTRING_S != null) ? tSTRING_S : (tSTRING_S = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "STRING_S"));
 	} 
 
 	//terminal ID:
-	//  "^"? ("a".."z" | "A".."Z" | "_") ("a".."z" | "A".."Z" | "_" | "0".."9")*;
+	//	"^"? ("a".."z" | "A".."Z" | "_") ("a".."z" | "A".."Z" | "_" | "0".."9")*;
 	public TerminalRule getIDRule() {
 		return gaTerminals.getIDRule();
 	} 
 
 	//terminal INT returns ecore::EInt:
-	//  "0".."9"+;
+	//	"0".."9"+;
 	public TerminalRule getINTRule() {
 		return gaTerminals.getINTRule();
 	} 
 
 	//terminal STRING:
-	//  "\"" ("\\" ("b" | "t" | "n" | "f" | "r" | "\"" | "\'" | "\\") | !("\\" | "\""
-	//  ))* "\"" | "\'" ("\\" ("b" | "t" | "n" | "f" | "r" | "\"" | "\'" | "\\") | !(
-	//  "\\" | "\'"))* "\'";
+	//	"\"" ("\\" ("b" | "t" | "n" | "f" | "r" | "\"" | "\'" | "\\") | !("\\" | "\""))* "\"" | "\'" ("\\" ("b" | "t" | "n" |
+	//	"f" | "r" | "\"" | "\'" | "\\") | !("\\" | "\'"))* "\'";
 	public TerminalRule getSTRINGRule() {
 		return gaTerminals.getSTRINGRule();
 	} 
 
 	//terminal ML_COMMENT:
-	//  "/ *"->"* /";
+	//	"/ *"->"* /";
 	public TerminalRule getML_COMMENTRule() {
 		return gaTerminals.getML_COMMENTRule();
 	} 
 
 	//terminal SL_COMMENT:
-	//  "//" !("\n" | "\r")* ("\r"? "\n")?;
+	//	"//" !("\n" | "\r")* ("\r"? "\n")?;
 	public TerminalRule getSL_COMMENTRule() {
 		return gaTerminals.getSL_COMMENTRule();
 	} 
 
 	//terminal WS:
-	//  (" " | "\t" | "\r" | "\n")+;
+	//	(" " | "\t" | "\r" | "\n")+;
 	public TerminalRule getWSRule() {
 		return gaTerminals.getWSRule();
 	} 
 
 	//terminal ANY_OTHER:
-	//  .;
+	//	.;
 	public TerminalRule getANY_OTHERRule() {
 		return gaTerminals.getANY_OTHERRule();
 	} 
