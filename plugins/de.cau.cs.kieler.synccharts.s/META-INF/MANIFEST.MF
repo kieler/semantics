@@ -13,6 +13,7 @@ Require-Bundle: org.eclipse.ui,
  de.cau.cs.kieler.core.model;bundle-version="0.2.0",
  org.eclipse.core.resources;bundle-version="3.5.2",
  org.eclipse.xtend.util.stdlib;bundle-version="1.0.0",
- de.cau.cs.kieler.s;bundle-version="0.0.1"
+ de.cau.cs.kieler.s.ui;bundle-version="0.1.0",
+ de.cau.cs.kieler.sim.kiem;bundle-version="0.2.0"
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-ActivationPolicy: lazy
