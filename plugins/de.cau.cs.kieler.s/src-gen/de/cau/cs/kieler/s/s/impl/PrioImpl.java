@@ -5,17 +5,25 @@
  */
 package de.cau.cs.kieler.s.s.impl;
 
+import de.cau.cs.kieler.s.s.Annotation;
 import de.cau.cs.kieler.s.s.IntValue;
 import de.cau.cs.kieler.s.s.Prio;
 import de.cau.cs.kieler.s.s.SPackage;
 
+import java.util.Collection;
+
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
+
+import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+
+import org.eclipse.emf.ecore.util.EObjectContainmentEList;
+import org.eclipse.emf.ecore.util.InternalEList;
 
 /**
  * <!-- begin-user-doc -->
@@ -24,6 +32,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * <p>
  * The following features are implemented:
  * <ul>
+ *   <li>{@link de.cau.cs.kieler.s.s.impl.PrioImpl#getAnnotations <em>Annotations</em>}</li>
  *   <li>{@link de.cau.cs.kieler.s.s.impl.PrioImpl#getPriority <em>Priority</em>}</li>
  * </ul>
  * </p>
@@ -32,6 +41,16 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  */
 public class PrioImpl extends InstructionImpl implements Prio
 {
+  /**
+   * The cached value of the '{@link #getAnnotations() <em>Annotations</em>}' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getAnnotations()
+   * @generated
+   * @ordered
+   */
+  protected EList<Annotation> annotations;
+
   /**
    * The cached value of the '{@link #getPriority() <em>Priority</em>}' containment reference.
    * <!-- begin-user-doc -->
@@ -61,6 +80,20 @@ public class PrioImpl extends InstructionImpl implements Prio
   protected EClass eStaticClass()
   {
     return SPackage.Literals.PRIO;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EList<Annotation> getAnnotations()
+  {
+    if (annotations == null)
+    {
+      annotations = new EObjectContainmentEList<Annotation>(Annotation.class, this, SPackage.PRIO__ANNOTATIONS);
+    }
+    return annotations;
   }
 
   /**
@@ -121,6 +154,8 @@ public class PrioImpl extends InstructionImpl implements Prio
   {
     switch (featureID)
     {
+      case SPackage.PRIO__ANNOTATIONS:
+        return ((InternalEList<?>)getAnnotations()).basicRemove(otherEnd, msgs);
       case SPackage.PRIO__PRIORITY:
         return basicSetPriority(null, msgs);
     }
@@ -137,6 +172,8 @@ public class PrioImpl extends InstructionImpl implements Prio
   {
     switch (featureID)
     {
+      case SPackage.PRIO__ANNOTATIONS:
+        return getAnnotations();
       case SPackage.PRIO__PRIORITY:
         return getPriority();
     }
@@ -148,11 +185,16 @@ public class PrioImpl extends InstructionImpl implements Prio
    * <!-- end-user-doc -->
    * @generated
    */
+  @SuppressWarnings("unchecked")
   @Override
   public void eSet(int featureID, Object newValue)
   {
     switch (featureID)
     {
+      case SPackage.PRIO__ANNOTATIONS:
+        getAnnotations().clear();
+        getAnnotations().addAll((Collection<? extends Annotation>)newValue);
+        return;
       case SPackage.PRIO__PRIORITY:
         setPriority((IntValue)newValue);
         return;
@@ -170,6 +212,9 @@ public class PrioImpl extends InstructionImpl implements Prio
   {
     switch (featureID)
     {
+      case SPackage.PRIO__ANNOTATIONS:
+        getAnnotations().clear();
+        return;
       case SPackage.PRIO__PRIORITY:
         setPriority((IntValue)null);
         return;
@@ -187,6 +232,8 @@ public class PrioImpl extends InstructionImpl implements Prio
   {
     switch (featureID)
     {
+      case SPackage.PRIO__ANNOTATIONS:
+        return annotations != null && !annotations.isEmpty();
       case SPackage.PRIO__PRIORITY:
         return priority != null;
     }

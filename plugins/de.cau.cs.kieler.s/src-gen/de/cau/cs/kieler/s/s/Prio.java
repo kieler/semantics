@@ -5,6 +5,7 @@
  */
 package de.cau.cs.kieler.s.s;
 
+import org.eclipse.emf.common.util.EList;
 
 /**
  * <!-- begin-user-doc -->
@@ -14,6 +15,7 @@ package de.cau.cs.kieler.s.s;
  * <p>
  * The following features are supported:
  * <ul>
+ *   <li>{@link de.cau.cs.kieler.s.s.Prio#getAnnotations <em>Annotations</em>}</li>
  *   <li>{@link de.cau.cs.kieler.s.s.Prio#getPriority <em>Priority</em>}</li>
  * </ul>
  * </p>
@@ -24,6 +26,22 @@ package de.cau.cs.kieler.s.s;
  */
 public interface Prio extends Instruction
 {
+  /**
+   * Returns the value of the '<em><b>Annotations</b></em>' containment reference list.
+   * The list contents are of type {@link de.cau.cs.kieler.s.s.Annotation}.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Annotations</em>' containment reference list isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Annotations</em>' containment reference list.
+   * @see de.cau.cs.kieler.s.s.SPackage#getPrio_Annotations()
+   * @model containment="true"
+   * @generated
+   */
+  EList<Annotation> getAnnotations();
+
   /**
    * Returns the value of the '<em><b>Priority</b></em>' containment reference.
    * <!-- begin-user-doc -->

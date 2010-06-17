@@ -5,6 +5,7 @@
  */
 package de.cau.cs.kieler.s.s;
 
+import org.eclipse.emf.common.util.EList;
 
 /**
  * <!-- begin-user-doc -->
@@ -17,6 +18,7 @@ package de.cau.cs.kieler.s.s;
  *   <li>{@link de.cau.cs.kieler.s.s.Signal#getName <em>Name</em>}</li>
  *   <li>{@link de.cau.cs.kieler.s.s.Signal#getType <em>Type</em>}</li>
  *   <li>{@link de.cau.cs.kieler.s.s.Signal#getCombineFunction <em>Combine Function</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.s.s.Signal#getAnnotations <em>Annotations</em>}</li>
  * </ul>
  * </p>
  *
@@ -103,5 +105,21 @@ public interface Signal extends Annotatable
    * @generated
    */
   void setCombineFunction(CombineFunction value);
+
+  /**
+   * Returns the value of the '<em><b>Annotations</b></em>' containment reference list.
+   * The list contents are of type {@link de.cau.cs.kieler.s.s.Annotation}.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Annotations</em>' containment reference list isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Annotations</em>' containment reference list.
+   * @see de.cau.cs.kieler.s.s.SPackage#getSignal_Annotations()
+   * @model containment="true"
+   * @generated
+   */
+  EList<Annotation> getAnnotations();
 
 } // Signal

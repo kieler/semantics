@@ -16,6 +16,7 @@ import org.eclipse.emf.common.util.EList;
  * The following features are supported:
  * <ul>
  *   <li>{@link de.cau.cs.kieler.s.s.State#getName <em>Name</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.s.s.State#getAnnotations <em>Annotations</em>}</li>
  *   <li>{@link de.cau.cs.kieler.s.s.State#getSignals <em>Signals</em>}</li>
  *   <li>{@link de.cau.cs.kieler.s.s.State#getInstructions <em>Instructions</em>}</li>
  * </ul>
@@ -52,6 +53,22 @@ public interface State extends Annotatable
    * @generated
    */
   void setName(String value);
+
+  /**
+   * Returns the value of the '<em><b>Annotations</b></em>' containment reference list.
+   * The list contents are of type {@link de.cau.cs.kieler.s.s.Annotation}.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Annotations</em>' containment reference list isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Annotations</em>' containment reference list.
+   * @see de.cau.cs.kieler.s.s.SPackage#getState_Annotations()
+   * @model containment="true"
+   * @generated
+   */
+  EList<Annotation> getAnnotations();
 
   /**
    * Returns the value of the '<em><b>Signals</b></em>' containment reference list.

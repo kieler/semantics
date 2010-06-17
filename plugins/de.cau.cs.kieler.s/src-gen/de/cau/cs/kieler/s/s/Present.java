@@ -27,30 +27,30 @@ import org.eclipse.emf.common.util.EList;
 public interface Present extends Instruction
 {
   /**
-   * Returns the value of the '<em><b>Signal</b></em>' containment reference.
+   * Returns the value of the '<em><b>Signal</b></em>' reference.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Signal</em>' containment reference isn't clear,
+   * If the meaning of the '<em>Signal</em>' reference isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Signal</em>' containment reference.
-   * @see #setSignal(SignalReference)
+   * @return the value of the '<em>Signal</em>' reference.
+   * @see #setSignal(Signal)
    * @see de.cau.cs.kieler.s.s.SPackage#getPresent_Signal()
-   * @model containment="true"
+   * @model
    * @generated
    */
-  SignalReference getSignal();
+  Signal getSignal();
 
   /**
-   * Sets the value of the '{@link de.cau.cs.kieler.s.s.Present#getSignal <em>Signal</em>}' containment reference.
+   * Sets the value of the '{@link de.cau.cs.kieler.s.s.Present#getSignal <em>Signal</em>}' reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Signal</em>' containment reference.
+   * @param value the new value of the '<em>Signal</em>' reference.
    * @see #getSignal()
    * @generated
    */
-  void setSignal(SignalReference value);
+  void setSignal(Signal value);
 
   /**
    * Returns the value of the '<em><b>Instructions</b></em>' containment reference list.

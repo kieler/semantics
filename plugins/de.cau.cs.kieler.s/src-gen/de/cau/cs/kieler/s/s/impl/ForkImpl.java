@@ -8,7 +8,7 @@ package de.cau.cs.kieler.s.s.impl;
 import de.cau.cs.kieler.s.s.Fork;
 import de.cau.cs.kieler.s.s.IntValue;
 import de.cau.cs.kieler.s.s.SPackage;
-import de.cau.cs.kieler.s.s.StateReference;
+import de.cau.cs.kieler.s.s.State;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
@@ -35,14 +35,14 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 public class ForkImpl extends InstructionImpl implements Fork
 {
   /**
-   * The cached value of the '{@link #getState() <em>State</em>}' containment reference.
+   * The cached value of the '{@link #getState() <em>State</em>}' reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @see #getState()
    * @generated
    * @ordered
    */
-  protected StateReference state;
+  protected State state;
 
   /**
    * The cached value of the '{@link #getPriority() <em>Priority</em>}' containment reference.
@@ -80,7 +80,27 @@ public class ForkImpl extends InstructionImpl implements Fork
    * <!-- end-user-doc -->
    * @generated
    */
-  public StateReference getState()
+  public State getState()
+  {
+    if (state != null && state.eIsProxy())
+    {
+      InternalEObject oldState = (InternalEObject)state;
+      state = (State)eResolveProxy(oldState);
+      if (state != oldState)
+      {
+        if (eNotificationRequired())
+          eNotify(new ENotificationImpl(this, Notification.RESOLVE, SPackage.FORK__STATE, oldState, state));
+      }
+    }
+    return state;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public State basicGetState()
   {
     return state;
   }
@@ -90,37 +110,12 @@ public class ForkImpl extends InstructionImpl implements Fork
    * <!-- end-user-doc -->
    * @generated
    */
-  public NotificationChain basicSetState(StateReference newState, NotificationChain msgs)
+  public void setState(State newState)
   {
-    StateReference oldState = state;
+    State oldState = state;
     state = newState;
     if (eNotificationRequired())
-    {
-      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, SPackage.FORK__STATE, oldState, newState);
-      if (msgs == null) msgs = notification; else msgs.add(notification);
-    }
-    return msgs;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public void setState(StateReference newState)
-  {
-    if (newState != state)
-    {
-      NotificationChain msgs = null;
-      if (state != null)
-        msgs = ((InternalEObject)state).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - SPackage.FORK__STATE, null, msgs);
-      if (newState != null)
-        msgs = ((InternalEObject)newState).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - SPackage.FORK__STATE, null, msgs);
-      msgs = basicSetState(newState, msgs);
-      if (msgs != null) msgs.dispatch();
-    }
-    else if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, SPackage.FORK__STATE, newState, newState));
+      eNotify(new ENotificationImpl(this, Notification.SET, SPackage.FORK__STATE, oldState, state));
   }
 
   /**
@@ -181,8 +176,6 @@ public class ForkImpl extends InstructionImpl implements Fork
   {
     switch (featureID)
     {
-      case SPackage.FORK__STATE:
-        return basicSetState(null, msgs);
       case SPackage.FORK__PRIORITY:
         return basicSetPriority(null, msgs);
     }
@@ -200,7 +193,8 @@ public class ForkImpl extends InstructionImpl implements Fork
     switch (featureID)
     {
       case SPackage.FORK__STATE:
-        return getState();
+        if (resolve) return getState();
+        return basicGetState();
       case SPackage.FORK__PRIORITY:
         return getPriority();
     }
@@ -218,7 +212,7 @@ public class ForkImpl extends InstructionImpl implements Fork
     switch (featureID)
     {
       case SPackage.FORK__STATE:
-        setState((StateReference)newValue);
+        setState((State)newValue);
         return;
       case SPackage.FORK__PRIORITY:
         setPriority((IntValue)newValue);
@@ -238,7 +232,7 @@ public class ForkImpl extends InstructionImpl implements Fork
     switch (featureID)
     {
       case SPackage.FORK__STATE:
-        setState((StateReference)null);
+        setState((State)null);
         return;
       case SPackage.FORK__PRIORITY:
         setPriority((IntValue)null);

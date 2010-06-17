@@ -8,7 +8,7 @@ package de.cau.cs.kieler.s.s.impl;
 import de.cau.cs.kieler.s.s.Instruction;
 import de.cau.cs.kieler.s.s.Present;
 import de.cau.cs.kieler.s.s.SPackage;
-import de.cau.cs.kieler.s.s.SignalReference;
+import de.cau.cs.kieler.s.s.Signal;
 
 import java.util.Collection;
 
@@ -42,14 +42,14 @@ import org.eclipse.emf.ecore.util.InternalEList;
 public class PresentImpl extends InstructionImpl implements Present
 {
   /**
-   * The cached value of the '{@link #getSignal() <em>Signal</em>}' containment reference.
+   * The cached value of the '{@link #getSignal() <em>Signal</em>}' reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @see #getSignal()
    * @generated
    * @ordered
    */
-  protected SignalReference signal;
+  protected Signal signal;
 
   /**
    * The cached value of the '{@link #getInstructions() <em>Instructions</em>}' containment reference list.
@@ -87,7 +87,27 @@ public class PresentImpl extends InstructionImpl implements Present
    * <!-- end-user-doc -->
    * @generated
    */
-  public SignalReference getSignal()
+  public Signal getSignal()
+  {
+    if (signal != null && signal.eIsProxy())
+    {
+      InternalEObject oldSignal = (InternalEObject)signal;
+      signal = (Signal)eResolveProxy(oldSignal);
+      if (signal != oldSignal)
+      {
+        if (eNotificationRequired())
+          eNotify(new ENotificationImpl(this, Notification.RESOLVE, SPackage.PRESENT__SIGNAL, oldSignal, signal));
+      }
+    }
+    return signal;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Signal basicGetSignal()
   {
     return signal;
   }
@@ -97,37 +117,12 @@ public class PresentImpl extends InstructionImpl implements Present
    * <!-- end-user-doc -->
    * @generated
    */
-  public NotificationChain basicSetSignal(SignalReference newSignal, NotificationChain msgs)
+  public void setSignal(Signal newSignal)
   {
-    SignalReference oldSignal = signal;
+    Signal oldSignal = signal;
     signal = newSignal;
     if (eNotificationRequired())
-    {
-      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, SPackage.PRESENT__SIGNAL, oldSignal, newSignal);
-      if (msgs == null) msgs = notification; else msgs.add(notification);
-    }
-    return msgs;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public void setSignal(SignalReference newSignal)
-  {
-    if (newSignal != signal)
-    {
-      NotificationChain msgs = null;
-      if (signal != null)
-        msgs = ((InternalEObject)signal).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - SPackage.PRESENT__SIGNAL, null, msgs);
-      if (newSignal != null)
-        msgs = ((InternalEObject)newSignal).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - SPackage.PRESENT__SIGNAL, null, msgs);
-      msgs = basicSetSignal(newSignal, msgs);
-      if (msgs != null) msgs.dispatch();
-    }
-    else if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, SPackage.PRESENT__SIGNAL, newSignal, newSignal));
+      eNotify(new ENotificationImpl(this, Notification.SET, SPackage.PRESENT__SIGNAL, oldSignal, signal));
   }
 
   /**
@@ -154,8 +149,6 @@ public class PresentImpl extends InstructionImpl implements Present
   {
     switch (featureID)
     {
-      case SPackage.PRESENT__SIGNAL:
-        return basicSetSignal(null, msgs);
       case SPackage.PRESENT__INSTRUCTIONS:
         return ((InternalEList<?>)getInstructions()).basicRemove(otherEnd, msgs);
     }
@@ -173,7 +166,8 @@ public class PresentImpl extends InstructionImpl implements Present
     switch (featureID)
     {
       case SPackage.PRESENT__SIGNAL:
-        return getSignal();
+        if (resolve) return getSignal();
+        return basicGetSignal();
       case SPackage.PRESENT__INSTRUCTIONS:
         return getInstructions();
     }
@@ -192,7 +186,7 @@ public class PresentImpl extends InstructionImpl implements Present
     switch (featureID)
     {
       case SPackage.PRESENT__SIGNAL:
-        setSignal((SignalReference)newValue);
+        setSignal((Signal)newValue);
         return;
       case SPackage.PRESENT__INSTRUCTIONS:
         getInstructions().clear();
@@ -213,7 +207,7 @@ public class PresentImpl extends InstructionImpl implements Present
     switch (featureID)
     {
       case SPackage.PRESENT__SIGNAL:
-        setSignal((SignalReference)null);
+        setSignal((Signal)null);
         return;
       case SPackage.PRESENT__INSTRUCTIONS:
         getInstructions().clear();

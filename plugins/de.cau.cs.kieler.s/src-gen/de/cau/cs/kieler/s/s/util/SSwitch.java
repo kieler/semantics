@@ -124,25 +124,11 @@ public class SSwitch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
-      case SPackage.STATE_REFERENCE:
-      {
-        StateReference stateReference = (StateReference)theEObject;
-        T result = caseStateReference(stateReference);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
       case SPackage.SIGNAL:
       {
         Signal signal = (Signal)theEObject;
         T result = caseSignal(signal);
         if (result == null) result = caseAnnotatable(signal);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      case SPackage.SIGNAL_REFERENCE:
-      {
-        SignalReference signalReference = (SignalReference)theEObject;
-        T result = caseSignalReference(signalReference);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -160,19 +146,19 @@ public class SSwitch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
-      case SPackage.CUSTOM_SIGNAL:
+      case SPackage.CUSTOM_SIGNAL_TYPE:
       {
-        CustomSignal customSignal = (CustomSignal)theEObject;
-        T result = caseCustomSignal(customSignal);
-        if (result == null) result = caseSignalType(customSignal);
+        CustomSignalType customSignalType = (CustomSignalType)theEObject;
+        T result = caseCustomSignalType(customSignalType);
+        if (result == null) result = caseSignalType(customSignalType);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
-      case SPackage.PRIMITIVE_SIGNAL:
+      case SPackage.PRIMITIVE_SIGNAL_TYPE:
       {
-        PrimitiveSignal primitiveSignal = (PrimitiveSignal)theEObject;
-        T result = casePrimitiveSignal(primitiveSignal);
-        if (result == null) result = caseSignalType(primitiveSignal);
+        PrimitiveSignalType primitiveSignalType = (PrimitiveSignalType)theEObject;
+        T result = casePrimitiveSignalType(primitiveSignalType);
+        if (result == null) result = caseSignalType(primitiveSignalType);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -373,22 +359,6 @@ public class SSwitch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>State Reference</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>State Reference</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseStateReference(StateReference object)
-  {
-    return null;
-  }
-
-  /**
    * Returns the result of interpreting the object as an instance of '<em>Signal</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
@@ -400,22 +370,6 @@ public class SSwitch<T>
    * @generated
    */
   public T caseSignal(Signal object)
-  {
-    return null;
-  }
-
-  /**
-   * Returns the result of interpreting the object as an instance of '<em>Signal Reference</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Signal Reference</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseSignalReference(SignalReference object)
   {
     return null;
   }
@@ -453,33 +407,33 @@ public class SSwitch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>Custom Signal</em>'.
+   * Returns the result of interpreting the object as an instance of '<em>Custom Signal Type</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
    * returning a non-null result will terminate the switch.
    * <!-- end-user-doc -->
    * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Custom Signal</em>'.
+   * @return the result of interpreting the object as an instance of '<em>Custom Signal Type</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
    */
-  public T caseCustomSignal(CustomSignal object)
+  public T caseCustomSignalType(CustomSignalType object)
   {
     return null;
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>Primitive Signal</em>'.
+   * Returns the result of interpreting the object as an instance of '<em>Primitive Signal Type</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
    * returning a non-null result will terminate the switch.
    * <!-- end-user-doc -->
    * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Primitive Signal</em>'.
+   * @return the result of interpreting the object as an instance of '<em>Primitive Signal Type</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
    */
-  public T casePrimitiveSignal(PrimitiveSignal object)
+  public T casePrimitiveSignalType(PrimitiveSignalType object)
   {
     return null;
   }

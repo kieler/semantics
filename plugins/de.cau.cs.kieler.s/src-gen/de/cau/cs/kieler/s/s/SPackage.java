@@ -163,22 +163,13 @@ public interface SPackage extends EPackage
   int ANNOTATABLE = 2;
 
   /**
-   * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int ANNOTATABLE__ANNOTATIONS = 0;
-
-  /**
    * The number of structural features of the '<em>Annotatable</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int ANNOTATABLE_FEATURE_COUNT = 1;
+  int ANNOTATABLE_FEATURE_COUNT = 0;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.s.s.impl.StateImpl <em>State</em>}' class.
@@ -191,15 +182,6 @@ public interface SPackage extends EPackage
   int STATE = 3;
 
   /**
-   * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int STATE__ANNOTATIONS = ANNOTATABLE__ANNOTATIONS;
-
-  /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -209,13 +191,22 @@ public interface SPackage extends EPackage
   int STATE__NAME = ANNOTATABLE_FEATURE_COUNT + 0;
 
   /**
+   * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int STATE__ANNOTATIONS = ANNOTATABLE_FEATURE_COUNT + 1;
+
+  /**
    * The feature id for the '<em><b>Signals</b></em>' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int STATE__SIGNALS = ANNOTATABLE_FEATURE_COUNT + 1;
+  int STATE__SIGNALS = ANNOTATABLE_FEATURE_COUNT + 2;
 
   /**
    * The feature id for the '<em><b>Instructions</b></em>' containment reference list.
@@ -224,7 +215,7 @@ public interface SPackage extends EPackage
    * @generated
    * @ordered
    */
-  int STATE__INSTRUCTIONS = ANNOTATABLE_FEATURE_COUNT + 2;
+  int STATE__INSTRUCTIONS = ANNOTATABLE_FEATURE_COUNT + 3;
 
   /**
    * The number of structural features of the '<em>State</em>' class.
@@ -233,35 +224,7 @@ public interface SPackage extends EPackage
    * @generated
    * @ordered
    */
-  int STATE_FEATURE_COUNT = ANNOTATABLE_FEATURE_COUNT + 3;
-
-  /**
-   * The meta object id for the '{@link de.cau.cs.kieler.s.s.impl.StateReferenceImpl <em>State Reference</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see de.cau.cs.kieler.s.s.impl.StateReferenceImpl
-   * @see de.cau.cs.kieler.s.s.impl.SPackageImpl#getStateReference()
-   * @generated
-   */
-  int STATE_REFERENCE = 4;
-
-  /**
-   * The feature id for the '<em><b>State</b></em>' reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int STATE_REFERENCE__STATE = 0;
-
-  /**
-   * The number of structural features of the '<em>State Reference</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int STATE_REFERENCE_FEATURE_COUNT = 1;
+  int STATE_FEATURE_COUNT = ANNOTATABLE_FEATURE_COUNT + 4;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.s.s.impl.SignalImpl <em>Signal</em>}' class.
@@ -271,16 +234,7 @@ public interface SPackage extends EPackage
    * @see de.cau.cs.kieler.s.s.impl.SPackageImpl#getSignal()
    * @generated
    */
-  int SIGNAL = 5;
-
-  /**
-   * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int SIGNAL__ANNOTATIONS = ANNOTATABLE__ANNOTATIONS;
+  int SIGNAL = 4;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -310,41 +264,22 @@ public interface SPackage extends EPackage
   int SIGNAL__COMBINE_FUNCTION = ANNOTATABLE_FEATURE_COUNT + 2;
 
   /**
+   * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int SIGNAL__ANNOTATIONS = ANNOTATABLE_FEATURE_COUNT + 3;
+
+  /**
    * The number of structural features of the '<em>Signal</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int SIGNAL_FEATURE_COUNT = ANNOTATABLE_FEATURE_COUNT + 3;
-
-  /**
-   * The meta object id for the '{@link de.cau.cs.kieler.s.s.impl.SignalReferenceImpl <em>Signal Reference</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see de.cau.cs.kieler.s.s.impl.SignalReferenceImpl
-   * @see de.cau.cs.kieler.s.s.impl.SPackageImpl#getSignalReference()
-   * @generated
-   */
-  int SIGNAL_REFERENCE = 6;
-
-  /**
-   * The feature id for the '<em><b>Signal</b></em>' reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int SIGNAL_REFERENCE__SIGNAL = 0;
-
-  /**
-   * The number of structural features of the '<em>Signal Reference</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int SIGNAL_REFERENCE_FEATURE_COUNT = 1;
+  int SIGNAL_FEATURE_COUNT = ANNOTATABLE_FEATURE_COUNT + 4;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.s.s.impl.CombineFunctionImpl <em>Combine Function</em>}' class.
@@ -354,7 +289,7 @@ public interface SPackage extends EPackage
    * @see de.cau.cs.kieler.s.s.impl.SPackageImpl#getCombineFunction()
    * @generated
    */
-  int COMBINE_FUNCTION = 7;
+  int COMBINE_FUNCTION = 5;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -391,7 +326,7 @@ public interface SPackage extends EPackage
    * @see de.cau.cs.kieler.s.s.impl.SPackageImpl#getSignalType()
    * @generated
    */
-  int SIGNAL_TYPE = 8;
+  int SIGNAL_TYPE = 6;
 
   /**
    * The number of structural features of the '<em>Signal Type</em>' class.
@@ -403,60 +338,60 @@ public interface SPackage extends EPackage
   int SIGNAL_TYPE_FEATURE_COUNT = 0;
 
   /**
-   * The meta object id for the '{@link de.cau.cs.kieler.s.s.impl.CustomSignalImpl <em>Custom Signal</em>}' class.
+   * The meta object id for the '{@link de.cau.cs.kieler.s.s.impl.CustomSignalTypeImpl <em>Custom Signal Type</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see de.cau.cs.kieler.s.s.impl.CustomSignalImpl
-   * @see de.cau.cs.kieler.s.s.impl.SPackageImpl#getCustomSignal()
+   * @see de.cau.cs.kieler.s.s.impl.CustomSignalTypeImpl
+   * @see de.cau.cs.kieler.s.s.impl.SPackageImpl#getCustomSignalType()
    * @generated
    */
-  int CUSTOM_SIGNAL = 9;
+  int CUSTOM_SIGNAL_TYPE = 7;
 
   /**
-   * The feature id for the '<em><b>Type</b></em>' attribute.
+   * The feature id for the '<em><b>Custom Type</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int CUSTOM_SIGNAL__TYPE = SIGNAL_TYPE_FEATURE_COUNT + 0;
+  int CUSTOM_SIGNAL_TYPE__CUSTOM_TYPE = SIGNAL_TYPE_FEATURE_COUNT + 0;
 
   /**
-   * The number of structural features of the '<em>Custom Signal</em>' class.
+   * The number of structural features of the '<em>Custom Signal Type</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int CUSTOM_SIGNAL_FEATURE_COUNT = SIGNAL_TYPE_FEATURE_COUNT + 1;
+  int CUSTOM_SIGNAL_TYPE_FEATURE_COUNT = SIGNAL_TYPE_FEATURE_COUNT + 1;
 
   /**
-   * The meta object id for the '{@link de.cau.cs.kieler.s.s.impl.PrimitiveSignalImpl <em>Primitive Signal</em>}' class.
+   * The meta object id for the '{@link de.cau.cs.kieler.s.s.impl.PrimitiveSignalTypeImpl <em>Primitive Signal Type</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see de.cau.cs.kieler.s.s.impl.PrimitiveSignalImpl
-   * @see de.cau.cs.kieler.s.s.impl.SPackageImpl#getPrimitiveSignal()
+   * @see de.cau.cs.kieler.s.s.impl.PrimitiveSignalTypeImpl
+   * @see de.cau.cs.kieler.s.s.impl.SPackageImpl#getPrimitiveSignalType()
    * @generated
    */
-  int PRIMITIVE_SIGNAL = 10;
+  int PRIMITIVE_SIGNAL_TYPE = 8;
 
   /**
-   * The feature id for the '<em><b>Type</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int PRIMITIVE_SIGNAL__TYPE = SIGNAL_TYPE_FEATURE_COUNT + 0;
-
-  /**
-   * The number of structural features of the '<em>Primitive Signal</em>' class.
+   * The feature id for the '<em><b>Primitive Type</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int PRIMITIVE_SIGNAL_FEATURE_COUNT = SIGNAL_TYPE_FEATURE_COUNT + 1;
+  int PRIMITIVE_SIGNAL_TYPE__PRIMITIVE_TYPE = SIGNAL_TYPE_FEATURE_COUNT + 0;
+
+  /**
+   * The number of structural features of the '<em>Primitive Signal Type</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int PRIMITIVE_SIGNAL_TYPE_FEATURE_COUNT = SIGNAL_TYPE_FEATURE_COUNT + 1;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.s.s.impl.IntValueImpl <em>Int Value</em>}' class.
@@ -466,7 +401,7 @@ public interface SPackage extends EPackage
    * @see de.cau.cs.kieler.s.s.impl.SPackageImpl#getIntValue()
    * @generated
    */
-  int INT_VALUE = 11;
+  int INT_VALUE = 9;
 
   /**
    * The feature id for the '<em><b>Value</b></em>' attribute.
@@ -494,7 +429,7 @@ public interface SPackage extends EPackage
    * @see de.cau.cs.kieler.s.s.impl.SPackageImpl#getFloatValue()
    * @generated
    */
-  int FLOAT_VALUE = 12;
+  int FLOAT_VALUE = 10;
 
   /**
    * The feature id for the '<em><b>Value</b></em>' attribute.
@@ -522,7 +457,7 @@ public interface SPackage extends EPackage
    * @see de.cau.cs.kieler.s.s.impl.SPackageImpl#getBooleanValue()
    * @generated
    */
-  int BOOLEAN_VALUE = 13;
+  int BOOLEAN_VALUE = 11;
 
   /**
    * The feature id for the '<em><b>Value</b></em>' attribute.
@@ -550,16 +485,16 @@ public interface SPackage extends EPackage
    * @see de.cau.cs.kieler.s.s.impl.SPackageImpl#getInstruction()
    * @generated
    */
-  int INSTRUCTION = 14;
+  int INSTRUCTION = 12;
 
   /**
-   * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
+   * The feature id for the '<em><b>Continuation</b></em>' reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int INSTRUCTION__ANNOTATIONS = ANNOTATABLE__ANNOTATIONS;
+  int INSTRUCTION__CONTINUATION = ANNOTATABLE_FEATURE_COUNT + 0;
 
   /**
    * The number of structural features of the '<em>Instruction</em>' class.
@@ -568,7 +503,7 @@ public interface SPackage extends EPackage
    * @generated
    * @ordered
    */
-  int INSTRUCTION_FEATURE_COUNT = ANNOTATABLE_FEATURE_COUNT + 0;
+  int INSTRUCTION_FEATURE_COUNT = ANNOTATABLE_FEATURE_COUNT + 1;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.s.s.impl.PauseImpl <em>Pause</em>}' class.
@@ -578,16 +513,16 @@ public interface SPackage extends EPackage
    * @see de.cau.cs.kieler.s.s.impl.SPackageImpl#getPause()
    * @generated
    */
-  int PAUSE = 15;
+  int PAUSE = 13;
 
   /**
-   * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
+   * The feature id for the '<em><b>Continuation</b></em>' reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int PAUSE__ANNOTATIONS = INSTRUCTION__ANNOTATIONS;
+  int PAUSE__CONTINUATION = INSTRUCTION__CONTINUATION;
 
   /**
    * The number of structural features of the '<em>Pause</em>' class.
@@ -606,16 +541,16 @@ public interface SPackage extends EPackage
    * @see de.cau.cs.kieler.s.s.impl.SPackageImpl#getTerm()
    * @generated
    */
-  int TERM = 16;
+  int TERM = 14;
 
   /**
-   * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
+   * The feature id for the '<em><b>Continuation</b></em>' reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int TERM__ANNOTATIONS = INSTRUCTION__ANNOTATIONS;
+  int TERM__CONTINUATION = INSTRUCTION__CONTINUATION;
 
   /**
    * The number of structural features of the '<em>Term</em>' class.
@@ -634,16 +569,16 @@ public interface SPackage extends EPackage
    * @see de.cau.cs.kieler.s.s.impl.SPackageImpl#getJoin()
    * @generated
    */
-  int JOIN = 17;
+  int JOIN = 15;
 
   /**
-   * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
+   * The feature id for the '<em><b>Continuation</b></em>' reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int JOIN__ANNOTATIONS = INSTRUCTION__ANNOTATIONS;
+  int JOIN__CONTINUATION = INSTRUCTION__CONTINUATION;
 
   /**
    * The number of structural features of the '<em>Join</em>' class.
@@ -662,16 +597,16 @@ public interface SPackage extends EPackage
    * @see de.cau.cs.kieler.s.s.impl.SPackageImpl#getAbort()
    * @generated
    */
-  int ABORT = 18;
+  int ABORT = 16;
 
   /**
-   * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
+   * The feature id for the '<em><b>Continuation</b></em>' reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int ABORT__ANNOTATIONS = INSTRUCTION__ANNOTATIONS;
+  int ABORT__CONTINUATION = INSTRUCTION__CONTINUATION;
 
   /**
    * The number of structural features of the '<em>Abort</em>' class.
@@ -690,19 +625,19 @@ public interface SPackage extends EPackage
    * @see de.cau.cs.kieler.s.s.impl.SPackageImpl#getPresent()
    * @generated
    */
-  int PRESENT = 19;
+  int PRESENT = 17;
 
   /**
-   * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
+   * The feature id for the '<em><b>Continuation</b></em>' reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int PRESENT__ANNOTATIONS = INSTRUCTION__ANNOTATIONS;
+  int PRESENT__CONTINUATION = INSTRUCTION__CONTINUATION;
 
   /**
-   * The feature id for the '<em><b>Signal</b></em>' containment reference.
+   * The feature id for the '<em><b>Signal</b></em>' reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
@@ -736,19 +671,19 @@ public interface SPackage extends EPackage
    * @see de.cau.cs.kieler.s.s.impl.SPackageImpl#getGoto()
    * @generated
    */
-  int GOTO = 20;
+  int GOTO = 18;
 
   /**
-   * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
+   * The feature id for the '<em><b>Continuation</b></em>' reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int GOTO__ANNOTATIONS = INSTRUCTION__ANNOTATIONS;
+  int GOTO__CONTINUATION = INSTRUCTION__CONTINUATION;
 
   /**
-   * The feature id for the '<em><b>State</b></em>' containment reference.
+   * The feature id for the '<em><b>State</b></em>' reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
@@ -773,19 +708,19 @@ public interface SPackage extends EPackage
    * @see de.cau.cs.kieler.s.s.impl.SPackageImpl#getFork()
    * @generated
    */
-  int FORK = 21;
+  int FORK = 19;
 
   /**
-   * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
+   * The feature id for the '<em><b>Continuation</b></em>' reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int FORK__ANNOTATIONS = INSTRUCTION__ANNOTATIONS;
+  int FORK__CONTINUATION = INSTRUCTION__CONTINUATION;
 
   /**
-   * The feature id for the '<em><b>State</b></em>' containment reference.
+   * The feature id for the '<em><b>State</b></em>' reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
@@ -819,19 +754,19 @@ public interface SPackage extends EPackage
    * @see de.cau.cs.kieler.s.s.impl.SPackageImpl#getForke()
    * @generated
    */
-  int FORKE = 22;
+  int FORKE = 20;
 
   /**
-   * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
+   * The feature id for the '<em><b>Continuation</b></em>' reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int FORKE__ANNOTATIONS = INSTRUCTION__ANNOTATIONS;
+  int FORKE__CONTINUATION = INSTRUCTION__CONTINUATION;
 
   /**
-   * The feature id for the '<em><b>State</b></em>' containment reference.
+   * The feature id for the '<em><b>State</b></em>' reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
@@ -856,19 +791,19 @@ public interface SPackage extends EPackage
    * @see de.cau.cs.kieler.s.s.impl.SPackageImpl#getEmit()
    * @generated
    */
-  int EMIT = 23;
+  int EMIT = 21;
 
   /**
-   * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
+   * The feature id for the '<em><b>Continuation</b></em>' reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int EMIT__ANNOTATIONS = INSTRUCTION__ANNOTATIONS;
+  int EMIT__CONTINUATION = INSTRUCTION__CONTINUATION;
 
   /**
-   * The feature id for the '<em><b>Signal</b></em>' containment reference.
+   * The feature id for the '<em><b>Signal</b></em>' reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
@@ -893,19 +828,19 @@ public interface SPackage extends EPackage
    * @see de.cau.cs.kieler.s.s.impl.SPackageImpl#getAwait()
    * @generated
    */
-  int AWAIT = 24;
+  int AWAIT = 22;
 
   /**
-   * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
+   * The feature id for the '<em><b>Continuation</b></em>' reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int AWAIT__ANNOTATIONS = INSTRUCTION__ANNOTATIONS;
+  int AWAIT__CONTINUATION = INSTRUCTION__CONTINUATION;
 
   /**
-   * The feature id for the '<em><b>Signal</b></em>' containment reference.
+   * The feature id for the '<em><b>Signal</b></em>' reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
@@ -930,7 +865,16 @@ public interface SPackage extends EPackage
    * @see de.cau.cs.kieler.s.s.impl.SPackageImpl#getPrio()
    * @generated
    */
-  int PRIO = 25;
+  int PRIO = 23;
+
+  /**
+   * The feature id for the '<em><b>Continuation</b></em>' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int PRIO__CONTINUATION = INSTRUCTION__CONTINUATION;
 
   /**
    * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
@@ -939,7 +883,7 @@ public interface SPackage extends EPackage
    * @generated
    * @ordered
    */
-  int PRIO__ANNOTATIONS = INSTRUCTION__ANNOTATIONS;
+  int PRIO__ANNOTATIONS = INSTRUCTION_FEATURE_COUNT + 0;
 
   /**
    * The feature id for the '<em><b>Priority</b></em>' containment reference.
@@ -948,7 +892,7 @@ public interface SPackage extends EPackage
    * @generated
    * @ordered
    */
-  int PRIO__PRIORITY = INSTRUCTION_FEATURE_COUNT + 0;
+  int PRIO__PRIORITY = INSTRUCTION_FEATURE_COUNT + 1;
 
   /**
    * The number of structural features of the '<em>Prio</em>' class.
@@ -957,17 +901,17 @@ public interface SPackage extends EPackage
    * @generated
    * @ordered
    */
-  int PRIO_FEATURE_COUNT = INSTRUCTION_FEATURE_COUNT + 1;
+  int PRIO_FEATURE_COUNT = INSTRUCTION_FEATURE_COUNT + 2;
 
   /**
-   * The meta object id for the '{@link de.cau.cs.kieler.s.s.PrimitiveSignalType <em>Primitive Signal Type</em>}' enum.
+   * The meta object id for the '{@link de.cau.cs.kieler.s.s.PrimitiveType <em>Primitive Type</em>}' enum.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see de.cau.cs.kieler.s.s.PrimitiveSignalType
-   * @see de.cau.cs.kieler.s.s.impl.SPackageImpl#getPrimitiveSignalType()
+   * @see de.cau.cs.kieler.s.s.PrimitiveType
+   * @see de.cau.cs.kieler.s.s.impl.SPackageImpl#getPrimitiveType()
    * @generated
    */
-  int PRIMITIVE_SIGNAL_TYPE = 26;
+  int PRIMITIVE_TYPE = 24;
 
 
   /**
@@ -1067,17 +1011,6 @@ public interface SPackage extends EPackage
   EClass getAnnotatable();
 
   /**
-   * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.s.s.Annotatable#getAnnotations <em>Annotations</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference list '<em>Annotations</em>'.
-   * @see de.cau.cs.kieler.s.s.Annotatable#getAnnotations()
-   * @see #getAnnotatable()
-   * @generated
-   */
-  EReference getAnnotatable_Annotations();
-
-  /**
    * Returns the meta object for class '{@link de.cau.cs.kieler.s.s.State <em>State</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -1097,6 +1030,17 @@ public interface SPackage extends EPackage
    * @generated
    */
   EAttribute getState_Name();
+
+  /**
+   * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.s.s.State#getAnnotations <em>Annotations</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference list '<em>Annotations</em>'.
+   * @see de.cau.cs.kieler.s.s.State#getAnnotations()
+   * @see #getState()
+   * @generated
+   */
+  EReference getState_Annotations();
 
   /**
    * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.s.s.State#getSignals <em>Signals</em>}'.
@@ -1119,27 +1063,6 @@ public interface SPackage extends EPackage
    * @generated
    */
   EReference getState_Instructions();
-
-  /**
-   * Returns the meta object for class '{@link de.cau.cs.kieler.s.s.StateReference <em>State Reference</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for class '<em>State Reference</em>'.
-   * @see de.cau.cs.kieler.s.s.StateReference
-   * @generated
-   */
-  EClass getStateReference();
-
-  /**
-   * Returns the meta object for the reference '{@link de.cau.cs.kieler.s.s.StateReference#getState <em>State</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the reference '<em>State</em>'.
-   * @see de.cau.cs.kieler.s.s.StateReference#getState()
-   * @see #getStateReference()
-   * @generated
-   */
-  EReference getStateReference_State();
 
   /**
    * Returns the meta object for class '{@link de.cau.cs.kieler.s.s.Signal <em>Signal</em>}'.
@@ -1185,25 +1108,15 @@ public interface SPackage extends EPackage
   EReference getSignal_CombineFunction();
 
   /**
-   * Returns the meta object for class '{@link de.cau.cs.kieler.s.s.SignalReference <em>Signal Reference</em>}'.
+   * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.s.s.Signal#getAnnotations <em>Annotations</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Signal Reference</em>'.
-   * @see de.cau.cs.kieler.s.s.SignalReference
+   * @return the meta object for the containment reference list '<em>Annotations</em>'.
+   * @see de.cau.cs.kieler.s.s.Signal#getAnnotations()
+   * @see #getSignal()
    * @generated
    */
-  EClass getSignalReference();
-
-  /**
-   * Returns the meta object for the reference '{@link de.cau.cs.kieler.s.s.SignalReference#getSignal <em>Signal</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the reference '<em>Signal</em>'.
-   * @see de.cau.cs.kieler.s.s.SignalReference#getSignal()
-   * @see #getSignalReference()
-   * @generated
-   */
-  EReference getSignalReference_Signal();
+  EReference getSignal_Annotations();
 
   /**
    * Returns the meta object for class '{@link de.cau.cs.kieler.s.s.CombineFunction <em>Combine Function</em>}'.
@@ -1248,46 +1161,46 @@ public interface SPackage extends EPackage
   EClass getSignalType();
 
   /**
-   * Returns the meta object for class '{@link de.cau.cs.kieler.s.s.CustomSignal <em>Custom Signal</em>}'.
+   * Returns the meta object for class '{@link de.cau.cs.kieler.s.s.CustomSignalType <em>Custom Signal Type</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Custom Signal</em>'.
-   * @see de.cau.cs.kieler.s.s.CustomSignal
+   * @return the meta object for class '<em>Custom Signal Type</em>'.
+   * @see de.cau.cs.kieler.s.s.CustomSignalType
    * @generated
    */
-  EClass getCustomSignal();
+  EClass getCustomSignalType();
 
   /**
-   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.s.s.CustomSignal#getType <em>Type</em>}'.
+   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.s.s.CustomSignalType#getCustomType <em>Custom Type</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Type</em>'.
-   * @see de.cau.cs.kieler.s.s.CustomSignal#getType()
-   * @see #getCustomSignal()
+   * @return the meta object for the attribute '<em>Custom Type</em>'.
+   * @see de.cau.cs.kieler.s.s.CustomSignalType#getCustomType()
+   * @see #getCustomSignalType()
    * @generated
    */
-  EAttribute getCustomSignal_Type();
+  EAttribute getCustomSignalType_CustomType();
 
   /**
-   * Returns the meta object for class '{@link de.cau.cs.kieler.s.s.PrimitiveSignal <em>Primitive Signal</em>}'.
+   * Returns the meta object for class '{@link de.cau.cs.kieler.s.s.PrimitiveSignalType <em>Primitive Signal Type</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Primitive Signal</em>'.
-   * @see de.cau.cs.kieler.s.s.PrimitiveSignal
+   * @return the meta object for class '<em>Primitive Signal Type</em>'.
+   * @see de.cau.cs.kieler.s.s.PrimitiveSignalType
    * @generated
    */
-  EClass getPrimitiveSignal();
+  EClass getPrimitiveSignalType();
 
   /**
-   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.s.s.PrimitiveSignal#getType <em>Type</em>}'.
+   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.s.s.PrimitiveSignalType#getPrimitiveType <em>Primitive Type</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Type</em>'.
-   * @see de.cau.cs.kieler.s.s.PrimitiveSignal#getType()
-   * @see #getPrimitiveSignal()
+   * @return the meta object for the attribute '<em>Primitive Type</em>'.
+   * @see de.cau.cs.kieler.s.s.PrimitiveSignalType#getPrimitiveType()
+   * @see #getPrimitiveSignalType()
    * @generated
    */
-  EAttribute getPrimitiveSignal_Type();
+  EAttribute getPrimitiveSignalType_PrimitiveType();
 
   /**
    * Returns the meta object for class '{@link de.cau.cs.kieler.s.s.IntValue <em>Int Value</em>}'.
@@ -1363,6 +1276,17 @@ public interface SPackage extends EPackage
   EClass getInstruction();
 
   /**
+   * Returns the meta object for the reference '{@link de.cau.cs.kieler.s.s.Instruction#getContinuation <em>Continuation</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the reference '<em>Continuation</em>'.
+   * @see de.cau.cs.kieler.s.s.Instruction#getContinuation()
+   * @see #getInstruction()
+   * @generated
+   */
+  EReference getInstruction_Continuation();
+
+  /**
    * Returns the meta object for class '{@link de.cau.cs.kieler.s.s.Pause <em>Pause</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -1413,10 +1337,10 @@ public interface SPackage extends EPackage
   EClass getPresent();
 
   /**
-   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.s.s.Present#getSignal <em>Signal</em>}'.
+   * Returns the meta object for the reference '{@link de.cau.cs.kieler.s.s.Present#getSignal <em>Signal</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>Signal</em>'.
+   * @return the meta object for the reference '<em>Signal</em>'.
    * @see de.cau.cs.kieler.s.s.Present#getSignal()
    * @see #getPresent()
    * @generated
@@ -1445,10 +1369,10 @@ public interface SPackage extends EPackage
   EClass getGoto();
 
   /**
-   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.s.s.Goto#getState <em>State</em>}'.
+   * Returns the meta object for the reference '{@link de.cau.cs.kieler.s.s.Goto#getState <em>State</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>State</em>'.
+   * @return the meta object for the reference '<em>State</em>'.
    * @see de.cau.cs.kieler.s.s.Goto#getState()
    * @see #getGoto()
    * @generated
@@ -1466,10 +1390,10 @@ public interface SPackage extends EPackage
   EClass getFork();
 
   /**
-   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.s.s.Fork#getState <em>State</em>}'.
+   * Returns the meta object for the reference '{@link de.cau.cs.kieler.s.s.Fork#getState <em>State</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>State</em>'.
+   * @return the meta object for the reference '<em>State</em>'.
    * @see de.cau.cs.kieler.s.s.Fork#getState()
    * @see #getFork()
    * @generated
@@ -1498,10 +1422,10 @@ public interface SPackage extends EPackage
   EClass getForke();
 
   /**
-   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.s.s.Forke#getState <em>State</em>}'.
+   * Returns the meta object for the reference '{@link de.cau.cs.kieler.s.s.Forke#getState <em>State</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>State</em>'.
+   * @return the meta object for the reference '<em>State</em>'.
    * @see de.cau.cs.kieler.s.s.Forke#getState()
    * @see #getForke()
    * @generated
@@ -1519,10 +1443,10 @@ public interface SPackage extends EPackage
   EClass getEmit();
 
   /**
-   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.s.s.Emit#getSignal <em>Signal</em>}'.
+   * Returns the meta object for the reference '{@link de.cau.cs.kieler.s.s.Emit#getSignal <em>Signal</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>Signal</em>'.
+   * @return the meta object for the reference '<em>Signal</em>'.
    * @see de.cau.cs.kieler.s.s.Emit#getSignal()
    * @see #getEmit()
    * @generated
@@ -1540,10 +1464,10 @@ public interface SPackage extends EPackage
   EClass getAwait();
 
   /**
-   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.s.s.Await#getSignal <em>Signal</em>}'.
+   * Returns the meta object for the reference '{@link de.cau.cs.kieler.s.s.Await#getSignal <em>Signal</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>Signal</em>'.
+   * @return the meta object for the reference '<em>Signal</em>'.
    * @see de.cau.cs.kieler.s.s.Await#getSignal()
    * @see #getAwait()
    * @generated
@@ -1561,6 +1485,17 @@ public interface SPackage extends EPackage
   EClass getPrio();
 
   /**
+   * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.s.s.Prio#getAnnotations <em>Annotations</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference list '<em>Annotations</em>'.
+   * @see de.cau.cs.kieler.s.s.Prio#getAnnotations()
+   * @see #getPrio()
+   * @generated
+   */
+  EReference getPrio_Annotations();
+
+  /**
    * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.s.s.Prio#getPriority <em>Priority</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -1572,14 +1507,14 @@ public interface SPackage extends EPackage
   EReference getPrio_Priority();
 
   /**
-   * Returns the meta object for enum '{@link de.cau.cs.kieler.s.s.PrimitiveSignalType <em>Primitive Signal Type</em>}'.
+   * Returns the meta object for enum '{@link de.cau.cs.kieler.s.s.PrimitiveType <em>Primitive Type</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for enum '<em>Primitive Signal Type</em>'.
-   * @see de.cau.cs.kieler.s.s.PrimitiveSignalType
+   * @return the meta object for enum '<em>Primitive Type</em>'.
+   * @see de.cau.cs.kieler.s.s.PrimitiveType
    * @generated
    */
-  EEnum getPrimitiveSignalType();
+  EEnum getPrimitiveType();
 
   /**
    * Returns the factory that creates the instances of the model.
@@ -1683,14 +1618,6 @@ public interface SPackage extends EPackage
     EClass ANNOTATABLE = eINSTANCE.getAnnotatable();
 
     /**
-     * The meta object literal for the '<em><b>Annotations</b></em>' containment reference list feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference ANNOTATABLE__ANNOTATIONS = eINSTANCE.getAnnotatable_Annotations();
-
-    /**
      * The meta object literal for the '{@link de.cau.cs.kieler.s.s.impl.StateImpl <em>State</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1709,6 +1636,14 @@ public interface SPackage extends EPackage
     EAttribute STATE__NAME = eINSTANCE.getState_Name();
 
     /**
+     * The meta object literal for the '<em><b>Annotations</b></em>' containment reference list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference STATE__ANNOTATIONS = eINSTANCE.getState_Annotations();
+
+    /**
      * The meta object literal for the '<em><b>Signals</b></em>' containment reference list feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1723,24 +1658,6 @@ public interface SPackage extends EPackage
      * @generated
      */
     EReference STATE__INSTRUCTIONS = eINSTANCE.getState_Instructions();
-
-    /**
-     * The meta object literal for the '{@link de.cau.cs.kieler.s.s.impl.StateReferenceImpl <em>State Reference</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.s.s.impl.StateReferenceImpl
-     * @see de.cau.cs.kieler.s.s.impl.SPackageImpl#getStateReference()
-     * @generated
-     */
-    EClass STATE_REFERENCE = eINSTANCE.getStateReference();
-
-    /**
-     * The meta object literal for the '<em><b>State</b></em>' reference feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference STATE_REFERENCE__STATE = eINSTANCE.getStateReference_State();
 
     /**
      * The meta object literal for the '{@link de.cau.cs.kieler.s.s.impl.SignalImpl <em>Signal</em>}' class.
@@ -1777,22 +1694,12 @@ public interface SPackage extends EPackage
     EReference SIGNAL__COMBINE_FUNCTION = eINSTANCE.getSignal_CombineFunction();
 
     /**
-     * The meta object literal for the '{@link de.cau.cs.kieler.s.s.impl.SignalReferenceImpl <em>Signal Reference</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.s.s.impl.SignalReferenceImpl
-     * @see de.cau.cs.kieler.s.s.impl.SPackageImpl#getSignalReference()
-     * @generated
-     */
-    EClass SIGNAL_REFERENCE = eINSTANCE.getSignalReference();
-
-    /**
-     * The meta object literal for the '<em><b>Signal</b></em>' reference feature.
+     * The meta object literal for the '<em><b>Annotations</b></em>' containment reference list feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EReference SIGNAL_REFERENCE__SIGNAL = eINSTANCE.getSignalReference_Signal();
+    EReference SIGNAL__ANNOTATIONS = eINSTANCE.getSignal_Annotations();
 
     /**
      * The meta object literal for the '{@link de.cau.cs.kieler.s.s.impl.CombineFunctionImpl <em>Combine Function</em>}' class.
@@ -1831,40 +1738,40 @@ public interface SPackage extends EPackage
     EClass SIGNAL_TYPE = eINSTANCE.getSignalType();
 
     /**
-     * The meta object literal for the '{@link de.cau.cs.kieler.s.s.impl.CustomSignalImpl <em>Custom Signal</em>}' class.
+     * The meta object literal for the '{@link de.cau.cs.kieler.s.s.impl.CustomSignalTypeImpl <em>Custom Signal Type</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.s.s.impl.CustomSignalImpl
-     * @see de.cau.cs.kieler.s.s.impl.SPackageImpl#getCustomSignal()
+     * @see de.cau.cs.kieler.s.s.impl.CustomSignalTypeImpl
+     * @see de.cau.cs.kieler.s.s.impl.SPackageImpl#getCustomSignalType()
      * @generated
      */
-    EClass CUSTOM_SIGNAL = eINSTANCE.getCustomSignal();
+    EClass CUSTOM_SIGNAL_TYPE = eINSTANCE.getCustomSignalType();
 
     /**
-     * The meta object literal for the '<em><b>Type</b></em>' attribute feature.
+     * The meta object literal for the '<em><b>Custom Type</b></em>' attribute feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute CUSTOM_SIGNAL__TYPE = eINSTANCE.getCustomSignal_Type();
+    EAttribute CUSTOM_SIGNAL_TYPE__CUSTOM_TYPE = eINSTANCE.getCustomSignalType_CustomType();
 
     /**
-     * The meta object literal for the '{@link de.cau.cs.kieler.s.s.impl.PrimitiveSignalImpl <em>Primitive Signal</em>}' class.
+     * The meta object literal for the '{@link de.cau.cs.kieler.s.s.impl.PrimitiveSignalTypeImpl <em>Primitive Signal Type</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.s.s.impl.PrimitiveSignalImpl
-     * @see de.cau.cs.kieler.s.s.impl.SPackageImpl#getPrimitiveSignal()
+     * @see de.cau.cs.kieler.s.s.impl.PrimitiveSignalTypeImpl
+     * @see de.cau.cs.kieler.s.s.impl.SPackageImpl#getPrimitiveSignalType()
      * @generated
      */
-    EClass PRIMITIVE_SIGNAL = eINSTANCE.getPrimitiveSignal();
+    EClass PRIMITIVE_SIGNAL_TYPE = eINSTANCE.getPrimitiveSignalType();
 
     /**
-     * The meta object literal for the '<em><b>Type</b></em>' attribute feature.
+     * The meta object literal for the '<em><b>Primitive Type</b></em>' attribute feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute PRIMITIVE_SIGNAL__TYPE = eINSTANCE.getPrimitiveSignal_Type();
+    EAttribute PRIMITIVE_SIGNAL_TYPE__PRIMITIVE_TYPE = eINSTANCE.getPrimitiveSignalType_PrimitiveType();
 
     /**
      * The meta object literal for the '{@link de.cau.cs.kieler.s.s.impl.IntValueImpl <em>Int Value</em>}' class.
@@ -1931,6 +1838,14 @@ public interface SPackage extends EPackage
     EClass INSTRUCTION = eINSTANCE.getInstruction();
 
     /**
+     * The meta object literal for the '<em><b>Continuation</b></em>' reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference INSTRUCTION__CONTINUATION = eINSTANCE.getInstruction_Continuation();
+
+    /**
      * The meta object literal for the '{@link de.cau.cs.kieler.s.s.impl.PauseImpl <em>Pause</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1981,7 +1896,7 @@ public interface SPackage extends EPackage
     EClass PRESENT = eINSTANCE.getPresent();
 
     /**
-     * The meta object literal for the '<em><b>Signal</b></em>' containment reference feature.
+     * The meta object literal for the '<em><b>Signal</b></em>' reference feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
@@ -2007,7 +1922,7 @@ public interface SPackage extends EPackage
     EClass GOTO = eINSTANCE.getGoto();
 
     /**
-     * The meta object literal for the '<em><b>State</b></em>' containment reference feature.
+     * The meta object literal for the '<em><b>State</b></em>' reference feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
@@ -2025,7 +1940,7 @@ public interface SPackage extends EPackage
     EClass FORK = eINSTANCE.getFork();
 
     /**
-     * The meta object literal for the '<em><b>State</b></em>' containment reference feature.
+     * The meta object literal for the '<em><b>State</b></em>' reference feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
@@ -2051,7 +1966,7 @@ public interface SPackage extends EPackage
     EClass FORKE = eINSTANCE.getForke();
 
     /**
-     * The meta object literal for the '<em><b>State</b></em>' containment reference feature.
+     * The meta object literal for the '<em><b>State</b></em>' reference feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
@@ -2069,7 +1984,7 @@ public interface SPackage extends EPackage
     EClass EMIT = eINSTANCE.getEmit();
 
     /**
-     * The meta object literal for the '<em><b>Signal</b></em>' containment reference feature.
+     * The meta object literal for the '<em><b>Signal</b></em>' reference feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
@@ -2087,7 +2002,7 @@ public interface SPackage extends EPackage
     EClass AWAIT = eINSTANCE.getAwait();
 
     /**
-     * The meta object literal for the '<em><b>Signal</b></em>' containment reference feature.
+     * The meta object literal for the '<em><b>Signal</b></em>' reference feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
@@ -2105,6 +2020,14 @@ public interface SPackage extends EPackage
     EClass PRIO = eINSTANCE.getPrio();
 
     /**
+     * The meta object literal for the '<em><b>Annotations</b></em>' containment reference list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference PRIO__ANNOTATIONS = eINSTANCE.getPrio_Annotations();
+
+    /**
      * The meta object literal for the '<em><b>Priority</b></em>' containment reference feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -2113,14 +2036,14 @@ public interface SPackage extends EPackage
     EReference PRIO__PRIORITY = eINSTANCE.getPrio_Priority();
 
     /**
-     * The meta object literal for the '{@link de.cau.cs.kieler.s.s.PrimitiveSignalType <em>Primitive Signal Type</em>}' enum.
+     * The meta object literal for the '{@link de.cau.cs.kieler.s.s.PrimitiveType <em>Primitive Type</em>}' enum.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.s.s.PrimitiveSignalType
-     * @see de.cau.cs.kieler.s.s.impl.SPackageImpl#getPrimitiveSignalType()
+     * @see de.cau.cs.kieler.s.s.PrimitiveType
+     * @see de.cau.cs.kieler.s.s.impl.SPackageImpl#getPrimitiveType()
      * @generated
      */
-    EEnum PRIMITIVE_SIGNAL_TYPE = eINSTANCE.getPrimitiveSignalType();
+    EEnum PRIMITIVE_TYPE = eINSTANCE.getPrimitiveType();
 
   }
 

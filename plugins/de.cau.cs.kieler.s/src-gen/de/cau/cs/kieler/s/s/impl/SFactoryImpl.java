@@ -72,13 +72,11 @@ public class SFactoryImpl extends EFactoryImpl implements SFactory
       case SPackage.ANNOTATION: return createAnnotation();
       case SPackage.ANNOTATABLE: return createAnnotatable();
       case SPackage.STATE: return createState();
-      case SPackage.STATE_REFERENCE: return createStateReference();
       case SPackage.SIGNAL: return createSignal();
-      case SPackage.SIGNAL_REFERENCE: return createSignalReference();
       case SPackage.COMBINE_FUNCTION: return createCombineFunction();
       case SPackage.SIGNAL_TYPE: return createSignalType();
-      case SPackage.CUSTOM_SIGNAL: return createCustomSignal();
-      case SPackage.PRIMITIVE_SIGNAL: return createPrimitiveSignal();
+      case SPackage.CUSTOM_SIGNAL_TYPE: return createCustomSignalType();
+      case SPackage.PRIMITIVE_SIGNAL_TYPE: return createPrimitiveSignalType();
       case SPackage.INT_VALUE: return createIntValue();
       case SPackage.FLOAT_VALUE: return createFloatValue();
       case SPackage.BOOLEAN_VALUE: return createBooleanValue();
@@ -109,8 +107,8 @@ public class SFactoryImpl extends EFactoryImpl implements SFactory
   {
     switch (eDataType.getClassifierID())
     {
-      case SPackage.PRIMITIVE_SIGNAL_TYPE:
-        return createPrimitiveSignalTypeFromString(eDataType, initialValue);
+      case SPackage.PRIMITIVE_TYPE:
+        return createPrimitiveTypeFromString(eDataType, initialValue);
       default:
         throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
     }
@@ -126,8 +124,8 @@ public class SFactoryImpl extends EFactoryImpl implements SFactory
   {
     switch (eDataType.getClassifierID())
     {
-      case SPackage.PRIMITIVE_SIGNAL_TYPE:
-        return convertPrimitiveSignalTypeToString(eDataType, instanceValue);
+      case SPackage.PRIMITIVE_TYPE:
+        return convertPrimitiveTypeToString(eDataType, instanceValue);
       default:
         throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
     }
@@ -182,32 +180,10 @@ public class SFactoryImpl extends EFactoryImpl implements SFactory
    * <!-- end-user-doc -->
    * @generated
    */
-  public StateReference createStateReference()
-  {
-    StateReferenceImpl stateReference = new StateReferenceImpl();
-    return stateReference;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   public Signal createSignal()
   {
     SignalImpl signal = new SignalImpl();
     return signal;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public SignalReference createSignalReference()
-  {
-    SignalReferenceImpl signalReference = new SignalReferenceImpl();
-    return signalReference;
   }
 
   /**
@@ -237,10 +213,10 @@ public class SFactoryImpl extends EFactoryImpl implements SFactory
    * <!-- end-user-doc -->
    * @generated
    */
-  public CustomSignal createCustomSignal()
+  public CustomSignalType createCustomSignalType()
   {
-    CustomSignalImpl customSignal = new CustomSignalImpl();
-    return customSignal;
+    CustomSignalTypeImpl customSignalType = new CustomSignalTypeImpl();
+    return customSignalType;
   }
 
   /**
@@ -248,10 +224,10 @@ public class SFactoryImpl extends EFactoryImpl implements SFactory
    * <!-- end-user-doc -->
    * @generated
    */
-  public PrimitiveSignal createPrimitiveSignal()
+  public PrimitiveSignalType createPrimitiveSignalType()
   {
-    PrimitiveSignalImpl primitiveSignal = new PrimitiveSignalImpl();
-    return primitiveSignal;
+    PrimitiveSignalTypeImpl primitiveSignalType = new PrimitiveSignalTypeImpl();
+    return primitiveSignalType;
   }
 
   /**
@@ -424,9 +400,9 @@ public class SFactoryImpl extends EFactoryImpl implements SFactory
    * <!-- end-user-doc -->
    * @generated
    */
-  public PrimitiveSignalType createPrimitiveSignalTypeFromString(EDataType eDataType, String initialValue)
+  public PrimitiveType createPrimitiveTypeFromString(EDataType eDataType, String initialValue)
   {
-    PrimitiveSignalType result = PrimitiveSignalType.get(initialValue);
+    PrimitiveType result = PrimitiveType.get(initialValue);
     if (result == null) throw new IllegalArgumentException("The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'");
     return result;
   }
@@ -436,7 +412,7 @@ public class SFactoryImpl extends EFactoryImpl implements SFactory
    * <!-- end-user-doc -->
    * @generated
    */
-  public String convertPrimitiveSignalTypeToString(EDataType eDataType, Object instanceValue)
+  public String convertPrimitiveTypeToString(EDataType eDataType, Object instanceValue)
   {
     return instanceValue == null ? null : instanceValue.toString();
   }

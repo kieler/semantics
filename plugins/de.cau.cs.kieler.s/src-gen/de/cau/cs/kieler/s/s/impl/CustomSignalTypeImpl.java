@@ -5,8 +5,7 @@
  */
 package de.cau.cs.kieler.s.s.impl;
 
-import de.cau.cs.kieler.s.s.PrimitiveSignal;
-import de.cau.cs.kieler.s.s.PrimitiveSignalType;
+import de.cau.cs.kieler.s.s.CustomSignalType;
 import de.cau.cs.kieler.s.s.SPackage;
 
 import org.eclipse.emf.common.notify.Notification;
@@ -17,45 +16,45 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
 /**
  * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Primitive Signal</b></em>'.
+ * An implementation of the model object '<em><b>Custom Signal Type</b></em>'.
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link de.cau.cs.kieler.s.s.impl.PrimitiveSignalImpl#getType <em>Type</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.s.s.impl.CustomSignalTypeImpl#getCustomType <em>Custom Type</em>}</li>
  * </ul>
  * </p>
  *
  * @generated
  */
-public class PrimitiveSignalImpl extends SignalTypeImpl implements PrimitiveSignal
+public class CustomSignalTypeImpl extends SignalTypeImpl implements CustomSignalType
 {
   /**
-   * The default value of the '{@link #getType() <em>Type</em>}' attribute.
+   * The default value of the '{@link #getCustomType() <em>Custom Type</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getType()
+   * @see #getCustomType()
    * @generated
    * @ordered
    */
-  protected static final PrimitiveSignalType TYPE_EDEFAULT = PrimitiveSignalType.PURE;
+  protected static final String CUSTOM_TYPE_EDEFAULT = null;
 
   /**
-   * The cached value of the '{@link #getType() <em>Type</em>}' attribute.
+   * The cached value of the '{@link #getCustomType() <em>Custom Type</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getType()
+   * @see #getCustomType()
    * @generated
    * @ordered
    */
-  protected PrimitiveSignalType type = TYPE_EDEFAULT;
+  protected String customType = CUSTOM_TYPE_EDEFAULT;
 
   /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    */
-  protected PrimitiveSignalImpl()
+  protected CustomSignalTypeImpl()
   {
     super();
   }
@@ -68,7 +67,7 @@ public class PrimitiveSignalImpl extends SignalTypeImpl implements PrimitiveSign
   @Override
   protected EClass eStaticClass()
   {
-    return SPackage.Literals.PRIMITIVE_SIGNAL;
+    return SPackage.Literals.CUSTOM_SIGNAL_TYPE;
   }
 
   /**
@@ -76,9 +75,9 @@ public class PrimitiveSignalImpl extends SignalTypeImpl implements PrimitiveSign
    * <!-- end-user-doc -->
    * @generated
    */
-  public PrimitiveSignalType getType()
+  public String getCustomType()
   {
-    return type;
+    return customType;
   }
 
   /**
@@ -86,12 +85,12 @@ public class PrimitiveSignalImpl extends SignalTypeImpl implements PrimitiveSign
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setType(PrimitiveSignalType newType)
+  public void setCustomType(String newCustomType)
   {
-    PrimitiveSignalType oldType = type;
-    type = newType == null ? TYPE_EDEFAULT : newType;
+    String oldCustomType = customType;
+    customType = newCustomType;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, SPackage.PRIMITIVE_SIGNAL__TYPE, oldType, type));
+      eNotify(new ENotificationImpl(this, Notification.SET, SPackage.CUSTOM_SIGNAL_TYPE__CUSTOM_TYPE, oldCustomType, customType));
   }
 
   /**
@@ -104,8 +103,8 @@ public class PrimitiveSignalImpl extends SignalTypeImpl implements PrimitiveSign
   {
     switch (featureID)
     {
-      case SPackage.PRIMITIVE_SIGNAL__TYPE:
-        return getType();
+      case SPackage.CUSTOM_SIGNAL_TYPE__CUSTOM_TYPE:
+        return getCustomType();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -120,8 +119,8 @@ public class PrimitiveSignalImpl extends SignalTypeImpl implements PrimitiveSign
   {
     switch (featureID)
     {
-      case SPackage.PRIMITIVE_SIGNAL__TYPE:
-        setType((PrimitiveSignalType)newValue);
+      case SPackage.CUSTOM_SIGNAL_TYPE__CUSTOM_TYPE:
+        setCustomType((String)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -137,8 +136,8 @@ public class PrimitiveSignalImpl extends SignalTypeImpl implements PrimitiveSign
   {
     switch (featureID)
     {
-      case SPackage.PRIMITIVE_SIGNAL__TYPE:
-        setType(TYPE_EDEFAULT);
+      case SPackage.CUSTOM_SIGNAL_TYPE__CUSTOM_TYPE:
+        setCustomType(CUSTOM_TYPE_EDEFAULT);
         return;
     }
     super.eUnset(featureID);
@@ -154,8 +153,8 @@ public class PrimitiveSignalImpl extends SignalTypeImpl implements PrimitiveSign
   {
     switch (featureID)
     {
-      case SPackage.PRIMITIVE_SIGNAL__TYPE:
-        return type != TYPE_EDEFAULT;
+      case SPackage.CUSTOM_SIGNAL_TYPE__CUSTOM_TYPE:
+        return CUSTOM_TYPE_EDEFAULT == null ? customType != null : !CUSTOM_TYPE_EDEFAULT.equals(customType);
     }
     return super.eIsSet(featureID);
   }
@@ -171,10 +170,10 @@ public class PrimitiveSignalImpl extends SignalTypeImpl implements PrimitiveSign
     if (eIsProxy()) return super.toString();
 
     StringBuffer result = new StringBuffer(super.toString());
-    result.append(" (type: ");
-    result.append(type);
+    result.append(" (customType: ");
+    result.append(customType);
     result.append(')');
     return result.toString();
   }
 
-} //PrimitiveSignalImpl
+} //CustomSignalTypeImpl

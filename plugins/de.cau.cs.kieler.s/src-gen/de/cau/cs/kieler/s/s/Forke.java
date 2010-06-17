@@ -25,29 +25,29 @@ package de.cau.cs.kieler.s.s;
 public interface Forke extends Instruction
 {
   /**
-   * Returns the value of the '<em><b>State</b></em>' containment reference.
+   * Returns the value of the '<em><b>State</b></em>' reference.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>State</em>' containment reference isn't clear,
+   * If the meaning of the '<em>State</em>' reference isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>State</em>' containment reference.
-   * @see #setState(StateReference)
+   * @return the value of the '<em>State</em>' reference.
+   * @see #setState(State)
    * @see de.cau.cs.kieler.s.s.SPackage#getForke_State()
-   * @model containment="true"
+   * @model
    * @generated
    */
-  StateReference getState();
+  State getState();
 
   /**
-   * Sets the value of the '{@link de.cau.cs.kieler.s.s.Forke#getState <em>State</em>}' containment reference.
+   * Sets the value of the '{@link de.cau.cs.kieler.s.s.Forke#getState <em>State</em>}' reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @param value the new value of the '<em>State</em>' containment reference.
+   * @param value the new value of the '<em>State</em>' reference.
    * @see #getState()
    * @generated
    */
-  void setState(StateReference value);
+  void setState(State value);
 
 } // Forke

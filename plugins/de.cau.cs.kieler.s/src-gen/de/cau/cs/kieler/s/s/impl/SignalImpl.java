@@ -5,18 +5,26 @@
  */
 package de.cau.cs.kieler.s.s.impl;
 
+import de.cau.cs.kieler.s.s.Annotation;
 import de.cau.cs.kieler.s.s.CombineFunction;
 import de.cau.cs.kieler.s.s.SPackage;
 import de.cau.cs.kieler.s.s.Signal;
 import de.cau.cs.kieler.s.s.SignalType;
 
+import java.util.Collection;
+
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
+
+import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+
+import org.eclipse.emf.ecore.util.EObjectContainmentEList;
+import org.eclipse.emf.ecore.util.InternalEList;
 
 /**
  * <!-- begin-user-doc -->
@@ -28,6 +36,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  *   <li>{@link de.cau.cs.kieler.s.s.impl.SignalImpl#getName <em>Name</em>}</li>
  *   <li>{@link de.cau.cs.kieler.s.s.impl.SignalImpl#getType <em>Type</em>}</li>
  *   <li>{@link de.cau.cs.kieler.s.s.impl.SignalImpl#getCombineFunction <em>Combine Function</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.s.s.impl.SignalImpl#getAnnotations <em>Annotations</em>}</li>
  * </ul>
  * </p>
  *
@@ -74,6 +83,16 @@ public class SignalImpl extends AnnotatableImpl implements Signal
    * @ordered
    */
   protected CombineFunction combineFunction;
+
+  /**
+   * The cached value of the '{@link #getAnnotations() <em>Annotations</em>}' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getAnnotations()
+   * @generated
+   * @ordered
+   */
+  protected EList<Annotation> annotations;
 
   /**
    * <!-- begin-user-doc -->
@@ -215,6 +234,20 @@ public class SignalImpl extends AnnotatableImpl implements Signal
    * <!-- end-user-doc -->
    * @generated
    */
+  public EList<Annotation> getAnnotations()
+  {
+    if (annotations == null)
+    {
+      annotations = new EObjectContainmentEList<Annotation>(Annotation.class, this, SPackage.SIGNAL__ANNOTATIONS);
+    }
+    return annotations;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
   {
@@ -222,6 +255,8 @@ public class SignalImpl extends AnnotatableImpl implements Signal
     {
       case SPackage.SIGNAL__TYPE:
         return basicSetType(null, msgs);
+      case SPackage.SIGNAL__ANNOTATIONS:
+        return ((InternalEList<?>)getAnnotations()).basicRemove(otherEnd, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
@@ -243,6 +278,8 @@ public class SignalImpl extends AnnotatableImpl implements Signal
       case SPackage.SIGNAL__COMBINE_FUNCTION:
         if (resolve) return getCombineFunction();
         return basicGetCombineFunction();
+      case SPackage.SIGNAL__ANNOTATIONS:
+        return getAnnotations();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -252,6 +289,7 @@ public class SignalImpl extends AnnotatableImpl implements Signal
    * <!-- end-user-doc -->
    * @generated
    */
+  @SuppressWarnings("unchecked")
   @Override
   public void eSet(int featureID, Object newValue)
   {
@@ -265,6 +303,10 @@ public class SignalImpl extends AnnotatableImpl implements Signal
         return;
       case SPackage.SIGNAL__COMBINE_FUNCTION:
         setCombineFunction((CombineFunction)newValue);
+        return;
+      case SPackage.SIGNAL__ANNOTATIONS:
+        getAnnotations().clear();
+        getAnnotations().addAll((Collection<? extends Annotation>)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -289,6 +331,9 @@ public class SignalImpl extends AnnotatableImpl implements Signal
       case SPackage.SIGNAL__COMBINE_FUNCTION:
         setCombineFunction((CombineFunction)null);
         return;
+      case SPackage.SIGNAL__ANNOTATIONS:
+        getAnnotations().clear();
+        return;
     }
     super.eUnset(featureID);
   }
@@ -309,6 +354,8 @@ public class SignalImpl extends AnnotatableImpl implements Signal
         return type != null;
       case SPackage.SIGNAL__COMBINE_FUNCTION:
         return combineFunction != null;
+      case SPackage.SIGNAL__ANNOTATIONS:
+        return annotations != null && !annotations.isEmpty();
     }
     return super.eIsSet(featureID);
   }

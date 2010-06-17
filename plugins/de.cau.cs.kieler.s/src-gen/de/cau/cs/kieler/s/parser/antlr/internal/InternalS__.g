@@ -15,53 +15,54 @@ T17 : ',' ;
 T18 : ';' ;
 T19 : 'Outputs' ;
 T20 : 'Signals' ;
-T21 : ':' ;
-T22 : 'SIGNALS' ;
-T23 : 'combine' ;
-T24 : 'CUSTOM' ;
-T25 : 'PAUSE' ;
-T26 : 'TERM' ;
-T27 : 'JOIN' ;
-T28 : 'ABORT' ;
-T29 : 'PRESENT' ;
-T30 : '{' ;
-T31 : '}' ;
-T32 : 'GOTO' ;
-T33 : 'FORK' ;
-T34 : 'FORKE' ;
-T35 : 'EMIT' ;
-T36 : 'AWAIT' ;
-T37 : 'PRIO' ;
-T38 : 'PURE' ;
-T39 : 'INT' ;
-T40 : 'BOOL' ;
-T41 : 'FLOAT' ;
+T21 : '@' ;
+T22 : ':' ;
+T23 : 'SIGNALS' ;
+T24 : 'combine' ;
+T25 : 'CUSTOM' ;
+T26 : 'PAUSE' ;
+T27 : 'TERM' ;
+T28 : 'JOIN' ;
+T29 : 'ABORT' ;
+T30 : 'PRESENT' ;
+T31 : '{' ;
+T32 : '}' ;
+T33 : 'GOTO' ;
+T34 : 'FORK' ;
+T35 : 'FORKE' ;
+T36 : 'EMIT' ;
+T37 : 'AWAIT' ;
+T38 : 'PRIO' ;
+T39 : 'PURE' ;
+T40 : 'INT' ;
+T41 : 'BOOL' ;
+T42 : 'FLOAT' ;
 
-// $ANTLR src "../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g" 2410
+// $ANTLR src "../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g" 1946
 RULE_FLOAT : ((RULE_INT '.' RULE_INT|RULE_INT ('.' RULE_INT)? ('e'|'E') '+'? RULE_INT) 'f'?|RULE_INT 'f');
 
-// $ANTLR src "../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g" 2412
+// $ANTLR src "../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g" 1948
 RULE_BOOLEAN : ('true'|'false');
 
-// $ANTLR src "../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g" 2414
+// $ANTLR src "../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g" 1950
 RULE_ID : '^'? ('a'..'z'|'A'..'Z'|'_') ('a'..'z'|'A'..'Z'|'_'|'0'..'9')*;
 
-// $ANTLR src "../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g" 2416
+// $ANTLR src "../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g" 1952
 RULE_INT : ('0'..'9')+;
 
-// $ANTLR src "../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g" 2418
+// $ANTLR src "../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g" 1954
 RULE_STRING : ('"' ('\\' ('b'|'t'|'n'|'f'|'r'|'"'|'\''|'\\')|~(('\\'|'"')))* '"'|'\'' ('\\' ('b'|'t'|'n'|'f'|'r'|'"'|'\''|'\\')|~(('\\'|'\'')))* '\'');
 
-// $ANTLR src "../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g" 2420
+// $ANTLR src "../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g" 1956
 RULE_ML_COMMENT : '/*' ( options {greedy=false;} : . )*'*/';
 
-// $ANTLR src "../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g" 2422
+// $ANTLR src "../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g" 1958
 RULE_SL_COMMENT : '//' ~(('\n'|'\r'))* ('\r'? '\n')?;
 
-// $ANTLR src "../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g" 2424
+// $ANTLR src "../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g" 1960
 RULE_WS : (' '|'\t'|'\r'|'\n')+;
 
-// $ANTLR src "../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g" 2426
+// $ANTLR src "../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g" 1962
 RULE_ANY_OTHER : .;
 
 

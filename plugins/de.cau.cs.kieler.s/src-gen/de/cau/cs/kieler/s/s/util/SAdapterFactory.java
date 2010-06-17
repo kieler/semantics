@@ -98,19 +98,9 @@ public class SAdapterFactory extends AdapterFactoryImpl
         return createStateAdapter();
       }
       @Override
-      public Adapter caseStateReference(StateReference object)
-      {
-        return createStateReferenceAdapter();
-      }
-      @Override
       public Adapter caseSignal(Signal object)
       {
         return createSignalAdapter();
-      }
-      @Override
-      public Adapter caseSignalReference(SignalReference object)
-      {
-        return createSignalReferenceAdapter();
       }
       @Override
       public Adapter caseCombineFunction(CombineFunction object)
@@ -123,14 +113,14 @@ public class SAdapterFactory extends AdapterFactoryImpl
         return createSignalTypeAdapter();
       }
       @Override
-      public Adapter caseCustomSignal(CustomSignal object)
+      public Adapter caseCustomSignalType(CustomSignalType object)
       {
-        return createCustomSignalAdapter();
+        return createCustomSignalTypeAdapter();
       }
       @Override
-      public Adapter casePrimitiveSignal(PrimitiveSignal object)
+      public Adapter casePrimitiveSignalType(PrimitiveSignalType object)
       {
-        return createPrimitiveSignalAdapter();
+        return createPrimitiveSignalTypeAdapter();
       }
       @Override
       public Adapter caseIntValue(IntValue object)
@@ -290,21 +280,6 @@ public class SAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.s.s.StateReference <em>State Reference</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see de.cau.cs.kieler.s.s.StateReference
-   * @generated
-   */
-  public Adapter createStateReferenceAdapter()
-  {
-    return null;
-  }
-
-  /**
    * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.s.s.Signal <em>Signal</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
@@ -315,21 +290,6 @@ public class SAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createSignalAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.s.s.SignalReference <em>Signal Reference</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see de.cau.cs.kieler.s.s.SignalReference
-   * @generated
-   */
-  public Adapter createSignalReferenceAdapter()
   {
     return null;
   }
@@ -365,31 +325,31 @@ public class SAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.s.s.CustomSignal <em>Custom Signal</em>}'.
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.s.s.CustomSignalType <em>Custom Signal Type</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
    * it's useful to ignore a case when inheritance will catch all the cases anyway.
    * <!-- end-user-doc -->
    * @return the new adapter.
-   * @see de.cau.cs.kieler.s.s.CustomSignal
+   * @see de.cau.cs.kieler.s.s.CustomSignalType
    * @generated
    */
-  public Adapter createCustomSignalAdapter()
+  public Adapter createCustomSignalTypeAdapter()
   {
     return null;
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.s.s.PrimitiveSignal <em>Primitive Signal</em>}'.
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.s.s.PrimitiveSignalType <em>Primitive Signal Type</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
    * it's useful to ignore a case when inheritance will catch all the cases anyway.
    * <!-- end-user-doc -->
    * @return the new adapter.
-   * @see de.cau.cs.kieler.s.s.PrimitiveSignal
+   * @see de.cau.cs.kieler.s.s.PrimitiveSignalType
    * @generated
    */
-  public Adapter createPrimitiveSignalAdapter()
+  public Adapter createPrimitiveSignalTypeAdapter()
   {
     return null;
   }

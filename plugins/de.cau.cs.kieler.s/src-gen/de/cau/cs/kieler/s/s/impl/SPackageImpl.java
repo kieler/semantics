@@ -11,7 +11,7 @@ import de.cau.cs.kieler.s.s.Annotation;
 import de.cau.cs.kieler.s.s.Await;
 import de.cau.cs.kieler.s.s.BooleanValue;
 import de.cau.cs.kieler.s.s.CombineFunction;
-import de.cau.cs.kieler.s.s.CustomSignal;
+import de.cau.cs.kieler.s.s.CustomSignalType;
 import de.cau.cs.kieler.s.s.Emit;
 import de.cau.cs.kieler.s.s.FloatValue;
 import de.cau.cs.kieler.s.s.Fork;
@@ -22,17 +22,15 @@ import de.cau.cs.kieler.s.s.IntValue;
 import de.cau.cs.kieler.s.s.Join;
 import de.cau.cs.kieler.s.s.Pause;
 import de.cau.cs.kieler.s.s.Present;
-import de.cau.cs.kieler.s.s.PrimitiveSignal;
 import de.cau.cs.kieler.s.s.PrimitiveSignalType;
+import de.cau.cs.kieler.s.s.PrimitiveType;
 import de.cau.cs.kieler.s.s.Prio;
 import de.cau.cs.kieler.s.s.Program;
 import de.cau.cs.kieler.s.s.SFactory;
 import de.cau.cs.kieler.s.s.SPackage;
 import de.cau.cs.kieler.s.s.Signal;
-import de.cau.cs.kieler.s.s.SignalReference;
 import de.cau.cs.kieler.s.s.SignalType;
 import de.cau.cs.kieler.s.s.State;
-import de.cau.cs.kieler.s.s.StateReference;
 import de.cau.cs.kieler.s.s.Term;
 
 import org.eclipse.emf.ecore.EAttribute;
@@ -84,21 +82,7 @@ public class SPackageImpl extends EPackageImpl implements SPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  private EClass stateReferenceEClass = null;
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   private EClass signalEClass = null;
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  private EClass signalReferenceEClass = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -119,14 +103,14 @@ public class SPackageImpl extends EPackageImpl implements SPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  private EClass customSignalEClass = null;
+  private EClass customSignalTypeEClass = null;
 
   /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    */
-  private EClass primitiveSignalEClass = null;
+  private EClass primitiveSignalTypeEClass = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -238,7 +222,7 @@ public class SPackageImpl extends EPackageImpl implements SPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  private EEnum primitiveSignalTypeEEnum = null;
+  private EEnum primitiveTypeEEnum = null;
 
   /**
    * Creates an instance of the model <b>Package</b>, registered with
@@ -398,16 +382,6 @@ public class SPackageImpl extends EPackageImpl implements SPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getAnnotatable_Annotations()
-  {
-    return (EReference)annotatableEClass.getEStructuralFeatures().get(0);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   public EClass getState()
   {
     return stateEClass;
@@ -428,7 +402,7 @@ public class SPackageImpl extends EPackageImpl implements SPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getState_Signals()
+  public EReference getState_Annotations()
   {
     return (EReference)stateEClass.getEStructuralFeatures().get(1);
   }
@@ -438,7 +412,7 @@ public class SPackageImpl extends EPackageImpl implements SPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getState_Instructions()
+  public EReference getState_Signals()
   {
     return (EReference)stateEClass.getEStructuralFeatures().get(2);
   }
@@ -448,19 +422,9 @@ public class SPackageImpl extends EPackageImpl implements SPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EClass getStateReference()
+  public EReference getState_Instructions()
   {
-    return stateReferenceEClass;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EReference getStateReference_State()
-  {
-    return (EReference)stateReferenceEClass.getEStructuralFeatures().get(0);
+    return (EReference)stateEClass.getEStructuralFeatures().get(3);
   }
 
   /**
@@ -508,19 +472,9 @@ public class SPackageImpl extends EPackageImpl implements SPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EClass getSignalReference()
+  public EReference getSignal_Annotations()
   {
-    return signalReferenceEClass;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EReference getSignalReference_Signal()
-  {
-    return (EReference)signalReferenceEClass.getEStructuralFeatures().get(0);
+    return (EReference)signalEClass.getEStructuralFeatures().get(3);
   }
 
   /**
@@ -568,9 +522,9 @@ public class SPackageImpl extends EPackageImpl implements SPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EClass getCustomSignal()
+  public EClass getCustomSignalType()
   {
-    return customSignalEClass;
+    return customSignalTypeEClass;
   }
 
   /**
@@ -578,9 +532,9 @@ public class SPackageImpl extends EPackageImpl implements SPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EAttribute getCustomSignal_Type()
+  public EAttribute getCustomSignalType_CustomType()
   {
-    return (EAttribute)customSignalEClass.getEStructuralFeatures().get(0);
+    return (EAttribute)customSignalTypeEClass.getEStructuralFeatures().get(0);
   }
 
   /**
@@ -588,9 +542,9 @@ public class SPackageImpl extends EPackageImpl implements SPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EClass getPrimitiveSignal()
+  public EClass getPrimitiveSignalType()
   {
-    return primitiveSignalEClass;
+    return primitiveSignalTypeEClass;
   }
 
   /**
@@ -598,9 +552,9 @@ public class SPackageImpl extends EPackageImpl implements SPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EAttribute getPrimitiveSignal_Type()
+  public EAttribute getPrimitiveSignalType_PrimitiveType()
   {
-    return (EAttribute)primitiveSignalEClass.getEStructuralFeatures().get(0);
+    return (EAttribute)primitiveSignalTypeEClass.getEStructuralFeatures().get(0);
   }
 
   /**
@@ -671,6 +625,16 @@ public class SPackageImpl extends EPackageImpl implements SPackage
   public EClass getInstruction()
   {
     return instructionEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getInstruction_Continuation()
+  {
+    return (EReference)instructionEClass.getEStructuralFeatures().get(0);
   }
 
   /**
@@ -868,7 +832,7 @@ public class SPackageImpl extends EPackageImpl implements SPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getPrio_Priority()
+  public EReference getPrio_Annotations()
   {
     return (EReference)prioEClass.getEStructuralFeatures().get(0);
   }
@@ -878,9 +842,19 @@ public class SPackageImpl extends EPackageImpl implements SPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EEnum getPrimitiveSignalType()
+  public EReference getPrio_Priority()
   {
-    return primitiveSignalTypeEEnum;
+    return (EReference)prioEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EEnum getPrimitiveType()
+  {
+    return primitiveTypeEEnum;
   }
 
   /**
@@ -924,23 +898,18 @@ public class SPackageImpl extends EPackageImpl implements SPackage
     createEAttribute(annotationEClass, ANNOTATION__VALUE);
 
     annotatableEClass = createEClass(ANNOTATABLE);
-    createEReference(annotatableEClass, ANNOTATABLE__ANNOTATIONS);
 
     stateEClass = createEClass(STATE);
     createEAttribute(stateEClass, STATE__NAME);
+    createEReference(stateEClass, STATE__ANNOTATIONS);
     createEReference(stateEClass, STATE__SIGNALS);
     createEReference(stateEClass, STATE__INSTRUCTIONS);
-
-    stateReferenceEClass = createEClass(STATE_REFERENCE);
-    createEReference(stateReferenceEClass, STATE_REFERENCE__STATE);
 
     signalEClass = createEClass(SIGNAL);
     createEAttribute(signalEClass, SIGNAL__NAME);
     createEReference(signalEClass, SIGNAL__TYPE);
     createEReference(signalEClass, SIGNAL__COMBINE_FUNCTION);
-
-    signalReferenceEClass = createEClass(SIGNAL_REFERENCE);
-    createEReference(signalReferenceEClass, SIGNAL_REFERENCE__SIGNAL);
+    createEReference(signalEClass, SIGNAL__ANNOTATIONS);
 
     combineFunctionEClass = createEClass(COMBINE_FUNCTION);
     createEAttribute(combineFunctionEClass, COMBINE_FUNCTION__NAME);
@@ -948,11 +917,11 @@ public class SPackageImpl extends EPackageImpl implements SPackage
 
     signalTypeEClass = createEClass(SIGNAL_TYPE);
 
-    customSignalEClass = createEClass(CUSTOM_SIGNAL);
-    createEAttribute(customSignalEClass, CUSTOM_SIGNAL__TYPE);
+    customSignalTypeEClass = createEClass(CUSTOM_SIGNAL_TYPE);
+    createEAttribute(customSignalTypeEClass, CUSTOM_SIGNAL_TYPE__CUSTOM_TYPE);
 
-    primitiveSignalEClass = createEClass(PRIMITIVE_SIGNAL);
-    createEAttribute(primitiveSignalEClass, PRIMITIVE_SIGNAL__TYPE);
+    primitiveSignalTypeEClass = createEClass(PRIMITIVE_SIGNAL_TYPE);
+    createEAttribute(primitiveSignalTypeEClass, PRIMITIVE_SIGNAL_TYPE__PRIMITIVE_TYPE);
 
     intValueEClass = createEClass(INT_VALUE);
     createEAttribute(intValueEClass, INT_VALUE__VALUE);
@@ -964,6 +933,7 @@ public class SPackageImpl extends EPackageImpl implements SPackage
     createEAttribute(booleanValueEClass, BOOLEAN_VALUE__VALUE);
 
     instructionEClass = createEClass(INSTRUCTION);
+    createEReference(instructionEClass, INSTRUCTION__CONTINUATION);
 
     pauseEClass = createEClass(PAUSE);
 
@@ -994,10 +964,11 @@ public class SPackageImpl extends EPackageImpl implements SPackage
     createEReference(awaitEClass, AWAIT__SIGNAL);
 
     prioEClass = createEClass(PRIO);
+    createEReference(prioEClass, PRIO__ANNOTATIONS);
     createEReference(prioEClass, PRIO__PRIORITY);
 
     // Create enums
-    primitiveSignalTypeEEnum = createEEnum(PRIMITIVE_SIGNAL_TYPE);
+    primitiveTypeEEnum = createEEnum(PRIMITIVE_TYPE);
   }
 
   /**
@@ -1031,8 +1002,8 @@ public class SPackageImpl extends EPackageImpl implements SPackage
     // Add supertypes to classes
     stateEClass.getESuperTypes().add(this.getAnnotatable());
     signalEClass.getESuperTypes().add(this.getAnnotatable());
-    customSignalEClass.getESuperTypes().add(this.getSignalType());
-    primitiveSignalEClass.getESuperTypes().add(this.getSignalType());
+    customSignalTypeEClass.getESuperTypes().add(this.getSignalType());
+    primitiveSignalTypeEClass.getESuperTypes().add(this.getSignalType());
     instructionEClass.getESuperTypes().add(this.getAnnotatable());
     pauseEClass.getESuperTypes().add(this.getInstruction());
     termEClass.getESuperTypes().add(this.getInstruction());
@@ -1058,23 +1029,18 @@ public class SPackageImpl extends EPackageImpl implements SPackage
     initEAttribute(getAnnotation_Value(), ecorePackage.getEString(), "value", null, 0, 1, Annotation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(annotatableEClass, Annotatable.class, "Annotatable", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getAnnotatable_Annotations(), this.getAnnotation(), null, "annotations", null, 0, -1, Annotatable.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(stateEClass, State.class, "State", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getState_Name(), ecorePackage.getEString(), "name", null, 0, 1, State.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getState_Annotations(), this.getAnnotation(), null, "annotations", null, 0, -1, State.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getState_Signals(), this.getSignal(), null, "signals", null, 0, -1, State.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getState_Instructions(), this.getInstruction(), null, "instructions", null, 0, -1, State.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-    initEClass(stateReferenceEClass, StateReference.class, "StateReference", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getStateReference_State(), this.getState(), null, "state", null, 0, 1, StateReference.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(signalEClass, Signal.class, "Signal", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getSignal_Name(), ecorePackage.getEString(), "name", null, 0, 1, Signal.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getSignal_Type(), this.getSignalType(), null, "type", null, 0, 1, Signal.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getSignal_CombineFunction(), this.getCombineFunction(), null, "combineFunction", null, 0, 1, Signal.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-    initEClass(signalReferenceEClass, SignalReference.class, "SignalReference", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getSignalReference_Signal(), this.getSignal(), null, "signal", null, 0, 1, SignalReference.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getSignal_Annotations(), this.getAnnotation(), null, "annotations", null, 0, -1, Signal.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(combineFunctionEClass, CombineFunction.class, "CombineFunction", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getCombineFunction_Name(), ecorePackage.getEString(), "name", null, 0, 1, CombineFunction.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -1082,11 +1048,11 @@ public class SPackageImpl extends EPackageImpl implements SPackage
 
     initEClass(signalTypeEClass, SignalType.class, "SignalType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
-    initEClass(customSignalEClass, CustomSignal.class, "CustomSignal", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getCustomSignal_Type(), ecorePackage.getEString(), "type", null, 0, 1, CustomSignal.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEClass(customSignalTypeEClass, CustomSignalType.class, "CustomSignalType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getCustomSignalType_CustomType(), ecorePackage.getEString(), "customType", null, 0, 1, CustomSignalType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-    initEClass(primitiveSignalEClass, PrimitiveSignal.class, "PrimitiveSignal", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getPrimitiveSignal_Type(), this.getPrimitiveSignalType(), "type", null, 0, 1, PrimitiveSignal.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEClass(primitiveSignalTypeEClass, PrimitiveSignalType.class, "PrimitiveSignalType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getPrimitiveSignalType_PrimitiveType(), this.getPrimitiveType(), "primitiveType", null, 0, 1, PrimitiveSignalType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(intValueEClass, IntValue.class, "IntValue", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getIntValue_Value(), ecorePackage.getEInt(), "value", null, 0, 1, IntValue.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -1098,6 +1064,7 @@ public class SPackageImpl extends EPackageImpl implements SPackage
     initEAttribute(getBooleanValue_Value(), ecorePackage.getEString(), "value", null, 0, 1, BooleanValue.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(instructionEClass, Instruction.class, "Instruction", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getInstruction_Continuation(), this.getState(), null, "continuation", null, 0, 1, Instruction.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(pauseEClass, Pause.class, "Pause", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
@@ -1108,34 +1075,35 @@ public class SPackageImpl extends EPackageImpl implements SPackage
     initEClass(abortEClass, Abort.class, "Abort", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
     initEClass(presentEClass, Present.class, "Present", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getPresent_Signal(), this.getSignalReference(), null, "signal", null, 0, 1, Present.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getPresent_Signal(), this.getSignal(), null, "signal", null, 0, 1, Present.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getPresent_Instructions(), this.getInstruction(), null, "instructions", null, 0, -1, Present.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(gotoEClass, Goto.class, "Goto", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getGoto_State(), this.getStateReference(), null, "state", null, 0, 1, Goto.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getGoto_State(), this.getState(), null, "state", null, 0, 1, Goto.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(forkEClass, Fork.class, "Fork", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getFork_State(), this.getStateReference(), null, "state", null, 0, 1, Fork.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getFork_State(), this.getState(), null, "state", null, 0, 1, Fork.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getFork_Priority(), this.getIntValue(), null, "priority", null, 0, 1, Fork.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(forkeEClass, Forke.class, "Forke", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getForke_State(), this.getStateReference(), null, "state", null, 0, 1, Forke.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getForke_State(), this.getState(), null, "state", null, 0, 1, Forke.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(emitEClass, Emit.class, "Emit", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getEmit_Signal(), this.getSignalReference(), null, "signal", null, 0, 1, Emit.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getEmit_Signal(), this.getSignal(), null, "signal", null, 0, 1, Emit.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(awaitEClass, Await.class, "Await", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getAwait_Signal(), this.getSignalReference(), null, "signal", null, 0, 1, Await.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getAwait_Signal(), this.getSignal(), null, "signal", null, 0, 1, Await.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(prioEClass, Prio.class, "Prio", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getPrio_Annotations(), this.getAnnotation(), null, "annotations", null, 0, -1, Prio.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getPrio_Priority(), this.getIntValue(), null, "priority", null, 0, 1, Prio.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     // Initialize enums and add enum literals
-    initEEnum(primitiveSignalTypeEEnum, PrimitiveSignalType.class, "PrimitiveSignalType");
-    addEEnumLiteral(primitiveSignalTypeEEnum, PrimitiveSignalType.PURE);
-    addEEnumLiteral(primitiveSignalTypeEEnum, PrimitiveSignalType.INT);
-    addEEnumLiteral(primitiveSignalTypeEEnum, PrimitiveSignalType.BOOL);
-    addEEnumLiteral(primitiveSignalTypeEEnum, PrimitiveSignalType.FLOAT);
+    initEEnum(primitiveTypeEEnum, PrimitiveType.class, "PrimitiveType");
+    addEEnumLiteral(primitiveTypeEEnum, PrimitiveType.PURE);
+    addEEnumLiteral(primitiveTypeEEnum, PrimitiveType.INT);
+    addEEnumLiteral(primitiveTypeEEnum, PrimitiveType.BOOL);
+    addEEnumLiteral(primitiveTypeEEnum, PrimitiveType.FLOAT);
 
     // Create resource
     createResource(eNS_URI);

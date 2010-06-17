@@ -13,7 +13,7 @@ Program :
 ;
 
 Annotation:
-	key = ID
+	'@' key = ID ':'
 	value = STRING
 ;
 
@@ -23,24 +23,16 @@ Annotatable:
 
 State:
 	name = ID ':'
-	(annotations += Annotation)? (',' annotations += Annotation)*
+	((annotations += Annotation) (',' annotations += Annotation)*)?
 	('SIGNALS' (signals+=Signal)* ';')? 
 	(instructions+=Instruction';')*
-;
-
-StateReference:
-	state = [State]
 ;
 
 Signal:
 	name=ID ':' 
 	type = SignalType
 	('combine' combineFunction = [CombineFunction])?
-	(annotations += Annotation)? (',' annotations += Annotation)*
-;
-
-SignalReference :
-	signal = [Signal]
+	((annotations += Annotation) (',' annotations += Annotation)*)?
 ;
 
 CombineFunction:
@@ -50,22 +42,22 @@ CombineFunction:
 
 
 SignalType:
-	PrimitiveSignal | CustomSignal;
+	PrimitiveSignalType | CustomSignalType;
   
-CustomSignal:
-  'CUSTOM' type = STRING;
+CustomSignalType:
+  'CUSTOM' customType = STRING;
 
-enum PrimitiveSignalType:
+enum PrimitiveType:
 	Pure='PURE' | Int='INT' | Bool='BOOL' | Float='FLOAT';
 	
-PrimitiveSignal:
-	type = PrimitiveSignalType
+PrimitiveSignalType:
+	primitiveType = PrimitiveType
 	;
   
 IntValue: 
 	value=INT;
 FloatValue:
-    value=Float ; 
+    value=Float; 
 BooleanValue:
     value=Boolean;
     
@@ -80,65 +72,55 @@ terminal Boolean:
 //---------------------------------------------------------------------
 Instruction:
    Abort | Join | Pause | Term | Present | Goto | Fork | Forke | Emit | Await | Prio
+   ((annotations += Annotation) (',' annotations += Annotation)*)?
    ;
 
 Pause :
 	{Pause} 
-	'PAUSE''('')'
-	(annotations += Annotation)? (',' annotations += Annotation)*
+	'PAUSE''('continuation=[State]?')'
   ;
   
 Term : 
 	{Term}
-	(annotations += Annotation)? (',' annotations += Annotation)*
-	'TERM''('')'
+	'TERM''('continuation=[State]?')'
   ;
   
 Join : 
 	{Join}
-	(annotations += Annotation)? (',' annotations += Annotation)*
-	'JOIN''('')'
+	'JOIN''('continuation=[State]?')'
   ;
   
 Abort : 
 	{Abort}
-	(annotations += Annotation)? (',' annotations += Annotation)*
-	'ABORT''('')'
+	'ABORT''('continuation=[State]?')'
   ;
   
 Present : 
-	(annotations += Annotation)? (',' annotations += Annotation)*
-	'PRESENT''('signal=SignalReference')' '{'
+	'PRESENT''('signal = [Signal] (',' continuation=[State])?')' '{'
 		(instructions += Instruction';')*
 	'}'
   ;
   
 Goto :
-	(annotations += Annotation)? (',' annotations += Annotation)*
-	'GOTO''('state=StateReference')'
+	'GOTO''('state=[State] (',' continuation=[State])?')'
   ;
   
 Fork :
-	(annotations += Annotation)? (',' annotations += Annotation)*
-	'FORK''('state=StateReference ',' priority=IntValue')'
+	'FORK''('state=[State] ',' priority=IntValue (',' continuation=[State])?')'
   ;
   
 Forke :
-	(annotations += Annotation)? (',' annotations += Annotation)*
-	'FORKE''('state=StateReference')'
+	'FORKE''('state=[State] (',' continuation=[State])?')'
   ;
   
 Emit:
-	(annotations += Annotation)? (',' annotations += Annotation)*
-	'EMIT''('signal= SignalReference')'
+	'EMIT''('signal= [Signal] (',' continuation=[State])?')'
 ;
 
 Await:
-	(annotations += Annotation)? (',' annotations += Annotation)*
-	'AWAIT''('signal= SignalReference')'
+	'AWAIT''('signal= [Signal] (',' continuation=[State])?')'
 ;
 
 Prio:
-	(annotations += Annotation)? (',' annotations += Annotation)*
-	'PRIO''('priority=IntValue')'
+	'PRIO''('priority=IntValue (',' continuation=[State])?')'
 ;

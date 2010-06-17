@@ -62,15 +62,6 @@ public interface SFactory extends EFactory
   State createState();
 
   /**
-   * Returns a new object of class '<em>State Reference</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>State Reference</em>'.
-   * @generated
-   */
-  StateReference createStateReference();
-
-  /**
    * Returns a new object of class '<em>Signal</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -78,15 +69,6 @@ public interface SFactory extends EFactory
    * @generated
    */
   Signal createSignal();
-
-  /**
-   * Returns a new object of class '<em>Signal Reference</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Signal Reference</em>'.
-   * @generated
-   */
-  SignalReference createSignalReference();
 
   /**
    * Returns a new object of class '<em>Combine Function</em>'.
@@ -107,22 +89,22 @@ public interface SFactory extends EFactory
   SignalType createSignalType();
 
   /**
-   * Returns a new object of class '<em>Custom Signal</em>'.
+   * Returns a new object of class '<em>Custom Signal Type</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return a new object of class '<em>Custom Signal</em>'.
+   * @return a new object of class '<em>Custom Signal Type</em>'.
    * @generated
    */
-  CustomSignal createCustomSignal();
+  CustomSignalType createCustomSignalType();
 
   /**
-   * Returns a new object of class '<em>Primitive Signal</em>'.
+   * Returns a new object of class '<em>Primitive Signal Type</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return a new object of class '<em>Primitive Signal</em>'.
+   * @return a new object of class '<em>Primitive Signal Type</em>'.
    * @generated
    */
-  PrimitiveSignal createPrimitiveSignal();
+  PrimitiveSignalType createPrimitiveSignalType();
 
   /**
    * Returns a new object of class '<em>Int Value</em>'.

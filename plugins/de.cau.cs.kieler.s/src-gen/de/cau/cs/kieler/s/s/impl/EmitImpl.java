@@ -7,10 +7,9 @@ package de.cau.cs.kieler.s.s.impl;
 
 import de.cau.cs.kieler.s.s.Emit;
 import de.cau.cs.kieler.s.s.SPackage;
-import de.cau.cs.kieler.s.s.SignalReference;
+import de.cau.cs.kieler.s.s.Signal;
 
 import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.common.notify.NotificationChain;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
@@ -33,14 +32,14 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 public class EmitImpl extends InstructionImpl implements Emit
 {
   /**
-   * The cached value of the '{@link #getSignal() <em>Signal</em>}' containment reference.
+   * The cached value of the '{@link #getSignal() <em>Signal</em>}' reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @see #getSignal()
    * @generated
    * @ordered
    */
-  protected SignalReference signal;
+  protected Signal signal;
 
   /**
    * <!-- begin-user-doc -->
@@ -68,7 +67,27 @@ public class EmitImpl extends InstructionImpl implements Emit
    * <!-- end-user-doc -->
    * @generated
    */
-  public SignalReference getSignal()
+  public Signal getSignal()
+  {
+    if (signal != null && signal.eIsProxy())
+    {
+      InternalEObject oldSignal = (InternalEObject)signal;
+      signal = (Signal)eResolveProxy(oldSignal);
+      if (signal != oldSignal)
+      {
+        if (eNotificationRequired())
+          eNotify(new ENotificationImpl(this, Notification.RESOLVE, SPackage.EMIT__SIGNAL, oldSignal, signal));
+      }
+    }
+    return signal;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Signal basicGetSignal()
   {
     return signal;
   }
@@ -78,53 +97,12 @@ public class EmitImpl extends InstructionImpl implements Emit
    * <!-- end-user-doc -->
    * @generated
    */
-  public NotificationChain basicSetSignal(SignalReference newSignal, NotificationChain msgs)
+  public void setSignal(Signal newSignal)
   {
-    SignalReference oldSignal = signal;
+    Signal oldSignal = signal;
     signal = newSignal;
     if (eNotificationRequired())
-    {
-      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, SPackage.EMIT__SIGNAL, oldSignal, newSignal);
-      if (msgs == null) msgs = notification; else msgs.add(notification);
-    }
-    return msgs;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public void setSignal(SignalReference newSignal)
-  {
-    if (newSignal != signal)
-    {
-      NotificationChain msgs = null;
-      if (signal != null)
-        msgs = ((InternalEObject)signal).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - SPackage.EMIT__SIGNAL, null, msgs);
-      if (newSignal != null)
-        msgs = ((InternalEObject)newSignal).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - SPackage.EMIT__SIGNAL, null, msgs);
-      msgs = basicSetSignal(newSignal, msgs);
-      if (msgs != null) msgs.dispatch();
-    }
-    else if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, SPackage.EMIT__SIGNAL, newSignal, newSignal));
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
-  {
-    switch (featureID)
-    {
-      case SPackage.EMIT__SIGNAL:
-        return basicSetSignal(null, msgs);
-    }
-    return super.eInverseRemove(otherEnd, featureID, msgs);
+      eNotify(new ENotificationImpl(this, Notification.SET, SPackage.EMIT__SIGNAL, oldSignal, signal));
   }
 
   /**
@@ -138,7 +116,8 @@ public class EmitImpl extends InstructionImpl implements Emit
     switch (featureID)
     {
       case SPackage.EMIT__SIGNAL:
-        return getSignal();
+        if (resolve) return getSignal();
+        return basicGetSignal();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -154,7 +133,7 @@ public class EmitImpl extends InstructionImpl implements Emit
     switch (featureID)
     {
       case SPackage.EMIT__SIGNAL:
-        setSignal((SignalReference)newValue);
+        setSignal((Signal)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -171,7 +150,7 @@ public class EmitImpl extends InstructionImpl implements Emit
     switch (featureID)
     {
       case SPackage.EMIT__SIGNAL:
-        setSignal((SignalReference)null);
+        setSignal((Signal)null);
         return;
     }
     super.eUnset(featureID);
