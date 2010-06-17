@@ -1,3 +1,4 @@
+package template;
 /*
  * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
  *
@@ -12,7 +13,7 @@
  * See the file epl-v10.html for the license text.
  */
 
-package template;
+
 
 import java.util.ArrayList;
 import java.util.Collections;
