@@ -1,15 +1,15 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: %pluginName
+Bundle-Name: EMF Metamodel Annotations
 Bundle-SymbolicName: de.cau.cs.kieler.core.annotations;singleton:=true
 Bundle-Version: 0.1.0
 Bundle-ClassPath: .
-Bundle-Vendor: %providerName
+Bundle-Vendor: Christian-Albrechts-Universität zu Kiel
 Bundle-Localization: plugin
-Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Export-Package: de.cau.cs.kieler.annotations,
  de.cau.cs.kieler.annotations.impl,
  de.cau.cs.kieler.annotations.util
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.emf.ecore;visibility:=reexport
 Bundle-ActivationPolicy: lazy
+Bundle-RequiredExecutionEnvironment: J2SE-1.5
