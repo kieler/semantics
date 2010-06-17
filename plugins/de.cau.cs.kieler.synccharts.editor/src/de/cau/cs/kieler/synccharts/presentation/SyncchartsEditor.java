@@ -710,8 +710,8 @@ public class SyncchartsEditor
         adapterFactory.addAdapterFactory(new ResourceItemProviderAdapterFactory());
         adapterFactory.addAdapterFactory(new SyncchartsItemProviderAdapterFactory());
         adapterFactory.addAdapterFactory(new AnnotationsItemProviderAdapterFactory());
-        adapterFactory.addAdapterFactory(new ExpressionsItemProviderAdapterFactory());
         adapterFactory.addAdapterFactory(new EcoreItemProviderAdapterFactory());
+        adapterFactory.addAdapterFactory(new ExpressionsItemProviderAdapterFactory());
         adapterFactory.addAdapterFactory(new ReflectiveItemProviderAdapterFactory());
 
         // Create the command stack that will notify this editor as commands are executed.

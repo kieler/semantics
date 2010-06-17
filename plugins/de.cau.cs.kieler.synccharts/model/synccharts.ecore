@@ -2,11 +2,11 @@
 <ecore:EPackage xmi:version="2.0"
     xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="synccharts"
-    nsURI="http://kieler.cs.cau.de/synccharts/0.2" nsPrefix="synccharts">
-  <eClassifiers xsi:type="ecore:EClass" name="Action" eSuperTypes="annotations.ecore#//Annotatable">
+    nsURI="http://kieler.cs.cau.de/synccharts/0.2.1" nsPrefix="synccharts">
+  <eClassifiers xsi:type="ecore:EClass" name="Action" eSuperTypes="../../de.cau.cs.kieler.core.annotations/model/annotations.ecore#//Annotatable">
     <eStructuralFeatures xsi:type="ecore:EReference" name="effects" upperBound="-1"
         eType="#//Effect" containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="trigger" eType="ecore:EClass expressions.ecore#//Expression"
+    <eStructuralFeatures xsi:type="ecore:EReference" name="trigger" eType="ecore:EClass ../../de.cau.cs.kieler.core.expressions/model/expressions.ecore#//Expression"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="delay" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"
         defaultValueLiteral="1"/>
@@ -15,15 +15,16 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Assignment" eSuperTypes="#//Effect">
     <eStructuralFeatures xsi:type="ecore:EReference" name="variable" lowerBound="1"
-        eType="ecore:EClass expressions.ecore#//Variable"/>
+        eType="ecore:EClass ../../de.cau.cs.kieler.core.expressions/model/expressions.ecore#//Variable"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="expression" lowerBound="1"
-        eType="ecore:EClass expressions.ecore#//Expression" containment="true"/>
+        eType="ecore:EClass ../../de.cau.cs.kieler.core.expressions/model/expressions.ecore#//Expression"
+        containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Effect" abstract="true"/>
   <eClassifiers xsi:type="ecore:EClass" name="Emission" eSuperTypes="#//Effect">
     <eStructuralFeatures xsi:type="ecore:EReference" name="signal" lowerBound="1"
-        eType="ecore:EClass expressions.ecore#//Signal"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="newValue" eType="ecore:EClass expressions.ecore#//Expression"
+        eType="ecore:EClass ../../de.cau.cs.kieler.core.expressions/model/expressions.ecore#//Signal"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="newValue" eType="ecore:EClass ../../de.cau.cs.kieler.core.expressions/model/expressions.ecore#//Expression"
         containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Region" eSuperTypes="#//Scope">
@@ -76,13 +77,15 @@
     <eLiterals name="STRONGABORT" value="1"/>
     <eLiterals name="NORMALTERMINATION" value="2" literal="NORMALTERMINATION"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Scope" abstract="true" eSuperTypes="annotations.ecore#//Annotatable">
+  <eClassifiers xsi:type="ecore:EClass" name="Scope" abstract="true" eSuperTypes="../../de.cau.cs.kieler.core.annotations/model/annotations.ecore#//Annotatable">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="id" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="label" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="signals" upperBound="-1"
-        eType="ecore:EClass expressions.ecore#//Signal" containment="true"/>
+        eType="ecore:EClass ../../de.cau.cs.kieler.core.expressions/model/expressions.ecore#//Signal"
+        containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="variables" upperBound="-1"
-        eType="ecore:EClass expressions.ecore#//Variable" containment="true"/>
+        eType="ecore:EClass ../../de.cau.cs.kieler.core.expressions/model/expressions.ecore#//Variable"
+        containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="suspensionTrigger" eType="#//Action"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="exitActions" upperBound="-1"
@@ -94,7 +97,7 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="bodyReference" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EObject"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="bodyContents" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EObject"
         containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="bodyText" eType="ecore:EClass expressions.ecore#//TextualCode"
+    <eStructuralFeatures xsi:type="ecore:EReference" name="bodyText" eType="ecore:EClass ../../de.cau.cs.kieler.core.expressions/model/expressions.ecore#//TextualCode"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="renamings" upperBound="-1"
         eType="#//Substitution" containment="true" eOpposite="#//Substitution/parentScope"/>

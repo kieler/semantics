@@ -54,7 +54,7 @@ public interface SyncchartsPackage extends EPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    String eNS_URI = "http://kieler.cs.cau.de/synccharts/0.2";
+    String eNS_URI = "http://kieler.cs.cau.de/synccharts/0.2.1";
 
     /**
      * The package namespace name.

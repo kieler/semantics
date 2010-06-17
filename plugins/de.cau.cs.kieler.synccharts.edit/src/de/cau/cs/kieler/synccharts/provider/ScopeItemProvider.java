@@ -89,6 +89,7 @@ public class ScopeItemProvider
             addIdPropertyDescriptor(object);
             addLabelPropertyDescriptor(object);
             addBodyReferencePropertyDescriptor(object);
+            addInterfaceDeclarationPropertyDescriptor(object);
         }
         return itemPropertyDescriptors;
     }
@@ -160,6 +161,28 @@ public class ScopeItemProvider
     }
 
     /**
+     * This adds a property descriptor for the Interface Declaration feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    protected void addInterfaceDeclarationPropertyDescriptor(Object object) {
+        itemPropertyDescriptors.add
+            (createItemPropertyDescriptor
+                (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+                 getResourceLocator(),
+                 getString("_UI_Scope_interfaceDeclaration_feature"),
+                 getString("_UI_PropertyDescriptor_description", "_UI_Scope_interfaceDeclaration_feature", "_UI_Scope_type"),
+                 SyncchartsPackage.Literals.SCOPE__INTERFACE_DECLARATION,
+                 true,
+                 false,
+                 false,
+                 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+                 null,
+                 null));
+    }
+
+    /**
      * This specifies how to implement {@link #getChildren} and is used to deduce an appropriate feature for an
      * {@link org.eclipse.emf.edit.command.AddCommand}, {@link org.eclipse.emf.edit.command.RemoveCommand} or
      * {@link org.eclipse.emf.edit.command.MoveCommand} in {@link #createCommand}.
@@ -180,7 +203,6 @@ public class ScopeItemProvider
             childrenFeatures.add(SyncchartsPackage.Literals.SCOPE__BODY_CONTENTS);
             childrenFeatures.add(SyncchartsPackage.Literals.SCOPE__BODY_TEXT);
             childrenFeatures.add(SyncchartsPackage.Literals.SCOPE__RENAMINGS);
-            childrenFeatures.add(SyncchartsPackage.Literals.SCOPE__INTERFACE_DECLARATION);
         }
         return childrenFeatures;
     }
@@ -226,6 +248,7 @@ public class ScopeItemProvider
         switch (notification.getFeatureID(Scope.class)) {
             case SyncchartsPackage.SCOPE__ID:
             case SyncchartsPackage.SCOPE__LABEL:
+            case SyncchartsPackage.SCOPE__INTERFACE_DECLARATION:
                 fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
                 return;
             case SyncchartsPackage.SCOPE__SIGNALS:
@@ -237,7 +260,6 @@ public class ScopeItemProvider
             case SyncchartsPackage.SCOPE__BODY_CONTENTS:
             case SyncchartsPackage.SCOPE__BODY_TEXT:
             case SyncchartsPackage.SCOPE__RENAMINGS:
-            case SyncchartsPackage.SCOPE__INTERFACE_DECLARATION:
                 fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
                 return;
         }
@@ -373,71 +395,6 @@ public class ScopeItemProvider
         newChildDescriptors.add
             (createChildParameter
                 (SyncchartsPackage.Literals.SCOPE__BODY_CONTENTS,
-                 ExpressionsFactory.eINSTANCE.createExpression()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (SyncchartsPackage.Literals.SCOPE__BODY_CONTENTS,
-                 ExpressionsFactory.eINSTANCE.createComplexExpression()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (SyncchartsPackage.Literals.SCOPE__BODY_CONTENTS,
-                 ExpressionsFactory.eINSTANCE.createTextualCode()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (SyncchartsPackage.Literals.SCOPE__BODY_CONTENTS,
-                 ExpressionsFactory.eINSTANCE.createValuedObject()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (SyncchartsPackage.Literals.SCOPE__BODY_CONTENTS,
-                 ExpressionsFactory.eINSTANCE.createSignal()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (SyncchartsPackage.Literals.SCOPE__BODY_CONTENTS,
-                 ExpressionsFactory.eINSTANCE.createSignalReference()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (SyncchartsPackage.Literals.SCOPE__BODY_CONTENTS,
-                 ExpressionsFactory.eINSTANCE.createVariable()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (SyncchartsPackage.Literals.SCOPE__BODY_CONTENTS,
-                 ExpressionsFactory.eINSTANCE.createVariableReference()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (SyncchartsPackage.Literals.SCOPE__BODY_CONTENTS,
-                 ExpressionsFactory.eINSTANCE.createValue()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (SyncchartsPackage.Literals.SCOPE__BODY_CONTENTS,
-                 ExpressionsFactory.eINSTANCE.createIntValue()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (SyncchartsPackage.Literals.SCOPE__BODY_CONTENTS,
-                 ExpressionsFactory.eINSTANCE.createFloatValue()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (SyncchartsPackage.Literals.SCOPE__BODY_CONTENTS,
-                 ExpressionsFactory.eINSTANCE.createBooleanValue()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (SyncchartsPackage.Literals.SCOPE__BODY_CONTENTS,
-                 ExpressionsFactory.eINSTANCE.createOperatorExpression()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (SyncchartsPackage.Literals.SCOPE__BODY_CONTENTS,
                  EcoreFactory.eINSTANCE.createEObject()));
 
         newChildDescriptors.add
@@ -512,6 +469,71 @@ public class ScopeItemProvider
 
         newChildDescriptors.add
             (createChildParameter
+                (SyncchartsPackage.Literals.SCOPE__BODY_CONTENTS,
+                 ExpressionsFactory.eINSTANCE.createExpression()));
+
+        newChildDescriptors.add
+            (createChildParameter
+                (SyncchartsPackage.Literals.SCOPE__BODY_CONTENTS,
+                 ExpressionsFactory.eINSTANCE.createComplexExpression()));
+
+        newChildDescriptors.add
+            (createChildParameter
+                (SyncchartsPackage.Literals.SCOPE__BODY_CONTENTS,
+                 ExpressionsFactory.eINSTANCE.createTextualCode()));
+
+        newChildDescriptors.add
+            (createChildParameter
+                (SyncchartsPackage.Literals.SCOPE__BODY_CONTENTS,
+                 ExpressionsFactory.eINSTANCE.createValuedObject()));
+
+        newChildDescriptors.add
+            (createChildParameter
+                (SyncchartsPackage.Literals.SCOPE__BODY_CONTENTS,
+                 ExpressionsFactory.eINSTANCE.createSignal()));
+
+        newChildDescriptors.add
+            (createChildParameter
+                (SyncchartsPackage.Literals.SCOPE__BODY_CONTENTS,
+                 ExpressionsFactory.eINSTANCE.createSignalReference()));
+
+        newChildDescriptors.add
+            (createChildParameter
+                (SyncchartsPackage.Literals.SCOPE__BODY_CONTENTS,
+                 ExpressionsFactory.eINSTANCE.createVariable()));
+
+        newChildDescriptors.add
+            (createChildParameter
+                (SyncchartsPackage.Literals.SCOPE__BODY_CONTENTS,
+                 ExpressionsFactory.eINSTANCE.createVariableReference()));
+
+        newChildDescriptors.add
+            (createChildParameter
+                (SyncchartsPackage.Literals.SCOPE__BODY_CONTENTS,
+                 ExpressionsFactory.eINSTANCE.createValue()));
+
+        newChildDescriptors.add
+            (createChildParameter
+                (SyncchartsPackage.Literals.SCOPE__BODY_CONTENTS,
+                 ExpressionsFactory.eINSTANCE.createIntValue()));
+
+        newChildDescriptors.add
+            (createChildParameter
+                (SyncchartsPackage.Literals.SCOPE__BODY_CONTENTS,
+                 ExpressionsFactory.eINSTANCE.createFloatValue()));
+
+        newChildDescriptors.add
+            (createChildParameter
+                (SyncchartsPackage.Literals.SCOPE__BODY_CONTENTS,
+                 ExpressionsFactory.eINSTANCE.createBooleanValue()));
+
+        newChildDescriptors.add
+            (createChildParameter
+                (SyncchartsPackage.Literals.SCOPE__BODY_CONTENTS,
+                 ExpressionsFactory.eINSTANCE.createOperatorExpression()));
+
+        newChildDescriptors.add
+            (createChildParameter
                 (SyncchartsPackage.Literals.SCOPE__BODY_TEXT,
                  ExpressionsFactory.eINSTANCE.createTextualCode()));
 
@@ -519,11 +541,6 @@ public class ScopeItemProvider
             (createChildParameter
                 (SyncchartsPackage.Literals.SCOPE__RENAMINGS,
                  SyncchartsFactory.eINSTANCE.createSubstitution()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (SyncchartsPackage.Literals.SCOPE__INTERFACE_DECLARATION,
-                 ""));
     }
 
     /**

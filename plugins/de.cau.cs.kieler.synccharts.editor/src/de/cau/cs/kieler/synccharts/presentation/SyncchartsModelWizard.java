@@ -84,7 +84,7 @@ import org.eclipse.ui.part.ISetSelectionTarget;
 
 import de.cau.cs.kieler.synccharts.SyncchartsFactory;
 import de.cau.cs.kieler.synccharts.SyncchartsPackage;
-import de.cau.cs.kieler.synccharts.edit.SyncchartsEditPlugin;
+import de.cau.cs.kieler.synccharts.provider.SyncchartsEditPlugin;
 
 
 import de.cau.cs.kieler.synccharts.editor.SyncchartsEditorPlugin;

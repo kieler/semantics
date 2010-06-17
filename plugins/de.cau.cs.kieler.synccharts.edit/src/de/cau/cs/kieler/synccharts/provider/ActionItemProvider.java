@@ -148,7 +148,7 @@ public class ActionItemProvider
                  SyncchartsPackage.Literals.ACTION__LABEL,
                  true,
                  false,
-                 true,
+                 false,
                  ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
                  null,
                  null));
@@ -222,6 +222,7 @@ public class ActionItemProvider
         switch (notification.getFeatureID(Action.class)) {
             case SyncchartsPackage.ACTION__DELAY:
             case SyncchartsPackage.ACTION__IS_IMMEDIATE:
+            case SyncchartsPackage.ACTION__LABEL:
                 fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
                 return;
             case SyncchartsPackage.ACTION__EFFECTS:

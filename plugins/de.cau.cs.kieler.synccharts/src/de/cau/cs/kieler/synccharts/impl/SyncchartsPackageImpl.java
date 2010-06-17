@@ -180,19 +180,15 @@ public class SyncchartsPackageImpl extends EPackageImpl implements SyncchartsPac
 
         isInited = true;
 
-        // Obtain or create and register interdependencies
-        AnnotationsPackageImpl theAnnotationsPackage = (AnnotationsPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(AnnotationsPackage.eNS_URI) instanceof AnnotationsPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(AnnotationsPackage.eNS_URI) : AnnotationsPackage.eINSTANCE);
-        ExpressionsPackageImpl theExpressionsPackage = (ExpressionsPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(ExpressionsPackage.eNS_URI) instanceof ExpressionsPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(ExpressionsPackage.eNS_URI) : ExpressionsPackage.eINSTANCE);
+        // Initialize simple dependencies
+        AnnotationsPackage.eINSTANCE.eClass();
+        ExpressionsPackage.eINSTANCE.eClass();
 
         // Create package meta-data objects
         theSyncchartsPackage.createPackageContents();
-        theAnnotationsPackage.createPackageContents();
-        theExpressionsPackage.createPackageContents();
 
         // Initialize created meta-data
         theSyncchartsPackage.initializePackageContents();
-        theAnnotationsPackage.initializePackageContents();
-        theExpressionsPackage.initializePackageContents();
 
         // Mark meta-data to indicate it can't be changed
         theSyncchartsPackage.freeze();

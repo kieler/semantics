@@ -4,32 +4,33 @@
  *
  * $Id$
  */
-package de.cau.cs.kieler.synccharts.presentation;
+package de.cau.cs.kieler.synccharts.provider;
 
 import de.cau.cs.kieler.annotations.provider.AnnotationsEditPlugin;
+
 import de.cau.cs.kieler.expressions.provider.ExpressionsEditPlugin;
+
 import org.eclipse.emf.common.EMFPlugin;
 
-import org.eclipse.emf.common.ui.EclipseUIPlugin;
-
 import org.eclipse.emf.common.util.ResourceLocator;
+
 import org.eclipse.emf.ecore.provider.EcoreEditPlugin;
 
 /**
- * This is the central singleton for the Synccharts editor plugin.
+ * This is the central singleton for the Synccharts edit plugin.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
  * @generated
  */
-public final class SyncchartsEditorPlugin extends EMFPlugin {
+public final class SyncchartsEditPlugin extends EMFPlugin {
     /**
      * Keep track of the singleton.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    public static final SyncchartsEditorPlugin INSTANCE = new SyncchartsEditorPlugin();
-    
+    public static final SyncchartsEditPlugin INSTANCE = new SyncchartsEditPlugin();
+
     /**
      * Keep track of the singleton.
      * <!-- begin-user-doc -->
@@ -44,13 +45,13 @@ public final class SyncchartsEditorPlugin extends EMFPlugin {
      * <!-- end-user-doc -->
      * @generated
      */
-    public SyncchartsEditorPlugin() {
+    public SyncchartsEditPlugin() {
         super
-            (new ResourceLocator [] {
-                AnnotationsEditPlugin.INSTANCE,
-                EcoreEditPlugin.INSTANCE,
-                ExpressionsEditPlugin.INSTANCE,
-            });
+          (new ResourceLocator [] {
+             AnnotationsEditPlugin.INSTANCE,
+             EcoreEditPlugin.INSTANCE,
+             ExpressionsEditPlugin.INSTANCE,
+           });
     }
 
     /**
@@ -64,7 +65,7 @@ public final class SyncchartsEditorPlugin extends EMFPlugin {
     public ResourceLocator getPluginResourceLocator() {
         return plugin;
     }
-    
+
     /**
      * Returns the singleton instance of the Eclipse plugin.
      * <!-- begin-user-doc -->
@@ -75,14 +76,14 @@ public final class SyncchartsEditorPlugin extends EMFPlugin {
     public static Implementation getPlugin() {
         return plugin;
     }
-    
+
     /**
      * The actual implementation of the Eclipse <b>Plugin</b>.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    public static class Implementation extends EclipseUIPlugin {
+    public static class Implementation extends EclipsePlugin {
         /**
          * Creates an instance.
          * <!-- begin-user-doc -->
@@ -91,7 +92,7 @@ public final class SyncchartsEditorPlugin extends EMFPlugin {
          */
         public Implementation() {
             super();
-    
+
             // Remember the static instance.
             //
             plugin = this;
