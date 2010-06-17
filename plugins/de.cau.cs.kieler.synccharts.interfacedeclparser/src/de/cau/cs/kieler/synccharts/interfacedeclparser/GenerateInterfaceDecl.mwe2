@@ -21,6 +21,9 @@ Workflow {
 	
 	component = DirectoryCleaner {
 		directory="${runtimeProject}/src-gen"
+	}
+	
+	component = DirectoryCleaner {
 		directory="${runtimeProject}.ui/src-gen"
 	}
 	
