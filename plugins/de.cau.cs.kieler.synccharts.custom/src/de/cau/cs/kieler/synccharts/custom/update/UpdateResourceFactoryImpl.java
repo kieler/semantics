@@ -62,10 +62,11 @@ public class UpdateResourceFactoryImpl extends XMIResourceFactoryImpl {
                         public void run(IProgressMonitor monitor)
                                 throws InvocationTargetException,
                                 InterruptedException {
-                            monitor.beginTask(
-                                    "Converting Synccharts 0.1 to 0.2!",
-                                    IProgressMonitor.UNKNOWN);
-                            doPreprocessing(uri);
+                            monitor
+                                    .beginTask(
+                                            "Converting Synccharts from older version.",
+                                            IProgressMonitor.UNKNOWN);
+                            doPreprocessing(uri, monitor);
                             monitor.done();
                         }
                     });
@@ -90,6 +91,10 @@ public class UpdateResourceFactoryImpl extends XMIResourceFactoryImpl {
         return resource;
     }
 
+    private enum Version {
+        v_0_1, v_0_2, v_0_2_1;
+    }
+
     /**
      * Perform pre-processing steps that have to be done before the parser can
      * start to load the file. This is necessary because some features that have
@@ -98,10 +103,21 @@ public class UpdateResourceFactoryImpl extends XMIResourceFactoryImpl {
      * 
      * @param uri
      *            the location of the file
+     * @param monitor
      */
-    private void doPreprocessing(final URI uri) {
-        ExtensibleURIConverterImpl conv = new ExtensibleURIConverterImpl();
+    private void doPreprocessing(final URI uri, IProgressMonitor monitor) {
+        monitor.subTask("Converting v0.1 to v0.2");
+        convert(uri, Version.v_0_1);
+        monitor.subTask("Converting v0.2 to v0.2.1");
+        convert(uri, Version.v_0_2);
+    }
 
+    /**
+     * @param uri
+     * @param version
+     */
+    private void convert(URI uri, Version version) {
+        ExtensibleURIConverterImpl conv = new ExtensibleURIConverterImpl();
         try {
             if (!conv.exists(uri, null)) {
                 return;
@@ -115,59 +131,25 @@ public class UpdateResourceFactoryImpl extends XMIResourceFactoryImpl {
             boolean modified = false;
 
             String s = reader.readLine();
+            int lineIndex = 0;
             while (s != null) {
 
-                if (s
-                        .contains("xmlns:synccharts=\"http://kieler.cs.cau.de/synccharts/0.2\"")) {
+                if (lineIndex == 1 && !s.contains(getVersionURI(version))) {
                     is.close();
                     return;
                 }
 
-                // variable types are now in lower case, changed integer to int
-                String newString = s.replaceAll("type=\"INTEGER\"",
-                        "type=\"int\"");
-                newString = newString.replaceAll("type=\"UNSIGNED\"",
-                        "type=\"unsigned\"");
-                newString = newString.replaceAll("type=\"PURE\"",
-                        "type=\"pure\"");
-                newString = newString.replaceAll("type=\"BOOL\"",
-                        "type=\"bool\"");
-                newString = newString.replaceAll("type=\"FLOAT\"",
-                        "type=\"float\"");
-                newString = newString.replaceAll("type=\"HOST\"",
-                        "type=\"host\"");
-
-                // triggersAndEffects is now called label
-                newString = newString.replaceAll("triggersAndEffects=\"",
-                        "label=\"");
-
-                // host code is now called textual code
-                newString = newString.replaceAll(
-                        "xsi:type=\"synccharts:HostCode\"",
-                        "xsi:type=\"synccharts:TextualCode\"");
-
-                // complex expression with an operator are now called operator
-                // expressions
-                newString = newString
-                        .replaceAll(
-                                "xsi:type=\"synccharts:ComplexExpression\" operator=\"",
-                                "xsi:type=\"synccharts:OperatorExpression\" operator=\"");
-
-                // renaming -> substitution, formal = oldID, actual = newID
-                newString = newString.replaceAll(
-                        "xsi:type=\"synccharts:Renaming\" oldID=\"",
-                        "xsi:type=\"synccharts:Substitution\" formal=\"");
-                if (newString.contains("xsi:type=\"synccharts:Substitution\"")) {
-                    newString = newString.replaceAll("newID=\"", "actual=\"");
+                String newString = s;
+                switch (version) {
+                case v_0_1:
+                    newString = convertLineV_0_1(s);
+                    break;
+                case v_0_2:
+                    newString = convertLineV_0_2(s);
+                    break;
+                case v_0_2_1:
+                    return;
                 }
-
-                newString = newString.replaceAll("targetState=\"//@",
-                        "DUMMY_targetState=\"//@");
-
-                if (newString.contains("regions") && newString.contains("id")) {
-                    newString = newString.replace("id", "DUMMY_id");
-                }
-
                 lines.add(newString);
                 s = reader.readLine();
 
@@ -179,10 +161,8 @@ public class UpdateResourceFactoryImpl extends XMIResourceFactoryImpl {
 
             if (modified) {
                 String line2 = lines.get(1);
-                line2 = line2
-                        .replace(
-                                "xmlns:synccharts=\"http://kieler.cs.cau.de/synccharts\"",
-                                "xmlns:synccharts=\"http://kieler.cs.cau.de/synccharts/0.2\"");
+                line2 = line2.replace(getVersionURI(version),
+                        getVersionURI(getNextVersion(version)));
                 lines.set(1, line2);
 
                 // write modified lines back to file
@@ -198,6 +178,107 @@ public class UpdateResourceFactoryImpl extends XMIResourceFactoryImpl {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    /**
+     * @param s
+     * @return
+     */
+    private String convertLineV_0_2(String s) {
+        String result = s;
+        if (result.contains(getVersionURI(Version.v_0_2))) {
+            result = result
+                    .replace(
+                            getVersionURI(Version.v_0_2),
+                            getVersionURI(Version.v_0_2)
+                                    + " xmlns:expressions=\"http://kieler.cs.cau.de/expressions\"");
+        }
+
+        result = result.replaceAll("xsi:type=\"synccharts:SignalReference\"",
+                "xsi:type=\"expressions:SignalReference\"");
+
+        result = result.replaceAll("xsi:type=\"synccharts:VariableReference\"",
+                "xsi:type=\"expressions:VariableReference\"");
+
+        result = result.replaceAll("xsi:type=\"synccharts:Emission\"",
+                "xsi:type=\"expressions:Emission\"");
+        return result;
+    }
+
+    /**
+     * @param version
+     * @return
+     */
+    private Version getNextVersion(Version version) {
+        switch (version) {
+        case v_0_1:
+            return Version.v_0_2;
+        case v_0_2:
+            return Version.v_0_2_1;
+        case v_0_2_1:
+            return null;
+        }
+        return null;
+    }
+
+    /**
+     * @param s
+     * @return
+     */
+    private String convertLineV_0_1(String s) {
+        // variable types are now in lower case, changed integer to int
+        String newString = s.replaceAll("type=\"INTEGER\"", "type=\"int\"");
+        newString = newString.replaceAll("type=\"UNSIGNED\"",
+                "type=\"unsigned\"");
+        newString = newString.replaceAll("type=\"PURE\"", "type=\"pure\"");
+        newString = newString.replaceAll("type=\"BOOL\"", "type=\"bool\"");
+        newString = newString.replaceAll("type=\"FLOAT\"", "type=\"float\"");
+        newString = newString.replaceAll("type=\"HOST\"", "type=\"host\"");
+
+        // triggersAndEffects is now called label
+        newString = newString.replaceAll("triggersAndEffects=\"", "label=\"");
+
+        // host code is now called textual code
+        newString = newString.replaceAll("xsi:type=\"synccharts:HostCode\"",
+                "xsi:type=\"synccharts:TextualCode\"");
+
+        // complex expression with an operator are now called operator
+        // expressions
+        newString = newString.replaceAll(
+                "xsi:type=\"synccharts:ComplexExpression\" operator=\"",
+                "xsi:type=\"synccharts:OperatorExpression\" operator=\"");
+
+        // renaming -> substitution, formal = oldID, actual = newID
+        newString = newString.replaceAll(
+                "xsi:type=\"synccharts:Renaming\" oldID=\"",
+                "xsi:type=\"synccharts:Substitution\" formal=\"");
+        if (newString.contains("xsi:type=\"synccharts:Substitution\"")) {
+            newString = newString.replaceAll("newID=\"", "actual=\"");
+        }
+
+        newString = newString.replaceAll("targetState=\"//@",
+                "DUMMY_targetState=\"//@");
+
+        if (newString.contains("regions") && newString.contains("id")) {
+            newString = newString.replace("id", "DUMMY_id");
+        }
+        return newString;
+    }
+
+    /**
+     * @param version
+     * @return
+     */
+    private String getVersionURI(Version version) {
+        switch (version) {
+        case v_0_1:
+            return "xmlns:synccharts=\"http://kieler.cs.cau.de/synccharts\"";
+        case v_0_2:
+            return "xmlns:synccharts=\"http://kieler.cs.cau.de/synccharts/0.2\"";
+        case v_0_2_1:
+            return "xmlns:synccharts=\"http://kieler.cs.cau.de/synccharts/0.2.1\"";
+        }
+        return null;
     }
 
     /**
