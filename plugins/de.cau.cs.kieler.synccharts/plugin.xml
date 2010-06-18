@@ -33,12 +33,6 @@
          </checkFile>
       </metaModel>
    </extension>
-   <extension
-         point="org.eclipse.ui.startup">
-      <startup
-            class="de.cau.cs.kieler.synccharts.startup.RegisterCheckValidator">
-      </startup>
-   </extension>
    <extension point="org.eclipse.emf.ecore.generated_package">
       <package
             uri="http://kieler.cs.cau.de/synccharts/0.2.1"
@@ -72,5 +66,36 @@
          </Priority>
       </editpolicyProvider>
    </extension>
+      <extension
+            point="de.cau.cs.kieler.core.model.Validation">
+         <ePackageDefinition
+               ePackageClass="de.cau.cs.kieler.synccharts.SyncchartsPackage"
+               ePackageId="de.cau.cs.kieler.synccharts"
+               ePackageNsURI="http://kieler.cs.cau.de/synccharts/0.2.1"
+               nsURI="http://kieler.cs.cau.de/synccharts/0.2">
+         </ePackageDefinition>
+         <Checkfile
+               ePackageId="de.cau.cs.kieler.synccharts"
+               id="de.cau.cs.kieler.synccharts.SyncchartsChecks"
+               isWrapExistingValidator="false"
+               name="Synccharts Checks"
+               path="model/SyncchartsChecks.chk"
+               tooltip="Checks whether the syncchart is valid.">
+            <referenceEPackageNsURI
+                  nsURI="http://kieler.cs.cau.de/expressions">
+            </referenceEPackageNsURI>
+         </Checkfile>
+         <Checkfile
+               ePackageId="de.cau.cs.kieler.synccharts"
+               id="de.cau.cs.kieler.synccharts.KleptoChecks"
+               isWrapExistingValidator="true"
+               name="Klepto Checks"
+               path="model/SyncchartsKleptoChecks.chk"
+               tooltip="Check whether the syncchart can be simulated with Klepto.">
+            <referenceEPackageNsURI
+                  nsURI="http://kieler.cs.cau.de/expressions">
+            </referenceEPackageNsURI>
+         </Checkfile>
+      </extension>
 
 </plugin>

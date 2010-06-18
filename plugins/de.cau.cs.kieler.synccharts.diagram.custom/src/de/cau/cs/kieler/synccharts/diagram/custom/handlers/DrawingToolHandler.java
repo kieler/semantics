@@ -19,7 +19,7 @@ import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.ui.handlers.HandlerUtil;
 
-import de.cau.cs.kieler.core.model.util.ValidationManager;
+import de.cau.cs.kieler.core.model.validation.ValidationManager;
 
 /**
  * Handler class for toggling between drawing mode and normal mode.

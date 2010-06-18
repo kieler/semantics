@@ -20,5 +20,4 @@ Import-Package: org.eclipse.ui
 Export-Package: de.cau.cs.kieler.synccharts,
  de.cau.cs.kieler.synccharts.contentadapter,
  de.cau.cs.kieler.synccharts.impl,
- de.cau.cs.kieler.synccharts.startup,
  de.cau.cs.kieler.synccharts.util

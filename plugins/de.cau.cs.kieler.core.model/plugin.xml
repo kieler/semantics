@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?eclipse version="3.4"?>
 <plugin>
+   <extension-point id="de.cau.cs.kieler.core.model.Validation" name="Validation" schema="schema/de.cau.cs.kieler.core.model.Validation.exsd"/>
    <extension
          point="org.eclipse.ui.commands">
       <command
             categoryId="de.cau.cs.kieler"
-            defaultHandler="de.cau.cs.kieler.core.model.util.ValidationManager"
+            defaultHandler="de.cau.cs.kieler.core.model.validation.ValidationManager"
             description="Toggles the Problem Markers."
             id="de.cau.cs.kieler.core.model.toggleProblemMarkers"
             name="Show Problem Markers">
@@ -96,6 +97,11 @@
             properties="hasValidateAction"
             type="org.eclipse.ui.IEditorPart">
       </propertyTester>
+   </extension>
+   <extension
+         point="org.eclipse.ui.startup">
+      <startup
+            class="de.cau.cs.kieler.core.model.validation.ValidationInformationCollector"></startup>
    </extension>
 
 </plugin>

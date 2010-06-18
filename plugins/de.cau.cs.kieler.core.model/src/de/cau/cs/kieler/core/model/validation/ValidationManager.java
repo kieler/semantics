@@ -11,10 +11,11 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.core.model.util;
+package de.cau.cs.kieler.core.model.validation;
 
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -30,7 +31,6 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EValidator;
 import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramEditor;
 import org.eclipse.gmf.runtime.notation.View;
-import org.eclipse.jface.action.Action;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.util.IPropertyChangeListener;
 import org.eclipse.jface.util.PropertyChangeEvent;
@@ -41,6 +41,7 @@ import org.eclipse.ui.handlers.HandlerUtil;
 import org.eclipse.xtend.typesystem.emf.check.CheckRegistry;
 
 import de.cau.cs.kieler.core.model.CoreModelPlugin;
+import de.cau.cs.kieler.core.model.util.ModelErrorHandler;
 import de.cau.cs.kieler.core.ui.handler.RemoveMarkerHandler;
 
 /**
@@ -52,29 +53,12 @@ import de.cau.cs.kieler.core.ui.handler.RemoveMarkerHandler;
 public final class ValidationManager extends AbstractHandler {
 
     /**
-     * Factory for creating the validate actions used in the validation.
-     * 
-     * @author soh
-     * @kieler.rating 2010-06-11 proposed yellow soh
-     */
-    public static interface IValidateActionFactory {
-
-        /**
-         * Get the validate action for the given ePackage.
-         * 
-         * @return the action
-         */
-        Action getValidateAction();
-
-    }
-
-    /**
      * Contains all registered packages with a factory for creating validate
      * actions.
      */
-    private static Map<EPackage, IValidateActionFactory> packages = new HashMap<EPackage, IValidateActionFactory>();
+    private static Map<EPackage, Object> packages = new HashMap<EPackage, Object>();
 
-    /** Maps the path of a check file to the internal checkfile objects. */
+    /** Maps the id of a check file to the internal checkfile objects. */
     private static Map<String, CheckFile> checkFiles = new HashMap<String, CheckFile>();
 
     /** The list of listeners to be notified of visibility changes. */
@@ -141,13 +125,13 @@ public final class ValidationManager extends AbstractHandler {
     /**
      * Get the Epackage of the file.
      * 
-     * @param file
+     * @param id
      *            the file
      * @return the package
      */
-    public static EPackage getEPackage(final String file) {
+    public static EPackage getEPackage(final String id) {
         EPackage result = null;
-        CheckFile checkFile = checkFiles.get(file);
+        CheckFile checkFile = checkFiles.get(id);
         if (checkFile != null) {
             result = checkFile.ePackage;
         }
@@ -180,12 +164,12 @@ public final class ValidationManager extends AbstractHandler {
     /**
      * Determine whether or not a file is enabled.
      * 
-     * @param file
+     * @param id
      *            the file
      * @return true if enabled, false if not, null if unknown.
      */
-    public static Boolean isEnabled(final String file) {
-        CheckFile check = checkFiles.get(file);
+    public static Boolean isEnabled(final String id) {
+        CheckFile check = checkFiles.get(id);
         if (check == null) {
             return null;
         }
@@ -222,6 +206,8 @@ public final class ValidationManager extends AbstractHandler {
     /**
      * Register a new check file.
      * 
+     * @param id
+     *            the id of the check file
      * @param ePackage
      *            the package
      * @param file
@@ -231,12 +217,15 @@ public final class ValidationManager extends AbstractHandler {
      *            has to be added after it.
      * @param referencedEPackageNsURIs
      *            ???
+     * @param name
+     *            the name to display
      * @param tooltip
      *            the tooltip to display
      */
-    public static void registerCheckFile(final EPackage ePackage,
+    public static void registerCheckFile(String id, final EPackage ePackage,
             final String file, final boolean isWrapExistingValidator,
-            final List<String> referencedEPackageNsURIs, final String tooltip) {
+            final List<String> referencedEPackageNsURIs, final String name,
+            String tooltip) {
         if (!packages.containsKey(ePackage)) {
             packages.put(ePackage, null);
         }
@@ -245,7 +234,7 @@ public final class ValidationManager extends AbstractHandler {
         IPreferenceStore store = CoreModelPlugin.getDefault()
                 .getPreferenceStore();
         boolean value = true;
-        String key = PREFERENCE_PREFIX + file;
+        String key = PREFERENCE_PREFIX + id;
         if (store.contains(key)) {
             // try the preference store
             value = store.getBoolean(key);
@@ -258,12 +247,18 @@ public final class ValidationManager extends AbstractHandler {
         }
 
         CheckFile checkFile = new CheckFile();
-        checkFiles.put(file, checkFile);
+        checkFiles.put(id, checkFile);
 
+        checkFile.id = id;
         checkFile.ePackage = ePackage;
         checkFile.file = file;
         checkFile.isWrapExistingValidator = isWrapExistingValidator;
-        checkFile.referencedEPackageNsURIs = referencedEPackageNsURIs;
+        if (referencedEPackageNsURIs != null) {
+            checkFile.referencedEPackageNsURIs = referencedEPackageNsURIs;
+        } else {
+            checkFile.referencedEPackageNsURIs = new LinkedList<String>();
+        }
+        checkFile.name = name;
         checkFile.tooltip = tooltip;
 
         register(checkFile);
@@ -274,41 +269,29 @@ public final class ValidationManager extends AbstractHandler {
     /**
      * Get the tooltip for the file.
      * 
-     * @param file
+     * @param id
      *            the file
      * @return the tooltip
      */
-    public static String getTooltip(final String file) {
-        CheckFile checkfile = checkFiles.get(file);
+    public static String getTooltip(final String id) {
+        CheckFile checkfile = checkFiles.get(id);
         if (checkfile != null) {
             return checkfile.tooltip;
         }
-        return "No tooltip available";
+        return "File not found";
     }
 
     /**
-     * Register a validate action with the given ePackage.
      * 
-     * @param ePackage
-     *            the package
-     * @param action
-     *            the validate action
+     * @param id
+     * @return
      */
-    public static void registerValidateAction(final EPackage ePackage,
-            final IValidateActionFactory action) {
-        packages.put(ePackage, action);
-    }
-
-    /**
-     * Run all validate actions.
-     * 
-     */
-    public static void validate() {
-        for (IValidateActionFactory action : packages.values()) {
-            if (action != null) {
-                action.getValidateAction().run();
-            }
+    public static String getDisplay(final String id) {
+        CheckFile checkfile = checkFiles.get(id);
+        if (checkfile != null) {
+            return checkfile.name;
         }
+        return "File not found";
     }
 
     /**
@@ -316,10 +299,7 @@ public final class ValidationManager extends AbstractHandler {
      */
     public static void validateActiveEditor() {
         EPackage ePackage = getEPackageOfActiveEditor();
-        IValidateActionFactory factory = packages.get(ePackage);
-        if (factory != null) {
-            factory.getValidateAction().run();
-        }
+        ValidationInformationCollector.validateEPackage(ePackage);
     }
 
     /**
@@ -348,11 +328,11 @@ public final class ValidationManager extends AbstractHandler {
     /**
      * Remove a checkfile from the list.
      * 
-     * @param file
-     *            the file url
+     * @param id
+     *            the id
      */
-    public static void removeCheck(final String file) {
-        CheckFile checkFile = checkFiles.remove(file);
+    public static void removeCheck(final String id) {
+        CheckFile checkFile = checkFiles.remove(id);
         if (checkFile != null) {
             EValidator.Registry.INSTANCE.remove(checkFile.ePackage);
             restoreChecks(checkFile.ePackage);
@@ -402,33 +382,33 @@ public final class ValidationManager extends AbstractHandler {
     /**
      * Enable the given check.
      * 
-     * @param file
+     * @param id
      *            the file
      */
-    public static void enableCheck(final String file) {
-        setEnabled(file, true);
+    public static void enableCheck(final String id) {
+        setEnabled(id, true);
     }
 
     /**
      * Disable a check file.
      * 
-     * @param file
+     * @param id
      *            the file
      */
-    public static void disableCheck(final String file) {
-        setEnabled(file, false);
+    public static void disableCheck(final String id) {
+        setEnabled(id, false);
     }
 
     /**
      * Set the enablement of a file.
      * 
-     * @param file
+     * @param id
      *            the file
      * @param enabled
      *            true if visible
      */
-    public static void setEnabled(final String file, final boolean enabled) {
-        CheckFile check = checkFiles.get(file);
+    public static void setEnabled(final String id, final boolean enabled) {
+        CheckFile check = checkFiles.get(id);
         if (check != null) {
             check.setEnabled(enabled);
             refreshChecks();
@@ -438,17 +418,17 @@ public final class ValidationManager extends AbstractHandler {
     /**
      * Notify listeners of a property change.
      * 
-     * @param file
+     * @param id
      *            the file
      * @param oldValue
      *            the old value
      * @param newValue
      *            the new value
      */
-    private static void firePropertyChangedEvent(final String file,
+    private static void firePropertyChangedEvent(final String id,
             final boolean oldValue, final boolean newValue) {
         PropertyChangeEvent event = new PropertyChangeEvent(
-                CoreModelPlugin.PLUGIN_ID, PREFERENCE_PREFIX + file, oldValue,
+                CoreModelPlugin.PLUGIN_ID, PREFERENCE_PREFIX + id, oldValue,
                 newValue);
 
         for (IPropertyChangeListener listener : listeners) {
@@ -474,6 +454,15 @@ public final class ValidationManager extends AbstractHandler {
      */
     public static void removeListener(final IPropertyChangeListener listener) {
         listeners.remove(listener);
+    }
+
+    /**
+     * @return
+     */
+    public static boolean hasValidateActionsForActionEditor() {
+        EPackage ePackage = ValidationManager.getEPackageOfActiveEditor();
+        String nsUri = ePackage.getNsURI();
+        return ValidationInformationCollector.hasValidateAction(nsUri);
     }
 
     /**
@@ -527,5 +516,9 @@ public final class ValidationManager extends AbstractHandler {
 
         /** True if the file should be visible. */
         private boolean enabled = true;
+
+        private String name;
+
+        private String id;
     }
 }

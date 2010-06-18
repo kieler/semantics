@@ -25,7 +25,7 @@ import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
 
 import de.cau.cs.kieler.core.model.CoreModelPlugin;
-import de.cau.cs.kieler.core.model.util.ValidationManager;
+import de.cau.cs.kieler.core.model.validation.ValidationManager;
 
 /**
  * The preference page for configuring which CheckFile should be used to
@@ -58,7 +58,8 @@ public class ValidationManagerPreferencePage extends FieldEditorPreferencePage
         for (String file : files) {
             Composite parent = getFieldEditorParent();
             BooleanFieldEditor enablementFE = new BooleanFieldEditor(
-                    ValidationManager.PREFERENCE_PREFIX + file, file, parent);
+                    ValidationManager.PREFERENCE_PREFIX + file,
+                    ValidationManager.getDisplay(file), parent);
             super.addField(enablementFE);
             editors.add(enablementFE);
 

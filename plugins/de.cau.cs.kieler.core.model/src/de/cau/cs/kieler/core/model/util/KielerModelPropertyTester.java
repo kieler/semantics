@@ -14,8 +14,9 @@
 package de.cau.cs.kieler.core.model.util;
 
 import org.eclipse.core.expressions.PropertyTester;
-import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramEditor;
+
+import de.cau.cs.kieler.core.model.validation.ValidationManager;
 
 /**
  * This tester tests whether the active editor is a diagram editor and thus
@@ -40,8 +41,7 @@ public class KielerModelPropertyTester extends PropertyTester {
         // for the currenly active diagram editor.
         if (property.equals("hasValidateAction")
                 && receiver instanceof DiagramEditor) {
-            EPackage ePackage = ValidationManager.getEPackageOfActiveEditor();
-            return !ValidationManager.getRegisteredFiles(ePackage).isEmpty();
+            return ValidationManager.hasValidateActionsForActionEditor();
         }
         return false;
     }

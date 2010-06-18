@@ -23,7 +23,6 @@ import org.eclipse.gef.EditPart;
 import org.eclipse.gmf.runtime.diagram.ui.editparts.DiagramEditPart;
 import org.eclipse.gmf.runtime.diagram.ui.parts.IDiagramWorkbenchPart;
 import org.eclipse.gmf.runtime.notation.View;
-import org.eclipse.jface.action.Action;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.swt.widgets.Display;
@@ -41,13 +40,9 @@ import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
 import de.cau.cs.kieler.core.model.util.ModelingUtil;
-import de.cau.cs.kieler.core.model.util.ValidationManager;
-import de.cau.cs.kieler.core.model.util.ValidationManager.IValidateActionFactory;
-import de.cau.cs.kieler.synccharts.SyncchartsPackage;
 import de.cau.cs.kieler.synccharts.Transition;
 import de.cau.cs.kieler.synccharts.diagram.custom.triggerlisteners.RedundantLabelTriggerListener;
 import de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditor;
-import de.cau.cs.kieler.synccharts.diagram.part.ValidateAction;
 
 /**
  * The main plugin class.
@@ -56,250 +51,231 @@ import de.cau.cs.kieler.synccharts.diagram.part.ValidateAction;
  * @kieler.rating 2010-06-14 proposed yellow
  */
 public class SyncchartsDiagramCustomPlugin extends AbstractUIPlugin implements
-		ISelectionListener, IPageListener, IWindowListener, IPartListener {
+        ISelectionListener, IPageListener, IWindowListener, IPartListener {
 
-	/** The current instance of the plugin. */
-	private static SyncchartsDiagramCustomPlugin instance = null;
+    /** The current instance of the plugin. */
+    private static SyncchartsDiagramCustomPlugin instance = null;
 
-	/**
-	 * Getter for the instance.
-	 * 
-	 * @return the instance.
-	 */
-	public static SyncchartsDiagramCustomPlugin getInstance() {
-		return instance;
-	}
+    /**
+     * Getter for the instance.
+     * 
+     * @return the instance.
+     */
+    public static SyncchartsDiagramCustomPlugin getInstance() {
+        return instance;
+    }
 
-	/**
-	 * Register the validate actions on the validation manager.
-	 * 
-	 * @param page
-	 *            the page for the validate action.
-	 */
-	private static void registerValidateAction(final IWorkbenchPage page) {
-		ValidationManager.registerValidateAction(SyncchartsPackage.eINSTANCE,
-				new IValidateActionFactory() {
+    /**
+     * Register the listener.
+     */
+    public void register() {
+        IWorkbench bench = getWorkbench();
+        if (bench != null) {
+            bench.addWindowListener(this);
+            IWorkbenchWindow window = bench.getActiveWorkbenchWindow();
+            if (window != null) {
+                window.addPageListener(this);
+                IWorkbenchPage page = window.getActivePage();
+                if (page != null) {
+                    RedundantLabelTriggerListener.hideRedundantLabels();
+                    page.addSelectionListener(this);
+                    page.addPartListener(this);
+                }
+            }
+        }
+    }
 
-					public Action getValidateAction() {
-						return new ValidateAction(page);
-					}
-				});
-	}
+    @Override
+    public void start(final BundleContext context) throws Exception {
+        super.start(context);
+        instance = this;
+        register();
+    }
 
-	/**
-	 * Register the listener.
-	 */
-	public void register() {
-		IWorkbench bench = getWorkbench();
-		if (bench != null) {
-			bench.addWindowListener(this);
-			IWorkbenchWindow window = bench.getActiveWorkbenchWindow();
-			if (window != null) {
-				window.addPageListener(this);
-				IWorkbenchPage page = window.getActivePage();
-				if (page != null) {
-					registerValidateAction(page);
-					RedundantLabelTriggerListener.hideRedundantLabels();
-					page.addSelectionListener(this);
-					page.addPartListener(this);
-				}
-			}
-		}
-	}
+    /**
+     * {@inheritDoc}
+     */
+    public void selectionChanged(final IWorkbenchPart part, final ISelection sel) {
+        if (sel instanceof IStructuredSelection) {
+            IStructuredSelection selection = (IStructuredSelection) sel;
+            Iterator<?> iter = selection.iterator();
+            if (part instanceof IDiagramWorkbenchPart) {
+                HighlightingManager.reset(part);
+                IDiagramWorkbenchPart dwp = (IDiagramWorkbenchPart) part;
+                DiagramEditPart dep = dwp.getDiagramEditPart();
+                while (iter.hasNext()) {
+                    Object o = iter.next();
+                    if (o instanceof EditPart) {
+                        EditPart editPart = (EditPart) o;
+                        EObject obj = ((View) editPart.getModel()).getElement();
+                        if (obj instanceof Transition) {
+                            // highlight all edit parts belonging to the
+                            // selected transition
+                            List<EditPart> parts = ModelingUtil.getEditParts(
+                                    dep, obj);
+                            for (EditPart transEditPart : parts) {
+                                HighlightingManager.highlight(part,
+                                        transEditPart, ColorConstants.blue,
+                                        ColorConstants.white);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
 
-	@Override
-	public void start(final BundleContext context) throws Exception {
-		super.start(context);
-		instance = this;
-		register();
-	}
+    /**
+     * {@inheritDoc}
+     */
+    public void pageActivated(final IWorkbenchPage page) {
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public void selectionChanged(final IWorkbenchPart part, final ISelection sel) {
-		if (sel instanceof IStructuredSelection) {
-			IStructuredSelection selection = (IStructuredSelection) sel;
-			Iterator<?> iter = selection.iterator();
-			if (part instanceof IDiagramWorkbenchPart) {
-				HighlightingManager.reset(part);
-				IDiagramWorkbenchPart dwp = (IDiagramWorkbenchPart) part;
-				DiagramEditPart dep = dwp.getDiagramEditPart();
-				while (iter.hasNext()) {
-					Object o = iter.next();
-					if (o instanceof EditPart) {
-						EditPart editPart = (EditPart) o;
-						EObject obj = ((View) editPart.getModel()).getElement();
-						if (obj instanceof Transition) {
-							// highlight all edit parts belonging to the
-							// selected transition
-							List<EditPart> parts = ModelingUtil.getEditParts(
-									dep, obj);
-							for (EditPart transEditPart : parts) {
-								HighlightingManager.highlight(part,
-										transEditPart, ColorConstants.blue,
-										ColorConstants.white);
-							}
-						}
-					}
-				}
-			}
-		}
-	}
+    /**
+     * {@inheritDoc}
+     */
+    public void pageClosed(final IWorkbenchPage page) {
+        if (page != null) {
+            page.removeSelectionListener(this);
+            page.removePartListener(this);
+        }
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public void pageActivated(final IWorkbenchPage page) {
-	}
+    /**
+     * {@inheritDoc}
+     */
+    public void pageOpened(final IWorkbenchPage page) {
+        if (page != null) {
+            RedundantLabelTriggerListener.hideRedundantLabels();
+            page.addSelectionListener(this);
+            page.addPartListener(this);
+        }
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public void pageClosed(final IWorkbenchPage page) {
-		if (page != null) {
-			page.removeSelectionListener(this);
-			page.removePartListener(this);
-		}
-	}
+    /**
+     * Getter for the active editor part.
+     * 
+     * @return the editor part or null
+     */
+    public IEditorPart getActiveEditorPart() {
+        IEditorPart result = null;
+        IWorkbench workbench = getWorkbench();
+        if (workbench != null) {
+            IWorkbenchWindow window = workbench.getActiveWorkbenchWindow();
+            if (window != null) {
+                IWorkbenchPage page = window.getActivePage();
+                if (page != null) {
+                    result = page.getActiveEditor();
+                }
+            }
+        }
+        return result;
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public void pageOpened(final IWorkbenchPage page) {
-		if (page != null) {
-			registerValidateAction(page);
-			RedundantLabelTriggerListener.hideRedundantLabels();
-			page.addSelectionListener(this);
-			page.addPartListener(this);
-		}
-	}
+    /**
+     * Getter for the list of opened synccharts editors.
+     * 
+     * @return the list of open synccharts editors.
+     */
+    public List<SyncchartsDiagramEditor> getOpenSyncchartsEditors() {
+        List<SyncchartsDiagramEditor> result = new LinkedList<SyncchartsDiagramEditor>();
+        IWorkbench workbench = getWorkbench();
+        if (workbench != null) {
+            IWorkbenchWindow window = workbench.getActiveWorkbenchWindow();
+            if (window != null) {
+                IWorkbenchPage page = window.getActivePage();
+                if (page != null) {
+                    IEditorReference[] refs = page.getEditorReferences();
+                    for (IEditorReference ref : refs) {
+                        IEditorPart part = ref.getEditor(false);
+                        if (part != null
+                                && part instanceof SyncchartsDiagramEditor) {
+                            result.add((SyncchartsDiagramEditor) part);
+                        }
+                    }
+                }
+            }
+        }
+        return result;
+    }
 
-	/**
-	 * Getter for the active editor part.
-	 * 
-	 * @return the editor part or null
-	 */
-	public IEditorPart getActiveEditorPart() {
-		IEditorPart result = null;
-		IWorkbench workbench = getWorkbench();
-		if (workbench != null) {
-			IWorkbenchWindow window = workbench.getActiveWorkbenchWindow();
-			if (window != null) {
-				IWorkbenchPage page = window.getActivePage();
-				if (page != null) {
-					result = page.getActiveEditor();
-				}
-			}
-		}
-		return result;
-	}
+    /**
+     * Getter for the display of the active workbench.
+     * 
+     * @return the display
+     */
+    public Display getDisplay() {
+        return getWorkbench().getDisplay();
+    }
 
-	/**
-	 * Getter for the list of opened synccharts editors.
-	 * 
-	 * @return the list of open synccharts editors.
-	 */
-	public List<SyncchartsDiagramEditor> getOpenSyncchartsEditors() {
-		List<SyncchartsDiagramEditor> result = new LinkedList<SyncchartsDiagramEditor>();
-		IWorkbench workbench = getWorkbench();
-		if (workbench != null) {
-			IWorkbenchWindow window = workbench.getActiveWorkbenchWindow();
-			if (window != null) {
-				IWorkbenchPage page = window.getActivePage();
-				if (page != null) {
-					IEditorReference[] refs = page.getEditorReferences();
-					for (IEditorReference ref : refs) {
-						IEditorPart part = ref.getEditor(false);
-						if (part != null
-								&& part instanceof SyncchartsDiagramEditor) {
-							result.add((SyncchartsDiagramEditor) part);
-						}
-					}
-				}
-			}
-		}
-		return result;
-	}
+    /**
+     * {@inheritDoc}
+     */
+    public void windowActivated(final IWorkbenchWindow window) {
+        if (window != null) {
+            window.addPageListener(this);
+        }
+    }
 
-	/**
-	 * Getter for the display of the active workbench.
-	 * 
-	 * @return the display
-	 */
-	public Display getDisplay() {
-		return getWorkbench().getDisplay();
-	}
+    /**
+     * {@inheritDoc}
+     */
+    public void windowClosed(final IWorkbenchWindow window) {
+        if (window != null) {
+            window.removePageListener(this);
+        }
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public void windowActivated(final IWorkbenchWindow window) {
-		if (window != null) {
-			window.addPageListener(this);
-		}
-	}
+    /**
+     * {@inheritDoc}
+     */
+    public void windowDeactivated(final IWorkbenchWindow window) {
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public void windowClosed(final IWorkbenchWindow window) {
-		if (window != null) {
-			window.removePageListener(this);
-		}
-	}
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public void windowDeactivated(final IWorkbenchWindow window) {
+    /**
+     * {@inheritDoc}
+     */
+    public void windowOpened(final IWorkbenchWindow window) {
+        if (window != null) {
+            window.addPageListener(this);
+            IWorkbenchPage page = window.getActivePage();
+            if (page != null) {
+                RedundantLabelTriggerListener.hideRedundantLabels();
+                page.addSelectionListener(this);
+                page.addPartListener(this);
+            }
+        }
+    }
 
-	}
+    /**
+     * {@inheritDoc}
+     */
+    public void partActivated(final IWorkbenchPart part) {
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public void windowOpened(final IWorkbenchWindow window) {
-		if (window != null) {
-			window.addPageListener(this);
-			IWorkbenchPage page = window.getActivePage();
-			if (page != null) {
-				registerValidateAction(page);
-				RedundantLabelTriggerListener.hideRedundantLabels();
-				page.addSelectionListener(this);
-				page.addPartListener(this);
-			}
-		}
-	}
+    /**
+     * {@inheritDoc}
+     */
+    public void partBroughtToTop(final IWorkbenchPart part) {
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public void partActivated(final IWorkbenchPart part) {
-	}
+    /**
+     * {@inheritDoc}
+     */
+    public void partClosed(final IWorkbenchPart part) {
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public void partBroughtToTop(final IWorkbenchPart part) {
-	}
+    /**
+     * {@inheritDoc}
+     */
+    public void partDeactivated(final IWorkbenchPart part) {
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public void partClosed(final IWorkbenchPart part) {
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	public void partDeactivated(final IWorkbenchPart part) {
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	public void partOpened(final IWorkbenchPart part) {
-		RedundantLabelTriggerListener.hideRedundantLabels();
-	}
+    /**
+     * {@inheritDoc}
+     */
+    public void partOpened(final IWorkbenchPart part) {
+        RedundantLabelTriggerListener.hideRedundantLabels();
+    }
 }

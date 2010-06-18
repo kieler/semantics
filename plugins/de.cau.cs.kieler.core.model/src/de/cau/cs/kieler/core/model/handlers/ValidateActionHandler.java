@@ -17,7 +17,7 @@ import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 
-import de.cau.cs.kieler.core.model.util.ValidationManager;
+import de.cau.cs.kieler.core.model.validation.ValidationManager;
 
 /**
  * Handler for triggering the validate action in the checkfile manager.

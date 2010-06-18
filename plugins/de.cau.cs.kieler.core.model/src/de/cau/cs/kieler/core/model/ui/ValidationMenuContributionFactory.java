@@ -36,7 +36,7 @@ import org.eclipse.ui.menus.ExtensionContributionFactory;
 import org.eclipse.ui.menus.IContributionRoot;
 import org.eclipse.ui.services.IServiceLocator;
 
-import de.cau.cs.kieler.core.model.util.ValidationManager;
+import de.cau.cs.kieler.core.model.validation.ValidationManager;
 
 /**
  * This factory is responsible for creating the menu entries for the menu of the
@@ -67,9 +67,9 @@ public class ValidationMenuContributionFactory extends
     private void fillMenu(final IContributionRoot menu) {
         Set<String> files = ValidationManager.getRegisteredFiles();
 
-        for (String file : files) {
-            CheckFileMenuItem item = new CheckFileMenuItem(file,
-                    ValidationManager.isEnabled(file));
+        for (String id : files) {
+            CheckFileMenuItem item = new CheckFileMenuItem(id,
+                    ValidationManager.isEnabled(id));
             menu.addContributionItem(item, null);
         }
 
@@ -87,7 +87,7 @@ public class ValidationMenuContributionFactory extends
             IPropertyChangeListener, IContributionItem {
 
         /** The file that belongs to the menu item. */
-        private String file;
+        private String id;
 
         /** True if the file is visible, false if not. */
         private boolean value;
@@ -99,13 +99,13 @@ public class ValidationMenuContributionFactory extends
          * Creates a new CheckFileMenuItem.
          * 
          * @param fileParam
-         *            the file
+         *            the id
          * @param valueParam
          *            true if visible
          */
         public CheckFileMenuItem(final String fileParam,
                 final boolean valueParam) {
-            this.file = fileParam;
+            this.id = fileParam;
             this.value = valueParam;
         }
 
@@ -120,7 +120,7 @@ public class ValidationMenuContributionFactory extends
          */
         public void widgetSelected(final SelectionEvent e) {
             // enable or disable the checkfile and trigger a validate
-            ValidationManager.setEnabled(file, result.getSelection());
+            ValidationManager.setEnabled(id, result.getSelection());
             ValidationManager.validateActiveEditor();
         }
 
@@ -129,7 +129,7 @@ public class ValidationMenuContributionFactory extends
          * somewhere else (e.g. the preference page).
          */
         public void propertyChange(final PropertyChangeEvent event) {
-            if (event.getProperty().contains(file)) {
+            if (event.getProperty().contains(id)) {
 
                 boolean newValue = (Boolean) event.getNewValue();
                 if (newValue != result.getSelection()) {
@@ -159,7 +159,7 @@ public class ValidationMenuContributionFactory extends
          */
         public void fill(final Menu parent, final int index) {
             result = new MenuItem(parent, SWT.CHECK, index);
-            result.setText(file);
+            result.setText(ValidationManager.getDisplay(id));
             result.setSelection(value);
             result.addSelectionListener(this);
             ValidationManager.addListener(this);
@@ -181,7 +181,7 @@ public class ValidationMenuContributionFactory extends
          * {@inheritDoc}
          */
         public String getId() {
-            return file;
+            return id;
         }
 
         /**
@@ -228,7 +228,7 @@ public class ValidationMenuContributionFactory extends
             if (ePackage == null) {
                 return false;
             }
-            return ValidationManager.getEPackage(file) == ePackage;
+            return ValidationManager.getEPackage(id).equals(ePackage);
         }
 
         /**
