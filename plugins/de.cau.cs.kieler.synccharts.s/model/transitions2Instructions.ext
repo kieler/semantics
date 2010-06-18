@@ -15,10 +15,11 @@ List[Instruction] getTransitionInstruction(Transition transition):
 	else 
 		if transition.trigger == null then(
 			info("2 >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>" + transition.label) ->
-			triggerAndEffectTransition(transition))
+			info("2 >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>" + transition.effects) ->
+			justEffectTransition(transition))
 		else
 			info("3 >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>" + transition.label) ->
-			justTriggerTransition(transition)
+			triggerAndEffectTransition(transition)
 ;
 
 List[Instruction] emptyTransition(Transition transition):
@@ -29,13 +30,15 @@ List[Instruction] emptyTransition(Transition transition):
 		out
 ;
 
-List[Instruction] justTriggerTransition(Transition transition):
+List[Instruction] justEffectTransition(Transition transition):
 	let out = {}:
 	let goto = new Goto:
 	let emit = Emit:
-	let signal = ((SignalReference)transition.trigger).signal:
 		goto.setState((s::State)transition.targetState.getSingleTraceTarget("S")) ->
-		goto
+		out.addAll(getEmitStatements(transition)) ->
+		out.add(goto) ->
+		//emit.setSignal((s::Signal)(trigger .getSingleTraceTarget("S"))
+		out
 ;
 
 List[Instruction] triggerAndEffectTransition(Transition transition):
@@ -43,11 +46,23 @@ List[Instruction] triggerAndEffectTransition(Transition transition):
 	out.add(transition.transform())
 ;
 
+List[Emit] getEmitStatements(Transition transition):
+	let out = {}:
+		info("EFFECTS " + transition.effects) ->
+		out.addAll(transition.effects.transform()) ->
+		out
+;
+
+create s::Emit this transform(Effect effect):
+	// TODO: for complex too
+	this.setSignal((s::Signal) ((Emission)effect).signal.getSingleTraceTarget("S"))
+;
+
 create s::Present this transform(Transition transition):
 	let goto = new Goto:
-	let signal = ((SignalReference)transition.trigger).signal:
+	let trigger = ((SignalReference)transition.trigger).signal:
 	let targetState = transition.targetState:
-		this.setSignal((s::Signal)(signal.getSingleTraceTarget("S")))->
-		goto.setState((s::State)targetState.getSingleTraceTarget("S")) ->
+		this.setSignal((s::Signal) (trigger.getSingleTraceTarget("S")))->
+		goto.setState((s::State) targetState.getSingleTraceTarget("S")) ->
 		this.instructions.add(goto)
 ;
