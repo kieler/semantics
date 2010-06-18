@@ -26,6 +26,7 @@ import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipse.emf.ecore.xmi.impl.BasicResourceHandler;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
 import org.eclipse.emf.ecore.xml.type.AnyType;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.dialogs.ProgressMonitorDialog;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.swt.widgets.Shell;
@@ -66,11 +67,22 @@ public class UpdateResourceFactoryImpl extends XMIResourceFactoryImpl {
                                     .beginTask(
                                             "Converting Synccharts from older version.",
                                             IProgressMonitor.UNKNOWN);
-                            doPreprocessing(uri, monitor);
+
+                            try {
+                                doPreprocessing(uri, monitor);
+                            } catch (UpdateException e0) {
+                                throw new UpdateRuntimeException(e0
+                                        .getMessage());
+                            }
+
                             monitor.done();
                         }
                     });
                 } catch (InvocationTargetException e) {
+                    Throwable excep = e.getCause();
+                    if (excep instanceof UpdateRuntimeException) {
+                        throw (UpdateRuntimeException) excep;
+                    }
                     e.printStackTrace();
                 } catch (InterruptedException e) {
                     e.printStackTrace();
@@ -104,79 +116,148 @@ public class UpdateResourceFactoryImpl extends XMIResourceFactoryImpl {
      * @param uri
      *            the location of the file
      * @param monitor
+     * @throws UpdateException
      */
-    private void doPreprocessing(final URI uri, IProgressMonitor monitor) {
+    private void doPreprocessing(final URI uri, IProgressMonitor monitor)
+            throws UpdateException {
         monitor.subTask("Converting v0.1 to v0.2");
-        convert(uri, Version.v_0_1);
+        boolean agreed = convert(uri, Version.v_0_1, false);
         monitor.subTask("Converting v0.2 to v0.2.1");
-        convert(uri, Version.v_0_2);
+        agreed = convert(uri, Version.v_0_2, agreed);
     }
 
     /**
      * @param uri
      * @param version
+     * @throws UpdateException
      */
-    private void convert(URI uri, Version version) {
+    private boolean convert(URI uri, Version version, boolean alreadyAgreed)
+            throws UpdateException {
+        boolean result = false;
         ExtensibleURIConverterImpl conv = new ExtensibleURIConverterImpl();
+
         try {
             if (!conv.exists(uri, null)) {
-                return;
+                return false;
             }
             InputStream is = conv.createInputStream(uri);
             BufferedReader reader = new BufferedReader(
                     new InputStreamReader(is));
 
-            // contains result to be written back to file
-            List<String> lines = new LinkedList<String>();
-            boolean modified = false;
+            try {
+                // contains result to be written back to file
+                List<String> lines = new LinkedList<String>();
+                boolean modified = false;
 
-            String s = reader.readLine();
-            int lineIndex = 0;
-            while (s != null) {
+                String s = reader.readLine();
+                int lineIndex = 0;
+                while (s != null) {
 
-                if (lineIndex == 1 && !s.contains(getVersionURI(version))) {
-                    is.close();
-                    return;
+                    if (lineIndex == 1) {
+                        if (!s.contains(getVersionURI(version))) {
+                            is.close();
+                            return false;
+                        }
+                        if (!alreadyAgreed) {
+                            askUser();
+                            result = true;
+                        }
+                    }
+
+                    String newString = s;
+                    switch (version) {
+                    case v_0_1:
+                        newString = convertLineV_0_1(s);
+                        break;
+                    case v_0_2:
+                        newString = convertLineV_0_2(s);
+                        break;
+                    case v_0_2_1:
+                        return result;
+                    }
+                    lines.add(newString);
+                    s = reader.readLine();
+
+                    if (!modified && !s.equals(newString)) {
+                        modified = true;
+                    }
+                    lineIndex++;
                 }
+                is.close();
 
-                String newString = s;
-                switch (version) {
-                case v_0_1:
-                    newString = convertLineV_0_1(s);
-                    break;
-                case v_0_2:
-                    newString = convertLineV_0_2(s);
-                    break;
-                case v_0_2_1:
-                    return;
+                if (modified) {
+                    String line2 = lines.get(1);
+                    line2 = line2.replace(getVersionURI(version),
+                            getVersionURI(getNextVersion(version)));
+                    lines.set(1, line2);
+
+                    // write modified lines back to file
+                    OutputStream os = conv.createOutputStream(uri);
+                    BufferedWriter bw = new BufferedWriter(
+                            new OutputStreamWriter(os));
+                    for (String line : lines) {
+                        bw.write(line + "\n");
+                        bw.flush();
+                    }
+                    os.close();
                 }
-                lines.add(newString);
-                s = reader.readLine();
-
-                if (!modified && !s.equals(newString)) {
-                    modified = true;
-                }
-            }
-            is.close();
-
-            if (modified) {
-                String line2 = lines.get(1);
-                line2 = line2.replace(getVersionURI(version),
-                        getVersionURI(getNextVersion(version)));
-                lines.set(1, line2);
-
-                // write modified lines back to file
-                OutputStream os = conv.createOutputStream(uri);
-                BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(
-                        os));
-                for (String line : lines) {
-                    bw.write(line + "\n");
-                    bw.flush();
-                }
-                os.close();
+            } catch (UpdateException e0) {
+                is.close();
+                throw e0;
             }
         } catch (IOException e) {
             e.printStackTrace();
+        }
+        return result;
+    }
+
+    private static class UpdateException extends Exception {
+
+        /**
+         *
+         */
+        private static final long serialVersionUID = 1L;
+
+        public UpdateException(final String s) {
+            super(s);
+        }
+
+    }
+
+    private static class UpdateRuntimeException extends RuntimeException {
+
+        /**
+        *
+        */
+        private static final long serialVersionUID = 1L;
+
+        public UpdateRuntimeException(final String s) {
+            super(s);
+        }
+
+    }
+
+    private boolean error = false;
+
+    /**
+     * @throws UpdateException
+     * 
+     */
+    private void askUser() throws UpdateException {
+        error = false;
+        PlatformUI.getWorkbench().getDisplay().syncExec(new Runnable() {
+
+            public void run() {
+                Shell parent = PlatformUI.getWorkbench()
+                        .getActiveWorkbenchWindow().getShell();
+                error = !MessageDialog.openQuestion(parent,
+                        "Old Synccharts version detected.",
+                        "Convert to new version?");
+            }
+        });
+
+        if (error) {
+            throw new UpdateException("User aborted conversion.");
         }
     }
 
@@ -256,11 +337,11 @@ public class UpdateResourceFactoryImpl extends XMIResourceFactoryImpl {
             newString = newString.replaceAll("newID=\"", "actual=\"");
         }
 
-        newString = newString.replaceAll("targetState=\"//@",
-                "DUMMY_targetState=\"//@");
+        newString = newString.replaceAll(" targetState=\"//@",
+                " DUMMY_targetState=\"//@");
 
         if (newString.contains("regions") && newString.contains("id")) {
-            newString = newString.replace("id", "DUMMY_id");
+            newString = newString.replace(" id", " DUMMY_id");
         }
         return newString;
     }
@@ -373,9 +454,15 @@ public class UpdateResourceFactoryImpl extends XMIResourceFactoryImpl {
                 }
             }
             if (f.getName().equals("DUMMY_id")) {
-                Region region = (Region) owner;
-                region.setId((String) value);
-                region.setLabel((String) value);
+                if (owner instanceof Region) {
+                    Region region = (Region) owner;
+                    region.setId((String) value);
+                    region.setLabel((String) value);
+                }
+                if (owner instanceof State) {
+                    State state = (State) owner;
+                    state.setId((String) value);
+                }
             }
             return false;
         }
