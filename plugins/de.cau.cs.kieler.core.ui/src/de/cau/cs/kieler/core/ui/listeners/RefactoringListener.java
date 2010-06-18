@@ -194,8 +194,16 @@ public class RefactoringListener implements IRefactoringHistoryListener {
             // applicable
             for (int i = 0; i < MODEL_EXTENSIONS.length; i++) {
                 if (ext != null && ext.equals(MODEL_EXTENSIONS[i])) {
-                    findRec(result, Platform.getLocation().toFile(), path, op,
-                            newName, i);
+                    String path0 = path.removeFileExtension()
+                            .removeLastSegments(1).toOSString();
+                    String path1 = Platform.getLocation().toOSString();
+                    String path2 = path1 + path0;
+
+                    File parent = Path.fromOSString(path2).toFile();
+
+                    for (File file : parent.listFiles()) {
+                        findRec(result, file, path, op, newName, i);
+                    }
                 }
             }
         }
@@ -221,12 +229,7 @@ public class RefactoringListener implements IRefactoringHistoryListener {
     private void findRec(final List<File> result, final File root,
             final IPath model, final OP op, final String newName,
             final int index) {
-        if (root.isDirectory()) {
-            // recursively look through all files in the directory
-            for (File file : root.listFiles()) {
-                findRec(result, file, model, op, newName, index);
-            }
-        } else if (root.getPath().endsWith("." + DIAGRAM_EXTENSIONS[index])) {
+        if (root.getPath().endsWith("." + DIAGRAM_EXTENSIONS[index])) {
             // found relevant file
             try {
                 InputStream is = new FileInputStream(root);
