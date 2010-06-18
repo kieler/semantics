@@ -308,27 +308,29 @@ public class ValidationInformationCollector implements IStartup, IPartListener,
      * @param ePackage
      */
     public static void validateEPackage(final EPackage ePackage) {
-        String id = getId(ePackage.getNsURI());
-        if (id != null) {
-            IWorkbenchPage page = PlatformUI.getWorkbench()
-                    .getActiveWorkbenchWindow().getActivePage();
-            if (validateActions.containsKey(id)) {
-                IConfigurationElement elem = validateActions.get(id);
-                try {
-                    Object obj = elem
-                            .createExecutableExtension("actionFactory");
-                    if (obj instanceof IValidationActionFactory) {
-                        IValidationActionFactory factory = (IValidationActionFactory) obj;
-                        Action action = factory.getValidationAction(page);
-                        if (action != null) {
-                            action.run();
+        if (ePackage != null) {
+            String id = getId(ePackage.getNsURI());
+            if (id != null) {
+                IWorkbenchPage page = PlatformUI.getWorkbench()
+                        .getActiveWorkbenchWindow().getActivePage();
+                if (validateActions.containsKey(id)) {
+                    IConfigurationElement elem = validateActions.get(id);
+                    try {
+                        Object obj = elem
+                                .createExecutableExtension("actionFactory");
+                        if (obj instanceof IValidationActionFactory) {
+                            IValidationActionFactory factory = (IValidationActionFactory) obj;
+                            Action action = factory.getValidationAction(page);
+                            if (action != null) {
+                                action.run();
+                            }
                         }
+                    } catch (CoreException e0) {
+                        e0.printStackTrace();
+                    } catch (RuntimeException e0) {
+                        e0.printStackTrace();
+                        throw e0;
                     }
-                } catch (CoreException e0) {
-                    e0.printStackTrace();
-                } catch (RuntimeException e0) {
-                    e0.printStackTrace();
-                    throw e0;
                 }
             }
         }
