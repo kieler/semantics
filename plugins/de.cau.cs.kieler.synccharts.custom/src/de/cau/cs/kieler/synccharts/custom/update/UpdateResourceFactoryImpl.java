@@ -261,6 +261,12 @@ public class UpdateResourceFactoryImpl extends XMIResourceFactoryImpl {
         }
     }
 
+    private static final String[] V_0_2_EXPRESSION = { "SignalReference",
+            "VariableReference", "Emission", "TextualCode", "Expression",
+            "ComplexExpression", "Value", "ValuedObject",
+            "OperationExpression", "Signal", "Variable", "FloatValue",
+            "IntValue", "BooleanValue" };
+
     /**
      * @param s
      * @return
@@ -275,14 +281,12 @@ public class UpdateResourceFactoryImpl extends XMIResourceFactoryImpl {
                                     + " xmlns:expressions=\"http://kieler.cs.cau.de/expressions\"");
         }
 
-        result = result.replaceAll("xsi:type=\"synccharts:SignalReference\"",
-                "xsi:type=\"expressions:SignalReference\"");
-
-        result = result.replaceAll("xsi:type=\"synccharts:VariableReference\"",
-                "xsi:type=\"expressions:VariableReference\"");
-
-        result = result.replaceAll("xsi:type=\"synccharts:Emission\"",
-                "xsi:type=\"expressions:Emission\"");
+        for (String expr : V_0_2_EXPRESSION) {
+            if (result.contains(expr)) {
+                result = result.replaceAll("xsi:type=\"synccharts:" + expr
+                        + "\"", "xsi:type=\"expressions:" + expr + "\"");
+            }
+        }
         return result;
     }
 
