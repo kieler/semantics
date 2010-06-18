@@ -17,6 +17,7 @@ import de.cau.cs.kieler.s.s.FloatValue;
 import de.cau.cs.kieler.s.s.Fork;
 import de.cau.cs.kieler.s.s.Forke;
 import de.cau.cs.kieler.s.s.Goto;
+import de.cau.cs.kieler.s.s.Halt;
 import de.cau.cs.kieler.s.s.Instruction;
 import de.cau.cs.kieler.s.s.IntValue;
 import de.cau.cs.kieler.s.s.Join;
@@ -153,6 +154,13 @@ public class SPackageImpl extends EPackageImpl implements SPackage
    * @generated
    */
   private EClass termEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass haltEClass = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -662,6 +670,16 @@ public class SPackageImpl extends EPackageImpl implements SPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  public EClass getHalt()
+  {
+    return haltEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public EClass getJoin()
   {
     return joinEClass;
@@ -939,6 +957,8 @@ public class SPackageImpl extends EPackageImpl implements SPackage
 
     termEClass = createEClass(TERM);
 
+    haltEClass = createEClass(HALT);
+
     joinEClass = createEClass(JOIN);
 
     abortEClass = createEClass(ABORT);
@@ -1007,6 +1027,7 @@ public class SPackageImpl extends EPackageImpl implements SPackage
     instructionEClass.getESuperTypes().add(this.getAnnotatable());
     pauseEClass.getESuperTypes().add(this.getInstruction());
     termEClass.getESuperTypes().add(this.getInstruction());
+    haltEClass.getESuperTypes().add(this.getInstruction());
     joinEClass.getESuperTypes().add(this.getInstruction());
     abortEClass.getESuperTypes().add(this.getInstruction());
     presentEClass.getESuperTypes().add(this.getInstruction());
@@ -1069,6 +1090,8 @@ public class SPackageImpl extends EPackageImpl implements SPackage
     initEClass(pauseEClass, Pause.class, "Pause", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
     initEClass(termEClass, Term.class, "Term", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+    initEClass(haltEClass, Halt.class, "Halt", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
     initEClass(joinEClass, Join.class, "Join", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 

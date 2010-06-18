@@ -71,7 +71,7 @@ terminal Boolean:
 //----------------------- List of S-Instructions ----------------------
 //---------------------------------------------------------------------
 Instruction:
-   Abort | Join | Pause | Term | Present | Goto | Fork | Forke | Emit | Await | Prio
+   Halt | Abort | Join | Pause | Term | Present | Goto | Fork | Forke | Emit | Await | Prio
    ((annotations += Annotation) (',' annotations += Annotation)*)?
    ;
 
@@ -83,6 +83,11 @@ Pause :
 Term : 
 	{Term}
 	'TERM''('continuation=[State]?')'
+  ;
+  
+Halt : 
+	{Halt}
+	'Halt''('continuation=[State]?')'
   ;
   
 Join : 

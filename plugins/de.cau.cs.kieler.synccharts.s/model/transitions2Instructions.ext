@@ -8,61 +8,33 @@ extension org::eclipse::xtend::util::stdlib::cloning;     // copy model elements
 extension org::eclipse::xtend::util::stdlib::tracing;     // create map between transformed objects
 extension org::eclipse::xtend::util::stdlib::issues;      // pass messages back to java (e.g. to UI)
 
+/////////////// local imports //////////////
+extension presentInstruction;
+extension gotoInstruction;
+extension emitInstruction;
+////////////////////////////////////////////
+
 List[Instruction] getTransitionInstruction(Transition transition):
-	if transition.label == "" then(
-		info("1 >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>" + transition.label) ->
-		emptyTransition(transition))
+	if transition.label == "" then
+		emptyTransition(transition)
 	else 
-		if transition.trigger == null then(
-			info("2 >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>" + transition.label) ->
-			info("2 >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>" + transition.effects) ->
-			justEffectTransition(transition))
+		if transition.trigger == null then
+			justEffectTransition(transition)
 		else
-			info("3 >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>" + transition.label) ->
-			triggerAndEffectTransition(transition)
+			getPresentInstruction(transition)
 ;
 
 List[Instruction] emptyTransition(Transition transition):
 	let out = {}:
-	let goto = new Goto:
-		goto.setState((s::State)transition.targetState.getSingleTraceTarget("S")) ->
-		out.add(goto) ->
+		out.add(getGotoInstruction(transition.targetState)) ->
 		out
 ;
 
 List[Instruction] justEffectTransition(Transition transition):
 	let out = {}:
-	let goto = new Goto:
 	let emit = Emit:
-		goto.setState((s::State)transition.targetState.getSingleTraceTarget("S")) ->
-		out.addAll(getEmitStatements(transition)) ->
-		out.add(goto) ->
+		out.addAll(getEmitInstructions(transition)) ->
+		out.add(getGotoInstruction(transition.targetState)) ->
 		//emit.setSignal((s::Signal)(trigger .getSingleTraceTarget("S"))
 		out
-;
-
-List[Instruction] triggerAndEffectTransition(Transition transition):
-	let out = {}:
-	out.add(transition.transform())
-;
-
-List[Emit] getEmitStatements(Transition transition):
-	let out = {}:
-		info("EFFECTS " + transition.effects) ->
-		out.addAll(transition.effects.transform()) ->
-		out
-;
-
-create s::Emit this transform(Effect effect):
-	// TODO: for complex too
-	this.setSignal((s::Signal) ((Emission)effect).signal.getSingleTraceTarget("S"))
-;
-
-create s::Present this transform(Transition transition):
-	let goto = new Goto:
-	let trigger = ((SignalReference)transition.trigger).signal:
-	let targetState = transition.targetState:
-		this.setSignal((s::Signal) (trigger.getSingleTraceTarget("S")))->
-		goto.setState((s::State) targetState.getSingleTraceTarget("S")) ->
-		this.instructions.add(goto)
 ;

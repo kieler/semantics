@@ -66,6 +66,7 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Pause" eSuperTypes="#//Instruction"/>
   <eClassifiers xsi:type="ecore:EClass" name="Term" eSuperTypes="#//Instruction"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Halt" eSuperTypes="#//Instruction"/>
   <eClassifiers xsi:type="ecore:EClass" name="Join" eSuperTypes="#//Instruction"/>
   <eClassifiers xsi:type="ecore:EClass" name="Abort" eSuperTypes="#//Instruction"/>
   <eClassifiers xsi:type="ecore:EClass" name="Present" eSuperTypes="#//Instruction">

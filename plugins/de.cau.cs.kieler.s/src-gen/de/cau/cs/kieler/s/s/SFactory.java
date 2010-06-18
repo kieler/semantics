@@ -161,6 +161,15 @@ public interface SFactory extends EFactory
   Term createTerm();
 
   /**
+   * Returns a new object of class '<em>Halt</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Halt</em>'.
+   * @generated
+   */
+  Halt createHalt();
+
+  /**
    * Returns a new object of class '<em>Join</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->

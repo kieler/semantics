@@ -562,6 +562,34 @@ public interface SPackage extends EPackage
   int TERM_FEATURE_COUNT = INSTRUCTION_FEATURE_COUNT + 0;
 
   /**
+   * The meta object id for the '{@link de.cau.cs.kieler.s.s.impl.HaltImpl <em>Halt</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see de.cau.cs.kieler.s.s.impl.HaltImpl
+   * @see de.cau.cs.kieler.s.s.impl.SPackageImpl#getHalt()
+   * @generated
+   */
+  int HALT = 15;
+
+  /**
+   * The feature id for the '<em><b>Continuation</b></em>' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int HALT__CONTINUATION = INSTRUCTION__CONTINUATION;
+
+  /**
+   * The number of structural features of the '<em>Halt</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int HALT_FEATURE_COUNT = INSTRUCTION_FEATURE_COUNT + 0;
+
+  /**
    * The meta object id for the '{@link de.cau.cs.kieler.s.s.impl.JoinImpl <em>Join</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -569,7 +597,7 @@ public interface SPackage extends EPackage
    * @see de.cau.cs.kieler.s.s.impl.SPackageImpl#getJoin()
    * @generated
    */
-  int JOIN = 15;
+  int JOIN = 16;
 
   /**
    * The feature id for the '<em><b>Continuation</b></em>' reference.
@@ -597,7 +625,7 @@ public interface SPackage extends EPackage
    * @see de.cau.cs.kieler.s.s.impl.SPackageImpl#getAbort()
    * @generated
    */
-  int ABORT = 16;
+  int ABORT = 17;
 
   /**
    * The feature id for the '<em><b>Continuation</b></em>' reference.
@@ -625,7 +653,7 @@ public interface SPackage extends EPackage
    * @see de.cau.cs.kieler.s.s.impl.SPackageImpl#getPresent()
    * @generated
    */
-  int PRESENT = 17;
+  int PRESENT = 18;
 
   /**
    * The feature id for the '<em><b>Continuation</b></em>' reference.
@@ -671,7 +699,7 @@ public interface SPackage extends EPackage
    * @see de.cau.cs.kieler.s.s.impl.SPackageImpl#getGoto()
    * @generated
    */
-  int GOTO = 18;
+  int GOTO = 19;
 
   /**
    * The feature id for the '<em><b>Continuation</b></em>' reference.
@@ -708,7 +736,7 @@ public interface SPackage extends EPackage
    * @see de.cau.cs.kieler.s.s.impl.SPackageImpl#getFork()
    * @generated
    */
-  int FORK = 19;
+  int FORK = 20;
 
   /**
    * The feature id for the '<em><b>Continuation</b></em>' reference.
@@ -754,7 +782,7 @@ public interface SPackage extends EPackage
    * @see de.cau.cs.kieler.s.s.impl.SPackageImpl#getForke()
    * @generated
    */
-  int FORKE = 20;
+  int FORKE = 21;
 
   /**
    * The feature id for the '<em><b>Continuation</b></em>' reference.
@@ -791,7 +819,7 @@ public interface SPackage extends EPackage
    * @see de.cau.cs.kieler.s.s.impl.SPackageImpl#getEmit()
    * @generated
    */
-  int EMIT = 21;
+  int EMIT = 22;
 
   /**
    * The feature id for the '<em><b>Continuation</b></em>' reference.
@@ -828,7 +856,7 @@ public interface SPackage extends EPackage
    * @see de.cau.cs.kieler.s.s.impl.SPackageImpl#getAwait()
    * @generated
    */
-  int AWAIT = 22;
+  int AWAIT = 23;
 
   /**
    * The feature id for the '<em><b>Continuation</b></em>' reference.
@@ -865,7 +893,7 @@ public interface SPackage extends EPackage
    * @see de.cau.cs.kieler.s.s.impl.SPackageImpl#getPrio()
    * @generated
    */
-  int PRIO = 23;
+  int PRIO = 24;
 
   /**
    * The feature id for the '<em><b>Continuation</b></em>' reference.
@@ -911,7 +939,7 @@ public interface SPackage extends EPackage
    * @see de.cau.cs.kieler.s.s.impl.SPackageImpl#getPrimitiveType()
    * @generated
    */
-  int PRIMITIVE_TYPE = 24;
+  int PRIMITIVE_TYPE = 25;
 
 
   /**
@@ -1305,6 +1333,16 @@ public interface SPackage extends EPackage
    * @generated
    */
   EClass getTerm();
+
+  /**
+   * Returns the meta object for class '{@link de.cau.cs.kieler.s.s.Halt <em>Halt</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Halt</em>'.
+   * @see de.cau.cs.kieler.s.s.Halt
+   * @generated
+   */
+  EClass getHalt();
 
   /**
    * Returns the meta object for class '{@link de.cau.cs.kieler.s.s.Join <em>Join</em>}'.
@@ -1864,6 +1902,16 @@ public interface SPackage extends EPackage
      * @generated
      */
     EClass TERM = eINSTANCE.getTerm();
+
+    /**
+     * The meta object literal for the '{@link de.cau.cs.kieler.s.s.impl.HaltImpl <em>Halt</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.s.s.impl.HaltImpl
+     * @see de.cau.cs.kieler.s.s.impl.SPackageImpl#getHalt()
+     * @generated
+     */
+    EClass HALT = eINSTANCE.getHalt();
 
     /**
      * The meta object literal for the '{@link de.cau.cs.kieler.s.s.impl.JoinImpl <em>Join</em>}' class.

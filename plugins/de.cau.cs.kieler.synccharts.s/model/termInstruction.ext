@@ -8,17 +8,14 @@ extension org::eclipse::xtend::util::stdlib::cloning;     // copy model elements
 extension org::eclipse::xtend::util::stdlib::tracing;     // create map between transformed objects
 extension org::eclipse::xtend::util::stdlib::issues;      // pass messages back to java (e.g. to UI)
 
-
-List[Instruction] getPresentInstruction(Transition transition):
+List[Term] getTermInstruction(synccharts::State state):
 	let out = {}:
-	out.add(transition.transform())
-;
-
-create s::Present this transform(Transition transition):
-	let goto = new Goto:
-	let trigger = ((SignalReference)transition.trigger).signal:
-	let targetState = transition.targetState:
-		this.setSignal((s::Signal) (trigger.getSingleTraceTarget("S")))->
-		goto.setState((s::State) targetState.getSingleTraceTarget("S")) ->
-		this.instructions.add(goto)
+	let term = new Term:
+	(
+		if state.outgoingTransitions.isEmpty && state.isFinal then
+			out.add(term)
+		else
+			null
+	) ->
+	out
 ;

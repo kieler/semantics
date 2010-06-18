@@ -153,6 +153,11 @@ public class SAdapterFactory extends AdapterFactoryImpl
         return createTermAdapter();
       }
       @Override
+      public Adapter caseHalt(Halt object)
+      {
+        return createHaltAdapter();
+      }
+      @Override
       public Adapter caseJoin(Join object)
       {
         return createJoinAdapter();
@@ -440,6 +445,21 @@ public class SAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createTermAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.s.s.Halt <em>Halt</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.cau.cs.kieler.s.s.Halt
+   * @generated
+   */
+  public Adapter createHaltAdapter()
   {
     return null;
   }

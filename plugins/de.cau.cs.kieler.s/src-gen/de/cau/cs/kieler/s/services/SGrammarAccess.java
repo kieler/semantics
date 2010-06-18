@@ -548,94 +548,98 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 	public class InstructionElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Instruction");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
-		private final RuleCall cAbortParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
-		private final RuleCall cJoinParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
-		private final RuleCall cPauseParserRuleCall_2 = (RuleCall)cAlternatives.eContents().get(2);
-		private final RuleCall cTermParserRuleCall_3 = (RuleCall)cAlternatives.eContents().get(3);
-		private final RuleCall cPresentParserRuleCall_4 = (RuleCall)cAlternatives.eContents().get(4);
-		private final RuleCall cGotoParserRuleCall_5 = (RuleCall)cAlternatives.eContents().get(5);
-		private final RuleCall cForkParserRuleCall_6 = (RuleCall)cAlternatives.eContents().get(6);
-		private final RuleCall cForkeParserRuleCall_7 = (RuleCall)cAlternatives.eContents().get(7);
-		private final RuleCall cEmitParserRuleCall_8 = (RuleCall)cAlternatives.eContents().get(8);
-		private final RuleCall cAwaitParserRuleCall_9 = (RuleCall)cAlternatives.eContents().get(9);
-		private final Group cGroup_10 = (Group)cAlternatives.eContents().get(10);
-		private final RuleCall cPrioParserRuleCall_10_0 = (RuleCall)cGroup_10.eContents().get(0);
-		private final Group cGroup_10_1 = (Group)cGroup_10.eContents().get(1);
-		private final Assignment cAnnotationsAssignment_10_1_0 = (Assignment)cGroup_10_1.eContents().get(0);
-		private final RuleCall cAnnotationsAnnotationParserRuleCall_10_1_0_0 = (RuleCall)cAnnotationsAssignment_10_1_0.eContents().get(0);
-		private final Group cGroup_10_1_1 = (Group)cGroup_10_1.eContents().get(1);
-		private final Keyword cCommaKeyword_10_1_1_0 = (Keyword)cGroup_10_1_1.eContents().get(0);
-		private final Assignment cAnnotationsAssignment_10_1_1_1 = (Assignment)cGroup_10_1_1.eContents().get(1);
-		private final RuleCall cAnnotationsAnnotationParserRuleCall_10_1_1_1_0 = (RuleCall)cAnnotationsAssignment_10_1_1_1.eContents().get(0);
+		private final RuleCall cHaltParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
+		private final RuleCall cAbortParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
+		private final RuleCall cJoinParserRuleCall_2 = (RuleCall)cAlternatives.eContents().get(2);
+		private final RuleCall cPauseParserRuleCall_3 = (RuleCall)cAlternatives.eContents().get(3);
+		private final RuleCall cTermParserRuleCall_4 = (RuleCall)cAlternatives.eContents().get(4);
+		private final RuleCall cPresentParserRuleCall_5 = (RuleCall)cAlternatives.eContents().get(5);
+		private final RuleCall cGotoParserRuleCall_6 = (RuleCall)cAlternatives.eContents().get(6);
+		private final RuleCall cForkParserRuleCall_7 = (RuleCall)cAlternatives.eContents().get(7);
+		private final RuleCall cForkeParserRuleCall_8 = (RuleCall)cAlternatives.eContents().get(8);
+		private final RuleCall cEmitParserRuleCall_9 = (RuleCall)cAlternatives.eContents().get(9);
+		private final RuleCall cAwaitParserRuleCall_10 = (RuleCall)cAlternatives.eContents().get(10);
+		private final Group cGroup_11 = (Group)cAlternatives.eContents().get(11);
+		private final RuleCall cPrioParserRuleCall_11_0 = (RuleCall)cGroup_11.eContents().get(0);
+		private final Group cGroup_11_1 = (Group)cGroup_11.eContents().get(1);
+		private final Assignment cAnnotationsAssignment_11_1_0 = (Assignment)cGroup_11_1.eContents().get(0);
+		private final RuleCall cAnnotationsAnnotationParserRuleCall_11_1_0_0 = (RuleCall)cAnnotationsAssignment_11_1_0.eContents().get(0);
+		private final Group cGroup_11_1_1 = (Group)cGroup_11_1.eContents().get(1);
+		private final Keyword cCommaKeyword_11_1_1_0 = (Keyword)cGroup_11_1_1.eContents().get(0);
+		private final Assignment cAnnotationsAssignment_11_1_1_1 = (Assignment)cGroup_11_1_1.eContents().get(1);
+		private final RuleCall cAnnotationsAnnotationParserRuleCall_11_1_1_1_0 = (RuleCall)cAnnotationsAssignment_11_1_1_1.eContents().get(0);
 		
 		////---------------------------------------------------------------------
 		////----------------------- List of S-Instructions ----------------------
 		////---------------------------------------------------------------------
 		//Instruction:
-		//	Abort | Join | Pause | Term | Present | Goto | Fork | Forke | Emit | Await | Prio (annotations+=Annotation (","
+		//	Halt | Abort | Join | Pause | Term | Present | Goto | Fork | Forke | Emit | Await | Prio (annotations+=Annotation (","
 		//	annotations+=Annotation)*)?;
 		public ParserRule getRule() { return rule; }
 
-		//Abort | Join | Pause | Term | Present | Goto | Fork | Forke | Emit | Await | Prio (annotations+=Annotation (","
+		//Halt | Abort | Join | Pause | Term | Present | Goto | Fork | Forke | Emit | Await | Prio (annotations+=Annotation (","
 		//annotations+=Annotation)*)?
 		public Alternatives getAlternatives() { return cAlternatives; }
 
+		//Halt
+		public RuleCall getHaltParserRuleCall_0() { return cHaltParserRuleCall_0; }
+
 		//Abort
-		public RuleCall getAbortParserRuleCall_0() { return cAbortParserRuleCall_0; }
+		public RuleCall getAbortParserRuleCall_1() { return cAbortParserRuleCall_1; }
 
 		//Join
-		public RuleCall getJoinParserRuleCall_1() { return cJoinParserRuleCall_1; }
+		public RuleCall getJoinParserRuleCall_2() { return cJoinParserRuleCall_2; }
 
 		//Pause
-		public RuleCall getPauseParserRuleCall_2() { return cPauseParserRuleCall_2; }
+		public RuleCall getPauseParserRuleCall_3() { return cPauseParserRuleCall_3; }
 
 		//Term
-		public RuleCall getTermParserRuleCall_3() { return cTermParserRuleCall_3; }
+		public RuleCall getTermParserRuleCall_4() { return cTermParserRuleCall_4; }
 
 		//Present
-		public RuleCall getPresentParserRuleCall_4() { return cPresentParserRuleCall_4; }
+		public RuleCall getPresentParserRuleCall_5() { return cPresentParserRuleCall_5; }
 
 		//Goto
-		public RuleCall getGotoParserRuleCall_5() { return cGotoParserRuleCall_5; }
+		public RuleCall getGotoParserRuleCall_6() { return cGotoParserRuleCall_6; }
 
 		//Fork
-		public RuleCall getForkParserRuleCall_6() { return cForkParserRuleCall_6; }
+		public RuleCall getForkParserRuleCall_7() { return cForkParserRuleCall_7; }
 
 		//Forke
-		public RuleCall getForkeParserRuleCall_7() { return cForkeParserRuleCall_7; }
+		public RuleCall getForkeParserRuleCall_8() { return cForkeParserRuleCall_8; }
 
 		//Emit
-		public RuleCall getEmitParserRuleCall_8() { return cEmitParserRuleCall_8; }
+		public RuleCall getEmitParserRuleCall_9() { return cEmitParserRuleCall_9; }
 
 		//Await
-		public RuleCall getAwaitParserRuleCall_9() { return cAwaitParserRuleCall_9; }
+		public RuleCall getAwaitParserRuleCall_10() { return cAwaitParserRuleCall_10; }
 
 		//Prio (annotations+=Annotation ("," annotations+=Annotation)*)?
-		public Group getGroup_10() { return cGroup_10; }
+		public Group getGroup_11() { return cGroup_11; }
 
 		//Prio
-		public RuleCall getPrioParserRuleCall_10_0() { return cPrioParserRuleCall_10_0; }
+		public RuleCall getPrioParserRuleCall_11_0() { return cPrioParserRuleCall_11_0; }
 
 		//(annotations+=Annotation ("," annotations+=Annotation)*)?
-		public Group getGroup_10_1() { return cGroup_10_1; }
+		public Group getGroup_11_1() { return cGroup_11_1; }
 
 		//annotations+=Annotation
-		public Assignment getAnnotationsAssignment_10_1_0() { return cAnnotationsAssignment_10_1_0; }
+		public Assignment getAnnotationsAssignment_11_1_0() { return cAnnotationsAssignment_11_1_0; }
 
 		//Annotation
-		public RuleCall getAnnotationsAnnotationParserRuleCall_10_1_0_0() { return cAnnotationsAnnotationParserRuleCall_10_1_0_0; }
+		public RuleCall getAnnotationsAnnotationParserRuleCall_11_1_0_0() { return cAnnotationsAnnotationParserRuleCall_11_1_0_0; }
 
 		//("," annotations+=Annotation)*
-		public Group getGroup_10_1_1() { return cGroup_10_1_1; }
+		public Group getGroup_11_1_1() { return cGroup_11_1_1; }
 
 		//","
-		public Keyword getCommaKeyword_10_1_1_0() { return cCommaKeyword_10_1_1_0; }
+		public Keyword getCommaKeyword_11_1_1_0() { return cCommaKeyword_11_1_1_0; }
 
 		//annotations+=Annotation
-		public Assignment getAnnotationsAssignment_10_1_1_1() { return cAnnotationsAssignment_10_1_1_1; }
+		public Assignment getAnnotationsAssignment_11_1_1_1() { return cAnnotationsAssignment_11_1_1_1; }
 
 		//Annotation
-		public RuleCall getAnnotationsAnnotationParserRuleCall_10_1_1_1_0() { return cAnnotationsAnnotationParserRuleCall_10_1_1_1_0; }
+		public RuleCall getAnnotationsAnnotationParserRuleCall_11_1_1_1_0() { return cAnnotationsAnnotationParserRuleCall_11_1_1_1_0; }
 	}
 
 	public class PauseElements extends AbstractParserRuleElementFinder {
@@ -701,6 +705,46 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 
 		//"TERM"
 		public Keyword getTERMKeyword_1() { return cTERMKeyword_1; }
+
+		//"("
+		public Keyword getLeftParenthesisKeyword_2() { return cLeftParenthesisKeyword_2; }
+
+		//continuation=[State]?
+		public Assignment getContinuationAssignment_3() { return cContinuationAssignment_3; }
+
+		//[State]
+		public CrossReference getContinuationStateCrossReference_3_0() { return cContinuationStateCrossReference_3_0; }
+
+		//ID
+		public RuleCall getContinuationStateIDTerminalRuleCall_3_0_1() { return cContinuationStateIDTerminalRuleCall_3_0_1; }
+
+		//")"
+		public Keyword getRightParenthesisKeyword_4() { return cRightParenthesisKeyword_4; }
+	}
+
+	public class HaltElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Halt");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Action cHaltAction_0 = (Action)cGroup.eContents().get(0);
+		private final Keyword cHaltKeyword_1 = (Keyword)cGroup.eContents().get(1);
+		private final Keyword cLeftParenthesisKeyword_2 = (Keyword)cGroup.eContents().get(2);
+		private final Assignment cContinuationAssignment_3 = (Assignment)cGroup.eContents().get(3);
+		private final CrossReference cContinuationStateCrossReference_3_0 = (CrossReference)cContinuationAssignment_3.eContents().get(0);
+		private final RuleCall cContinuationStateIDTerminalRuleCall_3_0_1 = (RuleCall)cContinuationStateCrossReference_3_0.eContents().get(1);
+		private final Keyword cRightParenthesisKeyword_4 = (Keyword)cGroup.eContents().get(4);
+		
+		//Halt:
+		//	{Halt} "Halt" "(" continuation=[State]? ")";
+		public ParserRule getRule() { return rule; }
+
+		//{Halt} "Halt" "(" continuation=[State]? ")"
+		public Group getGroup() { return cGroup; }
+
+		//{Halt}
+		public Action getHaltAction_0() { return cHaltAction_0; }
+
+		//"Halt"
+		public Keyword getHaltKeyword_1() { return cHaltKeyword_1; }
 
 		//"("
 		public Keyword getLeftParenthesisKeyword_2() { return cLeftParenthesisKeyword_2; }
@@ -1285,6 +1329,7 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 	private InstructionElements pInstruction;
 	private PauseElements pPause;
 	private TermElements pTerm;
+	private HaltElements pHalt;
 	private JoinElements pJoin;
 	private AbortElements pAbort;
 	private PresentElements pPresent;
@@ -1466,7 +1511,7 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 	////----------------------- List of S-Instructions ----------------------
 	////---------------------------------------------------------------------
 	//Instruction:
-	//	Abort | Join | Pause | Term | Present | Goto | Fork | Forke | Emit | Await | Prio (annotations+=Annotation (","
+	//	Halt | Abort | Join | Pause | Term | Present | Goto | Fork | Forke | Emit | Await | Prio (annotations+=Annotation (","
 	//	annotations+=Annotation)*)?;
 	public InstructionElements getInstructionAccess() {
 		return (pInstruction != null) ? pInstruction : (pInstruction = new InstructionElements());
@@ -1494,6 +1539,16 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public ParserRule getTermRule() {
 		return getTermAccess().getRule();
+	}
+
+	//Halt:
+	//	{Halt} "Halt" "(" continuation=[State]? ")";
+	public HaltElements getHaltAccess() {
+		return (pHalt != null) ? pHalt : (pHalt = new HaltElements());
+	}
+	
+	public ParserRule getHaltRule() {
+		return getHaltAccess().getRule();
 	}
 
 	//Join:

@@ -16,8 +16,10 @@ extension org::eclipse::xtend::util::stdlib::issues;      // pass messages back 
 /////////////// local imports //////////////
 extension helper;
 extension transitions2Instructions;
-extension presentInstruction;
 extension haltInstruction;
+extension termInstruction;
+extension pauseInstruction;
+extension gotoInstruction;
 ////////////////////////////////////////////
 
 //-----------------------------------------------------------------------------
@@ -125,7 +127,8 @@ s::State putInstructions(s::State state, List[s::Instruction] instructions):
 
 List[s::Instruction] getStateInstructions(synccharts::State state):
 	let outList = {}:
-		(
+		
+		
 		// TODO: # strong Transitions
 		// TODO: onEntry actions
 		// TODO: PRIO(weak)
@@ -142,13 +145,11 @@ List[s::Instruction] getStateInstructions(synccharts::State state):
 		// TODO: all weak transitions
 		// TODO: GOTO(_intern)
 		
+		outList.add(getPauseInstruction(state)) ->
 		// All transitions with Trigger
-		if !state.outgoingTransitions.isEmpty then 
-			outList.addAll(state.outgoingTransitions.getTransitionInstruction())
-		else
-			null 
-		)
-		->
+		outList.addAll(state.outgoingTransitions.getTransitionInstruction()) ->
+		outList.addAll(getTermInstruction(state)) ->
+		outList.add(getGotoInstruction(state)) ->
 		outList
 ;
 

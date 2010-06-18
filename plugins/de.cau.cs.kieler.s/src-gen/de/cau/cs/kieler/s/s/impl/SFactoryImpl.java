@@ -83,6 +83,7 @@ public class SFactoryImpl extends EFactoryImpl implements SFactory
       case SPackage.INSTRUCTION: return createInstruction();
       case SPackage.PAUSE: return createPause();
       case SPackage.TERM: return createTerm();
+      case SPackage.HALT: return createHalt();
       case SPackage.JOIN: return createJoin();
       case SPackage.ABORT: return createAbort();
       case SPackage.PRESENT: return createPresent();
@@ -294,6 +295,17 @@ public class SFactoryImpl extends EFactoryImpl implements SFactory
   {
     TermImpl term = new TermImpl();
     return term;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Halt createHalt()
+  {
+    HaltImpl halt = new HaltImpl();
+    return halt;
   }
 
   /**

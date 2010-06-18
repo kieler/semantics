@@ -62,6 +62,7 @@
     </genClasses>
     <genClasses ecoreClass="S.ecore#//Pause"/>
     <genClasses ecoreClass="S.ecore#//Term"/>
+    <genClasses ecoreClass="S.ecore#//Halt"/>
     <genClasses ecoreClass="S.ecore#//Join"/>
     <genClasses ecoreClass="S.ecore#//Abort"/>
     <genClasses ecoreClass="S.ecore#//Present">
