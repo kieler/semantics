@@ -513,7 +513,7 @@
       <extension
          point="org.eclipse.gmf.runtime.diagram.ui.editpolicyProviders">
       <editpolicyProvider
-            class="de.cau.cs.kieler.synccharts.diagram.custom.handlers.DeletionPolicy">
+            class="de.cau.cs.kieler.synccharts.diagram.custom.handlers.SyncchartsDeletionPolicyProvider">
          <Priority
                name="Lowest">
          </Priority>
@@ -559,6 +559,13 @@
                properties="activeSyncchartsEditor"
                type="org.eclipse.ui.IEditorPart">
          </propertyTester>
+      </extension>
+      <extension
+            point="de.cau.cs.kieler.core.model.Validation">
+         <ValidateAction
+               actionFactory="de.cau.cs.kieler.synccharts.diagram.custom.SyncchartsValidationActionFactory"
+               ePackageId="de.cau.cs.kieler.synccharts">
+         </ValidateAction>
       </extension>
 
 </plugin>
