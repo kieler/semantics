@@ -135,7 +135,7 @@ public class OutlineTransformationCommandHandler extends AbstractHandler {
                     .size()]));
 
             framework.initializeTransformation(editor.getTransformationFile(),
-                    t.getTransformation(), editor.getModelPackageClass());
+                    t.getTransformation(), editor.getModelPackages());
             Object res = framework.executeTransformation();
 
             Resource x = targetList.get(0).eResource().getContents().get(0)

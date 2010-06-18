@@ -13,6 +13,9 @@
  */
 package de.cau.cs.kieler.synccharts.diagram.custom.commands;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.ui.IEditorPart;
 import org.osgi.framework.Bundle;
@@ -36,8 +39,10 @@ public class SyncchartsCutCopyPasteCommandFactory extends
 	/** The transformation file. */
 	private static final String FILE = "/transformations/feature.ext";
 
-	/** The base package of the underlying meta model. */
-	private static final String MODEL = "de.cau.cs.kieler.synccharts.SyncchartsPackage";
+	/** The base packages of the underlying meta model. */
+	private static final String[] MODEL = {
+	        "de.cau.cs.kieler.synccharts.SyncchartsPackage"
+	};
 
 	/** All types that are supported by copy and paste and have to be mapped. */
 	private static final Class<?>[] TYPES = { State.class, Region.class,
@@ -94,7 +99,11 @@ public class SyncchartsCutCopyPasteCommandFactory extends
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected String getModel() {
-		return MODEL;
+	protected List<String> getModel() {
+	    List<String> modelsList = new ArrayList<String>(MODEL.length);
+		for (String s : MODEL) {
+		    modelsList.add(s);
+		}
+		return modelsList;
 	}
 }

@@ -112,8 +112,7 @@
             TransformationFile="src/activity.ext"
             checkVisibility="true"
             contextId="org.eclipse.uml2.diagram.activity.ui.diagramContext"
-            editorId="org.eclipse.uml2.diagram.activity.part.UMLDiagramEditorID"
-            packageName="org.eclipse.uml2.uml.UMLPackage">
+            editorId="org.eclipse.uml2.diagram.activity.part.UMLDiagramEditorID">
        <transformations>
           <transformation
                 icon="icons/action.gif"
@@ -163,13 +162,15 @@
              </transformationCommand>
           </menuContribution>
        </menus>
+       <package
+             class="org.eclipse.uml2.uml.UMLPackage">
+       </package>
       </configuration>
       <configuration
             TransformationFile="src/statem.ext"
             checkVisibility="true"
             contextId="org.eclipse.uml2.diagram.statemachine.ui.diagramContext"
-            editorId="org.eclipse.uml2.diagram.statemachine.part.UMLDiagramEditorID"
-            packageName="org.eclipse.uml2.uml.UMLPackage">
+            editorId="org.eclipse.uml2.diagram.statemachine.part.UMLDiagramEditorID">
          <transformations>
             <transformation
                   name="Create Composite"
@@ -185,13 +186,15 @@
                </transformationCommand>
             </menuContribution>
          </menus>
+         <package
+               class="org.eclipse.uml2.uml.UMLPackage">
+         </package>
       </configuration>
       <configuration
             TransformationFile="src/usecase.ext"
             checkVisibility="true"
             contextId="org.eclipse.uml2.diagram.usecase.ui.diagramContext"
-            editorId="org.eclipse.uml2.diagram.usecase.part.UMLDiagramEditorID"
-            packageName="org.eclipse.uml2.uml.UMLPackage">
+            editorId="org.eclipse.uml2.diagram.usecase.part.UMLDiagramEditorID">
          <menus>
             <menuContribution
                   locationURI="menu:de.cau.cs.kieler">
@@ -303,6 +306,9 @@
                   transformationId="de.cau.cs.kieler.uml2.usecase.addConstraintToExtension">
             </transformation>
          </transformations>
+         <package
+               class="org.eclipse.uml2.uml.UMLPackage">
+         </package>
       </configuration>
    </extension>
    <extension

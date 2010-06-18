@@ -1,4 +1,5 @@
 import synccharts;
+import expressions;
 import utilities;
 
 extension org::eclipse::xtend::util::stdlib::io;          // debug printouts

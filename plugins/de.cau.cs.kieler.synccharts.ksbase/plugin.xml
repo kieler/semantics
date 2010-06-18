@@ -8,8 +8,7 @@
                checkVisibility="true"
                contextId="de.cau.cs.kieler.synccharts.diagram.ui.diagramContext"
                defautlIcon="icons/obj16/State.gif"
-               editorId="de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorID"
-               packageName="de.cau.cs.kieler.synccharts.SyncchartsPackage">
+               editorId="de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorID">
 			<transformations>
 				<transformation
           tooltip="Create a successor for the selected states"
@@ -295,6 +294,15 @@
     </menuContribution>
 
 			</menus>
+   <package
+         class="de.cau.cs.kieler.synccharts.SyncchartsPackage">
+   </package>
+   <package
+         class="de.cau.cs.kieler.expressions.ExpressionsPackage">
+   </package>
+   <package
+         class="de.cau.cs.kieler.annotations.AnnotationsPackage">
+   </package>
 		</configuration>
 		
  </extension>
