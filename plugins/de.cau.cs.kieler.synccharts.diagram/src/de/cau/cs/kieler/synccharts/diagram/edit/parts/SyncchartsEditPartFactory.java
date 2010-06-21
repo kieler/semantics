@@ -63,47 +63,47 @@ public class SyncchartsEditPartFactory implements EditPartFactory {
             case SignalNameEditPart.VISUAL_ID:
                 return new SignalNameEditPart(view);
 
-            case ActionEditPart.VISUAL_ID:
-                return new ActionEditPart(view);
+            case StateEntryActionEditPart.VISUAL_ID:
+                return new StateEntryActionEditPart(view);
 
-            case ActionLabelEditPart.VISUAL_ID:
-                return new ActionLabelEditPart(view);
+            case StateEntryActionLabelEditPart.VISUAL_ID:
+                return new StateEntryActionLabelEditPart(view);
 
-            case Action2EditPart.VISUAL_ID:
-                return new Action2EditPart(view);
+            case StateInnerActionEditPart.VISUAL_ID:
+                return new StateInnerActionEditPart(view);
 
-            case ActionLabel2EditPart.VISUAL_ID:
-                return new ActionLabel2EditPart(view);
+            case StateInnerActionLabelEditPart.VISUAL_ID:
+                return new StateInnerActionLabelEditPart(view);
 
-            case Action3EditPart.VISUAL_ID:
-                return new Action3EditPart(view);
+            case StateExitActionEditPart.VISUAL_ID:
+                return new StateExitActionEditPart(view);
 
-            case ActionLabel3EditPart.VISUAL_ID:
-                return new ActionLabel3EditPart(view);
+            case StateExitActionLabelEditPart.VISUAL_ID:
+                return new StateExitActionLabelEditPart(view);
 
-            case Action4EditPart.VISUAL_ID:
-                return new Action4EditPart(view);
+            case StateSuspensionTriggerEditPart.VISUAL_ID:
+                return new StateSuspensionTriggerEditPart(view);
 
-            case ActionLabel4EditPart.VISUAL_ID:
-                return new ActionLabel4EditPart(view);
+            case StateSuspensionTriggerLabelEditPart.VISUAL_ID:
+                return new StateSuspensionTriggerLabelEditPart(view);
 
             case TextualCodeEditPart.VISUAL_ID:
                 return new TextualCodeEditPart(view);
 
-            case StateStateEditPart.VISUAL_ID:
-                return new StateStateEditPart(view);
+            case StateSignalCompartment2EditPart.VISUAL_ID:
+                return new StateSignalCompartment2EditPart(view);
 
-            case StateState2EditPart.VISUAL_ID:
-                return new StateState2EditPart(view);
+            case StateEntryActionCompartment2EditPart.VISUAL_ID:
+                return new StateEntryActionCompartment2EditPart(view);
 
-            case StateState3EditPart.VISUAL_ID:
-                return new StateState3EditPart(view);
+            case StateInnerActionCompartment2EditPart.VISUAL_ID:
+                return new StateInnerActionCompartment2EditPart(view);
 
-            case StateState4EditPart.VISUAL_ID:
-                return new StateState4EditPart(view);
+            case StateExitActionCompartment2EditPart.VISUAL_ID:
+                return new StateExitActionCompartment2EditPart(view);
 
-            case StateState5EditPart.VISUAL_ID:
-                return new StateState5EditPart(view);
+            case StateSuspensionTriggerCompartment2EditPart.VISUAL_ID:
+                return new StateSuspensionTriggerCompartment2EditPart(view);
 
             case StateRegionCompartmentEditPart.VISUAL_ID:
                 return new StateRegionCompartmentEditPart(view);
@@ -111,20 +111,20 @@ public class SyncchartsEditPartFactory implements EditPartFactory {
             case RegionStateCompartmentEditPart.VISUAL_ID:
                 return new RegionStateCompartmentEditPart(view);
 
-            case StateState6EditPart.VISUAL_ID:
-                return new StateState6EditPart(view);
+            case StateSignalCompartmentEditPart.VISUAL_ID:
+                return new StateSignalCompartmentEditPart(view);
 
-            case StateState7EditPart.VISUAL_ID:
-                return new StateState7EditPart(view);
+            case StateEntryActionCompartmentEditPart.VISUAL_ID:
+                return new StateEntryActionCompartmentEditPart(view);
 
-            case StateState8EditPart.VISUAL_ID:
-                return new StateState8EditPart(view);
+            case StateInnerActionCompartmentEditPart.VISUAL_ID:
+                return new StateInnerActionCompartmentEditPart(view);
 
-            case StateState9EditPart.VISUAL_ID:
-                return new StateState9EditPart(view);
+            case StateExitActionCompartmentEditPart.VISUAL_ID:
+                return new StateExitActionCompartmentEditPart(view);
 
-            case StateState10EditPart.VISUAL_ID:
-                return new StateState10EditPart(view);
+            case StateSuspensionTriggerCompartmentEditPart.VISUAL_ID:
+                return new StateSuspensionTriggerCompartmentEditPart(view);
 
             case StateRegionCompartment2EditPart.VISUAL_ID:
                 return new StateRegionCompartment2EditPart(view);
@@ -154,7 +154,8 @@ public class SyncchartsEditPartFactory implements EditPartFactory {
     /**
      * @generated
      */
-    public static CellEditorLocator getTextCellEditorLocator(ITextAwareEditPart source) {
+    public static CellEditorLocator getTextCellEditorLocator(
+            ITextAwareEditPart source) {
         if (source.getFigure() instanceof WrappingLabel)
             return new TextCellEditorLocator((WrappingLabel) source.getFigure());
         else {
@@ -193,15 +194,18 @@ public class SyncchartsEditPartFactory implements EditPartFactory {
             Text text = (Text) celleditor.getControl();
             Rectangle rect = getWrapLabel().getTextBounds().getCopy();
             getWrapLabel().translateToAbsolute(rect);
-            if (getWrapLabel().isTextWrapOn() && getWrapLabel().getText().length() > 0) {
-                rect.setSize(new Dimension(text.computeSize(rect.width, SWT.DEFAULT)));
+            if (getWrapLabel().isTextWrapOn()
+                    && getWrapLabel().getText().length() > 0) {
+                rect.setSize(new Dimension(text.computeSize(rect.width,
+                        SWT.DEFAULT)));
             } else {
 
                 Font font = text.getFont();
                 if (!font.isDisposed()) {
-                    int avr = FigureUtilities.getFontMetrics(font).getAverageCharWidth();
-                    rect.setSize(new Dimension(text.computeSize(SWT.DEFAULT, SWT.DEFAULT)).expand(
-                            avr * 2, 0));
+                    int avr = FigureUtilities.getFontMetrics(font)
+                            .getAverageCharWidth();
+                    rect.setSize(new Dimension(text.computeSize(SWT.DEFAULT,
+                            SWT.DEFAULT)).expand(avr * 2, 0));
                 }
             }
             if (!rect.equals(new Rectangle(text.getBounds()))) {
@@ -244,9 +248,10 @@ public class SyncchartsEditPartFactory implements EditPartFactory {
 
             Font font = text.getFont();
             if (!font.isDisposed()) {
-                int avr = FigureUtilities.getFontMetrics(font).getAverageCharWidth();
-                rect.setSize(new Dimension(text.computeSize(SWT.DEFAULT, SWT.DEFAULT)).expand(
-                        avr * 2, 0));
+                int avr = FigureUtilities.getFontMetrics(font)
+                        .getAverageCharWidth();
+                rect.setSize(new Dimension(text.computeSize(SWT.DEFAULT,
+                        SWT.DEFAULT)).expand(avr * 2, 0));
             }
             if (!rect.equals(new Rectangle(text.getBounds()))) {
                 text.setBounds(rect.x, rect.y, rect.width, rect.height);

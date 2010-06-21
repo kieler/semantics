@@ -38,7 +38,20 @@ import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.handlers.HandlerUtil;
 
-import de.cau.cs.kieler.synccharts.diagram.edit.parts.*;
+import de.cau.cs.kieler.synccharts.diagram.edit.parts.State2EditPart;
+import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateEditPart;
+import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateEntryActionCompartment2EditPart;
+import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateEntryActionCompartmentEditPart;
+import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateExitActionCompartment2EditPart;
+import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateExitActionCompartmentEditPart;
+import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateInnerActionCompartment2EditPart;
+import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateInnerActionCompartmentEditPart;
+import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateRegionCompartment2EditPart;
+import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateRegionCompartmentEditPart;
+import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateSignalCompartment2EditPart;
+import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateSignalCompartmentEditPart;
+import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateSuspensionTriggerCompartment2EditPart;
+import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateSuspensionTriggerCompartmentEditPart;
 import de.cau.cs.kieler.synccharts.diagram.providers.SyncchartsElementTypes;
 
 /**
@@ -50,57 +63,64 @@ public class AddToStateHandler extends AbstractHandler implements IHandler {
 
     /** parameter for type of element to add */
     public static final String TYPE_PARAM = "de.cau.cs.kieler.synccharts.custom.parameters.type";
-    
-    private static final String VAL_ENTRY_ACTION = "OnEntryAction"; 
+
+    private static final String VAL_ENTRY_ACTION = "OnEntryAction";
     private static final String VAL_EXIT_ACTION = "OnExitAction";
     private static final String VAL_INSIDE_ACTION = "OnInsideAction";
     private static final String VAL_REGION = "Region";
     private static final String VAL_SIGNAL = "Signal";
     private static final String VAL_VARIABLE = "Variable";
     private static final String VAL_SUSPENSION_TRIGGER = "SuspensionTrigger";
-    
+
     /** last compartment to which an element was added */
     private ShapeCompartmentEditPart lastEditCompartment;
     /** view adapter for the last edited compartment */
     private IAdaptable elementViewAdapter;
-    
+
     /* (non-Javadoc)
      * @see org.eclipse.core.commands.IHandler#execute(org.eclipse.core.commands.ExecutionEvent)
      */
     public Object execute(ExecutionEvent event) throws ExecutionException {
         lastEditCompartment = null;
-        IStructuredSelection selection = (IStructuredSelection)HandlerUtil.getActiveMenuSelection(event);
-        if (selection == null)
-            selection = (IStructuredSelection)HandlerUtil.getCurrentSelection(event);
+        IStructuredSelection selection = (IStructuredSelection) HandlerUtil
+                .getActiveMenuSelection(event);
+        if (selection == null) {
+            selection = (IStructuredSelection) HandlerUtil
+                    .getCurrentSelection(event);
+        }
         String type = event.getParameter(TYPE_PARAM);
         if (selection != null && type != null) {
-            
+
             // add an element to each selected node
             Iterator<?> selectionIter = selection.iterator();
             while (selectionIter.hasNext()) {
                 Object nextObj = selectionIter.next();
                 if (nextObj instanceof StateEditPart
-                        || nextObj instanceof State2EditPart)
-                    addElement((ShapeNodeEditPart)nextObj, type);
-                else if (nextObj instanceof ShapeCompartmentEditPart
+                        || nextObj instanceof State2EditPart) {
+                    addElement((ShapeNodeEditPart) nextObj, type);
+                } else if (nextObj instanceof ShapeCompartmentEditPart
                         || nextObj instanceof ITextAwareEditPart) {
-                    EditPart parent = ((EditPart)nextObj).getParent();
+                    EditPart parent = ((EditPart) nextObj).getParent();
                     if (parent instanceof StateEditPart
-                            || parent instanceof State2EditPart)
-                        addElement((ShapeNodeEditPart)parent, type);
+                            || parent instanceof State2EditPart) {
+                        addElement((ShapeNodeEditPart) parent, type);
+                    }
                 }
             }
-            
+
             // set the last selected node into edit mode
             if (lastEditCompartment != null) {
                 final EditPartViewer viewer = lastEditCompartment.getViewer();
-                final EditPart elementPart = (EditPart)viewer.getEditPartRegistry()
-                        .get(elementViewAdapter.getAdapter(View.class));
+                final EditPart elementPart = (EditPart) viewer
+                        .getEditPartRegistry().get(
+                                elementViewAdapter.getAdapter(View.class));
                 if (elementPart != null) {
                     Display.getCurrent().asyncExec(new Runnable() {
                         public void run() {
-                            viewer.setSelection(new StructuredSelection(elementPart));
-                            Request der = new Request(RequestConstants.REQ_DIRECT_EDIT);
+                            viewer.setSelection(new StructuredSelection(
+                                    elementPart));
+                            Request der = new Request(
+                                    RequestConstants.REQ_DIRECT_EDIT);
                             elementPart.performRequest(der);
                         }
                     });
@@ -109,62 +129,61 @@ public class AddToStateHandler extends AbstractHandler implements IHandler {
         }
         return null;
     }
-    
+
     /**
      * Adds an element of given type to the state edit part.
      * 
-     * @param stateEditPart state edit part
-     * @param type type of element to add
+     * @param stateEditPart
+     *            state edit part
+     * @param type
+     *            type of element to add
      */
     private void addElement(ShapeNodeEditPart stateEditPart, String type) {
         Class<?> class1 = null, class2 = null;
         IElementType elementType = null;
- /* FIXME: names of EditParts are broken 
-  *      if (type.equals(VAL_ENTRY_ACTION)) {
-        	class1 = StateEntryActionCompartmentEditPart.class;
+        if (type.equals(VAL_ENTRY_ACTION)) {
+            class1 = StateEntryActionCompartmentEditPart.class;
             class2 = StateEntryActionCompartment2EditPart.class;
-            elementType = SyncchartsElementTypes.Action_3012;
-        }
-        else if (type.equals(VAL_EXIT_ACTION)) {
-        	class1 = StateExitActionCompartmentEditPart.class;
+            elementType = SyncchartsElementTypes.Action_3026;
+        } else if (type.equals(VAL_EXIT_ACTION)) {
+            class1 = StateExitActionCompartmentEditPart.class;
             class2 = StateExitActionCompartment2EditPart.class;
-            elementType = SyncchartsElementTypes.Action_3016;
-        }
-        else if (type.equals(VAL_INSIDE_ACTION)) {
-        	class1 = StateInnerActionCompartmentEditPart.class;
+            elementType = SyncchartsElementTypes.Action_3028;
+        } else if (type.equals(VAL_INSIDE_ACTION)) {
+            class1 = StateInnerActionCompartmentEditPart.class;
             class2 = StateInnerActionCompartment2EditPart.class;
-            elementType = SyncchartsElementTypes.Action_3014;
-        }
-        else if (type.equals(VAL_REGION)) {
+            elementType = SyncchartsElementTypes.Action_3027;
+        } else if (type.equals(VAL_REGION)) {
             class1 = StateRegionCompartmentEditPart.class;
             class2 = StateRegionCompartment2EditPart.class;
-            elementType = SyncchartsElementTypes.Region_3009;
-        }
-        else if (type.equals(VAL_SIGNAL)) {
+            elementType = SyncchartsElementTypes.Region_3023;
+        } else if (type.equals(VAL_SIGNAL)) {
             class1 = StateSignalCompartmentEditPart.class;
             class2 = StateSignalCompartment2EditPart.class;
-            elementType = SyncchartsElementTypes.Signal_3021;
+            elementType = SyncchartsElementTypes.Signal_3025;
         }
-//        else if (type.equals(VAL_VARIABLE)) {
-//            class1 = StateVariableCompartmentEditPart.class;
-//            class2 = StateVariableCompartment2EditPart.class;
-//            elementType = SyncchartsElementTypes.Variable_3007;
-//        }
+        // else if (type.equals(VAL_VARIABLE)) {
+        // class1 = StateVariableCompartmentEditPart.class;
+        // class2 = StateVariableCompartment2EditPart.class;
+        // elementType = SyncchartsElementTypes.Variable_3007;
+        // }
         else if (type.equals(VAL_SUSPENSION_TRIGGER)) {
             class1 = StateSuspensionTriggerCompartmentEditPart.class;
             class2 = StateSuspensionTriggerCompartment2EditPart.class;
-            elementType = SyncchartsElementTypes.Action_3018;
+            elementType = SyncchartsElementTypes.Action_3029;
+        } else {
+            return;
         }
-        else return;
 
         // find compartment of given type
         ShapeCompartmentEditPart compartment = null;
-        Iterator<?> compartmentIter = stateEditPart.getResizableCompartments().iterator();
+        Iterator<?> compartmentIter = stateEditPart.getResizableCompartments()
+                .iterator();
         while (compartmentIter.hasNext()) {
-            EditPart editPart = (EditPart)compartmentIter.next();
+            EditPart editPart = (EditPart) compartmentIter.next();
             if (editPart.getClass().equals(class1)
                     || editPart.getClass().equals(class2)) {
-                compartment = (ShapeCompartmentEditPart)editPart;
+                compartment = (ShapeCompartmentEditPart) editPart;
                 break;
             }
         }
@@ -172,13 +191,15 @@ public class AddToStateHandler extends AbstractHandler implements IHandler {
         if (compartment != null) {
             // create element in the chosen compartment
             CreateViewRequest createRequest = CreateViewRequestFactory
-                    .getCreateShapeRequest(elementType,
-                    stateEditPart.getDiagramPreferencesHint());
+                    .getCreateShapeRequest(elementType, stateEditPart
+                            .getDiagramPreferencesHint());
             Command createCmd = compartment.getCommand(createRequest);
-            elementViewAdapter = (IAdaptable)((List<?>)createRequest.getNewObject()).get(0);
-            compartment.getDiagramEditDomain().getDiagramCommandStack().execute(createCmd);
+            elementViewAdapter = (IAdaptable) ((List<?>) createRequest
+                    .getNewObject()).get(0);
+            compartment.getDiagramEditDomain().getDiagramCommandStack()
+                    .execute(createCmd);
             lastEditCompartment = compartment;
         }
-  */  } 
+    }
 
 }

@@ -278,27 +278,27 @@ public class Messages extends NLS {
     /**
      * @generated
      */
-    public static String StateStateEditPart_title;
+    public static String StateSignalCompartment2EditPart_title;
 
     /**
      * @generated
      */
-    public static String StateState2EditPart_title;
+    public static String StateEntryActionCompartment2EditPart_title;
 
     /**
      * @generated
      */
-    public static String StateState3EditPart_title;
+    public static String StateInnerActionCompartment2EditPart_title;
 
     /**
      * @generated
      */
-    public static String StateState4EditPart_title;
+    public static String StateExitActionCompartment2EditPart_title;
 
     /**
      * @generated
      */
-    public static String StateState5EditPart_title;
+    public static String StateSuspensionTriggerCompartment2EditPart_title;
 
     /**
      * @generated
@@ -313,27 +313,27 @@ public class Messages extends NLS {
     /**
      * @generated
      */
-    public static String StateState6EditPart_title;
+    public static String StateSignalCompartmentEditPart_title;
 
     /**
      * @generated
      */
-    public static String StateState7EditPart_title;
+    public static String StateEntryActionCompartmentEditPart_title;
 
     /**
      * @generated
      */
-    public static String StateState8EditPart_title;
+    public static String StateInnerActionCompartmentEditPart_title;
 
     /**
      * @generated
      */
-    public static String StateState9EditPart_title;
+    public static String StateExitActionCompartmentEditPart_title;
 
     /**
      * @generated
      */
-    public static String StateState10EditPart_title;
+    public static String StateSuspensionTriggerCompartmentEditPart_title;
 
     /**
      * @generated

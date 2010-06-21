@@ -62,7 +62,8 @@ public class Region2EditPart extends ShapeNodeEditPart {
      */
     protected void createDefaultEditPolicies() {
         super.createDefaultEditPolicies();
-        installEditPolicy(EditPolicyRoles.SEMANTIC_ROLE, new Region2ItemSemanticEditPolicy());
+        installEditPolicy(EditPolicyRoles.SEMANTIC_ROLE,
+                new Region2ItemSemanticEditPolicy());
         installEditPolicy(EditPolicy.LAYOUT_ROLE, createLayoutEditPolicy());
         // XXX need an SCR to runtime to have another abstract superclass that would let children add reasonable editpolicies
         // removeEditPolicy(org.eclipse.gmf.runtime.diagram.ui.editpolicies.EditPolicyRoles.CONNECTION_HANDLES_ROLE);
@@ -75,7 +76,8 @@ public class Region2EditPart extends ShapeNodeEditPart {
         LayoutEditPolicy lep = new LayoutEditPolicy() {
 
             protected EditPolicy createChildEditPolicy(EditPart child) {
-                EditPolicy result = child.getEditPolicy(EditPolicy.PRIMARY_DRAG_ROLE);
+                EditPolicy result = child
+                        .getEditPolicy(EditPolicy.PRIMARY_DRAG_ROLE);
                 if (result == null) {
                     result = new NonResizableEditPolicy();
                 }
@@ -100,7 +102,8 @@ public class Region2EditPart extends ShapeNodeEditPart {
         IFigure figure = new RegionFigure();
 
         if (figure instanceof IAttributeAwareFigure) {
-            ((IAttributeAwareFigure) figure).listenTo(this.getNotationView().getElement());
+            ((IAttributeAwareFigure) figure).listenTo(this.getNotationView()
+                    .getElement());
         }
         return primaryShape = figure;
     }
@@ -285,8 +288,9 @@ public class Region2EditPart extends ShapeNodeEditPart {
 
             fFigureRegionIdFigure.setFont(FFIGUREREGIONIDFIGURE_FONT);
 
-            fFigureRegionIdFigure.setBorder(new MarginBorder(getMapMode().DPtoLP(0), getMapMode()
-                    .DPtoLP(2), getMapMode().DPtoLP(0), getMapMode().DPtoLP(2)));
+            fFigureRegionIdFigure.setBorder(new MarginBorder(getMapMode()
+                    .DPtoLP(0), getMapMode().DPtoLP(2), getMapMode().DPtoLP(0),
+                    getMapMode().DPtoLP(2)));
 
             this.add(fFigureRegionIdFigure);
 
@@ -323,7 +327,7 @@ public class Region2EditPart extends ShapeNodeEditPart {
     /**
      * @generated
      */
-    static final Font FFIGUREREGIONIDFIGURE_FONT = new Font(Display.getCurrent(), "Sans", 7,
-            SWT.NORMAL);
+    static final Font FFIGUREREGIONIDFIGURE_FONT = new Font(Display
+            .getCurrent(), "Sans", 7, SWT.NORMAL);
 
 }

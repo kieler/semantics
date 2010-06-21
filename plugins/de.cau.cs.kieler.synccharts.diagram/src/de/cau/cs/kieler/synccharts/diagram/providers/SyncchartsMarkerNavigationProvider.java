@@ -19,25 +19,31 @@ import de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorUtil;
 /**
  * @generated
  */
-public class SyncchartsMarkerNavigationProvider extends AbstractModelMarkerNavigationProvider {
+public class SyncchartsMarkerNavigationProvider extends
+        AbstractModelMarkerNavigationProvider {
 
     /**
      * @generated
      */
-    public static final String MARKER_TYPE = SyncchartsDiagramEditorPlugin.ID + ".diagnostic"; //$NON-NLS-1$
+    public static final String MARKER_TYPE = SyncchartsDiagramEditorPlugin.ID
+            + ".diagnostic"; //$NON-NLS-1$
 
     /**
      * @generated
      */
     protected void doGotoMarker(IMarker marker) {
-        String elementId = marker.getAttribute(
-                org.eclipse.gmf.runtime.common.core.resources.IMarker.ELEMENT_ID, null);
+        String elementId = marker
+                .getAttribute(
+                        org.eclipse.gmf.runtime.common.core.resources.IMarker.ELEMENT_ID,
+                        null);
         if (elementId == null || !(getEditor() instanceof DiagramEditor)) {
             return;
         }
         DiagramEditor editor = (DiagramEditor) getEditor();
-        Map editPartRegistry = editor.getDiagramGraphicalViewer().getEditPartRegistry();
-        EObject targetView = editor.getDiagram().eResource().getEObject(elementId);
+        Map editPartRegistry = editor.getDiagramGraphicalViewer()
+                .getEditPartRegistry();
+        EObject targetView = editor.getDiagram().eResource().getEObject(
+                elementId);
         if (targetView == null) {
             return;
         }
@@ -63,19 +69,22 @@ public class SyncchartsMarkerNavigationProvider extends AbstractModelMarkerNavig
     /**
      * @generated
      */
-    public static IMarker addMarker(IFile file, String elementId, String location, String message,
-            int statusSeverity) {
+    public static IMarker addMarker(IFile file, String elementId,
+            String location, String message, int statusSeverity) {
         IMarker marker = null;
         try {
             marker = file.createMarker(MARKER_TYPE);
             marker.setAttribute(IMarker.MESSAGE, message);
             marker.setAttribute(IMarker.LOCATION, location);
-            marker.setAttribute(org.eclipse.gmf.runtime.common.ui.resources.IMarker.ELEMENT_ID,
-                    elementId);
+            marker
+                    .setAttribute(
+                            org.eclipse.gmf.runtime.common.ui.resources.IMarker.ELEMENT_ID,
+                            elementId);
             int markerSeverity = IMarker.SEVERITY_INFO;
             if (statusSeverity == IStatus.WARNING) {
                 markerSeverity = IMarker.SEVERITY_WARNING;
-            } else if (statusSeverity == IStatus.ERROR || statusSeverity == IStatus.CANCEL) {
+            } else if (statusSeverity == IStatus.ERROR
+                    || statusSeverity == IStatus.CANCEL) {
                 markerSeverity = IMarker.SEVERITY_ERROR;
             }
             marker.setAttribute(IMarker.SEVERITY, markerSeverity);

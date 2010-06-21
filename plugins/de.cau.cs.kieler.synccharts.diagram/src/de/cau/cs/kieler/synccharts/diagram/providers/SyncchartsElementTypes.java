@@ -18,15 +18,15 @@ import org.eclipse.swt.graphics.Image;
 
 import de.cau.cs.kieler.core.expressions.ExpressionsPackage;
 import de.cau.cs.kieler.synccharts.SyncchartsPackage;
-import de.cau.cs.kieler.synccharts.diagram.edit.parts.Action2EditPart;
-import de.cau.cs.kieler.synccharts.diagram.edit.parts.Action3EditPart;
-import de.cau.cs.kieler.synccharts.diagram.edit.parts.Action4EditPart;
-import de.cau.cs.kieler.synccharts.diagram.edit.parts.ActionEditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.Region2EditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.RegionEditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.SignalEditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.State2EditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateEditPart;
+import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateEntryActionEditPart;
+import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateExitActionEditPart;
+import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateInnerActionEditPart;
+import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateSuspensionTriggerEditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.TextualCodeEditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.TransitionEditPart;
 import de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorPlugin;
@@ -122,22 +122,26 @@ public class SyncchartsElementTypes extends ElementInitializers {
     /**
      * @generated
      */
-    private static ImageDescriptor getProvidedImageDescriptor(ENamedElement element) {
+    private static ImageDescriptor getProvidedImageDescriptor(
+            ENamedElement element) {
         if (element instanceof EStructuralFeature) {
             EStructuralFeature feature = ((EStructuralFeature) element);
             EClass eContainingClass = feature.getEContainingClass();
             EClassifier eType = feature.getEType();
             if (eContainingClass != null && !eContainingClass.isAbstract()) {
                 element = eContainingClass;
-            } else if (eType instanceof EClass && !((EClass) eType).isAbstract()) {
+            } else if (eType instanceof EClass
+                    && !((EClass) eType).isAbstract()) {
                 element = eType;
             }
         }
         if (element instanceof EClass) {
             EClass eClass = (EClass) element;
             if (!eClass.isAbstract()) {
-                return SyncchartsDiagramEditorPlugin.getInstance().getItemImageDescriptor(
-                        eClass.getEPackage().getEFactoryInstance().create(eClass));
+                return SyncchartsDiagramEditorPlugin.getInstance()
+                        .getItemImageDescriptor(
+                                eClass.getEPackage().getEFactoryInstance()
+                                        .create(eClass));
             }
         }
         // TODO : support structural features
@@ -227,9 +231,11 @@ public class SyncchartsElementTypes extends ElementInitializers {
 
             elements.put(Action_3029, SyncchartsPackage.eINSTANCE.getAction());
 
-            elements.put(TextualCode_3030, ExpressionsPackage.eINSTANCE.getTextualCode());
+            elements.put(TextualCode_3030, ExpressionsPackage.eINSTANCE
+                    .getTextualCode());
 
-            elements.put(Transition_4003, SyncchartsPackage.eINSTANCE.getTransition());
+            elements.put(Transition_4003, SyncchartsPackage.eINSTANCE
+                    .getTransition());
         }
         return (ENamedElement) elements.get(type);
     }
@@ -277,13 +283,13 @@ public class SyncchartsElementTypes extends ElementInitializers {
             return State_3024;
         case SignalEditPart.VISUAL_ID:
             return Signal_3025;
-        case ActionEditPart.VISUAL_ID:
+        case StateEntryActionEditPart.VISUAL_ID:
             return Action_3026;
-        case Action2EditPart.VISUAL_ID:
+        case StateInnerActionEditPart.VISUAL_ID:
             return Action_3027;
-        case Action3EditPart.VISUAL_ID:
+        case StateExitActionEditPart.VISUAL_ID:
             return Action_3028;
-        case Action4EditPart.VISUAL_ID:
+        case StateSuspensionTriggerEditPart.VISUAL_ID:
             return Action_3029;
         case TextualCodeEditPart.VISUAL_ID:
             return TextualCode_3030;

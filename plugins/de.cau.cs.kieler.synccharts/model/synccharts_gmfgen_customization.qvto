@@ -34,12 +34,10 @@ main() {
 	
 	// use our own category for the "new" wizard
 	model.diagram.creationWizardCategoryID := "de.cau.cs.kieler";
-	
+
 	// special settings for all nodes, e.g. edit part names
 	model.diagram.allSubobjectsOfType(GenChildNode)[GenChildNode] ->map childNodeNames();
-    model.diagram.allSubobjectsOfType(GenCompartment)[GenCompartment] ->map compartmentNames();
-    
-	
+    	
 	// special settings for all compartments
 	model.diagram.allSubobjectsOfType(GenCompartment)[GenCompartment] ->map compartmentSettings();
 	
@@ -69,28 +67,38 @@ main() {
     model.diagram.links.allSubobjectsOfType(InnerClassViewmap)[InnerClassViewmap] -> map customizeTextWrap("FigureTransitionTriggersAndEffectsFigure","TransitionFigure");
 }
 
-mapping inout GenCompartment::compartmentNames(){
-	// var childName : String := self.childNodes.allSubobjectsOfType(GenChildNode)[GenChildNode];
-	//self.childNodes.allSubobjectsOfType(GenChildNode)[GenChildNode] ->map getFirstName(childName);
-	//switch {
-	//	case (childName.startsWith("Signal")) self ->map fixCompartmentName("Signal");
-	//	case (childName.startsWith("StateEntryAction")) self ->map fixCompartmentName("StateEntryAction");
-	//}
+mapping inout GenCompartment::compartmentNames(inout signalIndex : Integer, inout entryIndex : Integer, inout innerIndex : Integer, inout exitIndex : Integer, inout suspendIndex : Integer){
+	var childName : String := "";
+	self.childNodes.allSubobjectsOfType(GenChildNode)[GenChildNode] ->forEach(child){			
+		if (child.editPartClassName.startsWith("Signal") or child.editPartClassName.startsWith("State")) then {
+		   childName := child.editPartClassName;
+		} endif;
+	};
+	switch {
+		case (childName.startsWith("Signal")) self ->map fixCompartmentName("Signal", signalIndex);
+		case (childName.startsWith("StateEntryAction")) self ->map fixCompartmentName("StateEntryAction", entryIndex);
+        case (childName.startsWith("StateInnerAction")) self ->map fixCompartmentName("StateInnerAction", innerIndex);
+        case (childName.startsWith("StateExitAction")) self ->map fixCompartmentName("StateExitAction", exitIndex);
+        case (childName.startsWith("StateSuspensionTrigger")) self ->map fixCompartmentName("StateSuspensionTrigger", suspendIndex);
+	}
 }
 
-//query GenCompartment::getFirstName() : String{
-//	return self.childNodes[0].editPartClassName;  
-//}
-
-mapping inout GenCompartment::fixCompartmentName(in prefix:String){
-	self.editPartClassName := prefix + "CompartmentEditPart";
+mapping inout GenCompartment::fixCompartmentName(in prefix:String, inout index:Integer){
+	var indexString : String := "";
+	if (index > 1) then {
+		indexString := index.toString();
+	} endif;
+	self.editPartClassName := prefix + indexString + "CompartmentEditPart";
+	self.canonicalEditPolicyClassName := prefix + indexString + "CompartmentCanonicalEditPolicy";
+	self.itemSemanticEditPolicyClassName := prefix + indexString + "CompartmentItemSemanticEditPolicy";
 }
 
 mapping inout GenChildNode::childNodeNames(){
 	if (self.modelFacet <> null) then {	
      if (self.modelFacet.childMetaFeature <> null) then {
       switch { 
-      	case (self.modelFacet.childMetaFeature.ecoreFeature.name.startsWith("entryActions")) self ->map fixChildNodeName("StateEntryAction");
+        case (self.modelFacet.childMetaFeature.ecoreFeature.name.startsWith("signals")) self ->map fixChildNodeName("StateSignal");
+        case (self.modelFacet.childMetaFeature.ecoreFeature.name.startsWith("entryActions")) self ->map fixChildNodeName("StateEntryAction");
         case (self.modelFacet.childMetaFeature.ecoreFeature.name.startsWith("innerActions")) self ->map fixChildNodeName("StateInnerAction");
         case (self.modelFacet.childMetaFeature.ecoreFeature.name.startsWith("exitActions")) self ->map fixChildNodeName("StateExitAction");
         case (self.modelFacet.childMetaFeature.ecoreFeature.name.startsWith("suspensionTrigger")) self ->map fixChildNodeName("StateSuspensionTrigger");
@@ -100,21 +108,35 @@ mapping inout GenChildNode::childNodeNames(){
 }
 
 mapping inout GenChildNode::fixChildNodeName(in prefix:String){
-	self.canonicalEditPolicyClassName := prefix + "CanonicalEditPolicy";
-    self.createCommandClassName := prefix + "CreateCommand";
-    self.editPartClassName := prefix + "EditPart";
-    self.graphicalNodeEditPolicyClassName := prefix + "GraphicalNodeEditPolicy";
-    self.itemSemanticEditPolicyClassName := prefix + "ItemSemanticEditPolicy";
-    self.childNodes.allSubobjectsOfType(GenNodeLabel)[GenNodeLabel] ->map fixLabel(prefix);
+    if (not prefix.match("StateSignal")) then {
+	    self.canonicalEditPolicyClassName := prefix + "CanonicalEditPolicy";
+        self.createCommandClassName := prefix + "CreateCommand";
+        self.editPartClassName := prefix + "EditPart";
+        self.graphicalNodeEditPolicyClassName := prefix + "GraphicalNodeEditPolicy";
+        self.itemSemanticEditPolicyClassName := prefix + "ItemSemanticEditPolicy";
+
+        self.labels ->forEach(label){
+            label.editPartClassName := prefix + "LabelEditPart";
+            label.itemSemanticEditPolicyClassName := prefix + "LabelItemSemanticEditPolicy";
+        };   
+    } endif;
+    var index : Integer := 1;
+    self.containers ->forEach(child){
+    	var indexString : String := "";
+        if (index > 1) then {
+           indexString := index.toString();
+        } endif;
+    	child.editPartClassName := prefix + "Compartment" + indexString + "EditPart";
+        child.canonicalEditPolicyClassName := prefix + "Compartment" + indexString + "CanonicalEditPolicy";
+        child.itemSemanticEditPolicyClassName := prefix + "Compartment" + indexString + "ItemSemanticEditPolicy";
+        index := index.+(1);
+    };
 }
 
-mapping inout GenNodeLabel::fixLabel(in prefix:String){
-	self.editPartClassName := prefix + "LabelEditPart";
-	self.itemSemanticEditPolicyClassName := prefix + "LabelItemSemanticEditPolicy";
-}
+mapping inout GenNodeLabel::fixLabelName(in prefix:String){
+	}
 
 mapping inout GenCompartment::compartmentSettings(){
-
 	// we want to be able to collapse all compartments
 	self.canCollapse := true;
 	// do not show compartments when they are empty
