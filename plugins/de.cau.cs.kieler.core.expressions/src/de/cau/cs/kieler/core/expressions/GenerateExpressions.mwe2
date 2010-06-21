@@ -5,7 +5,7 @@ import org.eclipse.xtext.generator.*
 import org.eclipse.xtext.ui.generator.*
 
 var grammarURI = "classpath:/de/cau/cs/kieler/core/expressions/Expressions.xtext"
-var file.extensions = "kits"
+var file.extensions = "expr"
 var projectName = "de.cau.cs.kieler.core.expressions"
 var runtimeProject = "../${projectName}"
 
@@ -19,15 +19,15 @@ Workflow {
 		directory = "${runtimeProject}/src-gen"
 	}
 	
-//	component = DirectoryCleaner {
-//		directory = "${runtimeProject}.ui/src-gen"
-//	}
+	component = DirectoryCleaner {
+		directory = "${runtimeProject}.ui/src-gen"
+	}
 	
 	component = Generator {
 		pathRtProject = runtimeProject
-//		pathUiProject = "${runtimeProject}.ui"
+		pathUiProject = "${runtimeProject}.ui"
 		projectNameRt = projectName
-//		projectNameUi = "${projectName}.ui"
+		projectNameUi = "${projectName}.ui"
 		
 		language = {
 			uri = grammarURI
