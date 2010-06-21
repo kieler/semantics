@@ -53,8 +53,8 @@ public class ActionLabelParser extends AbstractContentAssistParser {
 					put(grammarAccess.getPlusOperatorAccess().getAlternatives(), "rule__PlusOperator__Alternatives");
 					put(grammarAccess.getMultOperatorAccess().getAlternatives(), "rule__MultOperator__Alternatives");
 					put(grammarAccess.getActionAccess().getGroup(), "rule__Action__Group__0");
-					put(grammarAccess.getActionAccess().getGroup_3(), "rule__Action__Group_3__0");
-					put(grammarAccess.getActionAccess().getGroup_3_1(), "rule__Action__Group_3_1__0");
+					put(grammarAccess.getActionAccess().getGroup_4(), "rule__Action__Group_4__0");
+					put(grammarAccess.getActionAccess().getGroup_4_1(), "rule__Action__Group_4_1__0");
 					put(grammarAccess.getEmissionAccess().getGroup(), "rule__Emission__Group__0");
 					put(grammarAccess.getEmissionAccess().getGroup_1_0(), "rule__Emission__Group_1_0__0");
 					put(grammarAccess.getEmissionAccess().getGroup_1_1(), "rule__Emission__Group_1_1__0");
@@ -85,12 +85,14 @@ public class ActionLabelParser extends AbstractContentAssistParser {
 					put(grammarAccess.getOrOperationAccess().getGroup(), "rule__OrOperation__Group__0");
 					put(grammarAccess.getOrOperationAccess().getGroup_1(), "rule__OrOperation__Group_1__0");
 					put(grammarAccess.getParanthesedBooleanExpressionAccess().getGroup_5(), "rule__ParanthesedBooleanExpression__Group_5__0");
-					put(grammarAccess.getHostCodeAccess().getGroup(), "rule__HostCode__Group__0");
-					put(grammarAccess.getHostCodeAccess().getGroup_1(), "rule__HostCode__Group_1__0");
-					put(grammarAccess.getActionAccess().getIsImmediateAssignment_0(), "rule__Action__IsImmediateAssignment_0");
-					put(grammarAccess.getActionAccess().getDelayAssignment_1(), "rule__Action__DelayAssignment_1");
-					put(grammarAccess.getActionAccess().getTriggerAssignment_2(), "rule__Action__TriggerAssignment_2");
-					put(grammarAccess.getActionAccess().getEffectsAssignment_3_1_0(), "rule__Action__EffectsAssignment_3_1_0");
+					put(grammarAccess.getTextExpressionAccess().getGroup(), "rule__TextExpression__Group__0");
+					put(grammarAccess.getTextExpressionAccess().getGroup_1(), "rule__TextExpression__Group_1__0");
+					put(grammarAccess.getTextEffectAccess().getGroup(), "rule__TextEffect__Group__0");
+					put(grammarAccess.getTextEffectAccess().getGroup_1(), "rule__TextEffect__Group_1__0");
+					put(grammarAccess.getActionAccess().getIsImmediateAssignment_1(), "rule__Action__IsImmediateAssignment_1");
+					put(grammarAccess.getActionAccess().getDelayAssignment_2(), "rule__Action__DelayAssignment_2");
+					put(grammarAccess.getActionAccess().getTriggerAssignment_3(), "rule__Action__TriggerAssignment_3");
+					put(grammarAccess.getActionAccess().getEffectsAssignment_4_1_0(), "rule__Action__EffectsAssignment_4_1_0");
 					put(grammarAccess.getEmissionAccess().getSignalAssignment_0(), "rule__Emission__SignalAssignment_0");
 					put(grammarAccess.getEmissionAccess().getNewValueAssignment_1_0_1(), "rule__Emission__NewValueAssignment_1_0_1");
 					put(grammarAccess.getEmissionAccess().getNewValueAssignment_1_1_1(), "rule__Emission__NewValueAssignment_1_1_1");
@@ -126,8 +128,10 @@ public class ActionLabelParser extends AbstractContentAssistParser {
 					put(grammarAccess.getAndOperationAccess().getSubExpressionsAssignment_1_2(), "rule__AndOperation__SubExpressionsAssignment_1_2");
 					put(grammarAccess.getOrOperationAccess().getOperatorAssignment_1_1(), "rule__OrOperation__OperatorAssignment_1_1");
 					put(grammarAccess.getOrOperationAccess().getSubExpressionsAssignment_1_2(), "rule__OrOperation__SubExpressionsAssignment_1_2");
-					put(grammarAccess.getHostCodeAccess().getCodeAssignment_0(), "rule__HostCode__CodeAssignment_0");
-					put(grammarAccess.getHostCodeAccess().getTypeAssignment_1_1(), "rule__HostCode__TypeAssignment_1_1");
+					put(grammarAccess.getTextExpressionAccess().getCodeAssignment_0(), "rule__TextExpression__CodeAssignment_0");
+					put(grammarAccess.getTextExpressionAccess().getTypeAssignment_1_1(), "rule__TextExpression__TypeAssignment_1_1");
+					put(grammarAccess.getTextEffectAccess().getCodeAssignment_0(), "rule__TextEffect__CodeAssignment_0");
+					put(grammarAccess.getTextEffectAccess().getTypeAssignment_1_1(), "rule__TextEffect__TypeAssignment_1_1");
 				}
 			};
 		}

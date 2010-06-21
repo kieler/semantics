@@ -21,7 +21,7 @@ Action returns synccharts::Action:
 	(isImmediate?='#')? (delay=INT)? (trigger=BooleanExpression)? ("/" (effects+=Effect (',')? )*)?; 		
 
 Effect returns synccharts::Effect: 
-	Emission | Assignment | HostCode;
+	Emission | Assignment | TextEffect;
 		
 Emission returns synccharts::Emission:
 	signal=[expressions::Signal]	
@@ -82,7 +82,7 @@ ValueExpression returns expressions::Expression:
 
 // Example: 42, 42.2, ?A, var1, (1+2*3)
 ParanthesedValueExpression returns expressions::Expression:
-    IntValue | FloatValue | ValOperation | VariableReference | HostCode | '('PlusOperation')' | '('DivOperation')';
+    IntValue | FloatValue | ValOperation | VariableReference | TextExpression | '('PlusOperation')' | '('DivOperation')';
 
 // Example: 1 + 2, varA - ?B
 PlusOperation returns expressions::Expression:
@@ -138,7 +138,7 @@ OrOperation returns expressions::Expression:
 // Example: true, A, 42>var1, (A or B), (not D and C or ?E = 42)
 // note that the order of CompareOperation and SignalReference is important. This might be an Xtext bug...
 ParanthesedBooleanExpression returns expressions::Expression:
-    BooleanValue | CompareOperation | SignalReference | ValOperation | HostCode | '('OrOperation')' ;
+    BooleanValue | CompareOperation | SignalReference | ValOperation | TextExpression | '('OrOperation')' ;
 
 // Example: not D and C or ?E = 42 or not (A and (B or C))
 BooleanExpression returns expressions::Expression:
@@ -188,9 +188,11 @@ enum DivOperator returns expressions::OperatorType:
 // Misc
 //==============================================================================
 	
-HostCode returns expressions::TextualCode:
-	//"'"code=STRING"'";
-	code=STRING ("(" type=ID ")")?; 	
+TextExpression returns expressions::TextExpression:
+	code=STRING ("(" type=ID ")")?;
+	
+TextEffect returns synccharts::TextEffect:
+ 	code=STRING ("(" type=ID ")")?;
 	
 Expression returns expressions::Expression:
  	ValueExpression | BooleanExpression
