@@ -1,0 +1,155 @@
+grammar de.cau.cs.kieler.core.expressions.Expressions with  org.eclipse.xtext.common.Terminals
+
+import "platform:/resource/de.cau.cs.kieler.core.expressions/model/expressions.ecore" 
+
+import "http://www.eclipse.org/emf/2002/Ecore" as ecore
+
+// --------------------------
+//
+//   EXPRESSIONS
+//
+// --------------------------
+
+Expression returns Expression:
+	BooleanExpression;
+
+// Example: not D and C or ?E = 42 or not (A and (B or C))
+BooleanExpression returns Expression:
+	OrExpression;
+
+// Example: A or B, A and B and C, C and B or D and not E, A and B and C
+OrExpression returns Expression:
+	AndExpression ({OperatorExpression.subExpressions+=current} operator=OrOperator subExpressions+=AndExpression)*;
+
+// Example: A and B, not C and 42 <= ?D
+AndExpression returns Expression:
+	NotExpression ({OperatorExpression.subExpressions+=current} operator=AndOperator subExpressions+=NotExpression)*;
+
+// Example: not A, not false, not (A or B)
+// at the latter we need the parans to indicate the right binding
+NotExpression returns Expression:
+    AtomicExpression |
+	{OperatorExpression} operator=NotOperator subExpressions+=(AtomicExpression);
+
+// Example: true, A, 42>var1, (A or B), (not D and C or ?E = 42)
+// note that the order of CompareOperation and SignalReference is important. This might be an Xtext bug...
+AtomicExpression returns Expression:
+    BooleanValue
+    | SignalReference
+    | {OperatorExpression} operator=PreOperator '(' subExpressions+= SignalReference ')'
+    | '(' CompareOperation ')'    
+    | '(' BooleanExpression ')'
+    ;
+
+SignalReference returns SignalReference:
+	signal=[Signal|EString];
+
+// Example: 42 <= ?A
+CompareOperation returns Expression:
+	ValuedExpression ({OperatorExpression.subExpressions+=current} operator=CompareOperator subExpressions+=ValuedExpression);
+
+// everything that evaluates to a primitive number value
+ValuedExpression returns Expression:
+	AddExpression;
+
+// Example: 1 + 2
+AddExpression returns Expression:
+	SubExpression ({OperatorExpression.subExpressions+=current} operator=AddOperator subExpressions+=SubExpression)*;
+
+// Example: varA - ?B
+SubExpression returns Expression:
+	MultExpression ({OperatorExpression.subExpressions+=current} operator=SubOperator subExpressions+=MultExpression)*;
+
+// Example: 2 * 4
+MultExpression returns Expression:
+	ModExpression ({OperatorExpression.subExpressions+=current} operator=MultOperator subExpressions+=ModExpression)*;
+
+// Example: varA mod ?B
+ModExpression returns Expression:
+	AtomicValuedExpression ({OperatorExpression.subExpressions+=current} operator=ModOperator subExpressions+=AtomicValuedExpression)?;
+
+AtomicValuedExpression returns Expression:
+    IntValue
+    | FloatValue
+    | VariableReference
+    | ValueTestExpression
+    | PreValueTestExpression 
+    | '(' DivExpression ')' 
+    | '(' ValuedExpression ')'
+    | TextExpression
+    ;
+
+// Example: (2 / 4)
+// note: division always has to have parantheses because the '/' sign is also used for trigger/effect delimiter
+DivExpression returns Expression:
+	AtomicValuedExpression {OperatorExpression.subExpressions+=current} operator=DivOperator subExpressions+=AtomicValuedExpression;
+
+VariableReference returns VariableReference:
+	variable=[Variable|EString];
+
+// Example: ? A
+ValueTestExpression returns OperatorExpression:
+	operator=ValueTestOperator '('subExpressions+=SignalReference')';
+	
+// Example: pre (? A)
+PreValueTestExpression returns OperatorExpression:
+	operator=PreOperator '('subExpressions+=ValueTestExpression')';
+
+// Taken from oba's kits grammar
+TextExpression returns TextExpression: 
+	code=STRING ("(" type=ID ")")?; 
+
+IntValue returns IntValue:
+	value=EIntegerObject;
+
+FloatValue returns FloatValue:
+	value=EFloatObject;
+
+BooleanValue returns BooleanValue:
+	value=EBooleanObject;
+
+EIntegerObject returns ecore::EIntegerObject:
+	'-'? INT;
+
+EFloatObject returns ecore::EFloatObject:
+	'-'? INT? '.' INT (('E'|'e') '-'? INT)?;
+
+EBooleanObject returns ecore::EBooleanObject:
+	'true' | 'false';
+
+EString returns ecore::EString:
+	STRING | ID;
+
+
+enum CompareOperator returns OperatorType:
+	EQ="=" | LT="<" | LEQ="<=" | GT=">" | GEQ=">=" | NE="<>";
+
+enum PreOperator returns OperatorType:
+    PRE="pre";
+
+enum OrOperator returns OperatorType:
+	OR="or";
+
+enum AndOperator returns OperatorType:
+	AND="and";
+
+enum NotOperator returns OperatorType:
+	NOT="not";
+
+enum AddOperator returns OperatorType:
+	ADD="+";
+	
+enum SubOperator returns OperatorType:
+	SUB="-";
+	
+enum MultOperator returns OperatorType:	
+	MULT="*";
+
+enum ModOperator returns OperatorType:	
+	MOD="mod";
+
+enum DivOperator returns OperatorType:	
+	DIV="/";
+
+enum ValueTestOperator returns OperatorType:
+	VAL="?";
