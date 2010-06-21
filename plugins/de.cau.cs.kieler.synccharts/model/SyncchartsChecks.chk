@@ -164,10 +164,9 @@ context Region if(parentState != null && parentState.regions.size > 1)
 // ================================================================================================
 // Signals
 
-// TODO: look at how this should be implemented now
-//context Signal if (parentScope != null && parentScope != null && parentState.parentRegion.parentState != null) 
-//    ERROR "Only signals in the root state may be global inputs or outputs." :
-//	((!isInput) && (!isOutput));
+context Signal if (eContainer /*=parentState*/ != null && eContainer.eContainer.eContainer /*=parentState.parentRegion.parentState*/ != null) 
+    ERROR "Only signals in the root state may be global inputs or outputs." :
+	((!isInput) && (!isOutput));
 
 context Signal if ((initialValue == null) || (initialValue == "")) 
     ERROR "Only valued signals may have a combine type other than NONE!" :
@@ -272,8 +271,7 @@ context Action if (label != null && label.trim().compareTo("") != 0 )
            but triggers and effects string contains text." :
     (trigger != null || (effects!=null && effects.size >0) || this.isImmediate);
     
-// TODO: reimplement this
 // Only Transitions can have a triggers without effects
-//context Action if (parentStateEntryAction != null || parentStateExitAction != null || parentStateInnerAction != null || parentStateSuspension != null)
-//	ERROR "Trigger must have an effect." :
-//	effects.size > 0;
+context Action if (eContainer.metaType.toString().matches("State"))
+	ERROR "Trigger must have an effect." :
+	effects.size > 0;
