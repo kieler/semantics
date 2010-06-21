@@ -1,0 +1,9 @@
+grammar de.cau.cs.kieler.synccharts.text.kits.Kits with org.eclipse.xtext.common.Terminals
+
+generate kits "http://www.cau.de/cs/kieler/synccharts/text/kits/Kits"
+
+Model:
+	greetings+=Greeting*;
+	
+Greeting:
+	'Hello' name=ID '!';
