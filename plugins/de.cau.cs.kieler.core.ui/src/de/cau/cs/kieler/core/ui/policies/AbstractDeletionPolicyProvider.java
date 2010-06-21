@@ -13,6 +13,8 @@
  */
 package de.cau.cs.kieler.core.ui.policies;
 
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gef.EditPolicy;
 import org.eclipse.gef.Request;
@@ -20,11 +22,17 @@ import org.eclipse.gef.commands.Command;
 import org.eclipse.gef.commands.UnexecutableCommand;
 import org.eclipse.gmf.runtime.common.core.service.AbstractProvider;
 import org.eclipse.gmf.runtime.common.core.service.IOperation;
+import org.eclipse.gmf.runtime.diagram.ui.editparts.CompartmentEditPart;
+import org.eclipse.gmf.runtime.diagram.ui.editparts.LabelEditPart;
 import org.eclipse.gmf.runtime.diagram.ui.editpolicies.ComponentEditPolicy;
+import org.eclipse.gmf.runtime.diagram.ui.requests.EditCommandRequestWrapper;
 import org.eclipse.gmf.runtime.diagram.ui.requests.GroupRequestViaKeyboard;
 import org.eclipse.gmf.runtime.diagram.ui.requests.RequestConstants;
 import org.eclipse.gmf.runtime.diagram.ui.services.editpolicy.CreateEditPoliciesOperation;
 import org.eclipse.gmf.runtime.diagram.ui.services.editpolicy.IEditPolicyProvider;
+import org.eclipse.gmf.runtime.emf.type.core.requests.DestroyElementRequest;
+import org.eclipse.gmf.runtime.emf.type.core.requests.IEditCommandRequest;
+import org.eclipse.gmf.runtime.notation.View;
 
 /**
  * This policy is responsible for ensuring that elements get deleted from model
@@ -33,8 +41,8 @@ import org.eclipse.gmf.runtime.diagram.ui.services.editpolicy.IEditPolicyProvide
  * @author soh
  * @kieler.rating 2009-02-24 proposed yellow
  */
-public abstract class AbstractDeletionPolicyProvider extends AbstractProvider implements
-        IEditPolicyProvider {
+public abstract class AbstractDeletionPolicyProvider extends AbstractProvider
+        implements IEditPolicyProvider {
 
     /**
      * Creates the edit policies.
@@ -48,32 +56,31 @@ public abstract class AbstractDeletionPolicyProvider extends AbstractProvider im
     }
 
     /**
-     * Determines whether an edit part is unremovable. Subclasses should
-     * override.
+     * Determines whether an edit part is unremovable. The default
+     * implementation has all edit parts removable that are not label edit
+     * parts.
      * 
      * @param editPart
      *            the edit part
      * @return true if the edit part should not be removed.
      */
-    protected boolean isUnremovableEditPart(
-            @SuppressWarnings("unused") final EditPart editPart) {
+    protected boolean isUnremovableEditPart(final EditPart editPart) {
+        // if (editPart instanceof CompartmentEditPart) {
+        // return true;
+        // }
+        if (editPart instanceof LabelEditPart) {
+            return true;
+        }
         return false;
     }
 
     /**
-     * Determine whether or not the edit policy is applicable for the edit part.
+     * Get the ePackage of the deletion policy. This is used to determine which
+     * edit parts this policy applies to.
      * 
-     * Extending classes should specify ALL editParts that concern them here,
-     * even the unremovable ones.
-     * 
-     * @param editPart
-     *            the edit part
-     * @return true
+     * @return ePackage the ePackage
      */
-    protected boolean provides(
-            @SuppressWarnings("unused") final EditPart editPart) {
-        return true;
-    }
+    protected abstract EPackage getEPackage();
 
     /**
      * Checks if this edit policy provides an operation.
@@ -86,7 +93,10 @@ public abstract class AbstractDeletionPolicyProvider extends AbstractProvider im
         boolean result = false;
         if (operation instanceof CreateEditPoliciesOperation) {
             CreateEditPoliciesOperation op = (CreateEditPoliciesOperation) operation;
-            result = provides(op.getEditPart());
+            EObject element = ((View) op.getEditPart().getModel()).getElement();
+            if (element != null) {
+                result = element.eClass().getEPackage().equals(getEPackage());
+            }
         }
         return result;
     }
@@ -125,7 +135,6 @@ public abstract class AbstractDeletionPolicyProvider extends AbstractProvider im
         @Override
         public Command getCommand(final Request request) {
             Command result = super.getCommand(request);
-
             // If the user presses the delete key, don't delete
             if (request instanceof GroupRequestViaKeyboard
                     && RequestConstants.REQ_DELETE.equals(request.getType())) {
@@ -138,6 +147,18 @@ public abstract class AbstractDeletionPolicyProvider extends AbstractProvider im
                     // create a semantic delete request rather than delete from
                     // diagram
                     result = super.createDeleteSemanticCommand(req);
+                }
+            } else if (request instanceof EditCommandRequestWrapper
+                    && editPart instanceof CompartmentEditPart) {
+                // when a compartment is about to be delete
+                // the enclosing parent should be deleted instead
+                EditCommandRequestWrapper req = (EditCommandRequestWrapper) request;
+                IEditCommandRequest cmdReq = req.getEditCommandRequest();
+
+                // the element is destroyed
+                if (cmdReq instanceof DestroyElementRequest) {
+                    // get the same request for the parent
+                    result = editPart.getParent().getCommand(request);
                 }
             }
 
