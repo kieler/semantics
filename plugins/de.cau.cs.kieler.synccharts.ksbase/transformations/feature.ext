@@ -637,6 +637,7 @@ Void renameSignalVariable(State state):
 	let newFloat = getRealFromUser("Enter Float please!",5.3):
 	let newBool = getBooleanFromUser("Enter Boolean please!"):
 	let list = getObjectFromListFromUser("Select one item please!",{"One","Two","Three"}):
+	newSignal.setName(newName) -> state.signals.add(newSignal) ->
 	info("renaming")
 ;
 

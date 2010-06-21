@@ -18,11 +18,11 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.xtext.parsetree.reconstr.impl.DefaultTransientValueService;
 
-import de.cau.cs.kieler.expressions.CombineOperator;
-import de.cau.cs.kieler.expressions.ExpressionsPackage;
-import de.cau.cs.kieler.expressions.Signal;
-import de.cau.cs.kieler.expressions.ValueType;
-import de.cau.cs.kieler.expressions.Variable;
+import de.cau.cs.kieler.core.expressions.CombineOperator;
+import de.cau.cs.kieler.core.expressions.ExpressionsPackage;
+import de.cau.cs.kieler.core.expressions.Signal;
+import de.cau.cs.kieler.core.expressions.ValueType;
+import de.cau.cs.kieler.core.expressions.Variable;
 import de.cau.cs.kieler.synccharts.SyncchartsPackage;
 
 /**

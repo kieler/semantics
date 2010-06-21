@@ -27,9 +27,9 @@ import org.junit.Test;
 import com.google.inject.Injector;
 
 import de.cau.cs.kieler.core.KielerException;
-import de.cau.cs.kieler.expressions.ExpressionsFactory;
-import de.cau.cs.kieler.expressions.Signal;
-import de.cau.cs.kieler.expressions.Variable;
+import de.cau.cs.kieler.core.expressions.ExpressionsFactory;
+import de.cau.cs.kieler.core.expressions.Signal;
+import de.cau.cs.kieler.core.expressions.Variable;
 import de.cau.cs.kieler.synccharts.Action;
 import de.cau.cs.kieler.synccharts.Region;
 import de.cau.cs.kieler.synccharts.State;

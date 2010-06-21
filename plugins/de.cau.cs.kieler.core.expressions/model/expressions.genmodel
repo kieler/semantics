@@ -5,7 +5,7 @@
     modelPluginID="de.cau.cs.kieler.core.expressions" modelName="Expressions" importerID="org.eclipse.emf.importer.ecore"
     complianceLevel="5.0" copyrightFields="false">
   <foreignModel>expressions.ecore</foreignModel>
-  <genPackages prefix="Expressions" basePackage="de.cau.cs.kieler" disposableProviderFactory="true"
+  <genPackages prefix="Expressions" basePackage="de.cau.cs.kieler.core" disposableProviderFactory="true"
       ecorePackage="expressions.ecore#/">
     <genEnums typeSafeEnumCompatible="false" ecoreEnum="expressions.ecore#//CombineOperator">
       <genEnumLiterals ecoreEnumLiteral="expressions.ecore#//CombineOperator/NONE"/>
@@ -87,5 +87,6 @@
     <genClasses ecoreClass="expressions.ecore#//OperatorExpression">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute expressions.ecore#//OperatorExpression/operator"/>
     </genClasses>
+    <genClasses ecoreClass="expressions.ecore#//TextExpression"/>
   </genPackages>
 </genmodel:GenModel>

@@ -15,8 +15,8 @@
  */
 package de.cau.cs.kieler.synccharts.impl;
 
-import de.cau.cs.kieler.expressions.Expression;
-import de.cau.cs.kieler.expressions.Variable;
+import de.cau.cs.kieler.core.expressions.Expression;
+import de.cau.cs.kieler.core.expressions.Variable;
 
 import de.cau.cs.kieler.synccharts.Assignment;
 import de.cau.cs.kieler.synccharts.SyncchartsPackage;

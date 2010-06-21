@@ -15,10 +15,10 @@
  */
 package de.cau.cs.kieler.synccharts;
 
-import de.cau.cs.kieler.annotations.Annotatable;
-import de.cau.cs.kieler.expressions.Signal;
-import de.cau.cs.kieler.expressions.TextualCode;
-import de.cau.cs.kieler.expressions.Variable;
+import de.cau.cs.kieler.core.annotations.Annotatable;
+import de.cau.cs.kieler.core.expressions.Signal;
+import de.cau.cs.kieler.core.expressions.TextualCode;
+import de.cau.cs.kieler.core.expressions.Variable;
 
 import org.eclipse.emf.common.util.EList;
 
@@ -107,7 +107,7 @@ public interface Scope extends Annotatable {
 
     /**
      * Returns the value of the '<em><b>Signals</b></em>' containment reference list.
-     * The list contents are of type {@link de.cau.cs.kieler.expressions.Signal}.
+     * The list contents are of type {@link de.cau.cs.kieler.core.expressions.Signal}.
      * <!-- begin-user-doc -->
      * <p>
      * If the meaning of the '<em>Signals</em>' containment reference list isn't clear,
@@ -123,7 +123,7 @@ public interface Scope extends Annotatable {
 
     /**
      * Returns the value of the '<em><b>Variables</b></em>' containment reference list.
-     * The list contents are of type {@link de.cau.cs.kieler.expressions.Variable}.
+     * The list contents are of type {@link de.cau.cs.kieler.core.expressions.Variable}.
      * <!-- begin-user-doc -->
      * <p>
      * If the meaning of the '<em>Variables</em>' containment reference list isn't clear,

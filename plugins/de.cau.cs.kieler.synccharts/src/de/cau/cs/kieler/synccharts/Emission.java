@@ -15,8 +15,8 @@
  */
 package de.cau.cs.kieler.synccharts;
 
-import de.cau.cs.kieler.expressions.Expression;
-import de.cau.cs.kieler.expressions.Signal;
+import de.cau.cs.kieler.core.expressions.Expression;
+import de.cau.cs.kieler.core.expressions.Signal;
 
 /**
  * <!-- begin-user-doc -->

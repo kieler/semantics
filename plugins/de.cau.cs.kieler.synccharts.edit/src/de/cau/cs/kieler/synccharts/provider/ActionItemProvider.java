@@ -16,9 +16,9 @@
 package de.cau.cs.kieler.synccharts.provider;
 
 
-import de.cau.cs.kieler.annotations.provider.AnnotatableItemProvider;
+import de.cau.cs.kieler.core.annotations.provider.AnnotatableItemProvider;
+import de.cau.cs.kieler.core.expressions.ExpressionsFactory;
 
-import de.cau.cs.kieler.expressions.ExpressionsFactory;
 
 import de.cau.cs.kieler.synccharts.Action;
 import de.cau.cs.kieler.synccharts.SyncchartsFactory;

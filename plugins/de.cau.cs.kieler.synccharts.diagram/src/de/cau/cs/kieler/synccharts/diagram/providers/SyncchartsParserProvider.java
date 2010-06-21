@@ -13,7 +13,7 @@ import org.eclipse.gmf.runtime.emf.type.core.IElementType;
 import org.eclipse.gmf.runtime.emf.ui.services.parser.ParserHintAdapter;
 import org.eclipse.gmf.runtime.notation.View;
 
-import de.cau.cs.kieler.expressions.ExpressionsPackage;
+import de.cau.cs.kieler.core.expressions.ExpressionsPackage;
 import de.cau.cs.kieler.synccharts.SyncchartsPackage;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.ActionLabel2EditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.ActionLabel3EditPart;

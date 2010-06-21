@@ -13,7 +13,7 @@
    <extension point="org.eclipse.emf.edit.itemProviderAdapterFactories">
       <factory
             uri="http://kieler.cs.cau.de/annotations"
-            class="de.cau.cs.kieler.annotations.provider.AnnotationsItemProviderAdapterFactory"
+            class="de.cau.cs.kieler.core.annotations.provider.AnnotationsItemProviderAdapterFactory"
             supportedTypes=
               "org.eclipse.emf.edit.provider.IEditingDomainItemProvider
                org.eclipse.emf.edit.provider.IStructuredItemContentProvider

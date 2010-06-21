@@ -298,10 +298,10 @@
          class="de.cau.cs.kieler.synccharts.SyncchartsPackage">
    </package>
    <package
-         class="de.cau.cs.kieler.expressions.ExpressionsPackage">
+         class="de.cau.cs.kieler.core.expressions.ExpressionsPackage">
    </package>
    <package
-         class="de.cau.cs.kieler.annotations.AnnotationsPackage">
+         class="de.cau.cs.kieler.core.annotations.AnnotationsPackage">
    </package>
 		</configuration>
 		

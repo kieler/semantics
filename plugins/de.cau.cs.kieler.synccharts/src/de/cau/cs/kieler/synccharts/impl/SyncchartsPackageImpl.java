@@ -15,10 +15,10 @@
  */
 package de.cau.cs.kieler.synccharts.impl;
 
-import de.cau.cs.kieler.annotations.AnnotationsPackage;
-import de.cau.cs.kieler.annotations.impl.AnnotationsPackageImpl;
-import de.cau.cs.kieler.expressions.ExpressionsPackage;
-import de.cau.cs.kieler.expressions.impl.ExpressionsPackageImpl;
+import de.cau.cs.kieler.core.annotations.AnnotationsPackage;
+import de.cau.cs.kieler.core.annotations.impl.AnnotationsPackageImpl;
+import de.cau.cs.kieler.core.expressions.ExpressionsPackage;
+import de.cau.cs.kieler.core.expressions.impl.ExpressionsPackageImpl;
 
 import de.cau.cs.kieler.synccharts.Action;
 import de.cau.cs.kieler.synccharts.Assignment;

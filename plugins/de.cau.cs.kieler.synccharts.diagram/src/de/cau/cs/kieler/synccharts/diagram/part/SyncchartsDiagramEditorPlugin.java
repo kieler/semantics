@@ -21,8 +21,8 @@ import org.eclipse.swt.graphics.Image;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
-import de.cau.cs.kieler.annotations.provider.AnnotationsItemProviderAdapterFactory;
-import de.cau.cs.kieler.expressions.provider.ExpressionsItemProviderAdapterFactory;
+import de.cau.cs.kieler.core.annotations.provider.AnnotationsItemProviderAdapterFactory;
+import de.cau.cs.kieler.core.expressions.provider.ExpressionsItemProviderAdapterFactory;
 import de.cau.cs.kieler.synccharts.provider.SyncchartsItemProviderAdapterFactory;
 
 /**

@@ -16,12 +16,12 @@
 package de.cau.cs.kieler.synccharts.provider;
 
 
-import de.cau.cs.kieler.annotations.AnnotationsFactory;
-import de.cau.cs.kieler.annotations.AnnotationsPackage;
 
-import de.cau.cs.kieler.annotations.provider.AnnotatableItemProvider;
+import de.cau.cs.kieler.core.annotations.AnnotationsFactory;
+import de.cau.cs.kieler.core.annotations.AnnotationsPackage;
+import de.cau.cs.kieler.core.annotations.provider.AnnotatableItemProvider;
+import de.cau.cs.kieler.core.expressions.ExpressionsFactory;
 
-import de.cau.cs.kieler.expressions.ExpressionsFactory;
 
 import de.cau.cs.kieler.synccharts.Scope;
 import de.cau.cs.kieler.synccharts.SyncchartsFactory;

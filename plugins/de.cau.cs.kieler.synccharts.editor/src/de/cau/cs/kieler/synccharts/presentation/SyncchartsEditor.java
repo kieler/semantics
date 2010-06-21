@@ -168,8 +168,8 @@ import org.eclipse.emf.edit.ui.view.ExtendedPropertySheetPage;
 
 import de.cau.cs.kieler.synccharts.provider.SyncchartsItemProviderAdapterFactory;
 
-import de.cau.cs.kieler.annotations.provider.AnnotationsItemProviderAdapterFactory;
-import de.cau.cs.kieler.expressions.provider.ExpressionsItemProviderAdapterFactory;
+import de.cau.cs.kieler.core.annotations.provider.AnnotationsItemProviderAdapterFactory;
+import de.cau.cs.kieler.core.expressions.provider.ExpressionsItemProviderAdapterFactory;
 import de.cau.cs.kieler.synccharts.editor.SyncchartsEditorPlugin;
 
 import org.eclipse.emf.ecore.provider.EcoreItemProviderAdapterFactory;

@@ -12,8 +12,8 @@ import org.eclipse.gmf.runtime.emf.type.core.requests.ConfigureRequest;
 import org.eclipse.gmf.runtime.emf.type.core.requests.CreateElementRequest;
 import org.eclipse.gmf.runtime.notation.View;
 
-import de.cau.cs.kieler.expressions.ExpressionsFactory;
-import de.cau.cs.kieler.expressions.TextualCode;
+import de.cau.cs.kieler.core.expressions.ExpressionsFactory;
+import de.cau.cs.kieler.core.expressions.TextualCode;
 import de.cau.cs.kieler.synccharts.Scope;
 
 /**

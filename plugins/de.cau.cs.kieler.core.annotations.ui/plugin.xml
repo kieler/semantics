@@ -20,7 +20,7 @@
                id="de.cau.cs.kieler.core.annotations.ui.annotationsPropertySection"
                tab="de.cau.cs.kieler.core.annotations.ui.annotationsPropertyTab">
             <input
-                  type="de.cau.cs.kieler.annotations.Annotatable">
+                  type="de.cau.cs.kieler.core.annotations.Annotatable">
             </input>
             <input
                   type="org.eclipse.gmf.runtime.notation.View">

@@ -15,8 +15,8 @@ Workflow {
 	 bean = StandaloneSetup { 
 		platformUri = "${runtimeProject}/.."
 		registerGeneratedEPackage = "de.cau.cs.kieler.synccharts.SyncchartsPackage"
-		registerGeneratedEPackage = "de.cau.cs.kieler.expressions.ExpressionsPackage"
-		registerGeneratedEPackage = "de.cau.cs.kieler.annotations.AnnotationsPackage" 
+		registerGeneratedEPackage = "de.cau.cs.kieler.core.expressions.ExpressionsPackage"
+		registerGeneratedEPackage = "de.cau.cs.kieler.core.annotations.AnnotationsPackage" 
 	}
 	
 	component = DirectoryCleaner {

@@ -6,8 +6,9 @@
  */
 package de.cau.cs.kieler.synccharts.presentation;
 
-import de.cau.cs.kieler.annotations.provider.AnnotationsEditPlugin;
-import de.cau.cs.kieler.expressions.provider.ExpressionsEditPlugin;
+import de.cau.cs.kieler.core.annotations.provider.AnnotationsEditPlugin;
+import de.cau.cs.kieler.core.expressions.provider.ExpressionsEditPlugin;
+
 import org.eclipse.emf.common.EMFPlugin;
 
 import org.eclipse.emf.common.ui.EclipseUIPlugin;

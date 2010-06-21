@@ -15,9 +15,9 @@
  */
 package de.cau.cs.kieler.synccharts.util;
 
-import de.cau.cs.kieler.annotations.Annotatable;
+import de.cau.cs.kieler.core.annotations.Annotatable;
+import de.cau.cs.kieler.core.expressions.TextualCode;
 
-import de.cau.cs.kieler.expressions.TextualCode;
 import de.cau.cs.kieler.synccharts.*;
 
 import org.eclipse.emf.common.notify.Adapter;
@@ -292,13 +292,13 @@ public class SyncchartsAdapterFactory extends AdapterFactoryImpl {
     }
 
     /**
-     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.annotations.Annotatable <em>Annotatable</em>}'.
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.core.annotations.Annotatable <em>Annotatable</em>}'.
      * <!-- begin-user-doc -->
      * This default implementation returns null so that we can easily ignore cases;
      * it's useful to ignore a case when inheritance will catch all the cases anyway.
      * <!-- end-user-doc -->
      * @return the new adapter.
-     * @see de.cau.cs.kieler.annotations.Annotatable
+     * @see de.cau.cs.kieler.core.annotations.Annotatable
      * @generated
      */
     public Adapter createAnnotatableAdapter() {
@@ -306,13 +306,13 @@ public class SyncchartsAdapterFactory extends AdapterFactoryImpl {
     }
 
     /**
-     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.expressions.TextualCode <em>Textual Code</em>}'.
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.core.expressions.TextualCode <em>Textual Code</em>}'.
      * <!-- begin-user-doc -->
      * This default implementation returns null so that we can easily ignore cases;
      * it's useful to ignore a case when inheritance will catch all the cases anyway.
      * <!-- end-user-doc -->
      * @return the new adapter.
-     * @see de.cau.cs.kieler.expressions.TextualCode
+     * @see de.cau.cs.kieler.core.expressions.TextualCode
      * @generated
      */
     public Adapter createTextualCodeAdapter() {

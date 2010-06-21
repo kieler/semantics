@@ -6,9 +6,9 @@ Bundle-Version: 0.1.0
 Bundle-ClassPath: .
 Bundle-Vendor: Christian-Albrechts-Universität zu Kiel
 Bundle-Localization: plugin
-Export-Package: de.cau.cs.kieler.annotations,
- de.cau.cs.kieler.annotations.impl,
- de.cau.cs.kieler.annotations.util
+Export-Package: de.cau.cs.kieler.core.annotations,
+ de.cau.cs.kieler.core.annotations.impl,
+ de.cau.cs.kieler.core.annotations.util
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.emf.ecore;visibility:=reexport
 Bundle-ActivationPolicy: lazy

@@ -6,42 +6,45 @@ grammar de.cau.cs.kieler.synccharts.labelparser.ActionLabel with org.eclipse.xte
 
 
 import "http://www.eclipse.org/emf/2002/Ecore" as ecore
-//import "http://kieler.cs.cau.de/synccharts" as syncchart
+//import "http://kieler.cs.cau.de/synccharts/0.2.1" as syncchart
+//import "http://kieler.cs.cau.de/expressions" as expressions
 import "platform:/resource/de.cau.cs.kieler.synccharts/model/synccharts.ecore" as synccharts
-//import "synccharts" as synchcharts
+import "platform:/resource/de.cau.cs.kieler.core.expressions/model/expressions.ecore" as expressions
+
 
 //==============================================================================
 // Basic Actions
 //==============================================================================
 
 Action returns synccharts::Action:
+    {synccharts::Action}
 	(isImmediate?='#')? (delay=INT)? (trigger=BooleanExpression)? ("/" (effects+=Effect (',')? )*)?; 		
 
 Effect returns synccharts::Effect: 
 	Emission | Assignment | HostCode;
 		
 Emission returns synccharts::Emission:
-	signal=[synccharts::Signal]	
+	signal=[expressions::Signal]	
 	(("(" newValue=ValueExpression ")")
    |("(" newValue=BooleanExpression ")") )?;
 
 Assignment returns synccharts::Assignment:
-	variable=[synccharts::Variable] ":=" 
+	variable=[expressions::Variable] ":=" 
 	 ( expression=ValueExpression
 	 | expression=BooleanExpression);
 
-SignalReference returns synccharts::SignalReference:
-	signal = [synccharts::Signal] 	
+SignalReference returns expressions::SignalReference:
+	signal = [expressions::Signal] 	
 	(("(" (subExpressions+=Expression (',')?)* ")"))?;
 
-VariableReference returns synccharts::VariableReference:
-	variable = [synccharts::Variable]
+VariableReference returns expressions::VariableReference:
+	variable = [expressions::Variable]
 	(("(" (subExpressions+=Expression (',')?)* ")"))?;
 
-Signal returns synccharts::Signal:
+Signal returns expressions::Signal:
 	name=ID;
 	
-Variable returns synccharts::Variable:
+Variable returns expressions::Variable:
 	name=ID;
 	
 //==============================================================================
@@ -52,13 +55,13 @@ Variable returns synccharts::Variable:
 terminal INT returns ecore::EInt:
  '-'?('0'..'9')+;
 
-IntValue returns synccharts::IntValue: 
+IntValue returns expressions::IntValue: 
 	value=INT;
-FloatValue returns synccharts::FloatValue:
+FloatValue returns expressions::FloatValue:
     value=Float ; 
-BooleanValue returns synccharts::BooleanValue :
+BooleanValue returns expressions::BooleanValue :
     value=Boolean;
-Value returns synccharts::Value:
+Value returns expressions::Value:
 	IntValue | FloatValue | BooleanValue;
 
 // make sure the Float rule does not shadow the INT rule
@@ -70,38 +73,38 @@ terminal Boolean returns ecore::EBooleanObject : "true" | "false";
 //==============================================================================
 
 // Example: ?A	
-ValOperation returns synccharts::OperatorExpression:
+ValOperation returns expressions::OperatorExpression:
 	operator=ValOperator subExpressions+=SignalReference;
 
 // everything that evaluates to a primitive number value
-ValueExpression returns synccharts::Expression:
+ValueExpression returns expressions::Expression:
 	PlusOperation;
 
 // Example: 42, 42.2, ?A, var1, (1+2*3)
-ParanthesedValueExpression returns synccharts::Expression:
+ParanthesedValueExpression returns expressions::Expression:
     IntValue | FloatValue | ValOperation | VariableReference | HostCode | '('PlusOperation')' | '('DivOperation')';
 
 // Example: 1 + 2, varA - ?B
-PlusOperation returns synccharts::Expression:
-	MultOrDivOperation ({synccharts::OperatorExpression.subExpressions+=current} operator=PlusOperator subExpressions+=MultOrDivOperation)*;
+PlusOperation returns expressions::Expression:
+	MultOrDivOperation ({expressions::OperatorExpression.subExpressions+=current} operator=PlusOperator subExpressions+=MultOrDivOperation)*;
 
-MultOrDivOperation returns synccharts::Expression:
+MultOrDivOperation returns expressions::Expression:
 	MultOperation | '('DivOperation')';
 
 // Example: 2 * 4, varA mod ?B
-MultOperation returns synccharts::Expression:
-	PreOrNormalValueExpression ({synccharts::OperatorExpression.subExpressions+=current} operator=MultOperator subExpressions+=PreOrNormalValueExpression)*;
+MultOperation returns expressions::Expression:
+	PreOrNormalValueExpression ({expressions::OperatorExpression.subExpressions+=current} operator=MultOperator subExpressions+=PreOrNormalValueExpression)*;
 
 // Example: (2 / 4)
 // note: division has to have always parantheses because the '/' sign is also used for trigger/effect delimiter
-DivOperation returns synccharts::Expression:
-	PreOrNormalValueExpression ({synccharts::OperatorExpression.subExpressions+=current} operator=DivOperator subExpressions+=PreOrNormalValueExpression)*;
+DivOperation returns expressions::Expression:
+	PreOrNormalValueExpression ({expressions::OperatorExpression.subExpressions+=current} operator=DivOperator subExpressions+=PreOrNormalValueExpression)*;
 
 // Example: pre (? A)
-PreArithmOperation returns synccharts::OperatorExpression:
+PreArithmOperation returns expressions::OperatorExpression:
 	operator=UnaryParanthesedOperator '('subExpressions+=ValOperation')';
 	 
-PreOrNormalValueExpression returns synccharts::Expression:
+PreOrNormalValueExpression returns expressions::Expression:
 	PreArithmOperation | ParanthesedValueExpression;
 
 //==============================================================================
@@ -109,75 +112,75 @@ PreOrNormalValueExpression returns synccharts::Expression:
 //==============================================================================
 
 // Example: 42 <= ?A
-CompareOperation returns synccharts::Expression:
-	ValueExpression ({synccharts::OperatorExpression.subExpressions+=current} operator=CompareOperator subExpressions+=ValueExpression);  	
+CompareOperation returns expressions::Expression:
+	ValueExpression ({expressions::OperatorExpression.subExpressions+=current} operator=CompareOperator subExpressions+=ValueExpression);  	
 
 // Example: not A, not false, not (A or B)
 // at the latter we need the parans to indicate the right binding
-UnaryOperation returns synccharts::OperatorExpression:
+UnaryOperation returns expressions::OperatorExpression:
 	operator=UnaryOperator subExpressions+=(ParanthesedBooleanExpression | UnaryParanthesedOperation);
 
-UnaryParanthesedOperation returns synccharts::OperatorExpression:
+UnaryParanthesedOperation returns expressions::OperatorExpression:
     operator=UnaryParanthesedOperator '('subExpressions+=BooleanExpression ')';
 
 // Example: either negated or normal expression (with parantheses) 
-UnaryOrNormalExpression returns synccharts::Expression:
+UnaryOrNormalExpression returns expressions::Expression:
 	UnaryOperation | UnaryParanthesedOperation | ParanthesedBooleanExpression;
 
 // Example: A and B, not C and 42 <= ?D
-AndOperation returns synccharts::Expression:
-	UnaryOrNormalExpression ({synccharts::OperatorExpression.subExpressions+=current} operator=OperatorAnd subExpressions+=UnaryOrNormalExpression)*;
+AndOperation returns expressions::Expression:
+	UnaryOrNormalExpression ({expressions::OperatorExpression.subExpressions+=current} operator=OperatorAnd subExpressions+=UnaryOrNormalExpression)*;
 
 // Example: A or B, C and B or D and not E 
-OrOperation returns synccharts::Expression:
-	AndOperation ({synccharts::OperatorExpression.subExpressions+=current} operator=OperatorOr subExpressions+=AndOperation)*;
+OrOperation returns expressions::Expression:
+	AndOperation ({expressions::OperatorExpression.subExpressions+=current} operator=OperatorOr subExpressions+=AndOperation)*;
 
 // Example: true, A, 42>var1, (A or B), (not D and C or ?E = 42)
 // note that the order of CompareOperation and SignalReference is important. This might be an Xtext bug...
-ParanthesedBooleanExpression returns synccharts::Expression:
+ParanthesedBooleanExpression returns expressions::Expression:
     BooleanValue | CompareOperation | SignalReference | ValOperation | HostCode | '('OrOperation')' ;
 
 // Example: not D and C or ?E = 42 or not (A and (B or C))
-BooleanExpression returns synccharts::Expression:
+BooleanExpression returns expressions::Expression:
 	OrOperation;
 
 //==============================================================================
 // Operators
 //==============================================================================
 	
-enum OperatorType returns synccharts::OperatorType:
+enum OperatorType returns expressions::OperatorType:
 	EQ="=" | LT="<" | LEQ="<=" | GT=">" | GEQ=">=" | NOT="not"| NE="<>" | AND="and" | OR="or" | ADD="+" | SUB="-" | MULT="*" | DIV="/" | MOD="mod" | VAL="?" | PRE="pre";
 
-enum ValOperator returns synccharts::OperatorType:
+enum ValOperator returns expressions::OperatorType:
 	VAL="?";
 
-enum CompareOperator returns synccharts::OperatorType:
+enum CompareOperator returns expressions::OperatorType:
 	EQ="=" | LT="<" | LEQ="<=" | GT=">" | GEQ=">=" | NE="<>";
 
 // not A	
-enum UnaryOperator returns synccharts::OperatorType:
+enum UnaryOperator returns expressions::OperatorType:
 	NOT="not";
 
 // pre(A)
-enum UnaryParanthesedOperator returns synccharts::OperatorType:
+enum UnaryParanthesedOperator returns expressions::OperatorType:
 	PRE="pre";
 
-enum OperatorOr returns synccharts::OperatorType:
+enum OperatorOr returns expressions::OperatorType:
 	OR="or";
 
-enum OperatorAnd returns synccharts::OperatorType:
+enum OperatorAnd returns expressions::OperatorType:
 	AND="and";
 
-enum OperatorPre returns synccharts::OperatorType:
+enum OperatorPre returns expressions::OperatorType:
     PRE="pre";
 
-enum PlusOperator returns synccharts::OperatorType:
+enum PlusOperator returns expressions::OperatorType:
 	ADD="+" | SUB="-";
 	
-enum MultOperator returns synccharts::OperatorType:	
+enum MultOperator returns expressions::OperatorType:	
 	MULT="*" | MOD="mod";
 
-enum DivOperator returns synccharts::OperatorType:	
+enum DivOperator returns expressions::OperatorType:	
 	DIV="/";
 
 
@@ -185,10 +188,10 @@ enum DivOperator returns synccharts::OperatorType:
 // Misc
 //==============================================================================
 	
-HostCode returns synccharts::TextualCode:
+HostCode returns expressions::TextualCode:
 	//"'"code=STRING"'";
 	code=STRING ("(" type=ID ")")?; 	
 	
-Expression returns synccharts::Expression:
+Expression returns expressions::Expression:
  	ValueExpression | BooleanExpression
 ;

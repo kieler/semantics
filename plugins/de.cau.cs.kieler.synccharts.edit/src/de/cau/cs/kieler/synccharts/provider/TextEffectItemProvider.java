@@ -7,7 +7,7 @@
 package de.cau.cs.kieler.synccharts.provider;
 
 
-import de.cau.cs.kieler.expressions.provider.TextualCodeItemProvider;
+import de.cau.cs.kieler.core.expressions.provider.TextualCodeItemProvider;
 
 import de.cau.cs.kieler.synccharts.TextEffect;
 

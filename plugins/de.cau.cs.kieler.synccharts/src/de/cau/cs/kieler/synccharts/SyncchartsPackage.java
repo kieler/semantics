@@ -15,9 +15,9 @@
  */
 package de.cau.cs.kieler.synccharts;
 
-import de.cau.cs.kieler.annotations.AnnotationsPackage;
+import de.cau.cs.kieler.core.annotations.AnnotationsPackage;
+import de.cau.cs.kieler.core.expressions.ExpressionsPackage;
 
-import de.cau.cs.kieler.expressions.ExpressionsPackage;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EDataType;

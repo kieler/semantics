@@ -16,7 +16,7 @@ package de.cau.cs.kieler.synccharts.codegen.sc;
 
 import java.util.ArrayList;
 
-import de.cau.cs.kieler.expressions.Signal;
+import de.cau.cs.kieler.core.expressions.Signal;
 
 /**
  * An implementation of a "triple" with a state, its trigger signals and effect signals.

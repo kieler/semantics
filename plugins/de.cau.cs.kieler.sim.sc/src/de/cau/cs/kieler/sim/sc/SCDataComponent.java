@@ -43,8 +43,8 @@ import de.cau.cs.kieler.sim.kiem.properties.KiemProperty;
 import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyTypeChoice;
 import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyTypeFile;
 import de.cau.cs.kieler.synccharts.Region;
-import de.cau.cs.kieler.expressions.Signal;
-import de.cau.cs.kieler.expressions.ValueType;
+import de.cau.cs.kieler.core.expressions.Signal;
+import de.cau.cs.kieler.core.expressions.ValueType;
 import de.cau.cs.kieler.synccharts.codegen.sc.WorkflowGenerator;
 
 /**

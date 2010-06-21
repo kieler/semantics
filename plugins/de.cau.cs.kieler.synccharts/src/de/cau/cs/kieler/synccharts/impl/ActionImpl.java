@@ -15,8 +15,8 @@
  */
 package de.cau.cs.kieler.synccharts.impl;
 
-import de.cau.cs.kieler.annotations.impl.AnnotatableImpl;
-import de.cau.cs.kieler.expressions.Expression;
+import de.cau.cs.kieler.core.annotations.impl.AnnotatableImpl;
+import de.cau.cs.kieler.core.expressions.Expression;
 
 import de.cau.cs.kieler.synccharts.Action;
 import de.cau.cs.kieler.synccharts.Effect;

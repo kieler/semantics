@@ -19,12 +19,12 @@ import java.util.LinkedList;
 import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
 
-import de.cau.cs.kieler.expressions.Expression;
-import de.cau.cs.kieler.expressions.OperatorExpression;
-import de.cau.cs.kieler.expressions.OperatorType;
-import de.cau.cs.kieler.expressions.Signal;
-import de.cau.cs.kieler.expressions.SignalReference;
-import de.cau.cs.kieler.expressions.Value;
+import de.cau.cs.kieler.core.expressions.Expression;
+import de.cau.cs.kieler.core.expressions.OperatorExpression;
+import de.cau.cs.kieler.core.expressions.OperatorType;
+import de.cau.cs.kieler.core.expressions.Signal;
+import de.cau.cs.kieler.core.expressions.SignalReference;
+import de.cau.cs.kieler.core.expressions.Value;
 import de.cau.cs.kieler.synccharts.Effect;
 import de.cau.cs.kieler.synccharts.Emission;
 import de.cau.cs.kieler.synccharts.Region;

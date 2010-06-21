@@ -13,7 +13,7 @@
    <extension point="org.eclipse.emf.ecore.generated_package">
       <package
             uri="http://kieler.cs.cau.de/annotations"
-            class="de.cau.cs.kieler.annotations.AnnotationsPackage"
+            class="de.cau.cs.kieler.core.annotations.AnnotationsPackage"
             genModel="model/annotations.genmodel"/>
    </extension>
 

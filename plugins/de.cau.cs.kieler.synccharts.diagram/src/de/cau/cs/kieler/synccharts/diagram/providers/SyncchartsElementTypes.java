@@ -16,7 +16,7 @@ import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.resource.ImageRegistry;
 import org.eclipse.swt.graphics.Image;
 
-import de.cau.cs.kieler.expressions.ExpressionsPackage;
+import de.cau.cs.kieler.core.expressions.ExpressionsPackage;
 import de.cau.cs.kieler.synccharts.SyncchartsPackage;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.Action2EditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.Action3EditPart;

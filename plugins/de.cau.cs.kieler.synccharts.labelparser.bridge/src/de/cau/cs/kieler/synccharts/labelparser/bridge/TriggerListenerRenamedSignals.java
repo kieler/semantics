@@ -6,8 +6,8 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.transaction.NotificationFilter;
 import org.eclipse.emf.transaction.TransactionalEditingDomain;
 
-import de.cau.cs.kieler.expressions.ExpressionsPackage;
-import de.cau.cs.kieler.expressions.ValuedObject;
+import de.cau.cs.kieler.core.expressions.ExpressionsPackage;
+import de.cau.cs.kieler.core.expressions.ValuedObject;
 import de.cau.cs.kieler.synccharts.contentadapter.FireOnceTriggerListener;
 
 /**

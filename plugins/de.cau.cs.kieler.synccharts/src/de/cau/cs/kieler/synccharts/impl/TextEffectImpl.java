@@ -6,7 +6,7 @@
  */
 package de.cau.cs.kieler.synccharts.impl;
 
-import de.cau.cs.kieler.expressions.impl.TextualCodeImpl;
+import de.cau.cs.kieler.core.expressions.impl.TextualCodeImpl;
 
 import de.cau.cs.kieler.synccharts.SyncchartsPackage;
 import de.cau.cs.kieler.synccharts.TextEffect;

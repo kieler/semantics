@@ -5,7 +5,7 @@
     modelPluginID="de.cau.cs.kieler.core.annotations" modelName="Annotations" importerID="org.eclipse.emf.importer.ecore"
     complianceLevel="5.0" copyrightFields="false" usedGenPackages="platform:/plugin/org.eclipse.emf.ecore/model/Ecore.genmodel#//ecore">
   <foreignModel>annotations.ecore</foreignModel>
-  <genPackages prefix="Annotations" basePackage="de.cau.cs.kieler" disposableProviderFactory="true"
+  <genPackages prefix="Annotations" basePackage="de.cau.cs.kieler.core" disposableProviderFactory="true"
       ecorePackage="annotations.ecore#/">
     <genClasses image="false" ecoreClass="annotations.ecore#//NamedObject">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute annotations.ecore#//NamedObject/name"/>

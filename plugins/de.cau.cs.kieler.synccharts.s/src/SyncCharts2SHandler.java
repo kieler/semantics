@@ -15,10 +15,10 @@ import org.eclipse.jface.viewers.TreeSelection;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.statushandlers.StatusManager;
 
-import de.cau.cs.kieler.annotations.AnnotationsPackage;
 import de.cau.cs.kieler.core.KielerException;
+import de.cau.cs.kieler.core.annotations.AnnotationsPackage;
+import de.cau.cs.kieler.core.expressions.ExpressionsPackage;
 import de.cau.cs.kieler.core.model.util.XtendTransformationUtil;
-import de.cau.cs.kieler.expressions.ExpressionsPackage;
 import de.cau.cs.kieler.s.s.SPackage;
 import de.cau.cs.kieler.synccharts.SyncchartsPackage;
 import de.cau.cs.kieler.synccharts.s.Activator;
