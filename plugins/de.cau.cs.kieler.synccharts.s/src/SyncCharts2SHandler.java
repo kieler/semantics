@@ -38,12 +38,6 @@ public class SyncCharts2SHandler extends AbstractHandler implements IHandler {
         final EPackage p3 = ExpressionsPackage.eINSTANCE;
         final EPackage p4 = AnnotationsPackage.eINSTANCE;
         
-        LinkedList<EPackage> modelPackages = new LinkedList<EPackage>();
-        modelPackages.add(p1);
-        modelPackages.add(p2);
-        modelPackages.add(p3);
-        modelPackages.add(p4);
-
         Status myStatus = null;
         try {
             // get input model from currently selected file in Explorer
@@ -57,7 +51,7 @@ public class SyncCharts2SHandler extends AbstractHandler implements IHandler {
             output = output.trimFileExtension().appendFileExtension("s");
 
             XtendTransformationUtil
-                    .model2ModelTransform(transformation, fun, input, output, modelPackages);
+                    .model2ModelTransform(transformation, fun, input, output, p1,p2,p3,p4);
         } catch (KielerException e) {
             myStatus = new Status(IStatus.ERROR, Activator.PLUGIN_ID,
                     "Failed to transform SyncChart model into S model.", e);

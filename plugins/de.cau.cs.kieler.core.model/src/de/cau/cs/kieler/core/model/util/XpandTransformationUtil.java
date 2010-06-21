@@ -36,7 +36,6 @@ import org.eclipse.xpand2.output.Outlet;
 import org.eclipse.xtend.typesystem.emf.EmfMetaModel;
 import org.eclipse.xtend.util.stdlib.ExtIssueReporter;
 
-import de.cau.cs.kieler.annotations.AnnotationsPackage;
 import de.cau.cs.kieler.core.KielerException;
 import de.cau.cs.kieler.core.model.ui.M2MProgressMonitor;
 import de.cau.cs.kieler.core.ui.KielerProgressMonitor;
@@ -70,8 +69,8 @@ public final class XpandTransformationUtil {
      *            EMF URI for input model (may be a local resource URI)
      * @param outPath
      *            the output path
-     * @param modelPackage1
-     *            EPackage of the metamodel that need to be known to the
+     * @param modelPackages
+     *            EPackage of the metamodels that need to be known to the
      *            transformation
      * 
      * @return the Status about success and errors and warnings
@@ -79,7 +78,7 @@ public final class XpandTransformationUtil {
     public static XtendStatus model2TextTransform(
             final KielerProgressMonitor monitor, final String xpandFile,
             final String startFunction, final URI inputModelURI,
-            final String outPath, final EPackage modelPackage1) {
+            final String outPath, final EPackage... modelPackages) {
         monitor.begin("Model2Text transformation", 2);
 
         // Workflow
@@ -110,25 +109,21 @@ public final class XpandTransformationUtil {
         emfReader.getResourceSet().getLoadOptions().put(
                 XMLResource.OPTION_PARSER_FEATURES, parserFeatures);
 
-        // Meta models
-        EmfMetaModel metaModel1 = new EmfMetaModel(modelPackage1);
 
         Generator xpandComponent = new Generator();
-
         Outlet outlet = new Outlet();
         outlet.setPath(outPath);
-        xpandComponent.addOutlet(outlet);
-
         // XpandComponent
-        xpandComponent.addMetaModel(metaModel1);
+        xpandComponent.addOutlet(outlet);
+        // Meta models
+        for (EPackage ePackage : modelPackages) {
+            EmfMetaModel metaModel = new EmfMetaModel(ePackage);
+            xpandComponent.addMetaModel(metaModel);
+        }
         xpandComponent.setExpand(xpandFile + "::" + startFunction
                 + " FOR inputmodel");
 
         // xpandComponent.setOutputSlot("outputmodel");
-
-        // add the Annotations Metamodel by default
-        xpandComponent.addMetaModel(new EmfMetaModel(
-                AnnotationsPackage.eINSTANCE));
 
         // workflow
         WorkflowContext wfx = new WorkflowContextDefaultImpl();
@@ -188,8 +183,8 @@ public final class XpandTransformationUtil {
      *            EMF URI for input model (may be a local resource URI)
      * @param outPath
      *            the output path of the transformation
-     * @param modelPackage1
-     *            EPackage of the metamodel that need to be known to the
+     * @param modelPackages
+     *            EPackages of the metamodels that need to be known to the
      *            transformation
      * 
      * @throws KielerException
@@ -200,14 +195,14 @@ public final class XpandTransformationUtil {
      */
     public static XtendStatus model2TextTransform(final String xpandFile,
             final String startFunction, final URI inputModelURI,
-            final String outPath, final EPackage modelPackage1)
+            final String outPath, final EPackage... modelPackages)
             throws KielerException {
         MonitoredOperation monitoredOperation = new MonitoredOperation() {
             @Override
             protected IStatus execute(final IProgressMonitor monitor) {
                 return model2TextTransform(new KielerProgressMonitor(monitor),
                         xpandFile, startFunction, inputModelURI, outPath,
-                        modelPackage1);
+                        modelPackages);
             }
         };
         monitoredOperation.runMonitored();

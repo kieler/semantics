@@ -38,12 +38,10 @@ import org.eclipse.xtend.XtendComponent;
 import org.eclipse.xtend.typesystem.emf.EmfMetaModel;
 import org.eclipse.xtend.util.stdlib.ExtIssueReporter;
 
-import de.cau.cs.kieler.annotations.AnnotationsPackage;
 import de.cau.cs.kieler.core.KielerException;
 import de.cau.cs.kieler.core.model.ui.M2MProgressMonitor;
 import de.cau.cs.kieler.core.ui.KielerProgressMonitor;
 import de.cau.cs.kieler.core.ui.util.MonitoredOperation;
-import de.cau.cs.kieler.expressions.ExpressionsPackage;
 
 /**
  * Utitlity class to conveniently execute Xtend transformations.
@@ -82,7 +80,7 @@ public final class XtendTransformationUtil {
      */
     public static XtendStatus model2ModelTransform(final KielerProgressMonitor monitor,
             final String xtendFile, final String startFunction, final URI inputModelURI,
-            final URI outputModelURI, final List<EPackage> involvedMetamodels) {
+            final URI outputModelURI, final EPackage... involvedMetamodels) {
         monitor.begin("Model2Model transformation", 2);
 
         // Workflow
@@ -192,7 +190,7 @@ public final class XtendTransformationUtil {
      */
     public static XtendStatus model2ModelTransform(final String xtendFile,
             final String startFunction, final URI inputModelURI, final URI outputModelURI,
-            final List<EPackage> involvedMetamodels) throws KielerException {
+            final EPackage... involvedMetamodels) throws KielerException {
         MonitoredOperation monitoredOperation = new MonitoredOperation() {
             @Override
             protected IStatus execute(final IProgressMonitor monitor) {
