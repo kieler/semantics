@@ -12,6 +12,9 @@ var runtimeProject = "../${projectName}"
 Workflow {
     bean = StandaloneSetup {
 		platformUri = "${runtimeProject}/.."
+			registerGeneratedEPackage = "de.cau.cs.kieler.synccharts.SyncchartsPackage"
+			registerGeneratedEPackage = "de.cau.cs.kieler.core.expressions.ExpressionsPackage"
+			registerGeneratedEPackage = "de.cau.cs.kieler.core.annotations.AnnotationsPackage" 
 	}
 
 	component = DirectoryCleaner {
@@ -36,7 +39,7 @@ Workflow {
 
 			// generates Java API for the generated EPackages 
 			fragment = ecore.EcoreGeneratorFragment {
-			// referencedGenModels = "uri to genmodel, uri to next genmodel"
+				referencedGenModels = "platform:/resource/de.cau.cs.kieler.synccharts/model/synccharts.genmodel, platform:/resource/de.cau.cs.kieler.core.annotations/model/annotations.genmodel, platform:/resource/de.cau.cs.kieler.core.expressions/model/expressions.genmodel"
 			}
 
 			// the serialization component
@@ -90,11 +93,6 @@ Workflow {
 			// generates a more lightweight Antlr parser and lexer tailored for content assist  
 			fragment = parser.antlr.XtextAntlrUiGeneratorFragment {}
 
-			// project wizard (optional) 
-			// fragment = projectWizard.SimpleProjectWizardFragment {
-			// 		generatorProjectName = "${projectName}.generator" 
-			//		modelFileExtension = file.extensions
-			// }
 		}
 	}
 }
