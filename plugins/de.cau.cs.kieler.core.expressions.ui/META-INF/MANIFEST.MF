@@ -15,5 +15,6 @@ Require-Bundle: de.cau.cs.kieler.core.expressions;visibility:=reexport,
  org.eclipse.xtext.builder
 Import-Package: org.apache.log4j
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
-Export-Package: de.cau.cs.kieler.core.expressions.ui.contentassist.antlr
+Export-Package: de.cau.cs.kieler.core.expressions.ui.contentassist,
+ de.cau.cs.kieler.core.expressions.ui.contentassist.antlr
 Bundle-Activator: de.cau.cs.kieler.core.expressions.ui.internal.ExpressionsActivator

@@ -7,53 +7,52 @@ package de.cau.cs.kieler.synccharts.labelparser.ui.contentassist.antlr.internal;
 import org.eclipse.xtext.ui.editor.contentassist.antlr.internal.Lexer;
 }
 
-T13 : '?' ;
+T11 : 'pre' ;
+T12 : 'or' ;
+T13 : 'and' ;
 T14 : 'not' ;
-T15 : 'pre' ;
-T16 : 'or' ;
-T17 : 'and' ;
-T18 : '/' ;
-T19 : '=' ;
-T20 : '<' ;
-T21 : '<=' ;
-T22 : '>' ;
-T23 : '>=' ;
-T24 : '<>' ;
-T25 : '+' ;
-T26 : '-' ;
-T27 : '*' ;
-T28 : 'mod' ;
-T29 : ',' ;
-T30 : '(' ;
-T31 : ')' ;
-T32 : ':=' ;
-T33 : '#' ;
+T15 : '+' ;
+T16 : '-' ;
+T17 : '*' ;
+T18 : 'mod' ;
+T19 : '/' ;
+T20 : '?' ;
+T21 : 'E' ;
+T22 : 'e' ;
+T23 : 'true' ;
+T24 : 'false' ;
+T25 : '=' ;
+T26 : '<' ;
+T27 : '<=' ;
+T28 : '>' ;
+T29 : '>=' ;
+T30 : '<>' ;
+T31 : ',' ;
+T32 : '(' ;
+T33 : ')' ;
+T34 : ':=' ;
+T35 : '.' ;
+T36 : '#' ;
 
-// $ANTLR src "../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/ui/contentassist/antlr/internal/InternalActionLabel.g" 5168
-RULE_INT : '-'? ('0'..'9')+;
-
-// $ANTLR src "../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/ui/contentassist/antlr/internal/InternalActionLabel.g" 5170
-RULE_FLOAT : ((RULE_INT '.' RULE_INT|RULE_INT ('.' RULE_INT)? ('e'|'E') '+'? RULE_INT) 'f'?|RULE_INT 'f');
-
-// $ANTLR src "../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/ui/contentassist/antlr/internal/InternalActionLabel.g" 5172
-RULE_BOOLEAN : ('true'|'false');
-
-// $ANTLR src "../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/ui/contentassist/antlr/internal/InternalActionLabel.g" 5174
+// $ANTLR src "../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/ui/contentassist/antlr/internal/InternalActionLabel.g" 5474
 RULE_ID : '^'? ('a'..'z'|'A'..'Z'|'_') ('a'..'z'|'A'..'Z'|'_'|'0'..'9')*;
 
-// $ANTLR src "../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/ui/contentassist/antlr/internal/InternalActionLabel.g" 5176
+// $ANTLR src "../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/ui/contentassist/antlr/internal/InternalActionLabel.g" 5476
+RULE_INT : ('0'..'9')+;
+
+// $ANTLR src "../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/ui/contentassist/antlr/internal/InternalActionLabel.g" 5478
 RULE_STRING : ('"' ('\\' ('b'|'t'|'n'|'f'|'r'|'"'|'\''|'\\')|~(('\\'|'"')))* '"'|'\'' ('\\' ('b'|'t'|'n'|'f'|'r'|'"'|'\''|'\\')|~(('\\'|'\'')))* '\'');
 
-// $ANTLR src "../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/ui/contentassist/antlr/internal/InternalActionLabel.g" 5178
+// $ANTLR src "../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/ui/contentassist/antlr/internal/InternalActionLabel.g" 5480
 RULE_ML_COMMENT : '/*' ( options {greedy=false;} : . )*'*/';
 
-// $ANTLR src "../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/ui/contentassist/antlr/internal/InternalActionLabel.g" 5180
+// $ANTLR src "../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/ui/contentassist/antlr/internal/InternalActionLabel.g" 5482
 RULE_SL_COMMENT : '//' ~(('\n'|'\r'))* ('\r'? '\n')?;
 
-// $ANTLR src "../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/ui/contentassist/antlr/internal/InternalActionLabel.g" 5182
+// $ANTLR src "../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/ui/contentassist/antlr/internal/InternalActionLabel.g" 5484
 RULE_WS : (' '|'\t'|'\r'|'\n')+;
 
-// $ANTLR src "../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/ui/contentassist/antlr/internal/InternalActionLabel.g" 5184
+// $ANTLR src "../de.cau.cs.kieler.synccharts.labelparser.ui/src-gen/de/cau/cs/kieler/synccharts/labelparser/ui/contentassist/antlr/internal/InternalActionLabel.g" 5486
 RULE_ANY_OTHER : .;
 
 
