@@ -26,7 +26,7 @@
          point="org.eclipse.ui.commands">
       <command
             categoryId="de.cau.cs.kieler"
-            defaultHandler="de.cau.cs.kieler.synccharts.labelparser.bridge.ActionLabelParseHandler"
+            defaultHandler="de.cau.cs.kieler.synccharts.text.actions.bridge.ActionLabelParseHandler"
             description="Re-parse all transition and action labels of the current SyncChart."
             id="de.cau.cs.kieler.synccharts.labelparser.bridge.parse"
             name="Parse all action labels">
@@ -35,13 +35,13 @@
    <extension
          point="de.cau.cs.kieler.synccharts.triggerListener">
       <triggerListener
-            class="de.cau.cs.kieler.synccharts.labelparser.bridge.TriggerListenerChangedTrigger">
+            class="de.cau.cs.kieler.synccharts.text.actions.bridge.TriggerListenerChangedTrigger">
       </triggerListener>
       <triggerListener
-            class="de.cau.cs.kieler.synccharts.labelparser.bridge.TriggerListenerRenamedSignals">
+            class="de.cau.cs.kieler.synccharts.text.actions.bridge.TriggerListenerRenamedSignals">
       </triggerListener>
       <triggerListener
-            class="de.cau.cs.kieler.synccharts.labelparser.bridge.TriggerListenerSerializer">
+            class="de.cau.cs.kieler.synccharts.text.actions.bridge.TriggerListenerSerializer">
       </triggerListener>
    </extension>
 
