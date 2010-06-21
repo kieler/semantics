@@ -6,6 +6,8 @@
  */
 package de.cau.cs.kieler.expressions;
 
+import org.eclipse.emf.ecore.EObject;
+
 
 /**
  * <!-- begin-user-doc -->
@@ -24,7 +26,7 @@ package de.cau.cs.kieler.expressions;
  * @model
  * @generated
  */
-public interface TextualCode extends ComplexExpression {
+public interface TextualCode extends EObject {
     /**
      * Returns the value of the '<em><b>Code</b></em>' attribute.
      * <!-- begin-user-doc -->

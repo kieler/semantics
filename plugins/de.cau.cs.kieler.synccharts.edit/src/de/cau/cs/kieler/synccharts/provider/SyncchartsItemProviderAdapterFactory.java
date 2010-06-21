@@ -246,6 +246,29 @@ public class SyncchartsItemProviderAdapterFactory extends SyncchartsAdapterFacto
     }
 
     /**
+     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.synccharts.TextEffect} instances.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    protected TextEffectItemProvider textEffectItemProvider;
+
+    /**
+     * This creates an adapter for a {@link de.cau.cs.kieler.synccharts.TextEffect}.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public Adapter createTextEffectAdapter() {
+        if (textEffectItemProvider == null) {
+            textEffectItemProvider = new TextEffectItemProvider(this);
+        }
+
+        return textEffectItemProvider;
+    }
+
+    /**
      * This returns the root adapter factory that contains this factory.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -351,6 +374,7 @@ public class SyncchartsItemProviderAdapterFactory extends SyncchartsAdapterFacto
         if (substitutionItemProvider != null) substitutionItemProvider.dispose();
         if (stateItemProvider != null) stateItemProvider.dispose();
         if (transitionItemProvider != null) transitionItemProvider.dispose();
+        if (textEffectItemProvider != null) textEffectItemProvider.dispose();
     }
 
 }

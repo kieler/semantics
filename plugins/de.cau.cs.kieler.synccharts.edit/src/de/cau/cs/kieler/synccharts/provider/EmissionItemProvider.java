@@ -195,11 +195,6 @@ public class EmissionItemProvider
         newChildDescriptors.add
             (createChildParameter
                 (SyncchartsPackage.Literals.EMISSION__NEW_VALUE,
-                 ExpressionsFactory.eINSTANCE.createTextualCode()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (SyncchartsPackage.Literals.EMISSION__NEW_VALUE,
                  ExpressionsFactory.eINSTANCE.createSignalReference()));
 
         newChildDescriptors.add
@@ -231,6 +226,11 @@ public class EmissionItemProvider
             (createChildParameter
                 (SyncchartsPackage.Literals.EMISSION__NEW_VALUE,
                  ExpressionsFactory.eINSTANCE.createOperatorExpression()));
+
+        newChildDescriptors.add
+            (createChildParameter
+                (SyncchartsPackage.Literals.EMISSION__NEW_VALUE,
+                 ExpressionsFactory.eINSTANCE.createTextExpression()));
     }
 
 }

@@ -118,22 +118,13 @@ public interface ExpressionsPackage extends EPackage {
     int TEXTUAL_CODE = 2;
 
     /**
-     * The feature id for the '<em><b>Sub Expressions</b></em>' containment reference list.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int TEXTUAL_CODE__SUB_EXPRESSIONS = COMPLEX_EXPRESSION__SUB_EXPRESSIONS;
-
-    /**
      * The feature id for the '<em><b>Code</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int TEXTUAL_CODE__CODE = COMPLEX_EXPRESSION_FEATURE_COUNT + 0;
+    int TEXTUAL_CODE__CODE = 0;
 
     /**
      * The feature id for the '<em><b>Type</b></em>' attribute.
@@ -142,7 +133,7 @@ public interface ExpressionsPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int TEXTUAL_CODE__TYPE = COMPLEX_EXPRESSION_FEATURE_COUNT + 1;
+    int TEXTUAL_CODE__TYPE = 1;
 
     /**
      * The number of structural features of the '<em>Textual Code</em>' class.
@@ -151,7 +142,7 @@ public interface ExpressionsPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int TEXTUAL_CODE_FEATURE_COUNT = COMPLEX_EXPRESSION_FEATURE_COUNT + 2;
+    int TEXTUAL_CODE_FEATURE_COUNT = 2;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.expressions.impl.ValuedObjectImpl <em>Valued Object</em>}' class.
@@ -596,6 +587,52 @@ public interface ExpressionsPackage extends EPackage {
     int OPERATOR_EXPRESSION_FEATURE_COUNT = COMPLEX_EXPRESSION_FEATURE_COUNT + 1;
 
     /**
+     * The meta object id for the '{@link de.cau.cs.kieler.expressions.impl.TextExpressionImpl <em>Text Expression</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.expressions.impl.TextExpressionImpl
+     * @see de.cau.cs.kieler.expressions.impl.ExpressionsPackageImpl#getTextExpression()
+     * @generated
+     */
+    int TEXT_EXPRESSION = 13;
+
+    /**
+     * The feature id for the '<em><b>Sub Expressions</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int TEXT_EXPRESSION__SUB_EXPRESSIONS = COMPLEX_EXPRESSION__SUB_EXPRESSIONS;
+
+    /**
+     * The feature id for the '<em><b>Code</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int TEXT_EXPRESSION__CODE = COMPLEX_EXPRESSION_FEATURE_COUNT + 0;
+
+    /**
+     * The feature id for the '<em><b>Type</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int TEXT_EXPRESSION__TYPE = COMPLEX_EXPRESSION_FEATURE_COUNT + 1;
+
+    /**
+     * The number of structural features of the '<em>Text Expression</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int TEXT_EXPRESSION_FEATURE_COUNT = COMPLEX_EXPRESSION_FEATURE_COUNT + 2;
+
+    /**
      * The meta object id for the '{@link de.cau.cs.kieler.expressions.CombineOperator <em>Combine Operator</em>}' enum.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -603,7 +640,7 @@ public interface ExpressionsPackage extends EPackage {
      * @see de.cau.cs.kieler.expressions.impl.ExpressionsPackageImpl#getCombineOperator()
      * @generated
      */
-    int COMBINE_OPERATOR = 13;
+    int COMBINE_OPERATOR = 14;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.expressions.OperatorType <em>Operator Type</em>}' enum.
@@ -613,7 +650,7 @@ public interface ExpressionsPackage extends EPackage {
      * @see de.cau.cs.kieler.expressions.impl.ExpressionsPackageImpl#getOperatorType()
      * @generated
      */
-    int OPERATOR_TYPE = 14;
+    int OPERATOR_TYPE = 15;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.expressions.ValueType <em>Value Type</em>}' enum.
@@ -623,7 +660,7 @@ public interface ExpressionsPackage extends EPackage {
      * @see de.cau.cs.kieler.expressions.impl.ExpressionsPackageImpl#getValueType()
      * @generated
      */
-    int VALUE_TYPE = 15;
+    int VALUE_TYPE = 16;
 
 
     /**
@@ -977,6 +1014,16 @@ public interface ExpressionsPackage extends EPackage {
     EAttribute getOperatorExpression_Operator();
 
     /**
+     * Returns the meta object for class '{@link de.cau.cs.kieler.expressions.TextExpression <em>Text Expression</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for class '<em>Text Expression</em>'.
+     * @see de.cau.cs.kieler.expressions.TextExpression
+     * @generated
+     */
+    EClass getTextExpression();
+
+    /**
      * Returns the meta object for enum '{@link de.cau.cs.kieler.expressions.CombineOperator <em>Combine Operator</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1317,6 +1364,16 @@ public interface ExpressionsPackage extends EPackage {
          * @generated
          */
         EAttribute OPERATOR_EXPRESSION__OPERATOR = eINSTANCE.getOperatorExpression_Operator();
+
+        /**
+         * The meta object literal for the '{@link de.cau.cs.kieler.expressions.impl.TextExpressionImpl <em>Text Expression</em>}' class.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see de.cau.cs.kieler.expressions.impl.TextExpressionImpl
+         * @see de.cau.cs.kieler.expressions.impl.ExpressionsPackageImpl#getTextExpression()
+         * @generated
+         */
+        EClass TEXT_EXPRESSION = eINSTANCE.getTextExpression();
 
         /**
          * The meta object literal for the '{@link de.cau.cs.kieler.expressions.CombineOperator <em>Combine Operator</em>}' enum.

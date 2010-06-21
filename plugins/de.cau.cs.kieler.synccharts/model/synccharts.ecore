@@ -104,4 +104,5 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="interfaceDeclaration" eType="#//Parsable"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EDataType" name="Parsable" instanceClassName="java.lang.String"/>
+  <eClassifiers xsi:type="ecore:EClass" name="TextEffect" eSuperTypes="../../de.cau.cs.kieler.core.expressions/model/expressions.ecore#//TextualCode #//Effect"/>
 </ecore:EPackage>

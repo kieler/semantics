@@ -365,6 +365,11 @@ public class ScopeItemProvider
         newChildDescriptors.add
             (createChildParameter
                 (SyncchartsPackage.Literals.SCOPE__BODY_CONTENTS,
+                 SyncchartsFactory.eINSTANCE.createTextEffect()));
+
+        newChildDescriptors.add
+            (createChildParameter
+                (SyncchartsPackage.Literals.SCOPE__BODY_CONTENTS,
                  AnnotationsFactory.eINSTANCE.createAnnotation()));
 
         newChildDescriptors.add
@@ -534,8 +539,23 @@ public class ScopeItemProvider
 
         newChildDescriptors.add
             (createChildParameter
+                (SyncchartsPackage.Literals.SCOPE__BODY_CONTENTS,
+                 ExpressionsFactory.eINSTANCE.createTextExpression()));
+
+        newChildDescriptors.add
+            (createChildParameter
+                (SyncchartsPackage.Literals.SCOPE__BODY_TEXT,
+                 SyncchartsFactory.eINSTANCE.createTextEffect()));
+
+        newChildDescriptors.add
+            (createChildParameter
                 (SyncchartsPackage.Literals.SCOPE__BODY_TEXT,
                  ExpressionsFactory.eINSTANCE.createTextualCode()));
+
+        newChildDescriptors.add
+            (createChildParameter
+                (SyncchartsPackage.Literals.SCOPE__BODY_TEXT,
+                 ExpressionsFactory.eINSTANCE.createTextExpression()));
 
         newChildDescriptors.add
             (createChildParameter

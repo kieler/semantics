@@ -74,6 +74,7 @@ public class ExpressionsFactoryImpl extends EFactoryImpl implements ExpressionsF
             case ExpressionsPackage.FLOAT_VALUE: return createFloatValue();
             case ExpressionsPackage.BOOLEAN_VALUE: return createBooleanValue();
             case ExpressionsPackage.OPERATOR_EXPRESSION: return createOperatorExpression();
+            case ExpressionsPackage.TEXT_EXPRESSION: return createTextExpression();
             default:
                 throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
         }
@@ -245,6 +246,16 @@ public class ExpressionsFactoryImpl extends EFactoryImpl implements ExpressionsF
     public OperatorExpression createOperatorExpression() {
         OperatorExpressionImpl operatorExpression = new OperatorExpressionImpl();
         return operatorExpression;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public TextExpression createTextExpression() {
+        TextExpressionImpl textExpression = new TextExpressionImpl();
+        return textExpression;
     }
 
     /**

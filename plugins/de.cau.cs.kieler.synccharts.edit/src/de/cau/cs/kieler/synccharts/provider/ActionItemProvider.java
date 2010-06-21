@@ -256,6 +256,11 @@ public class ActionItemProvider
 
         newChildDescriptors.add
             (createChildParameter
+                (SyncchartsPackage.Literals.ACTION__EFFECTS,
+                 SyncchartsFactory.eINSTANCE.createTextEffect()));
+
+        newChildDescriptors.add
+            (createChildParameter
                 (SyncchartsPackage.Literals.ACTION__TRIGGER,
                  ExpressionsFactory.eINSTANCE.createExpression()));
 
@@ -263,11 +268,6 @@ public class ActionItemProvider
             (createChildParameter
                 (SyncchartsPackage.Literals.ACTION__TRIGGER,
                  ExpressionsFactory.eINSTANCE.createComplexExpression()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (SyncchartsPackage.Literals.ACTION__TRIGGER,
-                 ExpressionsFactory.eINSTANCE.createTextualCode()));
 
         newChildDescriptors.add
             (createChildParameter
@@ -303,6 +303,11 @@ public class ActionItemProvider
             (createChildParameter
                 (SyncchartsPackage.Literals.ACTION__TRIGGER,
                  ExpressionsFactory.eINSTANCE.createOperatorExpression()));
+
+        newChildDescriptors.add
+            (createChildParameter
+                (SyncchartsPackage.Literals.ACTION__TRIGGER,
+                 ExpressionsFactory.eINSTANCE.createTextExpression()));
     }
 
     /**

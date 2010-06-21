@@ -103,8 +103,6 @@ public class ExpressionsSwitch<T> {
             case ExpressionsPackage.TEXTUAL_CODE: {
                 TextualCode textualCode = (TextualCode)theEObject;
                 T result = caseTextualCode(textualCode);
-                if (result == null) result = caseComplexExpression(textualCode);
-                if (result == null) result = caseExpression(textualCode);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -180,6 +178,15 @@ public class ExpressionsSwitch<T> {
                 T result = caseOperatorExpression(operatorExpression);
                 if (result == null) result = caseComplexExpression(operatorExpression);
                 if (result == null) result = caseExpression(operatorExpression);
+                if (result == null) result = defaultCase(theEObject);
+                return result;
+            }
+            case ExpressionsPackage.TEXT_EXPRESSION: {
+                TextExpression textExpression = (TextExpression)theEObject;
+                T result = caseTextExpression(textExpression);
+                if (result == null) result = caseComplexExpression(textExpression);
+                if (result == null) result = caseTextualCode(textExpression);
+                if (result == null) result = caseExpression(textExpression);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -379,6 +386,21 @@ public class ExpressionsSwitch<T> {
      * @generated
      */
     public T caseOperatorExpression(OperatorExpression object) {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>Text Expression</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Text Expression</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseTextExpression(TextExpression object) {
         return null;
     }
 

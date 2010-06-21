@@ -18,7 +18,7 @@
         eType="#//Expression" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Expression"/>
-  <eClassifiers xsi:type="ecore:EClass" name="TextualCode" eSuperTypes="#//ComplexExpression">
+  <eClassifiers xsi:type="ecore:EClass" name="TextualCode">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="code" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
@@ -92,4 +92,5 @@
   <eClassifiers xsi:type="ecore:EClass" name="OperatorExpression" eSuperTypes="#//ComplexExpression">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="operator" eType="#//OperatorType"/>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="TextExpression" eSuperTypes="#//ComplexExpression #//TextualCode"/>
 </ecore:EPackage>

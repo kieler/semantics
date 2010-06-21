@@ -161,11 +161,6 @@ public class ComplexExpressionItemProvider
         newChildDescriptors.add
             (createChildParameter
                 (ExpressionsPackage.Literals.COMPLEX_EXPRESSION__SUB_EXPRESSIONS,
-                 ExpressionsFactory.eINSTANCE.createTextualCode()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (ExpressionsPackage.Literals.COMPLEX_EXPRESSION__SUB_EXPRESSIONS,
                  ExpressionsFactory.eINSTANCE.createSignalReference()));
 
         newChildDescriptors.add
@@ -197,6 +192,11 @@ public class ComplexExpressionItemProvider
             (createChildParameter
                 (ExpressionsPackage.Literals.COMPLEX_EXPRESSION__SUB_EXPRESSIONS,
                  ExpressionsFactory.eINSTANCE.createOperatorExpression()));
+
+        newChildDescriptors.add
+            (createChildParameter
+                (ExpressionsPackage.Literals.COMPLEX_EXPRESSION__SUB_EXPRESSIONS,
+                 ExpressionsFactory.eINSTANCE.createTextExpression()));
     }
 
 }

@@ -7,6 +7,7 @@
 package de.cau.cs.kieler.expressions.impl;
 
 import de.cau.cs.kieler.expressions.ExpressionsPackage;
+import de.cau.cs.kieler.expressions.TextExpression;
 import de.cau.cs.kieler.expressions.TextualCode;
 
 import org.eclipse.emf.common.notify.Notification;
@@ -14,23 +15,22 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EClass;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.impl.EObjectImpl;
 
 /**
  * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Textual Code</b></em>'.
+ * An implementation of the model object '<em><b>Text Expression</b></em>'.
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link de.cau.cs.kieler.expressions.impl.TextualCodeImpl#getCode <em>Code</em>}</li>
- *   <li>{@link de.cau.cs.kieler.expressions.impl.TextualCodeImpl#getType <em>Type</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.expressions.impl.TextExpressionImpl#getCode <em>Code</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.expressions.impl.TextExpressionImpl#getType <em>Type</em>}</li>
  * </ul>
  * </p>
  *
  * @generated
  */
-public class TextualCodeImpl extends EObjectImpl implements TextualCode {
+public class TextExpressionImpl extends ComplexExpressionImpl implements TextExpression {
     /**
      * The default value of the '{@link #getCode() <em>Code</em>}' attribute.
      * <!-- begin-user-doc -->
@@ -76,7 +76,7 @@ public class TextualCodeImpl extends EObjectImpl implements TextualCode {
      * <!-- end-user-doc -->
      * @generated
      */
-    protected TextualCodeImpl() {
+    protected TextExpressionImpl() {
         super();
     }
 
@@ -87,7 +87,7 @@ public class TextualCodeImpl extends EObjectImpl implements TextualCode {
      */
     @Override
     protected EClass eStaticClass() {
-        return ExpressionsPackage.Literals.TEXTUAL_CODE;
+        return ExpressionsPackage.Literals.TEXT_EXPRESSION;
     }
 
     /**
@@ -108,7 +108,7 @@ public class TextualCodeImpl extends EObjectImpl implements TextualCode {
         String oldCode = code;
         code = newCode;
         if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, ExpressionsPackage.TEXTUAL_CODE__CODE, oldCode, code));
+            eNotify(new ENotificationImpl(this, Notification.SET, ExpressionsPackage.TEXT_EXPRESSION__CODE, oldCode, code));
     }
 
     /**
@@ -129,7 +129,7 @@ public class TextualCodeImpl extends EObjectImpl implements TextualCode {
         String oldType = type;
         type = newType;
         if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, ExpressionsPackage.TEXTUAL_CODE__TYPE, oldType, type));
+            eNotify(new ENotificationImpl(this, Notification.SET, ExpressionsPackage.TEXT_EXPRESSION__TYPE, oldType, type));
     }
 
     /**
@@ -140,9 +140,9 @@ public class TextualCodeImpl extends EObjectImpl implements TextualCode {
     @Override
     public Object eGet(int featureID, boolean resolve, boolean coreType) {
         switch (featureID) {
-            case ExpressionsPackage.TEXTUAL_CODE__CODE:
+            case ExpressionsPackage.TEXT_EXPRESSION__CODE:
                 return getCode();
-            case ExpressionsPackage.TEXTUAL_CODE__TYPE:
+            case ExpressionsPackage.TEXT_EXPRESSION__TYPE:
                 return getType();
         }
         return super.eGet(featureID, resolve, coreType);
@@ -156,10 +156,10 @@ public class TextualCodeImpl extends EObjectImpl implements TextualCode {
     @Override
     public void eSet(int featureID, Object newValue) {
         switch (featureID) {
-            case ExpressionsPackage.TEXTUAL_CODE__CODE:
+            case ExpressionsPackage.TEXT_EXPRESSION__CODE:
                 setCode((String)newValue);
                 return;
-            case ExpressionsPackage.TEXTUAL_CODE__TYPE:
+            case ExpressionsPackage.TEXT_EXPRESSION__TYPE:
                 setType((String)newValue);
                 return;
         }
@@ -174,10 +174,10 @@ public class TextualCodeImpl extends EObjectImpl implements TextualCode {
     @Override
     public void eUnset(int featureID) {
         switch (featureID) {
-            case ExpressionsPackage.TEXTUAL_CODE__CODE:
+            case ExpressionsPackage.TEXT_EXPRESSION__CODE:
                 setCode(CODE_EDEFAULT);
                 return;
-            case ExpressionsPackage.TEXTUAL_CODE__TYPE:
+            case ExpressionsPackage.TEXT_EXPRESSION__TYPE:
                 setType(TYPE_EDEFAULT);
                 return;
         }
@@ -192,12 +192,46 @@ public class TextualCodeImpl extends EObjectImpl implements TextualCode {
     @Override
     public boolean eIsSet(int featureID) {
         switch (featureID) {
-            case ExpressionsPackage.TEXTUAL_CODE__CODE:
+            case ExpressionsPackage.TEXT_EXPRESSION__CODE:
                 return CODE_EDEFAULT == null ? code != null : !CODE_EDEFAULT.equals(code);
-            case ExpressionsPackage.TEXTUAL_CODE__TYPE:
+            case ExpressionsPackage.TEXT_EXPRESSION__TYPE:
                 return TYPE_EDEFAULT == null ? type != null : !TYPE_EDEFAULT.equals(type);
         }
         return super.eIsSet(featureID);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public int eBaseStructuralFeatureID(int derivedFeatureID, Class<?> baseClass) {
+        if (baseClass == TextualCode.class) {
+            switch (derivedFeatureID) {
+                case ExpressionsPackage.TEXT_EXPRESSION__CODE: return ExpressionsPackage.TEXTUAL_CODE__CODE;
+                case ExpressionsPackage.TEXT_EXPRESSION__TYPE: return ExpressionsPackage.TEXTUAL_CODE__TYPE;
+                default: return -1;
+            }
+        }
+        return super.eBaseStructuralFeatureID(derivedFeatureID, baseClass);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public int eDerivedStructuralFeatureID(int baseFeatureID, Class<?> baseClass) {
+        if (baseClass == TextualCode.class) {
+            switch (baseFeatureID) {
+                case ExpressionsPackage.TEXTUAL_CODE__CODE: return ExpressionsPackage.TEXT_EXPRESSION__CODE;
+                case ExpressionsPackage.TEXTUAL_CODE__TYPE: return ExpressionsPackage.TEXT_EXPRESSION__TYPE;
+                default: return -1;
+            }
+        }
+        return super.eDerivedStructuralFeatureID(baseFeatureID, baseClass);
     }
 
     /**
@@ -218,4 +252,4 @@ public class TextualCodeImpl extends EObjectImpl implements TextualCode {
         return result.toString();
     }
 
-} //TextualCodeImpl
+} //TextExpressionImpl

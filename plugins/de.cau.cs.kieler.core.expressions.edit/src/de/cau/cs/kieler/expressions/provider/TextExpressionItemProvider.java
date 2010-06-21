@@ -8,7 +8,7 @@ package de.cau.cs.kieler.expressions.provider;
 
 
 import de.cau.cs.kieler.expressions.ExpressionsPackage;
-import de.cau.cs.kieler.expressions.TextualCode;
+import de.cau.cs.kieler.expressions.TextExpression;
 
 import java.util.Collection;
 import java.util.List;
@@ -16,7 +16,6 @@ import java.util.List;
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 
-import org.eclipse.emf.common.util.ResourceLocator;
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
@@ -25,17 +24,16 @@ import org.eclipse.emf.edit.provider.IItemPropertySource;
 import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
-import org.eclipse.emf.edit.provider.ItemProviderAdapter;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 
 /**
- * This is the item provider adapter for a {@link de.cau.cs.kieler.expressions.TextualCode} object.
+ * This is the item provider adapter for a {@link de.cau.cs.kieler.expressions.TextExpression} object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
  * @generated
  */
-public class TextualCodeItemProvider
-    extends ItemProviderAdapter
+public class TextExpressionItemProvider
+    extends ComplexExpressionItemProvider
     implements
         IEditingDomainItemProvider,
         IStructuredItemContentProvider,
@@ -48,7 +46,7 @@ public class TextualCodeItemProvider
      * <!-- end-user-doc -->
      * @generated
      */
-    public TextualCodeItemProvider(AdapterFactory adapterFactory) {
+    public TextExpressionItemProvider(AdapterFactory adapterFactory) {
         super(adapterFactory);
     }
 
@@ -114,14 +112,14 @@ public class TextualCodeItemProvider
     }
 
     /**
-     * This returns TextualCode.gif.
+     * This returns TextExpression.gif.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
     @Override
     public Object getImage(Object object) {
-        return overlayImage(object, getResourceLocator().getImage("full/obj16/TextualCode"));
+        return overlayImage(object, getResourceLocator().getImage("full/obj16/TextExpression"));
     }
 
     /**
@@ -132,10 +130,10 @@ public class TextualCodeItemProvider
      */
     @Override
     public String getText(Object object) {
-        String label = ((TextualCode)object).getCode();
+        String label = ((TextExpression)object).getCode();
         return label == null || label.length() == 0 ?
-            getString("_UI_TextualCode_type") :
-            getString("_UI_TextualCode_type") + " " + label;
+            getString("_UI_TextExpression_type") :
+            getString("_UI_TextExpression_type") + " " + label;
     }
 
     /**
@@ -149,9 +147,9 @@ public class TextualCodeItemProvider
     public void notifyChanged(Notification notification) {
         updateChildren(notification);
 
-        switch (notification.getFeatureID(TextualCode.class)) {
-            case ExpressionsPackage.TEXTUAL_CODE__CODE:
-            case ExpressionsPackage.TEXTUAL_CODE__TYPE:
+        switch (notification.getFeatureID(TextExpression.class)) {
+            case ExpressionsPackage.TEXT_EXPRESSION__CODE:
+            case ExpressionsPackage.TEXT_EXPRESSION__TYPE:
                 fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
                 return;
         }
@@ -168,17 +166,6 @@ public class TextualCodeItemProvider
     @Override
     protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object) {
         super.collectNewChildDescriptors(newChildDescriptors, object);
-    }
-
-    /**
-     * Return the resource locator for this item provider's resources.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public ResourceLocator getResourceLocator() {
-        return ExpressionsEditPlugin.INSTANCE;
     }
 
 }

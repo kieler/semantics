@@ -243,6 +243,11 @@ public class VariableItemProvider
             (createChildParameter
                 (ExpressionsPackage.Literals.VARIABLE__VALUE,
                  ExpressionsFactory.eINSTANCE.createOperatorExpression()));
+
+        newChildDescriptors.add
+            (createChildParameter
+                (ExpressionsPackage.Literals.VARIABLE__VALUE,
+                 ExpressionsFactory.eINSTANCE.createTextExpression()));
     }
 
 }

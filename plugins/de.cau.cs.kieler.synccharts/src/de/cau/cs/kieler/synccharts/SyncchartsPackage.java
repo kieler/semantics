@@ -17,6 +17,7 @@ package de.cau.cs.kieler.synccharts;
 
 import de.cau.cs.kieler.annotations.AnnotationsPackage;
 
+import de.cau.cs.kieler.expressions.ExpressionsPackage;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EDataType;
@@ -919,6 +920,43 @@ public interface SyncchartsPackage extends EPackage {
     int TRANSITION_FEATURE_COUNT = ACTION_FEATURE_COUNT + 5;
 
     /**
+     * The meta object id for the '{@link de.cau.cs.kieler.synccharts.impl.TextEffectImpl <em>Text Effect</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.synccharts.impl.TextEffectImpl
+     * @see de.cau.cs.kieler.synccharts.impl.SyncchartsPackageImpl#getTextEffect()
+     * @generated
+     */
+    int TEXT_EFFECT = 9;
+
+    /**
+     * The feature id for the '<em><b>Code</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int TEXT_EFFECT__CODE = ExpressionsPackage.TEXTUAL_CODE__CODE;
+
+    /**
+     * The feature id for the '<em><b>Type</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int TEXT_EFFECT__TYPE = ExpressionsPackage.TEXTUAL_CODE__TYPE;
+
+    /**
+     * The number of structural features of the '<em>Text Effect</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int TEXT_EFFECT_FEATURE_COUNT = ExpressionsPackage.TEXTUAL_CODE_FEATURE_COUNT + 0;
+
+    /**
      * The meta object id for the '{@link de.cau.cs.kieler.synccharts.StateType <em>State Type</em>}' enum.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -926,7 +964,7 @@ public interface SyncchartsPackage extends EPackage {
      * @see de.cau.cs.kieler.synccharts.impl.SyncchartsPackageImpl#getStateType()
      * @generated
      */
-    int STATE_TYPE = 9;
+    int STATE_TYPE = 10;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.synccharts.TransitionType <em>Transition Type</em>}' enum.
@@ -936,7 +974,7 @@ public interface SyncchartsPackage extends EPackage {
      * @see de.cau.cs.kieler.synccharts.impl.SyncchartsPackageImpl#getTransitionType()
      * @generated
      */
-    int TRANSITION_TYPE = 10;
+    int TRANSITION_TYPE = 11;
 
     /**
      * The meta object id for the '<em>Parsable</em>' data type.
@@ -946,7 +984,7 @@ public interface SyncchartsPackage extends EPackage {
      * @see de.cau.cs.kieler.synccharts.impl.SyncchartsPackageImpl#getParsable()
      * @generated
      */
-    int PARSABLE = 11;
+    int PARSABLE = 12;
 
 
     /**
@@ -1469,6 +1507,16 @@ public interface SyncchartsPackage extends EPackage {
     EAttribute getScope_InterfaceDeclaration();
 
     /**
+     * Returns the meta object for class '{@link de.cau.cs.kieler.synccharts.TextEffect <em>Text Effect</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for class '<em>Text Effect</em>'.
+     * @see de.cau.cs.kieler.synccharts.TextEffect
+     * @generated
+     */
+    EClass getTextEffect();
+
+    /**
      * Returns the meta object for enum '{@link de.cau.cs.kieler.synccharts.StateType <em>State Type</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1922,6 +1970,16 @@ public interface SyncchartsPackage extends EPackage {
          * @generated
          */
         EAttribute SCOPE__INTERFACE_DECLARATION = eINSTANCE.getScope_InterfaceDeclaration();
+
+        /**
+         * The meta object literal for the '{@link de.cau.cs.kieler.synccharts.impl.TextEffectImpl <em>Text Effect</em>}' class.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see de.cau.cs.kieler.synccharts.impl.TextEffectImpl
+         * @see de.cau.cs.kieler.synccharts.impl.SyncchartsPackageImpl#getTextEffect()
+         * @generated
+         */
+        EClass TEXT_EFFECT = eINSTANCE.getTextEffect();
 
         /**
          * The meta object literal for the '{@link de.cau.cs.kieler.synccharts.StateType <em>State Type</em>}' enum.

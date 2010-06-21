@@ -143,6 +143,15 @@ public interface ExpressionsFactory extends EFactory {
     OperatorExpression createOperatorExpression();
 
     /**
+     * Returns a new object of class '<em>Text Expression</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Text Expression</em>'.
+     * @generated
+     */
+    TextExpression createTextExpression();
+
+    /**
      * Returns the package supported by this factory.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->

@@ -18,6 +18,7 @@ import de.cau.cs.kieler.expressions.OperatorExpression;
 import de.cau.cs.kieler.expressions.OperatorType;
 import de.cau.cs.kieler.expressions.Signal;
 import de.cau.cs.kieler.expressions.SignalReference;
+import de.cau.cs.kieler.expressions.TextExpression;
 import de.cau.cs.kieler.expressions.TextualCode;
 import de.cau.cs.kieler.expressions.Value;
 import de.cau.cs.kieler.expressions.ValueType;
@@ -130,6 +131,13 @@ public class ExpressionsPackageImpl extends EPackageImpl implements ExpressionsP
      * @generated
      */
     private EClass operatorExpressionEClass = null;
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EClass textExpressionEClass = null;
 
     /**
      * <!-- begin-user-doc -->
@@ -515,6 +523,15 @@ public class ExpressionsPackageImpl extends EPackageImpl implements ExpressionsP
      * <!-- end-user-doc -->
      * @generated
      */
+    public EClass getTextExpression() {
+        return textExpressionEClass;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     public EEnum getCombineOperator() {
         return combineOperatorEEnum;
     }
@@ -611,6 +628,8 @@ public class ExpressionsPackageImpl extends EPackageImpl implements ExpressionsP
         operatorExpressionEClass = createEClass(OPERATOR_EXPRESSION);
         createEAttribute(operatorExpressionEClass, OPERATOR_EXPRESSION__OPERATOR);
 
+        textExpressionEClass = createEClass(TEXT_EXPRESSION);
+
         // Create enums
         combineOperatorEEnum = createEEnum(COMBINE_OPERATOR);
         operatorTypeEEnum = createEEnum(OPERATOR_TYPE);
@@ -646,7 +665,6 @@ public class ExpressionsPackageImpl extends EPackageImpl implements ExpressionsP
 
         // Add supertypes to classes
         complexExpressionEClass.getESuperTypes().add(this.getExpression());
-        textualCodeEClass.getESuperTypes().add(this.getComplexExpression());
         signalEClass.getESuperTypes().add(this.getValuedObject());
         signalReferenceEClass.getESuperTypes().add(this.getComplexExpression());
         variableEClass.getESuperTypes().add(this.getValuedObject());
@@ -656,6 +674,8 @@ public class ExpressionsPackageImpl extends EPackageImpl implements ExpressionsP
         floatValueEClass.getESuperTypes().add(this.getValue());
         booleanValueEClass.getESuperTypes().add(this.getValue());
         operatorExpressionEClass.getESuperTypes().add(this.getComplexExpression());
+        textExpressionEClass.getESuperTypes().add(this.getComplexExpression());
+        textExpressionEClass.getESuperTypes().add(this.getTextualCode());
 
         // Initialize classes and features; add operations and parameters
         initEClass(complexExpressionEClass, ComplexExpression.class, "ComplexExpression", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -703,6 +723,8 @@ public class ExpressionsPackageImpl extends EPackageImpl implements ExpressionsP
 
         initEClass(operatorExpressionEClass, OperatorExpression.class, "OperatorExpression", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEAttribute(getOperatorExpression_Operator(), this.getOperatorType(), "operator", null, 0, 1, OperatorExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+        initEClass(textExpressionEClass, TextExpression.class, "TextExpression", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
         // Initialize enums and add enum literals
         initEEnum(combineOperatorEEnum, CombineOperator.class, "CombineOperator");

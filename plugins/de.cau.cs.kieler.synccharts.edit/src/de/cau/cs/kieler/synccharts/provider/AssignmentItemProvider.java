@@ -195,11 +195,6 @@ public class AssignmentItemProvider
         newChildDescriptors.add
             (createChildParameter
                 (SyncchartsPackage.Literals.ASSIGNMENT__EXPRESSION,
-                 ExpressionsFactory.eINSTANCE.createTextualCode()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (SyncchartsPackage.Literals.ASSIGNMENT__EXPRESSION,
                  ExpressionsFactory.eINSTANCE.createSignalReference()));
 
         newChildDescriptors.add
@@ -231,6 +226,11 @@ public class AssignmentItemProvider
             (createChildParameter
                 (SyncchartsPackage.Literals.ASSIGNMENT__EXPRESSION,
                  ExpressionsFactory.eINSTANCE.createOperatorExpression()));
+
+        newChildDescriptors.add
+            (createChildParameter
+                (SyncchartsPackage.Literals.ASSIGNMENT__EXPRESSION,
+                 ExpressionsFactory.eINSTANCE.createTextExpression()));
     }
 
 }

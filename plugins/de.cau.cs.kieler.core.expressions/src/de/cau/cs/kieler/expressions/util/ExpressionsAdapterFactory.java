@@ -124,6 +124,10 @@ public class ExpressionsAdapterFactory extends AdapterFactoryImpl {
                 return createOperatorExpressionAdapter();
             }
             @Override
+            public Adapter caseTextExpression(TextExpression object) {
+                return createTextExpressionAdapter();
+            }
+            @Override
             public Adapter defaultCase(EObject object) {
                 return createEObjectAdapter();
             }
@@ -322,6 +326,20 @@ public class ExpressionsAdapterFactory extends AdapterFactoryImpl {
      * @generated
      */
     public Adapter createOperatorExpressionAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.expressions.TextExpression <em>Text Expression</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.cau.cs.kieler.expressions.TextExpression
+     * @generated
+     */
+    public Adapter createTextExpressionAdapter() {
         return null;
     }
 

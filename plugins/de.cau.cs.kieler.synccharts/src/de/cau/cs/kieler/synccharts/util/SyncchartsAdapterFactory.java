@@ -17,6 +17,7 @@ package de.cau.cs.kieler.synccharts.util;
 
 import de.cau.cs.kieler.annotations.Annotatable;
 
+import de.cau.cs.kieler.expressions.TextualCode;
 import de.cau.cs.kieler.synccharts.*;
 
 import org.eclipse.emf.common.notify.Adapter;
@@ -119,8 +120,16 @@ public class SyncchartsAdapterFactory extends AdapterFactoryImpl {
                 return createScopeAdapter();
             }
             @Override
+            public Adapter caseTextEffect(TextEffect object) {
+                return createTextEffectAdapter();
+            }
+            @Override
             public Adapter caseAnnotatable(Annotatable object) {
                 return createAnnotatableAdapter();
+            }
+            @Override
+            public Adapter caseTextualCode(TextualCode object) {
+                return createTextualCodeAdapter();
             }
             @Override
             public Adapter defaultCase(EObject object) {
@@ -269,6 +278,20 @@ public class SyncchartsAdapterFactory extends AdapterFactoryImpl {
     }
 
     /**
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.synccharts.TextEffect <em>Text Effect</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.cau.cs.kieler.synccharts.TextEffect
+     * @generated
+     */
+    public Adapter createTextEffectAdapter() {
+        return null;
+    }
+
+    /**
      * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.annotations.Annotatable <em>Annotatable</em>}'.
      * <!-- begin-user-doc -->
      * This default implementation returns null so that we can easily ignore cases;
@@ -279,6 +302,20 @@ public class SyncchartsAdapterFactory extends AdapterFactoryImpl {
      * @generated
      */
     public Adapter createAnnotatableAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.expressions.TextualCode <em>Textual Code</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.cau.cs.kieler.expressions.TextualCode
+     * @generated
+     */
+    public Adapter createTextualCodeAdapter() {
         return null;
     }
 

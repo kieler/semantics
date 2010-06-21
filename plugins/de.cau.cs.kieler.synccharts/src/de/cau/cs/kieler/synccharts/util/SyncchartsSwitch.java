@@ -17,6 +17,7 @@ package de.cau.cs.kieler.synccharts.util;
 
 import de.cau.cs.kieler.annotations.Annotatable;
 
+import de.cau.cs.kieler.expressions.TextualCode;
 import de.cau.cs.kieler.synccharts.*;
 
 import java.util.List;
@@ -162,6 +163,14 @@ public class SyncchartsSwitch<T> {
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
+            case SyncchartsPackage.TEXT_EFFECT: {
+                TextEffect textEffect = (TextEffect)theEObject;
+                T result = caseTextEffect(textEffect);
+                if (result == null) result = caseTextualCode(textEffect);
+                if (result == null) result = caseEffect(textEffect);
+                if (result == null) result = defaultCase(theEObject);
+                return result;
+            }
             default: return defaultCase(theEObject);
         }
     }
@@ -302,6 +311,21 @@ public class SyncchartsSwitch<T> {
     }
 
     /**
+     * Returns the result of interpreting the object as an instance of '<em>Text Effect</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Text Effect</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseTextEffect(TextEffect object) {
+        return null;
+    }
+
+    /**
      * Returns the result of interpreting the object as an instance of '<em>Annotatable</em>'.
      * <!-- begin-user-doc -->
      * This implementation returns null;
@@ -313,6 +337,21 @@ public class SyncchartsSwitch<T> {
      * @generated
      */
     public T caseAnnotatable(Annotatable object) {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>Textual Code</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Textual Code</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseTextualCode(TextualCode object) {
         return null;
     }
 

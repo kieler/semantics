@@ -31,6 +31,7 @@ import de.cau.cs.kieler.synccharts.StateType;
 import de.cau.cs.kieler.synccharts.Substitution;
 import de.cau.cs.kieler.synccharts.SyncchartsFactory;
 import de.cau.cs.kieler.synccharts.SyncchartsPackage;
+import de.cau.cs.kieler.synccharts.TextEffect;
 import de.cau.cs.kieler.synccharts.Transition;
 import de.cau.cs.kieler.synccharts.TransitionType;
 
@@ -112,6 +113,13 @@ public class SyncchartsPackageImpl extends EPackageImpl implements SyncchartsPac
      * @generated
      */
     private EClass scopeEClass = null;
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EClass textEffectEClass = null;
 
     /**
      * <!-- begin-user-doc -->
@@ -636,6 +644,15 @@ public class SyncchartsPackageImpl extends EPackageImpl implements SyncchartsPac
      * <!-- end-user-doc -->
      * @generated
      */
+    public EClass getTextEffect() {
+        return textEffectEClass;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     public EEnum getStateType() {
         return stateTypeEEnum;
     }
@@ -743,6 +760,8 @@ public class SyncchartsPackageImpl extends EPackageImpl implements SyncchartsPac
         createEReference(scopeEClass, SCOPE__RENAMINGS);
         createEAttribute(scopeEClass, SCOPE__INTERFACE_DECLARATION);
 
+        textEffectEClass = createEClass(TEXT_EFFECT);
+
         // Create enums
         stateTypeEEnum = createEEnum(STATE_TYPE);
         transitionTypeEEnum = createEEnum(TRANSITION_TYPE);
@@ -790,6 +809,8 @@ public class SyncchartsPackageImpl extends EPackageImpl implements SyncchartsPac
         stateEClass.getESuperTypes().add(this.getScope());
         transitionEClass.getESuperTypes().add(this.getAction());
         scopeEClass.getESuperTypes().add(theAnnotationsPackage.getAnnotatable());
+        textEffectEClass.getESuperTypes().add(theExpressionsPackage.getTextualCode());
+        textEffectEClass.getESuperTypes().add(this.getEffect());
 
         // Initialize classes and features; add operations and parameters
         initEClass(actionEClass, Action.class, "Action", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -848,6 +869,8 @@ public class SyncchartsPackageImpl extends EPackageImpl implements SyncchartsPac
         initEReference(getScope_BodyText(), theExpressionsPackage.getTextualCode(), null, "bodyText", null, 0, 1, Scope.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getScope_Renamings(), this.getSubstitution(), this.getSubstitution_ParentScope(), "renamings", null, 0, -1, Scope.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getScope_InterfaceDeclaration(), this.getParsable(), "interfaceDeclaration", null, 0, 1, Scope.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+        initEClass(textEffectEClass, TextEffect.class, "TextEffect", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
         // Initialize enums and add enum literals
         initEEnum(stateTypeEEnum, StateType.class, "StateType");

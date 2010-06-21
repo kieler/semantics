@@ -315,6 +315,11 @@ public class SignalItemProvider
             (createChildParameter
                 (ExpressionsPackage.Literals.SIGNAL__VALUE,
                  ExpressionsFactory.eINSTANCE.createOperatorExpression()));
+
+        newChildDescriptors.add
+            (createChildParameter
+                (ExpressionsPackage.Literals.SIGNAL__VALUE,
+                 ExpressionsFactory.eINSTANCE.createTextExpression()));
     }
 
 }

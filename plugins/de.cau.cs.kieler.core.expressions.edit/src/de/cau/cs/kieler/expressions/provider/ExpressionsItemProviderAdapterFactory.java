@@ -375,6 +375,29 @@ public class ExpressionsItemProviderAdapterFactory extends ExpressionsAdapterFac
     }
 
     /**
+     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.expressions.TextExpression} instances.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    protected TextExpressionItemProvider textExpressionItemProvider;
+
+    /**
+     * This creates an adapter for a {@link de.cau.cs.kieler.expressions.TextExpression}.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public Adapter createTextExpressionAdapter() {
+        if (textExpressionItemProvider == null) {
+            textExpressionItemProvider = new TextExpressionItemProvider(this);
+        }
+
+        return textExpressionItemProvider;
+    }
+
+    /**
      * This returns the root adapter factory that contains this factory.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -486,6 +509,7 @@ public class ExpressionsItemProviderAdapterFactory extends ExpressionsAdapterFac
         if (floatValueItemProvider != null) floatValueItemProvider.dispose();
         if (booleanValueItemProvider != null) booleanValueItemProvider.dispose();
         if (operatorExpressionItemProvider != null) operatorExpressionItemProvider.dispose();
+        if (textExpressionItemProvider != null) textExpressionItemProvider.dispose();
     }
 
 }

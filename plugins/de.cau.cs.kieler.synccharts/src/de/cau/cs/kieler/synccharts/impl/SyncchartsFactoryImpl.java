@@ -77,6 +77,7 @@ public class SyncchartsFactoryImpl extends EFactoryImpl implements SyncchartsFac
             case SyncchartsPackage.SUBSTITUTION: return createSubstitution();
             case SyncchartsPackage.STATE: return createState();
             case SyncchartsPackage.TRANSITION: return createTransition();
+            case SyncchartsPackage.TEXT_EFFECT: return createTextEffect();
             default:
                 throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
         }
@@ -188,6 +189,16 @@ public class SyncchartsFactoryImpl extends EFactoryImpl implements SyncchartsFac
     public Transition createTransition() {
         TransitionImpl transition = new TransitionImpl();
         return transition;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public TextEffect createTextEffect() {
+        TextEffectImpl textEffect = new TextEffectImpl();
+        return textEffect;
     }
 
     /**
