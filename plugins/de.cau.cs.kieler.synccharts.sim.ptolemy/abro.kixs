@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<synccharts:Region xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:synccharts="http://kieler.cs.cau.de/synccharts/0.2.1" xmlns:expressions="http://kieler.cs.cau.de/expressions">
+  <innerStates id="ABRO" label="ABRO" interfaceDeclaration="input A;&#xA;input B;&#xA;input R;&#xA;output O;">
+    <signals name="A" isInput="true"/>
+    <signals name="B" isInput="true"/>
+    <signals name="R" isInput="true"/>
+    <signals name="O" isOutput="true"/>
+    <regions id="R0">
+      <innerStates id="ABO" label="ABO" incomingTransitions="//@innerStates.0/@regions.0/@innerStates.0/@outgoingTransitions.0" isInitial="true">
+        <regions id="R0">
+          <innerStates id="WaitAB" label="WaitAB" isInitial="true">
+            <regions id="R0">
+              <innerStates id="wA" label="wA" isInitial="true">
+                <outgoingTransitions label="A" priority="1" targetState="//@innerStates.0/@regions.0/@innerStates.0/@regions.0/@innerStates.0/@regions.0/@innerStates.1">
+                  <trigger xsi:type="expressions:SignalReference" signal="A"/>
+                </outgoingTransitions>
+              </innerStates>
+              <innerStates id="dA" label="dA" incomingTransitions="//@innerStates.0/@regions.0/@innerStates.0/@regions.0/@innerStates.0/@regions.0/@innerStates.0/@outgoingTransitions.0" isFinal="true"/>
+            </regions>
+            <regions id="R1">
+              <innerStates id="wB" label="wB" isInitial="true">
+                <outgoingTransitions label="B" priority="1" targetState="//@innerStates.0/@regions.0/@innerStates.0/@regions.0/@innerStates.0/@regions.1/@innerStates.1">
+                  <trigger xsi:type="expressions:SignalReference" signal="B"/>
+                </outgoingTransitions>
+              </innerStates>
+              <innerStates id="dB" label="dB" incomingTransitions="//@innerStates.0/@regions.0/@innerStates.0/@regions.0/@innerStates.0/@regions.1/@innerStates.0/@outgoingTransitions.0" isFinal="true"/>
+            </regions>
+            <outgoingTransitions label="/O" priority="1" type="NORMALTERMINATION" targetState="//@innerStates.0/@regions.0/@innerStates.0/@regions.0/@innerStates.1">
+              <effects xsi:type="synccharts:Emission" signal="O"/>
+            </outgoingTransitions>
+          </innerStates>
+          <innerStates id="done" incomingTransitions="//@innerStates.0/@regions.0/@innerStates.0/@regions.0/@innerStates.0/@outgoingTransitions.0" label="done"/>
+        </regions>
+        <outgoingTransitions label="R" priority="1" type="STRONGABORT" targetState="//@innerStates.0/@regions.0/@innerStates.0">
+          <trigger xsi:type="expressions:SignalReference" signal="R"/>
+        </outgoingTransitions>
+      </innerStates>
+    </regions>
+  </innerStates>
+</synccharts:Region>

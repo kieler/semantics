@@ -1,5 +1,7 @@
 import synccharts;
 import expressions;
+//import annotatations;
+
 import Moml;
 
 //-----------------------------------------------------------------------------
@@ -372,8 +374,10 @@ Void inputSignalTransformationNewSignals(List[Signal] inputSignalList,
  let inputSignal = inputSignalList.first():
 
  let uniqueName = getUniqueName(inputSignal.name, signalList):
+ let topmostState = ((State)inputSignal.eContainer):
  let newSignalName = inputSignal.name:
  let newSignal = new Signal:
+// let newSignal2 = new Signal:
  let newRegion = new Region:
  let newState = new State:
  let newTransition = new Transition:
@@ -384,7 +388,7 @@ Void inputSignalTransformationNewSignals(List[Signal] inputSignalList,
  //rename original signal
  inputSignal.setName(uniqueName) ->
  //add new signal to the original state (the top most)
- ((State)inputSignal.eContainer).signals.add(newSignal) ->
+ topmostState.signals.add(newSignal) ->
  //set new input signal's name and input type
  newSignal.setIsInput(true) ->
  newSignal.setIsOutput(false) ->
@@ -440,12 +444,12 @@ Void n2wState(List[synccharts::Region] regionList) :
 
 Void n2wTransition(List[synccharts::Transition] transitionList, synccharts::State state) :
   let transition = transitionList.first():
-  let operatorExpression = new synccharts::OperatorExpression:
+  let operatorExpression = new expressions::OperatorExpression:
   dump("TEST TRANSITION "+getURIFragment(transition)) ->
   (transitionList.withoutFirst().size > 0) ?
      n2wTransition(transitionList.withoutFirst(), state) : null ->
    //add a new operator/complex expression trigger (will be filled recusively)
-   operatorExpression.setOperator(OperatorType::AND) ->
+   operatorExpression.setOperator(expressions::OperatorType::AND) ->
   (transition.type.toString().matches("NORMALTERMINATION") && (state.regions.size > 0)) ?
     transition.setTrigger(operatorExpression) : null ->
   (transition.type.toString().matches("NORMALTERMINATION") && (state.regions.size > 0)) ?
@@ -465,12 +469,12 @@ Void n2wBuildTriggerState(List[synccharts::Region] regionList,
 					        synccharts::Transition weakAbortTransition) :
   let region = regionList.first():
   let regionSignalName = "finished_" + hash(region.innerStates.flatten().toString()):
-  let regionSignal = new synccharts::Signal:
-  let signalReference = new synccharts::SignalReference:
+  let regionSignal = new expressions::Signal:
+  let signalReference = new expressions::SignalReference:
   let trigger = weakAbortTransition.trigger:
    //construct a new (local) signal
    regionSignal.setName(regionSignalName) ->
-   regionSignal.setType(ValueType::PURE) ->
+   regionSignal.setType(expressions::ValueType::PURE) ->
    //add signal to main state
    mainState.signals.add(regionSignal) ->
    //construct a new signal reference (for trigger) and add it
@@ -486,7 +490,7 @@ Void n2wBuildTriggerState(List[synccharts::Region] regionList,
 Void n2wBuildTriggerRegion(List[synccharts::State] stateList, 
 								   synccharts::State mainState, 
 							  synccharts::Transition weakAbortTransition,
-							  synccharts::Signal regionSignal) :
+							  Signal regionSignal) :
   let state = stateList.first():
   (stateList.withoutFirst().size > 0) ?
   	 n2wBuildTriggerRegion(stateList.withoutFirst(), mainState, weakAbortTransition,regionSignal) : null ->
@@ -499,7 +503,7 @@ Void n2wBuildTriggerRegion(List[synccharts::State] stateList,
 Void n2wBuildTriggerFinalState(synccharts::State finalState, 
 							   synccharts::State mainState, 
 						  synccharts::Transition weakAbortTransition,
-						  synccharts::Signal regionSignal) :
+						  Signal regionSignal) :
   let newTransition = new synccharts::Transition:
    //construct a new self transition 
    newTransition.setTargetState(finalState) ->
@@ -512,9 +516,9 @@ Void n2wBuildTriggerFinalState(synccharts::State finalState,
 
 Void n2wBuildTriggerFinalStateTransitions(List[synccharts::Transition] transitionList,
 								 synccharts::Transition weakAbortTransition,
-								 synccharts::Signal regionSignal) :
+								 Signal regionSignal) :
     let transition = transitionList.first():
-	let signalEmission = new synccharts::Emission:
+	let signalEmission = new Emission:
     signalEmission.setSignal(regionSignal) ->
     dump("FINAL TRANSITION SIGNAL "+regionSignal.name + " FOR "+ transition.getURIFragment()) ->
 	transition.effects.add(signalEmission) ->
@@ -582,7 +586,7 @@ Void localSignalShiftPreprocessingState(List[synccharts::Region] regionList, syn
   	 localSignalShiftPreprocessingRegion(region.innerStates, mainState) : null
 ;
 
-Void localSignalShiftPreprocessingSignal(List[synccharts::Signal] signalList, synccharts::State state, synccharts::State mainState) :
+Void localSignalShiftPreprocessingSignal(List[Signal] signalList, synccharts::State state, synccharts::State mainState) :
   let signal = signalList.first():
   (signalList.withoutFirst().size > 0) ?
      localSignalShiftPreprocessingSignal(signalList.withoutFirst(), state, mainState) : null ->
@@ -614,7 +618,7 @@ Void localSignalRenamingPreprocessingState(List[synccharts::Region] regionList) 
   	 localSignalRenamingPreprocessingRegion(region.innerStates) : null
 ;
 
-Void localSignalRenamingPreprocessingSignal(List[synccharts::Signal] signalList, synccharts::State state) :
+Void localSignalRenamingPreprocessingSignal(List[Signal] signalList, synccharts::State state) :
   let signal = signalList.first():
   (signalList.withoutFirst().size > 0) ?
      localSignalRenamingPreprocessingSignal(signalList.withoutFirst(), state) : null ->
@@ -1310,7 +1314,7 @@ Void ConnectNestedInputSignalsHelper(EntityType baseEntity,
 //Create ModalModel == Region-Component. 
 create EntityType this createModalModelEntity(synccharts::Region region, 
 											  int number, 
-									 	List[synccharts::Signal] signalList):
+									 	List[Signal] signalList):
 	let p0 = new PropertyType:
 	let p1 = new PropertyType:
 		p0.setName("directorClass") ->
@@ -1337,7 +1341,7 @@ create EntityType this createModalModelEntity(synccharts::Region region,
 //Create ModalController == Region-Declaration (simple states and macro
 // states declarations).
 create EntityType this createModalControllerEntity(synccharts::Region region,
-									 List[synccharts::Signal] signalList):
+									 List[Signal] signalList):
    	this.setName("_Controller") ->
   	this.setClass1("ptolemy.domains.modal.modal.ModalController") ->
   	//first add signals if any
@@ -1385,7 +1389,7 @@ create EntityType this createMacroStateEntity(synccharts::State state):
 create EntityType this createMacroStateRefinementEntity(
 										synccharts::State state, 
 										EntityType modalModel,
-										List[synccharts::Signal] signalList):
+										List[Signal] signalList):
    	this.setName(getStateId(state)) ->
   	this.setClass1("ptolemy.domains.modal.modal.Refinement") ->
    	//getMovedSignalNames() contains names of moved signals
@@ -1431,8 +1435,8 @@ create EntityType this createSimpleStateEntity(synccharts::State state):
 //-----------------------------------------------------------------------------
 
 //Move signalList to the other newList. 
-Void moveToSignalList(List[synccharts::Signal] newList, 
-					  List[synccharts::Signal] signalList) :
+Void moveToSignalList(List[Signal] newList, 
+					  List[Signal] signalList) :
 	JAVA de.cau.cs.kieler.synccharts.sim.ptolemy.oaw.XtendJava.
 			moveToSignalList(org.eclipse.emf.common.util.EList, 
 							 org.eclipse.emf.common.util.EList)
@@ -1495,9 +1499,9 @@ String hash(String s) :
 ;
 
 //Get URIFragment of an model element to identify it. 
-int getPortType(synccharts::Signal signal, synccharts::Region region) :
+int getPortType(Signal signal, synccharts::Region region) :
 	JAVA de.cau.cs.kieler.synccharts.sim.ptolemy.oaw.XtendJava.
-			getPortType(de.cau.cs.kieler.synccharts.Signal,
+			getPortType(de.cau.cs.kieler.core.expressions.Signal,
 						de.cau.cs.kieler.synccharts.Region)
 ;
 
@@ -1543,10 +1547,10 @@ boolean isMacroState(synccharts::State state) :
 ; 
 
 //Construct the trigger.
-String buildTrigger(synccharts::Expression expression, 
+String buildTrigger(expressions::Expression expression, 
 					String terminatedURIHash) :
 	JAVA de.cau.cs.kieler.synccharts.sim.ptolemy.oaw.XtendJava.
-			buildTrigger(de.cau.cs.kieler.synccharts.Expression, 
+			buildTrigger(de.cau.cs.kieler.core.expressions.Expression, 
 						 java.lang.String)
 ;
 
@@ -1570,8 +1574,15 @@ Void IterateTransitions(List[synccharts::Transition] transitionList,
 							 EntityType entity):
  	let transition = transitionList.last():
  	(transitionList.size > 0) ? 
+ 			dump(transition.label.toString()) 
+ 			: null ->
+ 	(transitionList.size > 0) ? 
  			dump(getStateId(transition.sourceState) + " -> " + 
  			getStateId(transition.targetState)) 
+ 			: null ->
+ 	(transitionList.size > 0) ? 
+ 			dump(transition.sourceState.toString() + " -> " + 
+ 			transition.targetState.toString()) 
  			: null ->
 	(transitionList.size > 0) ? 
 			addTransition(transition,
@@ -1606,7 +1617,7 @@ Void IterateStates(List[synccharts::State] stateList,
 //For simple states : do nothing
 Void IterateStatesRefinement(List[synccharts::State] stateList, 
 								  EntityType entity, 
-								  List[synccharts::Signal] signalList) :
+								  List[Signal] signalList) :
  	let state = stateList.last():
  	state.isMacroState() ? 
  				entity.entity.add(
@@ -1624,7 +1635,7 @@ Void IterateStatesRefinement(List[synccharts::State] stateList,
 //Define all signals that are defined until now!
 Void IterateRegions(List[synccharts::Region] regionList, 
 					EntityType entity, 
-					List[synccharts::Signal] signalList):
+					List[Signal] signalList):
  	let region = regionList.last():
  	entity.entity.add(createModalModelEntity(region, 
  											 regionList.size, 
@@ -1713,6 +1724,7 @@ Void addTransition(	synccharts::Transition transition,
 					String name) :
 	let link1 = new LinkType:
 	let link2 = new LinkType:
+	dump("addTransition from " + getStateId(transition.sourceState) + " to " + getStateId(transition.targetState)) ->
 	link1.setPort(
 		getStateId(transition.sourceState) + ".outgoingPort") ->
 	link1.setRelation(name) ->
@@ -1902,7 +1914,7 @@ Void addTerminationSignalsToModalModel(EntityType entity,
 
 //Add signals in signalsList to ModalModel entity.
 Void addSignalsToModalModel(EntityType entity, 
-							List[synccharts::Signal] signalList,
+							List[Signal] signalList,
 							synccharts::Region region) :
 	let port = new PortType:
 	let portLocalIn = new PortType:
@@ -2002,16 +2014,15 @@ Void addSignalsToModalModel(EntityType entity,
 
 //Helper function detecting local signals.
 //If signals is not input and signal is not output => signal is local.
-Boolean isLocal(synccharts::Signal signal) :
+Boolean isLocal(Signal signal) :
  (!signal.isInput && !signal.isOutput)
 ;
-
 
 //Add signals in signalsList to ModalController entity.
 //StateSignalList contains all local signals that are defined in this state
 //and that do not need to be added.
 Void addSignalsToModalController(EntityType entity, EntityType parent,
-								 List[synccharts::Signal] signalList,
+								 List[Signal] signalList,
 								 synccharts::Region region,
 								 List[String] stateSignalNames) :
 	let port = new PortType:
