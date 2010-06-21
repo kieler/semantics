@@ -122,27 +122,11 @@
                id="de.cau.cs.kieler.core.ui.expandMacroStates"
                name="Expand reference-macrostates">
          </command>
-         <command
-               categoryId="de.cau.cs.kieler"
-               defaultHandler="de.cau.cs.kieler.synccharts.diagram.custom.handlers.Synccharts_0_1_to_0_2_Handler"
-               id="de.cau.cs.kieler.synccharts.update_0_1_to_0_2"
-               name="Update v0.1 to v0.2">
-         </command>
                               <command
                categoryId="de.cau.cs.kieler"
                defaultHandler="de.cau.cs.kieler.synccharts.diagram.custom.handlers.ToggleTransitionLabelHandler"
                id="de.cau.cs.kieler.synccharts.diagram.custom.hideTransitionLabels"
                name="Hide Transition Priority Labels">
-            <state
-                  class="org.eclipse.ui.handlers.RegistryToggleState:false"
-                  id="org.eclipse.ui.commands.toggleState">
-            </state>
-         </command>
-         <command
-               categoryId="de.cau.cs.kieler"
-               defaultHandler="de.cau.cs.kieler.synccharts.diagram.custom.handlers.DrawingToolHandler"
-               id="de.cau.cs.kieler.synccharts.diagram.custom.toggleDrawingMode"
-               name="Activate Drawing Mode">
             <state
                   class="org.eclipse.ui.handlers.RegistryToggleState:false"
                   id="org.eclipse.ui.commands.toggleState">
@@ -327,11 +311,6 @@
                   style="push"
                   tooltip="Expand reference-macrostates">
             </command>
-            <command
-                  commandId="de.cau.cs.kieler.synccharts.update_0_1_to_0_2"
-                  label="Update v0.1 to v0.2"
-                  style="push">
-            </command>
          </menu>
       </menuContribution>
             <menuContribution
@@ -339,25 +318,6 @@
                <command
                      commandId="de.cau.cs.kieler.synccharts.diagram.custom.hideTransitionLabels"
                      style="toggle">
-                  <visibleWhen
-                        checkEnabled="false">
-                     <with
-                           variable="activeEditor">
-                        <test
-                              forcePluginActivation="false"
-                              property="de.cau.cs.kieler.synccharts.activeSyncchartsEditor">
-                        </test>
-                     </with>
-                  </visibleWhen>
-               </command>
-            </menuContribution>
-            <menuContribution
-                  locationURI="toolbar:de.cau.cs.kieler">
-               <command
-                     commandId="de.cau.cs.kieler.synccharts.diagram.custom.toggleDrawingMode"
-                     icon="icons/palette_view.gif"
-                     style="toggle"
-                     tooltip="Activates Drawing Mode. This disables all error markers and hides all transition priority labels.">
                   <visibleWhen
                         checkEnabled="false">
                      <with

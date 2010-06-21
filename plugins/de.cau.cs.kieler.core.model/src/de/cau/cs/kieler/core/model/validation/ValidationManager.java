@@ -20,10 +20,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.eclipse.core.commands.AbstractHandler;
-import org.eclipse.core.commands.Command;
-import org.eclipse.core.commands.ExecutionEvent;
-import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences;
 import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.emf.ecore.EObject;
@@ -37,12 +33,9 @@ import org.eclipse.jface.util.PropertyChangeEvent;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PlatformUI;
-import org.eclipse.ui.handlers.HandlerUtil;
 import org.eclipse.xtend.typesystem.emf.check.CheckRegistry;
 
 import de.cau.cs.kieler.core.model.CoreModelPlugin;
-import de.cau.cs.kieler.core.model.util.ModelErrorHandler;
-import de.cau.cs.kieler.core.ui.handler.RemoveMarkerHandler;
 
 /**
  * Handler for managing check files and validate actions.
@@ -50,7 +43,7 @@ import de.cau.cs.kieler.core.ui.handler.RemoveMarkerHandler;
  * @author soh
  * @kieler.rating 2010-06-11 proposed yellow soh
  */
-public final class ValidationManager extends AbstractHandler {
+public final class ValidationManager {
 
     /**
      * Contains all registered packages with a factory for creating validate
@@ -66,35 +59,6 @@ public final class ValidationManager extends AbstractHandler {
 
     /** Prefix for the preference store. */
     public static final String PREFERENCE_PREFIX = "_Checkfile_";
-
-    /**
-     * {@inheritDoc}
-     */
-    public Object execute(final ExecutionEvent event) throws ExecutionException {
-        // Enable or disable all checkfiles.
-        Command command = event.getCommand();
-        boolean oldValue = HandlerUtil.toggleCommandState(command);
-        setEnabled(!oldValue);
-        return null;
-    }
-
-    /**
-     * Enable or disable the hiding of problem markers.
-     * 
-     * @param b
-     *            true if markers should be visible, false if not
-     */
-    public static void setEnabled(final boolean b) {
-        if (b) {
-            enableAll();
-            ModelErrorHandler.enabled();
-            validateActiveEditor();
-        } else {
-            disableAll();
-            ModelErrorHandler.disable();
-            RemoveMarkerHandler.removeMarkers();
-        }
-    }
 
     /**
      * Get all registered check files.

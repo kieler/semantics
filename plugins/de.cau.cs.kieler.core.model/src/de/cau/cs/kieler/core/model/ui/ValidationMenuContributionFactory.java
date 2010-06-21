@@ -16,27 +16,24 @@ package de.cau.cs.kieler.core.model.ui;
 import java.util.Set;
 
 import org.eclipse.emf.ecore.EPackage;
-import org.eclipse.jface.action.IContributionItem;
-import org.eclipse.jface.action.IContributionManager;
+import org.eclipse.jface.action.Separator;
 import org.eclipse.jface.preference.PreferenceDialog;
 import org.eclipse.jface.util.IPropertyChangeListener;
 import org.eclipse.jface.util.PropertyChangeEvent;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.events.SelectionListener;
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.CoolBar;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.Shell;
-import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.dialogs.PreferencesUtil;
 import org.eclipse.ui.menus.ExtensionContributionFactory;
 import org.eclipse.ui.menus.IContributionRoot;
 import org.eclipse.ui.services.IServiceLocator;
 
+import de.cau.cs.kieler.core.model.util.ModelErrorHandler;
 import de.cau.cs.kieler.core.model.validation.ValidationManager;
+import de.cau.cs.kieler.core.ui.handler.RemoveMarkerHandler;
 
 /**
  * This factory is responsible for creating the menu entries for the menu of the
@@ -73,6 +70,8 @@ public class ValidationMenuContributionFactory extends
             menu.addContributionItem(item, null);
         }
 
+        menu.addContributionItem(new Separator(), null);
+        menu.addContributionItem(new ToggleDynamicMarkersMenuItem(), null);
         menu.addContributionItem(new GotoPreferencePageItem(), null);
     }
 
@@ -83,8 +82,8 @@ public class ValidationMenuContributionFactory extends
      * @author soh
      * @kieler.rating 2010-06-11 proposed yellow soh
      */
-    private static class CheckFileMenuItem implements SelectionListener,
-            IPropertyChangeListener, IContributionItem {
+    private static class CheckFileMenuItem extends AbstractContributionItem
+            implements IPropertyChangeListener {
 
         /** The file that belongs to the menu item. */
         private String id;
@@ -112,12 +111,7 @@ public class ValidationMenuContributionFactory extends
         /**
          * {@inheritDoc}
          */
-        public void widgetDefaultSelected(final SelectionEvent e) {
-        }
-
-        /**
-         * {@inheritDoc}
-         */
+        @Override
         public void widgetSelected(final SelectionEvent e) {
             // enable or disable the checkfile and trigger a validate
             ValidationManager.setEnabled(id, result.getSelection());
@@ -142,21 +136,18 @@ public class ValidationMenuContributionFactory extends
          * Dispose of the menu item and deregister as listener since there is no
          * menu item that needs to be notified of changes.
          */
+        @Override
         public void dispose() {
+            result.removeSelectionListener(this);
             result.dispose();
             ValidationManager.removeListener(this);
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        public void fill(final Composite parent) {
         }
 
         /**
          * Setup the menu item at the specified index in the menu. Also register
          * the necessary listeners.
          */
+        @Override
         public void fill(final Menu parent, final int index) {
             result = new MenuItem(parent, SWT.CHECK, index);
             result.setText(ValidationManager.getDisplay(id));
@@ -168,18 +159,7 @@ public class ValidationMenuContributionFactory extends
         /**
          * {@inheritDoc}
          */
-        public void fill(final ToolBar parent, final int index) {
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        public void fill(final CoolBar parent, final int index) {
-        }
-
-        /**
-         * {@inheritDoc}
-         */
+        @Override
         public String getId() {
             return id;
         }
@@ -187,78 +167,22 @@ public class ValidationMenuContributionFactory extends
         /**
          * {@inheritDoc}
          */
-        public boolean isDirty() {
-            return false;
-        }
-
-        /**
-         * {@inheritDoc}
-         */
+        @Override
         public boolean isDynamic() {
             return true;
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        public boolean isEnabled() {
-            return true;
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        public boolean isGroupMarker() {
-            return false;
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        public boolean isSeparator() {
-            return false;
         }
 
         /**
          * The Menu item should only be visible for editors that match the
          * epackage of the checkfile.
          */
+        @Override
         public boolean isVisible() {
             EPackage ePackage = ValidationManager.getEPackageOfActiveEditor();
             if (ePackage == null) {
                 return false;
             }
             return ValidationManager.getEPackage(id).equals(ePackage);
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        public void saveWidgetState() {
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        public void setParent(final IContributionManager parent) {
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        public void setVisible(final boolean visible) {
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        public void update() {
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        public void update(final String id) {
         }
     }
 
@@ -268,88 +192,39 @@ public class ValidationMenuContributionFactory extends
      * @author soh
      * @kieler.rating 2010-06-11 proposed yellow soh
      */
-    private static class GotoPreferencePageItem implements SelectionListener,
-            IContributionItem {
+    private static class GotoPreferencePageItem extends
+            AbstractContributionItem {
 
         /** The menu item that triggers the opening of the page. */
         private MenuItem item;
 
-        public void update(final String id) {
-        }
-
-        public void update() {
-        }
-
-        public void setVisible(final boolean visible) {
-        }
-
-        public void setParent(final IContributionManager parent) {
-        }
-
-        public void saveWidgetState() {
-        }
-
-        public boolean isVisible() {
-            return true;
-        }
-
-        public boolean isSeparator() {
-            return false;
-        }
-
-        public boolean isGroupMarker() {
-            return false;
-        }
-
-        public boolean isEnabled() {
-            return true;
-        }
-
-        public boolean isDynamic() {
-            return false;
-        }
-
-        public boolean isDirty() {
-            return false;
-        }
-
+        @Override
         public String getId() {
             return "de.cau.cs.kieler.core.model.goToPreferencePage";
-        }
-
-        public void fill(final CoolBar parent, final int index) {
-        }
-
-        public void fill(final ToolBar parent, final int index) {
         }
 
         /**
          * 
          * {@inheritDoc}
          */
+        @Override
         public void fill(final Menu parent, final int index) {
             item = new MenuItem(parent, SWT.PUSH, index);
             item.setText("Configure...");
             item.addSelectionListener(this);
         }
 
-        public void fill(final Composite parent) {
-        }
-
+        @Override
         public void dispose() {
+            item.removeSelectionListener(this);
             item.dispose();
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        public void widgetDefaultSelected(final SelectionEvent e) {
         }
 
         /**
          * Opens the preference dialog of the active workbench and goes directly
          * to the page for the validation manager.
          */
+        @Override
         public void widgetSelected(final SelectionEvent e) {
             Shell shell = PlatformUI.getWorkbench().getActiveWorkbenchWindow()
                     .getShell();
@@ -359,5 +234,57 @@ public class ValidationMenuContributionFactory extends
                     null, null);
             dialog.open();
         }
+    }
+
+    /**
+     * The menu item for toggling the dynamic markers.
+     * 
+     * @author soh
+     * @kieler.rating 2010-06-11 proposed yellow soh
+     */
+    private static class ToggleDynamicMarkersMenuItem extends
+            AbstractContributionItem {
+
+        /** The menu item that triggers the opening of the page. */
+        private MenuItem item;
+
+        @Override
+        public String getId() {
+            return "de.cau.cs.kieler.core.model.toggleDynamicMarkers";
+        }
+
+        /**
+         * 
+         * {@inheritDoc}
+         */
+        @Override
+        public void fill(final Menu parent, final int index) {
+            item = new MenuItem(parent, SWT.CHECK, index);
+            item.setText("Show dynamic markers");
+            item.setSelection(ModelErrorHandler.isEnabled());
+            item.addSelectionListener(this);
+        }
+
+        @Override
+        public void dispose() {
+            item.removeSelectionListener(this);
+            item.dispose();
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public void widgetSelected(final SelectionEvent e) {
+            if (ModelErrorHandler.isEnabled()) {
+                ModelErrorHandler.disable();
+                RemoveMarkerHandler.removeMarkers();
+                ValidationManager.validateActiveEditor();
+            } else {
+                ModelErrorHandler.enable();
+            }
+            item.setSelection(ModelErrorHandler.isEnabled());
+        }
+
     }
 }

@@ -58,7 +58,7 @@ public class ModelErrorHandler implements StatusListener {
     /**
      * Enable the error handler.
      */
-    public static void enabled() {
+    public static void enable() {
         if (!enabled) {
             enabled = true;
         }
