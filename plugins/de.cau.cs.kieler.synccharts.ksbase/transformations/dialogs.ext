@@ -1,0 +1,24 @@
+import synccharts;
+import expressions;
+import utilities;
+
+extension org::eclipse::xtend::util::stdlib::io;          // debug printouts
+extension de::cau::cs::kieler::ksbase::util::userdialogs; // functions to request values from user
+
+
+// === Refactoring functions ===
+// @author haf
+
+Void renameSignalVariableIntern(State state):
+    let newName = getStringFromUser("Renaming Signal or Variable","A"):
+    let newInt = getIntFromUser("Enter Integer please!",5):
+    let newFloat = getRealFromUser("Enter Float please!",5.3):
+    let newBool = getBooleanFromUser("Enter Boolean please!"):
+    let list = getObjectFromListFromUser("Select one item please!",{"One","Two","Three"}):
+    newSignal.setName(newName) -> state.signals.add(newSignal) ->
+    info("renaming")
+;
+
+Boolean hasSignalsVariablesIntern(State scope):
+    (scope.signals.size > 0 || scope.variables.size > 0)
+;

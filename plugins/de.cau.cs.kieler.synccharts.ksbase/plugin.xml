@@ -158,6 +158,14 @@
                     transformationId="de.cau.cs.kieler.synccharts.ksbase.renameSignalVariable"
                     validation="hasSignalsVariables">
               </transformation>
+              <transformation
+                    icon="icons/encapsulate.gif"
+                    name="Encapsulate Region"
+                    tooltip="Move the selected region(s) into a new State and place that state into the regions parent."
+                    transformation="encapsulateRegion"
+                    transformationId="de.cau.cs.kieler.synccharts.ksbase.encapsulateRegion"
+                    validation="regionsOnSameHierarchy">
+              </transformation>
 			</transformations>
 			<menus>
 				<menuContribution locationURI="menu:de.cau.cs.kieler">
@@ -195,6 +203,9 @@
           </transformationCommand>
           <transformationCommand
                 transformationId="de.cau.cs.kieler.synccharts.ksbase.insertState">
+          </transformationCommand>
+          <transformationCommand
+                transformationId="de.cau.cs.kieler.synccharts.ksbase.encapsulateRegion">
           </transformationCommand>
 				</menuContribution>
 				<menuContribution locationURI="toolbar:de.cau.cs.kieler">
@@ -256,6 +267,9 @@
           <transformationCommand
                 transformationId="de.cau.cs.kieler.synccharts.ksbase.renameSignalVariable">
           </transformationCommand>
+          <transformationCommand
+                transformationId="de.cau.cs.kieler.synccharts.ksbase.encapsulateRegion">
+          </transformationCommand>
     </menuContribution>
     <menuContribution
           locationURI="popupBar:any">
@@ -290,6 +304,9 @@
           </transformationCommand>
           <transformationCommand
                 transformationId="de.cau.cs.kieler.synccharts.ksbase.insertState">
+          </transformationCommand>
+          <transformationCommand
+                transformationId="de.cau.cs.kieler.synccharts.ksbase.encapsulateRegion">
           </transformationCommand>
     </menuContribution>
 
