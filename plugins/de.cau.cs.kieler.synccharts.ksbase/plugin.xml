@@ -168,6 +168,12 @@
                     validation="hasSignalsVariables">
               </transformation>
               <transformation
+                    name="Rename Signal"
+                    tooltip="Rename the signal"
+                    transformation="renameSignal"
+                    transformationId="de.cau.cs.kieler.synccharts.ksbase.renameSignal">
+              </transformation>
+              <transformation
                     icon="icons/encapsulate.gif"
                     name="Encapsulate Region"
                     tooltip="Move the selected region(s) into a new State and place that state into the regions parent."
@@ -298,6 +304,9 @@
           </transformationCommand>
           <transformationCommand
                 transformationId="de.cau.cs.kieler.synccharts.ksbase.addState">
+          </transformationCommand>
+          <transformationCommand
+                transformationId="de.cau.cs.kieler.synccharts.ksbase.renameSignal">
           </transformationCommand>
     </menuContribution>
     <menuContribution

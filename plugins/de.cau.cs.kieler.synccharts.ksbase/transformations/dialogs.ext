@@ -1,5 +1,3 @@
-import synccharts;
-import expressions;
 import utilities;
 
 extension org::eclipse::xtend::util::stdlib::io;          // debug printouts
@@ -9,16 +7,20 @@ extension de::cau::cs::kieler::ksbase::util::userdialogs; // functions to reques
 // === Refactoring functions ===
 // @author haf
 
-Void renameSignalVariableIntern(State state):
-    let newName = getStringFromUser("Renaming Signal or Variable","A"):
-    let newInt = getIntFromUser("Enter Integer please!",5):
-    let newFloat = getRealFromUser("Enter Float please!",5.3):
-    let newBool = getBooleanFromUser("Enter Boolean please!"):
-    let list = getObjectFromListFromUser("Select one item please!",{"One","Two","Three"}):
-    newSignal.setName(newName) -> state.signals.add(newSignal) ->
-    info("renaming")
+//Void example(State state):
+//    let newName = getStringFromUser("Renaming Signal or Variable","A"):
+//    let newInt = getIntFromUser("Enter Integer please!",5):
+ //   let newFloat = getRealFromUser("Enter Float please!",5.3):
+ //   let newBool = getBooleanFromUser("Enter Boolean please!"):
+ //   let list = getObjectFromListFromUser("Select one item please!",{"One","Two","Three"}):
+ //   newSignal.setName(newName) -> state.signals.add(newSignal) ->
+ //   info("renaming")
+//;
+
+String getStringFromUserIntern(String msg, String initValue):
+ getStringFromUser(msg, initValue)
 ;
 
-Boolean hasSignalsVariablesIntern(State scope):
-    (scope.signals.size > 0 || scope.variables.size > 0)
+Object getListSelectionFromUserIntern(String message, List choice):
+ getObjectFromListFromUser(message, choice)
 ;

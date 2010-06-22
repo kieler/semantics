@@ -380,11 +380,86 @@ root.regions.add(innerRootRegion) ->
 rootRegion.innerStates.add(root)
 ;
 
-Void renameSignalVariable(State state):
- renameSignalVariableIntern(state)
+// determine whether a scope contains signals or variables
+Boolean scopeHasSignalsVariables(Scope scope):
+ (scope.signals.size > 0 || scope.variables.size > 0)
 ;
 
-Boolean hasSignalsVariables(State scope):
- hasSignalsVariablesIntern(scope)
+// delegate methods
+Boolean hasSignalsVariables(Region region):
+ scopeHasSignalsVariables(region)
+;
+Boolean hasSignalsVariables(State state):
+ scopeHasSignalsVariables(state)
 ;
 
+// get an empty string list from java for creating a list for user selection
+List[String] getStringList():
+ JAVA de.cau.cs.kieler.synccharts.ksbase.util.OptimizeUtils.getStringList()
+;
+
+// create a list for user selection with all signal and variable names
+List unionOfSignalsAndVariables(Scope scope):
+ let list = getStringList():
+ list.removeAll(list) ->
+ list.addAll(scope.signals.name) ->
+ list.addAll(scope.variables.name) ->
+ list
+;
+
+// entry point for the renaming of signals/variables inside a scope
+Void renameSignalVariable(State scope):
+ scopeRenameSignalVariable(scope)
+;
+Void renameSignalVariable(Region scope):
+ scopeRenameSignalVariable(scope)
+;
+ 
+// open a dialog and ask the user to select the signal/variable to rename
+Void scopeRenameSignalVariable(Scope scope):
+ let choice = unionOfSignalsAndVariables(scope):
+ let oldName = (String) getListSelectionFromUserIntern("Select signal or variable to rename", choice):
+ if (oldName != null) then scopeRenameSignalVariableStep2(scope, oldName)
+;
+
+// open a dialog and ask the user for a new name for the signal
+Void renameSignal(Signal signal):
+ let newName = getStringFromUserIntern("Enter new name for Signal " + signal.name + "!", "newName"):
+ if (newName != null) then signal.setName(newName)
+;
+
+// open a dialog and ask the user for a new name for the signal or variable
+Void scopeRenameSignalVariableStep2(Scope scope, String oldName):
+ let newName = getStringFromUserIntern("Enter new name for Signal or Variable " + oldName + "!", "newName"):
+ if (newName != null) then scopeRenameSignalVariableStep3(scope, oldName, newName)
+;
+
+// find the signal or variable referenced by the old name and rename it
+Void scopeRenameSignalVariableStep3(Scope scope, String oldName, String newName):
+ let var = findVariable(scope, oldName):
+ let sig = findSignal(scope, oldName):
+ (if (var != null) then renameVariable(scope, var, newName)) ->
+ (if (sig != null) then renameSignal(scope, sig, newName))
+;
+
+// rename a signal
+Void renameSignal(Scope scope, Signal signal, String newName):
+ let oldName = signal.name:
+ signal.setName(newName)
+;
+
+// rename a variable
+Void renameVariable(Scope scope, Variable var, String newName):
+ let oldName = var.name:
+ var.setName(newName)
+;
+
+// find a variable at the toplevel of a scope
+Variable findVariable(Scope scope, String name):
+ scope.variables.selectFirst(var|var.name.matches(name))
+;
+
+// find a signal at the toplevel of a scope
+Signal findSignal(Scope scope, String name):
+ scope.signals.selectFirst(e|e.name.matches(name))
+; 

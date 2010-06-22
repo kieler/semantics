@@ -250,6 +250,14 @@ public final class OptimizeUtils {
 
     /**
      * 
+     * @return a new list of strings
+     */
+    public static List<String> getStringList() {
+        return new LinkedList<String>();
+    }
+
+    /**
+     * 
      * @return a new list of regions
      */
     public static List<Region> getRegionList() {
