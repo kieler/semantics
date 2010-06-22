@@ -152,6 +152,7 @@ public class StateLayout extends AbstractTableLayout {
             break;
         case BODYTEXT:
             isEmpty = state.getBodyText() == null
+                    || state.getBodyText().getCode() == null
                     || state.getBodyText().getCode().length() == 0;
             break;
         case SIGNALS:
