@@ -18,11 +18,11 @@ Workflow {
 	}
 
 	component = DirectoryCleaner {
-		directory = "${runtimeProject}/src-gen"
+		directory = "${runtimeProject}/src-gen/de/cau/cs/kieler/synccharts/text/actions"
 	}
 
 	component = DirectoryCleaner {
-		directory = "${runtimeProject}.ui/src-gen"
+		directory = "${runtimeProject}.ui/src-gen/de/cau/cs/kieler/synccharts/text/actions"
 	}
 
 	component = Generator {

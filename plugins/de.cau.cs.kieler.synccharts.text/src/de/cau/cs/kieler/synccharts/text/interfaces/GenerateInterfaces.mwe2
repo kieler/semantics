@@ -18,11 +18,11 @@ Workflow {
 	}
 
 	component = DirectoryCleaner {
-		directory = "${runtimeProject}/src-gen"
+		directory = "${runtimeProject}/src-gen/de/cau/cs/kieler/synccharts/text/interfaces/"
 	}
 
 	component = DirectoryCleaner {
-		directory = "${runtimeProject}.ui/src-gen"
+		directory = "${runtimeProject}.ui/src-gende/cau/cs/kieler/synccharts/text/interfaces/"
 	}
 
 	component = Generator {
@@ -34,13 +34,13 @@ Workflow {
 			uri = grammarURI
 			fileExtensions = file.extensions
 
-			// Java API to access grammar elements (required by several other fragments)
-			fragment = grammarAccess.GrammarAccessFragment {}
-
 			// generates Java API for the generated EPackages 
 			fragment = ecore.EcoreGeneratorFragment {
-				referencedGenModels = "platform:/resource/de.cau.cs.kieler.synccharts/model/synccharts.genmodel, platform:/resource/de.cau.cs.kieler.core.annotations/model/annotations.genmodel, platform:/resource/de.cau.cs.kieler.core.expressions/model/expressions.genmodel"
+				referencedGenModels = "platform:/resource/de.cau.cs.kieler.core.annotations/model/annotations.genmodel, platform:/resource/de.cau.cs.kieler.core.expressions/model/expressions.genmodel, platform:/resource/de.cau.cs.kieler.synccharts/model/synccharts.genmodel"
 			}
+
+			// Java API to access grammar elements (required by several other fragments)
+			fragment = grammarAccess.GrammarAccessFragment {}
 
 			// the serialization component
 			fragment = parseTreeConstructor.ParseTreeConstructorFragment {}
@@ -52,9 +52,9 @@ Workflow {
 
 			// The antlr parser generator fragment.
 			fragment = parser.antlr.XtextAntlrGeneratorFragment {
-			//  options = {
-			//		backtrack = true
-			//	}
+			  options = {
+					backtrack = true
+				}
 			}
 
 			// java-based API for validation 
@@ -91,8 +91,11 @@ Workflow {
 			fragment = contentAssist.JavaBasedContentAssistFragment {}
 
 			// generates a more lightweight Antlr parser and lexer tailored for content assist  
-			fragment = parser.antlr.XtextAntlrUiGeneratorFragment {}
-
+			fragment = parser.antlr.XtextAntlrUiGeneratorFragment {
+			  options = {
+					backtrack = true
+				}
+			}
 		}
 	}
 }
