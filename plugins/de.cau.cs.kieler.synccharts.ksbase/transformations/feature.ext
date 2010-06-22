@@ -247,6 +247,10 @@ Void flattenRegion(List[Region] target):
 //     Templates      ///
 /////////////////////////
 
+Boolean isRootRegion(Region region):
+ region.parentState == null
+;
+
 //Creates a default StateChart
 Void createDefault(Region rootRegion):
 let state = new State:
@@ -266,15 +270,14 @@ JAVA de.cau.cs.kieler.ksbase.ui.utils.TransformationUtils.getFileNameOfActiveEdi
 ;
 
 //Adds an initial state to a region
-Void addInitialState(Region target):
- let parent = target.parentState :
+Void addState(Region target):
  let state = new State:
- (parent != null) ?
- (state.setLabel("Initial") ->
- state.setIsInitial(true) ->
+ (if (target.innerStates.isEmpty) then
+  (state.setLabel("Initial") ->
+   state.setIsInitial(true))
+  ) ->
  target.innerStates.add(state) ->
- setSelection(state)) :
- createDefault(target)
+ setSelection(state)
 ;
 
 // Helper method to set the label on a transition

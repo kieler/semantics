@@ -62,12 +62,21 @@
           transformationId="de.cau.cs.kieler.ksbase.addABRO">
 				</transformation>
 				<transformation
-          tooltip="Create a default SyncChart"
           icon="icons/default.gif"
           name="Create Default"
-          transformation="addInitialState"
-          transformationId="de.cau.cs.kieler.ksbase.empty">
+          tooltip="Create a default SyncChart"
+          transformation="createDefault"
+          transformationId="de.cau.cs.kieler.ksbase.createDefault"
+          validation="isRootRegion">
 				</transformation>
+    <transformation
+          icon="icons/default.gif"
+          name="Create State"
+          tooltip="Creates a state in the target region. The created state is initial if the region was empty."
+          transformation="addState"
+          transformationId="de.cau.cs.kieler.synccharts.ksbase.addState"
+          validation="isNoRootRegion">
+    </transformation>
     <transformation
           tooltip="Set the transition target to the selected state"
           icon="icons/reconnect_target.gif"
@@ -188,7 +197,7 @@
            transformationId="de.cau.cs.kieler.ksbase.downgradeState">
      </transformationCommand>
      						<transformationCommand transformationId="de.cau.cs.kieler.ksbase.addABRO"></transformationCommand>
-						<transformationCommand transformationId="de.cau.cs.kieler.ksbase.empty">
+						<transformationCommand transformationId="de.cau.cs.kieler.ksbase.createDefault">
 						</transformationCommand>
 						        <transformationCommand
               transformationId="de.cau.cs.kieler.ksbase.connect">
@@ -217,6 +226,9 @@
           </transformationCommand>
           <transformationCommand
                 transformationId="de.cau.cs.kieler.synccharts.ksbase.flattenRegion">
+          </transformationCommand>
+          <transformationCommand
+                transformationId="de.cau.cs.kieler.synccharts.ksbase.addState">
           </transformationCommand>
 				</menuContribution>
 				<menuContribution locationURI="toolbar:de.cau.cs.kieler">
@@ -270,7 +282,7 @@
                 transformationId="de.cau.cs.kieler.ksbase.flattenState">
           </transformationCommand>
           <transformationCommand
-                transformationId="de.cau.cs.kieler.ksbase.empty">
+                transformationId="de.cau.cs.kieler.ksbase.createDefault">
           </transformationCommand>
           <transformationCommand
                 transformationId="de.cau.cs.kieler.synccharts.ksbase.insertState">
@@ -283,6 +295,9 @@
           </transformationCommand>
           <transformationCommand
                 transformationId="de.cau.cs.kieler.synccharts.ksbase.flattenRegion">
+          </transformationCommand>
+          <transformationCommand
+                transformationId="de.cau.cs.kieler.synccharts.ksbase.addState">
           </transformationCommand>
     </menuContribution>
     <menuContribution
@@ -314,7 +329,7 @@
                 transformationId="de.cau.cs.kieler.ksbase.flattenState">
           </transformationCommand>
           <transformationCommand
-                transformationId="de.cau.cs.kieler.ksbase.empty">
+                transformationId="de.cau.cs.kieler.ksbase.createDefault">
           </transformationCommand>
           <transformationCommand
                 transformationId="de.cau.cs.kieler.synccharts.ksbase.insertState">
@@ -324,6 +339,9 @@
           </transformationCommand>
           <transformationCommand
                 transformationId="de.cau.cs.kieler.synccharts.ksbase.flattenRegion">
+          </transformationCommand>
+          <transformationCommand
+                transformationId="de.cau.cs.kieler.synccharts.ksbase.addState">
           </transformationCommand>
     </menuContribution>
 
