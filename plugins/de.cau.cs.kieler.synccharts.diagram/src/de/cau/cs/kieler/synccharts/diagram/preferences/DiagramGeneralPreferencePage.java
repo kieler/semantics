@@ -6,7 +6,7 @@ import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.swt.widgets.Composite;
 
 import de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorPlugin;
-import de.cau.cs.kieler.synccharts.labelparser.bridge.LabelParserBridgePlugin;
+import de.cau.cs.kieler.synccharts.text.actions.bridge.LabelParserBridgePlugin;
 
 /**
  * @generated

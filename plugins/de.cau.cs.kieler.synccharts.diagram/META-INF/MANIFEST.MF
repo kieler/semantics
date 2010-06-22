@@ -36,7 +36,6 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.draw2d;visibility:=reexport,
  de.cau.cs.kieler.core.ui;visibility:=reexport,
  de.cau.cs.kieler.synccharts.custom;visibility:=reexport,
- de.cau.cs.kieler.synccharts.labelparser.bridge;visibility:=reexport,
  de.cau.cs.kieler.synccharts;visibility:=reexport,
  de.cau.cs.kieler.synccharts.edit;visibility:=reexport,
  org.eclipse.ocl.ecore;visibility:=reexport,
@@ -46,5 +45,6 @@ Require-Bundle: org.eclipse.core.runtime,
  de.cau.cs.kieler.core.expressions;visibility:=reexport,
  de.cau.cs.kieler.core.annotations.edit;visibility:=reexport,
  de.cau.cs.kieler.core.expressions.edit;visibility:=reexport,
- org.eclipse.emf.ecore.edit;visibility:=reexport
+ org.eclipse.emf.ecore.edit;visibility:=reexport,
+ de.cau.cs.kieler.synccharts.text.bridge;visibility:=reexport
 Eclipse-LazyStart: true

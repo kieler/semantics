@@ -17,7 +17,7 @@ main() {
 	// some general plugin settings	
 	model.plugin.requiredPlugins += "de.cau.cs.kieler.core.ui";
 	model.plugin.requiredPlugins += "de.cau.cs.kieler.synccharts.custom";
-	model.plugin.requiredPlugins += "de.cau.cs.kieler.synccharts.labelparser.bridge";
+	model.plugin.requiredPlugins += "de.cau.cs.kieler.synccharts.text.bridge";
 	model.plugin.requiredPlugins += "de.cau.cs.kieler.core.annotations";
 	model.plugin.requiredPlugins += "de.cau.cs.kieler.core.annotations.edit";
 	model.plugin.requiredPlugins += "de.cau.cs.kieler.core.expressions";

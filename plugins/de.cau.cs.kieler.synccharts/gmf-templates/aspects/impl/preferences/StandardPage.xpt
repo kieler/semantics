@@ -31,10 +31,10 @@ public class «getClassName()»«EXPAND extendsList»«EXPAND implementsList» {
    	private String AUTO_SERIALIZE_LABEL = "Perform automated serialization";
 	
 	«EXPAND xpt::Common::generatedMemberComment»
-    private static String AUTO_SERIALIZE_PREF = de.cau.cs.kieler.synccharts.labelparser.bridge.LabelParserBridgePlugin.AUTO_SERIALIZE;
+    private static String AUTO_SERIALIZE_PREF = de.cau.cs.kieler.synccharts.text.actions.bridge.LabelParserBridgePlugin.AUTO_SERIALIZE;
 	
 	«EXPAND xpt::Common::generatedMemberComment»
-    private static org.eclipse.jface.preference.IPreferenceStore LABEL_PARSER_STORE = de.cau.cs.kieler.synccharts.labelparser.bridge.LabelParserBridgePlugin
+    private static org.eclipse.jface.preference.IPreferenceStore LABEL_PARSER_STORE = de.cau.cs.kieler.synccharts.text.actions.bridge.LabelParserBridgePlugin
             .getDefault().getPreferenceStore();
 	
 	«EXPAND xpt::Common::generatedMemberComment»
