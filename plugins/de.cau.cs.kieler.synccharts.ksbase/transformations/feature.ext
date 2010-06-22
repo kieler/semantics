@@ -150,11 +150,22 @@ Boolean statesOnSameHierarchy(State s1, State s2):
 	s1.parentRegion == s2.parentRegion
 ;
 
-
-
 Boolean isNoRootState(List[State] states):
     states.notExists(e|e.parentRegion.parentState == null)
 ;
+
+Boolean isNoRootRegion(Region region):
+ region.parentState != null
+;
+
+Boolean isNoRootRegion(Region r1, Region r2):
+ r1.parentState != null && r2.parentState != null
+;
+
+Boolean isNoRootRegion(List[Region] regions):
+ regions.notExists(e|e.parentState == null)
+;
+
 // Add a state to the parent state and add all Regions
 // to that new State
 Void encapsulateRegions(State parentState):
@@ -189,37 +200,17 @@ Void myDebug(Object object):
  JAVA de.cau.cs.kieler.synccharts.ksbase.util.OptimizeUtils.debug(java.lang.Object)
 ;
 
-// determine whether all regions in the list are on the same hierarchy level
-Boolean regionsOnSameHierarchy(List[Region] regions):
- let parentStates = getStateList():
- myDebug(regions) ->
- parentStates.removeAll(parentStates) ->
- regions.addParentStateToList(parentStates) ->
- myDebug(parentStates) ->
- //parentStates.size == 1 ->
- true
-;
-
-Void addParentStateToList(Region region, List[State] list):
- let parent = region.parentState:
- if (!list.contains(parent)) then (
-   list.add(parent)
- )
-;
-
-Boolean regionsOnSameHierarchy(Region target):
- true
-;
-
 // put the selected region into a new state and add
 // that state to a region in the selected regions parent state
 Void encapsulateRegion(Region target):
  let newState = new State:
  let newRegion = new Region:
  if (target.parentState != null) then (
+   newState.setIsInitial(true) ->
    target.parentState.regions.add(newRegion) ->
    newRegion.innerStates.add(newState) ->
-   newState.regions.add(target)
+   newState.regions.add(target) ->
+   setSelection(newState)
  )
 ;
 
@@ -227,11 +218,29 @@ Void encapsulateRegion(List[Region] targets):
  let newState = new State:
  let newRegion = new Region:
  let parent = targets.get(0).parentState:
- //if (regionsOnSameHierarchy(targets)) then (
-   parent.regions.add(newRegion) ->
-   newRegion.innerStates.add(newState) ->
-   newState.regions.addAll(targets)
- //)
+ newState.setIsInitial(true) ->
+ parent.regions.add(newRegion) ->
+ newRegion.innerStates.add(newState) ->
+ newState.regions.addAll(targets) ->
+ setSelection(newState)
+;
+
+Void flattenRegion(Region target):
+ let parentState = target.parentState:
+ let parentRegion = parentState.parentRegion:
+ parentRegion.innerStates.addAll(target.innerStates) ->
+ parentState.regions.remove(target) ->
+ if (parentState.regions.isEmpty) then
+   parentRegion.innerStates.remove(parentState)
+;
+
+Void flattenRegion(List[Region] target):
+ let parentState = target.get(0).parentState:
+ let parentRegion = parentState.parentRegion:
+ target.innerStates.setParentRegion(parentRegion) ->
+ parentState.regions.removeAll(target) ->
+ if (parentState.regions.isEmpty) then
+   parentRegion.innerStates.remove(parentState)
 ;
 
 /////////////////////////

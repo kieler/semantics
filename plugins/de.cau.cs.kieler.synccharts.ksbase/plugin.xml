@@ -164,7 +164,15 @@
                     tooltip="Move the selected region(s) into a new State and place that state into the regions parent."
                     transformation="encapsulateRegion"
                     transformationId="de.cau.cs.kieler.synccharts.ksbase.encapsulateRegion"
-                    validation="regionsOnSameHierarchy">
+                    validation="isNoRootRegion">
+              </transformation>
+              <transformation
+                    icon="icons/flatten.gif"
+                    name="Flatten Region"
+                    tooltip="Moves all states from the selected region to the next region in the hierarchy."
+                    transformation="flattenRegion"
+                    transformationId="de.cau.cs.kieler.synccharts.ksbase.flattenRegion"
+                    validation="isNoRootRegion">
               </transformation>
 			</transformations>
 			<menus>
@@ -206,6 +214,9 @@
           </transformationCommand>
           <transformationCommand
                 transformationId="de.cau.cs.kieler.synccharts.ksbase.encapsulateRegion">
+          </transformationCommand>
+          <transformationCommand
+                transformationId="de.cau.cs.kieler.synccharts.ksbase.flattenRegion">
           </transformationCommand>
 				</menuContribution>
 				<menuContribution locationURI="toolbar:de.cau.cs.kieler">
@@ -270,6 +281,9 @@
           <transformationCommand
                 transformationId="de.cau.cs.kieler.synccharts.ksbase.encapsulateRegion">
           </transformationCommand>
+          <transformationCommand
+                transformationId="de.cau.cs.kieler.synccharts.ksbase.flattenRegion">
+          </transformationCommand>
     </menuContribution>
     <menuContribution
           locationURI="popupBar:any">
@@ -307,6 +321,9 @@
           </transformationCommand>
           <transformationCommand
                 transformationId="de.cau.cs.kieler.synccharts.ksbase.encapsulateRegion">
+          </transformationCommand>
+          <transformationCommand
+                transformationId="de.cau.cs.kieler.synccharts.ksbase.flattenRegion">
           </transformationCommand>
     </menuContribution>
 
