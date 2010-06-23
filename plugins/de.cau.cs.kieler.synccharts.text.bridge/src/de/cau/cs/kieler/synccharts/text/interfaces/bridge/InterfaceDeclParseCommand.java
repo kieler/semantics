@@ -246,7 +246,7 @@ public class InterfaceDeclParseCommand extends AbstractCommand {
                 .getInstance(XtextResourceSet.class);
         XtextResource resource = (XtextResource) resourceSet.createResource(URI
                 .createURI("platform:/resource/de.cau.cs.kieler.synccharts."
-                        + "interfacedeclparser/dummy.ifd"));
+                        + "interfacedeclparser/dummy.intfc"));
 
         // FIXME: passing the parent to the scope provider in this static
         // way is veeeeery evil
