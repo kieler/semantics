@@ -1091,28 +1091,10 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 		private final EnumLiteralDeclaration cNORMALTERMINATIONEnumLiteralDeclaration_2 = (EnumLiteralDeclaration)cAlternatives.eContents().get(2);
 		private final Keyword cNORMALTERMINATIONGreaterThanSignHyphenMinusGreaterThanSignKeyword_2_0 = (Keyword)cNORMALTERMINATIONEnumLiteralDeclaration_2.eContents().get(0);
 		
-		////enum ValueType returns expressions::ValueType:
-		////	PURE="PURE" | BOOL="BOOL" | UNSIGNED="UNSIGNED"	| 
-		////	INT="INT" | FLOAT="FLOAT" | HOST="HOST"	
-		////;
-		////
-		////enum CombineOperator returns expressions::CombineOperator:
-		////	NONE="NONE" | ADD="+" | MULT="*" | MAX="max" |
-		////	MIN="min" | OR="or" | AND="and" | HOST="host"
-		////;
 		//enum TransitionType returns synccharts::TransitionType:
 		//	WEAKABORT="-->" | STRONGABORT="o->" | NORMALTERMINATION=">->";
 		public EnumRule getRule() { return rule; }
 
-		////enum ValueType returns expressions::ValueType:
-		////	PURE="PURE" | BOOL="BOOL" | UNSIGNED="UNSIGNED"	| 
-		////	INT="INT" | FLOAT="FLOAT" | HOST="HOST"	
-		////;
-		////
-		////enum CombineOperator returns expressions::CombineOperator:
-		////	NONE="NONE" | ADD="+" | MULT="*" | MAX="max" |
-		////	MIN="min" | OR="or" | AND="and" | HOST="host"
-		////;
 		//WEAKABORT="-->" | STRONGABORT="o->" | NORMALTERMINATION=">->"
 		public Alternatives getAlternatives() { return cAlternatives; }
 
@@ -1128,16 +1110,7 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 		//"o->"
 		public Keyword getSTRONGABORTOKeyword_1_0() { return cSTRONGABORTOKeyword_1_0; }
 
-		//NORMALTERMINATION= //enum ValueType returns expressions::ValueType:
-		////	PURE="PURE" | BOOL="BOOL" | UNSIGNED="UNSIGNED"	| 
-		////	INT="INT" | FLOAT="FLOAT" | HOST="HOST"	
-		////;
-		////
-		////enum CombineOperator returns expressions::CombineOperator:
-		////	NONE="NONE" | ADD="+" | MULT="*" | MAX="max" |
-		////	MIN="min" | OR="or" | AND="and" | HOST="host"
-		////;
-		//">->"
+		//NORMALTERMINATION=">->"
 		public EnumLiteralDeclaration getNORMALTERMINATIONEnumLiteralDeclaration_2() { return cNORMALTERMINATIONEnumLiteralDeclaration_2; }
 
 		//">->"
@@ -1354,15 +1327,6 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 		return getStateTypeAccess().getRule();
 	}
 
-	////enum ValueType returns expressions::ValueType:
-	////	PURE="PURE" | BOOL="BOOL" | UNSIGNED="UNSIGNED"	| 
-	////	INT="INT" | FLOAT="FLOAT" | HOST="HOST"	
-	////;
-	////
-	////enum CombineOperator returns expressions::CombineOperator:
-	////	NONE="NONE" | ADD="+" | MULT="*" | MAX="max" |
-	////	MIN="min" | OR="or" | AND="and" | HOST="host"
-	////;
 	//enum TransitionType returns synccharts::TransitionType:
 	//	WEAKABORT="-->" | STRONGABORT="o->" | NORMALTERMINATION=">->";
 	public TransitionTypeElements getTransitionTypeAccess() {
