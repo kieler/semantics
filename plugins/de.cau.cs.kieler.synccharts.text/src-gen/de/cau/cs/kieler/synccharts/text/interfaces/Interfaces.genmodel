@@ -7,7 +7,7 @@
     updateClasspath="false" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
     complianceLevel="5.0" copyrightFields="false" editPluginID="de.cau.cs.kieler.synccharts.text.edit"
     editorPluginID="de.cau.cs.kieler.synccharts.text.editor" usedGenPackages="../../../../../../../../../de.cau.cs.kieler.core.annotations/model/annotations.genmodel#//annotations ../../../../../../../../../de.cau.cs.kieler.core.expressions/model/expressions.genmodel#//expressions ../../../../../../../../../de.cau.cs.kieler.synccharts/model/synccharts.genmodel#//synccharts">
-  <genPackages prefix="InterfaceDecl" basePackage="de.cau.cs.kieler.synccharts.text.interfaces"
+  <genPackages prefix="Interfaces" basePackage="de.cau.cs.kieler.synccharts.text.interfaces"
       disposableProviderFactory="true" ecorePackage="Interfaces.ecore#/">
     <genClasses ecoreClass="Interfaces.ecore#//StateExtend">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Interfaces.ecore#//StateExtend/regions"/>

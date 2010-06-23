@@ -21,8 +21,7 @@ import "http://www.eclipse.org/emf/2002/Ecore" as ecore
 import "platform:/resource/de.cau.cs.kieler.synccharts/model/synccharts.ecore" as synccharts
 import "platform:/resource/de.cau.cs.kieler.core.expressions/model/expressions.ecore" as expressions
 
-generate interfaceDecl "http://www.cau.de/cs/kieler/synccharts/interfacedeclparser/InterfaceDecl"
- 
+generate interfaces "http://kieler.cs.cau.de/synccharts/interfaces" 
  
 //==============================================================================
 // "Buckets" containing the Signals / Regions with Signals

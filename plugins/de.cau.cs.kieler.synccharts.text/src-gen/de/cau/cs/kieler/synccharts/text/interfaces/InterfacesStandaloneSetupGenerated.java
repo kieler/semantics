@@ -27,8 +27,8 @@ public class InterfacesStandaloneSetupGenerated implements ISetup {
 	}
 	
 	public void register(Injector injector) {
-	if (!EPackage.Registry.INSTANCE.containsKey("http://www.cau.de/cs/kieler/synccharts/interfacedeclparser/InterfaceDecl")) {
-		EPackage.Registry.INSTANCE.put("http://www.cau.de/cs/kieler/synccharts/interfacedeclparser/InterfaceDecl", de.cau.cs.kieler.synccharts.text.interfaces.interfaceDecl.InterfaceDeclPackage.eINSTANCE);
+	if (!EPackage.Registry.INSTANCE.containsKey("http://kieler.cs.cau.de/synccharts/interfaces")) {
+		EPackage.Registry.INSTANCE.put("http://kieler.cs.cau.de/synccharts/interfaces", de.cau.cs.kieler.synccharts.text.interfaces.interfaces.InterfacesPackage.eINSTANCE);
 	}
 
 		org.eclipse.xtext.resource.IResourceFactory resourceFactory = injector.getInstance(org.eclipse.xtext.resource.IResourceFactory.class);

@@ -10,12 +10,12 @@
     <metamodelDeclarations xsi:type="xtext:ReferencedMetamodel" alias="expressions">
       <ePackage href="http://kieler.cs.cau.de/expressions#/"/>
     </metamodelDeclarations>
-    <metamodelDeclarations xsi:type="xtext:GeneratedMetamodel" name="interfaceDecl">
-      <ePackage href="http://www.cau.de/cs/kieler/synccharts/interfacedeclparser/InterfaceDecl#/"/>
+    <metamodelDeclarations xsi:type="xtext:GeneratedMetamodel" name="interfaces">
+      <ePackage href="http://kieler.cs.cau.de/synccharts/interfaces#/"/>
     </metamodelDeclarations>
     <rules xsi:type="xtext:ParserRule" name="StateExtend">
       <type metamodel="/0/@metamodelDeclarations.3">
-        <classifier xsi:type="ecore:EClass" href="http://www.cau.de/cs/kieler/synccharts/interfacedeclparser/InterfaceDecl#//StateExtend"/>
+        <classifier xsi:type="ecore:EClass" href="http://kieler.cs.cau.de/synccharts/interfaces#//StateExtend"/>
       </type>
       <alternatives xsi:type="xtext:Alternatives" cardinality="+">
         <elements xsi:type="xtext:Assignment" feature="regions" operator="+=">
@@ -56,7 +56,7 @@
     </rules>
     <rules xsi:type="xtext:ParserRule" name="RegionSignalDec">
       <type metamodel="/0/@metamodelDeclarations.3">
-        <classifier xsi:type="ecore:EClass" href="http://www.cau.de/cs/kieler/synccharts/interfacedeclparser/InterfaceDecl#//RegionSignalDec"/>
+        <classifier xsi:type="ecore:EClass" href="http://kieler.cs.cau.de/synccharts/interfaces#//RegionSignalDec"/>
       </type>
       <alternatives xsi:type="xtext:Group">
         <elements xsi:type="xtext:Assignment" feature="region" operator="=">
@@ -127,7 +127,7 @@
     </rules>
     <rules xsi:type="xtext:ParserRule" name="Variables">
       <type metamodel="/0/@metamodelDeclarations.3">
-        <classifier xsi:type="ecore:EClass" href="http://www.cau.de/cs/kieler/synccharts/interfacedeclparser/InterfaceDecl#//Variables"/>
+        <classifier xsi:type="ecore:EClass" href="http://kieler.cs.cau.de/synccharts/interfaces#//Variables"/>
       </type>
       <alternatives xsi:type="xtext:Group">
         <elements xsi:type="xtext:Group">
@@ -146,7 +146,7 @@
     </rules>
     <rules xsi:type="xtext:ParserRule" name="Signals">
       <type metamodel="/0/@metamodelDeclarations.3">
-        <classifier xsi:type="ecore:EClass" href="http://www.cau.de/cs/kieler/synccharts/interfacedeclparser/InterfaceDecl#//Signals"/>
+        <classifier xsi:type="ecore:EClass" href="http://kieler.cs.cau.de/synccharts/interfaces#//Signals"/>
       </type>
       <alternatives xsi:type="xtext:Group">
         <elements xsi:type="xtext:Group">
@@ -165,7 +165,7 @@
     </rules>
     <rules xsi:type="xtext:ParserRule" name="InputSignals">
       <type metamodel="/0/@metamodelDeclarations.3">
-        <classifier xsi:type="ecore:EClass" href="http://www.cau.de/cs/kieler/synccharts/interfacedeclparser/InterfaceDecl#//InputSignals"/>
+        <classifier xsi:type="ecore:EClass" href="http://kieler.cs.cau.de/synccharts/interfaces#//InputSignals"/>
       </type>
       <alternatives xsi:type="xtext:Group">
         <elements xsi:type="xtext:Group">
@@ -184,7 +184,7 @@
     </rules>
     <rules xsi:type="xtext:ParserRule" name="OutputSignals">
       <type metamodel="/0/@metamodelDeclarations.3">
-        <classifier xsi:type="ecore:EClass" href="http://www.cau.de/cs/kieler/synccharts/interfacedeclparser/InterfaceDecl#//OutputSignals"/>
+        <classifier xsi:type="ecore:EClass" href="http://kieler.cs.cau.de/synccharts/interfaces#//OutputSignals"/>
       </type>
       <alternatives xsi:type="xtext:Group">
         <elements xsi:type="xtext:Group">
@@ -203,7 +203,7 @@
     </rules>
     <rules xsi:type="xtext:ParserRule" name="InOutputSignals">
       <type metamodel="/0/@metamodelDeclarations.3">
-        <classifier xsi:type="ecore:EClass" href="http://www.cau.de/cs/kieler/synccharts/interfacedeclparser/InterfaceDecl#//InOutputSignals"/>
+        <classifier xsi:type="ecore:EClass" href="http://kieler.cs.cau.de/synccharts/interfaces#//InOutputSignals"/>
       </type>
       <alternatives xsi:type="xtext:Group">
         <elements xsi:type="xtext:Group">

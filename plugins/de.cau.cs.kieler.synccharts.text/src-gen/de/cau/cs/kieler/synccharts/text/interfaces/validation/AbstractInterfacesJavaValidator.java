@@ -13,7 +13,7 @@ public class AbstractInterfacesJavaValidator extends AbstractDeclarativeValidato
 @Override
 	protected List<EPackage> getEPackages() {
 	    List<EPackage> result = new ArrayList<EPackage>();
-	    result.add(de.cau.cs.kieler.synccharts.text.interfaces.interfaceDecl.InterfaceDeclPackage.eINSTANCE);
+	    result.add(de.cau.cs.kieler.synccharts.text.interfaces.interfaces.InterfacesPackage.eINSTANCE);
 		return result;
 	}
 
