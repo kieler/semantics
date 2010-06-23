@@ -38,360 +38,203 @@ import de.cau.cs.kieler.synccharts.Transition;
  */
 public final class Utils {
 
-	/**
+    /**
      * 
      */
-	private Utils() {
-		// does nothing
-	}
+    private Utils() {
+        // does nothing
+    }
 
-	/** Clipboard for copy and paste. */
-	private static volatile EObject stateClipBoard = null;
-	/** Clipboard for copy and paste. */
-	private static volatile Collection<State> statesClipBoard = null;
-	/** Clipboard for copy and paste. */
-	private static volatile EObject regionClipBoard = null;
-	/** Clipboard for copy and paste. */
-	private static volatile Collection<Region> regionsClipBoard = null;
-	/** Clipboard for copy and paste. */
-	private static volatile EObject transitionClipBoard = null;
-	/** Clipboard for copy and paste. */
-	private static volatile Collection<Transition> transitionsClipBoard = null;
+    public static Object ecoreCopy(final Object object) {
+        return EcoreUtil.copy((EObject) object);
+    }
 
-	/**
-	 * Remove a region from its parent state if its not the root region.
-	 * 
-	 * @param region
-	 *            the region to remove
-	 */
-	private static void removeRegionFromParent(final Region region) {
-		State parent = region.getParentState();
-		if (parent != null) {
-			parent.getRegions().remove(region);
-		}
-	}
+    private static Object clipBoard = null;
 
-	/**
-	 * Remove a state from the parent region.
-	 * 
-	 * @param state
-	 *            the state to remove
-	 */
-	private static void removeStateFromParent(final State state) {
-		state.getParentRegion().getInnerStates().remove(state);
-	}
+    public static Object getObjectFromClipboard() {
+        if (clipBoard instanceof EObject) {
+            Object copy = EcoreUtil.copy((EObject) clipBoard);
+            if (copy instanceof State) {
+                cloneTransitions((State) clipBoard, (State) copy);
+            }
+            return copy;
+        } else if (clipBoard instanceof Collection<?>) {
+            Collection<?> copy = EcoreUtil
+                    .copyAll((Collection<? extends EObject>) clipBoard);
+            if (!copy.isEmpty()) {
+                Object head = copy.iterator().next();
+                if (head instanceof State) {
+                    return getStatesFromClipboard(
+                            (Collection<State>) clipBoard,
+                            (Collection<State>) copy);
+                }
+                if (head instanceof Region) {
+                    return getRegionsFromClipboard(
+                            (Collection<Region>) clipBoard,
+                            (Collection<Region>) copy);
+                }
+                if (head instanceof Transition) {
+                    return getTransitionsFromClipboard(
+                            (Collection<Transition>) clipBoard,
+                            (Collection<Transition>) copy);
+                }
+            }
+            return null;
+        }
+        return null;
+    }
 
-	/**
-	 * Copy an object to clipboard and remove it from the model.
-	 * 
-	 * @param object
-	 *            the object to cut
-	 */
-	public static void cutObject(final Object object) {
-		objectToClipboard(object);
-		if (object instanceof EObject) {
-			if (object instanceof State) {
-				State s = (State) object;
-				removeStateFromParent(s);
-			} else if (object instanceof Region) {
-				Region r = (Region) object;
-				removeRegionFromParent(r);
-			} else if (object instanceof Transition) {
-				Transition t = (Transition) object;
-				t.getSourceState().getOutgoingTransitions().remove(t);
-			}
-		} else if (object instanceof List<?>) {
-			List<?> list = (List<?>) object;
-			for (Object o : list) {
-				if (o instanceof State) {
-					removeStateFromParent((State) o);
-				} else if (o instanceof Region) {
-					removeRegionFromParent((Region) o);
-				} else if (o instanceof Transition) {
-					Transition t = (Transition) o;
-					t.getSourceState().getOutgoingTransitions().remove(t);
-				}
-			}
-		}
-	}
+    /**
+     * Copy an object to clipboard.
+     * 
+     * @param object
+     *            the object
+     */
+    public static Object objectToClipboard(final Object object) {
+        resetClipboard();
+        if (object instanceof EObject) {
+            EObject o = EcoreUtil.copy((EObject) object);
+            clipBoard = o;
+        } else if (object instanceof List<?>) {
+            List<?> list = (List<?>) object;
+            clipBoard = EcoreUtil.copyAll(list);
+        }
+        return clipBoard;
+    }
 
-	/**
-	 * Clone all transitions on a state.
-	 * 
-	 * @param source
-	 *            the source
-	 * @param target
-	 *            the clone
-	 */
-	private static void cloneTransitions(final State source, final State target) {
-		List<Transition> transSource = source.getOutgoingTransitions();
-		List<Transition> transTarget = target.getOutgoingTransitions();
-		transTarget.removeAll(transTarget);
+    /**
+     * Clears the clipboard.
+     */
+    private static void resetClipboard() {
+        clipBoard = null;
+    }
 
-		for (Transition t : transSource) {
-			if (t.getTargetState() == source) {
-				Transition clone = (Transition) EcoreUtil.copy(t);
-				transTarget.add(clone);
-				clone.setTargetState(target);
-			}
-		}
-	}
+    public static boolean isClipboardEmpty() {
+        return clipBoard == null;
+    }
 
-	/**
-	 * Copy an object to clipboard.
-	 * 
-	 * @param object
-	 *            the object
-	 */
-	public static void objectToClipboard(final Object object) {
-		resetClipboard();
-		if (object instanceof EObject) {
-			EObject o = EcoreUtil.copy((EObject) object);
-			if (o instanceof State) {
-				cloneTransitions((State) object, (State) o);
-				stateClipBoard = o;
-			} else if (o instanceof Region) {
-				regionClipBoard = o;
-			} else if (o instanceof Transition) {
-				transitionClipBoard = o;
-			}
-		} else if (object instanceof List<?>) {
-			List<?> list = (List<?>) object;
+    /**
+     * Clone all transitions on a state.
+     * 
+     * @param source
+     *            the source
+     * @param target
+     *            the clone
+     */
+    private static void cloneTransitions(final State source, final State target) {
+        List<Transition> transSource = source.getOutgoingTransitions();
+        List<Transition> transTarget = target.getOutgoingTransitions();
+        transTarget.removeAll(transTarget);
 
-			if (list.get(0) instanceof State) {
-				statesToClipboard(list);
-			} else if (list.get(0) instanceof Region) {
-				regionsToClipboard(list);
-			} else if (list.get(0) instanceof Transition) {
-				transitionsToClipboard(list);
-			}
-		}
-	}
+        for (Transition t : transSource) {
+            if (t.getTargetState() == source) {
+                Transition clone = (Transition) EcoreUtil.copy(t);
+                transTarget.add(clone);
+                clone.setTargetState(target);
+            }
+        }
+    }
 
-	/**
-	 * Copy pure transition list to clipboard. If state is encountered copy
-	 * state list instead.
-	 * 
-	 * @param list
-	 *            the list that should be added to clipboard
-	 */
-	private static void transitionsToClipboard(final List<?> list) {
-		Collection<Transition> coll = new LinkedList<Transition>();
-		boolean foundState = false;
-		for (Object o : list) {
-			if (o instanceof Transition) {
-				coll.add((Transition) o);
-			} else if (o instanceof State) {
-				foundState = true;
-				break;
-			}
-		}
-		if (foundState) {
-			statesToClipboard(list);
-		} else {
-			transitionsClipBoard = EcoreUtil.copyAll(coll);
-		}
-	}
+    /**
+     * Get a list of states from the clipboard.
+     * 
+     * @return the states
+     */
+    public static List<State> getStatesFromClipboard(
+            Collection<State> statesClipBoard, Collection<State> copy) {
+        if (!statesClipBoard.isEmpty()) {
+            List<State> dummy = new LinkedList<State>();
+            for (State state : copy) {
+                dummy.add(state);
 
-	/**
-	 * Copy pure region list to clipboard. If state is encountered copy state
-	 * list instead.
-	 * 
-	 * @param list
-	 *            the list that should be added to clipboard
-	 */
-	private static void regionsToClipboard(final List<?> list) {
-		Collection<Region> coll = new LinkedList<Region>();
-		boolean foundState = false;
-		for (Object o : list) {
-			if (o instanceof Region) {
-				coll.add((Region) o);
-			} else if (o instanceof State) {
-				foundState = true;
-				break;
-			}
-		}
-		if (foundState) {
-			statesToClipboard(list);
-		} else {
-			regionsClipBoard = EcoreUtil.copyAll(coll);
-		}
-	}
+                // remove transitions that leave the current selection
+                Iterator<Transition> iter = state.getOutgoingTransitions()
+                        .iterator();
+                while (iter.hasNext()) {
+                    Transition trans = iter.next();
+                    if (!copy.contains(trans.getTargetState())) {
+                        iter.remove();
+                    }
+                }
+            }
+            return dummy;
+        }
+        return null;
+    }
 
-	/**
-	 * Copy state list to clipboard and clear of all substates.
-	 * 
-	 * @param list
-	 *            the list that should be added to clipboard
-	 */
-	private static void statesToClipboard(final List<?> list) {
-		Collection<State> coll = new LinkedList<State>();
-		for (Object o : list) {
-			if (o instanceof State) {
-				State state = (State) o;
-				State parent = state.getParentRegion().getParentState();
-				if (parent == null || !list.contains(parent)) {
-					coll.add(state);
-				}
-			}
-		}
-		statesClipBoard = EcoreUtil.copyAll(coll);
-	}
+    /**
+     * Get a list of regions from the clipboard.
+     * 
+     * @return the regions
+     */
+    public static List<Region> getRegionsFromClipboard(
+            Collection<Region> regionsClipBoard, Collection<Region> copy) {
+        if (!regionsClipBoard.isEmpty()) {
+            List<Region> dummy = new LinkedList<Region>();
+            for (Region region : copy) {
+                dummy.add(region);
+            }
+            return dummy;
+        }
+        return null;
+    }
 
-	/**
-	 * Clears the clipboard.
-	 */
-	private static void resetClipboard() {
-		stateClipBoard = null;
-		statesClipBoard = null;
-		regionClipBoard = null;
-		regionsClipBoard = null;
-		transitionClipBoard = null;
-		transitionsClipBoard = null;
-	}
+    /**
+     * Get a transition from the clipboard.
+     * 
+     * @return the transition
+     */
+    public static List<Transition> getTransitionsFromClipboard(
+            Collection<Transition> transitionsClipBoard,
+            Collection<Transition> copy) {
+        if (!transitionsClipBoard.isEmpty()) {
+            List<Transition> dummy = new LinkedList<Transition>();
+            for (Transition transition : copy) {
+                dummy.add(transition);
+            }
+            return dummy;
+        }
+        return null;
+    }
 
-	/**
-	 * Get a state from the clipboard.
-	 * 
-	 * @return the state
-	 */
-	public static State getStateFromClipboard() {
-		if (stateClipBoard != null) {
-			State newState = (State) EcoreUtil.copy(stateClipBoard);
-			cloneTransitions((State) stateClipBoard, newState);
-			return newState;
-		}
-		return null;
-	}
+    /**
+     * Copy the object.
+     * 
+     * @param object
+     *            the object
+     * @return the copy
+     */
+    public static EObject copy(final Object object) {
+        return EcoreUtil.copy((EObject) object);
+    }
 
-	/**
-	 * Get a list of states from the clipboard.
-	 * 
-	 * @return the states
-	 */
-	public static List<State> getStatesFromClipboard() {
-		if (statesClipBoard != null && !statesClipBoard.isEmpty()) {
-			Collection<State> states = EcoreUtil.copyAll(statesClipBoard);
-			List<State> dummy = new LinkedList<State>();
-			for (State state : states) {
-				dummy.add(state);
+    /**
+     * Debug output for xtend code.
+     * 
+     * @param object
+     *            the message
+     */
+    public static void debug(final Object object) {
+        System.out.println("COPY AND PASTE DEBUG: " + object.toString());
+    }
 
-				// remove transitions that leave the current selection
-				Iterator<Transition> iter = state.getOutgoingTransitions()
-						.iterator();
-				while (iter.hasNext()) {
-					Transition trans = iter.next();
-					if (!states.contains(trans.getTargetState())) {
-						iter.remove();
-					}
-				}
-			}
-			return dummy;
-		}
-		return null;
-	}
+    /**
+     * 
+     * @param aString
+     *            the string to print
+     */
+    public static void dump(final String aString) {
+        System.out.println(aString);
+    }
 
-	/**
-	 * Get a region from the clipboard.
-	 * 
-	 * @return the region
-	 */
-	public static Region getRegionFromClipboard() {
-		if (regionClipBoard != null) {
-			Region newRegion = (Region) EcoreUtil.copy(regionClipBoard);
-			return newRegion;
-		}
-		return null;
-	}
-
-	/**
-	 * Get a list of regions from the clipboard.
-	 * 
-	 * @return the regions
-	 */
-	public static List<Region> getRegionsFromClipboard() {
-		if (regionsClipBoard != null && !regionsClipBoard.isEmpty()) {
-			Collection<Region> regions = EcoreUtil.copyAll(regionsClipBoard);
-			List<Region> dummy = new LinkedList<Region>();
-			for (Region region : regions) {
-				dummy.add(region);
-			}
-			return dummy;
-		}
-		return null;
-	}
-
-	/**
-	 * Get a transition from the clipboard.
-	 * 
-	 * @return the transition
-	 */
-	public static Transition getTransitionFromClipboard() {
-		if (transitionClipBoard != null) {
-			Transition newTrans = (Transition) EcoreUtil
-					.copy(transitionClipBoard);
-			return newTrans;
-		}
-		return null;
-	}
-
-	/**
-	 * Get a transition from the clipboard.
-	 * 
-	 * @return the transition
-	 */
-	public static List<Transition> getTransitionsFromClipboard() {
-		if (transitionsClipBoard != null && !transitionsClipBoard.isEmpty()) {
-			Collection<Transition> transitions = EcoreUtil
-					.copyAll(transitionsClipBoard);
-
-			List<Transition> dummy = new LinkedList<Transition>();
-			for (Transition transition : transitions) {
-				dummy.add(transition);
-			}
-			return dummy;
-		}
-		return null;
-	}
-
-	/**
-	 * Copy the object.
-	 * 
-	 * @param object
-	 *            the object
-	 * @return the copy
-	 */
-	public static EObject copy(final Object object) {
-		return EcoreUtil.copy((EObject) object);
-	}
-
-	/**
-	 * Debug output for xtend code.
-	 * 
-	 * @param object
-	 *            the message
-	 */
-	public static void debug(final Object object) {
-		System.out.println("COPY AND PASTE DEBUG: " + object.toString());
-	}
-
-	/**
-	 * 
-	 * @param aString
-	 *            the string to print
-	 */
-	public static void dump(final String aString) {
-		System.out.println(aString);
-	}
-
-	/**
-	 * Pseudo-method, allows setting breakpoints for analysing objects.
-	 * 
-	 * @param object
-	 *            the object
-	 * @return the object passed as param, casted to EObject
-	 */
-	public static EObject analyze(final Object object) {
-		return (EObject) object;
-	}
+    /**
+     * Pseudo-method, allows setting breakpoints for analysing objects.
+     * 
+     * @param object
+     *            the object
+     * @return the object passed as param, casted to EObject
+     */
+    public static EObject analyze(final Object object) {
+        return (EObject) object;
+    }
 }
