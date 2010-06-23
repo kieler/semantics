@@ -175,7 +175,7 @@ public class InterfaceDeclSerializeCommand extends AbstractCommand {
         XtextResourceSet resourceSet = injector.getInstance(XtextResourceSet.class);
         this.resource = (XtextResource) resourceSet.createResource(URI
                 .createURI("platform:/resource/de.cau.cs.kieler.synccharts."
-                        + "interfacedeclparser/dummy.ifd"));
+                        + "interfacedeclparser/dummy.intfc"));
         this.serializeLogic = new InterfaceDeclSerializerLogic();
     }
 
