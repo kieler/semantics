@@ -34,8 +34,8 @@ import de.cau.cs.kieler.core.expressions.Signal;
 import de.cau.cs.kieler.core.expressions.Variable;
 import de.cau.cs.kieler.synccharts.Region;
 import de.cau.cs.kieler.synccharts.State;
-import de.cau.cs.kieler.synccharts.text.interfaces.interfaceDecl.InterfaceDeclFactory;
-import de.cau.cs.kieler.synccharts.text.interfaces.interfaceDecl.StateExtend;
+import de.cau.cs.kieler.synccharts.text.interfaces.interfaces.InterfacesFactory;
+import de.cau.cs.kieler.synccharts.text.interfaces.interfaces.StateExtend;
 
 /**
  * Command for serializing all contained signals of a state and its regions back
@@ -292,7 +292,7 @@ public class InterfaceDeclSerializeCommand extends AbstractCommand {
                 resource = (XtextResource) resourceSet.createResource(URI
                         .createURI("platform:/resource/de.cau.cs.kieler.synccharts."
                                 + "interfacedeclparser/dummy.ifd"));
-                se = InterfaceDeclFactory.eINSTANCE.createStateExtend();
+                se = InterfacesFactory.eINSTANCE.createStateExtend();
                 resource.getContents().add(se);
             } else {
                 resource = new InterfaceDeclParseCommand(rootState, injector).getParsedResource();
@@ -363,7 +363,7 @@ public class InterfaceDeclSerializeCommand extends AbstractCommand {
     private void prepareCanonicalSerialization(final State state) {
 
         // init StateExtend and put it into resource
-        StateExtend se = InterfaceDeclFactory.eINSTANCE.createStateExtend();
+        StateExtend se = InterfacesFactory.eINSTANCE.createStateExtend();
         resource.getContents().add(se);
 
         // inject all current signals and variables

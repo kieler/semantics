@@ -39,12 +39,12 @@ import de.cau.cs.kieler.core.expressions.Signal;
 import de.cau.cs.kieler.core.expressions.Variable;
 import de.cau.cs.kieler.synccharts.Region;
 import de.cau.cs.kieler.synccharts.State;
-import de.cau.cs.kieler.synccharts.text.interfaces.interfaceDecl.InOutputSignals;
-import de.cau.cs.kieler.synccharts.text.interfaces.interfaceDecl.InputSignals;
-import de.cau.cs.kieler.synccharts.text.interfaces.interfaceDecl.OutputSignals;
-import de.cau.cs.kieler.synccharts.text.interfaces.interfaceDecl.RegionSignalDec;
-import de.cau.cs.kieler.synccharts.text.interfaces.interfaceDecl.Signals;
-import de.cau.cs.kieler.synccharts.text.interfaces.interfaceDecl.StateExtend;
+import de.cau.cs.kieler.synccharts.text.interfaces.interfaces.InOutputSignals;
+import de.cau.cs.kieler.synccharts.text.interfaces.interfaces.InputSignals;
+import de.cau.cs.kieler.synccharts.text.interfaces.interfaces.OutputSignals;
+import de.cau.cs.kieler.synccharts.text.interfaces.interfaces.RegionSignalDec;
+import de.cau.cs.kieler.synccharts.text.interfaces.interfaces.Signals;
+import de.cau.cs.kieler.synccharts.text.interfaces.interfaces.StateExtend;
 import de.cau.cs.kieler.synccharts.text.interfaces.scoping.InterfacesScopeProvider;
 
 /**

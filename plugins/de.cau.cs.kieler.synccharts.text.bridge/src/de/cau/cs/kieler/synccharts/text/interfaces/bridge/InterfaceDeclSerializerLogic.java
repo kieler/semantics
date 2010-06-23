@@ -22,13 +22,13 @@ import de.cau.cs.kieler.core.expressions.Signal;
 import de.cau.cs.kieler.core.expressions.ValueType;
 import de.cau.cs.kieler.core.expressions.Variable;
 import de.cau.cs.kieler.synccharts.Region;
-import de.cau.cs.kieler.synccharts.text.interfaces.interfaceDecl.InOutputSignals;
-import de.cau.cs.kieler.synccharts.text.interfaces.interfaceDecl.InputSignals;
-import de.cau.cs.kieler.synccharts.text.interfaces.interfaceDecl.InterfaceDeclFactory;
-import de.cau.cs.kieler.synccharts.text.interfaces.interfaceDecl.OutputSignals;
-import de.cau.cs.kieler.synccharts.text.interfaces.interfaceDecl.RegionSignalDec;
-import de.cau.cs.kieler.synccharts.text.interfaces.interfaceDecl.Signals;
-import de.cau.cs.kieler.synccharts.text.interfaces.interfaceDecl.StateExtend;
+import de.cau.cs.kieler.synccharts.text.interfaces.interfaces.InOutputSignals;
+import de.cau.cs.kieler.synccharts.text.interfaces.interfaces.InputSignals;
+import de.cau.cs.kieler.synccharts.text.interfaces.interfaces.InterfacesFactory;
+import de.cau.cs.kieler.synccharts.text.interfaces.interfaces.OutputSignals;
+import de.cau.cs.kieler.synccharts.text.interfaces.interfaces.RegionSignalDec;
+import de.cau.cs.kieler.synccharts.text.interfaces.interfaces.Signals;
+import de.cau.cs.kieler.synccharts.text.interfaces.interfaces.StateExtend;
 
 /**
  * Provide functionality for handling modifications of signals or variables. As
@@ -108,23 +108,23 @@ public class InterfaceDeclSerializerLogic {
         Copier cop = new Copier();
         Signal newSig = (Signal) cop.copy(sig);
         if (sig.isIsInput() && sig.isIsOutput()) {
-            InOutputSignals ios = InterfaceDeclFactory.eINSTANCE.createInOutputSignals();
+            InOutputSignals ios = InterfacesFactory.eINSTANCE.createInOutputSignals();
             newSig.setIsInput(true);
             newSig.setIsOutput(true);
             ios.getSignals().add(newSig);
             se.getInOutputSignals().add(ios);
         } else if (sig.isIsInput()) {
-            InputSignals is = InterfaceDeclFactory.eINSTANCE.createInputSignals();
+            InputSignals is = InterfacesFactory.eINSTANCE.createInputSignals();
             newSig.setIsInput(false);
             is.getSignals().add(newSig);
             se.getInputSignals().add(is);
         } else if (sig.isIsOutput()) {
-            OutputSignals os = InterfaceDeclFactory.eINSTANCE.createOutputSignals();
+            OutputSignals os = InterfacesFactory.eINSTANCE.createOutputSignals();
             newSig.setIsOutput(false);
             os.getSignals().add(newSig);
             se.getOutputSignals().add(os);
         } else {
-            Signals sigs = InterfaceDeclFactory.eINSTANCE.createSignals();
+            Signals sigs = InterfacesFactory.eINSTANCE.createSignals();
             sigs.getSignals().add(newSig);
             se.getSignals().add(sigs);
         }
@@ -142,10 +142,10 @@ public class InterfaceDeclSerializerLogic {
     protected void handleBunchNewSignals(final StateExtend se, final EList<Signal> sigs) {
         Copier cop = new Copier();
 
-        InOutputSignals ios = InterfaceDeclFactory.eINSTANCE.createInOutputSignals();
-        InputSignals is = InterfaceDeclFactory.eINSTANCE.createInputSignals();
-        OutputSignals os = InterfaceDeclFactory.eINSTANCE.createOutputSignals();
-        Signals newsigs = InterfaceDeclFactory.eINSTANCE.createSignals();
+        InOutputSignals ios = InterfacesFactory.eINSTANCE.createInOutputSignals();
+        InputSignals is = InterfacesFactory.eINSTANCE.createInputSignals();
+        OutputSignals os = InterfacesFactory.eINSTANCE.createOutputSignals();
+        Signals newsigs = InterfacesFactory.eINSTANCE.createSignals();
 
         for (Signal s : sigs) {
             Signal newSig = (Signal) cop.copy(s);
@@ -482,7 +482,7 @@ public class InterfaceDeclSerializerLogic {
             }
         }
         if (rsd == null) {
-            rsd = InterfaceDeclFactory.eINSTANCE.createRegionSignalDec();
+            rsd = InterfacesFactory.eINSTANCE.createRegionSignalDec();
         }
         rsd.setRegion(reg);
         rsd.getSignals().add(newSig);
@@ -508,7 +508,7 @@ public class InterfaceDeclSerializerLogic {
             }
         }
         if (rsd == null) {
-            rsd = InterfaceDeclFactory.eINSTANCE.createRegionSignalDec();
+            rsd = InterfacesFactory.eINSTANCE.createRegionSignalDec();
         }
         rsd.setRegion(reg);
         rsd.getVars().add(newVar);
@@ -587,7 +587,7 @@ public class InterfaceDeclSerializerLogic {
      *            signal being moved
      */
     private void moveToInputs(final StateExtend se, final Signal s) {
-        InputSignals is = InterfaceDeclFactory.eINSTANCE.createInputSignals();
+        InputSignals is = InterfacesFactory.eINSTANCE.createInputSignals();
         is.getSignals().add(s);
         se.getInputSignals().add(is);
     }
@@ -601,7 +601,7 @@ public class InterfaceDeclSerializerLogic {
      *            signal being moved
      */
     private void moveToOutputs(final StateExtend se, final Signal s) {
-        OutputSignals os = InterfaceDeclFactory.eINSTANCE.createOutputSignals();
+        OutputSignals os = InterfacesFactory.eINSTANCE.createOutputSignals();
         os.getSignals().add(s);
         se.getOutputSignals().add(os);
     }
@@ -615,7 +615,7 @@ public class InterfaceDeclSerializerLogic {
      *            signal being moved
      */
     private void moveToInOutputs(final StateExtend se, final Signal s) {
-        InOutputSignals io = InterfaceDeclFactory.eINSTANCE.createInOutputSignals();
+        InOutputSignals io = InterfacesFactory.eINSTANCE.createInOutputSignals();
         io.getSignals().add(s);
         se.getInOutputSignals().add(io);
     }
@@ -629,7 +629,7 @@ public class InterfaceDeclSerializerLogic {
      *            signal being moved
      */
     private void moveToNormal(final StateExtend se, final Signal s) {
-        Signals sigs = InterfaceDeclFactory.eINSTANCE.createSignals();
+        Signals sigs = InterfacesFactory.eINSTANCE.createSignals();
         sigs.getSignals().add(s);
         se.getSignals().add(sigs);
     }
