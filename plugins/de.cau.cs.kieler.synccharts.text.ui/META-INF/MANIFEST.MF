@@ -17,5 +17,6 @@ Require-Bundle: de.cau.cs.kieler.synccharts.text;visibility:=reexport,
 Import-Package: org.apache.log4j
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Export-Package: de.cau.cs.kieler.synccharts.text.actions.ui.contentassist.antlr,
- de.cau.cs.kieler.synccharts.text.interfaces.ui.contentassist.antlr
+ de.cau.cs.kieler.synccharts.text.interfaces.ui.contentassist.antlr,
+ de.cau.cs.kieler.synccharts.text.kits.ui.contentassist.antlr
 Bundle-Activator: de.cau.cs.kieler.synccharts.text.actions.ui.internal.ActionsActivator

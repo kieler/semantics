@@ -1,10 +1,10 @@
-module de.cau.cs.kieler.synccharts.text.Kits
+module de.cau.cs.kieler.synccharts.text.kits.Kits
 
 import org.eclipse.emf.mwe.utils.*
 import org.eclipse.xtext.generator.*
 import org.eclipse.xtext.ui.generator.*
 
-var grammarURI = "classpath:/de/cau/cs/kieler/synccharts/text/Kits.xtext"
+var grammarURI = "classpath:/de/cau/cs/kieler/synccharts/text/kits/Kits.xtext"
 var file.extensions = "kits"
 var projectName = "de.cau.cs.kieler.synccharts.text"
 var runtimeProject = "../${projectName}"

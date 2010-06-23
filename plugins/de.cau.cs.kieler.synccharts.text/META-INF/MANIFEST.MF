@@ -38,5 +38,11 @@ Export-Package: de.cau.cs.kieler.synccharts.text.actions,
  de.cau.cs.kieler.synccharts.text.interfaces.parseTreeConstruction,
  de.cau.cs.kieler.synccharts.text.interfaces.parser.antlr,
  de.cau.cs.kieler.synccharts.text.interfaces.parser.antlr.internal,
- de.cau.cs.kieler.synccharts.text.interfaces.validation
+ de.cau.cs.kieler.synccharts.text.interfaces.validation,
+ de.cau.cs.kieler.synccharts.text.kits,
+ de.cau.cs.kieler.synccharts.text.kits.services,
+ de.cau.cs.kieler.synccharts.text.kits.parseTreeConstruction,
+ de.cau.cs.kieler.synccharts.text.kits.parser.antlr,
+ de.cau.cs.kieler.synccharts.text.kits.parser.antlr.internal,
+ de.cau.cs.kieler.synccharts.text.kits.validation
 

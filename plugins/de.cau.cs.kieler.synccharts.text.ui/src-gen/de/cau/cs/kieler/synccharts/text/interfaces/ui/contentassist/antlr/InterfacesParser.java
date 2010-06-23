@@ -51,9 +51,9 @@ public class InterfacesParser extends AbstractContentAssistParser {
 					put(grammarAccess.getEFloatObjectAccess().getAlternatives_4_0(), "rule__EFloatObject__Alternatives_4_0");
 					put(grammarAccess.getEBooleanObjectAccess().getAlternatives(), "rule__EBooleanObject__Alternatives");
 					put(grammarAccess.getEStringAccess().getAlternatives(), "rule__EString__Alternatives");
+					put(grammarAccess.getCompareOperatorAccess().getAlternatives(), "rule__CompareOperator__Alternatives");
 					put(grammarAccess.getValueTypeAccess().getAlternatives(), "rule__ValueType__Alternatives");
 					put(grammarAccess.getCombineOperatorAccess().getAlternatives(), "rule__CombineOperator__Alternatives");
-					put(grammarAccess.getCompareOperatorAccess().getAlternatives(), "rule__CompareOperator__Alternatives");
 					put(grammarAccess.getStateExtendAccess().getGroup_1(), "rule__StateExtend__Group_1__0");
 					put(grammarAccess.getStateExtendAccess().getGroup_2(), "rule__StateExtend__Group_2__0");
 					put(grammarAccess.getStateExtendAccess().getGroup_3(), "rule__StateExtend__Group_3__0");

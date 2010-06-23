@@ -336,11 +336,10 @@ public class InternalInterfacesLexer extends Lexer {
     public final void mT27() throws RecognitionException {
         try {
             int _type = T27;
-            // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/interfaces/ui/contentassist/antlr/internal/InternalInterfaces.g:24:5: ( 'PURE' )
-            // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/interfaces/ui/contentassist/antlr/internal/InternalInterfaces.g:24:7: 'PURE'
+            // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/interfaces/ui/contentassist/antlr/internal/InternalInterfaces.g:24:5: ( '=' )
+            // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/interfaces/ui/contentassist/antlr/internal/InternalInterfaces.g:24:7: '='
             {
-            match("PURE"); 
-
+            match('='); 
 
             }
 
@@ -355,11 +354,10 @@ public class InternalInterfacesLexer extends Lexer {
     public final void mT28() throws RecognitionException {
         try {
             int _type = T28;
-            // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/interfaces/ui/contentassist/antlr/internal/InternalInterfaces.g:25:5: ( 'BOOL' )
-            // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/interfaces/ui/contentassist/antlr/internal/InternalInterfaces.g:25:7: 'BOOL'
+            // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/interfaces/ui/contentassist/antlr/internal/InternalInterfaces.g:25:5: ( '<' )
+            // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/interfaces/ui/contentassist/antlr/internal/InternalInterfaces.g:25:7: '<'
             {
-            match("BOOL"); 
-
+            match('<'); 
 
             }
 
@@ -374,10 +372,10 @@ public class InternalInterfacesLexer extends Lexer {
     public final void mT29() throws RecognitionException {
         try {
             int _type = T29;
-            // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/interfaces/ui/contentassist/antlr/internal/InternalInterfaces.g:26:5: ( 'UNSIGNED' )
-            // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/interfaces/ui/contentassist/antlr/internal/InternalInterfaces.g:26:7: 'UNSIGNED'
+            // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/interfaces/ui/contentassist/antlr/internal/InternalInterfaces.g:26:5: ( '<=' )
+            // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/interfaces/ui/contentassist/antlr/internal/InternalInterfaces.g:26:7: '<='
             {
-            match("UNSIGNED"); 
+            match("<="); 
 
 
             }
@@ -393,11 +391,10 @@ public class InternalInterfacesLexer extends Lexer {
     public final void mT30() throws RecognitionException {
         try {
             int _type = T30;
-            // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/interfaces/ui/contentassist/antlr/internal/InternalInterfaces.g:27:5: ( 'INT' )
-            // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/interfaces/ui/contentassist/antlr/internal/InternalInterfaces.g:27:7: 'INT'
+            // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/interfaces/ui/contentassist/antlr/internal/InternalInterfaces.g:27:5: ( '>' )
+            // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/interfaces/ui/contentassist/antlr/internal/InternalInterfaces.g:27:7: '>'
             {
-            match("INT"); 
-
+            match('>'); 
 
             }
 
@@ -412,10 +409,10 @@ public class InternalInterfacesLexer extends Lexer {
     public final void mT31() throws RecognitionException {
         try {
             int _type = T31;
-            // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/interfaces/ui/contentassist/antlr/internal/InternalInterfaces.g:28:5: ( 'FLOAT' )
-            // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/interfaces/ui/contentassist/antlr/internal/InternalInterfaces.g:28:7: 'FLOAT'
+            // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/interfaces/ui/contentassist/antlr/internal/InternalInterfaces.g:28:5: ( '>=' )
+            // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/interfaces/ui/contentassist/antlr/internal/InternalInterfaces.g:28:7: '>='
             {
-            match("FLOAT"); 
+            match(">="); 
 
 
             }
@@ -431,10 +428,10 @@ public class InternalInterfacesLexer extends Lexer {
     public final void mT32() throws RecognitionException {
         try {
             int _type = T32;
-            // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/interfaces/ui/contentassist/antlr/internal/InternalInterfaces.g:29:5: ( 'HOST' )
-            // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/interfaces/ui/contentassist/antlr/internal/InternalInterfaces.g:29:7: 'HOST'
+            // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/interfaces/ui/contentassist/antlr/internal/InternalInterfaces.g:29:5: ( '<>' )
+            // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/interfaces/ui/contentassist/antlr/internal/InternalInterfaces.g:29:7: '<>'
             {
-            match("HOST"); 
+            match("<>"); 
 
 
             }
@@ -450,10 +447,10 @@ public class InternalInterfacesLexer extends Lexer {
     public final void mT33() throws RecognitionException {
         try {
             int _type = T33;
-            // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/interfaces/ui/contentassist/antlr/internal/InternalInterfaces.g:30:5: ( 'NONE' )
-            // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/interfaces/ui/contentassist/antlr/internal/InternalInterfaces.g:30:7: 'NONE'
+            // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/interfaces/ui/contentassist/antlr/internal/InternalInterfaces.g:30:5: ( 'PURE' )
+            // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/interfaces/ui/contentassist/antlr/internal/InternalInterfaces.g:30:7: 'PURE'
             {
-            match("NONE"); 
+            match("PURE"); 
 
 
             }
@@ -469,10 +466,10 @@ public class InternalInterfacesLexer extends Lexer {
     public final void mT34() throws RecognitionException {
         try {
             int _type = T34;
-            // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/interfaces/ui/contentassist/antlr/internal/InternalInterfaces.g:31:5: ( 'max' )
-            // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/interfaces/ui/contentassist/antlr/internal/InternalInterfaces.g:31:7: 'max'
+            // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/interfaces/ui/contentassist/antlr/internal/InternalInterfaces.g:31:5: ( 'BOOL' )
+            // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/interfaces/ui/contentassist/antlr/internal/InternalInterfaces.g:31:7: 'BOOL'
             {
-            match("max"); 
+            match("BOOL"); 
 
 
             }
@@ -488,10 +485,10 @@ public class InternalInterfacesLexer extends Lexer {
     public final void mT35() throws RecognitionException {
         try {
             int _type = T35;
-            // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/interfaces/ui/contentassist/antlr/internal/InternalInterfaces.g:32:5: ( 'min' )
-            // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/interfaces/ui/contentassist/antlr/internal/InternalInterfaces.g:32:7: 'min'
+            // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/interfaces/ui/contentassist/antlr/internal/InternalInterfaces.g:32:5: ( 'UNSIGNED' )
+            // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/interfaces/ui/contentassist/antlr/internal/InternalInterfaces.g:32:7: 'UNSIGNED'
             {
-            match("min"); 
+            match("UNSIGNED"); 
 
 
             }
@@ -507,10 +504,10 @@ public class InternalInterfacesLexer extends Lexer {
     public final void mT36() throws RecognitionException {
         try {
             int _type = T36;
-            // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/interfaces/ui/contentassist/antlr/internal/InternalInterfaces.g:33:5: ( 'host' )
-            // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/interfaces/ui/contentassist/antlr/internal/InternalInterfaces.g:33:7: 'host'
+            // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/interfaces/ui/contentassist/antlr/internal/InternalInterfaces.g:33:5: ( 'INT' )
+            // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/interfaces/ui/contentassist/antlr/internal/InternalInterfaces.g:33:7: 'INT'
             {
-            match("host"); 
+            match("INT"); 
 
 
             }
@@ -526,10 +523,11 @@ public class InternalInterfacesLexer extends Lexer {
     public final void mT37() throws RecognitionException {
         try {
             int _type = T37;
-            // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/interfaces/ui/contentassist/antlr/internal/InternalInterfaces.g:34:5: ( '=' )
-            // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/interfaces/ui/contentassist/antlr/internal/InternalInterfaces.g:34:7: '='
+            // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/interfaces/ui/contentassist/antlr/internal/InternalInterfaces.g:34:5: ( 'FLOAT' )
+            // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/interfaces/ui/contentassist/antlr/internal/InternalInterfaces.g:34:7: 'FLOAT'
             {
-            match('='); 
+            match("FLOAT"); 
+
 
             }
 
@@ -544,10 +542,11 @@ public class InternalInterfacesLexer extends Lexer {
     public final void mT38() throws RecognitionException {
         try {
             int _type = T38;
-            // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/interfaces/ui/contentassist/antlr/internal/InternalInterfaces.g:35:5: ( '<' )
-            // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/interfaces/ui/contentassist/antlr/internal/InternalInterfaces.g:35:7: '<'
+            // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/interfaces/ui/contentassist/antlr/internal/InternalInterfaces.g:35:5: ( 'HOST' )
+            // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/interfaces/ui/contentassist/antlr/internal/InternalInterfaces.g:35:7: 'HOST'
             {
-            match('<'); 
+            match("HOST"); 
+
 
             }
 
@@ -562,10 +561,10 @@ public class InternalInterfacesLexer extends Lexer {
     public final void mT39() throws RecognitionException {
         try {
             int _type = T39;
-            // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/interfaces/ui/contentassist/antlr/internal/InternalInterfaces.g:36:5: ( '<=' )
-            // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/interfaces/ui/contentassist/antlr/internal/InternalInterfaces.g:36:7: '<='
+            // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/interfaces/ui/contentassist/antlr/internal/InternalInterfaces.g:36:5: ( 'NONE' )
+            // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/interfaces/ui/contentassist/antlr/internal/InternalInterfaces.g:36:7: 'NONE'
             {
-            match("<="); 
+            match("NONE"); 
 
 
             }
@@ -581,10 +580,11 @@ public class InternalInterfacesLexer extends Lexer {
     public final void mT40() throws RecognitionException {
         try {
             int _type = T40;
-            // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/interfaces/ui/contentassist/antlr/internal/InternalInterfaces.g:37:5: ( '>' )
-            // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/interfaces/ui/contentassist/antlr/internal/InternalInterfaces.g:37:7: '>'
+            // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/interfaces/ui/contentassist/antlr/internal/InternalInterfaces.g:37:5: ( 'max' )
+            // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/interfaces/ui/contentassist/antlr/internal/InternalInterfaces.g:37:7: 'max'
             {
-            match('>'); 
+            match("max"); 
+
 
             }
 
@@ -599,10 +599,10 @@ public class InternalInterfacesLexer extends Lexer {
     public final void mT41() throws RecognitionException {
         try {
             int _type = T41;
-            // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/interfaces/ui/contentassist/antlr/internal/InternalInterfaces.g:38:5: ( '>=' )
-            // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/interfaces/ui/contentassist/antlr/internal/InternalInterfaces.g:38:7: '>='
+            // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/interfaces/ui/contentassist/antlr/internal/InternalInterfaces.g:38:5: ( 'min' )
+            // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/interfaces/ui/contentassist/antlr/internal/InternalInterfaces.g:38:7: 'min'
             {
-            match(">="); 
+            match("min"); 
 
 
             }
@@ -618,10 +618,10 @@ public class InternalInterfacesLexer extends Lexer {
     public final void mT42() throws RecognitionException {
         try {
             int _type = T42;
-            // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/interfaces/ui/contentassist/antlr/internal/InternalInterfaces.g:39:5: ( '<>' )
-            // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/interfaces/ui/contentassist/antlr/internal/InternalInterfaces.g:39:7: '<>'
+            // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/interfaces/ui/contentassist/antlr/internal/InternalInterfaces.g:39:5: ( 'host' )
+            // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/interfaces/ui/contentassist/antlr/internal/InternalInterfaces.g:39:7: 'host'
             {
-            match("<>"); 
+            match("host"); 
 
 
             }
@@ -2131,9 +2131,9 @@ public class InternalInterfacesLexer extends Lexer {
 
     protected DFA18 dfa18 = new DFA18(this);
     static final String DFA18_eotS =
-        "\1\uffff\4\55\3\uffff\1\55\1\72\1\uffff\1\74\1\75\12\55\1\uffff"+
-        "\1\113\1\115\3\55\1\122\2\uffff\2\55\3\uffff\3\53\4\uffff\1\55\1"+
-        "\uffff\1\55\1\144\2\55\3\uffff\3\55\6\uffff\12\55\6\uffff\3\55\4"+
+        "\1\uffff\4\55\3\uffff\1\55\1\72\1\uffff\1\74\1\75\2\55\1\uffff\1"+
+        "\103\1\105\13\55\1\122\2\uffff\2\55\3\uffff\3\53\4\uffff\1\55\1"+
+        "\uffff\1\55\1\144\2\55\3\uffff\3\55\6\uffff\2\55\6\uffff\13\55\4"+
         "\uffff\2\55\13\uffff\1\u0083\1\55\1\uffff\1\u0085\1\u0086\1\u0087"+
         "\1\u0088\1\u0089\5\55\1\u008f\6\55\1\u0097\2\55\13\uffff\1\55\5"+
         "\uffff\1\u009d\1\55\1\u009f\1\u00a0\1\55\1\uffff\1\55\1\u00a3\1"+
@@ -2145,52 +2145,51 @@ public class InternalInterfacesLexer extends Lexer {
         "\u00be\uffff";
     static final String DFA18_minS =
         "\1\0\2\162\1\156\1\157\3\uffff\1\141\1\52\1\uffff\2\60\1\162\1\141"+
-        "\1\125\1\117\2\116\1\114\2\117\1\157\1\uffff\2\75\1\156\1\151\1"+
+        "\1\uffff\2\75\1\125\1\117\2\116\1\114\2\117\1\157\1\156\1\151\1"+
         "\141\1\75\2\uffff\1\157\1\151\3\uffff\2\0\1\101\4\uffff\1\145\1"+
         "\uffff\1\164\1\60\1\144\1\164\3\uffff\1\144\1\156\1\170\6\uffff"+
-        "\1\165\1\154\1\122\1\117\1\123\1\124\1\117\1\123\1\116\1\163\6\uffff"+
-        "\1\160\1\147\1\162\4\uffff\1\155\1\164\4\uffff\2\0\1\uffff\2\0\2"+
-        "\uffff\1\60\1\160\1\uffff\5\60\1\145\1\163\1\105\1\114\1\111\1\60"+
-        "\1\101\1\124\1\105\1\164\1\165\1\156\1\60\1\142\1\150\1\uffff\3"+
-        "\0\2\uffff\3\0\2\uffff\1\165\5\uffff\1\60\1\145\2\60\1\107\1\uffff"+
+        "\1\165\1\154\6\uffff\1\122\1\117\1\123\1\124\1\117\1\123\1\116\1"+
+        "\163\1\160\1\147\1\162\4\uffff\1\155\1\164\4\uffff\2\0\1\uffff\2"+
+        "\0\2\uffff\1\60\1\160\1\uffff\5\60\1\145\1\163\1\105\1\114\1\111"+
+        "\1\60\1\101\1\124\1\105\1\164\1\165\1\156\1\60\1\142\1\150\1\uffff"+
+        "\3\0\2\uffff\3\0\2\uffff\1\165\5\uffff\1\60\1\145\2\60\1\107\1\uffff"+
         "\1\124\3\60\1\164\2\141\1\uffff\1\151\1\60\2\0\1\164\1\uffff\1\60"+
         "\2\uffff\1\116\1\60\3\uffff\1\60\1\154\1\142\1\156\2\uffff\1\60"+
         "\1\uffff\1\105\2\uffff\1\60\1\154\1\145\1\uffff\1\104\1\uffff\1"+
         "\145\3\60\3\uffff";
     static final String DFA18_maxS =
         "\1\ufffe\1\162\1\165\1\156\1\157\3\uffff\1\157\1\57\1\uffff\2\172"+
-        "\1\162\1\141\1\125\1\117\2\116\1\114\2\117\1\157\1\uffff\1\76\1"+
-        "\75\1\156\1\151\1\141\1\75\2\uffff\1\157\1\151\3\uffff\2\ufffe\1"+
-        "\172\4\uffff\1\145\1\uffff\1\164\1\172\1\144\1\164\3\uffff\1\144"+
-        "\1\156\1\170\6\uffff\1\165\1\154\1\122\1\117\1\123\1\124\1\117\1"+
-        "\123\1\116\1\163\6\uffff\1\160\1\147\1\162\4\uffff\1\155\1\164\4"+
-        "\uffff\2\ufffe\1\uffff\2\ufffe\2\uffff\1\172\1\160\1\uffff\5\172"+
-        "\1\145\1\163\1\105\1\114\1\111\1\172\1\101\1\124\1\105\1\164\1\165"+
-        "\1\156\1\172\1\142\1\150\1\uffff\3\ufffe\2\uffff\3\ufffe\2\uffff"+
-        "\1\165\5\uffff\1\172\1\145\2\172\1\107\1\uffff\1\124\3\172\1\164"+
-        "\2\141\1\uffff\1\151\1\172\2\ufffe\1\164\1\uffff\1\172\2\uffff\1"+
-        "\116\1\172\3\uffff\1\172\1\154\1\142\1\156\2\uffff\1\172\1\uffff"+
-        "\1\105\2\uffff\1\172\1\154\1\145\1\uffff\1\104\1\uffff\1\145\3\172"+
-        "\3\uffff";
+        "\1\162\1\141\1\uffff\1\76\1\75\1\125\1\117\2\116\1\114\2\117\1\157"+
+        "\1\156\1\151\1\141\1\75\2\uffff\1\157\1\151\3\uffff\2\ufffe\1\172"+
+        "\4\uffff\1\145\1\uffff\1\164\1\172\1\144\1\164\3\uffff\1\144\1\156"+
+        "\1\170\6\uffff\1\165\1\154\6\uffff\1\122\1\117\1\123\1\124\1\117"+
+        "\1\123\1\116\1\163\1\160\1\147\1\162\4\uffff\1\155\1\164\4\uffff"+
+        "\2\ufffe\1\uffff\2\ufffe\2\uffff\1\172\1\160\1\uffff\5\172\1\145"+
+        "\1\163\1\105\1\114\1\111\1\172\1\101\1\124\1\105\1\164\1\165\1\156"+
+        "\1\172\1\142\1\150\1\uffff\3\ufffe\2\uffff\3\ufffe\2\uffff\1\165"+
+        "\5\uffff\1\172\1\145\2\172\1\107\1\uffff\1\124\3\172\1\164\2\141"+
+        "\1\uffff\1\151\1\172\2\ufffe\1\164\1\uffff\1\172\2\uffff\1\116\1"+
+        "\172\3\uffff\1\172\1\154\1\142\1\156\2\uffff\1\172\1\uffff\1\105"+
+        "\2\uffff\1\172\1\154\1\145\1\uffff\1\104\1\uffff\1\145\3\172\3\uffff";
     static final String DFA18_acceptS =
-        "\5\uffff\1\5\1\6\1\7\2\uffff\1\12\14\uffff\1\31\6\uffff\1\44\1\46"+
+        "\5\uffff\1\5\1\6\1\7\2\uffff\1\12\4\uffff\1\17\16\uffff\1\44\1\46"+
         "\2\uffff\1\52\1\53\1\54\3\uffff\1\57\1\60\1\64\1\65\1\uffff\1\57"+
-        "\4\uffff\1\5\1\6\1\7\3\uffff\1\62\1\63\1\11\1\12\1\13\1\14\12\uffff"+
-        "\1\31\1\33\1\36\1\32\1\35\1\34\3\uffff\1\47\1\43\1\44\1\46\2\uffff"+
+        "\4\uffff\1\5\1\6\1\7\3\uffff\1\62\1\63\1\11\1\12\1\13\1\14\2\uffff"+
+        "\1\17\1\21\1\24\1\20\1\23\1\22\13\uffff\1\47\1\43\1\44\1\46\2\uffff"+
         "\1\52\1\53\1\54\1\55\2\uffff\1\56\2\uffff\1\60\1\64\2\uffff\1\2"+
         "\24\uffff\1\55\3\uffff\1\55\1\56\3\uffff\1\56\1\1\1\uffff\1\3\1"+
-        "\4\1\10\1\27\1\26\5\uffff\1\22\7\uffff\1\45\5\uffff\1\15\1\uffff"+
-        "\1\17\1\20\2\uffff\1\24\1\25\1\30\4\uffff\1\51\1\61\1\uffff\1\16"+
-        "\1\uffff\1\23\1\37\3\uffff\1\40\1\uffff\1\41\4\uffff\1\50\1\21\1"+
+        "\4\1\10\1\35\1\34\5\uffff\1\30\7\uffff\1\45\5\uffff\1\15\1\uffff"+
+        "\1\25\1\26\2\uffff\1\32\1\33\1\36\4\uffff\1\51\1\61\1\uffff\1\16"+
+        "\1\uffff\1\31\1\37\3\uffff\1\40\1\uffff\1\41\4\uffff\1\50\1\27\1"+
         "\42";
     static final String DFA18_specialS =
         "\u00be\uffff}>";
     static final String[] DFA18_transitionS = {
             "\11\53\2\52\2\53\1\52\22\53\1\52\1\53\1\45\4\53\1\46\1\42\1"+
-            "\43\1\7\1\5\1\37\1\6\1\44\1\11\12\51\1\35\1\36\1\30\1\27\1\31"+
-            "\1\12\1\53\1\50\1\20\2\50\1\13\1\23\1\50\1\24\1\22\4\50\1\25"+
-            "\1\50\1\17\4\50\1\21\5\50\3\53\1\47\1\50\1\53\1\3\1\50\1\40"+
-            "\1\50\1\14\1\16\1\50\1\26\1\32\3\50\1\10\1\4\1\2\1\1\2\50\1"+
+            "\43\1\7\1\5\1\37\1\6\1\44\1\11\12\51\1\35\1\36\1\20\1\17\1\21"+
+            "\1\12\1\53\1\50\1\23\2\50\1\13\1\26\1\50\1\27\1\25\4\50\1\30"+
+            "\1\50\1\22\4\50\1\24\5\50\3\53\1\47\1\50\1\53\1\3\1\50\1\40"+
+            "\1\50\1\14\1\16\1\50\1\31\1\32\3\50\1\10\1\4\1\2\1\1\2\50\1"+
             "\33\1\15\1\50\1\34\1\41\3\50\uff84\53",
             "\1\54",
             "\1\57\2\uffff\1\56",
@@ -2206,17 +2205,17 @@ public class InternalInterfacesLexer extends Lexer {
             "\12\55\7\uffff\32\55\4\uffff\1\55\1\uffff\32\55",
             "\1\76",
             "\1\77",
-            "\1\100",
-            "\1\101",
-            "\1\102",
-            "\1\103",
+            "",
+            "\1\101\1\102",
             "\1\104",
-            "\1\105",
             "\1\106",
             "\1\107",
-            "",
-            "\1\111\1\112",
+            "\1\110",
+            "\1\111",
+            "\1\112",
+            "\1\113",
             "\1\114",
+            "\1\115",
             "\1\116",
             "\1\117",
             "\1\120",
@@ -2255,6 +2254,12 @@ public class InternalInterfacesLexer extends Lexer {
             "",
             "\1\152",
             "\1\153",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
             "\1\154",
             "\1\155",
             "\1\156",
@@ -2263,12 +2268,6 @@ public class InternalInterfacesLexer extends Lexer {
             "\1\161",
             "\1\162",
             "\1\163",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
             "\1\164",
             "\1\165",
             "\1\166",

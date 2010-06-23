@@ -186,4 +186,3 @@ enum StateType returns synccharts::StateType:
 enum TransitionType returns synccharts::TransitionType:
 	WEAKABORT = '-->' | STRONGABORT = 'o->' | NORMALTERMINATION = '>->';
 
-
