@@ -44,6 +44,8 @@ public class ExpressionsParser extends AbstractContentAssistParser {
 					put(grammarAccess.getEBooleanObjectAccess().getAlternatives(), "rule__EBooleanObject__Alternatives");
 					put(grammarAccess.getEStringAccess().getAlternatives(), "rule__EString__Alternatives");
 					put(grammarAccess.getCompareOperatorAccess().getAlternatives(), "rule__CompareOperator__Alternatives");
+					put(grammarAccess.getValueTypeAccess().getAlternatives(), "rule__ValueType__Alternatives");
+					put(grammarAccess.getCombineOperatorAccess().getAlternatives(), "rule__CombineOperator__Alternatives");
 					put(grammarAccess.getOrExpressionAccess().getGroup(), "rule__OrExpression__Group__0");
 					put(grammarAccess.getOrExpressionAccess().getGroup_1(), "rule__OrExpression__Group_1__0");
 					put(grammarAccess.getAndExpressionAccess().getGroup(), "rule__AndExpression__Group__0");

@@ -533,6 +533,76 @@
         <literal value="?"/>
       </alternatives>
     </rules>
+    <rules xsi:type="xtext:EnumRule" name="ValueType">
+      <type metamodel="/0/@metamodelDeclarations.0">
+        <classifier xsi:type="ecore:EEnum" href="http://kieler.cs.cau.de/expressions#//ValueType"/>
+      </type>
+      <alternatives xsi:type="xtext:Alternatives">
+        <elements xsi:type="xtext:EnumLiteralDeclaration">
+          <enumLiteral href="http://kieler.cs.cau.de/expressions#//ValueType/PURE"/>
+          <literal value="PURE"/>
+        </elements>
+        <elements xsi:type="xtext:EnumLiteralDeclaration">
+          <enumLiteral href="http://kieler.cs.cau.de/expressions#//ValueType/BOOL"/>
+          <literal value="BOOL"/>
+        </elements>
+        <elements xsi:type="xtext:EnumLiteralDeclaration">
+          <enumLiteral href="http://kieler.cs.cau.de/expressions#//ValueType/UNSIGNED"/>
+          <literal value="UNSIGNED"/>
+        </elements>
+        <elements xsi:type="xtext:EnumLiteralDeclaration">
+          <enumLiteral href="http://kieler.cs.cau.de/expressions#//ValueType/INT"/>
+          <literal value="INT"/>
+        </elements>
+        <elements xsi:type="xtext:EnumLiteralDeclaration">
+          <enumLiteral href="http://kieler.cs.cau.de/expressions#//ValueType/FLOAT"/>
+          <literal value="FLOAT"/>
+        </elements>
+        <elements xsi:type="xtext:EnumLiteralDeclaration">
+          <enumLiteral href="http://kieler.cs.cau.de/expressions#//ValueType/HOST"/>
+          <literal value="HOST"/>
+        </elements>
+      </alternatives>
+    </rules>
+    <rules xsi:type="xtext:EnumRule" name="CombineOperator">
+      <type metamodel="/0/@metamodelDeclarations.0">
+        <classifier xsi:type="ecore:EEnum" href="http://kieler.cs.cau.de/expressions#//CombineOperator"/>
+      </type>
+      <alternatives xsi:type="xtext:Alternatives">
+        <elements xsi:type="xtext:EnumLiteralDeclaration">
+          <enumLiteral href="http://kieler.cs.cau.de/expressions#//CombineOperator/NONE"/>
+          <literal value="NONE"/>
+        </elements>
+        <elements xsi:type="xtext:EnumLiteralDeclaration">
+          <enumLiteral href="http://kieler.cs.cau.de/expressions#//CombineOperator/ADD"/>
+          <literal value="+"/>
+        </elements>
+        <elements xsi:type="xtext:EnumLiteralDeclaration">
+          <enumLiteral href="http://kieler.cs.cau.de/expressions#//CombineOperator/MULT"/>
+          <literal value="*"/>
+        </elements>
+        <elements xsi:type="xtext:EnumLiteralDeclaration">
+          <enumLiteral href="http://kieler.cs.cau.de/expressions#//CombineOperator/MAX"/>
+          <literal value="max"/>
+        </elements>
+        <elements xsi:type="xtext:EnumLiteralDeclaration">
+          <enumLiteral href="http://kieler.cs.cau.de/expressions#//CombineOperator/MIN"/>
+          <literal value="min"/>
+        </elements>
+        <elements xsi:type="xtext:EnumLiteralDeclaration">
+          <enumLiteral href="http://kieler.cs.cau.de/expressions#//CombineOperator/OR"/>
+          <literal value="or"/>
+        </elements>
+        <elements xsi:type="xtext:EnumLiteralDeclaration">
+          <enumLiteral href="http://kieler.cs.cau.de/expressions#//CombineOperator/AND"/>
+          <literal value="and"/>
+        </elements>
+        <elements xsi:type="xtext:EnumLiteralDeclaration">
+          <enumLiteral href="http://kieler.cs.cau.de/expressions#//CombineOperator/HOST"/>
+          <literal value="host"/>
+        </elements>
+      </alternatives>
+    </rules>
   </xtext:Grammar>
   <xtext:Grammar name="org.eclipse.xtext.common.Terminals" definesHiddenTokens="true" hiddenTokens="/1/@rules.5 /1/@rules.3 /1/@rules.4">
     <metamodelDeclarations xsi:type="xtext:ReferencedMetamodel" alias="ecore">

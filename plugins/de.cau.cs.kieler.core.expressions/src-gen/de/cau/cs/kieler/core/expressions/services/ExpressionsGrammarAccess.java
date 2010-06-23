@@ -1126,6 +1126,144 @@ public class ExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		//"?"
 		public Keyword getVALQuestionMarkKeyword_0() { return cVALQuestionMarkKeyword_0; }
 	}
+
+	public class ValueTypeElements extends AbstractEnumRuleElementFinder {
+		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "ValueType");
+		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
+		private final EnumLiteralDeclaration cPUREEnumLiteralDeclaration_0 = (EnumLiteralDeclaration)cAlternatives.eContents().get(0);
+		private final Keyword cPUREPUREKeyword_0_0 = (Keyword)cPUREEnumLiteralDeclaration_0.eContents().get(0);
+		private final EnumLiteralDeclaration cBOOLEnumLiteralDeclaration_1 = (EnumLiteralDeclaration)cAlternatives.eContents().get(1);
+		private final Keyword cBOOLBOOLKeyword_1_0 = (Keyword)cBOOLEnumLiteralDeclaration_1.eContents().get(0);
+		private final EnumLiteralDeclaration cUNSIGNEDEnumLiteralDeclaration_2 = (EnumLiteralDeclaration)cAlternatives.eContents().get(2);
+		private final Keyword cUNSIGNEDUNSIGNEDKeyword_2_0 = (Keyword)cUNSIGNEDEnumLiteralDeclaration_2.eContents().get(0);
+		private final EnumLiteralDeclaration cINTEnumLiteralDeclaration_3 = (EnumLiteralDeclaration)cAlternatives.eContents().get(3);
+		private final Keyword cINTINTKeyword_3_0 = (Keyword)cINTEnumLiteralDeclaration_3.eContents().get(0);
+		private final EnumLiteralDeclaration cFLOATEnumLiteralDeclaration_4 = (EnumLiteralDeclaration)cAlternatives.eContents().get(4);
+		private final Keyword cFLOATFLOATKeyword_4_0 = (Keyword)cFLOATEnumLiteralDeclaration_4.eContents().get(0);
+		private final EnumLiteralDeclaration cHOSTEnumLiteralDeclaration_5 = (EnumLiteralDeclaration)cAlternatives.eContents().get(5);
+		private final Keyword cHOSTHOSTKeyword_5_0 = (Keyword)cHOSTEnumLiteralDeclaration_5.eContents().get(0);
+		
+		/// *
+		//   the following declarations are re-used in Interface.xtext, Kits.xtext 
+		// * /enum ValueType:
+		//	PURE | BOOL | UNSIGNED | INT | FLOAT | HOST;
+		public EnumRule getRule() { return rule; }
+
+		//PURE | BOOL | UNSIGNED | INT | FLOAT | HOST
+		public Alternatives getAlternatives() { return cAlternatives; }
+
+		//PURE
+		public EnumLiteralDeclaration getPUREEnumLiteralDeclaration_0() { return cPUREEnumLiteralDeclaration_0; }
+
+		//"PURE"
+		public Keyword getPUREPUREKeyword_0_0() { return cPUREPUREKeyword_0_0; }
+
+		//BOOL
+		public EnumLiteralDeclaration getBOOLEnumLiteralDeclaration_1() { return cBOOLEnumLiteralDeclaration_1; }
+
+		//"BOOL"
+		public Keyword getBOOLBOOLKeyword_1_0() { return cBOOLBOOLKeyword_1_0; }
+
+		//UNSIGNED
+		public EnumLiteralDeclaration getUNSIGNEDEnumLiteralDeclaration_2() { return cUNSIGNEDEnumLiteralDeclaration_2; }
+
+		//"UNSIGNED"
+		public Keyword getUNSIGNEDUNSIGNEDKeyword_2_0() { return cUNSIGNEDUNSIGNEDKeyword_2_0; }
+
+		//INT
+		public EnumLiteralDeclaration getINTEnumLiteralDeclaration_3() { return cINTEnumLiteralDeclaration_3; }
+
+		//"INT"
+		public Keyword getINTINTKeyword_3_0() { return cINTINTKeyword_3_0; }
+
+		//FLOAT
+		public EnumLiteralDeclaration getFLOATEnumLiteralDeclaration_4() { return cFLOATEnumLiteralDeclaration_4; }
+
+		//"FLOAT"
+		public Keyword getFLOATFLOATKeyword_4_0() { return cFLOATFLOATKeyword_4_0; }
+
+		//HOST
+		public EnumLiteralDeclaration getHOSTEnumLiteralDeclaration_5() { return cHOSTEnumLiteralDeclaration_5; }
+
+		//"HOST"
+		public Keyword getHOSTHOSTKeyword_5_0() { return cHOSTHOSTKeyword_5_0; }
+	}
+
+	public class CombineOperatorElements extends AbstractEnumRuleElementFinder {
+		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "CombineOperator");
+		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
+		private final EnumLiteralDeclaration cNONEEnumLiteralDeclaration_0 = (EnumLiteralDeclaration)cAlternatives.eContents().get(0);
+		private final Keyword cNONENONEKeyword_0_0 = (Keyword)cNONEEnumLiteralDeclaration_0.eContents().get(0);
+		private final EnumLiteralDeclaration cADDEnumLiteralDeclaration_1 = (EnumLiteralDeclaration)cAlternatives.eContents().get(1);
+		private final Keyword cADDPlusSignKeyword_1_0 = (Keyword)cADDEnumLiteralDeclaration_1.eContents().get(0);
+		private final EnumLiteralDeclaration cMULTEnumLiteralDeclaration_2 = (EnumLiteralDeclaration)cAlternatives.eContents().get(2);
+		private final Keyword cMULTAsteriskKeyword_2_0 = (Keyword)cMULTEnumLiteralDeclaration_2.eContents().get(0);
+		private final EnumLiteralDeclaration cMAXEnumLiteralDeclaration_3 = (EnumLiteralDeclaration)cAlternatives.eContents().get(3);
+		private final Keyword cMAXMaxKeyword_3_0 = (Keyword)cMAXEnumLiteralDeclaration_3.eContents().get(0);
+		private final EnumLiteralDeclaration cMINEnumLiteralDeclaration_4 = (EnumLiteralDeclaration)cAlternatives.eContents().get(4);
+		private final Keyword cMINMinKeyword_4_0 = (Keyword)cMINEnumLiteralDeclaration_4.eContents().get(0);
+		private final EnumLiteralDeclaration cOREnumLiteralDeclaration_5 = (EnumLiteralDeclaration)cAlternatives.eContents().get(5);
+		private final Keyword cOROrKeyword_5_0 = (Keyword)cOREnumLiteralDeclaration_5.eContents().get(0);
+		private final EnumLiteralDeclaration cANDEnumLiteralDeclaration_6 = (EnumLiteralDeclaration)cAlternatives.eContents().get(6);
+		private final Keyword cANDAndKeyword_6_0 = (Keyword)cANDEnumLiteralDeclaration_6.eContents().get(0);
+		private final EnumLiteralDeclaration cHOSTEnumLiteralDeclaration_7 = (EnumLiteralDeclaration)cAlternatives.eContents().get(7);
+		private final Keyword cHOSTHostKeyword_7_0 = (Keyword)cHOSTEnumLiteralDeclaration_7.eContents().get(0);
+		
+		//enum CombineOperator:
+		//	NONE | ADD="+" | MULT="*" | MAX="max" | MIN="min" | OR="or" | AND="and" | HOST="host";
+		public EnumRule getRule() { return rule; }
+
+		//NONE | ADD="+" | MULT="*" | MAX="max" | MIN="min" | OR="or" | AND="and" | HOST="host"
+		public Alternatives getAlternatives() { return cAlternatives; }
+
+		//NONE
+		public EnumLiteralDeclaration getNONEEnumLiteralDeclaration_0() { return cNONEEnumLiteralDeclaration_0; }
+
+		//"NONE"
+		public Keyword getNONENONEKeyword_0_0() { return cNONENONEKeyword_0_0; }
+
+		//ADD="+"
+		public EnumLiteralDeclaration getADDEnumLiteralDeclaration_1() { return cADDEnumLiteralDeclaration_1; }
+
+		//"+"
+		public Keyword getADDPlusSignKeyword_1_0() { return cADDPlusSignKeyword_1_0; }
+
+		//MULT="*"
+		public EnumLiteralDeclaration getMULTEnumLiteralDeclaration_2() { return cMULTEnumLiteralDeclaration_2; }
+
+		//"*"
+		public Keyword getMULTAsteriskKeyword_2_0() { return cMULTAsteriskKeyword_2_0; }
+
+		//MAX="max"
+		public EnumLiteralDeclaration getMAXEnumLiteralDeclaration_3() { return cMAXEnumLiteralDeclaration_3; }
+
+		//"max"
+		public Keyword getMAXMaxKeyword_3_0() { return cMAXMaxKeyword_3_0; }
+
+		//MIN="min"
+		public EnumLiteralDeclaration getMINEnumLiteralDeclaration_4() { return cMINEnumLiteralDeclaration_4; }
+
+		//"min"
+		public Keyword getMINMinKeyword_4_0() { return cMINMinKeyword_4_0; }
+
+		//OR="or"
+		public EnumLiteralDeclaration getOREnumLiteralDeclaration_5() { return cOREnumLiteralDeclaration_5; }
+
+		//"or"
+		public Keyword getOROrKeyword_5_0() { return cOROrKeyword_5_0; }
+
+		//AND="and"
+		public EnumLiteralDeclaration getANDEnumLiteralDeclaration_6() { return cANDEnumLiteralDeclaration_6; }
+
+		//"and"
+		public Keyword getANDAndKeyword_6_0() { return cANDAndKeyword_6_0; }
+
+		//HOST="host"
+		public EnumLiteralDeclaration getHOSTEnumLiteralDeclaration_7() { return cHOSTEnumLiteralDeclaration_7; }
+
+		//"host"
+		public Keyword getHOSTHostKeyword_7_0() { return cHOSTHostKeyword_7_0; }
+	}
 	
 	private ExpressionElements pExpression;
 	private BooleanExpressionElements pBooleanExpression;
@@ -1164,6 +1302,8 @@ public class ExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 	private ModOperatorElements unknownRuleModOperator;
 	private DivOperatorElements unknownRuleDivOperator;
 	private ValueTestOperatorElements unknownRuleValueTestOperator;
+	private ValueTypeElements unknownRuleValueType;
+	private CombineOperatorElements unknownRuleCombineOperator;
 	
 	private final GrammarProvider grammarProvider;
 
@@ -1582,6 +1722,28 @@ public class ExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public EnumRule getValueTestOperatorRule() {
 		return getValueTestOperatorAccess().getRule();
+	}
+
+	/// *
+	//   the following declarations are re-used in Interface.xtext, Kits.xtext 
+	// * /enum ValueType:
+	//	PURE | BOOL | UNSIGNED | INT | FLOAT | HOST;
+	public ValueTypeElements getValueTypeAccess() {
+		return (unknownRuleValueType != null) ? unknownRuleValueType : (unknownRuleValueType = new ValueTypeElements());
+	}
+	
+	public EnumRule getValueTypeRule() {
+		return getValueTypeAccess().getRule();
+	}
+
+	//enum CombineOperator:
+	//	NONE | ADD="+" | MULT="*" | MAX="max" | MIN="min" | OR="or" | AND="and" | HOST="host";
+	public CombineOperatorElements getCombineOperatorAccess() {
+		return (unknownRuleCombineOperator != null) ? unknownRuleCombineOperator : (unknownRuleCombineOperator = new CombineOperatorElements());
+	}
+	
+	public EnumRule getCombineOperatorRule() {
+		return getCombineOperatorAccess().getRule();
 	}
 
 	//terminal ID:
