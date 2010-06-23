@@ -84,6 +84,12 @@
     	          <instanceof value="org.eclipse.core.resources.IFile"/>
         	      <test property="org.eclipse.core.resources.extension" value="«editorGen.domainFileExtension»"/>
                </and>
+      «REM» Manually added: Allow kits file also to be inspected in project explorer similar to kixs file.«ENDREM»
+	           <and>
+    	          <instanceof value="org.eclipse.core.resources.IFile"/>
+        	      <test property="org.eclipse.core.resources.extension" value="kits"/>
+               </and>
+      «REM» Manually added END«ENDREM»
                <instanceof value="«getDomainNavigatorItemQualifiedClassName()»"/>
             </or>
          </triggerPoints>
