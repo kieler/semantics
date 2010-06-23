@@ -2,7 +2,7 @@
 <feature
       id="de.cau.cs.kieler.synccharts"
       label="KIELER Thin SyncCharts Editor"
-      version="0.2.0.qualifier"
+      version="0.3.0.qualifier"
       provider-name="Christian-Albrechts-Universität zu Kiel">
 
    <description url="http://rtsys.informatik.uni-kiel.de/trac/kieler/wiki/Projects/Editors/Synccharts">
@@ -147,27 +147,6 @@ This Agreement is governed by the laws of the State of New York and the intellec
          unpack="false"/>
 
    <plugin
-         id="de.cau.cs.kieler.synccharts.labelparser"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="de.cau.cs.kieler.synccharts.labelparser.bridge"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="de.cau.cs.kieler.synccharts.labelparser.ui"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
          id="de.cau.cs.kieler.synccharts.editor"
          download-size="0"
          install-size="0"
@@ -182,21 +161,21 @@ This Agreement is governed by the laws of the State of New York and the intellec
          unpack="false"/>
 
    <plugin
-         id="de.cau.cs.kieler.synccharts.interfacedeclparser"
+         id="de.cau.cs.kieler.synccharts.text"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
 
    <plugin
-         id="de.cau.cs.kieler.synccharts.interfacedeclparser.bridge"
+         id="de.cau.cs.kieler.synccharts.text.bridge"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
 
    <plugin
-         id="de.cau.cs.kieler.synccharts.interfacedeclparser.ui"
+         id="de.cau.cs.kieler.synccharts.text.ui"
          download-size="0"
          install-size="0"
          version="0.0.0"
