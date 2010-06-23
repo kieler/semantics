@@ -1,77 +1,84 @@
-module de.cau.cs.kieler.synccharts.text.kits.Kits
+module de.cau.cs.kieler.synccharts.text.Kits
 
 import org.eclipse.emf.mwe.utils.*
 import org.eclipse.xtext.generator.*
 import org.eclipse.xtext.ui.generator.*
 
-var grammarURI = "classpath:/de/cau/cs/kieler/synccharts/text/kits/Kits.xtext"
+var grammarURI = "classpath:/de/cau/cs/kieler/synccharts/text/Kits.xtext"
 var file.extensions = "kits"
 var projectName = "de.cau.cs.kieler.synccharts.text"
 var runtimeProject = "../${projectName}"
 
 Workflow {
-    bean = StandaloneSetup {
+	bean = StandaloneSetup {
 		platformUri = "${runtimeProject}/.."
+		registerGeneratedEPackage = "de.cau.cs.kieler.synccharts.SyncchartsPackage"
 	}
-
+	
 	component = DirectoryCleaner {
-		directory = "${runtimeProject}/src-gen"
+		directory = "${runtimeProject}/src-gen/de/cau/cs/kieler/synccharts/text/kits"
 	}
-
+	
 	component = DirectoryCleaner {
-		directory = "${runtimeProject}.ui/src-gen"
+		directory = "${runtimeProject}.ui/src-gen/de/cau/cs/kieler/synccharts/text/kits"
 	}
-
+	
 	component = Generator {
 		pathRtProject = runtimeProject
 		pathUiProject = "${runtimeProject}.ui"
 		projectNameRt = projectName
 		projectNameUi = "${projectName}.ui"
+		
 		language = {
 			uri = grammarURI
 			fileExtensions = file.extensions
-
+			
 			// Java API to access grammar elements (required by several other fragments)
 			fragment = grammarAccess.GrammarAccessFragment {}
-
-			// generates Java API for the generated EPackages 
+			
+			// generates Java API for the generated EPackages
+			/* 
 			fragment = ecore.EcoreGeneratorFragment {
-			// referencedGenModels = "uri to genmodel, uri to next genmodel"
+			 	referencedGenModels = "platform:/resource/de.cau.cs.kieler.synccharts/model/synccharts.genmodel"
 			}
-
+			*/
+			
 			// the serialization component
 			fragment = parseTreeConstructor.ParseTreeConstructorFragment {}
-
+			
 			// a custom ResourceFactory for use with EMF 
 			fragment = resourceFactory.ResourceFactoryFragment {
 				fileExtensions = file.extensions
 			}
-
-			// The antlr parser generator fragment.
-			fragment = parser.antlr.XtextAntlrGeneratorFragment {
-			//  options = {
-			//		backtrack = true
-			//	}
+				
+			// the Antlr parser
+			fragment = de.itemis.xtext.antlr.XtextAntlrGeneratorFragment {
+				options = {
+					classSplitting = true
+					backtrack = true
+				}
 			}
-
+			
 			// java-based API for validation 
 			fragment = validation.JavaValidatorFragment {
-				composedCheck = "org.eclipse.xtext.validation.ImportUriValidator"
-				composedCheck = "org.eclipse.xtext.validation.NamesAreUniqueValidator"
-				// registerForImportedPackages = true
-			}
 
+                composedCheck = "org.eclipse.xtext.validation.ImportUriValidator"
+                composedCheck = "org.eclipse.xtext.validation.NamesAreUniqueValidator"
+                
+            }
+            
 			// scoping and exporting API
-			// fragment = scoping.ImportURIScopingFragment {}
-			// fragment = exporting.SimpleNamesFragment {}
-
+			fragment = scoping.ImportURIScopingFragment {}
+			fragment = exporting.SimpleNamesFragment {}
+			
 			// scoping and exporting API 
+			/*
 			fragment = scoping.ImportNamespacesScopingFragment {}
 			fragment = exporting.QualifiedNamesFragment {}
-			fragment = builder.BuilderIntegrationFragment {}
-
+			*/
+			
 			// formatter API 
-			fragment = formatting.FormatterFragment {}
+			fragment = ecore2xtext.FormatterFragment {}
 
 			// labeling API 
 			fragment = labeling.LabelProviderFragment {}
@@ -79,22 +86,32 @@ Workflow {
 			// outline API 
 			fragment = outline.TransformerFragment {}
 			fragment = outline.OutlineNodeAdapterFactoryFragment {}
-			fragment = outline.QuickOutlineFragment {}
 
-			// quickfix API 
-			fragment = quickfix.QuickfixProviderFragment {}
-
-			// content assist API  
+			// java-based API for content assistance 
 			fragment = contentAssist.JavaBasedContentAssistFragment {}
+			
+			// the following fragment tries to use the Antlr based content assist 
+			//     fragment which can be downloaded from http://www.itemis.com 
+			//     and will be ignored if it's not available. 
+			fragment = de.itemis.xtext.antlr.XtextAntlrUiGeneratorFragment { 
+				options = {
+					classSplitting = true
+					backtrack = true
+				}
+			}
 
-			// generates a more lightweight Antlr parser and lexer tailored for content assist  
-			fragment = parser.antlr.XtextAntlrUiGeneratorFragment {}
+			fragment = builder.BuilderIntegrationFragment {}
 
 			// project wizard (optional) 
-			// fragment = projectWizard.SimpleProjectWizardFragment {
-			// 		generatorProjectName = "${projectName}.generator" 
-			//		modelFileExtension = file.extensions
-			// }
+			/*
+			fragment = projectWizard.SimpleProjectWizardFragment {
+				generatorProjectName = "${projectName}.generator" 
+				modelFileExtension = file.extensions
+			}
+			*/
+			
+			// quickfix API 
+			fragment = quickfix.QuickfixProviderFragment {}			
 		}
 	}
 }

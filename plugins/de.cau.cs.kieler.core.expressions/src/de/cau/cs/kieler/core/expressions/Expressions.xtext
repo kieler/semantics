@@ -153,3 +153,19 @@ enum DivOperator returns OperatorType:
 
 enum ValueTestOperator returns OperatorType:
 	VAL="?";
+
+
+/*
+   the following declarations are re-used in Interface.xtext, Kits.xtext 
+*/
+enum ValueType returns ValueType:
+	PURE="PURE" | BOOL="BOOL" | UNSIGNED="UNSIGNED"	| 
+	INT="INT" | FLOAT="FLOAT" | HOST="HOST"	
+;
+
+enum CombineOperator returns CombineOperator:
+	NONE="NONE" | ADD="+" | MULT="*" | MAX="max" |
+	MIN="min" | OR="or" | AND="and" | HOST="host"
+;
+
+

@@ -104,18 +104,6 @@ Variable returns expressions::Variable:
     )
 ;
 
-
-		
-enum ValueType returns expressions::ValueType:
-	PURE="PURE" | BOOL="BOOL" | UNSIGNED="UNSIGNED"	| 
-	INT="INT" | FLOAT="FLOAT" | HOST="HOST"	
-;
-
-enum CombineOperator returns expressions::CombineOperator:
-	NONE="NONE" | ADD="+" | MULT="*" | MAX="max" |
-	MIN="min" | OR="or" | AND="and" | HOST="host"
-;
-
 terminal STRING_D: '"' '"' | ('"' ('\\' '"' | !'"')* ('\\' '"' | !('\\' | '"')) '"');
 terminal STRING_S: "'" "'" | ("'" ('\\' "'" | !"'")* ('\\' "'" | !('\\' | "'")) "'");
 
