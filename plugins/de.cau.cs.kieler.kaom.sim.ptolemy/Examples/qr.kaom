@@ -1,0 +1,370 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kaom:Entity xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ann="http://kieler.cs.cau.de/annotations" xmlns:kaom="http://kieler.cs.cau.de/KAOM">
+  <childEntities name="qr">
+    <annotations xsi:type="ann:StringAnnotation" name="ptolemyClass" value="ptolemy.actor.TypedCompositeActor"/>
+    <annotations xsi:type="ann:StringAnnotation" name="_createdBy" value="8.1.devel">
+      <annotations xsi:type="ann:StringAnnotation" name="ptolemyClass" value="ptolemy.kernel.attributes.VersionAttribute"/>
+    </annotations>
+    <annotations xsi:type="ann:StringAnnotation" name="Antennas" value="6">
+      <annotations xsi:type="ann:StringAnnotation" name="ptolemyClass" value="ptolemy.data.expr.Parameter"/>
+    </annotations>
+    <annotations xsi:type="ann:StringAnnotation" name="Updates" value="10">
+      <annotations xsi:type="ann:StringAnnotation" name="ptolemyClass" value="ptolemy.data.expr.Parameter"/>
+    </annotations>
+    <annotations xsi:type="ann:StringAnnotation" name="_vergilSize" value="[672, 452]">
+      <annotations xsi:type="ann:StringAnnotation" name="ptolemyClass" value="ptolemy.actor.gui.SizeAttribute"/>
+    </annotations>
+    <annotations xsi:type="ann:StringAnnotation" name="_vergilLocation" value="[97, 100]">
+      <annotations xsi:type="ann:StringAnnotation" name="ptolemyClass" value="ptolemy.actor.gui.LocationAttribute"/>
+    </annotations>
+    <annotations xsi:type="ann:StringAnnotation" name="_windowProperties" value="{bounds={97, 99, 887, 559}, maximized=false}">
+      <annotations xsi:type="ann:StringAnnotation" name="ptolemyClass" value="ptolemy.actor.gui.WindowPropertiesAttribute"/>
+    </annotations>
+    <annotations xsi:type="ann:StringAnnotation" name="_vergilZoomFactor" value="1.0">
+      <annotations xsi:type="ann:StringAnnotation" name="ptolemyClass" value="ptolemy.data.expr.ExpertParameter"/>
+    </annotations>
+    <annotations xsi:type="ann:StringAnnotation" name="_vergilCenter" value="{336.0, 226.0}">
+      <annotations xsi:type="ann:StringAnnotation" name="ptolemyClass" value="ptolemy.data.expr.ExpertParameter"/>
+    </annotations>
+    <childEntities name="Zeros">
+      <annotations xsi:type="ann:StringAnnotation" name="ptolemyClass" value="ptolemy.domains.pn.demo.QR.ND_1"/>
+      <annotations xsi:type="ann:StringAnnotation" name="N" value="Antennas">
+        <annotations xsi:type="ann:StringAnnotation" name="ptolemyClass" value="ptolemy.data.expr.Parameter"/>
+      </annotations>
+      <annotations xsi:type="ann:StringAnnotation" name="K" value="Updates">
+        <annotations xsi:type="ann:StringAnnotation" name="ptolemyClass" value="ptolemy.data.expr.Parameter"/>
+      </annotations>
+      <annotations xsi:type="ann:StringAnnotation" name="_location" value="45.0, 95.0">
+        <annotations xsi:type="ann:StringAnnotation" name="ptolemyClass" value="ptolemy.kernel.util.Location"/>
+      </annotations>
+      <childPorts name="WP_2" incomingLinks="//@childEntities.0/@childLinks.0"/>
+      <childPorts name="WP_6" incomingLinks="//@childEntities.0/@childLinks.1"/>
+    </childEntities>
+    <childEntities name="Antenna Data">
+      <annotations xsi:type="ann:StringAnnotation" name="ptolemyClass" value="ptolemy.domains.pn.demo.QR.ND_2"/>
+      <annotations xsi:type="ann:StringAnnotation" name="N" value="Antennas">
+        <annotations xsi:type="ann:StringAnnotation" name="ptolemyClass" value="ptolemy.data.expr.Parameter"/>
+      </annotations>
+      <annotations xsi:type="ann:StringAnnotation" name="K" value="Updates">
+        <annotations xsi:type="ann:StringAnnotation" name="ptolemyClass" value="ptolemy.data.expr.Parameter"/>
+      </annotations>
+      <annotations xsi:type="ann:StringAnnotation" name="_location" value="75.0, 210.0">
+        <annotations xsi:type="ann:StringAnnotation" name="ptolemyClass" value="ptolemy.kernel.util.Location"/>
+      </annotations>
+      <childPorts name="WP_4" incomingLinks="//@childEntities.0/@childLinks.2"/>
+      <childPorts name="WP_8" incomingLinks="//@childEntities.0/@childLinks.3"/>
+    </childEntities>
+    <childEntities name="Vectorize">
+      <annotations xsi:type="ann:StringAnnotation" name="ptolemyClass" value="ptolemy.domains.pn.demo.QR.ND_3"/>
+      <annotations xsi:type="ann:StringAnnotation" name="N" value="Antennas">
+        <annotations xsi:type="ann:StringAnnotation" name="ptolemyClass" value="ptolemy.data.expr.Parameter"/>
+      </annotations>
+      <annotations xsi:type="ann:StringAnnotation" name="K" value="Updates">
+        <annotations xsi:type="ann:StringAnnotation" name="ptolemyClass" value="ptolemy.data.expr.Parameter"/>
+      </annotations>
+      <annotations xsi:type="ann:StringAnnotation" name="_location" value="210.0, 95.0">
+        <annotations xsi:type="ann:StringAnnotation" name="ptolemyClass" value="ptolemy.kernel.util.Location"/>
+      </annotations>
+      <childPorts name="RP_1" incomingLinks="//@childEntities.0/@childLinks.4"/>
+      <childPorts name="RP_2" incomingLinks="//@childEntities.0/@childLinks.5"/>
+      <childPorts name="RP_3" incomingLinks="//@childEntities.0/@childLinks.6"/>
+      <childPorts name="RP_4" incomingLinks="//@childEntities.0/@childLinks.7"/>
+      <childPorts name="WP_1" incomingLinks="//@childEntities.0/@childLinks.8"/>
+      <childPorts name="WP_11" incomingLinks="//@childEntities.0/@childLinks.9"/>
+      <childPorts name="WP_10" incomingLinks="//@childEntities.0/@childLinks.10"/>
+    </childEntities>
+    <childEntities name="Rotate">
+      <annotations xsi:type="ann:StringAnnotation" name="ptolemyClass" value="ptolemy.domains.pn.demo.QR.ND_4"/>
+      <annotations xsi:type="ann:StringAnnotation" name="N" value="Antennas">
+        <annotations xsi:type="ann:StringAnnotation" name="ptolemyClass" value="ptolemy.data.expr.Parameter"/>
+      </annotations>
+      <annotations xsi:type="ann:StringAnnotation" name="K" value="Updates">
+        <annotations xsi:type="ann:StringAnnotation" name="ptolemyClass" value="ptolemy.data.expr.Parameter"/>
+      </annotations>
+      <annotations xsi:type="ann:StringAnnotation" name="_location" value="215.0, 210.0">
+        <annotations xsi:type="ann:StringAnnotation" name="ptolemyClass" value="ptolemy.kernel.util.Location"/>
+      </annotations>
+      <childPorts name="RP_5" incomingLinks="//@childEntities.0/@childLinks.11"/>
+      <childPorts name="RP_6" incomingLinks="//@childEntities.0/@childLinks.12"/>
+      <childPorts name="RP_7" incomingLinks="//@childEntities.0/@childLinks.13"/>
+      <childPorts name="RP_8" incomingLinks="//@childEntities.0/@childLinks.14"/>
+      <childPorts name="RP_9" incomingLinks="//@childEntities.0/@childLinks.15"/>
+      <childPorts name="RP_10" incomingLinks="//@childEntities.0/@childLinks.16"/>
+      <childPorts name="WP_5" incomingLinks="//@childEntities.0/@childLinks.17"/>
+      <childPorts name="WP_12" incomingLinks="//@childEntities.0/@childLinks.18"/>
+      <childPorts name="WP_3" incomingLinks="//@childEntities.0/@childLinks.19"/>
+      <childPorts name="WP_7" incomingLinks="//@childEntities.0/@childLinks.20"/>
+      <childPorts name="WP_9" incomingLinks="//@childEntities.0/@childLinks.21"/>
+    </childEntities>
+    <childEntities name="Data Collector">
+      <annotations xsi:type="ann:StringAnnotation" name="ptolemyClass" value="ptolemy.domains.pn.demo.QR.ND_5"/>
+      <annotations xsi:type="ann:StringAnnotation" name="N" value="Antennas">
+        <annotations xsi:type="ann:StringAnnotation" name="ptolemyClass" value="ptolemy.data.expr.Parameter"/>
+      </annotations>
+      <annotations xsi:type="ann:StringAnnotation" name="K" value="Updates">
+        <annotations xsi:type="ann:StringAnnotation" name="ptolemyClass" value="ptolemy.data.expr.Parameter"/>
+      </annotations>
+      <annotations xsi:type="ann:StringAnnotation" name="_location" value="345.0, 190.0">
+        <annotations xsi:type="ann:StringAnnotation" name="ptolemyClass" value="ptolemy.kernel.util.Location"/>
+      </annotations>
+      <childPorts name="RP_11" incomingLinks="//@childEntities.0/@childLinks.22"/>
+      <childPorts name="RP_12" incomingLinks="//@childEntities.0/@childLinks.23"/>
+      <childPorts name="out0" incomingLinks="//@childEntities.0/@childLinks.24"/>
+    </childEntities>
+    <childEntities name="StreamToMatrix">
+      <annotations xsi:type="ann:StringAnnotation" name="ptolemyClass" value="ptolemy.domains.pn.demo.QR.StreamToMatrix"/>
+      <annotations xsi:type="ann:StringAnnotation" name="dimension" value="Antennas">
+        <annotations xsi:type="ann:StringAnnotation" name="ptolemyClass" value="ptolemy.data.expr.Parameter"/>
+      </annotations>
+      <annotations xsi:type="ann:StringAnnotation" name="_location" value="427.1428527832031, 280.0">
+        <annotations xsi:type="ann:StringAnnotation" name="ptolemyClass" value="ptolemy.kernel.util.Location"/>
+      </annotations>
+      <childPorts name="input" incomingLinks="//@childEntities.0/@childLinks.25"/>
+      <childPorts name="output" incomingLinks="//@childEntities.0/@childLinks.26"/>
+    </childEntities>
+    <childEntities name="MatrixViewer">
+      <annotations xsi:type="ann:StringAnnotation" name="ptolemyClass" value="ptolemy.actor.lib.gui.MatrixViewer"/>
+      <annotations xsi:type="ann:StringAnnotation" name="_windowProperties" value="{bounds={259, 33, 462, 161}, maximized=false}">
+        <annotations xsi:type="ann:StringAnnotation" name="ptolemyClass" value="ptolemy.actor.gui.WindowPropertiesAttribute"/>
+      </annotations>
+      <annotations xsi:type="ann:StringAnnotation" name="_paneSize" value="[454, 113]">
+        <annotations xsi:type="ann:StringAnnotation" name="ptolemyClass" value="ptolemy.actor.gui.SizeAttribute"/>
+      </annotations>
+      <annotations xsi:type="ann:StringAnnotation" name="width" value="300">
+        <annotations xsi:type="ann:StringAnnotation" name="ptolemyClass" value="ptolemy.data.expr.Parameter"/>
+      </annotations>
+      <annotations xsi:type="ann:StringAnnotation" name="height" value="100">
+        <annotations xsi:type="ann:StringAnnotation" name="ptolemyClass" value="ptolemy.data.expr.Parameter"/>
+      </annotations>
+      <annotations xsi:type="ann:StringAnnotation" name="_location" value="536.7142944335938, 280.0">
+        <annotations xsi:type="ann:StringAnnotation" name="ptolemyClass" value="ptolemy.kernel.util.Location"/>
+      </annotations>
+      <childPorts name="input" incomingLinks="//@childEntities.0/@childLinks.27"/>
+    </childEntities>
+    <childEntities name="Process Network Director">
+      <annotations name="annotationNode"/>
+      <annotations xsi:type="ann:StringAnnotation" name="Process Network Director">
+        <annotations xsi:type="ann:StringAnnotation" name="ptolemyClass" value="ptolemy.domains.pn.kernel.PNDirector"/>
+        <annotations xsi:type="ann:StringAnnotation" name="initialQueueCapacity" value="1">
+          <annotations xsi:type="ann:StringAnnotation" name="ptolemyClass" value="ptolemy.data.expr.Parameter"/>
+        </annotations>
+        <annotations xsi:type="ann:StringAnnotation" name="maximumQueueCapacity" value="65536">
+          <annotations xsi:type="ann:StringAnnotation" name="ptolemyClass" value="ptolemy.data.expr.Parameter"/>
+        </annotations>
+        <annotations xsi:type="ann:StringAnnotation" name="_location" value="75.0, 35.0">
+          <annotations xsi:type="ann:StringAnnotation" name="ptolemyClass" value="ptolemy.kernel.util.Location"/>
+        </annotations>
+      </annotations>
+    </childEntities>
+    <childEntities name="This model shows a Process Network &#xA;(PN) that executes the QR-algorithm on a &#xA;continuous stream of data, coming from an&#xA;array of antennas. The processes in the &#xA;network execute in parallel on the new&#xA;samples of data from the antennas. The &#xA;update parameter indicates how many sets &#xA;of samples need to be processed.">
+      <annotations name="annotationNode"/>
+      <annotations xsi:type="ann:StringAnnotation" name="AnnotationUpdated">
+        <annotations xsi:type="ann:StringAnnotation" name="ptolemyClass" value="ptolemy.vergil.kernel.attributes.TextAttribute"/>
+        <annotations xsi:type="ann:StringAnnotation" name="_hideName" value="true">
+          <annotations xsi:type="ann:StringAnnotation" name="ptolemyClass" value="ptolemy.data.expr.SingletonParameter"/>
+        </annotations>
+        <annotations xsi:type="ann:StringAnnotation" name="_hideAllParameters" value="true">
+          <annotations xsi:type="ann:StringAnnotation" name="ptolemyClass" value="ptolemy.data.expr.Parameter"/>
+        </annotations>
+        <annotations xsi:type="ann:StringAnnotation" name="textSize" value="14">
+          <annotations xsi:type="ann:StringAnnotation" name="ptolemyClass" value="ptolemy.data.expr.Parameter"/>
+        </annotations>
+        <annotations xsi:type="ann:StringAnnotation" name="textColor" value="{0.0, 0.0, 1.0, 1.0}">
+          <annotations xsi:type="ann:StringAnnotation" name="ptolemyClass" value="ptolemy.actor.gui.ColorAttribute"/>
+        </annotations>
+        <annotations xsi:type="ann:StringAnnotation" name="fontFamily" value="SansSerif">
+          <annotations xsi:type="ann:StringAnnotation" name="ptolemyClass" value="ptolemy.data.expr.StringParameter"/>
+        </annotations>
+        <annotations xsi:type="ann:StringAnnotation" name="bold" value="false">
+          <annotations xsi:type="ann:StringAnnotation" name="ptolemyClass" value="ptolemy.data.expr.Parameter"/>
+        </annotations>
+        <annotations xsi:type="ann:StringAnnotation" name="italic" value="false">
+          <annotations xsi:type="ann:StringAnnotation" name="ptolemyClass" value="ptolemy.data.expr.Parameter"/>
+        </annotations>
+        <annotations xsi:type="ann:StringAnnotation" name="text" value="This model shows a Process Network &#xA;(PN) that executes the QR-algorithm on a &#xA;continuous stream of data, coming from an&#xA;array of antennas. The processes in the &#xA;network execute in parallel on the new&#xA;samples of data from the antennas. The &#xA;update parameter indicates how many sets &#xA;of samples need to be processed.">
+          <annotations xsi:type="ann:StringAnnotation" name="ptolemyClass" value="ptolemy.kernel.util.StringAttribute"/>
+          <annotations xsi:type="ann:StringAnnotation" name="_style">
+            <annotations xsi:type="ann:StringAnnotation" name="ptolemyClass" value="ptolemy.actor.gui.style.TextStyle"/>
+            <annotations xsi:type="ann:StringAnnotation" name="height" value="20">
+              <annotations xsi:type="ann:StringAnnotation" name="ptolemyClass" value="ptolemy.data.expr.Parameter"/>
+            </annotations>
+            <annotations xsi:type="ann:StringAnnotation" name="width" value="80">
+              <annotations xsi:type="ann:StringAnnotation" name="ptolemyClass" value="ptolemy.data.expr.Parameter"/>
+            </annotations>
+          </annotations>
+        </annotations>
+        <annotations xsi:type="ann:StringAnnotation" name="_location" value="{325.0, 5.0}">
+          <annotations xsi:type="ann:StringAnnotation" name="ptolemyClass" value="ptolemy.kernel.util.Location"/>
+        </annotations>
+      </annotations>
+    </childEntities>
+    <childEntities name="Zeros are used to initialize&#xA;the Rotate and Vectorize processes &#xA;with value zero.">
+      <annotations name="annotationNode"/>
+      <annotations xsi:type="ann:StringAnnotation" name="AnnotationUpdated2">
+        <annotations xsi:type="ann:StringAnnotation" name="ptolemyClass" value="ptolemy.vergil.kernel.attributes.TextAttribute"/>
+        <annotations xsi:type="ann:StringAnnotation" name="_hideName" value="true">
+          <annotations xsi:type="ann:StringAnnotation" name="ptolemyClass" value="ptolemy.data.expr.SingletonParameter"/>
+        </annotations>
+        <annotations xsi:type="ann:StringAnnotation" name="_hideAllParameters" value="true">
+          <annotations xsi:type="ann:StringAnnotation" name="ptolemyClass" value="ptolemy.data.expr.Parameter"/>
+        </annotations>
+        <annotations xsi:type="ann:StringAnnotation" name="textSize" value="12">
+          <annotations xsi:type="ann:StringAnnotation" name="ptolemyClass" value="ptolemy.data.expr.Parameter"/>
+        </annotations>
+        <annotations xsi:type="ann:StringAnnotation" name="textColor" value="{0.0, 0.0, 0.0, 1.0}">
+          <annotations xsi:type="ann:StringAnnotation" name="ptolemyClass" value="ptolemy.actor.gui.ColorAttribute"/>
+        </annotations>
+        <annotations xsi:type="ann:StringAnnotation" name="fontFamily" value="SansSerif">
+          <annotations xsi:type="ann:StringAnnotation" name="ptolemyClass" value="ptolemy.data.expr.StringParameter"/>
+        </annotations>
+        <annotations xsi:type="ann:StringAnnotation" name="bold" value="false">
+          <annotations xsi:type="ann:StringAnnotation" name="ptolemyClass" value="ptolemy.data.expr.Parameter"/>
+        </annotations>
+        <annotations xsi:type="ann:StringAnnotation" name="italic" value="false">
+          <annotations xsi:type="ann:StringAnnotation" name="ptolemyClass" value="ptolemy.data.expr.Parameter"/>
+        </annotations>
+        <annotations xsi:type="ann:StringAnnotation" name="text" value="Zeros are used to initialize&#xA;the Rotate and Vectorize processes &#xA;with value zero.">
+          <annotations xsi:type="ann:StringAnnotation" name="ptolemyClass" value="ptolemy.kernel.util.StringAttribute"/>
+          <annotations xsi:type="ann:StringAnnotation" name="_style">
+            <annotations xsi:type="ann:StringAnnotation" name="ptolemyClass" value="ptolemy.actor.gui.style.TextStyle"/>
+            <annotations xsi:type="ann:StringAnnotation" name="height" value="20">
+              <annotations xsi:type="ann:StringAnnotation" name="ptolemyClass" value="ptolemy.data.expr.Parameter"/>
+            </annotations>
+            <annotations xsi:type="ann:StringAnnotation" name="width" value="80">
+              <annotations xsi:type="ann:StringAnnotation" name="ptolemyClass" value="ptolemy.data.expr.Parameter"/>
+            </annotations>
+          </annotations>
+        </annotations>
+        <annotations xsi:type="ann:StringAnnotation" name="_location" value="{145.0, 300.0}">
+          <annotations xsi:type="ann:StringAnnotation" name="ptolemyClass" value="ptolemy.kernel.util.Location"/>
+        </annotations>
+      </annotations>
+    </childEntities>
+    <childEntities name="The matrix shown, is the&#xA;resulting R matrix for the number &#xA;of antennas used.">
+      <annotations name="annotationNode"/>
+      <annotations xsi:type="ann:StringAnnotation" name="AnnotationUpdated3">
+        <annotations xsi:type="ann:StringAnnotation" name="ptolemyClass" value="ptolemy.vergil.kernel.attributes.TextAttribute"/>
+        <annotations xsi:type="ann:StringAnnotation" name="_hideName" value="true">
+          <annotations xsi:type="ann:StringAnnotation" name="ptolemyClass" value="ptolemy.data.expr.SingletonParameter"/>
+        </annotations>
+        <annotations xsi:type="ann:StringAnnotation" name="_hideAllParameters" value="true">
+          <annotations xsi:type="ann:StringAnnotation" name="ptolemyClass" value="ptolemy.data.expr.Parameter"/>
+        </annotations>
+        <annotations xsi:type="ann:StringAnnotation" name="textSize" value="12">
+          <annotations xsi:type="ann:StringAnnotation" name="ptolemyClass" value="ptolemy.data.expr.Parameter"/>
+        </annotations>
+        <annotations xsi:type="ann:StringAnnotation" name="textColor" value="{0.0, 0.0, 0.0, 1.0}">
+          <annotations xsi:type="ann:StringAnnotation" name="ptolemyClass" value="ptolemy.actor.gui.ColorAttribute"/>
+        </annotations>
+        <annotations xsi:type="ann:StringAnnotation" name="fontFamily" value="SansSerif">
+          <annotations xsi:type="ann:StringAnnotation" name="ptolemyClass" value="ptolemy.data.expr.StringParameter"/>
+        </annotations>
+        <annotations xsi:type="ann:StringAnnotation" name="bold" value="false">
+          <annotations xsi:type="ann:StringAnnotation" name="ptolemyClass" value="ptolemy.data.expr.Parameter"/>
+        </annotations>
+        <annotations xsi:type="ann:StringAnnotation" name="italic" value="false">
+          <annotations xsi:type="ann:StringAnnotation" name="ptolemyClass" value="ptolemy.data.expr.Parameter"/>
+        </annotations>
+        <annotations xsi:type="ann:StringAnnotation" name="text" value="The matrix shown, is the&#xA;resulting R matrix for the number &#xA;of antennas used.">
+          <annotations xsi:type="ann:StringAnnotation" name="ptolemyClass" value="ptolemy.kernel.util.StringAttribute"/>
+          <annotations xsi:type="ann:StringAnnotation" name="_style">
+            <annotations xsi:type="ann:StringAnnotation" name="ptolemyClass" value="ptolemy.actor.gui.style.TextStyle"/>
+            <annotations xsi:type="ann:StringAnnotation" name="height" value="20">
+              <annotations xsi:type="ann:StringAnnotation" name="ptolemyClass" value="ptolemy.data.expr.Parameter"/>
+            </annotations>
+            <annotations xsi:type="ann:StringAnnotation" name="width" value="80">
+              <annotations xsi:type="ann:StringAnnotation" name="ptolemyClass" value="ptolemy.data.expr.Parameter"/>
+            </annotations>
+          </annotations>
+        </annotations>
+        <annotations xsi:type="ann:StringAnnotation" name="_location" value="{390.0, 335.0}">
+          <annotations xsi:type="ann:StringAnnotation" name="ptolemyClass" value="ptolemy.kernel.util.Location"/>
+        </annotations>
+      </annotations>
+    </childEntities>
+    <childEntities name="Author: Bart Kienhuis">
+      <annotations name="annotationNode"/>
+      <annotations xsi:type="ann:StringAnnotation" name="AnnotationUpdated4">
+        <annotations xsi:type="ann:StringAnnotation" name="ptolemyClass" value="ptolemy.vergil.kernel.attributes.TextAttribute"/>
+        <annotations xsi:type="ann:StringAnnotation" name="_hideName" value="true">
+          <annotations xsi:type="ann:StringAnnotation" name="ptolemyClass" value="ptolemy.data.expr.SingletonParameter"/>
+        </annotations>
+        <annotations xsi:type="ann:StringAnnotation" name="_hideAllParameters" value="true">
+          <annotations xsi:type="ann:StringAnnotation" name="ptolemyClass" value="ptolemy.data.expr.Parameter"/>
+        </annotations>
+        <annotations xsi:type="ann:StringAnnotation" name="textSize" value="14">
+          <annotations xsi:type="ann:StringAnnotation" name="ptolemyClass" value="ptolemy.data.expr.Parameter"/>
+        </annotations>
+        <annotations xsi:type="ann:StringAnnotation" name="textColor" value="{0.2, 0.2, 0.2, 1.0}">
+          <annotations xsi:type="ann:StringAnnotation" name="ptolemyClass" value="ptolemy.actor.gui.ColorAttribute"/>
+        </annotations>
+        <annotations xsi:type="ann:StringAnnotation" name="fontFamily" value="SansSerif">
+          <annotations xsi:type="ann:StringAnnotation" name="ptolemyClass" value="ptolemy.data.expr.StringParameter"/>
+        </annotations>
+        <annotations xsi:type="ann:StringAnnotation" name="bold" value="false">
+          <annotations xsi:type="ann:StringAnnotation" name="ptolemyClass" value="ptolemy.data.expr.Parameter"/>
+        </annotations>
+        <annotations xsi:type="ann:StringAnnotation" name="italic" value="false">
+          <annotations xsi:type="ann:StringAnnotation" name="ptolemyClass" value="ptolemy.data.expr.Parameter"/>
+        </annotations>
+        <annotations xsi:type="ann:StringAnnotation" name="text" value="Author: Bart Kienhuis">
+          <annotations xsi:type="ann:StringAnnotation" name="ptolemyClass" value="ptolemy.kernel.util.StringAttribute"/>
+          <annotations xsi:type="ann:StringAnnotation" name="_style">
+            <annotations xsi:type="ann:StringAnnotation" name="ptolemyClass" value="ptolemy.actor.gui.style.TextStyle"/>
+            <annotations xsi:type="ann:StringAnnotation" name="height" value="20">
+              <annotations xsi:type="ann:StringAnnotation" name="ptolemyClass" value="ptolemy.data.expr.Parameter"/>
+            </annotations>
+            <annotations xsi:type="ann:StringAnnotation" name="width" value="80">
+              <annotations xsi:type="ann:StringAnnotation" name="ptolemyClass" value="ptolemy.data.expr.Parameter"/>
+            </annotations>
+          </annotations>
+        </annotations>
+        <annotations xsi:type="ann:StringAnnotation" name="_location" value="{15.0, 410.0}">
+          <annotations xsi:type="ann:StringAnnotation" name="ptolemyClass" value="ptolemy.kernel.util.Location"/>
+        </annotations>
+      </annotations>
+    </childEntities>
+    <childLinks source="//@childEntities.0/@childRelations.0" target="//@childEntities.0/@childEntities.0/@childPorts.0"/>
+    <childLinks source="//@childEntities.0/@childRelations.1" target="//@childEntities.0/@childEntities.0/@childPorts.1"/>
+    <childLinks source="//@childEntities.0/@childRelations.2" target="//@childEntities.0/@childEntities.1/@childPorts.0"/>
+    <childLinks source="//@childEntities.0/@childRelations.3" target="//@childEntities.0/@childEntities.1/@childPorts.1"/>
+    <childLinks source="//@childEntities.0/@childRelations.10" target="//@childEntities.0/@childEntities.2/@childPorts.0"/>
+    <childLinks source="//@childEntities.0/@childRelations.0" target="//@childEntities.0/@childEntities.2/@childPorts.1"/>
+    <childLinks source="//@childEntities.0/@childRelations.7" target="//@childEntities.0/@childEntities.2/@childPorts.2"/>
+    <childLinks source="//@childEntities.0/@childRelations.2" target="//@childEntities.0/@childEntities.2/@childPorts.3"/>
+    <childLinks source="//@childEntities.0/@childRelations.10" target="//@childEntities.0/@childEntities.2/@childPorts.4"/>
+    <childLinks source="//@childEntities.0/@childRelations.4" target="//@childEntities.0/@childEntities.2/@childPorts.5"/>
+    <childLinks source="//@childEntities.0/@childRelations.5" target="//@childEntities.0/@childEntities.2/@childPorts.6"/>
+    <childLinks source="//@childEntities.0/@childRelations.13" target="//@childEntities.0/@childEntities.3/@childPorts.0"/>
+    <childLinks source="//@childEntities.0/@childRelations.1" target="//@childEntities.0/@childEntities.3/@childPorts.1"/>
+    <childLinks source="//@childEntities.0/@childRelations.12" target="//@childEntities.0/@childEntities.3/@childPorts.2"/>
+    <childLinks source="//@childEntities.0/@childRelations.3" target="//@childEntities.0/@childEntities.3/@childPorts.3"/>
+    <childLinks source="//@childEntities.0/@childRelations.11" target="//@childEntities.0/@childEntities.3/@childPorts.4"/>
+    <childLinks source="//@childEntities.0/@childRelations.5" target="//@childEntities.0/@childEntities.3/@childPorts.5"/>
+    <childLinks source="//@childEntities.0/@childRelations.13" target="//@childEntities.0/@childEntities.3/@childPorts.6"/>
+    <childLinks source="//@childEntities.0/@childRelations.6" target="//@childEntities.0/@childEntities.3/@childPorts.7"/>
+    <childLinks source="//@childEntities.0/@childRelations.7" target="//@childEntities.0/@childEntities.3/@childPorts.8"/>
+    <childLinks source="//@childEntities.0/@childRelations.12" target="//@childEntities.0/@childEntities.3/@childPorts.9"/>
+    <childLinks source="//@childEntities.0/@childRelations.11" target="//@childEntities.0/@childEntities.3/@childPorts.10"/>
+    <childLinks source="//@childEntities.0/@childRelations.4" target="//@childEntities.0/@childEntities.4/@childPorts.0"/>
+    <childLinks source="//@childEntities.0/@childRelations.6" target="//@childEntities.0/@childEntities.4/@childPorts.1"/>
+    <childLinks source="//@childEntities.0/@childRelations.8" target="//@childEntities.0/@childEntities.4/@childPorts.2"/>
+    <childLinks source="//@childEntities.0/@childRelations.8" target="//@childEntities.0/@childEntities.5/@childPorts.0"/>
+    <childLinks source="//@childEntities.0/@childRelations.9" target="//@childEntities.0/@childEntities.5/@childPorts.1"/>
+    <childLinks source="//@childEntities.0/@childRelations.9" target="//@childEntities.0/@childEntities.6/@childPorts.0"/>
+    <childRelations name="_R0" outgoingLinks="//@childEntities.0/@childLinks.0 //@childEntities.0/@childLinks.5"/>
+    <childRelations name="_R1" outgoingLinks="//@childEntities.0/@childLinks.1 //@childEntities.0/@childLinks.12"/>
+    <childRelations name="_R2" outgoingLinks="//@childEntities.0/@childLinks.2 //@childEntities.0/@childLinks.7"/>
+    <childRelations name="_R3" outgoingLinks="//@childEntities.0/@childLinks.3 //@childEntities.0/@childLinks.14"/>
+    <childRelations name="_R5" outgoingLinks="//@childEntities.0/@childLinks.9 //@childEntities.0/@childLinks.22"/>
+    <childRelations name="_R6" outgoingLinks="//@childEntities.0/@childLinks.10 //@childEntities.0/@childLinks.16"/>
+    <childRelations name="_R8" outgoingLinks="//@childEntities.0/@childLinks.18 //@childEntities.0/@childLinks.23"/>
+    <childRelations name="_R9" outgoingLinks="//@childEntities.0/@childLinks.6 //@childEntities.0/@childLinks.19"/>
+    <childRelations name="_R12" outgoingLinks="//@childEntities.0/@childLinks.24 //@childEntities.0/@childLinks.25"/>
+    <childRelations name="_R13" outgoingLinks="//@childEntities.0/@childLinks.26 //@childEntities.0/@childLinks.27"/>
+    <childRelations name="relation0" outgoingLinks="//@childEntities.0/@childLinks.4 //@childEntities.0/@childLinks.8"/>
+    <childRelations name="relation1" outgoingLinks="//@childEntities.0/@childLinks.15 //@childEntities.0/@childLinks.21"/>
+    <childRelations name="relation2" outgoingLinks="//@childEntities.0/@childLinks.13 //@childEntities.0/@childLinks.20"/>
+    <childRelations name="relation3" outgoingLinks="//@childEntities.0/@childLinks.11 //@childEntities.0/@childLinks.17"/>
+  </childEntities>
+</kaom:Entity>
