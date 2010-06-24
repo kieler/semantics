@@ -106,7 +106,7 @@ public class UpdateResourceFactoryImpl extends XMIResourceFactoryImpl {
                                                 IProgressMonitor.UNKNOWN);
 
                                 try {
-                                    doPreprocessing(uri);
+                                    doPreprocessing(uri, monitor);
                                 } catch (UpdateException e0) {
                                     throw new UpdateRuntimeException(e0
                                             .getMessage(), e0.getCause());
@@ -156,10 +156,11 @@ public class UpdateResourceFactoryImpl extends XMIResourceFactoryImpl {
      * @param monitor
      * @throws UpdateException
      */
-    private void doPreprocessing(final URI uri) throws UpdateException {
-        // monitor.subTask("Converting v0.1 to v0.2");
+    private void doPreprocessing(final URI uri, final IProgressMonitor monitor)
+            throws UpdateException {
+        monitor.subTask("Converting v0.1 to v0.2");
         convert(uri, Version.v_0_1);
-        // monitor.subTask("Converting v0.2 to v0.2.1");
+        monitor.subTask("Converting v0.2 to v0.2.1");
         convert(uri, Version.v_0_2);
     }
 
