@@ -3,9 +3,9 @@
  */
 package de.cau.cs.kieler.synccharts.text.kits.formatting;
 
+import org.eclipse.xtext.Keyword;
 import org.eclipse.xtext.formatting.impl.AbstractDeclarativeFormatter;
 import org.eclipse.xtext.formatting.impl.FormattingConfig;
-import org.eclipse.xtext.Keyword;
 import org.eclipse.xtext.util.Pair;
 
 /**
@@ -19,7 +19,9 @@ import org.eclipse.xtext.util.Pair;
 public class KitsFormatter extends AbstractDeclarativeFormatter {
 	
 	@Override
+	
 	protected void configureFormatting(FormattingConfig c) {
+		c.setIndentationSpace("  ");
 		de.cau.cs.kieler.synccharts.text.kits.services.KitsGrammarAccess f = (de.cau.cs.kieler.synccharts.text.kits.services.KitsGrammarAccess) getGrammarAccess();
 		for(Pair<Keyword, Keyword> pair: f.findKeywordPairs("{", "}")) {
 			c.setIndentation(pair.getFirst(), pair.getSecond());
@@ -27,13 +29,47 @@ public class KitsFormatter extends AbstractDeclarativeFormatter {
 			c.setLinewrap(1).before(pair.getSecond());
 			c.setLinewrap(1).after(pair.getSecond());
 		}
-		for(Keyword comma: f.findKeywords(",")) {
+		for(Pair<Keyword, Keyword> pair: f.findKeywordPairs("[", "]")) {
+			c.setIndentation(pair.getFirst(), pair.getSecond());
+			c.setLinewrap(1).after(pair.getFirst());
+			c.setLinewrap(1).before(pair.getSecond());
+			c.setLinewrap(1).after(pair.getSecond());
+		}
+		for(Keyword comma: f.findKeywords(",",";")) {
 			c.setNoLinewrap().before(comma);
 			c.setNoSpace().before(comma);
 			c.setLinewrap().after(comma);
 		}
-		c.setLinewrap(0, 1, 2).before(f.getSL_COMMENTRule());
-		c.setLinewrap(0, 1, 2).before(f.getML_COMMENTRule());
-		c.setLinewrap(0, 1, 1).after(f.getML_COMMENTRule());
+				
+		for (Keyword keyword: f.findKeywords("-->",">->","o->")) {
+			c.setLinewrap().before(keyword.eContainer());
+//			c.setLinewrap().after(keyword.eContainer());
+		}
+		
+		for (Keyword keyword: f.findKeywords("||")) {
+			c.setLinewrap().before(keyword);
+			c.setLinewrap().after(keyword);
+		}
+		for(Keyword bracket: f.findKeywords("?")) {
+			c.setNoSpace().after(bracket);
+		}
+		for(Keyword bracket: f.findKeywords("<")) {
+			c.setNoSpace().after(bracket);
+		}
+		for(Keyword bracket: f.findKeywords(">")) {
+			c.setNoSpace().before(bracket);
+		}
+		for (Keyword keyword: f.findKeywords("label", "id", "type")) {
+			c.setLinewrap().before(keyword);
+		}
+		// Regions & States
+		for (Keyword keyword: f.findKeywords("init", "State", "Region")) {
+			c.setLinewrap().before(keyword);
+		}
+		// Transitions
+		for (Keyword keyword: f.findKeywords("priority", "targetState", "effects", "trigger")) {
+			c.setLinewrap().before(keyword);
+		}
+
 	}
 }
