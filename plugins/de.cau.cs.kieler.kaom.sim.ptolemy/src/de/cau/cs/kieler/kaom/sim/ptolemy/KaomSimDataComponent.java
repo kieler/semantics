@@ -448,7 +448,8 @@ public class KaomSimDataComponent extends JSONObjectDataComponent {
             
             //FIXME: find a better and more generic way to convert file locations / URLs
 
-            ptolemyModelFile = modelInput.replaceAll(".kaom", "") + ".moml";
+            ptolemyModelFile = modelInput.substring(0,modelInput.lastIndexOf("."));
+            ptolemyModelFile += ".moml";
            
             // test file for actual existence
             File f = new File(ptolemyModelFile);
