@@ -14,13 +14,29 @@
  *****************************************************************************/
 package de.cau.cs.kieler.synccharts.diagram.custom.commands;
 
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
+import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.emf.ecore.xmi.XMIResource;
+import org.eclipse.emf.ecore.xmi.XMLResource;
+import org.eclipse.emf.ecore.xmi.impl.BasicResourceHandler;
+import org.eclipse.emf.ecore.xmi.impl.XMIHelperImpl;
+import org.eclipse.emf.ecore.xmi.impl.XMIResourceImpl;
+import org.eclipse.swt.dnd.Clipboard;
+import org.eclipse.swt.dnd.TextTransfer;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.ui.PlatformUI;
 
 import de.cau.cs.kieler.synccharts.Region;
 import de.cau.cs.kieler.synccharts.State;
@@ -29,14 +45,15 @@ import de.cau.cs.kieler.synccharts.Transition;
 /**
  * Utility class for cut, copy and paste. It holds the different clipboards
  * where the copied objects are kept temporarily. It also provides methods to
- * interact with the different clipboards.
- * 
- * TODO: create a generic super class for this
+ * interact with the different clipboards. *
  * 
  * @author soh
- * @kieler.rating 2010-03-12 proposed yellow
+ * @kieler.rating 2010-06-15 yellow msp, cmot
  */
 public final class Utils {
+
+    /** The clipboard where the copied objects are stored. */
+    private static Object clipBoard = null;
 
     /**
      * 
@@ -45,13 +62,80 @@ public final class Utils {
         // does nothing
     }
 
+    /**
+     * Clone an eObject with the method from EcoreUtil
+     * 
+     * @param object
+     *            the eObject to clone
+     * @return the clone
+     */
     public static Object ecoreCopy(final Object object) {
         return EcoreUtil.copy((EObject) object);
     }
 
-    private static Object clipBoard = null;
+    /**
+     * Get the systems native clipboard.
+     * 
+     * @return the clipboard
+     */
+    private static Clipboard getSystemClipboard() {
+        Display display = PlatformUI.getWorkbench().getDisplay();
+        return new Clipboard(display);
+    }
 
+    /**
+     * Get the contents of the system clipboard and try to parse EObjects from
+     * it.
+     * 
+     * FIXME: not working yet. integrate into loading process
+     * 
+     * @return the objects parsed from it
+     */
+    private static Object getObjectFromSystemClipboard() {
+        Clipboard systemClipboard = getSystemClipboard();
+        TextTransfer textTransfer = TextTransfer.getInstance();
+        Object obj = systemClipboard.getContents(textTransfer);
+        if (obj != null && obj instanceof String) {
+            String root = (String) obj;
+            XMIResource xmiResource = new XMIResourceImpl();
+            xmiResource.setURI(URI.createURI("dummy"));
+            // XMIHelperImpl xmlHelper = new XMIHelperImpl(xmiResource);
+            ByteArrayInputStream bais = new ByteArrayInputStream(root
+                    .getBytes());
+
+            Map<Object, Object> defaultLoadOptions = xmiResource
+                    .getDefaultLoadOptions();
+            defaultLoadOptions.put(XMLResource.OPTION_RESOURCE_HANDLER,
+                    new BasicResourceHandler());
+
+            try {
+                xmiResource.load(bais, defaultLoadOptions);
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+
+            EList<EObject> results = xmiResource.getContents();
+
+            if (results != null && !results.isEmpty()) {
+                if (results.size() == 1) {
+                    return results.get(0);
+                }
+                return EcoreUtil.copyAll(results);
+            }
+            return null;
+        }
+        return null;
+    }
+
+    /**
+     * Get an object from the clipboard. This involves preparing the object so
+     * it can be inserted right away.
+     * 
+     * @return an EObject or a list of eObjects
+     */
+    @SuppressWarnings("unchecked")
     public static Object getObjectFromClipboard() {
+        getObjectFromSystemClipboard();
         if (clipBoard instanceof EObject) {
             Object copy = EcoreUtil.copy((EObject) clipBoard);
             if (copy instanceof State) {
@@ -89,6 +173,7 @@ public final class Utils {
      * 
      * @param object
      *            the object
+     * @return the contents of the clipboard
      */
     public static Object objectToClipboard(final Object object) {
         resetClipboard();
@@ -99,7 +184,47 @@ public final class Utils {
             List<?> list = (List<?>) object;
             clipBoard = EcoreUtil.copyAll(list);
         }
+        objectToSystemClipboard(object);
         return clipBoard;
+    }
+
+    /**
+     * Experimental method for writing the object or list of objects to the
+     * system clipboard.
+     * 
+     * TODO: use this to implement copy and paste through the system to allow
+     * copying between applications.
+     * 
+     * @param object
+     *            the object that should be copied to clipboard
+     */
+    private static void objectToSystemClipboard(final Object object) {
+        ArrayList<EObject> arrayList = new ArrayList<EObject>();
+        if (object instanceof EObject) {
+            arrayList.add((EObject) object);
+        } else if (object instanceof List<?>) {
+            for (Object o : (List<?>) object) {
+                arrayList.add((EObject) o);
+            }
+        } else {
+            return;
+        }
+        String returnStr = null;
+        XMIResource xmiResource = new XMIResourceImpl();
+        XMIHelperImpl xmiHelper = new XMIHelperImpl(xmiResource);
+        try {
+            returnStr = XMIHelperImpl.saveString(new HashMap<Object, Object>(),
+                    arrayList, "UTF-8", xmiHelper);
+        } catch (RuntimeException ex) {
+            ex.printStackTrace();
+        } catch (Exception e0) {
+            e0.printStackTrace();
+        }
+
+        Clipboard systemClipboard = getSystemClipboard();
+        TextTransfer textTransfer = TextTransfer.getInstance();
+        systemClipboard.setContents(new Object[] { returnStr },
+                new TextTransfer[] { textTransfer });
     }
 
     /**
@@ -109,6 +234,11 @@ public final class Utils {
         clipBoard = null;
     }
 
+    /**
+     * Check if there is any object inside the clipboard
+     * 
+     * @return true if the clipboard is empty
+     */
     public static boolean isClipboardEmpty() {
         return clipBoard == null;
     }
@@ -136,9 +266,13 @@ public final class Utils {
     }
 
     /**
-     * Get a list of states from the clipboard.
+     * Prepare a list of states to be ready for insertion using xtend.
      * 
-     * @return the states
+     * @param statesClipBoard
+     *            the raw list of states
+     * @param copy
+     *            the copy of the list
+     * @return the states the formatted list
      */
     public static List<State> getStatesFromClipboard(
             Collection<State> statesClipBoard, Collection<State> copy) {
@@ -163,9 +297,13 @@ public final class Utils {
     }
 
     /**
-     * Get a list of regions from the clipboard.
+     * Prepare a list of regions to be ready for insertion using xtend.
      * 
-     * @return the regions
+     * @param regionsClipBoard
+     *            the raw list of regions
+     * @param copy
+     *            the copy of the list
+     * @return the states the formatted list
      */
     public static List<Region> getRegionsFromClipboard(
             Collection<Region> regionsClipBoard, Collection<Region> copy) {
@@ -180,9 +318,13 @@ public final class Utils {
     }
 
     /**
-     * Get a transition from the clipboard.
+     * Prepare a list of transitions to be ready for insertion using xtend.
      * 
-     * @return the transition
+     * @param transitionsClipBoard
+     *            the raw list of transitions
+     * @param copy
+     *            the copy of the list
+     * @return the states the formatted list
      */
     public static List<Transition> getTransitionsFromClipboard(
             Collection<Transition> transitionsClipBoard,

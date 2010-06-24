@@ -31,79 +31,77 @@ import de.cau.cs.kieler.synccharts.diagram.custom.SyncchartsDiagramCustomPlugin;
  * Creates the cut, copy and paste commands from ksbase.
  * 
  * @author soh
- * @kieler.rating 2010-06-14 proposed yellow
+ * @kieler.rating 2010-06-15 yellow msp, cmot
  */
 public class SyncchartsCutCopyPasteCommandFactory extends
-		AbstractCutCopyPasteCommandFactory {
+        AbstractCutCopyPasteCommandFactory {
 
-	/** The transformation file. */
-	private static final String FILE = "/transformations/feature.ext";
+    /** The transformation file. */
+    private static final String FILE = "/transformations/copyPaste.ext";
 
-	/** The base packages of the underlying meta model. */
-	private static final String[] MODEL = {
-	        "de.cau.cs.kieler.synccharts.SyncchartsPackage"
-	};
+    /** The base packages of the underlying meta model. */
+    private static final String[] MODEL = { "de.cau.cs.kieler.synccharts.SyncchartsPackage" };
 
-	/** All types that are supported by copy and paste and have to be mapped. */
-	private static final Class<?>[] TYPES = { State.class, Region.class,
-			Transition.class };
+    /** All types that are supported by copy and paste and have to be mapped. */
+    private static final Class<?>[] TYPES = { State.class, Region.class,
+            Transition.class };
 
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	protected Bundle getBundle() {
-		return SyncchartsDiagramCustomPlugin.getInstance().getBundle();
-	}
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected Bundle getBundle() {
+        return SyncchartsDiagramCustomPlugin.getInstance().getBundle();
+    }
 
-	@Override
-	protected Class<?>[] getTypes() {
-		return TYPES;
-	}
+    @Override
+    protected Class<?>[] getTypes() {
+        return TYPES;
+    }
 
-	/**
-	 * Perform actions after the operation. In this case refreshing the edit
-	 * policies and performing an auto layout.
-	 * 
-	 * @param monitor
-	 *            the progress monitor
-	 */
-	@Override
-	protected void performPostOperationActions(final IProgressMonitor monitor) {
-		SyncchartsDiagramCustomPlugin.getInstance().getDisplay().syncExec(
-				new Runnable() {
+    /**
+     * Perform actions after the operation. In this case refreshing the edit
+     * policies and performing an auto layout.
+     * 
+     * @param monitor
+     *            the progress monitor
+     */
+    @Override
+    protected void performPostOperationActions(final IProgressMonitor monitor) {
+        SyncchartsDiagramCustomPlugin.getInstance().getDisplay().syncExec(
+                new Runnable() {
 
-					public void run() {
-						IEditorPart editorPart = SyncchartsDiagramCustomPlugin
-								.getInstance().getActiveEditorPart();
-						if (editorPart != null) {
-							refreshEditPolicies(editorPart);
+                    public void run() {
+                        IEditorPart editorPart = SyncchartsDiagramCustomPlugin
+                                .getInstance().getActiveEditorPart();
+                        if (editorPart != null) {
+                            refreshEditPolicies(editorPart);
 
-							EclipseLayoutServices.getInstance().layout(editorPart, null,
-							        true, false);
-						}
-					}
+                            EclipseLayoutServices.getInstance().layout(
+                                    editorPart, null, true, false);
+                        }
+                    }
 
-				});
-	}
+                });
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	protected String getFile() {
-		return FILE;
-	}
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected String getFile() {
+        return FILE;
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	protected List<String> getModel() {
-	    List<String> modelsList = new ArrayList<String>(MODEL.length);
-		for (String s : MODEL) {
-		    modelsList.add(s);
-		}
-		return modelsList;
-	}
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected List<String> getModel() {
+        List<String> modelsList = new ArrayList<String>(MODEL.length);
+        for (String s : MODEL) {
+            modelsList.add(s);
+        }
+        return modelsList;
+    }
 }
