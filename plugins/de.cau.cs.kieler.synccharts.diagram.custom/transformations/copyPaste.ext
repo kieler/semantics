@@ -177,20 +177,20 @@ Object getObjectFromClipboard():
  JAVA de.cau.cs.kieler.synccharts.diagram.custom.commands.Utils.getObjectFromClipboard()
 ;
 
+// determine whether or not the clipboard is empty
 Boolean isClipboardEmpty():
  JAVA de.cau.cs.kieler.synccharts.diagram.custom.commands.Utils.isClipboardEmpty()
 ;
 
+// check for the type of a list
 Boolean isStateList(List[Object] list):
  let head = list.get(0):
  head.metaType == State
 ;
-
 Boolean isRegionList(List[Object] list):
  let head = list.get(0):
  head.metaType == Region
 ;
-
 Boolean isTransitionList(List[Object] list):
  let head = list.get(0):
  head.metaType == Transition
@@ -212,6 +212,7 @@ Void paste(List[Object] objects):
  )
 ;
 
+// dummy matcher
 Void pasteInternal(Object noop0, Object noop1):
  null
 ;
@@ -229,7 +230,6 @@ Void pasteInternal(Region target, State state):
  target.innerStates.add(state)
 ;
 
-// try region in region, if failed try states in region
 Void pasteInternal(Region target, Region region):
  pasteRegionIntoRegion(region, target)
 ;
@@ -247,17 +247,18 @@ Void pasteRegionIntoRegion(Region region, Region target):
 ;
 
 Void pasteInternal(Region target, List[Object] list):
- if (isStateList(list)) then pasteInternalStates(target, list)
- else (if (isRegionList(list)) then pasteInternalRegions(target, list)
- else (if (isTransitionList(list)) then pasteInternalTransitions(target, list)
- ))
+ (if (isStateList(list)) then pasteInternalStates(target, list) else 
+ (if (isRegionList(list)) then pasteInternalRegions(target, list) else 
+ (if (isTransitionList(list)) then pasteInternalTransitions(target, list)
+ )
+ )
+ )
 ;
 
 Void pasteInternalStates(Region target, List[State] states):
  target.innerStates.addAll(states)
 ;
 
-// try regions into region
 Void pasteInternalRegions(Region target, List[Region] regions):
   pasteRegionsIntoRegion(regions, target)
 ;
@@ -274,7 +275,6 @@ Void pasteRegionsIntoRegion(List[Region] regions, Region target):
   dummy.setLabel(getFileNameOfActiveEditor()))
 ;
 
-// try pasting a transition into a region by creating two dummy states
 Void pasteInternal(Region target, Transition trans):
   pasteTransitionIntoRegion(target, trans)
 ;
@@ -313,7 +313,6 @@ Void paste(State target):
  if (!isClipboardEmpty()) then pasteInternal(target, getObjectFromClipboard())
 ;
 
-// try state into state if fails try region into state
 Void pasteInternal(State target, State state):
   replaceState(target, state)
 ;
@@ -340,7 +339,6 @@ Void fixReference(Transition trans, State oldTarget, State newTarget):
  )
 ;
 
-// try region into state if fails try states into state
 Void pasteInternal(State target, Region region):
   target.regions.add(region)
 ;
@@ -352,7 +350,6 @@ Void pasteInternal(State target, List[Object] list):
  ))
 ;
 
-// try states into state if fails try regions into state
 Void pasteInternalStates(State target, List[State] states):
  let parent = target.parentRegion:
   target.incomingTransitions.removeAll(target.incomingTransitions) ->
@@ -361,18 +358,15 @@ Void pasteInternalStates(State target, List[State] states):
   parent.innerStates.addAll(states)
 ;
 
-// try regions into state
 Void pasteInternalRegions(State target, List[Region] regions):
  target.regions.addAll(regions)
 ;
 
-// try transition as self transition on state
 Void pasteInternal(State target, Transition trans):
  trans.setSourceState(target) ->
  trans.setTargetState(target)
 ;
 
-// try transitions as self transitions on state
 Void pasteInternalTransitions(State target, List[Transition] trans):
  trans.addSelfloopToState(target)
 ;
@@ -452,7 +446,6 @@ Void pasteStateListTransitions(List[State] states, List[Transition] trans):
    trans.connectStates(source, target)
 ;
 
-// try adding the region to each state
 Void pasteStateList(List[State] states, Region region):
   states.insertRegionFromClipboardIntoState()
 ;
@@ -500,7 +493,6 @@ Void addStateInClipboardToRegion(Region target):
  target.innerStates.add(state)
 ;
 
-// try replacing each target with the region in clipboard
 Void pasteRegionList(List[Region] targets, Region region):
   targets.replaceWithRegionFromClipboard()
 ;
@@ -524,7 +516,6 @@ Void pasteRegionList(List[Region] targets, List[Object] list):
  ))
 ;
 
-// try pasting all states in clipboard in each region
 Void pasteRegionListStates(List[Region] targets, List[State] states):
  targets.addStatesFromClipboardToRegion()
 ;
@@ -665,7 +656,6 @@ Void pasteRegionOnTransition(Transition target, Region region, State transKeeper
  pasteStateOnTransition(target, dummyState, transKeeper)
 ;
 
-// try pasting states on transition by encapsulating in region and state
 Void pasteInternalStates(Transition target, List[State] states):
  pasteStatesOnTransition(target, states, target.sourceState)
 ;
@@ -677,7 +667,6 @@ Void pasteStatesOnTransition(Transition target, List[State] states, State transK
  pasteRegionOnTransition(target, region, transKeeper)
 ;
 
-// try pasting regions on transition by encapsulating in state
 Void pasteInternalRegions(Transition target, List[Region] regions):
  pasteRegionsOnTransition(target, regions, target.sourceState)
 ;
@@ -703,7 +692,6 @@ Void pasteTransitionList(List[Transition] targets, Object noop):
  null
 ;
 
-// try replacing each transition with a copy of the one in clipboard
 Void pasteTransitionList(List[Transition] targets, Transition trans):
  targets.replaceWithTransition()
 ;
@@ -725,7 +713,6 @@ Void pasteTransitionList(List[Transition] targets, List[Object] list):
  ))
 ;
 
-// try replacing each transition with a copy of all the ones in clipboard
 Void pasteTransitionListTransitions(List[Transition] targets, List[Transition] transList):
  targets.replaceWithTransitions()
 ;
@@ -740,7 +727,6 @@ Void replaceWithTransitions(Transition target):
  transList.setSourceState(source)
 ;
 
-// try insert the state in each transition
 Void pasteTransitionList(List[Transition] targets, State state):
  targets.pasteStateInClipboardIntoTransition()
 ;
@@ -751,7 +737,6 @@ Void pasteStateInClipboardIntoTransition(Transition target):
  pasteStateOnTransition(target, state, target.sourceState)
 ;
 
-// try inserting the region into each transition
 Void pasteTransitionList(List[Transition] targets, Region region):
  targets.pasteRegionInClipboardIntoTransition()
 ;
@@ -764,7 +749,6 @@ Void pasteRegionInClipboardIntoTransition(Transition target):
  pasteStateOnTransition(target, dummyState, target.sourceState)
 ;
 
-// try inserting all states in clipboard into each transition
 Void pasteTransitionListStates(List[Transition] targets, List[State] states):
  targets.pasteStatesInClipboardIntoTransition()
 ;
