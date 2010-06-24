@@ -523,10 +523,12 @@
     	          <instanceof value="org.eclipse.core.resources.IFile"/>
         	      <test property="org.eclipse.core.resources.extension" value="kixs"/>
                </and>
+      
 	           <and>
     	          <instanceof value="org.eclipse.core.resources.IFile"/>
         	      <test property="org.eclipse.core.resources.extension" value="kits"/>
                </and>
+      
                <instanceof value="de.cau.cs.kieler.synccharts.diagram.navigator.SyncchartsDomainNavigatorItem"/>
             </or>
          </triggerPoints>

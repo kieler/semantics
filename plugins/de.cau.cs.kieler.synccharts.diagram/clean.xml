@@ -5,6 +5,18 @@
 				<include name="**/*.java" />
 				<include name="../message.properties" />
 			</fileset>
+			<fileset dir="icons">
+				<include name="**/*.*" />
+			</fileset>
+			<fileset dir="META-INF">
+			    <include name="MANIFEST.MF" />
+			</fileset>
+			<fileset dir="">
+			 <include name="plugin.xml" />
+			 <include name="messages.properties" />
+			 <include name="plugin.properties" />
+			 <include name="build.properties" />
+			</fileset>
 		</delete>
 	</target>
 </project>

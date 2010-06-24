@@ -7,7 +7,7 @@ Bundle-ClassPath: .
 Bundle-Activator: de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorPlugin
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
-Export-Package: de.cau.cs.kieler.synccharts.diagram.edit.parts,
+Export-Package: de.cau.cs.kieler.synccharts.diagram.edit.parts, 
  de.cau.cs.kieler.synccharts.diagram.part,
  de.cau.cs.kieler.synccharts.diagram.providers
 Require-Bundle: org.eclipse.core.runtime,
@@ -36,15 +36,16 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.draw2d;visibility:=reexport,
  de.cau.cs.kieler.core.ui;visibility:=reexport,
  de.cau.cs.kieler.synccharts.custom;visibility:=reexport,
+ de.cau.cs.kieler.synccharts.text.bridge;visibility:=reexport,
+ de.cau.cs.kieler.core.annotations;visibility:=reexport,
+ de.cau.cs.kieler.core.annotations.edit;visibility:=reexport,
+ de.cau.cs.kieler.core.expressions;visibility:=reexport,
+ de.cau.cs.kieler.core.expressions.edit;visibility:=reexport,
  de.cau.cs.kieler.synccharts;visibility:=reexport,
  de.cau.cs.kieler.synccharts.edit;visibility:=reexport,
+ org.eclipse.emf.ecore;visibility:=reexport,
+ org.eclipse.emf.ecore.edit;visibility:=reexport,
  org.eclipse.ocl.ecore;visibility:=reexport,
  org.eclipse.emf.validation;visibility:=reexport,
- org.eclipse.gef;visibility:=reexport,
- de.cau.cs.kieler.core.annotations;visibility:=reexport,
- de.cau.cs.kieler.core.expressions;visibility:=reexport,
- de.cau.cs.kieler.core.annotations.edit;visibility:=reexport,
- de.cau.cs.kieler.core.expressions.edit;visibility:=reexport,
- org.eclipse.emf.ecore.edit;visibility:=reexport,
- de.cau.cs.kieler.synccharts.text.bridge;visibility:=reexport
+ org.eclipse.gef;visibility:=reexport
 Eclipse-LazyStart: true

@@ -72,7 +72,7 @@ public class SyncchartsDiagramEditorPlugin extends AbstractUIPlugin {
                 getPreferenceStore());
         adapterFactory = createAdapterFactory();
 
-        //de.cau.cs.kieler.synccharts.text.actions.bridge.SyncchartsContentAdapter.init();
+        //de.cau.cs.kieler.synccharts.labelparser.bridge.SyncchartsContentAdapter.init();
     }
 
     /**
