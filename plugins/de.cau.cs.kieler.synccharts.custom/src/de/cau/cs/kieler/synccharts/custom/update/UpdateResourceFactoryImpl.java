@@ -44,6 +44,40 @@ import de.cau.cs.kieler.synccharts.Transition;
  */
 public class UpdateResourceFactoryImpl extends XMIResourceFactoryImpl {
 
+    private boolean isFileOutOfDate(final URI uri) {
+        ExtensibleURIConverterImpl conv = new ExtensibleURIConverterImpl();
+
+        if (!conv.exists(uri, null)) {
+            return false;
+        }
+
+        try {
+            InputStream is = conv.createInputStream(uri);
+
+            BufferedReader reader = new BufferedReader(
+                    new InputStreamReader(is));
+
+            // contains result to be written back to file
+            String s = reader.readLine();
+            int lineIndex = 0;
+            while (s != null) {
+
+                if (lineIndex == 1) {
+                    if (!s.contains(getVersionURI(Version.v_0_2_1))) {
+                        return askUser();
+                    }
+                }
+                s = reader.readLine();
+                lineIndex++;
+            }
+            is.close();
+        } catch (IOException e0) {
+            e0.printStackTrace();
+        }
+
+        return false;
+    }
+
     /**
      * {@inheritDoc}
      */
@@ -51,45 +85,49 @@ public class UpdateResourceFactoryImpl extends XMIResourceFactoryImpl {
     public Resource createResource(final URI uri) {
         XMIResource resource = (XMIResource) super.createResource(uri);
 
-        PlatformUI.getWorkbench().getDisplay().syncExec(new Runnable() {
-            public void run() {
-                Shell parent = PlatformUI.getWorkbench()
-                        .getActiveWorkbenchWindow().getShell();
-                PlatformUI.getWorkbench().getProgressService();
-                ProgressMonitorDialog dialog = new ProgressMonitorDialog(parent);
-                try {
-                    dialog.run(true, false, new IRunnableWithProgress() {
+        if (isFileOutOfDate(uri)) {
 
-                        public void run(IProgressMonitor monitor)
-                                throws InvocationTargetException,
-                                InterruptedException {
-                            monitor
-                                    .beginTask(
-                                            "Converting Synccharts from older version.",
-                                            IProgressMonitor.UNKNOWN);
+            PlatformUI.getWorkbench().getDisplay().syncExec(new Runnable() {
+                public void run() {
+                    Shell parent = PlatformUI.getWorkbench()
+                            .getActiveWorkbenchWindow().getShell();
+                    PlatformUI.getWorkbench().getProgressService();
+                    ProgressMonitorDialog dialog = new ProgressMonitorDialog(
+                            parent);
+                    try {
+                        dialog.run(true, false, new IRunnableWithProgress() {
 
-                            try {
-                                doPreprocessing(uri, monitor);
-                            } catch (UpdateException e0) {
-                                throw new UpdateRuntimeException(e0
-                                        .getMessage());
+                            public void run(IProgressMonitor monitor)
+                                    throws InvocationTargetException,
+                                    InterruptedException {
+                                monitor
+                                        .beginTask(
+                                                "Converting Synccharts from older version.",
+                                                IProgressMonitor.UNKNOWN);
+
+                                try {
+                                    doPreprocessing(uri);
+                                } catch (UpdateException e0) {
+                                    throw new UpdateRuntimeException(e0
+                                            .getMessage(), e0.getCause());
+                                }
+
+                                monitor.done();
                             }
-
-                            monitor.done();
+                        });
+                    } catch (InvocationTargetException e) {
+                        Throwable excep = e.getCause();
+                        if (excep instanceof UpdateRuntimeException) {
+                            throw (UpdateRuntimeException) excep;
                         }
-                    });
-                } catch (InvocationTargetException e) {
-                    Throwable excep = e.getCause();
-                    if (excep instanceof UpdateRuntimeException) {
-                        throw (UpdateRuntimeException) excep;
+                        e.printStackTrace();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
                     }
-                    e.printStackTrace();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
 
-            }
-        });
+                }
+            });
+        }
 
         Map<Object, Object> defaultLoadOptions = resource
                 .getDefaultLoadOptions();
@@ -118,12 +156,11 @@ public class UpdateResourceFactoryImpl extends XMIResourceFactoryImpl {
      * @param monitor
      * @throws UpdateException
      */
-    private void doPreprocessing(final URI uri, IProgressMonitor monitor)
-            throws UpdateException {
-        monitor.subTask("Converting v0.1 to v0.2");
-        boolean agreed = convert(uri, Version.v_0_1, false);
-        monitor.subTask("Converting v0.2 to v0.2.1");
-        agreed = convert(uri, Version.v_0_2, agreed);
+    private void doPreprocessing(final URI uri) throws UpdateException {
+        // monitor.subTask("Converting v0.1 to v0.2");
+        convert(uri, Version.v_0_1);
+        // monitor.subTask("Converting v0.2 to v0.2.1");
+        convert(uri, Version.v_0_2);
     }
 
     /**
@@ -131,84 +168,73 @@ public class UpdateResourceFactoryImpl extends XMIResourceFactoryImpl {
      * @param version
      * @throws UpdateException
      */
-    private boolean convert(URI uri, Version version, boolean alreadyAgreed)
-            throws UpdateException {
-        boolean result = false;
+    private void convert(URI uri, Version version) throws UpdateException {
         ExtensibleURIConverterImpl conv = new ExtensibleURIConverterImpl();
 
         try {
             if (!conv.exists(uri, null)) {
-                return false;
+                return;
             }
             InputStream is = conv.createInputStream(uri);
             BufferedReader reader = new BufferedReader(
                     new InputStreamReader(is));
 
-            try {
-                // contains result to be written back to file
-                List<String> lines = new LinkedList<String>();
-                boolean modified = false;
+            // contains result to be written back to file
+            List<String> lines = new LinkedList<String>();
+            boolean modified = false;
 
-                String s = reader.readLine();
-                int lineIndex = 0;
-                while (s != null) {
+            String s = reader.readLine();
+            int lineIndex = 0;
+            while (s != null) {
 
-                    if (lineIndex == 1) {
-                        if (!s.contains(getVersionURI(version))) {
-                            is.close();
-                            return false;
-                        }
-                        if (!alreadyAgreed) {
-                            askUser();
-                            result = true;
-                        }
+                if (lineIndex == 1) {
+                    if (!s.contains(getVersionURI(version))) {
+                        is.close();
+                        return;
                     }
-
-                    String newString = s;
-                    switch (version) {
-                    case v_0_1:
-                        newString = convertLineV_0_1(s);
-                        break;
-                    case v_0_2:
-                        newString = convertLineV_0_2(s);
-                        break;
-                    case v_0_2_1:
-                        return result;
-                    }
-                    lines.add(newString);
-                    s = reader.readLine();
-
-                    if (!modified && !s.equals(newString)) {
-                        modified = true;
-                    }
-                    lineIndex++;
                 }
-                is.close();
 
-                if (modified) {
-                    String line2 = lines.get(1);
-                    line2 = line2.replace(getVersionURI(version),
-                            getVersionURI(getNextVersion(version)));
-                    lines.set(1, line2);
-
-                    // write modified lines back to file
-                    OutputStream os = conv.createOutputStream(uri);
-                    BufferedWriter bw = new BufferedWriter(
-                            new OutputStreamWriter(os));
-                    for (String line : lines) {
-                        bw.write(line + "\n");
-                        bw.flush();
-                    }
-                    os.close();
+                String newString = s;
+                switch (version) {
+                case v_0_1:
+                    newString = convertLineV_0_1(s);
+                    break;
+                case v_0_2:
+                    newString = convertLineV_0_2(s);
+                    break;
+                case v_0_2_1:
+                    return;
                 }
-            } catch (UpdateException e0) {
-                is.close();
-                throw e0;
+                lines.add(newString);
+                s = reader.readLine();
+
+                if (!modified && !s.equals(newString)) {
+                    modified = true;
+                }
+                lineIndex++;
+            }
+            is.close();
+
+            if (modified) {
+                String line2 = lines.get(1);
+                line2 = line2.replace(getVersionURI(version),
+                        getVersionURI(getNextVersion(version)));
+                lines.set(1, line2);
+
+                // write modified lines back to file
+                OutputStream os = conv.createOutputStream(uri);
+                BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(
+                        os));
+                for (String line : lines) {
+                    bw.write(line + "\n");
+                    bw.flush();
+                }
+                os.close();
             }
         } catch (IOException e) {
             e.printStackTrace();
+            throw new UpdateException(e);
         }
-        return result;
     }
 
     private static class UpdateException extends Exception {
@@ -222,6 +248,10 @@ public class UpdateResourceFactoryImpl extends XMIResourceFactoryImpl {
             super(s);
         }
 
+        public UpdateException(final Throwable cause) {
+            super(cause);
+        }
+
     }
 
     private static class UpdateRuntimeException extends RuntimeException {
@@ -231,34 +261,32 @@ public class UpdateResourceFactoryImpl extends XMIResourceFactoryImpl {
         */
         private static final long serialVersionUID = 1L;
 
-        public UpdateRuntimeException(final String s) {
-            super(s);
+        public UpdateRuntimeException(final String s, final Throwable cause) {
+            super(s, cause);
         }
 
     }
 
-    private boolean error = false;
+    private boolean dummyResult = false;
 
     /**
      * @throws UpdateException
      * 
      */
-    private void askUser() throws UpdateException {
-        error = false;
+    private boolean askUser() {
+        dummyResult = false;
         PlatformUI.getWorkbench().getDisplay().syncExec(new Runnable() {
 
             public void run() {
                 Shell parent = PlatformUI.getWorkbench()
                         .getActiveWorkbenchWindow().getShell();
-                error = !MessageDialog.openQuestion(parent,
+                dummyResult = MessageDialog.openQuestion(parent,
                         "Old Synccharts version detected.",
                         "Convert to new version?");
             }
         });
 
-        if (error) {
-            throw new UpdateException("User aborted conversion.");
-        }
+        return dummyResult;
     }
 
     private static final String[] V_0_2_EXPRESSION = { "SignalReference",
