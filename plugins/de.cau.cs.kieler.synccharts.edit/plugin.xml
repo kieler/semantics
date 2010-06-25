@@ -21,7 +21,7 @@
 
    <extension point="org.eclipse.emf.edit.itemProviderAdapterFactories">
       <factory
-            uri="http://kieler.cs.cau.de/synccharts/0.2"
+            uri="http://kieler.cs.cau.de/synccharts/0.2.1"
             class="de.cau.cs.kieler.synccharts.provider.SyncchartsItemProviderAdapterFactory"
             supportedTypes=
               "org.eclipse.emf.edit.provider.IEditingDomainItemProvider
