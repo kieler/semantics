@@ -1,8 +1,15 @@
 /**
- * <copyright>
- * </copyright>
- *
- * $Id$
+ * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
+ * 
+ * http://www.informatik.uni-kiel.de/rtsys/kieler/
+ * 
+ * Copyright 2010 by
+ * + Christian-Albrechts-University of Kiel
+ *   + Department of Computer Science
+ *     + Real-Time and Embedded Systems Group
+ * 
+ * This code is provided under the terms of the Eclipse Public License (EPL).
+ * See the file epl-v10.html for the license text.
  */
 package de.cau.cs.kieler.core.annotations.impl;
 
@@ -86,6 +93,7 @@ public abstract class AnnotatableImpl extends EObjectImpl implements Annotatable
      * @param name the name of the Annotation, does not need to be unique
      * @returns the first Annotation that matches the name
      * <!-- end-user-doc -->
+     * @generated NOT
      */
     public Annotation getAnnotation(String name) {
         for (Annotation annotation : this.getAnnotations()) {
@@ -102,6 +110,7 @@ public abstract class AnnotatableImpl extends EObjectImpl implements Annotatable
      * @param name the name of the Annotations, does not need to be unique
      * @returns a list of all Annotations that match the name
      * <!-- end-user-doc -->
+     * @generated NOT
      */
     public EList<Annotation> getAllAnnotations(String name) {
         EList<Annotation> list = new BasicEList<Annotation>();
