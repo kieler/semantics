@@ -99,8 +99,8 @@ public class InterfaceDeclParserTests {
 
     @Test
     public void testParseSome() throws Exception {
-        parse("signal b, c;");
-        String[] names = { "b", "c" };
+        parse("signal a, b, c, d, e;");
+        String[] names = { "a", "b", "c", "d", "e" };
         if (!searchSignals(rootState.getSignals(), names)) {
             throw new KielerException("parsing some signals failed");
         }
