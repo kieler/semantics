@@ -290,11 +290,11 @@ public class UpdateResourceFactoryImpl extends XMIResourceFactoryImpl {
         return dummyResult;
     }
 
-    private static final String[] V_0_2_EXPRESSION = { "SignalReference",
-            "VariableReference", "Emission", "TextualCode", "Expression",
+    private static final String[] V_0_2_EXPRESSION = { "CombineOperator", "SignalReference",
+            "VariableReference", "TextualCode", "Expression",
             "ComplexExpression", "Value", "ValuedObject",
-            "OperationExpression", "Signal", "Variable", "FloatValue",
-            "IntValue", "BooleanValue" };
+            "OperatorType", "Signal", "ValueType", "Variable", "FloatValue",
+            "IntValue", "BooleanValue", "OperatorExpression", "TextExpression" };
 
     /**
      * @param s
