@@ -130,7 +130,7 @@ public abstract class AbstractAutomatedComponent extends
      * @return 0
      */
     public int getNumberOfAdditionalSteps() {
-        return wantsMoreRuns();
+        return wantsMoreSteps();
     }
 
     /**
