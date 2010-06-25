@@ -436,13 +436,18 @@
       </option>
       <option
             class="de.cau.cs.kieler.synccharts.Action"
-            option="de.cau.cs.kieler.layout.options.diagramType"
-            value="de.cau.cs.kieler.layout.diagrams.nolayout">
+            option="de.cau.cs.kieler.layout.options.noLayout"
+            value="true">
       </option>
       <option
-            class="de.cau.cs.kieler.synccharts.Signal"
-            option="de.cau.cs.kieler.layout.options.diagramType"
-            value="de.cau.cs.kieler.layout.diagrams.nolayout">
+            class="de.cau.cs.kieler.core.expressions.Signal"
+            option="de.cau.cs.kieler.layout.options.noLayout"
+            value="true">
+      </option>
+      <option
+            class="de.cau.cs.kieler.core.expressions.Variable"
+            option="de.cau.cs.kieler.layout.options.noLayout"
+            value="true">
       </option>
       <option
             class="de.cau.cs.kieler.synccharts.State"
