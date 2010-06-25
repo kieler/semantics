@@ -1,17 +1,28 @@
 /**
- * <copyright>
- * </copyright>
- *
- * $Id$
+ * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
+ * 
+ * http://www.informatik.uni-kiel.de/rtsys/kieler/
+ * 
+ * Copyright 2010 by
+ * + Christian-Albrechts-University of Kiel
+ *   + Department of Computer Science
+ *     + Real-Time and Embedded Systems Group
+ * 
+ * This code is provided under the terms of the Eclipse Public License (EPL).
+ * See the file epl-v10.html for the license text.
  */
 package de.cau.cs.kieler.core.expressions.provider;
 
+
+import de.cau.cs.kieler.core.expressions.BooleanValue;
+import de.cau.cs.kieler.core.expressions.ExpressionsPackage;
 
 import java.util.Collection;
 import java.util.List;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
+
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
@@ -21,9 +32,6 @@ import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ViewerNotification;
-
-import de.cau.cs.kieler.core.expressions.BooleanValue;
-import de.cau.cs.kieler.core.expressions.ExpressionsPackage;
 
 /**
  * This is the item provider adapter for a {@link de.cau.cs.kieler.core.expressions.BooleanValue} object.
