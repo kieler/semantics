@@ -50,11 +50,11 @@ context State
 
 // FIXME: not working yet
 context Scope
- WARNING "SC: Float and unsigned signals are not supported:" + getSignalsWithFloatUnsignedType(this):
- getSignalsWithFloatUnsignedType(this).isEmpty;
+ WARNING "SC: Float and unsigned signals are not supported: " + getSignalsWithFloatUnsignedType(this):
+ signals == null || getSignalsWithFloatUnsignedType(this).isEmpty;
 
 List[Signal] getSignalsWithFloatUnsignedType(Scope scope):
- scope.signals.select(e|e.type == ValueType::FLOAT || e.type == ValueType::UNSIGNED)
+ scope.signals.select(e|e.type == ValueType::FLOAT || e.type == ValueType::UNSIGNED).name
 ;
 
 context Signal
