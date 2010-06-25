@@ -236,12 +236,15 @@ public class SyncchartsSimDataComponent extends JSONObjectDataComponent {
             momlWriter.setModelSlot("momlmodel");
 
             // Meta models
+            EmfMetaModel metaModel0 = new EmfMetaModel(
+                    de.cau.cs.kieler.core.expressions.ExpressionsPackage.eINSTANCE);
             EmfMetaModel metaModel1 = new EmfMetaModel(
                     de.cau.cs.kieler.synccharts.SyncchartsPackage.eINSTANCE);
             EmfMetaModel metaModel2 = new EmfMetaModel(Moml.MomlPackage.eINSTANCE);
 
             // XtendComponent
             XtendComponent xtendComponent = new XtendComponent();
+            xtendComponent.addMetaModel(metaModel0);
             xtendComponent.addMetaModel(metaModel1);
             xtendComponent.addMetaModel(metaModel2);
             xtendComponent.setInvoke("synccharts2moml::transform(emfmodel)");

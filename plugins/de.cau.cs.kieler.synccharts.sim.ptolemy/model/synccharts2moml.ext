@@ -1,5 +1,7 @@
-import synccharts;
+
+import ecore;
 import expressions;
+import synccharts;
 //import annotatations;
 
 import Moml;
