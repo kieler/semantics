@@ -96,6 +96,17 @@
                   nsURI="http://kieler.cs.cau.de/expressions">
             </referenceEPackageNsURI>
          </Checkfile>
+         <Checkfile
+               ePackageId="de.cau.cs.kieler.synccharts"
+               id="de.cau.cs.kieler.synccharts.ScChecks"
+               isWrapExistingValidator="true"
+               name="SC Checks"
+               path="model/SyncchartsScChecks.chk"
+               tooltip="Checks whether SC code can be generated from the syncchart.">
+            <referenceEPackageNsURI
+                  nsURI="http://kieler.cs.cau.de/expressions">
+            </referenceEPackageNsURI>
+         </Checkfile>
       </extension>
 
 </plugin>

@@ -1,0 +1,62 @@
+import synccharts;
+import expressions;
+
+// determine whether trigger or effect of an action contain host code
+Boolean containsHostCode(ComplexExpression expression):
+ expression.subExpressions.exists(e|e.containsHostCode())
+;
+Boolean containsHostCode(Value expression):
+ false
+;
+Boolean containsHostCode(TextExpression expression):
+ true
+;
+Boolean containsHostCode(Expression expression):
+ false
+;
+Boolean containsHostCode(Assignment effect):
+ effect.expression.containsHostCode()
+;
+Boolean containsHostCode(Emission effect):
+ effect.newValue.containsHostCode()
+;
+Boolean containsHostCode(TextEffect effect):
+ true
+;
+Boolean containsHostCode(Effect effect):
+ false
+;
+context Action
+ WARNING "SC: Host code is not supported!" :
+ !trigger.containsHostCode() && !effects.exists(e|e.containsHostCode());
+
+context Action
+ WARNING "SC: Delays are not supported!" :
+ delay == 1;
+
+context Transition
+ WARNING "SC: History connector is not supported!" :
+ !isHistory; 
+ 
+
+context State
+ WARNING "SC: On exit actions are not supported!" :
+ exitActions == null || exitActions.isEmpty;
+ 
+context State
+ WARNING "SC: Suspension is not supported!" :
+ suspensionTrigger == null;
+
+
+// FIXME: not working yet
+context Scope
+ WARNING "SC: Float and unsigned signals are not supported:" + getSignalsWithFloatUnsignedType(this):
+ getSignalsWithFloatUnsignedType(this).isEmpty;
+
+List[Signal] getSignalsWithFloatUnsignedType(Scope scope):
+ scope.signals.select(e|e.type == ValueType::FLOAT || e.type == ValueType::UNSIGNED)
+;
+
+context Signal
+ WARNING "SC: Float and unsigned signals are not supported!" :
+ type != ValueType::FLOAT && type != ValueType::UNSIGNED;
