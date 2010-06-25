@@ -51,6 +51,7 @@ import org.eclipse.xpand2.output.Outlet;
 import org.eclipse.xtend.expression.AbstractExpressionsUsingWorkflowComponent.GlobalVar;
 import org.eclipse.xtend.typesystem.emf.EmfMetaModel;
 
+import de.cau.cs.kieler.core.expressions.ExpressionsPackage;
 import de.cau.cs.kieler.synccharts.Region;
 import de.cau.cs.kieler.synccharts.SyncchartsPackage;
 
@@ -129,7 +130,8 @@ public class WorkflowGenerator {
         String filename = ((Region) myModel).getInnerStates().get(0).getId();
 
         // Meta model
-        EmfMetaModel metaModel = new EmfMetaModel(SyncchartsPackage.eINSTANCE);
+        EmfMetaModel metaModel1 = new EmfMetaModel(ExpressionsPackage.eINSTANCE);
+        EmfMetaModel metaModel2 = new EmfMetaModel(SyncchartsPackage.eINSTANCE);
 
         if (sim) {
             outPath = path;
@@ -141,7 +143,8 @@ public class WorkflowGenerator {
 
         // Generator
         Generator generator = new Generator();
-        generator.addMetaModel(metaModel);
+        generator.addMetaModel(metaModel2);
+        generator.addMetaModel(metaModel1);
         generator.addOutlet(outlet);
 
         GlobalVar varName = new GlobalVar();

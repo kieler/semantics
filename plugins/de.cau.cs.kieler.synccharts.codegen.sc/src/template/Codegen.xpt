@@ -46,7 +46,7 @@
 	analogous to the SC Dokumentation.
 «ENDREM»
 «DEFINE init FOR Region-»
-	«IF !this.eAllContents.select(e|e.metaType==ComplexExpression && ((OperatorExpression)e).operator==OperatorType::PRE).isEmpty-»
+	«IF !this.eAllContents.select(e|e.metaType == OperatorExpression && ((OperatorExpression)e).operator==OperatorType::PRE).isEmpty-»
 	#define _SC_USE_PRE //;
 	«ENDIF-»
 	«IF getHighestPriority(this.innerStates.first()) > 31-»

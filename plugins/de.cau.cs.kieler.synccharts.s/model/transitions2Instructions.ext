@@ -12,21 +12,31 @@ extension org::eclipse::xtend::util::stdlib::issues;      // pass messages back 
 extension presentInstruction;
 extension gotoInstruction;
 extension emitInstruction;
+extension priorities;
 ////////////////////////////////////////////
 
+/*
+* Returns a list with the SC representations of a given transition.
+*/
 List[Instruction] getTransitionInstruction(Transition transition):
-	if transition.label == "" then
-		emptyTransition(transition)
-	else 
-		if transition.trigger == null then
-			justEffectTransition(transition)
-		else
-			getPresentInstruction(transition)
+	let out = {}:
+		(
+			if transition.label == "" then
+				out.addAll(emptyTransition(transition))
+			else 
+				if transition.trigger == null then
+					out.addAll(justEffectTransition(transition))
+				else
+					out.addAll(getPresentInstruction(transition))
+		)
+		->
+		out.addAll(getSmallestStatePrio(transition)) ->
+		out
 ;
 
 List[Instruction] emptyTransition(Transition transition):
 	let out = {}:
-		out.add(getGotoInstruction(transition.targetState)) ->
+		out.addAll(getGotoInstruction(transition.targetState)) ->
 		out
 ;
 
@@ -34,7 +44,7 @@ List[Instruction] justEffectTransition(Transition transition):
 	let out = {}:
 	let emit = Emit:
 		out.addAll(getEmitInstructions(transition)) ->
-		out.add(getGotoInstruction(transition.targetState)) ->
-		//emit.setSignal((s::Signal)(trigger .getSingleTraceTarget("S"))
+		out.addAll(getReducedPrio(transition)) ->
+		out.addAll(getGotoInstruction(transition.targetState)) ->
 		out
 ;

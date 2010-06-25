@@ -8,10 +8,14 @@ extension org::eclipse::xtend::util::stdlib::cloning;     // copy model elements
 extension org::eclipse::xtend::util::stdlib::tracing;     // create map between transformed objects
 extension org::eclipse::xtend::util::stdlib::issues;      // pass messages back to java (e.g. to UI)
 
-Halt getHalt(synccharts::State state):
+List[Halt] getHaltInstruction(synccharts::State state):
+	let out = {}:
 	let halt = new Halt:
+	(
 	if state.outgoingTransitions.isEmpty && !state.isFinal then
-		halt
+		out.add(halt)
 	else
 		null
+	) ->
+	out
 ;

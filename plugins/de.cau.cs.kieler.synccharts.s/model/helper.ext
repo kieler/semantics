@@ -8,6 +8,7 @@ extension org::eclipse::xtend::util::stdlib::cloning;     // copy model elements
 extension org::eclipse::xtend::util::stdlib::tracing;     // create map between transformed objects
 extension org::eclipse::xtend::util::stdlib::issues;      // pass messages back to java (e.g. to UI)
 
+
 // Returns the root initial state
 State getInitialState(synccharts::State state):
 	state.regions.first().innerStates.select(s|s.isInitial).first()
@@ -25,6 +26,11 @@ String getStatePathAsName(synccharts::State state):
 		let regionString = getParentRegionString(state):
 		getStatePathAsName(state.parentRegion.parentState) + regionString + "_" + state.id
 	)
+;
+
+// Tests if a transition has signals of which other signals are dependend.
+boolean hasDependentState(Transition transition):
+	JAVA Helper.hasDependentState(de.cau.cs.kieler.synccharts.Transition)
 ;
 
 // Returns a String for a region if a state has more than one inner regions
@@ -45,4 +51,24 @@ synccharts::State getInitialState(synccharts::Region region):
 s::IntValue setIntValue(int vaule):
 	let intValue = new s::IntValue:
 		intValue.setValue(vaule)
+;
+
+// returns true if the transition is a strong abort
+boolean isStrongAbort(Transition transition):
+	transition.type == TransitionType::STRONGABORT
+;
+
+// returns true if the transition is a weak abort
+boolean isWeakAbort(Transition transition):
+	transition.type == TransitionType::WEAKABORT
+;
+
+// returns true if a state is hierarchical
+boolean isNormalTermination(Transition transition):
+	transition.type == TransitionType::NORMALTERMINATION
+;
+
+// returns true if a state is hierarchical
+boolean isHierarchical(synccharts::State state):
+	!state.regions.isEmpty
 ;

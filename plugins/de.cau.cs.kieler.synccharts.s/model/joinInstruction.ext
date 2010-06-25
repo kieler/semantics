@@ -10,21 +10,27 @@ extension org::eclipse::xtend::util::stdlib::issues;      // pass messages back 
 
 /////////////// local imports //////////////
 extension gotoInstruction;
-extension priorities;
+extension transitions2Instructions;
 ////////////////////////////////////////////
 
-List[Instruction] getPresentInstruction(Transition transition):
+List[Instruction] getJoinInstruction(Transition transition):
 	let out = {}:
-	let present = new Present:
-	createPresent(present, transition) ->
-	out.add(present) ->
+	(
+		if transition.sourceState.outgoingTransitions == 1 then
+			out.addAll(joinOneTransition(transition))
+		else
+			// TODO: 
+			out.addAll(joinOneTransition(transition))
+	)
+	->
 	out
 ;
 
-Void createPresent(Present present, Transition transition):
-	let trigger = ((SignalReference)transition.trigger).signal:
-	let targetState = transition.targetState:
-		present.setSignal((s::Signal) (trigger.getSingleTraceTarget("S")))->
-		present.instructions.addAll(getReducedPrio(transition)) ->
-		present.instructions.addAll(getGotoInstruction(transition.targetState))
+// instructions for join, if the macro state has only one transition
+List[Instruction] joinOneTransition(Transition transition):
+	let out = {}:
+	let join = new Join:
+		out.add(join) ->
+		out.addAll(justEffectTransition(transition)) ->
+		out
 ;

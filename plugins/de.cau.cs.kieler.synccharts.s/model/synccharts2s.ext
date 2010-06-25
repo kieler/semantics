@@ -15,11 +15,14 @@ extension org::eclipse::xtend::util::stdlib::issues;      // pass messages back 
 
 /////////////// local imports //////////////
 extension helper;
+extension priorities;
 extension transitions2Instructions;
 extension haltInstruction;
 extension termInstruction;
 extension pauseInstruction;
 extension gotoInstruction;
+extension forkInstruction;
+extension joinInstruction;
 ////////////////////////////////////////////
 
 //-----------------------------------------------------------------------------
@@ -32,7 +35,6 @@ create s::Program this transform(synccharts::Region root):
 	addAllStatesToMappingList(root) ->
 	computeThreadPriorities(root.innerStates.first()) ->
 	this.setName(root.innerStates.first().id) ->
-	// TODO: mit echter main thread prio ersetzen
 	this.setPriority(setIntValue(getMainTreadPriority(root.innerStates.first()))) -> 
 	this.setStates(getAllStates(root.innerStates.first())) ->
 	this.setSignals(getStateSignals(root.innerStates.first()))
@@ -48,37 +50,18 @@ Void addAllStatesToMappingList(synccharts::Region region):
 ;
 
 Void addAllStatesToMappingList(synccharts::State state):
-	if state.regions.isEmpty then
-		state.transform()
-	else (
-		state.transform() ->
-		state.regions.addAllStatesToMappingList()
-	)
+	state.transform() ->
+	state.transformMain() ->
+	state.transformIntern() ->
+	state.transformMainIntern() ->
+	state.regions.addAllStatesToMappingList()
 ;
 // End: ------------------------------------------------
 
 // Computation of the priority list like is was done in codegen.sc.
-// Start: ----------------------------------------------
 cached List computeThreadPriorities(synccharts::State rootState):
 	JAVA Helper.computeThreadPriorities(de.cau.cs.kieler.synccharts.State)
 ;
-
-// Returns the thread priority of a state. The state is not represented as weak
-// or strong but by the real nature of the given state.
-int getRealThreadPriority(synccharts::State state):
-	JAVA Helper.getRealThreadPriority(de.cau.cs.kieler.synccharts.State)
-;
-
-// Returns the thread priority of the main thread.
-cached int getMainTreadPriority(synccharts::State rootState):
-	if rootState.regions.size == 1 then
-		getRealThreadPriority(getInitialState(rootState))
-	else
-		getRealThreadPriority(rootState)
-;
-// End: ------------------------------------------------
-
-//-------------------- - - - - - - ---------------------------------
 
 
 // builds a state for s
@@ -99,25 +82,50 @@ List[s::State] addStateToList(s::State state, List[s::State] states):
 List[s::State] getAllStates(synccharts::State state):
 	let outList = {}:
 	let putState = (s::State)state.getSingleTraceTarget("S"):
-		putInstructions(putState, getStateInstructions(state)) ->
-		if state.regions.isEmpty then (
-			if state.parentRegion.parentState != null then
-				outList.add(putState)
-			else 
+	let putStateIntern = (s::State)state.getSingleTraceTarget("S_intern"):
+		(
+			if state.parentRegion.parentState != null then (
+				(
+					if state.regions.isEmpty then (
+						putInstructions(putState, getStateSurfInstructions(state)) ->
+						putInstructions(putStateIntern, getStateDepthInstructions(state))
+					) else (
+						putInstructions(putState, getStateMainInstructions(state))
+					)
+				)
+				->
+				outList.add(putState) ->
+				if state.regions.isEmpty then (
+					outList.add(putStateIntern)
+				) else (
+					null
+				)
+				
+			) else (
 				null
 			)
-		else (
-			//TODO: FORK und FORKE...
-			(
-			if state.parentRegion.parentState != null then
-				outList.add(putState)
-			else 
-				null 
-			)
-			-> 
-			outList.addAll(state.regions.getStatesOfRegion())
-			)
+		)
+		
 		->
+			
+		(
+			if !state.regions.isEmpty then (
+				outList.addAll(state.regions.getStatesOfRegion()) ->
+				if state.parentRegion.parentState != null then (
+					let putStateHierarchy = (s::State)state.getSingleTraceTarget("S_main"):
+					let putStateHierarchyIntern = (s::State)state.getSingleTraceTarget("S_main_intern"):
+					putInstructions(putStateHierarchy, getStateSurfInstructions(state)) ->
+					putInstructions(putStateHierarchyIntern, getStateDepthInstructions(state)) ->
+					outList.add(putStateHierarchy) ->
+					outList.add(putStateHierarchyIntern)
+				) else (
+					null
+				)
+			) else (
+				null
+			)
+		)
+		-> 
 		outList
 ;
 
@@ -125,31 +133,49 @@ s::State putInstructions(s::State state, List[s::Instruction] instructions):
 	state.instructions.addAll(instructions)
 ;
 
-List[s::Instruction] getStateInstructions(synccharts::State state):
+List[s::Instruction] getStateSurfInstructions(synccharts::State state):
 	let outList = {}:
-		
-		
-		// TODO: # strong Transitions
+		// # strong Transitions
+		outList.addAll(state.outgoingTransitions.select(t|t.isImmediate && t.isStrongAbort()).getTransitionInstruction()) ->
 		// TODO: onEntry actions
-		// TODO: PRIO(weak)
-		// TODO: # weak Transitions
-		//////////// _intern ///////////
-		// TODO: PRIO(strong)
-		// TODO: normal termination
-		// TODO: Label for join?
-		// TODO: PAUSE
-		// TODO: host code?
-		// TODO: all strong transitions
-		// TODO: onInside actions
-		// TODO: PRIO(weak)
-		// TODO: all weak transitions
-		// TODO: GOTO(_intern)
+		// PRIO(weak)
+		outList.addAll(getWeakStatePrio(state)) ->
 		
-		outList.add(getPauseInstruction(state)) ->
-		// All transitions with Trigger
-		outList.addAll(state.outgoingTransitions.getTransitionInstruction()) ->
+		// # weak Transitions
+		outList.addAll(state.outgoingTransitions.select(t|t.isImmediate && t.isWeakAbort()).getTransitionInstruction()) ->
+		//////////// _intern ///////////
+		// PRIO(strong)
+		outList.addAll(getRealStatePrio(state)) ->
+		// normal termination
+		outList.addAll(state.outgoingTransitions.select(t|t.isNormalTermination()).getJoinInstruction()) ->
+		outList
+;
+
+List[s::Instruction] getStateDepthInstructions(synccharts::State state):
+	let outList = {}:
+		info(state.id) ->
+		// PAUSE
+		outList.addAll(getPauseInstruction(state)) ->
+		// TODO: host code
+		// all strong transitions
+		outList.addAll(state.outgoingTransitions.select(t|t.isStrongAbort()).getTransitionInstruction()) ->
+		// TODO: onInside actions
+		// PRIO(weak)
+		outList.addAll(getWeakStatePrio(state)) ->
+		// all weak transitions
+		outList.addAll(state.outgoingTransitions.select(t|t.isWeakAbort()).getTransitionInstruction()) ->
+		// instructions for states without outgoing transitions
 		outList.addAll(getTermInstruction(state)) ->
-		outList.add(getGotoInstruction(state)) ->
+		outList.addAll(getHaltInstruction(state)) ->
+		// GOTO(_intern): return to the return adress if no transition is taken
+		outList.addAll(getGotoReturnInstruction(state)) ->
+		// return value - a list with all instructions for a state
+		outList
+;
+
+List[s::Instruction] getStateMainInstructions(synccharts::State state):
+	let outList = {}:
+		outList.addAll(getForkInstructions(state)) ->
 		outList
 ;
 
@@ -167,19 +193,31 @@ List[s::State] getStatesOfRegion(synccharts::Region region):
 // transforms a SyncChart state into a S state
 create s::State this transform(synccharts::State state):
 	createTrace(this,state,"SyncCharts","S") ->
-	createTrace(this,state,"SyncCharts","S_intern") ->
-	createTrace(this,state,"SyncCharts","S_main") ->
-	createTrace(this,state,"SyncCharts","S_main_intern") ->
-	if state.regions.isEmpty then
-		this.setName("L" + getStatePathAsName(state)) 
-	else 
-		this.setName("L_main" + getStatePathAsName(state))
-	->
+	this.setName("L" + getStatePathAsName(state)) ->
 	if !state.signals.isEmpty then
 		this.setSignals(state.signals.transform())
 	else
 		null
 ;
+
+// transforms a SyncChart state into a S state
+create s::State this transformIntern(synccharts::State state):
+	createTrace(this,state,"SyncCharts","S_intern") ->
+	this.setName("L" + getStatePathAsName(state) + "_intern")
+;
+
+// transforms a SyncChart state into a S state
+create s::State this transformMain(synccharts::State state):
+	createTrace(this,state,"SyncCharts","S_main") ->
+	this.setName("L" + getStatePathAsName(state) + "_main")
+;
+
+// transforms a SyncChart state into a S state
+create s::State this transformMainIntern(synccharts::State state):
+	createTrace(this,state,"SyncCharts","S_main_intern") ->
+	this.setName("L" + getStatePathAsName(state) + "_main_intern")
+;
+
 
 // Transforms a SyncCharts signal into a s Signal 
 create s::Signal this transform(expressions::Signal signal):

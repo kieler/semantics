@@ -8,7 +8,45 @@ extension org::eclipse::xtend::util::stdlib::cloning;     // copy model elements
 extension org::eclipse::xtend::util::stdlib::tracing;     // create map between transformed objects
 extension org::eclipse::xtend::util::stdlib::issues;      // pass messages back to java (e.g. to UI)
 
-Goto getGotoInstruction(synccharts::State state):
+/////////////// local imports //////////////
+extension helper;
+extension priorities;
+////////////////////////////////////////////
+
+List[Instruction] getGotoInstruction(synccharts::State state):
+	let out = {}:
 	let goto = new Goto:
-	goto.setState((s::State)state.getSingleTraceTarget("S"))
+		(
+			if state.isHierarchical() then (
+				let abort = new Abort:
+					out.add(abort) ->
+					out.addAll(getRealStatePrio(state))
+			) else (
+				null
+			)
+		)
+		->
+		goto.setState((s::State)state.getSingleTraceTarget("S"))->
+		out.add(goto)
+		->
+		out
+;
+
+List[Instruction] getGotoReturnInstruction(synccharts::State state):
+	let out = {}:
+	let goto = new Goto:
+	if !(state.isFinal || state.outgoingTransitions.isEmpty) then (
+		(
+			if state.isHierarchical() then
+				goto.setState((s::State)state.getSingleTraceTarget("S_main_intern"))
+			else
+				goto.setState((s::State)state.getSingleTraceTarget("S_intern"))
+		)
+		->
+		out.add(goto)
+	)
+	else
+		null
+	->
+	out
 ;
