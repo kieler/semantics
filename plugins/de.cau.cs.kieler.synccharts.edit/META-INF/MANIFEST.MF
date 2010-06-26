@@ -16,5 +16,5 @@ Require-Bundle: org.eclipse.core.runtime,
  de.cau.cs.kieler.core.annotations;bundle-version="0.1.0",
  de.cau.cs.kieler.core.expressions;bundle-version="0.1.0",
  de.cau.cs.kieler.core.annotations.edit;bundle-version="0.1.0",
- de.cau.cs.kieler.core.expressions.edit;bundle-version="1.0.0"
+ de.cau.cs.kieler.core.expressions.edit;bundle-version="0.1.0"
 Bundle-ActivationPolicy: lazy
