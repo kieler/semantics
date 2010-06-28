@@ -69,9 +69,9 @@ Void copy(Action action1, Action action2):
   let incomings = {}:
   let outgoings = {}:
   incomings.addAll(action1.incoming) ->
-  incomings.setTarget(action2) ->
+  ((List[ActivityEdge])incomings).setTarget(action2) ->
   outgoings.addAll(action1.outgoing) ->
-  outgoings.setSource(action2) ->
+  ((List[ActivityEdge])outgoings).setSource(action2) ->
   action2.setActivity(action1.activity) ->
   action2.setName(action1.name);
 
