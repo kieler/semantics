@@ -140,7 +140,7 @@ Void error(String s):
 	JAVA template.Helper.error(java.lang.String)
 ;
 
-// Tests if a state is hierarchical without transitions and actions.
+// Tests if a state is hierarchical root state without transitions and actions.
 boolean isSimpleHierarchical(State state):
 	state.parentRegion.parentState == null &&
 	(state.regions.size == 1) &&
