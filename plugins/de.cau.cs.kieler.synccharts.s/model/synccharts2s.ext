@@ -25,6 +25,13 @@ extension forkInstruction;
 extension joinInstruction;
 ////////////////////////////////////////////
 
+
+// TODO:
+// - local signals (must transformed to outer layer)?
+// - complex expressions
+// - count delays (not considered in SC yet)
+// - valued signals
+
 //-----------------------------------------------------------------------------
 //     SyncChart - 2 - S    TRANSFORMATION    
 //     @author: tam
