@@ -121,7 +121,7 @@ public class SCDataComponent extends AbstractAutomatedProducer {
                     errorString += "\n" + line;
 
                 }
-
+                //TODO: -D_SC_SUPPRESS_ERROR_DETECT: error messages detecting (use own buffer)
                 int exitValue = process.waitFor();
 
                 if (exitValue != 0) {
