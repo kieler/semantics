@@ -41,6 +41,8 @@ import org.osgi.framework.BundleContext;
 
 import de.cau.cs.kieler.core.model.util.ModelingUtil;
 import de.cau.cs.kieler.synccharts.Transition;
+import de.cau.cs.kieler.synccharts.custom.update.UpdateResourceFactoryImpl;
+import de.cau.cs.kieler.synccharts.diagram.custom.commands.ReInitSyncchartsDiagramCommand;
 import de.cau.cs.kieler.synccharts.diagram.custom.triggerlisteners.RedundantLabelTriggerListener;
 import de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditor;
 
@@ -90,6 +92,8 @@ public class SyncchartsDiagramCustomPlugin extends AbstractUIPlugin implements
         super.start(context);
         instance = this;
         register();
+        UpdateResourceFactoryImpl
+                .setReInitDiagramCommand(new ReInitSyncchartsDiagramCommand());
     }
 
     /**

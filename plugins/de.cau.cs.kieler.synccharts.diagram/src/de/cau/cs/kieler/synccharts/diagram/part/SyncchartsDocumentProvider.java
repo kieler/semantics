@@ -56,6 +56,7 @@ import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.part.FileEditorInput;
 
 import de.cau.cs.kieler.synccharts.contentadapter.SyncchartsContentUtil;
+import de.cau.cs.kieler.synccharts.custom.update.UpdateResourceFactoryImpl;
 
 /**
  * @generated
@@ -214,6 +215,14 @@ public class SyncchartsDocumentProvider extends AbstractDocumentProvider
         TransactionalEditingDomain domain = diagramDocument.getEditingDomain();
         if (element instanceof FileEditorInput) {
             IStorage storage = ((FileEditorInput) element).getStorage();
+
+            // Added checking whether the diagram file is out of date.
+            // This prevents a freeze of the application due to the
+            // migration to 0.2.1. 
+            // FIXME: Find the reason for the freeze and find better solution.     
+            UpdateResourceFactoryImpl
+                    .checkDiagramEditorInput((FileEditorInput) element);
+
             Diagram diagram = DiagramIOUtil.load(domain, storage, true,
                     getProgressMonitor());
             document.setContent(diagram);

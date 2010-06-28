@@ -136,6 +136,82 @@ private org.eclipse.emf.transaction.TransactionalEditingDomain createEditingDoma
 }
 «ENDDEFINE»
 
+«DEFINE setDocumentContent FOR gmfgen::GenDiagram-»
+    «EXPAND xpt::Common::generatedMemberComment»
+protected void setDocumentContent(org.eclipse.gmf.runtime.diagram.ui.resources.editor.document.IDocument document, org.eclipse.ui.IEditorInput element) throws org.eclipse.core.runtime.CoreException {
+    org.eclipse.gmf.runtime.diagram.ui.resources.editor.document.IDiagramDocument diagramDocument = (org.eclipse.gmf.runtime.diagram.ui.resources.editor.document.IDiagramDocument) document;
+    org.eclipse.emf.transaction.TransactionalEditingDomain domain = diagramDocument.getEditingDomain();
+    «IF null = editorGen.application»if (element instanceof «EXPAND fileEditorInputClassFQName») {
+        org.eclipse.core.resources.IStorage storage = ((«EXPAND fileEditorInputClassFQName») element).getStorage();
+        
+        «REM»
+        Added checking whether the diagram file is out of date.
+        This prevents a freeze of the application due to the
+        migration to 0.2.1. 
+        FIXME: Find the reason for the freeze and find better solution.    
+        «ENDREM»
+        // Added checking whether the diagram file is out of date.
+        // This prevents a freeze of the application due to the
+        // migration to 0.2.1. 
+        // FIXME: Find the reason for the freeze and find better solution.     
+        de.cau.cs.kieler.synccharts.custom.update.UpdateResourceFactoryImpl
+                    .checkDiagramEditorInput((«EXPAND fileEditorInputClassFQName») element);
+            
+        
+        
+        org.eclipse.gmf.runtime.notation.Diagram diagram = org.eclipse.gmf.runtime.diagram.ui.resources.editor.internal.util.DiagramIOUtil.load(domain, storage, true, getProgressMonitor());
+        document.setContent(diagram);
+    } else «ENDIF»if(element instanceof «EXPAND uriEditorInputClassFQName») {
+        org.eclipse.emf.common.util.URI uri = ((«EXPAND uriEditorInputClassFQName») element).getURI();
+        org.eclipse.emf.ecore.resource.Resource resource = null;
+        try {
+            resource = domain.getResourceSet().getResource(uri.trimFragment(), false);
+            if (resource == null) {
+                resource = domain.getResourceSet().createResource(uri.trimFragment());
+            }
+            if (!resource.isLoaded()) {
+                try {
+                    java.util.Map options = new java.util.HashMap(org.eclipse.gmf.runtime.emf.core.resources.GMFResourceFactory.getDefaultLoadOptions());
+                    // @see 171060 
+                    // options.put(org.eclipse.emf.ecore.xmi.XMLResource.OPTION_RECORD_UNKNOWN_FEATURE, Boolean.TRUE);
+                    resource.load(options);
+                } catch (java.io.IOException e) {
+                    resource.unload();
+                    throw e;
+                }
+            }
+            if (uri.fragment() != null) {
+                org.eclipse.emf.ecore.EObject rootElement = resource.getEObject(uri.fragment());
+                if (rootElement instanceof org.eclipse.gmf.runtime.notation.Diagram) {
+                    document.setContent((org.eclipse.gmf.runtime.notation.Diagram) rootElement);
+                    return;
+                }
+            } else {
+                for (java.util.Iterator it = resource.getContents().iterator(); it.hasNext();) {
+                    Object rootElement = it.next();
+                    if (rootElement instanceof org.eclipse.gmf.runtime.notation.Diagram) {
+                        document.setContent((org.eclipse.gmf.runtime.notation.Diagram) rootElement);
+                        return;
+                    }
+                }
+            }
+            throw new RuntimeException(«EXPAND xpt::Externalizer::accessorCall(i18nKeyForDocumentProviderNoDiagramInResourceError(self)) FOR editorGen»);
+        } catch (Exception e) {
+            org.eclipse.core.runtime.CoreException thrownExcp = null;
+            if (e instanceof org.eclipse.core.runtime.CoreException) {
+                thrownExcp = (org.eclipse.core.runtime.CoreException) e;
+            } else {
+                String msg = e.getLocalizedMessage();
+                thrownExcp = new org.eclipse.core.runtime.CoreException(new org.eclipse.core.runtime.Status(org.eclipse.core.runtime.IStatus.ERROR, «editorGen.plugin.getActivatorQualifiedClassName()».ID, 0, 
+                msg != null ? msg : «EXPAND xpt::Externalizer::accessorCall(i18nKeyForDocumentProviderDiagramLoadingError(self)) FOR editorGen», e));
+            }
+            throw thrownExcp;
+        }
+    } else {
+    «EXPAND throwIncorrectInputException-»
+    }   
+}
+«ENDDEFINE»
 
 «DEFINE fileEditorInputClassFQName FOR gmfgen::GenDiagram»org.eclipse.ui.part.FileEditorInput«ENDDEFINE»
 «DEFINE uriEditorInputClassFQName FOR gmfgen::GenDiagram»org.eclipse.emf.common.ui.URIEditorInput«ENDDEFINE»

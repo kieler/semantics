@@ -43,7 +43,7 @@ public class AffectedFileSelectionDialog implements IStructuredContentProvider,
 
     /** The message to display. */
     private static final String MESSAGE = "Select which diagrams should be"
-            + "reinitialized.\n\n WARNING: This will delete all notes and layout information";
+            + " reinitialized.\n\n WARNING: This will delete all notes and layout information";
 
     /**
      * 

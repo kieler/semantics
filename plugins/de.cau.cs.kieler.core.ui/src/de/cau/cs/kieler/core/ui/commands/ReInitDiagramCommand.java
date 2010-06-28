@@ -217,7 +217,7 @@ public abstract class ReInitDiagramCommand extends AbstractHandler {
      * @param path
      *            the path of the model file
      */
-    private void reinitialize(final IPath path) {
+    public void reinitialize(final IPath path) {
         List<IPath> partners = getPartners(path);
 
         List<IPath> selection = getUserSelection(partners);
@@ -235,7 +235,8 @@ public abstract class ReInitDiagramCommand extends AbstractHandler {
             if (kidsFile != null) {
                 kidsFile.delete();
             }
-
+            kixsPath = kixsPath.makeRelativeTo(Platform.getLocation());
+            kidsPath = kidsPath.makeRelativeTo(Platform.getLocation());
             reinitializeDiagram(kixsPath, kidsPath);
 
             performPostOperationAction(path, partners);
@@ -264,6 +265,7 @@ public abstract class ReInitDiagramCommand extends AbstractHandler {
      * @param partners
      *            the partner files
      */
+    @SuppressWarnings("unused")
     protected void performPreOperationActions(final IPath path,
             final List<IPath> partners) {
     }
@@ -279,7 +281,13 @@ public abstract class ReInitDiagramCommand extends AbstractHandler {
         List<File> files = new LinkedList<File>();
         // recursively search the workspace
         if (path.getFileExtension().equals(getModelExtension())) {
-            findRec(files, Platform.getLocation().toFile(), path);
+            String path0 = path.removeFileExtension().removeLastSegments(1)
+                    .toOSString();
+            String path1 = Platform.getLocation().toOSString();
+            String path2 = path0.startsWith(path1) ? path0 : path1 + path0;
+
+            File parent = Path.fromOSString(path2).toFile();
+            findRec(files, parent, path);
         }
         List<IPath> result = new LinkedList<IPath>();
         for (File file : files) {
@@ -359,7 +367,7 @@ public abstract class ReInitDiagramCommand extends AbstractHandler {
         String location = path.toOSString();
         String platformPath = Platform.getLocation().toOSString();
         if (!location.contains(platformPath)) {
-            location = platformPath + location;
+            location = platformPath + Path.SEPARATOR + location;
         }
         IPath partnerLocation = Path.fromOSString(location);
         return partnerLocation.toFile();

@@ -13,6 +13,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
@@ -31,7 +32,9 @@ import org.eclipse.jface.dialogs.ProgressMonitorDialog;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.part.FileEditorInput;
 
+import de.cau.cs.kieler.core.ui.commands.ReInitDiagramCommand;
 import de.cau.cs.kieler.synccharts.Region;
 import de.cau.cs.kieler.synccharts.State;
 import de.cau.cs.kieler.synccharts.Transition;
@@ -44,27 +47,82 @@ import de.cau.cs.kieler.synccharts.Transition;
  */
 public class UpdateResourceFactoryImpl extends XMIResourceFactoryImpl {
 
-    private boolean isFileOutOfDate(final URI uri) {
-        ExtensibleURIConverterImpl conv = new ExtensibleURIConverterImpl();
+    /**
+     *
+     */
+    public static final Synccharts_MM_Version CURRENT_VERSION = Synccharts_MM_Version.v_0_2_1;
 
-        if (!conv.exists(uri, null)) {
-            return false;
-        }
+    /**
+     * The command for reinitializing the diagram.
+     */
+    private static ReInitDiagramCommand cmd;
 
+    /**
+     * Set the reinitialize command for automatic migration. FIXME: currently
+     * not active
+     * 
+     * @param cmdParam
+     *            the param
+     */
+    public static void setReInitDiagramCommand(
+            final ReInitDiagramCommand cmdParam) {
+        cmd = cmdParam;
+    }
+
+    /**
+     * The file name of the last kixs file that was found.
+     */
+    public static String lastName;
+
+    /**
+     * @param input
+     */
+    public static void checkDiagramEditorInput(final FileEditorInput input) {
         try {
-            InputStream is = conv.createInputStream(uri);
+            if (isFileOutOfDate(input.getStorage().getContents())) {
+                // TODO: automatic reinit currently disabled
+                // IPath path = input.getPath();
+                // path = path.removeLastSegments(1).addTrailingSeparator();
+                // String pathString = path.toOSString() + lastName;
+                // cmd.reinitialize(Path.fromOSString(pathString));
+                throw new IllegalArgumentException(
+                        "Syncchart diagram is out of date. "
+                                + "Please open the corresponding .kixs file and then reinitialize"
+                                + " the diagram.");
+            }
+        } catch (CoreException e0) {
+            e0.printStackTrace();
+        }
+    }
 
+    /**
+     * @param is
+     * @return
+     */
+    private static boolean isFileOutOfDate(final InputStream is) {
+        try {
             BufferedReader reader = new BufferedReader(
                     new InputStreamReader(is));
-
             // contains result to be written back to file
             String s = reader.readLine();
             int lineIndex = 0;
             while (s != null) {
-
                 if (lineIndex == 1) {
-                    if (!s.contains(getVersionURI(Version.v_0_2_1))) {
-                        return askUser();
+                    if (s.contains(getVersionURI(CURRENT_VERSION))) {
+                        return false;
+                    }
+
+                }
+
+                if (lineIndex > 1) {
+                    String[] segments = s.split(" ");
+                    for (String segment : segments) {
+                        if (segment.startsWith("href=\"")) {
+                            segments = segment.replace("href=", "").replace(
+                                    "\"", "").split("#");
+                            lastName = segments[0];
+                            return true;
+                        }
                     }
                 }
                 s = reader.readLine();
@@ -74,7 +132,23 @@ public class UpdateResourceFactoryImpl extends XMIResourceFactoryImpl {
         } catch (IOException e0) {
             e0.printStackTrace();
         }
+        return true;
+    }
 
+    /**
+     * @param uri
+     * @return
+     */
+    private boolean isFileOutOfDate(final URI uri) {
+        ExtensibleURIConverterImpl conv = new ExtensibleURIConverterImpl();
+        if (!conv.exists(uri, null)) {
+            return false;
+        }
+        try {
+            return isFileOutOfDate(conv.createInputStream(uri));
+        } catch (IOException e0) {
+            e0.printStackTrace();
+        }
         return false;
     }
 
@@ -85,8 +159,7 @@ public class UpdateResourceFactoryImpl extends XMIResourceFactoryImpl {
     public Resource createResource(final URI uri) {
         XMIResource resource = (XMIResource) super.createResource(uri);
 
-        if (isFileOutOfDate(uri)) {
-
+        if (isFileOutOfDate(uri) && askUser()) {
             PlatformUI.getWorkbench().getDisplay().syncExec(new Runnable() {
                 public void run() {
                     Shell parent = PlatformUI.getWorkbench()
@@ -104,14 +177,12 @@ public class UpdateResourceFactoryImpl extends XMIResourceFactoryImpl {
                                         .beginTask(
                                                 "Converting Synccharts from older version.",
                                                 IProgressMonitor.UNKNOWN);
-
                                 try {
                                     doPreprocessing(uri, monitor);
                                 } catch (UpdateException e0) {
                                     throw new UpdateRuntimeException(e0
                                             .getMessage(), e0.getCause());
                                 }
-
                                 monitor.done();
                             }
                         });
@@ -124,7 +195,6 @@ public class UpdateResourceFactoryImpl extends XMIResourceFactoryImpl {
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
-
                 }
             });
         }
@@ -141,8 +211,22 @@ public class UpdateResourceFactoryImpl extends XMIResourceFactoryImpl {
         return resource;
     }
 
-    private enum Version {
-        v_0_1, v_0_2, v_0_2_1;
+    /**
+     * @author soh
+     */
+    public enum Synccharts_MM_Version {
+        /**
+         *
+         */
+        v_0_1,
+        /**
+         *
+         */
+        v_0_2,
+        /**
+         *
+         */
+        v_0_2_1;
     }
 
     /**
@@ -159,9 +243,9 @@ public class UpdateResourceFactoryImpl extends XMIResourceFactoryImpl {
     private void doPreprocessing(final URI uri, final IProgressMonitor monitor)
             throws UpdateException {
         monitor.subTask("Converting v0.1 to v0.2");
-        convert(uri, Version.v_0_1);
+        convert(uri, Synccharts_MM_Version.v_0_1);
         monitor.subTask("Converting v0.2 to v0.2.1");
-        convert(uri, Version.v_0_2);
+        convert(uri, Synccharts_MM_Version.v_0_2);
     }
 
     /**
@@ -169,7 +253,8 @@ public class UpdateResourceFactoryImpl extends XMIResourceFactoryImpl {
      * @param version
      * @throws UpdateException
      */
-    private void convert(URI uri, Version version) throws UpdateException {
+    private void convert(URI uri, Synccharts_MM_Version version)
+            throws UpdateException {
         ExtensibleURIConverterImpl conv = new ExtensibleURIConverterImpl();
 
         try {
@@ -238,6 +323,9 @@ public class UpdateResourceFactoryImpl extends XMIResourceFactoryImpl {
         }
     }
 
+    /**
+     * @author soh
+     */
     private static class UpdateException extends Exception {
 
         /**
@@ -245,16 +333,20 @@ public class UpdateResourceFactoryImpl extends XMIResourceFactoryImpl {
          */
         private static final long serialVersionUID = 1L;
 
-        public UpdateException(final String s) {
-            super(s);
-        }
-
+        /**
+         * Creates a new UpdateResourceFactoryImpl.java.
+         * 
+         * @param cause
+         */
         public UpdateException(final Throwable cause) {
             super(cause);
         }
 
     }
 
+    /**
+     * @author soh
+     */
     private static class UpdateRuntimeException extends RuntimeException {
 
         /**
@@ -262,17 +354,25 @@ public class UpdateResourceFactoryImpl extends XMIResourceFactoryImpl {
         */
         private static final long serialVersionUID = 1L;
 
+        /**
+         * Creates a new UpdateResourceFactoryImpl.java.
+         * 
+         * @param s
+         * @param cause
+         */
         public UpdateRuntimeException(final String s, final Throwable cause) {
             super(s, cause);
         }
 
     }
 
+    /**
+     *
+     */
     private boolean dummyResult = false;
 
     /**
-     * @throws UpdateException
-     * 
+     * @return
      */
     private boolean askUser() {
         dummyResult = false;
@@ -290,9 +390,12 @@ public class UpdateResourceFactoryImpl extends XMIResourceFactoryImpl {
         return dummyResult;
     }
 
-    private static final String[] V_0_2_EXPRESSION = { "CombineOperator", "SignalReference",
-            "VariableReference", "TextualCode", "Expression",
-            "ComplexExpression", "Value", "ValuedObject",
+    /**
+     *
+     */
+    private static final String[] V_0_2_EXPRESSION = { "CombineOperator",
+            "SignalReference", "VariableReference", "TextualCode",
+            "Expression", "ComplexExpression", "Value", "ValuedObject",
             "OperatorType", "Signal", "ValueType", "Variable", "FloatValue",
             "IntValue", "BooleanValue", "OperatorExpression", "TextExpression" };
 
@@ -302,11 +405,11 @@ public class UpdateResourceFactoryImpl extends XMIResourceFactoryImpl {
      */
     private String convertLineV_0_2(String s) {
         String result = s;
-        if (result.contains(getVersionURI(Version.v_0_2))) {
+        if (result.contains(getVersionURI(Synccharts_MM_Version.v_0_2))) {
             result = result
                     .replace(
-                            getVersionURI(Version.v_0_2),
-                            getVersionURI(Version.v_0_2)
+                            getVersionURI(Synccharts_MM_Version.v_0_2),
+                            getVersionURI(Synccharts_MM_Version.v_0_2)
                                     + " xmlns:expressions=\"http://kieler.cs.cau.de/expressions\"");
         }
 
@@ -323,12 +426,12 @@ public class UpdateResourceFactoryImpl extends XMIResourceFactoryImpl {
      * @param version
      * @return
      */
-    private Version getNextVersion(Version version) {
+    private Synccharts_MM_Version getNextVersion(Synccharts_MM_Version version) {
         switch (version) {
         case v_0_1:
-            return Version.v_0_2;
+            return Synccharts_MM_Version.v_0_2;
         case v_0_2:
-            return Version.v_0_2_1;
+            return Synccharts_MM_Version.v_0_2_1;
         case v_0_2_1:
             return null;
         }
@@ -383,7 +486,7 @@ public class UpdateResourceFactoryImpl extends XMIResourceFactoryImpl {
      * @param version
      * @return
      */
-    private String getVersionURI(Version version) {
+    private static String getVersionURI(Synccharts_MM_Version version) {
         switch (version) {
         case v_0_1:
             return "xmlns:synccharts=\"http://kieler.cs.cau.de/synccharts\"";
