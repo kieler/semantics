@@ -134,6 +134,7 @@ end module
  «ENDIF»
 «ENDDEFINE»
 
+
 «DEFINE Trigger FOR OperatorExpression»
   «IF operator==OperatorType::PRE»
   pre(«EXPAND Trigger FOR subExpressions.first()»)
@@ -145,20 +146,21 @@ end module
   («FOREACH subExpressions AS sub SEPARATOR " " + operator.toString() + " "» «EXPAND Trigger FOR sub» «ENDFOREACH»)
   «ENDIF»
 «ENDDEFINE»
+«DEFINE Trigger FOR IntValue»«value»«ENDDEFINE»
+«DEFINE Trigger FOR FloatValue»«value»«ENDDEFINE»
+«DEFINE Trigger FOR BooleanValue»«IF value»true«ELSE»false«ENDIF»«ENDDEFINE»
+«DEFINE Trigger FOR VariableReference»«variable.name»«ENDDEFINE»
+«DEFINE Trigger FOR SignalReference»«signal.name»«ENDDEFINE»
+«DEFINE Trigger FOR TextualCode»«code»«ENDDEFINE»
+«DEFINE Trigger FOR expressions::Expression»//ERROR: unknown expression«ENDDEFINE»
+
 
 «DEFINE Effect FOR Emission»emit «signal.name»«IF newValue!=null»(«EXPAND Trigger FOR newValue»)«ENDIF»;«ENDDEFINE»
 «DEFINE Effect FOR Assignment»«variable» := «expression»;«ENDDEFINE»
 «DEFINE Effect FOR TextualCode»«code»;«ENDDEFINE»
 «DEFINE Effect FOR Effect»//ERROR: unknown effect«ENDDEFINE»
 «REM» Trigger «ENDREM»
-«DEFINE Trigger FOR IntValue»«value»«ENDDEFINE»
-«DEFINE Trigger FOR FloatValue»«value»«ENDDEFINE»
-«DEFINE Trigger FOR BooleanValue»«IF value»true«ELSE»false«ENDIF»«ENDDEFINE»
-«DEFINE Trigger FOR VariableReference»«variable.name»«ENDDEFINE»
-«DEFINE Trigger FOR SignalReference»«signal.name»«ENDDEFINE»
 
-«DEFINE Trigger FOR TextualCode»«code»«ENDDEFINE»
-«DEFINE Trigger FOR synccharts::Expression»//ERROR: unknown expression«ENDDEFINE»
 
 «DEFINE Action FOR Action»
   «IF this.trigger!=null»
