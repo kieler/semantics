@@ -920,14 +920,13 @@ public class PopupBarPolicy extends DiagramAssistantEditPolicy {
 
     /**
      * 
-     * @return
+     * @return the preference name
      */
-    String getPreferenceName() {
+    public String getPreferenceName() {
         return IPreferenceConstants.PREF_SHOW_POPUP_BARS;
     }
 
     /**
-     * 
      * {@inheritDoc}
      */
     @Override

@@ -46,9 +46,11 @@ public class ValidationInformationCollector implements IStartup, IPartListener,
 
     private static Map<String, String> ePackages = new HashMap<String, String>();
 
-    private static Map<String, IConfigurationElement> validateActions = new HashMap<String, IConfigurationElement>();
+    private static Map<String, IConfigurationElement> validateActions
+            = new HashMap<String, IConfigurationElement>();
 
-    private static Map<String, Map<String, CheckfileDefinition>> checkfiles = new HashMap<String, Map<String, CheckfileDefinition>>();
+    private static Map<String, Map<String, CheckfileDefinition>> checkfiles
+            = new HashMap<String, Map<String, CheckfileDefinition>>();
 
     /**
      * {@inheritDoc}
@@ -135,10 +137,10 @@ public class ValidationInformationCollector implements IStartup, IPartListener,
     }
 
     /**
-     * @param nsUri
-     * @return
+     * @param nsUri the namespace URI
+     * @return true if the validate action is available
      */
-    public static boolean hasValidateAction(String nsUri) {
+    public static boolean hasValidateAction(final String nsUri) {
         String id = getId(nsUri);
         if (id != null) {
             return validateActions.containsKey(id);
@@ -146,7 +148,10 @@ public class ValidationInformationCollector implements IStartup, IPartListener,
         return false;
     }
 
-    private static class CheckfileDefinition {
+    private static final class CheckfileDefinition {
+        
+        private CheckfileDefinition() {
+        }
 
         private String id;
 

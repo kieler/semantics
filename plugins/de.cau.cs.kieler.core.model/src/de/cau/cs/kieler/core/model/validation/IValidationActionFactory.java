@@ -27,6 +27,7 @@ public interface IValidationActionFactory {
     /**
      * Get the validate action for the given ePackage.
      * 
+     * @param page the workbench page
      * @return the action
      */
     Action getValidationAction(IWorkbenchPage page);

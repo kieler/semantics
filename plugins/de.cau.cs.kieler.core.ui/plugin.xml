@@ -80,10 +80,6 @@
             </separator>
          </menu>
       </menuContribution>
-      <group
-            id="de.cau.cs.kieler"
-            separatorsVisible="true">
-      </group>
    </extension>
    <extension
          point="org.eclipse.ui.preferencePages">

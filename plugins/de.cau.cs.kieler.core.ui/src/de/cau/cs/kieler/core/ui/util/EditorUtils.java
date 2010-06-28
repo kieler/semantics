@@ -14,7 +14,6 @@
  *****************************************************************************/
 package de.cau.cs.kieler.core.ui.util;
 
-import org.eclipse.core.runtime.Assert;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IEditorReference;
 import org.eclipse.ui.PlatformUI;

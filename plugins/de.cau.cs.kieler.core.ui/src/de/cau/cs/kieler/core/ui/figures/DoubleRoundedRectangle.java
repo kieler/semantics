@@ -28,7 +28,7 @@ public class DoubleRoundedRectangle extends RoundedRectangle {
 
     /** width of the double rectangle border. */
     public static final int BORDER_WIDTH = 3;
-    
+
     /**
      * The constructor.
      */
@@ -42,8 +42,8 @@ public class DoubleRoundedRectangle extends RoundedRectangle {
      * @param graphics the graphics object
      */
     protected void outlineShape(final Graphics graphics) {
-        int distance = Math.max(lineWidth +1, BORDER_WIDTH);
-    	Rectangle rect = new Rectangle();
+        int distance = Math.max(lineWidth + 1, BORDER_WIDTH);
+        Rectangle rect = new Rectangle();
         Rectangle bounds = getBounds();
         rect.x = bounds.x + lineWidth / 2;
         rect.y = bounds.y + lineWidth / 2;
@@ -52,12 +52,12 @@ public class DoubleRoundedRectangle extends RoundedRectangle {
         // calculate corners according to current dimensions
         int cornerWidth = Math.min(corner.width, bounds.width);
         int cornerHeight = Math.min(corner.height, bounds.height);
-        
+
         graphics.drawRoundRectangle(rect, cornerWidth, cornerHeight);
         // Draw the second rectangle inside the first one
         rect.x += distance;
         rect.y += distance;
-        rect.width -=  2 * distance;
+        rect.width -= 2 * distance;
         rect.height -= 2 * distance;
         graphics.drawRoundRectangle(rect, cornerWidth - distance * BORDER_WIDTH,
                 cornerHeight - distance * BORDER_WIDTH);

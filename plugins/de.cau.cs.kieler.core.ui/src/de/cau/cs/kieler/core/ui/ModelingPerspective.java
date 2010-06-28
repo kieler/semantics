@@ -64,7 +64,7 @@ public class ModelingPerspective implements IPerspectiveFactory {
     /**
      * Add KIELER Views (and some important Eclipse views) as shortcuts into the View menu.
      * 
-     * @param layout
+     * @param layout the page layout
      */
     protected void createViewShortcuts(final IPageLayout layout) {
         layout.addShowViewShortcut(VIEW_KEV);
@@ -85,27 +85,29 @@ public class ModelingPerspective implements IPerspectiveFactory {
     /**
      * Add the KIELER views to the layout.
      * 
-     * @param layout
+     * @param layout the page layout
      */
     protected void createViewLayout(final IPageLayout layout) {
         String editor = layout.getEditorArea();
 
         // TOP LEFT ==============================================
-        IFolderLayout topLeft = layout.createFolder("topLeft", IPageLayout.LEFT, SMALL, editor); //$NON-NLS-1$
+        IFolderLayout topLeft = layout.createFolder("topLeft", IPageLayout.LEFT, //$NON-NLS-1$
+                SMALL, editor);
 //        addViewIfExists(topLeft, IPageLayout.ID_RES_NAV);
         // project explorer does not show the new wizard shortcuts...
         addViewIfExists(topLeft, IPageLayout.ID_PROJECT_EXPLORER);
 
         // BOTTOM LEFT ==============================================
-        IFolderLayout bottomLeft = layout.createFolder("bottomLeft", IPageLayout.BOTTOM, MEDIUM, //$NON-NLS-1$
-                "topLeft"); //$NON-NLS-1$
+        IFolderLayout bottomLeft = layout.createFolder("bottomLeft", IPageLayout.BOTTOM,  //$NON-NLS-1$
+                MEDIUM, "topLeft"); //$NON-NLS-1$
         addViewIfExists(bottomLeft, IPageLayout.ID_OUTLINE);
 
         // add Kieler views to bottom left folder
         addViewIfExists(bottomLeft, VIEW_KIEM_TABLE);
 
         // BOTTOM =================================================
-        IFolderLayout bottom = layout.createFolder("bottom", IPageLayout.BOTTOM, BIG, editor); //$NON-NLS-1$
+        IFolderLayout bottom = layout.createFolder("bottom", IPageLayout.BOTTOM, //$NON-NLS-1$
+                BIG, editor);
         addViewIfExists(bottom, IPageLayout.ID_PROP_SHEET);
         addViewIfExists(bottom, IPageLayout.ID_PROBLEM_VIEW);
         addViewIfExists(bottom, "org.eclipse.ui.console.ConsoleView"); //$NON-NLS-1$
@@ -124,7 +126,7 @@ public class ModelingPerspective implements IPerspectiveFactory {
     /**
      * Add shortcuts to the New-Dialog to the KIELER wizards.
      * 
-     * @param layout
+     * @param layout the page layout
      */
     protected void createNewWizardShortcuts(final IPageLayout layout) {
         layout.addNewWizardShortcut(WIZ_PROJECT);
@@ -137,6 +139,9 @@ public class ModelingPerspective implements IPerspectiveFactory {
     /**
      * Add a view to a folder only if the view exists. This method can be used to add views from
      * other plugins to get no exceptions if the plugin is not loaded.
+     * 
+     * @param folder a folder layout
+     * @param id a view identifier
      */
     protected void addViewIfExists(final IFolderLayout folder, final String id) {
         // first search the view and only add it, if it is available

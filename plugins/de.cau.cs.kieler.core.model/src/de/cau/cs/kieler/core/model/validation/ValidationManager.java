@@ -59,6 +59,12 @@ public final class ValidationManager {
 
     /** Prefix for the preference store. */
     public static final String PREFERENCE_PREFIX = "_Checkfile_";
+    
+    /**
+     * Hide the default constructor.
+     */
+    private ValidationManager() {
+    }
 
     /**
      * Get all registered check files.
@@ -186,10 +192,10 @@ public final class ValidationManager {
      * @param tooltip
      *            the tooltip to display
      */
-    public static void registerCheckFile(String id, final EPackage ePackage,
+    public static void registerCheckFile(final String id, final EPackage ePackage,
             final String file, final boolean isWrapExistingValidator,
             final List<String> referencedEPackageNsURIs, final String name,
-            String tooltip) {
+            final String tooltip) {
         if (!packages.containsKey(ePackage)) {
             packages.put(ePackage, null);
         }

@@ -128,8 +128,7 @@ public abstract class AbstractCutCopyPasteHandler extends
      *            the selection
      * @return true if the selection can be cut/copied
      */
-    protected boolean canKsbaseCopy(
-            @SuppressWarnings("unused") final IStructuredSelection sel) {
+    protected boolean canKsbaseCopy(final IStructuredSelection sel) {
         boolean result = true;
         canKsbaseCopy = result;
         return result;
@@ -145,8 +144,7 @@ public abstract class AbstractCutCopyPasteHandler extends
      *            the selection
      * @return true if the selection can be used
      */
-    protected boolean canKsbasePaste(
-            @SuppressWarnings("unused") final IStructuredSelection sel) {
+    protected boolean canKsbasePaste(final IStructuredSelection sel) {
         boolean result = true;
         canKsbasePaste = result;
         return result;

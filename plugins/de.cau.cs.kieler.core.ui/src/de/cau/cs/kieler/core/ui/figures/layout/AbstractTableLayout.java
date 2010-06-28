@@ -94,8 +94,11 @@ public abstract class AbstractTableLayout extends AbstractHintLayout {
         isObservingVisibility = true;
     }
 
-    /** @return the Layout for the given IFigure */
-    public ExtendedTable getCorrespondingLayout(IFigure stateFigure) {
+    /**
+     * @param stateFigure a state figure
+     * @return the layout for the given figure
+     */
+    public ExtendedTable getCorrespondingLayout(final IFigure stateFigure) {
         return null;
     }
 
@@ -204,7 +207,7 @@ public abstract class AbstractTableLayout extends AbstractHintLayout {
                     if (cell.isEmpty) {
                         minimumSize = new Dimension(layout.getMinWidth(), layout.getMinHeight());
                     } else if (child instanceof ResizableCompartmentFigure 
-                            && !((ResizableCompartmentFigure)child).isExpanded()) {
+                            && !((ResizableCompartmentFigure) child).isExpanded()) {
                         /*Collapsed Compartments should just get space for their expand-trigger*/
                         minimumSize = child.getMinimumSize();
                         /* TODO : For regions we normaly would need here getPreferredSize.*/
@@ -229,7 +232,7 @@ public abstract class AbstractTableLayout extends AbstractHintLayout {
                     ResizableCompartmentFigure compartment = (ResizableCompartmentFigure) child;
                     if (cell.isEmpty) {
                         setTitleVisibility(compartment, false); 
-                    } else if (! compartment.isExpanded()) {
+                    } else if (!compartment.isExpanded()) {
                         /*Collapsed Compartments should just get space for their expand-trigger*/
                         minimumSize = compartment.getMinimumSize();
                         /* TODO : For regions we normaly would need here getPreferredSize.*/
@@ -281,12 +284,12 @@ public abstract class AbstractTableLayout extends AbstractHintLayout {
             /* Set the widths for the complete row, to avoid scrollbars we add 1 pix each side. */
             preferredRowWidth += 2;
             if (preferredRowWidth > preferredStateWidth) {
-                preferredStateWidth = preferredRowWidth ;
+                preferredStateWidth = preferredRowWidth;
             }
             
             minimumRowWidth += 2;
             if (minimumRowWidth > minimumStateWidth) {
-                minimumStateWidth = minimumRowWidth ;
+                minimumStateWidth = minimumRowWidth;
             }
 
             /* Set the height for the complete row */
@@ -439,11 +442,11 @@ public abstract class AbstractTableLayout extends AbstractHintLayout {
                 
                 /*For ie RoundedRectangles the shape has rounded corners, therefore we have to introduce
                  * a padding when we paint the separator next to the corners.*/
-                if(regionSeparatorHeight < layout.getMinHeight() / 2){
-                	left++;
-                	right--;
+                if (regionSeparatorHeight < layout.getMinHeight() / 2) {
+                    left++;
+                    right--;
                 }
-                	
+
                 points.addPoint(new Point(left, regionSeparatorHeight));
                 points.addPoint(new Point(Math.max(left, right), regionSeparatorHeight));
                 regionSeparator.setPoints(points);

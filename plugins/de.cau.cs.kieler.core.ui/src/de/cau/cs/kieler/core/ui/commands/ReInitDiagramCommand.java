@@ -251,7 +251,6 @@ public abstract class ReInitDiagramCommand extends AbstractHandler {
      * @param partners
      *            the partner files
      */
-    @SuppressWarnings("unused")
     protected void performPostOperationAction(final IPath path,
             final List<IPath> partners) {
     }
@@ -265,7 +264,6 @@ public abstract class ReInitDiagramCommand extends AbstractHandler {
      * @param partners
      *            the partner files
      */
-    @SuppressWarnings("unused")
     protected void performPreOperationActions(final IPath path,
             final List<IPath> partners) {
     }

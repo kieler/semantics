@@ -1,6 +1,6 @@
-/**
+/*
  * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
- * 
+ *
  * http://www.informatik.uni-kiel.de/rtsys/kieler/
  * 
  * Copyright 2010 by
@@ -11,11 +11,8 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.core.expressions;
 
 /**
- * Use this class to register components to be used at runtime / without the Equinox extension registry.
+ * Implementation of the Expressions model.
  */
-public class ExpressionsRuntimeModule extends de.cau.cs.kieler.core.expressions.AbstractExpressionsRuntimeModule {
-
-}
+package de.cau.cs.kieler.core.expressions.impl;

@@ -55,10 +55,8 @@ public class DiagramPopupBarPolicy extends PopupBarPolicy implements
      */
     private ToolEntry theLastTool = null;
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.eclipse.gef.EditPolicy#activate()
+    /**
+     * {@inheritDoc}
      */
     @Override
     public void activate() {
@@ -66,10 +64,8 @@ public class DiagramPopupBarPolicy extends PopupBarPolicy implements
         addPaletteListener();
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.eclipse.gef.EditPolicy#deactivate()
+    /**
+     * {@inheritDoc}
      */
     @Override
     public void deactivate() {
@@ -77,10 +73,8 @@ public class DiagramPopupBarPolicy extends PopupBarPolicy implements
         super.deactivate();
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.eclipse.gmf.runtime.diagram.ui.editpolicies.PopupBarEditPolicy#fillActionDescriptors()
+    /**
+     * {@inheritDoc}
      */
     @Override
     protected void fillPopupBarDescriptors() {
