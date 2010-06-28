@@ -35,8 +35,14 @@ create s::Program this transform(synccharts::Region root):
 	addAllStatesToMappingList(root) ->
 	computeThreadPriorities(root.innerStates.first()) ->
 	this.setName(root.innerStates.first().id) ->
-	this.setPriority(setIntValue(getMainTreadPriority(root.innerStates.first()))) -> 
-	this.setStates(getAllStates(root.innerStates.first())) ->
+	this.setPriority(setIntValue(getMainTreadPriority(root.innerStates.first()))) ->
+	( 
+		if root.innerStates.first().regions.size == 1 then
+			this.setStates(getAllStates(root.innerStates.first()))
+		else
+			//this.setStates(getRootStateMoreRegions(root.innerStates.first()))
+			this.setStates(getStatesOfRegion(root))
+	) ->
 	this.setSignals(getStateSignals(root.innerStates.first()))
 ;
 
@@ -77,6 +83,21 @@ List[s::State] addStateToList(s::State state, List[s::State] states):
 	states.add(state)
 ;
 
+// returns a list of all states of a region
+List[s::State] getStatesOfRegion(synccharts::Region region):
+	let outList = {}:
+	outList.addAll(region.innerStates.getAllStates()) ->
+	outList.addAll(region.innerStates.transform()) ->
+	outList
+;
+
+// 
+List[s::State] getRootStateMoreRegions(synccharts::State state):
+	let outList = {}:
+	//outList.addAll(getStatesOfRegion(region)) ->
+	outList
+;
+
 // returns a list including all states of the SyncChart
 // the parameter has to be the root state of the SyncChart
 List[s::State] getAllStates(synccharts::State state):
@@ -84,7 +105,7 @@ List[s::State] getAllStates(synccharts::State state):
 	let putState = (s::State)state.getSingleTraceTarget("S"):
 	let putStateIntern = (s::State)state.getSingleTraceTarget("S_intern"):
 		(
-			if state.parentRegion.parentState != null then (
+			if (state.parentRegion.parentState != null || (state.regions.size > 1)) then (
 				(
 					if state.regions.isEmpty then (
 						putInstructions(putState, getStateSurfInstructions(state)) ->
@@ -110,16 +131,17 @@ List[s::State] getAllStates(synccharts::State state):
 			
 		(
 			if !state.regions.isEmpty then (
-				outList.addAll(state.regions.getStatesOfRegion()) ->
-				if state.parentRegion.parentState != null then (
+				outList.addAll(state.regions.getStatesOfRegion()) ->(
+				//if state.parentRegion.parentState != null then (
 					let putStateHierarchy = (s::State)state.getSingleTraceTarget("S_main"):
 					let putStateHierarchyIntern = (s::State)state.getSingleTraceTarget("S_main_intern"):
 					putInstructions(putStateHierarchy, getStateSurfInstructions(state)) ->
 					putInstructions(putStateHierarchyIntern, getStateDepthInstructions(state)) ->
 					outList.add(putStateHierarchy) ->
 					outList.add(putStateHierarchyIntern)
-				) else (
-					null
+				//) else (
+					//null
+				//)
 				)
 			) else (
 				null
@@ -143,7 +165,6 @@ List[s::Instruction] getStateSurfInstructions(synccharts::State state):
 		
 		// # weak Transitions
 		outList.addAll(state.outgoingTransitions.select(t|t.isImmediate && t.isWeakAbort()).getTransitionInstruction()) ->
-		//////////// _intern ///////////
 		// PRIO(strong)
 		outList.addAll(getRealStatePrio(state)) ->
 		// normal termination
@@ -178,16 +199,6 @@ List[s::Instruction] getStateMainInstructions(synccharts::State state):
 		outList.addAll(getForkInstructions(state)) ->
 		outList
 ;
-
-// returns a list of all states of a region
-List[s::State] getStatesOfRegion(synccharts::Region region):
-	let outList = {}:
-	outList.addAll(region.innerStates.getAllStates()) ->
-	// TODO: remove transform (not critical)
-	outList.addAll(region.innerStates.transform()) ->
-	outList
-;
-
 
 
 // transforms a SyncChart state into a S state

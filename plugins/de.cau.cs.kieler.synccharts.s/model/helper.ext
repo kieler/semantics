@@ -20,9 +20,12 @@ Boolean isRootState(synccharts::State state):
 
 // Returns the name of 
 String getStatePathAsName(synccharts::State state):
-	if state.isRootState() then
-		""
-	else (
+	if state.isRootState() then (
+		if state.regions.size > 1 then
+			"_" + state.id
+		else
+			""
+	) else (
 		let regionString = getParentRegionString(state):
 		getStatePathAsName(state.parentRegion.parentState) + regionString + "_" + state.id
 	)
