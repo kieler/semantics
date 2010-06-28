@@ -32,17 +32,25 @@ extension joinInstruction;
   
 //Start Model Transformation here.
 create s::Program this transform(synccharts::Region root):
+	//create states and cache them in mapping list
 	addAllStatesToMappingList(root) ->
+	
 	computeThreadPriorities(root.innerStates.first()) ->
+	
 	this.setName(root.innerStates.first().id) ->
 	this.setPriority(setIntValue(getMainTreadPriority(root.innerStates.first()))) ->
+
+    //several forks for more then one top level region (otherwise no fork is required)
+    //and construct list of s-states	
 	( 
 		if root.innerStates.first().regions.size == 1 then
 			this.setStates(getAllStates(root.innerStates.first()))
 		else
-			//this.setStates(getRootStateMoreRegions(root.innerStates.first()))
 			this.setStates(getStatesOfRegion(root))
 	) ->
+	
+	//signal declaration
+	//TODO: maybe consolidate with synccharts signal declaration?
 	this.setSignals(getStateSignals(root.innerStates.first()))
 ;
 
@@ -91,57 +99,47 @@ List[s::State] getStatesOfRegion(synccharts::Region region):
 	outList
 ;
 
-// 
-List[s::State] getRootStateMoreRegions(synccharts::State state):
-	let outList = {}:
-	//outList.addAll(getStatesOfRegion(region)) ->
-	outList
-;
-
 // returns a list including all states of the SyncChart
 // the parameter has to be the root state of the SyncChart
 List[s::State] getAllStates(synccharts::State state):
 	let outList = {}:
-	let putState = (s::State)state.getSingleTraceTarget("S"):
-	let putStateIntern = (s::State)state.getSingleTraceTarget("S_intern"):
 		(
+			//if root state with more than one region OR not root state ...
 			if (state.parentRegion.parentState != null || (state.regions.size > 1)) then (
+				let putState = (s::State)state.getSingleTraceTarget("S"):
+				let putStateIntern = (s::State)state.getSingleTraceTarget("S_intern"):
 				(
 					if state.regions.isEmpty then (
+						//simple state
 						putInstructions(putState, getStateSurfInstructions(state)) ->
-						putInstructions(putStateIntern, getStateDepthInstructions(state))
+						putInstructions(putStateIntern, getStateDepthInstructions(state)) ->
+						outList.add(putState) ->
+						outList.add(putStateIntern)
 					) else (
-						putInstructions(putState, getStateMainInstructions(state))
+						//macro state  (... only add fork,forke to instruction list yet)
+						putInstructions(putState, getStateMainInstructions(state)) ->
+						outList.add(putState)
 					)
 				)
-				->
-				outList.add(putState) ->
-				if state.regions.isEmpty then (
-					outList.add(putStateIntern)
-				) else (
-					null
-				)
-				
 			) else (
+				//do nothing for a root state with just one region
 				null
 			)
 		)
 		
 		->
-			
+		
+		//for hierarchical states produce main-s-states here... 
 		(
 			if !state.regions.isEmpty then (
+				//recursive call to getStatesOfRegion (these call getAllState again)
 				outList.addAll(state.regions.getStatesOfRegion()) ->(
-				//if state.parentRegion.parentState != null then (
 					let putStateHierarchy = (s::State)state.getSingleTraceTarget("S_main"):
 					let putStateHierarchyIntern = (s::State)state.getSingleTraceTarget("S_main_intern"):
 					putInstructions(putStateHierarchy, getStateSurfInstructions(state)) ->
 					putInstructions(putStateHierarchyIntern, getStateDepthInstructions(state)) ->
 					outList.add(putStateHierarchy) ->
 					outList.add(putStateHierarchyIntern)
-				//) else (
-					//null
-				//)
 				)
 			) else (
 				null
@@ -176,6 +174,7 @@ List[s::Instruction] getStateDepthInstructions(synccharts::State state):
 	let outList = {}:
 		info(state.id) ->
 		// PAUSE
+		// TODO: check whether pause is necessary for normal termination transitions (maybe pause already included in join/joinelse?)
 		outList.addAll(getPauseInstruction(state)) ->
 		// TODO: host code
 		// all strong transitions
