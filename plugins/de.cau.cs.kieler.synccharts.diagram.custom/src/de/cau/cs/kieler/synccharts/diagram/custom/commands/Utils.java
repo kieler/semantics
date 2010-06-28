@@ -63,7 +63,7 @@ public final class Utils {
     }
 
     /**
-     * Clone an eObject with the method from EcoreUtil
+     * Clone an eObject with the method from EcoreUtil.
      * 
      * @param object
      *            the eObject to clone
@@ -235,7 +235,7 @@ public final class Utils {
     }
 
     /**
-     * Check if there is any object inside the clipboard
+     * Check if there is any object inside the clipboard.
      * 
      * @return true if the clipboard is empty
      */
@@ -275,7 +275,7 @@ public final class Utils {
      * @return the states the formatted list
      */
     public static List<State> getStatesFromClipboard(
-            Collection<State> statesClipBoard, Collection<State> copy) {
+            final Collection<State> statesClipBoard, final Collection<State> copy) {
         if (!statesClipBoard.isEmpty()) {
             List<State> dummy = new LinkedList<State>();
             for (State state : copy) {
@@ -306,7 +306,7 @@ public final class Utils {
      * @return the states the formatted list
      */
     public static List<Region> getRegionsFromClipboard(
-            Collection<Region> regionsClipBoard, Collection<Region> copy) {
+            final Collection<Region> regionsClipBoard, final Collection<Region> copy) {
         if (!regionsClipBoard.isEmpty()) {
             List<Region> dummy = new LinkedList<Region>();
             for (Region region : copy) {
@@ -327,8 +327,8 @@ public final class Utils {
      * @return the states the formatted list
      */
     public static List<Transition> getTransitionsFromClipboard(
-            Collection<Transition> transitionsClipBoard,
-            Collection<Transition> copy) {
+            final Collection<Transition> transitionsClipBoard,
+            final Collection<Transition> copy) {
         if (!transitionsClipBoard.isEmpty()) {
             List<Transition> dummy = new LinkedList<Transition>();
             for (Transition transition : copy) {

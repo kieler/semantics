@@ -174,8 +174,7 @@ public class Execution extends Job {
                         returnValue + "");
                 return (returnValue);
             }
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
            return Execution.SECOND_WAITTIMEOUT; 
         }
     }
@@ -1182,7 +1181,8 @@ public class Execution extends Job {
                                                 KiemPlugin.PLUGIN_ID, e, false);
                                     }
                                 }
-                            } else if ((!this.isHistoryStep()) && dataComponentWrapper.isProducerOnly()) {
+                            } else if ((!this.isHistoryStep())
+                                    && dataComponentWrapper.isProducerOnly()) {
                                 // ===========================================//
                                 // == P U R E P R O D U C E R (REAP) ==//
                                 // ===========================================//

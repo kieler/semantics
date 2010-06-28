@@ -18,7 +18,8 @@ public class SFormatter extends AbstractDeclarativeFormatter {
 	
 	@Override
 	protected void configureFormatting(FormattingConfig c) {
-		de.cau.cs.kieler.s.services.SGrammarAccess f = (de.cau.cs.kieler.s.services.SGrammarAccess) getGrammarAccess();
+// TODO implement formatting
+//		de.cau.cs.kieler.s.services.SGrammarAccess f = (de.cau.cs.kieler.s.services.SGrammarAccess) getGrammarAccess();
 
 		//...
 	}

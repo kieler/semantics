@@ -61,7 +61,7 @@ import de.cau.cs.kieler.synccharts.diagram.providers.SyncchartsElementTypes;
  */
 public class AddToStateHandler extends AbstractHandler implements IHandler {
 
-    /** parameter for type of element to add */
+    /** parameter for type of element to add. */
     public static final String TYPE_PARAM = "de.cau.cs.kieler.synccharts.custom.parameters.type";
 
     private static final String VAL_ENTRY_ACTION = "OnEntryAction";
@@ -72,15 +72,15 @@ public class AddToStateHandler extends AbstractHandler implements IHandler {
     private static final String VAL_VARIABLE = "Variable";
     private static final String VAL_SUSPENSION_TRIGGER = "SuspensionTrigger";
 
-    /** last compartment to which an element was added */
+    /** last compartment to which an element was added. */
     private ShapeCompartmentEditPart lastEditCompartment;
-    /** view adapter for the last edited compartment */
+    /** view adapter for the last edited compartment. */
     private IAdaptable elementViewAdapter;
 
-    /* (non-Javadoc)
-     * @see org.eclipse.core.commands.IHandler#execute(org.eclipse.core.commands.ExecutionEvent)
+    /**
+     * {@inheritDoc}
      */
-    public Object execute(ExecutionEvent event) throws ExecutionException {
+    public Object execute(final ExecutionEvent event) throws ExecutionException {
         lastEditCompartment = null;
         IStructuredSelection selection = (IStructuredSelection) HandlerUtil
                 .getActiveMenuSelection(event);
@@ -138,7 +138,7 @@ public class AddToStateHandler extends AbstractHandler implements IHandler {
      * @param type
      *            type of element to add
      */
-    private void addElement(ShapeNodeEditPart stateEditPart, String type) {
+    private void addElement(final ShapeNodeEditPart stateEditPart, final String type) {
         Class<?> class1 = null, class2 = null;
         IElementType elementType = null;
         if (type.equals(VAL_ENTRY_ACTION)) {
@@ -161,13 +161,7 @@ public class AddToStateHandler extends AbstractHandler implements IHandler {
             class1 = StateSignalCompartmentEditPart.class;
             class2 = StateSignalCompartment2EditPart.class;
             elementType = SyncchartsElementTypes.Signal_3025;
-        }
-        // else if (type.equals(VAL_VARIABLE)) {
-        // class1 = StateVariableCompartmentEditPart.class;
-        // class2 = StateVariableCompartment2EditPart.class;
-        // elementType = SyncchartsElementTypes.Variable_3007;
-        // }
-        else if (type.equals(VAL_SUSPENSION_TRIGGER)) {
+        } else if (type.equals(VAL_SUSPENSION_TRIGGER)) {
             class1 = StateSuspensionTriggerCompartmentEditPart.class;
             class2 = StateSuspensionTriggerCompartment2EditPart.class;
             elementType = SyncchartsElementTypes.Action_3029;

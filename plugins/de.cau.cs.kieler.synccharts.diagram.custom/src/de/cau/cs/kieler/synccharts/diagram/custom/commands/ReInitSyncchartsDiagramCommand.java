@@ -64,163 +64,147 @@ import de.cau.cs.kieler.synccharts.diagram.part.SyncchartsVisualIDRegistry;
  */
 public class ReInitSyncchartsDiagramCommand extends ReInitDiagramCommand {
 
-	/** File extension for diagram files. */
-	private static final String DIAGRAM_EXTENSION = "kids";
+    /** File extension for diagram files. */
+    private static final String DIAGRAM_EXTENSION = "kids";
 
-	/** File extension for model files. */
-	private static final String MODEL_EXTENSION = "kixs";
+    /** File extension for model files. */
+    private static final String MODEL_EXTENSION = "kixs";
 
-	/** Delay for the auto layout. */
-	private static final long AUTO_LAYOUT_DELAY = 1000;
+    /** Delay for the auto layout. */
+    private static final long AUTO_LAYOUT_DELAY = 1000;
 
-	/**
-	 * Perform actions after the reinit. In this case an auto layout on the
-	 * currenly active diagram.
-	 * 
-	 * @param path
-	 *            the file
-	 * @param partners
-	 *            the partner files
-	 */
-	@Override
-	protected void performPostOperationAction(final IPath path,
-			final List<IPath> partners) {
-		WorkbenchJob job = new WorkbenchJob("") {
+    /**
+     * Perform actions after the reinit. In this case an auto layout on the currenly active diagram.
+     * 
+     * @param path the file
+     * @param partners the partner files
+     */
+    @Override
+    protected void performPostOperationAction(final IPath path, final List<IPath> partners) {
+        WorkbenchJob job = new WorkbenchJob("") {
 
-			@Override
-			public IStatus runInUIThread(final IProgressMonitor monitor) {
-				// perform auto layout
-				IEditorPart editor = getActiveEditor();
-				EditPart part = null;
-				if (editor != null) {
-				    EclipseLayoutServices.getInstance().layout(editor, part, false, true);
-				}
-				return new Status(IStatus.OK,
-						"de.cau.cs.kieler.synccharts.diagram.custom", "Done");
-			}
-		};
+            @Override
+            public IStatus runInUIThread(final IProgressMonitor monitor) {
+                // perform auto layout
+                IEditorPart editor = getActiveEditor();
+                EditPart part = null;
+                if (editor != null) {
+                    EclipseLayoutServices.getInstance().layout(editor, part, false, true);
+                }
+                return new Status(IStatus.OK, "de.cau.cs.kieler.synccharts.diagram.custom", "Done");
+            }
+        };
 
-		job.schedule(AUTO_LAYOUT_DELAY);
-	}
+        job.schedule(AUTO_LAYOUT_DELAY);
+    }
 
-	/**
-	 * Get the active editor for the page.
-	 * 
-	 * @return the active editor.
-	 */
-	private IEditorPart getActiveEditor() {
-		IEditorPart result = null;
-		IWorkbench workbench = PlatformUI.getWorkbench();
-		if (workbench != null) {
-			IWorkbenchWindow window = workbench.getActiveWorkbenchWindow();
-			if (window != null) {
-				IWorkbenchPage page = window.getActivePage();
-				if (page != null) {
-					result = page.getActiveEditor();
-				}
-			}
-		}
-		return result;
-	}
+    /**
+     * Get the active editor for the page.
+     * 
+     * @return the active editor.
+     */
+    private IEditorPart getActiveEditor() {
+        IEditorPart result = null;
+        IWorkbench workbench = PlatformUI.getWorkbench();
+        if (workbench != null) {
+            IWorkbenchWindow window = workbench.getActiveWorkbenchWindow();
+            if (window != null) {
+                IWorkbenchPage page = window.getActivePage();
+                if (page != null) {
+                    result = page.getActiveEditor();
+                }
+            }
+        }
+        return result;
+    }
 
-	/**
-	 * Create a new diagram file from the given semantics model. This code is
-	 * taken directly from the synccharts.diagram plugin.
-	 * 
-	 * @param diagramRoot
-	 *            the root element.
-	 * @param editingDomain
-	 *            the editing domain.
-	 * @param kidsPath
-	 *            the destination file
-	 * @return true if the creation was successful
-	 */
-	@Override
-	protected boolean createNewDiagram(final EObject diagramRoot,
-			final TransactionalEditingDomain editingDomain, final IPath kidsPath) {
-		List<IFile> affectedFiles = new LinkedList<IFile>();
-		refreshWorkspace();
+    /**
+     * Create a new diagram file from the given semantics model. This code is taken directly from
+     * the synccharts.diagram plugin.
+     * 
+     * @param diagramRoot the root element.
+     * @param editingDomain the editing domain.
+     * @param kidsPath the destination file
+     * @return true if the creation was successful
+     */
+    @Override
+    protected boolean createNewDiagram(final EObject diagramRoot,
+            final TransactionalEditingDomain editingDomain, final IPath kidsPath) {
+        List<IFile> affectedFiles = new LinkedList<IFile>();
+        refreshWorkspace();
 
-		// get the destination file
-		IFile diagramFile = ResourcesPlugin.getWorkspace().getRoot().getFile(
-				kidsPath);
-		refreshWorkspace();
+        // get the destination file
+        IFile diagramFile = ResourcesPlugin.getWorkspace().getRoot().getFile(kidsPath);
+        refreshWorkspace();
 
-		if (!diagramFile.exists()) {
-			// create a new file
-			byte[] buf = { 0 };
-			InputStream stream = new ByteArrayInputStream(buf);
-			try {
-				diagramFile.create(stream, true, null);
-				refreshWorkspace();
-				stream.close();
-			} catch (CoreException e0) {
-				e0.printStackTrace();
-			} catch (IOException e0) {
-				e0.printStackTrace();
-			}
-		}
+        if (!diagramFile.exists()) {
+            // create a new file
+            byte[] buf = {0};
+            InputStream stream = new ByteArrayInputStream(buf);
+            try {
+                diagramFile.create(stream, true, null);
+                refreshWorkspace();
+                stream.close();
+            } catch (CoreException e0) {
+                e0.printStackTrace();
+            } catch (IOException e0) {
+                e0.printStackTrace();
+            }
+        }
 
-		SyncchartsDiagramEditorUtil.setCharset(diagramFile);
-		affectedFiles.add(diagramFile);
-		URI diagramModelURI = URI.createPlatformResourceURI(diagramFile
-				.getFullPath().toString(), true);
-		ResourceSet resourceSet = editingDomain.getResourceSet();
-		final Resource diagramResource = resourceSet
-				.createResource(diagramModelURI);
-		AbstractTransactionalCommand command = new AbstractTransactionalCommand(
-				editingDomain,
-				Messages.SyncchartsNewDiagramFileWizard_InitDiagramCommand,
-				affectedFiles) {
+        SyncchartsDiagramEditorUtil.setCharset(diagramFile);
+        affectedFiles.add(diagramFile);
+        URI diagramModelURI = URI.createPlatformResourceURI(diagramFile.getFullPath().toString(), true);
+        ResourceSet resourceSet = editingDomain.getResourceSet();
+        final Resource diagramResource = resourceSet.createResource(diagramModelURI);
+        AbstractTransactionalCommand command = new AbstractTransactionalCommand(editingDomain,
+                Messages.SyncchartsNewDiagramFileWizard_InitDiagramCommand, affectedFiles) {
 
-			@Override
-			protected CommandResult doExecuteWithResult(
-					final IProgressMonitor monitor, final IAdaptable info)
-					throws ExecutionException {
-				int diagramVID = SyncchartsVisualIDRegistry
-						.getDiagramVisualID(diagramRoot);
-				if (diagramVID != RegionEditPart.VISUAL_ID) {
-					String msg = Messages.SyncchartsNewDiagramFileWizard_IncorrectRootError;
-					return CommandResult.newErrorCommandResult(msg);
-				}
-				Diagram diagram = ViewService.createDiagram(diagramRoot,
-						RegionEditPart.MODEL_ID,
-						SyncchartsDiagramEditorPlugin.DIAGRAM_PREFERENCES_HINT);
-				diagramResource.getContents().add(diagram);
-				return CommandResult.newOKCommandResult();
-			}
-		};
-		try {
-			OperationHistoryFactory.getOperationHistory().execute(command,
-					new NullProgressMonitor(), null);
-			diagramResource.save(SyncchartsDiagramEditorUtil.getSaveOptions());
-			SyncchartsDiagramEditorUtil.openDiagram(diagramResource);
-		} catch (ExecutionException e) {
-			SyncchartsDiagramEditorPlugin.getInstance().logError(
-					"Unable to create model and diagram", e); //$NON-NLS-1$
-		} catch (IOException ex) {
-			SyncchartsDiagramEditorPlugin.getInstance().logError(
-					"Save operation failed for: " + diagramModelURI, ex); //$NON-NLS-1$
-		} catch (PartInitException ex) {
-			SyncchartsDiagramEditorPlugin.getInstance().logError(
-					"Unable to open editor", ex); //$NON-NLS-1$
-		}
-		return true;
-	}
+            @Override
+            protected CommandResult doExecuteWithResult(final IProgressMonitor monitor,
+                    final IAdaptable info) throws ExecutionException {
+                int diagramVID = SyncchartsVisualIDRegistry.getDiagramVisualID(diagramRoot);
+                if (diagramVID != RegionEditPart.VISUAL_ID) {
+                    String msg = Messages.SyncchartsNewDiagramFileWizard_IncorrectRootError;
+                    return CommandResult.newErrorCommandResult(msg);
+                }
+                Diagram diagram = ViewService.createDiagram(diagramRoot, RegionEditPart.MODEL_ID,
+                        SyncchartsDiagramEditorPlugin.DIAGRAM_PREFERENCES_HINT);
+                diagramResource.getContents().add(diagram);
+                return CommandResult.newOKCommandResult();
+            }
+        };
+        try {
+            OperationHistoryFactory.getOperationHistory().execute(command, new NullProgressMonitor(),
+                    null);
+            diagramResource.save(SyncchartsDiagramEditorUtil.getSaveOptions());
+            SyncchartsDiagramEditorUtil.openDiagram(diagramResource);
+        } catch (ExecutionException e) {
+            SyncchartsDiagramEditorPlugin.getInstance()
+                    .logError("Unable to create model and diagram", e); //$NON-NLS-1$
+        } catch (IOException ex) {
+            SyncchartsDiagramEditorPlugin.getInstance().logError(
+                    "Save operation failed for: " + diagramModelURI, ex); //$NON-NLS-1$
+        } catch (PartInitException ex) {
+            SyncchartsDiagramEditorPlugin.getInstance().logError(
+                    "Unable to open editor", ex); //$NON-NLS-1$
+        }
+        return true;
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	protected String getDiagramExtension() {
-		return DIAGRAM_EXTENSION;
-	}
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected String getDiagramExtension() {
+        return DIAGRAM_EXTENSION;
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	protected String getModelExtension() {
-		return MODEL_EXTENSION;
-	}
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected String getModelExtension() {
+        return MODEL_EXTENSION;
+    }
 }

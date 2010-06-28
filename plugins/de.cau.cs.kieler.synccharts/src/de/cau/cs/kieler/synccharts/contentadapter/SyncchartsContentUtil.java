@@ -27,15 +27,10 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.transaction.ResourceSetListener;
 import org.eclipse.emf.transaction.TransactionalEditingDomain;
-import org.eclipse.emf.transaction.TriggerListener;
-import org.eclipse.emf.transaction.impl.TransactionalEditingDomainImpl;
 import org.eclipse.ui.statushandlers.StatusManager;
 
-import de.cau.cs.kieler.synccharts.Region;
-import de.cau.cs.kieler.synccharts.State;
 import de.cau.cs.kieler.synccharts.Transition;
 
 /**

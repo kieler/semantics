@@ -2,9 +2,9 @@
 package de.cau.cs.kieler.s.ui.quickfix;
 
 import org.eclipse.xtext.ui.editor.quickfix.DefaultQuickfixProvider;
-import org.eclipse.xtext.ui.editor.quickfix.Fix;
-import org.eclipse.xtext.ui.editor.quickfix.IssueResolutionAcceptor;
-import org.eclipse.xtext.validation.Issue;
+//import org.eclipse.xtext.ui.editor.quickfix.Fix;
+//import org.eclipse.xtext.ui.editor.quickfix.IssueResolutionAcceptor;
+//import org.eclipse.xtext.validation.Issue;
 
 public class SQuickfixProvider extends DefaultQuickfixProvider {
 

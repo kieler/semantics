@@ -161,7 +161,7 @@ public class KiemPlugin extends AbstractUIPlugin {
      * @param parentShellParam
      *            the new shell
      */
-    public void setShell(Shell parentShellParam) {
+    public void setShell(final Shell parentShellParam) {
         if (parentShellParam != null) {
             KiemPlugin.parentShell = parentShellParam;
         }
@@ -524,7 +524,7 @@ public class KiemPlugin extends AbstractUIPlugin {
      *            the parent shell 
      * @return an int value indicating the users decision
      */
-    public int promptToSaveOnClose(Shell parentShellParam) {
+    public int promptToSaveOnClose(final Shell parentShellParam) {
         this.setShell(parentShellParam);
         if (this.isDirty()) {
             String fileName = "noname.execution";
@@ -998,7 +998,7 @@ public class KiemPlugin extends AbstractUIPlugin {
      *            the parent shell
      */
     public void doSave(final IProgressMonitor monitor,
-                       Shell parentShellParam) {
+                       final Shell parentShellParam) {
         KiemPlugin.getDefault().setShell(parentShellParam);
         if (KiemPlugin.getDefault().getCurrentFile() == null) {
             this.doSaveAs(parentShell);
@@ -1037,7 +1037,7 @@ public class KiemPlugin extends AbstractUIPlugin {
      * @param parentShellParam  
      *            the parent shell to open the save dialog in
      */
-    public void doSaveAs(Shell parentShellParam) {
+    public void doSaveAs(final Shell parentShellParam) {
         KiemPlugin.getDefault().setShell(parentShellParam);
         SaveAsDialog dlg = new SaveAsDialog(parentShell);
         dlg.setBlockOnOpen(true);
@@ -1069,7 +1069,7 @@ public class KiemPlugin extends AbstractUIPlugin {
      * @param isDirtyParam
      *            the new dirty
      */
-    public void setDirty(boolean isDirtyParam) {
+    public void setDirty(final boolean isDirtyParam) {
         this.isDirty = isDirtyParam;
     }
 

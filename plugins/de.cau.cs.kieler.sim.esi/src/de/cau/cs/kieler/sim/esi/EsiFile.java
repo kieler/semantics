@@ -46,7 +46,7 @@ import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
  */
 public class EsiFile implements ITraceProvider {
 
-    private final static String[] EXTENSIONS = {"esi", "eso"};
+    private static final String[] EXTENSIONS = {"esi", "eso"};
     
     private tracelist traceList = null;
     private EsiTrace current = null;
@@ -167,7 +167,7 @@ public class EsiFile implements ITraceProvider {
      * 
      * @throws KiemInitializationException
      */
-    public List<EsiTrace> loadTrace(String fileName) throws KiemInitializationException {
+    public List<EsiTrace> loadTrace(final String fileName) throws KiemInitializationException {
         ISetup setup = new EsiStandaloneSetup();
         Injector injector = setup.createInjectorAndDoEMFRegistration();
         XtextResourceSet rs = injector.getInstance(XtextResourceSet.class);

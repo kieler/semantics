@@ -15,7 +15,6 @@
 package de.cau.cs.kieler.simplerailctrl.codegen.c.handlers;
 
 import java.io.IOException;
-import java.net.MalformedURLException;
 
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;

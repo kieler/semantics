@@ -146,8 +146,8 @@ public class FileSelectionPage extends WizardExportResourcesPage implements
      * 
      * @return the list of files
      */
-    @SuppressWarnings("unchecked")
     public List<String> getAllSelectedFiles() {
+        @SuppressWarnings("rawtypes")
         List selection = super.getSelectedResources();
         List<String> result = new LinkedList<String>();
 
@@ -169,8 +169,8 @@ public class FileSelectionPage extends WizardExportResourcesPage implements
      * other files to the list of models.
      * 
      */
-    @SuppressWarnings("unchecked")
     private void fillLists() {
+        @SuppressWarnings("rawtypes")
         List selection = super.getSelectedResources();
         executionFiles = new LinkedList<IPath>();
         modelFiles = new LinkedList<IPath>();

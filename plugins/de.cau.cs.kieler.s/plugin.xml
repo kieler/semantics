@@ -14,8 +14,7 @@
         point="de.cau.cs.kieler.ksbase.configurations">
      <configuration
            TransformationFile="transformations/feature.ext"
-           editorId="de.cau.cs.kieler.s.S"
-           packageName="de.cau.cs.kieler.s.s.SPackage">
+           editorId="de.cau.cs.kieler.s.S">
         <menus>
            <menuContribution
                  locationURI="menu:de.cau.cs.kieler">
@@ -38,6 +37,9 @@
                  transformationId="de.cau.cs.kieler.s.kernelExpand">
            </transformation>
         </transformations>
+        <package
+              class="de.cau.cs.kieler.s.s.SPackage">
+        </package>
      </configuration>
   </extension>
 

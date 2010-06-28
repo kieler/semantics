@@ -665,8 +665,6 @@ public abstract class AbstractDataComponent implements IDataComponent, IExecutab
      * 
      * @param kIEMInstanceParam
      *            the KIEM instance
-     * @param kIEMViewInstanceParam
-     *            the KIEM view instance
      */
     public final void masterSetKIEMInstance(final KiemPlugin kIEMInstanceParam) {
         this.kIEMInstance = kIEMInstanceParam;

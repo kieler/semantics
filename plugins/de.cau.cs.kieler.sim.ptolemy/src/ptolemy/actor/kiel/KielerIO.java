@@ -43,6 +43,10 @@ import ptolemy.kernel.util.NameDuplicationException;
  * @Pt.AcceptedRating Red (cmot)
  */
 public class KielerIO extends TypedAtomicActor {
+    
+    /** serial version UID. */
+    private static final long serialVersionUID = -3181830589443018196L;
+
     /**
      * Construct an actor with the given container and name.
      * 
