@@ -18,7 +18,8 @@ Boolean isRootState(synccharts::State state):
 	state.parentRegion.parentState == null
 ;
 
-// Returns the name of 
+// Returns the name of a state, e.g. "L_Initial_Initial_"
+// TODO: shortest hierarchy, unique incremental name DataComponent options 
 String getStatePathAsName(synccharts::State state):
 	if state.isRootState() then (
 		if state.regions.size > 1 then

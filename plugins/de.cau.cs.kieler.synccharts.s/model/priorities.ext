@@ -12,6 +12,7 @@ extension org::eclipse::xtend::util::stdlib::issues;      // pass messages back 
 extension helper;
 ////////////////////////////////////////////
 
+// priority of a state represented as a weak state (for strong and weak outgoing transitions) 
 List[Instruction] getWeakStatePrio(synccharts::State state):
 	let out = {}:
 		if !state.regions.isEmpty &&
@@ -30,6 +31,7 @@ List[Instruction] getWeakStatePrio(synccharts::State state):
 		out
 ;
 
+// priority: weak for no outgoing strong transition states, strong for outgoing strong transition states
 List[Instruction] getRealStatePrio(synccharts::State state):
 	let out = {}:
 		if state.outgoingTransitions.exists(t|t.type != TransitionType::STRONGABORT) &&
@@ -58,6 +60,7 @@ List[Instruction] getSmallestStatePrio(synccharts::Transition transition):
 		out
 ;
 
+// Used if other transition in parallel region depends on this transition emission
 List[Instruction] getReducedPrio(synccharts::Transition transition):
 	let out = {}:
 	let prio = new Prio:

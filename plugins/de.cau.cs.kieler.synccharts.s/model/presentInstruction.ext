@@ -22,6 +22,7 @@ List[Instruction] getPresentInstruction(Transition transition):
 ;
 
 Void createPresent(Present present, Transition transition):
+ 	//TODO: for complex expression this code needs to be changed...
 	let trigger = ((SignalReference)transition.trigger).signal:
 	let targetState = transition.targetState:
 		present.setSignal((s::Signal) (trigger.getSingleTraceTarget("S")))->

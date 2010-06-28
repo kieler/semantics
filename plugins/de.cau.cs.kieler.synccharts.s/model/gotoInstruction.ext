@@ -32,6 +32,7 @@ List[Instruction] getGotoInstruction(synccharts::State state):
 		out
 ;
 
+// depth return
 List[Instruction] getGotoReturnInstruction(synccharts::State state):
 	let out = {}:
 	let goto = new Goto:
