@@ -834,11 +834,6 @@
             title="Transition"
             description="Create new Transition"
             genLinks="//@diagram/@links.0"/>
-        <entries
-            xsi:type="gmfgen:ToolEntry"
-            title="Region"
-            description="Create a new Region"
-            genNodes="//@diagram/@childNodes.0"/>
       </groups>
     </palette>
     <preferences

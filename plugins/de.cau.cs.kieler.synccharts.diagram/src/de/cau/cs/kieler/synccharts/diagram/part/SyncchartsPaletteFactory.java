@@ -35,7 +35,6 @@ public class SyncchartsPaletteFactory {
         paletteContainer.setId("createSynccharts1Group"); //$NON-NLS-1$
         paletteContainer.add(createState1CreationTool());
         paletteContainer.add(createTransition2CreationTool());
-        paletteContainer.add(createRegion3CreationTool());
         return paletteContainer;
     }
 
@@ -68,22 +67,6 @@ public class SyncchartsPaletteFactory {
         entry.setId("createTransition2CreationTool"); //$NON-NLS-1$
         entry.setSmallIcon(SyncchartsElementTypes
                 .getImageDescriptor(SyncchartsElementTypes.Transition_4003));
-        entry.setLargeIcon(entry.getSmallIcon());
-        return entry;
-    }
-
-    /**
-     * @generated
-     */
-    private ToolEntry createRegion3CreationTool() {
-        List/*<IElementType>*/types = new ArrayList/*<IElementType>*/(1);
-        types.add(SyncchartsElementTypes.Region_3023);
-        NodeToolEntry entry = new NodeToolEntry(
-                Messages.Region3CreationTool_title,
-                Messages.Region3CreationTool_desc, types);
-        entry.setId("createRegion3CreationTool"); //$NON-NLS-1$
-        entry.setSmallIcon(SyncchartsElementTypes
-                .getImageDescriptor(SyncchartsElementTypes.Region_3023));
         entry.setLargeIcon(entry.getSmallIcon());
         return entry;
     }

@@ -18,7 +18,7 @@ import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
 import de.cau.cs.kieler.synccharts.Action;
-import de.cau.cs.kieler.synccharts.Transition;
+
 /**
  * The activator class controls the plug-in life cycle.
  * 
@@ -36,6 +36,7 @@ public class SyncchartsKsbasePlugin extends AbstractUIPlugin {
      * The constructor.
      */
     public SyncchartsKsbasePlugin() {
+
     }
 
     /**
@@ -48,9 +49,11 @@ public class SyncchartsKsbasePlugin extends AbstractUIPlugin {
      *             When starting this plug-in fails.
      * 
      */
+    @Override
     public void start(final BundleContext context) throws Exception {
         super.start(context);
         SyncchartsKsbasePlugin.setDefault(this);
+
     }
 
     /**
@@ -62,6 +65,7 @@ public class SyncchartsKsbasePlugin extends AbstractUIPlugin {
      * @throws Exception
      *             When stopping this plug-in fails.
      */
+    @Override
     public void stop(final BundleContext context) throws Exception {
         SyncchartsKsbasePlugin.setDefault(null);
         super.stop(context);
@@ -75,16 +79,18 @@ public class SyncchartsKsbasePlugin extends AbstractUIPlugin {
     public static SyncchartsKsbasePlugin getDefault() {
         return plugin;
     }
-    
+
     /**
      * Sets the shared instance.
-     * @param value The new shared instance value
+     * 
+     * @param value
+     *            The new shared instance value
      */
-    public static void setDefault(final SyncchartsKsbasePlugin value) { 
+    public static void setDefault(final SyncchartsKsbasePlugin value) {
         plugin = value;
     }
-    
+
     public static void setLabel(final Action trans, final String label) {
-    	trans.setLabel(label);
+        trans.setLabel(label);
     }
 }

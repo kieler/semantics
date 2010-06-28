@@ -55,9 +55,6 @@
             <editableFeatures
                 href="synccharts.ecore#//Scope/label"/>
           </labelMappings>
-          <tool
-              xsi:type="gmftool:CreationTool"
-              href="synccharts.gmftool#//@palette/@tools.0/@tools.2"/>
           <diagramNode
               href="synccharts.gmfgraph#Region"/>
           <children

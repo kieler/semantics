@@ -139,6 +139,48 @@
       <menuContribution
             locationURI="popup:org.eclipse.gmf.runtime.diagram.ui.DiagramEditorContextMenu?after=addGroup">
          <command
+               commandId="de.cau.cs.kieler.synccharts.custom.contextMenu.addRegion"
+               icon="icons/obj16/Region.gif"
+               label="Add Region"
+               mnemonic="R"
+               style="push"
+               tooltip="Add a region to the state, which is executed in parallel to other regions">
+            <visibleWhen
+                  checkEnabled="false">
+               <and>
+                  <reference
+                        definitionId="de.cau.cs.kieler.synccharts.custom.expressions.statePart">
+                  </reference>
+                  <reference
+                        definitionId="de.cau.cs.kieler.synccharts.diagram.isKsbaseInactive">
+                  </reference>
+               </and>
+            </visibleWhen>
+            <parameter
+                  name="de.cau.cs.kieler.synccharts.custom.parameters.type"
+                  value="Region">
+            </parameter>
+         </command>
+         <command
+               commandId="de.cau.cs.kieler.synccharts.custom.contextMenu.addState"
+               icon="icons/obj16/State.gif"
+               label="Add State"
+               mnemonic="S"
+               style="push"
+               tooltip="Add a state to the selected region">
+            <visibleWhen
+                  checkEnabled="false">
+               <and>
+                  <reference
+                        definitionId="de.cau.cs.kieler.synccharts.custom.expressions.region">
+                  </reference>
+                  <reference
+                        definitionId="de.cau.cs.kieler.synccharts.diagram.isKsbaseInactive">
+                  </reference>
+               </and>
+            </visibleWhen>
+         </command>
+         <command
                commandId="de.cau.cs.kieler.synccharts.custom.contextMenu.addSignal"
                icon="icons/obj16/Signal.gif"
                label="Add Signal"
@@ -251,47 +293,6 @@
             </visibleWhen>
          </command>
         
-      </menuContribution>
-      <menuContribution
-            locationURI="popup:de.cau.cs.kieler">
-         <menu
-               id="compatSyncchartsEditing"
-               label="Compatibility SyncChart Edit Operations"
-               mnemonic="C"
-               tooltip="Edit Operations for SyncCharts that are only required if structure-based editing is not available">
-            <command
-                  commandId="de.cau.cs.kieler.synccharts.custom.contextMenu.addRegion"
-                  icon="icons/obj16/Region.gif"
-                  label="Add Region"
-                  mnemonic="R"
-                  style="push"
-                  tooltip="Add a region to the state, which is executed in parallel to other regions">
-               <visibleWhen
-                     checkEnabled="false">
-                  <reference
-                        definitionId="de.cau.cs.kieler.synccharts.custom.expressions.statePart">
-                  </reference>
-               </visibleWhen>
-               <parameter
-                     name="de.cau.cs.kieler.synccharts.custom.parameters.type"
-                     value="Region">
-               </parameter>
-            </command>
-            <command
-                  commandId="de.cau.cs.kieler.synccharts.custom.contextMenu.addState"
-                  icon="icons/obj16/State.gif"
-                  label="Add State"
-                  mnemonic="S"
-                  style="push"
-                  tooltip="Add a state to the selected region">
-               <visibleWhen
-                     checkEnabled="false">
-                  <reference
-                        definitionId="de.cau.cs.kieler.synccharts.custom.expressions.region">
-                  </reference>
-               </visibleWhen>
-            </command>
-         </menu>
       </menuContribution>
             <menuContribution
             locationURI="popup:org.eclipse.ui.popup.any?after=additions">
@@ -408,6 +409,16 @@
             </or>
          </iterate>
       </definition>
+      <definition
+            id="de.cau.cs.kieler.synccharts.diagram.isKsbaseInactive">
+         <with
+               variable="activeEditor">
+            <test
+                  forcePluginActivation="false"
+                  property="de.cau.cs.kieler.synccharts.isKsbaseInactive">
+            </test>
+         </with>
+      </definition>
    </extension>
    <extension
          point="org.eclipse.ui.bindings">
@@ -522,6 +533,13 @@
                id="de.cau.cs.kieler.synccharts.activeSyncchartsEditor"
                namespace="de.cau.cs.kieler.synccharts"
                properties="activeSyncchartsEditor"
+               type="org.eclipse.ui.IEditorPart">
+         </propertyTester>
+         <propertyTester
+               class="de.cau.cs.kieler.synccharts.diagram.custom.handlers.SyncchartsPropertyTester"
+               id="de.cau.cs.kieler.synccharts.isKsbaseInactive"
+               namespace="de.cau.cs.kieler.synccharts"
+               properties="isKsbaseInactive"
                type="org.eclipse.ui.IEditorPart">
          </propertyTester>
       </extension>

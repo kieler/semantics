@@ -26,25 +26,34 @@ import de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditor;
  */
 public class SyncchartsPropertyTester extends PropertyTester {
 
-	/**
-	 * 
-	 * Creates a new SyncchartsPropertyTester.
-	 * 
-	 */
-	public SyncchartsPropertyTester() {
+    private static boolean isKsbaseInactive = true;
 
-	}
+    public static void ksbaseIsActive() {
+        isKsbaseInactive = false;
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public boolean test(final Object receiver, final String property,
-			final Object[] args, final Object expectedValue) {
-		if (property.equals("activeSyncchartsEditor")
-				&& receiver instanceof SyncchartsDiagramEditor) {
-			return true;
-		}
-		return false;
-	}
+    /**
+     * 
+     * Creates a new SyncchartsPropertyTester.
+     * 
+     */
+    public SyncchartsPropertyTester() {
+
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public boolean test(final Object receiver, final String property,
+            final Object[] args, final Object expectedValue) {
+        if (property.equals("activeSyncchartsEditor")
+                && receiver instanceof SyncchartsDiagramEditor) {
+            return true;
+        }
+        if (property.equals("isKsbaseInactive")) {
+            return isKsbaseInactive;
+        }
+        return false;
+    }
 
 }
