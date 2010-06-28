@@ -31,6 +31,8 @@ extension joinInstruction;
 // - complex expressions
 // - count delays (not considered in SC yet)
 // - valued signals
+// - unterscheiden zwischen input, signals, outputs
+// - ...
 
 //-----------------------------------------------------------------------------
 //     SyncChart - 2 - S    TRANSFORMATION    
