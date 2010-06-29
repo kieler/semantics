@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.ui.commands">
+      <command
+            defaultHandler="de.cau.cs.kieler.s.sc.SCGenerator"
+            id="de.cau.cs.kieler.s.sc.s2sc"
+            name="S 2 SC transformation">
+      </command> 
+   </extension>
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            locationURI="popup:de.cau.cs.kieler">
+         <command
+               commandId="de.cau.cs.kieler.s.sc.s2sc"
+               label="S 2 SC transformation"
+               style="push">
+         </command>
+      </menuContribution>
+   </extension>
+
+</plugin>

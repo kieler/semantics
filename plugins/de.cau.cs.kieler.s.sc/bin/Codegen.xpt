@@ -1,0 +1,28 @@
+«IMPORT s»
+
+// ABRO - the "hello world" for SSMs
+// Example from Charles André, Semantics of SyncCharts,
+// ISRN I3S/RR-2003-24-FR, April 2003, Figure 5-12
+//
+// rvh, 17 mar 2009
+#include "sc.h"
+
+#define RUNMAX 2                // # of runs to execute
+#define TICKMAX 5               // # of ticks to execute
+
+int runMax  = RUNMAX;           // # of runs to execute
+int tickMax = TICKMAX;          // # of ticks to execute
+
+
+// ======================================
+// Program-specific definitions
+
+// Signals
+
+«DEFINE main FOR Program-»
+	«FILE name + ".c"-»
+	
+	/* generated SC-code */
+	
+	«ENDFILE»
+«ENDDEFINE»
