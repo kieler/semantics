@@ -499,7 +499,8 @@ public class UpdateResourceFactoryImpl extends XMIResourceFactoryImpl {
                 if (token.startsWith("targetState=\"//@")) {
                     String newToken = token.replaceFirst("targetState=\"//@",
                             "DUMMY_targetState=\"//@");
-                    builder.append(newToken.replace("/>", "") + " ");
+                    builder.append(newToken.replace("/>", "").replace(">", "")
+                            + " ");
                 }
                 if (token.contains("regions")) {
                     isRegionHeader = true;
