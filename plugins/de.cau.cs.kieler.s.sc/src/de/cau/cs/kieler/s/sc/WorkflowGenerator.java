@@ -37,7 +37,7 @@ public class WorkflowGenerator extends AbstractWorkflowGenerator {
      */
     @Override
     public String getPathToMainTemplate() {
-        return "de::cau::cs::kieler::s::sc::templates::Codegen";
+        return "templates::Codegen";
     }
 
 }
