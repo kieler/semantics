@@ -1,3 +1,17 @@
+/*
+ * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
+ *
+ * http://www.informatik.uni-kiel.de/rtsys/kieler/
+ * 
+ * Copyright 2009 by
+ * + Christian-Albrechts-University of Kiel
+ *   + Department of Computer Science
+ *     + Real-Time and Embedded Systems Group
+ * 
+ * This code is provided under the terms of the Eclipse Public License (EPL).
+ * See the file epl-v10.html for the license text.
+ * 
+ *****************************************************************************/
 package de.cau.cs.kieler.synccharts.custom.update;
 
 import java.io.BufferedReader;
@@ -40,7 +54,7 @@ import de.cau.cs.kieler.synccharts.State;
 import de.cau.cs.kieler.synccharts.Transition;
 
 /**
- * This class handles the migration from Synccharts 0.1 to 0.2.
+ * This class handles the migration from Synccharts 0.1 to 0.2.1.
  * 
  * @author soh
  * 
@@ -72,10 +86,13 @@ public class UpdateResourceFactoryImpl extends XMIResourceFactoryImpl {
     /**
      * The file name of the last kixs file that was found.
      */
-    public static String lastName;
+    private static String lastName;
 
     /**
+     * Check whether the editor is out of date and thrown an exception if it is.
+     * 
      * @param input
+     *            the file editor input
      */
     public static void checkDiagramEditorInput(final FileEditorInput input) {
         try {
@@ -170,7 +187,7 @@ public class UpdateResourceFactoryImpl extends XMIResourceFactoryImpl {
                     try {
                         dialog.run(true, false, new IRunnableWithProgress() {
 
-                            public void run(IProgressMonitor monitor)
+                            public void run(final IProgressMonitor monitor)
                                     throws InvocationTargetException,
                                     InterruptedException {
                                 monitor
@@ -253,7 +270,7 @@ public class UpdateResourceFactoryImpl extends XMIResourceFactoryImpl {
      * @param version
      * @throws UpdateException
      */
-    private void convert(URI uri, Synccharts_MM_Version version)
+    private void convert(final URI uri, final Synccharts_MM_Version version)
             throws UpdateException {
         ExtensibleURIConverterImpl conv = new ExtensibleURIConverterImpl();
 
@@ -283,10 +300,10 @@ public class UpdateResourceFactoryImpl extends XMIResourceFactoryImpl {
                 String newString = s;
                 switch (version) {
                 case v_0_1:
-                    newString = convertLineV_0_1(s);
+                    newString = convertLineV01To02(s);
                     break;
                 case v_0_2:
-                    newString = convertLineV_0_2(s);
+                    newString = convertLineV02To021(s);
                     break;
                 case v_0_2_1:
                     return;
@@ -403,7 +420,7 @@ public class UpdateResourceFactoryImpl extends XMIResourceFactoryImpl {
      * @param s
      * @return
      */
-    private String convertLineV_0_2(String s) {
+    private String convertLineV02To021(final String s) {
         String result = s;
         if (result.contains(getVersionURI(Synccharts_MM_Version.v_0_2))) {
             result = result
@@ -426,7 +443,8 @@ public class UpdateResourceFactoryImpl extends XMIResourceFactoryImpl {
      * @param version
      * @return
      */
-    private Synccharts_MM_Version getNextVersion(Synccharts_MM_Version version) {
+    private Synccharts_MM_Version getNextVersion(
+            final Synccharts_MM_Version version) {
         switch (version) {
         case v_0_1:
             return Synccharts_MM_Version.v_0_2;
@@ -442,7 +460,7 @@ public class UpdateResourceFactoryImpl extends XMIResourceFactoryImpl {
      * @param s
      * @return
      */
-    private String convertLineV_0_1(String s) {
+    private String convertLineV01To02(final String s) {
         // variable types are now in lower case, changed integer to int
         String newString = s.replaceAll("type=\"INTEGER\"", "type=\"int\"");
         newString = newString.replaceAll("type=\"UNSIGNED\"",
@@ -473,12 +491,28 @@ public class UpdateResourceFactoryImpl extends XMIResourceFactoryImpl {
             newString = newString.replaceAll("newID=\"", "actual=\"");
         }
 
-        newString = newString.replaceAll(" targetState=\"//@",
-                " DUMMY_targetState=\"//@");
-
-        if (newString.contains("regions") && newString.contains("id")) {
-            newString = newString.replace(" id", " DUMMY_id");
+        String[] array = newString.split(" ");
+        StringBuilder builder = new StringBuilder();
+        boolean isRegionHeader = false;
+        for (String token : array) {
+            if (token.length() > 1) {
+                if (token.startsWith("targetState=\"//@")) {
+                    String newToken = token.replaceFirst("targetState=\"//@",
+                            "DUMMY_targetState=\"//@");
+                    builder.append(newToken.replace("/>", "") + " ");
+                }
+                if (token.contains("regions")) {
+                    isRegionHeader = true;
+                }
+                if (isRegionHeader && token.startsWith("id")) {
+                    String newToken = token.replaceFirst("id", "DUMMY_id");
+                    builder.append(newToken.replace(">", "") + " ");
+                }
+            }
+            builder.append(token + " ");
         }
+        newString = builder.toString();
+
         return newString;
     }
 
@@ -486,7 +520,7 @@ public class UpdateResourceFactoryImpl extends XMIResourceFactoryImpl {
      * @param version
      * @return
      */
-    private static String getVersionURI(Synccharts_MM_Version version) {
+    private static String getVersionURI(final Synccharts_MM_Version version) {
         switch (version) {
         case v_0_1:
             return "xmlns:synccharts=\"http://kieler.cs.cau.de/synccharts\"";
