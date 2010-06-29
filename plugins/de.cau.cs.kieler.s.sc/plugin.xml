@@ -6,7 +6,7 @@
       <command
             defaultHandler="de.cau.cs.kieler.s.sc.SCGenerator"
             id="de.cau.cs.kieler.s.sc.s2sc"
-            name="S 2 SC transformation">
+            name="S 2 SC Transformation">
       </command> 
    </extension>
    <extension
@@ -15,7 +15,7 @@
             locationURI="popup:de.cau.cs.kieler">
          <command
                commandId="de.cau.cs.kieler.s.sc.s2sc"
-               label="S 2 SC transformation"
+               label="S 2 SC Transformation"
                style="push">
          </command>
       </menuContribution>
