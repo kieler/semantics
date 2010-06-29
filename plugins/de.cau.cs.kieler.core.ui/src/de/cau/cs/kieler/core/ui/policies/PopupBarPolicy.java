@@ -41,13 +41,10 @@ import org.eclipse.gmf.runtime.diagram.ui.editpolicies.DiagramAssistantEditPolic
 import org.eclipse.gmf.runtime.diagram.ui.editpolicies.PopupBarEditPolicy;
 import org.eclipse.gmf.runtime.diagram.ui.internal.editparts.ISurfaceEditPart;
 import org.eclipse.gmf.runtime.diagram.ui.internal.l10n.DiagramUIPluginImages;
-import org.eclipse.gmf.runtime.diagram.ui.l10n.DiagramUIMessages;
 import org.eclipse.gmf.runtime.diagram.ui.preferences.IPreferenceConstants;
 import org.eclipse.gmf.runtime.diagram.ui.tools.AbstractPopupBarTool;
-import org.eclipse.gmf.runtime.diagram.ui.tools.PopupBarTool;
 import org.eclipse.gmf.runtime.emf.type.core.IElementType;
 import org.eclipse.gmf.runtime.emf.ui.services.modelingassistant.ModelingAssistantService;
-import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Control;
@@ -763,7 +760,7 @@ public class PopupBarPolicy extends DiagramAssistantEditPolicy {
     }
 
     /**
-     * allows plugins to add their own popup bar tools and tips.
+     * This method allows plugins to add their own popup bar tools and tips.
      * 
      * @param elementType
      *            the element type
@@ -781,7 +778,6 @@ public class PopupBarPolicy extends DiagramAssistantEditPolicy {
         PopupBarDescriptor desc = new PopupBarDescriptor(theTip, theImage,
                 elementType, theTracker);
         myPopupBarDescriptors.add(desc);
-
     }
 
     /**
@@ -793,15 +789,11 @@ public class PopupBarPolicy extends DiagramAssistantEditPolicy {
      *            the image
      * @param theTracker
      *            the tracker
+     * @deprecated don't use this
      */
+    @Deprecated
     protected void addPopupBarDescriptor(final IElementType elementType,
             final Image theImage, final DragTracker theTracker) {
-
-        String theInputStr = DiagramUIMessages.PopupBar_AddNew;
-
-        String theTip = NLS.bind(theInputStr, elementType.getDisplayName());
-
-        addPopupBarDescriptor(elementType, theImage, theTracker, theTip);
     }
 
     /**
@@ -812,13 +804,11 @@ public class PopupBarPolicy extends DiagramAssistantEditPolicy {
      *            the element type
      * @param theImage
      *            the image
+     * @deprecated don't use this
      */
+    @Deprecated
     protected void addPopupBarDescriptor(final IElementType elementType,
             final Image theImage) {
-
-        this.addPopupBarDescriptor(elementType, theImage, new PopupBarTool(
-                getHost(), elementType));
-
     }
 
     /**
@@ -830,15 +820,11 @@ public class PopupBarPolicy extends DiagramAssistantEditPolicy {
      *            the image
      * @param theTip
      *            the tool tip
+     * @deprecated don't use this
      */
+    @Deprecated
     protected void addPopupBarDescriptor(final IElementType elementType,
             final Image theImage, final String theTip) {
-
-        PopupBarTool theTracker = new PopupBarTool(getHost(), elementType);
-        PopupBarDescriptor desc = new PopupBarDescriptor(theTip, theImage,
-                elementType, theTracker);
-        myPopupBarDescriptors.add(desc);
-
     }
 
     /**
@@ -850,14 +836,11 @@ public class PopupBarPolicy extends DiagramAssistantEditPolicy {
      *            the image
      * @param theRequest
      *            the create request to be used
+     * @deprecated don't use this
      */
+    @Deprecated
     protected void addPopupBarDescriptor(final IElementType elementType,
             final Image theImage, final CreateRequest theRequest) {
-
-        PopupBarTool theTracker = new PopupBarTool(getHost(), theRequest);
-
-        this.addPopupBarDescriptor(elementType, theImage, theTracker);
-
     }
 
     /**

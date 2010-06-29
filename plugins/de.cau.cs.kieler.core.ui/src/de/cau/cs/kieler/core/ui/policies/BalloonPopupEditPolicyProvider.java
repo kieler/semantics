@@ -53,6 +53,7 @@ public class BalloonPopupEditPolicyProvider extends AbstractProvider implements
         if (!isNote(editPart)) {
             try {
                 if (getContributions() != null) {
+                    editPart.removeEditPolicy(EditPolicyRoles.POPUPBAR_ROLE);
                     BalloonPopupBarEditPolicy policy = new BalloonPopupBarEditPolicy(
                             getContributions(), editPart);
                     policy.setHost(editPart);
@@ -121,9 +122,7 @@ public class BalloonPopupEditPolicyProvider extends AbstractProvider implements
                                         String key = child.getAttribute("key");
                                         String value = child
                                                 .getAttribute("value");
-
                                         map.put(key, value);
-
                                     }
                                     con.setAttributes(map);
                                 }
