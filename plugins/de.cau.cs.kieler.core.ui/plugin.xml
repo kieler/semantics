@@ -300,6 +300,13 @@
          </enablement>
       </commonWizard>
    </extension>
+   <extension
+         point="org.eclipse.ui.importWizards">
+      <category
+            id="de.cau.cs.kieler"
+            name="KIELER">
+      </category>
+   </extension>
  <!--  <extension
          point="org.eclipse.ui.intro.config">
       <config
