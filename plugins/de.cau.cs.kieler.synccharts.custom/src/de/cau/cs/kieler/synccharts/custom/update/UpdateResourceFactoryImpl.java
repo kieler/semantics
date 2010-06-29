@@ -169,6 +169,8 @@ public class UpdateResourceFactoryImpl extends XMIResourceFactoryImpl {
         return false;
     }
 
+    private static boolean wasFileOutOfDate = true;
+
     /**
      * {@inheritDoc}
      */
@@ -176,7 +178,9 @@ public class UpdateResourceFactoryImpl extends XMIResourceFactoryImpl {
     public Resource createResource(final URI uri) {
         XMIResource resource = (XMIResource) super.createResource(uri);
 
+        wasFileOutOfDate = false;
         if (isFileOutOfDate(uri) && askUser()) {
+            wasFileOutOfDate = true;
             PlatformUI.getWorkbench().getDisplay().syncExec(new Runnable() {
                 public void run() {
                     Shell parent = PlatformUI.getWorkbench()
@@ -221,7 +225,7 @@ public class UpdateResourceFactoryImpl extends XMIResourceFactoryImpl {
         defaultLoadOptions.put(XMLResource.OPTION_RECORD_UNKNOWN_FEATURE,
                 Boolean.TRUE);
         defaultLoadOptions.put(XMLResource.OPTION_RESOURCE_HANDLER,
-                new SyncchartsResourceHandler());
+                new SyncchartsResourceHandler(uri));
         defaultLoadOptions.put(XMLResource.OPTION_PROCESS_DANGLING_HREF,
                 XMLResource.OPTION_PROCESS_DANGLING_HREF_RECORD);
 
@@ -330,8 +334,8 @@ public class UpdateResourceFactoryImpl extends XMIResourceFactoryImpl {
                         os));
                 for (String line : lines) {
                     bw.write(line + "\n");
-                    bw.flush();
                 }
+                bw.flush();
                 os.close();
             }
         } catch (IOException e) {
@@ -507,7 +511,8 @@ public class UpdateResourceFactoryImpl extends XMIResourceFactoryImpl {
                 }
                 if (isRegionHeader && token.startsWith("id")) {
                     String newToken = token.replaceFirst("id", "DUMMY_id");
-                    builder.append(newToken.replace(">", "") + " ");
+                    builder.append(newToken.replace("/>", "").replace(">", "")
+                            + " ");
                 }
             }
             builder.append(token + " ");
@@ -542,6 +547,17 @@ public class UpdateResourceFactoryImpl extends XMIResourceFactoryImpl {
      */
     private class SyncchartsResourceHandler extends BasicResourceHandler {
 
+        private URI uri;
+
+        /**
+         * Creates a new UpdateResourceFactoryImpl.java.
+         * 
+         * @param uri
+         */
+        public SyncchartsResourceHandler(final URI uriParam) {
+            uri = uriParam;
+        }
+
         @Override
         public void preLoad(final XMLResource resource,
                 final InputStream inputStream, final Map<?, ?> options) {
@@ -561,6 +577,19 @@ public class UpdateResourceFactoryImpl extends XMIResourceFactoryImpl {
                 EObject key = entry.getKey();
                 AnyType value = entry.getValue();
                 handleUnknownData(key, value);
+            }
+
+            if (wasFileOutOfDate) {
+                Map<Object, Object> defaultSaveOptions = resource
+                        .getDefaultSaveOptions();
+                defaultSaveOptions.put(XMLResource.OPTION_RESOURCE_HANDLER,
+                        new SyncchartsCleanupHandler(uri));
+
+                try {
+                    resource.save(defaultSaveOptions);
+                } catch (IOException e0) {
+                    e0.printStackTrace();
+                }
             }
         }
 
@@ -615,8 +644,8 @@ public class UpdateResourceFactoryImpl extends XMIResourceFactoryImpl {
                 Region parent = trans.getSourceState().getParentRegion();
 
                 for (State state : parent.getInnerStates()) {
-                    URI uri = EcoreUtil.getURI(state);
-                    String uriString = uri.toString();
+                    URI stateURI = EcoreUtil.getURI(state);
+                    String uriString = stateURI.toString();
                     uriString = uriString.substring(uriString.indexOf("#") + 1);
                     if (uriString.equals(value)) {
                         trans.setTargetState(state);
@@ -637,7 +666,83 @@ public class UpdateResourceFactoryImpl extends XMIResourceFactoryImpl {
             }
             return false;
         }
-
     }
 
+    private static class SyncchartsCleanupHandler extends BasicResourceHandler {
+        private URI uri;
+
+        /**
+         * Creates a new UpdateResourceFactoryImpl.java.
+         * 
+         * @param uri
+         */
+        public SyncchartsCleanupHandler(final URI uriParam) {
+            uri = uriParam;
+        }
+
+        @Override
+        public void postSave(XMLResource resource, OutputStream outputStream,
+                Map<?, ?> options) {
+            cleanUpFile();
+        }
+
+        /**
+         * 
+         */
+        private void cleanUpFile() {
+            ExtensibleURIConverterImpl conv = new ExtensibleURIConverterImpl();
+
+            try {
+                InputStream is = conv.createInputStream(uri);
+                BufferedReader reader = new BufferedReader(
+                        new InputStreamReader(is));
+
+                // contains result to be written back to file
+                List<String> lines = new LinkedList<String>();
+                boolean modified = false;
+
+                String s = reader.readLine();
+                while (s != null) {
+                    String[] array = s.split(" ");
+                    StringBuilder builder = new StringBuilder();
+                    for (String token : array) {
+                        if (token.length() > 0) {
+                            if (!token.startsWith("DUMMY")) {
+                                builder.append(token + " ");
+                            } else {
+                                if (token.endsWith("/>")) {
+                                    builder.append("/>");
+                                } else if (token.endsWith(">")) {
+                                    builder.append(">");
+                                }
+                            }
+                        } else {
+                            builder.append(" ");
+                        }
+                    }
+                    lines.add(builder.toString());
+                    s = reader.readLine();
+
+                    if (!modified && !s.equals(builder.toString())) {
+                        modified = true;
+                    }
+                }
+                is.close();
+
+                if (modified) {
+                    // write modified lines back to file
+                    OutputStream os = conv.createOutputStream(uri);
+                    BufferedWriter bw = new BufferedWriter(
+                            new OutputStreamWriter(os));
+                    for (String line : lines) {
+                        bw.write(line + "\n");
+                    }
+                    bw.flush();
+                    os.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 }
