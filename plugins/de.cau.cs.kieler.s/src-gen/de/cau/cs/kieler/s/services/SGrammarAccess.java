@@ -220,6 +220,7 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cSignalParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
 		private final RuleCall cInstructionParserRuleCall_2 = (RuleCall)cAlternatives.eContents().get(2);
 		
+		////TODO: Consolidate with Annotatable xtext grammar somehow... (s.a.)
 		//Annotatable:
 		//	State | Signal | Instruction;
 		public ParserRule getRule() { return rule; }
@@ -1383,6 +1384,7 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 		return getAnnotationAccess().getRule();
 	}
 
+	////TODO: Consolidate with Annotatable xtext grammar somehow... (s.a.)
 	//Annotatable:
 	//	State | Signal | Instruction;
 	public AnnotatableElements getAnnotatableAccess() {

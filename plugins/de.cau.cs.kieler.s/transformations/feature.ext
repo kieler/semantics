@@ -28,3 +28,7 @@ Void kernelExpand(Halt instr):
   let parent = instr.eContainer:
   parent.toString()
 ;
+
+int getHighestPriority(Program program) :
+	5
+;

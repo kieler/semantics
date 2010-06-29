@@ -17,6 +17,7 @@ Annotation:
 	value = STRING
 ;
 
+//TODO: Consolidate with Annotatable xtext grammar somehow... (s.a.)
 Annotatable:
 	State | Signal | Instruction;
 
@@ -27,6 +28,8 @@ State:
 	('SIGNALS' (signals+=Signal)* ';')? 
 	(instructions+=Instruction';')*
 ;
+
+
 
 Signal:
 	name=ID ':' 

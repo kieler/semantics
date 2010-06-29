@@ -1075,6 +1075,7 @@ protected class Annotation_ValueAssignment_3 extends AssignmentToken  {
 
 /************ begin Rule Annotatable ****************
  *
+ * //TODO: Consolidate with Annotatable xtext grammar somehow... (s.a.)
  * Annotatable:
  * 	State | Signal | Instruction;
  *
