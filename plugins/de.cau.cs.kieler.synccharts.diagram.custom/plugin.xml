@@ -434,7 +434,7 @@
       </key>
    </extension>
    <extension
-         point="de.cau.cs.kieler.kiml.layout.layoutInfo">
+         point="de.cau.cs.kieler.kiml.layoutInfo">
       <option
             class="de.cau.cs.kieler.synccharts.Region"
             option="de.cau.cs.kieler.layout.options.diagramType"
