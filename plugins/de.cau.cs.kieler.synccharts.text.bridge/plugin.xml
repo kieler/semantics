@@ -6,7 +6,7 @@
       <menuContribution
             locationURI="popup:de.cau.cs.kieler">
          <command
-               commandId="de.cau.cs.kieler.synccharts.labelparser.bridge.parse"
+               commandId="de.cau.cs.kieler.synccharts.text.bridge.parseTransitionlabel"
                label="Parse Labels"
                style="push"
                tooltip="Re-Parse all transition and action labels of current SyncChart.">
@@ -28,7 +28,7 @@
             categoryId="de.cau.cs.kieler"
             defaultHandler="de.cau.cs.kieler.synccharts.text.actions.bridge.ActionLabelParseHandler"
             description="Re-parse all transition and action labels of the current SyncChart."
-            id="de.cau.cs.kieler.synccharts.labelparser.bridge.parse"
+            id="de.cau.cs.kieler.synccharts.text.bridge.parseTransitionlabel"
             name="Parse all action labels">
       </command>
    </extension>

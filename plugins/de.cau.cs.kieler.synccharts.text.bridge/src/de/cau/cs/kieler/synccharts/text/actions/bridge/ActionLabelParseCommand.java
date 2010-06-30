@@ -200,7 +200,7 @@ public class ActionLabelParseCommand extends AbstractCommand {
                 .getInstance(XtextResourceSet.class);
         XtextResource resource = (XtextResource) resourceSet
                 .createResource(URI
-                        .createURI("platform:/resource/de.cau.cs.kieler.synccharts.labelparser/"
+                        .createURI("platform:/resource/de.cau.cs.kieler.synccharts.text/"
                                 + "dummy.action"));
         // set the scope where the Xtext linker shall search for Signals and
         // Variables
