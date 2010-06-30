@@ -18,7 +18,7 @@
    <feature url="features/de.cau.cs.kieler.kiml.source_0.2.0.qualifier.jar" id="de.cau.cs.kieler.kiml.source" version="0.2.0.qualifier">
       <category name="KIELER sources"/>
    </feature>
-   <feature url="features/de.cau.cs.kieler.synccharts_0.2.0.qualifier.jar" id="de.cau.cs.kieler.synccharts" version="0.2.0.qualifier">
+   <feature url="features/de.cau.cs.kieler.synccharts_0.3.0.qualifier.jar" id="de.cau.cs.kieler.synccharts" version="0.3.0.qualifier">
       <category name="KIELER"/>
    </feature>
    <feature url="features/de.cau.cs.kieler.synccharts.source_0.2.0.qualifier.jar" id="de.cau.cs.kieler.synccharts.source" version="0.2.0.qualifier">
