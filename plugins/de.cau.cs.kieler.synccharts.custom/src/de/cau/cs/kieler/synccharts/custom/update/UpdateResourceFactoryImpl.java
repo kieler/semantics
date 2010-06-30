@@ -108,7 +108,8 @@ public class UpdateResourceFactoryImpl extends XMIResourceFactoryImpl {
                                 + " the diagram.");
             }
         } catch (CoreException e0) {
-            e0.printStackTrace();
+            // e0.printStackTrace();
+            return;
         }
     }
 
@@ -135,8 +136,8 @@ public class UpdateResourceFactoryImpl extends XMIResourceFactoryImpl {
                     String[] segments = s.split(" ");
                     for (String segment : segments) {
                         if (segment.startsWith("href=\"")) {
-                            segments = segment.replace("href=", "").replace(
-                                    "\"", "").split("#");
+                            segments = segment.replace("href=", "")
+                                    .replace("\"", "").split("#");
                             lastName = segments[0];
                             return true;
                         }
@@ -194,10 +195,9 @@ public class UpdateResourceFactoryImpl extends XMIResourceFactoryImpl {
                             public void run(final IProgressMonitor monitor)
                                     throws InvocationTargetException,
                                     InterruptedException {
-                                monitor
-                                        .beginTask(
-                                                "Converting Synccharts from older version.",
-                                                IProgressMonitor.UNKNOWN);
+                                monitor.beginTask(
+                                        "Converting Synccharts from older version.",
+                                        IProgressMonitor.UNKNOWN);
                                 try {
                                     doPreprocessing(uri, monitor);
                                 } catch (UpdateException e0) {
