@@ -5,7 +5,7 @@
     <property file="${scriptdir}/build.properties" />
     
     <!-- CHSCH 2010-06-30: we don't want to have findbugs in the CI anymore -->
-    <property file="no.findbugs" />
+    <property name="no.findbugs" value=" " />
     
     <!-- default definitions: may be overwritten while calling this script if necessary -->    
     <property name="baseLocation"          location="${system.baseLocation}" />
