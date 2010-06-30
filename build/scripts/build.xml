@@ -3,7 +3,10 @@
     <property environment="system"/>
     <property name="scriptdir" location="."/>
     <property file="${scriptdir}/build.properties" />
-
+    
+    <!-- CHSCH 2010-06-30: we don't want to have findbugs in the CI anymore -->
+    <property file="no.findbugs" />
+    
     <!-- default definitions: may be overwritten while calling this script if necessary -->    
     <property name="baseLocation"          location="${system.baseLocation}" />
     <property name="baseDeltaPackLocation" location="${system.baseDeltaPackLocation}" />
