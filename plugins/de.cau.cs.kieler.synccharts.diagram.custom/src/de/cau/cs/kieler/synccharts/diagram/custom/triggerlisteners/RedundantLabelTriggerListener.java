@@ -39,6 +39,7 @@ import de.cau.cs.kieler.synccharts.State;
 import de.cau.cs.kieler.synccharts.SyncchartsPackage;
 import de.cau.cs.kieler.synccharts.Transition;
 import de.cau.cs.kieler.synccharts.diagram.custom.SyncchartsDiagramCustomPlugin;
+import de.cau.cs.kieler.synccharts.diagram.edit.parts.RegionLabelEditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.TransitionPriorityEditPart;
 import de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditor;
 
@@ -76,16 +77,12 @@ public class RedundantLabelTriggerListener extends TriggerListener {
      * 
      */
     public RedundantLabelTriggerListener() {
-        super(
-                NotificationFilter.RESOURCE_LOADED
-                        .or(NotificationFilter
-                                .createFeatureFilter(
-                                        SyncchartsPackage.eINSTANCE
-                                                .getState_Regions())
-                                .or(
-                                        NotificationFilter
-                                                .createFeatureFilter(SyncchartsPackage.eINSTANCE
-                                                        .getState_OutgoingTransitions()))));
+        super(NotificationFilter.RESOURCE_LOADED.or(NotificationFilter
+                .createFeatureFilter(
+                        SyncchartsPackage.eINSTANCE.getState_Regions())
+                .or(NotificationFilter
+                        .createFeatureFilter(SyncchartsPackage.eINSTANCE
+                                .getState_OutgoingTransitions()))));
     }
 
     /**
@@ -184,12 +181,11 @@ public class RedundantLabelTriggerListener extends TriggerListener {
             list.add(o);
         }
         Iterator<?> iter = list.iterator();
-/* FIXME: EditPart names are broken 
         while (iter.hasNext()) {
             Object o = iter.next();
             // test if it is one of the relevant edit parts
             if (o instanceof TransitionPriorityEditPart
-                    || o instanceof RegionIdEditPart) {
+                    || o instanceof RegionLabelEditPart) {
                 // get the semantic element
                 EObject obj = ((View) ((EditPart) o).getModel()).getElement();
                 if (o instanceof TransitionPriorityEditPart) {
@@ -202,8 +198,8 @@ public class RedundantLabelTriggerListener extends TriggerListener {
                         VisibilityManager.hide(part, editPart);
                         continue;
                     }
-                } else if (o instanceof RegionIdEditPart) {
-                    RegionIdEditPart editPart = (RegionIdEditPart) o;
+                } else if (o instanceof RegionLabelEditPart) {
+                    RegionLabelEditPart editPart = (RegionLabelEditPart) o;
                     Region region = (Region) obj;
                     State parent = region.getParentState();
                     if (parent != null) {
@@ -213,8 +209,8 @@ public class RedundantLabelTriggerListener extends TriggerListener {
                             continue;
                         }
                     }
-                } 
-            } 
-        }*/
+                }
+            }
+        }
     }
 }

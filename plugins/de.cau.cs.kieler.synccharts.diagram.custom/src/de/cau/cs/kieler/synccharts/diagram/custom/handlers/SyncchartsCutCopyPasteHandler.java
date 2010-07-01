@@ -36,53 +36,53 @@ import de.cau.cs.kieler.synccharts.diagram.edit.parts.TransitionEditPart;
  */
 public class SyncchartsCutCopyPasteHandler extends AbstractCutCopyPasteHandler {
 
-	/**
-	 * Creates a new SyncchartsCutCopyPasteHandler.
-	 */
-	public SyncchartsCutCopyPasteHandler() {
-		super();
-	}
+    /**
+     * Creates a new SyncchartsCutCopyPasteHandler.
+     */
+    public SyncchartsCutCopyPasteHandler() {
+        super();
+    }
 
-	/**
-	 * Checks whether the selection contains only valid parts.
-	 * 
-	 * @param selection
-	 *            the selection
-	 * @return true if only valid parts are in the selection
-	 */
-	@Override
-	protected boolean isValidSelection(final IStructuredSelection selection) {
-		Iterator<?> iter = selection.iterator();
+    /**
+     * Checks whether the selection contains only valid parts.
+     * 
+     * @param selection
+     *            the selection
+     * @return true if only valid parts are in the selection
+     */
+    @Override
+    protected boolean isValidSelection(final IStructuredSelection selection) {
+        Iterator<?> iter = selection.iterator();
 
-		while (iter.hasNext()) {
-			Object object = iter.next();
-			if (object instanceof EditPart) {
-				EditPart editPart = (EditPart) object;
-				if (editPart instanceof State2EditPart) {
-					continue;
-				} else if (editPart instanceof StateEditPart) {
-					continue;
-				} else if (editPart instanceof RegionEditPart) {
-					continue;
-				} else if (editPart instanceof Region2EditPart) {
-					continue;
-				} else if (editPart instanceof TransitionEditPart) {
-					continue;
-				}
-			}
-			// selection contains invalid parts, return.
-			return false;
-		}
-		// no invalid parts found
-		return true;
-	}
+        while (iter.hasNext()) {
+            Object object = iter.next();
+            if (object instanceof EditPart) {
+                EditPart editPart = (EditPart) object;
+                if (editPart instanceof State2EditPart) {
+                    continue;
+                } else if (editPart instanceof StateEditPart) {
+                    continue;
+                } else if (editPart instanceof RegionEditPart) {
+                    continue;
+                } else if (editPart instanceof Region2EditPart) {
+                    continue;
+                } else if (editPart instanceof TransitionEditPart) {
+                    continue;
+                }
+            }
+            // selection contains invalid parts, return.
+            return false;
+        }
+        // no invalid parts found
+        return true;
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	protected ICutCopyPasteCommandFactory getCommandFactory() {
-		return new SyncchartsCutCopyPasteCommandFactory();
-	}
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected ICutCopyPasteCommandFactory getCommandFactory() {
+        return new SyncchartsCutCopyPasteCommandFactory();
+    }
 
 }

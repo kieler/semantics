@@ -668,21 +668,26 @@ public class UpdateResourceFactoryImpl extends XMIResourceFactoryImpl {
         }
     }
 
+    /**
+     * Save handler for cleaning up the DUMMY additions to the file.
+     * 
+     * @author soh
+     */
     private static class SyncchartsCleanupHandler extends BasicResourceHandler {
         private URI uri;
 
         /**
          * Creates a new UpdateResourceFactoryImpl.java.
          * 
-         * @param uri
+         * @param uriParam
          */
         public SyncchartsCleanupHandler(final URI uriParam) {
             uri = uriParam;
         }
 
         @Override
-        public void postSave(XMLResource resource, OutputStream outputStream,
-                Map<?, ?> options) {
+        public void postSave(final XMLResource resource,
+                final OutputStream outputStream, final Map<?, ?> options) {
             cleanUpFile();
         }
 

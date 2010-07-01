@@ -28,17 +28,12 @@ public class SyncchartsPropertyTester extends PropertyTester {
 
     private static boolean isKsbaseInactive = true;
 
+    /**
+     * Notify the tester that the synccharts.ksbase plugin is active. This is
+     * necessary to hide the non-ksbase edit actions.
+     */
     public static void ksbaseIsActive() {
         isKsbaseInactive = false;
-    }
-
-    /**
-     * 
-     * Creates a new SyncchartsPropertyTester.
-     * 
-     */
-    public SyncchartsPropertyTester() {
-
     }
 
     /**

@@ -30,29 +30,29 @@ import de.cau.cs.kieler.synccharts.diagram.custom.triggerlisteners.RedundantLabe
  */
 public class ToggleTransitionLabelHandler extends AbstractHandler {
 
-	/**
-	 * Toggle between hiding all labels and just the redundant ones.
-	 * 
-	 * @param b
-	 *            true if all transition priority labels should be hidden.
-	 */
-	public static void hideAll(final boolean b) {
-		if (b) {
-			RedundantLabelTriggerListener.hideAll();
-		} else {
-			RedundantLabelTriggerListener.hideRedundant();
-		}
-		RedundantLabelTriggerListener.hideRedundantLabels();
-	}
+    /**
+     * Toggle between hiding all labels and just the redundant ones.
+     * 
+     * @param b
+     *            true if all transition priority labels should be hidden.
+     */
+    public static void hideAll(final boolean b) {
+        if (b) {
+            RedundantLabelTriggerListener.hideAll();
+        } else {
+            RedundantLabelTriggerListener.hideRedundant();
+        }
+        RedundantLabelTriggerListener.hideRedundantLabels();
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public Object execute(final ExecutionEvent event) throws ExecutionException {
-		Command command = event.getCommand();
-		boolean oldValue = HandlerUtil.toggleCommandState(command);
-		hideAll(!oldValue);
-		return null;
-	}
+    /**
+     * {@inheritDoc}
+     */
+    public Object execute(final ExecutionEvent event) throws ExecutionException {
+        Command command = event.getCommand();
+        boolean oldValue = HandlerUtil.toggleCommandState(command);
+        hideAll(!oldValue);
+        return null;
+    }
 
 }

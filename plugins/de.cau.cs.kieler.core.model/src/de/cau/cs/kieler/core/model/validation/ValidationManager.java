@@ -32,6 +32,7 @@ import org.eclipse.jface.util.IPropertyChangeListener;
 import org.eclipse.jface.util.PropertyChangeEvent;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IWorkbenchPage;
+import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.xtend.typesystem.emf.check.CheckRegistry;
 
@@ -59,7 +60,7 @@ public final class ValidationManager {
 
     /** Prefix for the preference store. */
     public static final String PREFERENCE_PREFIX = "_Checkfile_";
-    
+
     /**
      * Hide the default constructor.
      */
@@ -115,16 +116,19 @@ public final class ValidationManager {
      */
     public static EPackage getEPackageOfActiveEditor() {
         EPackage ePackage = null;
-        IWorkbenchPage page = PlatformUI.getWorkbench()
-                .getActiveWorkbenchWindow().getActivePage();
-        if (page != null) {
-            IEditorPart ed = page.getActiveEditor();
-            if (ed != null && ed instanceof DiagramEditor) {
-                DiagramEditor diagEd = (DiagramEditor) ed;
-                Object obj = diagEd.getDiagramEditPart().getModel();
-                if (obj != null && obj instanceof View) {
-                    EObject eObj = ((View) obj).getElement();
-                    ePackage = eObj.eClass().getEPackage();
+        IWorkbenchWindow window = PlatformUI.getWorkbench()
+                .getActiveWorkbenchWindow();
+        if (window != null) {
+            IWorkbenchPage page = window.getActivePage();
+            if (page != null) {
+                IEditorPart ed = page.getActiveEditor();
+                if (ed != null && ed instanceof DiagramEditor) {
+                    DiagramEditor diagEd = (DiagramEditor) ed;
+                    Object obj = diagEd.getDiagramEditPart().getModel();
+                    if (obj != null && obj instanceof View) {
+                        EObject eObj = ((View) obj).getElement();
+                        ePackage = eObj.eClass().getEPackage();
+                    }
                 }
             }
         }
@@ -192,8 +196,9 @@ public final class ValidationManager {
      * @param tooltip
      *            the tooltip to display
      */
-    public static void registerCheckFile(final String id, final EPackage ePackage,
-            final String file, final boolean isWrapExistingValidator,
+    public static void registerCheckFile(final String id,
+            final EPackage ePackage, final String file,
+            final boolean isWrapExistingValidator,
             final List<String> referencedEPackageNsURIs, final String name,
             final String tooltip) {
         if (!packages.containsKey(ePackage)) {
@@ -252,9 +257,11 @@ public final class ValidationManager {
     }
 
     /**
+     * Get the displayed name for a given checkfile.
      * 
      * @param id
-     * @return
+     *            the id of the checkfile
+     * @return the displayed name
      */
     public static String getDisplay(final String id) {
         CheckFile checkfile = checkFiles.get(id);
@@ -427,9 +434,12 @@ public final class ValidationManager {
     }
 
     /**
-     * @return
+     * Determine whether there is a validate action present for the given
+     * editor.
+     * 
+     * @return true if there is a validate action
      */
-    public static boolean hasValidateActionsForActionEditor() {
+    public static boolean hasValidateActionsForActiveEditor() {
         EPackage ePackage = ValidationManager.getEPackageOfActiveEditor();
         String nsUri = ePackage.getNsURI();
         return ValidationInformationCollector.hasValidateAction(nsUri);

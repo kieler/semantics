@@ -40,113 +40,113 @@ import org.eclipse.ui.IWorkbenchPart;
  */
 public final class VisibilityManager {
 
-	/** Map containing all highlighting effects and highlighted edit parts. */
-	private final HashMap<IWorkbenchPart, HashMap<GraphicalEditPart, Boolean>> map;
+    /** Map containing all highlighting effects and highlighted edit parts. */
+    private final HashMap<IWorkbenchPart, HashMap<GraphicalEditPart, Boolean>> map;
 
-	/** singleton instance. */
-	private static VisibilityManager instance = new VisibilityManager();
+    /** singleton instance. */
+    private static VisibilityManager instance = new VisibilityManager();
 
-	/** singleton pattern. */
-	private VisibilityManager() {
-		map = new HashMap<IWorkbenchPart, HashMap<GraphicalEditPart, Boolean>>();
-	}
+    /** singleton pattern. */
+    private VisibilityManager() {
+        map = new HashMap<IWorkbenchPart, HashMap<GraphicalEditPart, Boolean>>();
+    }
 
-	/**
-	 * Hide an edit part.
-	 * 
-	 * The hiding can be reset by calling the reset methods.
-	 * 
-	 * @param editor
-	 *            the editor
-	 * @param editPart
-	 *            the edit part
-	 */
-	public static void hide(final IDiagramWorkbenchPart editor,
-			final GraphicalEditPart editPart) {
-		HashMap<GraphicalEditPart, Boolean> parts = instance.map.get(editor);
-		TransactionalEditingDomain domain = editor.getDiagramEditPart()
-				.getEditingDomain();
-		if (parts == null) {
-			parts = new HashMap<GraphicalEditPart, Boolean>();
-			instance.map.put(editor, parts);
-		}
-		parts.remove(editPart);
+    /**
+     * Hide an edit part.
+     * 
+     * The hiding can be reset by calling the reset methods.
+     * 
+     * @param editor
+     *            the editor
+     * @param editPart
+     *            the edit part
+     */
+    public static void hide(final IDiagramWorkbenchPart editor,
+            final GraphicalEditPart editPart) {
+        HashMap<GraphicalEditPart, Boolean> parts = instance.map.get(editor);
+        TransactionalEditingDomain domain = editor.getDiagramEditPart()
+                .getEditingDomain();
+        if (parts == null) {
+            parts = new HashMap<GraphicalEditPart, Boolean>();
+            instance.map.put(editor, parts);
+        }
+        parts.remove(editPart);
 
-		parts.put(editPart, setVisible(editPart, false, domain));
-	}
+        parts.put(editPart, setVisible(editPart, false, domain));
+    }
 
-	/**
-	 * Reset all hiding effects on the given editor.
-	 * 
-	 * @param editor
-	 *            the editor
-	 */
-	public static void reset(final IDiagramWorkbenchPart editor) {
-		HashMap<GraphicalEditPart, Boolean> parts = instance.map.remove(editor);
-		TransactionalEditingDomain domain = editor.getDiagramEditPart()
-				.getEditingDomain();
+    /**
+     * Reset all hiding effects on the given editor.
+     * 
+     * @param editor
+     *            the editor
+     */
+    public static void reset(final IDiagramWorkbenchPart editor) {
+        HashMap<GraphicalEditPart, Boolean> parts = instance.map.remove(editor);
+        TransactionalEditingDomain domain = editor.getDiagramEditPart()
+                .getEditingDomain();
 
-		if (parts != null) {
-			Iterator<GraphicalEditPart> iter = parts.keySet().iterator();
-			while (iter.hasNext()) {
-				GraphicalEditPart part = iter.next();
-				setVisible(part, true, domain);
-			}
-		}
-	}
+        if (parts != null) {
+            Iterator<GraphicalEditPart> iter = parts.keySet().iterator();
+            while (iter.hasNext()) {
+                GraphicalEditPart part = iter.next();
+                setVisible(part, true, domain);
+            }
+        }
+    }
 
-	/**
-	 * Reset the hiding on the given edit part.
-	 * 
-	 * @param editor
-	 *            the editor
-	 * @param editPart
-	 *            the edit part
-	 */
-	public static void reset(final IDiagramWorkbenchPart editor,
-			final GraphicalEditPart editPart) {
-		HashMap<GraphicalEditPart, Boolean> parts = instance.map.get(editor);
-		TransactionalEditingDomain domain = editor.getDiagramEditPart()
-				.getEditingDomain();
+    /**
+     * Reset the hiding on the given edit part.
+     * 
+     * @param editor
+     *            the editor
+     * @param editPart
+     *            the edit part
+     */
+    public static void reset(final IDiagramWorkbenchPart editor,
+            final GraphicalEditPart editPart) {
+        HashMap<GraphicalEditPart, Boolean> parts = instance.map.get(editor);
+        TransactionalEditingDomain domain = editor.getDiagramEditPart()
+                .getEditingDomain();
 
-		if (parts != null && parts.containsKey(editPart)) {
-			parts.remove(editPart);
-			setVisible(editPart, true, domain);
-		}
-	}
+        if (parts != null && parts.containsKey(editPart)) {
+            parts.remove(editPart);
+            setVisible(editPart, true, domain);
+        }
+    }
 
-	/**
-	 * Change the visibility of a given edit part.
-	 * 
-	 * @param editPart
-	 *            the part to change the visibility for
-	 * @param b
-	 *            true if the part should be visible
-	 * @param domain
-	 *            the editing domain
-	 * @return the visibility of the edit part
-	 */
-	private static Boolean setVisible(final GraphicalEditPart editPart,
-			final boolean b, final TransactionalEditingDomain domain) {
-		try {
-			AbstractEMFOperation op = new AbstractEMFOperation(domain,
-					"Redundant Label Cleanup") {
+    /**
+     * Change the visibility of a given edit part.
+     * 
+     * @param editPart
+     *            the part to change the visibility for
+     * @param b
+     *            true if the part should be visible
+     * @param domain
+     *            the editing domain
+     * @return the visibility of the edit part
+     */
+    private static Boolean setVisible(final GraphicalEditPart editPart,
+            final boolean b, final TransactionalEditingDomain domain) {
+        try {
+            AbstractEMFOperation op = new AbstractEMFOperation(domain,
+                    "Redundant Label Cleanup") {
 
-				@Override
-				protected IStatus doExecute(final IProgressMonitor monitor,
-						final IAdaptable info) throws ExecutionException {
-					View view = (View) editPart.getModel();
+                @Override
+                protected IStatus doExecute(final IProgressMonitor monitor,
+                        final IAdaptable info) throws ExecutionException {
+                    View view = (View) editPart.getModel();
 
-					ViewUtil.setStructuralFeatureValue(view,
-							(EStructuralFeature) PackageUtil
-									.getElement("notation.View.visible"), b);
-					return Status.OK_STATUS;
-				}
-			};
-			op.execute(null, null);
-		} catch (ExecutionException e0) {
-			e0.printStackTrace();
-		}
-		return b;
-	}
+                    ViewUtil.setStructuralFeatureValue(view,
+                            (EStructuralFeature) PackageUtil
+                                    .getElement("notation.View.visible"), b);
+                    return Status.OK_STATUS;
+                }
+            };
+            op.execute(null, null);
+        } catch (ExecutionException e0) {
+            e0.printStackTrace();
+        }
+        return b;
+    }
 }

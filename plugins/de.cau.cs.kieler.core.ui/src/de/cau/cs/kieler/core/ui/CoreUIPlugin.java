@@ -19,6 +19,7 @@ import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
 import de.cau.cs.kieler.core.ui.listeners.RefactoringListener;
+import de.cau.cs.kieler.core.ui.util.CombinedWorkbenchListener;
 
 /**
  * Activator class for the KIELER core UI plugin.
@@ -47,6 +48,7 @@ public class CoreUIPlugin extends AbstractUIPlugin {
     @Override
     public void start(final BundleContext context) throws Exception {
         super.start(context);
+        CombinedWorkbenchListener.getInstance().earlyStartup();
         plugin = this;
         RefactoringCore.getHistoryService().addHistoryListener(
                 new RefactoringListener());

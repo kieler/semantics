@@ -41,7 +41,7 @@ public class KielerModelPropertyTester extends PropertyTester {
         // for the currenly active diagram editor.
         if (property.equals("hasValidateAction")
                 && receiver instanceof DiagramEditor) {
-            return ValidationManager.hasValidateActionsForActionEditor();
+            return ValidationManager.hasValidateActionsForActiveEditor();
         }
         return false;
     }

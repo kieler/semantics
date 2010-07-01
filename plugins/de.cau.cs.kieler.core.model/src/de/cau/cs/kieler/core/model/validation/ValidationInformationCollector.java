@@ -29,28 +29,40 @@ import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramEditor;
 import org.eclipse.gmf.runtime.notation.View;
 import org.eclipse.jface.action.Action;
 import org.eclipse.ui.IEditorPart;
-import org.eclipse.ui.IPageListener;
 import org.eclipse.ui.IPartListener;
 import org.eclipse.ui.IStartup;
-import org.eclipse.ui.IWindowListener;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchPart;
-import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
 
-/**
- * @author soh
- */
-public class ValidationInformationCollector implements IStartup, IPartListener,
-        IPageListener, IWindowListener {
+import de.cau.cs.kieler.core.ui.util.CombinedWorkbenchListener;
 
+/**
+ * This class is responsible for gathering the data contributed through the
+ * extension point.
+ * 
+ * @author soh
+ * @kieler.rating 2010-07-01 proposed yellow soh
+ */
+public class ValidationInformationCollector implements IStartup, IPartListener {
+
+    /** The map for mapping ePackage IDs to ePackage nsURIs. */
     private static Map<String, String> ePackages = new HashMap<String, String>();
 
-    private static Map<String, IConfigurationElement> validateActions
-            = new HashMap<String, IConfigurationElement>();
+    /**
+     * The map for mapping ePackage IDs to the elements containing the validate
+     * action.
+     */
+    // SUPPRESS CHECKSTYLE NEXT LineLength
+    private static Map<String, IConfigurationElement> validateActions = new HashMap<String, IConfigurationElement>();
 
-    private static Map<String, Map<String, CheckfileDefinition>> checkfiles
-            = new HashMap<String, Map<String, CheckfileDefinition>>();
+    /**
+     * The map for mapping the ePackage IDs to the checkfiles registered under
+     * the given ePackage. The checkfiles are mapped from their ID to the
+     * definition.
+     */
+    // SUPPRESS CHECKSTYLE NEXT LineLength
+    private static Map<String, Map<String, CheckfileDefinition>> checkfiles = new HashMap<String, Map<String, CheckfileDefinition>>();
 
     /**
      * {@inheritDoc}
@@ -73,13 +85,8 @@ public class ValidationInformationCollector implements IStartup, IPartListener,
             }
         }
 
-        IWorkbenchWindow window = PlatformUI.getWorkbench()
-                .getActiveWorkbenchWindow();
-
-        PlatformUI.getWorkbench().addWindowListener(this);
-        if (window != null) {
-            windowOpened(window);
-        }
+        CombinedWorkbenchListener.addPartListener(this);
+        CombinedWorkbenchListener.receiveAlreadyOpenedParts(this);
     }
 
     /**
@@ -137,7 +144,8 @@ public class ValidationInformationCollector implements IStartup, IPartListener,
     }
 
     /**
-     * @param nsUri the namespace URI
+     * @param nsUri
+     *            the namespace URI
      * @return true if the validate action is available
      */
     public static boolean hasValidateAction(final String nsUri) {
@@ -148,9 +156,16 @@ public class ValidationInformationCollector implements IStartup, IPartListener,
         return false;
     }
 
+    /**
+     * Helper class for holding all the information about a checkfile parsed
+     * from the extension point.
+     * 
+     * @author soh
+     */
     private static final class CheckfileDefinition {
-        
+
         private CheckfileDefinition() {
+
         }
 
         private String id;
@@ -216,6 +231,7 @@ public class ValidationInformationCollector implements IStartup, IPartListener,
      * {@inheritDoc}
      */
     public void partActivated(final IWorkbenchPart part) {
+
     }
 
     /**
@@ -249,68 +265,14 @@ public class ValidationInformationCollector implements IStartup, IPartListener,
             e0.printStackTrace();
             throw e0;
         }
+
     }
 
     /**
-     * {@inheritDoc}
-     */
-    public void pageActivated(final IWorkbenchPage page) {
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public void pageClosed(final IWorkbenchPage page) {
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public void pageOpened(final IWorkbenchPage page) {
-        page.addPartListener(this);
-        IEditorPart part = page.getActiveEditor();
-        if (part != null) {
-            partOpened(part);
-        }
-    }
-
-    private boolean windowActivated = false;
-
-    /**
-     * {@inheritDoc}
-     */
-    public void windowActivated(final IWorkbenchWindow window) {
-        if (!windowActivated) {
-            windowOpened(window);
-            windowActivated = true;
-        }
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public void windowClosed(final IWorkbenchWindow window) {
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public void windowDeactivated(final IWorkbenchWindow window) {
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public void windowOpened(final IWorkbenchWindow window) {
-        window.addPageListener(this);
-        IWorkbenchPage page = window.getActivePage();
-        if (page != null) {
-            pageOpened(page);
-        }
-    }
-
-    /**
+     * Validate all editors belonging to a given ePackage.
+     * 
      * @param ePackage
+     *            the epackage to for which the editors should be validated
      */
     public static void validateEPackage(final EPackage ePackage) {
         if (ePackage != null) {

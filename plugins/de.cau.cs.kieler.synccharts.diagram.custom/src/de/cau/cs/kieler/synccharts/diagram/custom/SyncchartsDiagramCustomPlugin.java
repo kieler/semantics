@@ -31,7 +31,6 @@ import org.eclipse.ui.IEditorReference;
 import org.eclipse.ui.IPageListener;
 import org.eclipse.ui.IPartListener;
 import org.eclipse.ui.ISelectionListener;
-import org.eclipse.ui.IWindowListener;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchPart;
@@ -40,6 +39,7 @@ import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
 import de.cau.cs.kieler.core.model.util.ModelingUtil;
+import de.cau.cs.kieler.core.ui.util.CombinedWorkbenchListener;
 import de.cau.cs.kieler.synccharts.Transition;
 import de.cau.cs.kieler.synccharts.custom.update.UpdateResourceFactoryImpl;
 import de.cau.cs.kieler.synccharts.diagram.custom.commands.ReInitSyncchartsDiagramCommand;
@@ -53,7 +53,7 @@ import de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditor;
  * @kieler.rating 2010-06-14 proposed yellow
  */
 public class SyncchartsDiagramCustomPlugin extends AbstractUIPlugin implements
-        ISelectionListener, IPageListener, IWindowListener, IPartListener {
+        ISelectionListener, IPageListener, IPartListener {
 
     /** The current instance of the plugin. */
     private static SyncchartsDiagramCustomPlugin instance = null;
@@ -67,31 +67,15 @@ public class SyncchartsDiagramCustomPlugin extends AbstractUIPlugin implements
         return instance;
     }
 
-    /**
-     * Register the listener.
-     */
-    public void register() {
-        IWorkbench bench = getWorkbench();
-        if (bench != null) {
-            bench.addWindowListener(this);
-            IWorkbenchWindow window = bench.getActiveWorkbenchWindow();
-            if (window != null) {
-                window.addPageListener(this);
-                IWorkbenchPage page = window.getActivePage();
-                if (page != null) {
-                    RedundantLabelTriggerListener.hideRedundantLabels();
-                    page.addSelectionListener(this);
-                    page.addPartListener(this);
-                }
-            }
-        }
-    }
-
     @Override
     public void start(final BundleContext context) throws Exception {
         super.start(context);
         instance = this;
-        register();
+        CombinedWorkbenchListener.addPageListener(this);
+        CombinedWorkbenchListener.addPartListener(this);
+        CombinedWorkbenchListener.addSelectionListener(this);
+        CombinedWorkbenchListener.receiveAlreadyOpenedPages(this);
+        CombinedWorkbenchListener.receiveAlreadyOpenedParts(this);
         UpdateResourceFactoryImpl
                 .setReInitDiagramCommand(new ReInitSyncchartsDiagramCommand());
     }
@@ -139,21 +123,14 @@ public class SyncchartsDiagramCustomPlugin extends AbstractUIPlugin implements
      * {@inheritDoc}
      */
     public void pageClosed(final IWorkbenchPage page) {
-        if (page != null) {
-            page.removeSelectionListener(this);
-            page.removePartListener(this);
-        }
+
     }
 
     /**
      * {@inheritDoc}
      */
     public void pageOpened(final IWorkbenchPage page) {
-        if (page != null) {
-            RedundantLabelTriggerListener.hideRedundantLabels();
-            page.addSelectionListener(this);
-            page.addPartListener(this);
-        }
+        RedundantLabelTriggerListener.hideRedundantLabels();
     }
 
     /**
@@ -215,46 +192,6 @@ public class SyncchartsDiagramCustomPlugin extends AbstractUIPlugin implements
     /**
      * {@inheritDoc}
      */
-    public void windowActivated(final IWorkbenchWindow window) {
-        if (window != null) {
-            window.addPageListener(this);
-        }
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public void windowClosed(final IWorkbenchWindow window) {
-        if (window != null) {
-            window.removePageListener(this);
-        }
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public void windowDeactivated(final IWorkbenchWindow window) {
-
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public void windowOpened(final IWorkbenchWindow window) {
-        if (window != null) {
-            window.addPageListener(this);
-            IWorkbenchPage page = window.getActivePage();
-            if (page != null) {
-                RedundantLabelTriggerListener.hideRedundantLabels();
-                page.addSelectionListener(this);
-                page.addPartListener(this);
-            }
-        }
-    }
-
-    /**
-     * {@inheritDoc}
-     */
     public void partActivated(final IWorkbenchPart part) {
     }
 
@@ -282,4 +219,5 @@ public class SyncchartsDiagramCustomPlugin extends AbstractUIPlugin implements
     public void partOpened(final IWorkbenchPart part) {
         RedundantLabelTriggerListener.hideRedundantLabels();
     }
+
 }

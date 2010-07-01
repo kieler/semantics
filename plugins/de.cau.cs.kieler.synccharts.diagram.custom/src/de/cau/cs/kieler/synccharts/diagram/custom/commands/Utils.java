@@ -100,8 +100,8 @@ public final class Utils {
             XMIResource xmiResource = new XMIResourceImpl();
             xmiResource.setURI(URI.createURI("dummy"));
             // XMIHelperImpl xmlHelper = new XMIHelperImpl(xmiResource);
-            ByteArrayInputStream bais = new ByteArrayInputStream(root
-                    .getBytes());
+            ByteArrayInputStream bais = new ByteArrayInputStream(
+                    root.getBytes());
 
             Map<Object, Object> defaultLoadOptions = xmiResource
                     .getDefaultLoadOptions();
@@ -258,7 +258,7 @@ public final class Utils {
 
         for (Transition t : transSource) {
             if (t.getTargetState() == source) {
-                Transition clone = (Transition) EcoreUtil.copy(t);
+                Transition clone = EcoreUtil.copy(t);
                 transTarget.add(clone);
                 clone.setTargetState(target);
             }
@@ -275,7 +275,8 @@ public final class Utils {
      * @return the states the formatted list
      */
     public static List<State> getStatesFromClipboard(
-            final Collection<State> statesClipBoard, final Collection<State> copy) {
+            final Collection<State> statesClipBoard,
+            final Collection<State> copy) {
         if (!statesClipBoard.isEmpty()) {
             List<State> dummy = new LinkedList<State>();
             for (State state : copy) {
@@ -306,7 +307,8 @@ public final class Utils {
      * @return the states the formatted list
      */
     public static List<Region> getRegionsFromClipboard(
-            final Collection<Region> regionsClipBoard, final Collection<Region> copy) {
+            final Collection<Region> regionsClipBoard,
+            final Collection<Region> copy) {
         if (!regionsClipBoard.isEmpty()) {
             List<Region> dummy = new LinkedList<Region>();
             for (Region region : copy) {
