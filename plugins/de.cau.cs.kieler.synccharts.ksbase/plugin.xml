@@ -19,6 +19,14 @@
           transformationId="de.cau.cs.kieler.ksbase.addSuc"
           validation="isNoRootState">
 				</transformation>
+    <transformation
+          icon="icons/successor_state.gif"
+          name="Add Single Successor State"
+          tooltip="Create a successor for the selected state"
+          transformation="addSuccessorState"
+          transformationId="de.cau.cs.kieler.ksbase.addSingleSuc"
+          validation="isNoRootState">
+    </transformation>
 				<transformation
           tooltip="Create a predecessor for the selected state"
           icon="icons/predecessor_state.gif"
@@ -37,38 +45,23 @@
           transformationId="de.cau.cs.kieler.ksbase.addChoice"
           validation="isNoRootState">
 				</transformation>
-				<transformation
-          tooltip="Flip source and target of the transition"
-          icon="icons/flip.gif"
-          keyboardShortcut="M1+R F"
-          name="Flip Transition"
-          transformation="flipTransition"
-          transformationId="de.cau.cs.kieler.ksbase.flip">
-				</transformation>
-				<transformation
-          tooltip="Connect both states"
-          icon="icons/connect.gif"
-          keyboardShortcut="M1+R W"
-          name="Connect States"
-          transformation="connectStates"
-          transformationId="de.cau.cs.kieler.ksbase.connect"
-          validation="isNoRootState,statesOnSameHierarchy">
-				</transformation>
-				<transformation
-          tooltip="Create an ABRO SyncChart"
-          icon="icons/abro.gif"
-          name="Add ABRO"
-          transformation="addABRO"
-          transformationId="de.cau.cs.kieler.ksbase.addABRO">
-				</transformation>
-				<transformation
-          icon="icons/default.gif"
-          name="Create Default"
-          tooltip="Create a default SyncChart"
-          transformation="createDefault"
-          transformationId="de.cau.cs.kieler.ksbase.createDefault"
-          validation="isRootRegion">
-				</transformation>
+    <transformation
+          icon="icons/upgrade.gif"
+          keyboardShortcut="M1+R R"
+          name="Add Region"
+          tooltip="Add a region with an initial state "
+          transformation="upgradeState"
+          transformationId="de.cau.cs.kieler.ksbase.addRegion">
+    </transformation>
+    <transformation
+          icon="icons/downgrade.gif"
+          keyboardShortcut="M1+R D"
+          name="Remove All Regions"
+          tooltip="Removing all regions of the selected state"
+          transformation="downgradeState"
+          transformationId="de.cau.cs.kieler.ksbase.removeAllRegions"
+          validation="isRegionState">
+    </transformation>
     <transformation
           icon="icons/default.gif"
           name="Create State"
@@ -78,49 +71,56 @@
           validation="isNoRootRegion">
     </transformation>
     <transformation
-          tooltip="Set the transition target to the selected state"
+          icon="icons/connect.gif"
+          keyboardShortcut="M1+R W"
+          name="Connect States"
+          tooltip="Connect both states"
+          transformation="connectStates"
+          transformationId="de.cau.cs.kieler.ksbase.connect"
+          validation="isNoRootState,statesOnSameHierarchy">
+    </transformation>
+    <transformation
+          icon="icons/self_loop.gif"
+          keyboardShortcut="M1+R O"
+          name="Add Self Loop"
+          tooltip="Create a self loop for the selected state"
+          transformation="addSelfLoop"
+          transformationId="de.cau.cs.kieler.ksbase.selfLoop"
+          validation="isNoRootState">
+    </transformation>
+    <transformation
+          icon="icons/successor_state.gif"
+          name="Insert State"
+          tooltip="Inserts a sstate between source and target of the transition"
+          transformation="insertState"
+          transformationId="de.cau.cs.kieler.synccharts.ksbase.insertState">
+    </transformation>
+				<transformation
+          tooltip="Flip source and target of the transition"
+          icon="icons/flip.gif"
+          keyboardShortcut="M1+R F"
+          name="Flip Transition"
+          transformation="flipTransition"
+          transformationId="de.cau.cs.kieler.ksbase.flip">
+				</transformation>
+    <transformation
           icon="icons/reconnect_target.gif"
           keyboardShortcut="M1+R T"
           name="Set Transition Target"
+          tooltip="Set the transition target to the selected state"
           transformation="rerouteTransitionTarget"
           transformationId="de.cau.cs.kieler.ksbase.rerouteTarget"
           validation="isNoRootState">
-       </transformation>
-       <transformation
-             tooltip="Set the transition source to the selected state"
-             icon="icons/reconnect_source.gif"
-             keyboardShortcut="M1+R J"
-             name="Set Transition Source"
-             transformation="rerouteTransitionSource"
-             transformationId="de.cau.cs.kieler.ksbase.rerouteSource"
-             validation="isNoRootState">
-    	</transformation>
-       <transformation
-             tooltip="Add a region with an initial state "
-             icon="icons/upgrade.gif"
-             keyboardShortcut="M1+R R"
-             name="Add Region"
-             transformation="upgradeState"
-             transformationId="de.cau.cs.kieler.ksbase.upgradeState">
-       </transformation>
-       <transformation
-             tooltip="Removing all regions of the selected state"
-             icon="icons/downgrade.gif"
-             keyboardShortcut="M1+R D"
-             name="Remove All Regions"
-             transformation="downgradeState"
-             transformationId="de.cau.cs.kieler.ksbase.downgradeState"
-             validation="isRegionState">
-       </transformation>
-       <transformation
-             tooltip="Create a self loop for the selected state"
-             icon="icons/self_loop.gif"
-             keyboardShortcut="M1+R O"
-             name="Add Self Loop"
-             transformation="addSelfLoop"
-             transformationId="de.cau.cs.kieler.ksbase.selfLoop"
-             validation="isNoRootState">
-       </transformation>
+    </transformation>
+    <transformation
+          icon="icons/reconnect_source.gif"
+          keyboardShortcut="M1+R J"
+          name="Set Transition Source"
+          tooltip="Set the transition source to the selected state"
+          transformation="rerouteTransitionSource"
+          transformationId="de.cau.cs.kieler.ksbase.rerouteSource"
+          validation="isNoRootState">
+    </transformation>
        <transformation
              tooltip="Create a new state and move all existing regions to the new one"
              icon="icons/encapsulate.gif"
@@ -138,26 +138,20 @@
              transformationId="de.cau.cs.kieler.ksbase.flattenState">
        </transformation>
        <transformation
-             tooltip="Inserts a sstate between source and target of the transition"
-             icon="icons/successor_state.gif"
-             name="Insert State"
-             transformation="insertState"
-             transformationId="de.cau.cs.kieler.synccharts.ksbase.insertState">
+             icon="icons/encapsulate.gif"
+             name="Encapsulate Region"
+             tooltip="Move the selected region(s) into a new State and place that state into the regions parent."
+             transformation="encapsulateRegion"
+             transformationId="de.cau.cs.kieler.synccharts.ksbase.encapsulateRegion"
+             validation="isNoRootRegion">
        </transformation>
        <transformation
-             icon="icons/successor_state.gif"
-             name="Add Single Successor State"
-             tooltip="Create a successor for the selected state"
-             transformation="addSuccessorState"
-             transformationId="de.cau.cs.kieler.ksbase.addSingleSuc"
-             validation="isNoRootState">
-       </transformation>
-              <transformation
-             icon="icons/quickfix_obj.gif"
-             name="Optimize"
-             tooltip="Optimize the current Synccharts. This can be configured through the preference page."
-             transformation="optimizeSelected"
-             transformationId="de.cau.cs.kieler.ksbase.optimize">
+             icon="icons/flatten.gif"
+             name="Flatten Region"
+             tooltip="Moves all states from the selected region to the next region in the hierarchy."
+             transformation="flattenRegion"
+             transformationId="de.cau.cs.kieler.synccharts.ksbase.flattenRegion"
+             validation="isNoRootRegion">
        </transformation>
               <transformation
                     keyboardShortcut="M1 + M2 + R"
@@ -174,79 +168,104 @@
                     transformationId="de.cau.cs.kieler.synccharts.ksbase.renameSignal">
               </transformation>
               <transformation
-                    icon="icons/encapsulate.gif"
-                    name="Encapsulate Region"
-                    tooltip="Move the selected region(s) into a new State and place that state into the regions parent."
-                    transformation="encapsulateRegion"
-                    transformationId="de.cau.cs.kieler.synccharts.ksbase.encapsulateRegion"
-                    validation="isNoRootRegion">
+                    icon="icons/abro.gif"
+                    name="Add ABRO"
+                    tooltip="Create an ABRO SyncChart"
+                    transformation="addABRO"
+                    transformationId="de.cau.cs.kieler.ksbase.addABRO">
               </transformation>
               <transformation
-                    icon="icons/flatten.gif"
-                    name="Flatten Region"
-                    tooltip="Moves all states from the selected region to the next region in the hierarchy."
-                    transformation="flattenRegion"
-                    transformationId="de.cau.cs.kieler.synccharts.ksbase.flattenRegion"
-                    validation="isNoRootRegion">
+                    icon="icons/default.gif"
+                    name="Create Default"
+                    tooltip="Create a default SyncChart"
+                    transformation="createDefault"
+                    transformationId="de.cau.cs.kieler.ksbase.createDefault"
+                    validation="isRootRegion">
+              </transformation>
+              <transformation
+                    icon="icons/quickfix_obj.gif"
+                    name="Optimize"
+                    tooltip="Optimize the current Synccharts. This can be configured through the preference page."
+                    transformation="optimizeSelected"
+                    transformationId="de.cau.cs.kieler.ksbase.optimize">
               </transformation>
 			</transformations>
 			<menus>
 				<menuContribution locationURI="menu:de.cau.cs.kieler">
+       <transformationCommand
+             transformationId="de.cau.cs.kieler.ksbase.addSuc">
+       </transformationCommand>
 					<transformationCommand transformationId="de.cau.cs.kieler.ksbase.addPred"></transformationCommand>
 					<transformationCommand transformationId="de.cau.cs.kieler.ksbase.addChoice">
 					</transformationCommand>
-					<transformationCommand transformationId="de.cau.cs.kieler.ksbase.addSuc"></transformationCommand>
+     <separator
+           id="de.cau.cs.kieler.synccharts.ksbase.separator1">
+     </separator>
      <transformationCommand
-           transformationId="de.cau.cs.kieler.ksbase.upgradeState">
+           transformationId="de.cau.cs.kieler.ksbase.addRegion">
      </transformationCommand>
      <transformationCommand
-           transformationId="de.cau.cs.kieler.ksbase.downgradeState">
+           transformationId="de.cau.cs.kieler.ksbase.removeAllRegions">
      </transformationCommand>
+     <transformationCommand
+           transformationId="de.cau.cs.kieler.synccharts.ksbase.addState">
+     </transformationCommand>
+     <separator
+           id="de.cau.cs.kieler.synccharts.ksbase.separator2">
+     </separator>
+     <transformationCommand
+           transformationId="de.cau.cs.kieler.ksbase.connect">
+     </transformationCommand>
+     <transformationCommand
+           transformationId="de.cau.cs.kieler.ksbase.selfLoop">
+     </transformationCommand>
+     <transformationCommand
+           transformationId="de.cau.cs.kieler.synccharts.ksbase.insertState">
+     </transformationCommand>
+     <transformationCommand
+           transformationId="de.cau.cs.kieler.ksbase.flip">
+     </transformationCommand>
+     <transformationCommand
+           transformationId="de.cau.cs.kieler.ksbase.rerouteTarget">
+     </transformationCommand>
+     <transformationCommand
+           transformationId="de.cau.cs.kieler.ksbase.rerouteSource">
+     </transformationCommand>
+     <separator
+           id="de.cau.cs.kieler.synccharts.ksbase.separator3">
+     </separator>
+     <transformationCommand
+           transformationId="de.cau.cs.kieler.ksbase.encapsulate">
+     </transformationCommand>
+     <transformationCommand
+           transformationId="de.cau.cs.kieler.ksbase.flattenState">
+     </transformationCommand>
+     <transformationCommand
+           transformationId="de.cau.cs.kieler.synccharts.ksbase.encapsulateRegion">
+     </transformationCommand>
+     <transformationCommand
+           transformationId="de.cau.cs.kieler.synccharts.ksbase.flattenRegion">
+     </transformationCommand>
+     <separator
+           id="de.cau.cs.kieler.synccharts.ksbase.separator4">
+     </separator>
      						<transformationCommand transformationId="de.cau.cs.kieler.ksbase.addABRO"></transformationCommand>
 						<transformationCommand transformationId="de.cau.cs.kieler.ksbase.createDefault">
 						</transformationCommand>
-						        <transformationCommand
-              transformationId="de.cau.cs.kieler.ksbase.connect">
-        </transformationCommand>
-						<transformationCommand transformationId="de.cau.cs.kieler.ksbase.flip"></transformationCommand>
-      <transformationCommand
-            transformationId="de.cau.cs.kieler.ksbase.rerouteTarget">
-      </transformationCommand>
-      <transformationCommand
-            transformationId="de.cau.cs.kieler.ksbase.rerouteSource">
-      </transformationCommand>
-      					<transformationCommand
-                transformationId="de.cau.cs.kieler.ksbase.selfLoop">
-          </transformationCommand>
-          <transformationCommand
-                transformationId="de.cau.cs.kieler.ksbase.encapsulate">
-          </transformationCommand>
-          <transformationCommand
-                transformationId="de.cau.cs.kieler.ksbase.flattenState">
-          </transformationCommand>
-          <transformationCommand
-                transformationId="de.cau.cs.kieler.synccharts.ksbase.insertState">
-          </transformationCommand>
-          <transformationCommand
-                transformationId="de.cau.cs.kieler.synccharts.ksbase.encapsulateRegion">
-          </transformationCommand>
-          <transformationCommand
-                transformationId="de.cau.cs.kieler.synccharts.ksbase.flattenRegion">
-          </transformationCommand>
-          <transformationCommand
-                transformationId="de.cau.cs.kieler.synccharts.ksbase.addState">
-          </transformationCommand>
 				</menuContribution>
 				<menuContribution locationURI="toolbar:de.cau.cs.kieler">
        <transformationCommand
              transformationId="de.cau.cs.kieler.ksbase.addSuc">
        </transformationCommand>
-					<transformationCommand transformationId="de.cau.cs.kieler.ksbase.upgradeState">
+					<transformationCommand transformationId="de.cau.cs.kieler.ksbase.addRegion">
 					</transformationCommand>
      <transformationCommand
-           transformationId="de.cau.cs.kieler.ksbase.downgradeState">
+           transformationId="de.cau.cs.kieler.ksbase.removeAllRegions">
      </transformationCommand>
 					<transformationCommand transformationId="de.cau.cs.kieler.ksbase.flip"></transformationCommand>
+     <separator
+           id="de.cau.cs.kieler.synccharts.ksbase.separator5">
+     </separator>
 				     <transformationCommand
            transformationId="de.cau.cs.kieler.ksbase.optimize">
      </transformationCommand>
@@ -260,16 +279,31 @@
              transformationId="de.cau.cs.kieler.ksbase.addPred">
        </transformationCommand>
        <transformationCommand
-             transformationId="de.cau.cs.kieler.ksbase.upgradeState">
-       </transformationCommand>
-       <transformationCommand
-             transformationId="de.cau.cs.kieler.ksbase.downgradeState">
-       </transformationCommand>
-       <transformationCommand
              transformationId="de.cau.cs.kieler.ksbase.addChoice">
        </transformationCommand>
+       <separator
+             id="de.cau.cs.kieler.synccharts.ksbase.separator6">
+       </separator>
+       <transformationCommand
+             transformationId="de.cau.cs.kieler.ksbase.addRegion">
+       </transformationCommand>
+       <transformationCommand
+             transformationId="de.cau.cs.kieler.ksbase.removeAllRegions">
+       </transformationCommand>
+       <transformationCommand
+             transformationId="de.cau.cs.kieler.synccharts.ksbase.addState">
+       </transformationCommand>
+       <separator
+             id="de.cau.cs.kieler.synccharts.ksbase.separator7">
+       </separator>
        <transformationCommand
              transformationId="de.cau.cs.kieler.ksbase.connect">
+       </transformationCommand>
+       <transformationCommand
+             transformationId="de.cau.cs.kieler.ksbase.selfLoop">
+       </transformationCommand>
+       <transformationCommand
+             transformationId="de.cau.cs.kieler.synccharts.ksbase.insertState">
        </transformationCommand>
           <transformationCommand transformationId="de.cau.cs.kieler.ksbase.flip"></transformationCommand>
           <transformationCommand
@@ -278,9 +312,9 @@
           <transformationCommand
                 transformationId="de.cau.cs.kieler.ksbase.rerouteSource">
           </transformationCommand>
-          <transformationCommand
-                transformationId="de.cau.cs.kieler.ksbase.selfLoop">
-          </transformationCommand>
+          <separator
+                id="de.cau.cs.kieler.synccharts.ksbase.separator8">
+          </separator>
           <transformationCommand
                 transformationId="de.cau.cs.kieler.ksbase.encapsulate">
           </transformationCommand>
@@ -288,25 +322,22 @@
                 transformationId="de.cau.cs.kieler.ksbase.flattenState">
           </transformationCommand>
           <transformationCommand
-                transformationId="de.cau.cs.kieler.ksbase.createDefault">
-          </transformationCommand>
-          <transformationCommand
-                transformationId="de.cau.cs.kieler.synccharts.ksbase.insertState">
-          </transformationCommand>
-          <transformationCommand
-                transformationId="de.cau.cs.kieler.synccharts.ksbase.renameSignalVariable">
-          </transformationCommand>
-          <transformationCommand
                 transformationId="de.cau.cs.kieler.synccharts.ksbase.encapsulateRegion">
           </transformationCommand>
           <transformationCommand
                 transformationId="de.cau.cs.kieler.synccharts.ksbase.flattenRegion">
           </transformationCommand>
+          <separator
+                id="de.cau.cs.kieler.synccharts.ksbase.separator9">
+          </separator>
           <transformationCommand
-                transformationId="de.cau.cs.kieler.synccharts.ksbase.addState">
+                transformationId="de.cau.cs.kieler.synccharts.ksbase.renameSignalVariable">
           </transformationCommand>
           <transformationCommand
                 transformationId="de.cau.cs.kieler.synccharts.ksbase.renameSignal">
+          </transformationCommand>
+          <transformationCommand
+                transformationId="de.cau.cs.kieler.ksbase.createDefault">
           </transformationCommand>
     </menuContribution>
     <menuContribution
@@ -318,30 +349,27 @@
              transformationId="de.cau.cs.kieler.ksbase.addPred">
        </transformationCommand>
        <transformationCommand
-             transformationId="de.cau.cs.kieler.ksbase.upgradeState">
-       </transformationCommand>
-       <transformationCommand
-             transformationId="de.cau.cs.kieler.ksbase.downgradeState">
-       </transformationCommand>
-       <transformationCommand
              transformationId="de.cau.cs.kieler.ksbase.addChoice">
        </transformationCommand>
+       <transformationCommand
+             transformationId="de.cau.cs.kieler.ksbase.addRegion">
+       </transformationCommand>
+       <transformationCommand
+             transformationId="de.cau.cs.kieler.ksbase.removeAllRegions">
+       </transformationCommand>
+       <transformationCommand
+             transformationId="de.cau.cs.kieler.ksbase.selfLoop">
+       </transformationCommand>
+       <transformationCommand
+             transformationId="de.cau.cs.kieler.synccharts.ksbase.insertState">
+       </transformationCommand>
           <transformationCommand transformationId="de.cau.cs.kieler.ksbase.flip">
-          </transformationCommand>
-          <transformationCommand
-                transformationId="de.cau.cs.kieler.ksbase.selfLoop">
           </transformationCommand>
           <transformationCommand
                 transformationId="de.cau.cs.kieler.ksbase.encapsulate">
           </transformationCommand>
           <transformationCommand
                 transformationId="de.cau.cs.kieler.ksbase.flattenState">
-          </transformationCommand>
-          <transformationCommand
-                transformationId="de.cau.cs.kieler.ksbase.createDefault">
-          </transformationCommand>
-          <transformationCommand
-                transformationId="de.cau.cs.kieler.synccharts.ksbase.insertState">
           </transformationCommand>
           <transformationCommand
                 transformationId="de.cau.cs.kieler.synccharts.ksbase.encapsulateRegion">
@@ -351,6 +379,9 @@
           </transformationCommand>
           <transformationCommand
                 transformationId="de.cau.cs.kieler.synccharts.ksbase.addState">
+          </transformationCommand>
+          <transformationCommand
+                transformationId="de.cau.cs.kieler.ksbase.createDefault">
           </transformationCommand>
     </menuContribution>
 
