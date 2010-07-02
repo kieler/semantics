@@ -16,6 +16,7 @@ package de.cau.cs.kieler.sim.kiem.config.preferences;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.eclipse.core.runtime.IStatus;
 import org.eclipse.jface.preference.PreferencePage;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
@@ -30,7 +31,11 @@ import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
+import org.eclipse.ui.statushandlers.StatusAdapter;
+import org.eclipse.ui.statushandlers.StatusManager;
 
+import de.cau.cs.kieler.core.ui.errorhandler.GenericErrorHandler.StatusListener;
+import de.cau.cs.kieler.sim.kiem.config.KiemConfigurationPlugin;
 import de.cau.cs.kieler.sim.kiem.config.data.Tools;
 import de.cau.cs.kieler.sim.kiem.config.managers.ConfigurationManager;
 import de.cau.cs.kieler.sim.kiem.config.managers.ContributionManager;
@@ -103,8 +108,29 @@ public class ConfigurationsPreferencePage extends PreferencePage implements
     private void buildPage(final Composite parent) {
         propertiesGroup = new Group(parent, SWT.NONE);
 
+        // FIXME: Workaround to prevent a ClassCircularityError from
+        // throwing a popup warning. Find a way to remove the formal
+        // circularity without changing the semantics.
+        // (The program works just fine, the circularity never actually
+        // affects anything)
+        StatusListener dummy = new StatusListener() {
+            public int reroute(final StatusAdapter statusAdapter,
+                    final int style) {
+                IStatus status = statusAdapter.getStatus();
+                if (status != null) {
+                    if (status.getException() instanceof ClassCircularityError) {
+                        return StatusManager.NONE;
+                    }
+                }
+                return StatusListener.DONT_CARE;
+            }
+        };
+        KiemConfigurationPlugin.addErrorListener(dummy);
+
         // get values from the main plugin
         ConfigurationManager configuration = ConfigurationManager.getInstance();
+
+        KiemConfigurationPlugin.removeErrorListener(dummy);
 
         KiemProperty[] properties = configuration
                 .getInternalDefaultProperties();
@@ -194,8 +220,8 @@ public class ConfigurationsPreferencePage extends PreferencePage implements
     private boolean saveProperties() {
         for (KiemIntegerPropertyInputField input : inputs) {
             if (!input.save()) {
-                Tools.showErrorDialog("Invalid input on text field.", page
-                        .getShell());
+                Tools.showErrorDialog("Invalid input on text field.",
+                        page.getShell());
                 input.update();
                 return false;
             }
@@ -263,8 +289,8 @@ public class ConfigurationsPreferencePage extends PreferencePage implements
                             matchingCheck.getSelection());
                 }
                 if (event.widget == recentCheck) {
-                    toggleCombo(ContributionManager.RECENT_COMBO, recentCheck
-                            .getSelection());
+                    toggleCombo(ContributionManager.RECENT_COMBO,
+                            recentCheck.getSelection());
                 }
                 if (event.widget == advancedCheck) {
                     ContributionManager.getInstance().setInAdvancedMode(

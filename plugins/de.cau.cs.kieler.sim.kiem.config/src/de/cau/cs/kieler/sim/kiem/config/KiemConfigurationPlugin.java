@@ -13,6 +13,7 @@
  */
 package de.cau.cs.kieler.sim.kiem.config;
 
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IEditorPart;
@@ -20,9 +21,14 @@ import org.eclipse.ui.IEditorSite;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchWindow;
+import org.eclipse.ui.internal.statushandlers.StatusHandlerDescriptor;
+import org.eclipse.ui.internal.statushandlers.StatusHandlerRegistry;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
+import org.eclipse.ui.statushandlers.AbstractStatusHandler;
 import org.osgi.framework.BundleContext;
 
+import de.cau.cs.kieler.core.ui.errorhandler.GenericErrorHandler;
+import de.cau.cs.kieler.core.ui.errorhandler.GenericErrorHandler.StatusListener;
 import de.cau.cs.kieler.sim.kiem.config.managers.AbstractManager;
 
 /**
@@ -143,6 +149,57 @@ public class KiemConfigurationPlugin extends AbstractUIPlugin {
         AbstractManager.saveAll();
         plugin = null;
         super.stop(context);
+    }
+
+    // --------------------------------------------------------------------------
+    // --------------------------------------------------------------------------
+
+    /**
+     * Getter for KIELERs generic error handler.
+     * 
+     * @return the error handler or null
+     */
+    @SuppressWarnings("restriction")
+    public static GenericErrorHandler getErrorHandler() {
+        try {
+            StatusHandlerDescriptor desc = StatusHandlerRegistry.getDefault()
+                    .getDefaultHandlerDescriptor();
+            if (desc != null) {
+                AbstractStatusHandler handler = desc.getStatusHandler();
+                if (handler instanceof GenericErrorHandler) {
+                    return (GenericErrorHandler) handler;
+                }
+            }
+        } catch (CoreException e0) {
+            e0.printStackTrace();
+        }
+        return null;
+    }
+
+    /**
+     * Add a new listener to the generic error handler.
+     * 
+     * @param listener
+     *            the new listener
+     */
+    public static void addErrorListener(final StatusListener listener) {
+        GenericErrorHandler handler = getErrorHandler();
+        if (handler != null) {
+            handler.addListener(listener);
+        }
+    }
+
+    /**
+     * Remove a listener from the generic error handler.
+     * 
+     * @param listener
+     *            the new listener
+     */
+    public static void removeErrorListener(final StatusListener listener) {
+        GenericErrorHandler handler = getErrorHandler();
+        if (handler != null) {
+            handler.removeListener(listener);
+        }
     }
 
     // --------------------------------------------------------------------------
