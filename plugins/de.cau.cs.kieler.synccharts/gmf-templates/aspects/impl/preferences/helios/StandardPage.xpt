@@ -1,0 +1,45 @@
+﻿/*
+ * Copyright (c) 2006, 2009 Borland Software Corporation
+ * 
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *    Dmitry Stadnik (Borland) - initial API and implementation
+ */
+
+«IMPORT 'http://www.eclipse.org/gmf/2009/GenModel'»
+
+«DEFINE Main FOR gmfgen::GenStandardPreferencePage-»
+«EXPAND xpt::Common::copyright FOR getDiagram().editorGen-»
+package «getDiagram().preferencesPackageName»;
+
+«EXPAND xpt::Common::generatedClassComment»
+public class «getClassName()»«EXPAND extendsList»«EXPAND implementsList» {
+
+	«EXPAND xpt::Common::generatedMemberComment»
+	public «getClassName()»() {
+		setPreferenceStore(«getDiagram().editorGen.plugin.getActivatorQualifiedClassName()».getInstance().getPreferenceStore());
+	}
+}
+«ENDDEFINE»
+
+«DEFINE extendsList FOR gmfgen::GenStandardPreferencePage-»
+«IF gmfgen::StandardPreferencePages::General = kind-»
+ extends org.eclipse.gmf.runtime.diagram.ui.preferences.DiagramsPreferencePage«-»
+«ELSEIF gmfgen::StandardPreferencePages::Appearance = kind-»
+ extends org.eclipse.gmf.runtime.diagram.ui.preferences.AppearancePreferencePage«-»
+«ELSEIF gmfgen::StandardPreferencePages::Connections = kind-»
+ extends org.eclipse.gmf.runtime.diagram.ui.preferences.ConnectionsPreferencePage«-»
+«ELSEIF gmfgen::StandardPreferencePages::Printing = kind-»
+ extends org.eclipse.gmf.runtime.diagram.ui.preferences.PrintingPreferencePage«-»
+«ELSEIF gmfgen::StandardPreferencePages::RulersAndGrid = kind-»
+ extends org.eclipse.gmf.runtime.diagram.ui.preferences.RulerGridPreferencePage«-»
+«ENDIF-»
+«ENDDEFINE»
+
+«DEFINE implementsList FOR gmfgen::GenStandardPreferencePage»«REM»no-op«ENDREM»«ENDDEFINE»
+
+«DEFINE call_initDefaults(storeVarName : String) FOR gmfgen::GenStandardPreferencePage»«IF kind <> gmfgen::StandardPreferencePages::Pathmaps»«getQualifiedClassName()».initDefaults(«storeVarName»);«ENDIF»«ENDDEFINE»
