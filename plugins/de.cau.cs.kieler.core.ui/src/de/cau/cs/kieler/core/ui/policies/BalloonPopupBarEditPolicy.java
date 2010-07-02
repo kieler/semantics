@@ -83,7 +83,8 @@ public class BalloonPopupBarEditPolicy extends DiagramPopupBarPolicy {
         super.fillPopupBarDescriptors();
         if (contributions != null) {
             for (IBalloonContribution item : contributions) {
-                if (item.setEditPart(editPart)) {
+                item.init(editPart);
+                if (item.isValid()) {
                     String tip = item.getTooltip();
                     Image image = item.getImage();
                     DragTracker tracker = new BalloonMouseListener(item);
@@ -102,7 +103,7 @@ public class BalloonPopupBarEditPolicy extends DiagramPopupBarPolicy {
     private IElementType generateType() {
         return new IElementType() {
 
-            @SuppressWarnings("unchecked")
+            @SuppressWarnings("rawtypes")
             public Object getAdapter(final Class adapter) {
                 return null;
             }

@@ -47,6 +47,7 @@ import org.eclipse.swt.graphics.RGB;
  * 
  * @author cmahoney
  */
+@SuppressWarnings("restriction")
 public class DiagramPopupBarPolicy extends PopupBarPolicy implements
         PaletteListener {
 
@@ -171,7 +172,6 @@ public class DiagramPopupBarPolicy extends PopupBarPolicy implements
      * @param palContainer
      *            the <code>PaletteContainer</code>
      */
-    @SuppressWarnings("restriction")
     protected void fillWithPaletteToolsInContainer(
             final PaletteContainer palContainer) {
         if (palContainer != null) {

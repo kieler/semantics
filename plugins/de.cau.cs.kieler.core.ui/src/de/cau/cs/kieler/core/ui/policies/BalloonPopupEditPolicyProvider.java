@@ -52,10 +52,11 @@ public class BalloonPopupEditPolicyProvider extends AbstractProvider implements
     public void createEditPolicies(final EditPart editPart) {
         if (!isNote(editPart)) {
             try {
-                if (getContributions() != null) {
+                List<IBalloonContribution> contrib = getContributions();
+                if (contrib != null) {
                     editPart.removeEditPolicy(EditPolicyRoles.POPUPBAR_ROLE);
                     BalloonPopupBarEditPolicy policy = new BalloonPopupBarEditPolicy(
-                            getContributions(), editPart);
+                            contrib, editPart);
                     policy.setHost(editPart);
                     editPart.installEditPolicy(EditPolicyRoles.POPUPBAR_ROLE,
                             policy);
@@ -88,7 +89,7 @@ public class BalloonPopupEditPolicyProvider extends AbstractProvider implements
     }
 
     /**
-     * Get the contributions from the extending plugins.
+     * Get the contributions from the extending plugins. *
      * 
      * @return the list of contributions
      */
@@ -110,13 +111,13 @@ public class BalloonPopupEditPolicyProvider extends AbstractProvider implements
 
                             if (o instanceof IBalloonContribution) {
                                 IBalloonContribution con = (IBalloonContribution) o;
-                                contributions.add(con);
+
+                                HashMap<String, String> map = new HashMap<String, String>();
 
                                 IConfigurationElement[] children = contributor
                                         .getChildren();
 
                                 if (children != null && children.length > 0) {
-                                    HashMap<String, String> map = new HashMap<String, String>();
 
                                     for (IConfigurationElement child : children) {
                                         String key = child.getAttribute("key");
@@ -124,8 +125,9 @@ public class BalloonPopupEditPolicyProvider extends AbstractProvider implements
                                                 .getAttribute("value");
                                         map.put(key, value);
                                     }
-                                    con.setAttributes(map);
+                                    con.init(map);
                                 }
+                                contributions.add(con);
                             }
                         } catch (CoreException e0) {
                             e0.printStackTrace();

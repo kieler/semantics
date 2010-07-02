@@ -13,7 +13,7 @@
  */
 package de.cau.cs.kieler.core.ui.policies;
 
-import java.util.HashMap;
+import java.util.Map;
 
 import org.eclipse.gef.EditPart;
 import org.eclipse.swt.graphics.Image;
@@ -48,17 +48,26 @@ public interface IBalloonContribution {
     /**
      * Set the edit part, return true if the edit part is supported.
      * 
-     * @param editPart
-     *            the edit part
      * @return true if the command is applicable for this edit part.
      */
-    boolean setEditPart(EditPart editPart);
+    boolean isValid();
 
     /**
-     * Set the attributes received through the extension point.
+     * Initializes the balloon.
      * 
      * @param map
      *            the attributes received through the extension point.
      */
-    void setAttributes(HashMap<String, String> map);
+    void init(Map<String, String> map);
+
+    /**
+     * Initializes the balloon.
+     * 
+     * 
+     * 
+     * @param editPart
+     *            the edit part
+     */
+    void init(EditPart editPart);
+
 }

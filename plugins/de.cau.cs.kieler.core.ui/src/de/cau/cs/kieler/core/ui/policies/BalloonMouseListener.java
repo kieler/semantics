@@ -172,7 +172,7 @@ public class BalloonMouseListener implements DragTracker {
     /**
      * {@inheritDoc}
      */
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings("rawtypes")
     public void setProperties(final Map properties) {
     }
 
