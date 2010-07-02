@@ -283,7 +283,7 @@ public class CombinedWorkbenchListener implements IStartup, IWindowListener,
      * {@inheritDoc}
      */
     public boolean preShutdown(final IWorkbench workbench, final boolean forced) {
-        boolean result = false;
+        boolean result = true;
         for (IWorkbenchListener listener : workbenchListeners) {
             result = listener.preShutdown(workbench, forced) || result;
         }
