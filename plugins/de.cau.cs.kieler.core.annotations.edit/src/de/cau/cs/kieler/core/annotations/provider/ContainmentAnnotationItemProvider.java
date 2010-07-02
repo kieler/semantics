@@ -14,9 +14,8 @@
 package de.cau.cs.kieler.core.annotations.provider;
 
 
-import de.cau.cs.kieler.core.annotations.Annotatable;
-import de.cau.cs.kieler.core.annotations.AnnotationsFactory;
 import de.cau.cs.kieler.core.annotations.AnnotationsPackage;
+import de.cau.cs.kieler.core.annotations.ContainmentAnnotation;
 
 import java.util.Collection;
 import java.util.List;
@@ -24,9 +23,8 @@ import java.util.List;
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 
-import org.eclipse.emf.common.util.ResourceLocator;
-
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.EcoreFactory;
 
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
@@ -34,17 +32,16 @@ import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.IItemPropertySource;
 import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
-import org.eclipse.emf.edit.provider.ItemProviderAdapter;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 
 /**
- * This is the item provider adapter for a {@link de.cau.cs.kieler.core.annotations.Annotatable} object.
+ * This is the item provider adapter for a {@link de.cau.cs.kieler.core.annotations.ContainmentAnnotation} object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
  * @generated
  */
-public class AnnotatableItemProvider
-    extends ItemProviderAdapter
+public class ContainmentAnnotationItemProvider
+    extends AnnotationItemProvider
     implements
         IEditingDomainItemProvider,
         IStructuredItemContentProvider,
@@ -57,7 +54,7 @@ public class AnnotatableItemProvider
      * <!-- end-user-doc -->
      * @generated
      */
-    public AnnotatableItemProvider(AdapterFactory adapterFactory) {
+    public ContainmentAnnotationItemProvider(AdapterFactory adapterFactory) {
         super(adapterFactory);
     }
 
@@ -88,7 +85,7 @@ public class AnnotatableItemProvider
     public Collection<? extends EStructuralFeature> getChildrenFeatures(Object object) {
         if (childrenFeatures == null) {
             super.getChildrenFeatures(object);
-            childrenFeatures.add(AnnotationsPackage.Literals.ANNOTATABLE__ANNOTATIONS);
+            childrenFeatures.add(AnnotationsPackage.Literals.CONTAINMENT_ANNOTATION__OBJECT);
         }
         return childrenFeatures;
     }
@@ -107,6 +104,17 @@ public class AnnotatableItemProvider
     }
 
     /**
+     * This returns ContainmentAnnotation.gif.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public Object getImage(Object object) {
+        return overlayImage(object, getResourceLocator().getImage("full/obj16/ContainmentAnnotation"));
+    }
+
+    /**
      * This returns the label text for the adapted class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -114,7 +122,10 @@ public class AnnotatableItemProvider
      */
     @Override
     public String getText(Object object) {
-        return getString("_UI_Annotatable_type");
+        String label = ((ContainmentAnnotation)object).getName();
+        return label == null || label.length() == 0 ?
+            getString("_UI_ContainmentAnnotation_type") :
+            getString("_UI_ContainmentAnnotation_type") + " " + label;
     }
 
     /**
@@ -128,8 +139,8 @@ public class AnnotatableItemProvider
     public void notifyChanged(Notification notification) {
         updateChildren(notification);
 
-        switch (notification.getFeatureID(Annotatable.class)) {
-            case AnnotationsPackage.ANNOTATABLE__ANNOTATIONS:
+        switch (notification.getFeatureID(ContainmentAnnotation.class)) {
+            case AnnotationsPackage.CONTAINMENT_ANNOTATION__OBJECT:
                 fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
                 return;
         }
@@ -149,49 +160,8 @@ public class AnnotatableItemProvider
 
         newChildDescriptors.add
             (createChildParameter
-                (AnnotationsPackage.Literals.ANNOTATABLE__ANNOTATIONS,
-                 AnnotationsFactory.eINSTANCE.createAnnotation()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (AnnotationsPackage.Literals.ANNOTATABLE__ANNOTATIONS,
-                 AnnotationsFactory.eINSTANCE.createStringAnnotation()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (AnnotationsPackage.Literals.ANNOTATABLE__ANNOTATIONS,
-                 AnnotationsFactory.eINSTANCE.createReferenceAnnotation()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (AnnotationsPackage.Literals.ANNOTATABLE__ANNOTATIONS,
-                 AnnotationsFactory.eINSTANCE.createBooleanAnnotation()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (AnnotationsPackage.Literals.ANNOTATABLE__ANNOTATIONS,
-                 AnnotationsFactory.eINSTANCE.createIntAnnotation()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (AnnotationsPackage.Literals.ANNOTATABLE__ANNOTATIONS,
-                 AnnotationsFactory.eINSTANCE.createFloatAnnotation()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (AnnotationsPackage.Literals.ANNOTATABLE__ANNOTATIONS,
-                 AnnotationsFactory.eINSTANCE.createContainmentAnnotation()));
-    }
-
-    /**
-     * Return the resource locator for this item provider's resources.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public ResourceLocator getResourceLocator() {
-        return AnnotationsEditPlugin.INSTANCE;
+                (AnnotationsPackage.Literals.CONTAINMENT_ANNOTATION__OBJECT,
+                 EcoreFactory.eINSTANCE.createEObject()));
     }
 
 }

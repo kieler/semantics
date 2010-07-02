@@ -400,6 +400,53 @@ public interface AnnotationsPackage extends EPackage {
 
 
     /**
+     * The meta object id for the '{@link de.cau.cs.kieler.core.annotations.impl.ContainmentAnnotationImpl <em>Containment Annotation</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.core.annotations.impl.ContainmentAnnotationImpl
+     * @see de.cau.cs.kieler.core.annotations.impl.AnnotationsPackageImpl#getContainmentAnnotation()
+     * @generated
+     */
+    int CONTAINMENT_ANNOTATION = 8;
+
+    /**
+     * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int CONTAINMENT_ANNOTATION__ANNOTATIONS = ANNOTATION__ANNOTATIONS;
+
+    /**
+     * The feature id for the '<em><b>Name</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int CONTAINMENT_ANNOTATION__NAME = ANNOTATION__NAME;
+
+    /**
+     * The feature id for the '<em><b>Object</b></em>' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int CONTAINMENT_ANNOTATION__OBJECT = ANNOTATION_FEATURE_COUNT + 0;
+
+    /**
+     * The number of structural features of the '<em>Containment Annotation</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int CONTAINMENT_ANNOTATION_FEATURE_COUNT = ANNOTATION_FEATURE_COUNT + 1;
+
+
+    /**
      * Returns the meta object for class '{@link de.cau.cs.kieler.core.annotations.NamedObject <em>Named Object</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -555,6 +602,27 @@ public interface AnnotationsPackage extends EPackage {
      * @generated
      */
     EAttribute getFloatAnnotation_Value();
+
+    /**
+     * Returns the meta object for class '{@link de.cau.cs.kieler.core.annotations.ContainmentAnnotation <em>Containment Annotation</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for class '<em>Containment Annotation</em>'.
+     * @see de.cau.cs.kieler.core.annotations.ContainmentAnnotation
+     * @generated
+     */
+    EClass getContainmentAnnotation();
+
+    /**
+     * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.core.annotations.ContainmentAnnotation#getObject <em>Object</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the containment reference '<em>Object</em>'.
+     * @see de.cau.cs.kieler.core.annotations.ContainmentAnnotation#getObject()
+     * @see #getContainmentAnnotation()
+     * @generated
+     */
+    EReference getContainmentAnnotation_Object();
 
     /**
      * Returns the factory that creates the instances of the model.
@@ -713,6 +781,24 @@ public interface AnnotationsPackage extends EPackage {
          * @generated
          */
         EAttribute FLOAT_ANNOTATION__VALUE = eINSTANCE.getFloatAnnotation_Value();
+
+        /**
+         * The meta object literal for the '{@link de.cau.cs.kieler.core.annotations.impl.ContainmentAnnotationImpl <em>Containment Annotation</em>}' class.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see de.cau.cs.kieler.core.annotations.impl.ContainmentAnnotationImpl
+         * @see de.cau.cs.kieler.core.annotations.impl.AnnotationsPackageImpl#getContainmentAnnotation()
+         * @generated
+         */
+        EClass CONTAINMENT_ANNOTATION = eINSTANCE.getContainmentAnnotation();
+
+        /**
+         * The meta object literal for the '<em><b>Object</b></em>' containment reference feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference CONTAINMENT_ANNOTATION__OBJECT = eINSTANCE.getContainmentAnnotation_Object();
 
     }
 

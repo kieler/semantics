@@ -111,6 +111,10 @@ public class AnnotationsAdapterFactory extends AdapterFactoryImpl {
                 return createFloatAnnotationAdapter();
             }
             @Override
+            public Adapter caseContainmentAnnotation(ContainmentAnnotation object) {
+                return createContainmentAnnotationAdapter();
+            }
+            @Override
             public Adapter defaultCase(EObject object) {
                 return createEObjectAdapter();
             }
@@ -239,6 +243,20 @@ public class AnnotationsAdapterFactory extends AdapterFactoryImpl {
      * @generated
      */
     public Adapter createFloatAnnotationAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.core.annotations.ContainmentAnnotation <em>Containment Annotation</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.cau.cs.kieler.core.annotations.ContainmentAnnotation
+     * @generated
+     */
+    public Adapter createContainmentAnnotationAdapter() {
         return null;
     }
 

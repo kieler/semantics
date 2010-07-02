@@ -221,6 +221,29 @@ public class AnnotationsItemProviderAdapterFactory extends AnnotationsAdapterFac
     }
 
     /**
+     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.core.annotations.ContainmentAnnotation} instances.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    protected ContainmentAnnotationItemProvider containmentAnnotationItemProvider;
+
+    /**
+     * This creates an adapter for a {@link de.cau.cs.kieler.core.annotations.ContainmentAnnotation}.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public Adapter createContainmentAnnotationAdapter() {
+        if (containmentAnnotationItemProvider == null) {
+            containmentAnnotationItemProvider = new ContainmentAnnotationItemProvider(this);
+        }
+
+        return containmentAnnotationItemProvider;
+    }
+
+    /**
      * This returns the root adapter factory that contains this factory.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -325,6 +348,7 @@ public class AnnotationsItemProviderAdapterFactory extends AnnotationsAdapterFac
         if (booleanAnnotationItemProvider != null) booleanAnnotationItemProvider.dispose();
         if (intAnnotationItemProvider != null) intAnnotationItemProvider.dispose();
         if (floatAnnotationItemProvider != null) floatAnnotationItemProvider.dispose();
+        if (containmentAnnotationItemProvider != null) containmentAnnotationItemProvider.dispose();
     }
 
 }

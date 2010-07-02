@@ -18,6 +18,7 @@ import de.cau.cs.kieler.core.annotations.Annotation;
 import de.cau.cs.kieler.core.annotations.AnnotationsFactory;
 import de.cau.cs.kieler.core.annotations.AnnotationsPackage;
 import de.cau.cs.kieler.core.annotations.BooleanAnnotation;
+import de.cau.cs.kieler.core.annotations.ContainmentAnnotation;
 import de.cau.cs.kieler.core.annotations.FloatAnnotation;
 import de.cau.cs.kieler.core.annotations.IntAnnotation;
 import de.cau.cs.kieler.core.annotations.NamedObject;
@@ -96,6 +97,13 @@ public class AnnotationsPackageImpl extends EPackageImpl implements AnnotationsP
      * @generated
      */
     private EClass floatAnnotationEClass = null;
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EClass containmentAnnotationEClass = null;
 
     /**
      * Creates an instance of the model <b>Package</b>, registered with
@@ -301,6 +309,24 @@ public class AnnotationsPackageImpl extends EPackageImpl implements AnnotationsP
      * <!-- end-user-doc -->
      * @generated
      */
+    public EClass getContainmentAnnotation() {
+        return containmentAnnotationEClass;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EReference getContainmentAnnotation_Object() {
+        return (EReference)containmentAnnotationEClass.getEStructuralFeatures().get(0);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     public AnnotationsFactory getAnnotationsFactory() {
         return (AnnotationsFactory)getEFactoryInstance();
     }
@@ -346,6 +372,9 @@ public class AnnotationsPackageImpl extends EPackageImpl implements AnnotationsP
 
         floatAnnotationEClass = createEClass(FLOAT_ANNOTATION);
         createEAttribute(floatAnnotationEClass, FLOAT_ANNOTATION__VALUE);
+
+        containmentAnnotationEClass = createEClass(CONTAINMENT_ANNOTATION);
+        createEReference(containmentAnnotationEClass, CONTAINMENT_ANNOTATION__OBJECT);
     }
 
     /**
@@ -386,6 +415,7 @@ public class AnnotationsPackageImpl extends EPackageImpl implements AnnotationsP
         booleanAnnotationEClass.getESuperTypes().add(this.getAnnotation());
         intAnnotationEClass.getESuperTypes().add(this.getAnnotation());
         floatAnnotationEClass.getESuperTypes().add(this.getAnnotation());
+        containmentAnnotationEClass.getESuperTypes().add(this.getAnnotation());
 
         // Initialize classes and features; add operations and parameters
         initEClass(namedObjectEClass, NamedObject.class, "NamedObject", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -420,6 +450,9 @@ public class AnnotationsPackageImpl extends EPackageImpl implements AnnotationsP
 
         initEClass(floatAnnotationEClass, FloatAnnotation.class, "FloatAnnotation", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEAttribute(getFloatAnnotation_Value(), theEcorePackage.getEFloat(), "value", null, 1, 1, FloatAnnotation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+        initEClass(containmentAnnotationEClass, ContainmentAnnotation.class, "ContainmentAnnotation", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+        initEReference(getContainmentAnnotation_Object(), theEcorePackage.getEObject(), null, "object", null, 1, 1, ContainmentAnnotation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         // Create resource
         createResource(eNS_URI);

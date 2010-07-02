@@ -87,6 +87,15 @@ public interface AnnotationsFactory extends EFactory {
     FloatAnnotation createFloatAnnotation();
 
     /**
+     * Returns a new object of class '<em>Containment Annotation</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Containment Annotation</em>'.
+     * @generated
+     */
+    ContainmentAnnotation createContainmentAnnotation();
+
+    /**
      * Returns the package supported by this factory.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
