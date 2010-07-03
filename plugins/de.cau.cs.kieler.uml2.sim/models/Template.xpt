@@ -1,0 +1,19 @@
+«IMPORT uml»
+
+«EXTENSION Extensions»
+
+«DEFINE main FOR Model»
+   «EXPAND sm FOREACH packagedElement»
+«ENDDEFINE»
+
+«DEFINE sm FOR StateMachine»
+	«FILE this.name.toString() +".maude"»
+	
+	// HERE COMES THE MAUDE CODE //
+	
+	«ENDFILE»
+«ENDDEFINE»
+
+
+«DEFINE sm FOR PackageableElement»
+«ENDDEFINE»
