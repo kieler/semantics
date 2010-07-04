@@ -1,30 +1,46 @@
 «IMPORT s»
 
+«EXTENSION Extensions»
+
+
 «DEFINE main FOR Program-»
 	«FILE name + ".c"-»
 
-
-// ABRO - the "hello world" for SSMs
-// Example from Charles André, Semantics of SyncCharts,
-// ISRN I3S/RR-2003-24-FR, April 2003, Figure 5-12
-//
-// rvh, 17 mar 2009
-#include "sc.h"
-
-#define RUNMAX 2                // # of runs to execute
-#define TICKMAX 5               // # of ticks to execute
-
-int runMax  = RUNMAX;           // # of runs to execute
-int tickMax = TICKMAX;          // # of ticks to execute
-
- 
-// ======================================
-// Program-specific definitions
-
-// Signals
-	
-/* generated SC-code */
-
+		/*****************************************************************************/
+		/* Generated SC-code                                                         */
+		/*****************************************************************************/
+		/* KIELER - Kiel Integrated Environment for Layout Eclipse RichClient        */
+		/*                                                                           */
+		/* http://www.informatik.uni-kiel.de/rtsys/kieler/                           */
+		/*                                                                           */
+		/* Copyright 2009 by                                                         */
+		/* + Christian-Albrechts-University of Kiel                                  */
+		/*   + Department of Computer Science                                        */
+		/*     + Real-Time and Embedded Systems Group                                */
+		/*                                                                           */
+		/* This code is provided under the terms of the Eclipse Public License (EPL).*/
+		/*****************************************************************************/
+		«EXPAND init-»
 	
 	«ENDFILE»
+«ENDDEFINE»
+
+
+
+«DEFINE init FOR Program-»
+	#include "misc.h"
+	#include "sc.h"
+
+	int valSigInt[_SC_valSigInt_SIZE];
+	int valSigIntPre[_SC_valSigInt_SIZE];
+	«EXPAND CodegenMisc::generateInitialize FOR this-»
+
+	«FOREACH allSignals(this.innerStates.first()) AS signal-»
+		«IF ((Signal)signal).isInput || !(((Signal)signal).isInput || ((Signal)signal).isOutput)-»
+			«EXPAND CodegenMisc::generateInputSignal FOR ((Signal)signal)»
+		«ENDIF-»
+	«ENDFOREACH-»
+	«EXPAND CodegenMisc::generateCallOutputs FOR allSignals(this.innerStates.first())»
+	int tick(){
+	TICKSTART(«EXPAND CodegenPriority::mainThreadPrio FOR this.innerStates.first()-»);
 «ENDDEFINE»
