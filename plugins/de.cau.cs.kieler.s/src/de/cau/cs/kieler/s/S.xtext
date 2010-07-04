@@ -2,16 +2,18 @@ grammar de.cau.cs.kieler.s.S 	with org.eclipse.xtext.common.Terminals
 //		 de.cau.cs.kieler.core.expressions.Expressions, 
 //		 de.cau.cs.kieler.core.annotations.Annotations
 
+//grammar de.cau.cs.kieler.s.S with de.cau.cs.kieler.synccharts.text.interfaces.Interfaces
 
 //import 'http://kieler.cs.cau.de/expressions' as expressions --> wrong
 //import 'http://kieler.cs.cau.de/annotations' as annotations
+
 //import "platform:/resource/de.cau.cs.kieler.core.expressions/model/expressions.ecore" as expressions
-import "platform:/resource/de.cau.cs.kieler.core.annotations/model/annotations.ecore" as annotations
+//import "platform:/resource/de.cau.cs.kieler.core.annotations/model/annotations.ecore" as annotations
 
 generate s "http://www.cau.de/cs/kieler/s"
 
 Program :
-	'Synchronous Program' name = ID '(' priority=IntValue ')'
+	'Synchronous Program' name = ID '(' priority=INT ')'
 	('Inputs' (signals += Signal) (',' signals += Signal)*';')?
 	('Outputs' (signals += Signal) (',' signals += Signal)*';')?
 	('Signals' (signals += Signal) (',' signals += Signal)*';')?
@@ -24,8 +26,8 @@ Program :
 //;
 
 //TODO: Consolidate with Annotatable xtext grammar somehow... (s.a.)
-Annotatable returns annotations::Annotatable:
- 	State | Signal | Instruction;
+//Annotatable returns annotations::Annotatable:
+// 	State | Instruction;
 
 
 State:
@@ -35,44 +37,43 @@ State:
 ;
 
 
-
 Signal:
 	name=ID ':' 
-	type = SignalType
-	('combine' combineFunction = [CombineFunction])?
+//	type = SignalType
+//	('combine' combineFunction = [CombineFunction])?
 ;
 
-CombineFunction:
-	name=ID
+//CombineFunction:
+//	name=ID
 //	type=[expressions::ValueType]
-	type=SignalType
-;
+//	type=ValueType
+//;
 
 
-SignalType:
-	PrimitiveSignalType | CustomSignalType;
+//SignalType:
+//	PrimitiveSignalType | CustomSignalType;
   
-CustomSignalType:
-  'CUSTOM' customType = STRING;
+//CustomSignalType:
+//  'CUSTOM' customType = STRING;
 
-enum PrimitiveType:
-	Pure='PURE' | Int='INT' | Bool='BOOL' | Float='FLOAT';
+//enum PrimitiveType:
+//	Pure='PURE' | Int='INT' | Bool='BOOL' | Float='FLOAT';
 	
-PrimitiveSignalType:
-	primitiveType = PrimitiveType
-	;
+//PrimitiveSignalType:
+//	primitiveType = PrimitiveType
+//	;
   
-IntValue: 
-	value=INT;
-FloatValue:
-    value=Float; 
-BooleanValue:
-    value=Boolean;
+//IntValue: 
+//	value=IntValue;
+//FloatValue:
+//    value=Float; 
+//BooleanValue:
+//    value=Boolean;
     
-terminal Float: 
-	((INT"."INT | INT("."INT)?("e"|"E")("+")?INT))"f"? | INT"f";
-terminal Boolean: 
-	"true" | "false";
+//terminal Float: 
+//	((INT"."INT | INT("."INT)?("e"|"E")("+")?INT))"f"? | INT"f";
+//terminal Boolean: 
+//	"true" | "false";
 	
 
 //---------------------------------------------------------------------
@@ -118,7 +119,7 @@ Goto :
   ;
   
 Fork :
-	'FORK''('state=[State] ',' priority=IntValue (',' continuation=[State])?')'
+	'FORK''('state=[State] ',' priority=INT (',' continuation=[State])?')'
   ;
   
 Forke :
@@ -134,5 +135,5 @@ Await:
 ;
 
 Prio:
-	'PRIO''('priority=IntValue (',' continuation=[State])?')'
+	'PRIO''('priority=INT (',' continuation=[State])?')'
 ;

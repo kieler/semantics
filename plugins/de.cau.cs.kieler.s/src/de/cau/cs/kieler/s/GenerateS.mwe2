@@ -10,10 +10,17 @@ var projectName = "de.cau.cs.kieler.s"
 var runtimeProject = "../${projectName}"
 
 Workflow {
+    //bean = StandaloneSetup {
+	//	platformUri = "${runtimeProject}/.."
+	//}
+
     bean = StandaloneSetup {
 		platformUri = "${runtimeProject}/.."
+			registerGeneratedEPackage = "de.cau.cs.kieler.synccharts.text.interfaces.interfaces.InterfacesPackage"
+			registerGeneratedEPackage = "de.cau.cs.kieler.core.expressions.ExpressionsPackage"
+			registerGeneratedEPackage = "de.cau.cs.kieler.core.annotations.AnnotationsPackage" 
 	}
-	
+			
 	component = DirectoryCleaner {
 		directory = "${runtimeProject}/src-gen"
 	}
@@ -38,6 +45,7 @@ Workflow {
 			// generates Java API for the generated EPackages 
 			fragment = ecore.EcoreGeneratorFragment {
 			// referencedGenModels = "uri to genmodel, uri to next genmodel"
+				 //referencedGenModels = "http://kieler.cs.cau.de/synccharts/interfaces"
 			}
 			
 			// the serialization component
@@ -46,6 +54,13 @@ Workflow {
 			// a custom ResourceFactory for use with EMF 
 			fragment = resourceFactory.ResourceFactoryFragment {
 				fileExtensions = file.extensions
+			}
+			
+			// The antlr parser generator fragment.
+			fragment = parser.antlr.XtextAntlrGeneratorFragment {
+			  options = {
+					backtrack = true
+				}
 			}
 				
 			// the following fragment tries to use the Antlr Generator fragment which can be installed via update manager from http://download.itemis.com/updates/
