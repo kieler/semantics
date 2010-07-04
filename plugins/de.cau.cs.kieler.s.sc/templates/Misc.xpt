@@ -1,0 +1,42 @@
+«REM»
+	A misc template file.
+«ENDREM»
+
+«IMPORT s»
+
+
+«REM»
+	Definition of the signaltype including all signals of the SyncChart.
+	The list is a list of signals. 
+«ENDREM»
+«DEFINE generateSigType FOR List-»
+	«IF !this.isEmpty-»
+		typedef enum {
+			«FOREACH this AS signal SEPARATOR ", "-»
+				sig_«((Signal)signal).name-»
+			«ENDFOREACH-»
+		} signaltype;
+	«ENDIF-»
+«ENDDEFINE»
+
+«REM»
+	Definition of the signal array including all signals of the SyncChart.
+	The list is a list of signals. 
+«ENDREM»
+«DEFINE generateSigArray FOR List-»
+	const char *s2signame[] = {
+		«FOREACH this AS signal SEPARATOR ", "-»
+		"sig_«((Signal)signal).name-»"
+		«ENDFOREACH-»
+	};
+«ENDDEFINE»
+
+«REM»
+	Template for a function to set inputs. 
+«ENDREM»
+«DEFINE generateInputSignal FOR Signal-»
+	void «((Program)this.eContainer).name»_I_«this.name»(«IF type!="ValueType::PURE"»int val«ENDIF») {
+		signals = signals | (1 << sig_«this.name»);
+		«IF type!="ValueType::PURE"»valSigInt[sig_«this.name»]=val;«ENDIF»
+	}
+«ENDDEFINE»

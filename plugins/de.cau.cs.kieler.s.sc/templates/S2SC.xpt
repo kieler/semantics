@@ -1,6 +1,6 @@
 «IMPORT s»
 
-«EXTENSION templates::Extensions»
+«EXTENSION Extensions»
 «REM»
  EXTENSION templates::Extensions
 «ENDREM»
@@ -34,13 +34,17 @@
     #include "misc.h"
     #include "sc.h"
 
-	«EXPAND generateSigType FOR allSignals(this)-»
-	«EXPAND generateSigArray FOR allSignals(this)-»
+	«EXPAND Misc::generateSigType FOR allSignals(this)-»
+	«EXPAND Misc::generateSigArray FOR allSignals(this)-»
 
     #define _SC_valSigInt_SIZE «allSignals(this).size» // Highest signal id in use;
 
     int valSigInt[_SC_valSigInt_SIZE];
     int valSigIntPre[_SC_valSigInt_SIZE];
+
+    «FOREACH allSignals(this) AS signal -»
+		«EXPAND Misc::generateInputSignal FOR signal-»
+    «ENDFOREACH-»
 	
     #ifndef EXTERNTICK
     int tick(){
@@ -115,20 +119,3 @@
 «DEFINE expandedInstruction FOR Instruction»
 «ENDDEFINE»
 
-«DEFINE generateSigType FOR List-»
-	«IF !this.isEmpty-»
-		typedef enum {
-			«FOREACH this AS signal SEPARATOR ", "-»
-				sig_«((Signal)signal).name-»
-			«ENDFOREACH-»
-		} signaltype;
-	«ENDIF-»
-«ENDDEFINE»
-
-«DEFINE generateSigArray FOR List-»
-	const char *s2signame[] = {
-		«FOREACH this AS signal SEPARATOR ", "-»
-		"sig_«((Signal)signal).name-»"
-		«ENDFOREACH-»
-	};
-«ENDDEFINE»
