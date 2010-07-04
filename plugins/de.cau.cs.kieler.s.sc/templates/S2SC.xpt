@@ -1,25 +1,28 @@
 «IMPORT s»
 
-«EXTENSION Extensions»
-
+«EXTENSION templates::Extensions»
+«REM»
+ EXTENSION templates::Extensions
+«ENDREM»
 
 «DEFINE main FOR Program-»
 	«FILE name + ".c"-»
 
-		/*****************************************************************************/
-		/* Generated SC-code                                                         */
-		/*****************************************************************************/
-		/* KIELER - Kiel Integrated Environment for Layout Eclipse RichClient        */
-		/*                                                                           */
-		/* http://www.informatik.uni-kiel.de/rtsys/kieler/                           */
-		/*                                                                           */
-		/* Copyright 2009 by                                                         */
-		/* + Christian-Albrechts-University of Kiel                                  */
-		/*   + Department of Computer Science                                        */
-		/*     + Real-Time and Embedded Systems Group                                */
-		/*                                                                           */
-		/* This code is provided under the terms of the Eclipse Public License (EPL).*/
-		/*****************************************************************************/
+    /*****************************************************************************/
+    /* Generated SC-code                                                         */
+    /*****************************************************************************/
+    /* KIELER - Kiel Integrated Environment for Layout Eclipse RichClient        */
+    /*                                                                           */
+    /* http://www.informatik.uni-kiel.de/rtsys/kieler/                           */
+    /*                                                                           */
+    /* Copyright 2009 by                                                         */
+    /* + Christian-Albrechts-University of Kiel                                  */
+    /*   + Department of Computer Science                                        */
+    /*     + Real-Time and Embedded Systems Group                                */
+    /*                                                                           */
+    /* This code is provided under the terms of the Eclipse Public License (EPL).*/
+    /*****************************************************************************/
+    
 		«EXPAND init-»
 	
 	«ENDFILE»
@@ -28,19 +31,104 @@
 
 
 «DEFINE init FOR Program-»
-	#include "misc.h"
-	#include "sc.h"
+    #include "misc.h"
+    #include "sc.h"
 
-	int valSigInt[_SC_valSigInt_SIZE];
-	int valSigIntPre[_SC_valSigInt_SIZE];
-	«EXPAND CodegenMisc::generateInitialize FOR this-»
+	«EXPAND generateSigType FOR allSignals(this)-»
+	«EXPAND generateSigArray FOR allSignals(this)-»
 
-	«FOREACH allSignals(this.innerStates.first()) AS signal-»
-		«IF ((Signal)signal).isInput || !(((Signal)signal).isInput || ((Signal)signal).isOutput)-»
-			«EXPAND CodegenMisc::generateInputSignal FOR ((Signal)signal)»
-		«ENDIF-»
-	«ENDFOREACH-»
-	«EXPAND CodegenMisc::generateCallOutputs FOR allSignals(this.innerStates.first())»
-	int tick(){
-	TICKSTART(«EXPAND CodegenPriority::mainThreadPrio FOR this.innerStates.first()-»);
+    #define _SC_valSigInt_SIZE «allSignals(this).size» // Highest signal id in use;
+
+    int valSigInt[_SC_valSigInt_SIZE];
+    int valSigIntPre[_SC_valSigInt_SIZE];
+	
+    #ifndef EXTERNTICK
+    int tick(){
+       TICKSTART(«this.priority.value»);
+       
+       «EXPAND expandedStateList FOR this.states-»
+       
+    }
+    #endif
+«ENDDEFINE»
+
+
+«DEFINE expandedStateList FOR List[State]-»
+   «FOREACH this AS state -»
+       «EXPAND expandedState FOR state-»
+   «ENDFOREACH-»
+«ENDDEFINE»
+
+
+«DEFINE expandedState FOR State-»
+       «this.name»:
+       «EXPAND expandedInstructionList FOR this.instructions-»
+       
+«ENDDEFINE»
+
+
+«DEFINE expandedInstructionList FOR List[Instruction]-»
+   «FOREACH this AS instruction -»
+       «EXPAND expandedInstruction FOR instruction-»
+   «ENDFOREACH-»
+«ENDDEFINE»
+
+
+«DEFINE expandedInstruction FOR Pause-»
+         PAUSE;
+«ENDDEFINE»
+«DEFINE expandedInstruction FOR Term-»
+         TERM;
+«ENDDEFINE»
+«DEFINE expandedInstruction FOR Halt-»
+         HALT;
+«ENDDEFINE»
+«DEFINE expandedInstruction FOR Join-»
+         JOIN;
+«ENDDEFINE»
+«DEFINE expandedInstruction FOR Abort-»
+         ABORT;
+«ENDDEFINE»
+«DEFINE expandedInstruction FOR Present-»
+         if (PRESENT(«this.signal.name-»)) {
+            «EXPAND expandedInstructionList FOR this.instructions-»
+         }
+«ENDDEFINE»
+«DEFINE expandedInstruction FOR Goto-»
+         GOTO(«this.state.name»);
+«ENDDEFINE»
+«DEFINE expandedInstruction FOR Fork-»
+         FORK(«this.state.name»,«this.priority.value»);
+«ENDDEFINE»
+«DEFINE expandedInstruction FOR Forke-»
+         FORKE(«this.state.name»);
+«ENDDEFINE»
+«DEFINE expandedInstruction FOR Emit-»
+         EMIT(«this.signal.name»);
+«ENDDEFINE»
+«DEFINE expandedInstruction FOR Await-»
+         AWAIT(«this.signal.name»);
+«ENDDEFINE»
+«DEFINE expandedInstruction FOR Prio-»
+         PRIO(«this.priority.value»);
+«ENDDEFINE»
+«DEFINE expandedInstruction FOR Instruction»
+«ENDDEFINE»
+
+«DEFINE generateSigType FOR List-»
+	«IF !this.isEmpty-»
+		typedef enum {
+			«FOREACH this AS signal SEPARATOR ", "-»
+				sig_«((Signal)signal).name-»
+			«ENDFOREACH-»
+		} signaltype;
+	«ENDIF-»
+«ENDDEFINE»
+
+«DEFINE generateSigArray FOR List-»
+	const char *s2signame[] = {
+		«FOREACH this AS signal SEPARATOR ", "-»
+		"sig_«((Signal)signal).name-»"
+		«ENDFOREACH-»
+	};
 «ENDDEFINE»
