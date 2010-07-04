@@ -1,6 +1,6 @@
 «IMPORT s»
 
-«EXTENSION Extensions»
+«EXTENSION templates::Extensions»
 «REM»
  EXTENSION templates::Extensions
 «ENDREM»
