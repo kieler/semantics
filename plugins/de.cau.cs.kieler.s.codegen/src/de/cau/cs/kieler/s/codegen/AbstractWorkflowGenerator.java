@@ -29,6 +29,7 @@ import de.cau.cs.kieler.core.KielerException;
 import de.cau.cs.kieler.core.model.util.XpandTransformationUtil;
 import de.cau.cs.kieler.s.s.Program;
 import de.cau.cs.kieler.s.s.SPackage;
+import de.cau.cs.kieler.core.expressions.ExpressionsPackage;
 
 public abstract class AbstractWorkflowGenerator {
 
@@ -104,7 +105,7 @@ public abstract class AbstractWorkflowGenerator {
         try {
             XpandTransformationUtil.model2TextTransform(
                     getPathToMainTemplate(), getNameOfMainMethod(), uri,
-                    outPath, SPackage.eINSTANCE);
+                    outPath, SPackage.eINSTANCE, ExpressionsPackage.eINSTANCE);
             ResourcesPlugin.getWorkspace().getRoot().refreshLocal(
                     IResource.DEPTH_INFINITE, new NullProgressMonitor());
         } catch (KielerException e0) {
