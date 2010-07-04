@@ -20,7 +20,8 @@ Require-Bundle: org.eclipse.xtext,
  org.antlr.runtime,
  de.cau.cs.kieler.ksbase;bundle-version="0.2.0",
  de.cau.cs.kieler.core.expressions;bundle-version="0.1.0",
- de.cau.cs.kieler.core.annotations;bundle-version="0.1.0"
+ de.cau.cs.kieler.core.annotations;bundle-version="0.1.0",
+ de.cau.cs.kieler.synccharts.text;bundle-version="0.1.0"
 Import-Package: org.apache.log4j
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Export-Package: de.cau.cs.kieler.s,
