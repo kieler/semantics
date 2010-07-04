@@ -1,7 +1,12 @@
-grammar de.cau.cs.kieler.s.S with org.eclipse.xtext.common.Terminals
+grammar de.cau.cs.kieler.s.S 	with org.eclipse.xtext.common.Terminals
+//		 de.cau.cs.kieler.core.expressions.Expressions, 
+//		 de.cau.cs.kieler.core.annotations.Annotations
 
-//import 'http://kieler.cs.cau.de/expressions' as expressions
+
+//import 'http://kieler.cs.cau.de/expressions' as expressions --> wrong
 //import 'http://kieler.cs.cau.de/annotations' as annotations
+//import "platform:/resource/de.cau.cs.kieler.core.expressions/model/expressions.ecore" as expressions
+import "platform:/resource/de.cau.cs.kieler.core.annotations/model/annotations.ecore" as annotations
 
 generate s "http://www.cau.de/cs/kieler/s"
 
@@ -13,19 +18,18 @@ Program :
 	(states += State)+
 ;
 
-Annotation:
-	'@' key = ID ':'
-	value = STRING
-;
+//Annotation:
+//	'@' key = ID ':'
+//	value = STRING
+//;
 
 //TODO: Consolidate with Annotatable xtext grammar somehow... (s.a.)
-Annotatable:
-	State | Signal | Instruction;
+Annotatable returns annotations::Annotatable:
+ 	State | Signal | Instruction;
 
 
 State:
 	name = ID ':'
-	((annotations += Annotation) (',' annotations += Annotation)*)?
 	('SIGNALS' (signals+=Signal)* ';')? 
 	(instructions+=Instruction';')*
 ;
@@ -36,11 +40,11 @@ Signal:
 	name=ID ':' 
 	type = SignalType
 	('combine' combineFunction = [CombineFunction])?
-	((annotations += Annotation) (',' annotations += Annotation)*)?
 ;
 
 CombineFunction:
 	name=ID
+//	type=[expressions::ValueType]
 	type=SignalType
 ;
 
@@ -76,7 +80,6 @@ terminal Boolean:
 //---------------------------------------------------------------------
 Instruction:
    Halt | Abort | Join | Pause | Term | Present | Goto | Fork | Forke | Emit | Await | Prio
-   ((annotations += Annotation) (',' annotations += Annotation)*)?
    ;
 
 Pause :
