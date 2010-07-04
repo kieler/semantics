@@ -1,5 +1,6 @@
 grammar de.cau.cs.kieler.s.S with org.eclipse.xtext.common.Terminals
 
+//import 'http://kieler.cs.cau.de/expressions' as expressions
 //import 'http://kieler.cs.cau.de/annotations' as annotations
 
 generate s "http://www.cau.de/cs/kieler/s"
