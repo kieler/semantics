@@ -1,5 +1,5 @@
 ﻿/*
- * Copyright (c) 2006, 2010 Borland Software Corporation and others
+ * Copyright (c) 2006, 2009 Borland Software Corporation
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -16,52 +16,41 @@
 «EXTENSION xpt::diagram::editparts::Utils»
 «EXTENSION xpt::diagram::Utils»
 
-
 «DEFINE createNodeShape(node : gmfgen::GenNode) FOR gmfgen::FigureViewmap-»
 	«LET (if figureQualifiedClassName = null then 'org.eclipse.draw2d.RectangleFigure' else figureQualifiedClassName endif) AS fqn-»
 		«EXPAND xpt::Common::generatedMemberComment»
 		protected org.eclipse.draw2d.IFigure createNodeShape() {
-			primaryShape = new «fqn»()«IF node.childNodes->notEmpty() and node.getLayoutType() = gmfgen::ViewmapLayoutType::XY_LAYOUT»«EXPAND forceUseLocalCoordinates»«ENDIF»;
+			primaryShape = new «fqn»()«IF node.getLayoutType() = gmfgen::ViewmapLayoutType::XY_LAYOUT»{
+				protected boolean useLocalCoordinates() {
+					return true;
+				}
+			}«ENDIF»;
 			«REM» added conditional setting of adapter target «ENDREM»
 			if (primaryShape instanceof de.cau.cs.kieler.core.ui.figures.IAttributeAwareFigure) {
 				((de.cau.cs.kieler.core.ui.figures.IAttributeAwareFigure) primaryShape).listenTo(this.getNotationView().getElement());
 			}
-			«REM» END custom code «ENDREM»
-			return primaryShape; 
+			return primaryShape;
 		}
 
 		«EXPAND getPrimaryShapeMethod FOR fqn-»
 	«ENDLET-»
 «ENDDEFINE»
 
-«DEFINE createNodeShape(node : gmfgen::GenNode) FOR gmfgen::SnippetViewmap-»
-	«EXPAND xpt::Common::generatedMemberComment»
-	protected org.eclipse.draw2d.IFigure createNodeShape() {
-		return «body»;
-	}
-«ENDDEFINE»
-
 «DEFINE createNodeShape(node : gmfgen::GenNode) FOR gmfgen::InnerClassViewmap-»
 	«EXPAND xpt::Common::generatedMemberComment»
 	protected org.eclipse.draw2d.IFigure createNodeShape() {
-		primaryShape = new «className»()«IF node.childNodes->notEmpty() and node.getLayoutType() = gmfgen::ViewmapLayoutType::XY_LAYOUT»«EXPAND forceUseLocalCoordinates»«ENDIF»;
+		org.eclipse.draw2d.IFigure figure = new «className»();
 		«REM» added conditional setting of adapter target «ENDREM»
-		if (primaryShape instanceof de.cau.cs.kieler.core.ui.figures.IAttributeAwareFigure) {
-			((de.cau.cs.kieler.core.ui.figures.IAttributeAwareFigure) primaryShape).listenTo(this.getNotationView().getElement());
+		if (figure instanceof de.cau.cs.kieler.core.ui.figures.IAttributeAwareFigure) {
+			((de.cau.cs.kieler.core.ui.figures.IAttributeAwareFigure) figure).listenTo(this.getNotationView().getElement());
 		}
-		«REM» END custom code «ENDREM»
-		return primaryShape;
+		«IF node.childNodes->size() > 0 and node.getLayoutType() = gmfgen::ViewmapLayoutType::XY_LAYOUT-»
+ 		figure.setUseLocalCoordinates(true);
+		«ENDIF-»
+ 		return primaryShape = figure;
 	}
 
 	«EXPAND getPrimaryShapeMethod FOR className-»
-«ENDDEFINE»
-
-«DEFINE forceUseLocalCoordinates FOR OclAny-»
-{
-	protected boolean useLocalCoordinates() {
-		return true;
-	}
-}«-»
 «ENDDEFINE»
 
 «DEFINE getPrimaryShapeMethod FOR String-»
@@ -87,4 +76,3 @@
 	//FIXME: workaround for #154536
 	result.getBounds().setSize(result.getPreferredSize());
 «ENDDEFINE»
-

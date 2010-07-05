@@ -1,5 +1,5 @@
 ﻿/*
- * Copyright (c) 2006, 2009 Borland Software Corporation
+ * Copyright (c) 2006, 2010 Borland Software Corporation and others
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -14,8 +14,9 @@
 «IMPORT 'http://www.eclipse.org/gmf/2009/GenModel'»
 «EXTENSION xpt::diagram::ViewmapAttributesUtils»
 
-«REM»remove refreshFontColor for RegionID, otherwise the color set in gmfgraph will be
-     overidden by default color set in the preferences«ENDREM»
+
+«REM»haf: remove refreshFontColor for RegionID, otherwise the color set in gmfgraph will be
+     overidden by default color set in the preferences«ENDREM»	
 «DEFINE refreshVisuals(needsRefreshBounds : Boolean) FOR gmfgen::GenCommonBase-»
 	«EXPAND xpt::Common::generatedMemberComment»
 	protected void refreshVisuals() {
@@ -30,26 +31,11 @@
 		«ENDIF-»
 	}
 «ENDDEFINE»
-
+	
 «DEFINE getManager(diagram : gmfgen::GenDiagram) FOR gmfgen::GenCommonBase-»
 	«EXPAND xpt::Common::generatedMemberComment»
 	protected org.eclipse.gef.tools.DirectEditManager getManager() {
-	«IF editPartClassName = "TransitionTriggersAndEffectsEditPart"»
-		Object model = getModel();
-		if (model instanceof org.eclipse.gmf.runtime.notation.DecorationNode) {
-			org.eclipse.gmf.runtime.notation.DecorationNode node = (org.eclipse.gmf.runtime.notation.DecorationNode) model;
-			de.cau.cs.kieler.synccharts.custom.contentassist.example.SignalNameProvider.INSTANCE.init((de.cau.cs.kieler.synccharts.Transition) node.getElement());
-			}
-	«ENDIF»
 		if (manager == null) {
-	«IF editPartClassName = "TransitionTriggersAndEffectsEditPart"»
-			// creates a new ContentProposalProvider for ContentProposalAdapter
-			de.cau.cs.kieler.synccharts.custom.contentassist.example.SignalNameContentProposalProvider provider = new de.cau.cs.kieler.synccharts.custom.contentassist.example.SignalNameContentProposalProvider();
-			// instantiate the modified constructor in LabelDirectEditManager
-			setManager(new de.cau.cs.kieler.synccharts.custom.contentassist.part.LabelDirectEditManager(this, org.eclipse.gmf.runtime.diagram.ui.tools.TextDirectEditManager
-					.getTextCellEditorClass(this), «diagram.getEditPartFactoryQualifiedClassName()»
-					.getTextCellEditorLocator(this), provider));
-	«ELSE»
 			«REM» (haf)
 			Manually set class of editor here to wrapping type, because of Eclipse bug #286072
 			original code:
@@ -60,26 +46,11 @@
 			setManager(new org.eclipse.gmf.runtime.diagram.ui.tools.TextDirectEditManager(this,
 				org.eclipse.gmf.runtime.gef.ui.internal.parts.WrapTextCellEditor.class,
 				«diagram.getEditPartFactoryQualifiedClassName()».getTextCellEditorLocator(this)));
-	«ENDIF»
 		}
 		return manager;
 	}
 «ENDDEFINE»
+	
 
 
-«DEFINE performDirectEditAtPoint FOR gmfgen::GenCommonBase-»
-	«EXPAND xpt::Common::generatedMemberComment»
-	«IF editPartClassName = "TransitionTriggersAndEffectsEditPart"»
-		protected void performDirectEdit(org.eclipse.draw2d.geometry.Point eventLocation) {
-		if (getManager() instanceof org.eclipse.gmf.runtime.diagram.ui.tools.TextDirectEditManager) {
-			((org.eclipse.gmf.runtime.diagram.ui.tools.TextDirectEditManager) getManager()).show(eventLocation.getSWTPoint());
-		}
-	}
-	«ELSE»
-	protected void performDirectEdit(org.eclipse.draw2d.geometry.Point eventLocation) {
-		if (getManager().getClass() == org.eclipse.gmf.runtime.diagram.ui.tools.TextDirectEditManager.class) {
-			((org.eclipse.gmf.runtime.diagram.ui.tools.TextDirectEditManager) getManager()).show(eventLocation.getSWTPoint());
-		}
-	}
-	«ENDIF»
-«ENDDEFINE»
+	

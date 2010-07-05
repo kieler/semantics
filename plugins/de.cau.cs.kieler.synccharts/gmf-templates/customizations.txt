@@ -1,11 +1,11 @@
 = List of Template Customizations =
 
 || Helios || Change || Eclipse Bug || Kieler Bug || File ||
-|| || Compartment layout and title/line style || || || [source:trunk/plugins/de.cau.cs.kieler.synccharts/gmf-templates/aspects/impl/diagram/editparts/CompartmentEditPart.xpt CompartmentEditPart] ||
+|| x || ??? Compartment layout and title/line style || || || [source:trunk/plugins/de.cau.cs.kieler.synccharts/gmf-templates/aspects/impl/diagram/editparts/CompartmentEditPart.xpt CompartmentEditPart] ||
 || || Attribute Awareness, Splines || || || [source:trunk/plugins/de.cau.cs.kieler.synccharts/gmf-templates/aspects/impl/diagram/editparts/LinkEditPart.xpt LinkEditPart ||
-|| || WrappingLabels??? || || || [source:trunk/plugins/de.cau.cs.kieler.synccharts/gmf-templates/aspects/impl/diagram/editparts/LinkLabelEditPart.xpt LinkLabelEditPart ||
-|| || Attribute Awareness, Default Node Size|| || || [source:trunk/plugins/de.cau.cs.kieler.synccharts/gmf-templates/aspects/impl/diagram/editparts/NodeEditPart.xpt NodeEditPart ||
-|| || RegionID color, Line Wrapping || #286072 || || [source:trunk/plugins/de.cau.cs.kieler.synccharts/gmf-templates/aspects/impl/diagram/editparts/TextAware.xpt TextAware ||
+|| s || WrappingLabels??? || || || [source:trunk/plugins/de.cau.cs.kieler.synccharts/gmf-templates/aspects/impl/diagram/editparts/LinkLabelEditPart.xpt LinkLabelEditPart ||
+|| X || Attribute Awareness, Default Node Size|| || || [source:trunk/plugins/de.cau.cs.kieler.synccharts/gmf-templates/aspects/impl/diagram/editparts/NodeEditPart.xpt NodeEditPart ||
+|| X || RegionID color, Line Wrapping || #286072 || || [source:trunk/plugins/de.cau.cs.kieler.synccharts/gmf-templates/aspects/impl/diagram/editparts/TextAware.xpt TextAware ||
 || || Pref to disable Xtext serialize, Splines || || || [source:trunk/plugins/de.cau.cs.kieler.synccharts/gmf-templates/aspects/impl/preferences/StandardPage.xpt StandardPage ||
 || || added check for font disposed || || || [source:trunk/plugins/de.cau.cs.kieler.synccharts/gmf-templates/aspects/xpt/diagram/editparts/EditPartFactory.xpt EditPartFactory||
 || || Pref category to kieler || || || [source:trunk/plugins/de.cau.cs.kieler.synccharts/gmf-templates/aspects/xpt/diagram/preferences/extensions.xpt extensions ||
@@ -19,6 +19,8 @@
 || || Removed Semantic Hints || || #266 || [source:trunk/plugins/de.cau.cs.kieler.synccharts/gmf-templates/aspects/xpt/providers/extensions.xpt extensions ||
 
  * N = Not yet solved
+ * X = Applied to Helios templates
+ * s = solved in Helios
  
  Caused by: java.lang.NullPointerException
 	at de.cau.cs.kieler.core.ui.figures.layout.AbstractTableLayout.calculateLayoutSizes(AbstractTableLayout.java:174)
