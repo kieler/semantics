@@ -16,16 +16,45 @@ extension priorities;
 List[Instruction] getPresentInstruction(Transition transition):
 	let out = {}:
 	let present = new Present:
-	createPresent(present, transition) ->
+	createPresent(present, transition, transition.trigger) ->
 	out.add(present) ->
 	out
 ;
 
-Void createPresent(Present present, Transition transition):
+//TODO: other Expressions!
+
+Void createPresent(Present present, Transition transition, SignalReference signalReference):
  	//TODO: for complex expression this code needs to be changed...
-	let trigger = ((SignalReference)transition.trigger).signal:
+ 	//Couldn't find property 'signal' for type expressions::OperatorExpression
+ 	
+	let triggerSignal = ((SignalReference)transition.trigger).signal:
+	let signalReference = new SignalReference :
 	let targetState = transition.targetState:
-		present.setSignal((s::Signal) (trigger.getSingleTraceTarget("S")))->
+		signalReference.setSignal((Signal)triggerSignal.getSingleTraceTarget("S")) ->
+		//present.setSignal((s::Signal) (trigger.getSingleTraceTarget("S")))-> // OLD
+		info(">>> signalReference.signal.name: " + signalReference.signal.name) ->
+		present.setExpression(signalReference) ->  // NEW
 		present.instructions.addAll(getReducedPrio(transition)) ->
 		present.instructions.addAll(getGotoInstruction(transition.targetState))
+;
+
+
+Void createPresent(Present present, Transition transition, OperatorExpression operatorExpression):
+ 	//TODO: for complex expression this code needs to be changed...
+ 	//Couldn't find property 'signal' for type expressions::OperatorExpression
+ 	
+	//let trigger = ((SignalReference)transition.trigger).signal:
+	let targetState = transition.targetState:
+		//present.setSignal((s::Signal) (trigger.getSingleTraceTarget("S")))-> // OLD
+		info(">>> operatorExpression: " + operatorExpression.subExpressions.flatten().toString()) ->
+		present.setExpression(operatorExpression) ->  // NEW
+		present.instructions.addAll(getReducedPrio(transition)) ->
+		present.instructions.addAll(getGotoInstruction(transition.targetState))
+;
+
+
+Void createPresent(Present present, Transition transition, Expression expression):
+ //should not happen (else)
+ info("!!!!!!!!!!!!! SHOULD NOT HAPPEN !!!!!!!!!!!!!!!!") ->
+ info(expression.metaType.name)
 ;

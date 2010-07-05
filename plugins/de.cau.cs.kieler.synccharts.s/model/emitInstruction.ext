@@ -10,11 +10,18 @@ extension org::eclipse::xtend::util::stdlib::issues;      // pass messages back 
 
 List[Emit] getEmitInstructions(Transition transition):
 	let out = {}:
-		out.addAll(transition.effects.transform()) ->
+		out.addAll(transition.effects.select(e|e.metaType == Emission).transform()) ->
 		out
 ;
 
+create s::Emit this transform(Emission emission):
+	//this.setSignal((s::Signal) ((Emission)effect).signal.getSingleTraceTarget("S")) OLD
+	this.setSignal(emission.signal)
+;
+
+//TODO: Assignment assignment and TextEffect textEffect
+
 create s::Emit this transform(Effect effect):
-	// TODO: complex too
-	this.setSignal((s::Signal) ((Emission)effect).signal.getSingleTraceTarget("S"))
+  //should not happen
+  null
 ;

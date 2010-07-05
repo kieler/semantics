@@ -52,10 +52,10 @@ synccharts::State getInitialState(synccharts::Region region):
 ;
 
 // converts an int into an IntValue
-s::IntValue setIntValue(int vaule):
-	let intValue = new s::IntValue:
-		intValue.setValue(vaule)
-;
+//s::IntValue setIntValue(int vaule):
+//	let intValue = new s::IntValue:
+//		/intValue.setValue(vaule)
+//;
 
 // returns true if the transition is a strong abort
 boolean isStrongAbort(Transition transition):

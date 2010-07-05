@@ -28,8 +28,8 @@ List[Instruction] getForkInstructions(synccharts::State state):
 ;
 
 create s::Fork this transform(Region region):
-	let intValue = new s::IntValue:
+//	let intValue = new s::IntValue:
 	this.setState((s::State)getInitialState(region).getSingleTraceTarget("S")) ->
-	intValue.setValue(getRealThreadPriority(getInitialState(region))) ->
-	this.setPriority(intValue)
+//	intValue.setValue(getRealThreadPriority(getInitialState(region))) ->
+	this.setPriority(getRealThreadPriority(getInitialState(region)))
 ;

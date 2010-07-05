@@ -20,9 +20,9 @@ List[Instruction] getWeakStatePrio(synccharts::State state):
 			state.outgoingTransitions.exists(t|t.type == TransitionType::STRONGABORT)
 		then (
 			let prio = new Prio:
-			let value = new s::IntValue:
-				value.setValue(getWeakThreadPriority(state)) ->
-				prio.setPriority(value) ->
+//			let value = new s::IntValue:
+//				value.setValue(getWeakThreadPriority(state)) ->
+				prio.setPriority(getWeakThreadPriority(state)) ->
 				out.add(prio) 
 		) else (
 			null
@@ -39,9 +39,9 @@ List[Instruction] getRealStatePrio(synccharts::State state):
 			state.outgoingTransitions.exists(t|t.type != TransitionType::NORMALTERMINATION)
 		then (
 			let prio = new Prio:
-			let value = new s::IntValue:
-				value.setValue(getRealThreadPriority(state)) ->
-				prio.setPriority(value) ->
+//			let value = new s::IntValue:
+//				value.setValue(getRealThreadPriority(state)) ->
+				prio.setPriority(getRealThreadPriority(state)) ->
 				out.add(prio) 
 		) else (
 			null
@@ -53,9 +53,9 @@ List[Instruction] getRealStatePrio(synccharts::State state):
 List[Instruction] getSmallestStatePrio(synccharts::Transition transition):
 	let out = {}:
 	let prio = new Prio:
-	let value = new s::IntValue:
-		value.setValue(getSmallestThreadPriority(transition.sourceState)) ->
-		prio.setPriority(value) ->
+//	let value = new s::IntValue:
+//		value.setValue(getSmallestThreadPriority(transition.sourceState)) ->
+		prio.setPriority(getSmallestThreadPriority(transition.sourceState)) ->
 		out.add(prio) ->
 		out
 ;
@@ -64,11 +64,11 @@ List[Instruction] getSmallestStatePrio(synccharts::Transition transition):
 List[Instruction] getReducedPrio(synccharts::Transition transition):
 	let out = {}:
 	let prio = new Prio:
-	let value = new s::IntValue:
+//	let value = new s::IntValue:
 		(
 			if hasDependentState(transition) then (
-				value.setValue(getRealThreadPriority(transition.targetState)) ->
-				prio.setPriority(value) ->
+//				value.setValue(getRealThreadPriority(transition.targetState)) ->
+				prio.setPriority(getRealThreadPriority(transition.targetState)) ->
 				out.add(prio)
 			) else (
 				null

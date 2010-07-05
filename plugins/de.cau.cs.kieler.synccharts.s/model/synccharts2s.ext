@@ -47,7 +47,7 @@ create s::Program this transform(synccharts::Region root):
 	computeThreadPriorities(root.innerStates.first()) ->
 	
 	this.setName(root.innerStates.first().id) ->
-	this.setPriority(setIntValue(getMainTreadPriority(root.innerStates.first()))) ->
+	this.setPriority(getMainTreadPriority(root.innerStates.first())) ->
 
     //several forks for more then one top level region (otherwise no fork is required)
     //and construct list of s-states	
@@ -88,7 +88,7 @@ cached List computeThreadPriorities(synccharts::State rootState):
 
 
 // builds a state for s
-s::State buildState(String name, List[s::Signal] signals, List[s::Instruction] instructions):
+s::State buildState(String name, List[expressions::Signal] signals, List[s::Instruction] instructions):
 	let state = new s::State:
 		state.setName(name) ->
 		state.setSignals(signals) ->
@@ -239,15 +239,35 @@ create s::State this transformMainIntern(synccharts::State state):
 
 
 // Transforms a SyncCharts signal into a s Signal 
-create s::Signal this transform(expressions::Signal signal):
-	let sigType = new PrimitiveSignalType:
-	createTrace(this,signal,"SyncCharts","S") ->
+//create s::Signal this transform(expressions::Signal signal):
+//	let sigType = new PrimitiveSignalType:
+//	createTrace(this,signal,"SyncCharts","S") ->
 	// TODO: auch für complex
-		sigType.setPrimitiveType(PrimitiveType::Pure) ->
-		this.setName(signal.name) ->
-		this.setType(sigType)
+//		sigType.setPrimitiveType(PrimitiveType::Pure) ->
+//		this.setName(signal.name) ->
+//		this.setType(sigType)
+//;
+
+// Transforms a SyncCharts signal into a s Signal 
+create expressions::Signal this transform(expressions::Signal signal):
+	createTrace(this,signal,"SyncCharts","S") ->
+	this.setCombineOperator(signal.combineOperator) ->
+	this.setName(signal.name) ->
+	this.setHostCombineOperator(signal.hostCombineOperator) ->
+	this.setHostType(signal.hostType) ->
+	this.setInitialValue(signal.initialValue) ->
+	this.setIsInput(signal.isInput) ->
+	this.setIsOutput(signal.isOutput) ->
+	this.setType(signal.type) ->
+	this.setValue(signal.value)
 ;
 
-List[s::Signal] getStateSignals(synccharts::State state):
+//the following is wrong, we cannot take the same signal-ref because this
+//doesnt fit
+//expressions::Signal transform(expressions::Signal signal):
+// signal
+//;
+
+List[expressions::Signal] getStateSignals(synccharts::State state):
 	state.signals.transform()
 ;
