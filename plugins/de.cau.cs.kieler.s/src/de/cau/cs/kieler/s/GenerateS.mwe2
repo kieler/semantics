@@ -16,7 +16,7 @@ Workflow {
 
     bean = StandaloneSetup {
 		platformUri = "${runtimeProject}/.."
-			registerGeneratedEPackage = "de.cau.cs.kieler.synccharts.text.interfaces.interfaces.InterfacesPackage"
+//			registerGeneratedEPackage = "de.cau.cs.kieler.synccharts.text.interfaces.interfaces.InterfacesPackage"
 			registerGeneratedEPackage = "de.cau.cs.kieler.core.expressions.ExpressionsPackage"
 			registerGeneratedEPackage = "de.cau.cs.kieler.core.annotations.AnnotationsPackage" 
 	}
@@ -44,8 +44,8 @@ Workflow {
 			
 			// generates Java API for the generated EPackages 
 			fragment = ecore.EcoreGeneratorFragment {
-			// referencedGenModels = "uri to genmodel, uri to next genmodel"
-				 //referencedGenModels = "http://kieler.cs.cau.de/synccharts/interfaces"
+//			   referencedGenModels = "platform:/resource/de.cau.cs.kieler.core.annotations/model/annotations.genmodel, platform:/resource/de.cau.cs.kieler.core.expressions/model/expressions.genmodel"
+			   referencedGenModels = "platform:/resource/de.cau.cs.kieler.core.expressions/model/expressions.genmodel"
 			}
 			
 			// the serialization component
@@ -60,11 +60,10 @@ Workflow {
 			fragment = parser.antlr.XtextAntlrGeneratorFragment {
 			  options = {
 					backtrack = true
+					memoize = false
 				}
 			}
 				
-			// the following fragment tries to use the Antlr Generator fragment which can be installed via update manager from http://download.itemis.com/updates/
-			fragment = AntlrDelegatingFragment {}
 			
 			// java-based API for validation 
 			fragment = validation.JavaValidatorFragment {
@@ -95,15 +94,18 @@ Workflow {
 			fragment = outline.QuickOutlineFragment {}
 
 			// java-based API for content assistance 
-			fragment = contentAssist.JavaBasedContentAssistFragment {}
-			
-			// the following fragment tries to use the Antlr based content assist 
-			//     fragment which can be downloaded from http://www.itemis.com 
-			//     and will be ignored if it's not available. 
-			fragment = DelegatingGeneratorFragment { 
-				delegate = "de.itemis.xtext.antlr.XtextAntlrUiGeneratorFragment"
-				message="You are generating without ANTLR."//" It is highly recommended to download and use the plugin \'de.itemis.xtext.antlr\' \n\t using the update site http:\//download.itemis.com/updates/."
+			fragment = contentAssist.JavaBasedContentAssistFragment {
 			}
+						
+			
+//			// the following fragment tries to use the Antlr based content assist 
+//			//     fragment which can be downloaded from http://www.itemis.com 
+//			//     and will be ignored if it's not available. 
+//			fragment = DelegatingGeneratorFragment { 
+//				delegate = "de.itemis.xtext.antlr.XtextAntlrUiGeneratorFragment"
+//				message="You are generating without ANTLR."//" It is highly recommended to download and use the plugin \'de.itemis.xtext.antlr\' \n\t using the update site http:\//download.itemis.com/updates/."
+//				
+//			}
 
 			fragment = builder.BuilderIntegrationFragment {}
 
@@ -114,6 +116,16 @@ Workflow {
 				modelFileExtension = file.extensions
 			}
 			*/
+			
+			// generates a more lightweight Antlr parser and lexer tailored for content assist  
+			fragment = parser.antlr.XtextAntlrUiGeneratorFragment {
+			options = {
+					backtrack = true
+					memoize = false
+				}
+			
+			}
+			
 			
 			// quickfix API 
 			fragment = quickfix.QuickfixProviderFragment {}			
