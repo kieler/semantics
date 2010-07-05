@@ -1,13 +1,14 @@
-grammar de.cau.cs.kieler.s.S 	with org.eclipse.xtext.common.Terminals
+//grammar de.cau.cs.kieler.s.S with org.eclipse.xtext.common.Terminals
 //		 de.cau.cs.kieler.core.expressions.Expressions, 
 //		 de.cau.cs.kieler.core.annotations.Annotations
-
+grammar de.cau.cs.kieler.s.S with de.cau.cs.kieler.core.expressions.Expressions
+//grammar de.cau.cs.kieler.s.S with de.cau.cs.kieler.synccharts.text.actions.Actions
 //grammar de.cau.cs.kieler.s.S with de.cau.cs.kieler.synccharts.text.interfaces.Interfaces
 
 //import 'http://kieler.cs.cau.de/expressions' as expressions --> wrong
 //import 'http://kieler.cs.cau.de/annotations' as annotations
 
-//import "platform:/resource/de.cau.cs.kieler.core.expressions/model/expressions.ecore" as expressions
+import "platform:/resource/de.cau.cs.kieler.core.expressions/model/expressions.ecore" as expressions
 //import "platform:/resource/de.cau.cs.kieler.core.annotations/model/annotations.ecore" as annotations
 
 generate s "http://www.cau.de/cs/kieler/s"
@@ -37,8 +38,9 @@ State:
 ;
 
 
-Signal:
+Signal : //  returns expressions::Signal
 	name=ID ':' 
+	
 //	type = SignalType
 //	('combine' combineFunction = [CombineFunction])?
 ;
@@ -109,7 +111,7 @@ Abort :
   ;
   
 Present : 
-	'PRESENT''('signal = [Signal] (',' continuation=[State])?')' '{'
+	'PRESENT''('signal = BooleanExpression (',' continuation=[State])?')' '{'
 		(instructions += Instruction';')*
 	'}'
   ;
