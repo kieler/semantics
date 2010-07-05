@@ -245,27 +245,128 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 	public class SignalElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Signal");
 		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Assignment cNameAssignment_0 = (Assignment)cGroup.eContents().get(0);
-		private final RuleCall cNameIDTerminalRuleCall_0_0 = (RuleCall)cNameAssignment_0.eContents().get(0);
-		private final Keyword cColonKeyword_1 = (Keyword)cGroup.eContents().get(1);
+		private final Assignment cIsInputAssignment_0 = (Assignment)cGroup.eContents().get(0);
+		private final Keyword cIsInputInputKeyword_0_0 = (Keyword)cIsInputAssignment_0.eContents().get(0);
+		private final Assignment cIsOutputAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final Keyword cIsOutputOutputKeyword_1_0 = (Keyword)cIsOutputAssignment_1.eContents().get(0);
+		private final Keyword cSignalKeyword_2 = (Keyword)cGroup.eContents().get(2);
+		private final Assignment cNameAssignment_3 = (Assignment)cGroup.eContents().get(3);
+		private final RuleCall cNameEStringParserRuleCall_3_0 = (RuleCall)cNameAssignment_3.eContents().get(0);
+		private final Group cGroup_4 = (Group)cGroup.eContents().get(4);
+		private final Keyword cColonEqualsSignKeyword_4_0 = (Keyword)cGroup_4.eContents().get(0);
+		private final Assignment cInitialValueAssignment_4_1 = (Assignment)cGroup_4.eContents().get(1);
+		private final RuleCall cInitialValueEStringParserRuleCall_4_1_0 = (RuleCall)cInitialValueAssignment_4_1.eContents().get(0);
+		private final Alternatives cAlternatives_5 = (Alternatives)cGroup.eContents().get(5);
+		private final Group cGroup_5_0 = (Group)cAlternatives_5.eContents().get(0);
+		private final Keyword cColonKeyword_5_0_0 = (Keyword)cGroup_5_0.eContents().get(0);
+		private final Assignment cTypeAssignment_5_0_1 = (Assignment)cGroup_5_0.eContents().get(1);
+		private final RuleCall cTypeValueTypeEnumRuleCall_5_0_1_0 = (RuleCall)cTypeAssignment_5_0_1.eContents().get(0);
+		private final Group cGroup_5_1 = (Group)cAlternatives_5.eContents().get(1);
+		private final Keyword cColonKeyword_5_1_0 = (Keyword)cGroup_5_1.eContents().get(0);
+		private final Keyword cCombineKeyword_5_1_1 = (Keyword)cGroup_5_1.eContents().get(1);
+		private final Assignment cTypeAssignment_5_1_2 = (Assignment)cGroup_5_1.eContents().get(2);
+		private final RuleCall cTypeValueTypeEnumRuleCall_5_1_2_0 = (RuleCall)cTypeAssignment_5_1_2.eContents().get(0);
+		private final Keyword cWithKeyword_5_1_3 = (Keyword)cGroup_5_1.eContents().get(3);
+		private final Alternatives cAlternatives_5_1_4 = (Alternatives)cGroup_5_1.eContents().get(4);
+		private final Assignment cCombineOperatorAssignment_5_1_4_0 = (Assignment)cAlternatives_5_1_4.eContents().get(0);
+		private final RuleCall cCombineOperatorCombineOperatorEnumRuleCall_5_1_4_0_0 = (RuleCall)cCombineOperatorAssignment_5_1_4_0.eContents().get(0);
+		private final Assignment cHostCombineOperatorAssignment_5_1_4_1 = (Assignment)cAlternatives_5_1_4.eContents().get(1);
+		private final RuleCall cHostCombineOperatorEStringParserRuleCall_5_1_4_1_0 = (RuleCall)cHostCombineOperatorAssignment_5_1_4_1.eContents().get(0);
+		private final Keyword cSemicolonKeyword_6 = (Keyword)cGroup.eContents().get(6);
 		
-		////	type = SignalType
-		////	('combine' combineFunction = [CombineFunction])?
 		//Signal returns expressions::Signal:
-		//	name=ID ":";
+		//	isInput?="input"? isOutput?="output"? "signal" name=EString (":=" initialValue=EString)? (":" type=ValueType | ":"
+		//	"combine" type=ValueType "with" (combineOperator=CombineOperator | hostCombineOperator=EString))? ";";
 		public ParserRule getRule() { return rule; }
 
-		//name=ID ":"
+		//isInput?="input"? isOutput?="output"? "signal" name=EString (":=" initialValue=EString)? (":" type=ValueType | ":"
+		//"combine" type=ValueType "with" (combineOperator=CombineOperator | hostCombineOperator=EString))? ";"
 		public Group getGroup() { return cGroup; }
 
-		//name=ID
-		public Assignment getNameAssignment_0() { return cNameAssignment_0; }
+		//isInput?="input"?
+		public Assignment getIsInputAssignment_0() { return cIsInputAssignment_0; }
 
-		//ID
-		public RuleCall getNameIDTerminalRuleCall_0_0() { return cNameIDTerminalRuleCall_0_0; }
+		//"input"
+		public Keyword getIsInputInputKeyword_0_0() { return cIsInputInputKeyword_0_0; }
+
+		//isOutput?="output"?
+		public Assignment getIsOutputAssignment_1() { return cIsOutputAssignment_1; }
+
+		//"output"
+		public Keyword getIsOutputOutputKeyword_1_0() { return cIsOutputOutputKeyword_1_0; }
+
+		//"signal"
+		public Keyword getSignalKeyword_2() { return cSignalKeyword_2; }
+
+		//name=EString
+		public Assignment getNameAssignment_3() { return cNameAssignment_3; }
+
+		//EString
+		public RuleCall getNameEStringParserRuleCall_3_0() { return cNameEStringParserRuleCall_3_0; }
+
+		//(":=" initialValue=EString)?
+		public Group getGroup_4() { return cGroup_4; }
+
+		//":="
+		public Keyword getColonEqualsSignKeyword_4_0() { return cColonEqualsSignKeyword_4_0; }
+
+		//initialValue=EString
+		public Assignment getInitialValueAssignment_4_1() { return cInitialValueAssignment_4_1; }
+
+		//EString
+		public RuleCall getInitialValueEStringParserRuleCall_4_1_0() { return cInitialValueEStringParserRuleCall_4_1_0; }
+
+		//(":" type=ValueType | ":" "combine" type=ValueType "with" (combineOperator=CombineOperator |
+		//hostCombineOperator=EString))?
+		public Alternatives getAlternatives_5() { return cAlternatives_5; }
+
+		//":" type=ValueType
+		public Group getGroup_5_0() { return cGroup_5_0; }
 
 		//":"
-		public Keyword getColonKeyword_1() { return cColonKeyword_1; }
+		public Keyword getColonKeyword_5_0_0() { return cColonKeyword_5_0_0; }
+
+		//type=ValueType
+		public Assignment getTypeAssignment_5_0_1() { return cTypeAssignment_5_0_1; }
+
+		//ValueType
+		public RuleCall getTypeValueTypeEnumRuleCall_5_0_1_0() { return cTypeValueTypeEnumRuleCall_5_0_1_0; }
+
+		//":" "combine" type=ValueType "with" (combineOperator=CombineOperator | hostCombineOperator=EString)
+		public Group getGroup_5_1() { return cGroup_5_1; }
+
+		//":"
+		public Keyword getColonKeyword_5_1_0() { return cColonKeyword_5_1_0; }
+
+		//"combine"
+		public Keyword getCombineKeyword_5_1_1() { return cCombineKeyword_5_1_1; }
+
+		//type=ValueType
+		public Assignment getTypeAssignment_5_1_2() { return cTypeAssignment_5_1_2; }
+
+		//ValueType
+		public RuleCall getTypeValueTypeEnumRuleCall_5_1_2_0() { return cTypeValueTypeEnumRuleCall_5_1_2_0; }
+
+		//"with"
+		public Keyword getWithKeyword_5_1_3() { return cWithKeyword_5_1_3; }
+
+		//combineOperator=CombineOperator | hostCombineOperator=EString
+		public Alternatives getAlternatives_5_1_4() { return cAlternatives_5_1_4; }
+
+		//combineOperator=CombineOperator
+		public Assignment getCombineOperatorAssignment_5_1_4_0() { return cCombineOperatorAssignment_5_1_4_0; }
+
+		//CombineOperator
+		public RuleCall getCombineOperatorCombineOperatorEnumRuleCall_5_1_4_0_0() { return cCombineOperatorCombineOperatorEnumRuleCall_5_1_4_0_0; }
+
+		//hostCombineOperator=EString
+		public Assignment getHostCombineOperatorAssignment_5_1_4_1() { return cHostCombineOperatorAssignment_5_1_4_1; }
+
+		//EString
+		public RuleCall getHostCombineOperatorEStringParserRuleCall_5_1_4_1_0() { return cHostCombineOperatorEStringParserRuleCall_5_1_4_1_0; }
+
+		//";"
+		public Keyword getSemicolonKeyword_6() { return cSemicolonKeyword_6; }
 	}
 
 	public class InstructionElements extends AbstractParserRuleElementFinder {
@@ -284,6 +385,11 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cAwaitParserRuleCall_10 = (RuleCall)cAlternatives.eContents().get(10);
 		private final RuleCall cPrioParserRuleCall_11 = (RuleCall)cAlternatives.eContents().get(11);
 		
+		////Signal returns expressions::Signal :
+		////	name=ID ':' 
+		////	type = SignalType
+		////	('combine' combineFunction = [CombineFunction])?
+		////;
 		////CombineFunction:
 		////	name=ID
 		////	type=[expressions::ValueType]
@@ -1042,10 +1148,9 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 		return getStateAccess().getRule();
 	}
 
-	////	type = SignalType
-	////	('combine' combineFunction = [CombineFunction])?
 	//Signal returns expressions::Signal:
-	//	name=ID ":";
+	//	isInput?="input"? isOutput?="output"? "signal" name=EString (":=" initialValue=EString)? (":" type=ValueType | ":"
+	//	"combine" type=ValueType "with" (combineOperator=CombineOperator | hostCombineOperator=EString))? ";";
 	public SignalElements getSignalAccess() {
 		return (pSignal != null) ? pSignal : (pSignal = new SignalElements());
 	}
@@ -1054,6 +1159,11 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 		return getSignalAccess().getRule();
 	}
 
+	////Signal returns expressions::Signal :
+	////	name=ID ':' 
+	////	type = SignalType
+	////	('combine' combineFunction = [CombineFunction])?
+	////;
 	////CombineFunction:
 	////	name=ID
 	////	type=[expressions::ValueType]

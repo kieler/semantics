@@ -38,11 +38,22 @@ State:
 ;
 
 
-Signal returns expressions::Signal :
-	name=ID ':' 
+Signal returns expressions::Signal:
+(isInput?='input')?
+	(isOutput?='output')?
+	'signal'
+	(name=EString)
+	(':=' initialValue=EString)?
+    ((':' type=ValueType)
+      |
+     (':' 'combine' type=ValueType 'with' (combineOperator=CombineOperator|hostCombineOperator=EString) )
+    )? ";";
+    
+//Signal returns expressions::Signal :
+//	name=ID ':' 
 //	type = SignalType
 //	('combine' combineFunction = [CombineFunction])?
-;
+//;
 
 //CombineFunction:
 //	name=ID
