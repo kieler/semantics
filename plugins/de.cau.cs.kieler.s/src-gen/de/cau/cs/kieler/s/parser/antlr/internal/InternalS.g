@@ -1064,9 +1064,9 @@ rulePresent returns [EObject current=null]
 (
 (
 		{ 
-	        currentNode=createCompositeNode(grammarAccess.getPresentAccess().getSignalBooleanExpressionParserRuleCall_2_0(), currentNode); 
+	        currentNode=createCompositeNode(grammarAccess.getPresentAccess().getExpressionExpressionParserRuleCall_2_0(), currentNode); 
 	    }
-		lv_signal_2_0=ruleBooleanExpression		{
+		lv_expression_2_0=ruleExpression		{
 	        if ($current==null) {
 	            $current = factory.create(grammarAccess.getPresentRule().getType().getClassifier());
 	            associateNodeWithAstElement(currentNode.getParent(), $current);
@@ -1074,9 +1074,9 @@ rulePresent returns [EObject current=null]
 	        try {
 	       		set(
 	       			$current, 
-	       			"signal",
-	        		lv_signal_2_0, 
-	        		"BooleanExpression", 
+	       			"expression",
+	        		lv_expression_2_0, 
+	        		"Expression", 
 	        		currentNode);
 	        } catch (ValueConverterException vce) {
 				handleValueConverterException(vce);
@@ -1623,6 +1623,39 @@ rulePrio returns [EObject current=null]
 ;
 
 
+
+
+
+// Entry rule entryRuleExpression
+entryRuleExpression returns [EObject current=null] 
+	:
+	{ currentNode = createCompositeNode(grammarAccess.getExpressionRule(), currentNode); }
+	 iv_ruleExpression=ruleExpression 
+	 { $current=$iv_ruleExpression.current; } 
+	 EOF 
+;
+
+// Rule Expression
+ruleExpression returns [EObject current=null] 
+    @init { EObject temp=null; setCurrentLookahead(); resetLookahead(); 
+    }
+    @after { resetLookahead(); 
+    	lastConsumedNode = currentNode;
+    }:
+
+	{ 
+	  /* */ 
+	}
+    { 
+        currentNode=createCompositeNode(grammarAccess.getExpressionAccess().getBooleanExpressionParserRuleCall(), currentNode); 
+    }
+    this_BooleanExpression_0=ruleBooleanExpression
+    { 
+        $current = $this_BooleanExpression_0.current; 
+        currentNode = currentNode.getParent();
+    }
+
+;
 
 
 

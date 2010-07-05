@@ -45,15 +45,6 @@ public interface SFactory extends EFactory
   State createState();
 
   /**
-   * Returns a new object of class '<em>Signal</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Signal</em>'.
-   * @generated
-   */
-  Signal createSignal();
-
-  /**
    * Returns a new object of class '<em>Instruction</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->

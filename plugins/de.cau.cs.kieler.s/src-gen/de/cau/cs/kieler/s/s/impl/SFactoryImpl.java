@@ -70,7 +70,6 @@ public class SFactoryImpl extends EFactoryImpl implements SFactory
     {
       case SPackage.PROGRAM: return createProgram();
       case SPackage.STATE: return createState();
-      case SPackage.SIGNAL: return createSignal();
       case SPackage.INSTRUCTION: return createInstruction();
       case SPackage.PAUSE: return createPause();
       case SPackage.TERM: return createTerm();
@@ -109,17 +108,6 @@ public class SFactoryImpl extends EFactoryImpl implements SFactory
   {
     StateImpl state = new StateImpl();
     return state;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public Signal createSignal()
-  {
-    SignalImpl signal = new SignalImpl();
-    return signal;
   }
 
   /**

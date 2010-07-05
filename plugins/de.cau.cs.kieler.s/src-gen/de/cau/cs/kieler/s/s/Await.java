@@ -6,6 +6,7 @@
  */
 package de.cau.cs.kieler.s.s;
 
+import de.cau.cs.kieler.core.expressions.Signal;
 
 /**
  * <!-- begin-user-doc -->

@@ -162,34 +162,6 @@ public interface SPackage extends EPackage
   int STATE_FEATURE_COUNT = 3;
 
   /**
-   * The meta object id for the '{@link de.cau.cs.kieler.s.s.impl.SignalImpl <em>Signal</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see de.cau.cs.kieler.s.s.impl.SignalImpl
-   * @see de.cau.cs.kieler.s.s.impl.SPackageImpl#getSignal()
-   * @generated
-   */
-  int SIGNAL = 2;
-
-  /**
-   * The feature id for the '<em><b>Name</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int SIGNAL__NAME = 0;
-
-  /**
-   * The number of structural features of the '<em>Signal</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int SIGNAL_FEATURE_COUNT = 1;
-
-  /**
    * The meta object id for the '{@link de.cau.cs.kieler.s.s.impl.InstructionImpl <em>Instruction</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -197,7 +169,7 @@ public interface SPackage extends EPackage
    * @see de.cau.cs.kieler.s.s.impl.SPackageImpl#getInstruction()
    * @generated
    */
-  int INSTRUCTION = 3;
+  int INSTRUCTION = 2;
 
   /**
    * The feature id for the '<em><b>Continuation</b></em>' reference.
@@ -225,7 +197,7 @@ public interface SPackage extends EPackage
    * @see de.cau.cs.kieler.s.s.impl.SPackageImpl#getPause()
    * @generated
    */
-  int PAUSE = 4;
+  int PAUSE = 3;
 
   /**
    * The feature id for the '<em><b>Continuation</b></em>' reference.
@@ -253,7 +225,7 @@ public interface SPackage extends EPackage
    * @see de.cau.cs.kieler.s.s.impl.SPackageImpl#getTerm()
    * @generated
    */
-  int TERM = 5;
+  int TERM = 4;
 
   /**
    * The feature id for the '<em><b>Continuation</b></em>' reference.
@@ -281,7 +253,7 @@ public interface SPackage extends EPackage
    * @see de.cau.cs.kieler.s.s.impl.SPackageImpl#getHalt()
    * @generated
    */
-  int HALT = 6;
+  int HALT = 5;
 
   /**
    * The feature id for the '<em><b>Continuation</b></em>' reference.
@@ -309,7 +281,7 @@ public interface SPackage extends EPackage
    * @see de.cau.cs.kieler.s.s.impl.SPackageImpl#getJoin()
    * @generated
    */
-  int JOIN = 7;
+  int JOIN = 6;
 
   /**
    * The feature id for the '<em><b>Continuation</b></em>' reference.
@@ -337,7 +309,7 @@ public interface SPackage extends EPackage
    * @see de.cau.cs.kieler.s.s.impl.SPackageImpl#getAbort()
    * @generated
    */
-  int ABORT = 8;
+  int ABORT = 7;
 
   /**
    * The feature id for the '<em><b>Continuation</b></em>' reference.
@@ -365,7 +337,7 @@ public interface SPackage extends EPackage
    * @see de.cau.cs.kieler.s.s.impl.SPackageImpl#getPresent()
    * @generated
    */
-  int PRESENT = 9;
+  int PRESENT = 8;
 
   /**
    * The feature id for the '<em><b>Continuation</b></em>' reference.
@@ -377,13 +349,13 @@ public interface SPackage extends EPackage
   int PRESENT__CONTINUATION = INSTRUCTION__CONTINUATION;
 
   /**
-   * The feature id for the '<em><b>Signal</b></em>' containment reference.
+   * The feature id for the '<em><b>Expression</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int PRESENT__SIGNAL = INSTRUCTION_FEATURE_COUNT + 0;
+  int PRESENT__EXPRESSION = INSTRUCTION_FEATURE_COUNT + 0;
 
   /**
    * The feature id for the '<em><b>Instructions</b></em>' containment reference list.
@@ -411,7 +383,7 @@ public interface SPackage extends EPackage
    * @see de.cau.cs.kieler.s.s.impl.SPackageImpl#getGoto()
    * @generated
    */
-  int GOTO = 10;
+  int GOTO = 9;
 
   /**
    * The feature id for the '<em><b>Continuation</b></em>' reference.
@@ -448,7 +420,7 @@ public interface SPackage extends EPackage
    * @see de.cau.cs.kieler.s.s.impl.SPackageImpl#getFork()
    * @generated
    */
-  int FORK = 11;
+  int FORK = 10;
 
   /**
    * The feature id for the '<em><b>Continuation</b></em>' reference.
@@ -494,7 +466,7 @@ public interface SPackage extends EPackage
    * @see de.cau.cs.kieler.s.s.impl.SPackageImpl#getForke()
    * @generated
    */
-  int FORKE = 12;
+  int FORKE = 11;
 
   /**
    * The feature id for the '<em><b>Continuation</b></em>' reference.
@@ -531,7 +503,7 @@ public interface SPackage extends EPackage
    * @see de.cau.cs.kieler.s.s.impl.SPackageImpl#getEmit()
    * @generated
    */
-  int EMIT = 13;
+  int EMIT = 12;
 
   /**
    * The feature id for the '<em><b>Continuation</b></em>' reference.
@@ -568,7 +540,7 @@ public interface SPackage extends EPackage
    * @see de.cau.cs.kieler.s.s.impl.SPackageImpl#getAwait()
    * @generated
    */
-  int AWAIT = 14;
+  int AWAIT = 13;
 
   /**
    * The feature id for the '<em><b>Continuation</b></em>' reference.
@@ -605,7 +577,7 @@ public interface SPackage extends EPackage
    * @see de.cau.cs.kieler.s.s.impl.SPackageImpl#getPrio()
    * @generated
    */
-  int PRIO = 15;
+  int PRIO = 14;
 
   /**
    * The feature id for the '<em><b>Continuation</b></em>' reference.
@@ -733,27 +705,6 @@ public interface SPackage extends EPackage
   EReference getState_Instructions();
 
   /**
-   * Returns the meta object for class '{@link de.cau.cs.kieler.s.s.Signal <em>Signal</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Signal</em>'.
-   * @see de.cau.cs.kieler.s.s.Signal
-   * @generated
-   */
-  EClass getSignal();
-
-  /**
-   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.s.s.Signal#getName <em>Name</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Name</em>'.
-   * @see de.cau.cs.kieler.s.s.Signal#getName()
-   * @see #getSignal()
-   * @generated
-   */
-  EAttribute getSignal_Name();
-
-  /**
    * Returns the meta object for class '{@link de.cau.cs.kieler.s.s.Instruction <em>Instruction</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -835,15 +786,15 @@ public interface SPackage extends EPackage
   EClass getPresent();
 
   /**
-   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.s.s.Present#getSignal <em>Signal</em>}'.
+   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.s.s.Present#getExpression <em>Expression</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>Signal</em>'.
-   * @see de.cau.cs.kieler.s.s.Present#getSignal()
+   * @return the meta object for the containment reference '<em>Expression</em>'.
+   * @see de.cau.cs.kieler.s.s.Present#getExpression()
    * @see #getPresent()
    * @generated
    */
-  EReference getPresent_Signal();
+  EReference getPresent_Expression();
 
   /**
    * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.s.s.Present#getInstructions <em>Instructions</em>}'.
@@ -1093,24 +1044,6 @@ public interface SPackage extends EPackage
     EReference STATE__INSTRUCTIONS = eINSTANCE.getState_Instructions();
 
     /**
-     * The meta object literal for the '{@link de.cau.cs.kieler.s.s.impl.SignalImpl <em>Signal</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.s.s.impl.SignalImpl
-     * @see de.cau.cs.kieler.s.s.impl.SPackageImpl#getSignal()
-     * @generated
-     */
-    EClass SIGNAL = eINSTANCE.getSignal();
-
-    /**
-     * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EAttribute SIGNAL__NAME = eINSTANCE.getSignal_Name();
-
-    /**
      * The meta object literal for the '{@link de.cau.cs.kieler.s.s.impl.InstructionImpl <em>Instruction</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1189,12 +1122,12 @@ public interface SPackage extends EPackage
     EClass PRESENT = eINSTANCE.getPresent();
 
     /**
-     * The meta object literal for the '<em><b>Signal</b></em>' containment reference feature.
+     * The meta object literal for the '<em><b>Expression</b></em>' containment reference feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EReference PRESENT__SIGNAL = eINSTANCE.getPresent_Signal();
+    EReference PRESENT__EXPRESSION = eINSTANCE.getPresent_Expression();
 
     /**
      * The meta object literal for the '<em><b>Instructions</b></em>' containment reference list feature.

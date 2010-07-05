@@ -110,13 +110,6 @@ public class SSwitch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
-      case SPackage.SIGNAL:
-      {
-        Signal signal = (Signal)theEObject;
-        T result = caseSignal(signal);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
       case SPackage.INSTRUCTION:
       {
         Instruction instruction = (Instruction)theEObject;
@@ -252,22 +245,6 @@ public class SSwitch<T>
    * @generated
    */
   public T caseState(State object)
-  {
-    return null;
-  }
-
-  /**
-   * Returns the result of interpreting the object as an instance of '<em>Signal</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Signal</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseSignal(Signal object)
   {
     return null;
   }

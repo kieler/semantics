@@ -38,9 +38,8 @@ State:
 ;
 
 
-Signal : //  returns expressions::Signal
+Signal returns expressions::Signal :
 	name=ID ':' 
-	
 //	type = SignalType
 //	('combine' combineFunction = [CombineFunction])?
 ;
@@ -111,7 +110,7 @@ Abort :
   ;
   
 Present : 
-	'PRESENT''('signal = BooleanExpression (',' continuation=[State])?')' '{'
+	'PRESENT''('expression = Expression (',' continuation=[State])?')' '{'
 		(instructions += Instruction';')*
 	'}'
   ;
@@ -129,11 +128,11 @@ Forke :
   ;
   
 Emit:
-	'EMIT''('signal= [Signal] (',' continuation=[State])?')'
+	'EMIT''('signal= [expressions::Signal] (',' continuation=[State])?')'
 ;
 
 Await:
-	'AWAIT''('signal= [Signal] (',' continuation=[State])?')'
+	'AWAIT''('signal= [expressions::Signal] (',' continuation=[State])?')'
 ;
 
 Prio:

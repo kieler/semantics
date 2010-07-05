@@ -18,7 +18,7 @@ import org.eclipse.emf.common.util.EList;
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link de.cau.cs.kieler.s.s.Present#getSignal <em>Signal</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.s.s.Present#getExpression <em>Expression</em>}</li>
  *   <li>{@link de.cau.cs.kieler.s.s.Present#getInstructions <em>Instructions</em>}</li>
  * </ul>
  * </p>
@@ -30,30 +30,30 @@ import org.eclipse.emf.common.util.EList;
 public interface Present extends Instruction
 {
   /**
-   * Returns the value of the '<em><b>Signal</b></em>' containment reference.
+   * Returns the value of the '<em><b>Expression</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Signal</em>' containment reference isn't clear,
+   * If the meaning of the '<em>Expression</em>' containment reference isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Signal</em>' containment reference.
-   * @see #setSignal(Expression)
-   * @see de.cau.cs.kieler.s.s.SPackage#getPresent_Signal()
+   * @return the value of the '<em>Expression</em>' containment reference.
+   * @see #setExpression(Expression)
+   * @see de.cau.cs.kieler.s.s.SPackage#getPresent_Expression()
    * @model containment="true"
    * @generated
    */
-  Expression getSignal();
+  Expression getExpression();
 
   /**
-   * Sets the value of the '{@link de.cau.cs.kieler.s.s.Present#getSignal <em>Signal</em>}' containment reference.
+   * Sets the value of the '{@link de.cau.cs.kieler.s.s.Present#getExpression <em>Expression</em>}' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Signal</em>' containment reference.
-   * @see #getSignal()
+   * @param value the new value of the '<em>Expression</em>' containment reference.
+   * @see #getExpression()
    * @generated
    */
-  void setSignal(Expression value);
+  void setExpression(Expression value);
 
   /**
    * Returns the value of the '<em><b>Instructions</b></em>' containment reference list.

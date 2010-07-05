@@ -249,10 +249,9 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cNameIDTerminalRuleCall_0_0 = (RuleCall)cNameAssignment_0.eContents().get(0);
 		private final Keyword cColonKeyword_1 = (Keyword)cGroup.eContents().get(1);
 		
-		////  returns expressions::Signal
 		////	type = SignalType
 		////	('combine' combineFunction = [CombineFunction])?
-		//Signal:
+		//Signal returns expressions::Signal:
 		//	name=ID ":";
 		public ParserRule getRule() { return rule; }
 
@@ -561,8 +560,8 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Keyword cPRESENTKeyword_0 = (Keyword)cGroup.eContents().get(0);
 		private final Keyword cLeftParenthesisKeyword_1 = (Keyword)cGroup.eContents().get(1);
-		private final Assignment cSignalAssignment_2 = (Assignment)cGroup.eContents().get(2);
-		private final RuleCall cSignalBooleanExpressionParserRuleCall_2_0 = (RuleCall)cSignalAssignment_2.eContents().get(0);
+		private final Assignment cExpressionAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final RuleCall cExpressionExpressionParserRuleCall_2_0 = (RuleCall)cExpressionAssignment_2.eContents().get(0);
 		private final Group cGroup_3 = (Group)cGroup.eContents().get(3);
 		private final Keyword cCommaKeyword_3_0 = (Keyword)cGroup_3.eContents().get(0);
 		private final Assignment cContinuationAssignment_3_1 = (Assignment)cGroup_3.eContents().get(1);
@@ -577,10 +576,10 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cRightCurlyBracketKeyword_7 = (Keyword)cGroup.eContents().get(7);
 		
 		//Present:
-		//	"PRESENT" "(" signal=BooleanExpression ("," continuation=[State])? ")" "{" (instructions+=Instruction ";")* "}";
+		//	"PRESENT" "(" expression=Expression ("," continuation=[State])? ")" "{" (instructions+=Instruction ";")* "}";
 		public ParserRule getRule() { return rule; }
 
-		//"PRESENT" "(" signal=BooleanExpression ("," continuation=[State])? ")" "{" (instructions+=Instruction ";")* "}"
+		//"PRESENT" "(" expression=Expression ("," continuation=[State])? ")" "{" (instructions+=Instruction ";")* "}"
 		public Group getGroup() { return cGroup; }
 
 		//"PRESENT"
@@ -589,11 +588,11 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 		//"("
 		public Keyword getLeftParenthesisKeyword_1() { return cLeftParenthesisKeyword_1; }
 
-		//signal=BooleanExpression
-		public Assignment getSignalAssignment_2() { return cSignalAssignment_2; }
+		//expression=Expression
+		public Assignment getExpressionAssignment_2() { return cExpressionAssignment_2; }
 
-		//BooleanExpression
-		public RuleCall getSignalBooleanExpressionParserRuleCall_2_0() { return cSignalBooleanExpressionParserRuleCall_2_0; }
+		//Expression
+		public RuleCall getExpressionExpressionParserRuleCall_2_0() { return cExpressionExpressionParserRuleCall_2_0; }
 
 		//("," continuation=[State])?
 		public Group getGroup_3() { return cGroup_3; }
@@ -828,10 +827,10 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cRightParenthesisKeyword_4 = (Keyword)cGroup.eContents().get(4);
 		
 		//Emit:
-		//	"EMIT" "(" signal=[Signal] ("," continuation=[State])? ")";
+		//	"EMIT" "(" signal=[expressions::Signal] ("," continuation=[State])? ")";
 		public ParserRule getRule() { return rule; }
 
-		//"EMIT" "(" signal=[Signal] ("," continuation=[State])? ")"
+		//"EMIT" "(" signal=[expressions::Signal] ("," continuation=[State])? ")"
 		public Group getGroup() { return cGroup; }
 
 		//"EMIT"
@@ -840,10 +839,10 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 		//"("
 		public Keyword getLeftParenthesisKeyword_1() { return cLeftParenthesisKeyword_1; }
 
-		//signal=[Signal]
+		//signal=[expressions::Signal]
 		public Assignment getSignalAssignment_2() { return cSignalAssignment_2; }
 
-		//[Signal]
+		//[expressions::Signal]
 		public CrossReference getSignalSignalCrossReference_2_0() { return cSignalSignalCrossReference_2_0; }
 
 		//ID
@@ -884,10 +883,10 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cRightParenthesisKeyword_4 = (Keyword)cGroup.eContents().get(4);
 		
 		//Await:
-		//	"AWAIT" "(" signal=[Signal] ("," continuation=[State])? ")";
+		//	"AWAIT" "(" signal=[expressions::Signal] ("," continuation=[State])? ")";
 		public ParserRule getRule() { return rule; }
 
-		//"AWAIT" "(" signal=[Signal] ("," continuation=[State])? ")"
+		//"AWAIT" "(" signal=[expressions::Signal] ("," continuation=[State])? ")"
 		public Group getGroup() { return cGroup; }
 
 		//"AWAIT"
@@ -896,10 +895,10 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 		//"("
 		public Keyword getLeftParenthesisKeyword_1() { return cLeftParenthesisKeyword_1; }
 
-		//signal=[Signal]
+		//signal=[expressions::Signal]
 		public Assignment getSignalAssignment_2() { return cSignalAssignment_2; }
 
-		//[Signal]
+		//[expressions::Signal]
 		public CrossReference getSignalSignalCrossReference_2_0() { return cSignalSignalCrossReference_2_0; }
 
 		//ID
@@ -1043,10 +1042,9 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 		return getStateAccess().getRule();
 	}
 
-	////  returns expressions::Signal
 	////	type = SignalType
 	////	('combine' combineFunction = [CombineFunction])?
-	//Signal:
+	//Signal returns expressions::Signal:
 	//	name=ID ":";
 	public SignalElements getSignalAccess() {
 		return (pSignal != null) ? pSignal : (pSignal = new SignalElements());
@@ -1144,7 +1142,7 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//Present:
-	//	"PRESENT" "(" signal=BooleanExpression ("," continuation=[State])? ")" "{" (instructions+=Instruction ";")* "}";
+	//	"PRESENT" "(" expression=Expression ("," continuation=[State])? ")" "{" (instructions+=Instruction ";")* "}";
 	public PresentElements getPresentAccess() {
 		return (pPresent != null) ? pPresent : (pPresent = new PresentElements());
 	}
@@ -1184,7 +1182,7 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//Emit:
-	//	"EMIT" "(" signal=[Signal] ("," continuation=[State])? ")";
+	//	"EMIT" "(" signal=[expressions::Signal] ("," continuation=[State])? ")";
 	public EmitElements getEmitAccess() {
 		return (pEmit != null) ? pEmit : (pEmit = new EmitElements());
 	}
@@ -1194,7 +1192,7 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//Await:
-	//	"AWAIT" "(" signal=[Signal] ("," continuation=[State])? ")";
+	//	"AWAIT" "(" signal=[expressions::Signal] ("," continuation=[State])? ")";
 	public AwaitElements getAwaitAccess() {
 		return (pAwait != null) ? pAwait : (pAwait = new AwaitElements());
 	}
