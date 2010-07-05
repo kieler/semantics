@@ -24,7 +24,7 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference synccharts.ecore#//Action/trigger"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute synccharts.ecore#//Action/delay"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute synccharts.ecore#//Action/isImmediate"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute synccharts.ecore#//Action/label"/>
+      <genFeatures createChild="false" propertyMultiLine="true" ecoreFeature="ecore:EAttribute synccharts.ecore#//Action/label"/>
     </genClasses>
     <genClasses ecoreClass="synccharts.ecore#//Assignment">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference synccharts.ecore#//Assignment/variable"/>
@@ -71,9 +71,11 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference synccharts.ecore#//Scope/entryActions"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference synccharts.ecore#//Scope/bodyReference"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference synccharts.ecore#//Scope/bodyContents"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference synccharts.ecore#//Scope/bodyText"/>
+      <genFeatures property="None" children="true" createChild="true" propertyMultiLine="true"
+          ecoreFeature="ecore:EReference synccharts.ecore#//Scope/bodyText"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference synccharts.ecore#//Scope/renamings"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute synccharts.ecore#//Scope/interfaceDeclaration"/>
+      <genFeatures createChild="false" propertyMultiLine="true" ecoreFeature="ecore:EAttribute synccharts.ecore#//Scope/interfaceDeclaration"/>
     </genClasses>
+    <genClasses ecoreClass="synccharts.ecore#//TextEffect"/>
   </genPackages>
 </genmodel:GenModel>

@@ -175,7 +175,7 @@ public class ScopeItemProvider
                  getString("_UI_PropertyDescriptor_description", "_UI_Scope_interfaceDeclaration_feature", "_UI_Scope_type"),
                  SyncchartsPackage.Literals.SCOPE__INTERFACE_DECLARATION,
                  true,
-                 false,
+                 true,
                  false,
                  ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
                  null,
@@ -400,7 +400,7 @@ public class ScopeItemProvider
         newChildDescriptors.add
             (createChildParameter
                 (SyncchartsPackage.Literals.SCOPE__BODY_CONTENTS,
-                 EcoreFactory.eINSTANCE.createEObject()));
+                 AnnotationsFactory.eINSTANCE.createContainmentAnnotation()));
 
         newChildDescriptors.add
             (createChildParameter
@@ -436,6 +436,11 @@ public class ScopeItemProvider
             (createChildParameter
                 (SyncchartsPackage.Literals.SCOPE__BODY_CONTENTS,
                  EcoreFactory.eINSTANCE.createEFactory()));
+
+        newChildDescriptors.add
+            (createChildParameter
+                (SyncchartsPackage.Literals.SCOPE__BODY_CONTENTS,
+                 EcoreFactory.eINSTANCE.createEObject()));
 
         newChildDescriptors.add
             (createChildParameter

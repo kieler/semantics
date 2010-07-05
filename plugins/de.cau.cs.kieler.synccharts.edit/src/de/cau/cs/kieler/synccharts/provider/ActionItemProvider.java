@@ -147,7 +147,7 @@ public class ActionItemProvider
                  getString("_UI_PropertyDescriptor_description", "_UI_Action_label_feature", "_UI_Action_type"),
                  SyncchartsPackage.Literals.ACTION__LABEL,
                  true,
-                 false,
+                 true,
                  false,
                  ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
                  null,
