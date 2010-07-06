@@ -4,8 +4,10 @@
    <extension
          point="org.eclipse.ui.commands">
       <command
+            categoryId="de.cau.cs.kieler"
             defaultHandler="de.cau.cs.kieler.s.sc.SCGenerator"
             id="de.cau.cs.kieler.s.sc.s2sc"
+            description="Generate SC-Code"
             name="S 2 SC Transformation">
       </command> 
    </extension>
@@ -17,6 +19,15 @@
                commandId="de.cau.cs.kieler.s.sc.s2sc"
                label="S 2 SC Transformation"
                style="push">
+            <visibleWhen
+                  checkEnabled="true">
+               <with
+                     variable="activeEditorId">
+                  <equals
+                        value="de.cau.cs.kieler.s.S">
+                  </equals>
+               </with>
+            </visibleWhen>
          </command>
       </menuContribution>
    </extension>

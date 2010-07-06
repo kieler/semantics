@@ -15,10 +15,9 @@
 
 package de.cau.cs.kieler.s.sc;
 
-import org.eclipse.core.commands.AbstractHandler;
-import org.eclipse.core.commands.ExecutionEvent;
-import org.eclipse.core.commands.ExecutionException;
-import org.eclipse.core.commands.IHandler;
+import org.eclipse.core.internal.resources.File;
+
+import de.cau.cs.kieler.s.codegen.AbstractCodegenHandler;
 
 /**
  * A simple class to invoke the process of generating SC-Code.
@@ -26,11 +25,24 @@ import org.eclipse.core.commands.IHandler;
  * @author tam
  * 
  */
-public class SCGenerator extends AbstractHandler implements IHandler {
+public class SCGenerator extends AbstractCodegenHandler {
 
-    public Object execute(final ExecutionEvent event) throws ExecutionException {
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected void createContext(final File selectedFile) {
+        WorkflowGenerator wf = new WorkflowGenerator(selectedFile);
+        wf.invokeWorkflow(false, "");
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected void createContext() {
         WorkflowGenerator wf = new WorkflowGenerator();
         wf.invokeWorkflow(false, "");
-        return null;
     }
+
 }

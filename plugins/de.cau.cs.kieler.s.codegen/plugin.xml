@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.core.expressions.propertyTesters">
+      <propertyTester
+            class="de.cau.cs.kieler.s.codegen.SPropertyTester"
+            id="de.cau.cs.kieler.s.codegen.isActiveSEditor"
+            namespace="de.cau.cs.kieler.s.codegen"
+            properties="activeSEditor"
+            type="org.eclipse.ui.IEditorPart">
+      </propertyTester>
+   </extension>
+   <extension
+         point="org.eclipse.core.expressions.definitions">
+      <definition
+            id="de.cau.cs.kieler.s.codegen.activeSEditor">
+         <with
+               variable="activeEditor">
+            <test
+                  property="de.cau.cs.kieler.s.codegen.isActiveSEditor">
+            </test>
+         </with>
+      </definition>
+   </extension>
+
+</plugin>

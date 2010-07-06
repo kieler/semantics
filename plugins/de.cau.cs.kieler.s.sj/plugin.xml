@@ -4,12 +4,11 @@
 <extension
          point="org.eclipse.ui.commands">
       <command
-            category="de.cau.cs.kieler"
             categoryId="de.cau.cs.kieler"
             defaultHandler="de.cau.cs.kieler.s.sj.SJGenerator"
             description="Generate SJ-Code"
-            id="de.cau.cs.kieler.s.sj.genSJ"
-            name="genSJ">
+            id="de.cau.cs.kieler.s.sj.s2sj"
+            name="S 2 SJ Transformation">
       </command>
    </extension>
    <extension
@@ -17,9 +16,8 @@
       <menuContribution
             locationURI="popup:de.cau.cs.kieler">
          <command
-               commandId="de.cau.cs.kieler.s.sj.genSJ"
-               label="generate SJ-Code"
-               mnemonic="generate SJ-Code"
+               commandId="de.cau.cs.kieler.s.sj.s2sj"
+               label="S 2 SJ Transformation"
                style="push"
                tooltip="generate SJ-Code for the current S">
             <visibleWhen
@@ -36,9 +34,8 @@
       <menuContribution
             locationURI="menu:de.cau.cs.kieler">
          <command
-               commandId="de.cau.cs.kieler.s.sj.genSJ"
-               label="generate SJ-Code"
-               mnemonic="generate SJ-Code"
+               commandId="de.cau.cs.kieler.s.sj.s2sj"
+               label="S 2 SJ Transformation"
                style="push"
                tooltip="generate SJ-Code for the current S">
             <visibleWhen

@@ -2,6 +2,7 @@ package de.cau.cs.kieler.s.codegen;
 
 import java.util.List;
 
+import org.eclipse.core.internal.resources.File;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
@@ -26,10 +27,10 @@ import org.eclipse.xtext.ui.editor.model.XtextDocument;
 import org.eclipse.xtext.util.concurrent.IUnitOfWork.Void;
 
 import de.cau.cs.kieler.core.KielerException;
+import de.cau.cs.kieler.core.expressions.ExpressionsPackage;
 import de.cau.cs.kieler.core.model.util.XpandTransformationUtil;
 import de.cau.cs.kieler.s.s.Program;
 import de.cau.cs.kieler.s.s.SPackage;
-import de.cau.cs.kieler.core.expressions.ExpressionsPackage;
 
 public abstract class AbstractWorkflowGenerator {
 
@@ -62,7 +63,8 @@ public abstract class AbstractWorkflowGenerator {
                 document.readOnly(new Void<XtextResource>() {
 
                     @Override
-                    public void process(XtextResource state) throws Exception {
+                    public void process(final XtextResource state)
+                            throws Exception {
                         List<EObject> eObj = state.getContents();
 
                         myModel = eObj.get(0);
@@ -92,6 +94,26 @@ public abstract class AbstractWorkflowGenerator {
     }
 
     /**
+     * Creates a new AbstractWorkflowGenerator.java.
+     * 
+     * @param selectedFile
+     */
+    public AbstractWorkflowGenerator(final File selectedFile) {
+        // TODO: implements this
+    }
+
+    /**
+     * Creates a new AbstractWorkflowGenerator.java.
+     * 
+     * @param selectedFile
+     * @param fileLocation
+     */
+    public AbstractWorkflowGenerator(final File selectedFile,
+            final String fileLocation) {
+        // TODO: implements this
+    }
+
+    /**
      * Invocation of the workflow. Prepares the environment for generating code.
      * 
      * @param sim
@@ -106,8 +128,11 @@ public abstract class AbstractWorkflowGenerator {
             XpandTransformationUtil.model2TextTransform(
                     getPathToMainTemplate(), getNameOfMainMethod(), uri,
                     outPath, SPackage.eINSTANCE, ExpressionsPackage.eINSTANCE);
-            ResourcesPlugin.getWorkspace().getRoot().refreshLocal(
-                    IResource.DEPTH_INFINITE, new NullProgressMonitor());
+            ResourcesPlugin
+                    .getWorkspace()
+                    .getRoot()
+                    .refreshLocal(IResource.DEPTH_INFINITE,
+                            new NullProgressMonitor());
         } catch (KielerException e0) {
             e0.printStackTrace();
         } catch (CoreException e0) {
