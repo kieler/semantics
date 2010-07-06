@@ -20,6 +20,21 @@
                label="S 2 SC Transformation"
                style="push">
             <visibleWhen
+                  checkEnabled="false">
+               <reference
+                     definitionId="de.cau.cs.kieler.s.codegen.canGenerate">
+               </reference>
+            </visibleWhen>
+         </command>
+      </menuContribution>
+            <menuContribution
+            locationURI="menu:de.cau.cs.kieler">
+         <command
+               commandId="de.cau.cs.kieler.s.sc.s2sc"
+               label="S 2 SC Transformation"
+               style="push"
+               tooltip="generate SC-Code for the current S">
+            <visibleWhen
                   checkEnabled="true">
                <with
                      variable="activeEditorId">

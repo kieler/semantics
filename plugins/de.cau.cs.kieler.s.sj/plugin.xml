@@ -20,16 +20,14 @@
                label="S 2 SJ Transformation"
                style="push"
                tooltip="generate SJ-Code for the current S">
-            <visibleWhen
-                  checkEnabled="true">
-               <with
-                     variable="activeEditorId">
-                  <equals
-                        value="de.cau.cs.kieler.s.S">
-                  </equals>
-               </with>
+                <visibleWhen
+                  checkEnabled="false">
+               <reference
+                     definitionId="de.cau.cs.kieler.s.codegen.canGenerate">
+               </reference>
             </visibleWhen>
          </command>
+         
       </menuContribution>
       <menuContribution
             locationURI="menu:de.cau.cs.kieler">

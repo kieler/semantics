@@ -99,7 +99,10 @@ public abstract class AbstractWorkflowGenerator {
      * @param selectedFile
      */
     public AbstractWorkflowGenerator(final File selectedFile) {
-        // TODO: implements this
+        uri = URI.createPlatformResourceURI(selectedFile.getRawLocation()
+                .toOSString(), true);
+        outPath = selectedFile.getRawLocation().removeLastSegments(1)
+                .addTrailingSeparator().toOSString();
     }
 
     /**
@@ -110,7 +113,10 @@ public abstract class AbstractWorkflowGenerator {
      */
     public AbstractWorkflowGenerator(final File selectedFile,
             final String fileLocation) {
-        // TODO: implements this
+        uri = URI.createPlatformResourceURI(selectedFile.getRawLocation()
+                .toOSString(), true);
+        outPath = selectedFile.getRawLocation().removeLastSegments(1)
+                .addTrailingSeparator().toOSString();
     }
 
     /**

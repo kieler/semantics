@@ -2,26 +2,40 @@
 <?eclipse version="3.4"?>
 <plugin>
    <extension
+         point="org.eclipse.core.expressions.definitions">
+      <definition
+            id="de.cau.cs.kieler.s.codegen.canGenerate">
+         <or>
+            <with
+                  variable="activeMenuSelection">
+               <and>
+                  <iterate
+                        ifEmpty="false"
+                        operator="and">
+                     <instanceof
+                           value="org.eclipse.core.internal.resources.File">
+                     </instanceof>
+                  </iterate>
+               </and>
+            </with>
+            <with
+                  variable="activeEditorId">
+               <equals
+                     value="de.cau.cs.kieler.s.S">
+               </equals>
+            </with>
+         </or>
+      </definition>
+   </extension>
+   <extension
          point="org.eclipse.core.expressions.propertyTesters">
       <propertyTester
             class="de.cau.cs.kieler.s.codegen.SPropertyTester"
-            id="de.cau.cs.kieler.s.codegen.isActiveSEditor"
+            id="de.cau.cs.kieler.s.codegen.propertyTester"
             namespace="de.cau.cs.kieler.s.codegen"
-            properties="activeSEditor"
-            type="org.eclipse.ui.IEditorPart">
+            properties="selection, activeMenuSelection"
+            type="org.eclipse.core.internal.resources.File">
       </propertyTester>
-   </extension>
-   <extension
-         point="org.eclipse.core.expressions.definitions">
-      <definition
-            id="de.cau.cs.kieler.s.codegen.activeSEditor">
-         <with
-               variable="activeEditor">
-            <test
-                  property="de.cau.cs.kieler.s.codegen.isActiveSEditor">
-            </test>
-         </with>
-      </definition>
    </extension>
 
 </plugin>
