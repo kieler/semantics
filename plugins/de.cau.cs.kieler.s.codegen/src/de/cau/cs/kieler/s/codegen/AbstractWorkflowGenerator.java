@@ -21,6 +21,7 @@ import org.eclipse.ui.IEditorSite;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.FileEditorInput;
+import org.eclipse.xpand2.output.PostProcessor;
 import org.eclipse.xtext.resource.XtextResource;
 import org.eclipse.xtext.ui.editor.XtextEditor;
 import org.eclipse.xtext.ui.editor.model.IXtextDocument;
@@ -156,6 +157,37 @@ public abstract class AbstractWorkflowGenerator {
 
     }
 
+    
+    /**
+     * Invocation of the workflow. Prepares the environment for generating code.
+     * 
+     * @param sim
+     *            is false if you just want to generate code and true if you want to generate code
+     *            and simulate it
+     * @param path
+     *            the path where the generated files should be written
+     * @param postProcessor
+     *            the post processor
+     */
+    public void invokeWorkflow(final boolean sim, final String path, final PostProcessor postProcessor) {
+
+        try {
+            XpandTransformationUtil.model2TextTransform(
+                    getPathToMainTemplate(), getNameOfMainMethod(), uri,
+                    outPath, postProcessor, SPackage.eINSTANCE, ExpressionsPackage.eINSTANCE);
+            ResourcesPlugin
+                    .getWorkspace()
+                    .getRoot()
+                    .refreshLocal(IResource.DEPTH_INFINITE,
+                            new NullProgressMonitor());
+        } catch (KielerException e0) {
+            e0.printStackTrace();
+        } catch (CoreException e0) {
+            e0.printStackTrace();
+        }
+
+    }
+    
     /**
      * Getter for the path to the main code generation template file. e.g.:
      * de::cau::cs::kieler::s::sj::templates::Codegen
