@@ -19,6 +19,7 @@ import java.util.List;
 import org.eclipse.draw2d.AbstractHintLayout;
 import org.eclipse.draw2d.IFigure;
 import org.eclipse.draw2d.Polyline;
+import org.eclipse.draw2d.PolylineShape;
 import org.eclipse.draw2d.RoundedRectangle;
 import org.eclipse.draw2d.geometry.Dimension;
 import org.eclipse.draw2d.geometry.Point;
@@ -169,6 +170,8 @@ public abstract class AbstractTableLayout extends AbstractHintLayout {
      * @return Returns the preferred- and minimum-size for the given layout
      */
     private LayoutSizes calculateLayoutSizes(final ExtendedTable layout, final IFigure stateFigure) {
+        assert layout != null;
+        
         @SuppressWarnings("unchecked")
         List<IFigure> children = stateFigure.getChildren();
         Cell[][] table = layout.table;
@@ -427,7 +430,7 @@ public abstract class AbstractTableLayout extends AbstractHintLayout {
             } else if (layout.horizontalAlignment[row] == ExtendedTable.SEPARATOR) {
                 /* get the referenced separator */
                 Cell cell = table[row][0];
-                Polyline regionSeparator = (Polyline) children.get(cell.figure);
+                PolylineShape regionSeparator = (PolylineShape) children.get(cell.figure);
                 PointList points = new PointList();
 
                 /* full expanded from left to right */
@@ -450,6 +453,14 @@ public abstract class AbstractTableLayout extends AbstractHintLayout {
                 points.addPoint(new Point(left, regionSeparatorHeight));
                 points.addPoint(new Point(Math.max(left, right), regionSeparatorHeight));
                 regionSeparator.setPoints(points);
+                // have to set bounds also
+                Rectangle sepBounds = regionSeparator.getBounds();
+                sepBounds.x = left;
+                sepBounds.y = regionSeparatorHeight;
+                sepBounds.height = 2;
+                sepBounds.width = right - left;
+                regionSeparator.setBounds(sepBounds);
+                
             }
 
             /* Increase the y-offset by the calculated maximum rowHeight */
