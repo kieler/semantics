@@ -16,45 +16,59 @@ extension priorities;
 List[Instruction] getIfInstruction(Transition transition):
 	let out = {}:
 	let ifInstr = new If:
-	createIf(ifInstr, transition, transition.trigger) ->
+	createIf(ifInstr, transition) ->
 	out.add(ifInstr) ->
 	out
 ;
 
 //TODO: other Expressions!
 
-Void createIf(If ifInstr, Transition transition, SignalReference signalReference):
+Void createIf(If ifInstr, Transition transition) :
  	//TODO: for complex expression this code needs to be changed...
  	//Couldn't find property 'signal' for type expressions::OperatorExpression
  	
-	let triggerSignal = ((SignalReference)transition.trigger).signal:
-	let signalReference = new SignalReference :
+	//let triggerSignal = ((SignalReference)transition.trigger).signal:
 	let targetState = transition.targetState:
-		signalReference.setSignal((Signal)triggerSignal.getSingleTraceTarget("S")) ->
 		//present.setSignal((s::Signal) (trigger.getSingleTraceTarget("S")))-> // OLD
-		info(">>> signalReference.signal.name: " + signalReference.signal.name) ->
-		ifInstr.setExpression(signalReference) ->  // NEW
+		ifInstr.setExpression(createExpression(transition.trigger)) ->
 		ifInstr.instructions.addAll(getReducedPrio(transition)) ->
 		ifInstr.instructions.addAll(getGotoInstruction(transition.targetState))
 ;
 
 
-Void createIf(If ifInstr, Transition transition, OperatorExpression operatorExpression):
- 	//TODO: for complex expression this code needs to be changed...
- 	//Couldn't find property 'signal' for type expressions::OperatorExpression
- 	
-	//let trigger = ((SignalReference)transition.trigger).signal:
-	let targetState = transition.targetState:
-		//present.setSignal((s::Signal) (trigger.getSingleTraceTarget("S")))-> // OLD
-		info(">>> operatorExpression: " + operatorExpression.subExpressions.flatten().toString()) ->
-		ifInstr.setExpression(operatorExpression) ->  // NEW
-		ifInstr.instructions.addAll(getReducedPrio(transition)) ->
-		ifInstr.instructions.addAll(getGotoInstruction(transition.targetState))
+Expression createExpression(SignalReference signalReference) :
+	let newSignalReference = new SignalReference :
+	let triggerSignal = ((SignalReference)signalReference).signal :
+	newSignalReference.setSignal((Signal)triggerSignal.getSingleTraceTarget("S")) ->
+	newSignalReference
+;
+
+Expression createExpression(OperatorExpression operatorExpression) :
+ 	let newOperatorExpression = new OperatorExpression :
+		newOperatorExpression.setOperator(operatorExpression.operator) ->
+		newOperatorExpression.subExpressions.addAll(
+			createExpression(operatorExpression.subExpressions)
+		) ->
+	newOperatorExpression
+;
+
+List[OperatorExpression] createExpression(List[OperatorExpression] operatorExpressionList) :
+   let firstExpression = operatorExpressionList.first() :
+   let newOperatorExpressionList = {} :
+   newOperatorExpressionList.add(firstExpression.createExpression()) ->
+   if (operatorExpressionList.size > 1) then
+       newOperatorExpressionList.addAll(
+        	createExpression(operatorExpressionList.withoutFirst())
+       )
+   else
+   		null ->
+   newOperatorExpressionList
 ;
 
 
-Void createIf(If ifInstr, Transition transition, Expression expression):
- //should not happen (else)
- info("!!!!!!!!!!!!! SHOULD NOT HAPPEN !!!!!!!!!!!!!!!!") ->
- info(expression.metaType.name)
+Expression createExpression(Expression expression) :
+   info("!!!!!!!!!!!!! SHOULD NOT HAPPEN !!!!!!!!!!!!!!!! [1]") ->
+   // should not be executed [1]
+   null
 ;
+
