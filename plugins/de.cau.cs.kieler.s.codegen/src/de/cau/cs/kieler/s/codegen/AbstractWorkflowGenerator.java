@@ -41,6 +41,7 @@ public abstract class AbstractWorkflowGenerator {
     protected String uriString = null;
     private IEditorPart editor = null;
     protected URI uri = null;
+    protected PostProcessor postProcessor = null;
 
     /**
      * The constructor sets the location in the KIELER workspace to save the sc
@@ -143,7 +144,7 @@ public abstract class AbstractWorkflowGenerator {
         try {
             XpandTransformationUtil.model2TextTransform(
                     getPathToMainTemplate(), getNameOfMainMethod(), uri,
-                    outPath, SPackage.eINSTANCE, ExpressionsPackage.eINSTANCE);
+                    outPath, this.postProcessor, SPackage.eINSTANCE, ExpressionsPackage.eINSTANCE);
             ResourcesPlugin
                     .getWorkspace()
                     .getRoot()
@@ -158,35 +159,7 @@ public abstract class AbstractWorkflowGenerator {
     }
 
     
-    /**
-     * Invocation of the workflow. Prepares the environment for generating code.
-     * 
-     * @param sim
-     *            is false if you just want to generate code and true if you want to generate code
-     *            and simulate it
-     * @param path
-     *            the path where the generated files should be written
-     * @param postProcessor
-     *            the post processor
-     */
-    public void invokeWorkflow(final boolean sim, final String path, final PostProcessor postProcessor) {
-
-        try {
-            XpandTransformationUtil.model2TextTransform(
-                    getPathToMainTemplate(), getNameOfMainMethod(), uri,
-                    outPath, postProcessor, SPackage.eINSTANCE, ExpressionsPackage.eINSTANCE);
-            ResourcesPlugin
-                    .getWorkspace()
-                    .getRoot()
-                    .refreshLocal(IResource.DEPTH_INFINITE,
-                            new NullProgressMonitor());
-        } catch (KielerException e0) {
-            e0.printStackTrace();
-        } catch (CoreException e0) {
-            e0.printStackTrace();
-        }
-
-    }
+ 
     
     /**
      * Getter for the path to the main code generation template file. e.g.:
