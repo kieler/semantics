@@ -16,9 +16,8 @@
 || X || Support multiple domain suffixes (kixs+kits) || || || [source:trunk/plugins/de.cau.cs.kieler.synccharts/gmf-templates/aspects/xpt/editor/extensions.xpt extensions ||
 || X || Register new wizard for Explorer, kits || || || [source:trunk/plugins/de.cau.cs.kieler.synccharts/gmf-templates/aspects/xpt/navigator/extensions.xpt extensions ||
 || X || Copy/Cut/Paste || || || [source:trunk/plugins/de.cau.cs.kieler.synccharts/gmf-templates/aspects/xpt/plugin/plugin.xpt plugin ||
-|| || Removed Semantic Hints || || #266 || [source:trunk/plugins/de.cau.cs.kieler.synccharts/gmf-templates/aspects/xpt/providers/extensions.xpt extensions ||
+|| s || Removed Semantic Hints || || #266 || [source:trunk/plugins/de.cau.cs.kieler.synccharts/gmf-templates/aspects/xpt/providers/extensions.xpt extensions ||
 
- * N = Not yet solved
  * X = Applied to Helios templates
  * s = solved in Helios
  * ? = Does not work, do not understand
