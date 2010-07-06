@@ -253,7 +253,7 @@ create expressions::Signal this transform(expressions::Signal signal):
 	createTrace(this,signal,"SyncCharts","S") ->
 	this.setCombineOperator(signal.combineOperator) ->
 	this.setName(signal.name) ->
-	this.setHostCombineOperator(signal.hostCombineOperator) ->
+//	this.setHostCombineOperator(signal.combineOperator) ->
 	this.setHostType(signal.hostType) ->
 	this.setInitialValue(signal.initialValue) ->
 	this.setIsInput(signal.isInput) ->

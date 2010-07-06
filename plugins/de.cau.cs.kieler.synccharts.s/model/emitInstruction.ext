@@ -16,7 +16,7 @@ List[Emit] getEmitInstructions(Transition transition):
 
 create s::Emit this transform(Emission emission):
 	//this.setSignal((s::Signal) ((Emission)effect).signal.getSingleTraceTarget("S")) OLD
-	this.setSignal(emission.signal)
+	this.setSignal((Signal)emission.signal.getSingleTraceTarget("S"))
 ;
 
 //TODO: Assignment assignment and TextEffect textEffect
