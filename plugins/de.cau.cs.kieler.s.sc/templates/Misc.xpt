@@ -10,83 +10,83 @@
 	Consider complex expression 
 «ENDREM»
 «DEFINE expandedExpression FOR OperatorExpression-»
-	«IF this.operator == OperatorType::EQ»
-		«FOREACH  this.subExpressions AS subExpression SEPARATOR " == "»
-			«EXPAND expandedExpression FOR subExpression»
+	«IF this.operator == OperatorType::EQ-»
+		«FOREACH  this.subExpressions AS subExpression SEPARATOR " == "-»
+			«EXPAND expandedExpression FOR subExpression-»
 		«ENDFOREACH»
 	«ENDIF»
-	«IF this.operator == OperatorType::LT»
-		«FOREACH  this.subExpressions AS subExpression SEPARATOR " < "»
-			«EXPAND expandedExpression FOR subExpression»
+	«IF this.operator == OperatorType::LT-»
+		«FOREACH  this.subExpressions AS subExpression SEPARATOR " < "-»
+			«EXPAND expandedExpression FOR subExpression-»
 		«ENDFOREACH»
 	«ENDIF»
-	«IF this.operator == OperatorType::LEQ»
-		«FOREACH  this.subExpressions AS subExpression SEPARATOR " <= "»
-			«EXPAND expandedExpression FOR subExpression»
+	«IF this.operator == OperatorType::LEQ-»
+		«FOREACH  this.subExpressions AS subExpression SEPARATOR " <= "-»
+			«EXPAND expandedExpression FOR subExpression-»
 		«ENDFOREACH»
 	«ENDIF»
-	«IF this.operator == OperatorType::GT»
-		«FOREACH  this.subExpressions AS subExpression SEPARATOR " > "»
-			«EXPAND expandedExpression FOR subExpression»
+	«IF this.operator == OperatorType::GT-»
+		«FOREACH  this.subExpressions AS subExpression SEPARATOR " > "-»
+			«EXPAND expandedExpression FOR subExpression-»
 		«ENDFOREACH»
 	«ENDIF»
-	«IF this.operator == OperatorType::GEQ»
-		«FOREACH  this.subExpressions AS subExpression SEPARATOR " >= "»
-			«EXPAND expandedExpression FOR subExpression»
+	«IF this.operator == OperatorType::GEQ-»
+		«FOREACH  this.subExpressions AS subExpression SEPARATOR " >= "-»
+			«EXPAND expandedExpression FOR subExpression-»
 		«ENDFOREACH»
 	«ENDIF»
-	«IF this.operator == OperatorType::NOT»
-		!(«EXPAND expandedExpression FOR this.subExpressions.first()»)
+	«IF this.operator == OperatorType::NOT-»
+		!(«EXPAND expandedExpression FOR this.subExpressions.first()-»)
 	«ENDIF»
-	«IF this.operator == OperatorType::VAL»
-		VAL(«EXPAND expandedExpression FOR this.subExpressions.first()»)
+	«IF this.operator == OperatorType::VAL-»
+		VAL(«EXPAND expandedExpression FOR this.subExpressions.first()-»)
 	«ENDIF»
-	«IF this.operator == OperatorType::PRE»
-		PRE(«EXPAND expandedExpression FOR this.subExpressions.first()»)
+	«IF this.operator == OperatorType::PRE-»
+		PRE(«EXPAND expandedExpression FOR this.subExpressions.first()-»)
 	«ENDIF»
-	«IF this.operator == OperatorType::NE»
-		«FOREACH  this.subExpressions AS subExpression SEPARATOR " != "»
-			«EXPAND expandedExpression FOR subExpression»
+	«IF this.operator == OperatorType::NE-»
+		«FOREACH  this.subExpressions AS subExpression SEPARATOR " != "-»
+			«EXPAND expandedExpression FOR subExpression-»
 		«ENDFOREACH»
 	«ENDIF»
-	«IF this.operator == OperatorType::AND»
-		«FOREACH  this.subExpressions AS subExpression SEPARATOR " && "»
-			«EXPAND expandedExpression FOR subExpression»
+	«IF this.operator == OperatorType::AND-»
+		«FOREACH  this.subExpressions AS subExpression SEPARATOR " && "-»
+			«EXPAND expandedExpression FOR subExpression-»
 		«ENDFOREACH»
 	«ENDIF»
-	«IF this.operator == OperatorType::OR»
-		«FOREACH  this.subExpressions AS subExpression SEPARATOR " || "»
-			«EXPAND expandedExpression FOR subExpression»
+	«IF this.operator == OperatorType::OR-»
+		«FOREACH  this.subExpressions AS subExpression SEPARATOR " || "-»
+			«EXPAND expandedExpression FOR subExpression-»
 		«ENDFOREACH»
 	«ENDIF»
-	«IF this.operator == OperatorType::ADD»
-		«FOREACH  this.subExpressions AS subExpression SEPARATOR " + "»
-			«EXPAND expandedExpression FOR subExpression»
+	«IF this.operator == OperatorType::ADD-»
+		«FOREACH  this.subExpressions AS subExpression SEPARATOR " + "-»
+			«EXPAND expandedExpression FOR subExpression-»
 		«ENDFOREACH»
 	«ENDIF»
-	«IF this.operator == OperatorType::SUB»
-		«FOREACH  this.subExpressions AS subExpression SEPARATOR " - "»
-			«EXPAND expandedExpression FOR subExpression»
+	«IF this.operator == OperatorType::SUB-»
+		«FOREACH  this.subExpressions AS subExpression SEPARATOR " - "-»
+			«EXPAND expandedExpression FOR subExpression-»
 		«ENDFOREACH»
 	«ENDIF»
-	«IF this.operator == OperatorType::MULT»
-		«FOREACH  this.subExpressions AS subExpression SEPARATOR " * "»
-			«EXPAND expandedExpression FOR subExpression»
+	«IF this.operator == OperatorType::MULT-»
+		«FOREACH  this.subExpressions AS subExpression SEPARATOR " * "-»
+			«EXPAND expandedExpression FOR subExpression-»
 		«ENDFOREACH»
 	«ENDIF»
-	«IF this.operator == OperatorType::DIV»
-		«FOREACH  this.subExpressions AS subExpression SEPARATOR " / "»
-			«EXPAND expandedExpression FOR subExpression»
+	«IF this.operator == OperatorType::DIV-»
+		«FOREACH  this.subExpressions AS subExpression SEPARATOR " / "-»
+			«EXPAND expandedExpression FOR subExpression-»
 		«ENDFOREACH»
 	«ENDIF»
-	«IF this.operator == OperatorType::MOD»
-		«FOREACH  this.subExpressions AS subExpression SEPARATOR " % "»
-			«EXPAND expandedExpression FOR subExpression»
+	«IF this.operator == OperatorType::MOD-»
+		«FOREACH  this.subExpressions AS subExpression SEPARATOR " % "-»
+			«EXPAND expandedExpression FOR subExpression-»
 		«ENDFOREACH»
 	«ENDIF»
 «ENDDEFINE»
 «DEFINE expandedExpression FOR SignalReference-»
-	PRESENT(«this.signal.name»)
+	PRESENT(«this.signal.name-»)
 «ENDDEFINE»
 «DEFINE expandedExpression FOR Expression-»
 «ENDDEFINE»
@@ -121,8 +121,8 @@
 	Template for a function to set inputs. 
 «ENDREM»
 «DEFINE generateInputSignal FOR Signal-»
-	void «((Program)this.eContainer).name»_I_«this.name»(«IF type!="ValueType::PURE"»int val«ENDIF») {
+	void «((Program)this.eContainer).name-»_I_«this.name-»(«IF type!="ValueType::PURE"-»int val«ENDIF») {
 		signals = signals | (1 << sig_«this.name»);
-		«IF type!="ValueType::PURE"»valSigInt[sig_«this.name»]=val;«ENDIF»
+		«IF type!="ValueType::PURE"-»valSigInt[sig_«this.name-»]=val;«ENDIF»
 	}
 «ENDDEFINE»
