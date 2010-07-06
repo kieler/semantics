@@ -1,12 +1,12 @@
-«IMPORT s»
+Â«IMPORT sÂ»
 
-«EXTENSION templates::Extensions»
-«REM»
+Â«EXTENSION templates::ExtensionsÂ»
+Â«REMÂ»
  EXTENSION templates::Extensions
-«ENDREM»
+Â«ENDREMÂ»
 
-«DEFINE main FOR Program-»
-	«FILE name + ".c"-»
+Â«DEFINE main FOR Program-Â»
+	Â«FILE name + ".c"-Â»
 
     /*****************************************************************************/
     /* Generated SC-code                                                         */
@@ -23,99 +23,99 @@
     /* This code is provided under the terms of the Eclipse Public License (EPL).*/
     /*****************************************************************************/
     
-		«EXPAND init-»
+		Â«EXPAND init-Â»
 	
-	«ENDFILE»
-«ENDDEFINE»
+	Â«ENDFILEÂ»
+Â«ENDDEFINEÂ»
 
 
 
-«DEFINE init FOR Program-»
+Â«DEFINE init FOR Program-Â»
     #include "misc.h"
     #include "sc.h"
 
-	«EXPAND Misc::generateSigType FOR allSignals(this)-»
-	«EXPAND Misc::generateSigArray FOR allSignals(this)-»
+	Â«EXPAND Misc::generateSigType FOR allSignals(this)-Â»
+	Â«EXPAND Misc::generateSigArray FOR allSignals(this)-Â»
 
-    #define _SC_valSigInt_SIZE «allSignals(this).size» // Highest signal id in use;
+    #define _SC_valSigInt_SIZE Â«allSignals(this).sizeÂ» // Highest signal id in use;
 
     int valSigInt[_SC_valSigInt_SIZE];
     int valSigIntPre[_SC_valSigInt_SIZE];
 
-    «FOREACH allSignals(this) AS signal -»
-		«EXPAND Misc::generateInputSignal FOR signal-»
-    «ENDFOREACH-»
+    Â«FOREACH allSignals(this) AS signal -Â»
+		Â«EXPAND Misc::generateInputSignal FOR signal-Â»
+    Â«ENDFOREACH-Â»
 	
     #ifndef EXTERNTICK
     int tick(){
-       TICKSTART(«this.priority.value»);
+       TICKSTART(Â«this.priority.valueÂ»);
        
-       «EXPAND expandedStateList FOR this.states-»
+       Â«EXPAND expandedStateList FOR this.states-Â»
        
     }
     #endif
-«ENDDEFINE»
+Â«ENDDEFINEÂ»
 
 
-«DEFINE expandedStateList FOR List[State]-»
-   «FOREACH this AS state -»
-       «EXPAND expandedState FOR state-»
-   «ENDFOREACH-»
-«ENDDEFINE»
+Â«DEFINE expandedStateList FOR List[State]-Â»
+   Â«FOREACH this AS state -Â»
+       Â«EXPAND expandedState FOR state-Â»
+   Â«ENDFOREACH-Â»
+Â«ENDDEFINEÂ»
 
 
-«DEFINE expandedState FOR State-»
-       «this.name»:
-       «EXPAND expandedInstructionList FOR this.instructions-»
+Â«DEFINE expandedState FOR State-Â»
+       Â«this.nameÂ»:
+       Â«EXPAND expandedInstructionList FOR this.instructions-Â»
        
-«ENDDEFINE»
+Â«ENDDEFINEÂ»
 
 
-«DEFINE expandedInstructionList FOR List[Instruction]-»
-   «FOREACH this AS instruction -»
-       «EXPAND expandedInstruction FOR instruction-»
-   «ENDFOREACH-»
-«ENDDEFINE»
+Â«DEFINE expandedInstructionList FOR List[Instruction]-Â»
+   Â«FOREACH this AS instruction -Â»
+       Â«EXPAND expandedInstruction FOR instruction-Â»
+   Â«ENDFOREACH-Â»
+Â«ENDDEFINEÂ»
 
 
-«DEFINE expandedInstruction FOR Pause-»
+Â«DEFINE expandedInstruction FOR Pause-Â»
          PAUSE;
-«ENDDEFINE»
-«DEFINE expandedInstruction FOR Term-»
+Â«ENDDEFINEÂ»
+Â«DEFINE expandedInstruction FOR Term-Â»
          TERM;
-«ENDDEFINE»
-«DEFINE expandedInstruction FOR Halt-»
+Â«ENDDEFINEÂ»
+Â«DEFINE expandedInstruction FOR Halt-Â»
          HALT;
-«ENDDEFINE»
-«DEFINE expandedInstruction FOR Join-»
+Â«ENDDEFINEÂ»
+Â«DEFINE expandedInstruction FOR Join-Â»
          JOIN;
-«ENDDEFINE»
-«DEFINE expandedInstruction FOR Abort-»
+Â«ENDDEFINEÂ»
+Â«DEFINE expandedInstruction FOR Abort-Â»
          ABORT;
-«ENDDEFINE»
-«DEFINE expandedInstruction FOR Present-»
-         if (PRESENT(«this.signal.name-»)) {
-            «EXPAND expandedInstructionList FOR this.instructions-»
+Â«ENDDEFINEÂ»
+Â«DEFINE expandedInstruction FOR Present-Â»
+         if (PRESENT(Â«this.signal.name-Â»)) {
+            Â«EXPAND expandedInstructionList FOR this.instructions-Â»
          }
-«ENDDEFINE»
-«DEFINE expandedInstruction FOR Goto-»
-         GOTO(«this.state.name»);
-«ENDDEFINE»
-«DEFINE expandedInstruction FOR Fork-»
-         FORK(«this.state.name»,«this.priority.value»);
-«ENDDEFINE»
-«DEFINE expandedInstruction FOR Forke-»
-         FORKE(«this.state.name»);
-«ENDDEFINE»
-«DEFINE expandedInstruction FOR Emit-»
-         EMIT(«this.signal.name»);
-«ENDDEFINE»
-«DEFINE expandedInstruction FOR Await-»
-         AWAIT(«this.signal.name»);
-«ENDDEFINE»
-«DEFINE expandedInstruction FOR Prio-»
-         PRIO(«this.priority.value»);
-«ENDDEFINE»
-«DEFINE expandedInstruction FOR Instruction»
-«ENDDEFINE»
+Â«ENDDEFINEÂ»
+Â«DEFINE expandedInstruction FOR Goto-Â»
+         GOTO(Â«this.state.nameÂ»);
+Â«ENDDEFINEÂ»
+Â«DEFINE expandedInstruction FOR Fork-Â»
+         FORK(Â«this.state.nameÂ»,Â«this.priority.valueÂ»);
+Â«ENDDEFINEÂ»
+Â«DEFINE expandedInstruction FOR Forke-Â»
+         FORKE(Â«this.state.nameÂ»);
+Â«ENDDEFINEÂ»
+Â«DEFINE expandedInstruction FOR Emit-Â»
+         EMIT(Â«this.signal.nameÂ»);
+Â«ENDDEFINEÂ»
+Â«DEFINE expandedInstruction FOR Await-Â»
+         AWAIT(Â«this.signal.nameÂ»);
+Â«ENDDEFINEÂ»
+Â«DEFINE expandedInstruction FOR Prio-Â»
+         PRIO(Â«this.priority.valueÂ»);
+Â«ENDDEFINEÂ»
+Â«DEFINE expandedInstruction FOR InstructionÂ»
+Â«ENDDEFINEÂ»
 

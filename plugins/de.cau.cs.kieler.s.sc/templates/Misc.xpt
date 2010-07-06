@@ -1,42 +1,42 @@
-«REM»
+Â«REMÂ»
 	A misc template file.
-«ENDREM»
+Â«ENDREMÂ»
 
-«IMPORT s»
+Â«IMPORT sÂ»
 
 
-«REM»
+Â«REMÂ»
 	Definition of the signaltype including all signals of the SyncChart.
 	The list is a list of signals. 
-«ENDREM»
-«DEFINE generateSigType FOR List-»
-	«IF !this.isEmpty-»
+Â«ENDREMÂ»
+Â«DEFINE generateSigType FOR List-Â»
+	Â«IF !this.isEmpty-Â»
 		typedef enum {
-			«FOREACH this AS signal SEPARATOR ", "-»
-				sig_«((Signal)signal).name-»
-			«ENDFOREACH-»
+			Â«FOREACH this AS signal SEPARATOR ", "-Â»
+				sig_Â«((Signal)signal).name-Â»
+			Â«ENDFOREACH-Â»
 		} signaltype;
-	«ENDIF-»
-«ENDDEFINE»
+	Â«ENDIF-Â»
+Â«ENDDEFINEÂ»
 
-«REM»
+Â«REMÂ»
 	Definition of the signal array including all signals of the SyncChart.
 	The list is a list of signals. 
-«ENDREM»
-«DEFINE generateSigArray FOR List-»
+Â«ENDREMÂ»
+Â«DEFINE generateSigArray FOR List-Â»
 	const char *s2signame[] = {
-		«FOREACH this AS signal SEPARATOR ", "-»
-		"sig_«((Signal)signal).name-»"
-		«ENDFOREACH-»
+		Â«FOREACH this AS signal SEPARATOR ", "-Â»
+		"sig_Â«((Signal)signal).name-Â»"
+		Â«ENDFOREACH-Â»
 	};
-«ENDDEFINE»
+Â«ENDDEFINEÂ»
 
-«REM»
+Â«REMÂ»
 	Template for a function to set inputs. 
-«ENDREM»
-«DEFINE generateInputSignal FOR Signal-»
-	void «((Program)this.eContainer).name»_I_«this.name»(«IF type!="ValueType::PURE"»int val«ENDIF») {
-		signals = signals | (1 << sig_«this.name»);
-		«IF type!="ValueType::PURE"»valSigInt[sig_«this.name»]=val;«ENDIF»
+Â«ENDREMÂ»
+Â«DEFINE generateInputSignal FOR Signal-Â»
+	void Â«((Program)this.eContainer).nameÂ»_I_Â«this.nameÂ»(Â«IF type!="ValueType::PURE"Â»int valÂ«ENDIFÂ») {
+		signals = signals | (1 << sig_Â«this.nameÂ»);
+		Â«IF type!="ValueType::PURE"Â»valSigInt[sig_Â«this.nameÂ»]=val;Â«ENDIFÂ»
 	}
-«ENDDEFINE»
+Â«ENDDEFINEÂ»
