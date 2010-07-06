@@ -7,7 +7,7 @@
             category="de.cau.cs.kieler"
             categoryId="de.cau.cs.kieler"
             defaultHandler="de.cau.cs.kieler.synccharts.codegen.sc.SCGenerator"
-            description="Generate SC-Code"
+            description="Generate SC-Code (deprecated)"
             id="de.cau.cs.kieler.synccharts.codegen.genSC"
             name="genSC">
       </command>
@@ -18,7 +18,7 @@
             locationURI="popup:de.cau.cs.kieler">
          <command
                commandId="de.cau.cs.kieler.synccharts.codegen.genSC"
-               label="generate SC-Code"
+               label="Generate SC-Code (deprecated)"
                mnemonic="generate SC-Code"
                style="push"
                tooltip="generate SC-Code for the current SyncChart">
@@ -37,7 +37,7 @@
             locationURI="menu:de.cau.cs.kieler">
          <command
                commandId="de.cau.cs.kieler.synccharts.codegen.genSC"
-               label="generate SC-Code"
+               label="Generate SC-Code (deprecated)"
                mnemonic="generate SC-Code"
                style="push"
                tooltip="generate SC-Code for the current SyncChart">

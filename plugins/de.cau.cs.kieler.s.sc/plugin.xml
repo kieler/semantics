@@ -7,8 +7,8 @@
             categoryId="de.cau.cs.kieler"
             defaultHandler="de.cau.cs.kieler.s.sc.SCGenerator"
             id="de.cau.cs.kieler.s.sc.s2sc"
-            description="Generate SC-Code"
-            name="S 2 SC Transformation">
+            description="Generate SC-Code (new)"
+            name="Generate SC-Code (new)">
       </command> 
    </extension>
    <extension
@@ -17,7 +17,7 @@
             locationURI="popup:de.cau.cs.kieler">
          <command
                commandId="de.cau.cs.kieler.s.sc.s2sc"
-               label="S 2 SC Transformation"
+               label="Generate SC-Code (new)"
                style="push">
             <visibleWhen
                   checkEnabled="false">
@@ -31,7 +31,7 @@
             locationURI="menu:de.cau.cs.kieler">
          <command
                commandId="de.cau.cs.kieler.s.sc.s2sc"
-               label="S 2 SC Transformation"
+               label="Generate SC-Code (new)"
                style="push"
                tooltip="generate SC-Code for the current S">
             <visibleWhen

@@ -6,9 +6,9 @@
       <command
             categoryId="de.cau.cs.kieler"
             defaultHandler="de.cau.cs.kieler.s.sj.SJGenerator"
-            description="Generate SJ-Code"
+            description="Generate SJ-Code (new)"
             id="de.cau.cs.kieler.s.sj.s2sj"
-            name="S 2 SJ Transformation">
+            name="Generate SJ-Code (new)">
       </command>
    </extension>
    <extension
@@ -17,7 +17,7 @@
             locationURI="popup:de.cau.cs.kieler">
          <command
                commandId="de.cau.cs.kieler.s.sj.s2sj"
-               label="S 2 SJ Transformation"
+               label="Generate SJ-Code (new)"
                style="push"
                tooltip="generate SJ-Code for the current S">
                 <visibleWhen
@@ -33,7 +33,7 @@
             locationURI="menu:de.cau.cs.kieler">
          <command
                commandId="de.cau.cs.kieler.s.sj.s2sj"
-               label="S 2 SJ Transformation"
+               label="Generate SJ-Code (new)"
                style="push"
                tooltip="generate SJ-Code for the current S">
             <visibleWhen
