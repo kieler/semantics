@@ -41,35 +41,34 @@ public class KitsFormatter extends AbstractDeclarativeFormatter {
 			c.setLinewrap().after(comma);
 		}
 				
-		for (Keyword keyword: f.findKeywords("-->",">->","o->")) {
-			c.setLinewrap().before(keyword.eContainer());
-//			c.setLinewrap().after(keyword.eContainer());
-		}
+		c.setLinewrap(2).after(f.getStateRule());
+		c.setLinewrap().before(f.getTransitionRule());
+		c.setLinewrap().after(f.getTransitionRule());
 		
-		for (Keyword keyword: f.findKeywords("||")) {
-			c.setLinewrap().before(keyword);
-			c.setLinewrap().after(keyword);
-		}
-		for(Keyword bracket: f.findKeywords("?")) {
-			c.setNoSpace().after(bracket);
-		}
-		for(Keyword bracket: f.findKeywords("<")) {
-			c.setNoSpace().after(bracket);
-		}
-		for(Keyword bracket: f.findKeywords(">")) {
-			c.setNoSpace().before(bracket);
-		}
-		for (Keyword keyword: f.findKeywords("label", "id", "type")) {
-			c.setLinewrap().before(keyword);
-		}
-		// Regions & States
-		for (Keyword keyword: f.findKeywords("init", "State", "Region")) {
-			c.setLinewrap().before(keyword);
-		}
-		// Transitions
-		for (Keyword keyword: f.findKeywords("priority", "targetState", "effects", "trigger")) {
-			c.setLinewrap().before(keyword);
-		}
+//		for (Keyword keyword: f.findKeywords("||")) {
+//			c.setLinewrap().before(keyword);
+//			c.setLinewrap().after(keyword);
+//		}
+//		for(Keyword bracket: f.findKeywords("?")) {
+//			c.setNoSpace().after(bracket);
+//		}
+//		for(Keyword bracket: f.findKeywords("<")) {
+//			c.setNoSpace().after(bracket);
+//		}
+//		for(Keyword bracket: f.findKeywords(">")) {
+//			c.setNoSpace().before(bracket);
+//		}
+//		for (Keyword keyword: f.findKeywords("label", "id", "type")) {
+//			c.setLinewrap().before(keyword);
+//		}
+//		// Regions & States
+//		for (Keyword keyword: f.findKeywords("init", "State", "Region")) {
+//			c.setLinewrap().before(keyword);
+//		}
+//		// Transitions
+//		for (Keyword keyword: f.findKeywords("priority", "targetState", "effects", "trigger")) {
+//			c.setLinewrap().before(keyword);
+//		}
 
 	}
 }

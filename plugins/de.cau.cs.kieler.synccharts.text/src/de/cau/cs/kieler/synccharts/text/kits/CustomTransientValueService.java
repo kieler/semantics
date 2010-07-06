@@ -19,6 +19,8 @@ public class CustomTransientValueService extends DefaultTransientValueService {
 			return true;
 		if (owner instanceof State && feature == SyncchartsPackage.eINSTANCE.getScope_Id())
 			return true;
+		if (owner instanceof State && feature == SyncchartsPackage.eINSTANCE.getScope_InterfaceDeclaration())
+			return true;
 		if (owner instanceof State && feature == SyncchartsPackage.eINSTANCE.getState_IncomingTransitions())
 			return true;
 		if (owner instanceof Region && feature == SyncchartsPackage.eINSTANCE.getRegion_ParentState())

@@ -29,8 +29,44 @@ import de.cau.cs.kieler.synccharts.Transition;
  */
 public class KitsScopeProvider extends AbstractDeclarativeScopeProvider {
 
+	
+	/**
+	 * A naive implementation of scoping for signals and variables.
+	 * Won't be called directly but via reflection by the Xtext runtime.
+	 * @param trans
+	 * @param reference
+	 * @return
+	 */
+	public IScope scope_Transition_targetState(Transition trans, EReference reference) {
+		List<IEObjectDescription> l = new LinkedList<IEObjectDescription>();
+		for (State s : ((Region) trans.eContainer().eContainer()).getInnerStates()) {
+			l.add(new EObjectDescription(s.getLabel(), s, Collections.EMPTY_MAP));
+		}
+		return new SimpleScope(l);
+	}
+	
+	/**
+	 * A naive implementation of scoping for signals and variables.
+	 * Won't be called directly but via reflection by the Xtext runtime.
+	 * Is to be completed.
+	 * @param trans
+	 * @param reference
+	 * @return
+	 */
+	public IScope scope_Transition_trigger(Transition trans, EReference reference) {
+		List<IEObjectDescription> l = new LinkedList<IEObjectDescription>();
+		for (Signal s : ((State) trans.eContainer()).getSignals()) {
+			l.add(new EObjectDescription(s.getName(), s, Collections.EMPTY_MAP));
+		}
+		for (Variable v : ((State) trans.eContainer()).getVariables()) {
+			l.add(new EObjectDescription(v.getName(), v, Collections.EMPTY_MAP));
+		}		
+		return new SimpleScope(l);
+	}
+	
+	/** old stuff */
     @SuppressWarnings("unchecked")
-	public IScope getScope(EObject context, EReference reference) {
+	public IScope getScopeOld(EObject context, EReference reference) {
 //		System.out.println(context.eClass().getName() + "  " + reference.getName());
 		
     	if (context instanceof Transition) {

@@ -38,6 +38,7 @@ public class KitsResource extends LazyLinkingResource {
 	protected void doLoad(InputStream inputStream, Map<?, ?> options) throws IOException {
 		super.doLoad(inputStream, options);
 		setupScopeIDs();
+		setupPriorities();
 	}
     
 	@Override
@@ -72,6 +73,7 @@ public class KitsResource extends LazyLinkingResource {
 	public void update(int offset, int replacedTextLength, String newText) {
 		super.update(offset, replacedTextLength, newText);
 		setupScopeIDs();
+		setupPriorities();
 	}
 	
 	/** adapted from TriggerListenerIDs */
@@ -80,8 +82,8 @@ public class KitsResource extends LazyLinkingResource {
 
 		caches.clear();
 		EObject o = null;
-		for (Iterator<EObject> i = this.getAllContents(); i.hasNext(); o = i
-				.next()) {
+		for (Iterator<EObject> i = this.getAllContents(); i.hasNext();) {
+			 o = i.next();
 			if (o instanceof Scope) {
 				Scope scope = (Scope) o;
 				String newId = scope.getLabel();
@@ -130,6 +132,22 @@ public class KitsResource extends LazyLinkingResource {
 				}
 			}
 		}
+	}
+	
+	
+	private void setupPriorities() {
+		EObject o = null;
+		for (Iterator<EObject> it = this.getAllContents(); it.hasNext(); ) {
+			o = it.next();
+			if (o instanceof State) {
+				State s = (State) o;
+				for (int i = 0; i < s.getOutgoingTransitions().size(); i++) {
+					s.getOutgoingTransitions().get(i).setPriority(i+1);
+				}
+				
+			}
+		}
+
 	}
      
 	/** copied from TriggerListenerIDs */

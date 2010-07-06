@@ -10,19 +10,19 @@ Region returns synccharts::Region:
 //     (variables+=Variable|signals+=Signal)* 
      (innerStates+=State) 
   );
+
+// ---------------------------------------------------------------------------------------------------
   
 NestedRegion returns synccharts::Region:
   ('Region' (label=ID) (variables+=Variable|signals+=Signal)* )? 
   (innerStates+=State)*;
-  
-//	'Region'
-//	'{'
-//		('id' id=EString)?
-//		('innerStates' '{' innerStates+=State ( "," innerStates+=State)* '}' )?
-//		('variables' '{' variables+=Variable ( "," variables+=Variable)* '}' )?
-//		('signals' '{' signals+=Signal ( "," signals+=Signal)* '}' )?
-//    '}';
 
+// ---------------------------------------------------------------------------------------------------
+
+SingleNestedRegion returns synccharts::Region:
+	(innerStates+=State)+;
+
+// ---------------------------------------------------------------------------------------------------
 
 State returns synccharts::State:
   (  ((isInitial?='init') (isFinal?='final')?) ('State')? (id=ID)? (label=EString)
@@ -30,7 +30,9 @@ State returns synccharts::State:
    | ((type=StateType))?                       ('State')? (id=ID)? (label=EString)
    )
   (  (outgoingTransitions+=Transition ("," outgoingTransitions+=Transition)*)? ';'
-   | ('{'( 
+   | ('{'(
+          ( regions+=SingleNestedRegion)
+          | 
           ( '[' regions+=NestedRegion ('||' regions+=NestedRegion)*  ']' )
           |
           (
@@ -49,45 +51,24 @@ State returns synccharts::State:
               'onexit'  exitActions+=Action  |
               'suspension' suspensionTrigger=Action
               ))*
-            ( '[' regions+=NestedRegion ('||' regions+=NestedRegion)* ']' )?
+            (
+             ( regions+=SingleNestedRegion)
+              | 
+              ('[' regions+=NestedRegion ('||' regions+=NestedRegion)* ']' )
+             )?
            )
           ) 
        '}' (outgoingTransitions+=Transition ("," outgoingTransitions+=Transition)* ';')?
       )
    );
 
-//	(isInitial?='isInitial')?
-//	(isFinal?='isFinal')?
-//	'State'
-//	'{'
-//		('id' id=EString)?
-//		('label' label=EString)?
-//		('type' type=StateType)?
-//		('bodyText' bodyText=EString)?
-//		('interfaceDeclaration' interfaceDeclaration=EString)?
-//		('bodyReference' bodyReference=[ecore::EObject|EString])?
-//		('signals' '{' signals+=Signal ( "," signals+=Signal)* '}' )?
-//		('regions' '{' regions+=Region ( "," regions+=Region)* '}' )?
-//		('entryActions' '{' entryActions+=Action ( "," entryActions+=Action)* '}' )?
-//		('innerActions' '{' innerActions+=Action ( "," innerActions+=Action)* '}' )?
-//		('exitActions' '{' exitActions+=Action ( "," exitActions+=Action)* '}' )?
-//		('renamings' '{' renamings+=Renaming ( "," renamings+=Renaming)* '}' )?
-//		('suspensionTrigger' suspensionTrigger=Action)?
-//		('outgoingTransitions' '{' outgoingTransitions+=Transition ( "," outgoingTransitions+=Transition)* '}' )?
-////		('bodyContents' bodyContents=EObject)?
-//    '}';
+// ---------------------------------------------------------------------------------------------------
 
 Variable returns expressions::Variable:
   'var' name=ID ((':=' initialValue=EString)? ':' type=ValueType) ";";
-//	'Variable'
-//	(name=EString)?
-//	'{'
-//		('type' type=ValueType)?
-//		('initialValue' initialValue=EString)?
-//		('hostType' hostType=EString)?
-//    '}';
 
-      
+// ---------------------------------------------------------------------------------------------------
+
 Signal returns expressions::Signal:
 (isInput?='input')?
 	(isOutput?='output')?
@@ -98,33 +79,8 @@ Signal returns expressions::Signal:
       |
      (':' 'combine' type=ValueType 'with' (combineOperator=CombineOperator|hostCombineOperator=EString) )
     )? ";";
-//	'{'
-//		('type' type=ValueType)?
-//		('initialValue' initialValue=EString)?
-//		('hostType' hostType=EString)?
-//		('combineOperator' combineOperator=CombineOperator)?
-//		('hostCombineOperator' hostCombineOperator=EString)?
-//    '}'
 
-
-//Action returns synccharts::Action:
-//	Action_Impl
-//	 | Transition
-//;
-
-//Action_Impl returns synccharts::Action:
-////	{Action}
-////	(isImmediate?='isImmediate')?
-////	'Action'
-////	'{'
-////		('triggersAndEffects' triggersAndEffects=EString)?
-////		('delay' delay=EInt)?
-////		('trigger' '{' trigger=Expression ' }' )?
-////		('effects' '{'
-//		 effects+=Effect ( "," effects+=Effect)*
-////		 '}' )?
-////    '}'
-//    ;
+// ---------------------------------------------------------------------------------------------------
 
 Transition returns synccharts::Transition:
 	type=TransitionType 
@@ -134,51 +90,7 @@ Transition returns synccharts::Transition:
 	  ( trigger=Expression)?
       ('/' effects+=Effect (','effects+=Effect)*)?
 	)? 
-	(isHistory?=' history')?
-	
-	
-//	(isImmediate?='isImmediate')?
-//	(isHistory?='isHistory')?
-//	'Transition'
-//	'{'
-////		(isImmediate?='#')? (delay=INT)? (trigger=BooleanExpression)? ("/" (effects+=Effect (',')? )*)? 		
-//		('triggersAndEffects' triggersAndEffects=EString)?
-//		('delay' delay=EInt)?
-//		('priority' priority=EInt)?
-//		('type' type=TransitionType)?
-//		('targetState' targetState=[State|EString])?
-//		('trigger' '{' trigger=Expression '}' )?
-//		('effects' '{' effects+=Effect ( "," effects+=Effect)* '}' )?
-//    '}'
-;
-
-//Effect returns synccharts::Effect:
-//	Assignment |
-////	HostCode |
-//	Emission ;
-//
-//Assignment returns synccharts::Assignment:
-//    variable=[expressions::Variable|EString] ':=' expression=Expression;
-////	'Assignment'
-////	'{'
-////		('variable' variable=[Variable|EString])?
-////		('expression' expression=Expression)?
-////    '}';
-//
-//Emission returns synccharts::Emission:
-//	signal=[expressions::Signal|EString];
-////	'Emission'
-////	'{'
-////		('signal' signal=[Signal|EString])?
-////		('newValue' newValue=Expression)?
-////    '}';
-//
-////HostCode returns HostCode:
-////	'HostCode'
-////	'{'
-////		('code' code=EString)?
-////		('type' type=EString)?
-////    '}';
+	(isHistory?=' history')?;
 
 enum StateType returns synccharts::StateType:
 	NORMAL = 'NORMAL' | CONDITIONAL = 'CONDITIONAL' | REFERENCE = 'REFERENCE' | TEXTUAL = 'TEXTUAL';
