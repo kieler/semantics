@@ -1,6 +1,3 @@
-import java.text.Annotation;
-import java.util.LinkedList;
-
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
@@ -25,7 +22,7 @@ import de.cau.cs.kieler.synccharts.s.Activator;
 
 public class SyncCharts2SHandler extends AbstractHandler implements IHandler {
 
-    public Object execute(ExecutionEvent event) throws ExecutionException {
+    public Object execute(final ExecutionEvent event) throws ExecutionException {
         // TODO Auto-generated method stub
         System.out.println("Transform SyncCharts2S");
         final String transformation = "model/synccharts2s";
@@ -37,31 +34,36 @@ public class SyncCharts2SHandler extends AbstractHandler implements IHandler {
         final EPackage p2 = SPackage.eINSTANCE;
         final EPackage p3 = ExpressionsPackage.eINSTANCE;
         final EPackage p4 = AnnotationsPackage.eINSTANCE;
-        
+
         Status myStatus = null;
         try {
             // get input model from currently selected file in Explorer
-            ISelection selection = PlatformUI.getWorkbench().getActiveWorkbenchWindow()
-                    .getSelectionService().getSelection();
+            ISelection selection = PlatformUI.getWorkbench()
+                    .getActiveWorkbenchWindow().getSelectionService()
+                    .getSelection();
             File file = (File) ((TreeSelection) selection).getFirstElement();
-            input = URI.createPlatformResourceURI(file.getFullPath().toString(), true);
+            input = URI.createPlatformResourceURI(
+                    file.getFullPath().toString(), true);
 
             // get output model from input model
             output = URI.createURI(input.toString());
             output = output.trimFileExtension().appendFileExtension("s");
 
-            XtendTransformationUtil
-                    .model2ModelTransform(transformation, fun, input, output, p1,p2,p3,p4);
+            XtendTransformationUtil.model2ModelTransform(transformation, fun,
+                    input, output, p1, p2, p3, p4);
         } catch (KielerException e) {
+            e.printStackTrace();
             myStatus = new Status(IStatus.ERROR, Activator.PLUGIN_ID,
                     "Failed to transform SyncChart model into S model.", e);
         } catch (NullPointerException npe) {
+            npe.printStackTrace();
             myStatus = new Status(
                     IStatus.ERROR,
                     Activator.PLUGIN_ID,
                     "Failed to transform SyncChart model into S model. Could not determine input file.",
                     npe);
         } catch (ClassCastException cce) {
+            cce.printStackTrace();
             myStatus = new Status(
                     IStatus.WARNING,
                     Activator.PLUGIN_ID,
