@@ -51,12 +51,12 @@
 	«ENDIF-»
 	«IF this.operator == OperatorType::AND-»
 		(«FOREACH  this.subExpressions AS subExpression SEPARATOR " && "-»
-				«EXPAND expandedExpression FOR subExpression-»
-		«ENDFOREACH-»)
+			«EXPAND expandedExpression FOR subExpression-»
+		 «ENDFOREACH-»)
 	«ENDIF-»
 	«IF this.operator == OperatorType::OR-»
 		(«FOREACH  this.subExpressions AS subExpression SEPARATOR " || "-»
-				«EXPAND expandedExpression FOR subExpression-»
+			«EXPAND expandedExpression FOR subExpression-»
 		«ENDFOREACH-»)
 	«ENDIF-»
 	«IF this.operator == OperatorType::ADD-»
