@@ -13,6 +13,7 @@ public class WorkflowGenerator extends AbstractWorkflowGenerator {
      */
     public WorkflowGenerator() {
         super();
+        this.postProcessor = new de.cau.cs.kieler.s.sc.beautifier.Beautifier();
     }
 
     /**
@@ -24,6 +25,7 @@ public class WorkflowGenerator extends AbstractWorkflowGenerator {
      */
     public WorkflowGenerator(final String fileLocation) {
         super(fileLocation);
+        this.postProcessor = new de.cau.cs.kieler.s.sc.beautifier.Beautifier();
     }
 
     /**
@@ -33,6 +35,7 @@ public class WorkflowGenerator extends AbstractWorkflowGenerator {
      */
     public WorkflowGenerator(final IFile selectedFile) {
         super(selectedFile);
+        this.postProcessor = new de.cau.cs.kieler.s.sc.beautifier.Beautifier();
     }
 
     /**
@@ -44,6 +47,7 @@ public class WorkflowGenerator extends AbstractWorkflowGenerator {
      */
     public WorkflowGenerator(final IFile selectedFile, final String fileLocation) {
         super(selectedFile, fileLocation);
+        this.postProcessor = new de.cau.cs.kieler.s.sc.beautifier.Beautifier();
     }
 
     /**
