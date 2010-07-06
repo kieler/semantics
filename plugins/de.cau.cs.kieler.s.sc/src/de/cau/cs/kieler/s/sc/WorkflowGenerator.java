@@ -61,5 +61,5 @@ public class WorkflowGenerator extends AbstractWorkflowGenerator {
     public String getPathToMainTemplate() {
         return "templates::S2SC";
     }
-
+    
 }
