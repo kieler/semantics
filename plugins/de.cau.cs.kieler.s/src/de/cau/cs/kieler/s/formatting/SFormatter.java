@@ -70,10 +70,10 @@ public class SFormatter extends AbstractDeclarativeFormatter {
         c.setIndentationIncrement().before(f.getInstructionRule());
         c.setIndentationDecrement().after(f.getInstructionRule());
 
-        // Indentation { } for PRESENT Instruction
-        c.setIndentation(f.getPresentAccess().getLeftCurlyBracketKeyword_5(), 
-                         f.getPresentAccess().getRightCurlyBracketKeyword_7());
-        c.setLinewrap().after(f.getPresentAccess().getLeftCurlyBracketKeyword_5());
-        c.setLinewrap().before(f.getPresentAccess().getRightCurlyBracketKeyword_7());
+        // Indentation { } for IF Instruction
+        c.setIndentation(f.getIfAccess().getLeftCurlyBracketKeyword_5(), 
+                         f.getIfAccess().getRightCurlyBracketKeyword_7());
+        c.setLinewrap().after(f.getIfAccess().getLeftCurlyBracketKeyword_5());
+        c.setLinewrap().before(f.getIfAccess().getRightCurlyBracketKeyword_7());
     }
 }
