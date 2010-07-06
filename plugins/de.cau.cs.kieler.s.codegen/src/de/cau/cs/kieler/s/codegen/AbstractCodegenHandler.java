@@ -19,7 +19,7 @@ import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.expressions.EvaluationContext;
-import org.eclipse.core.internal.resources.File;
+import org.eclipse.core.resources.IFile;
 
 /**
  * @author soh
@@ -37,8 +37,10 @@ public abstract class AbstractCodegenHandler extends AbstractHandler {
             if (defVar instanceof List<?>) {
                 List<?> list = (List<?>) defVar;
 
-                if (!list.isEmpty() && list.get(0) instanceof File) {
-                    createContext((File) list.get(0));
+                if (!list.isEmpty() && list.get(0) instanceof IFile) {
+                    for (Object file : list) {
+                        createContext((IFile) file);
+                    }
                     return null;
                 }
             }
@@ -47,7 +49,7 @@ public abstract class AbstractCodegenHandler extends AbstractHandler {
         return null;
     }
 
-    protected abstract void createContext(File selectedFile);
+    protected abstract void createContext(IFile selectedFile);
 
     protected abstract void createContext();
 }

@@ -1,6 +1,6 @@
 package de.cau.cs.kieler.s.sc;
 
-import org.eclipse.core.internal.resources.File;
+import org.eclipse.core.resources.IFile;
 
 import de.cau.cs.kieler.s.codegen.AbstractWorkflowGenerator;
 
@@ -31,7 +31,7 @@ public class WorkflowGenerator extends AbstractWorkflowGenerator {
      * 
      * @param selectedFiles
      */
-    public WorkflowGenerator(final File selectedFile) {
+    public WorkflowGenerator(final IFile selectedFile) {
         super(selectedFile);
     }
 
@@ -42,7 +42,7 @@ public class WorkflowGenerator extends AbstractWorkflowGenerator {
      * @param fileLocation
      *            the location of the given diagram file
      */
-    public WorkflowGenerator(final File selectedFile, final String fileLocation) {
+    public WorkflowGenerator(final IFile selectedFile, final String fileLocation) {
         super(selectedFile, fileLocation);
     }
 

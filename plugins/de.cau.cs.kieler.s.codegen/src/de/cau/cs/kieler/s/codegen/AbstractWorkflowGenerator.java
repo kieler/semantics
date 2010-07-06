@@ -2,7 +2,7 @@ package de.cau.cs.kieler.s.codegen;
 
 import java.util.List;
 
-import org.eclipse.core.internal.resources.File;
+import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
@@ -101,7 +101,7 @@ public abstract class AbstractWorkflowGenerator {
      * 
      * @param selectedFile
      */
-    public AbstractWorkflowGenerator(final File selectedFile) {
+    public AbstractWorkflowGenerator(final IFile selectedFile) {
         // System.out.println("File:" + selectedFile);
         uri = URI.createPlatformResourceURI(selectedFile.getFullPath()
                 .makeRelativeTo(Platform.getLocation()).toOSString(), true);
@@ -117,7 +117,7 @@ public abstract class AbstractWorkflowGenerator {
      * @param selectedFile
      * @param fileLocation
      */
-    public AbstractWorkflowGenerator(final File selectedFile,
+    public AbstractWorkflowGenerator(final IFile selectedFile,
             final String fileLocation) {
         // System.out.println("File:" + selectedFile);
         uri = URI.createPlatformResourceURI(selectedFile.getFullPath()

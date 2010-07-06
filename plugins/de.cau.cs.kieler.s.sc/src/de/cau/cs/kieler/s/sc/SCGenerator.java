@@ -15,7 +15,7 @@
 
 package de.cau.cs.kieler.s.sc;
 
-import org.eclipse.core.internal.resources.File;
+import org.eclipse.core.resources.IFile;
 
 import de.cau.cs.kieler.s.codegen.AbstractCodegenHandler;
 
@@ -31,7 +31,7 @@ public class SCGenerator extends AbstractCodegenHandler {
      * {@inheritDoc}
      */
     @Override
-    protected void createContext(final File selectedFile) {
+    protected void createContext(final IFile selectedFile) {
         WorkflowGenerator wf = new WorkflowGenerator(selectedFile);
         wf.invokeWorkflow(false, "");
     }
