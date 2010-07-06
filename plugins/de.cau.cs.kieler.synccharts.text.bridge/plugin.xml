@@ -45,6 +45,7 @@
       </triggerListener>
    </extension>
 
+<!--
    <extension
          point="org.eclipse.ui.menus">
       <menuContribution
@@ -110,4 +111,5 @@
             class="de.cau.cs.kieler.synccharts.text.interfaces.bridge.TriggerListenerChangedRegion">
       </triggerListener>
    </extension>
+   -->
 </plugin>
