@@ -25,8 +25,8 @@ public class SPropertyTester extends PropertyTester {
      */
     public boolean test(final Object receiver, final String property,
             final Object[] args, final Object expectedValue) {
-        System.out.println(receiver);
-        System.out.println(property);
+        // System.out.println("rec:" + receiver);
+        // System.out.println("prop:" + property);
 
         return true;
     }

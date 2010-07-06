@@ -7,6 +7,7 @@ import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.NullProgressMonitor;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -74,6 +75,8 @@ public abstract class AbstractWorkflowGenerator {
                 });
             }
         }
+        // System.out.println("URI:" + uri);
+        // System.out.println("Outpath:" + outPath);
     }
 
     /**
@@ -99,10 +102,13 @@ public abstract class AbstractWorkflowGenerator {
      * @param selectedFile
      */
     public AbstractWorkflowGenerator(final File selectedFile) {
-        uri = URI.createPlatformResourceURI(selectedFile.getRawLocation()
-                .toOSString(), true);
+        // System.out.println("File:" + selectedFile);
+        uri = URI.createPlatformResourceURI(selectedFile.getFullPath()
+                .makeRelativeTo(Platform.getLocation()).toOSString(), true);
         outPath = selectedFile.getRawLocation().removeLastSegments(1)
                 .addTrailingSeparator().toOSString();
+        // System.out.println("URI:" + uri);
+        // System.out.println("Outpath:" + outPath);
     }
 
     /**
@@ -113,10 +119,13 @@ public abstract class AbstractWorkflowGenerator {
      */
     public AbstractWorkflowGenerator(final File selectedFile,
             final String fileLocation) {
-        uri = URI.createPlatformResourceURI(selectedFile.getRawLocation()
-                .toOSString(), true);
+        // System.out.println("File:" + selectedFile);
+        uri = URI.createPlatformResourceURI(selectedFile.getFullPath()
+                .makeRelativeTo(Platform.getLocation()).toOSString(), true);
         outPath = selectedFile.getRawLocation().removeLastSegments(1)
                 .addTrailingSeparator().toOSString();
+        // System.out.println("URI:" + uri);
+        // System.out.println("Outpath:" + outPath);
     }
 
     /**

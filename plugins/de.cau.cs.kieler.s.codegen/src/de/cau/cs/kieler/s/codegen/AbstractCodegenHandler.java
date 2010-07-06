@@ -79,7 +79,6 @@ public abstract class AbstractCodegenHandler extends AbstractHandler {
                 Iterator<?> iter = iterable.iterator();
                 while (iter.hasNext()) {
                     Object o = iter.next();
-                    System.out.println(o);
                     IPath path = null;
                     if (o instanceof org.eclipse.core.internal.resources.File) {
                         // selection is an a file
