@@ -14,80 +14,78 @@
 		(«FOREACH  this.subExpressions AS subExpression SEPARATOR " == "-»
 			«EXPAND expandedExpression FOR subExpression-»
 		«ENDFOREACH-»)
-	«ENDIF»
+	«ENDIF-»
 	«IF this.operator == OperatorType::LT-»
 		(«FOREACH  this.subExpressions AS subExpression SEPARATOR " < "-»
 			«EXPAND expandedExpression FOR subExpression-»
 		«ENDFOREACH-»)
-	«ENDIF»
+	«ENDIF-»
 	«IF this.operator == OperatorType::LEQ-»
 		(«FOREACH  this.subExpressions AS subExpression SEPARATOR " <= "-»
 			«EXPAND expandedExpression FOR subExpression-»
 		«ENDFOREACH-»)
-	«ENDIF»
+	«ENDIF-»
 	«IF this.operator == OperatorType::GT-»
 		(«FOREACH  this.subExpressions AS subExpression SEPARATOR " > "-»
 			«EXPAND expandedExpression FOR subExpression-»
 		«ENDFOREACH-»)
-	«ENDIF»
+	«ENDIF-»
 	«IF this.operator == OperatorType::GEQ-»
 		(«FOREACH  this.subExpressions AS subExpression SEPARATOR " >= "-»
 			«EXPAND expandedExpression FOR subExpression-»
 		«ENDFOREACH-»)
-	«ENDIF»
+	«ENDIF-»
 	«IF this.operator == OperatorType::NOT-»
 		(!(«EXPAND expandedExpression FOR this.subExpressions.first()-»))
-	«ENDIF»
+	«ENDIF-»
 	«IF this.operator == OperatorType::VAL-»
 		(VAL(«EXPAND expandedExpression FOR this.subExpressions.first()-»))
-	«ENDIF»
+	«ENDIF-»
 	«IF this.operator == OperatorType::PRE-»
 		(PRE(«EXPAND expandedExpression FOR this.subExpressions.first()-»))
-	«ENDIF»
+	«ENDIF-»
 	«IF this.operator == OperatorType::NE-»
 		(«FOREACH  this.subExpressions AS subExpression SEPARATOR " != "-»
 			«EXPAND expandedExpression FOR subExpression-»
 		«ENDFOREACH-»)
-	«ENDIF»
+	«ENDIF-»
 	«IF this.operator == OperatorType::AND-»
 		(«FOREACH  this.subExpressions AS subExpression SEPARATOR " && "-»
-			«EXPAND expandedExpression FOR subExpression-»
+				«EXPAND expandedExpression FOR subExpression-»
 		«ENDFOREACH-»)
-	«ENDIF»
+	«ENDIF-»
 	«IF this.operator == OperatorType::OR-»
 		(«FOREACH  this.subExpressions AS subExpression SEPARATOR " || "-»
-			«EXPAND expandedExpression FOR subExpression-»
+				«EXPAND expandedExpression FOR subExpression-»
 		«ENDFOREACH-»)
-	«ENDIF»
+	«ENDIF-»
 	«IF this.operator == OperatorType::ADD-»
 		(«FOREACH  this.subExpressions AS subExpression SEPARATOR " + "-»
 			«EXPAND expandedExpression FOR subExpression-»
 		«ENDFOREACH-»)
-	«ENDIF»
+	«ENDIF-»
 	«IF this.operator == OperatorType::SUB-»
 		(«FOREACH  this.subExpressions AS subExpression SEPARATOR " - "-»
 			«EXPAND expandedExpression FOR subExpression-»
 		«ENDFOREACH-»)
-	«ENDIF»
+	«ENDIF-»
 	«IF this.operator == OperatorType::MULT-»
 		(«FOREACH  this.subExpressions AS subExpression SEPARATOR " * "-»
 			«EXPAND expandedExpression FOR subExpression-»
 		«ENDFOREACH-»)
-	«ENDIF»
+	«ENDIF-»
 	«IF this.operator == OperatorType::DIV-»
 		(«FOREACH  this.subExpressions AS subExpression SEPARATOR " / "-»
 			«EXPAND expandedExpression FOR subExpression-»
 		«ENDFOREACH-»)
-	«ENDIF»
+	«ENDIF-»
 	«IF this.operator == OperatorType::MOD-»
 		(«FOREACH  this.subExpressions AS subExpression SEPARATOR " % "-»
 			«EXPAND expandedExpression FOR subExpression-»
 		«ENDFOREACH-»)
-	«ENDIF»
+	«ENDIF-»
 «ENDDEFINE»
-«DEFINE expandedExpression FOR SignalReference-»
-	PRESENT(«this.signal.name-»)
-«ENDDEFINE»
+«DEFINE expandedExpression FOR SignalReference-»PRESENT(«this.signal.name-»)«ENDDEFINE»
 «DEFINE expandedExpression FOR Expression-»
 «ENDDEFINE»
 

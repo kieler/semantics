@@ -38,7 +38,7 @@
 	«EXPAND Misc::generateSigType FOR allSignals(this)-»
 	«EXPAND Misc::generateSigArray FOR allSignals(this)-»
 
-    #define _SC_valSigInt_SIZE «allSignals(this).size» // Highest signal id in use;
+    #define _SC_valSigInt_SIZE «allSignals(this).size-» // Highest signal id in use;
 
     int valSigInt[_SC_valSigInt_SIZE];
     int valSigIntPre[_SC_valSigInt_SIZE];
@@ -49,7 +49,7 @@
 	
     #ifndef EXTERNTICK
     int tick(){
-       TICKSTART(«this.priority»);
+       TICKSTART(«this.priority-»);
        
        «EXPAND expandedStateList FOR this.states-»
        
@@ -66,7 +66,7 @@
 
 
 «DEFINE expandedState FOR State-»
-       «this.name»:
+       «this.name-»:
        «EXPAND expandedInstructionList FOR this.instructions-»
        
 «ENDDEFINE»
@@ -95,28 +95,28 @@
          ABORT;
 «ENDDEFINE»
 «DEFINE expandedInstruction FOR If-»
-         if («EXPAND Misc::expandedExpression FOR this.expression») {
-            «EXPAND expandedInstructionList FOR this.instructions-»
+         if («EXPAND Misc::expandedExpression FOR this.expression-») {
+         	  «EXPAND expandedInstructionList FOR this.instructions-»   
          }
 «ENDDEFINE»
 «DEFINE expandedInstruction FOR Goto-»
-         GOTO(«this.state.name»);
+         GOTO(«this.state.name-»);
 «ENDDEFINE»
 «DEFINE expandedInstruction FOR Fork-»
-         FORK(«this.state.name»,«this.priority»);
+         FORK(«this.state.name-»,«this.priority-»);
 «ENDDEFINE»
 «DEFINE expandedInstruction FOR Forke-»
-         FORKE(«this.state.name»);
+         FORKE(«this.state.name-»);
 «ENDDEFINE»
 «DEFINE expandedInstruction FOR Emit-»
-         EMIT(«this.signal.name»);
+         EMIT(«this.signal.name-»);
 «ENDDEFINE»
 «DEFINE expandedInstruction FOR Await-»
-         AWAIT(«this.signal.name»);
+         AWAIT(«this.signal.name-»);
 «ENDDEFINE»
 «DEFINE expandedInstruction FOR Prio-»
-         PRIO(«this.priority»);
+         PRIO(«this.priority-»);
 «ENDDEFINE»
-«DEFINE expandedInstruction FOR Instruction»
+«DEFINE expandedInstruction FOR Instruction-»
 «ENDDEFINE»
 
