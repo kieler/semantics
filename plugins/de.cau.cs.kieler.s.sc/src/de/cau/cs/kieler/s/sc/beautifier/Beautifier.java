@@ -68,19 +68,18 @@ public class Beautifier implements PostProcessor {
 	public void beforeWriteAndClose(final FileHandle info) {
 		if (info.getAbsolutePath() != null && info.getAbsolutePath().endsWith(".c")) {
 
-			IDocument doc = new Document(info.getBuffer().toString());
-			TextEdit edit = getCodeFormatter().format(CodeFormatter.K_COMPILATION_UNIT, doc.get(), 0,
-					doc.get().length(), 0, null);
-
+			IDocument inputDoc = new Document(info.getBuffer().toString());
+			
+			SCCodeFormatter scCodeFormatter = new SCCodeFormatter();
+			
+			IDocument outputDoc = scCodeFormatter.format(inputDoc);
+			
 			// check if text formatted successfully
-			if (edit != null) {
+			if (outputDoc != null) {
 				try {
-					edit.apply(doc);
-					info.setBuffer(new StringBuffer(doc.get()));
+					info.setBuffer(new StringBuffer(outputDoc.get()));
 				} catch (MalformedTreeException e) {
 					log.warn("Error during code formatting. Illegal code edit tree (" + e.getMessage() + ").");
-				} catch (BadLocationException e) {
-					log.warn("Error during code formatting. Bad location (" + e.getMessage() + ").");
 				}
 			} else {
 				log.warn("File " + info.getAbsolutePath()
