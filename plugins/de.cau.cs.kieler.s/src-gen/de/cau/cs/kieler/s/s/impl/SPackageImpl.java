@@ -15,10 +15,10 @@ import de.cau.cs.kieler.s.s.Fork;
 import de.cau.cs.kieler.s.s.Forke;
 import de.cau.cs.kieler.s.s.Goto;
 import de.cau.cs.kieler.s.s.Halt;
+import de.cau.cs.kieler.s.s.If;
 import de.cau.cs.kieler.s.s.Instruction;
 import de.cau.cs.kieler.s.s.Join;
 import de.cau.cs.kieler.s.s.Pause;
-import de.cau.cs.kieler.s.s.Present;
 import de.cau.cs.kieler.s.s.Prio;
 import de.cau.cs.kieler.s.s.Program;
 import de.cau.cs.kieler.s.s.SFactory;
@@ -102,7 +102,7 @@ public class SPackageImpl extends EPackageImpl implements SPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  private EClass presentEClass = null;
+  private EClass ifEClass = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -377,9 +377,9 @@ public class SPackageImpl extends EPackageImpl implements SPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EClass getPresent()
+  public EClass getIf()
   {
-    return presentEClass;
+    return ifEClass;
   }
 
   /**
@@ -387,9 +387,9 @@ public class SPackageImpl extends EPackageImpl implements SPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getPresent_Expression()
+  public EReference getIf_Expression()
   {
-    return (EReference)presentEClass.getEStructuralFeatures().get(0);
+    return (EReference)ifEClass.getEStructuralFeatures().get(0);
   }
 
   /**
@@ -397,9 +397,9 @@ public class SPackageImpl extends EPackageImpl implements SPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getPresent_Instructions()
+  public EReference getIf_Instructions()
   {
-    return (EReference)presentEClass.getEStructuralFeatures().get(1);
+    return (EReference)ifEClass.getEStructuralFeatures().get(1);
   }
 
   /**
@@ -586,9 +586,9 @@ public class SPackageImpl extends EPackageImpl implements SPackage
 
     abortEClass = createEClass(ABORT);
 
-    presentEClass = createEClass(PRESENT);
-    createEReference(presentEClass, PRESENT__EXPRESSION);
-    createEReference(presentEClass, PRESENT__INSTRUCTIONS);
+    ifEClass = createEClass(IF);
+    createEReference(ifEClass, IF__EXPRESSION);
+    createEReference(ifEClass, IF__INSTRUCTIONS);
 
     gotoEClass = createEClass(GOTO);
     createEReference(gotoEClass, GOTO__STATE);
@@ -647,7 +647,7 @@ public class SPackageImpl extends EPackageImpl implements SPackage
     haltEClass.getESuperTypes().add(this.getInstruction());
     joinEClass.getESuperTypes().add(this.getInstruction());
     abortEClass.getESuperTypes().add(this.getInstruction());
-    presentEClass.getESuperTypes().add(this.getInstruction());
+    ifEClass.getESuperTypes().add(this.getInstruction());
     gotoEClass.getESuperTypes().add(this.getInstruction());
     forkEClass.getESuperTypes().add(this.getInstruction());
     forkeEClass.getESuperTypes().add(this.getInstruction());
@@ -680,9 +680,9 @@ public class SPackageImpl extends EPackageImpl implements SPackage
 
     initEClass(abortEClass, Abort.class, "Abort", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
-    initEClass(presentEClass, Present.class, "Present", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getPresent_Expression(), theExpressionsPackage.getExpression(), null, "expression", null, 0, 1, Present.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getPresent_Instructions(), this.getInstruction(), null, "instructions", null, 0, -1, Present.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEClass(ifEClass, If.class, "If", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getIf_Expression(), theExpressionsPackage.getExpression(), null, "expression", null, 0, 1, If.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getIf_Instructions(), this.getInstruction(), null, "instructions", null, 0, -1, If.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(gotoEClass, Goto.class, "Goto", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getGoto_State(), this.getState(), null, "state", null, 0, 1, Goto.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

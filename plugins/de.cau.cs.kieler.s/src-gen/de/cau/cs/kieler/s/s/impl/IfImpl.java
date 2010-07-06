@@ -8,8 +8,8 @@ package de.cau.cs.kieler.s.s.impl;
 
 import de.cau.cs.kieler.core.expressions.Expression;
 
+import de.cau.cs.kieler.s.s.If;
 import de.cau.cs.kieler.s.s.Instruction;
-import de.cau.cs.kieler.s.s.Present;
 import de.cau.cs.kieler.s.s.SPackage;
 
 import java.util.Collection;
@@ -29,19 +29,19 @@ import org.eclipse.emf.ecore.util.InternalEList;
 
 /**
  * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Present</b></em>'.
+ * An implementation of the model object '<em><b>If</b></em>'.
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link de.cau.cs.kieler.s.s.impl.PresentImpl#getExpression <em>Expression</em>}</li>
- *   <li>{@link de.cau.cs.kieler.s.s.impl.PresentImpl#getInstructions <em>Instructions</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.s.s.impl.IfImpl#getExpression <em>Expression</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.s.s.impl.IfImpl#getInstructions <em>Instructions</em>}</li>
  * </ul>
  * </p>
  *
  * @generated
  */
-public class PresentImpl extends InstructionImpl implements Present
+public class IfImpl extends InstructionImpl implements If
 {
   /**
    * The cached value of the '{@link #getExpression() <em>Expression</em>}' containment reference.
@@ -68,7 +68,7 @@ public class PresentImpl extends InstructionImpl implements Present
    * <!-- end-user-doc -->
    * @generated
    */
-  protected PresentImpl()
+  protected IfImpl()
   {
     super();
   }
@@ -81,7 +81,7 @@ public class PresentImpl extends InstructionImpl implements Present
   @Override
   protected EClass eStaticClass()
   {
-    return SPackage.Literals.PRESENT;
+    return SPackage.Literals.IF;
   }
 
   /**
@@ -105,7 +105,7 @@ public class PresentImpl extends InstructionImpl implements Present
     expression = newExpression;
     if (eNotificationRequired())
     {
-      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, SPackage.PRESENT__EXPRESSION, oldExpression, newExpression);
+      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, SPackage.IF__EXPRESSION, oldExpression, newExpression);
       if (msgs == null) msgs = notification; else msgs.add(notification);
     }
     return msgs;
@@ -122,14 +122,14 @@ public class PresentImpl extends InstructionImpl implements Present
     {
       NotificationChain msgs = null;
       if (expression != null)
-        msgs = ((InternalEObject)expression).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - SPackage.PRESENT__EXPRESSION, null, msgs);
+        msgs = ((InternalEObject)expression).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - SPackage.IF__EXPRESSION, null, msgs);
       if (newExpression != null)
-        msgs = ((InternalEObject)newExpression).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - SPackage.PRESENT__EXPRESSION, null, msgs);
+        msgs = ((InternalEObject)newExpression).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - SPackage.IF__EXPRESSION, null, msgs);
       msgs = basicSetExpression(newExpression, msgs);
       if (msgs != null) msgs.dispatch();
     }
     else if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, SPackage.PRESENT__EXPRESSION, newExpression, newExpression));
+      eNotify(new ENotificationImpl(this, Notification.SET, SPackage.IF__EXPRESSION, newExpression, newExpression));
   }
 
   /**
@@ -141,7 +141,7 @@ public class PresentImpl extends InstructionImpl implements Present
   {
     if (instructions == null)
     {
-      instructions = new EObjectContainmentEList<Instruction>(Instruction.class, this, SPackage.PRESENT__INSTRUCTIONS);
+      instructions = new EObjectContainmentEList<Instruction>(Instruction.class, this, SPackage.IF__INSTRUCTIONS);
     }
     return instructions;
   }
@@ -156,9 +156,9 @@ public class PresentImpl extends InstructionImpl implements Present
   {
     switch (featureID)
     {
-      case SPackage.PRESENT__EXPRESSION:
+      case SPackage.IF__EXPRESSION:
         return basicSetExpression(null, msgs);
-      case SPackage.PRESENT__INSTRUCTIONS:
+      case SPackage.IF__INSTRUCTIONS:
         return ((InternalEList<?>)getInstructions()).basicRemove(otherEnd, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -174,9 +174,9 @@ public class PresentImpl extends InstructionImpl implements Present
   {
     switch (featureID)
     {
-      case SPackage.PRESENT__EXPRESSION:
+      case SPackage.IF__EXPRESSION:
         return getExpression();
-      case SPackage.PRESENT__INSTRUCTIONS:
+      case SPackage.IF__INSTRUCTIONS:
         return getInstructions();
     }
     return super.eGet(featureID, resolve, coreType);
@@ -193,10 +193,10 @@ public class PresentImpl extends InstructionImpl implements Present
   {
     switch (featureID)
     {
-      case SPackage.PRESENT__EXPRESSION:
+      case SPackage.IF__EXPRESSION:
         setExpression((Expression)newValue);
         return;
-      case SPackage.PRESENT__INSTRUCTIONS:
+      case SPackage.IF__INSTRUCTIONS:
         getInstructions().clear();
         getInstructions().addAll((Collection<? extends Instruction>)newValue);
         return;
@@ -214,10 +214,10 @@ public class PresentImpl extends InstructionImpl implements Present
   {
     switch (featureID)
     {
-      case SPackage.PRESENT__EXPRESSION:
+      case SPackage.IF__EXPRESSION:
         setExpression((Expression)null);
         return;
-      case SPackage.PRESENT__INSTRUCTIONS:
+      case SPackage.IF__INSTRUCTIONS:
         getInstructions().clear();
         return;
     }
@@ -234,12 +234,12 @@ public class PresentImpl extends InstructionImpl implements Present
   {
     switch (featureID)
     {
-      case SPackage.PRESENT__EXPRESSION:
+      case SPackage.IF__EXPRESSION:
         return expression != null;
-      case SPackage.PRESENT__INSTRUCTIONS:
+      case SPackage.IF__INSTRUCTIONS:
         return instructions != null && !instructions.isEmpty();
     }
     return super.eIsSet(featureID);
   }
 
-} //PresentImpl
+} //IfImpl

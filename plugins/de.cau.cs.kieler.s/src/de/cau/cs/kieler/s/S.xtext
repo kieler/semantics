@@ -92,7 +92,7 @@ Signal returns expressions::Signal:
 //----------------------- List of S-Instructions ----------------------
 //---------------------------------------------------------------------
 Instruction:
-   Halt | Abort | Join | Pause | Term | Present | Goto | Fork | Forke | Emit | Await | Prio
+   Halt | Abort | Join | Pause | Term | If | Goto | Fork | Forke | Emit | Await | Prio
    ;
 
 Pause :
@@ -120,8 +120,8 @@ Abort :
 	'ABORT''('continuation=[State]?')'
   ;
   
-Present : 
-	'PRESENT''('expression = Expression (',' continuation=[State])?')' '{'
+If : 
+	'IF''('expression = Expression (',' continuation=[State])?')' '{'
 		(instructions += Instruction';')*
 	'}'
   ;

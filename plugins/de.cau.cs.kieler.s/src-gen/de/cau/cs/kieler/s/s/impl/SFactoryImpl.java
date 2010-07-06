@@ -76,7 +76,7 @@ public class SFactoryImpl extends EFactoryImpl implements SFactory
       case SPackage.HALT: return createHalt();
       case SPackage.JOIN: return createJoin();
       case SPackage.ABORT: return createAbort();
-      case SPackage.PRESENT: return createPresent();
+      case SPackage.IF: return createIf();
       case SPackage.GOTO: return createGoto();
       case SPackage.FORK: return createFork();
       case SPackage.FORKE: return createForke();
@@ -181,10 +181,10 @@ public class SFactoryImpl extends EFactoryImpl implements SFactory
    * <!-- end-user-doc -->
    * @generated
    */
-  public Present createPresent()
+  public If createIf()
   {
-    PresentImpl present = new PresentImpl();
-    return present;
+    IfImpl if_ = new IfImpl();
+    return if_;
   }
 
   /**

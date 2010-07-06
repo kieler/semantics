@@ -12,22 +12,22 @@ import org.eclipse.emf.common.util.EList;
 
 /**
  * <!-- begin-user-doc -->
- * A representation of the model object '<em><b>Present</b></em>'.
+ * A representation of the model object '<em><b>If</b></em>'.
  * <!-- end-user-doc -->
  *
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link de.cau.cs.kieler.s.s.Present#getExpression <em>Expression</em>}</li>
- *   <li>{@link de.cau.cs.kieler.s.s.Present#getInstructions <em>Instructions</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.s.s.If#getExpression <em>Expression</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.s.s.If#getInstructions <em>Instructions</em>}</li>
  * </ul>
  * </p>
  *
- * @see de.cau.cs.kieler.s.s.SPackage#getPresent()
+ * @see de.cau.cs.kieler.s.s.SPackage#getIf()
  * @model
  * @generated
  */
-public interface Present extends Instruction
+public interface If extends Instruction
 {
   /**
    * Returns the value of the '<em><b>Expression</b></em>' containment reference.
@@ -39,14 +39,14 @@ public interface Present extends Instruction
    * <!-- end-user-doc -->
    * @return the value of the '<em>Expression</em>' containment reference.
    * @see #setExpression(Expression)
-   * @see de.cau.cs.kieler.s.s.SPackage#getPresent_Expression()
+   * @see de.cau.cs.kieler.s.s.SPackage#getIf_Expression()
    * @model containment="true"
    * @generated
    */
   Expression getExpression();
 
   /**
-   * Sets the value of the '{@link de.cau.cs.kieler.s.s.Present#getExpression <em>Expression</em>}' containment reference.
+   * Sets the value of the '{@link de.cau.cs.kieler.s.s.If#getExpression <em>Expression</em>}' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @param value the new value of the '<em>Expression</em>' containment reference.
@@ -65,10 +65,10 @@ public interface Present extends Instruction
    * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Instructions</em>' containment reference list.
-   * @see de.cau.cs.kieler.s.s.SPackage#getPresent_Instructions()
+   * @see de.cau.cs.kieler.s.s.SPackage#getIf_Instructions()
    * @model containment="true"
    * @generated
    */
   EList<Instruction> getInstructions();
 
-} // Present
+} // If

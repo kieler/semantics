@@ -377,7 +377,7 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cJoinParserRuleCall_2 = (RuleCall)cAlternatives.eContents().get(2);
 		private final RuleCall cPauseParserRuleCall_3 = (RuleCall)cAlternatives.eContents().get(3);
 		private final RuleCall cTermParserRuleCall_4 = (RuleCall)cAlternatives.eContents().get(4);
-		private final RuleCall cPresentParserRuleCall_5 = (RuleCall)cAlternatives.eContents().get(5);
+		private final RuleCall cIfParserRuleCall_5 = (RuleCall)cAlternatives.eContents().get(5);
 		private final RuleCall cGotoParserRuleCall_6 = (RuleCall)cAlternatives.eContents().get(6);
 		private final RuleCall cForkParserRuleCall_7 = (RuleCall)cAlternatives.eContents().get(7);
 		private final RuleCall cForkeParserRuleCall_8 = (RuleCall)cAlternatives.eContents().get(8);
@@ -418,10 +418,10 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 		////----------------------- List of S-Instructions ----------------------
 		////---------------------------------------------------------------------
 		//Instruction:
-		//	Halt | Abort | Join | Pause | Term | Present | Goto | Fork | Forke | Emit | Await | Prio;
+		//	Halt | Abort | Join | Pause | Term | If | Goto | Fork | Forke | Emit | Await | Prio;
 		public ParserRule getRule() { return rule; }
 
-		//Halt | Abort | Join | Pause | Term | Present | Goto | Fork | Forke | Emit | Await | Prio
+		//Halt | Abort | Join | Pause | Term | If | Goto | Fork | Forke | Emit | Await | Prio
 		public Alternatives getAlternatives() { return cAlternatives; }
 
 		//Halt
@@ -439,8 +439,8 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 		//Term
 		public RuleCall getTermParserRuleCall_4() { return cTermParserRuleCall_4; }
 
-		//Present
-		public RuleCall getPresentParserRuleCall_5() { return cPresentParserRuleCall_5; }
+		//If
+		public RuleCall getIfParserRuleCall_5() { return cIfParserRuleCall_5; }
 
 		//Goto
 		public RuleCall getGotoParserRuleCall_6() { return cGotoParserRuleCall_6; }
@@ -661,10 +661,10 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 		public Keyword getRightParenthesisKeyword_4() { return cRightParenthesisKeyword_4; }
 	}
 
-	public class PresentElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Present");
+	public class IfElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "If");
 		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Keyword cPRESENTKeyword_0 = (Keyword)cGroup.eContents().get(0);
+		private final Keyword cIFKeyword_0 = (Keyword)cGroup.eContents().get(0);
 		private final Keyword cLeftParenthesisKeyword_1 = (Keyword)cGroup.eContents().get(1);
 		private final Assignment cExpressionAssignment_2 = (Assignment)cGroup.eContents().get(2);
 		private final RuleCall cExpressionExpressionParserRuleCall_2_0 = (RuleCall)cExpressionAssignment_2.eContents().get(0);
@@ -681,15 +681,15 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cSemicolonKeyword_6_1 = (Keyword)cGroup_6.eContents().get(1);
 		private final Keyword cRightCurlyBracketKeyword_7 = (Keyword)cGroup.eContents().get(7);
 		
-		//Present:
-		//	"PRESENT" "(" expression=Expression ("," continuation=[State])? ")" "{" (instructions+=Instruction ";")* "}";
+		//If:
+		//	"IF" "(" expression=Expression ("," continuation=[State])? ")" "{" (instructions+=Instruction ";")* "}";
 		public ParserRule getRule() { return rule; }
 
-		//"PRESENT" "(" expression=Expression ("," continuation=[State])? ")" "{" (instructions+=Instruction ";")* "}"
+		//"IF" "(" expression=Expression ("," continuation=[State])? ")" "{" (instructions+=Instruction ";")* "}"
 		public Group getGroup() { return cGroup; }
 
-		//"PRESENT"
-		public Keyword getPRESENTKeyword_0() { return cPRESENTKeyword_0; }
+		//"IF"
+		public Keyword getIFKeyword_0() { return cIFKeyword_0; }
 
 		//"("
 		public Keyword getLeftParenthesisKeyword_1() { return cLeftParenthesisKeyword_1; }
@@ -1091,7 +1091,7 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 	private HaltElements pHalt;
 	private JoinElements pJoin;
 	private AbortElements pAbort;
-	private PresentElements pPresent;
+	private IfElements pIf;
 	private GotoElements pGoto;
 	private ForkElements pFork;
 	private ForkeElements pForke;
@@ -1192,7 +1192,7 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 	////----------------------- List of S-Instructions ----------------------
 	////---------------------------------------------------------------------
 	//Instruction:
-	//	Halt | Abort | Join | Pause | Term | Present | Goto | Fork | Forke | Emit | Await | Prio;
+	//	Halt | Abort | Join | Pause | Term | If | Goto | Fork | Forke | Emit | Await | Prio;
 	public InstructionElements getInstructionAccess() {
 		return (pInstruction != null) ? pInstruction : (pInstruction = new InstructionElements());
 	}
@@ -1251,14 +1251,14 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 		return getAbortAccess().getRule();
 	}
 
-	//Present:
-	//	"PRESENT" "(" expression=Expression ("," continuation=[State])? ")" "{" (instructions+=Instruction ";")* "}";
-	public PresentElements getPresentAccess() {
-		return (pPresent != null) ? pPresent : (pPresent = new PresentElements());
+	//If:
+	//	"IF" "(" expression=Expression ("," continuation=[State])? ")" "{" (instructions+=Instruction ";")* "}";
+	public IfElements getIfAccess() {
+		return (pIf != null) ? pIf : (pIf = new IfElements());
 	}
 	
-	public ParserRule getPresentRule() {
-		return getPresentAccess().getRule();
+	public ParserRule getIfRule() {
+		return getIfAccess().getRule();
 	}
 
 	//Goto:

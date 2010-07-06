@@ -99,13 +99,13 @@ public interface SFactory extends EFactory
   Abort createAbort();
 
   /**
-   * Returns a new object of class '<em>Present</em>'.
+   * Returns a new object of class '<em>If</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return a new object of class '<em>Present</em>'.
+   * @return a new object of class '<em>If</em>'.
    * @generated
    */
-  Present createPresent();
+  If createIf();
 
   /**
    * Returns a new object of class '<em>Goto</em>'.

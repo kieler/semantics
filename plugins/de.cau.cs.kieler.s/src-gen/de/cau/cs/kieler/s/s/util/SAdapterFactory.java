@@ -119,9 +119,9 @@ public class SAdapterFactory extends AdapterFactoryImpl
         return createAbortAdapter();
       }
       @Override
-      public Adapter casePresent(Present object)
+      public Adapter caseIf(If object)
       {
-        return createPresentAdapter();
+        return createIfAdapter();
       }
       @Override
       public Adapter caseGoto(Goto object)
@@ -296,16 +296,16 @@ public class SAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.s.s.Present <em>Present</em>}'.
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.s.s.If <em>If</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
    * it's useful to ignore a case when inheritance will catch all the cases anyway.
    * <!-- end-user-doc -->
    * @return the new adapter.
-   * @see de.cau.cs.kieler.s.s.Present
+   * @see de.cau.cs.kieler.s.s.If
    * @generated
    */
-  public Adapter createPresentAdapter()
+  public Adapter createIfAdapter()
   {
     return null;
   }

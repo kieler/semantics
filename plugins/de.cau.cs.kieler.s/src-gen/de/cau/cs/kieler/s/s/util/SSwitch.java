@@ -157,11 +157,11 @@ public class SSwitch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
-      case SPackage.PRESENT:
+      case SPackage.IF:
       {
-        Present present = (Present)theEObject;
-        T result = casePresent(present);
-        if (result == null) result = caseInstruction(present);
+        If if_ = (If)theEObject;
+        T result = caseIf(if_);
+        if (result == null) result = caseInstruction(if_);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -346,17 +346,17 @@ public class SSwitch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>Present</em>'.
+   * Returns the result of interpreting the object as an instance of '<em>If</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
    * returning a non-null result will terminate the switch.
    * <!-- end-user-doc -->
    * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Present</em>'.
+   * @return the result of interpreting the object as an instance of '<em>If</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
    */
-  public T casePresent(Present object)
+  public T caseIf(If object)
   {
     return null;
   }

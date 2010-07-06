@@ -45,7 +45,6 @@ RULE_ML_COMMENT=7
 'PAUSE'=27
 '='=47
 'FORKE'=37
-'PRESENT'=32
 ')'=13
 'Outputs'=17
 'UNSIGNED'=64
@@ -53,6 +52,7 @@ RULE_ML_COMMENT=7
 'Inputs'=14
 '}'=34
 'AWAIT'=39
+'IF'=32
 'EMIT'=38
 '<='=49
 'false'=46

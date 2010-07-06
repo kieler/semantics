@@ -330,14 +330,14 @@ public interface SPackage extends EPackage
   int ABORT_FEATURE_COUNT = INSTRUCTION_FEATURE_COUNT + 0;
 
   /**
-   * The meta object id for the '{@link de.cau.cs.kieler.s.s.impl.PresentImpl <em>Present</em>}' class.
+   * The meta object id for the '{@link de.cau.cs.kieler.s.s.impl.IfImpl <em>If</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see de.cau.cs.kieler.s.s.impl.PresentImpl
-   * @see de.cau.cs.kieler.s.s.impl.SPackageImpl#getPresent()
+   * @see de.cau.cs.kieler.s.s.impl.IfImpl
+   * @see de.cau.cs.kieler.s.s.impl.SPackageImpl#getIf()
    * @generated
    */
-  int PRESENT = 8;
+  int IF = 8;
 
   /**
    * The feature id for the '<em><b>Continuation</b></em>' reference.
@@ -346,7 +346,7 @@ public interface SPackage extends EPackage
    * @generated
    * @ordered
    */
-  int PRESENT__CONTINUATION = INSTRUCTION__CONTINUATION;
+  int IF__CONTINUATION = INSTRUCTION__CONTINUATION;
 
   /**
    * The feature id for the '<em><b>Expression</b></em>' containment reference.
@@ -355,7 +355,7 @@ public interface SPackage extends EPackage
    * @generated
    * @ordered
    */
-  int PRESENT__EXPRESSION = INSTRUCTION_FEATURE_COUNT + 0;
+  int IF__EXPRESSION = INSTRUCTION_FEATURE_COUNT + 0;
 
   /**
    * The feature id for the '<em><b>Instructions</b></em>' containment reference list.
@@ -364,16 +364,16 @@ public interface SPackage extends EPackage
    * @generated
    * @ordered
    */
-  int PRESENT__INSTRUCTIONS = INSTRUCTION_FEATURE_COUNT + 1;
+  int IF__INSTRUCTIONS = INSTRUCTION_FEATURE_COUNT + 1;
 
   /**
-   * The number of structural features of the '<em>Present</em>' class.
+   * The number of structural features of the '<em>If</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int PRESENT_FEATURE_COUNT = INSTRUCTION_FEATURE_COUNT + 2;
+  int IF_FEATURE_COUNT = INSTRUCTION_FEATURE_COUNT + 2;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.s.s.impl.GotoImpl <em>Goto</em>}' class.
@@ -776,36 +776,36 @@ public interface SPackage extends EPackage
   EClass getAbort();
 
   /**
-   * Returns the meta object for class '{@link de.cau.cs.kieler.s.s.Present <em>Present</em>}'.
+   * Returns the meta object for class '{@link de.cau.cs.kieler.s.s.If <em>If</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Present</em>'.
-   * @see de.cau.cs.kieler.s.s.Present
+   * @return the meta object for class '<em>If</em>'.
+   * @see de.cau.cs.kieler.s.s.If
    * @generated
    */
-  EClass getPresent();
+  EClass getIf();
 
   /**
-   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.s.s.Present#getExpression <em>Expression</em>}'.
+   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.s.s.If#getExpression <em>Expression</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @return the meta object for the containment reference '<em>Expression</em>'.
-   * @see de.cau.cs.kieler.s.s.Present#getExpression()
-   * @see #getPresent()
+   * @see de.cau.cs.kieler.s.s.If#getExpression()
+   * @see #getIf()
    * @generated
    */
-  EReference getPresent_Expression();
+  EReference getIf_Expression();
 
   /**
-   * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.s.s.Present#getInstructions <em>Instructions</em>}'.
+   * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.s.s.If#getInstructions <em>Instructions</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @return the meta object for the containment reference list '<em>Instructions</em>'.
-   * @see de.cau.cs.kieler.s.s.Present#getInstructions()
-   * @see #getPresent()
+   * @see de.cau.cs.kieler.s.s.If#getInstructions()
+   * @see #getIf()
    * @generated
    */
-  EReference getPresent_Instructions();
+  EReference getIf_Instructions();
 
   /**
    * Returns the meta object for class '{@link de.cau.cs.kieler.s.s.Goto <em>Goto</em>}'.
@@ -1112,14 +1112,14 @@ public interface SPackage extends EPackage
     EClass ABORT = eINSTANCE.getAbort();
 
     /**
-     * The meta object literal for the '{@link de.cau.cs.kieler.s.s.impl.PresentImpl <em>Present</em>}' class.
+     * The meta object literal for the '{@link de.cau.cs.kieler.s.s.impl.IfImpl <em>If</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.s.s.impl.PresentImpl
-     * @see de.cau.cs.kieler.s.s.impl.SPackageImpl#getPresent()
+     * @see de.cau.cs.kieler.s.s.impl.IfImpl
+     * @see de.cau.cs.kieler.s.s.impl.SPackageImpl#getIf()
      * @generated
      */
-    EClass PRESENT = eINSTANCE.getPresent();
+    EClass IF = eINSTANCE.getIf();
 
     /**
      * The meta object literal for the '<em><b>Expression</b></em>' containment reference feature.
@@ -1127,7 +1127,7 @@ public interface SPackage extends EPackage
      * <!-- end-user-doc -->
      * @generated
      */
-    EReference PRESENT__EXPRESSION = eINSTANCE.getPresent_Expression();
+    EReference IF__EXPRESSION = eINSTANCE.getIf_Expression();
 
     /**
      * The meta object literal for the '<em><b>Instructions</b></em>' containment reference list feature.
@@ -1135,7 +1135,7 @@ public interface SPackage extends EPackage
      * <!-- end-user-doc -->
      * @generated
      */
-    EReference PRESENT__INSTRUCTIONS = eINSTANCE.getPresent_Instructions();
+    EReference IF__INSTRUCTIONS = eINSTANCE.getIf_Instructions();
 
     /**
      * The meta object literal for the '{@link de.cau.cs.kieler.s.s.impl.GotoImpl <em>Goto</em>}' class.

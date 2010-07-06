@@ -28,7 +28,7 @@
   <eClassifiers xsi:type="ecore:EClass" name="Halt" eSuperTypes="#//Instruction"/>
   <eClassifiers xsi:type="ecore:EClass" name="Join" eSuperTypes="#//Instruction"/>
   <eClassifiers xsi:type="ecore:EClass" name="Abort" eSuperTypes="#//Instruction"/>
-  <eClassifiers xsi:type="ecore:EClass" name="Present" eSuperTypes="#//Instruction">
+  <eClassifiers xsi:type="ecore:EClass" name="If" eSuperTypes="#//Instruction">
     <eStructuralFeatures xsi:type="ecore:EReference" name="expression" eType="ecore:EClass ../../../../../../../de.cau.cs.kieler.core.expressions/model/expressions.ecore#//Expression"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="instructions" upperBound="-1"

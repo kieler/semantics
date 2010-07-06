@@ -28,7 +28,7 @@ T28 : 'TERM' ;
 T29 : 'Halt' ;
 T30 : 'JOIN' ;
 T31 : 'ABORT' ;
-T32 : 'PRESENT' ;
+T32 : 'IF' ;
 T33 : '{' ;
 T34 : '}' ;
 T35 : 'GOTO' ;
