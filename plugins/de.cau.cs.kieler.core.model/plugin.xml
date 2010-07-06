@@ -28,16 +28,14 @@
                   checkEnabled="false">
                <with
                      variable="activeEditor">
-                  <and>
-                     <test
-                           forcePluginActivation="false"
-                           property="de.cau.cs.kieler.core.model.isDiagramEditor">
-                     </test>
-                     <test
-                           forcePluginActivation="false"
-                           property="de.cau.cs.kieler.core.model.hasValidateAction">
-                     </test>
-                  </and>
+                  <or>
+                     <instanceof
+                           value="org.eclipse.gmf.runtime.diagram.ui.parts.DiagramEditor">
+                     </instanceof>
+                     <instanceof
+                           value="org.eclipse.xtext.ui.editor.XtextEditor">
+                     </instanceof>
+                  </or>
                </with>
             </visibleWhen>
          </command>
@@ -55,23 +53,6 @@
             id="de.cau.cs.kieler.core.model.validationManager"
             name="Validation Manager">
       </page>
-   </extension>
-   <extension
-         point="org.eclipse.core.expressions.propertyTesters">
-      <propertyTester
-            class="de.cau.cs.kieler.core.model.util.KielerModelPropertyTester"
-            id="de.cau.cs.kieler.core.model.isDiagramEditor"
-            namespace="de.cau.cs.kieler.core.model"
-            properties="isDiagramEditor"
-            type="org.eclipse.ui.IEditorPart">
-      </propertyTester>
-      <propertyTester
-            class="de.cau.cs.kieler.core.model.util.KielerModelPropertyTester"
-            id="de.cau.cs.kieler.core.model.hasValidateAction"
-            namespace="de.cau.cs.kieler.core.model"
-            properties="hasValidateAction"
-            type="org.eclipse.ui.IEditorPart">
-      </propertyTester>
    </extension>
    <extension
          point="org.eclipse.ui.startup">

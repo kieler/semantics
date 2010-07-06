@@ -28,12 +28,21 @@ import org.eclipse.emf.ecore.impl.EPackageRegistryImpl;
 import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramEditor;
 import org.eclipse.gmf.runtime.notation.View;
 import org.eclipse.jface.action.Action;
+import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IEditorPart;
+import org.eclipse.ui.IEditorSite;
 import org.eclipse.ui.IPartListener;
 import org.eclipse.ui.IStartup;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.PlatformUI;
+import org.eclipse.xtext.resource.XtextResource;
+import org.eclipse.xtext.ui.editor.XtextEditor;
+import org.eclipse.xtext.ui.editor.model.IXtextDocument;
+import org.eclipse.xtext.ui.editor.model.XtextDocument;
+import org.eclipse.xtext.util.concurrent.IUnitOfWork.Void;
 
 import de.cau.cs.kieler.core.ui.util.CombinedWorkbenchListener;
 
@@ -240,24 +249,31 @@ public class ValidationInformationCollector implements IStartup, IPartListener {
     public void partOpened(final IWorkbenchPart part) {
         try {
             if (part instanceof IEditorPart) {
+                EObject eObj = null;
                 if (part instanceof DiagramEditor) {
                     DiagramEditor diagEd = (DiagramEditor) part;
                     Object obj = diagEd.getDiagramEditPart().getModel();
                     if (obj != null && obj instanceof View) {
-                        EObject eObj = ((View) obj).getElement();
-                        String uri = eObj.eClass().getEPackage().getNsURI();
-                        String id = getId(uri);
-                        if (id != null) {
-                            Map<String, CheckfileDefinition> checks = checkfiles
-                                    .get(id);
-                            if (checks != null) {
-                                for (CheckfileDefinition check : checks
-                                        .values()) {
-                                    registerCheckfile(check);
-                                }
+                        eObj = ((View) obj).getElement();
+                    }
+                } else if (part instanceof XtextEditor) {
+                    XtextEditor xtextEd = (XtextEditor) part;
+                    eObj = getModelFromXtextEditor(xtextEd);
+                }
+
+                if (eObj != null) {
+                    String uri = eObj.eClass().getEPackage().getNsURI();
+                    String id = getId(uri);
+                    if (id != null) {
+                        Map<String, CheckfileDefinition> checks = checkfiles
+                                .get(id);
+                        if (checks != null) {
+                            for (CheckfileDefinition check : checks.values()) {
+                                registerCheckfile(check);
                             }
                         }
                     }
+
                     ValidationManager.validateActiveEditor();
                 }
             }
@@ -266,6 +282,50 @@ public class ValidationInformationCollector implements IStartup, IPartListener {
             throw e0;
         }
 
+    }
+
+    private EObject xtextModel;
+
+    /**
+     * @param xtextEd
+     */
+    private EObject getModelFromXtextEditor(final XtextEditor xtextEd) {
+        checkForDirtyEditor(xtextEd);
+        IXtextDocument docu = xtextEd.getDocument();
+
+        if (docu instanceof XtextDocument) {
+            XtextDocument document = (XtextDocument) docu;
+
+            document.readOnly(new Void<XtextResource>() {
+
+                @Override
+                public void process(final XtextResource state) throws Exception {
+                    List<EObject> eObj = state.getContents();
+
+                    xtextModel = eObj.get(0);
+
+                }
+            });
+        }
+        return xtextModel;
+    }
+
+    private static void checkForDirtyEditor(final XtextEditor diagramEditor) {
+        if (diagramEditor.isDirty()) {
+            final Shell shell = Display.getCurrent().getShells()[0];
+            boolean b = MessageDialog
+                    .openQuestion(
+                            shell,
+                            "Save Resource",
+                            "'"
+                                    + diagramEditor.getEditorInput().getName()
+                                    + "'"
+                                    + " has been modified. Save changes before simulating? (recommended)");
+            if (b) {
+                IEditorSite part = diagramEditor.getEditorSite();
+                part.getPage().saveEditor((IEditorPart) part.getPart(), false);
+            }
+        }
     }
 
     /**

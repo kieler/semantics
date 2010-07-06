@@ -31,8 +31,9 @@ public class ValidateActionHandler extends AbstractHandler {
      * {@inheritDoc}
      */
     public Object execute(final ExecutionEvent event) throws ExecutionException {
-        ValidationManager.validateActiveEditor();
+        if (ValidationManager.hasValidateActionsForActiveEditor()) {
+            ValidationManager.validateActiveEditor();
+        }
         return null;
     }
-
 }
