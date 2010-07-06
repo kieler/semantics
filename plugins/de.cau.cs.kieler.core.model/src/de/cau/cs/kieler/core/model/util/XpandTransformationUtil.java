@@ -33,6 +33,7 @@ import org.eclipse.emf.mwe.internal.core.Workflow;
 import org.eclipse.emf.mwe.utils.Reader;
 import org.eclipse.xpand2.Generator;
 import org.eclipse.xpand2.output.Outlet;
+import org.eclipse.xpand2.output.PostProcessor;
 import org.eclipse.xtend.typesystem.emf.EmfMetaModel;
 import org.eclipse.xtend.util.stdlib.ExtIssueReporter;
 
@@ -70,15 +71,40 @@ public final class XpandTransformationUtil {
      * @param outPath
      *            the output path
      * @param modelPackages
-     *            EPackage of the metamodels that need to be known to the
-     *            transformation
+     *            EPackage of the metamodels that need to be known to the transformation
      * 
      * @return the Status about success and errors and warnings
      */
-    public static XtendStatus model2TextTransform(
-            final KielerProgressMonitor monitor, final String xpandFile,
-            final String startFunction, final URI inputModelURI,
+    public static XtendStatus model2TextTransform(final KielerProgressMonitor monitor,
+            final String xpandFile, final String startFunction, final URI inputModelURI,
             final String outPath, final EPackage... modelPackages) {
+        return model2TextTransform(monitor, xpandFile, startFunction, inputModelURI, outPath, null,
+                modelPackages);
+    }
+
+    /**
+     * This transformation uses the xpand transformation language.
+     * 
+     * @param monitor
+     *            if true a progress bar is displayed
+     * @param xpandFile
+     *            filename that holds the xpand functions
+     * @param startFunction
+     *            initial transformation function
+     * @param inputModelURI
+     *            EMF URI for input model (may be a local resource URI)
+     * @param outPath
+     *            the output path
+     * @param postProcessor
+     *            the post processor
+     * @param modelPackages
+     *            EPackage of the metamodels that need to be known to the transformation
+     * @return the Status about success and errors and warnings
+     */
+    public static XtendStatus model2TextTransform(final KielerProgressMonitor monitor,
+            final String xpandFile, final String startFunction, final URI inputModelURI,
+            final String outPath, final PostProcessor postProcessor,
+            final EPackage... modelPackages) {
         monitor.begin("Model2Text transformation", 2);
 
         // Workflow
@@ -90,29 +116,29 @@ public final class XpandTransformationUtil {
         emfReader.setModelSlot("inputmodel");
         // ptolemy models may contain strange XML elements that are not
         // specified in XSD
-        emfReader.getResourceSet().getLoadOptions().put(
-                XMIResource.OPTION_RECORD_UNKNOWN_FEATURE, true);
+        emfReader.getResourceSet().getLoadOptions()
+                .put(XMIResource.OPTION_RECORD_UNKNOWN_FEATURE, true);
         // add parser option to avoid searching for DTDs online. This would
         // require an
         // online connection to execute the transformation
         HashMap<String, Boolean> parserFeatures = new HashMap<String, Boolean>();
-        parserFeatures.put("http://xml.org/sax/features/validation",
+        parserFeatures.put("http://xml.org/sax/features/validation", Boolean.FALSE);
+        parserFeatures.put("http://apache.org/xml/features/nonvalidating/load-dtd-grammar",
                 Boolean.FALSE);
-        parserFeatures
-                .put(
-                        "http://apache.org/xml/features/nonvalidating/load-dtd-grammar",
-                        Boolean.FALSE);
-        parserFeatures
-                .put(
-                        "http://apache.org/xml/features/nonvalidating/load-external-dtd",
-                        Boolean.FALSE);
-        emfReader.getResourceSet().getLoadOptions().put(
-                XMLResource.OPTION_PARSER_FEATURES, parserFeatures);
-
+        parserFeatures.put("http://apache.org/xml/features/nonvalidating/load-external-dtd",
+                Boolean.FALSE);
+        emfReader.getResourceSet().getLoadOptions()
+                .put(XMLResource.OPTION_PARSER_FEATURES, parserFeatures);
 
         Generator xpandComponent = new Generator();
         Outlet outlet = new Outlet();
         outlet.setPath(outPath);
+
+        // Beautifier
+        if (postProcessor != null) {
+            outlet.addPostprocessor(postProcessor);
+        }
+
         // XpandComponent
         xpandComponent.addOutlet(outlet);
         // Meta models
@@ -120,8 +146,7 @@ public final class XpandTransformationUtil {
             EmfMetaModel metaModel = new EmfMetaModel(ePackage);
             xpandComponent.addMetaModel(metaModel);
         }
-        xpandComponent.setExpand(xpandFile + "::" + startFunction
-                + " FOR inputmodel");
+        xpandComponent.setExpand(xpandFile + "::" + startFunction + " FOR inputmodel");
 
         // xpandComponent.setOutputSlot("outputmodel");
 
@@ -137,6 +162,7 @@ public final class XpandTransformationUtil {
         workflow.addComponent(emfReader);
         workflow.addComponent(issueReporter);
         workflow.addComponent(xpandComponent);
+
         // workflow.invoke(wfx, (ProgressMonitor)monitor.subTask(80),
         // issues);
         Exception e = null;
@@ -144,11 +170,9 @@ public final class XpandTransformationUtil {
             workflow.invoke(wfx, m2mMonitor, issues);
         } catch (WorkflowInterruptedException we) {
             if (we.getMessage().contains("UnknownHostException")) {
-                e = new KielerException(
-                        "Failed loading Ptolemy file. "
-                                + "Could not resolve the Ptolemy DTD. Unfortunately the parser"
-                                + " currently requires an Internet connection.",
-                        we);
+                e = new KielerException("Failed loading Ptolemy file. "
+                        + "Could not resolve the Ptolemy DTD. Unfortunately the parser"
+                        + " currently requires an Internet connection.", we);
             } else {
                 e = we;
             }
@@ -159,21 +183,20 @@ public final class XpandTransformationUtil {
         Map<EObject, AnyType> unknownFeatures = new HashMap<EObject, AnyType>();
         for (Resource resource : emfReader.getResourceSet().getResources()) {
             if (resource instanceof XMLResource) {
-                unknownFeatures.putAll(((XMLResource) resource)
-                        .getEObjectToExtensionMap());
+                unknownFeatures.putAll(((XMLResource) resource).getEObjectToExtensionMap());
             }
         }
 
-        XtendStatus status = new XtendStatus(issues, xpandComponent
-                .getLogMessage(), unknownFeatures, e);
+        XtendStatus status = new XtendStatus(issues, xpandComponent.getLogMessage(),
+                unknownFeatures, e);
         monitor.done();
         return status;
     }
 
     /**
      * This transformation uses the xpand transformation language. Same as
-     * {@link model2TextTransform} but executes the transformation in a
-     * MonitoredOperation and automatically pops up a progress bar.
+     * {@link model2TextTransform} but executes the transformation in a MonitoredOperation and
+     * automatically pops up a progress bar.
      * 
      * @param xpandFile
      *            filename that holds the xpand functions
@@ -184,8 +207,7 @@ public final class XpandTransformationUtil {
      * @param outPath
      *            the output path of the transformation
      * @param modelPackages
-     *            EPackages of the metamodels that need to be known to the
-     *            transformation
+     *            EPackages of the metamodels that need to be known to the transformation
      * 
      * @throws KielerException
      *             if something fails
@@ -194,18 +216,52 @@ public final class XpandTransformationUtil {
      * 
      */
     public static XtendStatus model2TextTransform(final String xpandFile,
-            final String startFunction, final URI inputModelURI,
-            final String outPath, final EPackage... modelPackages)
-            throws KielerException {
+            final String startFunction, final URI inputModelURI, final String outPath,
+            final EPackage... modelPackages) throws KielerException {
         MonitoredOperation monitoredOperation = new MonitoredOperation() {
             @Override
             protected IStatus execute(final IProgressMonitor monitor) {
-                return model2TextTransform(new KielerProgressMonitor(monitor),
-                        xpandFile, startFunction, inputModelURI, outPath,
-                        modelPackages);
+                return model2TextTransform(new KielerProgressMonitor(monitor), xpandFile,
+                        startFunction, inputModelURI, outPath, modelPackages);
             }
         };
         monitoredOperation.runMonitored();
         return (XtendStatus) monitoredOperation.getStatus();
     }
+
+    /**
+     * This transformation uses the xpand transformation language. Same as
+     * 
+     * @param xpandFile
+     *            filename that holds the xpand functions
+     * @param startFunction
+     *            initial transformation function
+     * @param inputModelURI
+     *            EMF URI for input model (may be a local resource URI)
+     * @param outPath
+     *            the output path of the transformation
+     * @param postProcessor
+     *            the post processor
+     * @param modelPackages
+     *            EPackages of the metamodels that need to be known to the transformation
+     * @return the Status about success and errors and warnings
+     * @throws KielerException
+     *             if something fails {@link model2TextTransform} but executes the transformation in
+     *             a MonitoredOperation and automatically pops up a progress bar.
+     */
+    public static XtendStatus model2TextTransform(final String xpandFile,
+            final String startFunction, final URI inputModelURI, final String outPath,
+            final PostProcessor postProcessor, final EPackage... modelPackages)
+            throws KielerException {
+        MonitoredOperation monitoredOperation = new MonitoredOperation() {
+            @Override
+            protected IStatus execute(final IProgressMonitor monitor) {
+                return model2TextTransform(new KielerProgressMonitor(monitor), xpandFile,
+                        startFunction, inputModelURI, outPath, postProcessor, modelPackages);
+            }
+        };
+        monitoredOperation.runMonitored();
+        return (XtendStatus) monitoredOperation.getStatus();
+    }
+
 }
