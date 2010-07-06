@@ -39,29 +39,31 @@ public class SFormatter extends AbstractDeclarativeFormatter {
         c.setLinewrap(2).after(f.getProgramAccess().getRightParenthesisKeyword_4());
         
         // Indentation for Signal, Input, Output declaration parts
-        c.setIndentationIncrement().after(f.getProgramAccess().getSignalsKeyword_7_0());
-        c.setIndentationDecrement().before(f.getProgramAccess().getSemicolonKeyword_5_3());
-        c.setIndentationIncrement().after(f.getProgramAccess().getInputsKeyword_5_0());
-        c.setIndentationDecrement().before(f.getProgramAccess().getSemicolonKeyword_6_3());
-        c.setIndentationIncrement().after(f.getProgramAccess().getOutputsKeyword_6_0());
-        c.setIndentationDecrement().before(f.getProgramAccess().getSemicolonKeyword_7_3());
+        //c.setIndentationIncrement().after(f.getProgramAccess().getSignalsKeyword_7_0());
+        //c.setIndentationDecrement().before(f.getProgramAccess().getSemicolonKeyword_5_3());
+        //c.setIndentationIncrement().after(f.getProgramAccess().getInputsKeyword_5_0());
+        //c.setIndentationDecrement().before(f.getProgramAccess().getSemicolonKeyword_6_3());
+        //c.setIndentationIncrement().after(f.getProgramAccess().getOutputsKeyword_6_0());
+        //c.setIndentationDecrement().before(f.getProgramAccess().getSemicolonKeyword_7_3());
 
         // Each Signal, Input, Output declaration part in a new line
         c.setLinewrap(1).before(f.getSignalRule());
         
         // Put ";" in a new line, one line separates Sig/In/Out parts
-        c.setLinewrap(1).after(f.getProgramAccess().getSignalsKeyword_7_0());
-        c.setLinewrap(1).after(f.getProgramAccess().getInputsKeyword_5_0());
-        c.setLinewrap(1).after(f.getProgramAccess().getOutputsKeyword_6_0());
-        c.setLinewrap(1).before(f.getProgramAccess().getSemicolonKeyword_5_3());
-        c.setLinewrap(1).before(f.getProgramAccess().getSemicolonKeyword_6_3());
-        c.setLinewrap(1).before(f.getProgramAccess().getSemicolonKeyword_7_3());
-        c.setLinewrap(2).after(f.getProgramAccess().getSemicolonKeyword_5_3());
-        c.setLinewrap(2).after(f.getProgramAccess().getSemicolonKeyword_6_3());
-        c.setLinewrap(2).after(f.getProgramAccess().getSemicolonKeyword_7_3());
-
+        //c.setLinewrap(1).after(f.getProgramAccess().getSignalsKeyword_7_0());
+        //c.setLinewrap(1).after(f.getProgramAccess().getInputsKeyword_5_0());
+        //c.setLinewrap(1).after(f.getProgramAccess().getOutputsKeyword_6_0());
+        //c.setLinewrap(1).before(f.getProgramAccess().getSemicolonKeyword_5_3());
+        //c.setLinewrap(1).before(f.getProgramAccess().getSemicolonKeyword_6_3());
+        //c.setLinewrap(1).before(f.getProgramAccess().getSemicolonKeyword_7_3());
+        //c.setLinewrap(2).after(f.getProgramAccess().getSemicolonKeyword_5_3());
+        //c.setLinewrap(2).after(f.getProgramAccess().getSemicolonKeyword_6_3());
+        //c.setLinewrap(2).after(f.getProgramAccess().getSemicolonKeyword_7_3());
+        //c.setLinewrap(1).after(f.getProgramAccess().getSemicolonKeyword_5_2());
+        
         // Linebreaks after STATE 
-        c.setLinewrap(2).after(f.getStateRule());
+        c.setLinewrap(2).before(f.getStateRule());
+        c.setLinewrap(1).after(f.getStateRule());
 
         // Linebreaks after Instructions
         c.setLinewrap(1).before(f.getInstructionRule());

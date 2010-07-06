@@ -13,13 +13,17 @@ import "platform:/resource/de.cau.cs.kieler.core.expressions/model/expressions.e
 
 generate s "http://www.cau.de/cs/kieler/s"
 
+
 Program :
 	'Synchronous Program' name = ID '(' priority=INT ')'
-	('Inputs' (signals += Signal) (',' signals += Signal)*';')?
-	('Outputs' (signals += Signal) (',' signals += Signal)*';')?
-	('Signals' (signals += Signal) (',' signals += Signal)*';')?
+//	('Inputs' (signals += Signal) (',' signals += Signal)*';')?
+//	('Outputs' (signals += Signal) (',' signals += Signal)*';')?
+//	('Signals' (signals += Signal) (',' signals += Signal)*';')?
+	(signals += Signal)*
 	(states += State)+
 ;
+
+
 
 //Annotation:
 //	'@' key = ID ':'
