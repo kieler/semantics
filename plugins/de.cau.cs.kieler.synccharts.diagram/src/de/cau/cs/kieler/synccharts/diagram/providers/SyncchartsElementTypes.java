@@ -34,7 +34,7 @@ import de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorPlugin;
 /**
  * @generated
  */
-public class SyncchartsElementTypes extends ElementInitializers {
+public class SyncchartsElementTypes {
 
     /**
      * @generated
@@ -45,7 +45,7 @@ public class SyncchartsElementTypes extends ElementInitializers {
     /**
      * @generated
      */
-    private static Map elements;
+    private static Map<IElementType, ENamedElement> elements;
 
     /**
      * @generated
@@ -55,7 +55,7 @@ public class SyncchartsElementTypes extends ElementInitializers {
     /**
      * @generated
      */
-    private static Set KNOWN_ELEMENT_TYPES;
+    private static Set<IElementType> KNOWN_ELEMENT_TYPES;
 
     /**
      * @generated
@@ -122,26 +122,22 @@ public class SyncchartsElementTypes extends ElementInitializers {
     /**
      * @generated
      */
-    private static ImageDescriptor getProvidedImageDescriptor(
-            ENamedElement element) {
+    private static ImageDescriptor getProvidedImageDescriptor(ENamedElement element) {
         if (element instanceof EStructuralFeature) {
             EStructuralFeature feature = ((EStructuralFeature) element);
             EClass eContainingClass = feature.getEContainingClass();
             EClassifier eType = feature.getEType();
             if (eContainingClass != null && !eContainingClass.isAbstract()) {
                 element = eContainingClass;
-            } else if (eType instanceof EClass
-                    && !((EClass) eType).isAbstract()) {
+            } else if (eType instanceof EClass && !((EClass) eType).isAbstract()) {
                 element = eType;
             }
         }
         if (element instanceof EClass) {
             EClass eClass = (EClass) element;
             if (!eClass.isAbstract()) {
-                return SyncchartsDiagramEditorPlugin.getInstance()
-                        .getItemImageDescriptor(
-                                eClass.getEPackage().getEFactoryInstance()
-                                        .create(eClass));
+                return SyncchartsDiagramEditorPlugin.getInstance().getItemImageDescriptor(
+                    eClass.getEPackage().getEFactoryInstance().create(eClass));
             }
         }
         // TODO : support structural features
@@ -211,7 +207,7 @@ public class SyncchartsElementTypes extends ElementInitializers {
     public static ENamedElement getElement(IAdaptable hint) {
         Object type = hint.getAdapter(IElementType.class);
         if (elements == null) {
-            elements = new IdentityHashMap();
+            elements = new IdentityHashMap<IElementType, ENamedElement>();
 
             elements.put(Region_1000, SyncchartsPackage.eINSTANCE.getRegion());
 
@@ -231,11 +227,9 @@ public class SyncchartsElementTypes extends ElementInitializers {
 
             elements.put(Action_3029, SyncchartsPackage.eINSTANCE.getAction());
 
-            elements.put(TextualCode_3030, ExpressionsPackage.eINSTANCE
-                    .getTextualCode());
+            elements.put(TextualCode_3030, ExpressionsPackage.eINSTANCE.getTextualCode());
 
-            elements.put(Transition_4003, SyncchartsPackage.eINSTANCE
-                    .getTransition());
+            elements.put(Transition_4003, SyncchartsPackage.eINSTANCE.getTransition());
         }
         return (ENamedElement) elements.get(type);
     }
@@ -252,7 +246,7 @@ public class SyncchartsElementTypes extends ElementInitializers {
      */
     public static boolean isKnownElementType(IElementType elementType) {
         if (KNOWN_ELEMENT_TYPES == null) {
-            KNOWN_ELEMENT_TYPES = new HashSet();
+            KNOWN_ELEMENT_TYPES = new HashSet<IElementType>();
             KNOWN_ELEMENT_TYPES.add(Region_1000);
             KNOWN_ELEMENT_TYPES.add(State_2003);
             KNOWN_ELEMENT_TYPES.add(Region_3023);

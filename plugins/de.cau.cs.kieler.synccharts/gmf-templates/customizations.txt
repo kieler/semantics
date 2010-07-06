@@ -1,64 +1,25 @@
 = List of Template Customizations =
 
 || Helios || Change || Eclipse Bug || Kieler Bug || File ||
-|| x || ??? Compartment layout and title/line style || || || [source:trunk/plugins/de.cau.cs.kieler.synccharts/gmf-templates/aspects/impl/diagram/editparts/CompartmentEditPart.xpt CompartmentEditPart] ||
-|| || Attribute Awareness, Splines || || || [source:trunk/plugins/de.cau.cs.kieler.synccharts/gmf-templates/aspects/impl/diagram/editparts/LinkEditPart.xpt LinkEditPart ||
-|| s || WrappingLabels??? || || || [source:trunk/plugins/de.cau.cs.kieler.synccharts/gmf-templates/aspects/impl/diagram/editparts/LinkLabelEditPart.xpt LinkLabelEditPart ||
+|| X || Compartment layout and title/line style || || || [source:trunk/plugins/de.cau.cs.kieler.synccharts/gmf-templates/aspects/impl/diagram/editparts/CompartmentEditPart.xpt CompartmentEditPart] ||
+|| X || Attribute Awareness, Splines || || || [source:trunk/plugins/de.cau.cs.kieler.synccharts/gmf-templates/aspects/impl/diagram/editparts/LinkEditPart.xpt LinkEditPart ||
+|| ? || WrappingLabels??? || || || [source:trunk/plugins/de.cau.cs.kieler.synccharts/gmf-templates/aspects/impl/diagram/editparts/LinkLabelEditPart.xpt LinkLabelEditPart ||
 || X || Attribute Awareness, Default Node Size|| || || [source:trunk/plugins/de.cau.cs.kieler.synccharts/gmf-templates/aspects/impl/diagram/editparts/NodeEditPart.xpt NodeEditPart ||
 || X || RegionID color, Line Wrapping || #286072 || || [source:trunk/plugins/de.cau.cs.kieler.synccharts/gmf-templates/aspects/impl/diagram/editparts/TextAware.xpt TextAware ||
-|| || Pref to disable Xtext serialize, Splines || || || [source:trunk/plugins/de.cau.cs.kieler.synccharts/gmf-templates/aspects/impl/preferences/StandardPage.xpt StandardPage ||
-|| || added check for font disposed || || || [source:trunk/plugins/de.cau.cs.kieler.synccharts/gmf-templates/aspects/xpt/diagram/editparts/EditPartFactory.xpt EditPartFactory||
-|| || Pref category to kieler || || || [source:trunk/plugins/de.cau.cs.kieler.synccharts/gmf-templates/aspects/xpt/diagram/preferences/extensions.xpt extensions ||
-|| || Splines || || || [source:trunk/plugins/de.cau.cs.kieler.synccharts/gmf-templates/aspects/xpt/diagram/preferences/PreferenceInitializer.xpt PreferenceInitializer ||
-|| N || name of kixs = name of kids || || || [source:trunk/plugins/de.cau.cs.kieler.synccharts/gmf-templates/aspects/xpt/editor/CreationWizard.xpt CreationWizard ||
-|| || ??? || || || [source:trunk/plugins/de.cau.cs.kieler.synccharts/gmf-templates/aspects/xpt/editor/CreationWizardPage.xpt CreationWizardPage ||
-|| || Validate on save, Trigger Listeners, Migration Check || || || [source:trunk/plugins/de.cau.cs.kieler.synccharts/gmf-templates/aspects/xpt/editor/DocumentProvider.xpt DocumentProvider ||
-|| || Support multiple domain suffixes (kixs+kits) || || || [source:trunk/plugins/de.cau.cs.kieler.synccharts/gmf-templates/aspects/xpt/editor/extensions.xpt extensions ||
-|| || Register new wizard for Explorer || || || [source:trunk/plugins/de.cau.cs.kieler.synccharts/gmf-templates/aspects/xpt/navigator/extensions.xpt extensions ||
-|| || Copy/Cut/Paste || || || [source:trunk/plugins/de.cau.cs.kieler.synccharts/gmf-templates/aspects/xpt/plugin/plugin.xpt plugin ||
+|| X || Pref to disable Xtext serialize, Splines || || || [source:trunk/plugins/de.cau.cs.kieler.synccharts/gmf-templates/aspects/impl/preferences/StandardPage.xpt StandardPage ||
+|| s || added check for font disposed || || || [source:trunk/plugins/de.cau.cs.kieler.synccharts/gmf-templates/aspects/xpt/diagram/editparts/EditPartFactory.xpt EditPartFactory||
+|| Xs|| Pref category to kieler || || || [source:trunk/plugins/de.cau.cs.kieler.synccharts/gmf-templates/aspects/xpt/diagram/preferences/extensions.xpt extensions ||
+|| X || Splines || || || [source:trunk/plugins/de.cau.cs.kieler.synccharts/gmf-templates/aspects/xpt/diagram/preferences/PreferenceInitializer.xpt PreferenceInitializer ||
+|| X || name of kixs = name of kids || || || [source:trunk/plugins/de.cau.cs.kieler.synccharts/gmf-templates/aspects/xpt/editor/CreationWizard.xpt CreationWizard ||
+|| X || add file extension || || || [source:trunk/plugins/de.cau.cs.kieler.synccharts/gmf-templates/aspects/xpt/editor/CreationWizardPage.xpt CreationWizardPage ||
+|| X || Validate on save, Trigger Listeners, Migration Check || || || [source:trunk/plugins/de.cau.cs.kieler.synccharts/gmf-templates/aspects/xpt/editor/DocumentProvider.xpt DocumentProvider ||
+|| X || Support multiple domain suffixes (kixs+kits) || || || [source:trunk/plugins/de.cau.cs.kieler.synccharts/gmf-templates/aspects/xpt/editor/extensions.xpt extensions ||
+|| X || Register new wizard for Explorer, kits || || || [source:trunk/plugins/de.cau.cs.kieler.synccharts/gmf-templates/aspects/xpt/navigator/extensions.xpt extensions ||
+|| X || Copy/Cut/Paste || || || [source:trunk/plugins/de.cau.cs.kieler.synccharts/gmf-templates/aspects/xpt/plugin/plugin.xpt plugin ||
 || || Removed Semantic Hints || || #266 || [source:trunk/plugins/de.cau.cs.kieler.synccharts/gmf-templates/aspects/xpt/providers/extensions.xpt extensions ||
 
  * N = Not yet solved
  * X = Applied to Helios templates
  * s = solved in Helios
- 
- Caused by: java.lang.NullPointerException
-	at de.cau.cs.kieler.core.ui.figures.layout.AbstractTableLayout.calculateLayoutSizes(AbstractTableLayout.java:174)
-	at de.cau.cs.kieler.core.ui.figures.layout.AbstractTableLayout.calculatePreferredSize(AbstractTableLayout.java:503)
-	at org.eclipse.draw2d.AbstractLayout.getPreferredSize(AbstractLayout.java:110)
-	at org.eclipse.draw2d.AbstractHintLayout.getPreferredSize(AbstractHintLayout.java:90)
-	at org.eclipse.draw2d.Figure.getPreferredSize(Figure.java:807)
-	at org.eclipse.draw2d.StackLayout.calculatePreferredSize(StackLayout.java:72)
-	at org.eclipse.draw2d.AbstractLayout.getPreferredSize(AbstractLayout.java:110)
-	at org.eclipse.draw2d.AbstractHintLayout.getPreferredSize(AbstractHintLayout.java:90)
-	at org.eclipse.draw2d.Figure.getPreferredSize(Figure.java:807)
-	at org.eclipse.gmf.runtime.gef.ui.figures.DefaultSizeNodeFigure.getPreferredSize(DefaultSizeNodeFigure.java:76)
-	at org.eclipse.gmf.runtime.diagram.ui.layout.FreeFormLayoutEx.layout(FreeFormLayoutEx.java:45)
-	at org.eclipse.draw2d.Figure$LayoutNotifier.layout(Figure.java:1974)
-	at org.eclipse.draw2d.Figure.layout(Figure.java:1093)
-	at org.eclipse.draw2d.Figure.validate(Figure.java:1894)
-	at org.eclipse.gmf.runtime.diagram.ui.figures.BorderItemsAwareFreeFormLayer.validate(BorderItemsAwareFreeFormLayer.java:168)
-	at org.eclipse.gmf.runtime.diagram.ui.editparts.DiagramEditPart$1.validate(DiagramEditPart.java:157)
-	at org.eclipse.draw2d.Figure.validate(Figure.java:1896)
-	at org.eclipse.gmf.runtime.diagram.u†i.figures.BorderItemsAwareFreeFormLayer.validate(BorderItemsAwareFreeFormLayer.java:168)
-	at org.eclipse.draw2d.Figure.validate(Figure.java:1896)
-	at org.eclipse.draw2d.Figure.validate(Figure.java:1896)
-	at org.eclipse.draw2d.Figure.validate(Figure.java:1896)
-	at org.eclipse.draw2d.FreeformViewport$FreeformViewportLayout.calculatePreferredSize(FreeformViewport.java:25)
-	at org.eclipse.draw2d.AbstractLayout.getPreferredSize(AbstractLayout.java:110)
-	at org.eclipse.draw2d.AbstractHintLayout.getPreferredSize(AbstractHintLayout.java:90)
-	at org.eclipse.draw2d.Figure.getPreferredSize(Figure.java:807)
-	at org.eclipse.draw2d.ScrollPaneSolver.solve(ScrollPaneSolver.java:82)
-	at org.eclipse.draw2d.FigureCanvas.layoutViewport(FigureCanvas.java:325)
-	at org.eclipse.draw2d.FigureCanvas.access$4(FigureCanvas.java:323)
-	at org.eclipse.draw2d.FigureCanvas$3.notifyValidating(FigureCanvas.java:292)
-	at org.eclipse.draw2d.UpdateManager.fireValidating(UpdateManager.java:143)
-	at org.eclipse.draw2d.DeferredUpdateManager.performValidation(DeferredUpdateManager.java:214)
-	at org.eclipse.gmf.runtime.diagram.ui.parts.DiagramGraphicalViewer$ToggleUpdateManager.performValidation(DiagramGraphicalViewer.java:124)
-	at org.eclipse.draw2d.DeferredUpdateManager.performUpdate(DeferredUpdateManager.java:190)
-	at org.eclipse.gmf.runtime.diagram.ui.parts.DiagramGraphicalViewer$ToggleUpdateManager.performUpdate(DiagramGraphicalViewer.java:114)
-	at org.eclipse.draw2d.DeferredUpdateManager$UpdateRequest.run(DeferredUpdateManager.java:44)
-	at org.eclipse.swt.widgets.RunnableLock.run(RunnableLock.java:35)
-	at org.eclipse.swt.widgets.Synchronizer.runAsyncMessages(Synchronizer.java:134)
-	... 23 more
+ * ? = Does not work, do not understand
  

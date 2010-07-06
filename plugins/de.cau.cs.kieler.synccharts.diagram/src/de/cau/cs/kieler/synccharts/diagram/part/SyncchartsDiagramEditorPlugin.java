@@ -23,6 +23,9 @@ import org.osgi.framework.BundleContext;
 
 import de.cau.cs.kieler.core.annotations.provider.AnnotationsItemProviderAdapterFactory;
 import de.cau.cs.kieler.core.expressions.provider.ExpressionsItemProviderAdapterFactory;
+import de.cau.cs.kieler.synccharts.diagram.edit.policies.SyncchartsBaseItemSemanticEditPolicy;
+import de.cau.cs.kieler.synccharts.diagram.expressions.SyncchartsOCLFactory;
+import de.cau.cs.kieler.synccharts.diagram.providers.ElementInitializers;
 import de.cau.cs.kieler.synccharts.provider.SyncchartsItemProviderAdapterFactory;
 
 /**
@@ -38,8 +41,7 @@ public class SyncchartsDiagramEditorPlugin extends AbstractUIPlugin {
     /**
      * @generated
      */
-    public static final PreferencesHint DIAGRAM_PREFERENCES_HINT = new PreferencesHint(
-            ID);
+    public static final PreferencesHint DIAGRAM_PREFERENCES_HINT = new PreferencesHint(ID);
 
     /**
      * @generated
@@ -59,6 +61,21 @@ public class SyncchartsDiagramEditorPlugin extends AbstractUIPlugin {
     /**
      * @generated
      */
+    private SyncchartsBaseItemSemanticEditPolicy.LinkConstraints linkConstraints;
+
+    /**
+     * @generated
+     */
+    private ElementInitializers initializers;
+
+    /**
+     * @generated
+     */
+    private SyncchartsOCLFactory oclFactory;
+
+    /**
+     * @generated
+     */
     public SyncchartsDiagramEditorPlugin() {
     }
 
@@ -68,11 +85,8 @@ public class SyncchartsDiagramEditorPlugin extends AbstractUIPlugin {
     public void start(BundleContext context) throws Exception {
         super.start(context);
         instance = this;
-        PreferencesHint.registerPreferenceStore(DIAGRAM_PREFERENCES_HINT,
-                getPreferenceStore());
+        PreferencesHint.registerPreferenceStore(DIAGRAM_PREFERENCES_HINT, getPreferenceStore());
         adapterFactory = createAdapterFactory();
-
-        //de.cau.cs.kieler.synccharts.labelparser.bridge.SyncchartsContentAdapter.init();
     }
 
     /**
@@ -81,6 +95,9 @@ public class SyncchartsDiagramEditorPlugin extends AbstractUIPlugin {
     public void stop(BundleContext context) throws Exception {
         adapterFactory.dispose();
         adapterFactory = null;
+        linkConstraints = null;
+        initializers = null;
+        oclFactory = null;
         instance = null;
         super.stop(context);
     }
@@ -96,7 +113,7 @@ public class SyncchartsDiagramEditorPlugin extends AbstractUIPlugin {
      * @generated
      */
     protected ComposedAdapterFactory createAdapterFactory() {
-        List factories = new ArrayList();
+        ArrayList<AdapterFactory> factories = new ArrayList<AdapterFactory>();
         fillItemProviderFactories(factories);
         return new ComposedAdapterFactory(factories);
     }
@@ -104,7 +121,7 @@ public class SyncchartsDiagramEditorPlugin extends AbstractUIPlugin {
     /**
      * @generated
      */
-    protected void fillItemProviderFactories(List factories) {
+    protected void fillItemProviderFactories(List<AdapterFactory> factories) {
         factories.add(new SyncchartsItemProviderAdapterFactory());
         factories.add(new AnnotationsItemProviderAdapterFactory());
         factories.add(new EcoreItemProviderAdapterFactory());
@@ -124,11 +141,11 @@ public class SyncchartsDiagramEditorPlugin extends AbstractUIPlugin {
      * @generated
      */
     public ImageDescriptor getItemImageDescriptor(Object item) {
-        IItemLabelProvider labelProvider = (IItemLabelProvider) adapterFactory
-                .adapt(item, IItemLabelProvider.class);
+        IItemLabelProvider labelProvider = (IItemLabelProvider) adapterFactory.adapt(item,
+            IItemLabelProvider.class);
         if (labelProvider != null) {
             return ExtendedImageRegistry.getInstance().getImageDescriptor(
-                    labelProvider.getImage(item));
+                labelProvider.getImage(item));
         }
         return null;
     }
@@ -158,7 +175,7 @@ public class SyncchartsDiagramEditorPlugin extends AbstractUIPlugin {
         final IPath p = new Path(path);
         if (p.isAbsolute() && p.segmentCount() > 1) {
             return AbstractUIPlugin.imageDescriptorFromPlugin(p.segment(0), p
-                    .removeFirstSegments(1).makeAbsolute().toString());
+                .removeFirstSegments(1).makeAbsolute().toString());
         } else {
             return getBundledImageDescriptor(p.makeAbsolute().toString());
         }
@@ -203,6 +220,48 @@ public class SyncchartsDiagramEditorPlugin extends AbstractUIPlugin {
     /**
      * @generated
      */
+    public SyncchartsBaseItemSemanticEditPolicy.LinkConstraints getLinkConstraints() {
+        return linkConstraints;
+    }
+
+    /**
+     * @generated
+     */
+    public void setLinkConstraints(SyncchartsBaseItemSemanticEditPolicy.LinkConstraints lc) {
+        this.linkConstraints = lc;
+    }
+
+    /**
+     * @generated
+     */
+    public ElementInitializers getElementInitializers() {
+        return initializers;
+    }
+
+    /**
+     * @generated
+     */
+    public void setElementInitializers(ElementInitializers i) {
+        this.initializers = i;
+    }
+
+    /**
+     * @generated
+     */
+    public SyncchartsOCLFactory getSyncchartsOCLFactory() {
+        return oclFactory;
+    }
+
+    /**
+     * @generated
+     */
+    public void setSyncchartsOCLFactory(SyncchartsOCLFactory f) {
+        this.oclFactory = f;
+    }
+
+    /**
+     * @generated
+     */
     public void logError(String error) {
         logError(error, null);
     }
@@ -215,8 +274,8 @@ public class SyncchartsDiagramEditorPlugin extends AbstractUIPlugin {
             error = throwable.getMessage();
         }
         getLog().log(
-                new Status(IStatus.ERROR, SyncchartsDiagramEditorPlugin.ID,
-                        IStatus.OK, error, throwable));
+            new Status(IStatus.ERROR, SyncchartsDiagramEditorPlugin.ID, IStatus.OK, error,
+                throwable));
         debug(error, throwable);
     }
 
@@ -235,8 +294,8 @@ public class SyncchartsDiagramEditorPlugin extends AbstractUIPlugin {
             message = throwable.getMessage();
         }
         getLog().log(
-                new Status(IStatus.INFO, SyncchartsDiagramEditorPlugin.ID,
-                        IStatus.OK, message, throwable));
+            new Status(IStatus.INFO, SyncchartsDiagramEditorPlugin.ID, IStatus.OK, message,
+                throwable));
         debug(message, throwable);
     }
 

@@ -43,8 +43,14 @@
 				org.eclipse.gmf.runtime.diagram.ui.tools.TextDirectEditManager.getTextCellEditorClass(this),
 				«diagram.getEditPartFactoryQualifiedClassName()».getTextCellEditorLocator(this)));
 			«ENDREM»
+			«REM»Modified the WrapTextCellEditor to a custom class. The original has ugly auto wrap
+			official class:
 			setManager(new org.eclipse.gmf.runtime.diagram.ui.tools.TextDirectEditManager(this,
 				org.eclipse.gmf.runtime.gef.ui.internal.parts.WrapTextCellEditor.class,
+				«diagram.getEditPartFactoryQualifiedClassName()».getTextCellEditorLocator(this)));
+			«ENDREM»
+			setManager(new org.eclipse.gmf.runtime.diagram.ui.tools.TextDirectEditManager(this,
+				de.cau.cs.kieler.synccharts.custom.WrapTextCellEditor.class,
 				«diagram.getEditPartFactoryQualifiedClassName()».getTextCellEditorLocator(this)));
 		}
 		return manager;

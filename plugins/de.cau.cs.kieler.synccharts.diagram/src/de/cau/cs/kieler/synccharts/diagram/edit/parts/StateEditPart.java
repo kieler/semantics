@@ -1,11 +1,12 @@
 package de.cau.cs.kieler.synccharts.diagram.edit.parts;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import org.eclipse.draw2d.IFigure;
 import org.eclipse.draw2d.MarginBorder;
-import org.eclipse.draw2d.Polyline;
+import org.eclipse.draw2d.PolylineShape;
 import org.eclipse.draw2d.Shape;
 import org.eclipse.draw2d.StackLayout;
 import org.eclipse.draw2d.geometry.Point;
@@ -68,15 +69,11 @@ public class StateEditPart extends ShapeNodeEditPart {
      * @generated
      */
     protected void createDefaultEditPolicies() {
-        installEditPolicy(EditPolicyRoles.CREATION_ROLE,
-                new CreationEditPolicy());
+        installEditPolicy(EditPolicyRoles.CREATION_ROLE, new CreationEditPolicy());
         super.createDefaultEditPolicies();
-        installEditPolicy(EditPolicyRoles.SEMANTIC_ROLE,
-                new StateItemSemanticEditPolicy());
-        installEditPolicy(EditPolicyRoles.DRAG_DROP_ROLE,
-                new DragDropEditPolicy());
-        installEditPolicy(EditPolicyRoles.CANONICAL_ROLE,
-                new StateCanonicalEditPolicy());
+        installEditPolicy(EditPolicyRoles.SEMANTIC_ROLE, new StateItemSemanticEditPolicy());
+        installEditPolicy(EditPolicyRoles.DRAG_DROP_ROLE, new DragDropEditPolicy());
+        installEditPolicy(EditPolicyRoles.CANONICAL_ROLE, new StateCanonicalEditPolicy());
         installEditPolicy(EditPolicy.LAYOUT_ROLE, createLayoutEditPolicy());
         // XXX need an SCR to runtime to have another abstract superclass that would let children add reasonable editpolicies
         // removeEditPolicy(org.eclipse.gmf.runtime.diagram.ui.editpolicies.EditPolicyRoles.CONNECTION_HANDLES_ROLE);
@@ -86,11 +83,10 @@ public class StateEditPart extends ShapeNodeEditPart {
      * @generated
      */
     protected LayoutEditPolicy createLayoutEditPolicy() {
-        LayoutEditPolicy lep = new LayoutEditPolicy() {
+        org.eclipse.gmf.runtime.diagram.ui.editpolicies.LayoutEditPolicy lep = new org.eclipse.gmf.runtime.diagram.ui.editpolicies.LayoutEditPolicy() {
 
             protected EditPolicy createChildEditPolicy(EditPart child) {
-                EditPolicy result = child
-                        .getEditPolicy(EditPolicy.PRIMARY_DRAG_ROLE);
+                EditPolicy result = child.getEditPolicy(EditPolicy.PRIMARY_DRAG_ROLE);
                 if (result == null) {
                     result = new NonResizableEditPolicy();
                 }
@@ -112,13 +108,13 @@ public class StateEditPart extends ShapeNodeEditPart {
      * @generated
      */
     protected IFigure createNodeShape() {
-        IFigure figure = new StateFigure();
+        primaryShape = new StateFigure();
 
-        if (figure instanceof IAttributeAwareFigure) {
-            ((IAttributeAwareFigure) figure).listenTo(this.getNotationView()
-                    .getElement());
+        if (primaryShape instanceof IAttributeAwareFigure) {
+            ((IAttributeAwareFigure) primaryShape).listenTo(this.getNotationView().getElement());
         }
-        return primaryShape = figure;
+
+        return primaryShape;
     }
 
     /**
@@ -132,14 +128,14 @@ public class StateEditPart extends ShapeNodeEditPart {
      * @generated
      */
     protected boolean addFixedChild(EditPart childEditPart) {
-        if (childEditPart instanceof StateInterfaceDeclarationEditPart) {
-            ((StateInterfaceDeclarationEditPart) childEditPart)
-                    .setLabel(getPrimaryShape().getFigureInterfaceDeclFigure());
-            return true;
-        }
         if (childEditPart instanceof StateLabelEditPart) {
             ((StateLabelEditPart) childEditPart).setLabel(getPrimaryShape()
-                    .getFigureStateNameFigure());
+                .getFigureStateNameFigure());
+            return true;
+        }
+        if (childEditPart instanceof StateInterfaceDeclarationEditPart) {
+            ((StateInterfaceDeclarationEditPart) childEditPart).setLabel(getPrimaryShape()
+                .getFigureInterfaceDeclFigure());
             return true;
         }
         return false;
@@ -149,10 +145,10 @@ public class StateEditPart extends ShapeNodeEditPart {
      * @generated
      */
     protected boolean removeFixedChild(EditPart childEditPart) {
-        if (childEditPart instanceof StateInterfaceDeclarationEditPart) {
+        if (childEditPart instanceof StateLabelEditPart) {
             return true;
         }
-        if (childEditPart instanceof StateLabelEditPart) {
+        if (childEditPart instanceof StateInterfaceDeclarationEditPart) {
             return true;
         }
         return false;
@@ -276,14 +272,14 @@ public class StateEditPart extends ShapeNodeEditPart {
      */
     public EditPart getPrimaryChildEditPart() {
         return getChildBySemanticHint(SyncchartsVisualIDRegistry
-                .getType(StateLabelEditPart.VISUAL_ID));
+            .getType(StateLabelEditPart.VISUAL_ID));
     }
 
     /**
      * @generated
      */
-    public List/*<org.eclipse.gmf.runtime.emf.type.core.IElementType>*/getMARelTypesOnSource() {
-        List/*<org.eclipse.gmf.runtime.emf.type.core.IElementType>*/types = new ArrayList/*<org.eclipse.gmf.runtime.emf.type.core.IElementType>*/();
+    public List<IElementType> getMARelTypesOnSource() {
+        ArrayList<IElementType> types = new ArrayList<IElementType>(1);
         types.add(SyncchartsElementTypes.Transition_4003);
         return types;
     }
@@ -291,9 +287,8 @@ public class StateEditPart extends ShapeNodeEditPart {
     /**
      * @generated
      */
-    public List/*<org.eclipse.gmf.runtime.emf.type.core.IElementType>*/getMARelTypesOnSourceAndTarget(
-            IGraphicalEditPart targetEditPart) {
-        List/*<org.eclipse.gmf.runtime.emf.type.core.IElementType>*/types = new ArrayList/*<org.eclipse.gmf.runtime.emf.type.core.IElementType>*/();
+    public List<IElementType> getMARelTypesOnSourceAndTarget(IGraphicalEditPart targetEditPart) {
+        LinkedList<IElementType> types = new LinkedList<IElementType>();
         if (targetEditPart instanceof de.cau.cs.kieler.synccharts.diagram.edit.parts.StateEditPart) {
             types.add(SyncchartsElementTypes.Transition_4003);
         }
@@ -306,13 +301,10 @@ public class StateEditPart extends ShapeNodeEditPart {
     /**
      * @generated
      */
-    public List/*<org.eclipse.gmf.runtime.emf.type.core.IElementType>*/getMATypesForTarget(
-            IElementType relationshipType) {
-        List/*<org.eclipse.gmf.runtime.emf.type.core.IElementType>*/types = new ArrayList/*<org.eclipse.gmf.runtime.emf.type.core.IElementType>*/();
+    public List<IElementType> getMATypesForTarget(IElementType relationshipType) {
+        LinkedList<IElementType> types = new LinkedList<IElementType>();
         if (relationshipType == SyncchartsElementTypes.Transition_4003) {
             types.add(SyncchartsElementTypes.State_2003);
-        }
-        if (relationshipType == SyncchartsElementTypes.Transition_4003) {
             types.add(SyncchartsElementTypes.State_3024);
         }
         return types;
@@ -321,8 +313,8 @@ public class StateEditPart extends ShapeNodeEditPart {
     /**
      * @generated
      */
-    public List/*<org.eclipse.gmf.runtime.emf.type.core.IElementType>*/getMARelTypesOnTarget() {
-        List/*<org.eclipse.gmf.runtime.emf.type.core.IElementType>*/types = new ArrayList/*<org.eclipse.gmf.runtime.emf.type.core.IElementType>*/();
+    public List<IElementType> getMARelTypesOnTarget() {
+        ArrayList<IElementType> types = new ArrayList<IElementType>(1);
         types.add(SyncchartsElementTypes.Transition_4003);
         return types;
     }
@@ -330,13 +322,10 @@ public class StateEditPart extends ShapeNodeEditPart {
     /**
      * @generated
      */
-    public List/*<org.eclipse.gmf.runtime.emf.type.core.IElementType>*/getMATypesForSource(
-            IElementType relationshipType) {
-        List/*<org.eclipse.gmf.runtime.emf.type.core.IElementType>*/types = new ArrayList/*<org.eclipse.gmf.runtime.emf.type.core.IElementType>*/();
+    public List<IElementType> getMATypesForSource(IElementType relationshipType) {
+        LinkedList<IElementType> types = new LinkedList<IElementType>();
         if (relationshipType == SyncchartsElementTypes.Transition_4003) {
             types.add(SyncchartsElementTypes.State_2003);
-        }
-        if (relationshipType == SyncchartsElementTypes.Transition_4003) {
             types.add(SyncchartsElementTypes.State_3024);
         }
         return types;
@@ -381,18 +370,14 @@ public class StateEditPart extends ShapeNodeEditPart {
             fFigureStateNameFigure = new WrappingLabel();
             fFigureStateNameFigure.setText("");
 
-            fFigureStateNameFigure.setBorder(new MarginBorder(getMapMode()
-                    .DPtoLP(5), getMapMode().DPtoLP(10),
-                    getMapMode().DPtoLP(5), getMapMode().DPtoLP(10)));
+            fFigureStateNameFigure.setBorder(new MarginBorder(getMapMode().DPtoLP(5), getMapMode()
+                .DPtoLP(10), getMapMode().DPtoLP(5), getMapMode().DPtoLP(10)));
 
             this.add(fFigureStateNameFigure);
 
-            Polyline polyline0 = new Polyline();
-            polyline0.addPoint(new Point(getMapMode().DPtoLP(0), getMapMode()
-                    .DPtoLP(20)));
-            polyline0.addPoint(new Point(getMapMode().DPtoLP(50), getMapMode()
-                    .DPtoLP(20)));
-            polyline0.setLineWidth(1);
+            PolylineShape polyline0 = new PolylineShape();
+            polyline0.addPoint(new Point(getMapMode().DPtoLP(0), getMapMode().DPtoLP(20)));
+            polyline0.addPoint(new Point(getMapMode().DPtoLP(50), getMapMode().DPtoLP(20)));
 
             this.add(polyline0);
 
@@ -400,9 +385,8 @@ public class StateEditPart extends ShapeNodeEditPart {
             fFigureBodyTextFigure.setText("");
             fFigureBodyTextFigure.setTextWrap(true);
 
-            fFigureBodyTextFigure.setBorder(new MarginBorder(getMapMode()
-                    .DPtoLP(5), getMapMode().DPtoLP(10),
-                    getMapMode().DPtoLP(5), getMapMode().DPtoLP(10)));
+            fFigureBodyTextFigure.setBorder(new MarginBorder(getMapMode().DPtoLP(5), getMapMode()
+                .DPtoLP(10), getMapMode().DPtoLP(5), getMapMode().DPtoLP(10)));
 
             this.add(fFigureBodyTextFigure);
 
@@ -410,31 +394,11 @@ public class StateEditPart extends ShapeNodeEditPart {
             fFigureInterfaceDeclFigure.setText("");
             fFigureInterfaceDeclFigure.setTextWrap(true);
 
-            fFigureInterfaceDeclFigure.setBorder(new MarginBorder(getMapMode()
-                    .DPtoLP(5), getMapMode().DPtoLP(10),
-                    getMapMode().DPtoLP(5), getMapMode().DPtoLP(10)));
+            fFigureInterfaceDeclFigure.setBorder(new MarginBorder(getMapMode().DPtoLP(5),
+                getMapMode().DPtoLP(10), getMapMode().DPtoLP(5), getMapMode().DPtoLP(10)));
 
             this.add(fFigureInterfaceDeclFigure);
 
-        }
-
-        /**
-         * @generated
-         */
-        private boolean myUseLocalCoordinates = true;
-
-        /**
-         * @generated
-         */
-        protected boolean useLocalCoordinates() {
-            return myUseLocalCoordinates;
-        }
-
-        /**
-         * @generated
-         */
-        protected void setUseLocalCoordinates(boolean useLocalCoordinates) {
-            myUseLocalCoordinates = useLocalCoordinates;
         }
 
         /**

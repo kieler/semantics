@@ -16,6 +16,7 @@ import de.cau.cs.kieler.synccharts.State;
 import de.cau.cs.kieler.synccharts.SyncchartsFactory;
 import de.cau.cs.kieler.synccharts.Transition;
 import de.cau.cs.kieler.synccharts.diagram.edit.policies.SyncchartsBaseItemSemanticEditPolicy;
+import de.cau.cs.kieler.synccharts.diagram.providers.ElementInitializers;
 import de.cau.cs.kieler.synccharts.diagram.providers.SyncchartsElementTypes;
 
 /**
@@ -41,8 +42,7 @@ public class TransitionCreateCommand extends EditElementCommand {
     /**
      * @generated
      */
-    public TransitionCreateCommand(CreateRelationshipRequest request,
-            EObject source, EObject target) {
+    public TransitionCreateCommand(CreateRelationshipRequest request, EObject source, EObject target) {
         super(request.getLabel(), null, request);
         this.source = source;
         this.target = target;
@@ -69,26 +69,24 @@ public class TransitionCreateCommand extends EditElementCommand {
         if (getContainer() == null) {
             return false;
         }
-        return SyncchartsBaseItemSemanticEditPolicy.LinkConstraints
-                .canCreateTransition_4003(getContainer(), getSource(),
-                        getTarget());
+        return SyncchartsBaseItemSemanticEditPolicy.getLinkConstraints().canCreateTransition_4003(
+            getContainer(), getSource(), getTarget());
     }
 
     /**
      * @generated
      */
-    protected CommandResult doExecuteWithResult(IProgressMonitor monitor,
-            IAdaptable info) throws ExecutionException {
+    protected CommandResult doExecuteWithResult(IProgressMonitor monitor, IAdaptable info)
+        throws ExecutionException {
         if (!canExecute()) {
-            throw new ExecutionException(
-                    "Invalid arguments in create link command"); //$NON-NLS-1$
+            throw new ExecutionException("Invalid arguments in create link command"); //$NON-NLS-1$
         }
 
         Transition newElement = SyncchartsFactory.eINSTANCE.createTransition();
         getContainer().getOutgoingTransitions().add(newElement);
         newElement.setSourceState(getSource());
         newElement.setTargetState(getTarget());
-        SyncchartsElementTypes.init_Transition_4003(newElement);
+        ElementInitializers.getInstance().init_Transition_4003(newElement);
         doConfigure(newElement, monitor, info);
         ((CreateElementRequest) getRequest()).setNewElement(newElement);
         return CommandResult.newOKCommandResult(newElement);
@@ -98,21 +96,16 @@ public class TransitionCreateCommand extends EditElementCommand {
     /**
      * @generated
      */
-    protected void doConfigure(Transition newElement, IProgressMonitor monitor,
-            IAdaptable info) throws ExecutionException {
-        IElementType elementType = ((CreateElementRequest) getRequest())
-                .getElementType();
-        ConfigureRequest configureRequest = new ConfigureRequest(
-                getEditingDomain(), newElement, elementType);
-        configureRequest.setClientContext(((CreateElementRequest) getRequest())
-                .getClientContext());
+    protected void doConfigure(Transition newElement, IProgressMonitor monitor, IAdaptable info)
+        throws ExecutionException {
+        IElementType elementType = ((CreateElementRequest) getRequest()).getElementType();
+        ConfigureRequest configureRequest = new ConfigureRequest(getEditingDomain(), newElement,
+            elementType);
+        configureRequest.setClientContext(((CreateElementRequest) getRequest()).getClientContext());
         configureRequest.addParameters(getRequest().getParameters());
-        configureRequest.setParameter(CreateRelationshipRequest.SOURCE,
-                getSource());
-        configureRequest.setParameter(CreateRelationshipRequest.TARGET,
-                getTarget());
-        ICommand configureCommand = elementType
-                .getEditCommand(configureRequest);
+        configureRequest.setParameter(CreateRelationshipRequest.SOURCE, getSource());
+        configureRequest.setParameter(CreateRelationshipRequest.TARGET, getTarget());
+        ICommand configureCommand = elementType.getEditCommand(configureRequest);
         if (configureCommand != null && configureCommand.canExecute()) {
             configureCommand.execute(monitor, info);
         }
@@ -155,8 +148,7 @@ public class TransitionCreateCommand extends EditElementCommand {
         // Find container element for the new link.
         // Climb up by containment hierarchy starting from the source
         // and return the first element that is instance of the container class.
-        for (EObject element = source; element != null; element = element
-                .eContainer()) {
+        for (EObject element = source; element != null; element = element.eContainer()) {
             if (element instanceof State) {
                 return (State) element;
             }

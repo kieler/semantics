@@ -33,16 +33,16 @@
 			result.setBorder(null);
 			
      		«REM» Give all but state compartments a custom layout «ENDREM» 
-		«REM»	«IF (title != ("StateCompartment")) -»
-				«IF (title != ("RegionCompartment")) -»
+			«IF (title <> 'StateCompartment') -»
+				«IF (title <> 'RegionCompartment') -»
 				result.getContentPane().setLayoutManager(new de.cau.cs.kieler.synccharts.custom.ListCompartmentLayout());
-				 Add the compartment's title as a new figure within the compartment 
+			«REM»	 Add the compartment's title as a new figure within the compartment «ENDREM»
 					org.eclipse.gmf.runtime.draw2d.ui.figures.WrappingLabel title = new org.eclipse.gmf.runtime.draw2d.ui.figures.WrappingLabel();
 					title.setText(result.getCompartmentTitle() + " ");
 					title.setForegroundColor(org.eclipse.draw2d.ColorConstants.black);
 					result.getContentPane().add(title, 0);
 				«ENDIF-»
-			«ENDIF-»«ENDREM»
+			«ENDIF-»
 			«REM» Additions end here «ENDREM»
 			
 			return result;

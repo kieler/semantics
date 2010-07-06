@@ -6,6 +6,7 @@ import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.emf.common.ui.URIEditorInput;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.workspace.util.WorkspaceSynchronizer;
 import org.eclipse.gmf.runtime.notation.Diagram;
@@ -71,12 +72,10 @@ public class SyncchartsNavigatorActionProvider extends CommonActionProvider {
         if (!myContribute) {
             return;
         }
-        IStructuredSelection selection = (IStructuredSelection) getContext()
-                .getSelection();
+        IStructuredSelection selection = (IStructuredSelection) getContext().getSelection();
         myOpenDiagramAction.selectionChanged(selection);
         if (myOpenDiagramAction.isEnabled()) {
-            actionBars.setGlobalActionHandler(ICommonActionConstants.OPEN,
-                    myOpenDiagramAction);
+            actionBars.setGlobalActionHandler(ICommonActionConstants.OPEN, myOpenDiagramAction);
         }
     }
 
@@ -89,7 +88,7 @@ public class SyncchartsNavigatorActionProvider extends CommonActionProvider {
     /**
      * @generated
      */
-    private class OpenDiagramAction extends Action {
+    private static class OpenDiagramAction extends Action {
 
         /**
          * @generated
@@ -117,17 +116,14 @@ public class SyncchartsNavigatorActionProvider extends CommonActionProvider {
             if (selection.size() == 1) {
                 Object selectedElement = selection.getFirstElement();
                 if (selectedElement instanceof SyncchartsNavigatorItem) {
-                    selectedElement = ((SyncchartsNavigatorItem) selectedElement)
-                            .getView();
+                    selectedElement = ((SyncchartsNavigatorItem) selectedElement).getView();
                 } else if (selectedElement instanceof IAdaptable) {
-                    selectedElement = ((IAdaptable) selectedElement)
-                            .getAdapter(View.class);
+                    selectedElement = ((IAdaptable) selectedElement).getAdapter(View.class);
                 }
                 if (selectedElement instanceof Diagram) {
                     Diagram diagram = (Diagram) selectedElement;
-                    if (RegionEditPart.MODEL_ID
-                            .equals(SyncchartsVisualIDRegistry
-                                    .getModelID(diagram))) {
+                    if (RegionEditPart.MODEL_ID.equals(SyncchartsVisualIDRegistry
+                        .getModelID(diagram))) {
                         myDiagram = diagram;
                     }
                 }
@@ -143,34 +139,32 @@ public class SyncchartsNavigatorActionProvider extends CommonActionProvider {
                 return;
             }
 
-            IEditorInput editorInput = getEditorInput();
+            IEditorInput editorInput = getEditorInput(myDiagram);
             IWorkbenchPage page = myViewerSite.getPage();
             try {
                 page.openEditor(editorInput, SyncchartsDiagramEditor.ID);
             } catch (PartInitException e) {
                 SyncchartsDiagramEditorPlugin.getInstance().logError(
-                        "Exception while openning diagram", e); //$NON-NLS-1$
+                    "Exception while openning diagram", e); //$NON-NLS-1$
             }
         }
 
         /**
          * @generated
          */
-        private IEditorInput getEditorInput() {
-            for (Iterator it = myDiagram.eResource().getContents().iterator(); it
-                    .hasNext();) {
-                EObject nextEObject = (EObject) it.next();
-                if (nextEObject == myDiagram) {
-                    return new FileEditorInput(WorkspaceSynchronizer
-                            .getFile(myDiagram.eResource()));
+        private static IEditorInput getEditorInput(Diagram diagram) {
+            Resource diagramResource = diagram.eResource();
+            for (EObject nextEObject : diagramResource.getContents()) {
+                if (nextEObject == diagram) {
+                    return new FileEditorInput(WorkspaceSynchronizer.getFile(diagramResource));
                 }
                 if (nextEObject instanceof Diagram) {
                     break;
                 }
             }
-            URI uri = EcoreUtil.getURI(myDiagram);
-            String editorName = uri.lastSegment()
-                    + "#" + myDiagram.eResource().getContents().indexOf(myDiagram); //$NON-NLS-1$
+            URI uri = EcoreUtil.getURI(diagram);
+            String editorName = uri.lastSegment() + '#'
+                + diagram.eResource().getContents().indexOf(diagram);
             IEditorInput editorInput = new URIEditorInput(uri, editorName);
             return editorInput;
         }

@@ -12,7 +12,6 @@ import org.eclipse.gmf.runtime.draw2d.ui.figures.WrappingLabel;
 import org.eclipse.gmf.runtime.notation.View;
 import org.eclipse.jface.viewers.CellEditor;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.widgets.Text;
 
 import de.cau.cs.kieler.synccharts.diagram.part.SyncchartsVisualIDRegistry;
@@ -154,8 +153,7 @@ public class SyncchartsEditPartFactory implements EditPartFactory {
     /**
      * @generated
      */
-    public static CellEditorLocator getTextCellEditorLocator(
-            ITextAwareEditPart source) {
+    public static CellEditorLocator getTextCellEditorLocator(ITextAwareEditPart source) {
         if (source.getFigure() instanceof WrappingLabel)
             return new TextCellEditorLocator((WrappingLabel) source.getFigure());
         else {
@@ -194,18 +192,13 @@ public class SyncchartsEditPartFactory implements EditPartFactory {
             Text text = (Text) celleditor.getControl();
             Rectangle rect = getWrapLabel().getTextBounds().getCopy();
             getWrapLabel().translateToAbsolute(rect);
-            if (getWrapLabel().isTextWrapOn()
-                    && getWrapLabel().getText().length() > 0) {
-                rect.setSize(new Dimension(text.computeSize(rect.width,
-                        SWT.DEFAULT)));
-            } else {
-
-                Font font = text.getFont();
-                if (!font.isDisposed()) {
-                    int avr = FigureUtilities.getFontMetrics(font)
-                            .getAverageCharWidth();
-                    rect.setSize(new Dimension(text.computeSize(SWT.DEFAULT,
-                            SWT.DEFAULT)).expand(avr * 2, 0));
+            if (!text.getFont().isDisposed()) {
+                if (getWrapLabel().isTextWrapOn() && getWrapLabel().getText().length() > 0) {
+                    rect.setSize(new Dimension(text.computeSize(rect.width, SWT.DEFAULT)));
+                } else {
+                    int avr = FigureUtilities.getFontMetrics(text.getFont()).getAverageCharWidth();
+                    rect.setSize(new Dimension(text.computeSize(SWT.DEFAULT, SWT.DEFAULT)).expand(
+                        avr * 2, 0));
                 }
             }
             if (!rect.equals(new Rectangle(text.getBounds()))) {
@@ -245,13 +238,10 @@ public class SyncchartsEditPartFactory implements EditPartFactory {
             Text text = (Text) celleditor.getControl();
             Rectangle rect = getLabel().getTextBounds().getCopy();
             getLabel().translateToAbsolute(rect);
-
-            Font font = text.getFont();
-            if (!font.isDisposed()) {
-                int avr = FigureUtilities.getFontMetrics(font)
-                        .getAverageCharWidth();
-                rect.setSize(new Dimension(text.computeSize(SWT.DEFAULT,
-                        SWT.DEFAULT)).expand(avr * 2, 0));
+            if (!text.getFont().isDisposed()) {
+                int avr = FigureUtilities.getFontMetrics(text.getFont()).getAverageCharWidth();
+                rect.setSize(new Dimension(text.computeSize(SWT.DEFAULT, SWT.DEFAULT)).expand(
+                    avr * 2, 0));
             }
             if (!rect.equals(new Rectangle(text.getBounds()))) {
                 text.setBounds(rect.x, rect.y, rect.width, rect.height);
