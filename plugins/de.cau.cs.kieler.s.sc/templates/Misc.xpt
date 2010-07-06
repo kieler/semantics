@@ -11,78 +11,78 @@
 «ENDREM»
 «DEFINE expandedExpression FOR OperatorExpression-»
 	«IF this.operator == OperatorType::EQ-»
-		«FOREACH  this.subExpressions AS subExpression SEPARATOR " == "-»
+		(«FOREACH  this.subExpressions AS subExpression SEPARATOR " == "-»
 			«EXPAND expandedExpression FOR subExpression-»
-		«ENDFOREACH»
+		«ENDFOREACH-»)
 	«ENDIF»
 	«IF this.operator == OperatorType::LT-»
-		«FOREACH  this.subExpressions AS subExpression SEPARATOR " < "-»
+		(«FOREACH  this.subExpressions AS subExpression SEPARATOR " < "-»
 			«EXPAND expandedExpression FOR subExpression-»
-		«ENDFOREACH»
+		«ENDFOREACH-»)
 	«ENDIF»
 	«IF this.operator == OperatorType::LEQ-»
-		«FOREACH  this.subExpressions AS subExpression SEPARATOR " <= "-»
+		(«FOREACH  this.subExpressions AS subExpression SEPARATOR " <= "-»
 			«EXPAND expandedExpression FOR subExpression-»
-		«ENDFOREACH»
+		«ENDFOREACH-»)
 	«ENDIF»
 	«IF this.operator == OperatorType::GT-»
-		«FOREACH  this.subExpressions AS subExpression SEPARATOR " > "-»
+		(«FOREACH  this.subExpressions AS subExpression SEPARATOR " > "-»
 			«EXPAND expandedExpression FOR subExpression-»
-		«ENDFOREACH»
+		«ENDFOREACH-»)
 	«ENDIF»
 	«IF this.operator == OperatorType::GEQ-»
-		«FOREACH  this.subExpressions AS subExpression SEPARATOR " >= "-»
+		(«FOREACH  this.subExpressions AS subExpression SEPARATOR " >= "-»
 			«EXPAND expandedExpression FOR subExpression-»
-		«ENDFOREACH»
+		«ENDFOREACH-»)
 	«ENDIF»
 	«IF this.operator == OperatorType::NOT-»
-		!(«EXPAND expandedExpression FOR this.subExpressions.first()-»)
+		(!(«EXPAND expandedExpression FOR this.subExpressions.first()-»))
 	«ENDIF»
 	«IF this.operator == OperatorType::VAL-»
-		VAL(«EXPAND expandedExpression FOR this.subExpressions.first()-»)
+		(VAL(«EXPAND expandedExpression FOR this.subExpressions.first()-»))
 	«ENDIF»
 	«IF this.operator == OperatorType::PRE-»
-		PRE(«EXPAND expandedExpression FOR this.subExpressions.first()-»)
+		(PRE(«EXPAND expandedExpression FOR this.subExpressions.first()-»))
 	«ENDIF»
 	«IF this.operator == OperatorType::NE-»
-		«FOREACH  this.subExpressions AS subExpression SEPARATOR " != "-»
+		(«FOREACH  this.subExpressions AS subExpression SEPARATOR " != "-»
 			«EXPAND expandedExpression FOR subExpression-»
-		«ENDFOREACH»
+		«ENDFOREACH-»)
 	«ENDIF»
 	«IF this.operator == OperatorType::AND-»
-		«FOREACH  this.subExpressions AS subExpression SEPARATOR " && "-»
+		(«FOREACH  this.subExpressions AS subExpression SEPARATOR " && "-»
 			«EXPAND expandedExpression FOR subExpression-»
-		«ENDFOREACH»
+		«ENDFOREACH-»)
 	«ENDIF»
 	«IF this.operator == OperatorType::OR-»
-		«FOREACH  this.subExpressions AS subExpression SEPARATOR " || "-»
+		(«FOREACH  this.subExpressions AS subExpression SEPARATOR " || "-»
 			«EXPAND expandedExpression FOR subExpression-»
-		«ENDFOREACH»
+		«ENDFOREACH-»)
 	«ENDIF»
 	«IF this.operator == OperatorType::ADD-»
-		«FOREACH  this.subExpressions AS subExpression SEPARATOR " + "-»
+		(«FOREACH  this.subExpressions AS subExpression SEPARATOR " + "-»
 			«EXPAND expandedExpression FOR subExpression-»
-		«ENDFOREACH»
+		«ENDFOREACH-»)
 	«ENDIF»
 	«IF this.operator == OperatorType::SUB-»
-		«FOREACH  this.subExpressions AS subExpression SEPARATOR " - "-»
+		(«FOREACH  this.subExpressions AS subExpression SEPARATOR " - "-»
 			«EXPAND expandedExpression FOR subExpression-»
-		«ENDFOREACH»
+		«ENDFOREACH-»)
 	«ENDIF»
 	«IF this.operator == OperatorType::MULT-»
-		«FOREACH  this.subExpressions AS subExpression SEPARATOR " * "-»
+		(«FOREACH  this.subExpressions AS subExpression SEPARATOR " * "-»
 			«EXPAND expandedExpression FOR subExpression-»
-		«ENDFOREACH»
+		«ENDFOREACH-»)
 	«ENDIF»
 	«IF this.operator == OperatorType::DIV-»
-		«FOREACH  this.subExpressions AS subExpression SEPARATOR " / "-»
+		(«FOREACH  this.subExpressions AS subExpression SEPARATOR " / "-»
 			«EXPAND expandedExpression FOR subExpression-»
-		«ENDFOREACH»
+		«ENDFOREACH-»)
 	«ENDIF»
 	«IF this.operator == OperatorType::MOD-»
-		«FOREACH  this.subExpressions AS subExpression SEPARATOR " % "-»
+		(«FOREACH  this.subExpressions AS subExpression SEPARATOR " % "-»
 			«EXPAND expandedExpression FOR subExpression-»
-		«ENDFOREACH»
+		«ENDFOREACH-»)
 	«ENDIF»
 «ENDDEFINE»
 «DEFINE expandedExpression FOR SignalReference-»
