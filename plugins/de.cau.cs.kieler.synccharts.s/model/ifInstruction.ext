@@ -13,17 +13,17 @@ extension gotoInstruction;
 extension priorities;
 ////////////////////////////////////////////
 
-List[Instruction] getPresentInstruction(Transition transition):
+List[Instruction] getIfInstruction(Transition transition):
 	let out = {}:
-	let present = new Present:
-	createPresent(present, transition, transition.trigger) ->
-	out.add(present) ->
+	let ifInstr = new If:
+	createIf(ifInstr, transition, transition.trigger) ->
+	out.add(ifInstr) ->
 	out
 ;
 
 //TODO: other Expressions!
 
-Void createPresent(Present present, Transition transition, SignalReference signalReference):
+Void createIf(If ifInstr, Transition transition, SignalReference signalReference):
  	//TODO: for complex expression this code needs to be changed...
  	//Couldn't find property 'signal' for type expressions::OperatorExpression
  	
@@ -33,13 +33,13 @@ Void createPresent(Present present, Transition transition, SignalReference signa
 		signalReference.setSignal((Signal)triggerSignal.getSingleTraceTarget("S")) ->
 		//present.setSignal((s::Signal) (trigger.getSingleTraceTarget("S")))-> // OLD
 		info(">>> signalReference.signal.name: " + signalReference.signal.name) ->
-		present.setExpression(signalReference) ->  // NEW
-		present.instructions.addAll(getReducedPrio(transition)) ->
-		present.instructions.addAll(getGotoInstruction(transition.targetState))
+		ifInstr.setExpression(signalReference) ->  // NEW
+		ifInstr.instructions.addAll(getReducedPrio(transition)) ->
+		ifInstr.instructions.addAll(getGotoInstruction(transition.targetState))
 ;
 
 
-Void createPresent(Present present, Transition transition, OperatorExpression operatorExpression):
+Void createIf(If ifInstr, Transition transition, OperatorExpression operatorExpression):
  	//TODO: for complex expression this code needs to be changed...
  	//Couldn't find property 'signal' for type expressions::OperatorExpression
  	
@@ -47,13 +47,13 @@ Void createPresent(Present present, Transition transition, OperatorExpression op
 	let targetState = transition.targetState:
 		//present.setSignal((s::Signal) (trigger.getSingleTraceTarget("S")))-> // OLD
 		info(">>> operatorExpression: " + operatorExpression.subExpressions.flatten().toString()) ->
-		present.setExpression(operatorExpression) ->  // NEW
-		present.instructions.addAll(getReducedPrio(transition)) ->
-		present.instructions.addAll(getGotoInstruction(transition.targetState))
+		ifInstr.setExpression(operatorExpression) ->  // NEW
+		ifInstr.instructions.addAll(getReducedPrio(transition)) ->
+		ifInstr.instructions.addAll(getGotoInstruction(transition.targetState))
 ;
 
 
-Void createPresent(Present present, Transition transition, Expression expression):
+Void createIf(If ifInstr, Transition transition, Expression expression):
  //should not happen (else)
  info("!!!!!!!!!!!!! SHOULD NOT HAPPEN !!!!!!!!!!!!!!!!") ->
  info(expression.metaType.name)
