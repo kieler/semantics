@@ -876,15 +876,13 @@ public class PopupBarPolicy extends DiagramAssistantEditPolicy {
             PopupBarDescriptor theDesc = iter.next();
 
             // Button b = new Button(theDesc.myButtonIcon);
-            PopupBarLabelHandle b = new PopupBarLabelHandle(theDesc
-                    .getDragTracker(), theDesc.getIcon());
+            PopupBarLabelHandle b = new PopupBarLabelHandle(
+                    theDesc.getDragTracker(), theDesc.getIcon());
 
             Rectangle r1 = new Rectangle();
             r1.setLocation(xLoc, yLoc);
             xLoc += ACTION_WIDTH_HGT;
-            r1
-                    .setSize(ACTION_WIDTH_HGT, ACTION_WIDTH_HGT
-                            - ACTION_MARGIN_RIGHT);
+            r1.setSize(ACTION_WIDTH_HGT, ACTION_WIDTH_HGT - ACTION_MARGIN_RIGHT);
 
             Label l = new Label();
             l.setText(theDesc.getToolTip());
@@ -994,6 +992,8 @@ public class PopupBarPolicy extends DiagramAssistantEditPolicy {
         setFlag(POPUPBAR_DISPLAYATMOUSEHOVERLOCATION, bVal);
     }
 
+    private static final int X_OFFSET = 5;
+
     /**
      * For editparts that consume the entire viewport, statechart, structure,
      * communication, we want to display the popup bar at the mouse location.
@@ -1021,6 +1021,7 @@ public class PopupBarPolicy extends DiagramAssistantEditPolicy {
 
             // shift the ballon so it is above the cursor.
             thePoint.y -= ACTION_WIDTH_HGT;
+            thePoint.x += X_OFFSET;
             adjustToFitInViewport(thePoint);
         } else {
             if (thePoint.x < getHostFigure().getBounds().width) {
