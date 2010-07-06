@@ -95,7 +95,9 @@
          ABORT;
 «ENDDEFINE»
 «DEFINE expandedInstruction FOR If-»
-         if («EXPAND Misc::expandedExpression FOR this.expression-») { «EXPAND expandedInstructionList FOR this.instructions-» }
+         if («EXPAND Misc::expandedExpression FOR this.expression-») { 
+         		«EXPAND expandedInstructionList FOR this.instructions-» 
+         }
 «ENDDEFINE»
 «DEFINE expandedInstruction FOR Goto-»
          GOTO(«this.state.name-»);
