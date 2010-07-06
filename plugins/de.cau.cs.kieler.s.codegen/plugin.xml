@@ -7,16 +7,21 @@
             id="de.cau.cs.kieler.s.codegen.canGenerate">
          <or>
             <with
-                  variable="activeMenuSelection">
-               <and>
+                  variable="selection">
                   <iterate
                         ifEmpty="false"
                         operator="and">
+                        <and>
                      <instanceof
-                           value="org.eclipse.core.internal.resources.File">
+                           value="org.eclipse.core.resources.IFile">
                      </instanceof>
+                     <test
+                     property="org.eclipse.core.resources.extension"
+                     value="s">
+                      </test>
+                     </and>
+              
                   </iterate>
-               </and>
             </with>
             <with
                   variable="activeEditorId">
@@ -29,12 +34,12 @@
    </extension>
    <extension
          point="org.eclipse.core.expressions.propertyTesters">
-      <propertyTester
-            class="de.cau.cs.kieler.s.codegen.SPropertyTester"
-            id="de.cau.cs.kieler.s.codegen.propertyTester"
-            namespace="de.cau.cs.kieler.s.codegen"
-            properties="selection, activeMenuSelection"
-            type="org.eclipse.core.internal.resources.File">
+            <propertyTester
+            class="org.eclipse.core.internal.propertytester.ResourcePropertyTester"
+            id="org.eclipse.core.resources.resourcePropertyTester"
+            namespace="org.eclipse.core.resources"
+            properties="name,path,extension,readOnly,projectNature,persistentProperty,projectPersistentProperty,sessionProperty,projectSessionProperty"
+            type="org.eclipse.core.resources.IResource">
       </propertyTester>
    </extension>
 
