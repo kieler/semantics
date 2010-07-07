@@ -17,6 +17,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.ui.IEditorPart;
+import org.eclipse.ui.IEditorReference;
 import org.eclipse.ui.IPageListener;
 import org.eclipse.ui.IPartListener;
 import org.eclipse.ui.IPerspectiveDescriptor;
@@ -24,6 +26,8 @@ import org.eclipse.ui.IPerspectiveListener;
 import org.eclipse.ui.IPropertyListener;
 import org.eclipse.ui.ISelectionListener;
 import org.eclipse.ui.IStartup;
+import org.eclipse.ui.IViewPart;
+import org.eclipse.ui.IViewReference;
 import org.eclipse.ui.IWindowListener;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchListener;
@@ -275,6 +279,13 @@ public class CombinedWorkbenchListener implements IStartup, IWindowListener,
 
             if (window != null) {
                 windowOpened(window);
+            } else {
+                IWorkbenchWindow[] openWindows = theWorkbench.getWorkbenchWindows();
+                if (openWindows != null && openWindows.length > 0) {
+                    for (IWorkbenchWindow w : openWindows) {
+                        windowOpened(w);
+                    }
+                }
             }
         }
     }
@@ -285,7 +296,7 @@ public class CombinedWorkbenchListener implements IStartup, IWindowListener,
     public boolean preShutdown(final IWorkbench workbench, final boolean forced) {
         boolean result = true;
         for (IWorkbenchListener listener : workbenchListeners) {
-            result = listener.preShutdown(workbench, forced) || result;
+            result = listener.preShutdown(workbench, forced) && result;
         }
         return result;
     }
@@ -348,6 +359,13 @@ public class CombinedWorkbenchListener implements IStartup, IWindowListener,
         IWorkbenchPage page = window.getActivePage();
         if (page != null) {
             pageOpened(page);
+        } else {
+            IWorkbenchPage[] openPages = window.getPages();
+            if (openPages != null && openPages.length > 0) {
+                for (IWorkbenchPage p : openPages) {
+                    pageOpened(p);
+                }
+            }
         }
     }
 
@@ -412,6 +430,26 @@ public class CombinedWorkbenchListener implements IStartup, IWindowListener,
         IWorkbenchPart part = page.getActivePart();
         if (part != null) {
             partOpened(part);
+        } else {
+            IEditorReference[] edRefs = page.getEditorReferences();
+            if (edRefs != null && edRefs.length > 0) {
+                for (IEditorReference ref : edRefs) {
+                    IEditorPart editor = ref.getEditor(false);
+                    if (editor != null) {
+                        partOpened(editor);
+                    }
+                }
+            }
+
+            IViewReference[] viewRefs = page.getViewReferences();
+            if (viewRefs != null && viewRefs.length > 0) {
+                for (IViewReference ref : viewRefs) {
+                    IViewPart view = ref.getView(false);
+                    if (view != null) {
+                        partOpened(view);
+                    }
+                }
+            }
         }
     }
 
