@@ -1,8 +1,6 @@
 package de.cau.cs.kieler.synccharts.diagram.expressions;
 
-import java.lang.ref.WeakReference;
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.Map;
 
 import org.eclipse.core.runtime.IStatus;
@@ -12,16 +10,12 @@ import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.ocl.Environment;
 import org.eclipse.ocl.EvaluationEnvironment;
 import org.eclipse.ocl.ParserException;
-import org.eclipse.ocl.Query;
 import org.eclipse.ocl.ecore.EcoreFactory;
+import org.eclipse.ocl.ecore.OCLExpression;
+import org.eclipse.ocl.ecore.Variable;
 import org.eclipse.ocl.ecore.OCL.Helper;
-import org.eclipse.ocl.expressions.OCLExpression;
-import org.eclipse.ocl.expressions.OperationCallExp;
-import org.eclipse.ocl.expressions.Variable;
-import org.eclipse.ocl.helper.OCLHelper;
 import org.eclipse.ocl.options.ParsingOptions;
-import org.eclipse.ocl.utilities.AbstractVisitor;
-import org.eclipse.ocl.utilities.PredefinedType;
+
 import de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorPlugin;
 
 /**
@@ -65,6 +59,7 @@ public class SyncchartsOCLFactory {
     }
 
     /**
+     * This is factory method, callers are responsible to keep reference to the return value if they want to reuse parsed expression
      * @generated
      */
     public static SyncchartsAbstractExpression getExpression(String body, EClassifier context,
@@ -73,6 +68,7 @@ public class SyncchartsOCLFactory {
     }
 
     /**
+     * This method will become private in the next release
      * @generated
      */
     public static SyncchartsAbstractExpression getExpression(String body, EClassifier context) {
@@ -92,7 +88,7 @@ public class SyncchartsOCLFactory {
         /**
          * @generated
          */
-        private org.eclipse.ocl.ecore.OCLExpression oclExpression;
+        private OCLExpression oclExpression;
 
         /**
          * @generated
@@ -152,10 +148,10 @@ public class SyncchartsOCLFactory {
         /**
          * @generated
          */
-        private static org.eclipse.ocl.ecore.Variable createVar(
+        private static Variable createVar(
             Environment<?, EClassifier, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?> ecoreEnv, String name,
             EClassifier type) {
-            org.eclipse.ocl.ecore.Variable var = EcoreFactory.eINSTANCE.createVariable();
+            Variable var = EcoreFactory.eINSTANCE.createVariable();
             var.setName(name);
             var.setType(ecoreEnv.getUMLReflection().getOCLType(type));
             return var;

@@ -1,7 +1,6 @@
 package de.cau.cs.kieler.synccharts.diagram.part;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -311,6 +310,7 @@ public class SyncchartsDiagramEditorUtil {
     }
 
     /**
+     * XXX This is quite suspicious code (especially editPartTmpHolder) and likely to be removed soon
      * @generated
      */
     public static class LazyElement2ViewMap {

@@ -116,19 +116,9 @@
             </ElementType>
          </ViewId>
       </GlobalActionHandlerProvider>
-      <GlobalActionHandlerProvider
-            class="org.eclipse.gmf.runtime.diagram.ui.render.providers.DiagramUIRenderGlobalActionHandlerProvider"
-            id="SyncchartsRender">
-         <Priority name="Lowest"/>
-         <ViewId id="de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorID">
-            <ElementType class="org.eclipse.gmf.runtime.diagram.ui.editparts.IGraphicalEditPart">
-               <GlobalActionId actionId="cut"/>
-               <GlobalActionId actionId="copy"/>
-               <GlobalActionId actionId="paste"/>
-            </ElementType>
-         </ViewId>
-      </GlobalActionHandlerProvider>
+
    </extension>
+
 
    <extension point="org.eclipse.gmf.runtime.common.ui.services.markerNavigationProviders" id="markers-navigation">
       <?gmfgen generated="true"?>

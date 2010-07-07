@@ -17,7 +17,6 @@ import de.cau.cs.kieler.synccharts.SyncchartsFactory;
 import de.cau.cs.kieler.synccharts.Transition;
 import de.cau.cs.kieler.synccharts.diagram.edit.policies.SyncchartsBaseItemSemanticEditPolicy;
 import de.cau.cs.kieler.synccharts.diagram.providers.ElementInitializers;
-import de.cau.cs.kieler.synccharts.diagram.providers.SyncchartsElementTypes;
 
 /**
  * @generated

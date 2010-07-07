@@ -2,7 +2,6 @@ package de.cau.cs.kieler.synccharts.diagram.part;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;

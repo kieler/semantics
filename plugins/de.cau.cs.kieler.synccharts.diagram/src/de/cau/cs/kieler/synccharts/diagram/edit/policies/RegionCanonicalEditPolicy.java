@@ -4,12 +4,10 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.emf.ecore.EObject;
@@ -21,7 +19,6 @@ import org.eclipse.gmf.runtime.diagram.ui.commands.DeferredLayoutCommand;
 import org.eclipse.gmf.runtime.diagram.ui.commands.ICommandProxy;
 import org.eclipse.gmf.runtime.diagram.ui.commands.SetViewMutabilityCommand;
 import org.eclipse.gmf.runtime.diagram.ui.editparts.IGraphicalEditPart;
-import org.eclipse.gmf.runtime.diagram.ui.editpolicies.CanonicalConnectionEditPolicy;
 import org.eclipse.gmf.runtime.diagram.ui.editpolicies.CanonicalEditPolicy;
 import org.eclipse.gmf.runtime.diagram.ui.requests.CreateConnectionViewRequest;
 import org.eclipse.gmf.runtime.diagram.ui.requests.CreateViewRequest;
@@ -177,13 +174,6 @@ public class RegionCanonicalEditPolicy extends CanonicalEditPolicy {
         createdViews.addAll(createdConnectionViews);
 
         makeViewsImmutable(createdViews);
-    }
-
-    /**
-     * @generated
-     */
-    private Diagram getDiagram() {
-        return ((View) getHost().getModel()).getDiagram();
     }
 
     /**
@@ -389,5 +379,12 @@ public class RegionCanonicalEditPolicy extends CanonicalEditPolicy {
             return (EditPart) getHost().getViewer().getEditPartRegistry().get(view);
         }
         return null;
+    }
+
+    /**
+     * @generated
+     */
+    private Diagram getDiagram() {
+        return ((View) getHost().getModel()).getDiagram();
     }
 }

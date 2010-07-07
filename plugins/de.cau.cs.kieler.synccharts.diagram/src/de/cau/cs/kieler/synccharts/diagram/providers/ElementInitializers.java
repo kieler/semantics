@@ -12,6 +12,7 @@ import de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorPlugin;
  * @generated
  */
 public class ElementInitializers {
+
     protected ElementInitializers() {
         // use #getInstance to access cached instance
     }
@@ -46,5 +47,4 @@ public class ElementInitializers {
         }
         return cached;
     }
-
 }

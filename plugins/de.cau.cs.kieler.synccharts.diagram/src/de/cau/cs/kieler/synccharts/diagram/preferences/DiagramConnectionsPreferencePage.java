@@ -35,6 +35,7 @@ public class DiagramConnectionsPreferencePage extends ConnectionsPreferencePage 
      * @generated
      */
     private String SPLINE_LABEL = "Spline Mode:";
+
     /**
      * @generated
      */

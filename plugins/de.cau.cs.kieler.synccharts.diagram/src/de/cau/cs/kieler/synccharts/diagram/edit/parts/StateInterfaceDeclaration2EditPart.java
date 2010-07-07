@@ -28,7 +28,6 @@ import org.eclipse.gmf.runtime.diagram.ui.tools.TextDirectEditManager;
 import org.eclipse.gmf.runtime.draw2d.ui.figures.WrappingLabel;
 import org.eclipse.gmf.runtime.emf.core.util.EObjectAdapter;
 import org.eclipse.gmf.runtime.emf.ui.services.parser.ISemanticParser;
-import org.eclipse.gmf.runtime.gef.ui.internal.parts.WrapTextCellEditor;
 import org.eclipse.gmf.runtime.notation.FontStyle;
 import org.eclipse.gmf.runtime.notation.NotationPackage;
 import org.eclipse.gmf.runtime.notation.View;
@@ -40,6 +39,7 @@ import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.FontData;
 import org.eclipse.swt.graphics.Image;
 
+import de.cau.cs.kieler.synccharts.custom.WrapTextCellEditor;
 import de.cau.cs.kieler.synccharts.diagram.edit.policies.SyncchartsTextSelectionEditPolicy;
 import de.cau.cs.kieler.synccharts.diagram.part.SyncchartsVisualIDRegistry;
 import de.cau.cs.kieler.synccharts.diagram.providers.SyncchartsElementTypes;
@@ -297,8 +297,7 @@ public class StateInterfaceDeclaration2EditPart extends CompartmentEditPart impl
     protected DirectEditManager getManager() {
         if (manager == null) {
 
-            setManager(new TextDirectEditManager(this,
-                de.cau.cs.kieler.synccharts.custom.WrapTextCellEditor.class,
+            setManager(new TextDirectEditManager(this, WrapTextCellEditor.class,
                 SyncchartsEditPartFactory.getTextCellEditorLocator(this)));
         }
         return manager;

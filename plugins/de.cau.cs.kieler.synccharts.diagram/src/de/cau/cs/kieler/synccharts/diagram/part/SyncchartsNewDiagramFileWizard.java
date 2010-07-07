@@ -2,7 +2,6 @@ package de.cau.cs.kieler.synccharts.diagram.part;
 
 import java.io.IOException;
 import java.util.LinkedList;
-import java.util.List;
 
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.commands.operations.OperationHistoryFactory;

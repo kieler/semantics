@@ -94,6 +94,26 @@ public class SyncchartsDiagramUpdater {
     /**
      * @generated
      */
+    public static List<SyncchartsNodeDescriptor> getRegion_1000SemanticChildren(View view) {
+        if (!view.isSetElement()) {
+            return Collections.emptyList();
+        }
+        Region modelElement = (Region) view.getElement();
+        LinkedList<SyncchartsNodeDescriptor> result = new LinkedList<SyncchartsNodeDescriptor>();
+        for (Iterator<?> it = modelElement.getInnerStates().iterator(); it.hasNext();) {
+            State childElement = (State) it.next();
+            int visualID = SyncchartsVisualIDRegistry.getNodeVisualID(view, childElement);
+            if (visualID == StateEditPart.VISUAL_ID) {
+                result.add(new SyncchartsNodeDescriptor(childElement, visualID));
+                continue;
+            }
+        }
+        return result;
+    }
+
+    /**
+     * @generated
+     */
     public static List<SyncchartsNodeDescriptor> getState_2003SemanticChildren(View view) {
         if (!view.isSetElement()) {
             return Collections.emptyList();
@@ -435,26 +455,6 @@ public class SyncchartsDiagramUpdater {
             Region childElement = (Region) it.next();
             int visualID = SyncchartsVisualIDRegistry.getNodeVisualID(view, childElement);
             if (visualID == Region2EditPart.VISUAL_ID) {
-                result.add(new SyncchartsNodeDescriptor(childElement, visualID));
-                continue;
-            }
-        }
-        return result;
-    }
-
-    /**
-     * @generated
-     */
-    public static List<SyncchartsNodeDescriptor> getRegion_1000SemanticChildren(View view) {
-        if (!view.isSetElement()) {
-            return Collections.emptyList();
-        }
-        Region modelElement = (Region) view.getElement();
-        LinkedList<SyncchartsNodeDescriptor> result = new LinkedList<SyncchartsNodeDescriptor>();
-        for (Iterator<?> it = modelElement.getInnerStates().iterator(); it.hasNext();) {
-            State childElement = (State) it.next();
-            int visualID = SyncchartsVisualIDRegistry.getNodeVisualID(view, childElement);
-            if (visualID == StateEditPart.VISUAL_ID) {
                 result.add(new SyncchartsNodeDescriptor(childElement, visualID));
                 continue;
             }

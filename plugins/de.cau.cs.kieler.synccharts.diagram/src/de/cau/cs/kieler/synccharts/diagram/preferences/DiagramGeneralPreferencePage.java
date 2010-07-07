@@ -20,23 +20,28 @@ public class DiagramGeneralPreferencePage extends DiagramsPreferencePage {
         setPreferenceStore(SyncchartsDiagramEditorPlugin.getInstance().getPreferenceStore());
     }
 
+    //soh: adding optional enabling and disabling of automated serialization in labelparser
     /**
      * @generated
      */
     private String AUTO_SERIALIZE_LABEL = "Perform automated serialization";
+
     /**
      * @generated
      */
     private static String AUTO_SERIALIZE_PREF = LabelParserBridgePlugin.AUTO_SERIALIZE;
+
     /**
      * @generated
      */
     private static IPreferenceStore LABEL_PARSER_STORE = LabelParserBridgePlugin.getDefault()
         .getPreferenceStore();
+
     /**
      * @generated
      */
     private CheckBoxFieldEditor autoSerializeEditor = null;
+
     /**
      * @generated
      */
