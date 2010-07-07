@@ -16,11 +16,8 @@ package de.cau.cs.kieler.synccharts.diagram.custom.commands;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.ui.IEditorPart;
 import org.osgi.framework.Bundle;
 
-import de.cau.cs.kieler.kiml.ui.layout.EclipseLayoutServices;
 import de.cau.cs.kieler.ksbase.ui.utils.AbstractCutCopyPasteCommandFactory;
 import de.cau.cs.kieler.synccharts.Region;
 import de.cau.cs.kieler.synccharts.State;
@@ -57,32 +54,6 @@ public class SyncchartsCutCopyPasteCommandFactory extends
     @Override
     protected Class<?>[] getTypes() {
         return TYPES;
-    }
-
-    /**
-     * Perform actions after the operation. In this case refreshing the edit
-     * policies and performing an auto layout.
-     * 
-     * @param monitor
-     *            the progress monitor
-     */
-    @Override
-    protected void performPostOperationActions(final IProgressMonitor monitor) {
-        SyncchartsDiagramCustomPlugin.getInstance().getDisplay().syncExec(
-                new Runnable() {
-
-                    public void run() {
-                        IEditorPart editorPart = SyncchartsDiagramCustomPlugin
-                                .getInstance().getActiveEditorPart();
-                        if (editorPart != null) {
-                            refreshEditPolicies(editorPart);
-
-                            EclipseLayoutServices.getInstance().layout(
-                                    editorPart, null, true, false);
-                        }
-                    }
-
-                });
     }
 
     /**
