@@ -999,8 +999,8 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
             if (!getActionRun().isEnabled()) {
                 getActionRun().setEnabled(true);
             }
-            if (!getActionPause().isEnabled()) {
-                getActionPause().setEnabled(true);
+            if (getActionPause().isEnabled()) {
+                getActionPause().setEnabled(false); // default pause == disabled
             }
             if (getActionStop().isEnabled()) {
                 getActionStop().setEnabled(false);
@@ -1489,7 +1489,12 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
                     // currentMaster.masterGUIstep();
                 } else {
                     // otherwise default implementation
-                    if (kIEMInstance.initExecution()) {
+                    if (kIEMInstance.getExecution() == null) {
+                        if (kIEMInstance.initExecution()) {
+                            kIEMInstance.getExecution().pauseExecutionSync();   // per default make a pause as a first step
+                        }
+                    }
+                    else if (kIEMInstance.initExecution()) {
                         kIEMInstance.getExecution().stepExecutionSync();
                     }
                 }
