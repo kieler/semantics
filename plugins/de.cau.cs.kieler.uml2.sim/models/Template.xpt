@@ -1,19 +1,21 @@
-«IMPORT uml»
+Â«IMPORT umlÂ»
 
-«EXTENSION Extensions»
+Â«EXTENSION ExtensionsÂ»
 
-«DEFINE main FOR Model»
-   «EXPAND sm FOREACH packagedElement»
-«ENDDEFINE»
+Â«DEFINE main FOR ModelÂ»
+   Â«EXPAND sm FOREACH packagedElementÂ»
+Â«ENDDEFINEÂ»
 
-«DEFINE sm FOR StateMachine»
-	«FILE this.name.toString() +".maude"»
+Â«DEFINE sm FOR StateMachineÂ»
+	Â«FILE this.name.toString() +".maude"Â»
+	
+	TransitionName = "Â«this.region.get(1).transition.get(0).nameÂ»";
 	
 	// HERE COMES THE MAUDE CODE //
 	
-	«ENDFILE»
-«ENDDEFINE»
+	Â«ENDFILEÂ»
+Â«ENDDEFINEÂ»
 
 
-«DEFINE sm FOR PackageableElement»
-«ENDDEFINE»
+Â«DEFINE sm FOR PackageableElementÂ»
+Â«ENDDEFINEÂ»

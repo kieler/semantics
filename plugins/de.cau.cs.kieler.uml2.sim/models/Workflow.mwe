@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <workflow>
-	<property name="model" value="de.cau.cs.kieler.uml2.sim/model.uml" />
+	<property name="model" value="de.cau.cs.kieler.uml2.sim/model2.uml" />
 	<property name="src-gen" value="src-gen" />
 	
 	<!-- set up EMF for standalone execution -->
