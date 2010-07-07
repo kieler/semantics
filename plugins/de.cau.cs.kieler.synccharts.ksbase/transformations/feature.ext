@@ -100,6 +100,9 @@ Void addSelfLoop(State state):
 Void rerouteTransitionTarget(Transition t, State target):
 t.setTargetState(target)
 ;
+Void rerouteTransitionTarget(State target, Transition t):
+ rerouteTransitionTarget(t, target)
+;
 
 //Reroutes the source of the given transition
 //to the given state
@@ -107,6 +110,9 @@ Void rerouteTransitionSource(Transition t, State source):
 t.sourceState.outgoingTransitions.remove(t) ->
 t.setSourceState(source) ->
 source.outgoingTransitions.add(t)
+;
+Void rerouteTransitionSource(State source, Transition t):
+ rerouteTransitionSource(t, source)
 ;
 
 //Adds a parallel region to the given state
@@ -164,6 +170,14 @@ Boolean isNoRootRegion(Region r1, Region r2):
 
 Boolean isNoRootRegion(List[Region] regions):
  regions.notExists(e|e.parentState == null)
+;
+
+Boolean isNoRootState(State s, Transition t):
+ s.isNoRootState()
+;
+
+Boolean isNoRootState(Transition t, State s):
+ s.isNoRootState()
 ;
 
 // Add a state to the parent state and add all Regions
