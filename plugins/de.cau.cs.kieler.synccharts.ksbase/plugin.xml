@@ -154,7 +154,7 @@
              validation="isNoRootRegion">
        </transformation>
               <transformation
-                    keyboardShortcut="M1 + M2 + R"
+                    keyboardShortcut="M1+M2+R"
                     name="Rename a Signal or Variable (Refactor)"
                     tooltip="Refactor the name of a Signal or Variable. Will change all references in the scope to the new name."
                     transformation="renameSignalVariable"
