@@ -172,12 +172,12 @@ Boolean isNoRootRegion(List[Region] regions):
  regions.notExists(e|e.parentState == null)
 ;
 
-Boolean isNoRootState(State s, Transition t):
- s.isNoRootState()
+Boolean hasNoRootState(State s, Transition t):
+ s.parentRegion.parentState != null
 ;
 
-Boolean isNoRootState(Transition t, State s):
- s.isNoRootState()
+Boolean hasNoRootState(Transition t, State s):
+ s.parentRegion.parentState != null
 ;
 
 // Add a state to the parent state and add all Regions

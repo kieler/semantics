@@ -110,7 +110,7 @@
           tooltip="Set the transition target to the selected state"
           transformation="rerouteTransitionTarget"
           transformationId="de.cau.cs.kieler.ksbase.rerouteTarget"
-          validation="isNoRootState">
+          validation="hasNoRootState">
     </transformation>
     <transformation
           icon="icons/reconnect_source.gif"
@@ -119,7 +119,7 @@
           tooltip="Set the transition source to the selected state"
           transformation="rerouteTransitionSource"
           transformationId="de.cau.cs.kieler.ksbase.rerouteSource"
-          validation="isNoRootState">
+          validation="hasNoRootState">
     </transformation>
        <transformation
              tooltip="Create a new state and move all existing regions to the new one"
