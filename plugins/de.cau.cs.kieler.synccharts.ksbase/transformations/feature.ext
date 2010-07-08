@@ -119,9 +119,11 @@ Void rerouteTransitionSource(State source, Transition t):
 Void upgradeState(State parentState):
 let region = new Region:
 let state = new State:
+let index = parentState.regions.size:
 state.setIsInitial(true) ->
 state.setLabel("Initial") ->
 region.innerStates.add(state) ->
+region.setLabel("R" + index) ->
 parentState.regions.add(region) ->
 setSelection(state)
 ;
@@ -189,6 +191,7 @@ Void encapsulateRegions(State parentState):
   (parentState.regions.size > 0) ? 
     (newState.regions.addAll(regions) ->
     parentState.regions.add(newRegion) ->
+    newRegion.setLabel("R" + parentState.regions.size) ->
     newRegion.innerStates.add(newState)) : 
    null
 ;
@@ -221,6 +224,7 @@ Void encapsulateRegion(Region target):
  let newRegion = new Region:
  if (target.parentState != null) then (
    newState.setIsInitial(true) ->
+   newRegion.setLabel("R" + target.parentState.regions.size) ->
    target.parentState.regions.add(newRegion) ->
    newRegion.innerStates.add(newState) ->
    newState.regions.add(target) ->
@@ -233,6 +237,7 @@ Void encapsulateRegion(List[Region] targets):
  let newRegion = new Region:
  let parent = targets.get(0).parentState:
  newState.setIsInitial(true) ->
+ newRegion.setLabel("R" + parent.regions.size) ->
  parent.regions.add(newRegion) ->
  newRegion.innerStates.add(newState) ->
  newState.regions.addAll(targets) ->
@@ -275,6 +280,7 @@ state.regions.add(region) ->
 innerState.setLabel("Initial") ->
 innerState.setIsInitial(true) -> 
 region.innerStates.add(innerState) ->
+region.setLabel("R0") ->
 rootRegion.innerStates.add(state) ->
 setSelection(innerState)
 ;
@@ -354,6 +360,7 @@ waitAB.setIsInitial(true) ->
 wAInitial.setLabel("wA") ->
 wAInitial.setIsInitial(true) ->
 wA.innerStates.add(wAInitial) ->
+wA.setLabel("wA") ->
 wAFinal.setLabel("dA") ->
 wAFinal.setIsFinal(true) ->
 wA.innerStates.add(wAFinal) ->
@@ -366,6 +373,7 @@ waitAB.regions.add(wA) ->
 wBInitial.setLabel("wB") ->
 wBInitial.setIsInitial(true) ->
 wB.innerStates.add(wBInitial) ->
+wB.setLabel("wB") ->
 wBFinal.setLabel("dB") ->
 wBFinal.setIsFinal(true) ->
 wB.innerStates.add(wBFinal) ->
@@ -382,6 +390,7 @@ waitABToFinal.setType(TransitionType::NORMALTERMINATION) ->
 //waitABToFinal.effects.add(sigOExpr) ->
 setLabel(waitABToFinal, "/O") ->
 ABORegion.innerStates.add(waitAB) ->
+ABORegion.setLabel("ABO") ->
 ABORegion.innerStates.add(ABOFinal) ->
 ABO.regions.add(ABORegion)->
 reset.setSourceState(ABO) ->
@@ -390,6 +399,7 @@ reset.setType(TransitionType::STRONGABORT) ->
 //reset.setTrigger(sigRExpr) ->
 setLabel(reset, "R") ->
 innerRootRegion.innerStates.add(ABO) ->
+innerRootRegion.setLabel("R0") ->
 root.regions.add(innerRootRegion) ->
 rootRegion.innerStates.add(root)
 ;
