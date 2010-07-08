@@ -14,6 +14,7 @@
  *****************************************************************************/
 package de.cau.cs.kieler.core.ui.figures.layout;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.draw2d.AbstractHintLayout;
@@ -113,6 +114,7 @@ public abstract class AbstractTableLayout extends AbstractHintLayout {
 
         // check whether the figure is an attribute aware figure
         if (stateFigure instanceof IAttributeAwareFigure) {
+        	printChildOverview(stateFigure);
             IAttributeAwareFigure attrStateFigure = (IAttributeAwareFigure) stateFigure;
 
             invalidateLabels(stateFigure);
@@ -633,9 +635,11 @@ public abstract class AbstractTableLayout extends AbstractHintLayout {
         for (Object child : state.getChildren()) {
             if (child instanceof ResizableCompartmentFigure) {
                 System.out.println(index + " : " + getName((ResizableCompartmentFigure) child));
+                printNames((ResizableCompartmentFigure) child);
             } else {
                 System.out.println(index + " : " + child.toString());
             }
+            
             index++;
         }
     }
@@ -661,5 +665,34 @@ public abstract class AbstractTableLayout extends AbstractHintLayout {
             }
         }
         return "";
+    }
+    
+    /**
+     * Helper-method to show all strings in a figure.
+     * 
+     * Retrieve the name of a figure by searching for a label.
+     * 
+     * @param figure
+     *            a figure
+     * @return the name of the figure
+     */
+    private static void printNames(final IFigure figure) {
+    	System.out.println("Found WrappingLabels: ");
+    	for (String label : getNames(figure)) {
+			System.out.print(label + ", ");
+		}
+    	System.out.println("");
+    }
+    
+    private static List<String> getNames(final IFigure figure) {
+    	List<String> foundStrings = new ArrayList<String>();
+        for (Object child : figure.getChildren()) {
+            if (child instanceof WrappingLabel) {
+                foundStrings.add(((WrappingLabel) child).getText());
+            } else {
+                foundStrings.addAll(getNames((IFigure) child));
+            }
+        }
+        return foundStrings;
     }
 }
