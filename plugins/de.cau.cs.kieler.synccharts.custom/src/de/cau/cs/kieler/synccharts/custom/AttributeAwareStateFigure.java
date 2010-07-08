@@ -29,9 +29,9 @@ import de.cau.cs.kieler.core.ui.util.FeatureValueCondition;
 import de.cau.cs.kieler.core.ui.util.ListSizeCondition;
 import de.cau.cs.kieler.core.util.CompoundCondition;
 import de.cau.cs.kieler.core.util.ICondition;
+import de.cau.cs.kieler.synccharts.State;
 import de.cau.cs.kieler.synccharts.StateType;
 import de.cau.cs.kieler.synccharts.SyncchartsPackage;
-import de.cau.cs.kieler.synccharts.State;
 
 /**
  * This class represents attribute aware state figures.
@@ -40,11 +40,12 @@ import de.cau.cs.kieler.synccharts.State;
  * @author schm
  * @author msp
  */
+@SuppressWarnings("unchecked")
 public class AttributeAwareStateFigure extends AttributeAwareSwitchFigure {
 
     /** line width for initial states. */
     private static final int INIT_LINE_WIDTH = 4;
-    
+
     private static final ICondition<EObject> COND_NORMAL = new FeatureValueCondition(
             SyncchartsPackage.eINSTANCE.getState_Type(), StateType.NORMAL);
     private static final ICondition<EObject> COND_CONDITIONAL = new FeatureValueCondition(
@@ -58,6 +59,10 @@ public class AttributeAwareStateFigure extends AttributeAwareSwitchFigure {
             SyncchartsPackage.eINSTANCE.getState_IsInitial(), true);
     private static final ICondition<EObject> COND_FINAL = new FeatureValueCondition(
             SyncchartsPackage.eINSTANCE.getState_IsFinal(), true);
+    private static final ICondition<EObject> COND_NOT_INITIAL = new FeatureValueCondition(
+            SyncchartsPackage.eINSTANCE.getState_IsInitial(), false);
+    private static final ICondition<EObject> COND_NOT_FINAL = new FeatureValueCondition(
+            SyncchartsPackage.eINSTANCE.getState_IsFinal(), false);
 
     private static final ICondition<EObject> COND_NOREGIONS = new ListSizeCondition(
             SyncchartsPackage.eINSTANCE.getState_Regions(), 0);
@@ -69,24 +74,32 @@ public class AttributeAwareStateFigure extends AttributeAwareSwitchFigure {
             SyncchartsPackage.eINSTANCE.getScope_InnerActions(), 0);
     private static final ICondition<EObject> COND_NOEXITACT = new ListSizeCondition(
             SyncchartsPackage.eINSTANCE.getScope_ExitActions(), 0);
-    
-    @SuppressWarnings("unchecked")
+
     private static final ICondition<EObject> COND_SIMPLE = new CompoundCondition<EObject>(
-            new ICondition[] {
-            COND_NORMAL, COND_NOREGIONS, COND_NOSIGNALS, COND_NOENTRYACT,
-            COND_NOINSIDEACT, COND_NOEXITACT
-    });
-    @SuppressWarnings("unchecked")
+            new ICondition[] { COND_NORMAL, COND_NOREGIONS, COND_NOSIGNALS,
+                    COND_NOENTRYACT, COND_NOINSIDEACT, COND_NOEXITACT });
+
+    private static final ICondition<EObject> COND_INITIAL_FINAL_STATE = new CompoundCondition<EObject>(
+            new ICondition[] { COND_INITIAL, COND_FINAL });
+    private static final ICondition<EObject> COND_INITIAL_STATE = new CompoundCondition<EObject>(
+            new ICondition[] { COND_INITIAL, COND_NOT_FINAL });
+    private static final ICondition<EObject> COND_FINAL_STATE = new CompoundCondition<EObject>(
+            new ICondition[] { COND_NOT_INITIAL, COND_FINAL });
+
+    private static final ICondition<EObject> COND_SIMPLE_INITIAL_FINAL = new CompoundCondition<EObject>(
+            new ICondition[] { COND_SIMPLE, COND_INITIAL_FINAL_STATE });
     private static final ICondition<EObject> COND_SIMPLE_INITIAL = new CompoundCondition<EObject>(
-            new ICondition[] {
-            COND_INITIAL, COND_SIMPLE
-    });
-    @SuppressWarnings("unchecked")
+            new ICondition[] { COND_SIMPLE, COND_INITIAL_STATE });
     private static final ICondition<EObject> COND_SIMPLE_FINAL = new CompoundCondition<EObject>(
-            new ICondition[] {
-            COND_FINAL, COND_SIMPLE
-    });
-    
+            new ICondition[] { COND_SIMPLE, COND_FINAL_STATE });
+
+    private static final ICondition<EObject> COND_COMPLEX_INITIAL_FINAL = new CompoundCondition<EObject>(
+            new ICondition[] { COND_INITIAL_FINAL_STATE });
+    private static final ICondition<EObject> COND_COMPLEX_INITIAL = new CompoundCondition<EObject>(
+            new ICondition[] { COND_INITIAL_STATE });
+    private static final ICondition<EObject> COND_COMPLEX_FINAL = new CompoundCondition<EObject>(
+            new ICondition[] { COND_FINAL_STATE });
+
     /**
      * The constructor.
      */
@@ -94,10 +107,11 @@ public class AttributeAwareStateFigure extends AttributeAwareSwitchFigure {
         super();
 
         // Create all needed figures
-        IFigure normalFigure = createNormalFigure(); 
+        IFigure normalFigure = createNormalFigure();
         IFigure initialFigure = createInitialFigure();
         IFigure finalFigure = createFinalFigure();
         IFigure conditionalFigure = new ConditionalStateFigure();
+        IFigure initialFinalFigure = createInitialFinalFigure();
         /* create even more normal figures to trigger layoutmanager via 
          * notifyChanged if statetype changed */
         IFigure referenceFigure = createNormalFigure();
@@ -108,15 +122,17 @@ public class AttributeAwareStateFigure extends AttributeAwareSwitchFigure {
 
         // Add all conditional figures to the list
         addConditionalFigure(conditionalFigure, COND_CONDITIONAL);
+        addConditionalFigure(initialFinalFigure, COND_SIMPLE_INITIAL_FINAL);
+        addConditionalFigure(initialFinalFigure, COND_COMPLEX_INITIAL_FINAL);
         addConditionalFigure(initialFigure, COND_SIMPLE_INITIAL);
-        addConditionalFigure(initialFigure, COND_INITIAL);
+        addConditionalFigure(initialFigure, COND_COMPLEX_INITIAL);
         addConditionalFigure(finalFigure, COND_SIMPLE_FINAL);
-        addConditionalFigure(finalFigure, COND_FINAL);
+        addConditionalFigure(finalFigure, COND_COMPLEX_FINAL);
         addConditionalFigure(referenceFigure, COND_REFERENCE);
         addConditionalFigure(textualfigure, COND_TEXTUAL);
         addConditionalFigure(normalFigure, COND_SIMPLE);
     }
-    
+
     /**
      * Create a figure for normal states.
      * 
@@ -124,14 +140,14 @@ public class AttributeAwareStateFigure extends AttributeAwareSwitchFigure {
      */
     private IFigure createNormalFigure() {
         RoundedRectangle figure = new RoundedRectangle();
-        figure.setCornerDimensions(new Dimension(
-                StateLayout.MIN_WIDTH, StateLayout.MIN_HEIGHT));
+        figure.setCornerDimensions(new Dimension(StateLayout.MIN_WIDTH,
+                StateLayout.MIN_HEIGHT));
         figure.setFill(false);
         figure.setLineWidth(1);
         figure.setForegroundColor(ColorConstants.black);
         return figure;
     }
-    
+
     /**
      * Create a figure for initial states.
      * 
@@ -139,14 +155,31 @@ public class AttributeAwareStateFigure extends AttributeAwareSwitchFigure {
      */
     private IFigure createInitialFigure() {
         RoundedRectangle figure = new RoundedRectangle();
-        figure.setCornerDimensions(new Dimension(
-                StateLayout.MIN_WIDTH, StateLayout.MIN_HEIGHT));
+        figure.setCornerDimensions(new Dimension(StateLayout.MIN_WIDTH,
+                StateLayout.MIN_HEIGHT));
         figure.setFill(false);
         figure.setLineWidth(INIT_LINE_WIDTH);
         figure.setForegroundColor(ColorConstants.black);
         return figure;
     }
-    
+
+    private static final float INIT_FINAL_LINE_WIDTH = 2.1f;
+
+    /**
+     * Create a figure for final states.
+     * 
+     * @return a figure for final states
+     */
+    private IFigure createInitialFinalFigure() {
+        RoundedRectangle figure = new DoubleRoundedRectangle();
+        figure.setCornerDimensions(new Dimension(StateLayout.MIN_WIDTH,
+                StateLayout.MIN_HEIGHT));
+        figure.setFill(false);
+        figure.setLineWidthFloat(INIT_FINAL_LINE_WIDTH);
+        figure.setForegroundColor(ColorConstants.black);
+        return figure;
+    }
+
     /**
      * Create a figure for final states.
      * 
@@ -154,8 +187,8 @@ public class AttributeAwareStateFigure extends AttributeAwareSwitchFigure {
      */
     private IFigure createFinalFigure() {
         RoundedRectangle figure = new DoubleRoundedRectangle();
-        figure.setCornerDimensions(new Dimension(
-                StateLayout.MIN_WIDTH, StateLayout.MIN_HEIGHT));
+        figure.setCornerDimensions(new Dimension(StateLayout.MIN_WIDTH,
+                StateLayout.MIN_HEIGHT));
         figure.setFill(false);
         figure.setLineWidth(1);
         figure.setForegroundColor(ColorConstants.black);
@@ -168,7 +201,7 @@ public class AttributeAwareStateFigure extends AttributeAwareSwitchFigure {
     public boolean isAdapterForType(final Object type) {
         return State.class == type;
     }
-    
+
     /**
      * {@inheritDoc}
      */
@@ -177,7 +210,8 @@ public class AttributeAwareStateFigure extends AttributeAwareSwitchFigure {
         Notifier target = getTarget();
         LayoutManager layoutManager = getLayoutManager();
         if (target instanceof State && layoutManager instanceof StateLayout) {
-            ((StateLayout) layoutManager).checkNewSize(this, (State) target, rect);
+            ((StateLayout) layoutManager).checkNewSize(this, (State) target,
+                    rect);
         }
         super.setBounds(rect);
     }
@@ -185,7 +219,8 @@ public class AttributeAwareStateFigure extends AttributeAwareSwitchFigure {
     /**
      * Directly set the bounds of this figure, without further checks.
      * 
-     * @param rect the new bounds
+     * @param rect
+     *            the new bounds
      */
     public void setBoundsDirect(final Rectangle rect) {
         super.setBounds(rect);
