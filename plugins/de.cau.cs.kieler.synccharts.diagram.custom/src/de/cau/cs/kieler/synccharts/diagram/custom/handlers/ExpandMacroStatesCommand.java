@@ -20,6 +20,9 @@ import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.expressions.EvaluationContext;
 import org.eclipse.core.runtime.IPath;
+import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.resource.URIConverter;
+import org.eclipse.emf.ecore.resource.impl.ExtensibleURIConverterImpl;
 import org.eclipse.emf.mwe.core.WorkflowContext;
 import org.eclipse.emf.mwe.core.WorkflowContextDefaultImpl;
 import org.eclipse.emf.mwe.core.issues.Issues;
@@ -92,7 +95,7 @@ public class ExpandMacroStatesCommand extends AbstractHandler {
                     if (o instanceof org.eclipse.core.internal.resources.File) {
                         IPath path = ((org.eclipse.core.internal.resources.File) o).getFullPath();
                         try {
-                            IPath expDiagram = expandMacroStates(path);
+                            expandMacroStates(path);
                         } catch (RuntimeException e0) {
                             e0.printStackTrace();
                             return null;
@@ -104,40 +107,64 @@ public class ExpandMacroStatesCommand extends AbstractHandler {
         return null;
     }
 
-    private IPath expandMacroStates(final IPath path) {
-        IPath target = (IPath) path.clone();
+    private void expandMacroStates(final IPath path) {
+    	IPath target;
+        Workflow workflow;
+        WorkflowContext wfx;
+        NullProgressMonitor monitor;
+        Issues issues;
+        EmfMetaModel metaModel;
+        Reader xmiReader;
+        XtendComponent transformation;
+        Writer writer;
+    	
+    	target = (IPath) path.clone();
         target = target.removeFileExtension();
         String filename = target.lastSegment() + "_EXPANDED.kixs";
+        String filename2 = target.lastSegment() + "_EXPANDED.mwe";
         target = target.removeLastSegments(1).append(filename);
+        
 
-        Workflow workflow = new Workflow();
-        WorkflowContext wfx = new WorkflowContextDefaultImpl();
-        NullProgressMonitor monitor = new NullProgressMonitor();
-        Issues issues = new IssuesImpl();
+        workflow = new Workflow();
+        wfx = new WorkflowContextDefaultImpl();
+        monitor = new NullProgressMonitor();
+        issues = new IssuesImpl();
+                    
 
         // Meta model
-        EmfMetaModel metaModel = new EmfMetaModel(SyncchartsPackage.eINSTANCE);
-
-        Reader xmiReader = new Reader();
-        xmiReader.setUri(path.toString());
+        // MINE
+        //metaModel = new EmfMetaModel(SyncchartsPackage.eINSTANCE);
+        // CMOTs
+        metaModel = new EmfMetaModel(de.cau.cs.kieler.synccharts.SyncchartsPackage.eINSTANCE);
+        
+        xmiReader = new Reader();
+        xmiReader.setUri(path.toOSString());
         xmiReader.setModelSlot("model");
         workflow.addComponent(xmiReader);
+        
+        //convert the currentFile-String into a valid resource URI (this is NOT the resolved form yet)
+        URI fileURI = URI.createPlatformResourceURI(path.toOSString(), true);
 
-        XtendComponent transformation = new XtendComponent();
+        //create a URI converter in order to resolve the file
+        URIConverter uriConverter = new ExtensibleURIConverterImpl();
+
+        xmiReader.setUri(fileURI.toString());
+        
+//        System.out.println(fileURI.trimSegments(1).toString());
+//        wfx.set("baseDir", fileURI.trimSegments(1).toString());
+
+        transformation = new XtendComponent();
         transformation.addMetaModel(metaModel);
         transformation.setInvoke("transformations::expandReferenceStates::transform(model)");
         transformation.setOutputSlot("transformedModel");
         workflow.addComponent(transformation);
-
-        Writer writer = new Writer();
-        writer.setUri(target.toString());
+        
+        writer = new Writer();
+        writer.setUri(target.toOSString());
         writer.setModelSlot("transformedModel");
         workflow.addComponent(writer);
-
+        
         workflow.invoke(wfx, monitor, issues);
-        
-        System.out.println("Issues: \n" + issues);
-        
-        return target;
+        System.out.println(issues);
     }
 }
