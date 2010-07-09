@@ -24,7 +24,7 @@ Require-Bundle: org.eclipse.core.runtime,
  org.json;bundle-version="0.1.0",
  org.apache.commons.logging;bundle-version="1.0.4",
  org.apache.log4j;bundle-version="1.2.15",
- org.ptolemy;bundle-version="8.0.0"
+ org.ptolemy;bundle-version="8.0.0";resolution:=optional
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-ActivationPolicy: lazy
 Bundle-ClassPath: .,
