@@ -39,11 +39,6 @@
          search-location="self"/>
 
    <includes
-         id="org.eclipse.emf.ocl"
-         version="0.0.0"
-         search-location="self"/>
-
-   <includes
          id="org.eclipse.emf.transaction"
          version="0.0.0"
          search-location="self"/>
