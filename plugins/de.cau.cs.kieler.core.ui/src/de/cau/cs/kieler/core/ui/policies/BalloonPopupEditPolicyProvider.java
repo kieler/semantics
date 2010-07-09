@@ -17,6 +17,7 @@ package de.cau.cs.kieler.core.ui.policies;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
@@ -112,7 +113,7 @@ public class BalloonPopupEditPolicyProvider extends AbstractProvider implements
                             if (o instanceof IBalloonContribution) {
                                 IBalloonContribution con = (IBalloonContribution) o;
 
-                                HashMap<String, String> map = new HashMap<String, String>();
+                                Map<String, String> map = new HashMap<String, String>();
 
                                 IConfigurationElement[] children = contributor
                                         .getChildren();
