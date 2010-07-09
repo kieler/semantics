@@ -124,16 +124,6 @@
          search-location="self"/>
 
    <includes
-         id="org.eclipse.emf.emfindex.runtime"
-         version="0.0.0"
-         search-location="self"/>
-
-   <includes
-         id="org.eclipse.emf.emfindex.ui"
-         version="0.0.0"
-         search-location="self"/>
-
-   <includes
          id="de.itemis.xtext.antlr.feature"
          version="0.0.0"
          search-location="self"/>
@@ -165,11 +155,6 @@
 
    <includes
          id="org.eclipse.emf.mwe.ui"
-         version="0.0.0"
-         search-location="self"/>
-
-   <includes
-         id="org.eclipse.uml2.diagram"
          version="0.0.0"
          search-location="self"/>
 
