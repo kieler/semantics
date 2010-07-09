@@ -136,6 +136,7 @@ public class ExpandMacroStatesCommand extends AbstractHandler {
         //metaModel = new EmfMetaModel(SyncchartsPackage.eINSTANCE);
         // CMOTs
         metaModel = new EmfMetaModel(de.cau.cs.kieler.synccharts.SyncchartsPackage.eINSTANCE);
+        EmfMetaModel expressions = new EmfMetaModel(de.cau.cs.kieler.core.expressions.ExpressionsPackage.eINSTANCE);
         
         xmiReader = new Reader();
         xmiReader.setUri(path.toOSString());
@@ -155,6 +156,7 @@ public class ExpandMacroStatesCommand extends AbstractHandler {
 
         transformation = new XtendComponent();
         transformation.addMetaModel(metaModel);
+        transformation.addMetaModel(expressions);
         transformation.setInvoke("transformations::expandReferenceStates::transform(model)");
         transformation.setOutputSlot("transformedModel");
         workflow.addComponent(transformation);
