@@ -43,10 +43,16 @@
     int valSigInt[_SC_valSigInt_SIZE];
     int valSigIntPre[_SC_valSigInt_SIZE];
 
-    «FOREACH allSignals(this) AS signal -»
+    «FOREACH allSignals(this).select(e|e.isInput) AS signal -»
 		«EXPAND Misc::generateInputSignal FOR signal-»
     «ENDFOREACH-»
+    «FOREACH allSignals(this).select(e|e.isOutput) AS signal -»
+		«EXPAND Misc::generateOutputSignal FOR signal-»
+    «ENDFOREACH-»
 	
+	«EXPAND Misc::generateCallOutputs FOR allSignals(this)»
+	«EXPAND Misc::generateReset-»
+		
     #ifndef EXTERNTICK
     int tick(){
        TICKSTART(«this.priority-»);
