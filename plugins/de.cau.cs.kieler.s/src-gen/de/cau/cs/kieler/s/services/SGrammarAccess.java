@@ -36,15 +36,13 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 		//	"Synchronous Program" name=ID "(" priority=INT ")" //	('Inputs' (signals += Signal) (',' signals += Signal)*';')?
 		//	//	('Outputs' (signals += Signal) (',' signals += Signal)*';')?
 		//	//	('Signals' (signals += Signal) (',' signals += Signal)*';')?
-		//	signals+=Signal* //	(signalDeclaration = SignalDeclaration)?
-		//	states+=State+;
+		//	signals+=Signal* states+=State+;
 		public ParserRule getRule() { return rule; }
 
 		//"Synchronous Program" name=ID "(" priority=INT ")" //	('Inputs' (signals += Signal) (',' signals += Signal)*';')?
 		////	('Outputs' (signals += Signal) (',' signals += Signal)*';')?
 		////	('Signals' (signals += Signal) (',' signals += Signal)*';')?
-		//signals+=Signal* //	(signalDeclaration = SignalDeclaration)?
-		//states+=State+
+		//signals+=Signal* states+=State+
 		public Group getGroup() { return cGroup; }
 
 		//"Synchronous Program"
@@ -97,9 +95,6 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cInstructionsInstructionParserRuleCall_3_0_0 = (RuleCall)cInstructionsAssignment_3_0.eContents().get(0);
 		private final Keyword cSemicolonKeyword_3_1 = (Keyword)cGroup_3.eContents().get(1);
 		
-		////SignalDeclaration :
-		////  	(signals += Signal)+
-		////;
 		////Annotation:
 		////	'@' key = ID ':'
 		////	value = STRING
@@ -648,58 +643,66 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 
 	public class GotoElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Goto");
-		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Keyword cGOTOKeyword_0 = (Keyword)cGroup.eContents().get(0);
-		private final Keyword cLeftParenthesisKeyword_1 = (Keyword)cGroup.eContents().get(1);
-		private final Assignment cStateAssignment_2 = (Assignment)cGroup.eContents().get(2);
-		private final CrossReference cStateStateCrossReference_2_0 = (CrossReference)cStateAssignment_2.eContents().get(0);
-		private final RuleCall cStateStateIDTerminalRuleCall_2_0_1 = (RuleCall)cStateStateCrossReference_2_0.eContents().get(1);
-		private final Group cGroup_3 = (Group)cGroup.eContents().get(3);
-		private final Keyword cCommaKeyword_3_0 = (Keyword)cGroup_3.eContents().get(0);
-		private final Assignment cContinuationAssignment_3_1 = (Assignment)cGroup_3.eContents().get(1);
-		private final CrossReference cContinuationStateCrossReference_3_1_0 = (CrossReference)cContinuationAssignment_3_1.eContents().get(0);
-		private final RuleCall cContinuationStateIDTerminalRuleCall_3_1_0_1 = (RuleCall)cContinuationStateCrossReference_3_1_0.eContents().get(1);
-		private final Keyword cRightParenthesisKeyword_4 = (Keyword)cGroup.eContents().get(4);
+		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
+		private final Group cGroup_0 = (Group)cAlternatives.eContents().get(0);
+		private final Keyword cGOTOKeyword_0_0 = (Keyword)cGroup_0.eContents().get(0);
+		private final Keyword cLeftParenthesisKeyword_0_1 = (Keyword)cGroup_0.eContents().get(1);
+		private final Assignment cStateAssignment_0_2 = (Assignment)cGroup_0.eContents().get(2);
+		private final CrossReference cStateStateCrossReference_0_2_0 = (CrossReference)cStateAssignment_0_2.eContents().get(0);
+		private final RuleCall cStateStateIDTerminalRuleCall_0_2_0_1 = (RuleCall)cStateStateCrossReference_0_2_0.eContents().get(1);
+		private final Group cGroup_1 = (Group)cAlternatives.eContents().get(1);
+		private final Group cGroup_1_0 = (Group)cGroup_1.eContents().get(0);
+		private final Keyword cCommaKeyword_1_0_0 = (Keyword)cGroup_1_0.eContents().get(0);
+		private final Assignment cContinuationAssignment_1_0_1 = (Assignment)cGroup_1_0.eContents().get(1);
+		private final CrossReference cContinuationStateCrossReference_1_0_1_0 = (CrossReference)cContinuationAssignment_1_0_1.eContents().get(0);
+		private final RuleCall cContinuationStateIDTerminalRuleCall_1_0_1_0_1 = (RuleCall)cContinuationStateCrossReference_1_0_1_0.eContents().get(1);
+		private final Keyword cRightParenthesisKeyword_1_1 = (Keyword)cGroup_1.eContents().get(1);
 		
 		//Goto:
-		//	"GOTO" "(" state=[State] ("," continuation=[State])? ")";
+		//	"GOTO" "(" state=[State] | ("," continuation=[State])? ")";
 		public ParserRule getRule() { return rule; }
 
-		//"GOTO" "(" state=[State] ("," continuation=[State])? ")"
-		public Group getGroup() { return cGroup; }
+		//"GOTO" "(" state=[State] | ("," continuation=[State])? ")"
+		public Alternatives getAlternatives() { return cAlternatives; }
+
+		//"GOTO" "(" state=[State]
+		public Group getGroup_0() { return cGroup_0; }
 
 		//"GOTO"
-		public Keyword getGOTOKeyword_0() { return cGOTOKeyword_0; }
+		public Keyword getGOTOKeyword_0_0() { return cGOTOKeyword_0_0; }
 
 		//"("
-		public Keyword getLeftParenthesisKeyword_1() { return cLeftParenthesisKeyword_1; }
+		public Keyword getLeftParenthesisKeyword_0_1() { return cLeftParenthesisKeyword_0_1; }
 
 		//state=[State]
-		public Assignment getStateAssignment_2() { return cStateAssignment_2; }
+		public Assignment getStateAssignment_0_2() { return cStateAssignment_0_2; }
 
 		//[State]
-		public CrossReference getStateStateCrossReference_2_0() { return cStateStateCrossReference_2_0; }
+		public CrossReference getStateStateCrossReference_0_2_0() { return cStateStateCrossReference_0_2_0; }
 
 		//ID
-		public RuleCall getStateStateIDTerminalRuleCall_2_0_1() { return cStateStateIDTerminalRuleCall_2_0_1; }
+		public RuleCall getStateStateIDTerminalRuleCall_0_2_0_1() { return cStateStateIDTerminalRuleCall_0_2_0_1; }
+
+		//("," continuation=[State])? ")"
+		public Group getGroup_1() { return cGroup_1; }
 
 		//("," continuation=[State])?
-		public Group getGroup_3() { return cGroup_3; }
+		public Group getGroup_1_0() { return cGroup_1_0; }
 
 		//","
-		public Keyword getCommaKeyword_3_0() { return cCommaKeyword_3_0; }
+		public Keyword getCommaKeyword_1_0_0() { return cCommaKeyword_1_0_0; }
 
 		//continuation=[State]
-		public Assignment getContinuationAssignment_3_1() { return cContinuationAssignment_3_1; }
+		public Assignment getContinuationAssignment_1_0_1() { return cContinuationAssignment_1_0_1; }
 
 		//[State]
-		public CrossReference getContinuationStateCrossReference_3_1_0() { return cContinuationStateCrossReference_3_1_0; }
+		public CrossReference getContinuationStateCrossReference_1_0_1_0() { return cContinuationStateCrossReference_1_0_1_0; }
 
 		//ID
-		public RuleCall getContinuationStateIDTerminalRuleCall_3_1_0_1() { return cContinuationStateIDTerminalRuleCall_3_1_0_1; }
+		public RuleCall getContinuationStateIDTerminalRuleCall_1_0_1_0_1() { return cContinuationStateIDTerminalRuleCall_1_0_1_0_1; }
 
 		//")"
-		public Keyword getRightParenthesisKeyword_4() { return cRightParenthesisKeyword_4; }
+		public Keyword getRightParenthesisKeyword_1_1() { return cRightParenthesisKeyword_1_1; }
 	}
 
 	public class ForkElements extends AbstractParserRuleElementFinder {
@@ -1033,8 +1036,7 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 	//	"Synchronous Program" name=ID "(" priority=INT ")" //	('Inputs' (signals += Signal) (',' signals += Signal)*';')?
 	//	//	('Outputs' (signals += Signal) (',' signals += Signal)*';')?
 	//	//	('Signals' (signals += Signal) (',' signals += Signal)*';')?
-	//	signals+=Signal* //	(signalDeclaration = SignalDeclaration)?
-	//	states+=State+;
+	//	signals+=Signal* states+=State+;
 	public ProgramElements getProgramAccess() {
 		return (pProgram != null) ? pProgram : (pProgram = new ProgramElements());
 	}
@@ -1043,9 +1045,6 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 		return getProgramAccess().getRule();
 	}
 
-	////SignalDeclaration :
-	////  	(signals += Signal)+
-	////;
 	////Annotation:
 	////	'@' key = ID ':'
 	////	value = STRING
@@ -1177,7 +1176,7 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//Goto:
-	//	"GOTO" "(" state=[State] ("," continuation=[State])? ")";
+	//	"GOTO" "(" state=[State] | ("," continuation=[State])? ")";
 	public GotoElements getGotoAccess() {
 		return (pGoto != null) ? pGoto : (pGoto = new GotoElements());
 	}

@@ -131,7 +131,7 @@ If :
   ;
   
 Goto :
-	'GOTO''('state=[State] (',' continuation=[State])?')'
+	'GOTO''('state=[State]| (',' continuation=[State])?')'
   ;
   
 Fork :
