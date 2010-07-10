@@ -26,7 +26,7 @@ List[Instruction] getGotoInstruction(synccharts::State state):
 			)
 		)
 		->
-		goto.setState((s::State)state.getSingleTraceTarget("S"))->
+		goto.setState((s::State)state.getSingleTraceTarget("S_surface"))->
 		out.add(goto)
 		->
 		out
@@ -39,9 +39,9 @@ List[Instruction] getGotoReturnInstruction(synccharts::State state):
 	if !(state.isFinal || state.outgoingTransitions.isEmpty) then (
 		(
 			if state.isHierarchical() then
-				goto.setState((s::State)state.getSingleTraceTarget("S_main_intern"))
+				goto.setState((s::State)state.getSingleTraceTarget("S_main_depth"))
 			else
-				goto.setState((s::State)state.getSingleTraceTarget("S_intern"))
+				goto.setState((s::State)state.getSingleTraceTarget("S_depth"))
 		)
 		->
 		out.add(goto)

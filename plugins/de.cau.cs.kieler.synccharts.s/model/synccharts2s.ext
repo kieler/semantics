@@ -115,19 +115,19 @@ List[s::State] getAllStates(synccharts::State state):
 		(
 			//if root state with more than one region OR not root state ...
 			if (state.parentRegion.parentState != null || (state.regions.size > 1)) then (
-				let putState = (s::State)state.getSingleTraceTarget("S"):
-				let putStateIntern = (s::State)state.getSingleTraceTarget("S_intern"):
+				let putStateSurface = (s::State)state.getSingleTraceTarget("S_surface"):
+				let putStateDepth = (s::State)state.getSingleTraceTarget("S_depth"):
 				(
 					if state.regions.isEmpty then (
 						//simple state
-						putInstructions(putState, getStateSurfInstructions(state)) ->
-						putInstructions(putStateIntern, getStateDepthInstructions(state)) ->
-						outList.add(putState) ->
-						outList.add(putStateIntern)
+						putInstructions(putStateSurface, getStateSurfInstructions(state)) ->
+						putInstructions(putStateDepth, getStateDepthInstructions(state)) ->
+						outList.add(putStateSurface) ->
+						outList.add(putStateDepth)
 					) else (
 						//macro state  (... only add fork,forke to instruction list yet)
-						putInstructions(putState, getStateMainInstructions(state)) ->
-						outList.add(putState)
+						putInstructions(putStateSurface, getStateMainInstructions(state)) ->
+						outList.add(putStateDepth)
 					)
 				)
 			) else (
@@ -143,8 +143,8 @@ List[s::State] getAllStates(synccharts::State state):
 			if !state.regions.isEmpty then (
 				//recursive call to getStatesOfRegion (these call getAllState again)
 				outList.addAll(state.regions.getStatesOfRegion()) ->(
-					let putStateHierarchy = (s::State)state.getSingleTraceTarget("S_main"):
-					let putStateHierarchyIntern = (s::State)state.getSingleTraceTarget("S_main_intern"):
+					let putStateHierarchy = (s::State)state.getSingleTraceTarget("S_main_surface"):
+					let putStateHierarchyIntern = (s::State)state.getSingleTraceTarget("S_main_depth"):
 					putInstructions(putStateHierarchy, getStateSurfInstructions(state)) ->
 					putInstructions(putStateHierarchyIntern, getStateDepthInstructions(state)) ->
 					outList.add(putStateHierarchy) ->
@@ -196,7 +196,7 @@ List[s::Instruction] getStateDepthInstructions(synccharts::State state):
 		// instructions for states without outgoing transitions
 		outList.addAll(getTermInstruction(state)) ->
 		outList.addAll(getHaltInstruction(state)) ->
-		// GOTO(_intern): return to the return adress if no transition is taken
+		// GOTO(_depth): return to the return adress if no transition is taken
 		outList.addAll(getGotoReturnInstruction(state)) ->
 		// return value - a list with all instructions for a state
 		outList
@@ -211,8 +211,8 @@ List[s::Instruction] getStateMainInstructions(synccharts::State state):
 
 // transforms a SyncChart state into a S state
 create s::State this transform(synccharts::State state):
-	createTrace(this,state,"SyncCharts","S") ->
-	this.setName("L" + getStatePathAsName(state)) ->
+	createTrace(this,state,"SyncCharts","S_surface") ->
+	this.setName("L" + getStatePathAsName(state) + "_surface") ->
 	if !state.signals.isEmpty then
 		this.setSignals(state.signals.transform())
 	else
@@ -221,20 +221,20 @@ create s::State this transform(synccharts::State state):
 
 // transforms a SyncChart state into a S state
 create s::State this transformIntern(synccharts::State state):
-	createTrace(this,state,"SyncCharts","S_intern") ->
-	this.setName("L" + getStatePathAsName(state) + "_intern")
+	createTrace(this,state,"SyncCharts","S_depth") ->
+	this.setName("L" + getStatePathAsName(state) + "_depth")
 ;
 
 // transforms a SyncChart state into a S state
 create s::State this transformMain(synccharts::State state):
-	createTrace(this,state,"SyncCharts","S_main") ->
-	this.setName("L" + getStatePathAsName(state) + "_main")
+	createTrace(this,state,"SyncCharts","S_main_surface") ->
+	this.setName("L" + getStatePathAsName(state) + "_main_surface")
 ;
 
 // transforms a SyncChart state into a S state
 create s::State this transformMainIntern(synccharts::State state):
-	createTrace(this,state,"SyncCharts","S_main_intern") ->
-	this.setName("L" + getStatePathAsName(state) + "_main_intern")
+	createTrace(this,state,"SyncCharts","S_main_depth") ->
+	this.setName("L" + getStatePathAsName(state) + "_main_depth")
 ;
 
 

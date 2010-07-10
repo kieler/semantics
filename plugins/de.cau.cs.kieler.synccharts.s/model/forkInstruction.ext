@@ -18,7 +18,7 @@ List[Instruction] getForkInstructions(synccharts::State state):
 	let forke = new Forke:
 			out.addAll(state.regions.transform()) ->
 		if !state.regions.isEmpty then (
-			forke.setState((s::State)state.getSingleTraceTarget("S_main")) ->
+			forke.setState((s::State)state.getSingleTraceTarget("S_main_surface")) ->
 			out.add(forke)
 		)
 		else
@@ -29,7 +29,7 @@ List[Instruction] getForkInstructions(synccharts::State state):
 
 create s::Fork this transform(Region region):
 //	let intValue = new s::IntValue:
-	this.setState((s::State)getInitialState(region).getSingleTraceTarget("S")) ->
+	this.setState((s::State)getInitialState(region).getSingleTraceTarget("S_surface")) ->
 //	intValue.setValue(getRealThreadPriority(getInitialState(region))) ->
 	this.setPriority(getRealThreadPriority(getInitialState(region)))
 ;
