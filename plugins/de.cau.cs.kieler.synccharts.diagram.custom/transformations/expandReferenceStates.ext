@@ -1,60 +1,46 @@
 import synccharts;
 import expressions;
 
-transform(Region region) :
-    dump("DOING transformRegion") ->
-	selectReferenceMacroStates(region).expandMacroState() -> region
+transform(Scope scope) :
+	selectReferenceMacroStates(scope).expandMacroState() -> scope
 ;
 
-transform(State state) :
-    dump("DOING transformState") ->
-	selectReferenceMacroStates(state).expandMacroState() -> state
-;
-
-selectReferenceMacroStates(Region region) :
-    dump("DOING selectReferenceMacroStates(Region region)") ->
-	region.eAllContents.typeSelect(State).select(state|state.type==StateType::REFERENCE)
-	;
-	
-selectReferenceMacroStates(State state) :
-	state.eAllContents.typeSelect(State).select(state|state.type==StateType::REFERENCE)
+selectReferenceMacroStates(Scope scope) :
+	scope.eAllContents.typeSelect(State).select(state|state.type==StateType::REFERENCE)
 	;
 
 /* As for now we only want Synccharts::States to be expanded, other types 
  * are transformed to a "legacy mode"*/
 expandMacroState(State target) :
     let referencedState = target.bodyReference :
-    dump("DOING expandMacroState(State target) for " + target.label + " with bodyReference" + target.bodyReference) ->
-    State.isInstance(referencedState) ?
-    //referencedState.eIsProxy() ?
+    State.isInstance(referencedState) ?        
+        target.expandSyncChartsState()
+        : null
+        ;
         
-        target.expandMacroStateWithSyncchartStateReference()
-        : target.analyze();
-        
-
-/*expand a given referenceMacroState which has a bodyReference to a SyncChart State*/
-State expandMacroStateWithSyncchartStateReference (State referencingState):
-    //let referencedState = referencingState.bodyReference.castToState():
+/* Expand a given referenceMacroState which has a bodyReference to a SyncChart State*/
+State expandSyncChartsState (State referencingState):
     let referencedState = referencingState.bodyReference.copyState() :
     let localSignals = referencedState.signals.select(e|e.isInput==false).select(e|e.isOutput==false) :
+    /* Recursive transform all referenceMacroStates.*/
     let referencedExpandedState = transform(referencedState) :
     let regions = referencedState.regions :
     let newName = getExpandedStateName(referencingState, referencedState) :
-    dump("expandMacroStateWithSyncchartStateReference "+newName + " "+referencedState.label) ->
+    /* First we add all regions of the referenced state. */
     referencingState.regions.addAll(regions) ->
+    /* We preserve the local signals of the referenced state. */
     referencingState.signals.addAll(localSignals) ->
+    /* We change the name of the referencing state. */
     referencingState.setLabel(newName) ->
+    /* After the expansion we change the type from REFERENCE to NORMAL. */
     referencingState.changeTypeToNormal() ->
+    /* We substitute the signals depending on the given renamings. */
     referencingState.renamings.executeSubstitution() ->
+    /* After substitution we delete the renamings as we dont need them anymore. */
     referencingState.removeAllRenamings() ->
+    /* Return the expanded state. */
     referencingState
 ;
-
-/*Copy the toplevel local signals from the source-state to the target-state.*/
-/*Void copyLocalSignals(State sourceState, State targetState) :
-    let localSignals = sourceState.signals.select(e|e.isInput==false).select(e|e.isOutput==false) ->
-    targetState.signals.addAll(localSignals)
-;*/
 
 getExpandedStateName(State referencingState, State referencedState) :
     referencingState.label + "_AT_" + referencedState.label;
@@ -66,7 +52,6 @@ changeTypeToNormal(State s) :
 State castToState(Object object) :
     (State) object;
 
-
 Void executeSubstitution(Substitution renaming) :
     let referencingState = (State) renaming.parentScope :
     let oldID = renaming.formal :
@@ -74,7 +59,6 @@ Void executeSubstitution(Substitution renaming) :
     let newSignal = getSignalForName(referencingState, newID) :
     let signalReferences = referencingState.eAllContents.typeSelect(SignalReference).select(e|e.signal.name==oldID) :
     let emissions = referencingState.eAllContents.typeSelect(Emission).select(e|e.signal.name==oldID) :
-    dump("EXECUTERENAMING(renaming) "+ renaming) ->
     (signalReferences.size > 0 ? renameSignalReference(signalReferences, newSignal) : null) ->
     (emissions.size > 0 ? renameEmission(emissions, newSignal) : null)
     ;
@@ -90,8 +74,7 @@ Void removeAllRenamings(State state) :
     ;
  
 Void deleteSubstitution(Substitution renaming) :
-    dump("DELETESUBSTITUTION(substitution) "+renaming) ->
-    renaming.verboseDelete()
+    renaming.delete()
 ;
 
     
@@ -109,27 +92,14 @@ Signal getSignalForName(State state, String name) :
                 getSignalForName(state.parentRegion.parentState, name) :
                 null);
 
-Void dump(String name) :
-	JAVA de.cau.cs.kieler.synccharts.diagram.custom.commands.Utils.dump(java.lang.String)
-;
-
 
 State copyState(Object object) :
     let state = (State) copy(object) :
-    dump("copyState(Object object) "+state) ->
     state;
     
 Object copy(Object object) :
 	JAVA de.cau.cs.kieler.synccharts.diagram.custom.commands.Utils.copy(java.lang.Object)
 ;
-
-Object analyze(Object object) :
-    JAVA de.cau.cs.kieler.synccharts.diagram.custom.commands.Utils.analyze(java.lang.Object)
-;
-
-Void verboseDelete(emf::EObject eobject):
-    dump("DELETE(emf::EObject eobject) "+eobject) ->
-    eobject.delete();
 
 Void delete (emf::EObject eobject):
     JAVA org.eclipse.emf.ecore.util.EcoreUtil.delete(org.eclipse.emf.ecore.EObject);
