@@ -5,22 +5,36 @@ extension Extensions reexport;
 Trigger trigger2(Transition transition):
   let trigger = new Trigger:
   let transitionLabel = transition.name:
-  let event = new NamedElement:
-  event.setName("getTrigger(transitionLabel)") ->
-  trigger.setEvent(event)
-;
-
-Effect effect2(Transition transition):
-  let effect = new Effect:
-  let transitionName = transition.name:
   let event = new Event:
-  event.setName(getTrigger(transitionName)) ->
-  effect.
+  event.setName(getTrigger(transitionLabel)) ->
+  trigger.setEvent(event) ->
+  trigger
 ;
 
-String getEffect(java::lang::String transitionLabel):
+//Effect effect2(Transition transition):
+//  let effect = new Trigger:
+//  let transitionName = transition.name:
+//  let event = new Event:
+//  event.setName(getTrigger(transitionName)) ->
+//  effect.
+//;
+
+
+List[Event] getTriggerEvents(StateMachine sm):
+ ((Set[Transition])sm.eAllContents.select(e|e.metaType == Transition)).trigger2().event
+;
+
+String getEffect(String transitionLabel):
   JAVA de.cau.cs.kieler.uml2.sim.JavaEscape.getEffect(java.lang.String)
 ;
-String getTrigger(java::lang::String transitionLabel):
+String getTrigger(String transitionLabel):
   JAVA de.cau.cs.kieler.uml2.sim.JavaEscape.getTrigger(java.lang.String)
 ;
+
+//Void test():
+//  let transition = new Transition :
+//  let transitionList = new List[Transition] : 
+//  transition.trigger2() ->
+//  transitionList.trigger2() ->
+//  trigger2(transition)
+//;
