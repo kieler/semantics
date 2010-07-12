@@ -1,14 +1,10 @@
 import uml;
 
-extension Extensions reexport;
+//extension Extensions reexport;
 
-Trigger trigger2(Transition transition):
-  let trigger = new Trigger:
+String trigger2(Transition transition):
   let transitionLabel = transition.name:
-  let event = new Event:
-  event.setName(getTrigger(transitionLabel)) ->
-  trigger.setEvent(event) ->
-  trigger
+  getTrigger(transitionLabel)
 ;
 
 //Effect effect2(Transition transition):
@@ -20,8 +16,8 @@ Trigger trigger2(Transition transition):
 //;
 
 
-List[Event] getTriggerEvents(StateMachine sm):
- ((Set[Transition])sm.eAllContents.select(e|e.metaType == Transition)).trigger2().event
+List[String] getTriggerEvents(StateMachine sm):
+ ((Set[Transition])sm.eAllContents.select(e|e.metaType == Transition)).trigger2()
 ;
 
 String getEffect(String transitionLabel):

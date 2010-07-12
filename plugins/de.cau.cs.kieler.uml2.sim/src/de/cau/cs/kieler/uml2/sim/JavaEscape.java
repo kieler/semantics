@@ -4,12 +4,14 @@ public class JavaEscape {
 
     //FIXME: only works for simple transition labels
     public static String getTrigger(String TransitionLabel) {
-        return TransitionLabel.substring(0,TransitionLabel.indexOf("/"));
+        return "a";
+        //return TransitionLabel.substring(0,TransitionLabel.indexOf("/"));
     }
     
     //FIXME: only works for simple transition labels
     public static String getEffect(String TransitionLabel) {
-        return TransitionLabel.substring(TransitionLabel.indexOf("/"));
+        return "b";
+//        return TransitionLabel.substring(TransitionLabel.indexOf("/"));
     }
     
 }
