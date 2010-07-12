@@ -43,7 +43,7 @@
       </eAnnotations>
     </eStructuralFeatures>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Element" abstract="true" eSuperTypes="platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EModelElement">
+  <eClassifiers xsi:type="ecore:EClass" name="Element" abstract="true" eSuperTypes="Ecore.ecore#//EModelElement">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
       <details key="documentation" value="An element is a constituent of a model. As such, it has the capability of owning other elements."/>
     </eAnnotations>
@@ -165,7 +165,7 @@
         </eAnnotations>
       </eParameters>
     </eOperations>
-    <eOperations name="applyStereotype" ordered="false" lowerBound="1" eType="ecore:EClass platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EObject">
+    <eOperations name="applyStereotype" ordered="false" lowerBound="1" eType="ecore:EClass Ecore.ecore#//EObject">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="Applies the specified stereotype to this element."/>
       </eAnnotations>
@@ -175,7 +175,7 @@
         </eAnnotations>
       </eParameters>
     </eOperations>
-    <eOperations name="unapplyStereotype" ordered="false" lowerBound="1" eType="ecore:EClass platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EObject">
+    <eOperations name="unapplyStereotype" ordered="false" lowerBound="1" eType="ecore:EClass Ecore.ecore#//EObject">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="Unapplies the specified stereotype from this element."/>
       </eAnnotations>
@@ -201,12 +201,12 @@
       </eParameters>
     </eOperations>
     <eOperations name="getStereotypeApplications" ordered="false" upperBound="-1"
-        eType="ecore:EClass platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EObject">
+        eType="ecore:EClass Ecore.ecore#//EObject">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="Retrieves the stereotype applications for this element."/>
       </eAnnotations>
     </eOperations>
-    <eOperations name="getStereotypeApplication" ordered="false" eType="ecore:EClass platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EObject">
+    <eOperations name="getStereotypeApplication" ordered="false" eType="ecore:EClass Ecore.ecore#//EObject">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="Retrieves the application of the specified stereotype for this element, or null if no such stereotype application exists."/>
       </eAnnotations>
@@ -286,7 +286,7 @@
         </eAnnotations>
       </eParameters>
     </eOperations>
-    <eOperations name="getValue" ordered="false" eType="ecore:EDataType platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EJavaObject">
+    <eOperations name="getValue" ordered="false" eType="ecore:EDataType Ecore.ecore#//EJavaObject">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="Retrieves the value of the property with the specified name in the specified stereotype for this element."/>
       </eAnnotations>
@@ -315,13 +315,13 @@
           <details key="documentation" value="The name of the property whose value to set."/>
         </eAnnotations>
       </eParameters>
-      <eParameters name="newValue" ordered="false" lowerBound="1" eType="ecore:EDataType platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EJavaObject">
+      <eParameters name="newValue" ordered="false" lowerBound="1" eType="ecore:EDataType Ecore.ecore#//EJavaObject">
         <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
           <details key="documentation" value="The new value for the property."/>
         </eAnnotations>
       </eParameters>
     </eOperations>
-    <eOperations name="createEAnnotation" ordered="false" lowerBound="1" eType="ecore:EClass platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EAnnotation">
+    <eOperations name="createEAnnotation" ordered="false" lowerBound="1" eType="ecore:EClass Ecore.ecore#//EAnnotation">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="Creates an annotation with the specified source and this element as its model element."/>
       </eAnnotations>
@@ -340,7 +340,7 @@
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="Retrieves the relationships of the specified type in which this element is involved."/>
       </eAnnotations>
-      <eParameters name="eClass" ordered="false" lowerBound="1" eType="ecore:EClass platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EClass">
+      <eParameters name="eClass" ordered="false" lowerBound="1" eType="ecore:EClass Ecore.ecore#//EClass">
         <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
           <details key="documentation" value="The (meta)type of the relationships to retrieve."/>
         </eAnnotations>
@@ -357,7 +357,7 @@
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="Retrieves the directed relationships of the specified type for which this element is a source."/>
       </eAnnotations>
-      <eParameters name="eClass" ordered="false" lowerBound="1" eType="ecore:EClass platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EClass">
+      <eParameters name="eClass" ordered="false" lowerBound="1" eType="ecore:EClass Ecore.ecore#//EClass">
         <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
           <details key="documentation" value="The (meta)type of the directed relationships to retrieve."/>
         </eAnnotations>
@@ -374,7 +374,7 @@
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="Retrieves the directed relationships of the specified type for which this element is a target."/>
       </eAnnotations>
-      <eParameters name="eClass" ordered="false" lowerBound="1" eType="ecore:EClass platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EClass">
+      <eParameters name="eClass" ordered="false" lowerBound="1" eType="ecore:EClass Ecore.ecore#//EClass">
         <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
           <details key="documentation" value="The (meta)type of the directed relationships to retrieve."/>
         </eAnnotations>
@@ -501,7 +501,7 @@
         </eAnnotations>
       </eParameters>
     </eOperations>
-    <eOperations name="applyProfile" ordered="false" upperBound="-1" eType="ecore:EClass platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EObject">
+    <eOperations name="applyProfile" ordered="false" upperBound="-1" eType="ecore:EClass Ecore.ecore#//EObject">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="Applies the current definition of the specified profile to this package and automatically applies required stereotypes in the profile to elements within this package's namespace hieararchy. If a different definition is already applied, automatically migrates any associated stereotype values on a &quot;best effort&quot; basis (matching classifiers and structural features by name)."/>
       </eAnnotations>
@@ -511,7 +511,7 @@
         </eAnnotations>
       </eParameters>
     </eOperations>
-    <eOperations name="unapplyProfile" ordered="false" upperBound="-1" eType="ecore:EClass platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EObject">
+    <eOperations name="unapplyProfile" ordered="false" upperBound="-1" eType="ecore:EClass Ecore.ecore#//EObject">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="Unapplies the specified profile from this package and automatically unapplies stereotypes in the profile from elements within this package's namespace hieararchy."/>
       </eAnnotations>
@@ -6529,7 +6529,7 @@
         <details key="documentation" value="Retrieves all the metaclasses extended by this stereotype, including the metaclasses extended by its superstereotypes."/>
       </eAnnotations>
     </eOperations>
-    <eOperations name="getDefinition" ordered="false" eType="ecore:EClass platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EClass">
+    <eOperations name="getDefinition" ordered="false" eType="ecore:EClass Ecore.ecore#//EClass">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="Retrieves the current definition (Ecore representation) of this stereotype."/>
       </eAnnotations>
@@ -6631,7 +6631,7 @@
         </eGenericType>
       </eParameters>
     </eOperations>
-    <eOperations name="create" ordered="false" lowerBound="1" eType="ecore:EClass platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EObject">
+    <eOperations name="create" ordered="false" lowerBound="1" eType="ecore:EClass Ecore.ecore#//EObject">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="Creates and returns an instance of (the Ecore representation of) the specified classifier defined in this profile."/>
       </eAnnotations>
@@ -6661,12 +6661,12 @@
         <details key="documentation" value="Determines whether this profile is defined."/>
       </eAnnotations>
     </eOperations>
-    <eOperations name="define" ordered="false" eType="ecore:EClass platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EPackage">
+    <eOperations name="define" ordered="false" eType="ecore:EClass Ecore.ecore#//EPackage">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="Defines this profile by (re)creating Ecore representations of its current contents."/>
       </eAnnotations>
     </eOperations>
-    <eOperations name="define" ordered="false" lowerBound="1" eType="ecore:EClass platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EPackage">
+    <eOperations name="define" ordered="false" lowerBound="1" eType="ecore:EClass Ecore.ecore#//EPackage">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="Defines this profile by (re)creating Ecore representations of its current contents, using the specified options, diagnostics, and context."/>
       </eAnnotations>
@@ -6674,12 +6674,12 @@
         <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
           <details key="documentation" value="The options to use."/>
         </eAnnotations>
-        <eGenericType eClassifier="ecore:EDataType platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EMap">
+        <eGenericType eClassifier="ecore:EDataType Ecore.ecore#//EMap">
           <eTypeArguments eClassifier="#//String"/>
           <eTypeArguments eClassifier="#//String"/>
         </eGenericType>
       </eParameters>
-      <eParameters name="diagnostics" ordered="false" lowerBound="1" eType="ecore:EDataType platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EDiagnosticChain">
+      <eParameters name="diagnostics" ordered="false" lowerBound="1" eType="ecore:EDataType Ecore.ecore#//EDiagnosticChain">
         <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
           <details key="documentation" value="The chain of diagnostics to which problems are to be appended."/>
         </eAnnotations>
@@ -6688,18 +6688,18 @@
         <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
           <details key="documentation" value="The cache of context-specific information."/>
         </eAnnotations>
-        <eGenericType eClassifier="ecore:EDataType platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EMap">
-          <eTypeArguments eClassifier="ecore:EDataType platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EJavaObject"/>
-          <eTypeArguments eClassifier="ecore:EDataType platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EJavaObject"/>
+        <eGenericType eClassifier="ecore:EDataType Ecore.ecore#//EMap">
+          <eTypeArguments eClassifier="ecore:EDataType Ecore.ecore#//EJavaObject"/>
+          <eTypeArguments eClassifier="ecore:EDataType Ecore.ecore#//EJavaObject"/>
         </eGenericType>
       </eParameters>
     </eOperations>
-    <eOperations name="getDefinition" ordered="false" eType="ecore:EClass platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EPackage">
+    <eOperations name="getDefinition" ordered="false" eType="ecore:EClass Ecore.ecore#//EPackage">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="Retrieves the current definition (Ecore representation) of this profile."/>
       </eAnnotations>
     </eOperations>
-    <eOperations name="getDefinition" ordered="false" eType="ecore:EClass platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//ENamedElement">
+    <eOperations name="getDefinition" ordered="false" eType="ecore:EClass Ecore.ecore#//ENamedElement">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="Retrieves the current definition (Ecore representation) of the specified named element in this profile."/>
       </eAnnotations>
@@ -7569,12 +7569,12 @@
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
       <details key="documentation" value="A profile application is used to show which profiles have been applied to a package."/>
     </eAnnotations>
-    <eOperations name="getAppliedDefinition" ordered="false" eType="ecore:EClass platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EPackage">
+    <eOperations name="getAppliedDefinition" ordered="false" eType="ecore:EClass Ecore.ecore#//EPackage">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="Retrieves the definition (Ecore representation) of the profile associated with this profile application."/>
       </eAnnotations>
     </eOperations>
-    <eOperations name="getAppliedDefinition" ordered="false" eType="ecore:EClass platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//ENamedElement">
+    <eOperations name="getAppliedDefinition" ordered="false" eType="ecore:EClass Ecore.ecore#//ENamedElement">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="Retrieves the definition (Ecore representation) of the specified named element in the profile associated with this profile application."/>
       </eAnnotations>
