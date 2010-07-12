@@ -18,9 +18,9 @@ Effect effect2(Transition transition):
   effect.
 ;
 
-String getTrigger(String TransitionLabel):
-  JAVA de.cau.cs.kieler.uml2.sim.JavaEscape(java.lang.String)
-;
 String getEffect(String TransitionLabel):
-  JAVA de.cau.cs.kieler.uml2.sim.JavaEscape(java.lang.String)
+  JAVA de.cau.cs.kieler.uml2.sim.JavaEscape.getEffect(java.lang.String)
+;
+String getTrigger(String TransitionLabel):
+  JAVA de.cau.cs.kieler.uml2.sim.JavaEscape.getTrigger(java.lang.String)
 ;
