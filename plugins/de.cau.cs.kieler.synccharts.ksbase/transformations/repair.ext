@@ -275,11 +275,14 @@ Void fixTransitionType(Transition trans):
 ;
 
 Void removeTriggerFromString(Transition trans):
+ let str = trans.label.split("/"):
+ 
  if (trans.label != null) then
   (if (trans.effects.isEmpty) then
      setLabel(trans, null)
-   else 
-     setLabel(trans, "/" + trans.label.split("/").get(1))
+   else (
+        if (str.length > 0) then
+            setLabel(trans, "/" + trans.label.split("/").get(1))
   )
 ;
 
