@@ -6,8 +6,16 @@ Trigger trigger2(Transition transition):
   let trigger = new Trigger:
   let transitionName = transition.name:
   let event = new Event:
-  event.setNameExpression("xs") ->
+  event.setName(getTrigger(transitionName)) ->
   trigger.setEvent(event)
+;
+
+Effect effect2(Transition transition):
+  let effect = new Effect:
+  let transitionName = transition.name:
+  let event = new Event:
+  event.setName(getTrigger(transitionName)) ->
+  effect.
 ;
 
 String getTrigger(String TransitionLabel):
