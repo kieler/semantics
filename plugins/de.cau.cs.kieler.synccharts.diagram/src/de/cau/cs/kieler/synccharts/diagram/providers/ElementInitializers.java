@@ -24,14 +24,15 @@ public class ElementInitializers {
         try {
             instance.setDelay(1);
             Object value_1 = SyncchartsOCLFactory.getExpression(0,
-                SyncchartsPackage.eINSTANCE.getTransition(), null).evaluate(instance);
+                    SyncchartsPackage.eINSTANCE.getTransition(), null)
+                    .evaluate(instance);
 
             value_1 = SyncchartsAbstractExpression.performCast(value_1,
-                EcorePackage.eINSTANCE.getEInt());
+                    EcorePackage.eINSTANCE.getEInt());
             instance.setPriority(((Integer) value_1).intValue());
         } catch (RuntimeException e) {
-            SyncchartsDiagramEditorPlugin.getInstance()
-                .logError("Element initialization failed", e); //$NON-NLS-1$						
+            SyncchartsDiagramEditorPlugin.getInstance().logError(
+                    "Element initialization failed", e); //$NON-NLS-1$						
         }
     }
 
@@ -39,11 +40,11 @@ public class ElementInitializers {
      * @generated
      */
     public static ElementInitializers getInstance() {
-        ElementInitializers cached = SyncchartsDiagramEditorPlugin.getInstance()
-            .getElementInitializers();
+        ElementInitializers cached = SyncchartsDiagramEditorPlugin
+                .getInstance().getElementInitializers();
         if (cached == null) {
             SyncchartsDiagramEditorPlugin.getInstance().setElementInitializers(
-                cached = new ElementInitializers());
+                    cached = new ElementInitializers());
         }
         return cached;
     }

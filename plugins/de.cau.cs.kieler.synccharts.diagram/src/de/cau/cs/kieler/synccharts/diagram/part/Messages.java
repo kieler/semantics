@@ -338,17 +338,12 @@ public class Messages extends NLS {
     /**
      * @generated
      */
-    public static String NavigatorGroupName_Region_1000_links;
+    public static String NavigatorGroupName_Transition_4003_target;
 
     /**
      * @generated
      */
-    public static String NavigatorGroupName_State_2003_incominglinks;
-
-    /**
-     * @generated
-     */
-    public static String NavigatorGroupName_State_2003_outgoinglinks;
+    public static String NavigatorGroupName_Transition_4003_source;
 
     /**
      * @generated
@@ -363,12 +358,17 @@ public class Messages extends NLS {
     /**
      * @generated
      */
-    public static String NavigatorGroupName_Transition_4003_target;
+    public static String NavigatorGroupName_State_2003_incominglinks;
 
     /**
      * @generated
      */
-    public static String NavigatorGroupName_Transition_4003_source;
+    public static String NavigatorGroupName_State_2003_outgoinglinks;
+
+    /**
+     * @generated
+     */
+    public static String NavigatorGroupName_Region_1000_links;
 
     /**
      * @generated

@@ -91,6 +91,7 @@ mapping inout GenCompartment::fixCompartmentName(in prefix:String, inout index:I
 	self.editPartClassName := prefix + indexString + "CompartmentEditPart";
 	self.canonicalEditPolicyClassName := prefix + indexString + "CompartmentCanonicalEditPolicy";
 	self.itemSemanticEditPolicyClassName := prefix + indexString + "CompartmentItemSemanticEditPolicy";
+	// self.title := prefix.replaceAll("State","").replaceAll("Compartment","") + "s :";
 }
 
 mapping inout GenChildNode::childNodeNames(){
@@ -133,9 +134,6 @@ mapping inout GenChildNode::fixChildNodeName(in prefix:String){
     };
 }
 
-mapping inout GenNodeLabel::fixLabelName(in prefix:String){
-	}
-
 mapping inout GenCompartment::compartmentSettings(){
 	// we want to be able to collapse all compartments
 	self.canCollapse := true;
@@ -149,22 +147,20 @@ mapping inout GenCompartment::compartmentSettings(){
 	// customize the title of the compartment according to its type	
 	self.needsTitle := false;
     
+    var name : String := self.editPartClassName.replace("EditPart","")
+                                            .replace("Compartment2","")
+                                            .replace("Compartment","");
+    
 	self.title := switch {
-		case (self.editPartClassName = "StateSignalEditPart")  "Signal:";
-		case (self.editPartClassName = "StateSignal2EditPart") "Signal:";
+		case (name = "StateSignal")  "Signal:";
 //		case (self.editPartClassName = "StateVariableCompartmentEditPart")  "Variable:";
 //		case (self.editPartClassName = "StateVariableCompartment2EditPart") "Variable:";
-		case (self.editPartClassName = "StateOnEntryActionEditPart")  "OnEntryAction:";
-		case (self.editPartClassName = "StateOnEntryAction2EditPart") "OnEntryAction:";
-		case (self.editPartClassName = "StateOnInsideActionEditPart")  "OnInsideAction:";
-		case (self.editPartClassName = "StateOnInsideAction2EditPart") "OnInsideAction:";
-		case (self.editPartClassName = "StateOnExitActionEditPart")  "OnExitAction:";
-		case (self.editPartClassName = "StateOnExitAction2EditPart") "OnExitAction:";
-		case (self.editPartClassName = "StateSuspendEditPart")  "Suspend:";
-		case (self.editPartClassName = "StateSuspend2EditPart") "Suspend:";
-		case (self.editPartClassName = "StateRegionCompartmentEditPart")  "RegionCompartment";
-		case (self.editPartClassName = "StateRegionCompartment2EditPart") "RegionCompartment";
-		case (self.editPartClassName = "RegionStateCompartmentEditPart")  "StateCompartment";
+		case (name = "StateEntryAction")  "OnEntryAction:";
+    	case (name = "StateInnerAction")  "OnInsideAction:";
+		case (name = "StateExitAction")  "OnExitAction:";
+		case (name = "StateSuspensionTrigger")  "Suspend:";
+		case (name = "StateRegion")  "RegionCompartment";
+		case (name = "RegionState")  "StateCompartment";
 		else "";
 	};
 }

@@ -33,7 +33,7 @@ public class SyncchartsBaseEditHelper extends AbstractEditHelper {
     protected IEditHelperAdvice[] getEditHelperAdvice(IEditCommandRequest req) {
         if (req.getParameter(CONTEXT_ELEMENT_TYPE) instanceof IElementType) {
             return ElementTypeRegistry.getInstance().getEditHelperAdvice(
-                (IElementType) req.getParameter(CONTEXT_ELEMENT_TYPE));
+                    (IElementType) req.getParameter(CONTEXT_ELEMENT_TYPE));
         }
         return super.getEditHelperAdvice(req);
     }
@@ -67,7 +67,8 @@ public class SyncchartsBaseEditHelper extends AbstractEditHelper {
     /**
      * @generated
      */
-    protected ICommand getCreateRelationshipCommand(CreateRelationshipRequest req) {
+    protected ICommand getCreateRelationshipCommand(
+            CreateRelationshipRequest req) {
         return null;
     }
 

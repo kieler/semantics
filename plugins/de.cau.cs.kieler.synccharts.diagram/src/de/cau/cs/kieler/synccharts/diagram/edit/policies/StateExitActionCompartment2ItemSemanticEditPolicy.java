@@ -10,7 +10,7 @@ import de.cau.cs.kieler.synccharts.diagram.providers.SyncchartsElementTypes;
  * @generated
  */
 public class StateExitActionCompartment2ItemSemanticEditPolicy extends
-    SyncchartsBaseItemSemanticEditPolicy {
+        SyncchartsBaseItemSemanticEditPolicy {
 
     /**
      * @generated
