@@ -2,12 +2,11 @@ package de.cau.cs.kieler.kvid.dataprovider;
 
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import de.cau.cs.kieler.kvid.datadistributor.GMFDataDistributor;
 import de.cau.cs.kieler.sim.kiem.IJSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.JSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.KiemExecutionException;
@@ -28,14 +27,14 @@ public class KIEMDataProvider extends JSONObjectDataComponent implements IJSONOb
             }
         }
         for (String string : dataByURI.keySet()) {
-            System.out.println("KViD: " + string + " " + dataByURI.get(string));            
+            System.out.println("KViD: " + string + " " + dataByURI.get(string));
+            GMFDataDistributor.getInstance().markPartByURI(string);
         }
         return null;
     }
 
     public void initialize() throws KiemInitializationException {
-        // TODO Auto-generated method stub
-        
+        GMFDataDistributor.getInstance().initialize();        
     }
 
     public void wrapup() throws KiemInitializationException {
