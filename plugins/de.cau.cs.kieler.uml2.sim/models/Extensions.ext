@@ -4,9 +4,9 @@ extension Extensions reexport;
 
 Trigger trigger2(Transition transition):
   let trigger = new Trigger:
-  let transitionName = transition.name:
-  let event = new Event:
-  event.setName(getTrigger(transitionName)) ->
+  let transitionLabel = transition.name:
+  let event = new NamedElement:
+  event.setName("getTrigger(transitionLabel)") ->
   trigger.setEvent(event)
 ;
 
@@ -18,9 +18,9 @@ Effect effect2(Transition transition):
   effect.
 ;
 
-String getEffect(String TransitionLabel):
+String getEffect(java::lang::String transitionLabel):
   JAVA de.cau.cs.kieler.uml2.sim.JavaEscape.getEffect(java.lang.String)
 ;
-String getTrigger(String TransitionLabel):
+String getTrigger(java::lang::String transitionLabel):
   JAVA de.cau.cs.kieler.uml2.sim.JavaEscape.getTrigger(java.lang.String)
 ;
