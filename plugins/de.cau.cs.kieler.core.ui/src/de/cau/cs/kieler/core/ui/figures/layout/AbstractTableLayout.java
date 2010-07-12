@@ -114,7 +114,7 @@ public abstract class AbstractTableLayout extends AbstractHintLayout {
 
         // check whether the figure is an attribute aware figure
         if (stateFigure instanceof IAttributeAwareFigure) {
-        	printChildOverview(stateFigure);
+        	// printChildOverview(stateFigure);
             IAttributeAwareFigure attrStateFigure = (IAttributeAwareFigure) stateFigure;
 
             invalidateLabels(stateFigure);
