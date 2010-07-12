@@ -6,10 +6,12 @@
    «EXPAND sm FOREACH packagedElement»
 «ENDDEFINE»
 
+«DEFINE main FOR Package»
+   «EXPAND sm FOREACH packagedElement»
+«ENDDEFINE»
+
 «DEFINE sm FOR StateMachine»
 	«FILE this.name.toString() +".maude"»
-	
-	TransitionName = "«this.region.get(1).transition.get(0).name»";
 	
 	// HERE COMES THE MAUDE CODE //
 	
