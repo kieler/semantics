@@ -1,4 +1,4 @@
-package de.cau.cs.kieler.uml2.sim.xtend;
+package de.cau.cs.kieler.uml2.sim;
 
 public class JavaEscape {
 
