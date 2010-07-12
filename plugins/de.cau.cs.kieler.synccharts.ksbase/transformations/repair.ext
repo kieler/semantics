@@ -281,7 +281,7 @@ Void removeTriggerFromString(Transition trans):
   (if (trans.effects.isEmpty) then
      setLabel(trans, null)
    else (
-        if (str.length > 0) then
+        if (str.length > 1) then
             setLabel(trans, "/" + trans.label.split("/").get(1))
   )
 ;
