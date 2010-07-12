@@ -494,6 +494,10 @@ public class UpdateResourceFactoryImpl extends XMIResourceFactoryImpl {
         if (newString.contains("xsi:type=\"synccharts:Substitution\"")) {
             newString = newString.replaceAll("newID=\"", "actual=\"");
         }
+        if (newString.contains("renamings")) {
+            newString = newString.replaceAll(" oldID=\"", " formal=\"");
+            newString = newString.replaceAll(" newID=\"", " actual=\"");
+        }
 
         String[] array = newString.split(" ");
         StringBuilder builder = new StringBuilder();
