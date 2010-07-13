@@ -246,6 +246,11 @@ public class ParserSerializerTest {
         this.parseAndSerialize("/ A(3)");
     }
 
+    @Test
+    public void testSerializerEmissionComplexValue() throws Exception {
+        this.parseAndSerialize("/ A(?B + 100)");
+    }
+    
     /**
      * A JUnit test for the Labelparser.
      * 
