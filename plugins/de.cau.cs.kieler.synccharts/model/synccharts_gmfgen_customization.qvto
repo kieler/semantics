@@ -91,7 +91,6 @@ mapping inout GenCompartment::fixCompartmentName(in prefix:String, inout index:I
 	self.editPartClassName := prefix + indexString + "CompartmentEditPart";
 	self.canonicalEditPolicyClassName := prefix + indexString + "CompartmentCanonicalEditPolicy";
 	self.itemSemanticEditPolicyClassName := prefix + indexString + "CompartmentItemSemanticEditPolicy";
-	// self.title := prefix.replaceAll("State","").replaceAll("Compartment","") + "s :";
 }
 
 mapping inout GenChildNode::childNodeNames(){
@@ -153,8 +152,7 @@ mapping inout GenCompartment::compartmentSettings(){
     
 	self.title := switch {
 		case (name = "StateSignal")  "Signal:";
-//		case (self.editPartClassName = "StateVariableCompartmentEditPart")  "Variable:";
-//		case (self.editPartClassName = "StateVariableCompartment2EditPart") "Variable:";
+//		case (name = "StateVariable")  "Variable:";
 		case (name = "StateEntryAction")  "OnEntryAction:";
     	case (name = "StateInnerAction")  "OnInsideAction:";
 		case (name = "StateExitAction")  "OnExitAction:";
