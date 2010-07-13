@@ -1,6 +1,6 @@
 grammar de.cau.cs.kieler.core.expressions.Expressions with  org.eclipse.xtext.common.Terminals
 
-import "platform:/resource/de.cau.cs.kieler.core.expressions/model/expressions.ecore" 
+import "platform:/resource/de.cau.cs.kieler.core.expressions/model/expressions.ecore" as expressions
 
 import "http://www.eclipse.org/emf/2002/Ecore" as ecore
 
@@ -10,160 +10,177 @@ import "http://www.eclipse.org/emf/2002/Ecore" as ecore
 //
 // --------------------------
 
-Expression returns Expression:
-	BooleanExpression;
+SignalReference returns expressions::SignalReference:
+	signal = [expressions::Signal] 	
+	(("(" (subExpressions+=Expression (',')?)* ")"))?;
 
-// Example: not D and C or ?E = 42 or not (A and (B or C))
-BooleanExpression returns Expression:
-	OrExpression;
+VariableReference returns expressions::VariableReference:
+	variable = [expressions::Variable]
+	(("(" (subExpressions+=Expression (',')?)* ")"))?;
 
-// Example: A or B, A and B and C, C and B or D and not E, A and B and C
-OrExpression returns Expression:
-	AndExpression ({OperatorExpression.subExpressions+=current} operator=OrOperator subExpressions+=AndExpression)*;
+Signal returns expressions::Signal:
+	name=ID;
+	
+Variable returns expressions::Variable:
+	name=ID;
+	
+//==============================================================================
+// Values
+//==============================================================================
 
-// Example: A and B, not C and 42 <= ?D
-AndExpression returns Expression:
-	NotExpression ({OperatorExpression.subExpressions+=current} operator=AndOperator subExpressions+=NotExpression)*;
+// redefine INT terminal to allow negative numbers
+terminal INT returns ecore::EInt:
+ '-'?('0'..'9')+;
+
+IntValue returns expressions::IntValue: 
+	value=INT;
+FloatValue returns expressions::FloatValue:
+    value=Float ; 
+BooleanValue returns expressions::BooleanValue :
+    value=Boolean;
+Value returns expressions::Value:
+	IntValue | FloatValue | BooleanValue;
+
+// make sure the Float rule does not shadow the INT rule
+terminal Float returns ecore::EFloatObject : ((INT"."INT | INT("."INT)?("e"|"E")("+")?INT))"f"? | INT"f";
+terminal Boolean returns ecore::EBooleanObject : "true" | "false";
+
+//==============================================================================
+// Arithmetic Expressions
+//==============================================================================
+
+// Example: ?A	
+ValOperation returns expressions::OperatorExpression:
+	operator=ValOperator subExpressions+=SignalReference;
+
+// everything that evaluates to a primitive number value
+ValuedExpression returns expressions::Expression:
+	PlusOperation;
+
+// Example: 42, 42.2, ?A, var1, (1+2*3)
+ParanthesedValuedExpression returns expressions::Expression:
+    IntValue | FloatValue | ValOperation | VariableReference | TextExpression | '('PlusOperation')' | '('DivOperation')';
+
+// Example: 1 + 2, varA - ?B
+PlusOperation returns expressions::Expression:
+	MultOrDivOperation ({expressions::OperatorExpression.subExpressions+=current} operator=PlusOperator subExpressions+=MultOrDivOperation)*;
+
+MultOrDivOperation returns expressions::Expression:
+	MultOperation | '('DivOperation')';
+
+// Example: 2 * 4, varA mod ?B
+MultOperation returns expressions::Expression:
+	PreOrNormalValuedExpression ({expressions::OperatorExpression.subExpressions+=current} operator=MultOperator subExpressions+=PreOrNormalValuedExpression)*;
+
+// Example: (2 / 4)
+// note: division has to have always parantheses because the '/' sign is also used for trigger/effect delimiter
+DivOperation returns expressions::Expression:
+	PreOrNormalValuedExpression ({expressions::OperatorExpression.subExpressions+=current} operator=DivOperator subExpressions+=PreOrNormalValuedExpression)*;
+
+// Example: pre (? A)
+PreArithmOperation returns expressions::OperatorExpression:
+	operator=UnaryParanthesedOperator '('subExpressions+=ValOperation')';
+	 
+PreOrNormalValuedExpression returns expressions::Expression:
+	PreArithmOperation | ParanthesedValuedExpression;
+
+//==============================================================================
+// Boolean Expressions
+//==============================================================================
+
+// Example: 42 <= ?A
+CompareOperation returns expressions::Expression:
+	ValuedExpression ({expressions::OperatorExpression.subExpressions+=current} operator=CompareOperator subExpressions+=ValuedExpression);  	
 
 // Example: not A, not false, not (A or B)
 // at the latter we need the parans to indicate the right binding
-NotExpression returns Expression:
-    AtomicExpression |
-	{OperatorExpression} operator=NotOperator subExpressions+=(AtomicExpression);
+UnaryOperation returns expressions::OperatorExpression:
+	operator=UnaryOperator subExpressions+=(ParanthesedBooleanExpression | UnaryParanthesedOperation);
+
+UnaryParanthesedOperation returns expressions::OperatorExpression:
+    operator=UnaryParanthesedOperator '('subExpressions+=BooleanExpression ')';
+
+// Example: either negated or normal expression (with parantheses) 
+UnaryOrNormalExpression returns expressions::Expression:
+	UnaryOperation | UnaryParanthesedOperation | ParanthesedBooleanExpression;
+
+// Example: A and B, not C and 42 <= ?D
+AndOperation returns expressions::Expression:
+	UnaryOrNormalExpression ({expressions::OperatorExpression.subExpressions+=current} operator=OperatorAnd subExpressions+=UnaryOrNormalExpression)*;
+
+// Example: A or B, C and B or D and not E 
+OrOperation returns expressions::Expression:
+	AndOperation ({expressions::OperatorExpression.subExpressions+=current} operator=OperatorOr subExpressions+=AndOperation)*;
 
 // Example: true, A, 42>var1, (A or B), (not D and C or ?E = 42)
 // note that the order of CompareOperation and SignalReference is important. This might be an Xtext bug...
-AtomicExpression returns Expression:
-    BooleanValue
-    | SignalReference
-    | {OperatorExpression} operator=PreOperator '(' subExpressions+= SignalReference ')'
-    | '(' CompareOperation ')'    
-    | '(' BooleanExpression ')'
-    ;
+ParanthesedBooleanExpression returns expressions::Expression:
+    BooleanValue | CompareOperation | SignalReference | ValOperation | TextExpression | '('OrOperation')' ;
 
-SignalReference returns SignalReference:
-	signal=[Signal|EString];
+// Example: not D and C or ?E = 42 or not (A and (B or C))
+BooleanExpression returns expressions::Expression:
+	OrOperation;
 
-// Example: 42 <= ?A
-CompareOperation returns Expression:
-	ValuedExpression ({OperatorExpression.subExpressions+=current} operator=CompareOperator subExpressions+=ValuedExpression);
-
-// everything that evaluates to a primitive number value
-ValuedExpression returns Expression:
-	AddExpression;
-
-// Example: 1 + 2
-AddExpression returns Expression:
-	SubExpression ({OperatorExpression.subExpressions+=current} operator=AddOperator subExpressions+=SubExpression)*;
-
-// Example: varA - ?B
-SubExpression returns Expression:
-	MultExpression ({OperatorExpression.subExpressions+=current} operator=SubOperator subExpressions+=MultExpression)*;
-
-// Example: 2 * 4
-MultExpression returns Expression:
-	ModExpression ({OperatorExpression.subExpressions+=current} operator=MultOperator subExpressions+=ModExpression)*;
-
-// Example: varA mod ?B
-ModExpression returns Expression:
-	AtomicValuedExpression ({OperatorExpression.subExpressions+=current} operator=ModOperator subExpressions+=AtomicValuedExpression)?;
-
-AtomicValuedExpression returns Expression:
-    IntValue
-    | FloatValue
-    | VariableReference
-    | ValueTestExpression
-    | PreValueTestExpression 
-    | '(' DivExpression ')' 
-    | '(' ValuedExpression ')'
-    | TextExpression
-    ;
-
-// Example: (2 / 4)
-// note: division always has to have parantheses because the '/' sign is also used for trigger/effect delimiter
-DivExpression returns Expression:
-	AtomicValuedExpression {OperatorExpression.subExpressions+=current} operator=DivOperator subExpressions+=AtomicValuedExpression;
-
-VariableReference returns VariableReference:
-	variable=[Variable|EString];
-
-// Example: ? A
-ValueTestExpression returns OperatorExpression:
-	operator=ValueTestOperator '('subExpressions+=SignalReference')';
+//==============================================================================
+// Operators
+//==============================================================================
 	
-// Example: pre (? A)
-PreValueTestExpression returns OperatorExpression:
-	operator=PreOperator '('subExpressions+=ValueTestExpression')';
+enum OperatorType returns expressions::OperatorType:
+	EQ="=" | LT="<" | LEQ="<=" | GT=">" | GEQ=">=" | NOT="not"| NE="<>" | AND="and" | OR="or" | ADD="+" | SUB="-" | MULT="*" | DIV="/" | MOD="mod" | VAL="?" | PRE="pre";
 
-// Taken from oba's kits grammar
-TextExpression returns TextExpression: 
-	code=STRING ("(" type=ID ")")?; 
-
-IntValue returns IntValue:
-	value=EIntegerObject;
-
-FloatValue returns FloatValue:
-	value=EFloatObject;
-
-BooleanValue returns BooleanValue:
-	value=EBooleanObject;
-
-EIntegerObject returns ecore::EIntegerObject:
-	'-'? INT;
-
-EFloatObject returns ecore::EFloatObject:
-	'-'? INT? '.' INT (('E'|'e') '-'? INT)?;
-
-EBooleanObject returns ecore::EBooleanObject:
-	'true' | 'false';
-
-EString returns ecore::EString:
-	STRING | ID;
-
-
-enum CompareOperator returns OperatorType:
-	EQ="=" | LT="<" | LEQ="<=" | GT=">" | GEQ=">=" | NE="<>";
-
-enum PreOperator returns OperatorType:
-    PRE="pre";
-
-enum OrOperator returns OperatorType:
-	OR="or";
-
-enum AndOperator returns OperatorType:
-	AND="and";
-
-enum NotOperator returns OperatorType:
-	NOT="not";
-
-enum AddOperator returns OperatorType:
-	ADD="+";
-	
-enum SubOperator returns OperatorType:
-	SUB="-";
-	
-enum MultOperator returns OperatorType:	
-	MULT="*";
-
-enum ModOperator returns OperatorType:	
-	MOD="mod";
-
-enum DivOperator returns OperatorType:	
-	DIV="/";
-
-enum ValueTestOperator returns OperatorType:
+enum ValOperator returns expressions::OperatorType:
 	VAL="?";
 
+enum CompareOperator returns expressions::OperatorType:
+	EQ="=" | LT="<" | LEQ="<=" | GT=">" | GEQ=">=" | NE="<>";
+
+// not A	
+enum UnaryOperator returns expressions::OperatorType:
+	NOT="not";
+
+// pre(A)
+enum UnaryParanthesedOperator returns expressions::OperatorType:
+	PRE="pre";
+
+enum OperatorOr returns expressions::OperatorType:
+	OR="or";
+
+enum OperatorAnd returns expressions::OperatorType:
+	AND="and";
+
+enum OperatorPre returns expressions::OperatorType:
+    PRE="pre";
+
+enum PlusOperator returns expressions::OperatorType:
+	ADD="+" | SUB="-";
+	
+enum MultOperator returns expressions::OperatorType:	
+	MULT="*" | MOD="mod";
+
+enum DivOperator returns expressions::OperatorType:	
+	DIV="/";
+
+
+//==============================================================================
+// Misc
+//==============================================================================
+	
+TextExpression returns expressions::TextExpression:
+	code=STRING ("(" type=ID ")")?;
+	
+Expression returns expressions::Expression:
+ 	ValuedExpression | BooleanExpression
+;
 
 /*
    the following declarations are re-used in Interface.xtext, Kits.xtext 
 */
-enum ValueType returns ValueType:
+enum ValueType returns expressions::ValueType:
 	PURE="PURE" | BOOL="BOOL" | UNSIGNED="UNSIGNED"	| 
 	INT="INT" | FLOAT="FLOAT" | HOST="HOST"	
 ;
 
-enum CombineOperator returns CombineOperator:
+enum CombineOperator returns expressions::CombineOperator:
 	NONE="NONE" | ADD="+" | MULT="*" | MAX="max" |
 	MIN="min" | OR="or" | AND="and" | HOST="host"
 ;
