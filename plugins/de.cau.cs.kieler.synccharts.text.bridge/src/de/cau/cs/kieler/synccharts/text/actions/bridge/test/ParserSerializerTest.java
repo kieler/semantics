@@ -37,6 +37,7 @@ import de.cau.cs.kieler.synccharts.SyncchartsFactory;
 import de.cau.cs.kieler.synccharts.Transition;
 import de.cau.cs.kieler.synccharts.text.actions.ActionsStandaloneSetup;
 import de.cau.cs.kieler.synccharts.text.actions.bridge.ActionLabelParseCommand;
+import de.cau.cs.kieler.synccharts.text.actions.bridge.ActionLabelSerializer;
 
 /**
  * JUnit Test Case for the SyncCharts Editor Transition label parser and its
@@ -616,8 +617,10 @@ public class ParserSerializerTest {
 
     private void parseAndSerialize(final String inputString) throws KielerException, IOException {
         parse(inputString);
-        // String serializedString = ActionLabelSerializer.toString(transition);
-        String serializedString = serialize(transition);
+        // Our Inofficial simple custom Serializer
+        String serializedString = ActionLabelSerializer.toString(transition);
+        // Official XText Serializer
+        //String serializedString = serialize(transition);
         if (inputString.equals(serializedString)) {
             return;
         } else {
