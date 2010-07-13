@@ -75,6 +75,18 @@ public abstract class AbstractDeletionPolicyProvider extends AbstractProvider
     }
 
     /**
+     * Determine whether the edit part is the root edit part and should not be
+     * deleted.
+     * 
+     * @param editPart
+     *            the edit part
+     * @return true if it is the root edit part
+     */
+    protected boolean isTopNode(final EditPart editPart) {
+        return ((View) editPart.getModel()).eContainer() == null;
+    }
+
+    /**
      * Get the ePackage of the deletion policy. This is used to determine which
      * edit parts this policy applies to.
      * 
@@ -135,12 +147,11 @@ public abstract class AbstractDeletionPolicyProvider extends AbstractProvider
         @Override
         public Command getCommand(final Request request) {
             Command result = super.getCommand(request);
-            // If the user presses the delete key, don't delete
             if (request instanceof GroupRequestViaKeyboard
                     && RequestConstants.REQ_DELETE.equals(request.getType())) {
                 GroupRequestViaKeyboard req = (GroupRequestViaKeyboard) request;
 
-                if (isUnremovableEditPart(editPart)) {
+                if (isTopNode(editPart) || isUnremovableEditPart(editPart)) {
                     // edit part should not be touched
                     result = UnexecutableCommand.INSTANCE;
                 } else {
@@ -148,8 +159,7 @@ public abstract class AbstractDeletionPolicyProvider extends AbstractProvider
                     // diagram
                     result = super.createDeleteSemanticCommand(req);
                 }
-            } else if (request instanceof EditCommandRequestWrapper
-                    && editPart instanceof CompartmentEditPart) {
+            } else if (request instanceof EditCommandRequestWrapper) {
                 // when a compartment is about to be delete
                 // the enclosing parent should be deleted instead
                 EditCommandRequestWrapper req = (EditCommandRequestWrapper) request;
@@ -157,8 +167,13 @@ public abstract class AbstractDeletionPolicyProvider extends AbstractProvider
 
                 // the element is destroyed
                 if (cmdReq instanceof DestroyElementRequest) {
-                    // get the same request for the parent
-                    result = editPart.getParent().getCommand(request);
+                    if (editPart instanceof CompartmentEditPart) {
+                        // get the same request for the parent
+                        result = editPart.getParent().getCommand(request);
+                    } else if (isTopNode(editPart)) {
+                        // edit part should not be touched
+                        result = UnexecutableCommand.INSTANCE;
+                    }
                 }
             }
 
