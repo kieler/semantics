@@ -47,8 +47,8 @@ import de.cau.cs.kieler.synccharts.text.actions.ActionsStandaloneSetup;
  */
 public class ActionLabelProcessorWrapper {
 
-    static final boolean PARSE = true;
-    static final boolean SERIALIZE = false;
+    public static final boolean PARSE = true;
+    public static final boolean SERIALIZE = false;
 
     private Injector injector;
     // SerializerUtil serializerUtil;
@@ -236,7 +236,7 @@ public class ActionLabelProcessorWrapper {
         }
     }
 
-    Command getProcessActionCommand(final Action action, final boolean parse) {
+    public Command getProcessActionCommand(final Action action, final boolean parse) {
         if (parse == PARSE) {
             return new ActionLabelParseCommand(action, action
                     .getLabel(), parser, injector);

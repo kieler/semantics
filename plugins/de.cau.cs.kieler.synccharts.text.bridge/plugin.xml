@@ -35,13 +35,13 @@
    <extension
          point="de.cau.cs.kieler.synccharts.triggerListener">
       <triggerListener
-            class="de.cau.cs.kieler.synccharts.text.actions.bridge.TriggerListenerChangedTrigger">
+            class="de.cau.cs.kieler.synccharts.text.actions.bridge.listeners.ChangedTriggerListener">
       </triggerListener>
       <triggerListener
-            class="de.cau.cs.kieler.synccharts.text.actions.bridge.TriggerListenerRenamedSignals">
+            class="de.cau.cs.kieler.synccharts.text.actions.bridge.listeners.RenamedSignalsListener">
       </triggerListener>
       <triggerListener
-            class="de.cau.cs.kieler.synccharts.text.actions.bridge.TriggerListenerSerializer">
+            class="de.cau.cs.kieler.synccharts.text.actions.bridge.listeners.SerializerListener">
       </triggerListener>
    </extension>
 

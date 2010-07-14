@@ -1,4 +1,4 @@
-package de.cau.cs.kieler.synccharts.text.actions.bridge;
+package de.cau.cs.kieler.synccharts.text.actions.bridge.listeners;
 
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
@@ -13,6 +13,8 @@ import de.cau.cs.kieler.core.model.util.ModelErrorHandler;
 import de.cau.cs.kieler.synccharts.Action;
 import de.cau.cs.kieler.synccharts.SyncchartsPackage;
 import de.cau.cs.kieler.synccharts.contentadapter.FireOnceTriggerListener;
+import de.cau.cs.kieler.synccharts.text.actions.bridge.ActionLabelProcessorWrapper;
+import de.cau.cs.kieler.synccharts.text.actions.bridge.LabelParserBridgePlugin;
 
 /**
  * Listen to changes of the TriggerAndEffects String of an Action and trigger
@@ -23,9 +25,9 @@ import de.cau.cs.kieler.synccharts.contentadapter.FireOnceTriggerListener;
  * @author haf
  * 
  */
-public class TriggerListenerChangedTrigger extends FireOnceTriggerListener {
+public class ChangedTriggerListener extends FireOnceTriggerListener {
 
-    public TriggerListenerChangedTrigger() {
+    public ChangedTriggerListener() {
         super(NotificationFilter.createFeatureFilter(
                 SyncchartsPackage.eINSTANCE.getAction_Label()).or(
                 NotificationFilter

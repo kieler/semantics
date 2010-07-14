@@ -1,4 +1,4 @@
-package de.cau.cs.kieler.synccharts.text.actions.bridge;
+package de.cau.cs.kieler.synccharts.text.actions.bridge.listeners;
 
 import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.command.CompoundCommand;
@@ -9,6 +9,8 @@ import org.eclipse.emf.transaction.TransactionalEditingDomain;
 import de.cau.cs.kieler.core.expressions.ExpressionsPackage;
 import de.cau.cs.kieler.core.expressions.ValuedObject;
 import de.cau.cs.kieler.synccharts.contentadapter.FireOnceTriggerListener;
+import de.cau.cs.kieler.synccharts.text.actions.bridge.ActionLabelProcessorWrapper;
+import de.cau.cs.kieler.synccharts.text.actions.bridge.LabelParserBridgePlugin;
 
 /**
  * Listen to renamings of Signals and Variables and then re-serialize all
@@ -17,9 +19,9 @@ import de.cau.cs.kieler.synccharts.contentadapter.FireOnceTriggerListener;
  * @author haf
  * 
  */
-public class TriggerListenerRenamedSignals extends FireOnceTriggerListener {
+public class RenamedSignalsListener extends FireOnceTriggerListener {
 
-    public TriggerListenerRenamedSignals() {
+    public RenamedSignalsListener() {
         super(NotificationFilter
                 .createFeatureFilter(ExpressionsPackage.eINSTANCE
                         .getValuedObject_Name()));
