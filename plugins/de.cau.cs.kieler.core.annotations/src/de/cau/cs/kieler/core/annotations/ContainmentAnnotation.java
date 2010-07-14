@@ -20,6 +20,16 @@ import org.eclipse.emf.ecore.EObject;
  * A representation of the model object '<em><b>Containment Annotation</b></em>'.
  * <!-- end-user-doc -->
  *
+ * <!-- begin-model-doc -->
+ * A ContainmentAnnotation carries an arbitrary EObject.
+ * By this any EObject can be attached as Annotation to an Annotatable.
+ * The EObject will be persistently stored together with the
+ * Annotatable as its child in the Annotation. Hence it also gets serialized
+ * into a file when the model gets saved. Therefore here an EObject is used
+ * and not any Object, because an EObject can be serialized with EMF.
+ * 
+ * <!-- end-model-doc -->
+ *
  * <p>
  * The following features are supported:
  * <ul>

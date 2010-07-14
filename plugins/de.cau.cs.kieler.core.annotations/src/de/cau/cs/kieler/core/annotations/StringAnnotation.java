@@ -19,6 +19,10 @@ package de.cau.cs.kieler.core.annotations;
  * A representation of the model object '<em><b>String Annotation</b></em>'.
  * <!-- end-user-doc -->
  *
+ * <!-- begin-model-doc -->
+ * A StringAnnotation carries a String Value.
+ * <!-- end-model-doc -->
+ *
  * <p>
  * The following features are supported:
  * <ul>

@@ -20,6 +20,13 @@ import org.eclipse.emf.ecore.EObject;
  * A representation of the model object '<em><b>Reference Annotation</b></em>'.
  * <!-- end-user-doc -->
  *
+ * <!-- begin-model-doc -->
+ * A ReferenceAnnotation carries a reference to an arbitrary EObject.
+ * By this any EObject can be referenced from an Annotation. The distinction
+ * to the ContainmentAnnotation is that the reference is only a pointer
+ * to the EObject most probably in another resource.
+ * <!-- end-model-doc -->
+ *
  * <p>
  * The following features are supported:
  * <ul>

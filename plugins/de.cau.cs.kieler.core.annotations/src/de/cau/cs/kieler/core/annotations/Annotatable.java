@@ -22,6 +22,12 @@ import org.eclipse.emf.ecore.EObject;
  * A representation of the model object '<em><b>Annotatable</b></em>'.
  * <!-- end-user-doc -->
  *
+ * <!-- begin-model-doc -->
+ * The Annotatable abstract class allows subclasses to be annotated by arbitrary information.
+ * An Annotatable has a list of attached Annotation objects and defines convenience functions
+ * to search annotations with a specific name.
+ * <!-- end-model-doc -->
+ *
  * <p>
  * The following features are supported:
  * <ul>

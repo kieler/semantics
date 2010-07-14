@@ -19,6 +19,18 @@ package de.cau.cs.kieler.core.annotations;
  * A representation of the model object '<em><b>Annotation</b></em>'.
  * <!-- end-user-doc -->
  *
+ * <!-- begin-model-doc -->
+ * An Annotation is an Object that can be attached to an Annotatable. It
+ * extends NamedObject and therefore it has a String name which is used
+ * as a key to identify the Annotation within the list of Annotations in
+ * the Annotatable.
+ * <p>
+ * A pure Annotatable Object can be used to specify some kind of
+ * boolean property that an Annotatable can carry or not.
+ * However, usually additional information is attached by subclassing
+ * the Annotation and add some additional value to the subclass.
+ * <!-- end-model-doc -->
+ *
  *
  * @see de.cau.cs.kieler.core.annotations.AnnotationsPackage#getAnnotation()
  * @model

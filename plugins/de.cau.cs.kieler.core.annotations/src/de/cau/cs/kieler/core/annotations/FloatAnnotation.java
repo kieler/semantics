@@ -19,6 +19,10 @@ package de.cau.cs.kieler.core.annotations;
  * A representation of the model object '<em><b>Float Annotation</b></em>'.
  * <!-- end-user-doc -->
  *
+ * <!-- begin-model-doc -->
+ * A FloatAnnotation carries a float value.
+ * <!-- end-model-doc -->
+ *
  * <p>
  * The following features are supported:
  * <ul>
