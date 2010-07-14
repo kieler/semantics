@@ -24,6 +24,17 @@ import org.eclipse.emf.common.util.Enumerator;
  * A representation of the literals of the enumeration '<em><b>Value Type</b></em>',
  * and utility methods for working with them.
  * <!-- end-user-doc -->
+ * <!-- begin-model-doc -->
+ * Possible built-in types for values (e.g. for Varibales or Signals).
+ * <p>
+ * Default value is the PURE type which means that the
+ * ValuedObject does not contain any value at all (only
+ * makes sense for Signals).
+ * <p>
+ * HOST means that no actual type is given but the
+ * type in the hostType attribute should be used 
+ * instead.
+ * <!-- end-model-doc -->
  * @see de.cau.cs.kieler.core.expressions.ExpressionsPackage#getValueType()
  * @model
  * @generated
@@ -97,6 +108,11 @@ public enum ValueType implements Enumerator {
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
+     * <!-- begin-model-doc -->
+     * Default value is the PURE type which means that the
+     * ValuedObject does not contain any value at all (only
+     * makes sense for Signals).
+     * <!-- end-model-doc -->
      * @see #PURE
      * @model literal="pure"
      * @generated
@@ -172,6 +188,11 @@ public enum ValueType implements Enumerator {
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
+     * <!-- begin-model-doc -->
+     * HOST means that no actual type is given but the
+     * type in the hostType attribute should be used 
+     * instead.
+     * <!-- end-model-doc -->
      * @see #HOST
      * @model literal="host"
      * @generated

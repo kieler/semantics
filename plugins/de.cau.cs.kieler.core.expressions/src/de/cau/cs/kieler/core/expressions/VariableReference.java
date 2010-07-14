@@ -19,6 +19,20 @@ package de.cau.cs.kieler.core.expressions;
  * A representation of the model object '<em><b>Variable Reference</b></em>'.
  * <!-- end-user-doc -->
  *
+ * <!-- begin-model-doc -->
+ * A VariableReference has a reference to a Variable object and is a ComplexExpression.
+ * Therefore such reference may have subExpressions. Those can be used to 
+ * address a specific value. E.g. the Variable could carry an array
+ * value and a subExpression could be an IntValue that points to a special entry in 
+ * that array. 
+ * <p>
+ * The distinction between a Variable and a VariableReference is mainly due to containment
+ * relations. A Variable is usually defined exactly once and therefore contained by some 
+ * scope element. A reference to that Variable may be required multiple times where
+ * such reference need to be contained at the places where the reference is used.
+ * Hence we need this distinction.
+ * <!-- end-model-doc -->
+ *
  * <p>
  * The following features are supported:
  * <ul>

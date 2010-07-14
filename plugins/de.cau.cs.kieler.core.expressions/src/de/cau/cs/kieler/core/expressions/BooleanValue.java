@@ -19,6 +19,10 @@ package de.cau.cs.kieler.core.expressions;
  * A representation of the model object '<em><b>Boolean Value</b></em>'.
  * <!-- end-user-doc -->
  *
+ * <!-- begin-model-doc -->
+ * An Boolean value object.
+ * <!-- end-model-doc -->
+ *
  * <p>
  * The following features are supported:
  * <ul>

@@ -24,6 +24,13 @@ import org.eclipse.emf.common.util.Enumerator;
  * A representation of the literals of the enumeration '<em><b>Operator Type</b></em>',
  * and utility methods for working with them.
  * <!-- end-user-doc -->
+ * <!-- begin-model-doc -->
+ * OperatorTypes are used for OperatorExpressions. 
+ * The types may reference any corresponding
+ * operator or function that may make use of
+ * an arbitrary number of subExpressions. Hence it
+ * contains unary and binary operators.
+ * <!-- end-model-doc -->
  * @see de.cau.cs.kieler.core.expressions.ExpressionsPackage#getOperatorType()
  * @model
  * @generated
@@ -197,6 +204,9 @@ public enum OperatorType implements Enumerator {
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
+     * <!-- begin-model-doc -->
+     * Equals operator
+     * <!-- end-model-doc -->
      * @see #EQ
      * @model literal="="
      * @generated
@@ -212,6 +222,9 @@ public enum OperatorType implements Enumerator {
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
+     * <!-- begin-model-doc -->
+     * Less than operator. (Not commutative!)
+     * <!-- end-model-doc -->
      * @see #LT
      * @model literal="<"
      * @generated
@@ -227,6 +240,9 @@ public enum OperatorType implements Enumerator {
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
+     * <!-- begin-model-doc -->
+     * Less or Equal operator. (Not commutative!)
+     * <!-- end-model-doc -->
      * @see #LEQ
      * @model literal="<="
      * @generated
@@ -242,6 +258,9 @@ public enum OperatorType implements Enumerator {
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
+     * <!-- begin-model-doc -->
+     * Greater than operator. (Not commutative!)
+     * <!-- end-model-doc -->
      * @see #GT
      * @model literal=">"
      * @generated
@@ -257,6 +276,9 @@ public enum OperatorType implements Enumerator {
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
+     * <!-- begin-model-doc -->
+     * Greater or Equal operator. (Not commutative!)
+     * <!-- end-model-doc -->
      * @see #GEQ
      * @model literal=">="
      * @generated
@@ -272,6 +294,9 @@ public enum OperatorType implements Enumerator {
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
+     * <!-- begin-model-doc -->
+     * Logical Negation operator (unary)
+     * <!-- end-model-doc -->
      * @see #NOT
      * @model literal="not"
      * @generated
@@ -287,6 +312,9 @@ public enum OperatorType implements Enumerator {
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
+     * <!-- begin-model-doc -->
+     * Value operator. Returns the value of a Signal referenced by a SignalReference.
+     * <!-- end-model-doc -->
      * @see #VAL
      * @model literal="?"
      * @generated
@@ -302,6 +330,9 @@ public enum OperatorType implements Enumerator {
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
+     * <!-- begin-model-doc -->
+     * Pre operator, returns the previous state of a Signal referenced by a SignalReference.
+     * <!-- end-model-doc -->
      * @see #PRE
      * @model literal="pre"
      * @generated
@@ -317,6 +348,10 @@ public enum OperatorType implements Enumerator {
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
+     * <!-- begin-model-doc -->
+     * Not Equal operator.
+     * 
+     * <!-- end-model-doc -->
      * @see #NE
      * @model literal="<>"
      * @generated
@@ -332,6 +367,10 @@ public enum OperatorType implements Enumerator {
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
+     * <!-- begin-model-doc -->
+     * Logical AND operator.
+     * 
+     * <!-- end-model-doc -->
      * @see #AND
      * @model literal="and"
      * @generated
@@ -347,6 +386,9 @@ public enum OperatorType implements Enumerator {
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
+     * <!-- begin-model-doc -->
+     * Logical OR operator.
+     * <!-- end-model-doc -->
      * @see #OR
      * @model literal="or"
      * @generated
@@ -362,6 +404,9 @@ public enum OperatorType implements Enumerator {
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
+     * <!-- begin-model-doc -->
+     * Arithmetic addition operator.
+     * <!-- end-model-doc -->
      * @see #ADD
      * @model literal="+"
      * @generated
@@ -377,6 +422,9 @@ public enum OperatorType implements Enumerator {
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
+     * <!-- begin-model-doc -->
+     * Arithmetic subtraction operator. (Not commutative!)
+     * <!-- end-model-doc -->
      * @see #SUB
      * @model literal="-"
      * @generated
@@ -392,6 +440,9 @@ public enum OperatorType implements Enumerator {
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
+     * <!-- begin-model-doc -->
+     * Arithmetic multiplication operator.
+     * <!-- end-model-doc -->
      * @see #MULT
      * @model literal="*"
      * @generated
@@ -407,6 +458,9 @@ public enum OperatorType implements Enumerator {
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
+     * <!-- begin-model-doc -->
+     * Aithmetic division operator. (Not commutative!)
+     * <!-- end-model-doc -->
      * @see #DIV
      * @model literal="/"
      * @generated
@@ -422,6 +476,9 @@ public enum OperatorType implements Enumerator {
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
+     * <!-- begin-model-doc -->
+     * Arithmetic modulo operation. (Not commutative!)
+     * <!-- end-model-doc -->
      * @see #MOD
      * @model literal="mod"
      * @generated

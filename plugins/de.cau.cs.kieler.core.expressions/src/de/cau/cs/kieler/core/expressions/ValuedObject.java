@@ -20,6 +20,14 @@ import org.eclipse.emf.ecore.EObject;
  * A representation of the model object '<em><b>Valued Object</b></em>'.
  * <!-- end-user-doc -->
  *
+ * <!-- begin-model-doc -->
+ * Base Class for Variables and Signals. A ValuedObject has a name and may carry a value. 
+ * Therefore the class has a type attribute which specifies the type of the value. 
+ * The type might either be given from a predefined list of internal (primitive) types or by the hostType String that 
+ * references some type in the target language, e.g. a Type in C or Java. An initial value can be given in String format.
+ * 
+ * <!-- end-model-doc -->
+ *
  * <p>
  * The following features are supported:
  * <ul>

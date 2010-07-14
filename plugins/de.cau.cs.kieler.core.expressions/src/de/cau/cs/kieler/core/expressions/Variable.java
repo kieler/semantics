@@ -20,6 +20,22 @@ import org.eclipse.emf.ecore.EObject;
  * A representation of the model object '<em><b>Variable</b></em>'.
  * <!-- end-user-doc -->
  *
+ * <!-- begin-model-doc -->
+ * A Variable is a data object that may be used for internal calculations. It is not directly
+ * intended for communication with concurrent program parts. Variables may be overridden
+ * multiple times within one synchronous tick. Hence writing a signal in concurrent program parts
+ * is not allowed. Therefore Variables, unlike Signals, do not need a combine strategy.
+ * <p>
+ * A Variable always carries a value and therefore needs a proper type. A Variable may be
+ * tagged to be a constant by the const attribute and then the value is given by the
+ * initialValue.
+ * <p>
+ * Due to the restrictions in broadcast communication, the usage of Variables is discouraged
+ * everywhere where Signals could be used instead.
+ * 
+ * 
+ * <!-- end-model-doc -->
+ *
  * <p>
  * The following features are supported:
  * <ul>

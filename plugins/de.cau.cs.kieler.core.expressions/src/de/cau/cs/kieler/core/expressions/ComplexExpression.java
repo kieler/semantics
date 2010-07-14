@@ -20,6 +20,13 @@ import org.eclipse.emf.common.util.EList;
  * A representation of the model object '<em><b>Complex Expression</b></em>'.
  * <!-- end-user-doc -->
  *
+ * <!-- begin-model-doc -->
+ * A ComplexExpression is an Expression that contains a list of sub expressions.
+ * This does make sense mainly for it subtypes. It does not carry an operator
+ * or something similar itself, because sub expressions make also sense in some
+ * contexts without an operator, e.g. for SignalReferences.
+ * <!-- end-model-doc -->
+ *
  * <p>
  * The following features are supported:
  * <ul>

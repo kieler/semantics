@@ -19,6 +19,14 @@ package de.cau.cs.kieler.core.expressions;
  * A representation of the model object '<em><b>Operator Expression</b></em>'.
  * <!-- end-user-doc -->
  *
+ * <!-- begin-model-doc -->
+ * An OperatorExpression is the most obvious ComplexExpression containing
+ * an operator and a list of subExpressions. The meaning is that the operator 
+ * should be applied to all elements of the ordered subExpression list.
+ * Note that some pre-defined operators are not commutative, hence the
+ * order of the subExpressions list is of importance.
+ * <!-- end-model-doc -->
+ *
  * <p>
  * The following features are supported:
  * <ul>

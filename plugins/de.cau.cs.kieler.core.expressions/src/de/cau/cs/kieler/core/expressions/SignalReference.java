@@ -19,6 +19,20 @@ package de.cau.cs.kieler.core.expressions;
  * A representation of the model object '<em><b>Signal Reference</b></em>'.
  * <!-- end-user-doc -->
  *
+ * <!-- begin-model-doc -->
+ * A SignalReference has a reference to a Signal object and is a ComplexExpression.
+ * Therefore such reference may have subExpressions. Those can be used to 
+ * address a specific value of a valued signal. E.g. the Signal could carry an array
+ * value and a subExpression could be an IntValue that points to a special entry in 
+ * that array. 
+ * <p>
+ * The distinction between a Signal and a SignalReference is mainly due to containment
+ * relations. A Signal is usually defined exactly once and therefore contained by some 
+ * scope element. A reference to that Signal may be required multiple times where
+ * such reference need to be contained at the places where the reference is used.
+ * Hence we need this distinction.
+ * <!-- end-model-doc -->
+ *
  * <p>
  * The following features are supported:
  * <ul>

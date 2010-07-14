@@ -24,6 +24,9 @@ import org.eclipse.emf.common.util.Enumerator;
  * A representation of the literals of the enumeration '<em><b>Combine Operator</b></em>',
  * and utility methods for working with them.
  * <!-- end-user-doc -->
+ * <!-- begin-model-doc -->
+ * Built-in operators that can be used as Signal combine operators.
+ * <!-- end-model-doc -->
  * @see de.cau.cs.kieler.core.expressions.ExpressionsPackage#getCombineOperator()
  * @model
  * @generated
@@ -117,6 +120,9 @@ public enum CombineOperator implements Enumerator {
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
+     * <!-- begin-model-doc -->
+     * Specifies that no combine operator is given. 
+     * <!-- end-model-doc -->
      * @see #NONE
      * @model
      * @generated
@@ -132,6 +138,9 @@ public enum CombineOperator implements Enumerator {
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
+     * <!-- begin-model-doc -->
+     * Arithmetic addition.
+     * <!-- end-model-doc -->
      * @see #ADD
      * @model literal="+"
      * @generated
@@ -147,6 +156,10 @@ public enum CombineOperator implements Enumerator {
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
+     * <!-- begin-model-doc -->
+     * Arithmetic multiplication.
+     * 
+     * <!-- end-model-doc -->
      * @see #MULT
      * @model literal="*"
      * @generated
@@ -162,6 +175,9 @@ public enum CombineOperator implements Enumerator {
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
+     * <!-- begin-model-doc -->
+     * The maximum function. Takes the greater of the given two.
+     * <!-- end-model-doc -->
      * @see #MAX
      * @model literal="max"
      * @generated
@@ -177,6 +193,9 @@ public enum CombineOperator implements Enumerator {
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
+     * <!-- begin-model-doc -->
+     * The minimum function. Takes the lesser of the given two.
+     * <!-- end-model-doc -->
      * @see #MIN
      * @model literal="min"
      * @generated
@@ -192,6 +211,9 @@ public enum CombineOperator implements Enumerator {
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
+     * <!-- begin-model-doc -->
+     * Logical or function for boolean valued signals.
+     * <!-- end-model-doc -->
      * @see #OR
      * @model literal="or"
      * @generated
@@ -207,6 +229,9 @@ public enum CombineOperator implements Enumerator {
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
+     * <!-- begin-model-doc -->
+     * Logical and for boolean valued signals.
+     * <!-- end-model-doc -->
      * @see #AND
      * @model literal="and"
      * @generated
@@ -222,6 +247,11 @@ public enum CombineOperator implements Enumerator {
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
+     * <!-- begin-model-doc -->
+     * Specifies that no built-in combine operator should be used 
+     * but the operator given in the hostCombineOperator field given as a String and 
+     * referencing some function of the host language (maybe C or Java, etc. ) .
+     * <!-- end-model-doc -->
      * @see #HOST
      * @model literal="host"
      * @generated

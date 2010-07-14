@@ -19,6 +19,10 @@ package de.cau.cs.kieler.core.expressions;
  * A representation of the model object '<em><b>Int Value</b></em>'.
  * <!-- end-user-doc -->
  *
+ * <!-- begin-model-doc -->
+ * An Integer value object.
+ * <!-- end-model-doc -->
+ *
  * <p>
  * The following features are supported:
  * <ul>

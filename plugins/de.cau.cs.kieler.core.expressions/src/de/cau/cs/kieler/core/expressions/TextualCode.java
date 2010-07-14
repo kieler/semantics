@@ -20,6 +20,15 @@ import org.eclipse.emf.ecore.EObject;
  * A representation of the model object '<em><b>Textual Code</b></em>'.
  * <!-- end-user-doc -->
  *
+ * <!-- begin-model-doc -->
+ * TextualCode carries an arbitrary String. It is used as an escape to external host languages
+ * such as C or Java. A type String can be used to specify what kind of language is represented
+ * by the code String.
+ * Subclasses such as TextExpression or TextEffect (synccharts metamodel) can be used to employ it in the
+ * corresponding context. 
+ * 
+ * <!-- end-model-doc -->
+ *
  * <p>
  * The following features are supported:
  * <ul>
