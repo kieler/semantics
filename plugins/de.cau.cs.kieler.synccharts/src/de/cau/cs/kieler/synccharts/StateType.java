@@ -26,6 +26,11 @@ import org.eclipse.emf.common.util.Enumerator;
  * A representation of the literals of the enumeration '<em><b>State Type</b></em>',
  * and utility methods for working with them.
  * <!-- end-user-doc -->
+ * <!-- begin-model-doc -->
+ * A type for a State to specify some special properties.
+ * 
+ *   
+ * <!-- end-model-doc -->
  * @see de.cau.cs.kieler.synccharts.SyncchartsPackage#getStateType()
  * @model
  * @generated
@@ -79,6 +84,10 @@ public enum StateType implements Enumerator {
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
+     * <!-- begin-model-doc -->
+     * Simple or
+     * macro States are of type NORMAL.
+     * <!-- end-model-doc -->
      * @see #NORMAL
      * @model
      * @generated
@@ -94,6 +103,11 @@ public enum StateType implements Enumerator {
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
+     * <!-- begin-model-doc -->
+     * A CONDITIONAL State is only a
+     * pseudostate in a sense that it will be left immediately within
+     * one tick. Its outgoing transitions have to be immediate.
+     * <!-- end-model-doc -->
      * @see #CONDITIONAL
      * @model
      * @generated
@@ -109,6 +123,13 @@ public enum StateType implements Enumerator {
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
+     * <!-- begin-model-doc -->
+     * A REFERENCE
+     * state carries a bodyReference to an arbitrary EObject. If this object is another
+     * State, e.g. from another file, this reference can be used to modularize
+     * SyncCharts. In such case all original interface of the referenced state
+     * needs to be redefined by {@link Substitution} objects.
+     * <!-- end-model-doc -->
      * @see #REFERENCE
      * @model
      * @generated
@@ -124,6 +145,11 @@ public enum StateType implements Enumerator {
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
+     * <!-- begin-model-doc -->
+     * A TEXTUAL
+     * state will be defined not by child Regions but by bodyText that represents
+     * its behavior, e.g. in the language Esterel or something similar. 
+     * <!-- end-model-doc -->
      * @see #TEXTUAL
      * @model
      * @generated

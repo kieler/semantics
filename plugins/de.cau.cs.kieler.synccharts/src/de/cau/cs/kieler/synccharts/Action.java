@@ -25,6 +25,24 @@ import org.eclipse.emf.common.util.EList;
  * A representation of the model object '<em><b>Action</b></em>'.
  * <!-- end-user-doc -->
  *
+ * <!-- begin-model-doc -->
+ * An Action represents some effect that is executed under some
+ * certain condition. The condition or sometimes called guard is
+ * the trigger which simply is any boolean {@link Expression} over
+ * {@link Signal}s or {@link Variable}s. Note that Actions may also be used
+ * in contexts, where no trigger or resp. effects are allowed. E.g.
+ * a suspensionTrigger has no effect.
+ * <p>
+ * The effects of an Action are either {@link Assignment}, {@link Emission} or escaping
+ * to an {@link TextEffect}.
+ * <p>
+ * An Action has a String label that represents the trigger and the effects
+ * list in a textual representation. The user of the 
+ * model is required to synchronize the label with the actual
+ * trigger and effects objects. For the SyncCharts graphical editor
+ * this is done by using an Xtext grammar/parser.
+ * <!-- end-model-doc -->
+ *
  * <p>
  * The following features are supported:
  * <ul>

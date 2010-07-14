@@ -26,6 +26,10 @@ import org.eclipse.emf.common.util.Enumerator;
  * A representation of the literals of the enumeration '<em><b>Transition Type</b></em>',
  * and utility methods for working with them.
  * <!-- end-user-doc -->
+ * <!-- begin-model-doc -->
+ * A Transition has a type specifying some special property.
+ * 
+ * <!-- end-model-doc -->
  * @see de.cau.cs.kieler.synccharts.SyncchartsPackage#getTransitionType()
  * @model
  * @generated
@@ -69,6 +73,10 @@ public enum TransitionType implements Enumerator {
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
+     * <!-- begin-model-doc -->
+     * A WEAKABORT transition allows the
+     * exited State to execute its contents in that tick.
+     * <!-- end-model-doc -->
      * @see #WEAKABORT
      * @model
      * @generated
@@ -84,6 +92,11 @@ public enum TransitionType implements Enumerator {
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
+     * <!-- begin-model-doc -->
+     * A STRONGABORT will immediately
+     * leave the state and not allow any actions in
+     * the source State in that tick. 
+     * <!-- end-model-doc -->
      * @see #STRONGABORT
      * @model
      * @generated
@@ -99,6 +112,10 @@ public enum TransitionType implements Enumerator {
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
+     * <!-- begin-model-doc -->
+     * A NORMALTERMINATION will leave a State whenever all contained
+     * Regions are in final States. A normal termination may not define a guard trigger.
+     * <!-- end-model-doc -->
      * @see #NORMALTERMINATION
      * @model
      * @generated

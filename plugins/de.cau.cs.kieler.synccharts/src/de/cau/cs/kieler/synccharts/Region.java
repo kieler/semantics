@@ -22,6 +22,17 @@ import org.eclipse.emf.common.util.EList;
  * A representation of the model object '<em><b>Region</b></em>'.
  * <!-- end-user-doc -->
  *
+ * <!-- begin-model-doc -->
+ * Regions represent a parallelism in SyncCharts. A {@link State} may contain
+ * multiple Regions and each Region may contain multiple States. The Regions
+ * are then logically executed in parallel. A SyncChart gets represented by one root Region 
+ * that contains exactly one root State.
+ * <p>
+ * A Region is a {@link Scope} and therefore gets identified by label and id
+ * and carries an interface declaration. Hence a Region may declare
+ * local signals or variables.
+ * <!-- end-model-doc -->
+ *
  * <p>
  * The following features are supported:
  * <ul>

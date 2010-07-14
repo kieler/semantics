@@ -23,6 +23,12 @@ import de.cau.cs.kieler.core.expressions.Variable;
  * A representation of the model object '<em><b>Assignment</b></em>'.
  * <!-- end-user-doc -->
  *
+ * <!-- begin-model-doc -->
+ * An Assignment assigns a new value to a {@link Variable}.
+ * It carries a reference to a Variable and an {@link Expression} 
+ * that represents the new value for that Variable.
+ * <!-- end-model-doc -->
+ *
  * <p>
  * The following features are supported:
  * <ul>

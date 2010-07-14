@@ -23,7 +23,21 @@ import org.eclipse.emf.common.util.EList;
  * <!-- end-user-doc -->
  *
  * <!-- begin-model-doc -->
- * This is a State GenModel Doc comment.
+ * A State is the main entity in a SyncChart. States are located in a {@link Region}.
+ * A SyncChart itself is represented by a top-level root Region that contains
+ * exactly one root State. Every State may contain multiple parallel Regions
+ * whereas a Region contains multiple States. This allows nested State
+ * machines with parallelism.
+ * <p>
+ * A State may be initial or final or both. An initial State is the entry State of a Region.
+ * SyncCharts may only have one initial State per Region. A final State indcates that
+ * its parent Region has terminated and nothing needs to be done in that Region
+ * and its parent State may be left via a normal termination transition.
+ * <p>
+ * A State is also a Scope and hence may carry an interface declaration and is
+ * identified by id and label.
+ * <p>
+ * States have a type to indicate different properties of States. See {@link StateType}.
  * <!-- end-model-doc -->
  *
  * <p>

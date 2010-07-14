@@ -29,6 +29,24 @@ import org.eclipse.emf.ecore.EObject;
  * A representation of the model object '<em><b>Scope</b></em>'.
  * <!-- end-user-doc -->
  *
+ * <!-- begin-model-doc -->
+ * A Scope is the abstract superclass for State and Region. 
+ * <p>
+ * The fields label and id are there to identify such object, where the label
+ * may be an arbitrary String and the id may be used as identifier in programming languages. Therefore the
+ * id should be unique within its containing scope, should start with a word character (letter, underscore) and should not
+ * contain whitespace.
+ * <p>
+ * The interfaceDeclaration is a String text field containing the interface declaration in a textual representation. 
+ * The user of a model instance needs to take care that this textual representation gets parsed correctly and 
+ * translated into proper Interface objects (e.g. Signals and Variables). For example the SyncCharts editor uses
+ * an Xtext grammar/parser to do this.
+ * <p>
+ * A Scope may carry lists of entry-, inner- or exit {@link Action}s that are executed on either Scope entry, staying a tick
+ * in the Scope or exiting the Scope. A suspensionTrigger Action guards the suspension of a Scope. When this trigger
+ * is evaluated to true, then the contents of the Scope is no longer evaluated until the guard gets false again.
+ * <!-- end-model-doc -->
+ *
  * <p>
  * The following features are supported:
  * <ul>

@@ -23,6 +23,16 @@ import de.cau.cs.kieler.core.expressions.Signal;
  * A representation of the model object '<em><b>Emission</b></em>'.
  * <!-- end-user-doc -->
  *
+ * <!-- begin-model-doc -->
+ * An Emission represents setting an {@link Signal}
+ * from "absent" to "present" in a tick.
+ * An Emission has a reference to the Signal
+ * that it emits.
+ * For valued Signals, an Emission may carry an
+ * {@link Expression} that represents the new
+ * value for that signal.
+ * <!-- end-model-doc -->
+ *
  * <p>
  * The following features are supported:
  * <ul>

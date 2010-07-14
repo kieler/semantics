@@ -22,6 +22,11 @@ import org.eclipse.emf.ecore.EObject;
  * A representation of the model object '<em><b>Effect</b></em>'.
  * <!-- end-user-doc -->
  *
+ * <!-- begin-model-doc -->
+ * An Effect is something executed by an {@link Action}.
+ * 
+ * <!-- end-model-doc -->
+ *
  *
  * @see de.cau.cs.kieler.synccharts.SyncchartsPackage#getEffect()
  * @model abstract="true"

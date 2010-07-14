@@ -21,6 +21,28 @@ package de.cau.cs.kieler.synccharts;
  * A representation of the model object '<em><b>Transition</b></em>'.
  * <!-- end-user-doc -->
  *
+ * <!-- begin-model-doc -->
+ * A Transition represents a connection between two {@link State}s and the
+ * shift from the source to the target State. In SyncCharts Transitions may
+ * only be specified between States on the same Regions. Inter-level
+ * Transitions are not allowed.
+ * <p>
+ * A Transition is an {@link Action} and therefore may contain a trigger condition
+ * which guards the Transition and effects that get executed when the transition
+ * is taken.
+ * <p>
+ * Transitions have an integer priority. If there are multiple outgoing 
+ * transitions of a States and multiple triggers are evaluated to true, then
+ * the transition with lowest priority is taken.
+ * <p>
+ * A history transition will enter its source state in its containing Regions at the states that
+ * it has left them before. So it does not start at the initial states in all circumstances but
+ * in the states that the source state was left in some earlier tick. Only when a State is entered
+ * for the first time (i.e. there is no history) then it is always entered in its initial States.
+ * <p>
+ * A transition has a type {@link TransitionType}.
+ * <!-- end-model-doc -->
+ *
  * <p>
  * The following features are supported:
  * <ul>
