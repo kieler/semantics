@@ -131,7 +131,7 @@ private org.eclipse.emf.transaction.TransactionalEditingDomain createEditingDoma
 			
 	});	
 	«REM»Added custom TriggerListener to track changes in the diagram«ENDREM»
-	de.cau.cs.kieler.synccharts.contentadapter.SyncchartsContentUtil.addTriggerListeners(editingDomain);
+	de.cau.cs.kieler.synccharts.listener.SyncchartsContentUtil.addTriggerListeners(editingDomain);
 	return editingDomain;
 }
 «ENDDEFINE»

@@ -1,4 +1,4 @@
-package de.cau.cs.kieler.synccharts.contentadapter;
+package de.cau.cs.kieler.synccharts.listener;
 
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;

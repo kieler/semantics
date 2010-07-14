@@ -13,7 +13,7 @@
  * 
  *****************************************************************************/
 
-package de.cau.cs.kieler.synccharts.contentadapter;
+package de.cau.cs.kieler.synccharts.listener;
 
 import java.util.Comparator;
 

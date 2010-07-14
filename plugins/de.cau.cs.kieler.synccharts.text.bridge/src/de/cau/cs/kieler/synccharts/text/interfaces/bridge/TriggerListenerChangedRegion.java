@@ -28,7 +28,7 @@ import de.cau.cs.kieler.core.expressions.Variable;
 import de.cau.cs.kieler.synccharts.Region;
 import de.cau.cs.kieler.synccharts.State;
 import de.cau.cs.kieler.synccharts.SyncchartsPackage;
-import de.cau.cs.kieler.synccharts.contentadapter.FireOnceTriggerListener;
+import de.cau.cs.kieler.synccharts.listener.FireOnceTriggerListener;
 
 /**
  * Not testable ... we can't cause a trigger for a region's signal or var within

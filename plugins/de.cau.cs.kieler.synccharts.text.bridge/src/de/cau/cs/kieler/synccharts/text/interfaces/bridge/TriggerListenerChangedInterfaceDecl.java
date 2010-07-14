@@ -23,7 +23,7 @@ import org.eclipse.emf.transaction.TransactionalEditingDomain;
 
 import de.cau.cs.kieler.synccharts.State;
 import de.cau.cs.kieler.synccharts.SyncchartsPackage;
-import de.cau.cs.kieler.synccharts.contentadapter.FireOnceTriggerListener;
+import de.cau.cs.kieler.synccharts.listener.FireOnceTriggerListener;
 
 /**
  * Listens to changes of the interface declaration String. A proper command

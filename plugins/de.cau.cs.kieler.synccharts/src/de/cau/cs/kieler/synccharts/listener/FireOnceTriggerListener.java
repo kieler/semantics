@@ -1,4 +1,4 @@
-package de.cau.cs.kieler.synccharts.contentadapter;
+package de.cau.cs.kieler.synccharts.listener;
 
 import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.transaction.NotificationFilter;

@@ -29,7 +29,7 @@ import de.cau.cs.kieler.core.expressions.Variable;
 import de.cau.cs.kieler.synccharts.Region;
 import de.cau.cs.kieler.synccharts.State;
 import de.cau.cs.kieler.synccharts.SyncchartsPackage;
-import de.cau.cs.kieler.synccharts.contentadapter.FireOnceTriggerListener;
+import de.cau.cs.kieler.synccharts.listener.FireOnceTriggerListener;
 
 /**
  * Listens to changes within a Signal. A proper command creating, manipulating

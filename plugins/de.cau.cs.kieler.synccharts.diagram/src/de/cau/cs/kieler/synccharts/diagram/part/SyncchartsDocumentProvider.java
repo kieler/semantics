@@ -55,8 +55,8 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.part.FileEditorInput;
 
-import de.cau.cs.kieler.synccharts.contentadapter.SyncchartsContentUtil;
 import de.cau.cs.kieler.synccharts.custom.update.UpdateResourceFactoryImpl;
+import de.cau.cs.kieler.synccharts.listener.SyncchartsContentUtil;
 
 /**
  * @generated

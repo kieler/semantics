@@ -21,8 +21,8 @@ import de.cau.cs.kieler.synccharts.Region;
 import de.cau.cs.kieler.synccharts.Scope;
 import de.cau.cs.kieler.synccharts.State;
 import de.cau.cs.kieler.synccharts.SyncchartsPackage;
-import de.cau.cs.kieler.synccharts.contentadapter.SyncchartsContentUtil;
-import de.cau.cs.kieler.synccharts.contentadapter.UniqueStringCache;
+import de.cau.cs.kieler.synccharts.listener.SyncchartsContentUtil;
+import de.cau.cs.kieler.synccharts.listener.UniqueStringCache;
 
 /**
  * 

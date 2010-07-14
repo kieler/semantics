@@ -8,7 +8,7 @@ import org.eclipse.emf.transaction.TransactionalEditingDomain;
 
 import de.cau.cs.kieler.core.expressions.ExpressionsPackage;
 import de.cau.cs.kieler.core.expressions.ValuedObject;
-import de.cau.cs.kieler.synccharts.contentadapter.FireOnceTriggerListener;
+import de.cau.cs.kieler.synccharts.listener.FireOnceTriggerListener;
 import de.cau.cs.kieler.synccharts.text.actions.bridge.ActionLabelProcessorWrapper;
 import de.cau.cs.kieler.synccharts.text.actions.bridge.LabelParserBridgePlugin;
 
