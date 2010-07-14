@@ -17,12 +17,14 @@ import org.eclipse.emf.transaction.TransactionalEditingDomain;
 
 import de.cau.cs.kieler.core.model.util.PossiblyEmptyCompoundCommand;
 import de.cau.cs.kieler.synccharts.Region;
+import de.cau.cs.kieler.synccharts.Scope;
 import de.cau.cs.kieler.synccharts.State;
 import de.cau.cs.kieler.synccharts.SyncchartsPackage;
 
 /**
  * A SyncCharts TriggerListener that handles different label values of
- * SyncCharts, namely the State label and ID and the Region ID. When either a
+ * SyncCharts, namely the Scope label and ID (i.e. identifiers for Regions and States).
+ * When either a
  * new State or Region is created, the label and ID are set automatically to
  * some unique dummy value, e.g. S0, S1, S2 for state name, _S0, _S1, _S2 for
  * State ID and R0, R1, R2 for Region ID.
@@ -42,8 +44,8 @@ public class TriggerListenerIDs extends FireOnceTriggerListener {
     public TriggerListenerIDs() {
         super(NotificationFilter.createFeatureFilter(SyncchartsPackage.eINSTANCE.getScope_Label())
                 .or(
-                        NotificationFilter.createFeatureFilter(SyncchartsPackage.eINSTANCE.getScope_Id()
-                                )).or(
+                   /*     NotificationFilter.createFeatureFilter(SyncchartsPackage.eINSTANCE.getScope_Id()
+                                )).or(*/
                         NotificationFilter.createFeatureFilter(SyncchartsPackage.eINSTANCE
                                 .getRegion_InnerStates())).or(
                         NotificationFilter.createFeatureFilter(SyncchartsPackage.eINSTANCE
@@ -53,23 +55,33 @@ public class TriggerListenerIDs extends FireOnceTriggerListener {
     @Override
     protected Command trigger(TransactionalEditingDomain domain, Notification notification) {
         int type = notification.getEventType();
-        PossiblyEmptyCompoundCommand cc = new PossiblyEmptyCompoundCommand();
-        if (type == Notification.ADD || type == Notification.SET) {
-            EStructuralFeature feature = (EStructuralFeature) notification.getFeature();
-            if (feature.equals(SyncchartsPackage.eINSTANCE.getScope_Label()) && notification.getNotifier() instanceof State) {
-                cc.append(handleStateLabel(notification));
-            } else if (feature.equals(SyncchartsPackage.eINSTANCE.getScope_Id()) && notification.getNotifier() instanceof State) {
-                cc.append(handleStateId(notification));
-            } else if (feature.equals(SyncchartsPackage.eINSTANCE.getRegion_InnerStates())) {
-                cc.append(handleNewState(notification));
-            } else if (feature.equals(SyncchartsPackage.eINSTANCE.getState_Regions())) {
-                cc.append(handleNewRegion(notification));
-            } 
+        Scope targetScope = null;
+        if (type == Notification.ADD){
+            targetScope = (Scope)notification.getNewValue();
         }
-        
-        return cc;
+        else if (type == Notification.SET) {
+            targetScope = (Scope)notification.getNotifier();
+        }
+        return handleScope(targetScope);
     }
 
+    private Command handleScope(Scope scope) {
+        PossiblyEmptyCompoundCommand cc = new PossiblyEmptyCompoundCommand();
+        if (scope != null) {
+            String newId = getUniqueString(scope, SyncchartsContentUtil.getValidId(scope.getLabel()));
+            cc.append(new SetCommand(getTarget(), scope, SyncchartsPackage.eINSTANCE
+                    .getScope_Id(), newId));
+        }
+        // handle contained Scopes recursively
+ /*       for (EObject child : scope.eContents()) {
+            if(child instanceof Scope){
+                cc.append(handleScope((Scope) child));
+            }
+        } */
+        return cc;
+    }
+    
+    
     private Command handleNewRegion(Notification notification) {
         return handleNewRegion((Region) notification.getNewValue());
     }
@@ -77,8 +89,7 @@ public class TriggerListenerIDs extends FireOnceTriggerListener {
     private Command handleNewRegion(Region region) {
         PossiblyEmptyCompoundCommand cc = new PossiblyEmptyCompoundCommand();
         if (region != null && region.getId() == null) {
-            String newRegionId = getUniqueString(region,
-                    SyncchartsPackage.eINSTANCE.getScope_Id(), "R");
+            String newRegionId = getUniqueString(region, "R");
             cc.append(new SetCommand(getTarget(), region, SyncchartsPackage.eINSTANCE
                     .getScope_Id(), newRegionId));
         }
@@ -109,8 +120,7 @@ public class TriggerListenerIDs extends FireOnceTriggerListener {
         CompoundCommand cc = new CompoundCommand();
         if (state != null) {
             if (state.getLabel() == null) {
-                String newLabel = getUniqueString(state, SyncchartsPackage.eINSTANCE
-                        .getScope_Label(), "S");
+                String newLabel = getUniqueString(state, "S");
                 String newId = newLabel.replaceAll("\\s", "_");
                 cc.append(new SetCommand(getTarget(), state, SyncchartsPackage.eINSTANCE
                         .getScope_Label(), newLabel));
@@ -141,8 +151,7 @@ public class TriggerListenerIDs extends FireOnceTriggerListener {
         CompoundCommand cc = new CompoundCommand();
 
         if (newId == null || newId.trim().equals("")) {
-            String anonymousId = getUniqueString(state, SyncchartsPackage.eINSTANCE.getScope_Id(),
-                    "_S");
+            String anonymousId = getUniqueString(state, "_S");
             return new SetCommand(getTarget(), state, SyncchartsPackage.eINSTANCE.getScope_Id(),
                     anonymousId);
         }
@@ -156,8 +165,7 @@ public class TriggerListenerIDs extends FireOnceTriggerListener {
                     // resolve conflict by changing auto generated IDs (for
                     // anonymous states)
                     if (sibling.getLabel() == null || sibling.getLabel().trim().equals("")) {
-                        String dummyId = getUniqueString(sibling, SyncchartsPackage.eINSTANCE
-                                .getScope_Id(), "_S");
+                        String dummyId = getUniqueString(sibling, "_S");
                         cc.append(new SetCommand(getTarget(), sibling, SyncchartsPackage.eINSTANCE
                                 .getScope_Id(), dummyId));
                     }
@@ -194,9 +202,16 @@ public class TriggerListenerIDs extends FireOnceTriggerListener {
         return cc;
     }
 
-    private String getUniqueString(EObject target, EAttribute attribute, String prefix) {
+
+    /**
+     * Get a unique String by using a local cache of Strings for a given Scope. This can
+     * be necessary if unique String results are not immediately applied to the model and
+     * hence asking the model for occupied IDs is not enough. 
+     */
+    private String getUniqueString(Scope target, String prefix) {
         EObject parent = target.eContainer();
         UniqueStringCache cache = null;
+        EAttribute attribute = SyncchartsPackage.eINSTANCE.getScope_Id();
         for (UniqueStringCache c : caches) {
             if ((parent == null && c.getParent() == null) || c.getParent().equals(parent)
                     && c.getAttribute().equals(attribute)) {
@@ -207,7 +222,7 @@ public class TriggerListenerIDs extends FireOnceTriggerListener {
             cache = new UniqueStringCache(parent, attribute);
             caches.add(cache);
         }
-        String temp = SyncchartsContentUtil.getNewUniqueString(target, attribute, prefix, cache);
+        String temp = SyncchartsContentUtil.getNewUniqueString(target, prefix, cache);
         cache.add(temp);
         return temp;
     }

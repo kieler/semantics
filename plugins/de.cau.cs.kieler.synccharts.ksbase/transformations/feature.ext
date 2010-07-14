@@ -47,10 +47,10 @@ let opt1 = new State:
 let opt2 = new State:
 let t1 = new Transition:
 let t2 = new Transition:
-choice.setLabel("C1") ->
+// haf: no default name: choice.setLabel("C1") ->
 choice.setType(StateType::CONDITIONAL) ->
-opt1.setLabel("S0") ->
-opt2.setLabel("S1") ->
+// haf: no default name: opt1.setLabel("S0") ->
+// haf: no default name: opt2.setLabel("S1") ->
 connectStates(source,choice) ->
 t1.setSourceState(choice) ->
 t1.setTargetState(opt1) ->
@@ -121,9 +121,9 @@ let region = new Region:
 let state = new State:
 let index = parentState.regions.size:
 state.setIsInitial(true) ->
-state.setLabel("Initial") ->
+// haf: no name by default state.setLabel("Initial") ->
 region.innerStates.add(state) ->
-region.setLabel("R" + index) ->
+// haf: no name by default region.setLabel("R" + index) ->
 parentState.regions.add(region) ->
 setSelection(state)
 ;
@@ -191,7 +191,7 @@ Void encapsulateRegions(State parentState):
   (parentState.regions.size > 0) ? 
     (newState.regions.addAll(regions) ->
     parentState.regions.add(newRegion) ->
-    newRegion.setLabel("R" + parentState.regions.size) ->
+    // haf: no default name: newRegion.setLabel("R" + parentState.regions.size) ->
     newRegion.innerStates.add(newState)) : 
    null
 ;
@@ -224,7 +224,7 @@ Void encapsulateRegion(Region target):
  let newRegion = new Region:
  if (target.parentState != null) then (
    newState.setIsInitial(true) ->
-   newRegion.setLabel("R" + target.parentState.regions.size) ->
+   // haf: no default name:  newRegion.setLabel("R" + target.parentState.regions.size) ->
    target.parentState.regions.add(newRegion) ->
    newRegion.innerStates.add(newState) ->
    newState.regions.add(target) ->
@@ -237,7 +237,7 @@ Void encapsulateRegion(List[Region] targets):
  let newRegion = new Region:
  let parent = targets.get(0).parentState:
  newState.setIsInitial(true) ->
- newRegion.setLabel("R" + parent.regions.size) ->
+ // haf: no default name: newRegion.setLabel("R" + parent.regions.size) ->
  parent.regions.add(newRegion) ->
  newRegion.innerStates.add(newState) ->
  newState.regions.addAll(targets) ->
@@ -277,10 +277,10 @@ let innerState = new State:
 let region = new Region:
 state.setLabel(getFileNameOfActiveEditor()) ->
 state.regions.add(region) ->
-innerState.setLabel("Initial") ->
+// haf: no default name: innerState.setLabel("Initial") ->
 innerState.setIsInitial(true) -> 
 region.innerStates.add(innerState) ->
-region.setLabel("R0") ->
+// haf: no default name: region.setLabel("R0") ->
 rootRegion.innerStates.add(state) ->
 setSelection(innerState)
 ;
@@ -293,7 +293,7 @@ JAVA de.cau.cs.kieler.ksbase.ui.utils.TransformationUtils.getFileNameOfActiveEdi
 Void addState(Region target):
  let state = new State:
  (if (target.innerStates.isEmpty) then
-  (state.setLabel("Initial") ->
+  (// haf: no default name: state.setLabel("Initial") ->
    state.setIsInitial(true))
   ) ->
  target.innerStates.add(state) ->

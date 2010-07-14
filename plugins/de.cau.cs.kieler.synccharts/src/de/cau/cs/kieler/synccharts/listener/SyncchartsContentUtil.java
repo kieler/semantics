@@ -31,6 +31,7 @@ import org.eclipse.emf.transaction.ResourceSetListener;
 import org.eclipse.emf.transaction.TransactionalEditingDomain;
 import org.eclipse.ui.statushandlers.StatusManager;
 
+import de.cau.cs.kieler.synccharts.Scope;
 import de.cau.cs.kieler.synccharts.Transition;
 
 /**
@@ -49,66 +50,84 @@ public final class SyncchartsContentUtil {
     private SyncchartsContentUtil() {
     }
 
-    private final static Map<TransactionalEditingDomain,List<ResourceSetListener>> listeners = new HashMap<TransactionalEditingDomain,List<ResourceSetListener>>();
-    
+    private final static Map<TransactionalEditingDomain, List<ResourceSetListener>> listeners = new HashMap<TransactionalEditingDomain, List<ResourceSetListener>>();
+
     /**
-     * Add all TriggerListener classes that are registered via the corresponding
-     * extension point as a listener to the passed TransactionalEditingDomain.
+     * Add all TriggerListener classes that are registered via the corresponding extension point as
+     * a listener to the passed TransactionalEditingDomain.
      * 
-     * @param domain
-     *            the given TransactionalEditingDomain
+     * @param domain the given TransactionalEditingDomain
      */
     public static void addTriggerListeners(TransactionalEditingDomain domain) {
         IConfigurationElement[] elements = Platform.getExtensionRegistry()
-                .getConfigurationElementsFor("de.cau.cs.kieler.synccharts.triggerListener");
-        List<ResourceSetListener> tempListeners = new ArrayList<ResourceSetListener>(elements.length); 
+            .getConfigurationElementsFor("de.cau.cs.kieler.synccharts.triggerListener");
+        List<ResourceSetListener> tempListeners = new ArrayList<ResourceSetListener>(
+            elements.length);
         for (int i = 0; i < elements.length; i++) {
             IConfigurationElement element = elements[i];
             try {
                 ResourceSetListener triggerListener = (ResourceSetListener) element
-                        .createExecutableExtension("class");
+                    .createExecutableExtension("class");
                 domain.addResourceSetListener(triggerListener);
                 tempListeners.add(triggerListener);
             } catch (CoreException e) {
                 Status myStatus = new Status(IStatus.ERROR, "de.cau.cs.kieler.synccharts",
-                        "Error attaching registered TriggerListener", e);
+                    "Error attaching registered TriggerListener", e);
                 StatusManager.getManager().handle(myStatus, StatusManager.LOG);
             }
         }
         // cleanup the cache in order to avoid memory leaks
         List<TransactionalEditingDomain> stuffToRemove = new ArrayList<TransactionalEditingDomain>();
-        for(TransactionalEditingDomain oldDomain : listeners.keySet()){
-            if(oldDomain.getID() == null){
-            	// avoid concurrent modification exception
-            	stuffToRemove.add(oldDomain);
+        for (TransactionalEditingDomain oldDomain : listeners.keySet()) {
+            if (oldDomain.getID() == null) {
+                // avoid concurrent modification exception
+                stuffToRemove.add(oldDomain);
             }
         }
         for (TransactionalEditingDomain oldDomain : stuffToRemove) {
-        	listeners.remove(oldDomain);
-		}
+            listeners.remove(oldDomain);
+        }
         listeners.put(domain, tempListeners);
     }
-    
-    public static List<ResourceSetListener> getTriggerListeners(TransactionalEditingDomain domain){
+
+    public static List<ResourceSetListener> getTriggerListeners(TransactionalEditingDomain domain) {
         return listeners.get(domain);
     }
 
     /**
-     * Determine a new unique ID for a given EObject (e.g. a Region or a State).
-     * Will search siblings (e.g. regions within the same State) and compare
-     * their IDs. Will return the next ID with the "PrefixN" where N is the next
-     * free integer number available, e.g. R0, R1, R2...
+     * Transform a given arbitrary String to a valid identifier. Replace all whitespace by
+     * underscores '_' and add an underscore prefix if the String does not start with a
+     * word-character.
      * 
-     * @param target
-     *            given EObject to look for a unique ID
-     * @param attribute
-     *            the feature in which the String is stored, e.g. a "name"
-     *            feature of a State
-     * @param prefix
-     *            A String Prefix with which the unique String should start.
-     * @return a new unique ID within the State
+     * @param label
+     * @return
      */
-    public static String getNewUniqueString(EObject target, EAttribute attribute, String prefix, UniqueStringCache cache) {
+    public static String getValidId(final String label) {
+        String newId = label;
+        if(newId == null){
+            newId = "";
+        }
+        newId = newId.trim().replaceAll("\\s", "_"); // \s = whitespace char
+        if (newId.equals("") || newId.matches("\\w.*")) // \w = non-word character
+        {
+            newId = "_" + newId;
+        }
+        return newId;
+    }
+
+    /**
+     * Determine a new unique ID for a given EObject (e.g. a Region or a State). Will search
+     * siblings (e.g. regions within the same State) and compare their IDs. Will return the next ID
+     * with the "PrefixN" where N is the next free integer number available, e.g. R0, R1, R2...
+     * 
+     * @param target given EObject to look for a unique ID
+     * @param attribute the feature in which the String is stored, e.g. a "name" feature of a State
+     * @param prefix A String Prefix with which the unique String should start.
+     * @return a new unique ID within the State
+     * @deprecated use the more specific {@link getNewUniqueString(Scope,String,UniqueStringCache)}
+     */
+    public static String getNewUniqueString(EObject target, EAttribute attribute, String prefix,
+        UniqueStringCache cache) {
         String id = prefix;
         EObject parent = target.eContainer();
         if (parent == null) {
@@ -122,42 +141,89 @@ public final class SyncchartsContentUtil {
             if (val == null || !(val instanceof String)) {
                 continue;
             } else {
-                ids.add((String)val);
+                ids.add((String) val);
             }
         }
-        if(cache!=null){
+        if (cache != null) {
             ids.addAll(cache.getList());
         }
-        
+
         for (String string : ids) {
-                String siblingId = string.trim();
-                if (siblingId.matches(prefix + "\\d+")) {
-                    // matches e.g. S24 or R99
-                    int i = siblingId.length();
-                    // get the number
-                    while (Character.isDigit(siblingId.charAt(i - 1))) {
-                        i--;
-                    }
-                    if (siblingId.substring(0, i).equals(prefix)) {
-                        // if id starts with prefix
-                        i = Integer.parseInt(siblingId.substring(i));
-                        if (i >= counter) {
-                            counter = i + 1;
-                        }
+            String siblingId = string.trim();
+            if (siblingId.matches(prefix + "\\d+")) {
+                // matches e.g. S24 or R99
+                int i = siblingId.length();
+                // get the number
+                while (Character.isDigit(siblingId.charAt(i - 1))) {
+                    i--;
+                }
+                if (siblingId.substring(0, i).equals(prefix)) {
+                    // if id starts with prefix
+                    i = Integer.parseInt(siblingId.substring(i));
+                    if (i >= counter) {
+                        counter = i + 1;
                     }
                 }
             }
+        }
         id = id + counter;
         return id;
     }
 
     /**
-     * Get a new unique priority to a given Transition. That is the current
-     * priority will be changed if there is a conflict with any sibling
-     * Transition. Set it to the max priority of all siblings plus one.
+     * Determine a new unique ID for a given Scope (e.g. a Region or a State). Will search
+     * siblings (e.g. regions within the same State) and compare their IDs. Will return the next ID
+     * with the "PrefixN" where N is the next free integer number available, e.g. R, R2, R3...
+     * N=1 will be omitted.
      * 
-     * @param transition
-     *            the input Transition whose prio will be changed
+     * @param target given Scope to look for a unique ID
+     * @param prefix A String Prefix with which the unique String should start.
+     * @return a new unique ID within the parent Scope
+     * @author haf
+     */
+    public static String getNewUniqueString(Scope target, String prefix, UniqueStringCache cache) {
+        String id = prefix;
+        Scope parent = (Scope) target.eContainer();
+        if (parent == null) {
+            return id;
+        }
+        EList<EObject> siblings = parent.eContents();
+        List<String> ids = new ArrayList<String>();
+        int counter = 2; // start with 2
+        for (EObject sibling : siblings) {
+            if (sibling instanceof Scope) {
+                String siblingId = ((Scope) sibling).getId();
+                if(siblingId != null){
+                    ids.add(siblingId);
+                }
+            }
+        }
+        if (cache != null) {
+            ids.addAll(cache.getList());
+        }
+        boolean conflict;
+        do{
+            conflict = false;
+            for (String string : ids) {
+                String siblingId = string.trim();
+                if (siblingId.equals(id)) {
+                    // now we have a conflict
+                    conflict = true;
+                    id = prefix + counter;
+                    counter++;
+                    break; // restart the search with new ID
+                }
+            }
+        } while (conflict);
+        return id;
+    }
+
+    /**
+     * Get a new unique priority to a given Transition. That is the current priority will be changed
+     * if there is a conflict with any sibling Transition. Set it to the max priority of all
+     * siblings plus one.
+     * 
+     * @param transition the input Transition whose prio will be changed
      * @return a new unique priority
      */
     public static int getUniquePrio(final Transition transition) {
@@ -187,7 +253,5 @@ public final class SyncchartsContentUtil {
             return currentPrio;
         }
     }
-    
-   
 
 }
