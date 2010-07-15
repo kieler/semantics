@@ -41,6 +41,9 @@ public class TriggerListenerIDs extends FireOnceTriggerListener {
 
     List<UniqueStringCache> caches = new ArrayList<UniqueStringCache>();
 
+    /**
+     * Public constructor setting up filters to react only on necessary events.
+     */
     public TriggerListenerIDs() {
         super(NotificationFilter.createFeatureFilter(SyncchartsPackage.eINSTANCE.getScope_Label())
                 .or(
@@ -52,6 +55,11 @@ public class TriggerListenerIDs extends FireOnceTriggerListener {
                                 .getState_Regions())));
     }
 
+    /**
+     * Trigger this TriggerListener for all events that the filters match to which 
+     * are specified in the constructor.
+     * {@inheritDoc}
+     */
     @Override
     protected Command trigger(TransactionalEditingDomain domain, Notification notification) {
         int type = notification.getEventType();
@@ -65,6 +73,11 @@ public class TriggerListenerIDs extends FireOnceTriggerListener {
         return handleScope(targetScope);
     }
 
+    /**
+     *  Handle the ID of a specific Scope which can be a State or a Region. This
+     *  will be set according to its label. If the label is empty or null, then
+     *  '_' will be used for ID. ID will be unique within the parent Scope.
+     */
     private Command handleScope(Scope scope) {
         PossiblyEmptyCompoundCommand cc = new PossiblyEmptyCompoundCommand();
         if (scope != null) {
@@ -72,136 +85,10 @@ public class TriggerListenerIDs extends FireOnceTriggerListener {
             cc.append(new SetCommand(getTarget(), scope, SyncchartsPackage.eINSTANCE
                     .getScope_Id(), newId));
         }
-        // handle contained Scopes recursively
- /*       for (EObject child : scope.eContents()) {
-            if(child instanceof Scope){
-                cc.append(handleScope((Scope) child));
-            }
-        } */
         return cc;
     }
     
-    
-    private Command handleNewRegion(Notification notification) {
-        return handleNewRegion((Region) notification.getNewValue());
-    }
-
-    private Command handleNewRegion(Region region) {
-        PossiblyEmptyCompoundCommand cc = new PossiblyEmptyCompoundCommand();
-        if (region != null && region.getId() == null) {
-            String newRegionId = getUniqueString(region, "R");
-            cc.append(new SetCommand(getTarget(), region, SyncchartsPackage.eINSTANCE
-                    .getScope_Id(), newRegionId));
-        }
-        // handle contained States recursively
-        for (State state : region.getInnerStates()) {
-            if (state.getLabel() == null) {
-                cc.append(handleNewState(state));
-            } else {
-                cc.append(handleStateLabel(state, state.getLabel()));
-            }
-        }
-
-        return cc;
-    }
-
-    private Command handleNewState(Notification notification) {
-        return handleNewState((State) notification.getNewValue());
-    }
-
-    /**
-     * Give a State an initial unique numbered label, e.g. S0, S1, S2... Also
-     * set the Id to _S0, _S1, _S2...
-     * 
-     * @param notification
-     * @return
-     */
-    private Command handleNewState(State state) {
-        CompoundCommand cc = new CompoundCommand();
-        if (state != null) {
-            if (state.getLabel() == null) {
-                String newLabel = getUniqueString(state, "S");
-                String newId = newLabel.replaceAll("\\s", "_");
-                cc.append(new SetCommand(getTarget(), state, SyncchartsPackage.eINSTANCE
-                        .getScope_Label(), newLabel));
-                cc.append(handleStateId(state, newId));
-                // handle contained regions recursively
-//                for (Region region : state.getRegions()) {
-//                    cc.append(handleNewRegion(region));
-//                }
-            }else{
-                cc.append(handleStateLabel(state,state.getLabel()));
-            }
-        }
-        return cc;
-    }
-
-    private Command handleStateId(Notification notification) {
-        return handleStateId((State) notification.getNotifier(), notification.getNewStringValue());
-    }
-
-    /**
-     * Set id to new ID and automatically change Ids of anonymous states.
-     * 
-     * @param state
-     * @param newId
-     * @return
-     */
-    private Command handleStateId(State state, String newId) {
-        CompoundCommand cc = new CompoundCommand();
-
-        if (newId == null || newId.trim().equals("")) {
-            String anonymousId = getUniqueString(state, "_S");
-            return new SetCommand(getTarget(), state, SyncchartsPackage.eINSTANCE.getScope_Id(),
-                    anonymousId);
-        }
-
-        // check whether ID is unique
-        Region parentRegion = state.getParentRegion();
-        if (parentRegion != null) {
-            for (State sibling : parentRegion.getInnerStates()) {
-                String siblingId = sibling.getId();
-                if (siblingId != null && siblingId.equals(newId)) {
-                    // resolve conflict by changing auto generated IDs (for
-                    // anonymous states)
-                    if (sibling.getLabel() == null || sibling.getLabel().trim().equals("")) {
-                        String dummyId = getUniqueString(sibling, "_S");
-                        cc.append(new SetCommand(getTarget(), sibling, SyncchartsPackage.eINSTANCE
-                                .getScope_Id(), dummyId));
-                    }
-                }
-            }
-        }
-        cc.append(new SetCommand(getTarget(), state, SyncchartsPackage.eINSTANCE.getScope_Id(),
-                newId));
-        return cc;
-    }
-
-    private Command handleStateLabel(Notification notification) {
-        return handleStateLabel((State) notification.getNotifier(), notification
-                .getNewStringValue());
-    }
-
-    /**
-     * Set label and set id by replacing whitespace by underscores.
-     * 
-     * @param notification
-     * @return
-     */
-    private Command handleStateLabel(State state, String newLabel) {
-        CompoundCommand cc = new CompoundCommand();
-        String newId = newLabel.replaceAll("\\s", "_");
-        cc.append(new SetCommand(getTarget(), state, SyncchartsPackage.eINSTANCE.getScope_Label(),
-                newLabel));
-        cc.append(handleStateId(state, newId));
-
-        // handle contained Regions recursively
-        for (Region region : state.getRegions()) {
-            cc.append(handleNewRegion(region));
-        }
-        return cc;
-    }
-
+ 
 
     /**
      * Get a unique String by using a local cache of Strings for a given Scope. This can
