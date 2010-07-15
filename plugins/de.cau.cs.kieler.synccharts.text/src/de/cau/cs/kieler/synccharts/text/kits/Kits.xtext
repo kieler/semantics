@@ -25,9 +25,9 @@ SingleNestedRegion returns synccharts::Region:
 // ---------------------------------------------------------------------------------------------------
 
 State returns synccharts::State:
-  (  ((isInitial?='init') (isFinal?='final')?) ('State')? (id=ID)? (label=EString)
-   | ((isFinal?='final') (isInitial?='init')?) ('State')? (id=ID)? (label=EString)
-   | ((type=StateType))?                       ('State')? (id=ID)? (label=EString)
+  (  ((isInitial?='init') (isFinal?='final')?) ('State')? (id=ID)? (label=STRING)
+   | ((isFinal?='final') (isInitial?='init')?) ('State')? (id=ID)? (label=STRING)
+   | ((type=StateType))?                       ('State')? (id=ID)? (label=STRING)
    )
   (  (outgoingTransitions+=Transition ("," outgoingTransitions+=Transition)*)? ';'
    | ('{'(
@@ -65,7 +65,7 @@ State returns synccharts::State:
 // ---------------------------------------------------------------------------------------------------
 
 Variable returns expressions::Variable:
-  'var' name=ID ((':=' initialValue=EString)? ':' type=ValueType) ";";
+  'var' name=ID ((':=' initialValue=STRING)? ':' type=ValueType) ";";
 
 // ---------------------------------------------------------------------------------------------------
 
@@ -73,19 +73,19 @@ Signal returns expressions::Signal:
 (isInput?='input')?
 	(isOutput?='output')?
 	'signal'
-	(name=EString)
-	(':=' initialValue=EString)?
+	(name=STRING)
+	(':=' initialValue=STRING)?
     ((':' type=ValueType)
       |
-     (':' 'combine' type=ValueType 'with' (combineOperator=CombineOperator|hostCombineOperator=EString) )
+     (':' 'combine' type=ValueType 'with' (combineOperator=CombineOperator|hostCombineOperator=STRING) )
     )? ";";
 
 // ---------------------------------------------------------------------------------------------------
 
 Transition returns synccharts::Transition:
 	type=TransitionType 
-	targetState=[synccharts::State|EString]
-	('<'priority=EIntegerObject'>')? 
+	targetState=[synccharts::State|STRING]
+	('<'priority=INT'>')? 
 	('with' (isImmediate?='#')? ("delay:=" delay=INT)? 
 	  ( trigger=Expression)?
       ('/' effects+=Effect (','effects+=Effect)*)?

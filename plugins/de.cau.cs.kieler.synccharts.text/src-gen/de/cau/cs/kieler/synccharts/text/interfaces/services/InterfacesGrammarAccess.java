@@ -1292,76 +1292,8 @@ public class InterfacesGrammarAccess extends AbstractGrammarElementFinder {
 	////   EXPRESSIONS
 	////
 	//// --------------------------
-	//Expression:
-	//	BooleanExpression;
-	public ExpressionsGrammarAccess.ExpressionElements getExpressionAccess() {
-		return gaActions.getExpressionAccess();
-	}
-	
-	public ParserRule getExpressionRule() {
-		return getExpressionAccess().getRule();
-	}
-
-	//// Example: not D and C or ?E = 42 or not (A and (B or C))
-	//BooleanExpression returns Expression:
-	//	OrExpression;
-	public ExpressionsGrammarAccess.BooleanExpressionElements getBooleanExpressionAccess() {
-		return gaActions.getBooleanExpressionAccess();
-	}
-	
-	public ParserRule getBooleanExpressionRule() {
-		return getBooleanExpressionAccess().getRule();
-	}
-
-	//// Example: A or B, A and B and C, C and B or D and not E, A and B and C
-	//OrExpression returns Expression:
-	//	AndExpression ({OperatorExpression.subExpressions+=current} operator=OrOperator subExpressions+=AndExpression)*;
-	public ExpressionsGrammarAccess.OrExpressionElements getOrExpressionAccess() {
-		return gaActions.getOrExpressionAccess();
-	}
-	
-	public ParserRule getOrExpressionRule() {
-		return getOrExpressionAccess().getRule();
-	}
-
-	//// Example: A and B, not C and 42 <= ?D
-	//AndExpression returns Expression:
-	//	NotExpression ({OperatorExpression.subExpressions+=current} operator=AndOperator subExpressions+=NotExpression)*;
-	public ExpressionsGrammarAccess.AndExpressionElements getAndExpressionAccess() {
-		return gaActions.getAndExpressionAccess();
-	}
-	
-	public ParserRule getAndExpressionRule() {
-		return getAndExpressionAccess().getRule();
-	}
-
-	//// Example: not A, not false, not (A or B)
-	//// at the latter we need the parans to indicate the right binding
-	//NotExpression returns Expression:
-	//	AtomicExpression | {OperatorExpression} operator=NotOperator subExpressions+=AtomicExpression;
-	public ExpressionsGrammarAccess.NotExpressionElements getNotExpressionAccess() {
-		return gaActions.getNotExpressionAccess();
-	}
-	
-	public ParserRule getNotExpressionRule() {
-		return getNotExpressionAccess().getRule();
-	}
-
-	//// Example: true, A, 42>var1, (A or B), (not D and C or ?E = 42)
-	//// note that the order of CompareOperation and SignalReference is important. This might be an Xtext bug...
-	//AtomicExpression returns Expression:
-	//	BooleanValue | SignalReference | {OperatorExpression} operator=PreOperator "(" subExpressions+=SignalReference ")" |
-	//	"(" CompareOperation ")" | "(" BooleanExpression ")";
-	public ExpressionsGrammarAccess.AtomicExpressionElements getAtomicExpressionAccess() {
-		return gaActions.getAtomicExpressionAccess();
-	}
-	
-	public ParserRule getAtomicExpressionRule() {
-		return getAtomicExpressionAccess().getRule();
-	}
-
-	//SignalReference:
-	//	signal=[Signal|EString];
+	//SignalReference returns expressions::SignalReference:
+	//	signal=[expressions::Signal] ("(" (subExpressions+=Expression ","?)* ")")?;
 	public ExpressionsGrammarAccess.SignalReferenceElements getSignalReferenceAccess() {
 		return gaActions.getSignalReferenceAccess();
 	}
@@ -1370,9 +1302,190 @@ public class InterfacesGrammarAccess extends AbstractGrammarElementFinder {
 		return getSignalReferenceAccess().getRule();
 	}
 
+	//VariableReference returns expressions::VariableReference:
+	//	variable=[expressions::Variable] ("(" (subExpressions+=Expression ","?)* ")")?;
+	public ExpressionsGrammarAccess.VariableReferenceElements getVariableReferenceAccess() {
+		return gaActions.getVariableReferenceAccess();
+	}
+	
+	public ParserRule getVariableReferenceRule() {
+		return getVariableReferenceAccess().getRule();
+	}
+
+	////==============================================================================
+	//// Values
+	////==============================================================================
+	//// redefine INT terminal to allow negative numbers
+	//terminal INT returns ecore::EInt:
+	//	"-"? "0".."9"+;
+	public TerminalRule getINTRule() {
+		return gaActions.getINTRule();
+	} 
+
+	//IntValue returns expressions::IntValue:
+	//	value=INT;
+	public ExpressionsGrammarAccess.IntValueElements getIntValueAccess() {
+		return gaActions.getIntValueAccess();
+	}
+	
+	public ParserRule getIntValueRule() {
+		return getIntValueAccess().getRule();
+	}
+
+	//FloatValue returns expressions::FloatValue:
+	//	value=Float;
+	public ExpressionsGrammarAccess.FloatValueElements getFloatValueAccess() {
+		return gaActions.getFloatValueAccess();
+	}
+	
+	public ParserRule getFloatValueRule() {
+		return getFloatValueAccess().getRule();
+	}
+
+	//BooleanValue returns expressions::BooleanValue:
+	//	value=Boolean;
+	public ExpressionsGrammarAccess.BooleanValueElements getBooleanValueAccess() {
+		return gaActions.getBooleanValueAccess();
+	}
+	
+	public ParserRule getBooleanValueRule() {
+		return getBooleanValueAccess().getRule();
+	}
+
+	//Value returns expressions::Value:
+	//	IntValue | FloatValue | BooleanValue;
+	public ExpressionsGrammarAccess.ValueElements getValueAccess() {
+		return gaActions.getValueAccess();
+	}
+	
+	public ParserRule getValueRule() {
+		return getValueAccess().getRule();
+	}
+
+	//// make sure the Float rule does not shadow the INT rule
+	//terminal Float returns ecore::EFloatObject:
+	//	(INT "." INT | INT ("." INT)? ("e" | "E") "+"? INT) "f"? | INT "f";
+	public TerminalRule getFloatRule() {
+		return gaActions.getFloatRule();
+	} 
+
+	//terminal Boolean returns ecore::EBooleanObject:
+	//	"true" | "false";
+	public TerminalRule getBooleanRule() {
+		return gaActions.getBooleanRule();
+	} 
+
+	////==============================================================================
+	//// Arithmetic Expressions
+	////==============================================================================
+	//// Example: ?A	
+	//ValOperation returns expressions::OperatorExpression:
+	//	operator=ValOperator subExpressions+=SignalReference;
+	public ExpressionsGrammarAccess.ValOperationElements getValOperationAccess() {
+		return gaActions.getValOperationAccess();
+	}
+	
+	public ParserRule getValOperationRule() {
+		return getValOperationAccess().getRule();
+	}
+
+	//// everything that evaluates to a primitive number value
+	//ValuedExpression returns expressions::Expression:
+	//	PlusOperation;
+	public ExpressionsGrammarAccess.ValuedExpressionElements getValuedExpressionAccess() {
+		return gaActions.getValuedExpressionAccess();
+	}
+	
+	public ParserRule getValuedExpressionRule() {
+		return getValuedExpressionAccess().getRule();
+	}
+
+	//// Example: 42, 42.2, ?A, var1, (1+2*3)
+	//ParanthesedValuedExpression returns expressions::Expression:
+	//	IntValue | FloatValue | ValOperation | VariableReference | TextExpression | "(" PlusOperation ")" | "(" DivOperation
+	//	")";
+	public ExpressionsGrammarAccess.ParanthesedValuedExpressionElements getParanthesedValuedExpressionAccess() {
+		return gaActions.getParanthesedValuedExpressionAccess();
+	}
+	
+	public ParserRule getParanthesedValuedExpressionRule() {
+		return getParanthesedValuedExpressionAccess().getRule();
+	}
+
+	//// Example: 1 + 2, varA - ?B
+	//PlusOperation returns expressions::Expression:
+	//	MultOrDivOperation ({expressions::OperatorExpression.subExpressions+=current} operator=PlusOperator
+	//	subExpressions+=MultOrDivOperation)*;
+	public ExpressionsGrammarAccess.PlusOperationElements getPlusOperationAccess() {
+		return gaActions.getPlusOperationAccess();
+	}
+	
+	public ParserRule getPlusOperationRule() {
+		return getPlusOperationAccess().getRule();
+	}
+
+	//MultOrDivOperation returns expressions::Expression:
+	//	MultOperation | "(" DivOperation ")";
+	public ExpressionsGrammarAccess.MultOrDivOperationElements getMultOrDivOperationAccess() {
+		return gaActions.getMultOrDivOperationAccess();
+	}
+	
+	public ParserRule getMultOrDivOperationRule() {
+		return getMultOrDivOperationAccess().getRule();
+	}
+
+	//// Example: 2 * 4, varA mod ?B
+	//MultOperation returns expressions::Expression:
+	//	PreOrNormalValuedExpression ({expressions::OperatorExpression.subExpressions+=current} operator=MultOperator
+	//	subExpressions+=PreOrNormalValuedExpression)*;
+	public ExpressionsGrammarAccess.MultOperationElements getMultOperationAccess() {
+		return gaActions.getMultOperationAccess();
+	}
+	
+	public ParserRule getMultOperationRule() {
+		return getMultOperationAccess().getRule();
+	}
+
+	//// Example: (2 / 4)
+	//// note: division has to have always parantheses because the '/' sign is also used for trigger/effect delimiter
+	//DivOperation returns expressions::Expression:
+	//	PreOrNormalValuedExpression ({expressions::OperatorExpression.subExpressions+=current} operator=DivOperator
+	//	subExpressions+=PreOrNormalValuedExpression)*;
+	public ExpressionsGrammarAccess.DivOperationElements getDivOperationAccess() {
+		return gaActions.getDivOperationAccess();
+	}
+	
+	public ParserRule getDivOperationRule() {
+		return getDivOperationAccess().getRule();
+	}
+
+	//// Example: pre (? A)
+	//PreArithmOperation returns expressions::OperatorExpression:
+	//	operator=UnaryParanthesedOperator "(" subExpressions+=ValOperation ")";
+	public ExpressionsGrammarAccess.PreArithmOperationElements getPreArithmOperationAccess() {
+		return gaActions.getPreArithmOperationAccess();
+	}
+	
+	public ParserRule getPreArithmOperationRule() {
+		return getPreArithmOperationAccess().getRule();
+	}
+
+	//PreOrNormalValuedExpression returns expressions::Expression:
+	//	PreArithmOperation | ParanthesedValuedExpression;
+	public ExpressionsGrammarAccess.PreOrNormalValuedExpressionElements getPreOrNormalValuedExpressionAccess() {
+		return gaActions.getPreOrNormalValuedExpressionAccess();
+	}
+	
+	public ParserRule getPreOrNormalValuedExpressionRule() {
+		return getPreOrNormalValuedExpressionAccess().getRule();
+	}
+
+	////==============================================================================
+	//// Boolean Expressions
+	////==============================================================================
 	//// Example: 42 <= ?A
-	//CompareOperation returns Expression:
-	//	ValuedExpression ({OperatorExpression.subExpressions+=current} operator=CompareOperator
+	//CompareOperation returns expressions::Expression:
+	//	ValuedExpression ({expressions::OperatorExpression.subExpressions+=current} operator=CompareOperator
 	//	subExpressions+=ValuedExpression);
 	public ExpressionsGrammarAccess.CompareOperationElements getCompareOperationAccess() {
 		return gaActions.getCompareOperationAccess();
@@ -1382,200 +1495,111 @@ public class InterfacesGrammarAccess extends AbstractGrammarElementFinder {
 		return getCompareOperationAccess().getRule();
 	}
 
-	//// everything that evaluates to a primitive number value
-	//ValuedExpression returns Expression:
-	//	AddExpression;
-	public ExpressionsGrammarAccess.ValuedExpressionElements getValuedExpressionAccess() {
-		return gaActions.getValuedExpressionAccess();
+	//// Example: not A, not false, not (A or B)
+	//// at the latter we need the parans to indicate the right binding
+	//UnaryOperation returns expressions::OperatorExpression:
+	//	operator=UnaryOperator subExpressions+=(ParanthesedBooleanExpression | UnaryParanthesedOperation);
+	public ExpressionsGrammarAccess.UnaryOperationElements getUnaryOperationAccess() {
+		return gaActions.getUnaryOperationAccess();
 	}
 	
-	public ParserRule getValuedExpressionRule() {
-		return getValuedExpressionAccess().getRule();
+	public ParserRule getUnaryOperationRule() {
+		return getUnaryOperationAccess().getRule();
 	}
 
-	//// Example: 1 + 2
-	//AddExpression returns Expression:
-	//	SubExpression ({OperatorExpression.subExpressions+=current} operator=AddOperator subExpressions+=SubExpression)*;
-	public ExpressionsGrammarAccess.AddExpressionElements getAddExpressionAccess() {
-		return gaActions.getAddExpressionAccess();
+	//UnaryParanthesedOperation returns expressions::OperatorExpression:
+	//	operator=UnaryParanthesedOperator "(" subExpressions+=BooleanExpression ")";
+	public ExpressionsGrammarAccess.UnaryParanthesedOperationElements getUnaryParanthesedOperationAccess() {
+		return gaActions.getUnaryParanthesedOperationAccess();
 	}
 	
-	public ParserRule getAddExpressionRule() {
-		return getAddExpressionAccess().getRule();
+	public ParserRule getUnaryParanthesedOperationRule() {
+		return getUnaryParanthesedOperationAccess().getRule();
 	}
 
-	//// Example: varA - ?B
-	//SubExpression returns Expression:
-	//	MultExpression ({OperatorExpression.subExpressions+=current} operator=SubOperator subExpressions+=MultExpression)*;
-	public ExpressionsGrammarAccess.SubExpressionElements getSubExpressionAccess() {
-		return gaActions.getSubExpressionAccess();
+	//// Example: either negated or normal expression (with parantheses) 
+	//UnaryOrNormalExpression returns expressions::Expression:
+	//	UnaryOperation | UnaryParanthesedOperation | ParanthesedBooleanExpression;
+	public ExpressionsGrammarAccess.UnaryOrNormalExpressionElements getUnaryOrNormalExpressionAccess() {
+		return gaActions.getUnaryOrNormalExpressionAccess();
 	}
 	
-	public ParserRule getSubExpressionRule() {
-		return getSubExpressionAccess().getRule();
+	public ParserRule getUnaryOrNormalExpressionRule() {
+		return getUnaryOrNormalExpressionAccess().getRule();
 	}
 
-	//// Example: 2 * 4
-	//MultExpression returns Expression:
-	//	ModExpression ({OperatorExpression.subExpressions+=current} operator=MultOperator subExpressions+=ModExpression)*;
-	public ExpressionsGrammarAccess.MultExpressionElements getMultExpressionAccess() {
-		return gaActions.getMultExpressionAccess();
+	//// Example: A and B, not C and 42 <= ?D
+	//AndOperation returns expressions::Expression:
+	//	UnaryOrNormalExpression ({expressions::OperatorExpression.subExpressions+=current} operator=OperatorAnd
+	//	subExpressions+=UnaryOrNormalExpression)*;
+	public ExpressionsGrammarAccess.AndOperationElements getAndOperationAccess() {
+		return gaActions.getAndOperationAccess();
 	}
 	
-	public ParserRule getMultExpressionRule() {
-		return getMultExpressionAccess().getRule();
+	public ParserRule getAndOperationRule() {
+		return getAndOperationAccess().getRule();
 	}
 
-	//// Example: varA mod ?B
-	//ModExpression returns Expression:
-	//	AtomicValuedExpression ({OperatorExpression.subExpressions+=current} operator=ModOperator
-	//	subExpressions+=AtomicValuedExpression)?;
-	public ExpressionsGrammarAccess.ModExpressionElements getModExpressionAccess() {
-		return gaActions.getModExpressionAccess();
+	//// Example: A or B, C and B or D and not E 
+	//OrOperation returns expressions::Expression:
+	//	AndOperation ({expressions::OperatorExpression.subExpressions+=current} operator=OperatorOr
+	//	subExpressions+=AndOperation)*;
+	public ExpressionsGrammarAccess.OrOperationElements getOrOperationAccess() {
+		return gaActions.getOrOperationAccess();
 	}
 	
-	public ParserRule getModExpressionRule() {
-		return getModExpressionAccess().getRule();
+	public ParserRule getOrOperationRule() {
+		return getOrOperationAccess().getRule();
 	}
 
-	//AtomicValuedExpression returns Expression:
-	//	IntValue | FloatValue | VariableReference | ValueTestExpression | PreValueTestExpression | "(" DivExpression ")" | "("
-	//	ValuedExpression ")" | TextExpression;
-	public ExpressionsGrammarAccess.AtomicValuedExpressionElements getAtomicValuedExpressionAccess() {
-		return gaActions.getAtomicValuedExpressionAccess();
+	//// Example: true, A, 42>var1, (A or B), (not D and C or ?E = 42)
+	//// note that the order of CompareOperation and SignalReference is important. This might be an Xtext bug...
+	//ParanthesedBooleanExpression returns expressions::Expression:
+	//	BooleanValue | CompareOperation | SignalReference | ValOperation | TextExpression | "(" OrOperation ")";
+	public ExpressionsGrammarAccess.ParanthesedBooleanExpressionElements getParanthesedBooleanExpressionAccess() {
+		return gaActions.getParanthesedBooleanExpressionAccess();
 	}
 	
-	public ParserRule getAtomicValuedExpressionRule() {
-		return getAtomicValuedExpressionAccess().getRule();
+	public ParserRule getParanthesedBooleanExpressionRule() {
+		return getParanthesedBooleanExpressionAccess().getRule();
 	}
 
-	//// Example: (2 / 4)
-	//// note: division always has to have parantheses because the '/' sign is also used for trigger/effect delimiter
-	//DivExpression returns Expression:
-	//	AtomicValuedExpression {OperatorExpression.subExpressions+=current} operator=DivOperator
-	//	subExpressions+=AtomicValuedExpression;
-	public ExpressionsGrammarAccess.DivExpressionElements getDivExpressionAccess() {
-		return gaActions.getDivExpressionAccess();
+	//// Example: not D and C or ?E = 42 or not (A and (B or C))
+	//BooleanExpression returns expressions::Expression:
+	//	OrOperation;
+	public ExpressionsGrammarAccess.BooleanExpressionElements getBooleanExpressionAccess() {
+		return gaActions.getBooleanExpressionAccess();
 	}
 	
-	public ParserRule getDivExpressionRule() {
-		return getDivExpressionAccess().getRule();
+	public ParserRule getBooleanExpressionRule() {
+		return getBooleanExpressionAccess().getRule();
 	}
 
-	//VariableReference:
-	//	variable=[Variable|EString];
-	public ExpressionsGrammarAccess.VariableReferenceElements getVariableReferenceAccess() {
-		return gaActions.getVariableReferenceAccess();
+	////==============================================================================
+	//// Operators
+	////==============================================================================
+	//enum OperatorType returns expressions::OperatorType:
+	//	EQ="=" | LT="<" | LEQ="<=" | GT=">" | GEQ=">=" | NOT="not" | NE="<>" | AND="and" | OR="or" | ADD="+" | SUB="-" |
+	//	MULT="*" | DIV="/" | MOD="mod" | VAL="?" | PRE="pre";
+	public ExpressionsGrammarAccess.OperatorTypeElements getOperatorTypeAccess() {
+		return gaActions.getOperatorTypeAccess();
 	}
 	
-	public ParserRule getVariableReferenceRule() {
-		return getVariableReferenceAccess().getRule();
+	public EnumRule getOperatorTypeRule() {
+		return getOperatorTypeAccess().getRule();
 	}
 
-	//// Example: ? A
-	//ValueTestExpression returns OperatorExpression:
-	//	operator=ValueTestOperator "(" subExpressions+=SignalReference ")";
-	public ExpressionsGrammarAccess.ValueTestExpressionElements getValueTestExpressionAccess() {
-		return gaActions.getValueTestExpressionAccess();
+	//enum ValOperator returns expressions::OperatorType:
+	//	VAL="?";
+	public ExpressionsGrammarAccess.ValOperatorElements getValOperatorAccess() {
+		return gaActions.getValOperatorAccess();
 	}
 	
-	public ParserRule getValueTestExpressionRule() {
-		return getValueTestExpressionAccess().getRule();
+	public EnumRule getValOperatorRule() {
+		return getValOperatorAccess().getRule();
 	}
 
-	//// Example: pre (? A)
-	//PreValueTestExpression returns OperatorExpression:
-	//	operator=PreOperator "(" subExpressions+=ValueTestExpression ")";
-	public ExpressionsGrammarAccess.PreValueTestExpressionElements getPreValueTestExpressionAccess() {
-		return gaActions.getPreValueTestExpressionAccess();
-	}
-	
-	public ParserRule getPreValueTestExpressionRule() {
-		return getPreValueTestExpressionAccess().getRule();
-	}
-
-	//// Taken from oba's kits grammar
-	//TextExpression:
-	//	code=STRING ("(" type=ID ")")?;
-	public ExpressionsGrammarAccess.TextExpressionElements getTextExpressionAccess() {
-		return gaActions.getTextExpressionAccess();
-	}
-	
-	public ParserRule getTextExpressionRule() {
-		return getTextExpressionAccess().getRule();
-	}
-
-	//IntValue:
-	//	value=EIntegerObject;
-	public ExpressionsGrammarAccess.IntValueElements getIntValueAccess() {
-		return gaActions.getIntValueAccess();
-	}
-	
-	public ParserRule getIntValueRule() {
-		return getIntValueAccess().getRule();
-	}
-
-	//FloatValue:
-	//	value=EFloatObject;
-	public ExpressionsGrammarAccess.FloatValueElements getFloatValueAccess() {
-		return gaActions.getFloatValueAccess();
-	}
-	
-	public ParserRule getFloatValueRule() {
-		return getFloatValueAccess().getRule();
-	}
-
-	//BooleanValue:
-	//	value=EBooleanObject;
-	public ExpressionsGrammarAccess.BooleanValueElements getBooleanValueAccess() {
-		return gaActions.getBooleanValueAccess();
-	}
-	
-	public ParserRule getBooleanValueRule() {
-		return getBooleanValueAccess().getRule();
-	}
-
-	//EIntegerObject returns ecore::EIntegerObject:
-	//	"-"? INT;
-	public ExpressionsGrammarAccess.EIntegerObjectElements getEIntegerObjectAccess() {
-		return gaActions.getEIntegerObjectAccess();
-	}
-	
-	public ParserRule getEIntegerObjectRule() {
-		return getEIntegerObjectAccess().getRule();
-	}
-
-	//EFloatObject returns ecore::EFloatObject:
-	//	"-"? INT? "." INT (("E" | "e") "-"? INT)?;
-	public ExpressionsGrammarAccess.EFloatObjectElements getEFloatObjectAccess() {
-		return gaActions.getEFloatObjectAccess();
-	}
-	
-	public ParserRule getEFloatObjectRule() {
-		return getEFloatObjectAccess().getRule();
-	}
-
-	//EBooleanObject returns ecore::EBooleanObject:
-	//	"true" | "false";
-	public ExpressionsGrammarAccess.EBooleanObjectElements getEBooleanObjectAccess() {
-		return gaActions.getEBooleanObjectAccess();
-	}
-	
-	public ParserRule getEBooleanObjectRule() {
-		return getEBooleanObjectAccess().getRule();
-	}
-
-	//EString returns ecore::EString:
-	//	STRING | ID;
-	public ExpressionsGrammarAccess.EStringElements getEStringAccess() {
-		return gaActions.getEStringAccess();
-	}
-	
-	public ParserRule getEStringRule() {
-		return getEStringAccess().getRule();
-	}
-
-	//enum CompareOperator returns OperatorType:
+	//enum CompareOperator returns expressions::OperatorType:
 	//	EQ="=" | LT="<" | LEQ="<=" | GT=">" | GEQ=">=" | NE="<>";
 	public ExpressionsGrammarAccess.CompareOperatorElements getCompareOperatorAccess() {
 		return gaActions.getCompareOperatorAccess();
@@ -1585,68 +1609,70 @@ public class InterfacesGrammarAccess extends AbstractGrammarElementFinder {
 		return getCompareOperatorAccess().getRule();
 	}
 
-	//enum PreOperator returns OperatorType:
-	//	PRE="pre";
-	public ExpressionsGrammarAccess.PreOperatorElements getPreOperatorAccess() {
-		return gaActions.getPreOperatorAccess();
-	}
-	
-	public EnumRule getPreOperatorRule() {
-		return getPreOperatorAccess().getRule();
-	}
-
-	//enum OrOperator returns OperatorType:
-	//	OR="or";
-	public ExpressionsGrammarAccess.OrOperatorElements getOrOperatorAccess() {
-		return gaActions.getOrOperatorAccess();
-	}
-	
-	public EnumRule getOrOperatorRule() {
-		return getOrOperatorAccess().getRule();
-	}
-
-	//enum AndOperator returns OperatorType:
-	//	AND="and";
-	public ExpressionsGrammarAccess.AndOperatorElements getAndOperatorAccess() {
-		return gaActions.getAndOperatorAccess();
-	}
-	
-	public EnumRule getAndOperatorRule() {
-		return getAndOperatorAccess().getRule();
-	}
-
-	//enum NotOperator returns OperatorType:
+	//// not A	
+	//enum UnaryOperator returns expressions::OperatorType:
 	//	NOT="not";
-	public ExpressionsGrammarAccess.NotOperatorElements getNotOperatorAccess() {
-		return gaActions.getNotOperatorAccess();
+	public ExpressionsGrammarAccess.UnaryOperatorElements getUnaryOperatorAccess() {
+		return gaActions.getUnaryOperatorAccess();
 	}
 	
-	public EnumRule getNotOperatorRule() {
-		return getNotOperatorAccess().getRule();
+	public EnumRule getUnaryOperatorRule() {
+		return getUnaryOperatorAccess().getRule();
 	}
 
-	//enum AddOperator returns OperatorType:
-	//	ADD="+";
-	public ExpressionsGrammarAccess.AddOperatorElements getAddOperatorAccess() {
-		return gaActions.getAddOperatorAccess();
+	//// pre(A)
+	//enum UnaryParanthesedOperator returns expressions::OperatorType:
+	//	PRE="pre";
+	public ExpressionsGrammarAccess.UnaryParanthesedOperatorElements getUnaryParanthesedOperatorAccess() {
+		return gaActions.getUnaryParanthesedOperatorAccess();
 	}
 	
-	public EnumRule getAddOperatorRule() {
-		return getAddOperatorAccess().getRule();
+	public EnumRule getUnaryParanthesedOperatorRule() {
+		return getUnaryParanthesedOperatorAccess().getRule();
 	}
 
-	//enum SubOperator returns OperatorType:
-	//	SUB="-";
-	public ExpressionsGrammarAccess.SubOperatorElements getSubOperatorAccess() {
-		return gaActions.getSubOperatorAccess();
+	//enum OperatorOr returns expressions::OperatorType:
+	//	OR="or";
+	public ExpressionsGrammarAccess.OperatorOrElements getOperatorOrAccess() {
+		return gaActions.getOperatorOrAccess();
 	}
 	
-	public EnumRule getSubOperatorRule() {
-		return getSubOperatorAccess().getRule();
+	public EnumRule getOperatorOrRule() {
+		return getOperatorOrAccess().getRule();
 	}
 
-	//enum MultOperator returns OperatorType:
-	//	MULT="*";
+	//enum OperatorAnd returns expressions::OperatorType:
+	//	AND="and";
+	public ExpressionsGrammarAccess.OperatorAndElements getOperatorAndAccess() {
+		return gaActions.getOperatorAndAccess();
+	}
+	
+	public EnumRule getOperatorAndRule() {
+		return getOperatorAndAccess().getRule();
+	}
+
+	//enum OperatorPre returns expressions::OperatorType:
+	//	PRE="pre";
+	public ExpressionsGrammarAccess.OperatorPreElements getOperatorPreAccess() {
+		return gaActions.getOperatorPreAccess();
+	}
+	
+	public EnumRule getOperatorPreRule() {
+		return getOperatorPreAccess().getRule();
+	}
+
+	//enum PlusOperator returns expressions::OperatorType:
+	//	ADD="+" | SUB="-";
+	public ExpressionsGrammarAccess.PlusOperatorElements getPlusOperatorAccess() {
+		return gaActions.getPlusOperatorAccess();
+	}
+	
+	public EnumRule getPlusOperatorRule() {
+		return getPlusOperatorAccess().getRule();
+	}
+
+	//enum MultOperator returns expressions::OperatorType:
+	//	MULT="*" | MOD="mod";
 	public ExpressionsGrammarAccess.MultOperatorElements getMultOperatorAccess() {
 		return gaActions.getMultOperatorAccess();
 	}
@@ -1655,17 +1681,7 @@ public class InterfacesGrammarAccess extends AbstractGrammarElementFinder {
 		return getMultOperatorAccess().getRule();
 	}
 
-	//enum ModOperator returns OperatorType:
-	//	MOD="mod";
-	public ExpressionsGrammarAccess.ModOperatorElements getModOperatorAccess() {
-		return gaActions.getModOperatorAccess();
-	}
-	
-	public EnumRule getModOperatorRule() {
-		return getModOperatorAccess().getRule();
-	}
-
-	//enum DivOperator returns OperatorType:
+	//enum DivOperator returns expressions::OperatorType:
 	//	DIV="/";
 	public ExpressionsGrammarAccess.DivOperatorElements getDivOperatorAccess() {
 		return gaActions.getDivOperatorAccess();
@@ -1675,19 +1691,32 @@ public class InterfacesGrammarAccess extends AbstractGrammarElementFinder {
 		return getDivOperatorAccess().getRule();
 	}
 
-	//enum ValueTestOperator returns OperatorType:
-	//	VAL="?";
-	public ExpressionsGrammarAccess.ValueTestOperatorElements getValueTestOperatorAccess() {
-		return gaActions.getValueTestOperatorAccess();
+	////==============================================================================
+	//// Misc
+	////==============================================================================
+	//TextExpression returns expressions::TextExpression:
+	//	code=STRING ("(" type=ID ")")?;
+	public ExpressionsGrammarAccess.TextExpressionElements getTextExpressionAccess() {
+		return gaActions.getTextExpressionAccess();
 	}
 	
-	public EnumRule getValueTestOperatorRule() {
-		return getValueTestOperatorAccess().getRule();
+	public ParserRule getTextExpressionRule() {
+		return getTextExpressionAccess().getRule();
+	}
+
+	//Expression returns expressions::Expression:
+	//	ValuedExpression | BooleanExpression;
+	public ExpressionsGrammarAccess.ExpressionElements getExpressionAccess() {
+		return gaActions.getExpressionAccess();
+	}
+	
+	public ParserRule getExpressionRule() {
+		return getExpressionAccess().getRule();
 	}
 
 	/// *
 	//   the following declarations are re-used in Interface.xtext, Kits.xtext 
-	// * /enum ValueType:
+	// * /enum ValueType returns expressions::ValueType:
 	//	PURE | BOOL | UNSIGNED | INT | FLOAT | HOST;
 	public ExpressionsGrammarAccess.ValueTypeElements getValueTypeAccess() {
 		return gaActions.getValueTypeAccess();
@@ -1697,7 +1726,7 @@ public class InterfacesGrammarAccess extends AbstractGrammarElementFinder {
 		return getValueTypeAccess().getRule();
 	}
 
-	//enum CombineOperator:
+	//enum CombineOperator returns expressions::CombineOperator:
 	//	NONE | ADD="+" | MULT="*" | MAX="max" | MIN="min" | OR="or" | AND="and" | HOST="host";
 	public ExpressionsGrammarAccess.CombineOperatorElements getCombineOperatorAccess() {
 		return gaActions.getCombineOperatorAccess();
@@ -1711,12 +1740,6 @@ public class InterfacesGrammarAccess extends AbstractGrammarElementFinder {
 	//	"^"? ("a".."z" | "A".."Z" | "_") ("a".."z" | "A".."Z" | "_" | "0".."9")*;
 	public TerminalRule getIDRule() {
 		return gaActions.getIDRule();
-	} 
-
-	//terminal INT returns ecore::EInt:
-	//	"0".."9"+;
-	public TerminalRule getINTRule() {
-		return gaActions.getINTRule();
 	} 
 
 	//terminal STRING:

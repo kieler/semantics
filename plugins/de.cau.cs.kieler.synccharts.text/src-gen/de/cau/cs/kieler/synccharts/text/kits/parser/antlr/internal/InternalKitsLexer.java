@@ -12,133 +12,92 @@ import java.util.ArrayList;
 
 @SuppressWarnings("all")
 public class InternalKitsLexer extends Lexer {
-    public static final int T14=14;
-    public static final int T29=29;
-    public static final int T36=36;
-    public static final int T58=58;
-    public static final int T70=70;
-    public static final int RULE_STRING=6;
-    public static final int T74=74;
-    public static final int T35=35;
-    public static final int T61=61;
-    public static final int T45=45;
-    public static final int T20=20;
-    public static final int T34=34;
-    public static final int T64=64;
-    public static final int T25=25;
-    public static final int T18=18;
-    public static final int T37=37;
-    public static final int T26=26;
-    public static final int RULE_INT=5;
-    public static final int T32=32;
-    public static final int T17=17;
-    public static final int T51=51;
-    public static final int T46=46;
-    public static final int T16=16;
-    public static final int T38=38;
-    public static final int T41=41;
-    public static final int T24=24;
-    public static final int T19=19;
-    public static final int T69=69;
-    public static final int T39=39;
-    public static final int T21=21;
-    public static final int T62=62;
-    public static final int T44=44;
-    public static final int T55=55;
-    public static final int RULE_ML_COMMENT=7;
-    public static final int RULE_ID=4;
+    public static final int RULE_BOOLEAN=8;
     public static final int T73=73;
-    public static final int T68=68;
-    public static final int T33=33;
-    public static final int T11=11;
-    public static final int T22=22;
-    public static final int T50=50;
-    public static final int T43=43;
-    public static final int T12=12;
-    public static final int T23=23;
+    public static final int RULE_ID=4;
+    public static final int RULE_ANY_OTHER=12;
+    public static final int T29=29;
     public static final int T28=28;
-    public static final int T42=42;
-    public static final int T66=66;
-    public static final int T40=40;
-    public static final int T71=71;
-    public static final int T63=63;
-    public static final int T57=57;
-    public static final int T72=72;
-    public static final int T13=13;
-    public static final int T65=65;
-    public static final int T56=56;
-    public static final int T76=76;
-    public static final int T75=75;
-    public static final int T59=59;
-    public static final int RULE_WS=9;
-    public static final int T48=48;
-    public static final int T15=15;
-    public static final int T54=54;
+    public static final int T27=27;
+    public static final int T26=26;
+    public static final int T25=25;
     public static final int EOF=-1;
+    public static final int T24=24;
+    public static final int T23=23;
+    public static final int T22=22;
+    public static final int T72=72;
+    public static final int T21=21;
+    public static final int T71=71;
+    public static final int T20=20;
+    public static final int T70=70;
+    public static final int T62=62;
+    public static final int T63=63;
+    public static final int T64=64;
+    public static final int T65=65;
+    public static final int T66=66;
     public static final int T67=67;
-    public static final int T47=47;
-    public static final int Tokens=77;
-    public static final int T53=53;
+    public static final int T68=68;
+    public static final int T69=69;
+    public static final int RULE_INT=6;
+    public static final int T38=38;
+    public static final int T37=37;
+    public static final int T39=39;
+    public static final int T34=34;
+    public static final int T33=33;
+    public static final int T36=36;
+    public static final int T35=35;
+    public static final int T30=30;
+    public static final int T61=61;
+    public static final int T32=32;
     public static final int T60=60;
-    public static final int RULE_ANY_OTHER=10;
     public static final int T31=31;
     public static final int T49=49;
-    public static final int RULE_SL_COMMENT=8;
-    public static final int T27=27;
+    public static final int T48=48;
+    public static final int RULE_FLOAT=7;
+    public static final int T43=43;
+    public static final int Tokens=74;
+    public static final int RULE_SL_COMMENT=10;
+    public static final int T42=42;
+    public static final int T41=41;
+    public static final int T40=40;
+    public static final int T47=47;
+    public static final int T46=46;
+    public static final int T45=45;
+    public static final int RULE_ML_COMMENT=9;
+    public static final int T44=44;
+    public static final int RULE_STRING=5;
+    public static final int T50=50;
+    public static final int T59=59;
+    public static final int T13=13;
+    public static final int T14=14;
     public static final int T52=52;
-    public static final int T30=30;
+    public static final int T15=15;
+    public static final int RULE_WS=11;
+    public static final int T51=51;
+    public static final int T16=16;
+    public static final int T54=54;
+    public static final int T17=17;
+    public static final int T53=53;
+    public static final int T18=18;
+    public static final int T56=56;
+    public static final int T19=19;
+    public static final int T55=55;
+    public static final int T58=58;
+    public static final int T57=57;
     public InternalKitsLexer() {;} 
     public InternalKitsLexer(CharStream input) {
         super(input);
     }
     public String getGrammarFileName() { return "../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g"; }
 
-    // $ANTLR start T11
-    public final void mT11() throws RecognitionException {
-        try {
-            int _type = T11;
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:10:5: ( 'Region' )
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:10:7: 'Region'
-            {
-            match("Region"); 
-
-
-            }
-
-            this.type = _type;
-        }
-        finally {
-        }
-    }
-    // $ANTLR end T11
-
-    // $ANTLR start T12
-    public final void mT12() throws RecognitionException {
-        try {
-            int _type = T12;
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:11:5: ( 'init' )
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:11:7: 'init'
-            {
-            match("init"); 
-
-
-            }
-
-            this.type = _type;
-        }
-        finally {
-        }
-    }
-    // $ANTLR end T12
-
     // $ANTLR start T13
     public final void mT13() throws RecognitionException {
         try {
             int _type = T13;
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:12:5: ( 'final' )
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:12:7: 'final'
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:10:5: ( 'Region' )
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:10:7: 'Region'
             {
-            match("final"); 
+            match("Region"); 
 
 
             }
@@ -154,10 +113,10 @@ public class InternalKitsLexer extends Lexer {
     public final void mT14() throws RecognitionException {
         try {
             int _type = T14;
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:13:5: ( 'State' )
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:13:7: 'State'
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:11:5: ( 'init' )
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:11:7: 'init'
             {
-            match("State"); 
+            match("init"); 
 
 
             }
@@ -173,10 +132,11 @@ public class InternalKitsLexer extends Lexer {
     public final void mT15() throws RecognitionException {
         try {
             int _type = T15;
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:14:5: ( ',' )
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:14:7: ','
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:12:5: ( 'final' )
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:12:7: 'final'
             {
-            match(','); 
+            match("final"); 
+
 
             }
 
@@ -191,10 +151,11 @@ public class InternalKitsLexer extends Lexer {
     public final void mT16() throws RecognitionException {
         try {
             int _type = T16;
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:15:5: ( ';' )
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:15:7: ';'
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:13:5: ( 'State' )
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:13:7: 'State'
             {
-            match(';'); 
+            match("State"); 
+
 
             }
 
@@ -209,10 +170,10 @@ public class InternalKitsLexer extends Lexer {
     public final void mT17() throws RecognitionException {
         try {
             int _type = T17;
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:16:5: ( '{' )
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:16:7: '{'
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:14:5: ( ',' )
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:14:7: ','
             {
-            match('{'); 
+            match(','); 
 
             }
 
@@ -227,10 +188,10 @@ public class InternalKitsLexer extends Lexer {
     public final void mT18() throws RecognitionException {
         try {
             int _type = T18;
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:17:5: ( '[' )
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:17:7: '['
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:15:5: ( ';' )
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:15:7: ';'
             {
-            match('['); 
+            match(';'); 
 
             }
 
@@ -245,11 +206,10 @@ public class InternalKitsLexer extends Lexer {
     public final void mT19() throws RecognitionException {
         try {
             int _type = T19;
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:18:5: ( '||' )
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:18:7: '||'
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:16:5: ( '{' )
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:16:7: '{'
             {
-            match("||"); 
-
+            match('{'); 
 
             }
 
@@ -264,10 +224,10 @@ public class InternalKitsLexer extends Lexer {
     public final void mT20() throws RecognitionException {
         try {
             int _type = T20;
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:19:5: ( ']' )
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:19:7: ']'
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:17:5: ( '[' )
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:17:7: '['
             {
-            match(']'); 
+            match('['); 
 
             }
 
@@ -282,10 +242,10 @@ public class InternalKitsLexer extends Lexer {
     public final void mT21() throws RecognitionException {
         try {
             int _type = T21;
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:20:5: ( 'onentry' )
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:20:7: 'onentry'
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:18:5: ( '||' )
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:18:7: '||'
             {
-            match("onentry"); 
+            match("||"); 
 
 
             }
@@ -301,11 +261,10 @@ public class InternalKitsLexer extends Lexer {
     public final void mT22() throws RecognitionException {
         try {
             int _type = T22;
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:21:5: ( 'oninner' )
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:21:7: 'oninner'
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:19:5: ( ']' )
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:19:7: ']'
             {
-            match("oninner"); 
-
+            match(']'); 
 
             }
 
@@ -320,10 +279,10 @@ public class InternalKitsLexer extends Lexer {
     public final void mT23() throws RecognitionException {
         try {
             int _type = T23;
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:22:5: ( 'onexit' )
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:22:7: 'onexit'
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:20:5: ( 'onentry' )
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:20:7: 'onentry'
             {
-            match("onexit"); 
+            match("onentry"); 
 
 
             }
@@ -339,10 +298,10 @@ public class InternalKitsLexer extends Lexer {
     public final void mT24() throws RecognitionException {
         try {
             int _type = T24;
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:23:5: ( 'suspension' )
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:23:7: 'suspension'
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:21:5: ( 'oninner' )
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:21:7: 'oninner'
             {
-            match("suspension"); 
+            match("oninner"); 
 
 
             }
@@ -358,10 +317,11 @@ public class InternalKitsLexer extends Lexer {
     public final void mT25() throws RecognitionException {
         try {
             int _type = T25;
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:24:5: ( '}' )
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:24:7: '}'
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:22:5: ( 'onexit' )
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:22:7: 'onexit'
             {
-            match('}'); 
+            match("onexit"); 
+
 
             }
 
@@ -376,10 +336,10 @@ public class InternalKitsLexer extends Lexer {
     public final void mT26() throws RecognitionException {
         try {
             int _type = T26;
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:25:5: ( 'var' )
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:25:7: 'var'
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:23:5: ( 'suspension' )
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:23:7: 'suspension'
             {
-            match("var"); 
+            match("suspension"); 
 
 
             }
@@ -395,11 +355,10 @@ public class InternalKitsLexer extends Lexer {
     public final void mT27() throws RecognitionException {
         try {
             int _type = T27;
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:26:5: ( ':=' )
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:26:7: ':='
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:24:5: ( '}' )
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:24:7: '}'
             {
-            match(":="); 
-
+            match('}'); 
 
             }
 
@@ -414,10 +373,11 @@ public class InternalKitsLexer extends Lexer {
     public final void mT28() throws RecognitionException {
         try {
             int _type = T28;
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:27:5: ( ':' )
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:27:7: ':'
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:25:5: ( 'var' )
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:25:7: 'var'
             {
-            match(':'); 
+            match("var"); 
+
 
             }
 
@@ -432,10 +392,10 @@ public class InternalKitsLexer extends Lexer {
     public final void mT29() throws RecognitionException {
         try {
             int _type = T29;
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:28:5: ( 'input' )
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:28:7: 'input'
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:26:5: ( ':=' )
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:26:7: ':='
             {
-            match("input"); 
+            match(":="); 
 
 
             }
@@ -451,11 +411,10 @@ public class InternalKitsLexer extends Lexer {
     public final void mT30() throws RecognitionException {
         try {
             int _type = T30;
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:29:5: ( 'output' )
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:29:7: 'output'
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:27:5: ( ':' )
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:27:7: ':'
             {
-            match("output"); 
-
+            match(':'); 
 
             }
 
@@ -470,10 +429,10 @@ public class InternalKitsLexer extends Lexer {
     public final void mT31() throws RecognitionException {
         try {
             int _type = T31;
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:30:5: ( 'signal' )
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:30:7: 'signal'
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:28:5: ( 'input' )
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:28:7: 'input'
             {
-            match("signal"); 
+            match("input"); 
 
 
             }
@@ -489,10 +448,10 @@ public class InternalKitsLexer extends Lexer {
     public final void mT32() throws RecognitionException {
         try {
             int _type = T32;
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:31:5: ( 'combine' )
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:31:7: 'combine'
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:29:5: ( 'output' )
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:29:7: 'output'
             {
-            match("combine"); 
+            match("output"); 
 
 
             }
@@ -508,10 +467,10 @@ public class InternalKitsLexer extends Lexer {
     public final void mT33() throws RecognitionException {
         try {
             int _type = T33;
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:32:5: ( 'with' )
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:32:7: 'with'
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:30:5: ( 'signal' )
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:30:7: 'signal'
             {
-            match("with"); 
+            match("signal"); 
 
 
             }
@@ -527,10 +486,11 @@ public class InternalKitsLexer extends Lexer {
     public final void mT34() throws RecognitionException {
         try {
             int _type = T34;
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:33:5: ( '<' )
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:33:7: '<'
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:31:5: ( 'combine' )
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:31:7: 'combine'
             {
-            match('<'); 
+            match("combine"); 
+
 
             }
 
@@ -545,10 +505,11 @@ public class InternalKitsLexer extends Lexer {
     public final void mT35() throws RecognitionException {
         try {
             int _type = T35;
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:34:5: ( '>' )
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:34:7: '>'
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:32:5: ( 'with' )
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:32:7: 'with'
             {
-            match('>'); 
+            match("with"); 
+
 
             }
 
@@ -563,10 +524,10 @@ public class InternalKitsLexer extends Lexer {
     public final void mT36() throws RecognitionException {
         try {
             int _type = T36;
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:35:5: ( '#' )
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:35:7: '#'
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:33:5: ( '<' )
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:33:7: '<'
             {
-            match('#'); 
+            match('<'); 
 
             }
 
@@ -581,11 +542,10 @@ public class InternalKitsLexer extends Lexer {
     public final void mT37() throws RecognitionException {
         try {
             int _type = T37;
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:36:5: ( 'delay:=' )
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:36:7: 'delay:='
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:34:5: ( '>' )
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:34:7: '>'
             {
-            match("delay:="); 
-
+            match('>'); 
 
             }
 
@@ -600,10 +560,10 @@ public class InternalKitsLexer extends Lexer {
     public final void mT38() throws RecognitionException {
         try {
             int _type = T38;
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:37:5: ( '/' )
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:37:7: '/'
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:35:5: ( '#' )
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:35:7: '#'
             {
-            match('/'); 
+            match('#'); 
 
             }
 
@@ -618,10 +578,10 @@ public class InternalKitsLexer extends Lexer {
     public final void mT39() throws RecognitionException {
         try {
             int _type = T39;
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:38:5: ( ' history' )
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:38:7: ' history'
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:36:5: ( 'delay:=' )
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:36:7: 'delay:='
             {
-            match(" history"); 
+            match("delay:="); 
 
 
             }
@@ -637,10 +597,10 @@ public class InternalKitsLexer extends Lexer {
     public final void mT40() throws RecognitionException {
         try {
             int _type = T40;
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:39:5: ( '(' )
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:39:7: '('
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:37:5: ( '/' )
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:37:7: '/'
             {
-            match('('); 
+            match('/'); 
 
             }
 
@@ -655,10 +615,11 @@ public class InternalKitsLexer extends Lexer {
     public final void mT41() throws RecognitionException {
         try {
             int _type = T41;
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:40:5: ( ')' )
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:40:7: ')'
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:38:5: ( ' history' )
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:38:7: ' history'
             {
-            match(')'); 
+            match(" history"); 
+
 
             }
 
@@ -673,10 +634,10 @@ public class InternalKitsLexer extends Lexer {
     public final void mT42() throws RecognitionException {
         try {
             int _type = T42;
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:41:5: ( '-' )
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:41:7: '-'
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:39:5: ( '(' )
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:39:7: '('
             {
-            match('-'); 
+            match('('); 
 
             }
 
@@ -691,10 +652,10 @@ public class InternalKitsLexer extends Lexer {
     public final void mT43() throws RecognitionException {
         try {
             int _type = T43;
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:42:5: ( '.' )
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:42:7: '.'
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:40:5: ( ')' )
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:40:7: ')'
             {
-            match('.'); 
+            match(')'); 
 
             }
 
@@ -709,10 +670,11 @@ public class InternalKitsLexer extends Lexer {
     public final void mT44() throws RecognitionException {
         try {
             int _type = T44;
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:43:5: ( 'E' )
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:43:7: 'E'
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:41:5: ( 'NORMAL' )
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:41:7: 'NORMAL'
             {
-            match('E'); 
+            match("NORMAL"); 
+
 
             }
 
@@ -727,10 +689,11 @@ public class InternalKitsLexer extends Lexer {
     public final void mT45() throws RecognitionException {
         try {
             int _type = T45;
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:44:5: ( 'e' )
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:44:7: 'e'
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:42:5: ( 'CONDITIONAL' )
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:42:7: 'CONDITIONAL'
             {
-            match('e'); 
+            match("CONDITIONAL"); 
+
 
             }
 
@@ -745,10 +708,10 @@ public class InternalKitsLexer extends Lexer {
     public final void mT46() throws RecognitionException {
         try {
             int _type = T46;
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:45:5: ( 'true' )
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:45:7: 'true'
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:43:5: ( 'REFERENCE' )
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:43:7: 'REFERENCE'
             {
-            match("true"); 
+            match("REFERENCE"); 
 
 
             }
@@ -764,10 +727,10 @@ public class InternalKitsLexer extends Lexer {
     public final void mT47() throws RecognitionException {
         try {
             int _type = T47;
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:46:5: ( 'false' )
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:46:7: 'false'
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:44:5: ( 'TEXTUAL' )
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:44:7: 'TEXTUAL'
             {
-            match("false"); 
+            match("TEXTUAL"); 
 
 
             }
@@ -783,10 +746,10 @@ public class InternalKitsLexer extends Lexer {
     public final void mT48() throws RecognitionException {
         try {
             int _type = T48;
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:47:5: ( 'NORMAL' )
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:47:7: 'NORMAL'
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:45:5: ( '-->' )
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:45:7: '-->'
             {
-            match("NORMAL"); 
+            match("-->"); 
 
 
             }
@@ -802,10 +765,10 @@ public class InternalKitsLexer extends Lexer {
     public final void mT49() throws RecognitionException {
         try {
             int _type = T49;
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:48:5: ( 'CONDITIONAL' )
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:48:7: 'CONDITIONAL'
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:46:5: ( 'o->' )
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:46:7: 'o->'
             {
-            match("CONDITIONAL"); 
+            match("o->"); 
 
 
             }
@@ -821,10 +784,10 @@ public class InternalKitsLexer extends Lexer {
     public final void mT50() throws RecognitionException {
         try {
             int _type = T50;
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:49:5: ( 'REFERENCE' )
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:49:7: 'REFERENCE'
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:47:5: ( '>->' )
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:47:7: '>->'
             {
-            match("REFERENCE"); 
+            match(">->"); 
 
 
             }
@@ -840,11 +803,10 @@ public class InternalKitsLexer extends Lexer {
     public final void mT51() throws RecognitionException {
         try {
             int _type = T51;
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:50:5: ( 'TEXTUAL' )
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:50:7: 'TEXTUAL'
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:48:5: ( '?' )
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:48:7: '?'
             {
-            match("TEXTUAL"); 
-
+            match('?'); 
 
             }
 
@@ -859,11 +821,10 @@ public class InternalKitsLexer extends Lexer {
     public final void mT52() throws RecognitionException {
         try {
             int _type = T52;
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:51:5: ( '-->' )
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:51:7: '-->'
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:49:5: ( '=' )
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:49:7: '='
             {
-            match("-->"); 
-
+            match('='); 
 
             }
 
@@ -878,10 +839,10 @@ public class InternalKitsLexer extends Lexer {
     public final void mT53() throws RecognitionException {
         try {
             int _type = T53;
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:52:5: ( 'o->' )
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:52:7: 'o->'
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:50:5: ( '<=' )
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:50:7: '<='
             {
-            match("o->"); 
+            match("<="); 
 
 
             }
@@ -897,10 +858,10 @@ public class InternalKitsLexer extends Lexer {
     public final void mT54() throws RecognitionException {
         try {
             int _type = T54;
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:53:5: ( '>->' )
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:53:7: '>->'
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:51:5: ( '>=' )
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:51:7: '>='
             {
-            match(">->"); 
+            match(">="); 
 
 
             }
@@ -916,10 +877,11 @@ public class InternalKitsLexer extends Lexer {
     public final void mT55() throws RecognitionException {
         try {
             int _type = T55;
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:54:5: ( '=' )
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:54:7: '='
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:52:5: ( '<>' )
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:52:7: '<>'
             {
-            match('='); 
+            match("<>"); 
+
 
             }
 
@@ -934,10 +896,10 @@ public class InternalKitsLexer extends Lexer {
     public final void mT56() throws RecognitionException {
         try {
             int _type = T56;
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:55:5: ( '<=' )
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:55:7: '<='
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:53:5: ( 'not' )
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:53:7: 'not'
             {
-            match("<="); 
+            match("not"); 
 
 
             }
@@ -953,10 +915,10 @@ public class InternalKitsLexer extends Lexer {
     public final void mT57() throws RecognitionException {
         try {
             int _type = T57;
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:56:5: ( '>=' )
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:56:7: '>='
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:54:5: ( 'pre' )
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:54:7: 'pre'
             {
-            match(">="); 
+            match("pre"); 
 
 
             }
@@ -972,10 +934,10 @@ public class InternalKitsLexer extends Lexer {
     public final void mT58() throws RecognitionException {
         try {
             int _type = T58;
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:57:5: ( '<>' )
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:57:7: '<>'
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:55:5: ( 'or' )
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:55:7: 'or'
             {
-            match("<>"); 
+            match("or"); 
 
 
             }
@@ -991,10 +953,10 @@ public class InternalKitsLexer extends Lexer {
     public final void mT59() throws RecognitionException {
         try {
             int _type = T59;
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:58:5: ( 'pre' )
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:58:7: 'pre'
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:56:5: ( 'and' )
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:56:7: 'and'
             {
-            match("pre"); 
+            match("and"); 
 
 
             }
@@ -1010,11 +972,10 @@ public class InternalKitsLexer extends Lexer {
     public final void mT60() throws RecognitionException {
         try {
             int _type = T60;
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:59:5: ( 'or' )
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:59:7: 'or'
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:57:5: ( '+' )
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:57:7: '+'
             {
-            match("or"); 
-
+            match('+'); 
 
             }
 
@@ -1029,11 +990,10 @@ public class InternalKitsLexer extends Lexer {
     public final void mT61() throws RecognitionException {
         try {
             int _type = T61;
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:60:5: ( 'and' )
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:60:7: 'and'
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:58:5: ( '-' )
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:58:7: '-'
             {
-            match("and"); 
-
+            match('-'); 
 
             }
 
@@ -1048,11 +1008,10 @@ public class InternalKitsLexer extends Lexer {
     public final void mT62() throws RecognitionException {
         try {
             int _type = T62;
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:61:5: ( 'not' )
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:61:7: 'not'
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:59:5: ( '*' )
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:59:7: '*'
             {
-            match("not"); 
-
+            match('*'); 
 
             }
 
@@ -1067,10 +1026,11 @@ public class InternalKitsLexer extends Lexer {
     public final void mT63() throws RecognitionException {
         try {
             int _type = T63;
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:62:5: ( '+' )
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:62:7: '+'
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:60:5: ( 'mod' )
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:60:7: 'mod'
             {
-            match('+'); 
+            match("mod"); 
+
 
             }
 
@@ -1085,10 +1045,11 @@ public class InternalKitsLexer extends Lexer {
     public final void mT64() throws RecognitionException {
         try {
             int _type = T64;
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:63:5: ( '*' )
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:63:7: '*'
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:61:5: ( 'PURE' )
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:61:7: 'PURE'
             {
-            match('*'); 
+            match("PURE"); 
+
 
             }
 
@@ -1103,10 +1064,10 @@ public class InternalKitsLexer extends Lexer {
     public final void mT65() throws RecognitionException {
         try {
             int _type = T65;
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:64:5: ( 'mod' )
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:64:7: 'mod'
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:62:5: ( 'BOOL' )
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:62:7: 'BOOL'
             {
-            match("mod"); 
+            match("BOOL"); 
 
 
             }
@@ -1122,10 +1083,11 @@ public class InternalKitsLexer extends Lexer {
     public final void mT66() throws RecognitionException {
         try {
             int _type = T66;
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:65:5: ( '?' )
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:65:7: '?'
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:63:5: ( 'UNSIGNED' )
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:63:7: 'UNSIGNED'
             {
-            match('?'); 
+            match("UNSIGNED"); 
+
 
             }
 
@@ -1140,10 +1102,10 @@ public class InternalKitsLexer extends Lexer {
     public final void mT67() throws RecognitionException {
         try {
             int _type = T67;
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:66:5: ( 'PURE' )
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:66:7: 'PURE'
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:64:5: ( 'INT' )
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:64:7: 'INT'
             {
-            match("PURE"); 
+            match("INT"); 
 
 
             }
@@ -1159,10 +1121,10 @@ public class InternalKitsLexer extends Lexer {
     public final void mT68() throws RecognitionException {
         try {
             int _type = T68;
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:67:5: ( 'BOOL' )
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:67:7: 'BOOL'
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:65:5: ( 'FLOAT' )
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:65:7: 'FLOAT'
             {
-            match("BOOL"); 
+            match("FLOAT"); 
 
 
             }
@@ -1178,10 +1140,10 @@ public class InternalKitsLexer extends Lexer {
     public final void mT69() throws RecognitionException {
         try {
             int _type = T69;
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:68:5: ( 'UNSIGNED' )
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:68:7: 'UNSIGNED'
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:66:5: ( 'HOST' )
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:66:7: 'HOST'
             {
-            match("UNSIGNED"); 
+            match("HOST"); 
 
 
             }
@@ -1197,10 +1159,10 @@ public class InternalKitsLexer extends Lexer {
     public final void mT70() throws RecognitionException {
         try {
             int _type = T70;
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:69:5: ( 'INT' )
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:69:7: 'INT'
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:67:5: ( 'NONE' )
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:67:7: 'NONE'
             {
-            match("INT"); 
+            match("NONE"); 
 
 
             }
@@ -1216,10 +1178,10 @@ public class InternalKitsLexer extends Lexer {
     public final void mT71() throws RecognitionException {
         try {
             int _type = T71;
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:70:5: ( 'FLOAT' )
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:70:7: 'FLOAT'
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:68:5: ( 'max' )
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:68:7: 'max'
             {
-            match("FLOAT"); 
+            match("max"); 
 
 
             }
@@ -1235,10 +1197,10 @@ public class InternalKitsLexer extends Lexer {
     public final void mT72() throws RecognitionException {
         try {
             int _type = T72;
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:71:5: ( 'HOST' )
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:71:7: 'HOST'
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:69:5: ( 'min' )
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:69:7: 'min'
             {
-            match("HOST"); 
+            match("min"); 
 
 
             }
@@ -1254,65 +1216,8 @@ public class InternalKitsLexer extends Lexer {
     public final void mT73() throws RecognitionException {
         try {
             int _type = T73;
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:72:5: ( 'NONE' )
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:72:7: 'NONE'
-            {
-            match("NONE"); 
-
-
-            }
-
-            this.type = _type;
-        }
-        finally {
-        }
-    }
-    // $ANTLR end T73
-
-    // $ANTLR start T74
-    public final void mT74() throws RecognitionException {
-        try {
-            int _type = T74;
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:73:5: ( 'max' )
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:73:7: 'max'
-            {
-            match("max"); 
-
-
-            }
-
-            this.type = _type;
-        }
-        finally {
-        }
-    }
-    // $ANTLR end T74
-
-    // $ANTLR start T75
-    public final void mT75() throws RecognitionException {
-        try {
-            int _type = T75;
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:74:5: ( 'min' )
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:74:7: 'min'
-            {
-            match("min"); 
-
-
-            }
-
-            this.type = _type;
-        }
-        finally {
-        }
-    }
-    // $ANTLR end T75
-
-    // $ANTLR start T76
-    public final void mT76() throws RecognitionException {
-        try {
-            int _type = T76;
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:75:5: ( 'host' )
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:75:7: 'host'
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:70:5: ( 'host' )
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:70:7: 'host'
             {
             match("host"); 
 
@@ -1324,25 +1229,270 @@ public class InternalKitsLexer extends Lexer {
         finally {
         }
     }
-    // $ANTLR end T76
+    // $ANTLR end T73
+
+    // $ANTLR start RULE_INT
+    public final void mRULE_INT() throws RecognitionException {
+        try {
+            int _type = RULE_INT;
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:4489:10: ( ( '-' )? ( '0' .. '9' )+ )
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:4489:12: ( '-' )? ( '0' .. '9' )+
+            {
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:4489:12: ( '-' )?
+            int alt1=2;
+            int LA1_0 = input.LA(1);
+
+            if ( (LA1_0=='-') ) {
+                alt1=1;
+            }
+            switch (alt1) {
+                case 1 :
+                    // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:4489:12: '-'
+                    {
+                    match('-'); 
+
+                    }
+                    break;
+
+            }
+
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:4489:17: ( '0' .. '9' )+
+            int cnt2=0;
+            loop2:
+            do {
+                int alt2=2;
+                int LA2_0 = input.LA(1);
+
+                if ( ((LA2_0>='0' && LA2_0<='9')) ) {
+                    alt2=1;
+                }
+
+
+                switch (alt2) {
+            	case 1 :
+            	    // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:4489:18: '0' .. '9'
+            	    {
+            	    matchRange('0','9'); 
+
+            	    }
+            	    break;
+
+            	default :
+            	    if ( cnt2 >= 1 ) break loop2;
+                        EarlyExitException eee =
+                            new EarlyExitException(2, input);
+                        throw eee;
+                }
+                cnt2++;
+            } while (true);
+
+
+            }
+
+            this.type = _type;
+        }
+        finally {
+        }
+    }
+    // $ANTLR end RULE_INT
+
+    // $ANTLR start RULE_FLOAT
+    public final void mRULE_FLOAT() throws RecognitionException {
+        try {
+            int _type = RULE_FLOAT;
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:4491:12: ( ( ( RULE_INT '.' RULE_INT | RULE_INT ( '.' RULE_INT )? ( 'e' | 'E' ) ( '+' )? RULE_INT ) ( 'f' )? | RULE_INT 'f' ) )
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:4491:14: ( ( RULE_INT '.' RULE_INT | RULE_INT ( '.' RULE_INT )? ( 'e' | 'E' ) ( '+' )? RULE_INT ) ( 'f' )? | RULE_INT 'f' )
+            {
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:4491:14: ( ( RULE_INT '.' RULE_INT | RULE_INT ( '.' RULE_INT )? ( 'e' | 'E' ) ( '+' )? RULE_INT ) ( 'f' )? | RULE_INT 'f' )
+            int alt7=2;
+            alt7 = dfa7.predict(input);
+            switch (alt7) {
+                case 1 :
+                    // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:4491:15: ( RULE_INT '.' RULE_INT | RULE_INT ( '.' RULE_INT )? ( 'e' | 'E' ) ( '+' )? RULE_INT ) ( 'f' )?
+                    {
+                    // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:4491:15: ( RULE_INT '.' RULE_INT | RULE_INT ( '.' RULE_INT )? ( 'e' | 'E' ) ( '+' )? RULE_INT )
+                    int alt5=2;
+                    alt5 = dfa5.predict(input);
+                    switch (alt5) {
+                        case 1 :
+                            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:4491:16: RULE_INT '.' RULE_INT
+                            {
+                            mRULE_INT(); 
+                            match('.'); 
+                            mRULE_INT(); 
+
+                            }
+                            break;
+                        case 2 :
+                            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:4491:38: RULE_INT ( '.' RULE_INT )? ( 'e' | 'E' ) ( '+' )? RULE_INT
+                            {
+                            mRULE_INT(); 
+                            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:4491:47: ( '.' RULE_INT )?
+                            int alt3=2;
+                            int LA3_0 = input.LA(1);
+
+                            if ( (LA3_0=='.') ) {
+                                alt3=1;
+                            }
+                            switch (alt3) {
+                                case 1 :
+                                    // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:4491:48: '.' RULE_INT
+                                    {
+                                    match('.'); 
+                                    mRULE_INT(); 
+
+                                    }
+                                    break;
+
+                            }
+
+                            if ( input.LA(1)=='E'||input.LA(1)=='e' ) {
+                                input.consume();
+
+                            }
+                            else {
+                                MismatchedSetException mse =
+                                    new MismatchedSetException(null,input);
+                                recover(mse);    throw mse;
+                            }
+
+                            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:4491:73: ( '+' )?
+                            int alt4=2;
+                            int LA4_0 = input.LA(1);
+
+                            if ( (LA4_0=='+') ) {
+                                alt4=1;
+                            }
+                            switch (alt4) {
+                                case 1 :
+                                    // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:4491:73: '+'
+                                    {
+                                    match('+'); 
+
+                                    }
+                                    break;
+
+                            }
+
+                            mRULE_INT(); 
+
+                            }
+                            break;
+
+                    }
+
+                    // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:4491:88: ( 'f' )?
+                    int alt6=2;
+                    int LA6_0 = input.LA(1);
+
+                    if ( (LA6_0=='f') ) {
+                        alt6=1;
+                    }
+                    switch (alt6) {
+                        case 1 :
+                            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:4491:88: 'f'
+                            {
+                            match('f'); 
+
+                            }
+                            break;
+
+                    }
+
+
+                    }
+                    break;
+                case 2 :
+                    // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:4491:93: RULE_INT 'f'
+                    {
+                    mRULE_INT(); 
+                    match('f'); 
+
+                    }
+                    break;
+
+            }
+
+
+            }
+
+            this.type = _type;
+        }
+        finally {
+        }
+    }
+    // $ANTLR end RULE_FLOAT
+
+    // $ANTLR start RULE_BOOLEAN
+    public final void mRULE_BOOLEAN() throws RecognitionException {
+        try {
+            int _type = RULE_BOOLEAN;
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:4493:14: ( ( 'true' | 'false' ) )
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:4493:16: ( 'true' | 'false' )
+            {
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:4493:16: ( 'true' | 'false' )
+            int alt8=2;
+            int LA8_0 = input.LA(1);
+
+            if ( (LA8_0=='t') ) {
+                alt8=1;
+            }
+            else if ( (LA8_0=='f') ) {
+                alt8=2;
+            }
+            else {
+                NoViableAltException nvae =
+                    new NoViableAltException("4493:16: ( 'true' | 'false' )", 8, 0, input);
+
+                throw nvae;
+            }
+            switch (alt8) {
+                case 1 :
+                    // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:4493:17: 'true'
+                    {
+                    match("true"); 
+
+
+                    }
+                    break;
+                case 2 :
+                    // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:4493:24: 'false'
+                    {
+                    match("false"); 
+
+
+                    }
+                    break;
+
+            }
+
+
+            }
+
+            this.type = _type;
+        }
+        finally {
+        }
+    }
+    // $ANTLR end RULE_BOOLEAN
 
     // $ANTLR start RULE_ID
     public final void mRULE_ID() throws RecognitionException {
         try {
             int _type = RULE_ID;
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:4644:9: ( ( '^' )? ( 'a' .. 'z' | 'A' .. 'Z' | '_' ) ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )* )
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:4644:11: ( '^' )? ( 'a' .. 'z' | 'A' .. 'Z' | '_' ) ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )*
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:4495:9: ( ( '^' )? ( 'a' .. 'z' | 'A' .. 'Z' | '_' ) ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )* )
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:4495:11: ( '^' )? ( 'a' .. 'z' | 'A' .. 'Z' | '_' ) ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )*
             {
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:4644:11: ( '^' )?
-            int alt1=2;
-            int LA1_0 = input.LA(1);
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:4495:11: ( '^' )?
+            int alt9=2;
+            int LA9_0 = input.LA(1);
 
-            if ( (LA1_0=='^') ) {
-                alt1=1;
+            if ( (LA9_0=='^') ) {
+                alt9=1;
             }
-            switch (alt1) {
+            switch (alt9) {
                 case 1 :
-                    // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:4644:11: '^'
+                    // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:4495:11: '^'
                     {
                     match('^'); 
 
@@ -1361,18 +1511,18 @@ public class InternalKitsLexer extends Lexer {
                 recover(mse);    throw mse;
             }
 
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:4644:40: ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )*
-            loop2:
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:4495:40: ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )*
+            loop10:
             do {
-                int alt2=2;
-                int LA2_0 = input.LA(1);
+                int alt10=2;
+                int LA10_0 = input.LA(1);
 
-                if ( ((LA2_0>='0' && LA2_0<='9')||(LA2_0>='A' && LA2_0<='Z')||LA2_0=='_'||(LA2_0>='a' && LA2_0<='z')) ) {
-                    alt2=1;
+                if ( ((LA10_0>='0' && LA10_0<='9')||(LA10_0>='A' && LA10_0<='Z')||LA10_0=='_'||(LA10_0>='a' && LA10_0<='z')) ) {
+                    alt10=1;
                 }
 
 
-                switch (alt2) {
+                switch (alt10) {
             	case 1 :
             	    // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:
             	    {
@@ -1391,7 +1541,7 @@ public class InternalKitsLexer extends Lexer {
             	    break;
 
             	default :
-            	    break loop2;
+            	    break loop10;
                 }
             } while (true);
 
@@ -1405,98 +1555,51 @@ public class InternalKitsLexer extends Lexer {
     }
     // $ANTLR end RULE_ID
 
-    // $ANTLR start RULE_INT
-    public final void mRULE_INT() throws RecognitionException {
-        try {
-            int _type = RULE_INT;
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:4646:10: ( ( '0' .. '9' )+ )
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:4646:12: ( '0' .. '9' )+
-            {
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:4646:12: ( '0' .. '9' )+
-            int cnt3=0;
-            loop3:
-            do {
-                int alt3=2;
-                int LA3_0 = input.LA(1);
-
-                if ( ((LA3_0>='0' && LA3_0<='9')) ) {
-                    alt3=1;
-                }
-
-
-                switch (alt3) {
-            	case 1 :
-            	    // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:4646:13: '0' .. '9'
-            	    {
-            	    matchRange('0','9'); 
-
-            	    }
-            	    break;
-
-            	default :
-            	    if ( cnt3 >= 1 ) break loop3;
-                        EarlyExitException eee =
-                            new EarlyExitException(3, input);
-                        throw eee;
-                }
-                cnt3++;
-            } while (true);
-
-
-            }
-
-            this.type = _type;
-        }
-        finally {
-        }
-    }
-    // $ANTLR end RULE_INT
-
     // $ANTLR start RULE_STRING
     public final void mRULE_STRING() throws RecognitionException {
         try {
             int _type = RULE_STRING;
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:4648:13: ( ( '\"' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )* '\"' | '\\'' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\\'' ) ) )* '\\'' ) )
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:4648:15: ( '\"' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )* '\"' | '\\'' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\\'' ) ) )* '\\'' )
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:4497:13: ( ( '\"' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )* '\"' | '\\'' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\\'' ) ) )* '\\'' ) )
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:4497:15: ( '\"' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )* '\"' | '\\'' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\\'' ) ) )* '\\'' )
             {
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:4648:15: ( '\"' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )* '\"' | '\\'' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\\'' ) ) )* '\\'' )
-            int alt6=2;
-            int LA6_0 = input.LA(1);
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:4497:15: ( '\"' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )* '\"' | '\\'' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\\'' ) ) )* '\\'' )
+            int alt13=2;
+            int LA13_0 = input.LA(1);
 
-            if ( (LA6_0=='\"') ) {
-                alt6=1;
+            if ( (LA13_0=='\"') ) {
+                alt13=1;
             }
-            else if ( (LA6_0=='\'') ) {
-                alt6=2;
+            else if ( (LA13_0=='\'') ) {
+                alt13=2;
             }
             else {
                 NoViableAltException nvae =
-                    new NoViableAltException("4648:15: ( '\"' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )* '\"' | '\\'' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\\'' ) ) )* '\\'' )", 6, 0, input);
+                    new NoViableAltException("4497:15: ( '\"' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )* '\"' | '\\'' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\\'' ) ) )* '\\'' )", 13, 0, input);
 
                 throw nvae;
             }
-            switch (alt6) {
+            switch (alt13) {
                 case 1 :
-                    // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:4648:16: '\"' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )* '\"'
+                    // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:4497:16: '\"' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )* '\"'
                     {
                     match('\"'); 
-                    // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:4648:20: ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )*
-                    loop4:
+                    // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:4497:20: ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )*
+                    loop11:
                     do {
-                        int alt4=3;
-                        int LA4_0 = input.LA(1);
+                        int alt11=3;
+                        int LA11_0 = input.LA(1);
 
-                        if ( (LA4_0=='\\') ) {
-                            alt4=1;
+                        if ( (LA11_0=='\\') ) {
+                            alt11=1;
                         }
-                        else if ( ((LA4_0>='\u0000' && LA4_0<='!')||(LA4_0>='#' && LA4_0<='[')||(LA4_0>=']' && LA4_0<='\uFFFE')) ) {
-                            alt4=2;
+                        else if ( ((LA11_0>='\u0000' && LA11_0<='!')||(LA11_0>='#' && LA11_0<='[')||(LA11_0>=']' && LA11_0<='\uFFFE')) ) {
+                            alt11=2;
                         }
 
 
-                        switch (alt4) {
+                        switch (alt11) {
                     	case 1 :
-                    	    // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:4648:21: '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' )
+                    	    // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:4497:21: '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' )
                     	    {
                     	    match('\\'); 
                     	    if ( input.LA(1)=='\"'||input.LA(1)=='\''||input.LA(1)=='\\'||input.LA(1)=='b'||input.LA(1)=='f'||input.LA(1)=='n'||input.LA(1)=='r'||input.LA(1)=='t' ) {
@@ -1513,7 +1616,7 @@ public class InternalKitsLexer extends Lexer {
                     	    }
                     	    break;
                     	case 2 :
-                    	    // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:4648:62: ~ ( ( '\\\\' | '\"' ) )
+                    	    // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:4497:62: ~ ( ( '\\\\' | '\"' ) )
                     	    {
                     	    if ( (input.LA(1)>='\u0000' && input.LA(1)<='!')||(input.LA(1)>='#' && input.LA(1)<='[')||(input.LA(1)>=']' && input.LA(1)<='\uFFFE') ) {
                     	        input.consume();
@@ -1530,7 +1633,7 @@ public class InternalKitsLexer extends Lexer {
                     	    break;
 
                     	default :
-                    	    break loop4;
+                    	    break loop11;
                         }
                     } while (true);
 
@@ -1539,26 +1642,26 @@ public class InternalKitsLexer extends Lexer {
                     }
                     break;
                 case 2 :
-                    // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:4648:82: '\\'' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\\'' ) ) )* '\\''
+                    // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:4497:82: '\\'' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\\'' ) ) )* '\\''
                     {
                     match('\''); 
-                    // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:4648:87: ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\\'' ) ) )*
-                    loop5:
+                    // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:4497:87: ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\\'' ) ) )*
+                    loop12:
                     do {
-                        int alt5=3;
-                        int LA5_0 = input.LA(1);
+                        int alt12=3;
+                        int LA12_0 = input.LA(1);
 
-                        if ( (LA5_0=='\\') ) {
-                            alt5=1;
+                        if ( (LA12_0=='\\') ) {
+                            alt12=1;
                         }
-                        else if ( ((LA5_0>='\u0000' && LA5_0<='&')||(LA5_0>='(' && LA5_0<='[')||(LA5_0>=']' && LA5_0<='\uFFFE')) ) {
-                            alt5=2;
+                        else if ( ((LA12_0>='\u0000' && LA12_0<='&')||(LA12_0>='(' && LA12_0<='[')||(LA12_0>=']' && LA12_0<='\uFFFE')) ) {
+                            alt12=2;
                         }
 
 
-                        switch (alt5) {
+                        switch (alt12) {
                     	case 1 :
-                    	    // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:4648:88: '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' )
+                    	    // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:4497:88: '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' )
                     	    {
                     	    match('\\'); 
                     	    if ( input.LA(1)=='\"'||input.LA(1)=='\''||input.LA(1)=='\\'||input.LA(1)=='b'||input.LA(1)=='f'||input.LA(1)=='n'||input.LA(1)=='r'||input.LA(1)=='t' ) {
@@ -1575,7 +1678,7 @@ public class InternalKitsLexer extends Lexer {
                     	    }
                     	    break;
                     	case 2 :
-                    	    // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:4648:129: ~ ( ( '\\\\' | '\\'' ) )
+                    	    // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:4497:129: ~ ( ( '\\\\' | '\\'' ) )
                     	    {
                     	    if ( (input.LA(1)>='\u0000' && input.LA(1)<='&')||(input.LA(1)>='(' && input.LA(1)<='[')||(input.LA(1)>=']' && input.LA(1)<='\uFFFE') ) {
                     	        input.consume();
@@ -1592,7 +1695,7 @@ public class InternalKitsLexer extends Lexer {
                     	    break;
 
                     	default :
-                    	    break loop5;
+                    	    break loop12;
                         }
                     } while (true);
 
@@ -1617,37 +1720,37 @@ public class InternalKitsLexer extends Lexer {
     public final void mRULE_ML_COMMENT() throws RecognitionException {
         try {
             int _type = RULE_ML_COMMENT;
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:4650:17: ( '/*' ( options {greedy=false; } : . )* '*/' )
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:4650:19: '/*' ( options {greedy=false; } : . )* '*/'
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:4499:17: ( '/*' ( options {greedy=false; } : . )* '*/' )
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:4499:19: '/*' ( options {greedy=false; } : . )* '*/'
             {
             match("/*"); 
 
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:4650:24: ( options {greedy=false; } : . )*
-            loop7:
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:4499:24: ( options {greedy=false; } : . )*
+            loop14:
             do {
-                int alt7=2;
-                int LA7_0 = input.LA(1);
+                int alt14=2;
+                int LA14_0 = input.LA(1);
 
-                if ( (LA7_0=='*') ) {
-                    int LA7_1 = input.LA(2);
+                if ( (LA14_0=='*') ) {
+                    int LA14_1 = input.LA(2);
 
-                    if ( (LA7_1=='/') ) {
-                        alt7=2;
+                    if ( (LA14_1=='/') ) {
+                        alt14=2;
                     }
-                    else if ( ((LA7_1>='\u0000' && LA7_1<='.')||(LA7_1>='0' && LA7_1<='\uFFFE')) ) {
-                        alt7=1;
+                    else if ( ((LA14_1>='\u0000' && LA14_1<='.')||(LA14_1>='0' && LA14_1<='\uFFFE')) ) {
+                        alt14=1;
                     }
 
 
                 }
-                else if ( ((LA7_0>='\u0000' && LA7_0<=')')||(LA7_0>='+' && LA7_0<='\uFFFE')) ) {
-                    alt7=1;
+                else if ( ((LA14_0>='\u0000' && LA14_0<=')')||(LA14_0>='+' && LA14_0<='\uFFFE')) ) {
+                    alt14=1;
                 }
 
 
-                switch (alt7) {
+                switch (alt14) {
             	case 1 :
-            	    // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:4650:52: .
+            	    // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:4499:52: .
             	    {
             	    matchAny(); 
 
@@ -1655,7 +1758,7 @@ public class InternalKitsLexer extends Lexer {
             	    break;
 
             	default :
-            	    break loop7;
+            	    break loop14;
                 }
             } while (true);
 
@@ -1675,25 +1778,25 @@ public class InternalKitsLexer extends Lexer {
     public final void mRULE_SL_COMMENT() throws RecognitionException {
         try {
             int _type = RULE_SL_COMMENT;
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:4652:17: ( '//' (~ ( ( '\\n' | '\\r' ) ) )* ( ( '\\r' )? '\\n' )? )
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:4652:19: '//' (~ ( ( '\\n' | '\\r' ) ) )* ( ( '\\r' )? '\\n' )?
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:4501:17: ( '//' (~ ( ( '\\n' | '\\r' ) ) )* ( ( '\\r' )? '\\n' )? )
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:4501:19: '//' (~ ( ( '\\n' | '\\r' ) ) )* ( ( '\\r' )? '\\n' )?
             {
             match("//"); 
 
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:4652:24: (~ ( ( '\\n' | '\\r' ) ) )*
-            loop8:
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:4501:24: (~ ( ( '\\n' | '\\r' ) ) )*
+            loop15:
             do {
-                int alt8=2;
-                int LA8_0 = input.LA(1);
+                int alt15=2;
+                int LA15_0 = input.LA(1);
 
-                if ( ((LA8_0>='\u0000' && LA8_0<='\t')||(LA8_0>='\u000B' && LA8_0<='\f')||(LA8_0>='\u000E' && LA8_0<='\uFFFE')) ) {
-                    alt8=1;
+                if ( ((LA15_0>='\u0000' && LA15_0<='\t')||(LA15_0>='\u000B' && LA15_0<='\f')||(LA15_0>='\u000E' && LA15_0<='\uFFFE')) ) {
+                    alt15=1;
                 }
 
 
-                switch (alt8) {
+                switch (alt15) {
             	case 1 :
-            	    // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:4652:24: ~ ( ( '\\n' | '\\r' ) )
+            	    // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:4501:24: ~ ( ( '\\n' | '\\r' ) )
             	    {
             	    if ( (input.LA(1)>='\u0000' && input.LA(1)<='\t')||(input.LA(1)>='\u000B' && input.LA(1)<='\f')||(input.LA(1)>='\u000E' && input.LA(1)<='\uFFFE') ) {
             	        input.consume();
@@ -1710,31 +1813,31 @@ public class InternalKitsLexer extends Lexer {
             	    break;
 
             	default :
-            	    break loop8;
+            	    break loop15;
                 }
             } while (true);
 
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:4652:40: ( ( '\\r' )? '\\n' )?
-            int alt10=2;
-            int LA10_0 = input.LA(1);
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:4501:40: ( ( '\\r' )? '\\n' )?
+            int alt17=2;
+            int LA17_0 = input.LA(1);
 
-            if ( (LA10_0=='\n'||LA10_0=='\r') ) {
-                alt10=1;
+            if ( (LA17_0=='\n'||LA17_0=='\r') ) {
+                alt17=1;
             }
-            switch (alt10) {
+            switch (alt17) {
                 case 1 :
-                    // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:4652:41: ( '\\r' )? '\\n'
+                    // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:4501:41: ( '\\r' )? '\\n'
                     {
-                    // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:4652:41: ( '\\r' )?
-                    int alt9=2;
-                    int LA9_0 = input.LA(1);
+                    // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:4501:41: ( '\\r' )?
+                    int alt16=2;
+                    int LA16_0 = input.LA(1);
 
-                    if ( (LA9_0=='\r') ) {
-                        alt9=1;
+                    if ( (LA16_0=='\r') ) {
+                        alt16=1;
                     }
-                    switch (alt9) {
+                    switch (alt16) {
                         case 1 :
-                            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:4652:41: '\\r'
+                            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:4501:41: '\\r'
                             {
                             match('\r'); 
 
@@ -1764,22 +1867,22 @@ public class InternalKitsLexer extends Lexer {
     public final void mRULE_WS() throws RecognitionException {
         try {
             int _type = RULE_WS;
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:4654:9: ( ( ' ' | '\\t' | '\\r' | '\\n' )+ )
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:4654:11: ( ' ' | '\\t' | '\\r' | '\\n' )+
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:4503:9: ( ( ' ' | '\\t' | '\\r' | '\\n' )+ )
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:4503:11: ( ' ' | '\\t' | '\\r' | '\\n' )+
             {
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:4654:11: ( ' ' | '\\t' | '\\r' | '\\n' )+
-            int cnt11=0;
-            loop11:
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:4503:11: ( ' ' | '\\t' | '\\r' | '\\n' )+
+            int cnt18=0;
+            loop18:
             do {
-                int alt11=2;
-                int LA11_0 = input.LA(1);
+                int alt18=2;
+                int LA18_0 = input.LA(1);
 
-                if ( ((LA11_0>='\t' && LA11_0<='\n')||LA11_0=='\r'||LA11_0==' ') ) {
-                    alt11=1;
+                if ( ((LA18_0>='\t' && LA18_0<='\n')||LA18_0=='\r'||LA18_0==' ') ) {
+                    alt18=1;
                 }
 
 
-                switch (alt11) {
+                switch (alt18) {
             	case 1 :
             	    // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:
             	    {
@@ -1798,12 +1901,12 @@ public class InternalKitsLexer extends Lexer {
             	    break;
 
             	default :
-            	    if ( cnt11 >= 1 ) break loop11;
+            	    if ( cnt18 >= 1 ) break loop18;
                         EarlyExitException eee =
-                            new EarlyExitException(11, input);
+                            new EarlyExitException(18, input);
                         throw eee;
                 }
-                cnt11++;
+                cnt18++;
             } while (true);
 
 
@@ -1820,8 +1923,8 @@ public class InternalKitsLexer extends Lexer {
     public final void mRULE_ANY_OTHER() throws RecognitionException {
         try {
             int _type = RULE_ANY_OTHER;
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:4656:16: ( . )
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:4656:18: .
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:4505:16: ( . )
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:4505:18: .
             {
             matchAny(); 
 
@@ -1835,685 +1938,495 @@ public class InternalKitsLexer extends Lexer {
     // $ANTLR end RULE_ANY_OTHER
 
     public void mTokens() throws RecognitionException {
-        // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:1:8: ( T11 | T12 | T13 | T14 | T15 | T16 | T17 | T18 | T19 | T20 | T21 | T22 | T23 | T24 | T25 | T26 | T27 | T28 | T29 | T30 | T31 | T32 | T33 | T34 | T35 | T36 | T37 | T38 | T39 | T40 | T41 | T42 | T43 | T44 | T45 | T46 | T47 | T48 | T49 | T50 | T51 | T52 | T53 | T54 | T55 | T56 | T57 | T58 | T59 | T60 | T61 | T62 | T63 | T64 | T65 | T66 | T67 | T68 | T69 | T70 | T71 | T72 | T73 | T74 | T75 | T76 | RULE_ID | RULE_INT | RULE_STRING | RULE_ML_COMMENT | RULE_SL_COMMENT | RULE_WS | RULE_ANY_OTHER )
-        int alt12=73;
-        int LA12_0 = input.LA(1);
-
-        if ( (LA12_0=='R') ) {
-            alt12 = mTokensHelper001();
-        }
-        else if ( (LA12_0=='i') ) {
-            alt12 = mTokensHelper002();
-        }
-        else if ( (LA12_0=='f') ) {
-            alt12 = mTokensHelper003();
-        }
-        else if ( (LA12_0=='S') ) {
-            alt12 = mTokensHelper004();
-        }
-        else if ( (LA12_0==',') ) {
-            alt12 = mTokensHelper005();
-        }
-        else if ( (LA12_0==';') ) {
-            alt12 = mTokensHelper006();
-        }
-        else if ( (LA12_0=='{') ) {
-            alt12 = mTokensHelper007();
-        }
-        else if ( (LA12_0=='[') ) {
-            alt12 = mTokensHelper008();
-        }
-        else if ( (LA12_0=='|') ) {
-            alt12 = mTokensHelper009();
-        }
-        else if ( (LA12_0==']') ) {
-            alt12 = mTokensHelper010();
-        }
-        else if ( (LA12_0=='o') ) {
-            alt12 = mTokensHelper011();
-        }
-        else if ( (LA12_0=='s') ) {
-            alt12 = mTokensHelper012();
-        }
-        else if ( (LA12_0=='}') ) {
-            alt12 = mTokensHelper013();
-        }
-        else if ( (LA12_0=='v') ) {
-            alt12 = mTokensHelper014();
-        }
-        else if ( (LA12_0==':') ) {
-            alt12 = mTokensHelper015();
-        }
-        else if ( (LA12_0=='c') ) {
-            alt12 = mTokensHelper016();
-        }
-        else if ( (LA12_0=='w') ) {
-            alt12 = mTokensHelper017();
-        }
-        else if ( (LA12_0=='<') ) {
-            alt12 = mTokensHelper018();
-        }
-        else if ( (LA12_0=='>') ) {
-            alt12 = mTokensHelper019();
-        }
-        else if ( (LA12_0=='#') ) {
-            alt12 = mTokensHelper020();
-        }
-        else if ( (LA12_0=='d') ) {
-            alt12 = mTokensHelper021();
-        }
-        else if ( (LA12_0=='/') ) {
-            alt12 = mTokensHelper022();
-        }
-        else if ( (LA12_0==' ') ) {
-            alt12 = mTokensHelper023();
-        }
-        else if ( (LA12_0=='(') ) {
-            alt12 = mTokensHelper024();
-        }
-        else if ( (LA12_0==')') ) {
-            alt12 = mTokensHelper025();
-        }
-        else if ( (LA12_0=='-') ) {
-            alt12 = mTokensHelper026();
-        }
-        else if ( (LA12_0=='.') ) {
-            alt12 = mTokensHelper027();
-        }
-        else if ( (LA12_0=='E') ) {
-            alt12 = mTokensHelper028();
-        }
-        else if ( (LA12_0=='e') ) {
-            alt12 = mTokensHelper029();
-        }
-        else if ( (LA12_0=='t') ) {
-            alt12 = mTokensHelper030();
-        }
-        else if ( (LA12_0=='N') ) {
-            alt12 = mTokensHelper031();
-        }
-        else if ( (LA12_0=='C') ) {
-            alt12 = mTokensHelper032();
-        }
-        else if ( (LA12_0=='T') ) {
-            alt12 = mTokensHelper033();
-        }
-        else if ( (LA12_0=='=') ) {
-            alt12 = mTokensHelper034();
-        }
-        else if ( (LA12_0=='p') ) {
-            alt12 = mTokensHelper035();
-        }
-        else if ( (LA12_0=='a') ) {
-            alt12 = mTokensHelper036();
-        }
-        else if ( (LA12_0=='n') ) {
-            alt12 = mTokensHelper037();
-        }
-        else if ( (LA12_0=='+') ) {
-            alt12 = mTokensHelper038();
-        }
-        else if ( (LA12_0=='*') ) {
-            alt12 = mTokensHelper039();
-        }
-        else if ( (LA12_0=='m') ) {
-            alt12 = mTokensHelper040();
-        }
-        else if ( (LA12_0=='?') ) {
-            alt12 = mTokensHelper041();
-        }
-        else if ( (LA12_0=='P') ) {
-            alt12 = mTokensHelper042();
-        }
-        else if ( (LA12_0=='B') ) {
-            alt12 = mTokensHelper043();
-        }
-        else if ( (LA12_0=='U') ) {
-            alt12 = mTokensHelper044();
-        }
-        else if ( (LA12_0=='I') ) {
-            alt12 = mTokensHelper045();
-        }
-        else if ( (LA12_0=='F') ) {
-            alt12 = mTokensHelper046();
-        }
-        else if ( (LA12_0=='H') ) {
-            alt12 = mTokensHelper047();
-        }
-        else if ( (LA12_0=='h') ) {
-            alt12 = mTokensHelper048();
-        }
-        else if ( (LA12_0=='^') ) {
-            alt12 = mTokensHelper049();
-        }
-        else if ( (LA12_0=='A'||LA12_0=='D'||LA12_0=='G'||(LA12_0>='J' && LA12_0<='M')||LA12_0=='O'||LA12_0=='Q'||(LA12_0>='V' && LA12_0<='Z')||LA12_0=='_'||LA12_0=='b'||LA12_0=='g'||(LA12_0>='j' && LA12_0<='l')||(LA12_0>='q' && LA12_0<='r')||LA12_0=='u'||(LA12_0>='x' && LA12_0<='z')) ) {
-            alt12 = mTokensHelper050();
-        }
-        else if ( ((LA12_0>='0' && LA12_0<='9')) ) {
-            alt12 = mTokensHelper051();
-        }
-        else if ( (LA12_0=='\"') ) {
-            alt12 = mTokensHelper052();
-        }
-        else if ( (LA12_0=='\'') ) {
-            alt12 = mTokensHelper053();
-        }
-        else if ( ((LA12_0>='\t' && LA12_0<='\n')||LA12_0=='\r') ) {
-            alt12 = mTokensHelper054();
-        }
-        else if ( ((LA12_0>='\u0000' && LA12_0<='\b')||(LA12_0>='\u000B' && LA12_0<='\f')||(LA12_0>='\u000E' && LA12_0<='\u001F')||LA12_0=='!'||(LA12_0>='$' && LA12_0<='&')||LA12_0=='@'||LA12_0=='\\'||LA12_0=='`'||(LA12_0>='~' && LA12_0<='\uFFFE')) ) {
-            alt12 = mTokensHelper055();
-        }
-        else {
-            alt12 = mTokensHelper056();
-        }
-        switch (alt12) {
+        // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:1:8: ( T13 | T14 | T15 | T16 | T17 | T18 | T19 | T20 | T21 | T22 | T23 | T24 | T25 | T26 | T27 | T28 | T29 | T30 | T31 | T32 | T33 | T34 | T35 | T36 | T37 | T38 | T39 | T40 | T41 | T42 | T43 | T44 | T45 | T46 | T47 | T48 | T49 | T50 | T51 | T52 | T53 | T54 | T55 | T56 | T57 | T58 | T59 | T60 | T61 | T62 | T63 | T64 | T65 | T66 | T67 | T68 | T69 | T70 | T71 | T72 | T73 | RULE_INT | RULE_FLOAT | RULE_BOOLEAN | RULE_ID | RULE_STRING | RULE_ML_COMMENT | RULE_SL_COMMENT | RULE_WS | RULE_ANY_OTHER )
+        int alt19=70;
+        alt19 = dfa19.predict(input);
+        switch (alt19) {
             case 1 :
-                // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:1:10: T11
-                {
-                mT11(); 
-
-                }
-                break;
-            case 2 :
-                // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:1:14: T12
-                {
-                mT12(); 
-
-                }
-                break;
-            case 3 :
-                // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:1:18: T13
+                // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:1:10: T13
                 {
                 mT13(); 
 
                 }
                 break;
-            case 4 :
-                // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:1:22: T14
+            case 2 :
+                // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:1:14: T14
                 {
                 mT14(); 
 
                 }
                 break;
-            case 5 :
-                // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:1:26: T15
+            case 3 :
+                // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:1:18: T15
                 {
                 mT15(); 
 
                 }
                 break;
-            case 6 :
-                // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:1:30: T16
+            case 4 :
+                // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:1:22: T16
                 {
                 mT16(); 
 
                 }
                 break;
-            case 7 :
-                // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:1:34: T17
+            case 5 :
+                // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:1:26: T17
                 {
                 mT17(); 
 
                 }
                 break;
-            case 8 :
-                // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:1:38: T18
+            case 6 :
+                // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:1:30: T18
                 {
                 mT18(); 
 
                 }
                 break;
-            case 9 :
-                // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:1:42: T19
+            case 7 :
+                // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:1:34: T19
                 {
                 mT19(); 
 
                 }
                 break;
-            case 10 :
-                // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:1:46: T20
+            case 8 :
+                // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:1:38: T20
                 {
                 mT20(); 
 
                 }
                 break;
-            case 11 :
-                // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:1:50: T21
+            case 9 :
+                // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:1:42: T21
                 {
                 mT21(); 
 
                 }
                 break;
-            case 12 :
-                // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:1:54: T22
+            case 10 :
+                // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:1:46: T22
                 {
                 mT22(); 
 
                 }
                 break;
-            case 13 :
-                // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:1:58: T23
+            case 11 :
+                // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:1:50: T23
                 {
                 mT23(); 
 
                 }
                 break;
-            case 14 :
-                // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:1:62: T24
+            case 12 :
+                // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:1:54: T24
                 {
                 mT24(); 
 
                 }
                 break;
-            case 15 :
-                // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:1:66: T25
+            case 13 :
+                // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:1:58: T25
                 {
                 mT25(); 
 
                 }
                 break;
-            case 16 :
-                // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:1:70: T26
+            case 14 :
+                // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:1:62: T26
                 {
                 mT26(); 
 
                 }
                 break;
-            case 17 :
-                // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:1:74: T27
+            case 15 :
+                // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:1:66: T27
                 {
                 mT27(); 
 
                 }
                 break;
-            case 18 :
-                // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:1:78: T28
+            case 16 :
+                // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:1:70: T28
                 {
                 mT28(); 
 
                 }
                 break;
-            case 19 :
-                // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:1:82: T29
+            case 17 :
+                // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:1:74: T29
                 {
                 mT29(); 
 
                 }
                 break;
-            case 20 :
-                // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:1:86: T30
+            case 18 :
+                // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:1:78: T30
                 {
                 mT30(); 
 
                 }
                 break;
-            case 21 :
-                // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:1:90: T31
+            case 19 :
+                // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:1:82: T31
                 {
                 mT31(); 
 
                 }
                 break;
-            case 22 :
-                // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:1:94: T32
+            case 20 :
+                // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:1:86: T32
                 {
                 mT32(); 
 
                 }
                 break;
-            case 23 :
-                // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:1:98: T33
+            case 21 :
+                // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:1:90: T33
                 {
                 mT33(); 
 
                 }
                 break;
-            case 24 :
-                // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:1:102: T34
+            case 22 :
+                // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:1:94: T34
                 {
                 mT34(); 
 
                 }
                 break;
-            case 25 :
-                // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:1:106: T35
+            case 23 :
+                // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:1:98: T35
                 {
                 mT35(); 
 
                 }
                 break;
-            case 26 :
-                // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:1:110: T36
+            case 24 :
+                // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:1:102: T36
                 {
                 mT36(); 
 
                 }
                 break;
-            case 27 :
-                // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:1:114: T37
+            case 25 :
+                // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:1:106: T37
                 {
                 mT37(); 
 
                 }
                 break;
-            case 28 :
-                // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:1:118: T38
+            case 26 :
+                // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:1:110: T38
                 {
                 mT38(); 
 
                 }
                 break;
-            case 29 :
-                // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:1:122: T39
+            case 27 :
+                // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:1:114: T39
                 {
                 mT39(); 
 
                 }
                 break;
-            case 30 :
-                // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:1:126: T40
+            case 28 :
+                // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:1:118: T40
                 {
                 mT40(); 
 
                 }
                 break;
-            case 31 :
-                // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:1:130: T41
+            case 29 :
+                // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:1:122: T41
                 {
                 mT41(); 
 
                 }
                 break;
-            case 32 :
-                // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:1:134: T42
+            case 30 :
+                // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:1:126: T42
                 {
                 mT42(); 
 
                 }
                 break;
-            case 33 :
-                // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:1:138: T43
+            case 31 :
+                // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:1:130: T43
                 {
                 mT43(); 
 
                 }
                 break;
-            case 34 :
-                // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:1:142: T44
+            case 32 :
+                // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:1:134: T44
                 {
                 mT44(); 
 
                 }
                 break;
-            case 35 :
-                // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:1:146: T45
+            case 33 :
+                // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:1:138: T45
                 {
                 mT45(); 
 
                 }
                 break;
-            case 36 :
-                // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:1:150: T46
+            case 34 :
+                // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:1:142: T46
                 {
                 mT46(); 
 
                 }
                 break;
-            case 37 :
-                // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:1:154: T47
+            case 35 :
+                // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:1:146: T47
                 {
                 mT47(); 
 
                 }
                 break;
-            case 38 :
-                // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:1:158: T48
+            case 36 :
+                // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:1:150: T48
                 {
                 mT48(); 
 
                 }
                 break;
-            case 39 :
-                // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:1:162: T49
+            case 37 :
+                // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:1:154: T49
                 {
                 mT49(); 
 
                 }
                 break;
-            case 40 :
-                // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:1:166: T50
+            case 38 :
+                // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:1:158: T50
                 {
                 mT50(); 
 
                 }
                 break;
-            case 41 :
-                // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:1:170: T51
+            case 39 :
+                // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:1:162: T51
                 {
                 mT51(); 
 
                 }
                 break;
-            case 42 :
-                // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:1:174: T52
+            case 40 :
+                // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:1:166: T52
                 {
                 mT52(); 
 
                 }
                 break;
-            case 43 :
-                // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:1:178: T53
+            case 41 :
+                // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:1:170: T53
                 {
                 mT53(); 
 
                 }
                 break;
-            case 44 :
-                // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:1:182: T54
+            case 42 :
+                // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:1:174: T54
                 {
                 mT54(); 
 
                 }
                 break;
-            case 45 :
-                // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:1:186: T55
+            case 43 :
+                // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:1:178: T55
                 {
                 mT55(); 
 
                 }
                 break;
-            case 46 :
-                // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:1:190: T56
+            case 44 :
+                // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:1:182: T56
                 {
                 mT56(); 
 
                 }
                 break;
-            case 47 :
-                // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:1:194: T57
+            case 45 :
+                // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:1:186: T57
                 {
                 mT57(); 
 
                 }
                 break;
-            case 48 :
-                // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:1:198: T58
+            case 46 :
+                // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:1:190: T58
                 {
                 mT58(); 
 
                 }
                 break;
-            case 49 :
-                // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:1:202: T59
+            case 47 :
+                // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:1:194: T59
                 {
                 mT59(); 
 
                 }
                 break;
-            case 50 :
-                // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:1:206: T60
+            case 48 :
+                // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:1:198: T60
                 {
                 mT60(); 
 
                 }
                 break;
-            case 51 :
-                // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:1:210: T61
+            case 49 :
+                // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:1:202: T61
                 {
                 mT61(); 
 
                 }
                 break;
-            case 52 :
-                // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:1:214: T62
+            case 50 :
+                // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:1:206: T62
                 {
                 mT62(); 
 
                 }
                 break;
-            case 53 :
-                // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:1:218: T63
+            case 51 :
+                // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:1:210: T63
                 {
                 mT63(); 
 
                 }
                 break;
-            case 54 :
-                // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:1:222: T64
+            case 52 :
+                // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:1:214: T64
                 {
                 mT64(); 
 
                 }
                 break;
-            case 55 :
-                // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:1:226: T65
+            case 53 :
+                // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:1:218: T65
                 {
                 mT65(); 
 
                 }
                 break;
-            case 56 :
-                // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:1:230: T66
+            case 54 :
+                // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:1:222: T66
                 {
                 mT66(); 
 
                 }
                 break;
-            case 57 :
-                // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:1:234: T67
+            case 55 :
+                // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:1:226: T67
                 {
                 mT67(); 
 
                 }
                 break;
-            case 58 :
-                // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:1:238: T68
+            case 56 :
+                // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:1:230: T68
                 {
                 mT68(); 
 
                 }
                 break;
-            case 59 :
-                // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:1:242: T69
+            case 57 :
+                // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:1:234: T69
                 {
                 mT69(); 
 
                 }
                 break;
-            case 60 :
-                // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:1:246: T70
+            case 58 :
+                // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:1:238: T70
                 {
                 mT70(); 
 
                 }
                 break;
-            case 61 :
-                // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:1:250: T71
+            case 59 :
+                // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:1:242: T71
                 {
                 mT71(); 
 
                 }
                 break;
-            case 62 :
-                // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:1:254: T72
+            case 60 :
+                // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:1:246: T72
                 {
                 mT72(); 
 
                 }
                 break;
-            case 63 :
-                // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:1:258: T73
+            case 61 :
+                // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:1:250: T73
                 {
                 mT73(); 
 
                 }
                 break;
-            case 64 :
-                // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:1:262: T74
-                {
-                mT74(); 
-
-                }
-                break;
-            case 65 :
-                // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:1:266: T75
-                {
-                mT75(); 
-
-                }
-                break;
-            case 66 :
-                // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:1:270: T76
-                {
-                mT76(); 
-
-                }
-                break;
-            case 67 :
-                // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:1:274: RULE_ID
-                {
-                mRULE_ID(); 
-
-                }
-                break;
-            case 68 :
-                // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:1:282: RULE_INT
+            case 62 :
+                // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:1:254: RULE_INT
                 {
                 mRULE_INT(); 
 
                 }
                 break;
-            case 69 :
-                // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:1:291: RULE_STRING
+            case 63 :
+                // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:1:263: RULE_FLOAT
+                {
+                mRULE_FLOAT(); 
+
+                }
+                break;
+            case 64 :
+                // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:1:274: RULE_BOOLEAN
+                {
+                mRULE_BOOLEAN(); 
+
+                }
+                break;
+            case 65 :
+                // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:1:287: RULE_ID
+                {
+                mRULE_ID(); 
+
+                }
+                break;
+            case 66 :
+                // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:1:295: RULE_STRING
                 {
                 mRULE_STRING(); 
 
                 }
                 break;
-            case 70 :
-                // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:1:303: RULE_ML_COMMENT
+            case 67 :
+                // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:1:307: RULE_ML_COMMENT
                 {
                 mRULE_ML_COMMENT(); 
 
                 }
                 break;
-            case 71 :
-                // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:1:319: RULE_SL_COMMENT
+            case 68 :
+                // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:1:323: RULE_SL_COMMENT
                 {
                 mRULE_SL_COMMENT(); 
 
                 }
                 break;
-            case 72 :
-                // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:1:335: RULE_WS
+            case 69 :
+                // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:1:339: RULE_WS
                 {
                 mRULE_WS(); 
 
                 }
                 break;
-            case 73 :
-                // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:1:343: RULE_ANY_OTHER
+            case 70 :
+                // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:1:347: RULE_ANY_OTHER
                 {
                 mRULE_ANY_OTHER(); 
 
@@ -2523,1387 +2436,504 @@ public class InternalKitsLexer extends Lexer {
         }
 
     }
-    private int mTokensHelper001() throws RecognitionException {
-        switch ( input.LA(2) ) {
-        case 'E':
-            {
-            int LA12_56 = input.LA(3);
 
-            if ( (LA12_56=='F') ) {
-                int LA12_124 = input.LA(4);
 
-                if ( (LA12_124=='E') ) {
-                    int LA12_159 = input.LA(5);
+    protected DFA7 dfa7 = new DFA7(this);
+    protected DFA5 dfa5 = new DFA5(this);
+    protected DFA19 dfa19 = new DFA19(this);
+    static final String DFA7_eotS =
+        "\5\uffff";
+    static final String DFA7_eofS =
+        "\5\uffff";
+    static final String DFA7_minS =
+        "\1\55\1\60\1\56\2\uffff";
+    static final String DFA7_maxS =
+        "\2\71\1\146\2\uffff";
+    static final String DFA7_acceptS =
+        "\3\uffff\1\1\1\2";
+    static final String DFA7_specialS =
+        "\5\uffff}>";
+    static final String[] DFA7_transitionS = {
+            "\1\1\2\uffff\12\2",
+            "\12\2",
+            "\1\3\1\uffff\12\2\13\uffff\1\3\37\uffff\1\3\1\4",
+            "",
+            ""
+    };
 
-                    if ( (LA12_159=='R') ) {
-                        int LA12_194 = input.LA(6);
+    static final short[] DFA7_eot = DFA.unpackEncodedString(DFA7_eotS);
+    static final short[] DFA7_eof = DFA.unpackEncodedString(DFA7_eofS);
+    static final char[] DFA7_min = DFA.unpackEncodedStringToUnsignedChars(DFA7_minS);
+    static final char[] DFA7_max = DFA.unpackEncodedStringToUnsignedChars(DFA7_maxS);
+    static final short[] DFA7_accept = DFA.unpackEncodedString(DFA7_acceptS);
+    static final short[] DFA7_special = DFA.unpackEncodedString(DFA7_specialS);
+    static final short[][] DFA7_transition;
 
-                        if ( (LA12_194=='E') ) {
-                            int LA12_221 = input.LA(7);
-
-                            if ( (LA12_221=='N') ) {
-                                int LA12_240 = input.LA(8);
-
-                                if ( (LA12_240=='C') ) {
-                                    int LA12_253 = input.LA(9);
-
-                                    if ( (LA12_253=='E') ) {
-                                        int LA12_261 = input.LA(10);
-
-                                        if ( ((LA12_261>='0' && LA12_261<='9')||(LA12_261>='A' && LA12_261<='Z')||LA12_261=='_'||(LA12_261>='a' && LA12_261<='z')) ) {
-                                            return 67;
-                                        }
-                                        else {
-                                            return 40;}
-                                    }
-                                    else {
-                                        return 67;}
-                                }
-                                else {
-                                    return 67;}
-                            }
-                            else {
-                                return 67;}
-                        }
-                        else {
-                            return 67;}
-                    }
-                    else {
-                        return 67;}
-                }
-                else {
-                    return 67;}
-            }
-            else {
-                return 67;}
-            }
-        case 'e':
-            {
-            int LA12_57 = input.LA(3);
-
-            if ( (LA12_57=='g') ) {
-                int LA12_125 = input.LA(4);
-
-                if ( (LA12_125=='i') ) {
-                    int LA12_160 = input.LA(5);
-
-                    if ( (LA12_160=='o') ) {
-                        int LA12_195 = input.LA(6);
-
-                        if ( (LA12_195=='n') ) {
-                            int LA12_222 = input.LA(7);
-
-                            if ( ((LA12_222>='0' && LA12_222<='9')||(LA12_222>='A' && LA12_222<='Z')||LA12_222=='_'||(LA12_222>='a' && LA12_222<='z')) ) {
-                                return 67;
-                            }
-                            else {
-                                return 1;}
-                        }
-                        else {
-                            return 67;}
-                    }
-                    else {
-                        return 67;}
-                }
-                else {
-                    return 67;}
-            }
-            else {
-                return 67;}
-            }
-        default:
-            return 67;}
-
-    }
-
-    private int mTokensHelper002() throws RecognitionException {
-        int LA12_2 = input.LA(2);
-
-        if ( (LA12_2=='n') ) {
-            switch ( input.LA(3) ) {
-            case 'p':
-                {
-                int LA12_126 = input.LA(4);
-
-                if ( (LA12_126=='u') ) {
-                    int LA12_161 = input.LA(5);
-
-                    if ( (LA12_161=='t') ) {
-                        int LA12_196 = input.LA(6);
-
-                        if ( ((LA12_196>='0' && LA12_196<='9')||(LA12_196>='A' && LA12_196<='Z')||LA12_196=='_'||(LA12_196>='a' && LA12_196<='z')) ) {
-                            return 67;
-                        }
-                        else {
-                            return 19;}
-                    }
-                    else {
-                        return 67;}
-                }
-                else {
-                    return 67;}
-                }
-            case 'i':
-                {
-                int LA12_127 = input.LA(4);
-
-                if ( (LA12_127=='t') ) {
-                    int LA12_162 = input.LA(5);
-
-                    if ( ((LA12_162>='0' && LA12_162<='9')||(LA12_162>='A' && LA12_162<='Z')||LA12_162=='_'||(LA12_162>='a' && LA12_162<='z')) ) {
-                        return 67;
-                    }
-                    else {
-                        return 2;}
-                }
-                else {
-                    return 67;}
-                }
-            default:
-                return 67;}
-
+    static {
+        int numStates = DFA7_transitionS.length;
+        DFA7_transition = new short[numStates][];
+        for (int i=0; i<numStates; i++) {
+            DFA7_transition[i] = DFA.unpackEncodedString(DFA7_transitionS[i]);
         }
-        else {
-            return 67;}
     }
 
-    private int mTokensHelper003() throws RecognitionException {
-        switch ( input.LA(2) ) {
-        case 'i':
-            {
-            int LA12_60 = input.LA(3);
+    class DFA7 extends DFA {
 
-            if ( (LA12_60=='n') ) {
-                int LA12_128 = input.LA(4);
-
-                if ( (LA12_128=='a') ) {
-                    int LA12_163 = input.LA(5);
-
-                    if ( (LA12_163=='l') ) {
-                        int LA12_198 = input.LA(6);
-
-                        if ( ((LA12_198>='0' && LA12_198<='9')||(LA12_198>='A' && LA12_198<='Z')||LA12_198=='_'||(LA12_198>='a' && LA12_198<='z')) ) {
-                            return 67;
-                        }
-                        else {
-                            return 3;}
-                    }
-                    else {
-                        return 67;}
-                }
-                else {
-                    return 67;}
-            }
-            else {
-                return 67;}
-            }
-        case 'a':
-            {
-            int LA12_61 = input.LA(3);
-
-            if ( (LA12_61=='l') ) {
-                int LA12_129 = input.LA(4);
-
-                if ( (LA12_129=='s') ) {
-                    int LA12_164 = input.LA(5);
-
-                    if ( (LA12_164=='e') ) {
-                        int LA12_199 = input.LA(6);
-
-                        if ( ((LA12_199>='0' && LA12_199<='9')||(LA12_199>='A' && LA12_199<='Z')||LA12_199=='_'||(LA12_199>='a' && LA12_199<='z')) ) {
-                            return 67;
-                        }
-                        else {
-                            return 37;}
-                    }
-                    else {
-                        return 67;}
-                }
-                else {
-                    return 67;}
-            }
-            else {
-                return 67;}
-            }
-        default:
-            return 67;}
-
-    }
-
-    private int mTokensHelper004() throws RecognitionException {
-        int LA12_4 = input.LA(2);
-
-        if ( (LA12_4=='t') ) {
-            int LA12_62 = input.LA(3);
-
-            if ( (LA12_62=='a') ) {
-                int LA12_130 = input.LA(4);
-
-                if ( (LA12_130=='t') ) {
-                    int LA12_165 = input.LA(5);
-
-                    if ( (LA12_165=='e') ) {
-                        int LA12_200 = input.LA(6);
-
-                        if ( ((LA12_200>='0' && LA12_200<='9')||(LA12_200>='A' && LA12_200<='Z')||LA12_200=='_'||(LA12_200>='a' && LA12_200<='z')) ) {
-                            return 67;
-                        }
-                        else {
-                            return 4;}
-                    }
-                    else {
-                        return 67;}
-                }
-                else {
-                    return 67;}
-            }
-            else {
-                return 67;}
+        public DFA7(BaseRecognizer recognizer) {
+            this.recognizer = recognizer;
+            this.decisionNumber = 7;
+            this.eot = DFA7_eot;
+            this.eof = DFA7_eof;
+            this.min = DFA7_min;
+            this.max = DFA7_max;
+            this.accept = DFA7_accept;
+            this.special = DFA7_special;
+            this.transition = DFA7_transition;
         }
-        else {
-            return 67;}
-    }
-
-    private int mTokensHelper005() throws RecognitionException {
-        return 5;
-    }
-
-    private int mTokensHelper006() throws RecognitionException {
-        return 6;
-    }
-
-    private int mTokensHelper007() throws RecognitionException {
-        return 7;
-    }
-
-    private int mTokensHelper008() throws RecognitionException {
-        return 8;
-    }
-
-    private int mTokensHelper009() throws RecognitionException {
-        int LA12_9 = input.LA(2);
-
-        if ( (LA12_9=='|') ) {
-            return 9;
+        public String getDescription() {
+            return "4491:14: ( ( RULE_INT '.' RULE_INT | RULE_INT ( '.' RULE_INT )? ( 'e' | 'E' ) ( '+' )? RULE_INT ) ( 'f' )? | RULE_INT 'f' )";
         }
-        else {
-            return 73;}
     }
+    static final String DFA5_eotS =
+        "\6\uffff\1\7\1\uffff";
+    static final String DFA5_eofS =
+        "\10\uffff";
+    static final String DFA5_minS =
+        "\1\55\1\60\1\56\1\55\1\uffff\2\60\1\uffff";
+    static final String DFA5_maxS =
+        "\2\71\1\145\1\71\1\uffff\1\71\1\145\1\uffff";
+    static final String DFA5_acceptS =
+        "\4\uffff\1\2\2\uffff\1\1";
+    static final String DFA5_specialS =
+        "\10\uffff}>";
+    static final String[] DFA5_transitionS = {
+            "\1\1\2\uffff\12\2",
+            "\12\2",
+            "\1\3\1\uffff\12\2\13\uffff\1\4\37\uffff\1\4",
+            "\1\5\2\uffff\12\6",
+            "",
+            "\12\6",
+            "\12\6\13\uffff\1\4\37\uffff\1\4",
+            ""
+    };
 
-    private int mTokensHelper010() throws RecognitionException {
-        return 10;
-    }
+    static final short[] DFA5_eot = DFA.unpackEncodedString(DFA5_eotS);
+    static final short[] DFA5_eof = DFA.unpackEncodedString(DFA5_eofS);
+    static final char[] DFA5_min = DFA.unpackEncodedStringToUnsignedChars(DFA5_minS);
+    static final char[] DFA5_max = DFA.unpackEncodedStringToUnsignedChars(DFA5_maxS);
+    static final short[] DFA5_accept = DFA.unpackEncodedString(DFA5_acceptS);
+    static final short[] DFA5_special = DFA.unpackEncodedString(DFA5_specialS);
+    static final short[][] DFA5_transition;
 
-    private int mTokensHelper011() throws RecognitionException {
-        switch ( input.LA(2) ) {
-        case 'n':
-            {
-            switch ( input.LA(3) ) {
-            case 'e':
-                {
-                switch ( input.LA(4) ) {
-                case 'n':
-                    {
-                    int LA12_166 = input.LA(5);
-
-                    if ( (LA12_166=='t') ) {
-                        int LA12_201 = input.LA(6);
-
-                        if ( (LA12_201=='r') ) {
-                            int LA12_227 = input.LA(7);
-
-                            if ( (LA12_227=='y') ) {
-                                int LA12_242 = input.LA(8);
-
-                                if ( ((LA12_242>='0' && LA12_242<='9')||(LA12_242>='A' && LA12_242<='Z')||LA12_242=='_'||(LA12_242>='a' && LA12_242<='z')) ) {
-                                    return 67;
-                                }
-                                else {
-                                    return 11;}
-                            }
-                            else {
-                                return 67;}
-                        }
-                        else {
-                            return 67;}
-                    }
-                    else {
-                        return 67;}
-                    }
-                case 'x':
-                    {
-                    int LA12_167 = input.LA(5);
-
-                    if ( (LA12_167=='i') ) {
-                        int LA12_202 = input.LA(6);
-
-                        if ( (LA12_202=='t') ) {
-                            int LA12_228 = input.LA(7);
-
-                            if ( ((LA12_228>='0' && LA12_228<='9')||(LA12_228>='A' && LA12_228<='Z')||LA12_228=='_'||(LA12_228>='a' && LA12_228<='z')) ) {
-                                return 67;
-                            }
-                            else {
-                                return 13;}
-                        }
-                        else {
-                            return 67;}
-                    }
-                    else {
-                        return 67;}
-                    }
-                default:
-                    return 67;}
-
-                }
-            case 'i':
-                {
-                int LA12_132 = input.LA(4);
-
-                if ( (LA12_132=='n') ) {
-                    int LA12_168 = input.LA(5);
-
-                    if ( (LA12_168=='n') ) {
-                        int LA12_203 = input.LA(6);
-
-                        if ( (LA12_203=='e') ) {
-                            int LA12_229 = input.LA(7);
-
-                            if ( (LA12_229=='r') ) {
-                                int LA12_244 = input.LA(8);
-
-                                if ( ((LA12_244>='0' && LA12_244<='9')||(LA12_244>='A' && LA12_244<='Z')||LA12_244=='_'||(LA12_244>='a' && LA12_244<='z')) ) {
-                                    return 67;
-                                }
-                                else {
-                                    return 12;}
-                            }
-                            else {
-                                return 67;}
-                        }
-                        else {
-                            return 67;}
-                    }
-                    else {
-                        return 67;}
-                }
-                else {
-                    return 67;}
-                }
-            default:
-                return 67;}
-
-            }
-        case '-':
-            {
-            return 43;
-            }
-        case 'u':
-            {
-            int LA12_71 = input.LA(3);
-
-            if ( (LA12_71=='t') ) {
-                int LA12_133 = input.LA(4);
-
-                if ( (LA12_133=='p') ) {
-                    int LA12_169 = input.LA(5);
-
-                    if ( (LA12_169=='u') ) {
-                        int LA12_204 = input.LA(6);
-
-                        if ( (LA12_204=='t') ) {
-                            int LA12_230 = input.LA(7);
-
-                            if ( ((LA12_230>='0' && LA12_230<='9')||(LA12_230>='A' && LA12_230<='Z')||LA12_230=='_'||(LA12_230>='a' && LA12_230<='z')) ) {
-                                return 67;
-                            }
-                            else {
-                                return 20;}
-                        }
-                        else {
-                            return 67;}
-                    }
-                    else {
-                        return 67;}
-                }
-                else {
-                    return 67;}
-            }
-            else {
-                return 67;}
-            }
-        case 'r':
-            {
-            int LA12_72 = input.LA(3);
-
-            if ( ((LA12_72>='0' && LA12_72<='9')||(LA12_72>='A' && LA12_72<='Z')||LA12_72=='_'||(LA12_72>='a' && LA12_72<='z')) ) {
-                return 67;
-            }
-            else {
-                return 50;}
-            }
-        default:
-            return 67;}
-
-    }
-
-    private int mTokensHelper012() throws RecognitionException {
-        switch ( input.LA(2) ) {
-        case 'u':
-            {
-            int LA12_73 = input.LA(3);
-
-            if ( (LA12_73=='s') ) {
-                int LA12_135 = input.LA(4);
-
-                if ( (LA12_135=='p') ) {
-                    int LA12_170 = input.LA(5);
-
-                    if ( (LA12_170=='e') ) {
-                        int LA12_205 = input.LA(6);
-
-                        if ( (LA12_205=='n') ) {
-                            int LA12_231 = input.LA(7);
-
-                            if ( (LA12_231=='s') ) {
-                                int LA12_246 = input.LA(8);
-
-                                if ( (LA12_246=='i') ) {
-                                    int LA12_256 = input.LA(9);
-
-                                    if ( (LA12_256=='o') ) {
-                                        int LA12_262 = input.LA(10);
-
-                                        if ( (LA12_262=='n') ) {
-                                            int LA12_266 = input.LA(11);
-
-                                            if ( ((LA12_266>='0' && LA12_266<='9')||(LA12_266>='A' && LA12_266<='Z')||LA12_266=='_'||(LA12_266>='a' && LA12_266<='z')) ) {
-                                                return 67;
-                                            }
-                                            else {
-                                                return 14;}
-                                        }
-                                        else {
-                                            return 67;}
-                                    }
-                                    else {
-                                        return 67;}
-                                }
-                                else {
-                                    return 67;}
-                            }
-                            else {
-                                return 67;}
-                        }
-                        else {
-                            return 67;}
-                    }
-                    else {
-                        return 67;}
-                }
-                else {
-                    return 67;}
-            }
-            else {
-                return 67;}
-            }
-        case 'i':
-            {
-            int LA12_74 = input.LA(3);
-
-            if ( (LA12_74=='g') ) {
-                int LA12_136 = input.LA(4);
-
-                if ( (LA12_136=='n') ) {
-                    int LA12_171 = input.LA(5);
-
-                    if ( (LA12_171=='a') ) {
-                        int LA12_206 = input.LA(6);
-
-                        if ( (LA12_206=='l') ) {
-                            int LA12_232 = input.LA(7);
-
-                            if ( ((LA12_232>='0' && LA12_232<='9')||(LA12_232>='A' && LA12_232<='Z')||LA12_232=='_'||(LA12_232>='a' && LA12_232<='z')) ) {
-                                return 67;
-                            }
-                            else {
-                                return 21;}
-                        }
-                        else {
-                            return 67;}
-                    }
-                    else {
-                        return 67;}
-                }
-                else {
-                    return 67;}
-            }
-            else {
-                return 67;}
-            }
-        default:
-            return 67;}
-
-    }
-
-    private int mTokensHelper013() throws RecognitionException {
-        return 15;
-    }
-
-    private int mTokensHelper014() throws RecognitionException {
-        int LA12_14 = input.LA(2);
-
-        if ( (LA12_14=='a') ) {
-            int LA12_76 = input.LA(3);
-
-            if ( (LA12_76=='r') ) {
-                int LA12_137 = input.LA(4);
-
-                if ( ((LA12_137>='0' && LA12_137<='9')||(LA12_137>='A' && LA12_137<='Z')||LA12_137=='_'||(LA12_137>='a' && LA12_137<='z')) ) {
-                    return 67;
-                }
-                else {
-                    return 16;}
-            }
-            else {
-                return 67;}
+    static {
+        int numStates = DFA5_transitionS.length;
+        DFA5_transition = new short[numStates][];
+        for (int i=0; i<numStates; i++) {
+            DFA5_transition[i] = DFA.unpackEncodedString(DFA5_transitionS[i]);
         }
-        else {
-            return 67;}
     }
 
-    private int mTokensHelper015() throws RecognitionException {
-        int LA12_15 = input.LA(2);
+    class DFA5 extends DFA {
 
-        if ( (LA12_15=='=') ) {
-            return 17;
+        public DFA5(BaseRecognizer recognizer) {
+            this.recognizer = recognizer;
+            this.decisionNumber = 5;
+            this.eot = DFA5_eot;
+            this.eof = DFA5_eof;
+            this.min = DFA5_min;
+            this.max = DFA5_max;
+            this.accept = DFA5_accept;
+            this.special = DFA5_special;
+            this.transition = DFA5_transition;
         }
-        else {
-            return 18;}
-    }
-
-    private int mTokensHelper016() throws RecognitionException {
-        int LA12_16 = input.LA(2);
-
-        if ( (LA12_16=='o') ) {
-            int LA12_79 = input.LA(3);
-
-            if ( (LA12_79=='m') ) {
-                int LA12_138 = input.LA(4);
-
-                if ( (LA12_138=='b') ) {
-                    int LA12_173 = input.LA(5);
-
-                    if ( (LA12_173=='i') ) {
-                        int LA12_207 = input.LA(6);
-
-                        if ( (LA12_207=='n') ) {
-                            int LA12_233 = input.LA(7);
-
-                            if ( (LA12_233=='e') ) {
-                                int LA12_248 = input.LA(8);
-
-                                if ( ((LA12_248>='0' && LA12_248<='9')||(LA12_248>='A' && LA12_248<='Z')||LA12_248=='_'||(LA12_248>='a' && LA12_248<='z')) ) {
-                                    return 67;
-                                }
-                                else {
-                                    return 22;}
-                            }
-                            else {
-                                return 67;}
-                        }
-                        else {
-                            return 67;}
-                    }
-                    else {
-                        return 67;}
-                }
-                else {
-                    return 67;}
-            }
-            else {
-                return 67;}
+        public String getDescription() {
+            return "4491:15: ( RULE_INT '.' RULE_INT | RULE_INT ( '.' RULE_INT )? ( 'e' | 'E' ) ( '+' )? RULE_INT )";
         }
-        else {
-            return 67;}
     }
+    static final String DFA19_eotS =
+        "\1\uffff\4\67\4\uffff\1\64\1\uffff\2\67\1\uffff\1\67\1\113\2\67"+
+        "\1\120\1\123\1\uffff\1\67\1\130\1\132\2\uffff\3\67\1\142\2\uffff"+
+        "\3\67\2\uffff\10\67\1\164\1\67\1\64\1\uffff\2\64\2\uffff\2\67\1"+
+        "\uffff\4\67\7\uffff\1\177\4\67\1\uffff\1\67\2\uffff\2\67\7\uffff"+
+        "\1\67\7\uffff\3\67\1\uffff\1\164\3\uffff\3\67\2\uffff\12\67\2\uffff"+
+        "\1\67\1\uffff\7\67\1\uffff\5\67\1\u00a8\7\67\1\u00b0\1\u00b1\1\u00b2"+
+        "\1\u00b3\1\u00b4\1\u00b5\3\67\1\u00b9\7\67\1\u00c1\11\67\1\uffff"+
+        "\1\67\1\u00cc\2\67\1\u00cf\2\67\6\uffff\1\u00d2\1\u00d3\1\67\1\uffff"+
+        "\1\67\1\u00d6\1\u00d7\1\u00d8\2\67\1\u00db\1\uffff\1\u00dc\1\u00d8"+
+        "\1\u00dd\7\67\1\uffff\2\67\1\uffff\2\67\2\uffff\1\67\1\u00ea\3\uffff"+
+        "\1\67\1\u00ec\3\uffff\1\67\1\u00ee\1\67\1\u00f0\1\67\1\u00f2\1\67"+
+        "\1\uffff\1\u00f4\3\67\1\uffff\1\67\1\uffff\1\u00f9\1\uffff\1\u00fa"+
+        "\1\uffff\1\67\1\uffff\1\u00fc\1\uffff\1\67\1\u00fe\2\67\2\uffff"+
+        "\1\67\1\uffff\1\67\1\uffff\1\u0103\1\u0104\2\67\2\uffff\1\u0107"+
+        "\1\67\1\uffff\1\u0109\1\uffff";
+    static final String DFA19_eofS =
+        "\u010a\uffff";
+    static final String DFA19_minS =
+        "\1\0\1\105\1\156\1\141\1\164\4\uffff\1\174\1\uffff\1\55\1\151\1"+
+        "\uffff\1\141\1\75\1\157\1\151\1\75\1\55\1\uffff\1\145\1\52\1\150"+
+        "\2\uffff\2\117\1\105\1\55\2\uffff\1\157\1\162\1\156\2\uffff\1\141"+
+        "\1\125\1\117\2\116\1\114\1\117\1\157\1\56\1\162\1\101\1\uffff\2"+
+        "\0\2\uffff\1\106\1\147\1\uffff\1\151\1\156\1\154\1\141\7\uffff\1"+
+        "\60\1\145\1\164\1\163\1\147\1\uffff\1\162\2\uffff\1\155\1\164\7"+
+        "\uffff\1\154\7\uffff\2\116\1\130\1\uffff\1\56\3\uffff\1\164\1\145"+
+        "\1\144\2\uffff\1\144\1\156\1\170\1\122\1\117\1\123\1\124\1\117\1"+
+        "\123\1\163\2\uffff\1\165\1\uffff\1\105\1\151\1\165\1\164\1\141\1"+
+        "\163\1\164\1\uffff\2\156\2\160\1\156\1\60\1\142\1\150\1\141\1\115"+
+        "\1\105\1\104\1\124\6\60\1\105\1\114\1\111\1\60\1\101\1\124\1\164"+
+        "\1\145\1\122\1\157\1\164\1\60\1\154\2\145\1\156\1\151\1\164\1\165"+
+        "\1\145\1\141\1\uffff\1\151\1\60\1\171\1\101\1\60\1\111\1\125\6\uffff"+
+        "\2\60\1\107\1\uffff\1\124\3\60\1\105\1\156\1\60\1\uffff\3\60\1\145"+
+        "\1\164\1\162\1\164\1\156\1\154\1\156\1\uffff\1\72\1\114\1\uffff"+
+        "\1\124\1\101\2\uffff\1\116\1\60\3\uffff\1\116\1\60\3\uffff\1\162"+
+        "\1\60\1\171\1\60\1\163\1\60\1\145\1\uffff\1\60\1\111\1\114\1\105"+
+        "\1\uffff\1\103\1\uffff\1\60\1\uffff\1\60\1\uffff\1\151\1\uffff\1"+
+        "\60\1\uffff\1\117\1\60\1\104\1\105\2\uffff\1\157\1\uffff\1\116\1"+
+        "\uffff\2\60\1\156\1\101\2\uffff\1\60\1\114\1\uffff\1\60\1\uffff";
+    static final String DFA19_maxS =
+        "\1\ufffe\1\145\1\156\1\151\1\164\4\uffff\1\174\1\uffff\2\165\1\uffff"+
+        "\1\141\1\75\1\157\1\151\1\76\1\75\1\uffff\1\145\1\57\1\150\2\uffff"+
+        "\2\117\1\105\1\71\2\uffff\1\157\1\162\1\156\2\uffff\1\157\1\125"+
+        "\1\117\2\116\1\114\1\117\1\157\1\146\1\162\1\172\1\uffff\2\ufffe"+
+        "\2\uffff\1\106\1\147\1\uffff\1\160\1\156\1\154\1\141\7\uffff\1\172"+
+        "\1\151\1\164\1\163\1\147\1\uffff\1\162\2\uffff\1\155\1\164\7\uffff"+
+        "\1\154\7\uffff\1\122\1\116\1\130\1\uffff\1\146\3\uffff\1\164\1\145"+
+        "\1\144\2\uffff\1\144\1\156\1\170\1\122\1\117\1\123\1\124\1\117\1"+
+        "\123\1\163\2\uffff\1\165\1\uffff\1\105\1\151\1\165\1\164\1\141\1"+
+        "\163\1\164\1\uffff\1\156\1\170\2\160\1\156\1\172\1\142\1\150\1\141"+
+        "\1\115\1\105\1\104\1\124\6\172\1\105\1\114\1\111\1\172\1\101\1\124"+
+        "\1\164\1\145\1\122\1\157\1\164\1\172\1\154\2\145\1\156\1\151\1\164"+
+        "\1\165\1\145\1\141\1\uffff\1\151\1\172\1\171\1\101\1\172\1\111\1"+
+        "\125\6\uffff\2\172\1\107\1\uffff\1\124\3\172\1\105\1\156\1\172\1"+
+        "\uffff\3\172\1\145\1\164\1\162\1\164\1\156\1\154\1\156\1\uffff\1"+
+        "\72\1\114\1\uffff\1\124\1\101\2\uffff\1\116\1\172\3\uffff\1\116"+
+        "\1\172\3\uffff\1\162\1\172\1\171\1\172\1\163\1\172\1\145\1\uffff"+
+        "\1\172\1\111\1\114\1\105\1\uffff\1\103\1\uffff\1\172\1\uffff\1\172"+
+        "\1\uffff\1\151\1\uffff\1\172\1\uffff\1\117\1\172\1\104\1\105\2\uffff"+
+        "\1\157\1\uffff\1\116\1\uffff\2\172\1\156\1\101\2\uffff\1\172\1\114"+
+        "\1\uffff\1\172\1\uffff";
+    static final String DFA19_acceptS =
+        "\5\uffff\1\5\1\6\1\7\1\10\1\uffff\1\12\2\uffff\1\17\6\uffff\1\32"+
+        "\3\uffff\1\36\1\37\4\uffff\1\47\1\50\3\uffff\1\60\1\62\13\uffff"+
+        "\1\101\2\uffff\1\105\1\106\2\uffff\1\101\4\uffff\1\5\1\6\1\7\1\10"+
+        "\1\11\1\12\1\45\5\uffff\1\17\1\uffff\1\21\1\22\2\uffff\1\51\1\53"+
+        "\1\30\1\46\1\52\1\31\1\32\1\uffff\1\104\1\103\1\34\1\35\1\105\1"+
+        "\36\1\37\3\uffff\1\44\1\uffff\1\61\1\47\1\50\3\uffff\1\60\1\62\12"+
+        "\uffff\1\76\1\77\1\uffff\1\102\7\uffff\1\56\50\uffff\1\20\7\uffff"+
+        "\1\54\1\55\1\57\1\63\1\74\1\73\3\uffff\1\67\7\uffff\1\2\12\uffff"+
+        "\1\27\2\uffff\1\72\2\uffff\1\64\1\65\2\uffff\1\71\1\75\1\100\2\uffff"+
+        "\1\23\1\3\1\4\7\uffff\1\33\4\uffff\1\70\1\uffff\1\1\1\uffff\1\15"+
+        "\1\uffff\1\24\1\uffff\1\25\1\uffff\1\40\4\uffff\1\14\1\13\1\uffff"+
+        "\1\26\1\uffff\1\43\4\uffff\1\66\1\42\2\uffff\1\16\1\uffff\1\41";
+    static final String DFA19_specialS =
+        "\u010a\uffff}>";
+    static final String[] DFA19_transitionS = {
+            "\11\64\2\63\2\64\1\63\22\64\1\27\1\64\1\61\1\24\3\64\1\62\1"+
+            "\30\1\31\1\44\1\43\1\5\1\35\1\64\1\26\12\55\1\17\1\6\1\22\1"+
+            "\37\1\23\1\36\1\64\1\60\1\47\1\33\2\60\1\52\1\60\1\53\1\51\4"+
+            "\60\1\32\1\60\1\46\1\60\1\1\1\4\1\34\1\50\5\60\1\10\1\64\1\12"+
+            "\1\57\1\60\1\64\1\42\1\60\1\20\1\25\1\60\1\3\1\60\1\54\1\2\3"+
+            "\60\1\45\1\40\1\13\1\41\2\60\1\14\1\56\1\60\1\16\1\21\3\60\1"+
+            "\7\1\11\1\15\uff81\64",
+            "\1\65\37\uffff\1\66",
+            "\1\70",
+            "\1\72\7\uffff\1\71",
+            "\1\73",
+            "",
+            "",
+            "",
+            "",
+            "\1\100",
+            "",
+            "\1\102\100\uffff\1\104\3\uffff\1\103\2\uffff\1\105",
+            "\1\107\13\uffff\1\106",
+            "",
+            "\1\111",
+            "\1\112",
+            "\1\114",
+            "\1\115",
+            "\1\116\1\117",
+            "\1\121\17\uffff\1\122",
+            "",
+            "\1\125",
+            "\1\127\4\uffff\1\126",
+            "\1\131",
+            "",
+            "",
+            "\1\135",
+            "\1\136",
+            "\1\137",
+            "\1\140\2\uffff\12\141",
+            "",
+            "",
+            "\1\145",
+            "\1\146",
+            "\1\147",
+            "",
+            "",
+            "\1\154\7\uffff\1\153\5\uffff\1\152",
+            "\1\155",
+            "\1\156",
+            "\1\157",
+            "\1\160",
+            "\1\161",
+            "\1\162",
+            "\1\163",
+            "\1\165\1\uffff\12\141\13\uffff\1\165\37\uffff\2\165",
+            "\1\166",
+            "\32\67\4\uffff\1\67\1\uffff\32\67",
+            "",
+            "\uffff\167",
+            "\uffff\167",
+            "",
+            "",
+            "\1\170",
+            "\1\171",
+            "",
+            "\1\173\6\uffff\1\172",
+            "\1\174",
+            "\1\175",
+            "\1\176",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "\12\67\7\uffff\32\67\4\uffff\1\67\1\uffff\32\67",
+            "\1\u0081\3\uffff\1\u0080",
+            "\1\u0082",
+            "\1\u0083",
+            "\1\u0084",
+            "",
+            "\1\u0085",
+            "",
+            "",
+            "\1\u0086",
+            "\1\u0087",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "\1\u0088",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "\1\u008a\3\uffff\1\u0089",
+            "\1\u008b",
+            "\1\u008c",
+            "",
+            "\1\165\1\uffff\12\141\13\uffff\1\165\37\uffff\2\165",
+            "",
+            "",
+            "",
+            "\1\u008d",
+            "\1\u008e",
+            "\1\u008f",
+            "",
+            "",
+            "\1\u0090",
+            "\1\u0091",
+            "\1\u0092",
+            "\1\u0093",
+            "\1\u0094",
+            "\1\u0095",
+            "\1\u0096",
+            "\1\u0097",
+            "\1\u0098",
+            "\1\u0099",
+            "",
+            "",
+            "\1\u009a",
+            "",
+            "\1\u009b",
+            "\1\u009c",
+            "\1\u009d",
+            "\1\u009e",
+            "\1\u009f",
+            "\1\u00a0",
+            "\1\u00a1",
+            "",
+            "\1\u00a2",
+            "\1\u00a4\11\uffff\1\u00a3",
+            "\1\u00a5",
+            "\1\u00a6",
+            "\1\u00a7",
+            "\12\67\7\uffff\32\67\4\uffff\1\67\1\uffff\32\67",
+            "\1\u00a9",
+            "\1\u00aa",
+            "\1\u00ab",
+            "\1\u00ac",
+            "\1\u00ad",
+            "\1\u00ae",
+            "\1\u00af",
+            "\12\67\7\uffff\32\67\4\uffff\1\67\1\uffff\32\67",
+            "\12\67\7\uffff\32\67\4\uffff\1\67\1\uffff\32\67",
+            "\12\67\7\uffff\32\67\4\uffff\1\67\1\uffff\32\67",
+            "\12\67\7\uffff\32\67\4\uffff\1\67\1\uffff\32\67",
+            "\12\67\7\uffff\32\67\4\uffff\1\67\1\uffff\32\67",
+            "\12\67\7\uffff\32\67\4\uffff\1\67\1\uffff\32\67",
+            "\1\u00b6",
+            "\1\u00b7",
+            "\1\u00b8",
+            "\12\67\7\uffff\32\67\4\uffff\1\67\1\uffff\32\67",
+            "\1\u00ba",
+            "\1\u00bb",
+            "\1\u00bc",
+            "\1\u00bd",
+            "\1\u00be",
+            "\1\u00bf",
+            "\1\u00c0",
+            "\12\67\7\uffff\32\67\4\uffff\1\67\1\uffff\32\67",
+            "\1\u00c2",
+            "\1\u00c3",
+            "\1\u00c4",
+            "\1\u00c5",
+            "\1\u00c6",
+            "\1\u00c7",
+            "\1\u00c8",
+            "\1\u00c9",
+            "\1\u00ca",
+            "",
+            "\1\u00cb",
+            "\12\67\7\uffff\32\67\4\uffff\1\67\1\uffff\32\67",
+            "\1\u00cd",
+            "\1\u00ce",
+            "\12\67\7\uffff\32\67\4\uffff\1\67\1\uffff\32\67",
+            "\1\u00d0",
+            "\1\u00d1",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "\12\67\7\uffff\32\67\4\uffff\1\67\1\uffff\32\67",
+            "\12\67\7\uffff\32\67\4\uffff\1\67\1\uffff\32\67",
+            "\1\u00d4",
+            "",
+            "\1\u00d5",
+            "\12\67\7\uffff\32\67\4\uffff\1\67\1\uffff\32\67",
+            "\12\67\7\uffff\32\67\4\uffff\1\67\1\uffff\32\67",
+            "\12\67\7\uffff\32\67\4\uffff\1\67\1\uffff\32\67",
+            "\1\u00d9",
+            "\1\u00da",
+            "\12\67\7\uffff\32\67\4\uffff\1\67\1\uffff\32\67",
+            "",
+            "\12\67\7\uffff\32\67\4\uffff\1\67\1\uffff\32\67",
+            "\12\67\7\uffff\32\67\4\uffff\1\67\1\uffff\32\67",
+            "\12\67\7\uffff\32\67\4\uffff\1\67\1\uffff\32\67",
+            "\1\u00de",
+            "\1\u00df",
+            "\1\u00e0",
+            "\1\u00e1",
+            "\1\u00e2",
+            "\1\u00e3",
+            "\1\u00e4",
+            "",
+            "\1\u00e5",
+            "\1\u00e6",
+            "",
+            "\1\u00e7",
+            "\1\u00e8",
+            "",
+            "",
+            "\1\u00e9",
+            "\12\67\7\uffff\32\67\4\uffff\1\67\1\uffff\32\67",
+            "",
+            "",
+            "",
+            "\1\u00eb",
+            "\12\67\7\uffff\32\67\4\uffff\1\67\1\uffff\32\67",
+            "",
+            "",
+            "",
+            "\1\u00ed",
+            "\12\67\7\uffff\32\67\4\uffff\1\67\1\uffff\32\67",
+            "\1\u00ef",
+            "\12\67\7\uffff\32\67\4\uffff\1\67\1\uffff\32\67",
+            "\1\u00f1",
+            "\12\67\7\uffff\32\67\4\uffff\1\67\1\uffff\32\67",
+            "\1\u00f3",
+            "",
+            "\12\67\7\uffff\32\67\4\uffff\1\67\1\uffff\32\67",
+            "\1\u00f5",
+            "\1\u00f6",
+            "\1\u00f7",
+            "",
+            "\1\u00f8",
+            "",
+            "\12\67\7\uffff\32\67\4\uffff\1\67\1\uffff\32\67",
+            "",
+            "\12\67\7\uffff\32\67\4\uffff\1\67\1\uffff\32\67",
+            "",
+            "\1\u00fb",
+            "",
+            "\12\67\7\uffff\32\67\4\uffff\1\67\1\uffff\32\67",
+            "",
+            "\1\u00fd",
+            "\12\67\7\uffff\32\67\4\uffff\1\67\1\uffff\32\67",
+            "\1\u00ff",
+            "\1\u0100",
+            "",
+            "",
+            "\1\u0101",
+            "",
+            "\1\u0102",
+            "",
+            "\12\67\7\uffff\32\67\4\uffff\1\67\1\uffff\32\67",
+            "\12\67\7\uffff\32\67\4\uffff\1\67\1\uffff\32\67",
+            "\1\u0105",
+            "\1\u0106",
+            "",
+            "",
+            "\12\67\7\uffff\32\67\4\uffff\1\67\1\uffff\32\67",
+            "\1\u0108",
+            "",
+            "\12\67\7\uffff\32\67\4\uffff\1\67\1\uffff\32\67",
+            ""
+    };
 
-    private int mTokensHelper017() throws RecognitionException {
-        int LA12_17 = input.LA(2);
+    static final short[] DFA19_eot = DFA.unpackEncodedString(DFA19_eotS);
+    static final short[] DFA19_eof = DFA.unpackEncodedString(DFA19_eofS);
+    static final char[] DFA19_min = DFA.unpackEncodedStringToUnsignedChars(DFA19_minS);
+    static final char[] DFA19_max = DFA.unpackEncodedStringToUnsignedChars(DFA19_maxS);
+    static final short[] DFA19_accept = DFA.unpackEncodedString(DFA19_acceptS);
+    static final short[] DFA19_special = DFA.unpackEncodedString(DFA19_specialS);
+    static final short[][] DFA19_transition;
 
-        if ( (LA12_17=='i') ) {
-            int LA12_80 = input.LA(3);
-
-            if ( (LA12_80=='t') ) {
-                int LA12_139 = input.LA(4);
-
-                if ( (LA12_139=='h') ) {
-                    int LA12_174 = input.LA(5);
-
-                    if ( ((LA12_174>='0' && LA12_174<='9')||(LA12_174>='A' && LA12_174<='Z')||LA12_174=='_'||(LA12_174>='a' && LA12_174<='z')) ) {
-                        return 67;
-                    }
-                    else {
-                        return 23;}
-                }
-                else {
-                    return 67;}
-            }
-            else {
-                return 67;}
+    static {
+        int numStates = DFA19_transitionS.length;
+        DFA19_transition = new short[numStates][];
+        for (int i=0; i<numStates; i++) {
+            DFA19_transition[i] = DFA.unpackEncodedString(DFA19_transitionS[i]);
         }
-        else {
-            return 67;}
     }
 
-    private int mTokensHelper018() throws RecognitionException {
-        switch ( input.LA(2) ) {
-        case '>':
-            {
-            return 48;
-            }
-        case '=':
-            {
-            return 46;
-            }
-        default:
-            return 24;}
+    class DFA19 extends DFA {
 
-    }
-
-    private int mTokensHelper019() throws RecognitionException {
-        switch ( input.LA(2) ) {
-        case '=':
-            {
-            return 47;
-            }
-        case '-':
-            {
-            return 44;
-            }
-        default:
-            return 25;}
-
-    }
-
-    private int mTokensHelper020() throws RecognitionException {
-        return 26;
-    }
-
-    private int mTokensHelper021() throws RecognitionException {
-        int LA12_21 = input.LA(2);
-
-        if ( (LA12_21=='e') ) {
-            int LA12_88 = input.LA(3);
-
-            if ( (LA12_88=='l') ) {
-                int LA12_140 = input.LA(4);
-
-                if ( (LA12_140=='a') ) {
-                    int LA12_175 = input.LA(5);
-
-                    if ( (LA12_175=='y') ) {
-                        int LA12_209 = input.LA(6);
-
-                        if ( (LA12_209==':') ) {
-                            return 27;
-                        }
-                        else {
-                            return 67;}
-                    }
-                    else {
-                        return 67;}
-                }
-                else {
-                    return 67;}
-            }
-            else {
-                return 67;}
+        public DFA19(BaseRecognizer recognizer) {
+            this.recognizer = recognizer;
+            this.decisionNumber = 19;
+            this.eot = DFA19_eot;
+            this.eof = DFA19_eof;
+            this.min = DFA19_min;
+            this.max = DFA19_max;
+            this.accept = DFA19_accept;
+            this.special = DFA19_special;
+            this.transition = DFA19_transition;
         }
-        else {
-            return 67;}
-    }
-
-    private int mTokensHelper022() throws RecognitionException {
-        switch ( input.LA(2) ) {
-        case '/':
-            {
-            return 71;
-            }
-        case '*':
-            {
-            return 70;
-            }
-        default:
-            return 28;}
-
-    }
-
-    private int mTokensHelper023() throws RecognitionException {
-        int LA12_23 = input.LA(2);
-
-        if ( (LA12_23=='h') ) {
-            return 29;
+        public String getDescription() {
+            return "1:1: Tokens : ( T13 | T14 | T15 | T16 | T17 | T18 | T19 | T20 | T21 | T22 | T23 | T24 | T25 | T26 | T27 | T28 | T29 | T30 | T31 | T32 | T33 | T34 | T35 | T36 | T37 | T38 | T39 | T40 | T41 | T42 | T43 | T44 | T45 | T46 | T47 | T48 | T49 | T50 | T51 | T52 | T53 | T54 | T55 | T56 | T57 | T58 | T59 | T60 | T61 | T62 | T63 | T64 | T65 | T66 | T67 | T68 | T69 | T70 | T71 | T72 | T73 | RULE_INT | RULE_FLOAT | RULE_BOOLEAN | RULE_ID | RULE_STRING | RULE_ML_COMMENT | RULE_SL_COMMENT | RULE_WS | RULE_ANY_OTHER );";
         }
-        else {
-            return 72;}
     }
-
-    private int mTokensHelper024() throws RecognitionException {
-        return 30;
-    }
-
-    private int mTokensHelper025() throws RecognitionException {
-        return 31;
-    }
-
-    private int mTokensHelper026() throws RecognitionException {
-        int LA12_26 = input.LA(2);
-
-        if ( (LA12_26=='-') ) {
-            return 42;
-        }
-        else {
-            return 32;}
-    }
-
-    private int mTokensHelper027() throws RecognitionException {
-        return 33;
-    }
-
-    private int mTokensHelper028() throws RecognitionException {
-        int LA12_28 = input.LA(2);
-
-        if ( ((LA12_28>='0' && LA12_28<='9')||(LA12_28>='A' && LA12_28<='Z')||LA12_28=='_'||(LA12_28>='a' && LA12_28<='z')) ) {
-            return 67;
-        }
-        else {
-            return 34;}
-    }
-
-    private int mTokensHelper029() throws RecognitionException {
-        int LA12_29 = input.LA(2);
-
-        if ( ((LA12_29>='0' && LA12_29<='9')||(LA12_29>='A' && LA12_29<='Z')||LA12_29=='_'||(LA12_29>='a' && LA12_29<='z')) ) {
-            return 67;
-        }
-        else {
-            return 35;}
-    }
-
-    private int mTokensHelper030() throws RecognitionException {
-        int LA12_30 = input.LA(2);
-
-        if ( (LA12_30=='r') ) {
-            int LA12_101 = input.LA(3);
-
-            if ( (LA12_101=='u') ) {
-                int LA12_141 = input.LA(4);
-
-                if ( (LA12_141=='e') ) {
-                    int LA12_176 = input.LA(5);
-
-                    if ( ((LA12_176>='0' && LA12_176<='9')||(LA12_176>='A' && LA12_176<='Z')||LA12_176=='_'||(LA12_176>='a' && LA12_176<='z')) ) {
-                        return 67;
-                    }
-                    else {
-                        return 36;}
-                }
-                else {
-                    return 67;}
-            }
-            else {
-                return 67;}
-        }
-        else {
-            return 67;}
-    }
-
-    private int mTokensHelper031() throws RecognitionException {
-        int LA12_31 = input.LA(2);
-
-        if ( (LA12_31=='O') ) {
-            switch ( input.LA(3) ) {
-            case 'R':
-                {
-                int LA12_142 = input.LA(4);
-
-                if ( (LA12_142=='M') ) {
-                    int LA12_177 = input.LA(5);
-
-                    if ( (LA12_177=='A') ) {
-                        int LA12_211 = input.LA(6);
-
-                        if ( (LA12_211=='L') ) {
-                            int LA12_235 = input.LA(7);
-
-                            if ( ((LA12_235>='0' && LA12_235<='9')||(LA12_235>='A' && LA12_235<='Z')||LA12_235=='_'||(LA12_235>='a' && LA12_235<='z')) ) {
-                                return 67;
-                            }
-                            else {
-                                return 38;}
-                        }
-                        else {
-                            return 67;}
-                    }
-                    else {
-                        return 67;}
-                }
-                else {
-                    return 67;}
-                }
-            case 'N':
-                {
-                int LA12_143 = input.LA(4);
-
-                if ( (LA12_143=='E') ) {
-                    int LA12_178 = input.LA(5);
-
-                    if ( ((LA12_178>='0' && LA12_178<='9')||(LA12_178>='A' && LA12_178<='Z')||LA12_178=='_'||(LA12_178>='a' && LA12_178<='z')) ) {
-                        return 67;
-                    }
-                    else {
-                        return 63;}
-                }
-                else {
-                    return 67;}
-                }
-            default:
-                return 67;}
-
-        }
-        else {
-            return 67;}
-    }
-
-    private int mTokensHelper032() throws RecognitionException {
-        int LA12_32 = input.LA(2);
-
-        if ( (LA12_32=='O') ) {
-            int LA12_103 = input.LA(3);
-
-            if ( (LA12_103=='N') ) {
-                int LA12_144 = input.LA(4);
-
-                if ( (LA12_144=='D') ) {
-                    int LA12_179 = input.LA(5);
-
-                    if ( (LA12_179=='I') ) {
-                        int LA12_213 = input.LA(6);
-
-                        if ( (LA12_213=='T') ) {
-                            int LA12_236 = input.LA(7);
-
-                            if ( (LA12_236=='I') ) {
-                                int LA12_250 = input.LA(8);
-
-                                if ( (LA12_250=='O') ) {
-                                    int LA12_258 = input.LA(9);
-
-                                    if ( (LA12_258=='N') ) {
-                                        int LA12_263 = input.LA(10);
-
-                                        if ( (LA12_263=='A') ) {
-                                            int LA12_267 = input.LA(11);
-
-                                            if ( (LA12_267=='L') ) {
-                                                int LA12_269 = input.LA(12);
-
-                                                if ( ((LA12_269>='0' && LA12_269<='9')||(LA12_269>='A' && LA12_269<='Z')||LA12_269=='_'||(LA12_269>='a' && LA12_269<='z')) ) {
-                                                    return 67;
-                                                }
-                                                else {
-                                                    return 39;}
-                                            }
-                                            else {
-                                                return 67;}
-                                        }
-                                        else {
-                                            return 67;}
-                                    }
-                                    else {
-                                        return 67;}
-                                }
-                                else {
-                                    return 67;}
-                            }
-                            else {
-                                return 67;}
-                        }
-                        else {
-                            return 67;}
-                    }
-                    else {
-                        return 67;}
-                }
-                else {
-                    return 67;}
-            }
-            else {
-                return 67;}
-        }
-        else {
-            return 67;}
-    }
-
-    private int mTokensHelper033() throws RecognitionException {
-        int LA12_33 = input.LA(2);
-
-        if ( (LA12_33=='E') ) {
-            int LA12_104 = input.LA(3);
-
-            if ( (LA12_104=='X') ) {
-                int LA12_145 = input.LA(4);
-
-                if ( (LA12_145=='T') ) {
-                    int LA12_180 = input.LA(5);
-
-                    if ( (LA12_180=='U') ) {
-                        int LA12_214 = input.LA(6);
-
-                        if ( (LA12_214=='A') ) {
-                            int LA12_237 = input.LA(7);
-
-                            if ( (LA12_237=='L') ) {
-                                int LA12_251 = input.LA(8);
-
-                                if ( ((LA12_251>='0' && LA12_251<='9')||(LA12_251>='A' && LA12_251<='Z')||LA12_251=='_'||(LA12_251>='a' && LA12_251<='z')) ) {
-                                    return 67;
-                                }
-                                else {
-                                    return 41;}
-                            }
-                            else {
-                                return 67;}
-                        }
-                        else {
-                            return 67;}
-                    }
-                    else {
-                        return 67;}
-                }
-                else {
-                    return 67;}
-            }
-            else {
-                return 67;}
-        }
-        else {
-            return 67;}
-    }
-
-    private int mTokensHelper034() throws RecognitionException {
-        return 45;
-    }
-
-    private int mTokensHelper035() throws RecognitionException {
-        int LA12_35 = input.LA(2);
-
-        if ( (LA12_35=='r') ) {
-            int LA12_106 = input.LA(3);
-
-            if ( (LA12_106=='e') ) {
-                int LA12_146 = input.LA(4);
-
-                if ( ((LA12_146>='0' && LA12_146<='9')||(LA12_146>='A' && LA12_146<='Z')||LA12_146=='_'||(LA12_146>='a' && LA12_146<='z')) ) {
-                    return 67;
-                }
-                else {
-                    return 49;}
-            }
-            else {
-                return 67;}
-        }
-        else {
-            return 67;}
-    }
-
-    private int mTokensHelper036() throws RecognitionException {
-        int LA12_36 = input.LA(2);
-
-        if ( (LA12_36=='n') ) {
-            int LA12_107 = input.LA(3);
-
-            if ( (LA12_107=='d') ) {
-                int LA12_147 = input.LA(4);
-
-                if ( ((LA12_147>='0' && LA12_147<='9')||(LA12_147>='A' && LA12_147<='Z')||LA12_147=='_'||(LA12_147>='a' && LA12_147<='z')) ) {
-                    return 67;
-                }
-                else {
-                    return 51;}
-            }
-            else {
-                return 67;}
-        }
-        else {
-            return 67;}
-    }
-
-    private int mTokensHelper037() throws RecognitionException {
-        int LA12_37 = input.LA(2);
-
-        if ( (LA12_37=='o') ) {
-            int LA12_108 = input.LA(3);
-
-            if ( (LA12_108=='t') ) {
-                int LA12_148 = input.LA(4);
-
-                if ( ((LA12_148>='0' && LA12_148<='9')||(LA12_148>='A' && LA12_148<='Z')||LA12_148=='_'||(LA12_148>='a' && LA12_148<='z')) ) {
-                    return 67;
-                }
-                else {
-                    return 52;}
-            }
-            else {
-                return 67;}
-        }
-        else {
-            return 67;}
-    }
-
-    private int mTokensHelper038() throws RecognitionException {
-        return 53;
-    }
-
-    private int mTokensHelper039() throws RecognitionException {
-        return 54;
-    }
-
-    private int mTokensHelper040() throws RecognitionException {
-        switch ( input.LA(2) ) {
-        case 'o':
-            {
-            int LA12_111 = input.LA(3);
-
-            if ( (LA12_111=='d') ) {
-                int LA12_149 = input.LA(4);
-
-                if ( ((LA12_149>='0' && LA12_149<='9')||(LA12_149>='A' && LA12_149<='Z')||LA12_149=='_'||(LA12_149>='a' && LA12_149<='z')) ) {
-                    return 67;
-                }
-                else {
-                    return 55;}
-            }
-            else {
-                return 67;}
-            }
-        case 'a':
-            {
-            int LA12_112 = input.LA(3);
-
-            if ( (LA12_112=='x') ) {
-                int LA12_150 = input.LA(4);
-
-                if ( ((LA12_150>='0' && LA12_150<='9')||(LA12_150>='A' && LA12_150<='Z')||LA12_150=='_'||(LA12_150>='a' && LA12_150<='z')) ) {
-                    return 67;
-                }
-                else {
-                    return 64;}
-            }
-            else {
-                return 67;}
-            }
-        case 'i':
-            {
-            int LA12_113 = input.LA(3);
-
-            if ( (LA12_113=='n') ) {
-                int LA12_151 = input.LA(4);
-
-                if ( ((LA12_151>='0' && LA12_151<='9')||(LA12_151>='A' && LA12_151<='Z')||LA12_151=='_'||(LA12_151>='a' && LA12_151<='z')) ) {
-                    return 67;
-                }
-                else {
-                    return 65;}
-            }
-            else {
-                return 67;}
-            }
-        default:
-            return 67;}
-
-    }
-
-    private int mTokensHelper041() throws RecognitionException {
-        return 56;
-    }
-
-    private int mTokensHelper042() throws RecognitionException {
-        int LA12_42 = input.LA(2);
-
-        if ( (LA12_42=='U') ) {
-            int LA12_115 = input.LA(3);
-
-            if ( (LA12_115=='R') ) {
-                int LA12_152 = input.LA(4);
-
-                if ( (LA12_152=='E') ) {
-                    int LA12_187 = input.LA(5);
-
-                    if ( ((LA12_187>='0' && LA12_187<='9')||(LA12_187>='A' && LA12_187<='Z')||LA12_187=='_'||(LA12_187>='a' && LA12_187<='z')) ) {
-                        return 67;
-                    }
-                    else {
-                        return 57;}
-                }
-                else {
-                    return 67;}
-            }
-            else {
-                return 67;}
-        }
-        else {
-            return 67;}
-    }
-
-    private int mTokensHelper043() throws RecognitionException {
-        int LA12_43 = input.LA(2);
-
-        if ( (LA12_43=='O') ) {
-            int LA12_116 = input.LA(3);
-
-            if ( (LA12_116=='O') ) {
-                int LA12_153 = input.LA(4);
-
-                if ( (LA12_153=='L') ) {
-                    int LA12_188 = input.LA(5);
-
-                    if ( ((LA12_188>='0' && LA12_188<='9')||(LA12_188>='A' && LA12_188<='Z')||LA12_188=='_'||(LA12_188>='a' && LA12_188<='z')) ) {
-                        return 67;
-                    }
-                    else {
-                        return 58;}
-                }
-                else {
-                    return 67;}
-            }
-            else {
-                return 67;}
-        }
-        else {
-            return 67;}
-    }
-
-    private int mTokensHelper044() throws RecognitionException {
-        int LA12_44 = input.LA(2);
-
-        if ( (LA12_44=='N') ) {
-            int LA12_117 = input.LA(3);
-
-            if ( (LA12_117=='S') ) {
-                int LA12_154 = input.LA(4);
-
-                if ( (LA12_154=='I') ) {
-                    int LA12_189 = input.LA(5);
-
-                    if ( (LA12_189=='G') ) {
-                        int LA12_217 = input.LA(6);
-
-                        if ( (LA12_217=='N') ) {
-                            int LA12_238 = input.LA(7);
-
-                            if ( (LA12_238=='E') ) {
-                                int LA12_252 = input.LA(8);
-
-                                if ( (LA12_252=='D') ) {
-                                    int LA12_260 = input.LA(9);
-
-                                    if ( ((LA12_260>='0' && LA12_260<='9')||(LA12_260>='A' && LA12_260<='Z')||LA12_260=='_'||(LA12_260>='a' && LA12_260<='z')) ) {
-                                        return 67;
-                                    }
-                                    else {
-                                        return 59;}
-                                }
-                                else {
-                                    return 67;}
-                            }
-                            else {
-                                return 67;}
-                        }
-                        else {
-                            return 67;}
-                    }
-                    else {
-                        return 67;}
-                }
-                else {
-                    return 67;}
-            }
-            else {
-                return 67;}
-        }
-        else {
-            return 67;}
-    }
-
-    private int mTokensHelper045() throws RecognitionException {
-        int LA12_45 = input.LA(2);
-
-        if ( (LA12_45=='N') ) {
-            int LA12_118 = input.LA(3);
-
-            if ( (LA12_118=='T') ) {
-                int LA12_155 = input.LA(4);
-
-                if ( ((LA12_155>='0' && LA12_155<='9')||(LA12_155>='A' && LA12_155<='Z')||LA12_155=='_'||(LA12_155>='a' && LA12_155<='z')) ) {
-                    return 67;
-                }
-                else {
-                    return 60;}
-            }
-            else {
-                return 67;}
-        }
-        else {
-            return 67;}
-    }
-
-    private int mTokensHelper046() throws RecognitionException {
-        int LA12_46 = input.LA(2);
-
-        if ( (LA12_46=='L') ) {
-            int LA12_119 = input.LA(3);
-
-            if ( (LA12_119=='O') ) {
-                int LA12_156 = input.LA(4);
-
-                if ( (LA12_156=='A') ) {
-                    int LA12_191 = input.LA(5);
-
-                    if ( (LA12_191=='T') ) {
-                        int LA12_218 = input.LA(6);
-
-                        if ( ((LA12_218>='0' && LA12_218<='9')||(LA12_218>='A' && LA12_218<='Z')||LA12_218=='_'||(LA12_218>='a' && LA12_218<='z')) ) {
-                            return 67;
-                        }
-                        else {
-                            return 61;}
-                    }
-                    else {
-                        return 67;}
-                }
-                else {
-                    return 67;}
-            }
-            else {
-                return 67;}
-        }
-        else {
-            return 67;}
-    }
-
-    private int mTokensHelper047() throws RecognitionException {
-        int LA12_47 = input.LA(2);
-
-        if ( (LA12_47=='O') ) {
-            int LA12_120 = input.LA(3);
-
-            if ( (LA12_120=='S') ) {
-                int LA12_157 = input.LA(4);
-
-                if ( (LA12_157=='T') ) {
-                    int LA12_192 = input.LA(5);
-
-                    if ( ((LA12_192>='0' && LA12_192<='9')||(LA12_192>='A' && LA12_192<='Z')||LA12_192=='_'||(LA12_192>='a' && LA12_192<='z')) ) {
-                        return 67;
-                    }
-                    else {
-                        return 62;}
-                }
-                else {
-                    return 67;}
-            }
-            else {
-                return 67;}
-        }
-        else {
-            return 67;}
-    }
-
-    private int mTokensHelper048() throws RecognitionException {
-        int LA12_48 = input.LA(2);
-
-        if ( (LA12_48=='o') ) {
-            int LA12_121 = input.LA(3);
-
-            if ( (LA12_121=='s') ) {
-                int LA12_158 = input.LA(4);
-
-                if ( (LA12_158=='t') ) {
-                    int LA12_193 = input.LA(5);
-
-                    if ( ((LA12_193>='0' && LA12_193<='9')||(LA12_193>='A' && LA12_193<='Z')||LA12_193=='_'||(LA12_193>='a' && LA12_193<='z')) ) {
-                        return 67;
-                    }
-                    else {
-                        return 66;}
-                }
-                else {
-                    return 67;}
-            }
-            else {
-                return 67;}
-        }
-        else {
-            return 67;}
-    }
-
-    private int mTokensHelper049() throws RecognitionException {
-        int LA12_49 = input.LA(2);
-
-        if ( ((LA12_49>='A' && LA12_49<='Z')||LA12_49=='_'||(LA12_49>='a' && LA12_49<='z')) ) {
-            return 67;
-        }
-        else {
-            return 73;}
-    }
-
-    private int mTokensHelper050() throws RecognitionException {
-        return 67;
-    }
-
-    private int mTokensHelper051() throws RecognitionException {
-        return 68;
-    }
-
-    private int mTokensHelper052() throws RecognitionException {
-        int LA12_52 = input.LA(2);
-
-        if ( ((LA12_52>='\u0000' && LA12_52<='\uFFFE')) ) {
-            return 69;
-        }
-        else {
-            return 73;}
-    }
-
-    private int mTokensHelper053() throws RecognitionException {
-        int LA12_53 = input.LA(2);
-
-        if ( ((LA12_53>='\u0000' && LA12_53<='\uFFFE')) ) {
-            return 69;
-        }
-        else {
-            return 73;}
-    }
-
-    private int mTokensHelper054() throws RecognitionException {
-        return 72;
-    }
-
-    private int mTokensHelper055() throws RecognitionException {
-        return 73;
-    }
-
-    private int mTokensHelper056() throws RecognitionException {
-        NoViableAltException nvae =
-            new NoViableAltException("1:1: Tokens : ( T11 | T12 | T13 | T14 | T15 | T16 | T17 | T18 | T19 | T20 | T21 | T22 | T23 | T24 | T25 | T26 | T27 | T28 | T29 | T30 | T31 | T32 | T33 | T34 | T35 | T36 | T37 | T38 | T39 | T40 | T41 | T42 | T43 | T44 | T45 | T46 | T47 | T48 | T49 | T50 | T51 | T52 | T53 | T54 | T55 | T56 | T57 | T58 | T59 | T60 | T61 | T62 | T63 | T64 | T65 | T66 | T67 | T68 | T69 | T70 | T71 | T72 | T73 | T74 | T75 | T76 | RULE_ID | RULE_INT | RULE_STRING | RULE_ML_COMMENT | RULE_SL_COMMENT | RULE_WS | RULE_ANY_OTHER );", 12, 0, input);
-
-        throw nvae;
-    }
-
-
-
  
 
 }
