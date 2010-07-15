@@ -15,6 +15,7 @@
 package de.cau.cs.kieler.synccharts.custom;
 
 import org.eclipse.draw2d.ColorConstants;
+import org.eclipse.draw2d.Graphics;
 import org.eclipse.draw2d.IFigure;
 import org.eclipse.draw2d.LayoutManager;
 import org.eclipse.draw2d.RoundedRectangle;
@@ -114,7 +115,7 @@ public class AttributeAwareStateFigure extends AttributeAwareSwitchFigure {
         IFigure initialFinalFigure = createInitialFinalFigure();
         /* create even more normal figures to trigger layoutmanager via 
          * notifyChanged if statetype changed */
-        IFigure referenceFigure = createNormalFigure();
+        IFigure referenceFigure = createReferenceFigure();
         IFigure textualfigure = createNormalFigure();
 
         // Set default and current figure
@@ -131,6 +132,48 @@ public class AttributeAwareStateFigure extends AttributeAwareSwitchFigure {
         addConditionalFigure(referenceFigure, COND_REFERENCE);
         addConditionalFigure(textualfigure, COND_TEXTUAL);
         addConditionalFigure(normalFigure, COND_SIMPLE);
+    }
+
+    /**
+     * Create a figure for reference States.
+     * 
+     * @return a figure for reference States
+     */
+    private IFigure createReferenceFigure() {
+        RoundedRectangle figure = new RoundedRectangle() {
+            @Override
+            protected void outlineShape(final Graphics graphics) {
+                float lineInset = Math.max(1.0f, getLineWidthFloat()) / 2.0f;
+                int inset1 = (int) Math.floor(lineInset);
+                int inset2 = (int) Math.ceil(lineInset);
+
+                Rectangle r = Rectangle.SINGLETON.setBounds(getBounds());
+                r.x += inset1;
+                r.y += inset1;
+                r.width -= inset1 + inset2;
+                r.height -= inset1 + inset2;
+
+                graphics.drawRoundRectangle(r,
+                        Math.max(0, corner.width - (int) lineInset),
+                        Math.max(0, corner.height - (int) lineInset));
+
+                int width = 17;
+                int refX = r.x + r.width / 2 - width / 2;
+                int refY = r.y + r.height - 20;
+
+                graphics.setForegroundColor(ColorConstants.white);
+                graphics.fillOval(refX, refY, width, width);
+                graphics.setForegroundColor(ColorConstants.black);
+                graphics.drawOval(refX, refY, width, width);
+                graphics.drawString("@", refX + 2, refY);
+            }
+        };
+        figure.setCornerDimensions(new Dimension(StateLayout.MIN_WIDTH,
+                StateLayout.MIN_HEIGHT));
+        figure.setFill(false);
+        figure.setLineWidth(1);
+        figure.setForegroundColor(ColorConstants.black);
+        return figure;
     }
 
     /**
