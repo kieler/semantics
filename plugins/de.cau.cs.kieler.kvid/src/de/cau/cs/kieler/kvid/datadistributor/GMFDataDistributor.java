@@ -1,6 +1,5 @@
 package de.cau.cs.kieler.kvid.datadistributor;
 
-import java.awt.Color;
 import java.util.Collection;
 import java.util.HashMap;
 
