@@ -251,11 +251,11 @@ public class AttributeAwareStateFigure extends AttributeAwareSwitchFigure {
 
         graphics.setForegroundColor(ColorConstants.white);
         graphics.fillOval(refX, refY, width, width);
-        graphics.setLineWidthFloat(1.0f);
+        // graphics.setLineWidthFloat(1.0f);
         graphics.setForegroundColor(ColorConstants.black);
-        graphics.drawOval(refX, refY, width, width);
+        // graphics.drawOval(refX, refY, width, width);
         graphics.drawString("@", refX + 2, refY);
-        graphics.setLineWidthFloat(lineWidthFloat);
+        // graphics.setLineWidthFloat(lineWidthFloat);
     }
 
     /**
