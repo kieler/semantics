@@ -17,6 +17,74 @@ import de.cau.cs.kieler.core.expressions.services.ExpressionsGrammarAccess;
 public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	
 	
+	public class TransitionElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Transition");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Action cTransitionAction_0 = (Action)cGroup.eContents().get(0);
+		private final Assignment cIsImmediateAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final Keyword cIsImmediateNumberSignKeyword_1_0 = (Keyword)cIsImmediateAssignment_1.eContents().get(0);
+		private final Assignment cDelayAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final RuleCall cDelayINTTerminalRuleCall_2_0 = (RuleCall)cDelayAssignment_2.eContents().get(0);
+		private final Assignment cTriggerAssignment_3 = (Assignment)cGroup.eContents().get(3);
+		private final RuleCall cTriggerBooleanExpressionParserRuleCall_3_0 = (RuleCall)cTriggerAssignment_3.eContents().get(0);
+		private final Group cGroup_4 = (Group)cGroup.eContents().get(4);
+		private final Keyword cSolidusKeyword_4_0 = (Keyword)cGroup_4.eContents().get(0);
+		private final Group cGroup_4_1 = (Group)cGroup_4.eContents().get(1);
+		private final Assignment cEffectsAssignment_4_1_0 = (Assignment)cGroup_4_1.eContents().get(0);
+		private final RuleCall cEffectsEffectParserRuleCall_4_1_0_0 = (RuleCall)cEffectsAssignment_4_1_0.eContents().get(0);
+		private final Keyword cCommaKeyword_4_1_1 = (Keyword)cGroup_4_1.eContents().get(1);
+		
+		//// haf: We need a Rule for transitions in order to serialize them
+		//// here we only want to have the features isImmediate, delay, trigger and effects
+		//// the features type, targetState, priority, isHistory are ignored and set as transient
+		//// you need to override the rule to support transitions properly
+		//Transition returns synccharts::Transition:
+		//	{synccharts::Transition} isImmediate?="#"? delay=INT? trigger=BooleanExpression? ("/" (effects+=Effect ","?)*)?;
+		public ParserRule getRule() { return rule; }
+
+		//{synccharts::Transition} isImmediate?="#"? delay=INT? trigger=BooleanExpression? ("/" (effects+=Effect ","?)*)?
+		public Group getGroup() { return cGroup; }
+
+		//{synccharts::Transition}
+		public Action getTransitionAction_0() { return cTransitionAction_0; }
+
+		//isImmediate?="#"?
+		public Assignment getIsImmediateAssignment_1() { return cIsImmediateAssignment_1; }
+
+		//"#"
+		public Keyword getIsImmediateNumberSignKeyword_1_0() { return cIsImmediateNumberSignKeyword_1_0; }
+
+		//delay=INT?
+		public Assignment getDelayAssignment_2() { return cDelayAssignment_2; }
+
+		//INT
+		public RuleCall getDelayINTTerminalRuleCall_2_0() { return cDelayINTTerminalRuleCall_2_0; }
+
+		//trigger=BooleanExpression?
+		public Assignment getTriggerAssignment_3() { return cTriggerAssignment_3; }
+
+		//BooleanExpression
+		public RuleCall getTriggerBooleanExpressionParserRuleCall_3_0() { return cTriggerBooleanExpressionParserRuleCall_3_0; }
+
+		//("/" (effects+=Effect ","?)*)?
+		public Group getGroup_4() { return cGroup_4; }
+
+		//"/"
+		public Keyword getSolidusKeyword_4_0() { return cSolidusKeyword_4_0; }
+
+		//(effects+=Effect ","?)*
+		public Group getGroup_4_1() { return cGroup_4_1; }
+
+		//effects+=Effect
+		public Assignment getEffectsAssignment_4_1_0() { return cEffectsAssignment_4_1_0; }
+
+		//Effect
+		public RuleCall getEffectsEffectParserRuleCall_4_1_0_0() { return cEffectsEffectParserRuleCall_4_1_0_0; }
+
+		//","?
+		public Keyword getCommaKeyword_4_1_1() { return cCommaKeyword_4_1_1; }
+	}
+
 	public class ActionElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Action");
 		private final Group cGroup = (Group)rule.eContents().get(1);
@@ -262,6 +330,7 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	
+	private TransitionElements pTransition;
 	private ActionElements pAction;
 	private EffectElements pEffect;
 	private EmissionElements pEmission;
@@ -289,6 +358,20 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	
+	//// haf: We need a Rule for transitions in order to serialize them
+	//// here we only want to have the features isImmediate, delay, trigger and effects
+	//// the features type, targetState, priority, isHistory are ignored and set as transient
+	//// you need to override the rule to support transitions properly
+	//Transition returns synccharts::Transition:
+	//	{synccharts::Transition} isImmediate?="#"? delay=INT? trigger=BooleanExpression? ("/" (effects+=Effect ","?)*)?;
+	public TransitionElements getTransitionAccess() {
+		return (pTransition != null) ? pTransition : (pTransition = new TransitionElements());
+	}
+	
+	public ParserRule getTransitionRule() {
+		return getTransitionAccess().getRule();
+	}
+
 	//Action returns synccharts::Action:
 	//	{synccharts::Action} isImmediate?="#"? delay=INT? trigger=BooleanExpression? ("/" (effects+=Effect ","?)*)?;
 	public ActionElements getActionAccess() {

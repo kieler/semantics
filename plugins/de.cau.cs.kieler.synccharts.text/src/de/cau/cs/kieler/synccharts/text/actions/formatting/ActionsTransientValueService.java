@@ -25,14 +25,12 @@ import de.cau.cs.kieler.synccharts.Transition;
  * @author haf
  * 
  */
-public class ActionsTransientValueService implements
-        ITransientValueService {
+public class ActionsTransientValueService implements ITransientValueService {
 
     /*
      * (non-Javadoc)
      * 
-     * @see
-     * org.eclipse.xtext.parsetree.reconstr.ITransientValueService#isMixedList
+     * @see org.eclipse.xtext.parsetree.reconstr.ITransientValueService#isMixedList
      * (org.eclipse.emf.ecore.EObject, org.eclipse.emf.ecore.EStructuralFeature)
      */
     public boolean isMixedList(EObject owner, EStructuralFeature feature) {
@@ -43,36 +41,25 @@ public class ActionsTransientValueService implements
     /*
      * (non-Javadoc)
      * 
-     * @see
-     * org.eclipse.xtext.parsetree.reconstr.ITransientValueService#isTransient
-     * (org.eclipse.emf.ecore.EObject, org.eclipse.emf.ecore.EStructuralFeature,
-     * int)
+     * @see org.eclipse.xtext.parsetree.reconstr.ITransientValueService#isTransient
+     * (org.eclipse.emf.ecore.EObject, org.eclipse.emf.ecore.EStructuralFeature, int)
      */
-    public boolean isTransient(EObject owner, EStructuralFeature feature,
-            int index) {
-        if ((owner instanceof Transition && 
-        	(      feature.equals(SyncchartsPackage.eINSTANCE
-        			    .getTransition_Priority())
-                || feature.equals(SyncchartsPackage.eINSTANCE
-                        .getTransition_Type())
-                || feature.equals(SyncchartsPackage.eINSTANCE
-                        .getTransition_IsHistory())
-                || feature.equals(SyncchartsPackage.eINSTANCE
-                        .getTransition_SourceState()) 
-                || feature.equals(SyncchartsPackage.eINSTANCE
-                		.getTransition_TargetState())
-             )
-             )                                                      
-        )
+    public boolean isTransient(EObject owner, EStructuralFeature feature, int index) {
+        if ((owner instanceof Transition && (feature.equals(SyncchartsPackage.eINSTANCE
+            .getTransition_Priority())
+            || feature.equals(SyncchartsPackage.eINSTANCE.getTransition_Type())
+            || feature.equals(SyncchartsPackage.eINSTANCE.getTransition_IsHistory())
+            || feature.equals(SyncchartsPackage.eINSTANCE.getTransition_SourceState())
+            || feature.equals(SyncchartsPackage.eINSTANCE.getTransition_TargetState()) || feature
+            .equals(SyncchartsPackage.eINSTANCE.getAction_Label()))))
             return true;
         else
             return false;
     }
 
-	public boolean isCheckElementsIndividually(EObject owner,
-			EStructuralFeature feature) {
-		// TODO Auto-generated method stub
-		return false;
-	}
+    public boolean isCheckElementsIndividually(EObject owner, EStructuralFeature feature) {
+        // TODO Auto-generated method stub
+        return false;
+    }
 
 }

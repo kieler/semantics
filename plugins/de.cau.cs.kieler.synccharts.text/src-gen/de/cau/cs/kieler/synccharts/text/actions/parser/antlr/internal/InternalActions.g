@@ -61,7 +61,7 @@ import de.cau.cs.kieler.synccharts.text.actions.services.ActionsGrammarAccess;
     
     @Override
     protected String getFirstRuleName() {
-    	return "Action";	
+    	return "Transition";	
    	}
    	
    	@Override
@@ -80,17 +80,17 @@ import de.cau.cs.kieler.synccharts.text.actions.services.ActionsGrammarAccess;
 
 
 
-// Entry rule entryRuleAction
-entryRuleAction returns [EObject current=null] 
+// Entry rule entryRuleTransition
+entryRuleTransition returns [EObject current=null] 
 	:
-	{ currentNode = createCompositeNode(grammarAccess.getActionRule(), currentNode); }
-	 iv_ruleAction=ruleAction 
-	 { $current=$iv_ruleAction.current; } 
+	{ currentNode = createCompositeNode(grammarAccess.getTransitionRule(), currentNode); }
+	 iv_ruleTransition=ruleTransition 
+	 { $current=$iv_ruleTransition.current; } 
 	 EOF 
 ;
 
-// Rule Action
-ruleAction returns [EObject current=null] 
+// Rule Transition
+ruleTransition returns [EObject current=null] 
     @init { EObject temp=null; setCurrentLookahead(); resetLookahead(); 
     }
     @after { resetLookahead(); 
@@ -101,10 +101,10 @@ ruleAction returns [EObject current=null]
 	  /* */ 
 	}
     { 
-        temp=factory.create(grammarAccess.getActionAccess().getActionAction_0().getType().getClassifier());
+        temp=factory.create(grammarAccess.getTransitionAccess().getTransitionAction_0().getType().getClassifier());
         $current = temp; 
         temp = null;
-        CompositeNode newNode = createCompositeNode(grammarAccess.getActionAccess().getActionAction_0(), currentNode.getParent());
+        CompositeNode newNode = createCompositeNode(grammarAccess.getTransitionAccess().getTransitionAction_0(), currentNode.getParent());
     newNode.getChildren().add(currentNode);
     moveLookaheadInfo(currentNode, newNode);
     currentNode = newNode; 
@@ -114,12 +114,12 @@ ruleAction returns [EObject current=null]
 (
 		lv_isImmediate_1_0=	'#' 
     {
-        createLeafNode(grammarAccess.getActionAccess().getIsImmediateNumberSignKeyword_1_0(), "isImmediate"); 
+        createLeafNode(grammarAccess.getTransitionAccess().getIsImmediateNumberSignKeyword_1_0(), "isImmediate"); 
     }
  
 	    {
 	        if ($current==null) {
-	            $current = factory.create(grammarAccess.getActionRule().getType().getClassifier());
+	            $current = factory.create(grammarAccess.getTransitionRule().getType().getClassifier());
 	            associateNodeWithAstElement(currentNode, $current);
 	        }
 	        
@@ -135,11 +135,11 @@ ruleAction returns [EObject current=null]
 (
 		lv_delay_2_0=RULE_INT
 		{
-			createLeafNode(grammarAccess.getActionAccess().getDelayINTTerminalRuleCall_2_0(), "delay"); 
+			createLeafNode(grammarAccess.getTransitionAccess().getDelayINTTerminalRuleCall_2_0(), "delay"); 
 		}
 		{
 	        if ($current==null) {
-	            $current = factory.create(grammarAccess.getActionRule().getType().getClassifier());
+	            $current = factory.create(grammarAccess.getTransitionRule().getType().getClassifier());
 	            associateNodeWithAstElement(currentNode, $current);
 	        }
 	        try {
@@ -158,11 +158,11 @@ ruleAction returns [EObject current=null]
 )?(
 (
 		{ 
-	        currentNode=createCompositeNode(grammarAccess.getActionAccess().getTriggerBooleanExpressionParserRuleCall_3_0(), currentNode); 
+	        currentNode=createCompositeNode(grammarAccess.getTransitionAccess().getTriggerBooleanExpressionParserRuleCall_3_0(), currentNode); 
 	    }
 		lv_trigger_3_0=ruleBooleanExpression		{
 	        if ($current==null) {
-	            $current = factory.create(grammarAccess.getActionRule().getType().getClassifier());
+	            $current = factory.create(grammarAccess.getTransitionRule().getType().getClassifier());
 	            associateNodeWithAstElement(currentNode.getParent(), $current);
 	        }
 	        try {
@@ -181,16 +181,16 @@ ruleAction returns [EObject current=null]
 )
 )?(	'/' 
     {
-        createLeafNode(grammarAccess.getActionAccess().getSolidusKeyword_4_0(), null); 
+        createLeafNode(grammarAccess.getTransitionAccess().getSolidusKeyword_4_0(), null); 
     }
 ((
 (
 		{ 
-	        currentNode=createCompositeNode(grammarAccess.getActionAccess().getEffectsEffectParserRuleCall_4_1_0_0(), currentNode); 
+	        currentNode=createCompositeNode(grammarAccess.getTransitionAccess().getEffectsEffectParserRuleCall_4_1_0_0(), currentNode); 
 	    }
 		lv_effects_5_0=ruleEffect		{
 	        if ($current==null) {
-	            $current = factory.create(grammarAccess.getActionRule().getType().getClassifier());
+	            $current = factory.create(grammarAccess.getTransitionRule().getType().getClassifier());
 	            associateNodeWithAstElement(currentNode.getParent(), $current);
 	        }
 	        try {
@@ -209,10 +209,12 @@ ruleAction returns [EObject current=null]
 )
 )(	',' 
     {
-        createLeafNode(grammarAccess.getActionAccess().getCommaKeyword_4_1_1(), null); 
+        createLeafNode(grammarAccess.getTransitionAccess().getCommaKeyword_4_1_1(), null); 
     }
 )?)*)?)
 ;
+
+
 
 
 

@@ -42,7 +42,7 @@ public class ActionsParser extends org.eclipse.xtext.parser.antlr.AbstractAntlrP
 	
 	@Override 
 	protected String getDefaultRuleName() {
-		return "Action";
+		return "Transition";
 	}
 	
 	public ActionsGrammarAccess getGrammarAccess() {

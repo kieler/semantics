@@ -31,43 +31,353 @@ protected class ThisRootNode extends RootToken {
 	@Override
 	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
 		switch(index) {
-			case 0: return new Action_Group(this, this, 0, inst);
-			case 1: return new Effect_Alternatives(this, this, 1, inst);
-			case 2: return new Emission_Group(this, this, 2, inst);
-			case 3: return new Assignment_Group(this, this, 3, inst);
-			case 4: return new TextEffect_Group(this, this, 4, inst);
-			case 5: return new SignalReference_Group(this, this, 5, inst);
-			case 6: return new VariableReference_Group(this, this, 6, inst);
-			case 7: return new Signal_NameAssignment(this, this, 7, inst);
-			case 8: return new Variable_NameAssignment(this, this, 8, inst);
-			case 9: return new IntValue_ValueAssignment(this, this, 9, inst);
-			case 10: return new FloatValue_ValueAssignment(this, this, 10, inst);
-			case 11: return new BooleanValue_ValueAssignment(this, this, 11, inst);
-			case 12: return new Value_Alternatives(this, this, 12, inst);
-			case 13: return new ValOperation_Group(this, this, 13, inst);
-			case 14: return new ValuedExpression_PlusOperationParserRuleCall(this, this, 14, inst);
-			case 15: return new ParanthesedValuedExpression_Alternatives(this, this, 15, inst);
-			case 16: return new PlusOperation_Group(this, this, 16, inst);
-			case 17: return new MultOrDivOperation_Alternatives(this, this, 17, inst);
-			case 18: return new MultOperation_Group(this, this, 18, inst);
-			case 19: return new DivOperation_Group(this, this, 19, inst);
-			case 20: return new PreArithmOperation_Group(this, this, 20, inst);
-			case 21: return new PreOrNormalValuedExpression_Alternatives(this, this, 21, inst);
-			case 22: return new CompareOperation_Group(this, this, 22, inst);
-			case 23: return new UnaryOperation_Group(this, this, 23, inst);
-			case 24: return new UnaryParanthesedOperation_Group(this, this, 24, inst);
-			case 25: return new UnaryOrNormalExpression_Alternatives(this, this, 25, inst);
-			case 26: return new AndOperation_Group(this, this, 26, inst);
-			case 27: return new OrOperation_Group(this, this, 27, inst);
-			case 28: return new ParanthesedBooleanExpression_Alternatives(this, this, 28, inst);
-			case 29: return new BooleanExpression_OrOperationParserRuleCall(this, this, 29, inst);
-			case 30: return new TextExpression_Group(this, this, 30, inst);
-			case 31: return new Expression_Alternatives(this, this, 31, inst);
+			case 0: return new Transition_Group(this, this, 0, inst);
+			case 1: return new Action_Group(this, this, 1, inst);
+			case 2: return new Effect_Alternatives(this, this, 2, inst);
+			case 3: return new Emission_Group(this, this, 3, inst);
+			case 4: return new Assignment_Group(this, this, 4, inst);
+			case 5: return new TextEffect_Group(this, this, 5, inst);
+			case 6: return new SignalReference_Group(this, this, 6, inst);
+			case 7: return new VariableReference_Group(this, this, 7, inst);
+			case 8: return new Signal_NameAssignment(this, this, 8, inst);
+			case 9: return new Variable_NameAssignment(this, this, 9, inst);
+			case 10: return new IntValue_ValueAssignment(this, this, 10, inst);
+			case 11: return new FloatValue_ValueAssignment(this, this, 11, inst);
+			case 12: return new BooleanValue_ValueAssignment(this, this, 12, inst);
+			case 13: return new Value_Alternatives(this, this, 13, inst);
+			case 14: return new ValOperation_Group(this, this, 14, inst);
+			case 15: return new ValuedExpression_PlusOperationParserRuleCall(this, this, 15, inst);
+			case 16: return new ParanthesedValuedExpression_Alternatives(this, this, 16, inst);
+			case 17: return new PlusOperation_Group(this, this, 17, inst);
+			case 18: return new MultOrDivOperation_Alternatives(this, this, 18, inst);
+			case 19: return new MultOperation_Group(this, this, 19, inst);
+			case 20: return new DivOperation_Group(this, this, 20, inst);
+			case 21: return new PreArithmOperation_Group(this, this, 21, inst);
+			case 22: return new PreOrNormalValuedExpression_Alternatives(this, this, 22, inst);
+			case 23: return new CompareOperation_Group(this, this, 23, inst);
+			case 24: return new UnaryOperation_Group(this, this, 24, inst);
+			case 25: return new UnaryParanthesedOperation_Group(this, this, 25, inst);
+			case 26: return new UnaryOrNormalExpression_Alternatives(this, this, 26, inst);
+			case 27: return new AndOperation_Group(this, this, 27, inst);
+			case 28: return new OrOperation_Group(this, this, 28, inst);
+			case 29: return new ParanthesedBooleanExpression_Alternatives(this, this, 29, inst);
+			case 30: return new BooleanExpression_OrOperationParserRuleCall(this, this, 30, inst);
+			case 31: return new TextExpression_Group(this, this, 31, inst);
+			case 32: return new Expression_Alternatives(this, this, 32, inst);
 			default: return null;
 		}	
 	}	
 }
 	
+
+/************ begin Rule Transition ****************
+ *
+ * // haf: We need a Rule for transitions in order to serialize them
+ * // here we only want to have the features isImmediate, delay, trigger and effects
+ * // the features type, targetState, priority, isHistory are ignored and set as transient
+ * // you need to override the rule to support transitions properly
+ * Transition returns synccharts::Transition:
+ * 	{synccharts::Transition} isImmediate?="#"? delay=INT? trigger=BooleanExpression? ("/" (effects+=Effect ","?)*)?;
+ *
+ **/
+
+// {synccharts::Transition} isImmediate?="#"? delay=INT? trigger=BooleanExpression? ("/" (effects+=Effect ","?)*)?
+protected class Transition_Group extends GroupToken {
+	
+	public Transition_Group(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
+		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
+	}
+	
+	@Override
+	public Group getGrammarElement() {
+		return grammarAccess.getTransitionAccess().getGroup();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
+		switch(index) {
+			case 0: return new Transition_Group_4(lastRuleCallOrigin, this, 0, inst);
+			case 1: return new Transition_TriggerAssignment_3(lastRuleCallOrigin, this, 1, inst);
+			case 2: return new Transition_DelayAssignment_2(lastRuleCallOrigin, this, 2, inst);
+			case 3: return new Transition_IsImmediateAssignment_1(lastRuleCallOrigin, this, 3, inst);
+			case 4: return new Transition_TransitionAction_0(lastRuleCallOrigin, this, 4, inst);
+			default: return null;
+		}	
+	}
+
+    @Override
+	public IEObjectConsumer tryConsume() {
+		if(getEObject().eClass() != grammarAccess.getTransitionAccess().getTransitionAction_0().getType().getClassifier())
+			return null;
+		return eObjectConsumer;
+	}
+
+}
+
+// {synccharts::Transition}
+protected class Transition_TransitionAction_0 extends ActionToken  {
+
+	public Transition_TransitionAction_0(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
+		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
+	}
+	
+	@Override
+	public Action getGrammarElement() {
+		return grammarAccess.getTransitionAccess().getTransitionAction_0();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
+		switch(index) {
+			default: return lastRuleCallOrigin.createFollowerAfterReturn(this, index, index, inst);
+		}	
+	}
+
+    @Override
+	public IEObjectConsumer tryConsume() {
+		if(!eObjectConsumer.isConsumed()) return null;
+		return eObjectConsumer;
+	}
+}
+
+// isImmediate?="#"?
+protected class Transition_IsImmediateAssignment_1 extends AssignmentToken  {
+	
+	public Transition_IsImmediateAssignment_1(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
+		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
+	}
+	
+	@Override
+	public Assignment getGrammarElement() {
+		return grammarAccess.getTransitionAccess().getIsImmediateAssignment_1();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
+		switch(index) {
+			case 0: return new Transition_TransitionAction_0(lastRuleCallOrigin, this, 0, inst);
+			default: return null;
+		}	
+	}
+
+    @Override	
+	public IEObjectConsumer tryConsume() {
+		if((value = eObjectConsumer.getConsumable("isImmediate",false)) == null) return null;
+		IEObjectConsumer obj = eObjectConsumer.cloneAndConsume("isImmediate");
+		if(Boolean.TRUE.equals(value)) { // org::eclipse::xtext::impl::KeywordImpl
+			type = AssignmentType.KEYWORD;
+			element = grammarAccess.getTransitionAccess().getIsImmediateNumberSignKeyword_1_0();
+			return obj;
+		}
+		return null;
+	}
+
+}
+
+// delay=INT?
+protected class Transition_DelayAssignment_2 extends AssignmentToken  {
+	
+	public Transition_DelayAssignment_2(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
+		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
+	}
+	
+	@Override
+	public Assignment getGrammarElement() {
+		return grammarAccess.getTransitionAccess().getDelayAssignment_2();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
+		switch(index) {
+			case 0: return new Transition_IsImmediateAssignment_1(lastRuleCallOrigin, this, 0, inst);
+			case 1: return new Transition_TransitionAction_0(lastRuleCallOrigin, this, 1, inst);
+			default: return null;
+		}	
+	}
+
+    @Override	
+	public IEObjectConsumer tryConsume() {
+		if((value = eObjectConsumer.getConsumable("delay",false)) == null) return null;
+		IEObjectConsumer obj = eObjectConsumer.cloneAndConsume("delay");
+		if(valueSerializer.isValid(obj.getEObject(), grammarAccess.getTransitionAccess().getDelayINTTerminalRuleCall_2_0(), value, null)) {
+			type = AssignmentType.TERMINAL_RULE_CALL;
+			element = grammarAccess.getTransitionAccess().getDelayINTTerminalRuleCall_2_0();
+			return obj;
+		}
+		return null;
+	}
+
+}
+
+// trigger=BooleanExpression?
+protected class Transition_TriggerAssignment_3 extends AssignmentToken  {
+	
+	public Transition_TriggerAssignment_3(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
+		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
+	}
+	
+	@Override
+	public Assignment getGrammarElement() {
+		return grammarAccess.getTransitionAccess().getTriggerAssignment_3();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
+		switch(index) {
+			case 0: return new BooleanExpression_OrOperationParserRuleCall(this, this, 0, inst);
+			default: return null;
+		}	
+	}
+
+    @Override	
+	public IEObjectConsumer tryConsume() {
+		if((value = eObjectConsumer.getConsumable("trigger",false)) == null) return null;
+		IEObjectConsumer obj = eObjectConsumer.cloneAndConsume("trigger");
+		if(value instanceof EObject) { // org::eclipse::xtext::impl::RuleCallImpl
+			IEObjectConsumer param = createEObjectConsumer((EObject)value);
+			if(param.isInstanceOf(grammarAccess.getBooleanExpressionRule().getType().getClassifier())) {
+				type = AssignmentType.PARSER_RULE_CALL;
+				element = grammarAccess.getTransitionAccess().getTriggerBooleanExpressionParserRuleCall_3_0(); 
+				consumed = obj;
+				return param;
+			}
+		}
+		return null;
+	}
+
+    @Override
+	public AbstractToken createFollowerAfterReturn(AbstractToken next,	int actIndex, int index, IEObjectConsumer inst) {
+		if(value == inst.getEObject() && !inst.isConsumed()) return null;
+		switch(index) {
+			case 0: return new Transition_DelayAssignment_2(lastRuleCallOrigin, next, actIndex, consumed);
+			case 1: return new Transition_IsImmediateAssignment_1(lastRuleCallOrigin, next, actIndex, consumed);
+			case 2: return new Transition_TransitionAction_0(lastRuleCallOrigin, next, actIndex, consumed);
+			default: return null;
+		}	
+	}	
+}
+
+// ("/" (effects+=Effect ","?)*)?
+protected class Transition_Group_4 extends GroupToken {
+	
+	public Transition_Group_4(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
+		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
+	}
+	
+	@Override
+	public Group getGrammarElement() {
+		return grammarAccess.getTransitionAccess().getGroup_4();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
+		switch(index) {
+			case 0: return new Transition_Group_4_1(lastRuleCallOrigin, this, 0, inst);
+			default: return null;
+		}	
+	}
+
+}
+
+// "/"
+protected class Transition_SolidusKeyword_4_0 extends KeywordToken  {
+	
+	public Transition_SolidusKeyword_4_0(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
+		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
+	}
+	
+	@Override
+	public Keyword getGrammarElement() {
+		return grammarAccess.getTransitionAccess().getSolidusKeyword_4_0();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
+		switch(index) {
+			case 0: return new Transition_TriggerAssignment_3(lastRuleCallOrigin, this, 0, inst);
+			case 1: return new Transition_DelayAssignment_2(lastRuleCallOrigin, this, 1, inst);
+			case 2: return new Transition_IsImmediateAssignment_1(lastRuleCallOrigin, this, 2, inst);
+			case 3: return new Transition_TransitionAction_0(lastRuleCallOrigin, this, 3, inst);
+			default: return null;
+		}	
+	}
+
+}
+
+// (effects+=Effect ","?)*
+protected class Transition_Group_4_1 extends GroupToken {
+	
+	public Transition_Group_4_1(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
+		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
+	}
+	
+	@Override
+	public Group getGrammarElement() {
+		return grammarAccess.getTransitionAccess().getGroup_4_1();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
+		switch(index) {
+			case 0: return new Transition_EffectsAssignment_4_1_0(lastRuleCallOrigin, this, 0, inst);
+			default: return null;
+		}	
+	}
+
+}
+
+// effects+=Effect
+protected class Transition_EffectsAssignment_4_1_0 extends AssignmentToken  {
+	
+	public Transition_EffectsAssignment_4_1_0(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
+		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
+	}
+	
+	@Override
+	public Assignment getGrammarElement() {
+		return grammarAccess.getTransitionAccess().getEffectsAssignment_4_1_0();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
+		switch(index) {
+			case 0: return new Effect_Alternatives(this, this, 0, inst);
+			default: return null;
+		}	
+	}
+
+    @Override	
+	public IEObjectConsumer tryConsume() {
+		if((value = eObjectConsumer.getConsumable("effects",false)) == null) return null;
+		IEObjectConsumer obj = eObjectConsumer.cloneAndConsume("effects");
+		if(value instanceof EObject) { // org::eclipse::xtext::impl::RuleCallImpl
+			IEObjectConsumer param = createEObjectConsumer((EObject)value);
+			if(param.isInstanceOf(grammarAccess.getEffectRule().getType().getClassifier())) {
+				type = AssignmentType.PARSER_RULE_CALL;
+				element = grammarAccess.getTransitionAccess().getEffectsEffectParserRuleCall_4_1_0_0(); 
+				consumed = obj;
+				return param;
+			}
+		}
+		return null;
+	}
+
+    @Override
+	public AbstractToken createFollowerAfterReturn(AbstractToken next,	int actIndex, int index, IEObjectConsumer inst) {
+		if(value == inst.getEObject() && !inst.isConsumed()) return null;
+		switch(index) {
+			case 0: return new Transition_Group_4_1(lastRuleCallOrigin, next, actIndex, consumed);
+			case 1: return new Transition_SolidusKeyword_4_0(lastRuleCallOrigin, next, actIndex, consumed);
+			default: return null;
+		}	
+	}	
+}
+
+
+
+
+/************ end Rule Transition ****************/
+
 
 /************ begin Rule Action ****************
  *
@@ -2207,7 +2517,7 @@ protected class ValuedExpression_PlusOperationParserRuleCall extends RuleCallTok
 	public IEObjectConsumer tryConsume() {
 		if(getEObject().eClass() != grammarAccess.getFloatValueRule().getType().getClassifier() && 
 		   getEObject().eClass() != grammarAccess.getIntValueRule().getType().getClassifier() && 
-		   getEObject().eClass() != grammarAccess.getDivOperationAccess().getOperatorExpressionSubExpressionsAction_1_0().getType().getClassifier() && 
+		   getEObject().eClass() != grammarAccess.getPlusOperationAccess().getOperatorExpressionSubExpressionsAction_1_0().getType().getClassifier() && 
 		   getEObject().eClass() != grammarAccess.getTextExpressionRule().getType().getClassifier() && 
 		   getEObject().eClass() != grammarAccess.getVariableReferenceRule().getType().getClassifier())
 			return null;
@@ -2265,7 +2575,7 @@ protected class ParanthesedValuedExpression_Alternatives extends AlternativesTok
 	public IEObjectConsumer tryConsume() {
 		if(getEObject().eClass() != grammarAccess.getFloatValueRule().getType().getClassifier() && 
 		   getEObject().eClass() != grammarAccess.getIntValueRule().getType().getClassifier() && 
-		   getEObject().eClass() != grammarAccess.getDivOperationAccess().getOperatorExpressionSubExpressionsAction_1_0().getType().getClassifier() && 
+		   getEObject().eClass() != grammarAccess.getPlusOperationAccess().getOperatorExpressionSubExpressionsAction_1_0().getType().getClassifier() && 
 		   getEObject().eClass() != grammarAccess.getTextExpressionRule().getType().getClassifier() && 
 		   getEObject().eClass() != grammarAccess.getVariableReferenceRule().getType().getClassifier())
 			return null;
@@ -2695,7 +3005,7 @@ protected class PlusOperation_Group extends GroupToken {
 	public IEObjectConsumer tryConsume() {
 		if(getEObject().eClass() != grammarAccess.getFloatValueRule().getType().getClassifier() && 
 		   getEObject().eClass() != grammarAccess.getIntValueRule().getType().getClassifier() && 
-		   getEObject().eClass() != grammarAccess.getDivOperationAccess().getOperatorExpressionSubExpressionsAction_1_0().getType().getClassifier() && 
+		   getEObject().eClass() != grammarAccess.getPlusOperationAccess().getOperatorExpressionSubExpressionsAction_1_0().getType().getClassifier() && 
 		   getEObject().eClass() != grammarAccess.getTextExpressionRule().getType().getClassifier() && 
 		   getEObject().eClass() != grammarAccess.getVariableReferenceRule().getType().getClassifier())
 			return null;
@@ -2914,7 +3224,7 @@ protected class MultOrDivOperation_Alternatives extends AlternativesToken {
 	public IEObjectConsumer tryConsume() {
 		if(getEObject().eClass() != grammarAccess.getFloatValueRule().getType().getClassifier() && 
 		   getEObject().eClass() != grammarAccess.getIntValueRule().getType().getClassifier() && 
-		   getEObject().eClass() != grammarAccess.getDivOperationAccess().getOperatorExpressionSubExpressionsAction_1_0().getType().getClassifier() && 
+		   getEObject().eClass() != grammarAccess.getPlusOperationAccess().getOperatorExpressionSubExpressionsAction_1_0().getType().getClassifier() && 
 		   getEObject().eClass() != grammarAccess.getTextExpressionRule().getType().getClassifier() && 
 		   getEObject().eClass() != grammarAccess.getVariableReferenceRule().getType().getClassifier())
 			return null;
@@ -3097,7 +3407,7 @@ protected class MultOperation_Group extends GroupToken {
 	public IEObjectConsumer tryConsume() {
 		if(getEObject().eClass() != grammarAccess.getFloatValueRule().getType().getClassifier() && 
 		   getEObject().eClass() != grammarAccess.getIntValueRule().getType().getClassifier() && 
-		   getEObject().eClass() != grammarAccess.getDivOperationAccess().getOperatorExpressionSubExpressionsAction_1_0().getType().getClassifier() && 
+		   getEObject().eClass() != grammarAccess.getPlusOperationAccess().getOperatorExpressionSubExpressionsAction_1_0().getType().getClassifier() && 
 		   getEObject().eClass() != grammarAccess.getTextExpressionRule().getType().getClassifier() && 
 		   getEObject().eClass() != grammarAccess.getVariableReferenceRule().getType().getClassifier())
 			return null;
@@ -3321,7 +3631,7 @@ protected class DivOperation_Group extends GroupToken {
 	public IEObjectConsumer tryConsume() {
 		if(getEObject().eClass() != grammarAccess.getFloatValueRule().getType().getClassifier() && 
 		   getEObject().eClass() != grammarAccess.getIntValueRule().getType().getClassifier() && 
-		   getEObject().eClass() != grammarAccess.getDivOperationAccess().getOperatorExpressionSubExpressionsAction_1_0().getType().getClassifier() && 
+		   getEObject().eClass() != grammarAccess.getPlusOperationAccess().getOperatorExpressionSubExpressionsAction_1_0().getType().getClassifier() && 
 		   getEObject().eClass() != grammarAccess.getTextExpressionRule().getType().getClassifier() && 
 		   getEObject().eClass() != grammarAccess.getVariableReferenceRule().getType().getClassifier())
 			return null;
@@ -3705,7 +4015,7 @@ protected class PreOrNormalValuedExpression_Alternatives extends AlternativesTok
 	public IEObjectConsumer tryConsume() {
 		if(getEObject().eClass() != grammarAccess.getFloatValueRule().getType().getClassifier() && 
 		   getEObject().eClass() != grammarAccess.getIntValueRule().getType().getClassifier() && 
-		   getEObject().eClass() != grammarAccess.getDivOperationAccess().getOperatorExpressionSubExpressionsAction_1_0().getType().getClassifier() && 
+		   getEObject().eClass() != grammarAccess.getPlusOperationAccess().getOperatorExpressionSubExpressionsAction_1_0().getType().getClassifier() && 
 		   getEObject().eClass() != grammarAccess.getTextExpressionRule().getType().getClassifier() && 
 		   getEObject().eClass() != grammarAccess.getVariableReferenceRule().getType().getClassifier())
 			return null;
@@ -4327,7 +4637,7 @@ protected class UnaryOrNormalExpression_Alternatives extends AlternativesToken {
     @Override
 	public IEObjectConsumer tryConsume() {
 		if(getEObject().eClass() != grammarAccess.getBooleanValueRule().getType().getClassifier() && 
-		   getEObject().eClass() != grammarAccess.getAndOperationAccess().getOperatorExpressionSubExpressionsAction_1_0().getType().getClassifier() && 
+		   getEObject().eClass() != grammarAccess.getCompareOperationAccess().getOperatorExpressionSubExpressionsAction_1_0().getType().getClassifier() && 
 		   getEObject().eClass() != grammarAccess.getSignalReferenceRule().getType().getClassifier() && 
 		   getEObject().eClass() != grammarAccess.getTextExpressionRule().getType().getClassifier())
 			return null;
@@ -4480,7 +4790,7 @@ protected class AndOperation_Group extends GroupToken {
     @Override
 	public IEObjectConsumer tryConsume() {
 		if(getEObject().eClass() != grammarAccess.getBooleanValueRule().getType().getClassifier() && 
-		   getEObject().eClass() != grammarAccess.getAndOperationAccess().getOperatorExpressionSubExpressionsAction_1_0().getType().getClassifier() && 
+		   getEObject().eClass() != grammarAccess.getCompareOperationAccess().getOperatorExpressionSubExpressionsAction_1_0().getType().getClassifier() && 
 		   getEObject().eClass() != grammarAccess.getSignalReferenceRule().getType().getClassifier() && 
 		   getEObject().eClass() != grammarAccess.getTextExpressionRule().getType().getClassifier())
 			return null;
@@ -4702,7 +5012,7 @@ protected class OrOperation_Group extends GroupToken {
     @Override
 	public IEObjectConsumer tryConsume() {
 		if(getEObject().eClass() != grammarAccess.getBooleanValueRule().getType().getClassifier() && 
-		   getEObject().eClass() != grammarAccess.getAndOperationAccess().getOperatorExpressionSubExpressionsAction_1_0().getType().getClassifier() && 
+		   getEObject().eClass() != grammarAccess.getCompareOperationAccess().getOperatorExpressionSubExpressionsAction_1_0().getType().getClassifier() && 
 		   getEObject().eClass() != grammarAccess.getSignalReferenceRule().getType().getClassifier() && 
 		   getEObject().eClass() != grammarAccess.getTextExpressionRule().getType().getClassifier())
 			return null;
@@ -4926,7 +5236,7 @@ protected class ParanthesedBooleanExpression_Alternatives extends AlternativesTo
     @Override
 	public IEObjectConsumer tryConsume() {
 		if(getEObject().eClass() != grammarAccess.getBooleanValueRule().getType().getClassifier() && 
-		   getEObject().eClass() != grammarAccess.getAndOperationAccess().getOperatorExpressionSubExpressionsAction_1_0().getType().getClassifier() && 
+		   getEObject().eClass() != grammarAccess.getCompareOperationAccess().getOperatorExpressionSubExpressionsAction_1_0().getType().getClassifier() && 
 		   getEObject().eClass() != grammarAccess.getSignalReferenceRule().getType().getClassifier() && 
 		   getEObject().eClass() != grammarAccess.getTextExpressionRule().getType().getClassifier())
 			return null;
@@ -5251,7 +5561,7 @@ protected class BooleanExpression_OrOperationParserRuleCall extends RuleCallToke
     @Override
 	public IEObjectConsumer tryConsume() {
 		if(getEObject().eClass() != grammarAccess.getBooleanValueRule().getType().getClassifier() && 
-		   getEObject().eClass() != grammarAccess.getAndOperationAccess().getOperatorExpressionSubExpressionsAction_1_0().getType().getClassifier() && 
+		   getEObject().eClass() != grammarAccess.getCompareOperationAccess().getOperatorExpressionSubExpressionsAction_1_0().getType().getClassifier() && 
 		   getEObject().eClass() != grammarAccess.getSignalReferenceRule().getType().getClassifier() && 
 		   getEObject().eClass() != grammarAccess.getTextExpressionRule().getType().getClassifier())
 			return null;
@@ -5481,7 +5791,7 @@ protected class Expression_Alternatives extends AlternativesToken {
 		if(getEObject().eClass() != grammarAccess.getBooleanValueRule().getType().getClassifier() && 
 		   getEObject().eClass() != grammarAccess.getFloatValueRule().getType().getClassifier() && 
 		   getEObject().eClass() != grammarAccess.getIntValueRule().getType().getClassifier() && 
-		   getEObject().eClass() != grammarAccess.getAndOperationAccess().getOperatorExpressionSubExpressionsAction_1_0().getType().getClassifier() && 
+		   getEObject().eClass() != grammarAccess.getDivOperationAccess().getOperatorExpressionSubExpressionsAction_1_0().getType().getClassifier() && 
 		   getEObject().eClass() != grammarAccess.getSignalReferenceRule().getType().getClassifier() && 
 		   getEObject().eClass() != grammarAccess.getTextExpressionRule().getType().getClassifier() && 
 		   getEObject().eClass() != grammarAccess.getVariableReferenceRule().getType().getClassifier())
@@ -5515,7 +5825,7 @@ protected class Expression_ValuedExpressionParserRuleCall_0 extends RuleCallToke
 	public IEObjectConsumer tryConsume() {
 		if(getEObject().eClass() != grammarAccess.getFloatValueRule().getType().getClassifier() && 
 		   getEObject().eClass() != grammarAccess.getIntValueRule().getType().getClassifier() && 
-		   getEObject().eClass() != grammarAccess.getDivOperationAccess().getOperatorExpressionSubExpressionsAction_1_0().getType().getClassifier() && 
+		   getEObject().eClass() != grammarAccess.getPlusOperationAccess().getOperatorExpressionSubExpressionsAction_1_0().getType().getClassifier() && 
 		   getEObject().eClass() != grammarAccess.getTextExpressionRule().getType().getClassifier() && 
 		   getEObject().eClass() != grammarAccess.getVariableReferenceRule().getType().getClassifier())
 			return null;
@@ -5554,7 +5864,7 @@ protected class Expression_BooleanExpressionParserRuleCall_1 extends RuleCallTok
     @Override
 	public IEObjectConsumer tryConsume() {
 		if(getEObject().eClass() != grammarAccess.getBooleanValueRule().getType().getClassifier() && 
-		   getEObject().eClass() != grammarAccess.getAndOperationAccess().getOperatorExpressionSubExpressionsAction_1_0().getType().getClassifier() && 
+		   getEObject().eClass() != grammarAccess.getCompareOperationAccess().getOperatorExpressionSubExpressionsAction_1_0().getType().getClassifier() && 
 		   getEObject().eClass() != grammarAccess.getSignalReferenceRule().getType().getClassifier() && 
 		   getEObject().eClass() != grammarAccess.getTextExpressionRule().getType().getClassifier())
 			return null;
