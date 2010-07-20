@@ -188,7 +188,7 @@ public final class XtendTransformationUtil {
      * @return the Status about success and errors and warnings
      * 
      */
-    public static XtendStatus model2ModelTransform(final String xtendFile,
+    public static IStatus model2ModelTransform(final String xtendFile,
             final String startFunction, final URI inputModelURI, final URI outputModelURI,
             final EPackage... involvedMetamodels) throws KielerException {
         MonitoredOperation monitoredOperation = new MonitoredOperation() {
@@ -200,6 +200,6 @@ public final class XtendTransformationUtil {
             }
         };
         monitoredOperation.runMonitored();
-        return (XtendStatus) monitoredOperation.getStatus();
+        return monitoredOperation.getStatus();
     }
 }
