@@ -80,12 +80,23 @@ public class AttributeAwareStateFigure extends AttributeAwareSwitchFigure {
             new ICondition[] { COND_NORMAL, COND_NOREGIONS, COND_NOSIGNALS,
                     COND_NOENTRYACT, COND_NOINSIDEACT, COND_NOEXITACT });
 
+    private static final ICondition<EObject> COND_SIMPLE_REF = new CompoundCondition<EObject>(
+            new ICondition[] { COND_REFERENCE, COND_NOREGIONS, COND_NOSIGNALS,
+                    COND_NOENTRYACT, COND_NOINSIDEACT, COND_NOEXITACT });
+
     private static final ICondition<EObject> COND_INITIAL_FINAL_STATE = new CompoundCondition<EObject>(
             new ICondition[] { COND_INITIAL, COND_FINAL });
     private static final ICondition<EObject> COND_INITIAL_STATE = new CompoundCondition<EObject>(
             new ICondition[] { COND_INITIAL, COND_NOT_FINAL });
     private static final ICondition<EObject> COND_FINAL_STATE = new CompoundCondition<EObject>(
             new ICondition[] { COND_NOT_INITIAL, COND_FINAL });
+
+    private static final ICondition<EObject> COND_SIMPLE_REF_INITIAL_FINAL = new CompoundCondition<EObject>(
+            new ICondition[] { COND_SIMPLE_REF, COND_INITIAL_FINAL_STATE });
+    private static final ICondition<EObject> COND_SIMPLE_REF_INITIAL = new CompoundCondition<EObject>(
+            new ICondition[] { COND_SIMPLE_REF, COND_INITIAL_STATE });
+    private static final ICondition<EObject> COND_SIMPLE_REF_FINAL = new CompoundCondition<EObject>(
+            new ICondition[] { COND_SIMPLE_REF, COND_FINAL_STATE });
 
     private static final ICondition<EObject> COND_REF_INITIAL_FINAL = new CompoundCondition<EObject>(
             new ICondition[] { COND_REFERENCE, COND_INITIAL_FINAL_STATE });
@@ -122,10 +133,14 @@ public class AttributeAwareStateFigure extends AttributeAwareSwitchFigure {
         IFigure initialFinalFigure = createInitialFinalFigure();
         /* create even more normal figures to trigger layoutmanager via 
          * notifyChanged if statetype changed */
-        IFigure referenceFigure = createNormalReferenceFigure();
-        IFigure referenceInitFigure = createInitialReferenceFigure();
-        IFigure referenceFinalFigure = createFinalReferenceFigure();
-        IFigure referenceInitFinalFigure = createInitialFinalReferenceFigure();
+        IFigure referenceFigure = createNormalReferenceFigure(false);
+        IFigure referenceInitFigure = createInitialReferenceFigure(false);
+        IFigure referenceFinalFigure = createFinalReferenceFigure(false);
+        IFigure referenceInitFinalFigure = createInitialFinalReferenceFigure(false);
+        IFigure simpleReferenceFigure = createNormalReferenceFigure(true);
+        IFigure simpleReferenceInitFigure = createInitialReferenceFigure(true);
+        IFigure simpleReferenceFinalFigure = createFinalReferenceFigure(true);
+        IFigure simpleReferenceInitFinalFigure = createInitialFinalReferenceFigure(true);
         IFigure textualfigure = createNormalFigure();
 
         // Set default and current figure
@@ -133,6 +148,11 @@ public class AttributeAwareStateFigure extends AttributeAwareSwitchFigure {
 
         // Add all conditional figures to the list
         addConditionalFigure(conditionalFigure, COND_CONDITIONAL);
+        addConditionalFigure(simpleReferenceInitFinalFigure,
+                COND_SIMPLE_REF_INITIAL_FINAL);
+        addConditionalFigure(simpleReferenceInitFigure, COND_SIMPLE_REF_INITIAL);
+        addConditionalFigure(simpleReferenceFinalFigure, COND_SIMPLE_REF_FINAL);
+        addConditionalFigure(simpleReferenceFigure, COND_SIMPLE_REF);
         addConditionalFigure(referenceInitFinalFigure, COND_REF_INITIAL_FINAL);
         addConditionalFigure(referenceInitFigure, COND_REF_INITIAL);
         addConditionalFigure(referenceFinalFigure, COND_REF_FINAL);
@@ -148,12 +168,15 @@ public class AttributeAwareStateFigure extends AttributeAwareSwitchFigure {
     }
 
     /**
-     * Creates a figure for normal reference states.
+     * Creates a figure for normal reference states. *
+     * 
+     * @param simple
+     *            true if the state is simple, false if not
      * 
      * @return the figure
      */
-    private IFigure createNormalReferenceFigure() {
-        RoundedRectangle figure = createRoundedRectangleReferenceFigure();
+    private IFigure createNormalReferenceFigure(final boolean simple) {
+        RoundedRectangle figure = createRoundedRectangleReferenceFigure(simple);
         makeNormalState(figure);
         return figure;
     }
@@ -161,10 +184,13 @@ public class AttributeAwareStateFigure extends AttributeAwareSwitchFigure {
     /**
      * Creates a figure for reference states that are initial.
      * 
+     * @param simple
+     *            true if the state is simple, false if not
+     * 
      * @return the figure
      */
-    private IFigure createInitialReferenceFigure() {
-        RoundedRectangle figure = createRoundedRectangleReferenceFigure();
+    private IFigure createInitialReferenceFigure(final boolean simple) {
+        RoundedRectangle figure = createRoundedRectangleReferenceFigure(simple);
         makeInitialState(figure);
         return figure;
     }
@@ -172,10 +198,12 @@ public class AttributeAwareStateFigure extends AttributeAwareSwitchFigure {
     /**
      * Creates a figure for reference states that are final.
      * 
+     * @param simple
+     *            true if the state is simple, false if not
      * @return the figure
      */
-    private IFigure createFinalReferenceFigure() {
-        RoundedRectangle figure = createDoubleRoundedRectangleReferenceFigure();
+    private IFigure createFinalReferenceFigure(final boolean simple) {
+        RoundedRectangle figure = createDoubleRoundedRectangleReferenceFigure(simple);
         makeFinalState(figure);
         return figure;
     }
@@ -183,10 +211,12 @@ public class AttributeAwareStateFigure extends AttributeAwareSwitchFigure {
     /**
      * Creates a figure for reference states that are initial and final.
      * 
+     * @param simple
+     *            true if the state is simple, false if not
      * @return the figure
      */
-    private IFigure createInitialFinalReferenceFigure() {
-        RoundedRectangle figure = createDoubleRoundedRectangleReferenceFigure();
+    private IFigure createInitialFinalReferenceFigure(final boolean simple) {
+        RoundedRectangle figure = createDoubleRoundedRectangleReferenceFigure(simple);
         makeInitialFinalState(figure);
         return figure;
     }
@@ -195,9 +225,12 @@ public class AttributeAwareStateFigure extends AttributeAwareSwitchFigure {
      * Create a figure for reference States using a double rounded rectangle as
      * basis.
      * 
+     * @param simple
+     *            true if the state is simple, false if not
      * @return a figure for reference States
      */
-    private RoundedRectangle createDoubleRoundedRectangleReferenceFigure() {
+    private RoundedRectangle createDoubleRoundedRectangleReferenceFigure(
+            final boolean simple) {
         RoundedRectangle figure = new DoubleRoundedRectangle() {
             @Override
             protected void outlineShape(final Graphics graphics) {
@@ -221,7 +254,7 @@ public class AttributeAwareStateFigure extends AttributeAwareSwitchFigure {
                 graphics.drawRoundRectangle(rect, cornerWidth - distance
                         * BORDER_WIDTH, cornerHeight - distance * BORDER_WIDTH);
 
-                setUpReferenceState(graphics, getLineWidthFloat(), rect);
+                setUpReferenceState(graphics, rect, simple);
             }
         };
         return figure;
@@ -231,39 +264,59 @@ public class AttributeAwareStateFigure extends AttributeAwareSwitchFigure {
     private static final int REFERENCE_SIGN_WIDTH = 17;
 
     /** The vertical offset inside the state for the sign. */
-    private static final int REFERENCE_SIGN_VERTICAL_OFFSET = 20;
+    private static final int REFERENCE_SIGN_OFFSET = 20;
 
     /**
      * Set up the outline of a shape to look like a reference figure.
      * 
      * @param graphics
      *            the graphics object
-     * @param lineWidthFloat
-     *            the line with as float
      * @param r
      *            the basic rectangle
+     * @param simple
+     *            true if the state is simple, false if not
      */
     private void setUpReferenceState(final Graphics graphics,
-            final float lineWidthFloat, final Rectangle r) {
-        int width = REFERENCE_SIGN_WIDTH;
-        int refX = r.x + r.width / 2 - width / 2;
-        int refY = r.y + r.height - REFERENCE_SIGN_VERTICAL_OFFSET;
+            final Rectangle r, final boolean simple) {
+        if (simple) {
+            int refX = r.x + r.width / 2 - REFERENCE_SIGN_WIDTH / 2;
+            int refY = r.y + r.height - REFERENCE_SIGN_OFFSET;
 
+            drawAtSymbol(graphics, refX, refY);
+        } else {
+            int refX = r.x + r.width - REFERENCE_SIGN_WIDTH - 2 - 2;
+            int refY = r.y + 2 + 2;
+
+            drawAtSymbol(graphics, refX, refY);
+        }
+    }
+
+    /**
+     * Draw a 'at' symbol on a white background.
+     * 
+     * @param graphics
+     *            the graphics object
+     * @param x
+     *            the top left x
+     * @param y
+     *            the top left y
+     */
+    private void drawAtSymbol(final Graphics graphics, final int x, final int y) {
         graphics.setForegroundColor(ColorConstants.white);
-        graphics.fillOval(refX, refY, width, width);
-        // graphics.setLineWidthFloat(1.0f);
+        graphics.fillOval(x, y, REFERENCE_SIGN_WIDTH, REFERENCE_SIGN_WIDTH);
         graphics.setForegroundColor(ColorConstants.black);
-        // graphics.drawOval(refX, refY, width, width);
-        graphics.drawString("@", refX + 2, refY);
-        // graphics.setLineWidthFloat(lineWidthFloat);
+        graphics.drawString("@", x + 2, y);
     }
 
     /**
      * Create a figure for reference States using a rounded rectangle as basis.
      * 
+     * @param simple
+     *            true if the state is simple, false if not
      * @return a figure for reference States
      */
-    private RoundedRectangle createRoundedRectangleReferenceFigure() {
+    private RoundedRectangle createRoundedRectangleReferenceFigure(
+            final boolean simple) {
         RoundedRectangle figure = new RoundedRectangle() {
             @Override
             protected void outlineShape(final Graphics graphics) {
@@ -281,7 +334,7 @@ public class AttributeAwareStateFigure extends AttributeAwareSwitchFigure {
                         Math.max(0, corner.width - (int) lineInset),
                         Math.max(0, corner.height - (int) lineInset));
 
-                setUpReferenceState(graphics, getLineWidthFloat(), r);
+                setUpReferenceState(graphics, r, simple);
             }
         };
         return figure;
