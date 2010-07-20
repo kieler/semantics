@@ -35,6 +35,9 @@ main() {
 	// use our own category for the "new" wizard
 	model.diagram.creationWizardCategoryID := "de.cau.cs.kieler";
 
+    // change all PolylineShapes back to Polylines
+    model.diagram.allSubobjectsOfType(InnerClassViewmap)[InnerClassViewmap] ->map changePolylineShapeToPolyline();
+
 	// special settings for all nodes, e.g. edit part names
 	model.diagram.allSubobjectsOfType(GenChildNode)[GenChildNode] ->map childNodeNames();
     	
@@ -81,6 +84,15 @@ mapping inout GenCompartment::compartmentNames(inout signalIndex : Integer, inou
         case (childName.startsWith("StateExitAction")) self ->map fixCompartmentName("StateExitAction", exitIndex);
         case (childName.startsWith("StateSuspensionTrigger")) self ->map fixCompartmentName("StateSuspensionTrigger", suspendIndex);
 	}
+}
+
+// With helios a change in gmf was introduced changing polylines into polylineShapes
+// However this caused the separators in states to no longer be shown due to some obscure bug
+// Changing back to polyline for now.
+mapping inout InnerClassViewmap::changePolylineShapeToPolyline(){
+    var temp : String := self.classBody;
+    temp := temp.replace("PolylineShape", "Polyline");
+    self.classBody := temp;
 }
 
 mapping inout GenCompartment::fixCompartmentName(in prefix:String, inout index:Integer){

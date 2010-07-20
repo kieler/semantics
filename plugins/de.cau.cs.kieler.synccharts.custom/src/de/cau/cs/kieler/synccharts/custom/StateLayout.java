@@ -72,7 +72,7 @@ public class StateLayout extends AbstractTableLayout {
      * {@inheritDoc}
      */
     @Override
-    public ExtendedTable getCorrespondingLayout(IFigure stateFigure) {
+    public ExtendedTable getCorrespondingLayout(final IFigure stateFigure) {
         /*
          * check whether the figure is an attribute aware state and whether it
          * is a simple or a complex state
@@ -126,7 +126,7 @@ public class StateLayout extends AbstractTableLayout {
     }
 
     /** Define isEmpty-value for every graphical element. */
-    private void setIsEmptyValues(ExtendedTable layout, State state) {
+    private void setIsEmptyValues(final ExtendedTable layout, final State state) {
         for (int row = 0; row < layout.table.length; row++) {
             for (int column = 0; column < layout.table[row].length; column++) {
                 Cell cell = layout.table[row][column];
@@ -140,7 +140,7 @@ public class StateLayout extends AbstractTableLayout {
      * hidden. It does so by checking constraints for the associated model
      * elements.
      */
-    private boolean isEmptyCell(int figureConstant, State state) {
+    private boolean isEmptyCell(final int figureConstant, final State state) {
         boolean isEmpty = false;
         switch (figureConstant) {
         case STATELABEL:

@@ -20,13 +20,10 @@ import java.util.List;
 import org.eclipse.draw2d.AbstractHintLayout;
 import org.eclipse.draw2d.IFigure;
 import org.eclipse.draw2d.Polyline;
-import org.eclipse.draw2d.PolylineShape;
-import org.eclipse.draw2d.RoundedRectangle;
 import org.eclipse.draw2d.geometry.Dimension;
 import org.eclipse.draw2d.geometry.Point;
 import org.eclipse.draw2d.geometry.PointList;
 import org.eclipse.draw2d.geometry.Rectangle;
-import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.gmf.runtime.diagram.ui.figures.ResizableCompartmentFigure;
 import org.eclipse.gmf.runtime.draw2d.ui.figures.WrappingLabel;
@@ -76,11 +73,12 @@ import de.cau.cs.kieler.core.ui.figures.layout.container.LayoutSizes;
 //   =                                    =
 //   +====================================+
 /**
- * A generic configurable table layout for figures: Inner elements are laid out in a tabular style.
- * See example above.
+ * A generic configurable table layout for figures: Inner elements are laid out
+ * in a tabular style. See example above.
  * 
- * The exact configuration for the tableLayout is passed through the GMFTableLayoutConfiguration. To
- * use this layouter one have to implement a configuration.
+ * The exact configuration for the tableLayout is passed through the
+ * GMFTableLayoutConfiguration. To use this layouter one have to implement a
+ * configuration.
  * 
  * @author schm
  * @author haf
@@ -97,7 +95,8 @@ public abstract class AbstractTableLayout extends AbstractHintLayout {
     }
 
     /**
-     * @param stateFigure a state figure
+     * @param stateFigure
+     *            a state figure
      * @return the layout for the given figure
      */
     public ExtendedTable getCorrespondingLayout(final IFigure stateFigure) {
@@ -114,19 +113,20 @@ public abstract class AbstractTableLayout extends AbstractHintLayout {
 
         // check whether the figure is an attribute aware figure
         if (stateFigure instanceof IAttributeAwareFigure) {
-        	// printChildOverview(stateFigure);
+            // printChildOverview(stateFigure);
             IAttributeAwareFigure attrStateFigure = (IAttributeAwareFigure) stateFigure;
 
             invalidateLabels(stateFigure);
 
             // trigger the actual layout-process
-            doTableLayout(attrStateFigure, getCorrespondingLayout(attrStateFigure));
+            doTableLayout(attrStateFigure,
+                    getCorrespondingLayout(attrStateFigure));
         }
     }
 
     /**
-     * Table-Layout will center the upper parts (hori. and vert.) while the lower parts are
-     * stretched vertically over the whole space.
+     * Table-Layout will center the upper parts (hori. and vert.) while the
+     * lower parts are stretched vertically over the whole space.
      * 
      * @param stateFigure
      *            The graphical element which is about to be layouted
@@ -155,25 +155,27 @@ public abstract class AbstractTableLayout extends AbstractHintLayout {
         if (layoutSizes.getPreferredWidth() < clientArea.width) {
             layoutSizes.setPreferredWidth(clientArea.width);
         }
-        
+
         /* Set the figure to correct outer bounds for figures with static bounds */
-        correctSize(stateFigure, new Dimension(layoutSizes.getMinimumWidth(), layoutSizes
-                .getMinimumHeight()));
+        correctSize(stateFigure, new Dimension(layoutSizes.getMinimumWidth(),
+                layoutSizes.getMinimumHeight()));
 
         /* Assign the calculated dimensions to the stateFigure */
         setAlignedLayout(tableLayout, stateFigure, layoutSizes);
     }
 
     /**
-     * Calculates the layout sizes for a given table-layout. This means we calculate for every cell
-     * of our table-layout the preferred size and and the minimum size. Additionally we take this
-     * cell-sizes to calculate the preferred- and minimum-size of the whole table.
+     * Calculates the layout sizes for a given table-layout. This means we
+     * calculate for every cell of our table-layout the preferred size and and
+     * the minimum size. Additionally we take this cell-sizes to calculate the
+     * preferred- and minimum-size of the whole table.
      * 
      * @return Returns the preferred- and minimum-size for the given layout
      */
-    private LayoutSizes calculateLayoutSizes(final ExtendedTable layout, final IFigure stateFigure) {
+    private LayoutSizes calculateLayoutSizes(final ExtendedTable layout,
+            final IFigure stateFigure) {
         assert layout != null;
-        
+
         @SuppressWarnings("unchecked")
         List<IFigure> children = stateFigure.getChildren();
         Cell[][] table = layout.table;
@@ -210,13 +212,15 @@ public abstract class AbstractTableLayout extends AbstractHintLayout {
                  */
                 if (cell.figure == layout.adjustableCanvas) {
                     if (cell.isEmpty) {
-                        minimumSize = new Dimension(layout.getMinWidth(), layout.getMinHeight());
-                    } else if (child instanceof ResizableCompartmentFigure 
-                            && !((ResizableCompartmentFigure) child).isExpanded()) {
+                        minimumSize = new Dimension(layout.getMinWidth(),
+                                layout.getMinHeight());
+                    } else if (child instanceof ResizableCompartmentFigure
+                            && !((ResizableCompartmentFigure) child)
+                                    .isExpanded()) {
                         /*Collapsed Compartments should just get space for their expand-trigger*/
                         minimumSize = child.getMinimumSize();
                         /* TODO : For regions we normaly would need here getPreferredSize.*/
-                        preferredSize = child.getMinimumSize(); 
+                        preferredSize = child.getMinimumSize();
                     } else {
                         preferredSize = child.getPreferredSize();
 
@@ -228,7 +232,8 @@ public abstract class AbstractTableLayout extends AbstractHintLayout {
                         if (child instanceof WrappingLabel) {
                             minimumSize = child.getPreferredSize();
                         } else {
-                            minimumSize = new Dimension(layout.getMinWidth(), layout.getMinHeight());
+                            minimumSize = new Dimension(layout.getMinWidth(),
+                                    layout.getMinHeight());
                         }
                     }
 
@@ -236,18 +241,20 @@ public abstract class AbstractTableLayout extends AbstractHintLayout {
                 } else if (child instanceof ResizableCompartmentFigure) {
                     ResizableCompartmentFigure compartment = (ResizableCompartmentFigure) child;
                     if (cell.isEmpty) {
-                        setTitleVisibility(compartment, false); 
+                        setTitleVisibility(compartment, false);
                     } else if (!compartment.isExpanded()) {
                         /*Collapsed Compartments should just get space for their expand-trigger*/
                         minimumSize = compartment.getMinimumSize();
                         /* TODO : For regions we normaly would need here getPreferredSize.*/
-                        preferredSize = compartment.getMinimumSize(); 
+                        preferredSize = compartment.getMinimumSize();
                     } else {
-                    
-                        minimumSize = compartment.getContentPane().getMinimumSize();
+
+                        minimumSize = compartment.getContentPane()
+                                .getMinimumSize();
                         /* TODO : For regions we normaly would need here getPreferredSize.*/
-                        preferredSize = compartment.getContentPane().getMinimumSize();
-                        
+                        preferredSize = compartment.getContentPane()
+                                .getMinimumSize();
+
                         setTitleVisibility(compartment, true);
                     }
 
@@ -291,7 +298,7 @@ public abstract class AbstractTableLayout extends AbstractHintLayout {
             if (preferredRowWidth > preferredStateWidth) {
                 preferredStateWidth = preferredRowWidth;
             }
-            
+
             minimumRowWidth += 2;
             if (minimumRowWidth > minimumStateWidth) {
                 minimumStateWidth = minimumRowWidth;
@@ -301,26 +308,29 @@ public abstract class AbstractTableLayout extends AbstractHintLayout {
             preferredStateHeight += preferredRowHeight;
             minimumStateHeight += minimumRowHeight;
         }
-        return new LayoutSizes(layoutSizes, preferredStateHeight, preferredStateWidth,
-                minimumStateHeight, minimumStateWidth);
+        return new LayoutSizes(layoutSizes, preferredStateHeight,
+                preferredStateWidth, minimumStateHeight, minimumStateWidth);
     }
 
     /**
-     * Layout the inner elements of stateFigure (resp. its children) to positions resulting from
-     * layoutSizes with dimensions taken direct from layoutSizes. To get the x,y-position for every
-     * inner element, the method has to iterate over the layoutSizes with the given layout.
+     * Layout the inner elements of stateFigure (resp. its children) to
+     * positions resulting from layoutSizes with dimensions taken direct from
+     * layoutSizes. To get the x,y-position for every inner element, the method
+     * has to iterate over the layoutSizes with the given layout.
      * 
      * @param layout
-     *            Container for the corresponding layout about to be applied to the stateFigure
+     *            Container for the corresponding layout about to be applied to
+     *            the stateFigure
      * 
      * @param stateFigure
      *            The graphical element about to be layouted
      * 
      * @param layoutSizes
-     *            Container for the calculated sizes of the inner elements of stateFigure
+     *            Container for the calculated sizes of the inner elements of
+     *            stateFigure
      */
-    private void setAlignedLayout(final ExtendedTable layout, final IFigure stateFigure,
-            final LayoutSizes layoutSizes) {
+    private void setAlignedLayout(final ExtendedTable layout,
+            final IFigure stateFigure, final LayoutSizes layoutSizes) {
         @SuppressWarnings("unchecked")
         List<IFigure> children = stateFigure.getChildren();
         Cell[][] table = layout.table;
@@ -432,7 +442,7 @@ public abstract class AbstractTableLayout extends AbstractHintLayout {
             } else if (layout.horizontalAlignment[row] == ExtendedTable.SEPARATOR) {
                 /* get the referenced separator */
                 Cell cell = table[row][0];
-                PolylineShape regionSeparator = (PolylineShape) children.get(cell.figure);
+                Polyline regionSeparator = (Polyline) children.get(cell.figure);
                 PointList points = new PointList();
 
                 /* full expanded from left to right */
@@ -440,11 +450,12 @@ public abstract class AbstractTableLayout extends AbstractHintLayout {
                 /* TODO : had problems with old calculation via stateWidth, therefore fallback to
                  * getParent().getBounds() as this gives right result. Old calculation resulted in 
                  * separator overhanging the (right) state-border*/
-                int right = regionSeparator.getParent().getBounds().width - 1 - layout.padding;
+                int right = regionSeparator.getParent().getBounds().width - 1
+                        - layout.padding;
 
                 /* It gets layouted direct under the predecessing row */
                 int regionSeparatorHeight = clientArea.y + offsetY;
-                
+
                 /*For ie RoundedRectangles the shape has rounded corners, therefore we have to introduce
                  * a padding when we paint the separator next to the corners.*/
                 if (regionSeparatorHeight < layout.getMinHeight() / 2) {
@@ -453,7 +464,8 @@ public abstract class AbstractTableLayout extends AbstractHintLayout {
                 }
 
                 points.addPoint(new Point(left, regionSeparatorHeight));
-                points.addPoint(new Point(Math.max(left, right), regionSeparatorHeight));
+                points.addPoint(new Point(Math.max(left, right),
+                        regionSeparatorHeight));
                 regionSeparator.setPoints(points);
                 // have to set bounds also
                 Rectangle sepBounds = regionSeparator.getBounds();
@@ -462,7 +474,7 @@ public abstract class AbstractTableLayout extends AbstractHintLayout {
                 sepBounds.height = 2;
                 sepBounds.width = right - left;
                 regionSeparator.setBounds(sepBounds);
-                
+
             }
 
             /* Increase the y-offset by the calculated maximum rowHeight */
@@ -485,15 +497,16 @@ public abstract class AbstractTableLayout extends AbstractHintLayout {
     }
 
     @Override
-    public Dimension calculateMinimumSize(final IFigure stateFigure, final int whint,
-            final int hhint) {
+    public Dimension calculateMinimumSize(final IFigure stateFigure,
+            final int whint, final int hhint) {
         if (!(stateFigure instanceof IAttributeAwareFigure)) {
             return super.calculateMinimumSize(stateFigure, whint, hhint);
         }
         ExtendedTable layout = getCorrespondingLayout(stateFigure);
         LayoutSizes layoutSizes = calculateLayoutSizes(layout, stateFigure);
-        return new Dimension(Math.max(layoutSizes.getMinimumWidth(), layout.getMinWidth()), Math
-                .max(layoutSizes.getMinimumHeight(), layout.getMinHeight()));
+        return new Dimension(Math.max(layoutSizes.getMinimumWidth(),
+                layout.getMinWidth()), Math.max(layoutSizes.getMinimumHeight(),
+                layout.getMinHeight()));
     }
 
     /**
@@ -508,20 +521,22 @@ public abstract class AbstractTableLayout extends AbstractHintLayout {
      * @return the preferred size
      */
     @Override
-    protected Dimension calculatePreferredSize(final IFigure stateFigure, final int whint,
-            final int hhint) {
+    protected Dimension calculatePreferredSize(final IFigure stateFigure,
+            final int whint, final int hhint) {
         if (!(stateFigure instanceof IAttributeAwareFigure)) {
             return super.calculateMinimumSize(stateFigure, whint, hhint);
         }
-        LayoutSizes layoutSizes = calculateLayoutSizes(getCorrespondingLayout(stateFigure),
-                stateFigure);
-        return new Dimension(layoutSizes.getPreferredWidth(), layoutSizes.getPreferredHeight());
+        LayoutSizes layoutSizes = calculateLayoutSizes(
+                getCorrespondingLayout(stateFigure), stateFigure);
+        return new Dimension(layoutSizes.getPreferredWidth(),
+                layoutSizes.getPreferredHeight());
     }
 
     /**
-     * Invalidate all child labels of the given figure. This will cause all cached size values to be
-     * reset. This is necessary because of an GMF bug that does not invalidate a label when a font
-     * has changed. Hence all minimum and preferred sizes are cached wrongly.
+     * Invalidate all child labels of the given figure. This will cause all
+     * cached size values to be reset. This is necessary because of an GMF bug
+     * that does not invalidate a label when a font has changed. Hence all
+     * minimum and preferred sizes are cached wrongly.
      * 
      * This one? https://bugs.eclipse.org/bugs/show_bug.cgi?id=235549
      * 
@@ -560,8 +575,8 @@ public abstract class AbstractTableLayout extends AbstractHintLayout {
      * @param visible
      *            true if visible, false otherwise
      */
-    private void setTitleVisibility(final ResizableCompartmentFigure compartment,
-            final boolean visible) {
+    private void setTitleVisibility(
+            final ResizableCompartmentFigure compartment, final boolean visible) {
         for (Object child : compartment.getContentPane().getChildren()) {
             if (child instanceof WrappingLabel) {
                 ((WrappingLabel) child).setVisible(visible);
@@ -570,10 +585,12 @@ public abstract class AbstractTableLayout extends AbstractHintLayout {
     }
 
     /**
-     * Method is called by the layout-routine, to correct the size of the stateFigure if need (ie.
-     * for non userResizeable states like CONDITIONAL in SyncCharts, or for too small states)
+     * Method is called by the layout-routine, to correct the size of the
+     * stateFigure if need (ie. for non userResizeable states like CONDITIONAL
+     * in SyncCharts, or for too small states)
      */
-    private void correctSize(final IAttributeAwareFigure stateFigure, final Dimension minimumSize) {
+    private void correctSize(final IAttributeAwareFigure stateFigure,
+            final Dimension minimumSize) {
         ExtendedTable layout = getCorrespondingLayout(stateFigure);
         Rectangle bounds = stateFigure.getBounds();
 
@@ -624,8 +641,9 @@ public abstract class AbstractTableLayout extends AbstractHintLayout {
     }
 
     /**
-     * Helper method for printing out all children of a figure to the terminal. Usefull if the gmf
-     * figure changes and we have to observe/verify the new child-indices.
+     * Helper method for printing out all children of a figure to the terminal.
+     * Usefull if the gmf figure changes and we have to observe/verify the new
+     * child-indices.
      */
     @SuppressWarnings("unused")
     private void printChildOverview(final IFigure state) {
@@ -634,12 +652,13 @@ public abstract class AbstractTableLayout extends AbstractHintLayout {
         int index = 0;
         for (Object child : state.getChildren()) {
             if (child instanceof ResizableCompartmentFigure) {
-                System.out.println(index + " : " + getName((ResizableCompartmentFigure) child));
+                System.out.println(index + " : "
+                        + getName((ResizableCompartmentFigure) child));
                 printNames((ResizableCompartmentFigure) child);
             } else {
                 System.out.println(index + " : " + child.toString());
             }
-            
+
             index++;
         }
     }
@@ -666,7 +685,7 @@ public abstract class AbstractTableLayout extends AbstractHintLayout {
         }
         return "";
     }
-    
+
     /**
      * Helper-method to show all strings in a figure.
      * 
@@ -677,15 +696,15 @@ public abstract class AbstractTableLayout extends AbstractHintLayout {
      * @return the name of the figure
      */
     private static void printNames(final IFigure figure) {
-    	System.out.println("Found WrappingLabels: ");
-    	for (String label : getNames(figure)) {
-			System.out.print(label + ", ");
-		}
-    	System.out.println("");
+        System.out.println("Found WrappingLabels: ");
+        for (String label : getNames(figure)) {
+            System.out.print(label + ", ");
+        }
+        System.out.println("");
     }
-    
+
     private static List<String> getNames(final IFigure figure) {
-    	List<String> foundStrings = new ArrayList<String>();
+        List<String> foundStrings = new ArrayList<String>();
         for (Object child : figure.getChildren()) {
             if (child instanceof WrappingLabel) {
                 foundStrings.add(((WrappingLabel) child).getText());

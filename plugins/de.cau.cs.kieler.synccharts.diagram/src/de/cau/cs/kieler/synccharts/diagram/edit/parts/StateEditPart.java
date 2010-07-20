@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.eclipse.draw2d.IFigure;
 import org.eclipse.draw2d.MarginBorder;
+import org.eclipse.draw2d.Polyline;
 import org.eclipse.draw2d.PolylineShape;
 import org.eclipse.draw2d.Shape;
 import org.eclipse.draw2d.StackLayout;
@@ -383,7 +384,7 @@ public class StateEditPart extends ShapeNodeEditPart {
 
             this.add(fFigureStateNameFigure);
 
-            PolylineShape polyline0 = new PolylineShape();
+            Polyline polyline0 = new Polyline();
             polyline0.addPoint(new Point(getMapMode().DPtoLP(0), getMapMode()
                     .DPtoLP(20)));
             polyline0.addPoint(new Point(getMapMode().DPtoLP(50), getMapMode()
