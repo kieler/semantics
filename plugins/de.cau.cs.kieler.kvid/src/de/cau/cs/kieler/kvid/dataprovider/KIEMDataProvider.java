@@ -25,7 +25,7 @@ public class KIEMDataProvider extends JSONObjectDataComponent implements IJSONOb
     }
 
     public void wrapup() throws KiemInitializationException {
-        // TODO Auto-generated method stub
+        KViDDataDistributor.getInstance().cleanup();
     }
 
     public boolean isProducer() {

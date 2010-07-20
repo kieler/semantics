@@ -18,20 +18,22 @@ public class KViDGMFFigure extends Figure {
         this.currentData = thedata;
         setLayoutManager(new BorderLayout());
         setBorder(new LineBorder(2));
-        setBounds(new Rectangle(0, 0, currentData.getData().toString().length()*2, 20));
+        setBounds(new Rectangle(0, 0, currentData.getData().toString().length()*20, 20));
         setForegroundColor(ColorConstants.black);
         Label label = new Label(currentData.getData().toString());
         label.setForegroundColor(ColorConstants.black);
-        label.setBounds(new Rectangle(0, 0, currentData.getData().toString().length()*2, 10));
+        label.setBounds(new Rectangle(0, 0, currentData.getData().toString().length()*10, 10));
         add(label, BorderLayout.CENTER);
     }
     
     public void updateData(KViDDataObject newData) {
         currentData = newData;
         removeAll();
+        setBounds(new Rectangle(0, 0, currentData.getData().toString().length()*20, 20));
         Label label = new Label(currentData.getData().toString());
         label.setForegroundColor(ColorConstants.black);
         label.setBounds(new Rectangle(0, 0, 10, 10));
+        label.setBounds(new Rectangle(0, 0, currentData.getData().toString().length()*10, 10));
         add(label, BorderLayout.CENTER);
     }
 

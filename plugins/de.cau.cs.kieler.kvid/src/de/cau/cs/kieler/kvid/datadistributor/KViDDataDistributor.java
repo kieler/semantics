@@ -78,6 +78,10 @@ public class KViDDataDistributor {
         drawer.draw(dataByURI);
     }
     
+    public void cleanup() {
+        drawer.clearDrawing();
+    }
+    
     public void markPartByURI(String fragmentURI) {
         EditPart marked = getEditPartByURI(fragmentURI);
         if (marked instanceof GraphicalEditPart) {

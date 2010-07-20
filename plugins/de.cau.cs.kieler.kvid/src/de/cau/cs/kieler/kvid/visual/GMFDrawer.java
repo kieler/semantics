@@ -24,9 +24,10 @@ public class GMFDrawer implements IDrawer {
         for (String key : dataSet.keySet()) {
             if (figuresByURI.containsKey(key)) {
                 figuresByURI.get(key).updateData(dataSet.get(key));
+                figuresByURI.get(key).setLocation(new Point(100, figuresByURI.size()*20));
             } else {
                 figuresByURI.put(key, new KViDGMFFigure(dataSet.get(key)));
-                figuresByURI.get(key).setLocation(new Point(500, figuresByURI.size()*20));
+                figuresByURI.get(key).setLocation(new Point(100, figuresByURI.size()*20));
             }
         }
         
@@ -46,10 +47,14 @@ public class GMFDrawer implements IDrawer {
     }
 
     public void clearDrawing() {
-        for (String key : figuresByURI.keySet()) {
-            KViDGMFFigure figure = figuresByURI.get(key);
-            figure.setVisible(false);
-            //TODO
+        IEditorPart editor = KViDDataDistributor.getInstance().getActiveEditor();
+        if (editor instanceof DiagramEditor) {
+            final IFigure canvas = ((DiagramEditor) editor).getDiagramEditPart().getLayer(DiagramRootEditPart.DECORATION_PRINTABLE_LAYER);
+            for (String key : figuresByURI.keySet()) {
+                KViDGMFFigure figure = figuresByURI.get(key);
+                figure.erase();
+            }
+            canvas.repaint();
         }
     }
 
