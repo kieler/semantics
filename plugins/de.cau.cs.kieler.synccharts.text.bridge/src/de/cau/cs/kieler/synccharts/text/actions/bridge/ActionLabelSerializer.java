@@ -151,8 +151,9 @@ public final class ActionLabelSerializer {
         if (expression instanceof TextualCode) {
             return toString((TextualCode) expression);
         }
-        if (expression instanceof ComplexExpression) {
+        if (expression instanceof OperatorExpression) {
             List<Expression> subExpressions = ((ComplexExpression) expression).getSubExpressions();
+            // if binary operation
             if (subExpressions.size() > 1) {
                 if (isSubExpression) {
                     sb.append("(");
@@ -160,26 +161,34 @@ public final class ActionLabelSerializer {
                 sb.append(toString((Expression) subExpressions.get(0), true));
                 sb.append(" ");
             }
-            sb.append(((OperatorExpression) expression).getOperator().getLiteral());
-            sb.append(" ");
+            // add operator
+            OperatorType operator = ((OperatorExpression) expression).getOperator();
+            sb.append(operator.getLiteral());
+            if(!operator.equals(OperatorType.PRE) && !operator.equals(OperatorType.VAL)){
+                sb.append(" ");
+            }
             if (subExpressions.size() > 1) {
-                sb.append(toString((Expression) subExpressions.get(1), true));
+                for(int i = 1; i<subExpressions.size(); i++){
+                    sb.append(toString((Expression) subExpressions.get(i), true));
+                    if(i<subExpressions.size()-1){
+                        sb.append(" ");
+                    }
+                }
                 if (isSubExpression) {
                     sb.append(")");
                 }
-            } else {
-                if ((isSubExpression && (subExpressions.get(0) instanceof ComplexExpression))
-                        || ((OperatorExpression) expression).getOperator().equals(OperatorType.PRE)) {
+            } else { // if unary operation 
+                if ((isSubExpression && (subExpressions.get(0) instanceof OperatorExpression))
+                        || operator.equals(OperatorType.PRE)) {
                     sb.append("(");
                 }
                 sb.append(toString((Expression) subExpressions.get(0), true));
-                if ((isSubExpression && (subExpressions.get(0) instanceof ComplexExpression))
-                        || ((OperatorExpression) expression).getOperator().equals(OperatorType.PRE)) {
+                if ((isSubExpression && (subExpressions.get(0) instanceof OperatorExpression))
+                        || operator.equals(OperatorType.PRE)) {
                     sb.append(")");
                 }
             }
         }
         return sb.toString();
     }
-
 }

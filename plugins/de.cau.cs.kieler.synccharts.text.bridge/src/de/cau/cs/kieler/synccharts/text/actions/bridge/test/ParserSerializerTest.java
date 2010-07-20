@@ -211,7 +211,7 @@ public class ParserSerializerTest {
      */
     @Test
     public void testSerializerComparison3() throws Exception {
-        this.parseAndSerialize("? A = 5");
+        this.parseAndSerialize("?A = 5");
     }
 
     /**
@@ -222,7 +222,7 @@ public class ParserSerializerTest {
      */
     @Test
     public void testSerializerComparisonValue() throws Exception {
-        this.parseAndSerialize("3 < ? A");
+        this.parseAndSerialize("3 < ?A");
     }
 
     /**
@@ -233,7 +233,7 @@ public class ParserSerializerTest {
      */
     @Test
     public void testSerializerValue() throws Exception {
-        this.parseAndSerialize("? A");
+        this.parseAndSerialize("?A");
     }
 
     /**
@@ -371,7 +371,7 @@ public class ParserSerializerTest {
      */
     @Test
     public void testSerializerDelayComparison() throws Exception {
-        this.parseAndSerialize("3 5 < ? A / B");
+        this.parseAndSerialize("3 5 < ?A / B");
     }
 
     /**
@@ -426,7 +426,7 @@ public class ParserSerializerTest {
      */
     @Test
     public void testSerializerPlus() throws Exception {
-        this.parseAndSerialize("(? A + 4) > 3");
+        this.parseAndSerialize("(?A + 4) > 3");
     }
 
     /**
@@ -448,7 +448,7 @@ public class ParserSerializerTest {
      */
     @Test
     public void testSerializerDiv() throws Exception {
-        this.parseAndSerialize("(varA / ? B) > varB");
+        this.parseAndSerialize("(varA / ?B) > varB");
     }
 
     /**
@@ -459,7 +459,7 @@ public class ParserSerializerTest {
      */
     @Test
     public void testSerializerPlusMult() throws Exception {
-        this.parseAndSerialize("((5 * varA) - (? B mod 2)) > 3");
+        this.parseAndSerialize("((5 * varA) - (?B mod 2)) > 3");
     }
 
     /**
@@ -470,7 +470,7 @@ public class ParserSerializerTest {
      */
     @Test
     public void testSerializerPlusDiv() throws Exception {
-        this.parseAndSerialize("((5 / varA) - (? B / 2)) > 3");
+        this.parseAndSerialize("((5 / varA) - (?B / 2)) > 3");
     }
 
     /**
@@ -481,7 +481,7 @@ public class ParserSerializerTest {
      */
     @Test
     public void testSerializerMultDiv() throws Exception {
-        this.parseAndSerialize("(varA * (? B / 2)) < 2");
+        this.parseAndSerialize("(varA * (?B / 2)) < 2");
     }
 
     /**
@@ -492,7 +492,7 @@ public class ParserSerializerTest {
      */
     @Test
     public void testSerializerPre() throws Exception {
-        this.parseAndSerialize("(pre (A) or (pre (? B) > 3)) or pre ((A and B))");
+        this.parseAndSerialize("(pre(A) or (pre(?B) > 3)) or pre((A and B))");
     }
 
     /**
@@ -503,7 +503,7 @@ public class ParserSerializerTest {
      */
     @Test
     public void testSerializerNotPre() throws Exception {
-        this.parseAndSerialize("not pre (B)");
+        this.parseAndSerialize("not pre(B)");
     }
 
     /**
@@ -525,7 +525,7 @@ public class ParserSerializerTest {
      */
     @Test
     public void testSerializerCtr1() throws Exception {
-        this.parseAndSerialize("(5 * (? A / 5)) = ? A / B");
+        this.parseAndSerialize("(5 * (?A / 5)) = ?A / B");
     }
 
     /**
@@ -536,7 +536,7 @@ public class ParserSerializerTest {
      */
     @Test
     public void testSerializerCtr2() throws Exception {
-        this.parseAndSerialize("/ A(pre (? A) - 1)");
+        this.parseAndSerialize("/ A(pre(?A) - 1)");
     }
 
     /**
@@ -547,7 +547,7 @@ public class ParserSerializerTest {
      */
     @Test
     public void testSerializerCtr3() throws Exception {
-        this.parseAndSerialize("pre (? A) = -100 / A(-100)");
+        this.parseAndSerialize("pre(?A) = -100 / A(-100)");
     }
 
     /**
@@ -558,7 +558,7 @@ public class ParserSerializerTest {
      */
     @Test
     public void testSerializerCtr4() throws Exception {
-        this.parseAndSerialize("/ A(pre (? A) + 1)");
+        this.parseAndSerialize("/ A(pre(?A) + 1)");
     }
 
     /**
