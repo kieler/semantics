@@ -1,5 +1,9 @@
 package de.cau.cs.kieler.kvid.data;
 
+import java.util.List;
+
+import org.eclipse.draw2d.geometry.Point;
+
 public class KViDDataObject {
     
     private String URI;
@@ -8,10 +12,19 @@ public class KViDDataObject {
     
     private KViDDataType type;
     
+    private List<Point> path;
+    
     public KViDDataObject(final String theURI, final String thedata) {
         this.URI = theURI;
         this.data = thedata;
         this.type = parseDataType(thedata);
+    }
+    
+    public KViDDataObject(final String theURI, final String thedata, final List<Point> thepath) {
+        this.URI = theURI;
+        this.data = thedata;
+        this.type = parseDataType(thedata);
+        this.path = thepath;
     }
     
     public KViDDataObject(final String theURI, final String thedata,
@@ -36,6 +49,10 @@ public class KViDDataObject {
     
     public String getURI() {
         return URI;
+    }
+    
+    public List<Point> getPath() {
+        return path;
     }
     
     private KViDDataType parseDataType(String data) {

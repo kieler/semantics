@@ -3,6 +3,8 @@ package de.cau.cs.kieler.kvid.datadistributor;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
 
 import org.eclipse.draw2d.BorderLayout;
 import org.eclipse.draw2d.ColorConstants;
@@ -66,11 +68,14 @@ public class KViDDataDistributor {
     
     public void update(final JSONObject data) {
         Iterator allKeys = data.keys();
+        List<Point> randomPath = new LinkedList<Point>();
+        randomPath.add(new Point(100, 100));
+        randomPath.add(new Point(100, 300));
         while (allKeys.hasNext()) {
             Object o = allKeys.next();
             try {
                 String key = o.toString();
-                dataByURI.put(o.toString(), new KViDDataObject(key, data.getString(key)));
+                dataByURI.put(o.toString(), new KViDDataObject(key, data.getString(key), randomPath));
             } catch (JSONException e) {
                 e.printStackTrace();
             }
