@@ -7,6 +7,7 @@ import org.eclipse.draw2d.Animation;
 import org.eclipse.draw2d.IFigure;
 import org.eclipse.draw2d.LayoutAnimator;
 import org.eclipse.draw2d.geometry.Point;
+import org.eclipse.gmf.runtime.diagram.ui.editparts.DiagramEditPart;
 
 public class GMFAnimator {
     
@@ -23,8 +24,6 @@ public class GMFAnimator {
             LayoutAnimator.getDefault().init(figure);
             figure.setLocation(figuresAndPath.get(figure).get(1));
             LayoutAnimator.getDefault().capture(figure);
-            canvas.revalidate();
-            canvas.repaint();
         }
         Animation.run(1000);
     }

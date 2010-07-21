@@ -56,7 +56,7 @@ public class GMFDrawer implements IDrawer {
                 public void run() {
                     GMFAnimator.animate(animatables, canvas);
                 }
-            });     
+            }); 
         }        
     }
 
