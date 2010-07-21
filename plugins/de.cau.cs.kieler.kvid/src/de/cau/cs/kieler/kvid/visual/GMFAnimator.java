@@ -7,13 +7,12 @@ import org.eclipse.draw2d.Animation;
 import org.eclipse.draw2d.IFigure;
 import org.eclipse.draw2d.LayoutAnimator;
 import org.eclipse.draw2d.geometry.Point;
-import org.eclipse.gmf.runtime.diagram.ui.editparts.DiagramEditPart;
 
 public class GMFAnimator {
     
-    public static void animate(HashMap<IFigure, List<Point>> figuresAndPath, DiagramEditPart part){
+    public static void animate(HashMap<KViDGMFFigure, List<Point>> figuresAndPath, IFigure canvas){
         Animation.markBegin();
-        for (IFigure figure : figuresAndPath.keySet()) {
+        for (KViDGMFFigure figure : figuresAndPath.keySet()) {
             /*ArrangeRequest request = new ArrangeRequest(ActionIds.ACTION_ARRANGE_ALL);
             CompoundCommand cc = new CompoundCommand();
             cc.add(part.getCommand(request));
@@ -24,8 +23,10 @@ public class GMFAnimator {
             LayoutAnimator.getDefault().init(figure);
             figure.setLocation(figuresAndPath.get(figure).get(1));
             LayoutAnimator.getDefault().capture(figure);
+            canvas.revalidate();
+            canvas.repaint();
         }
-        Animation.run(5000);
+        Animation.run(1000);
     }
     
 }

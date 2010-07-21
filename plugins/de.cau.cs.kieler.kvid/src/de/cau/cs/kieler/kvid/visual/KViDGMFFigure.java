@@ -2,10 +2,8 @@ package de.cau.cs.kieler.kvid.visual;
 
 import org.eclipse.draw2d.BorderLayout;
 import org.eclipse.draw2d.ColorConstants;
-import org.eclipse.draw2d.Figure;
-import org.eclipse.draw2d.Graphics;
 import org.eclipse.draw2d.Label;
-import org.eclipse.draw2d.LineBorder;
+import org.eclipse.draw2d.LayoutAnimator;
 import org.eclipse.draw2d.RoundedRectangle;
 import org.eclipse.draw2d.geometry.Rectangle;
 
@@ -25,7 +23,8 @@ public class KViDGMFFigure extends RoundedRectangle {
         Label label = new Label(currentData.getData().toString());
         label.setForegroundColor(ColorConstants.black);
         label.setBounds(new Rectangle(0, 0, currentData.getData().toString().length()*10, 10));
-        //add(label, BorderLayout.CENTER);
+        add(label, BorderLayout.CENTER);
+        this.addLayoutListener(LayoutAnimator.getDefault());
     }
     
     public void updateData(KViDDataObject newData) {
@@ -37,6 +36,10 @@ public class KViDGMFFigure extends RoundedRectangle {
         label.setBounds(new Rectangle(0, 0, 10, 10));
         label.setBounds(new Rectangle(0, 0, currentData.getData().toString().length()*10, 10));
         add(label, BorderLayout.CENTER);
+    }
+    
+    public KViDDataObject getData() {
+        return currentData;
     }
     
     /*@Override

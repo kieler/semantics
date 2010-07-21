@@ -1,12 +1,7 @@
 package de.cau.cs.kieler.kvid.dataprovider;
 
-import java.util.HashMap;
-import java.util.Iterator;
-
-import org.json.JSONException;
 import org.json.JSONObject;
 
-import de.cau.cs.kieler.kvid.data.KViDDataObject;
 import de.cau.cs.kieler.kvid.datadistributor.KViDDataDistributor;
 import de.cau.cs.kieler.sim.kiem.IJSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.JSONObjectDataComponent;

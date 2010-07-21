@@ -5,7 +5,6 @@ import java.util.List;
 
 import org.eclipse.draw2d.IFigure;
 import org.eclipse.draw2d.geometry.Point;
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.gmf.runtime.diagram.ui.editparts.DiagramRootEditPart;
 import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramEditor;
 import org.eclipse.ui.IEditorPart;
@@ -47,7 +46,7 @@ public class GMFDrawer implements IDrawer {
             }
             
             //animating phase
-            final HashMap<IFigure, List<Point>> animatables = new HashMap<IFigure, List<Point>>();
+            final HashMap<KViDGMFFigure, List<Point>> animatables = new HashMap<KViDGMFFigure, List<Point>>();
             for (final String key : dataSet.keySet()) {
                 if (dataSet.get(key).getPath() != null) {
                     animatables.put(figuresByURI.get(key), dataSet.get(key).getPath());
@@ -55,7 +54,7 @@ public class GMFDrawer implements IDrawer {
             }
             PlatformUI.getWorkbench().getDisplay().syncExec(new Runnable() {
                 public void run() {
-                    GMFAnimator.animate(animatables, ((DiagramEditor) editor).getDiagramEditPart());
+                    GMFAnimator.animate(animatables, canvas);
                 }
             });     
         }        
