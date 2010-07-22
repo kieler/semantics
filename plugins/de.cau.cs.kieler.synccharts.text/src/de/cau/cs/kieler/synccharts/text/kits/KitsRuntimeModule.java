@@ -16,4 +16,9 @@ public class KitsRuntimeModule extends de.cau.cs.kieler.synccharts.text.kits.Abs
 		return CustomTransientValueService.class;
 	}
 	
+	public Class<? extends org.eclipse.xtext.linking.ILinker> bindILinker() {
+		return KitsLinker.class;
+	}
+
+	
 }
