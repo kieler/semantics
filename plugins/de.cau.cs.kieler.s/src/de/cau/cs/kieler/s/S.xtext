@@ -46,11 +46,11 @@ Signal returns expressions::Signal:
 (isInput?='input')?
 	(isOutput?='output')?
 	'signal'
-	(name=EString)
-	(':=' initialValue=EString)?
+	(name=STRING)
+	(':=' initialValue=STRING)?
     ((':' type=ValueType)
       |
-     (':' 'combine' type=ValueType 'with' (combineOperator=CombineOperator|hostCombineOperator=EString) )
+     (':' 'combine' type=ValueType 'with' (combineOperator=CombineOperator|hostCombineOperator=STRING) )
     )? ";";
     
 //Signal returns expressions::Signal :

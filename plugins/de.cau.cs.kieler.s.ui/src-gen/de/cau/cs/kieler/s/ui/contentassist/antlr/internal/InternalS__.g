@@ -7,84 +7,85 @@ package de.cau.cs.kieler.s.ui.contentassist.antlr.internal;
 import org.eclipse.xtext.ui.editor.contentassist.antlr.internal.Lexer;
 }
 
-T11 : 'pre' ;
-T12 : 'or' ;
-T13 : 'and' ;
+T13 : '?' ;
 T14 : 'not' ;
-T15 : '+' ;
-T16 : '-' ;
-T17 : '*' ;
-T18 : 'mod' ;
-T19 : '/' ;
-T20 : '?' ;
-T21 : 'E' ;
-T22 : 'e' ;
-T23 : 'true' ;
-T24 : 'false' ;
-T25 : '=' ;
-T26 : '<' ;
-T27 : '<=' ;
-T28 : '>' ;
-T29 : '>=' ;
-T30 : '<>' ;
-T31 : 'PURE' ;
-T32 : 'BOOL' ;
-T33 : 'UNSIGNED' ;
-T34 : 'INT' ;
-T35 : 'FLOAT' ;
-T36 : 'HOST' ;
-T37 : 'NONE' ;
-T38 : 'max' ;
-T39 : 'min' ;
-T40 : 'host' ;
-T41 : 'Synchronous Program' ;
-T42 : '(' ;
-T43 : ')' ;
-T44 : ':' ;
-T45 : 'SIGNALS' ;
-T46 : ';' ;
-T47 : 'signal' ;
-T48 : ':=' ;
-T49 : 'combine' ;
-T50 : 'with' ;
-T51 : 'PAUSE' ;
-T52 : 'TERM' ;
-T53 : 'Halt' ;
-T54 : 'JOIN' ;
-T55 : 'ABORT' ;
-T56 : 'IF' ;
-T57 : '{' ;
-T58 : '}' ;
-T59 : ',' ;
-T60 : 'GOTO' ;
-T61 : 'FORK' ;
-T62 : 'FORKE' ;
-T63 : 'EMIT' ;
-T64 : 'AWAIT' ;
-T65 : 'PRIO' ;
-T66 : '.' ;
-T67 : 'input' ;
-T68 : 'output' ;
+T15 : 'pre' ;
+T16 : 'or' ;
+T17 : 'and' ;
+T18 : '/' ;
+T19 : '=' ;
+T20 : '<' ;
+T21 : '<=' ;
+T22 : '>' ;
+T23 : '>=' ;
+T24 : '<>' ;
+T25 : '+' ;
+T26 : '-' ;
+T27 : '*' ;
+T28 : 'mod' ;
+T29 : 'PURE' ;
+T30 : 'BOOL' ;
+T31 : 'UNSIGNED' ;
+T32 : 'INT' ;
+T33 : 'FLOAT' ;
+T34 : 'HOST' ;
+T35 : 'NONE' ;
+T36 : 'max' ;
+T37 : 'min' ;
+T38 : 'host' ;
+T39 : 'Synchronous Program' ;
+T40 : '(' ;
+T41 : ')' ;
+T42 : ':' ;
+T43 : 'SIGNALS' ;
+T44 : ';' ;
+T45 : 'signal' ;
+T46 : ':=' ;
+T47 : 'combine' ;
+T48 : 'with' ;
+T49 : 'PAUSE' ;
+T50 : 'TERM' ;
+T51 : 'Halt' ;
+T52 : 'JOIN' ;
+T53 : 'ABORT' ;
+T54 : 'IF' ;
+T55 : '{' ;
+T56 : '}' ;
+T57 : ',' ;
+T58 : 'GOTO' ;
+T59 : 'FORK' ;
+T60 : 'FORKE' ;
+T61 : 'EMIT' ;
+T62 : 'AWAIT' ;
+T63 : 'PRIO' ;
+T64 : 'input' ;
+T65 : 'output' ;
 
-// $ANTLR src "../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g" 9274
+// $ANTLR src "../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g" 8960
+RULE_INT : '-'? ('0'..'9')+;
+
+// $ANTLR src "../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g" 8962
+RULE_FLOAT : ((RULE_INT '.' RULE_INT|RULE_INT ('.' RULE_INT)? ('e'|'E') '+'? RULE_INT) 'f'?|RULE_INT 'f');
+
+// $ANTLR src "../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g" 8964
+RULE_BOOLEAN : ('true'|'false');
+
+// $ANTLR src "../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g" 8966
 RULE_ID : '^'? ('a'..'z'|'A'..'Z'|'_') ('a'..'z'|'A'..'Z'|'_'|'0'..'9')*;
 
-// $ANTLR src "../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g" 9276
-RULE_INT : ('0'..'9')+;
-
-// $ANTLR src "../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g" 9278
+// $ANTLR src "../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g" 8968
 RULE_STRING : ('"' ('\\' ('b'|'t'|'n'|'f'|'r'|'"'|'\''|'\\')|~(('\\'|'"')))* '"'|'\'' ('\\' ('b'|'t'|'n'|'f'|'r'|'"'|'\''|'\\')|~(('\\'|'\'')))* '\'');
 
-// $ANTLR src "../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g" 9280
+// $ANTLR src "../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g" 8970
 RULE_ML_COMMENT : '/*' ( options {greedy=false;} : . )*'*/';
 
-// $ANTLR src "../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g" 9282
+// $ANTLR src "../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g" 8972
 RULE_SL_COMMENT : '//' ~(('\n'|'\r'))* ('\r'? '\n')?;
 
-// $ANTLR src "../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g" 9284
+// $ANTLR src "../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g" 8974
 RULE_WS : (' '|'\t'|'\r'|'\n')+;
 
-// $ANTLR src "../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g" 9286
+// $ANTLR src "../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g" 8976
 RULE_ANY_OTHER : .;
 
 

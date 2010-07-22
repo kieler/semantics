@@ -7,84 +7,85 @@ package de.cau.cs.kieler.s.parser.antlr.internal;
 import org.eclipse.xtext.parser.antlr.Lexer;
 }
 
-T11 : 'Synchronous Program' ;
-T12 : '(' ;
-T13 : ')' ;
-T14 : ':' ;
-T15 : 'SIGNALS' ;
-T16 : ';' ;
-T17 : 'input' ;
-T18 : 'output' ;
-T19 : 'signal' ;
-T20 : ':=' ;
-T21 : 'combine' ;
-T22 : 'with' ;
-T23 : 'PAUSE' ;
-T24 : 'TERM' ;
-T25 : 'Halt' ;
-T26 : 'JOIN' ;
-T27 : 'ABORT' ;
-T28 : 'IF' ;
-T29 : ',' ;
-T30 : '{' ;
-T31 : '}' ;
-T32 : 'GOTO' ;
-T33 : 'FORK' ;
-T34 : 'FORKE' ;
-T35 : 'EMIT' ;
-T36 : 'AWAIT' ;
-T37 : 'PRIO' ;
-T38 : '-' ;
-T39 : '.' ;
-T40 : 'E' ;
-T41 : 'e' ;
-T42 : 'true' ;
-T43 : 'false' ;
-T44 : '=' ;
-T45 : '<' ;
-T46 : '<=' ;
-T47 : '>' ;
-T48 : '>=' ;
-T49 : '<>' ;
-T50 : 'pre' ;
-T51 : 'or' ;
-T52 : 'and' ;
-T53 : 'not' ;
-T54 : '+' ;
-T55 : '*' ;
-T56 : 'mod' ;
-T57 : '/' ;
-T58 : '?' ;
-T59 : 'PURE' ;
-T60 : 'BOOL' ;
-T61 : 'UNSIGNED' ;
-T62 : 'INT' ;
-T63 : 'FLOAT' ;
-T64 : 'HOST' ;
-T65 : 'NONE' ;
-T66 : 'max' ;
-T67 : 'min' ;
-T68 : 'host' ;
+T13 : 'Synchronous Program' ;
+T14 : '(' ;
+T15 : ')' ;
+T16 : ':' ;
+T17 : 'SIGNALS' ;
+T18 : ';' ;
+T19 : 'input' ;
+T20 : 'output' ;
+T21 : 'signal' ;
+T22 : ':=' ;
+T23 : 'combine' ;
+T24 : 'with' ;
+T25 : 'PAUSE' ;
+T26 : 'TERM' ;
+T27 : 'Halt' ;
+T28 : 'JOIN' ;
+T29 : 'ABORT' ;
+T30 : 'IF' ;
+T31 : ',' ;
+T32 : '{' ;
+T33 : '}' ;
+T34 : 'GOTO' ;
+T35 : 'FORK' ;
+T36 : 'FORKE' ;
+T37 : 'EMIT' ;
+T38 : 'AWAIT' ;
+T39 : 'PRIO' ;
+T40 : '?' ;
+T41 : '=' ;
+T42 : '<' ;
+T43 : '<=' ;
+T44 : '>' ;
+T45 : '>=' ;
+T46 : '<>' ;
+T47 : 'not' ;
+T48 : 'pre' ;
+T49 : 'or' ;
+T50 : 'and' ;
+T51 : '+' ;
+T52 : '-' ;
+T53 : '*' ;
+T54 : 'mod' ;
+T55 : '/' ;
+T56 : 'PURE' ;
+T57 : 'BOOL' ;
+T58 : 'UNSIGNED' ;
+T59 : 'INT' ;
+T60 : 'FLOAT' ;
+T61 : 'HOST' ;
+T62 : 'NONE' ;
+T63 : 'max' ;
+T64 : 'min' ;
+T65 : 'host' ;
 
-// $ANTLR src "../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g" 3928
+// $ANTLR src "../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g" 3777
+RULE_INT : '-'? ('0'..'9')+;
+
+// $ANTLR src "../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g" 3779
+RULE_FLOAT : ((RULE_INT '.' RULE_INT|RULE_INT ('.' RULE_INT)? ('e'|'E') '+'? RULE_INT) 'f'?|RULE_INT 'f');
+
+// $ANTLR src "../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g" 3781
+RULE_BOOLEAN : ('true'|'false');
+
+// $ANTLR src "../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g" 3783
 RULE_ID : '^'? ('a'..'z'|'A'..'Z'|'_') ('a'..'z'|'A'..'Z'|'_'|'0'..'9')*;
 
-// $ANTLR src "../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g" 3930
-RULE_INT : ('0'..'9')+;
-
-// $ANTLR src "../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g" 3932
+// $ANTLR src "../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g" 3785
 RULE_STRING : ('"' ('\\' ('b'|'t'|'n'|'f'|'r'|'"'|'\''|'\\')|~(('\\'|'"')))* '"'|'\'' ('\\' ('b'|'t'|'n'|'f'|'r'|'"'|'\''|'\\')|~(('\\'|'\'')))* '\'');
 
-// $ANTLR src "../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g" 3934
+// $ANTLR src "../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g" 3787
 RULE_ML_COMMENT : '/*' ( options {greedy=false;} : . )*'*/';
 
-// $ANTLR src "../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g" 3936
+// $ANTLR src "../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g" 3789
 RULE_SL_COMMENT : '//' ~(('\n'|'\r'))* ('\r'? '\n')?;
 
-// $ANTLR src "../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g" 3938
+// $ANTLR src "../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g" 3791
 RULE_WS : (' '|'\t'|'\r'|'\n')+;
 
-// $ANTLR src "../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g" 3940
+// $ANTLR src "../de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/parser/antlr/internal/InternalS.g" 3793
 RULE_ANY_OTHER : .;
 
 
