@@ -164,6 +164,11 @@ enum DivOperator returns expressions::OperatorType:
 //==============================================================================
 // Misc
 //==============================================================================
+
+//TODO: chsch will comment this :-)
+EString returns ecore::EString:
+ STRING | ID
+;
 	
 TextExpression returns expressions::TextExpression:
 	code=STRING ("(" type=ID ")")?;

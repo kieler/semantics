@@ -857,6 +857,30 @@ public class ExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		public RuleCall getOrOperationParserRuleCall() { return cOrOperationParserRuleCall; }
 	}
 
+	public class EStringElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "EString");
+		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
+		private final RuleCall cSTRINGTerminalRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
+		private final RuleCall cIDTerminalRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
+		
+		////==============================================================================
+		//// Misc
+		////==============================================================================
+		////TODO: chsch will comment this :-)
+		//EString returns ecore::EString:
+		//	STRING | ID;
+		public ParserRule getRule() { return rule; }
+
+		//STRING | ID
+		public Alternatives getAlternatives() { return cAlternatives; }
+
+		//STRING
+		public RuleCall getSTRINGTerminalRuleCall_0() { return cSTRINGTerminalRuleCall_0; }
+
+		//ID
+		public RuleCall getIDTerminalRuleCall_1() { return cIDTerminalRuleCall_1; }
+	}
+
 	public class TextExpressionElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "TextExpression");
 		private final Group cGroup = (Group)rule.eContents().get(1);
@@ -868,9 +892,6 @@ public class ExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cTypeIDTerminalRuleCall_1_1_0 = (RuleCall)cTypeAssignment_1_1.eContents().get(0);
 		private final Keyword cRightParenthesisKeyword_1_2 = (Keyword)cGroup_1.eContents().get(2);
 		
-		////==============================================================================
-		//// Misc
-		////==============================================================================
 		//TextExpression returns expressions::TextExpression:
 		//	code=STRING ("(" type=ID ")")?;
 		public ParserRule getRule() { return rule; }
@@ -1473,6 +1494,7 @@ public class ExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 	private PlusOperatorElements unknownRulePlusOperator;
 	private MultOperatorElements unknownRuleMultOperator;
 	private DivOperatorElements unknownRuleDivOperator;
+	private EStringElements pEString;
 	private TextExpressionElements pTextExpression;
 	private ExpressionElements pExpression;
 	private ValueTypeElements unknownRuleValueType;
@@ -1926,6 +1948,17 @@ public class ExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 	////==============================================================================
 	//// Misc
 	////==============================================================================
+	////TODO: chsch will comment this :-)
+	//EString returns ecore::EString:
+	//	STRING | ID;
+	public EStringElements getEStringAccess() {
+		return (pEString != null) ? pEString : (pEString = new EStringElements());
+	}
+	
+	public ParserRule getEStringRule() {
+		return getEStringAccess().getRule();
+	}
+
 	//TextExpression returns expressions::TextExpression:
 	//	code=STRING ("(" type=ID ")")?;
 	public TextExpressionElements getTextExpressionAccess() {
