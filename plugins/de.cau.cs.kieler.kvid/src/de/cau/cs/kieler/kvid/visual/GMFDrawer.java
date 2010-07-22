@@ -54,7 +54,7 @@ public class GMFDrawer implements IDrawer {
             }
             PlatformUI.getWorkbench().getDisplay().syncExec(new Runnable() {
                 public void run() {
-                    GMFAnimator.animate(animatables, canvas);
+                    GMFAnimator.animate(animatables, ((DiagramEditor) editor).getDiagramEditPart());
                 }
             }); 
         }        
