@@ -667,13 +667,13 @@ protected class State_SemicolonKeyword_3_1 extends KeywordToken  {
 /************ begin Rule Signal ****************
  *
  * Signal returns expressions::Signal:
- * 	isInput?="input"? isOutput?="output"? "signal" name=STRING (":=" initialValue=STRING)? (":" type=ValueType | ":"
- * 	"combine" type=ValueType "with" (combineOperator=CombineOperator | hostCombineOperator=STRING))? ";";
+ * 	isInput?="input"? isOutput?="output"? "signal" name=EString (":=" initialValue=EString)? (":" type=ValueType | ":"
+ * 	"combine" type=ValueType "with" (combineOperator=CombineOperator | hostCombineOperator=EString))? ";";
  *
  **/
 
-// isInput?="input"? isOutput?="output"? "signal" name=STRING (":=" initialValue=STRING)? (":" type=ValueType | ":"
-// "combine" type=ValueType "with" (combineOperator=CombineOperator | hostCombineOperator=STRING))? ";"
+// isInput?="input"? isOutput?="output"? "signal" name=EString (":=" initialValue=EString)? (":" type=ValueType | ":"
+// "combine" type=ValueType "with" (combineOperator=CombineOperator | hostCombineOperator=EString))? ";"
 protected class Signal_Group extends GroupToken {
 	
 	public Signal_Group(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -792,7 +792,7 @@ protected class Signal_SignalKeyword_2 extends KeywordToken  {
 
 }
 
-// name=STRING
+// name=EString
 protected class Signal_NameAssignment_3 extends AssignmentToken  {
 	
 	public Signal_NameAssignment_3(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -816,9 +816,9 @@ protected class Signal_NameAssignment_3 extends AssignmentToken  {
 	public IEObjectConsumer tryConsume() {
 		if((value = eObjectConsumer.getConsumable("name",true)) == null) return null;
 		IEObjectConsumer obj = eObjectConsumer.cloneAndConsume("name");
-		if(valueSerializer.isValid(obj.getEObject(), grammarAccess.getSignalAccess().getNameSTRINGTerminalRuleCall_3_0(), value, null)) {
-			type = AssignmentType.TERMINAL_RULE_CALL;
-			element = grammarAccess.getSignalAccess().getNameSTRINGTerminalRuleCall_3_0();
+		if(valueSerializer.isValid(obj.getEObject(), grammarAccess.getSignalAccess().getNameEStringParserRuleCall_3_0(), value, null)) {
+			type = AssignmentType.DATATYPE_RULE_CALL;
+			element = grammarAccess.getSignalAccess().getNameEStringParserRuleCall_3_0();
 			return obj;
 		}
 		return null;
@@ -826,7 +826,7 @@ protected class Signal_NameAssignment_3 extends AssignmentToken  {
 
 }
 
-// (":=" initialValue=STRING)?
+// (":=" initialValue=EString)?
 protected class Signal_Group_4 extends GroupToken {
 	
 	public Signal_Group_4(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -870,7 +870,7 @@ protected class Signal_ColonEqualsSignKeyword_4_0 extends KeywordToken  {
 
 }
 
-// initialValue=STRING
+// initialValue=EString
 protected class Signal_InitialValueAssignment_4_1 extends AssignmentToken  {
 	
 	public Signal_InitialValueAssignment_4_1(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -894,9 +894,9 @@ protected class Signal_InitialValueAssignment_4_1 extends AssignmentToken  {
 	public IEObjectConsumer tryConsume() {
 		if((value = eObjectConsumer.getConsumable("initialValue",false)) == null) return null;
 		IEObjectConsumer obj = eObjectConsumer.cloneAndConsume("initialValue");
-		if(valueSerializer.isValid(obj.getEObject(), grammarAccess.getSignalAccess().getInitialValueSTRINGTerminalRuleCall_4_1_0(), value, null)) {
-			type = AssignmentType.TERMINAL_RULE_CALL;
-			element = grammarAccess.getSignalAccess().getInitialValueSTRINGTerminalRuleCall_4_1_0();
+		if(valueSerializer.isValid(obj.getEObject(), grammarAccess.getSignalAccess().getInitialValueEStringParserRuleCall_4_1_0(), value, null)) {
+			type = AssignmentType.DATATYPE_RULE_CALL;
+			element = grammarAccess.getSignalAccess().getInitialValueEStringParserRuleCall_4_1_0();
 			return obj;
 		}
 		return null;
@@ -906,7 +906,7 @@ protected class Signal_InitialValueAssignment_4_1 extends AssignmentToken  {
 
 
 // (":" type=ValueType | ":" "combine" type=ValueType "with" (combineOperator=CombineOperator |
-// hostCombineOperator=STRING))?
+// hostCombineOperator=EString))?
 protected class Signal_Alternatives_5 extends AlternativesToken {
 
 	public Signal_Alternatives_5(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -1009,7 +1009,7 @@ protected class Signal_TypeAssignment_5_0_1 extends AssignmentToken  {
 }
 
 
-// ":" "combine" type=ValueType "with" (combineOperator=CombineOperator | hostCombineOperator=STRING)
+// ":" "combine" type=ValueType "with" (combineOperator=CombineOperator | hostCombineOperator=EString)
 protected class Signal_Group_5_1 extends GroupToken {
 	
 	public Signal_Group_5_1(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -1132,7 +1132,7 @@ protected class Signal_WithKeyword_5_1_3 extends KeywordToken  {
 
 }
 
-// combineOperator=CombineOperator | hostCombineOperator=STRING
+// combineOperator=CombineOperator | hostCombineOperator=EString
 protected class Signal_Alternatives_5_1_4 extends AlternativesToken {
 
 	public Signal_Alternatives_5_1_4(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -1189,7 +1189,7 @@ protected class Signal_CombineOperatorAssignment_5_1_4_0 extends AssignmentToken
 
 }
 
-// hostCombineOperator=STRING
+// hostCombineOperator=EString
 protected class Signal_HostCombineOperatorAssignment_5_1_4_1 extends AssignmentToken  {
 	
 	public Signal_HostCombineOperatorAssignment_5_1_4_1(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -1213,9 +1213,9 @@ protected class Signal_HostCombineOperatorAssignment_5_1_4_1 extends AssignmentT
 	public IEObjectConsumer tryConsume() {
 		if((value = eObjectConsumer.getConsumable("hostCombineOperator",true)) == null) return null;
 		IEObjectConsumer obj = eObjectConsumer.cloneAndConsume("hostCombineOperator");
-		if(valueSerializer.isValid(obj.getEObject(), grammarAccess.getSignalAccess().getHostCombineOperatorSTRINGTerminalRuleCall_5_1_4_1_0(), value, null)) {
-			type = AssignmentType.TERMINAL_RULE_CALL;
-			element = grammarAccess.getSignalAccess().getHostCombineOperatorSTRINGTerminalRuleCall_5_1_4_1_0();
+		if(valueSerializer.isValid(obj.getEObject(), grammarAccess.getSignalAccess().getHostCombineOperatorEStringParserRuleCall_5_1_4_1_0(), value, null)) {
+			type = AssignmentType.DATATYPE_RULE_CALL;
+			element = grammarAccess.getSignalAccess().getHostCombineOperatorEStringParserRuleCall_5_1_4_1_0();
 			return obj;
 		}
 		return null;
@@ -5369,7 +5369,7 @@ protected class ValuedExpression_PlusOperationParserRuleCall extends RuleCallTok
 	public IEObjectConsumer tryConsume() {
 		if(getEObject().eClass() != grammarAccess.getFloatValueRule().getType().getClassifier() && 
 		   getEObject().eClass() != grammarAccess.getIntValueRule().getType().getClassifier() && 
-		   getEObject().eClass() != grammarAccess.getDivOperationAccess().getOperatorExpressionSubExpressionsAction_1_0().getType().getClassifier() && 
+		   getEObject().eClass() != grammarAccess.getPreArithmOperationRule().getType().getClassifier() && 
 		   getEObject().eClass() != grammarAccess.getTextExpressionRule().getType().getClassifier() && 
 		   getEObject().eClass() != grammarAccess.getVariableReferenceRule().getType().getClassifier())
 			return null;
@@ -5427,7 +5427,7 @@ protected class ParanthesedValuedExpression_Alternatives extends AlternativesTok
 	public IEObjectConsumer tryConsume() {
 		if(getEObject().eClass() != grammarAccess.getFloatValueRule().getType().getClassifier() && 
 		   getEObject().eClass() != grammarAccess.getIntValueRule().getType().getClassifier() && 
-		   getEObject().eClass() != grammarAccess.getDivOperationAccess().getOperatorExpressionSubExpressionsAction_1_0().getType().getClassifier() && 
+		   getEObject().eClass() != grammarAccess.getPreArithmOperationRule().getType().getClassifier() && 
 		   getEObject().eClass() != grammarAccess.getTextExpressionRule().getType().getClassifier() && 
 		   getEObject().eClass() != grammarAccess.getVariableReferenceRule().getType().getClassifier())
 			return null;
@@ -5857,7 +5857,7 @@ protected class PlusOperation_Group extends GroupToken {
 	public IEObjectConsumer tryConsume() {
 		if(getEObject().eClass() != grammarAccess.getFloatValueRule().getType().getClassifier() && 
 		   getEObject().eClass() != grammarAccess.getIntValueRule().getType().getClassifier() && 
-		   getEObject().eClass() != grammarAccess.getDivOperationAccess().getOperatorExpressionSubExpressionsAction_1_0().getType().getClassifier() && 
+		   getEObject().eClass() != grammarAccess.getPreArithmOperationRule().getType().getClassifier() && 
 		   getEObject().eClass() != grammarAccess.getTextExpressionRule().getType().getClassifier() && 
 		   getEObject().eClass() != grammarAccess.getVariableReferenceRule().getType().getClassifier())
 			return null;
@@ -6076,7 +6076,7 @@ protected class MultOrDivOperation_Alternatives extends AlternativesToken {
 	public IEObjectConsumer tryConsume() {
 		if(getEObject().eClass() != grammarAccess.getFloatValueRule().getType().getClassifier() && 
 		   getEObject().eClass() != grammarAccess.getIntValueRule().getType().getClassifier() && 
-		   getEObject().eClass() != grammarAccess.getDivOperationAccess().getOperatorExpressionSubExpressionsAction_1_0().getType().getClassifier() && 
+		   getEObject().eClass() != grammarAccess.getPreArithmOperationRule().getType().getClassifier() && 
 		   getEObject().eClass() != grammarAccess.getTextExpressionRule().getType().getClassifier() && 
 		   getEObject().eClass() != grammarAccess.getVariableReferenceRule().getType().getClassifier())
 			return null;
@@ -6259,7 +6259,7 @@ protected class MultOperation_Group extends GroupToken {
 	public IEObjectConsumer tryConsume() {
 		if(getEObject().eClass() != grammarAccess.getFloatValueRule().getType().getClassifier() && 
 		   getEObject().eClass() != grammarAccess.getIntValueRule().getType().getClassifier() && 
-		   getEObject().eClass() != grammarAccess.getDivOperationAccess().getOperatorExpressionSubExpressionsAction_1_0().getType().getClassifier() && 
+		   getEObject().eClass() != grammarAccess.getPreArithmOperationRule().getType().getClassifier() && 
 		   getEObject().eClass() != grammarAccess.getTextExpressionRule().getType().getClassifier() && 
 		   getEObject().eClass() != grammarAccess.getVariableReferenceRule().getType().getClassifier())
 			return null;
@@ -6483,7 +6483,7 @@ protected class DivOperation_Group extends GroupToken {
 	public IEObjectConsumer tryConsume() {
 		if(getEObject().eClass() != grammarAccess.getFloatValueRule().getType().getClassifier() && 
 		   getEObject().eClass() != grammarAccess.getIntValueRule().getType().getClassifier() && 
-		   getEObject().eClass() != grammarAccess.getDivOperationAccess().getOperatorExpressionSubExpressionsAction_1_0().getType().getClassifier() && 
+		   getEObject().eClass() != grammarAccess.getPreArithmOperationRule().getType().getClassifier() && 
 		   getEObject().eClass() != grammarAccess.getTextExpressionRule().getType().getClassifier() && 
 		   getEObject().eClass() != grammarAccess.getVariableReferenceRule().getType().getClassifier())
 			return null;
@@ -6867,7 +6867,7 @@ protected class PreOrNormalValuedExpression_Alternatives extends AlternativesTok
 	public IEObjectConsumer tryConsume() {
 		if(getEObject().eClass() != grammarAccess.getFloatValueRule().getType().getClassifier() && 
 		   getEObject().eClass() != grammarAccess.getIntValueRule().getType().getClassifier() && 
-		   getEObject().eClass() != grammarAccess.getDivOperationAccess().getOperatorExpressionSubExpressionsAction_1_0().getType().getClassifier() && 
+		   getEObject().eClass() != grammarAccess.getPreArithmOperationRule().getType().getClassifier() && 
 		   getEObject().eClass() != grammarAccess.getTextExpressionRule().getType().getClassifier() && 
 		   getEObject().eClass() != grammarAccess.getVariableReferenceRule().getType().getClassifier())
 			return null;
@@ -7489,7 +7489,7 @@ protected class UnaryOrNormalExpression_Alternatives extends AlternativesToken {
     @Override
 	public IEObjectConsumer tryConsume() {
 		if(getEObject().eClass() != grammarAccess.getBooleanValueRule().getType().getClassifier() && 
-		   getEObject().eClass() != grammarAccess.getOrOperationAccess().getOperatorExpressionSubExpressionsAction_1_0().getType().getClassifier() && 
+		   getEObject().eClass() != grammarAccess.getUnaryParanthesedOperationRule().getType().getClassifier() && 
 		   getEObject().eClass() != grammarAccess.getSignalReferenceRule().getType().getClassifier() && 
 		   getEObject().eClass() != grammarAccess.getTextExpressionRule().getType().getClassifier())
 			return null;
@@ -7642,7 +7642,7 @@ protected class AndOperation_Group extends GroupToken {
     @Override
 	public IEObjectConsumer tryConsume() {
 		if(getEObject().eClass() != grammarAccess.getBooleanValueRule().getType().getClassifier() && 
-		   getEObject().eClass() != grammarAccess.getOrOperationAccess().getOperatorExpressionSubExpressionsAction_1_0().getType().getClassifier() && 
+		   getEObject().eClass() != grammarAccess.getUnaryParanthesedOperationRule().getType().getClassifier() && 
 		   getEObject().eClass() != grammarAccess.getSignalReferenceRule().getType().getClassifier() && 
 		   getEObject().eClass() != grammarAccess.getTextExpressionRule().getType().getClassifier())
 			return null;
@@ -7864,7 +7864,7 @@ protected class OrOperation_Group extends GroupToken {
     @Override
 	public IEObjectConsumer tryConsume() {
 		if(getEObject().eClass() != grammarAccess.getBooleanValueRule().getType().getClassifier() && 
-		   getEObject().eClass() != grammarAccess.getOrOperationAccess().getOperatorExpressionSubExpressionsAction_1_0().getType().getClassifier() && 
+		   getEObject().eClass() != grammarAccess.getUnaryParanthesedOperationRule().getType().getClassifier() && 
 		   getEObject().eClass() != grammarAccess.getSignalReferenceRule().getType().getClassifier() && 
 		   getEObject().eClass() != grammarAccess.getTextExpressionRule().getType().getClassifier())
 			return null;
@@ -8088,7 +8088,7 @@ protected class ParanthesedBooleanExpression_Alternatives extends AlternativesTo
     @Override
 	public IEObjectConsumer tryConsume() {
 		if(getEObject().eClass() != grammarAccess.getBooleanValueRule().getType().getClassifier() && 
-		   getEObject().eClass() != grammarAccess.getOrOperationAccess().getOperatorExpressionSubExpressionsAction_1_0().getType().getClassifier() && 
+		   getEObject().eClass() != grammarAccess.getUnaryParanthesedOperationRule().getType().getClassifier() && 
 		   getEObject().eClass() != grammarAccess.getSignalReferenceRule().getType().getClassifier() && 
 		   getEObject().eClass() != grammarAccess.getTextExpressionRule().getType().getClassifier())
 			return null;
@@ -8413,7 +8413,7 @@ protected class BooleanExpression_OrOperationParserRuleCall extends RuleCallToke
     @Override
 	public IEObjectConsumer tryConsume() {
 		if(getEObject().eClass() != grammarAccess.getBooleanValueRule().getType().getClassifier() && 
-		   getEObject().eClass() != grammarAccess.getOrOperationAccess().getOperatorExpressionSubExpressionsAction_1_0().getType().getClassifier() && 
+		   getEObject().eClass() != grammarAccess.getUnaryParanthesedOperationRule().getType().getClassifier() && 
 		   getEObject().eClass() != grammarAccess.getSignalReferenceRule().getType().getClassifier() && 
 		   getEObject().eClass() != grammarAccess.getTextExpressionRule().getType().getClassifier())
 			return null;
@@ -8432,11 +8432,9 @@ protected class BooleanExpression_OrOperationParserRuleCall extends RuleCallToke
 /************ end Rule BooleanExpression ****************/
 
 
+
 /************ begin Rule TextExpression ****************
  *
- * //==============================================================================
- * // Misc
- * //==============================================================================
  * TextExpression returns expressions::TextExpression:
  * 	code=STRING ("(" type=ID ")")?;
  *
@@ -8643,7 +8641,7 @@ protected class Expression_Alternatives extends AlternativesToken {
 		if(getEObject().eClass() != grammarAccess.getBooleanValueRule().getType().getClassifier() && 
 		   getEObject().eClass() != grammarAccess.getFloatValueRule().getType().getClassifier() && 
 		   getEObject().eClass() != grammarAccess.getIntValueRule().getType().getClassifier() && 
-		   getEObject().eClass() != grammarAccess.getDivOperationAccess().getOperatorExpressionSubExpressionsAction_1_0().getType().getClassifier() && 
+		   getEObject().eClass() != grammarAccess.getUnaryOperationRule().getType().getClassifier() && 
 		   getEObject().eClass() != grammarAccess.getSignalReferenceRule().getType().getClassifier() && 
 		   getEObject().eClass() != grammarAccess.getTextExpressionRule().getType().getClassifier() && 
 		   getEObject().eClass() != grammarAccess.getVariableReferenceRule().getType().getClassifier())
@@ -8677,7 +8675,7 @@ protected class Expression_ValuedExpressionParserRuleCall_0 extends RuleCallToke
 	public IEObjectConsumer tryConsume() {
 		if(getEObject().eClass() != grammarAccess.getFloatValueRule().getType().getClassifier() && 
 		   getEObject().eClass() != grammarAccess.getIntValueRule().getType().getClassifier() && 
-		   getEObject().eClass() != grammarAccess.getDivOperationAccess().getOperatorExpressionSubExpressionsAction_1_0().getType().getClassifier() && 
+		   getEObject().eClass() != grammarAccess.getPreArithmOperationRule().getType().getClassifier() && 
 		   getEObject().eClass() != grammarAccess.getTextExpressionRule().getType().getClassifier() && 
 		   getEObject().eClass() != grammarAccess.getVariableReferenceRule().getType().getClassifier())
 			return null;
@@ -8716,7 +8714,7 @@ protected class Expression_BooleanExpressionParserRuleCall_1 extends RuleCallTok
     @Override
 	public IEObjectConsumer tryConsume() {
 		if(getEObject().eClass() != grammarAccess.getBooleanValueRule().getType().getClassifier() && 
-		   getEObject().eClass() != grammarAccess.getOrOperationAccess().getOperatorExpressionSubExpressionsAction_1_0().getType().getClassifier() && 
+		   getEObject().eClass() != grammarAccess.getUnaryParanthesedOperationRule().getType().getClassifier() && 
 		   getEObject().eClass() != grammarAccess.getSignalReferenceRule().getType().getClassifier() && 
 		   getEObject().eClass() != grammarAccess.getTextExpressionRule().getType().getClassifier())
 			return null;

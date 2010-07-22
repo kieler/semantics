@@ -155,11 +155,11 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cIsOutputOutputKeyword_1_0 = (Keyword)cIsOutputAssignment_1.eContents().get(0);
 		private final Keyword cSignalKeyword_2 = (Keyword)cGroup.eContents().get(2);
 		private final Assignment cNameAssignment_3 = (Assignment)cGroup.eContents().get(3);
-		private final RuleCall cNameSTRINGTerminalRuleCall_3_0 = (RuleCall)cNameAssignment_3.eContents().get(0);
+		private final RuleCall cNameEStringParserRuleCall_3_0 = (RuleCall)cNameAssignment_3.eContents().get(0);
 		private final Group cGroup_4 = (Group)cGroup.eContents().get(4);
 		private final Keyword cColonEqualsSignKeyword_4_0 = (Keyword)cGroup_4.eContents().get(0);
 		private final Assignment cInitialValueAssignment_4_1 = (Assignment)cGroup_4.eContents().get(1);
-		private final RuleCall cInitialValueSTRINGTerminalRuleCall_4_1_0 = (RuleCall)cInitialValueAssignment_4_1.eContents().get(0);
+		private final RuleCall cInitialValueEStringParserRuleCall_4_1_0 = (RuleCall)cInitialValueAssignment_4_1.eContents().get(0);
 		private final Alternatives cAlternatives_5 = (Alternatives)cGroup.eContents().get(5);
 		private final Group cGroup_5_0 = (Group)cAlternatives_5.eContents().get(0);
 		private final Keyword cColonKeyword_5_0_0 = (Keyword)cGroup_5_0.eContents().get(0);
@@ -175,16 +175,16 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cCombineOperatorAssignment_5_1_4_0 = (Assignment)cAlternatives_5_1_4.eContents().get(0);
 		private final RuleCall cCombineOperatorCombineOperatorEnumRuleCall_5_1_4_0_0 = (RuleCall)cCombineOperatorAssignment_5_1_4_0.eContents().get(0);
 		private final Assignment cHostCombineOperatorAssignment_5_1_4_1 = (Assignment)cAlternatives_5_1_4.eContents().get(1);
-		private final RuleCall cHostCombineOperatorSTRINGTerminalRuleCall_5_1_4_1_0 = (RuleCall)cHostCombineOperatorAssignment_5_1_4_1.eContents().get(0);
+		private final RuleCall cHostCombineOperatorEStringParserRuleCall_5_1_4_1_0 = (RuleCall)cHostCombineOperatorAssignment_5_1_4_1.eContents().get(0);
 		private final Keyword cSemicolonKeyword_6 = (Keyword)cGroup.eContents().get(6);
 		
 		//Signal returns expressions::Signal:
-		//	isInput?="input"? isOutput?="output"? "signal" name=STRING (":=" initialValue=STRING)? (":" type=ValueType | ":"
-		//	"combine" type=ValueType "with" (combineOperator=CombineOperator | hostCombineOperator=STRING))? ";";
+		//	isInput?="input"? isOutput?="output"? "signal" name=EString (":=" initialValue=EString)? (":" type=ValueType | ":"
+		//	"combine" type=ValueType "with" (combineOperator=CombineOperator | hostCombineOperator=EString))? ";";
 		public ParserRule getRule() { return rule; }
 
-		//isInput?="input"? isOutput?="output"? "signal" name=STRING (":=" initialValue=STRING)? (":" type=ValueType | ":"
-		//"combine" type=ValueType "with" (combineOperator=CombineOperator | hostCombineOperator=STRING))? ";"
+		//isInput?="input"? isOutput?="output"? "signal" name=EString (":=" initialValue=EString)? (":" type=ValueType | ":"
+		//"combine" type=ValueType "with" (combineOperator=CombineOperator | hostCombineOperator=EString))? ";"
 		public Group getGroup() { return cGroup; }
 
 		//isInput?="input"?
@@ -202,26 +202,26 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 		//"signal"
 		public Keyword getSignalKeyword_2() { return cSignalKeyword_2; }
 
-		//name=STRING
+		//name=EString
 		public Assignment getNameAssignment_3() { return cNameAssignment_3; }
 
-		//STRING
-		public RuleCall getNameSTRINGTerminalRuleCall_3_0() { return cNameSTRINGTerminalRuleCall_3_0; }
+		//EString
+		public RuleCall getNameEStringParserRuleCall_3_0() { return cNameEStringParserRuleCall_3_0; }
 
-		//(":=" initialValue=STRING)?
+		//(":=" initialValue=EString)?
 		public Group getGroup_4() { return cGroup_4; }
 
 		//":="
 		public Keyword getColonEqualsSignKeyword_4_0() { return cColonEqualsSignKeyword_4_0; }
 
-		//initialValue=STRING
+		//initialValue=EString
 		public Assignment getInitialValueAssignment_4_1() { return cInitialValueAssignment_4_1; }
 
-		//STRING
-		public RuleCall getInitialValueSTRINGTerminalRuleCall_4_1_0() { return cInitialValueSTRINGTerminalRuleCall_4_1_0; }
+		//EString
+		public RuleCall getInitialValueEStringParserRuleCall_4_1_0() { return cInitialValueEStringParserRuleCall_4_1_0; }
 
 		//(":" type=ValueType | ":" "combine" type=ValueType "with" (combineOperator=CombineOperator |
-		//hostCombineOperator=STRING))?
+		//hostCombineOperator=EString))?
 		public Alternatives getAlternatives_5() { return cAlternatives_5; }
 
 		//":" type=ValueType
@@ -236,7 +236,7 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 		//ValueType
 		public RuleCall getTypeValueTypeEnumRuleCall_5_0_1_0() { return cTypeValueTypeEnumRuleCall_5_0_1_0; }
 
-		//":" "combine" type=ValueType "with" (combineOperator=CombineOperator | hostCombineOperator=STRING)
+		//":" "combine" type=ValueType "with" (combineOperator=CombineOperator | hostCombineOperator=EString)
 		public Group getGroup_5_1() { return cGroup_5_1; }
 
 		//":"
@@ -254,7 +254,7 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 		//"with"
 		public Keyword getWithKeyword_5_1_3() { return cWithKeyword_5_1_3; }
 
-		//combineOperator=CombineOperator | hostCombineOperator=STRING
+		//combineOperator=CombineOperator | hostCombineOperator=EString
 		public Alternatives getAlternatives_5_1_4() { return cAlternatives_5_1_4; }
 
 		//combineOperator=CombineOperator
@@ -263,11 +263,11 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 		//CombineOperator
 		public RuleCall getCombineOperatorCombineOperatorEnumRuleCall_5_1_4_0_0() { return cCombineOperatorCombineOperatorEnumRuleCall_5_1_4_0_0; }
 
-		//hostCombineOperator=STRING
+		//hostCombineOperator=EString
 		public Assignment getHostCombineOperatorAssignment_5_1_4_1() { return cHostCombineOperatorAssignment_5_1_4_1; }
 
-		//STRING
-		public RuleCall getHostCombineOperatorSTRINGTerminalRuleCall_5_1_4_1_0() { return cHostCombineOperatorSTRINGTerminalRuleCall_5_1_4_1_0; }
+		//EString
+		public RuleCall getHostCombineOperatorEStringParserRuleCall_5_1_4_1_0() { return cHostCombineOperatorEStringParserRuleCall_5_1_4_1_0; }
 
 		//";"
 		public Keyword getSemicolonKeyword_6() { return cSemicolonKeyword_6; }
@@ -1063,8 +1063,8 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//Signal returns expressions::Signal:
-	//	isInput?="input"? isOutput?="output"? "signal" name=STRING (":=" initialValue=STRING)? (":" type=ValueType | ":"
-	//	"combine" type=ValueType "with" (combineOperator=CombineOperator | hostCombineOperator=STRING))? ";";
+	//	isInput?="input"? isOutput?="output"? "signal" name=EString (":=" initialValue=EString)? (":" type=ValueType | ":"
+	//	"combine" type=ValueType "with" (combineOperator=CombineOperator | hostCombineOperator=EString))? ";";
 	public SignalElements getSignalAccess() {
 		return (pSignal != null) ? pSignal : (pSignal = new SignalElements());
 	}
@@ -1652,6 +1652,17 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 	////==============================================================================
 	//// Misc
 	////==============================================================================
+	////TODO: chsch will comment this :-)
+	//EString returns ecore::EString:
+	//	STRING | ID;
+	public ExpressionsGrammarAccess.EStringElements getEStringAccess() {
+		return gaExpressions.getEStringAccess();
+	}
+	
+	public ParserRule getEStringRule() {
+		return getEStringAccess().getRule();
+	}
+
 	//TextExpression returns expressions::TextExpression:
 	//	code=STRING ("(" type=ID ")")?;
 	public ExpressionsGrammarAccess.TextExpressionElements getTextExpressionAccess() {

@@ -386,25 +386,25 @@ ruleSignal returns [EObject current=null]
     }
 (
 (
-		lv_name_3_0=RULE_STRING
-		{
-			createLeafNode(grammarAccess.getSignalAccess().getNameSTRINGTerminalRuleCall_3_0(), "name"); 
-		}
-		{
+		{ 
+	        currentNode=createCompositeNode(grammarAccess.getSignalAccess().getNameEStringParserRuleCall_3_0(), currentNode); 
+	    }
+		lv_name_3_0=ruleEString		{
 	        if ($current==null) {
 	            $current = factory.create(grammarAccess.getSignalRule().getType().getClassifier());
-	            associateNodeWithAstElement(currentNode, $current);
+	            associateNodeWithAstElement(currentNode.getParent(), $current);
 	        }
 	        try {
 	       		set(
 	       			$current, 
 	       			"name",
 	        		lv_name_3_0, 
-	        		"STRING", 
-	        		lastConsumedNode);
+	        		"EString", 
+	        		currentNode);
 	        } catch (ValueConverterException vce) {
 				handleValueConverterException(vce);
 	        }
+	        currentNode = currentNode.getParent();
 	    }
 
 )
@@ -414,25 +414,25 @@ ruleSignal returns [EObject current=null]
     }
 (
 (
-		lv_initialValue_5_0=RULE_STRING
-		{
-			createLeafNode(grammarAccess.getSignalAccess().getInitialValueSTRINGTerminalRuleCall_4_1_0(), "initialValue"); 
-		}
-		{
+		{ 
+	        currentNode=createCompositeNode(grammarAccess.getSignalAccess().getInitialValueEStringParserRuleCall_4_1_0(), currentNode); 
+	    }
+		lv_initialValue_5_0=ruleEString		{
 	        if ($current==null) {
 	            $current = factory.create(grammarAccess.getSignalRule().getType().getClassifier());
-	            associateNodeWithAstElement(currentNode, $current);
+	            associateNodeWithAstElement(currentNode.getParent(), $current);
 	        }
 	        try {
 	       		set(
 	       			$current, 
 	       			"initialValue",
 	        		lv_initialValue_5_0, 
-	        		"STRING", 
-	        		lastConsumedNode);
+	        		"EString", 
+	        		currentNode);
 	        } catch (ValueConverterException vce) {
 				handleValueConverterException(vce);
 	        }
+	        currentNode = currentNode.getParent();
 	    }
 
 )
@@ -528,25 +528,25 @@ ruleSignal returns [EObject current=null]
 )
     |(
 (
-		lv_hostCombineOperator_13_0=RULE_STRING
-		{
-			createLeafNode(grammarAccess.getSignalAccess().getHostCombineOperatorSTRINGTerminalRuleCall_5_1_4_1_0(), "hostCombineOperator"); 
-		}
-		{
+		{ 
+	        currentNode=createCompositeNode(grammarAccess.getSignalAccess().getHostCombineOperatorEStringParserRuleCall_5_1_4_1_0(), currentNode); 
+	    }
+		lv_hostCombineOperator_13_0=ruleEString		{
 	        if ($current==null) {
 	            $current = factory.create(grammarAccess.getSignalRule().getType().getClassifier());
-	            associateNodeWithAstElement(currentNode, $current);
+	            associateNodeWithAstElement(currentNode.getParent(), $current);
 	        }
 	        try {
 	       		set(
 	       			$current, 
 	       			"hostCombineOperator",
 	        		lv_hostCombineOperator_13_0, 
-	        		"STRING", 
-	        		lastConsumedNode);
+	        		"EString", 
+	        		currentNode);
 	        } catch (ValueConverterException vce) {
 				handleValueConverterException(vce);
 	        }
+	        currentNode = currentNode.getParent();
 	    }
 
 )
@@ -3359,6 +3359,44 @@ ruleBooleanExpression returns [EObject current=null]
     }
 
 ;
+
+
+
+
+
+// Entry rule entryRuleEString
+entryRuleEString returns [String current=null] 
+	:
+	{ currentNode = createCompositeNode(grammarAccess.getEStringRule(), currentNode); } 
+	 iv_ruleEString=ruleEString 
+	 { $current=$iv_ruleEString.current.getText(); }  
+	 EOF 
+;
+
+// Rule EString
+ruleEString returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] 
+    @init { setCurrentLookahead(); resetLookahead(); 
+    }
+    @after { resetLookahead(); 
+	    lastConsumedNode = currentNode;
+    }:
+(    this_STRING_0=RULE_STRING    {
+		$current.merge(this_STRING_0);
+    }
+
+    { 
+    createLeafNode(grammarAccess.getEStringAccess().getSTRINGTerminalRuleCall_0(), null); 
+    }
+
+    |    this_ID_1=RULE_ID    {
+		$current.merge(this_ID_1);
+    }
+
+    { 
+    createLeafNode(grammarAccess.getEStringAccess().getIDTerminalRuleCall_1(), null); 
+    }
+)
+    ;
 
 
 
