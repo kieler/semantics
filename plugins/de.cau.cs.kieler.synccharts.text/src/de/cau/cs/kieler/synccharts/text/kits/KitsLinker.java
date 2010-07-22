@@ -15,6 +15,9 @@ import de.cau.cs.kieler.synccharts.Transition;
 
 public class KitsLinker extends LazyLinker {
 	
+	/**
+	 * Implementation of a customizing hook resolving State-Transition-Cross-Reference properly.
+	 */
 	public void afterModelLinked(EObject model, IDiagnosticConsumer diagnosticsConsumer) {
 		Transition tr = null;
 		State target = null;
@@ -28,10 +31,6 @@ public class KitsLinker extends LazyLinker {
 				/** the following access will the actual target to be resolved*/
 				target = tr.getTargetState();
 				
-				if (target.getLabel().equals("S7"))
-				{
-					System.out.println("hier");
-				}
 				tr.setTargetState(null);
 				tr.setTargetState(target);
 			}				
