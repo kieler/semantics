@@ -43,11 +43,12 @@ public final class EditorUtils {
     public static IEditorPart getLastActiveEditor() {
         IEditorPart editor = null;
         try {
-            editor = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage()
-                    .getActiveEditor();
+            editor = PlatformUI.getWorkbench().getActiveWorkbenchWindow()
+                    .getActivePage().getActiveEditor();
             if (editor == null) {
-                IEditorReference[] editors = PlatformUI.getWorkbench().getActiveWorkbenchWindow()
-                        .getActivePage().getEditorReferences();
+                IEditorReference[] editors = PlatformUI.getWorkbench()
+                        .getActiveWorkbenchWindow().getActivePage()
+                        .getEditorReferences();
                 editor = editors[0].getEditor(true);
             }
         } catch (NullPointerException e) {

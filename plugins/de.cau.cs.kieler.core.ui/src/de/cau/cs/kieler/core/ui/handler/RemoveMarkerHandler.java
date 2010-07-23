@@ -21,11 +21,12 @@ import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.ui.IEditorInput;
-import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.part.FileEditorInput;
 import org.eclipse.ui.statushandlers.StatusManager;
 
 import de.cau.cs.kieler.core.ui.CoreUIPlugin;
+import de.cau.cs.kieler.core.ui.util.EditorUtils;
 
 /**
  * A Command handler that removes all problem markers from the currently opened
@@ -48,9 +49,11 @@ public class RemoveMarkerHandler extends AbstractHandler {
      */
     public static void removeMarkers() {
         // get currently opened file
-        IEditorInput input = PlatformUI.getWorkbench()
-                .getActiveWorkbenchWindow().getActivePage().getActiveEditor()
-                .getEditorInput();
+        IEditorPart part = EditorUtils.getLastActiveEditor();
+        if (part == null) {
+            return;
+        }
+        IEditorInput input = part.getEditorInput();
         if (input instanceof FileEditorInput) {
             try {
                 // FIXME: more generic solution needed

@@ -40,6 +40,7 @@ import org.osgi.framework.BundleContext;
 
 import de.cau.cs.kieler.core.model.util.ModelingUtil;
 import de.cau.cs.kieler.core.ui.util.CombinedWorkbenchListener;
+import de.cau.cs.kieler.core.ui.util.EditorUtils;
 import de.cau.cs.kieler.synccharts.Transition;
 import de.cau.cs.kieler.synccharts.custom.update.UpdateResourceFactoryImpl;
 import de.cau.cs.kieler.synccharts.diagram.custom.commands.ReInitSyncchartsDiagramCommand;
@@ -139,18 +140,7 @@ public class SyncchartsDiagramCustomPlugin extends AbstractUIPlugin implements
      * @return the editor part or null
      */
     public IEditorPart getActiveEditorPart() {
-        IEditorPart result = null;
-        IWorkbench workbench = getWorkbench();
-        if (workbench != null) {
-            IWorkbenchWindow window = workbench.getActiveWorkbenchWindow();
-            if (window != null) {
-                IWorkbenchPage page = window.getActivePage();
-                if (page != null) {
-                    result = page.getActiveEditor();
-                }
-            }
-        }
-        return result;
+        return EditorUtils.getLastActiveEditor();
     }
 
     /**

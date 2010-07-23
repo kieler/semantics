@@ -18,9 +18,6 @@ import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IEditorSite;
-import org.eclipse.ui.IWorkbench;
-import org.eclipse.ui.IWorkbenchPage;
-import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.internal.statushandlers.StatusHandlerDescriptor;
 import org.eclipse.ui.internal.statushandlers.StatusHandlerRegistry;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
@@ -29,6 +26,7 @@ import org.osgi.framework.BundleContext;
 
 import de.cau.cs.kieler.core.ui.errorhandler.GenericErrorHandler;
 import de.cau.cs.kieler.core.ui.errorhandler.GenericErrorHandler.StatusListener;
+import de.cau.cs.kieler.core.ui.util.EditorUtils;
 import de.cau.cs.kieler.sim.kiem.config.managers.AbstractManager;
 
 /**
@@ -113,18 +111,9 @@ public class KiemConfigurationPlugin extends AbstractUIPlugin {
     public IEditorSite getActiveEditor() {
         IEditorSite editorSite = null;
 
-        IWorkbench workbench = getDefault().getWorkbench();
-        if (workbench != null) {
-            IWorkbenchWindow window = workbench.getActiveWorkbenchWindow();
-            if (window != null) {
-                IWorkbenchPage page = window.getActivePage();
-                if (page != null) {
-                    IEditorPart editor = page.getActiveEditor();
-                    if (editor != null) {
-                        editorSite = editor.getEditorSite();
-                    }
-                }
-            }
+        IEditorPart editor = EditorUtils.getLastActiveEditor();
+        if (editor != null) {
+            editorSite = editor.getEditorSite();
         }
 
         return editorSite;

@@ -31,12 +31,10 @@ import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.util.IPropertyChangeListener;
 import org.eclipse.jface.util.PropertyChangeEvent;
 import org.eclipse.ui.IEditorPart;
-import org.eclipse.ui.IWorkbenchPage;
-import org.eclipse.ui.IWorkbenchWindow;
-import org.eclipse.ui.PlatformUI;
 import org.eclipse.xtend.typesystem.emf.check.CheckRegistry;
 
 import de.cau.cs.kieler.core.model.CoreModelPlugin;
+import de.cau.cs.kieler.core.ui.util.EditorUtils;
 
 /**
  * Handler for managing check files and validate actions.
@@ -116,20 +114,14 @@ public final class ValidationManager {
      */
     public static EPackage getEPackageOfActiveEditor() {
         EPackage ePackage = null;
-        IWorkbenchWindow window = PlatformUI.getWorkbench()
-                .getActiveWorkbenchWindow();
-        if (window != null) {
-            IWorkbenchPage page = window.getActivePage();
-            if (page != null) {
-                IEditorPart ed = page.getActiveEditor();
-                if (ed != null && ed instanceof DiagramEditor) {
-                    DiagramEditor diagEd = (DiagramEditor) ed;
-                    Object obj = diagEd.getDiagramEditPart().getModel();
-                    if (obj != null && obj instanceof View) {
-                        EObject eObj = ((View) obj).getElement();
-                        ePackage = eObj.eClass().getEPackage();
-                    }
-                }
+
+        IEditorPart ed = EditorUtils.getLastActiveEditor();
+        if (ed != null && ed instanceof DiagramEditor) {
+            DiagramEditor diagEd = (DiagramEditor) ed;
+            Object obj = diagEd.getDiagramEditPart().getModel();
+            if (obj != null && obj instanceof View) {
+                EObject eObj = ((View) obj).getElement();
+                ePackage = eObj.eClass().getEPackage();
             }
         }
         return ePackage;

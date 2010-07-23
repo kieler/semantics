@@ -32,9 +32,9 @@ import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchPart;
-import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.actions.WorkspaceModifyDelegatingOperation;
 
+import de.cau.cs.kieler.core.ui.util.EditorUtils;
 import de.cau.cs.kieler.synccharts.diagram.providers.SyncchartsMarkerNavigationProvider;
 import de.cau.cs.kieler.synccharts.diagram.providers.SyncchartsValidationProvider;
 
@@ -59,9 +59,13 @@ public class ValidateAction extends Action {
     /**
      * @generated
      */
+    @Override
     public void run() {
-        IWorkbenchPart workbenchPart = page.getActivePart();
-        if (workbenchPart instanceof IDiagramWorkbenchPart) {
+
+        IWorkbenchPart workbenchPart = EditorUtils.getLastActiveEditor();
+        if (workbenchPart != null
+                && workbenchPart instanceof IDiagramWorkbenchPart) {
+
             final IDiagramWorkbenchPart part = (IDiagramWorkbenchPart) workbenchPart;
             try {
                 new WorkspaceModifyDelegatingOperation(
@@ -87,10 +91,11 @@ public class ValidateAction extends Action {
     public static void runValidation(View view) {
         try {
             if (SyncchartsDiagramEditorUtil.openDiagram(view.eResource())) {
-                IEditorPart editorPart = PlatformUI.getWorkbench()
-                        .getActiveWorkbenchWindow().getActivePage()
-                        .getActiveEditor();
-                if (editorPart instanceof IDiagramWorkbenchPart) {
+
+                IEditorPart editorPart = EditorUtils.getLastActiveEditor();
+
+                if (editorPart != null
+                        && editorPart instanceof IDiagramWorkbenchPart) {
                     runValidation(
                             ((IDiagramWorkbenchPart) editorPart)
                                     .getDiagramEditPart(),
@@ -99,6 +104,7 @@ public class ValidateAction extends Action {
                     runNonUIValidation(view);
                 }
             }
+
         } catch (Exception e) {
             SyncchartsDiagramEditorPlugin.getInstance().logError(
                     "Validation action failed", e); //$NON-NLS-1$
