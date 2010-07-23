@@ -92,7 +92,9 @@ public class «creationWizardClassName»
 			public void setVisible(boolean visible) {
 				if (visible) {
 					String fileName = diagramModelFilePage.getFileName();
-					fileName = fileName.substring(0, fileName.length() - ".«editorGen.diagramFileExtension»".length()); //$NON-NLS-1$
+					if (fileName.endsWith(".«editorGen.diagramFileExtension»")) {
+					   fileName = fileName.substring(0, fileName.length() - ".«editorGen.diagramFileExtension»".length()); //$NON-NLS-1$
+					}
 					setFileName(«getDiagramEditorUtilQualifiedClassName()».getUniqueFileName(
 							getContainerFullPath(), fileName, "«editorGen.domainFileExtension»")); //$NON-NLS-1$
 				}
