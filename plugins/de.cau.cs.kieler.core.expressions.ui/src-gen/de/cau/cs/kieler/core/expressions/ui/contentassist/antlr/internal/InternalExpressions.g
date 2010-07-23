@@ -680,6 +680,8 @@ finally {
 
 
 
+
+
 // Entry rule entryRuleTextExpression
 entryRuleTextExpression 
 :
@@ -1114,6 +1116,7 @@ rule__ParanthesedBooleanExpression__Alternatives
 finally {
 	restoreStackSize(stackSize);
 }
+
 
 rule__Expression__Alternatives
     @init {
