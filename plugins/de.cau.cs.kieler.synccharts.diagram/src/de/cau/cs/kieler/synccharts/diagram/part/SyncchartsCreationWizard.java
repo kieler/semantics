@@ -115,11 +115,13 @@ public class SyncchartsCreationWizard extends Wizard implements INewWizard {
 
             public void setVisible(boolean visible) {
                 if (visible) {
+
                     String fileName = diagramModelFilePage.getFileName();
                     if (fileName.endsWith(".kids")) {
                         fileName = fileName.substring(0, fileName.length()
                                 - ".kids".length()); //$NON-NLS-1$
                     }
+
                     setFileName(SyncchartsDiagramEditorUtil.getUniqueFileName(
                             getContainerFullPath(), fileName, "kixs")); //$NON-NLS-1$
                 }
@@ -141,9 +143,9 @@ public class SyncchartsCreationWizard extends Wizard implements INewWizard {
 
         if (domainModelFilePage.getFileName().matches("default\\d*.\\w*")) {
             String name = diagramModelFilePage.getFileName();
-            domainModelFilePage.setFileName(name.substring(0, name.length()
-                    - diagramModelFilePage.getExtension().length())
-                    + domainModelFilePage.getExtension());
+            String domainFileName = name.replace(".kids", "");
+            domainFileName += ".kixs";
+            domainModelFilePage.setFileName(domainFileName);
         }
 
         IRunnableWithProgress op = new WorkspaceModifyOperation(null) {

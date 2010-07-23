@@ -91,10 +91,12 @@ public class «creationWizardClassName»
 
 			public void setVisible(boolean visible) {
 				if (visible) {
+				    «REM»Convert the diagram file name if the extension is missing. «ENDREM»
 					String fileName = diagramModelFilePage.getFileName();
 					if (fileName.endsWith(".«editorGen.diagramFileExtension»")) {
 					   fileName = fileName.substring(0, fileName.length() - ".«editorGen.diagramFileExtension»".length()); //$NON-NLS-1$
 					}
+                    «REM»Custom code end «ENDREM»  
 					setFileName(«getDiagramEditorUtilQualifiedClassName()».getUniqueFileName(
 							getContainerFullPath(), fileName, "«editorGen.domainFileExtension»")); //$NON-NLS-1$
 				}
@@ -111,9 +113,12 @@ public class «creationWizardClassName»
 	public boolean performFinish() {
 	«REM»This is new in order to set the domain file to the same as the diagram file if the 
 	     domain file was not set at all «ENDREM»
-	if(domainModelFilePage.getFileName().matches("default\\d*.\\w*")){
+	   if (domainModelFilePage.getFileName().matches("default\\d*.\\w*")) {
             String name = diagramModelFilePage.getFileName();
-            domainModelFilePage.setFileName(name.substring(0,name.length()-diagramModelFilePage.getExtension().length())+domainModelFilePage.getExtension());
+            String domainFileName = name.replace(
+                    ".«editorGen.diagramFileExtension»", "");
+            domainFileName += ".«editorGen.domainFileExtension»";
+            domainModelFilePage.setFileName(domainFileName);
         }
 	«REM»Custom code end «ENDREM»        
 		org.eclipse.jface.operation.IRunnableWithProgress op =
