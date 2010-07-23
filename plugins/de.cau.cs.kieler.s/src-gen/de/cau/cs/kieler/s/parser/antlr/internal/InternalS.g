@@ -1201,13 +1201,13 @@ ruleGoto returns [EObject current=null]
     @after { resetLookahead(); 
     	lastConsumedNode = currentNode;
     }:
-((	'GOTO' 
+(	'GOTO' 
     {
-        createLeafNode(grammarAccess.getGotoAccess().getGOTOKeyword_0_0(), null); 
+        createLeafNode(grammarAccess.getGotoAccess().getGOTOKeyword_0(), null); 
     }
 	'(' 
     {
-        createLeafNode(grammarAccess.getGotoAccess().getLeftParenthesisKeyword_0_1(), null); 
+        createLeafNode(grammarAccess.getGotoAccess().getLeftParenthesisKeyword_1(), null); 
     }
 (
 (
@@ -1222,14 +1222,13 @@ ruleGoto returns [EObject current=null]
         }
 	RULE_ID
 	{
-		createLeafNode(grammarAccess.getGotoAccess().getStateStateCrossReference_0_2_0(), "state"); 
+		createLeafNode(grammarAccess.getGotoAccess().getStateStateCrossReference_2_0(), "state"); 
 	}
 
 )
-))
-    |((	',' 
+)(	',' 
     {
-        createLeafNode(grammarAccess.getGotoAccess().getCommaKeyword_1_0_0(), null); 
+        createLeafNode(grammarAccess.getGotoAccess().getCommaKeyword_3_0(), null); 
     }
 (
 (
@@ -1244,15 +1243,15 @@ ruleGoto returns [EObject current=null]
         }
 	RULE_ID
 	{
-		createLeafNode(grammarAccess.getGotoAccess().getContinuationStateCrossReference_1_0_1_0(), "continuation"); 
+		createLeafNode(grammarAccess.getGotoAccess().getContinuationStateCrossReference_3_1_0(), "continuation"); 
 	}
 
 )
 ))?	')' 
     {
-        createLeafNode(grammarAccess.getGotoAccess().getRightParenthesisKeyword_1_1(), null); 
+        createLeafNode(grammarAccess.getGotoAccess().getRightParenthesisKeyword_4(), null); 
     }
-))
+)
 ;
 
 

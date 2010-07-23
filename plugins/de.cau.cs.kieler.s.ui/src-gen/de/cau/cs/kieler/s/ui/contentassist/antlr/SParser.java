@@ -40,7 +40,6 @@ public class SParser extends AbstractContentAssistParser {
 					put(grammarAccess.getSignalAccess().getAlternatives_5(), "rule__Signal__Alternatives_5");
 					put(grammarAccess.getSignalAccess().getAlternatives_5_1_4(), "rule__Signal__Alternatives_5_1_4");
 					put(grammarAccess.getInstructionAccess().getAlternatives(), "rule__Instruction__Alternatives");
-					put(grammarAccess.getGotoAccess().getAlternatives(), "rule__Goto__Alternatives");
 					put(grammarAccess.getValueAccess().getAlternatives(), "rule__Value__Alternatives");
 					put(grammarAccess.getParanthesedValuedExpressionAccess().getAlternatives(), "rule__ParanthesedValuedExpression__Alternatives");
 					put(grammarAccess.getMultOrDivOperationAccess().getAlternatives(), "rule__MultOrDivOperation__Alternatives");
@@ -48,6 +47,7 @@ public class SParser extends AbstractContentAssistParser {
 					put(grammarAccess.getUnaryOperationAccess().getSubExpressionsAlternatives_1_0(), "rule__UnaryOperation__SubExpressionsAlternatives_1_0");
 					put(grammarAccess.getUnaryOrNormalExpressionAccess().getAlternatives(), "rule__UnaryOrNormalExpression__Alternatives");
 					put(grammarAccess.getParanthesedBooleanExpressionAccess().getAlternatives(), "rule__ParanthesedBooleanExpression__Alternatives");
+					put(grammarAccess.getEStringAccess().getAlternatives(), "rule__EString__Alternatives");
 					put(grammarAccess.getExpressionAccess().getAlternatives(), "rule__Expression__Alternatives");
 					put(grammarAccess.getOperatorTypeAccess().getAlternatives(), "rule__OperatorType__Alternatives");
 					put(grammarAccess.getCompareOperatorAccess().getAlternatives(), "rule__CompareOperator__Alternatives");
@@ -71,9 +71,8 @@ public class SParser extends AbstractContentAssistParser {
 					put(grammarAccess.getIfAccess().getGroup(), "rule__If__Group__0");
 					put(grammarAccess.getIfAccess().getGroup_3(), "rule__If__Group_3__0");
 					put(grammarAccess.getIfAccess().getGroup_6(), "rule__If__Group_6__0");
-					put(grammarAccess.getGotoAccess().getGroup_0(), "rule__Goto__Group_0__0");
-					put(grammarAccess.getGotoAccess().getGroup_1(), "rule__Goto__Group_1__0");
-					put(grammarAccess.getGotoAccess().getGroup_1_0(), "rule__Goto__Group_1_0__0");
+					put(grammarAccess.getGotoAccess().getGroup(), "rule__Goto__Group__0");
+					put(grammarAccess.getGotoAccess().getGroup_3(), "rule__Goto__Group_3__0");
 					put(grammarAccess.getForkAccess().getGroup(), "rule__Fork__Group__0");
 					put(grammarAccess.getForkAccess().getGroup_5(), "rule__Fork__Group_5__0");
 					put(grammarAccess.getForkeAccess().getGroup(), "rule__Forke__Group__0");
@@ -135,8 +134,8 @@ public class SParser extends AbstractContentAssistParser {
 					put(grammarAccess.getIfAccess().getExpressionAssignment_2(), "rule__If__ExpressionAssignment_2");
 					put(grammarAccess.getIfAccess().getContinuationAssignment_3_1(), "rule__If__ContinuationAssignment_3_1");
 					put(grammarAccess.getIfAccess().getInstructionsAssignment_6_0(), "rule__If__InstructionsAssignment_6_0");
-					put(grammarAccess.getGotoAccess().getStateAssignment_0_2(), "rule__Goto__StateAssignment_0_2");
-					put(grammarAccess.getGotoAccess().getContinuationAssignment_1_0_1(), "rule__Goto__ContinuationAssignment_1_0_1");
+					put(grammarAccess.getGotoAccess().getStateAssignment_2(), "rule__Goto__StateAssignment_2");
+					put(grammarAccess.getGotoAccess().getContinuationAssignment_3_1(), "rule__Goto__ContinuationAssignment_3_1");
 					put(grammarAccess.getForkAccess().getStateAssignment_2(), "rule__Fork__StateAssignment_2");
 					put(grammarAccess.getForkAccess().getPriorityAssignment_4(), "rule__Fork__PriorityAssignment_4");
 					put(grammarAccess.getForkAccess().getContinuationAssignment_5_1(), "rule__Fork__ContinuationAssignment_5_1");
