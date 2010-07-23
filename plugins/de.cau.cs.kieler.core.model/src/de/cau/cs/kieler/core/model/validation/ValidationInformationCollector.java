@@ -44,6 +44,7 @@ import org.eclipse.xtext.ui.editor.model.IXtextDocument;
 import org.eclipse.xtext.ui.editor.model.XtextDocument;
 import org.eclipse.xtext.util.concurrent.IUnitOfWork.Void;
 
+import de.cau.cs.kieler.core.KielerException;
 import de.cau.cs.kieler.core.ui.util.CombinedWorkbenchListener;
 
 /**
@@ -356,7 +357,8 @@ public class ValidationInformationCollector implements IStartup, IPartListener {
                         e0.printStackTrace();
                     } catch (RuntimeException e0) {
                         e0.printStackTrace();
-                        throw e0;
+                       throw e0;
+//                        throw (new KielerException(e0.getMessage()));
                     }
                 }
             }
