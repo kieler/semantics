@@ -16,7 +16,8 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.xtext.ui.ecore;bundle-version="1.0.0",
  de.cau.cs.kieler.synccharts.codegen.sc;bundle-version="0.0.1",
  de.cau.cs.kieler.core.expressions;bundle-version="0.1.0",
- de.cau.cs.kieler.core.annotations;bundle-version="0.1.0"
+ de.cau.cs.kieler.core.annotations;bundle-version="0.1.0",
+ de.cau.cs.kieler.core.model;bundle-version="0.2.0"
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Import-Package: de.cau.cs.kieler.synccharts,

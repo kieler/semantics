@@ -45,6 +45,7 @@ import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyTypeFile;
 import de.cau.cs.kieler.synccharts.Region;
 import de.cau.cs.kieler.core.expressions.Signal;
 import de.cau.cs.kieler.core.expressions.ValueType;
+import de.cau.cs.kieler.core.model.validation.ValidationManager;
 import de.cau.cs.kieler.synccharts.codegen.sc.WorkflowGenerator;
 
 /**
@@ -79,6 +80,10 @@ public class SCDataComponent extends AbstractAutomatedProducer {
      * {@inheritDoc}
      */
     public void initialize() throws KiemInitializationException {
+        //Enable SC checks in possibly open GMF SyncCharts editor
+        ValidationManager.enableCheck("de.cau.cs.kieler.synccharts.ScChecks");        
+        ValidationManager.validateActiveEditor();
+        
         // building path to bundle
         Bundle bundle = Platform.getBundle("de.cau.cs.kieler.synccharts.codegen.sc");
 

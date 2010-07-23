@@ -86,6 +86,7 @@ import org.osgi.framework.Bundle;
 
 import de.cau.cs.kieler.core.alg.BasicProgressMonitor;
 import de.cau.cs.kieler.core.alg.IKielerProgressMonitor;
+import de.cau.cs.kieler.core.model.validation.ValidationManager;
 import de.cau.cs.kieler.core.ui.KielerProgressMonitor;
 import de.cau.cs.kieler.core.util.Maybe;
 
@@ -389,6 +390,10 @@ public class SyncchartsSimDataComponent extends JSONObjectDataComponent {
         PTOEXE = null;
         System.gc();
         String[] keys = null;
+        
+        //Enable KlePto checks in possibly open GMF SyncCharts editor
+        ValidationManager.enableCheck("de.cau.cs.kieler.synccharts.KleptoChecks");        
+        ValidationManager.validateActiveEditor();
 
         // Check if the model conforms to all check files and no warnings left!
         Diagnostician diagnostician = new Diagnostician();
