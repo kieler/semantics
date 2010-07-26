@@ -168,36 +168,6 @@ public class SignalItemProvider
     }
 
     /**
-     * This specifies how to implement {@link #getChildren} and is used to deduce an appropriate feature for an
-     * {@link org.eclipse.emf.edit.command.AddCommand}, {@link org.eclipse.emf.edit.command.RemoveCommand} or
-     * {@link org.eclipse.emf.edit.command.MoveCommand} in {@link #createCommand}.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public Collection<? extends EStructuralFeature> getChildrenFeatures(Object object) {
-        if (childrenFeatures == null) {
-            super.getChildrenFeatures(object);
-            childrenFeatures.add(ExpressionsPackage.Literals.SIGNAL__VALUE);
-        }
-        return childrenFeatures;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    protected EStructuralFeature getChildFeature(Object object, Object child) {
-        // Check the type of the specified child object and return the proper feature to use for
-        // adding (see {@link AddCommand}) it as a child.
-
-        return super.getChildFeature(object, child);
-    }
-
-    /**
      * This returns Signal.gif.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -240,9 +210,6 @@ public class SignalItemProvider
             case ExpressionsPackage.SIGNAL__HOST_COMBINE_OPERATOR:
                 fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
                 return;
-            case ExpressionsPackage.SIGNAL__VALUE:
-                fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
-                return;
         }
         super.notifyChanged(notification);
     }
@@ -257,76 +224,6 @@ public class SignalItemProvider
     @Override
     protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object) {
         super.collectNewChildDescriptors(newChildDescriptors, object);
-
-        newChildDescriptors.add
-            (createChildParameter
-                (ExpressionsPackage.Literals.SIGNAL__VALUE,
-                 ExpressionsFactory.eINSTANCE.createExpression()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (ExpressionsPackage.Literals.SIGNAL__VALUE,
-                 ExpressionsFactory.eINSTANCE.createComplexExpression()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (ExpressionsPackage.Literals.SIGNAL__VALUE,
-                 ExpressionsFactory.eINSTANCE.createTextualCode()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (ExpressionsPackage.Literals.SIGNAL__VALUE,
-                 ExpressionsFactory.eINSTANCE.createValuedObject()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (ExpressionsPackage.Literals.SIGNAL__VALUE,
-                 ExpressionsFactory.eINSTANCE.createSignal()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (ExpressionsPackage.Literals.SIGNAL__VALUE,
-                 ExpressionsFactory.eINSTANCE.createSignalReference()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (ExpressionsPackage.Literals.SIGNAL__VALUE,
-                 ExpressionsFactory.eINSTANCE.createVariable()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (ExpressionsPackage.Literals.SIGNAL__VALUE,
-                 ExpressionsFactory.eINSTANCE.createVariableReference()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (ExpressionsPackage.Literals.SIGNAL__VALUE,
-                 ExpressionsFactory.eINSTANCE.createValue()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (ExpressionsPackage.Literals.SIGNAL__VALUE,
-                 ExpressionsFactory.eINSTANCE.createIntValue()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (ExpressionsPackage.Literals.SIGNAL__VALUE,
-                 ExpressionsFactory.eINSTANCE.createFloatValue()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (ExpressionsPackage.Literals.SIGNAL__VALUE,
-                 ExpressionsFactory.eINSTANCE.createBooleanValue()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (ExpressionsPackage.Literals.SIGNAL__VALUE,
-                 ExpressionsFactory.eINSTANCE.createOperatorExpression()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (ExpressionsPackage.Literals.SIGNAL__VALUE,
-                 ExpressionsFactory.eINSTANCE.createTextExpression()));
     }
 
 }

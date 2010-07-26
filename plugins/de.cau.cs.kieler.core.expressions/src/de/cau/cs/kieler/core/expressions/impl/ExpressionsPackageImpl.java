@@ -296,17 +296,8 @@ public class ExpressionsPackageImpl extends EPackageImpl implements ExpressionsP
      * <!-- end-user-doc -->
      * @generated
      */
-    public EReference getSignal_Value() {
-        return (EReference)signalEClass.getEStructuralFeatures().get(0);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
     public EAttribute getSignal_IsInput() {
-        return (EAttribute)signalEClass.getEStructuralFeatures().get(1);
+        return (EAttribute)signalEClass.getEStructuralFeatures().get(0);
     }
 
     /**
@@ -315,7 +306,7 @@ public class ExpressionsPackageImpl extends EPackageImpl implements ExpressionsP
      * @generated
      */
     public EAttribute getSignal_IsOutput() {
-        return (EAttribute)signalEClass.getEStructuralFeatures().get(2);
+        return (EAttribute)signalEClass.getEStructuralFeatures().get(1);
     }
 
     /**
@@ -324,7 +315,7 @@ public class ExpressionsPackageImpl extends EPackageImpl implements ExpressionsP
      * @generated
      */
     public EAttribute getSignal_CombineOperator() {
-        return (EAttribute)signalEClass.getEStructuralFeatures().get(3);
+        return (EAttribute)signalEClass.getEStructuralFeatures().get(2);
     }
 
     /**
@@ -333,7 +324,7 @@ public class ExpressionsPackageImpl extends EPackageImpl implements ExpressionsP
      * @generated
      */
     public EAttribute getSignal_HostCombineOperator() {
-        return (EAttribute)signalEClass.getEStructuralFeatures().get(4);
+        return (EAttribute)signalEClass.getEStructuralFeatures().get(3);
     }
 
     /**
@@ -413,17 +404,8 @@ public class ExpressionsPackageImpl extends EPackageImpl implements ExpressionsP
      * <!-- end-user-doc -->
      * @generated
      */
-    public EReference getVariable_Value() {
-        return (EReference)variableEClass.getEStructuralFeatures().get(0);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
     public EAttribute getVariable_Const() {
-        return (EAttribute)variableEClass.getEStructuralFeatures().get(1);
+        return (EAttribute)variableEClass.getEStructuralFeatures().get(0);
     }
 
     /**
@@ -599,7 +581,6 @@ public class ExpressionsPackageImpl extends EPackageImpl implements ExpressionsP
         createEAttribute(textualCodeEClass, TEXTUAL_CODE__TYPE);
 
         signalEClass = createEClass(SIGNAL);
-        createEReference(signalEClass, SIGNAL__VALUE);
         createEAttribute(signalEClass, SIGNAL__IS_INPUT);
         createEAttribute(signalEClass, SIGNAL__IS_OUTPUT);
         createEAttribute(signalEClass, SIGNAL__COMBINE_OPERATOR);
@@ -615,7 +596,6 @@ public class ExpressionsPackageImpl extends EPackageImpl implements ExpressionsP
         createEAttribute(valuedObjectEClass, VALUED_OBJECT__HOST_TYPE);
 
         variableEClass = createEClass(VARIABLE);
-        createEReference(variableEClass, VARIABLE__VALUE);
         createEAttribute(variableEClass, VARIABLE__CONST);
 
         variableReferenceEClass = createEClass(VARIABLE_REFERENCE);
@@ -695,7 +675,6 @@ public class ExpressionsPackageImpl extends EPackageImpl implements ExpressionsP
         initEAttribute(getTextualCode_Type(), ecorePackage.getEString(), "type", null, 0, 1, TextualCode.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(signalEClass, Signal.class, "Signal", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-        initEReference(getSignal_Value(), ecorePackage.getEObject(), null, "value", null, 0, 1, Signal.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getSignal_IsInput(), ecorePackage.getEBoolean(), "isInput", null, 1, 1, Signal.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getSignal_IsOutput(), ecorePackage.getEBoolean(), "isOutput", null, 1, 1, Signal.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getSignal_CombineOperator(), this.getCombineOperator(), "combineOperator", null, 1, 1, Signal.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -711,7 +690,6 @@ public class ExpressionsPackageImpl extends EPackageImpl implements ExpressionsP
         initEAttribute(getValuedObject_HostType(), ecorePackage.getEString(), "hostType", null, 0, 1, ValuedObject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(variableEClass, Variable.class, "Variable", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-        initEReference(getVariable_Value(), ecorePackage.getEObject(), null, "value", null, 1, 1, Variable.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getVariable_Const(), ecorePackage.getEBoolean(), "const", null, 1, 1, Variable.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(variableReferenceEClass, VariableReference.class, "VariableReference", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);

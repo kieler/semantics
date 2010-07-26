@@ -33,7 +33,6 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link de.cau.cs.kieler.core.expressions.impl.SignalImpl#getValue <em>Value</em>}</li>
  *   <li>{@link de.cau.cs.kieler.core.expressions.impl.SignalImpl#isIsInput <em>Is Input</em>}</li>
  *   <li>{@link de.cau.cs.kieler.core.expressions.impl.SignalImpl#isIsOutput <em>Is Output</em>}</li>
  *   <li>{@link de.cau.cs.kieler.core.expressions.impl.SignalImpl#getCombineOperator <em>Combine Operator</em>}</li>
@@ -44,16 +43,6 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * @generated
  */
 public class SignalImpl extends ValuedObjectImpl implements Signal {
-    /**
-     * The cached value of the '{@link #getValue() <em>Value</em>}' containment reference.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see #getValue()
-     * @generated
-     * @ordered
-     */
-    protected EObject value;
-
     /**
      * The default value of the '{@link #isIsInput() <em>Is Input</em>}' attribute.
      * <!-- begin-user-doc -->
@@ -158,49 +147,6 @@ public class SignalImpl extends ValuedObjectImpl implements Signal {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EObject getValue() {
-        return value;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public NotificationChain basicSetValue(EObject newValue, NotificationChain msgs) {
-        EObject oldValue = value;
-        value = newValue;
-        if (eNotificationRequired()) {
-            ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ExpressionsPackage.SIGNAL__VALUE, oldValue, newValue);
-            if (msgs == null) msgs = notification; else msgs.add(notification);
-        }
-        return msgs;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public void setValue(EObject newValue) {
-        if (newValue != value) {
-            NotificationChain msgs = null;
-            if (value != null)
-                msgs = ((InternalEObject)value).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - ExpressionsPackage.SIGNAL__VALUE, null, msgs);
-            if (newValue != null)
-                msgs = ((InternalEObject)newValue).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - ExpressionsPackage.SIGNAL__VALUE, null, msgs);
-            msgs = basicSetValue(newValue, msgs);
-            if (msgs != null) msgs.dispatch();
-        }
-        else if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, ExpressionsPackage.SIGNAL__VALUE, newValue, newValue));
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
     public boolean isIsInput() {
         return isInput;
     }
@@ -286,24 +232,8 @@ public class SignalImpl extends ValuedObjectImpl implements Signal {
      * @generated
      */
     @Override
-    public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
-        switch (featureID) {
-            case ExpressionsPackage.SIGNAL__VALUE:
-                return basicSetValue(null, msgs);
-        }
-        return super.eInverseRemove(otherEnd, featureID, msgs);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
     public Object eGet(int featureID, boolean resolve, boolean coreType) {
         switch (featureID) {
-            case ExpressionsPackage.SIGNAL__VALUE:
-                return getValue();
             case ExpressionsPackage.SIGNAL__IS_INPUT:
                 return isIsInput();
             case ExpressionsPackage.SIGNAL__IS_OUTPUT:
@@ -324,9 +254,6 @@ public class SignalImpl extends ValuedObjectImpl implements Signal {
     @Override
     public void eSet(int featureID, Object newValue) {
         switch (featureID) {
-            case ExpressionsPackage.SIGNAL__VALUE:
-                setValue((EObject)newValue);
-                return;
             case ExpressionsPackage.SIGNAL__IS_INPUT:
                 setIsInput((Boolean)newValue);
                 return;
@@ -351,9 +278,6 @@ public class SignalImpl extends ValuedObjectImpl implements Signal {
     @Override
     public void eUnset(int featureID) {
         switch (featureID) {
-            case ExpressionsPackage.SIGNAL__VALUE:
-                setValue((EObject)null);
-                return;
             case ExpressionsPackage.SIGNAL__IS_INPUT:
                 setIsInput(IS_INPUT_EDEFAULT);
                 return;
@@ -378,8 +302,6 @@ public class SignalImpl extends ValuedObjectImpl implements Signal {
     @Override
     public boolean eIsSet(int featureID) {
         switch (featureID) {
-            case ExpressionsPackage.SIGNAL__VALUE:
-                return value != null;
             case ExpressionsPackage.SIGNAL__IS_INPUT:
                 return isInput != IS_INPUT_EDEFAULT;
             case ExpressionsPackage.SIGNAL__IS_OUTPUT:

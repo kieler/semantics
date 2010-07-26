@@ -156,8 +156,6 @@
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
       <details key="documentation" value="A Signal is the first-class data object in synchronous languages used for communication.&#xA;Signals extend ValuedObject and therefore have a name and may carry a value. A Signal can&#xA;be part of a module's interface and therefore be an input, an output (or even both). If a Signal&#xA;is neither input nor output, it is considered to be a local signal with a limited scope not visible&#xA;to the outside.&#xA;&lt;p>&#xA;As the value of a Signal is unique in one tick, the interpreter needs to know how to handle &#xA;multiple emissions of the same Signal in a tick. Therefore a combineOperator can be set. Such &#xA;operator needs to be commutative. It can be chosen from a pre-defined enumeration or by&#xA;a String referencing a function in the target language (e.g. a C or Java function name that &#xA;has exactly two parameters and produces one combined result of the corresponding data type).&#xA;&#xA;"/>
     </eAnnotations>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="value" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EObject"
-        containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="isInput" lowerBound="1"
         eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="isOutput" lowerBound="1"
@@ -206,8 +204,6 @@
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
       <details key="documentation" value="A Variable is a data object that may be used for internal calculations. It is not directly&#xA;intended for communication with concurrent program parts. Variables may be overridden&#xA;multiple times within one synchronous tick. Hence writing a signal in concurrent program parts&#xA;is not allowed. Therefore Variables, unlike Signals, do not need a combine strategy.&#xA;&lt;p>&#xA;A Variable always carries a value and therefore needs a proper type. A Variable may be&#xA;tagged to be a constant by the const attribute and then the value is given by the&#xA;initialValue.&#xA;&lt;p>&#xA;Due to the restrictions in broadcast communication, the usage of Variables is discouraged&#xA;everywhere where Signals could be used instead.&#xA;&#xA;"/>
     </eAnnotations>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="value" lowerBound="1" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EObject"
-        containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="const" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="VariableReference" eSuperTypes="#//ComplexExpression">

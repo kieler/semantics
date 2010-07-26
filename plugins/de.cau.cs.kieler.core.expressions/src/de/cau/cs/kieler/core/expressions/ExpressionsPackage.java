@@ -253,22 +253,13 @@ public interface ExpressionsPackage extends EPackage {
     int SIGNAL__HOST_TYPE = VALUED_OBJECT__HOST_TYPE;
 
     /**
-     * The feature id for the '<em><b>Value</b></em>' containment reference.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int SIGNAL__VALUE = VALUED_OBJECT_FEATURE_COUNT + 0;
-
-    /**
      * The feature id for the '<em><b>Is Input</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int SIGNAL__IS_INPUT = VALUED_OBJECT_FEATURE_COUNT + 1;
+    int SIGNAL__IS_INPUT = VALUED_OBJECT_FEATURE_COUNT + 0;
 
     /**
      * The feature id for the '<em><b>Is Output</b></em>' attribute.
@@ -277,7 +268,7 @@ public interface ExpressionsPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int SIGNAL__IS_OUTPUT = VALUED_OBJECT_FEATURE_COUNT + 2;
+    int SIGNAL__IS_OUTPUT = VALUED_OBJECT_FEATURE_COUNT + 1;
 
     /**
      * The feature id for the '<em><b>Combine Operator</b></em>' attribute.
@@ -286,7 +277,7 @@ public interface ExpressionsPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int SIGNAL__COMBINE_OPERATOR = VALUED_OBJECT_FEATURE_COUNT + 3;
+    int SIGNAL__COMBINE_OPERATOR = VALUED_OBJECT_FEATURE_COUNT + 2;
 
     /**
      * The feature id for the '<em><b>Host Combine Operator</b></em>' attribute.
@@ -295,7 +286,7 @@ public interface ExpressionsPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int SIGNAL__HOST_COMBINE_OPERATOR = VALUED_OBJECT_FEATURE_COUNT + 4;
+    int SIGNAL__HOST_COMBINE_OPERATOR = VALUED_OBJECT_FEATURE_COUNT + 3;
 
     /**
      * The number of structural features of the '<em>Signal</em>' class.
@@ -304,7 +295,7 @@ public interface ExpressionsPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int SIGNAL_FEATURE_COUNT = VALUED_OBJECT_FEATURE_COUNT + 5;
+    int SIGNAL_FEATURE_COUNT = VALUED_OBJECT_FEATURE_COUNT + 4;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.core.expressions.impl.SignalReferenceImpl <em>Signal Reference</em>}' class.
@@ -390,22 +381,13 @@ public interface ExpressionsPackage extends EPackage {
     int VARIABLE__HOST_TYPE = VALUED_OBJECT__HOST_TYPE;
 
     /**
-     * The feature id for the '<em><b>Value</b></em>' containment reference.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int VARIABLE__VALUE = VALUED_OBJECT_FEATURE_COUNT + 0;
-
-    /**
      * The feature id for the '<em><b>Const</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int VARIABLE__CONST = VALUED_OBJECT_FEATURE_COUNT + 1;
+    int VARIABLE__CONST = VALUED_OBJECT_FEATURE_COUNT + 0;
 
     /**
      * The number of structural features of the '<em>Variable</em>' class.
@@ -414,7 +396,7 @@ public interface ExpressionsPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int VARIABLE_FEATURE_COUNT = VALUED_OBJECT_FEATURE_COUNT + 2;
+    int VARIABLE_FEATURE_COUNT = VALUED_OBJECT_FEATURE_COUNT + 1;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.core.expressions.impl.VariableReferenceImpl <em>Variable Reference</em>}' class.
@@ -744,17 +726,6 @@ public interface ExpressionsPackage extends EPackage {
     EClass getSignal();
 
     /**
-     * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.core.expressions.Signal#getValue <em>Value</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the containment reference '<em>Value</em>'.
-     * @see de.cau.cs.kieler.core.expressions.Signal#getValue()
-     * @see #getSignal()
-     * @generated
-     */
-    EReference getSignal_Value();
-
-    /**
      * Returns the meta object for the attribute '{@link de.cau.cs.kieler.core.expressions.Signal#isIsInput <em>Is Input</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -882,17 +853,6 @@ public interface ExpressionsPackage extends EPackage {
      * @generated
      */
     EClass getVariable();
-
-    /**
-     * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.core.expressions.Variable#getValue <em>Value</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the containment reference '<em>Value</em>'.
-     * @see de.cau.cs.kieler.core.expressions.Variable#getValue()
-     * @see #getVariable()
-     * @generated
-     */
-    EReference getVariable_Value();
 
     /**
      * Returns the meta object for the attribute '{@link de.cau.cs.kieler.core.expressions.Variable#isConst <em>Const</em>}'.
@@ -1147,14 +1107,6 @@ public interface ExpressionsPackage extends EPackage {
         EClass SIGNAL = eINSTANCE.getSignal();
 
         /**
-         * The meta object literal for the '<em><b>Value</b></em>' containment reference feature.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EReference SIGNAL__VALUE = eINSTANCE.getSignal_Value();
-
-        /**
          * The meta object literal for the '<em><b>Is Input</b></em>' attribute feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
@@ -1255,14 +1207,6 @@ public interface ExpressionsPackage extends EPackage {
          * @generated
          */
         EClass VARIABLE = eINSTANCE.getVariable();
-
-        /**
-         * The meta object literal for the '<em><b>Value</b></em>' containment reference feature.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EReference VARIABLE__VALUE = eINSTANCE.getVariable_Value();
 
         /**
          * The meta object literal for the '<em><b>Const</b></em>' attribute feature.
