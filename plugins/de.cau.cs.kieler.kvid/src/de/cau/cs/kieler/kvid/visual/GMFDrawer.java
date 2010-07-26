@@ -22,14 +22,17 @@ public class GMFDrawer implements IDrawer {
         //clearDrawing();
         
         //update data phase
+        int figureCounter = 1; 
         for (String key : dataSet.keySet()) {
+            
             if (figuresByURI.containsKey(key)) {
                 figuresByURI.get(key).updateData(dataSet.get(key));
-                figuresByURI.get(key).setLocation(new Point(100, figuresByURI.size()*20));
+                figuresByURI.get(key).setLocation(new Point(300, figureCounter*50));
             } else {
                 figuresByURI.put(key, new KViDGMFFigure(dataSet.get(key)));
-                figuresByURI.get(key).setLocation(new Point(100, figuresByURI.size()*20));
+                figuresByURI.get(key).setLocation(new Point(300, figureCounter*50));
             }
+            figureCounter++;
         }
         
         final IEditorPart editor = KViDDataDistributor.getInstance().getActiveEditor();

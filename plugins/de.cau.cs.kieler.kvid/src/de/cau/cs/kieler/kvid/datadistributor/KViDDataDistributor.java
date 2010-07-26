@@ -63,10 +63,12 @@ public class KViDDataDistributor {
     
     public void update(final JSONObject data) {
         Iterator allKeys = data.keys();
-        List<Point> randomPath = new LinkedList<Point>();
-        randomPath.add(new Point(100, 100));
-        randomPath.add(new Point(100, 300));
+        int figureCounter = 1;
         while (allKeys.hasNext()) {
+            List<Point> randomPath = new LinkedList<Point>();
+            randomPath.add(new Point(300, figureCounter*50));
+            randomPath.add(new Point(400, figureCounter*50));
+            randomPath.add(new Point(300, figureCounter*50));
             Object o = allKeys.next();
             try {
                 String key = o.toString();
@@ -74,6 +76,7 @@ public class KViDDataDistributor {
             } catch (JSONException e) {
                 e.printStackTrace();
             }
+            figureCounter++;
         }
         drawer.draw(dataByURI);
     }
