@@ -31,8 +31,6 @@ public class CustomTransientValueService extends DefaultTransientValueService {
 			return true;
 		if (owner instanceof Transition && feature == SyncchartsPackage.eINSTANCE.getAction_Label())
 			return true;
-		if (owner instanceof Variable && feature == ExpressionsPackage.eINSTANCE.getVariable_Value())
-			return true;
 //		if (owner instanceof SignalReference && feature.getFeatureID() == SyncchartsPackage.SIGNAL_REFERENCE__PARENT_ACTION)
 //			return true;
 //		if (owner instanceof SignalReference && feature.getFeatureID() == SyncchartsPackage.SIGNAL_REFERENCE__PARENT_ASSIGNMENT)

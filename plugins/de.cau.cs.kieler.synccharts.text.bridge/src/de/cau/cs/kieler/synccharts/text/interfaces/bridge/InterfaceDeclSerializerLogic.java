@@ -575,7 +575,6 @@ public class InterfaceDeclSerializerLogic {
         old.setType(newS.getType());
         old.setHostCombineOperator(newS.getHostCombineOperator());
         old.setHostType(newS.getHostType());
-        old.setValue(newS.getValue());
     }
 
     /**
@@ -647,7 +646,6 @@ public class InterfaceDeclSerializerLogic {
         old.setInitialValue(newVar.getInitialValue());
         old.setName(newVar.getName());
         old.setType(newVar.getType());
-        old.setValue(newVar.getValue());
     }
 
     // ##################
