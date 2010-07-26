@@ -17,7 +17,7 @@ import de.cau.cs.kieler.kvid.datadistributor.KViDDataDistributor;
 public class GMFAnimator {
     
     public static void animate(HashMap<KViDGMFFigure, List<Point>> figuresAndPath, DiagramEditPart diagram){
-        //Animation.markBegin();
+
         AnimatingCommand anima = new AnimatingCommand();
         CompoundCommand cc = new CompoundCommand();
         boolean allPathsExeeded = false;
@@ -26,32 +26,24 @@ public class GMFAnimator {
         while(!allPathsExeeded) {
             allPathsExeeded = true;
             for (KViDGMFFigure figure : figuresAndPath.keySet()) {
-                /*ArrangeRequest request = new ArrangeRequest(ActionIds.ACTION_ARRANGE_ALL);
-                CompoundCommand cc = new CompoundCommand();
-                cc.add(part.getCommand(request));
-                part.getDiagramEditDomain().getDiagramCommandStack().execute(cc);
-                part.getContentPane().revalidate();
-                part.getContentPane().repaint();
-                figure.setLocation(figuresAndPath.get(figure).get(0));
-                LayoutAnimator.getDefault().init(figure);
-                figure.setLocation(figuresAndPath.get(figure).get(1));
-                LayoutAnimator.getDefault().capture(figure);
-                */
                 if (pathCounter == 0) {
                     anima.initializeAnimatedElement(figure, diagram.getViewer());
                 }
                 if (pathCounter < figuresAndPath.get(figure).size()) {      
                     anima.specifyStep(figure, figuresAndPath.get(figure).get(pathCounter));
-                    allPathsExeeded = false;
+                    if ((pathCounter + 1) < figuresAndPath.get(figure).size()) {
+                        allPathsExeeded = false;
+                    }
                 }
             }
-            anima.nextStep();
+            if (!allPathsExeeded) {
+                anima.nextStep();
+            }
             pathCounter++;
         }
         
         cc.add(anima);
         diagram.getDiagramEditDomain().getDiagramCommandStack().execute(cc);
-        //Animation.run(1000);
     }
     
 }
