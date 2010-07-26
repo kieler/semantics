@@ -65,8 +65,9 @@ import de.cau.cs.kieler.sim.kiem.KiemExecutionException;
 import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import de.cau.cs.kieler.synccharts.Region;
 import de.cau.cs.kieler.synccharts.SyncchartsPackage;
-import de.cau.cs.kieler.synccharts.diagram.custom.SyncchartsValidationActionFactory;
 import de.cau.cs.kieler.synccharts.sim.ptolemy.oaw.MomlWriter;
 import de.cau.cs.kieler.sim.kiem.JSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.JSONSignalValues;
@@ -400,15 +401,24 @@ public class SyncchartsSimDataComponent extends JSONObjectDataComponent {
         // because we might want to simulate headless!!!
         
         // Check if the model conforms to all check files and no warnings left!
-//        Diagnostician diagnostician = Diagnostician.INSTANCE;
-//        EObject rootEObject = this.getInputModelEObject(this
-//                .getInputEditor());
-//        Diagnostic diagnostic = diagnostician.validate(rootEObject);
+        Diagnostician diagnostician = Diagnostician.INSTANCE;
+        EObject rootEObject = this.getInputModelEObject(this
+                .getInputEditor());
+
+//        Object eValidator;
+//        EValidator.Registry eValidatorRegistry = rootEObject.;
+//        eValidator = eValidatorRegistry.get(eType.eContainer();
+//        boolean result = ((EValidator)eValidator).validate(eClass, eObject, diagnostics, context);
+
+        Region syncChart = (de.cau.cs.kieler.synccharts.Region)rootEObject;
+        
+        Diagnostic diagnostic = diagnostician.validate(syncChart);
         //de.cau.cs.kieler.synccharts.diagram.custom.SyncchartsValidationActionFactory;
-//        boolean ok = diagnostic.getSeverity() == Diagnostic.OK;
+        int serenity = diagnostic.getSeverity();
+        boolean ok = (serenity == Diagnostic.OK);
 
         //FIXME this is currently not working ...
-        boolean ok = true; //diagnostic.getSeverity() == Diagnostic.OK;
+        //boolean ok = true; //diagnostic.getSeverity() == Diagnostic.OK;
 
         if (!ok) {
             // bring Problems View to the front otherwise
@@ -425,7 +435,7 @@ public class SyncchartsSimDataComponent extends JSONObjectDataComponent {
                                         + "'"
                                         + " contains unsolved problems. Please check the Eclipse Problems View to fix these"
                                         + ".\n\nNote that while errors or simulation warnings exist, the"
-                                        + " execution of the model is rather unpredictable.");
+                                        + " execution of the model is rather unpredictable.\n\n"+diagnostic.toString());
             } catch (Exception e) {
                 // in case of an error here, do not start simulation
                 throw new KiemInitializationException(
