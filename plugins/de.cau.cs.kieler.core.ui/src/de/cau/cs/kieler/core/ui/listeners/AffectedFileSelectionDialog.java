@@ -13,19 +13,13 @@
  */
 package de.cau.cs.kieler.core.ui.listeners;
 
-import java.util.LinkedList;
 import java.util.List;
 
 import org.eclipse.core.resources.IFile;
-import org.eclipse.jface.dialogs.Dialog;
-import org.eclipse.jface.viewers.ILabelProvider;
-import org.eclipse.jface.viewers.ILabelProviderListener;
-import org.eclipse.jface.viewers.IStructuredContentProvider;
-import org.eclipse.jface.viewers.Viewer;
-import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Shell;
-import org.eclipse.ui.dialogs.ListSelectionDialog;
 
+import de.cau.cs.kieler.core.ui.commands.FunctionReturningString;
+import de.cau.cs.kieler.core.ui.commands.SelectObjectsFromListDialog;
 import de.cau.cs.kieler.core.ui.listeners.RefactoringListener.OP;
 
 /**
@@ -34,17 +28,8 @@ import de.cau.cs.kieler.core.ui.listeners.RefactoringListener.OP;
  * @author soh
  * @kieler.rating 2010-06-14 proposed yellow soh
  */
-public class AffectedFileSelectionDialog implements IStructuredContentProvider,
-        ILabelProvider {
-
-    /** The shell where to display the dialog. */
-    private Shell shell;
-
-    /** The list of affected files. */
-    private List<IFile> affectedFiles;
-
-    /** The operation for displaying text. */
-    private OP operation;
+public class AffectedFileSelectionDialog extends
+        SelectObjectsFromListDialog<IFile> {
 
     /**
      * 
@@ -59,41 +44,18 @@ public class AffectedFileSelectionDialog implements IStructuredContentProvider,
      */
     public AffectedFileSelectionDialog(final Shell theShell,
             final List<IFile> files, final OP theOP) {
-        shell = theShell;
-        affectedFiles = files;
-        operation = theOP;
-    }
-
-    /**
-     * Open the list selection dialog.
-     * 
-     * @return the list of files selected by the user
-     */
-    public List<IFile> openDialog() {
-        ListSelectionDialog dialog = new ListSelectionDialog(shell,
-                affectedFiles, this, this, getMessage());
-        dialog.setHelpAvailable(false);
-        dialog.setInitialElementSelections(affectedFiles);
-
-        if (dialog.open() == Dialog.OK) {
-            Object[] result = dialog.getResult();
-
-            // convert result to the format
-            List<IFile> output = new LinkedList<IFile>();
-            for (Object o : result) {
-                output.add((IFile) o);
-            }
-            return output;
-        }
-        return null;
+        super(theShell, files, getMessage(theOP),
+                new FunctionReturningString.IFileToStringFunction());
     }
 
     /**
      * Create a message for each operation.
      * 
+     * @param operation
+     *            the operation
      * @return the message
      */
-    private String getMessage() {
+    private static String getMessage(final OP operation) {
         switch (operation) {
         case DELETE:
             return "The following files are affected by "
@@ -108,65 +70,4 @@ public class AffectedFileSelectionDialog implements IStructuredContentProvider,
         return "";
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    @SuppressWarnings("unchecked")
-    public Object[] getElements(final Object inputElement) {
-        List<IFile> input = new LinkedList<IFile>();
-        if (inputElement instanceof List<?>) {
-            input = (List<IFile>) inputElement;
-        }
-        return input.toArray(new IFile[input.size()]);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public void dispose() {
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public void inputChanged(final Viewer viewer, final Object oldInput,
-            final Object newInput) {
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public Image getImage(final Object element) {
-        return null;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public String getText(final Object element) {
-        if (element instanceof IFile) {
-            IFile data = (IFile) element;
-            return data.getFullPath().toString();
-        }
-        return null;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public void addListener(final ILabelProviderListener listener) {
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public boolean isLabelProperty(final Object element, final String property) {
-        return false;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public void removeListener(final ILabelProviderListener listener) {
-    }
 }
