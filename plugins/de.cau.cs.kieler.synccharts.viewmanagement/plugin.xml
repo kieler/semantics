@@ -15,6 +15,11 @@
             class="de.cau.cs.kieler.synccharts.viewmanagement.StateActivityTrigger"
             name="State Activity Trigger">
       </trigger>
+      <trigger
+            class="de.cau.cs.kieler.synccharts.viewmanagement.LabelSizeChangedTrigger$ViewManagementTrigger"
+            description="Trigger on change of diagram labels"
+            name="de.cau.cs.kieler.synccharts.viewmanagement.label">
+      </trigger>
    </extension>
    <extension
          point="de.cau.cs.kieler.viewmanagement.combination">
@@ -27,6 +32,11 @@
             description="Collapses non-active states and shows only active in the focus."
             name="Active State Focus/Context">
       </combination>
+      <combination
+            class="de.cau.cs.kieler.synccharts.viewmanagement.SizeChangedLayoutCombination"
+            description="Will do auto layout when a label changed its size."
+            name="Label Changed Layout">
+      </combination>
    </extension>
    <extension
          point="de.cau.cs.kieler.sim.kiem.json.datacomponent">
@@ -35,6 +45,12 @@
             id="de.cau.cs.kieler.synccharts.viewmanagement.simple"
             name="Simple Highlighter">
       </content>
+   </extension>
+   <extension
+         point="de.cau.cs.kieler.synccharts.triggerListener">
+      <triggerListener
+            class="de.cau.cs.kieler.synccharts.viewmanagement.LabelSizeChangedTrigger">
+      </triggerListener>
    </extension>
 
 </plugin>
