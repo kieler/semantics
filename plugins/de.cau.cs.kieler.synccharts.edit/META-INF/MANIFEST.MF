@@ -4,17 +4,18 @@ Bundle-Name: %pluginName
 Bundle-SymbolicName: de.cau.cs.kieler.synccharts.edit;singleton:=true
 Bundle-Version: 0.1.0.qualifier
 Bundle-ClassPath: .
-Bundle-Activator: de.cau.cs.kieler.synccharts.edit.SyncchartsEditPlugin$Implementation
+Bundle-Activator: de.cau.cs.kieler.synccharts.provider.SyncchartsEditPlugin$Implementation
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
-Export-Package: de.cau.cs.kieler.synccharts.edit,
- de.cau.cs.kieler.synccharts.provider
+Export-Package: de.cau.cs.kieler.synccharts.provider
 Require-Bundle: org.eclipse.core.runtime,
  de.cau.cs.kieler.synccharts;visibility:=reexport,
  org.eclipse.emf.edit;visibility:=reexport,
- de.cau.cs.kieler.core.annotations;bundle-version="0.1.0",
- de.cau.cs.kieler.core.expressions;bundle-version="0.1.0",
- de.cau.cs.kieler.core.annotations.edit;bundle-version="0.1.0",
- de.cau.cs.kieler.core.expressions.edit;bundle-version="0.1.0"
+ de.cau.cs.kieler.core.annotations;visibility:=reexport,
+ de.cau.cs.kieler.core.annotations.edit;visibility:=reexport,
+ org.eclipse.emf.ecore;visibility:=reexport,
+ org.eclipse.emf.ecore.edit;visibility:=reexport,
+ de.cau.cs.kieler.core.expressions;visibility:=reexport,
+ de.cau.cs.kieler.core.expressions.edit;visibility:=reexport
 Bundle-ActivationPolicy: lazy
