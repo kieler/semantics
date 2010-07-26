@@ -13,10 +13,10 @@
  */
 package de.cau.cs.kieler.core.ui.listeners;
 
-import java.io.File;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.eclipse.core.resources.IFile;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.viewers.ILabelProviderListener;
@@ -41,7 +41,7 @@ public class AffectedFileSelectionDialog implements IStructuredContentProvider,
     private Shell shell;
 
     /** The list of affected files. */
-    private List<File> affectedFiles;
+    private List<IFile> affectedFiles;
 
     /** The operation for displaying text. */
     private OP operation;
@@ -58,7 +58,7 @@ public class AffectedFileSelectionDialog implements IStructuredContentProvider,
      *            the operation
      */
     public AffectedFileSelectionDialog(final Shell theShell,
-            final List<File> files, final OP theOP) {
+            final List<IFile> files, final OP theOP) {
         shell = theShell;
         affectedFiles = files;
         operation = theOP;
@@ -69,7 +69,7 @@ public class AffectedFileSelectionDialog implements IStructuredContentProvider,
      * 
      * @return the list of files selected by the user
      */
-    public List<File> openDialog() {
+    public List<IFile> openDialog() {
         ListSelectionDialog dialog = new ListSelectionDialog(shell,
                 affectedFiles, this, this, getMessage());
         dialog.setHelpAvailable(false);
@@ -79,9 +79,9 @@ public class AffectedFileSelectionDialog implements IStructuredContentProvider,
             Object[] result = dialog.getResult();
 
             // convert result to the format
-            List<File> output = new LinkedList<File>();
+            List<IFile> output = new LinkedList<IFile>();
             for (Object o : result) {
-                output.add((File) o);
+                output.add((IFile) o);
             }
             return output;
         }
@@ -113,11 +113,11 @@ public class AffectedFileSelectionDialog implements IStructuredContentProvider,
      */
     @SuppressWarnings("unchecked")
     public Object[] getElements(final Object inputElement) {
-        List<File> input = new LinkedList<File>();
+        List<IFile> input = new LinkedList<IFile>();
         if (inputElement instanceof List<?>) {
-            input = (List<File>) inputElement;
+            input = (List<IFile>) inputElement;
         }
-        return input.toArray(new File[input.size()]);
+        return input.toArray(new IFile[input.size()]);
     }
 
     /**
@@ -144,9 +144,9 @@ public class AffectedFileSelectionDialog implements IStructuredContentProvider,
      * {@inheritDoc}
      */
     public String getText(final Object element) {
-        if (element instanceof File) {
-            File data = (File) element;
-            return data.getPath();
+        if (element instanceof IFile) {
+            IFile data = (IFile) element;
+            return data.getFullPath().toString();
         }
         return null;
     }

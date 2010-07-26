@@ -14,25 +14,21 @@
 package de.cau.cs.kieler.core.ui.listeners;
 
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileInputStream;
+import java.io.ByteArrayInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
+import java.io.UnsupportedEncodingException;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.eclipse.core.resources.IContainer;
+import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
-import org.eclipse.core.runtime.Path;
-import org.eclipse.core.runtime.Platform;
 import org.eclipse.ltk.core.refactoring.RefactoringDescriptor;
 import org.eclipse.ltk.core.refactoring.history.IRefactoringHistoryListener;
 import org.eclipse.ltk.core.refactoring.history.RefactoringHistoryEvent;
@@ -108,8 +104,8 @@ public class RefactoringListener implements IRefactoringHistoryListener {
 
         try {
             // refresh workspace
-            ResourcesPlugin.getWorkspace().getRoot().refreshLocal(
-                    IResource.DEPTH_INFINITE, null);
+            ResourcesPlugin.getWorkspace().getRoot()
+                    .refreshLocal(IResource.DEPTH_INFINITE, null);
         } catch (CoreException e0) {
             e0.printStackTrace();
         }
@@ -125,7 +121,7 @@ public class RefactoringListener implements IRefactoringHistoryListener {
      */
     private void deleteFile(final DeleteResourcesDescriptor deleteDesc) {
         IPath[] locations = deleteDesc.getResourcePaths();
-        final List<File> affectedFiles = new LinkedList<File>();
+        final List<IFile> affectedFiles = new LinkedList<IFile>();
 
         for (IPath path : locations) {
             affectedFiles.addAll(executeOperation(path, OP.DELETE, null));
@@ -133,11 +129,16 @@ public class RefactoringListener implements IRefactoringHistoryListener {
 
         // found files, ask user for confirmation
         if (!affectedFiles.isEmpty()) {
-            List<File> deletedFiles = getUserSelection(affectedFiles, OP.DELETE);
+            List<IFile> deletedFiles = getUserSelection(affectedFiles,
+                    OP.DELETE);
 
             if (!deletedFiles.isEmpty()) {
-                for (File file : deletedFiles) {
-                    file.delete();
+                try {
+                    ResourcesPlugin.getWorkspace().delete(
+                            deletedFiles.toArray(new IResource[deletedFiles
+                                    .size()]), true, null);
+                } catch (CoreException e0) {
+                    e0.printStackTrace();
                 }
             }
         }
@@ -152,9 +153,9 @@ public class RefactoringListener implements IRefactoringHistoryListener {
      *            the operation
      * @return the selected files
      */
-    private List<File> getUserSelection(final List<File> affectedFiles,
+    private List<IFile> getUserSelection(final List<IFile> affectedFiles,
             final OP op) {
-        final List<File> result = new LinkedList<File>();
+        final List<IFile> result = new LinkedList<IFile>();
         PlatformUI.getWorkbench().getDisplay().syncExec(new Runnable() {
 
             public void run() {
@@ -165,7 +166,7 @@ public class RefactoringListener implements IRefactoringHistoryListener {
 
                 AffectedFileSelectionDialog dialog = new AffectedFileSelectionDialog(
                         shell, affectedFiles, op);
-                List<File> results = dialog.openDialog();
+                List<IFile> results = dialog.openDialog();
                 if (results != null) {
                     result.addAll(results);
                 }
@@ -185,24 +186,29 @@ public class RefactoringListener implements IRefactoringHistoryListener {
      *            optionally the new name of the file
      * @return the list of files that link to the refactored file
      */
-    private List<File> executeOperation(final IPath path, final OP op,
+    private List<IFile> executeOperation(final IPath path, final OP op,
             final String newName) {
-        List<File> result = new LinkedList<File>();
+        List<IFile> result = new LinkedList<IFile>();
         if (path != null) {
             String ext = path.getFileExtension();
+
             // test the different model extensions and find which of them is
             // applicable
             for (int i = 0; i < MODEL_EXTENSIONS.length; i++) {
                 if (ext != null && ext.equals(MODEL_EXTENSIONS[i])) {
-                    String path0 = path.removeFileExtension()
-                            .removeLastSegments(1).toOSString();
-                    String path1 = Platform.getLocation().toOSString();
-                    String path2 = path1 + path0;
+                    IFile file = ResourcesPlugin.getWorkspace().getRoot()
+                            .getFile(path);
+                    IContainer container = file.getParent();
 
-                    File parent = Path.fromOSString(path2).toFile();
-
-                    for (File file : parent.listFiles()) {
-                        findRec(result, file, path, op, newName, i);
+                    try {
+                        IResource[] members = container.members();
+                        for (IResource res : members) {
+                            if (res instanceof IFile) {
+                                find(result, (IFile) res, path, op, newName, i);
+                            }
+                        }
+                    } catch (CoreException e0) {
+                        e0.printStackTrace();
                     }
                 }
             }
@@ -226,13 +232,13 @@ public class RefactoringListener implements IRefactoringHistoryListener {
      * @param index
      *            the index in the model/diagram extension list to use
      */
-    private void findRec(final List<File> result, final File root,
+    private void find(final List<IFile> result, final IFile root,
             final IPath model, final OP op, final String newName,
             final int index) {
-        if (root.getPath().endsWith("." + DIAGRAM_EXTENSIONS[index])) {
+        if (root.getFileExtension().equals(DIAGRAM_EXTENSIONS[index])) {
             // found relevant file
             try {
-                InputStream is = new FileInputStream(root);
+                InputStream is = root.getContents();
                 InputStreamReader isr = new InputStreamReader(is);
                 BufferedReader br = new BufferedReader(isr);
 
@@ -278,22 +284,27 @@ public class RefactoringListener implements IRefactoringHistoryListener {
 
                 if (op.equals(OP.RENAME)) {
                     // write information back into the file
-                    OutputStream os = new FileOutputStream(root);
-                    OutputStreamWriter osw = new OutputStreamWriter(os);
-                    BufferedWriter bw = new BufferedWriter(osw);
-
+                    StringBuilder builder = new StringBuilder();
                     for (String string : list) {
-                        bw.write(string);
-                        bw.flush();
+                        builder.append(string);
                     }
-                }
 
+                    try {
+                        root.setContents(new ByteArrayInputStream(builder
+                                .toString().getBytes("UTF-8")), true, true,
+                                null);
+                    } catch (UnsupportedEncodingException e) {
+                        e.printStackTrace();
+                    }
+
+                }
             } catch (FileNotFoundException e0) {
                 e0.printStackTrace();
             } catch (IOException e0) {
                 e0.printStackTrace();
+            } catch (CoreException e0) {
+                e0.printStackTrace();
             }
-
         }
     }
 
@@ -307,30 +318,19 @@ public class RefactoringListener implements IRefactoringHistoryListener {
     private void moveFile(final MoveResourcesDescriptor moveDesc) {
         IPath[] src = moveDesc.getResourcePathsToMove();
         IPath dest = moveDesc.getDestinationPath();
-
         for (IPath path : src) {
-            List<File> list = executeOperation(path, OP.MOVE, null);
-            String pathExt = path.getFileExtension();
-            int index = -1;
-            for (int i = 0; i < MODEL_EXTENSIONS.length; i++) {
-                if (pathExt.equals(MODEL_EXTENSIONS[i])) {
-                    index = i;
-                    break;
-                }
-            }
+            List<IFile> list = executeOperation(path, OP.MOVE, null);
+            List<IFile> selection = getUserSelection(list, OP.MOVE);
 
-            List<File> selection = getUserSelection(list, OP.MOVE);
-
-            for (File partner : selection) {
+            for (IFile partner : selection) {
                 if (partner != null) {
-                    IPath srcName = path.removeFileExtension();
-                    String name = srcName.segment(srcName.segmentCount() - 1);
-                    name = dest.toOSString() + IPath.SEPARATOR + name + "." //$NON-NLS-1$
-                            + DIAGRAM_EXTENSIONS[index];
-                    IPath newPath = Path.fromOSString(Platform.getLocation()
-                            .toOSString()
-                            + name);
-                    partner.renameTo(newPath.toFile());
+                    try {
+                        partner.move(
+                                dest.addTrailingSeparator().append(
+                                        partner.getName()), false, null);
+                    } catch (CoreException e0) {
+                        e0.printStackTrace();
+                    }
                 }
             }
         }
