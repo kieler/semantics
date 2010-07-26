@@ -44,6 +44,13 @@
             class="de.cau.cs.kieler.synccharts.text.actions.bridge.listeners.SerializerListener">
       </triggerListener>
    </extension>
+   <extension
+         point="de.cau.cs.kieler.core.model.Validation">
+      <ValidateAction
+            actionFactory="de.cau.cs.kieler.synccharts.text.kits.bridge.KitsValidationActionFactory"
+            ePackageId="de.cau.cs.kieler.synccharts">
+      </ValidateAction>
+   </extension>
 
 <!--
    <extension

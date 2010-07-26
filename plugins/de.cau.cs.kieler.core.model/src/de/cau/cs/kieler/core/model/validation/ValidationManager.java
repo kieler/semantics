@@ -32,8 +32,10 @@ import org.eclipse.jface.util.IPropertyChangeListener;
 import org.eclipse.jface.util.PropertyChangeEvent;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.xtend.typesystem.emf.check.CheckRegistry;
+import org.eclipse.xtext.ui.editor.XtextEditor;
 
 import de.cau.cs.kieler.core.model.CoreModelPlugin;
+import de.cau.cs.kieler.core.model.util.ModelingUtil;
 import de.cau.cs.kieler.core.ui.util.EditorUtils;
 
 /**
@@ -116,11 +118,19 @@ public final class ValidationManager {
         EPackage ePackage = null;
 
         IEditorPart ed = EditorUtils.getLastActiveEditor();
-        if (ed != null && ed instanceof DiagramEditor) {
-            DiagramEditor diagEd = (DiagramEditor) ed;
-            Object obj = diagEd.getDiagramEditPart().getModel();
-            if (obj != null && obj instanceof View) {
-                EObject eObj = ((View) obj).getElement();
+        if (ed != null) {
+            EObject eObj = null;
+            if (ed instanceof DiagramEditor) {
+                DiagramEditor diagEd = (DiagramEditor) ed;
+                Object obj = diagEd.getDiagramEditPart().getModel();
+                if (obj != null && obj instanceof View) {
+                    eObj = ((View) obj).getElement();
+                }
+            } else if (ed instanceof XtextEditor) {
+                XtextEditor xEd = (XtextEditor) ed;
+                eObj = ModelingUtil.getModelFromXtextEditor(xEd);
+            }
+            if (eObj != null) {
                 ePackage = eObj.eClass().getEPackage();
             }
         }

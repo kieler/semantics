@@ -29,9 +29,19 @@ import org.eclipse.gmf.runtime.diagram.core.util.ViewUtil;
 import org.eclipse.gmf.runtime.diagram.ui.editparts.DiagramEditPart;
 import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramEditor;
 import org.eclipse.gmf.runtime.notation.View;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.StructuredSelection;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Shell;
+import org.eclipse.ui.IEditorPart;
+import org.eclipse.ui.IEditorSite;
 import org.eclipse.ui.PlatformUI;
+import org.eclipse.xtext.resource.XtextResource;
+import org.eclipse.xtext.ui.editor.XtextEditor;
+import org.eclipse.xtext.ui.editor.model.IXtextDocument;
+import org.eclipse.xtext.ui.editor.model.XtextDocument;
+import org.eclipse.xtext.util.concurrent.IUnitOfWork.Void;
 
 /**
  * Utility class with static methods to handle EMF models and GEF EditParts.
@@ -43,8 +53,56 @@ import org.eclipse.ui.PlatformUI;
 public final class ModelingUtil {
 
     private ModelingUtil() {
+
     }
 
+    private static EObject xtextModel;
+
+    /**
+     * Get the model from a given xtext editor.
+     * 
+     * @param xtextEd
+     *            the editor
+     * @return the model
+     */
+    public static EObject getModelFromXtextEditor(final XtextEditor xtextEd) {
+        checkForDirtyEditor(xtextEd);
+        IXtextDocument docu = xtextEd.getDocument();
+
+        if (docu instanceof XtextDocument) {
+            XtextDocument document = (XtextDocument) docu;
+
+            document.readOnly(new Void<XtextResource>() {
+
+                @Override
+                public void process(final XtextResource state) throws Exception {
+                    List<EObject> eObj = state.getContents();
+
+                    xtextModel = eObj.get(0);
+
+                }
+            });
+        }
+        return xtextModel;
+    }
+
+    private static void checkForDirtyEditor(final XtextEditor diagramEditor) {
+        if (diagramEditor.isDirty()) {
+            final Shell shell = Display.getCurrent().getShells()[0];
+            boolean b = MessageDialog
+                    .openQuestion(
+                            shell,
+                            "Save Resource",
+                            "'"
+                                    + diagramEditor.getEditorInput().getName()
+                                    + "'"
+                                    + " has been modified. Save changes before simulating? (recommended)");
+            if (b) {
+                IEditorSite part = diagramEditor.getEditorSite();
+                part.getPage().saveEditor((IEditorPart) part.getPart(), false);
+            }
+        }
+    }
 
     /**
      * Find an GEF EditPart that corresponds to an semantic model EObject.
@@ -121,8 +179,8 @@ public final class ModelingUtil {
                             } else {
                                 break;
                             } // a Root diagram edit part has no real view, so
-                            // we will stop
-                            // searching there
+                              // we will stop
+                              // searching there
                         }
                         // cachedEditParts2.put(eObject, editPart);
                         return editPart;
@@ -384,8 +442,8 @@ public final class ModelingUtil {
                                 } else {
                                     break;
                                 } // a Root diagram edit part has no real view,
-                                // so
-                                // we will stop searching there
+                                  // so
+                                  // we will stop searching there
                             }
                             return editPart;
                         }

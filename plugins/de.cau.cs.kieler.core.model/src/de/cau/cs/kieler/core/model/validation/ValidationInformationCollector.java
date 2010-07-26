@@ -28,23 +28,15 @@ import org.eclipse.emf.ecore.impl.EPackageRegistryImpl;
 import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramEditor;
 import org.eclipse.gmf.runtime.notation.View;
 import org.eclipse.jface.action.Action;
-import org.eclipse.jface.dialogs.MessageDialog;
-import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IEditorPart;
-import org.eclipse.ui.IEditorSite;
 import org.eclipse.ui.IPartListener;
 import org.eclipse.ui.IStartup;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.PlatformUI;
-import org.eclipse.xtext.resource.XtextResource;
 import org.eclipse.xtext.ui.editor.XtextEditor;
-import org.eclipse.xtext.ui.editor.model.IXtextDocument;
-import org.eclipse.xtext.ui.editor.model.XtextDocument;
-import org.eclipse.xtext.util.concurrent.IUnitOfWork.Void;
 
-import de.cau.cs.kieler.core.KielerException;
+import de.cau.cs.kieler.core.model.util.ModelingUtil;
 import de.cau.cs.kieler.core.ui.util.CombinedWorkbenchListener;
 
 /**
@@ -64,7 +56,7 @@ public class ValidationInformationCollector implements IStartup, IPartListener {
      * action.
      */
     // SUPPRESS CHECKSTYLE NEXT LineLength
-    private static Map<String, IConfigurationElement> validateActions = new HashMap<String, IConfigurationElement>();
+    private static Map<String, List<IConfigurationElement>> validateActions = new HashMap<String, List<IConfigurationElement>>();
 
     /**
      * The map for mapping the ePackage IDs to the checkfiles registered under
@@ -104,7 +96,12 @@ public class ValidationInformationCollector implements IStartup, IPartListener {
      */
     private void addValidateAction(final IConfigurationElement element) {
         String ePackageId = element.getAttribute("ePackageId");
-        validateActions.put(ePackageId, element);
+        List<IConfigurationElement> list = validateActions.get(ePackageId);
+        if (list == null) {
+            list = new LinkedList<IConfigurationElement>();
+            validateActions.put(ePackageId, list);
+        }
+        list.add(element);
     }
 
     /**
@@ -259,7 +256,7 @@ public class ValidationInformationCollector implements IStartup, IPartListener {
                     }
                 } else if (part instanceof XtextEditor) {
                     XtextEditor xtextEd = (XtextEditor) part;
-                    eObj = getModelFromXtextEditor(xtextEd);
+                    eObj = ModelingUtil.getModelFromXtextEditor(xtextEd);
                 }
 
                 if (eObj != null) {
@@ -285,50 +282,6 @@ public class ValidationInformationCollector implements IStartup, IPartListener {
 
     }
 
-    private EObject xtextModel;
-
-    /**
-     * @param xtextEd
-     */
-    private EObject getModelFromXtextEditor(final XtextEditor xtextEd) {
-        checkForDirtyEditor(xtextEd);
-        IXtextDocument docu = xtextEd.getDocument();
-
-        if (docu instanceof XtextDocument) {
-            XtextDocument document = (XtextDocument) docu;
-
-            document.readOnly(new Void<XtextResource>() {
-
-                @Override
-                public void process(final XtextResource state) throws Exception {
-                    List<EObject> eObj = state.getContents();
-
-                    xtextModel = eObj.get(0);
-
-                }
-            });
-        }
-        return xtextModel;
-    }
-
-    private static void checkForDirtyEditor(final XtextEditor diagramEditor) {
-        if (diagramEditor.isDirty()) {
-            final Shell shell = Display.getCurrent().getShells()[0];
-            boolean b = MessageDialog
-                    .openQuestion(
-                            shell,
-                            "Save Resource",
-                            "'"
-                                    + diagramEditor.getEditorInput().getName()
-                                    + "'"
-                                    + " has been modified. Save changes before simulating? (recommended)");
-            if (b) {
-                IEditorSite part = diagramEditor.getEditorSite();
-                part.getPage().saveEditor((IEditorPart) part.getPart(), false);
-            }
-        }
-    }
-
     /**
      * Validate all editors belonging to a given ePackage.
      * 
@@ -342,23 +295,26 @@ public class ValidationInformationCollector implements IStartup, IPartListener {
                 IWorkbenchPage page = PlatformUI.getWorkbench()
                         .getActiveWorkbenchWindow().getActivePage();
                 if (validateActions.containsKey(id)) {
-                    IConfigurationElement elem = validateActions.get(id);
-                    try {
-                        Object obj = elem
-                                .createExecutableExtension("actionFactory");
-                        if (obj instanceof IValidationActionFactory) {
-                            IValidationActionFactory factory = (IValidationActionFactory) obj;
-                            Action action = factory.getValidationAction(page);
-                            if (action != null) {
-                                action.run();
+                    List<IConfigurationElement> elements = validateActions
+                            .get(id);
+                    for (IConfigurationElement elem : elements) {
+                        try {
+                            Object obj = elem
+                                    .createExecutableExtension("actionFactory");
+                            if (obj instanceof IValidationActionFactory) {
+                                IValidationActionFactory factory = (IValidationActionFactory) obj;
+                                Action action = factory
+                                        .getValidationAction(page);
+                                if (action != null) {
+                                    action.run();
+                                }
                             }
+                        } catch (CoreException e0) {
+                            e0.printStackTrace();
+                        } catch (RuntimeException e0) {
+                            e0.printStackTrace();
+                            throw e0;
                         }
-                    } catch (CoreException e0) {
-                        e0.printStackTrace();
-                    } catch (RuntimeException e0) {
-                        e0.printStackTrace();
-                       throw e0;
-//                        throw (new KielerException(e0.getMessage()));
                     }
                 }
             }
