@@ -14,8 +14,6 @@
 package de.cau.cs.kieler.core.ui.commands;
 
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
@@ -29,13 +27,14 @@ import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.expressions.EvaluationContext;
+import org.eclipse.core.resources.IContainer;
+import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.Path;
-import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.common.util.WrappedException;
 import org.eclipse.emf.ecore.EObject;
@@ -155,9 +154,11 @@ public abstract class ReInitDiagramCommand extends AbstractHandler {
                         path = Path.fromOSString(uri.toPlatformString(true));
                     }
                     if (path != null) {
+                        IFile file = ResourcesPlugin.getWorkspace().getRoot()
+                                .getFile(path);
                         try {
                             // execute transformation
-                            reinitialize(path);
+                            reinitialize(file);
                         } catch (RuntimeException e0) {
                             e0.printStackTrace();
                             throw e0;
@@ -177,8 +178,8 @@ public abstract class ReInitDiagramCommand extends AbstractHandler {
     protected void refreshWorkspace() {
         WaitUntilDoneMonitor monitor = new WaitUntilDoneMonitor();
         try {
-            ResourcesPlugin.getWorkspace().getRoot().refreshLocal(
-                    IResource.DEPTH_INFINITE, monitor);
+            ResourcesPlugin.getWorkspace().getRoot()
+                    .refreshLocal(IResource.DEPTH_INFINITE, monitor);
             monitor.waitUntilDone();
         } catch (CoreException e0) {
             e0.printStackTrace();
@@ -192,8 +193,8 @@ public abstract class ReInitDiagramCommand extends AbstractHandler {
      *            the affected files.
      * @return the selected files
      */
-    private List<IPath> getUserSelection(final List<IPath> affectedFiles) {
-        final List<IPath> result = new LinkedList<IPath>();
+    private List<IFile> getUserSelection(final List<IFile> affectedFiles) {
+        final List<IFile> result = new LinkedList<IFile>();
         PlatformUI.getWorkbench().getDisplay().syncExec(new Runnable() {
 
             public void run() {
@@ -202,7 +203,7 @@ public abstract class ReInitDiagramCommand extends AbstractHandler {
 
                 AffectedFileSelectionDialog dialog = new AffectedFileSelectionDialog(
                         shell, affectedFiles);
-                List<IPath> results = dialog.openDialog();
+                List<IFile> results = dialog.openDialog();
                 if (results != null) {
                     result.addAll(results);
                 }
@@ -217,26 +218,30 @@ public abstract class ReInitDiagramCommand extends AbstractHandler {
      * @param path
      *            the path of the model file
      */
-    public void reinitialize(final IPath path) {
-        List<IPath> partners = getPartners(path);
+    public void reinitialize(final IFile path) {
+        List<IFile> partners = getPartners(path);
 
-        List<IPath> selection = getUserSelection(partners);
+        List<IFile> selection = getUserSelection(partners);
 
-        for (IPath partner : selection) {
+        for (IFile partner : selection) {
             performPreOperationActions(path, partners);
 
-            IPath kixsPath = path.getFileExtension()
+            IFile kixsPath = path.getFileExtension()
                     .equals(getModelExtension()) ? path : partner;
-            IPath kidsPath = path.getFileExtension().equals(
+            IFile kidsPath = path.getFileExtension().equals(
                     getDiagramExtension()) ? path : partner;
-            File kidsFile = getFile(kidsPath);
 
             // delete old diagram file
-            if (kidsFile != null) {
-                kidsFile.delete();
+            if (kidsPath != null) {
+                IResource[] resources = new IResource[1];
+                resources[0] = kidsPath;
+                try {
+                    ResourcesPlugin.getWorkspace()
+                            .delete(resources, true, null);
+                } catch (CoreException e0) {
+                    e0.printStackTrace();
+                }
             }
-            kixsPath = kixsPath.makeRelativeTo(Platform.getLocation());
-            kidsPath = kidsPath.makeRelativeTo(Platform.getLocation());
             reinitializeDiagram(kixsPath, kidsPath);
 
             performPostOperationAction(path, partners);
@@ -252,8 +257,9 @@ public abstract class ReInitDiagramCommand extends AbstractHandler {
      * @param partners
      *            the partner files
      */
-    protected void performPostOperationAction(final IPath path,
-            final List<IPath> partners) {
+    @SuppressWarnings("unused")
+    protected void performPostOperationAction(final IFile path,
+            final List<IFile> partners) {
     }
 
     /**
@@ -266,8 +272,8 @@ public abstract class ReInitDiagramCommand extends AbstractHandler {
      *            the partner files
      */
     @SuppressWarnings("unused")
-    protected void performPreOperationActions(final IPath path,
-            final List<IPath> partners) {
+    protected void performPreOperationActions(final IFile path,
+            final List<IFile> partners) {
     }
 
     /**
@@ -277,26 +283,18 @@ public abstract class ReInitDiagramCommand extends AbstractHandler {
      *            the file
      * @return the list of partners
      */
-    private List<IPath> getPartners(final IPath path) {
-        List<File> files = new LinkedList<File>();
+    private List<IFile> getPartners(final IFile path) {
+        List<IFile> files = new LinkedList<IFile>();
         // recursively search the workspace
         if (path.getFileExtension().equals(getModelExtension())) {
-            String path0 = path.removeFileExtension().removeLastSegments(1)
-                    .toOSString();
-            String path1 = Platform.getLocation().toOSString();
-            String path2 = path0.startsWith(path1) ? path0 : path1 + path0;
-
-            File parent = Path.fromOSString(path2).toFile();
-            findRec(files, parent, path);
+            find(files, path.getParent(), path);
         }
-        List<IPath> result = new LinkedList<IPath>();
-        for (File file : files) {
+        List<IFile> result = new LinkedList<IFile>();
+        for (IFile file : files) {
             if (file != null
                     && (!file.exists() || path.getFileExtension().equals(
                             getModelExtension()))) {
-                // convert the file to Ipath and add to list of results
-                IPath filePath = Path.fromOSString(file.getPath());
-                result.add(filePath.makeRelativeTo(Platform.getLocation()));
+                result.add(file);
             }
         }
         return result;
@@ -312,65 +310,57 @@ public abstract class ReInitDiagramCommand extends AbstractHandler {
      * @param model
      *            the model file
      */
-    private void findRec(final List<File> result, final File root,
-            final IPath model) {
-        if (root.isDirectory()) {
-            // recursively look through all files in the directory
-            for (File file : root.listFiles()) {
-                findRec(result, file, model);
-            }
-        } else if (root.getPath().endsWith("." + getDiagramExtension())) {
-            // found relevant file
-            try {
-                InputStream is = new FileInputStream(root);
-                InputStreamReader isr = new InputStreamReader(is);
-                BufferedReader br = new BufferedReader(isr);
+    private void find(final List<IFile> result, final IContainer root,
+            final IFile model) {
 
-                // line that is read at the moment
-                String s = br.readLine();
-                boolean found = false;
+        try {
+            IResource[] members = root.members();
 
-                // search the file for references to the model file
-                while (s != null && !found) {
-                    if (s.contains(model.toFile().getName())) {
-                        if (!found) {
-                            found = true;
-                            result.add(root);
+            for (IResource res : members) {
+
+                if (res instanceof IFile) {
+                    IFile file = (IFile) res;
+                    if (file.getFileExtension().equals(getDiagramExtension())) {
+
+                        // found relevant file
+                        try {
+                            InputStream is = file.getContents();
+                            InputStreamReader isr = new InputStreamReader(is);
+                            BufferedReader br = new BufferedReader(isr);
+
+                            // line that is read at the moment
+                            String s = br.readLine();
+                            boolean found = false;
+
+                            // search the file for references to the model file
+                            while (s != null && !found) {
+                                if (s.contains(model.getName())) {
+                                    if (!found) {
+                                        found = true;
+                                        result.add(file);
+                                    }
+                                }
+                                if (!found) {
+                                    s = br.readLine();
+                                }
+                            }
+
+                            // close streams
+                            br.close();
+                            isr.close();
+                            is.close();
+                        } catch (FileNotFoundException e0) {
+                            e0.printStackTrace();
+                        } catch (IOException e0) {
+                            e0.printStackTrace();
                         }
                     }
-                    if (!found) {
-                        s = br.readLine();
-                    }
                 }
-
-                // close streams
-                br.close();
-                isr.close();
-                is.close();
-            } catch (FileNotFoundException e0) {
-                e0.printStackTrace();
-            } catch (IOException e0) {
-                e0.printStackTrace();
             }
 
+        } catch (CoreException e01) {
+            e01.printStackTrace();
         }
-    }
-
-    /**
-     * Get the file object to a given path.
-     * 
-     * @param path
-     *            the path
-     * @return the file
-     */
-    private File getFile(final IPath path) {
-        String location = path.toOSString();
-        String platformPath = Platform.getLocation().toOSString();
-        if (!location.contains(platformPath)) {
-            location = platformPath + Path.SEPARATOR + location;
-        }
-        IPath partnerLocation = Path.fromOSString(location);
-        return partnerLocation.toFile();
     }
 
     /**
@@ -381,10 +371,18 @@ public abstract class ReInitDiagramCommand extends AbstractHandler {
      * @param diagramPath
      *            the destination file.
      */
-    private void reinitializeDiagram(final IPath modelPath,
-            final IPath diagramPath) {
-        URI domainModelURI = URI.createPlatformResourceURI(
-                modelPath.toString(), true);
+    private void reinitializeDiagram(final IFile modelPath,
+            final IFile diagramPath) {
+        String[] array = modelPath.toString().split("/");
+        StringBuilder builder = new StringBuilder();
+        for (int i = 0; i < array.length - 1; i++) {
+            if (!array[i].equals("L")) {
+                builder.append(array[i] + "/");
+            }
+        }
+        builder.append(array[array.length - 1]);
+        URI domainModelURI = URI.createPlatformResourceURI(builder.toString(),
+                true);
 
         TransactionalEditingDomain editingDomain = GMFEditingDomainFactory.INSTANCE
                 .createEditingDomain();
@@ -419,7 +417,7 @@ public abstract class ReInitDiagramCommand extends AbstractHandler {
      */
     protected abstract boolean createNewDiagram(final EObject diagramRoot,
             final TransactionalEditingDomain editingDomain,
-            final IPath diagramPath);
+            final IFile diagramPath);
 
     /**
      * A monitor that blocks the calling thread until the monitored thread is

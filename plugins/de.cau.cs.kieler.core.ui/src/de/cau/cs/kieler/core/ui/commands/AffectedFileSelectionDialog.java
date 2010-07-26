@@ -16,7 +16,7 @@ package de.cau.cs.kieler.core.ui.commands;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.resources.IFile;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.viewers.ILabelProviderListener;
@@ -39,7 +39,7 @@ public class AffectedFileSelectionDialog implements IStructuredContentProvider,
     private Shell shell;
 
     /** The list of affected files. */
-    private List<IPath> affectedFiles;
+    private List<IFile> affectedFiles;
 
     /** The message to display. */
     private static final String MESSAGE = "Select which diagrams should be"
@@ -55,7 +55,7 @@ public class AffectedFileSelectionDialog implements IStructuredContentProvider,
      *            the files
      */
     public AffectedFileSelectionDialog(final Shell theShell,
-            final List<IPath> files) {
+            final List<IFile> files) {
         shell = theShell;
         affectedFiles = files;
     }
@@ -66,7 +66,7 @@ public class AffectedFileSelectionDialog implements IStructuredContentProvider,
      * @return the list of files selected by the user or null if the user
      *         clicked on Cancel
      */
-    public List<IPath> openDialog() {
+    public List<IFile> openDialog() {
         ListSelectionDialog dialog = new ListSelectionDialog(shell,
                 affectedFiles, this, this, MESSAGE);
         dialog.setHelpAvailable(false);
@@ -78,9 +78,9 @@ public class AffectedFileSelectionDialog implements IStructuredContentProvider,
             Object[] result = dialog.getResult();
 
             // convert result to the desired format
-            List<IPath> output = new LinkedList<IPath>();
+            List<IFile> output = new LinkedList<IFile>();
             for (Object o : result) {
-                output.add((IPath) o);
+                output.add((IFile) o);
             }
             return output;
         }
@@ -92,11 +92,11 @@ public class AffectedFileSelectionDialog implements IStructuredContentProvider,
      */
     @SuppressWarnings("unchecked")
     public Object[] getElements(final Object inputElement) {
-        List<IPath> input = new LinkedList<IPath>();
+        List<IFile> input = new LinkedList<IFile>();
         if (inputElement instanceof List<?>) {
-            input = (List<IPath>) inputElement;
+            input = (List<IFile>) inputElement;
         }
-        return input.toArray(new IPath[input.size()]);
+        return input.toArray(new IFile[input.size()]);
     }
 
     /**
@@ -123,9 +123,9 @@ public class AffectedFileSelectionDialog implements IStructuredContentProvider,
      * {@inheritDoc}
      */
     public String getText(final Object element) {
-        if (element instanceof IPath) {
-            IPath data = (IPath) element;
-            return data.toOSString();
+        if (element instanceof IFile) {
+            IFile data = (IFile) element;
+            return data.getFullPath().toString();
         }
         return null;
     }
