@@ -52,8 +52,8 @@ public class ActiveStateFocusCombination extends ACombination {
      */
     public ActiveStateFocusCombination() {
         ActiveStateFocusCombination.instance = this;
-        ActiveStateFocusCombination.getInstance().setActive(true);
-        this.initialize();
+        // ActiveStateFocusCombination.getInstance().setActive(true);
+        //this.initialize();
     }
 
     /**

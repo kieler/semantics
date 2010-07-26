@@ -29,7 +29,6 @@ public class ActiveStateHighlightCombination extends ACombination {
     public ActiveStateHighlightCombination() {
         ActiveStateHighlightCombination.instance = this;
         ActiveStateHighlightCombination.getInstance().setActive(true);
-        this.initialize();
     }
 
     /**
