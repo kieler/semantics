@@ -122,26 +122,22 @@ public class SyncchartsElementTypes {
     /**
      * @generated
      */
-    private static ImageDescriptor getProvidedImageDescriptor(
-            ENamedElement element) {
+    private static ImageDescriptor getProvidedImageDescriptor(ENamedElement element) {
         if (element instanceof EStructuralFeature) {
             EStructuralFeature feature = ((EStructuralFeature) element);
             EClass eContainingClass = feature.getEContainingClass();
             EClassifier eType = feature.getEType();
             if (eContainingClass != null && !eContainingClass.isAbstract()) {
                 element = eContainingClass;
-            } else if (eType instanceof EClass
-                    && !((EClass) eType).isAbstract()) {
+            } else if (eType instanceof EClass && !((EClass) eType).isAbstract()) {
                 element = eType;
             }
         }
         if (element instanceof EClass) {
             EClass eClass = (EClass) element;
             if (!eClass.isAbstract()) {
-                return SyncchartsDiagramEditorPlugin.getInstance()
-                        .getItemImageDescriptor(
-                                eClass.getEPackage().getEFactoryInstance()
-                                        .create(eClass));
+                return SyncchartsDiagramEditorPlugin.getInstance().getItemImageDescriptor(
+                    eClass.getEPackage().getEFactoryInstance().create(eClass));
             }
         }
         // TODO : support structural features
@@ -231,11 +227,9 @@ public class SyncchartsElementTypes {
 
             elements.put(Action_3029, SyncchartsPackage.eINSTANCE.getAction());
 
-            elements.put(TextualCode_3030,
-                    ExpressionsPackage.eINSTANCE.getTextualCode());
+            elements.put(TextualCode_3030, ExpressionsPackage.eINSTANCE.getTextualCode());
 
-            elements.put(Transition_4003,
-                    SyncchartsPackage.eINSTANCE.getTransition());
+            elements.put(Transition_4003, SyncchartsPackage.eINSTANCE.getTransition());
         }
         return (ENamedElement) elements.get(type);
     }

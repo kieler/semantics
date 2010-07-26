@@ -62,8 +62,7 @@ public class Region2EditPart extends ShapeNodeEditPart {
      */
     protected void createDefaultEditPolicies() {
         super.createDefaultEditPolicies();
-        installEditPolicy(EditPolicyRoles.SEMANTIC_ROLE,
-                new Region2ItemSemanticEditPolicy());
+        installEditPolicy(EditPolicyRoles.SEMANTIC_ROLE, new Region2ItemSemanticEditPolicy());
         installEditPolicy(EditPolicy.LAYOUT_ROLE, createLayoutEditPolicy());
         // XXX need an SCR to runtime to have another abstract superclass that would let children add reasonable editpolicies
         // removeEditPolicy(org.eclipse.gmf.runtime.diagram.ui.editpolicies.EditPolicyRoles.CONNECTION_HANDLES_ROLE);
@@ -76,8 +75,7 @@ public class Region2EditPart extends ShapeNodeEditPart {
         org.eclipse.gmf.runtime.diagram.ui.editpolicies.LayoutEditPolicy lep = new org.eclipse.gmf.runtime.diagram.ui.editpolicies.LayoutEditPolicy() {
 
             protected EditPolicy createChildEditPolicy(EditPart child) {
-                EditPolicy result = child
-                        .getEditPolicy(EditPolicy.PRIMARY_DRAG_ROLE);
+                EditPolicy result = child.getEditPolicy(EditPolicy.PRIMARY_DRAG_ROLE);
                 if (result == null) {
                     result = new NonResizableEditPolicy();
                 }
@@ -102,8 +100,7 @@ public class Region2EditPart extends ShapeNodeEditPart {
         primaryShape = new RegionFigure();
 
         if (primaryShape instanceof IAttributeAwareFigure) {
-            ((IAttributeAwareFigure) primaryShape).listenTo(this
-                    .getNotationView().getElement());
+            ((IAttributeAwareFigure) primaryShape).listenTo(this.getNotationView().getElement());
         }
 
         return primaryShape;
@@ -122,7 +119,7 @@ public class Region2EditPart extends ShapeNodeEditPart {
     protected boolean addFixedChild(EditPart childEditPart) {
         if (childEditPart instanceof RegionLabelEditPart) {
             ((RegionLabelEditPart) childEditPart).setLabel(getPrimaryShape()
-                    .getFigureRegionIdFigure());
+                .getFigureRegionIdFigure());
             return true;
         }
         return false;
@@ -256,7 +253,7 @@ public class Region2EditPart extends ShapeNodeEditPart {
      */
     public EditPart getPrimaryChildEditPart() {
         return getChildBySemanticHint(SyncchartsVisualIDRegistry
-                .getType(RegionLabelEditPart.VISUAL_ID));
+            .getType(RegionLabelEditPart.VISUAL_ID));
     }
 
     /**
@@ -289,9 +286,8 @@ public class Region2EditPart extends ShapeNodeEditPart {
 
             fFigureRegionIdFigure.setFont(FFIGUREREGIONIDFIGURE_FONT);
 
-            fFigureRegionIdFigure.setBorder(new MarginBorder(getMapMode()
-                    .DPtoLP(0), getMapMode().DPtoLP(2), getMapMode().DPtoLP(0),
-                    getMapMode().DPtoLP(2)));
+            fFigureRegionIdFigure.setBorder(new MarginBorder(getMapMode().DPtoLP(0), getMapMode()
+                .DPtoLP(2), getMapMode().DPtoLP(0), getMapMode().DPtoLP(2)));
 
             this.add(fFigureRegionIdFigure);
 
@@ -309,7 +305,7 @@ public class Region2EditPart extends ShapeNodeEditPart {
     /**
      * @generated
      */
-    static final Font FFIGUREREGIONIDFIGURE_FONT = new Font(
-            Display.getCurrent(), "Sans", 7, SWT.NORMAL);
+    static final Font FFIGUREREGIONIDFIGURE_FONT = new Font(Display.getCurrent(), "Sans", 7,
+        SWT.NORMAL);
 
 }

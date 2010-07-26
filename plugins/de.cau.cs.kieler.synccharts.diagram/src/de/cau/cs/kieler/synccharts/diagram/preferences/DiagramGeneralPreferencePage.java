@@ -17,8 +17,7 @@ public class DiagramGeneralPreferencePage extends DiagramsPreferencePage {
      * @generated
      */
     public DiagramGeneralPreferencePage() {
-        setPreferenceStore(SyncchartsDiagramEditorPlugin.getInstance()
-                .getPreferenceStore());
+        setPreferenceStore(SyncchartsDiagramEditorPlugin.getInstance().getPreferenceStore());
     }
 
     //soh: adding optional enabling and disabling of automated serialization in labelparser
@@ -35,8 +34,8 @@ public class DiagramGeneralPreferencePage extends DiagramsPreferencePage {
     /**
      * @generated
      */
-    private static IPreferenceStore LABEL_PARSER_STORE = LabelParserBridgePlugin
-            .getDefault().getPreferenceStore();
+    private static IPreferenceStore LABEL_PARSER_STORE = LabelParserBridgePlugin.getDefault()
+        .getPreferenceStore();
 
     /**
      * @generated
@@ -47,8 +46,8 @@ public class DiagramGeneralPreferencePage extends DiagramsPreferencePage {
      * @generated
      */
     private static final String AUTO_SERIALIZE_TOOLTIP = "Automatic Serialization of expressions causes labels to be displayed "
-            + "how the parser interprets them. However this deletes all custom formatting "
-            + "e.g. line breaks.";
+        + "how the parser interprets them. However this deletes all custom formatting "
+        + "e.g. line breaks.";
 
     /**
      * @generated
@@ -58,13 +57,12 @@ public class DiagramGeneralPreferencePage extends DiagramsPreferencePage {
         super.addFields(composite);
 
         // automated serialization
-        autoSerializeEditor = new CheckBoxFieldEditor(AUTO_SERIALIZE_PREF,
-                AUTO_SERIALIZE_LABEL, composite);
+        autoSerializeEditor = new CheckBoxFieldEditor(AUTO_SERIALIZE_PREF, AUTO_SERIALIZE_LABEL,
+            composite);
         LABEL_PARSER_STORE.setDefault(AUTO_SERIALIZE_PREF, true);
         autoSerializeEditor.setPreferenceStore(LABEL_PARSER_STORE);
         autoSerializeEditor.load();
-        autoSerializeEditor.getCheckbox()
-                .setToolTipText(AUTO_SERIALIZE_TOOLTIP);
+        autoSerializeEditor.getCheckbox().setToolTipText(AUTO_SERIALIZE_TOOLTIP);
     }
 
     /**

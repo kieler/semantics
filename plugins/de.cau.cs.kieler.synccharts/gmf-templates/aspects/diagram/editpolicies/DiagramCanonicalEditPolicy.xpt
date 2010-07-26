@@ -1,0 +1,40 @@
+﻿/*
+ * Copyright (c) 2007, 2010 Borland Software Corporation and others
+ * 
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *    Alexander Shatalin (Borland) - initial API and implementation
+ *    Artem Tikhomirov               moved from xpt::diagram::editpolicies to diagram::editpolicies API location
+ *                                   [281014] pass semantic hints right from the CEP
+ */
+
+«IMPORT 'http://www.eclipse.org/gmf/2009/GenModel'»
+
+«DEFINE refreshSemanticMethod FOR gmfgen::GenDiagram-»
+«EXPAND xpt::Common::generatedMemberComment»
+protected void refreshSemantic() {
+	if (resolveSemanticElement() == null) {
+		return;
+	}
+	«EXPAND CodeStyle::newGenericInstance('createdViews', 'java.util.LinkedList', 'org.eclipse.core.runtime.IAdaptable')»();
+	«EXPAND impl::diagram::update::CanonicalUpdate::refreshSemanticChildren('createdViews', editorGen.diagramUpdater)-»
+
+	«IF links->notEmpty()-»
+		«EXPAND CodeStyle::G('java.util.Collection', 'org.eclipse.core.runtime.IAdaptable')» createdConnectionViews = refreshConnections();
+	«ENDIF-»
+
+	«EXPAND impl::diagram::update::CanonicalUpdate::executeLayoutCommand('createdViews')-»
+
+	«IF links->notEmpty()-»
+		createdViews.addAll(createdConnectionViews);
+	«ENDIF-»
+
+	makeViewsImmutable(createdViews);
+	«REM»haf: added *synchronous* call to make view immutable for Bug #1050«ENDREM»
+	org.eclipse.gmf.runtime.diagram.ui.commands.SetViewMutabilityCommand.makeImmutable(createdViews).execute();
+}
+«ENDDEFINE»

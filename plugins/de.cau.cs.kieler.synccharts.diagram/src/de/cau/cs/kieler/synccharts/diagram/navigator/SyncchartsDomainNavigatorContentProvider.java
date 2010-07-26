@@ -23,8 +23,7 @@ import de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorPlugin;
 /**
  * @generated
  */
-public class SyncchartsDomainNavigatorContentProvider implements
-        ICommonContentProvider {
+public class SyncchartsDomainNavigatorContentProvider implements ICommonContentProvider {
 
     /**
      * @generated
@@ -61,10 +60,9 @@ public class SyncchartsDomainNavigatorContentProvider implements
      */
     public SyncchartsDomainNavigatorContentProvider() {
         myAdapterFctoryContentProvier = new AdapterFactoryContentProvider(
-                SyncchartsDiagramEditorPlugin.getInstance()
-                        .getItemProvidersAdapterFactory());
+            SyncchartsDiagramEditorPlugin.getInstance().getItemProvidersAdapterFactory());
         TransactionalEditingDomain editingDomain = GMFEditingDomainFactory.INSTANCE
-                .createEditingDomain();
+            .createEditingDomain();
         myEditingDomain = (AdapterFactoryEditingDomain) editingDomain;
         myEditingDomain.setResourceToReadOnlyMap(new HashMap() {
             public Object get(Object key) {
@@ -82,29 +80,28 @@ public class SyncchartsDomainNavigatorContentProvider implements
             }
         };
         myWorkspaceSynchronizer = new WorkspaceSynchronizer(editingDomain,
-                new WorkspaceSynchronizer.Delegate() {
-                    public void dispose() {
-                    }
+            new WorkspaceSynchronizer.Delegate() {
+                public void dispose() {
+                }
 
-                    public boolean handleResourceChanged(final Resource resource) {
-                        unloadAllResources();
-                        asyncRefresh();
-                        return true;
-                    }
+                public boolean handleResourceChanged(final Resource resource) {
+                    unloadAllResources();
+                    asyncRefresh();
+                    return true;
+                }
 
-                    public boolean handleResourceDeleted(Resource resource) {
-                        unloadAllResources();
-                        asyncRefresh();
-                        return true;
-                    }
+                public boolean handleResourceDeleted(Resource resource) {
+                    unloadAllResources();
+                    asyncRefresh();
+                    return true;
+                }
 
-                    public boolean handleResourceMoved(Resource resource,
-                            final URI newURI) {
-                        unloadAllResources();
-                        asyncRefresh();
-                        return true;
-                    }
-                });
+                public boolean handleResourceMoved(Resource resource, final URI newURI) {
+                    unloadAllResources();
+                    asyncRefresh();
+                    return true;
+                }
+            });
     }
 
     /**
@@ -131,8 +128,7 @@ public class SyncchartsDomainNavigatorContentProvider implements
      * @generated
      */
     void unloadAllResources() {
-        for (Resource nextResource : myEditingDomain.getResourceSet()
-                .getResources()) {
+        for (Resource nextResource : myEditingDomain.getResourceSet().getResources()) {
             nextResource.unload();
         }
     }
@@ -142,8 +138,7 @@ public class SyncchartsDomainNavigatorContentProvider implements
      */
     void asyncRefresh() {
         if (myViewer != null && !myViewer.getControl().isDisposed()) {
-            myViewer.getControl().getDisplay()
-                    .asyncExec(myViewerRefreshRunnable);
+            myViewer.getControl().getDisplay().asyncExec(myViewerRefreshRunnable);
         }
     }
 
@@ -178,19 +173,15 @@ public class SyncchartsDomainNavigatorContentProvider implements
     public Object[] getChildren(Object parentElement) {
         if (parentElement instanceof IFile) {
             IFile file = (IFile) parentElement;
-            URI fileURI = URI.createPlatformResourceURI(file.getFullPath()
-                    .toString(), true);
-            Resource resource = myEditingDomain.getResourceSet().getResource(
-                    fileURI, true);
-            return wrapEObjects(
-                    myAdapterFctoryContentProvier.getChildren(resource),
-                    parentElement);
+            URI fileURI = URI.createPlatformResourceURI(file.getFullPath().toString(), true);
+            Resource resource = myEditingDomain.getResourceSet().getResource(fileURI, true);
+            return wrapEObjects(myAdapterFctoryContentProvier.getChildren(resource), parentElement);
         }
 
         if (parentElement instanceof SyncchartsDomainNavigatorItem) {
             return wrapEObjects(
-                    myAdapterFctoryContentProvier.getChildren(((SyncchartsDomainNavigatorItem) parentElement)
-                            .getEObject()), parentElement);
+                myAdapterFctoryContentProvier.getChildren(((SyncchartsDomainNavigatorItem) parentElement)
+                    .getEObject()), parentElement);
         }
         return EMPTY_ARRAY;
     }
@@ -202,9 +193,8 @@ public class SyncchartsDomainNavigatorContentProvider implements
         Collection result = new ArrayList();
         for (int i = 0; i < objects.length; i++) {
             if (objects[i] instanceof EObject) {
-                result.add(new SyncchartsDomainNavigatorItem(
-                        (EObject) objects[i], parentElement,
-                        myAdapterFctoryContentProvier));
+                result.add(new SyncchartsDomainNavigatorItem((EObject) objects[i], parentElement,
+                    myAdapterFctoryContentProvier));
             }
         }
         return result.toArray();
