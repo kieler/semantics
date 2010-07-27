@@ -397,28 +397,17 @@ public class SyncchartsSimDataComponent extends JSONObjectDataComponent {
         ValidationManager.enableCheck("de.cau.cs.kieler.synccharts.KleptoChecks");        
         ValidationManager.validateActiveEditor();
 
-        // dont want dependency to synccharts diagram (custom) for validation
-        // because we might want to simulate headless!!!
+        // We don't want a dependency to synccharts diagram (custom) for validation
+        // because we might want to simulate head less!!!
         
         // Check if the model conforms to all check files and no warnings left!
         Diagnostician diagnostician = Diagnostician.INSTANCE;
         EObject rootEObject = this.getInputModelEObject(this
                 .getInputEditor());
-
-//        Object eValidator;
-//        EValidator.Registry eValidatorRegistry = rootEObject.;
-//        eValidator = eValidatorRegistry.get(eType.eContainer();
-//        boolean result = ((EValidator)eValidator).validate(eClass, eObject, diagnostics, context);
-
         Region syncChart = (de.cau.cs.kieler.synccharts.Region)rootEObject;
-        
         Diagnostic diagnostic = diagnostician.validate(syncChart);
-        //de.cau.cs.kieler.synccharts.diagram.custom.SyncchartsValidationActionFactory;
         int serenity = diagnostic.getSeverity();
         boolean ok = (serenity == Diagnostic.OK);
-
-        //FIXME this is currently not working ...
-        //boolean ok = true; //diagnostic.getSeverity() == Diagnostic.OK;
 
         if (!ok) {
             // bring Problems View to the front otherwise

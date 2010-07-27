@@ -63,8 +63,6 @@ public class XtendJava {
             }
             modalModels.push(modalModel);
             portNames.push(portName);
-            System.out.println("BINCHEN"+modalModels.size());
-            System.out.println("BINCHEN"+portName);
         }
         
         public final static String popPortName2Delete() {
