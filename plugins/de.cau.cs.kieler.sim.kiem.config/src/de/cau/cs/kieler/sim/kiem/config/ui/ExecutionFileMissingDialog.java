@@ -41,8 +41,10 @@ public class ExecutionFileMissingDialog {
 
     /** The dialog message. */
     private static final String DIALOG_MESSAGE = "The .execution file associated"
-            + " with this schedule can't be found at the saved location. "
-            + " Do you want to enter a new location for it or should the schedule be "
+            + " with this schedule can't be found at the saved location."
+            + " This can be caused by the file being deleted, moved, renamed or closing"
+            + " the project the file is located in."
+            + " Do you want to enter a new location for it or should the schedule be"
             + " deleted.";
 
     /** The text for the delete button. */
