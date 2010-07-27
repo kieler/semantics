@@ -76,9 +76,11 @@ public final class ModelingUtil {
 
                 @Override
                 public void process(final XtextResource state) throws Exception {
-                    List<EObject> eObj = state.getContents();
+                    if (state != null) {
+                        List<EObject> eObj = state.getContents();
 
-                    xtextModel = eObj.get(0);
+                        xtextModel = eObj.get(0);
+                    }
 
                 }
             });

@@ -2,33 +2,35 @@ import synccharts;
 import expressions;
 
 // determine whether trigger or effect of an action contain host code
-Boolean containsHostCode(ComplexExpression expression):
- expression.subExpressions.exists(e|e.containsHostCode())
+Boolean containsHostCode(TextEffect effect):
+ true
 ;
-Boolean containsHostCode(Value expression):
- false
+Boolean containsHostCode(TextualCode effect):
+ true
 ;
 Boolean containsHostCode(TextExpression expression):
  true
 ;
+Boolean containsHostCode(Void effect):
+ false
+;
 Boolean containsHostCode(Expression expression):
  false
 ;
-Boolean containsHostCode(Assignment effect):
- effect.expression.containsHostCode()
-;
-Boolean containsHostCode(Emission effect):
- effect.newValue.containsHostCode()
-;
-Boolean containsHostCode(TextEffect effect):
- true
+Boolean containsHostCode(ComplexExpression expression):
+ expression.subExpressions != null && expression.subExpressions.exists(e|e.containsHostCode())
 ;
 Boolean containsHostCode(Effect effect):
  false
 ;
+Boolean containsHostCode(Assignment effect):
+ effect.expression != null && effect.expression.containsHostCode()
+;
+
 context Action
  WARNING "SC: Host code is not supported!" :
- !trigger.containsHostCode() && !effects.exists(e|e.containsHostCode());
+ (trigger == null || !trigger.containsHostCode()) 
+ && (effects == null || effects.size == 0 || !effects.exists(e|e.containsHostCode()));
 
 context Action
  WARNING "SC: Delays are not supported!" :
@@ -40,7 +42,7 @@ context Transition
  
 
 context State
- WARNING "SC: On exit actions are not supported!" :
+ WARNING "SC: On exit actions are not supported!" : 
  exitActions == null || exitActions.isEmpty;
  
 context State
