@@ -70,10 +70,12 @@ public class SyncchartsNavigatorActionProvider extends CommonActionProvider {
         if (!myContribute) {
             return;
         }
-        IStructuredSelection selection = (IStructuredSelection) getContext().getSelection();
+        IStructuredSelection selection =
+                (IStructuredSelection) getContext().getSelection();
         myOpenDiagramAction.selectionChanged(selection);
         if (myOpenDiagramAction.isEnabled()) {
-            actionBars.setGlobalActionHandler(ICommonActionConstants.OPEN, myOpenDiagramAction);
+            actionBars.setGlobalActionHandler(ICommonActionConstants.OPEN,
+                    myOpenDiagramAction);
         }
     }
 
@@ -114,14 +116,19 @@ public class SyncchartsNavigatorActionProvider extends CommonActionProvider {
             if (selection.size() == 1) {
                 Object selectedElement = selection.getFirstElement();
                 if (selectedElement instanceof SyncchartsNavigatorItem) {
-                    selectedElement = ((SyncchartsNavigatorItem) selectedElement).getView();
+                    selectedElement =
+                            ((SyncchartsNavigatorItem) selectedElement)
+                                    .getView();
                 } else if (selectedElement instanceof IAdaptable) {
-                    selectedElement = ((IAdaptable) selectedElement).getAdapter(View.class);
+                    selectedElement =
+                            ((IAdaptable) selectedElement)
+                                    .getAdapter(View.class);
                 }
                 if (selectedElement instanceof Diagram) {
                     Diagram diagram = (Diagram) selectedElement;
-                    if (RegionEditPart.MODEL_ID.equals(SyncchartsVisualIDRegistry
-                        .getModelID(diagram))) {
+                    if (RegionEditPart.MODEL_ID
+                            .equals(SyncchartsVisualIDRegistry
+                                    .getModelID(diagram))) {
                         myDiagram = diagram;
                     }
                 }
@@ -143,7 +150,7 @@ public class SyncchartsNavigatorActionProvider extends CommonActionProvider {
                 page.openEditor(editorInput, SyncchartsDiagramEditor.ID);
             } catch (PartInitException e) {
                 SyncchartsDiagramEditorPlugin.getInstance().logError(
-                    "Exception while openning diagram", e); //$NON-NLS-1$
+                        "Exception while openning diagram", e); //$NON-NLS-1$
             }
         }
 
@@ -154,15 +161,19 @@ public class SyncchartsNavigatorActionProvider extends CommonActionProvider {
             Resource diagramResource = diagram.eResource();
             for (EObject nextEObject : diagramResource.getContents()) {
                 if (nextEObject == diagram) {
-                    return new FileEditorInput(WorkspaceSynchronizer.getFile(diagramResource));
+                    return new FileEditorInput(
+                            WorkspaceSynchronizer.getFile(diagramResource));
                 }
                 if (nextEObject instanceof Diagram) {
                     break;
                 }
             }
             URI uri = EcoreUtil.getURI(diagram);
-            String editorName = uri.lastSegment() + '#'
-                + diagram.eResource().getContents().indexOf(diagram);
+            String editorName =
+                    uri.lastSegment()
+                            + '#'
+                            + diagram.eResource().getContents()
+                                    .indexOf(diagram);
             IEditorInput editorInput = new URIEditorInput(uri, editorName);
             return editorInput;
         }

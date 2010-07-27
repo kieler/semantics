@@ -58,7 +58,7 @@ public class StateExitActionEditPart extends ShapeNodeEditPart {
     protected void createDefaultEditPolicies() {
         super.createDefaultEditPolicies();
         installEditPolicy(EditPolicyRoles.SEMANTIC_ROLE,
-            new StateExitActionItemSemanticEditPolicy());
+                new StateExitActionItemSemanticEditPolicy());
         installEditPolicy(EditPolicy.LAYOUT_ROLE, createLayoutEditPolicy());
         // XXX need an SCR to runtime to have another abstract superclass that would let children add reasonable editpolicies
         // removeEditPolicy(org.eclipse.gmf.runtime.diagram.ui.editpolicies.EditPolicyRoles.CONNECTION_HANDLES_ROLE);
@@ -68,24 +68,26 @@ public class StateExitActionEditPart extends ShapeNodeEditPart {
      * @generated
      */
     protected LayoutEditPolicy createLayoutEditPolicy() {
-        org.eclipse.gmf.runtime.diagram.ui.editpolicies.LayoutEditPolicy lep = new org.eclipse.gmf.runtime.diagram.ui.editpolicies.LayoutEditPolicy() {
+        org.eclipse.gmf.runtime.diagram.ui.editpolicies.LayoutEditPolicy lep =
+                new org.eclipse.gmf.runtime.diagram.ui.editpolicies.LayoutEditPolicy() {
 
-            protected EditPolicy createChildEditPolicy(EditPart child) {
-                EditPolicy result = child.getEditPolicy(EditPolicy.PRIMARY_DRAG_ROLE);
-                if (result == null) {
-                    result = new NonResizableEditPolicy();
-                }
-                return result;
-            }
+                    protected EditPolicy createChildEditPolicy(EditPart child) {
+                        EditPolicy result =
+                                child.getEditPolicy(EditPolicy.PRIMARY_DRAG_ROLE);
+                        if (result == null) {
+                            result = new NonResizableEditPolicy();
+                        }
+                        return result;
+                    }
 
-            protected Command getMoveChildrenCommand(Request request) {
-                return null;
-            }
+                    protected Command getMoveChildrenCommand(Request request) {
+                        return null;
+                    }
 
-            protected Command getCreateCommand(CreateRequest request) {
-                return null;
-            }
-        };
+                    protected Command getCreateCommand(CreateRequest request) {
+                        return null;
+                    }
+                };
         return lep;
     }
 
@@ -96,7 +98,8 @@ public class StateExitActionEditPart extends ShapeNodeEditPart {
         primaryShape = new InvisibleFigure();
 
         if (primaryShape instanceof IAttributeAwareFigure) {
-            ((IAttributeAwareFigure) primaryShape).listenTo(this.getNotationView().getElement());
+            ((IAttributeAwareFigure) primaryShape).listenTo(this
+                    .getNotationView().getElement());
         }
 
         return primaryShape;
@@ -114,8 +117,9 @@ public class StateExitActionEditPart extends ShapeNodeEditPart {
      */
     protected boolean addFixedChild(EditPart childEditPart) {
         if (childEditPart instanceof StateExitActionLabelEditPart) {
-            ((StateExitActionLabelEditPart) childEditPart).setLabel(getPrimaryShape()
-                .getFigureInvisibleFigureLabelFigure());
+            ((StateExitActionLabelEditPart) childEditPart)
+                    .setLabel(getPrimaryShape()
+                            .getFigureInvisibleFigureLabelFigure());
             return true;
         }
         return false;
@@ -162,6 +166,7 @@ public class StateExitActionEditPart extends ShapeNodeEditPart {
      * @generated
      */
     protected NodeFigure createNodePlate() {
+        //StateExitActionEditPart
         DefaultSizeNodeFigure result = new DefaultSizeNodeFigure(20, 20);
         return result;
     }
@@ -249,7 +254,7 @@ public class StateExitActionEditPart extends ShapeNodeEditPart {
      */
     public EditPart getPrimaryChildEditPart() {
         return getChildBySemanticHint(SyncchartsVisualIDRegistry
-            .getType(StateExitActionLabelEditPart.VISUAL_ID));
+                .getType(StateExitActionLabelEditPart.VISUAL_ID));
     }
 
     /**

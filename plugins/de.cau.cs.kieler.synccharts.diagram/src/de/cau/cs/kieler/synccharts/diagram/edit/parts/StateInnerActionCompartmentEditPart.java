@@ -22,7 +22,8 @@ import de.cau.cs.kieler.synccharts.diagram.part.Messages;
 /**
  * @generated
  */
-public class StateInnerActionCompartmentEditPart extends ShapeCompartmentEditPart {
+public class StateInnerActionCompartmentEditPart extends
+        ShapeCompartmentEditPart {
 
     /**
      * @generated
@@ -47,7 +48,8 @@ public class StateInnerActionCompartmentEditPart extends ShapeCompartmentEditPar
      * @generated
      */
     public IFigure createFigure() {
-        ResizableCompartmentFigure result = (ResizableCompartmentFigure) super.createFigure();
+        ResizableCompartmentFigure result =
+                (ResizableCompartmentFigure) super.createFigure();
         result.setTitleVisibility(false);
 
         Object border = result.getBorder();
@@ -73,13 +75,16 @@ public class StateInnerActionCompartmentEditPart extends ShapeCompartmentEditPar
      */
     protected void createDefaultEditPolicies() {
         super.createDefaultEditPolicies();
-        installEditPolicy(EditPolicy.PRIMARY_DRAG_ROLE, new ResizableCompartmentEditPolicy());
+        installEditPolicy(EditPolicy.PRIMARY_DRAG_ROLE,
+                new ResizableCompartmentEditPolicy());
         installEditPolicy(EditPolicyRoles.SEMANTIC_ROLE,
-            new StateInnerActionCompartmentItemSemanticEditPolicy());
-        installEditPolicy(EditPolicyRoles.CREATION_ROLE, new CreationEditPolicy());
-        installEditPolicy(EditPolicyRoles.DRAG_DROP_ROLE, new DragDropEditPolicy());
+                new StateInnerActionCompartmentItemSemanticEditPolicy());
+        installEditPolicy(EditPolicyRoles.CREATION_ROLE,
+                new CreationEditPolicy());
+        installEditPolicy(EditPolicyRoles.DRAG_DROP_ROLE,
+                new DragDropEditPolicy());
         installEditPolicy(EditPolicyRoles.CANONICAL_ROLE,
-            new StateInnerActionCompartmentCanonicalEditPolicy());
+                new StateInnerActionCompartmentCanonicalEditPolicy());
     }
 
     /**

@@ -14,26 +14,31 @@ public abstract class SyncchartsAbstractNavigatorItem extends PlatformObject {
      * @generated
      */
     static {
-        final Class[] supportedTypes = new Class[] { ITabbedPropertySheetPageContributor.class };
-        final ITabbedPropertySheetPageContributor propertySheetPageContributor = new ITabbedPropertySheetPageContributor() {
-            public String getContributorId() {
-                return "de.cau.cs.kieler.synccharts.diagram"; //$NON-NLS-1$
-            }
-        };
-        Platform.getAdapterManager().registerAdapters(new IAdapterFactory() {
+        final Class[] supportedTypes =
+                new Class[] { ITabbedPropertySheetPageContributor.class };
+        final ITabbedPropertySheetPageContributor propertySheetPageContributor =
+                new ITabbedPropertySheetPageContributor() {
+                    public String getContributorId() {
+                        return "de.cau.cs.kieler.synccharts.diagram"; //$NON-NLS-1$
+                    }
+                };
+        Platform.getAdapterManager().registerAdapters(
+                new IAdapterFactory() {
 
-            public Object getAdapter(Object adaptableObject, Class adapterType) {
-                if (adaptableObject instanceof de.cau.cs.kieler.synccharts.diagram.navigator.SyncchartsAbstractNavigatorItem
-                    && adapterType == ITabbedPropertySheetPageContributor.class) {
-                    return propertySheetPageContributor;
-                }
-                return null;
-            }
+                    public Object getAdapter(Object adaptableObject,
+                            Class adapterType) {
+                        if (adaptableObject instanceof de.cau.cs.kieler.synccharts.diagram.navigator.SyncchartsAbstractNavigatorItem
+                                && adapterType == ITabbedPropertySheetPageContributor.class) {
+                            return propertySheetPageContributor;
+                        }
+                        return null;
+                    }
 
-            public Class[] getAdapterList() {
-                return supportedTypes;
-            }
-        }, de.cau.cs.kieler.synccharts.diagram.navigator.SyncchartsAbstractNavigatorItem.class);
+                    public Class[] getAdapterList() {
+                        return supportedTypes;
+                    }
+                },
+                de.cau.cs.kieler.synccharts.diagram.navigator.SyncchartsAbstractNavigatorItem.class);
     }
 
     /**

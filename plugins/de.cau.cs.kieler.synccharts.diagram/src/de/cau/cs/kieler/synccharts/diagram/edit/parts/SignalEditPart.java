@@ -57,7 +57,8 @@ public class SignalEditPart extends ShapeNodeEditPart {
      */
     protected void createDefaultEditPolicies() {
         super.createDefaultEditPolicies();
-        installEditPolicy(EditPolicyRoles.SEMANTIC_ROLE, new SignalItemSemanticEditPolicy());
+        installEditPolicy(EditPolicyRoles.SEMANTIC_ROLE,
+                new SignalItemSemanticEditPolicy());
         installEditPolicy(EditPolicy.LAYOUT_ROLE, createLayoutEditPolicy());
         // XXX need an SCR to runtime to have another abstract superclass that would let children add reasonable editpolicies
         // removeEditPolicy(org.eclipse.gmf.runtime.diagram.ui.editpolicies.EditPolicyRoles.CONNECTION_HANDLES_ROLE);
@@ -67,24 +68,26 @@ public class SignalEditPart extends ShapeNodeEditPart {
      * @generated
      */
     protected LayoutEditPolicy createLayoutEditPolicy() {
-        org.eclipse.gmf.runtime.diagram.ui.editpolicies.LayoutEditPolicy lep = new org.eclipse.gmf.runtime.diagram.ui.editpolicies.LayoutEditPolicy() {
+        org.eclipse.gmf.runtime.diagram.ui.editpolicies.LayoutEditPolicy lep =
+                new org.eclipse.gmf.runtime.diagram.ui.editpolicies.LayoutEditPolicy() {
 
-            protected EditPolicy createChildEditPolicy(EditPart child) {
-                EditPolicy result = child.getEditPolicy(EditPolicy.PRIMARY_DRAG_ROLE);
-                if (result == null) {
-                    result = new NonResizableEditPolicy();
-                }
-                return result;
-            }
+                    protected EditPolicy createChildEditPolicy(EditPart child) {
+                        EditPolicy result =
+                                child.getEditPolicy(EditPolicy.PRIMARY_DRAG_ROLE);
+                        if (result == null) {
+                            result = new NonResizableEditPolicy();
+                        }
+                        return result;
+                    }
 
-            protected Command getMoveChildrenCommand(Request request) {
-                return null;
-            }
+                    protected Command getMoveChildrenCommand(Request request) {
+                        return null;
+                    }
 
-            protected Command getCreateCommand(CreateRequest request) {
-                return null;
-            }
-        };
+                    protected Command getCreateCommand(CreateRequest request) {
+                        return null;
+                    }
+                };
         return lep;
     }
 
@@ -95,7 +98,8 @@ public class SignalEditPart extends ShapeNodeEditPart {
         primaryShape = new InvisibleFigure();
 
         if (primaryShape instanceof IAttributeAwareFigure) {
-            ((IAttributeAwareFigure) primaryShape).listenTo(this.getNotationView().getElement());
+            ((IAttributeAwareFigure) primaryShape).listenTo(this
+                    .getNotationView().getElement());
         }
 
         return primaryShape;
@@ -114,7 +118,7 @@ public class SignalEditPart extends ShapeNodeEditPart {
     protected boolean addFixedChild(EditPart childEditPart) {
         if (childEditPart instanceof SignalNameEditPart) {
             ((SignalNameEditPart) childEditPart).setLabel(getPrimaryShape()
-                .getFigureInvisibleFigureLabelFigure());
+                    .getFigureInvisibleFigureLabelFigure());
             return true;
         }
         return false;
@@ -161,6 +165,7 @@ public class SignalEditPart extends ShapeNodeEditPart {
      * @generated
      */
     protected NodeFigure createNodePlate() {
+        //SignalEditPart
         DefaultSizeNodeFigure result = new DefaultSizeNodeFigure(20, 20);
         return result;
     }
@@ -248,7 +253,7 @@ public class SignalEditPart extends ShapeNodeEditPart {
      */
     public EditPart getPrimaryChildEditPart() {
         return getChildBySemanticHint(SyncchartsVisualIDRegistry
-            .getType(SignalNameEditPart.VISUAL_ID));
+                .getType(SignalNameEditPart.VISUAL_ID));
     }
 
     /**

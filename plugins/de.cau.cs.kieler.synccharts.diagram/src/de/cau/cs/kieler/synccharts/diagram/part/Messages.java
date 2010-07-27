@@ -348,22 +348,22 @@ public class Messages extends NLS {
     /**
      * @generated
      */
-    public static String NavigatorGroupName_State_3024_incominglinks;
-
-    /**
-     * @generated
-     */
-    public static String NavigatorGroupName_State_3024_outgoinglinks;
-
-    /**
-     * @generated
-     */
     public static String NavigatorGroupName_State_2003_incominglinks;
 
     /**
      * @generated
      */
     public static String NavigatorGroupName_State_2003_outgoinglinks;
+
+    /**
+     * @generated
+     */
+    public static String NavigatorGroupName_State_3024_incominglinks;
+
+    /**
+     * @generated
+     */
+    public static String NavigatorGroupName_State_3024_outgoinglinks;
 
     /**
      * @generated

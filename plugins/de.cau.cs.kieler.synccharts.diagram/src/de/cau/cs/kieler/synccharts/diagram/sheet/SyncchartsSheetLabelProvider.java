@@ -15,7 +15,8 @@ import de.cau.cs.kieler.synccharts.diagram.providers.SyncchartsElementTypes;
 /**
  * @generated
  */
-public class SyncchartsSheetLabelProvider extends BaseLabelProvider implements ILabelProvider {
+public class SyncchartsSheetLabelProvider extends BaseLabelProvider implements
+        ILabelProvider {
 
     /**
      * @generated
@@ -71,7 +72,9 @@ public class SyncchartsSheetLabelProvider extends BaseLabelProvider implements I
             if (etype != null) {
                 return etype;
             }
-            view = view.eContainer() instanceof View ? (View) view.eContainer() : null;
+            view =
+                    view.eContainer() instanceof View ? (View) view
+                            .eContainer() : null;
         }
         return null;
     }
