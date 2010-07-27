@@ -47,7 +47,7 @@ import de.cau.cs.kieler.kvid.visual.IDrawer;
  * @author jjc
  *
  */
-public class KViDDataDistributor {
+public class KViDDataDistributor implements IProviderListener {
     
     private static final KViDDataDistributor INSTANCE = new KViDDataDistributor();
     
@@ -81,7 +81,7 @@ public class KViDDataDistributor {
         }
     }
     
-    public void update(final JSONObject data) {
+    public JSONObject update(final JSONObject data) {
         Iterator allKeys = data.keys();
         int figureCounter = 1;
         final int horizontalConstant = 300;
@@ -102,6 +102,7 @@ public class KViDDataDistributor {
             figureCounter++;
         }
         drawer.draw(dataByURI);
+        return null;
     }
     
     public void cleanup() {
@@ -130,6 +131,14 @@ public class KViDDataDistributor {
             }
         }
         return editor;        
+    }
+
+    public void triggerInitialization() {
+        initialize();
+    }
+
+    public void triggerWrapup() {
+        cleanup();
     }
 
 }

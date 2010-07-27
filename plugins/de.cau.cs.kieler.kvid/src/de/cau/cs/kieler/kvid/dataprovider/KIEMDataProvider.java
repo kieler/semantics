@@ -13,8 +13,12 @@
  */
 package de.cau.cs.kieler.kvid.dataprovider;
 
+import java.util.LinkedList;
+import java.util.List;
+
 import org.json.JSONObject;
 
+import de.cau.cs.kieler.kvid.datadistributor.IProviderListener;
 import de.cau.cs.kieler.kvid.datadistributor.KViDDataDistributor;
 import de.cau.cs.kieler.sim.kiem.IJSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.JSONObjectDataComponent;
@@ -27,14 +31,18 @@ import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
  * 
  */
 public class KIEMDataProvider extends JSONObjectDataComponent implements
-        IJSONObjectDataComponent {
+        IJSONObjectDataComponent, IKViDDataProvider {
 
+    private List<IProviderListener> listeners = new LinkedList<IProviderListener>();
+    
     /**
      * {@inheritDoc}
      */
     public JSONObject step(final JSONObject jSONObject)
             throws KiemExecutionException {
-        KViDDataDistributor.getInstance().update(jSONObject);
+        for (IProviderListener listener : listeners) {
+            listener.update(jSONObject);
+        }
         return null;
     }
 
@@ -42,14 +50,19 @@ public class KIEMDataProvider extends JSONObjectDataComponent implements
      * {@inheritDoc}
      */
     public void initialize() throws KiemInitializationException {
-        KViDDataDistributor.getInstance().initialize();
+        registerProviderListener(KViDDataDistributor.getInstance());
+        for (IProviderListener listener : listeners) {
+            listener.triggerInitialization();
+        }
     }
 
     /**
      * {@inheritDoc}
      */
     public void wrapup() throws KiemInitializationException {
-        KViDDataDistributor.getInstance().cleanup();
+        for (IProviderListener listener : listeners) {
+            listener.triggerWrapup();
+        }
     }
 
     /**
@@ -64,6 +77,17 @@ public class KIEMDataProvider extends JSONObjectDataComponent implements
      */
     public boolean isObserver() {
         return true;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public void registerProviderListener(IProviderListener listener) {
+        listeners.add(listener);
+    }
+
+    public void removeProviderListener(IProviderListener listener) {
+        listeners.remove(listener);
     }
 
 }

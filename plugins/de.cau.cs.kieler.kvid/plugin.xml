@@ -6,7 +6,7 @@
       <content
             class="de.cau.cs.kieler.kvid.dataprovider.KIEMDataProvider"
             id="de.cau.cs.kieler.kvid.KIEMDataProvider"
-            name="KIEMDataProvider">
+            name="KViDDataProvider">
       </content>
    </extension>
 

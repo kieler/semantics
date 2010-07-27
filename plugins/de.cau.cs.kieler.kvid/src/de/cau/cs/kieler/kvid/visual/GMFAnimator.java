@@ -69,6 +69,7 @@ public final class GMFAnimator {
             pathCounter++;
         }
         
+        //TODO outsource in KIEMDataProvider
         anima.setCompleteDuration(KiemPlugin.getDefault().getAimedStepDuration() / 2);
         cc.add(anima);
         diagram.getDiagramEditDomain().getDiagramCommandStack().execute(cc);
