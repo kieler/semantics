@@ -22,8 +22,6 @@ import org.eclipse.draw2d.geometry.Point;
 import org.eclipse.gef.commands.CompoundCommand;
 import org.eclipse.gmf.runtime.diagram.ui.editparts.DiagramEditPart;
 
-import de.cau.cs.kieler.sim.kiem.KiemPlugin;
-
 /**
  * 
  * Class handling the animation of data figures in GMF.
@@ -41,9 +39,11 @@ public final class GMFAnimator {
      * 
      * @param figuresAndPath Hashmap holding the KViDFigures and the path to follow
      * @param diagram The diagram in which the animation should take place
+     * @param animationTime The time an animation may use to perform
      */
     public static void animate(final HashMap<KViDGMFFigure, List<Point>> figuresAndPath,
-                               final DiagramEditPart diagram) {
+                               final DiagramEditPart diagram,
+                               final int animationTime) {
 
         AnimatingCommand anima = new AnimatingCommand();
         CompoundCommand cc = new CompoundCommand();
@@ -69,8 +69,7 @@ public final class GMFAnimator {
             pathCounter++;
         }
         
-        //TODO outsource in KIEMDataProvider
-        anima.setCompleteDuration(KiemPlugin.getDefault().getAimedStepDuration() / 2);
+        anima.setCompleteDuration(animationTime / 2);
         cc.add(anima);
         diagram.getDiagramEditDomain().getDiagramCommandStack().execute(cc);
     }
