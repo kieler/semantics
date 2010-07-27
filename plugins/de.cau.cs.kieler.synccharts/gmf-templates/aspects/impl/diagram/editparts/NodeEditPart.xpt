@@ -75,7 +75,6 @@
 «DEFINE createNodePlate FOR gmfgen::GenNode-»
 	«EXPAND xpt::Common::generatedMemberComment»
 	protected org.eclipse.gmf.runtime.gef.ui.figures.NodeFigure createNodePlate() {
-		//«editPartClassName»
 		«IF editPartClassName <> 'StateEditPart' and editPartClassName <> 'State2EditPart'-»
 		org.eclipse.gmf.runtime.gef.ui.figures.DefaultSizeNodeFigure result = new org.eclipse.gmf.runtime.gef.ui.figures.DefaultSizeNodeFigure(«IF getDiagram().isPixelMapMode()»«defaultSizeWidth(viewmap, 20)», «defaultSizeHeight(viewmap, 20)»«ELSE»getMapMode().DPtoLP(«defaultSizeWidth(viewmap, 20)»), getMapMode().DPtoLP(«defaultSizeHeight(viewmap, 20)»)«ENDIF»);
 		«ELSE-»
