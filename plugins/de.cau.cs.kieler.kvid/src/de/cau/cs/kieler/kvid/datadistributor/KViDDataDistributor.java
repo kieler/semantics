@@ -1,3 +1,16 @@
+/*
+ * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
+ *
+ * http://www.informatik.uni-kiel.de/rtsys/kieler/
+ * 
+ * Copyright 2009 by
+ * + Christian-Albrechts-University of Kiel
+ *   + Department of Computer Science
+ *     + Real-Time and Embedded Systems Group
+ * 
+ * This code is provided under the terms of the Eclipse Public License (EPL).
+ * See the file epl-v10.html for the license text.
+ */
 package de.cau.cs.kieler.kvid.datadistributor;
 
 import java.util.Collection;
@@ -27,9 +40,16 @@ import de.cau.cs.kieler.kvid.data.KViDDataObject;
 import de.cau.cs.kieler.kvid.visual.GMFDrawer;
 import de.cau.cs.kieler.kvid.visual.IDrawer;
 
+/**
+ * This class organizes the distribution of the collected data to the object that
+ * visualize it.
+ * 
+ * @author jjc
+ *
+ */
 public class KViDDataDistributor {
     
-    private static final KViDDataDistributor instance = new KViDDataDistributor();
+    private static final KViDDataDistributor INSTANCE = new KViDDataDistributor();
     
     private HashMap<String, EditPart> editPartsByURI = new HashMap<String, EditPart>();
     
@@ -38,24 +58,24 @@ public class KViDDataDistributor {
     private IDrawer drawer = new GMFDrawer();
     
     public static KViDDataDistributor getInstance() {
-        return instance;
+        return INSTANCE;
     }
     
     public void initialize() {
         IEditorPart activeEditor = getActiveEditor();
         if (activeEditor instanceof DiagramEditor) {
-            DiagramEditPart dep = ((DiagramEditor)activeEditor).getDiagramEditPart();
+            DiagramEditPart dep = ((DiagramEditor) activeEditor).getDiagramEditPart();
             Collection<?> editParts = dep.getViewer().getEditPartRegistry()
                     .values();
             for (Object object : editParts) {
-                EditPart part = (EditPart)object;
+                EditPart part = (EditPart) object;
                 if (part.getModel() instanceof EObject) {
-                    EObject eObject = (EObject)part.getModel();
+                    EObject eObject = (EObject) part.getModel();
                     Resource resource = eObject.eResource();
                     System.out.println(eObject.toString());
-                    String URI = EcoreUtil.getURI(eObject).toString();
-                    editPartsByURI.put(URI, part);
-                    System.out.println(URI);
+                    String uri = EcoreUtil.getURI(eObject).toString();
+                    editPartsByURI.put(uri, part);
+                    System.out.println(uri);
                 }
             }
         }
@@ -64,11 +84,14 @@ public class KViDDataDistributor {
     public void update(final JSONObject data) {
         Iterator allKeys = data.keys();
         int figureCounter = 1;
+        final int horizontalConstant = 300;
+        final int movementWidth = 100;
+        final int objectSpacing = 50;
         while (allKeys.hasNext()) {
             List<Point> randomPath = new LinkedList<Point>();
-            randomPath.add(new Point(300, figureCounter*50));
-            randomPath.add(new Point(400, figureCounter*50));
-            randomPath.add(new Point(300, figureCounter*50));
+            randomPath.add(new Point(horizontalConstant, figureCounter * objectSpacing));
+            randomPath.add(new Point(horizontalConstant + movementWidth, figureCounter * objectSpacing));
+            randomPath.add(new Point(horizontalConstant, figureCounter * objectSpacing));
             Object o = allKeys.next();
             try {
                 String key = o.toString();

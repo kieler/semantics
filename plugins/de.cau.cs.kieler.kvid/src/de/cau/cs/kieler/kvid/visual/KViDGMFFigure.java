@@ -1,3 +1,16 @@
+/*
+ * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
+ *
+ * http://www.informatik.uni-kiel.de/rtsys/kieler/
+ * 
+ * Copyright 2009 by
+ * + Christian-Albrechts-University of Kiel
+ *   + Department of Computer Science
+ *     + Real-Time and Embedded Systems Group
+ * 
+ * This code is provided under the terms of the Eclipse Public License (EPL).
+ * See the file epl-v10.html for the license text.
+ */
 package de.cau.cs.kieler.kvid.visual;
 
 import org.eclipse.draw2d.BorderLayout;
@@ -10,6 +23,11 @@ import org.eclipse.draw2d.geometry.Rectangle;
 
 import de.cau.cs.kieler.kvid.data.KViDDataObject;
 
+/**
+ * 
+ * @author jjc
+ *
+ */
 public class KViDGMFFigure extends RoundedRectangle {
     
     private KViDDataObject currentData;
@@ -43,17 +61,5 @@ public class KViDGMFFigure extends RoundedRectangle {
     public void handleMousePressed(MouseEvent event) {
         System.out.println("Click");
     }
-    
-    /*@Override
-    public void paintFigure(Graphics g) {
-        Rectangle r = bounds;
-        g.drawArc(r.x + r.width / 8, r.y, r.width / 4, r.height - 1, 90, 180);
-        g.drawLine(r.x + r.width / 4, r.y, r.x + 3 * r.width / 4, r.y);
-        g.drawLine(r.x + r.width / 4, r.y + r.height - 1,
-            r.x + 3 * r.width / 4, r.y + r.height - 1);
-        g.drawArc(r.x + 5 * r.width / 8, r.y, r.width / 4, r.height - 1, 270,
-            180);
-        g.drawText(currentData.getData().toString(), r.x + 3 * r.width / 8, r.y + r.height / 8);
-      }*/
 
 }

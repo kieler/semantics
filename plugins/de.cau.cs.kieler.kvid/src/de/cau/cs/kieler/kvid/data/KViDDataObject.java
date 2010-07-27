@@ -1,27 +1,51 @@
+/*
+ * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
+ *
+ * http://www.informatik.uni-kiel.de/rtsys/kieler/
+ * 
+ * Copyright 2009 by
+ * + Christian-Albrechts-University of Kiel
+ *   + Department of Computer Science
+ *     + Real-Time and Embedded Systems Group
+ * 
+ * This code is provided under the terms of the Eclipse Public License (EPL).
+ * See the file epl-v10.html for the license text.
+ */
 package de.cau.cs.kieler.kvid.data;
 
 import java.util.List;
 
 import org.eclipse.draw2d.geometry.Point;
 
+/**
+ * 
+ * Class for storing all important data for KViD to visualize.
+ * 
+ * @author jjc
+ *
+ */
 public class KViDDataObject {
     
-    private String URI;
+    /** URI of the model element providing the data. */
+    private String uri;
     
+    /** The data itself in a string representation. */
     private String data;
     
+    /** The type of the data, given in data types known by KViD. */
     private KViDDataType type;
     
+    /** If animation is desired, give the path to follow here. */
     private List<Point> path;
     
     public KViDDataObject(final String theURI, final String thedata) {
-        this.URI = theURI;
+        this.uri = theURI;
         this.data = thedata;
         this.type = parseDataType(thedata);
     }
     
     public KViDDataObject(final String theURI, final String thedata, final List<Point> thepath) {
-        this.URI = theURI;
+        this.uri = theURI;
         this.data = thedata;
         this.type = parseDataType(thedata);
         this.path = thepath;
@@ -29,7 +53,7 @@ public class KViDDataObject {
     
     public KViDDataObject(final String theURI, final String thedata,
             final KViDDataType thetype) {
-        this.URI = theURI;
+        this.uri = theURI;
         this.data = thedata;
         this.type = thetype;
     }
@@ -48,7 +72,7 @@ public class KViDDataObject {
     }
     
     public String getURI() {
-        return URI;
+        return uri;
     }
     
     public List<Point> getPath() {
