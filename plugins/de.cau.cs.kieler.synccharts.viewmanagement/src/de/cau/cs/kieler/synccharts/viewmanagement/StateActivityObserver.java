@@ -24,6 +24,7 @@ import org.eclipse.gef.EditPart;
 import org.eclipse.gmf.runtime.diagram.ui.editparts.ShapeEditPart;
 import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramEditor;
 import org.eclipse.gmf.runtime.notation.View;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IEditorReference;
 import org.eclipse.ui.IViewPart;
@@ -260,26 +261,46 @@ public class StateActivityObserver extends JSONObjectDataComponent implements
         return "";
     }
 
+    // -------------------------------------------------------------------------
+
+    DiagramEditor diagramEditor = null;
+    boolean diagramEditorFlag = false;
+
     DiagramEditor getInputEditor() {
         String kiemEditorProperty = this.getProperties()[0].getValue();
-        DiagramEditor diagramEditor = null;
+        diagramEditorFlag = false;
 
-        // get the active editor as a default case (if property is empty)
-        IWorkbenchPage activePage = PlatformUI.getWorkbench()
-                .getActiveWorkbenchWindow().getActivePage();
-        IEditorPart editor = activePage.getActiveEditor();
-        if (editor instanceof DiagramEditor) {
-            diagramEditor = (DiagramEditor) editor;
-        }
+        Display.getDefault().syncExec(new Runnable() {
+            public void run() {
+                // get the active editor as a default case (if property is empty)
+                IWorkbenchWindow window = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
+                IWorkbenchPage activePage = window.getActivePage();
+                IEditorPart editor = activePage.getActiveEditor();
+                if (editor instanceof DiagramEditor) {
+                    diagramEditor = (DiagramEditor) editor;
+                }
+                diagramEditorFlag = true;
+            }
+        });
 
         // only check non-empty and valid property (this is optional)
         if (!kiemEditorProperty.equals("")) {
             if (getEditor(kiemEditorProperty) != null) {
                 diagramEditor = getEditor(kiemEditorProperty);
             }
+        } else {
+            while (!diagramEditorFlag) {
+                try {
+                    Thread.sleep(100);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
         }
         return diagramEditor;
     }
+
+    // -------------------------------------------------------------------------
 
     /**
      * @return the rootEditPart
