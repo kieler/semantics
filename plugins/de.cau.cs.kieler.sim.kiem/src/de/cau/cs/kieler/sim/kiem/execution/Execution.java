@@ -70,6 +70,9 @@ public class Execution extends Job {
 
     /** Defines the number of steps in pause mode. */
     private static final int NO_STEPS = 0;
+    
+    /** The job monitor (Progress view) that can be canceled by the user. */
+    private IProgressMonitor executionProgressMonitor;
 
     /**
      * The Constant SECOND_WAITTIMEOUT indicates how long to sleep until changes in aimed step
@@ -84,6 +87,9 @@ public class Execution extends Job {
 
     /** The Intended duration of a step. */
     private int aimedStepDuration;
+    
+    /** While execution is up and running isRunning is true. */
+    private boolean isStarted = false;
 
     /**
      * The step to perform can be NO_STEPS in pause mode or INFINITY_STEPS in run mode or
@@ -145,8 +151,21 @@ public class Execution extends Job {
     /** The event manager to handle notification of DataComponents. */
     private EventManager eventManager;
 
+    
     // -------------------------------------------------------------------------
-
+    
+    /**
+     * Checks whether isStarted is true. This is the case whenever the execution
+     * is up an running (already initialized and not aborted yet).
+     * 
+     * @return true, if is started
+     */
+    public boolean isStarted() {
+        return this.isStarted;
+    }
+    
+    // -------------------------------------------------------------------------
+    
     /**
      * Tries to get the Timeout from the plugins content providers. <BR>
      * <BR>
@@ -192,6 +211,7 @@ public class Execution extends Job {
     public Execution(final List<DataComponentWrapper> dataComponentWrapperListParam,
             final EventManager eventManagerParam) {
         super("KIEM Execution");
+        isStarted = false;
         this.eventManager = eventManagerParam;
         this.aimedStepDuration = KiemPlugin.AIMED_STEP_DURATION_DEFAULT;
         this.stop = false;
@@ -338,9 +358,8 @@ public class Execution extends Job {
 
     /**
      * Gets the maximum step. This usually not differs by more than 1 from the current step (
-     * {@link #getSteps()}), unless the current step is a history step.
      * 
-     * @return the maximum step
+     * @return the maximum step {@link #getSteps()}), unless the current step is a history step.
      */
     public long getMaximumSteps() {
         return this.stepCounterMax;
@@ -703,6 +722,28 @@ public class Execution extends Job {
 
     // -------------------------------------------------------------------------
 
+    /**
+     * Aborts the execution. In this case the stop flag is immediately set so that no further step is
+     * made. The data components are then being informed about the stop command. For safety reasons
+     * we again set the stop flag in synchronized monitor of this object and then stop all worker
+     * threads that where started. The latter includes the timeout thread.
+     */
+    public void abortExecutionAsync() {
+        // stop timeout thread
+        this.timeout.terminate();
+
+        // terminate
+        this.errorTerminate();
+        
+        // must notify the view here, because job can be canceled directly (or
+        // remotely by other
+        // plug-in)
+        KiemPlugin.getDefault().setExecution(null);
+        KiemPlugin.getDefault().updateViewAsync();
+    }
+
+    // -------------------------------------------------------------------------
+
     // public void stepExecutionAsync() {
     // Thread asyncStep = new Thread() {
     // public void run() {
@@ -781,8 +822,6 @@ public class Execution extends Job {
      * the call of this method should only happen during the development of a new component.
      */
     public void errorTerminate() {
-        // wrapup components
-        wrapupComponents(true);
         // stop this execution thread immediately
         this.steps = NO_STEPS;
         this.stop = true;
@@ -790,6 +829,8 @@ public class Execution extends Job {
         KiemPlugin.getDefault().setExecution(null);
         // update the view
         KiemPlugin.getDefault().updateViewAsync();
+        // wrapup components
+        wrapupComponents(true);
         // try to stop all components, no blocking stopExecution() call
         for (int c = 0; c < this.dataComponentWrapperList.size(); c++) {
             if (this.observerExecutionArray[c] != null) {
@@ -974,16 +1015,37 @@ public class Execution extends Job {
     }
 
     // -------------------------------------------------------------------------
+    
+    /**
+     * Gets the progress monitor.that the user may have canceled.
+     * 
+     * @return the progress monitor
+     */
+    public IProgressMonitor getExecutionProgressMonitor() {
+        return this.executionProgressMonitor;
+    }
+    
+    
+    // -------------------------------------------------------------------------
 
     /**
-     * {@inheritDoc}
+     * Run.
+     * 
+     * @param monitor
+     *            the monitor
+     * @return the i status {@inheritDoc}
      */
     protected IStatus run(final IProgressMonitor monitor) {
+        this.executionProgressMonitor = monitor;
+        
         synchronized (this) {
             // this returns stepCounter and historyStepCounter and all other
             // timing variables
             resetTimingVariables();
         }
+        
+        // here it is eligible to assume that initialization passed w/o any errors
+        isStarted = true;
         
         try {
             while (!this.stop) {
@@ -1213,6 +1275,7 @@ public class Execution extends Job {
                                 // escape if stopped
                                 timeout.abortTimeout();
                                 if (this.stop) {
+                                    isStarted = false;
                                     return Status.CANCEL_STATUS;
                                 }
 
@@ -1277,12 +1340,14 @@ public class Execution extends Job {
 
                 } // end synchronized
 
-                // stop if monitor is cancelled
+                // stop if monitor is canceled
                 if (monitor.isCanceled()) {
-                    this.stopExecutionSync();
+                    //this.stopExecutionSync();
+                    this.abortExecutionAsync();
                 }
                 // escape if stopped
                 if (this.stop) {
+                    isStarted = false;
                     return Status.OK_STATUS;
                 }
 
@@ -1329,10 +1394,12 @@ public class Execution extends Job {
 
                 // stop if monitor is cancelled
                 if (monitor.isCanceled()) {
-                    this.stopExecutionSync();
+                    //this.stopExecutionSync();
+                    this.abortExecutionAsync();
                 }
                 // escape if stopped
                 if (this.stop) {
+                    isStarted = false;
                     return Status.OK_STATUS;
                 }
 
@@ -1349,10 +1416,12 @@ public class Execution extends Job {
                     }
                     // stop if monitor is cancelled
                     if (monitor.isCanceled()) {
-                        this.stopExecutionSync();
+                        //this.stopExecutionSync();
+                        this.abortExecutionAsync();
                     }
                     // if stop is requested, jump out
                     if (this.stop) {
+                        isStarted = false;
                         return Status.OK_STATUS;
                     }
                     endtime = System.currentTimeMillis();
@@ -1363,24 +1432,25 @@ public class Execution extends Job {
         } catch (Exception e) {
             // This should not happen during normal operation but may happen if
             // Eclipse is terminated unexpectedly.
+            isStarted = false;
             return Status.OK_STATUS;
         }
 
+        isStarted = false;
         return Job.ASYNC_FINISH;
     }
 
     // -------------------------------------------------------------------------
 
     /**
-     * A proxy method for showing an error from within an {@link ObserverExecution}, a
-     * {@link ProducerExecution} or the {@link TimeoutThread}.
+     * A proxy method for showing an error from within an {@link ObserverExecution}, a.
      * 
      * @param textMessage
      *            the text message to display
      * @param pluginID
      *            the plug-in id
      * @param e
-     *            the original Exception
+     *            the original Exception {@link ProducerExecution} or the {@link TimeoutThread}.
      */
     public void showError(final String textMessage, final String pluginID, final Exception e) {
         KiemPlugin.getDefault().showError(textMessage, pluginID, e, false);
@@ -1389,15 +1459,14 @@ public class Execution extends Job {
     // -------------------------------------------------------------------------
 
     /**
-     * A proxy method for showing a warning from within an {@link ObserverExecution}, a
-     * {@link ProducerExecution} or the {@link TimeoutThread}.
+     * A proxy method for showing a warning from within an {@link ObserverExecution}, a.
      * 
      * @param textMessage
      *            the text message to display
      * @param pluginID
      *            the plug-in id
      * @param e
-     *            the original Exception
+     *            the original Exception {@link ProducerExecution} or the {@link TimeoutThread}.
      */
     public void showWarning(final String textMessage, final String pluginID, final Exception e) {
         KiemPlugin.getDefault().showWarning(textMessage, pluginID, e, false);

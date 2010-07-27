@@ -240,8 +240,8 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
                 // enable sub items
                 int subItemCnt = viewer.getTree().getItem(c - disabledCounter).getItemCount();
                 for (int cc = 0; cc < subItemCnt; cc++) {
-                    viewer.getTree().getItem(c - disabledCounter).getItem(cc).setForeground(
-                            currentColor);
+                    viewer.getTree().getItem(c - disabledCounter).getItem(cc)
+                            .setForeground(currentColor);
                 }
             } catch (Exception e) {
                 // catch strange SWT bugs
@@ -787,6 +787,18 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
     // -------------------------------------------------------------------------
 
     /**
+     * Checks whether abortion possible is true.
+     * 
+     * @return true, if is abortion possible
+     */
+    private boolean isAbortionPossible() {
+        boolean returnValue = (kIEMInstance != null && kIEMInstance.isInitializingExecution());
+        return returnValue;
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
      * Updates the table view synchronously from within another thread. <BR>
      * <BR>
      * BE CAREFUL WITH USING THIS METHOD BECAUSE THIS COULD MORE EASILY PRODUCE DEADLOCKS
@@ -811,6 +823,7 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
             }
         });
     }
+
     // -------------------------------------------------------------------------
 
     /**
@@ -823,7 +836,7 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
             }
         });
     }
-    
+
     // -------------------------------------------------------------------------
 
     /**
@@ -876,8 +889,7 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
         updateColumnsCollapsed();
         try {
             viewer.refresh();
-        }
-        catch(Exception e) {
+        } catch (Exception e) {
             // catch any viewer refresh errors here
         }
         refreshEnabledDisabledTextColors();
@@ -950,39 +962,52 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
                 if (getAimedStepDurationTextField().isEnabled()) {
                     getAimedStepDurationTextField().setEnabled(false);
                 }
+                // if abortion is possible, let the user abort via STOP button
+                if (isAbortionPossible()) {
+                    getActionStop().setEnabled(true);
+                }
                 return;
             } else {
                 // master is responsible for enabling/disabling
                 // buttons
                 getActionStepBack().setEnabled(
-                        KiemPlugin.getDefault().getCurrentMaster().masterGUIisEnabled(
-                                AbstractDataComponent.MASTER_CMD_STEPBACK));
+                        KiemPlugin.getDefault().getCurrentMaster()
+                                .masterGUIisEnabled(AbstractDataComponent.MASTER_CMD_STEPBACK));
                 getActionStep().setEnabled(
-                        KiemPlugin.getDefault().getCurrentMaster().masterGUIisEnabled(
-                                AbstractDataComponent.MASTER_CMD_STEP));
+                        KiemPlugin.getDefault().getCurrentMaster()
+                                .masterGUIisEnabled(AbstractDataComponent.MASTER_CMD_STEP));
                 getActionMacroStep().setEnabled(
-                        KiemPlugin.getDefault().getCurrentMaster().masterGUIisEnabled(
-                                AbstractDataComponent.MASTER_CMD_MACROSTEP));
+                        KiemPlugin.getDefault().getCurrentMaster()
+                                .masterGUIisEnabled(AbstractDataComponent.MASTER_CMD_MACROSTEP));
                 getActionMacroStep().setEnabled(
-                        KiemPlugin.getDefault().getCurrentMaster().masterGUIisEnabled(
-                                AbstractDataComponent.MASTER_CMD_RUN));
+                        KiemPlugin.getDefault().getCurrentMaster()
+                                .masterGUIisEnabled(AbstractDataComponent.MASTER_CMD_RUN));
                 getActionPause().setEnabled(
-                        KiemPlugin.getDefault().getCurrentMaster().masterGUIisEnabled(
-                                AbstractDataComponent.MASTER_CMD_PAUSE));
+                        KiemPlugin.getDefault().getCurrentMaster()
+                                .masterGUIisEnabled(AbstractDataComponent.MASTER_CMD_PAUSE));
                 getActionStop().setEnabled(
-                        KiemPlugin.getDefault().getCurrentMaster().masterGUIisEnabled(
-                                AbstractDataComponent.MASTER_CMD_STOP));
+                        KiemPlugin.getDefault().getCurrentMaster()
+                                .masterGUIisEnabled(AbstractDataComponent.MASTER_CMD_STOP));
                 // getActionStepBack().setEnabled(currentMaster.masterGUIisEnabledStepBack());
                 // getActionStep().setEnabled(currentMaster.masterGUIisEnabledStep());
                 // getActionMacroStep().setEnabled(currentMaster.masterGUIisEnabledMacroStep());
                 // getActionRun().setEnabled(currentMaster.masterGUIisEnabledRun());
                 // getActionPause().setEnabled(currentMaster.masterGUIisEnabledPause());
                 // getActionStop().setEnabled(currentMaster.masterGUIisEnabledStop());
+
+                // if abortion is possible, let the user abort via STOP button
+                if (isAbortionPossible()) {
+                    getActionStop().setEnabled(true);
+                }
                 getAimedStepDurationTextField().setEnabled(false);
                 return;
             }
         }
         if (allDisabled) {
+            // if abortion is possible, let the user abort via STOP button
+            if (isAbortionPossible()) {
+                getActionStop().setEnabled(true);
+            }
             return;
         }
         if (kIEMInstance.getExecution() == null) {
@@ -1060,6 +1085,10 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
             if (!getAimedStepDurationTextField().isEnabled()) {
                 getAimedStepDurationTextField().setEnabled(true);
             }
+        }
+        // if abortion is possible, let the user abort via STOP button
+        if (isAbortionPossible()) {
+            getActionStop().setEnabled(true);
         }
     }
 
@@ -1298,23 +1327,23 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
         actionStepBack = new Action() {
             @Override
             public void run() {
-                // only update if first step in execution
-                boolean mustUpdate = (kIEMInstance.getExecution() == null);
-                if ((KiemPlugin.getDefault().getCurrentMaster() != null)
-                        && KiemPlugin.getDefault().getCurrentMaster().isMasterImplementingGUI()) {
-                    // if a master implements the action
-                    KiemPlugin.getDefault().getCurrentMaster().masterGUI(
-                            AbstractDataComponent.MASTER_CMD_STEPBACK);
-                    // currentMaster.masterGUIstepBack();
-                } else {
-                    // otherwise default implementation
-                    if (kIEMInstance.initExecution()) {
-                        kIEMInstance.getExecution().stepBackExecutionSync();
+                new Thread(new Runnable() {
+                    public void run() {
+                        if ((KiemPlugin.getDefault().getCurrentMaster() != null)
+                                && KiemPlugin.getDefault().getCurrentMaster()
+                                        .isMasterImplementingGUI()) {
+                            // if a master implements the action
+                            KiemPlugin.getDefault().getCurrentMaster()
+                                    .masterGUI(AbstractDataComponent.MASTER_CMD_STEPBACK);
+                            // currentMaster.masterGUIstepBack();
+                        } else {
+                            // otherwise default implementation
+                            if (kIEMInstance.initExecution()) {
+                                kIEMInstance.getExecution().stepBackExecutionSync();
+                            }
+                        }
                     }
-                }
-                if (mustUpdate) {
-                    updateView(true);
-                }
+                }).start();
             }
         };
         actionStepBack.setText(Messages.mActionStepBack);
@@ -1339,22 +1368,22 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
         actionStepFMC = new Action() {
             @Override
             public void run() {
-                // only update if first step in execution
-                boolean mustUpdate = (kIEMInstance.getExecution() == null);
-                if ((KiemPlugin.getDefault().getCurrentMaster() != null)
-                        && KiemPlugin.getDefault().getCurrentMaster().isMasterImplementingGUI()) {
-                    // unsupported
-                    KiemPlugin.getDefault().getCurrentMaster().noop();
-                } else {
-                    // otherwise default implementation
-                    if (kIEMInstance.initExecution()) {
-                        kIEMInstance.getExecution().stepExecutionPause(
-                                kIEMInstance.getExecution().getMaximumSteps());
+                (new Thread(new Runnable() {
+                    public void run() {
+                        if ((KiemPlugin.getDefault().getCurrentMaster() != null)
+                                && KiemPlugin.getDefault().getCurrentMaster()
+                                        .isMasterImplementingGUI()) {
+                            // unsupported
+                            KiemPlugin.getDefault().getCurrentMaster().noop();
+                        } else {
+                            // otherwise default implementation
+                            if (kIEMInstance.initExecution()) {
+                                kIEMInstance.getExecution().stepExecutionPause(
+                                        kIEMInstance.getExecution().getMaximumSteps());
+                            }
+                        }
                     }
-                }
-                if (mustUpdate) {
-                    updateView(true);
-                }
+                })).start();
             }
         };
         actionStepFMC.setText(Messages.mActionStepFMC);
@@ -1380,31 +1409,31 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
         actionStepUser = new Action() {
             @Override
             public void run() {
-                // only update if first step in execution
-                boolean mustUpdate = (kIEMInstance.getExecution() == null);
-                if ((KiemPlugin.getDefault().getCurrentMaster() != null)
-                        && KiemPlugin.getDefault().getCurrentMaster().isMasterImplementingGUI()) {
-                    // unsupported
-                    KiemPlugin.getDefault().getCurrentMaster().noop();
-                } else {
-                    // otherwise default implementation
-                    if (kIEMInstance.initExecution()) {
-                        String value = showInputDialog(Messages.mActionStepUserDialogTitle,
-                                Messages.mActionStepUserDialogText, ""
-                                        + kIEMInstance.getExecution().getMaximumSteps());
-                        if (value != null) {
-                            try {
-                                long step = Long.parseLong(value);
-                                kIEMInstance.getExecution().stepExecutionPause(step);
-                            } catch (Exception e) {
-                                // no error should appear here
+                (new Thread(new Runnable() {
+                    public void run() {
+                        if ((KiemPlugin.getDefault().getCurrentMaster() != null)
+                                && KiemPlugin.getDefault().getCurrentMaster()
+                                        .isMasterImplementingGUI()) {
+                            // unsupported
+                            KiemPlugin.getDefault().getCurrentMaster().noop();
+                        } else {
+                            // otherwise default implementation
+                            if (kIEMInstance.initExecution()) {
+                                String value = showInputDialog(Messages.mActionStepUserDialogTitle,
+                                        Messages.mActionStepUserDialogText, ""
+                                                + kIEMInstance.getExecution().getMaximumSteps());
+                                if (value != null) {
+                                    try {
+                                        long step = Long.parseLong(value);
+                                        kIEMInstance.getExecution().stepExecutionPause(step);
+                                    } catch (Exception e) {
+                                        // no error should appear here
+                                    }
+                                }
                             }
                         }
                     }
-                }
-                if (mustUpdate) {
-                    updateView(true);
-                }
+                })).start();
             }
         };
         actionStepUser.setText(Messages.mActionStepUser);
@@ -1430,31 +1459,31 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
         actionRunUser = new Action() {
             @Override
             public void run() {
-                // only update if first step in execution
-                boolean mustUpdate = (kIEMInstance.getExecution() == null);
-                if ((KiemPlugin.getDefault().getCurrentMaster() != null)
-                        && KiemPlugin.getDefault().getCurrentMaster().isMasterImplementingGUI()) {
-                    // unsupported
-                    KiemPlugin.getDefault().getCurrentMaster().noop();
-                } else {
-                    // otherwise default implementation
-                    if (kIEMInstance.initExecution()) {
-                        String value = showInputDialog(Messages.mActionRunUserDialogTitle,
-                                Messages.mActionRunUserDialogText, ""
-                                        + kIEMInstance.getExecution().getMaximumSteps());
-                        if (value != null) {
-                            try {
-                                long step = Long.parseLong(value);
-                                kIEMInstance.getExecution().runExecutionPause(step);
-                            } catch (Exception e) {
-                                // no error should appear here
+                (new Thread(new Runnable() {
+                    public void run() {
+                        if ((KiemPlugin.getDefault().getCurrentMaster() != null)
+                                && KiemPlugin.getDefault().getCurrentMaster()
+                                        .isMasterImplementingGUI()) {
+                            // unsupported
+                            KiemPlugin.getDefault().getCurrentMaster().noop();
+                        } else {
+                            // otherwise default implementation
+                            if (kIEMInstance.initExecution()) {
+                                String value = showInputDialog(Messages.mActionRunUserDialogTitle,
+                                        Messages.mActionRunUserDialogText, ""
+                                                + kIEMInstance.getExecution().getMaximumSteps());
+                                if (value != null) {
+                                    try {
+                                        long step = Long.parseLong(value);
+                                        kIEMInstance.getExecution().runExecutionPause(step);
+                                    } catch (Exception e) {
+                                        // no error should appear here
+                                    }
+                                }
                             }
                         }
                     }
-                }
-                if (mustUpdate) {
-                    updateView(true);
-                }
+                })).start();
             }
         };
         actionRunUser.setText(Messages.mActionRunUser);
@@ -1479,28 +1508,31 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
         actionStep = new Action() {
             @Override
             public void run() {
-                // only update if first step in execution
-                boolean mustUpdate = (kIEMInstance.getExecution() == null);
-                if ((KiemPlugin.getDefault().getCurrentMaster() != null)
-                        && KiemPlugin.getDefault().getCurrentMaster().isMasterImplementingGUI()) {
-                    // if a master implements the action
-                    KiemPlugin.getDefault().getCurrentMaster().masterGUI(
-                            AbstractDataComponent.MASTER_CMD_STEP);
-                    // currentMaster.masterGUIstep();
-                } else {
-                    // otherwise default implementation
-                    if (kIEMInstance.getExecution() == null) {
-                        if (kIEMInstance.initExecution()) {
-                            kIEMInstance.getExecution().pauseExecutionSync();   // per default make a pause as a first step
+
+                (new Thread(new Runnable() {
+                    public void run() {
+
+                        if ((KiemPlugin.getDefault().getCurrentMaster() != null)
+                                && KiemPlugin.getDefault().getCurrentMaster()
+                                        .isMasterImplementingGUI()) {
+                            // if a master implements the action
+                            KiemPlugin.getDefault().getCurrentMaster()
+                                    .masterGUI(AbstractDataComponent.MASTER_CMD_STEP);
+                            // currentMaster.masterGUIstep();
+                        } else {
+                            // otherwise default implementation
+                            if (kIEMInstance.getExecution() == null) {
+                                if (kIEMInstance.initExecution()) {
+                                    // per default make a pause as a first step
+                                    kIEMInstance.getExecution().pauseExecutionSync();
+                                }
+                            } else if (kIEMInstance.initExecution()) {
+                                kIEMInstance.getExecution().stepExecutionSync();
+                            }
                         }
                     }
-                    else if (kIEMInstance.initExecution()) {
-                        kIEMInstance.getExecution().stepExecutionSync();
-                    }
-                }
-                if (mustUpdate) {
-                    updateView(true);
-                }
+                })).start();
+
             }
         };
         actionStep.setText(Messages.mActionStep);
@@ -1525,19 +1557,23 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
         actionMacroStep = new Action() {
             @Override
             public void run() {
-                if ((KiemPlugin.getDefault().getCurrentMaster() != null)
-                        && KiemPlugin.getDefault().getCurrentMaster().isMasterImplementingGUI()) {
-                    // if a master implements the action
-                    KiemPlugin.getDefault().getCurrentMaster().masterGUI(
-                            AbstractDataComponent.MASTER_CMD_MACROSTEP);
-                    // currentMaster.masterGUImacroStep();
-                } else {
-                    // otherwise default implementation
-                    if (kIEMInstance.initExecution()) {
-                        kIEMInstance.getExecution().macroStepExecutionSync();
+                (new Thread(new Runnable() {
+                    public void run() {
+                        if ((KiemPlugin.getDefault().getCurrentMaster() != null)
+                                && KiemPlugin.getDefault().getCurrentMaster()
+                                        .isMasterImplementingGUI()) {
+                            // if a master implements the action
+                            KiemPlugin.getDefault().getCurrentMaster()
+                                    .masterGUI(AbstractDataComponent.MASTER_CMD_MACROSTEP);
+                            // currentMaster.masterGUImacroStep();
+                        } else {
+                            // otherwise default implementation
+                            if (kIEMInstance.initExecution()) {
+                                kIEMInstance.getExecution().macroStepExecutionSync();
+                            }
+                        }
                     }
-                }
-                updateView(true);
+                })).start();
             }
         };
         actionMacroStep.setText(Messages.mActionMacroStep);
@@ -1562,19 +1598,23 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
         actionRun = new Action() {
             @Override
             public void run() {
-                if ((KiemPlugin.getDefault().getCurrentMaster() != null)
-                        && KiemPlugin.getDefault().getCurrentMaster().isMasterImplementingGUI()) {
-                    // if a master implements the action
-                    KiemPlugin.getDefault().getCurrentMaster().masterGUI(
-                            AbstractDataComponent.MASTER_CMD_RUN);
-                    // currentMaster.masterGUIrun();
-                } else {
-                    // otherwise default implementation
-                    if (kIEMInstance.initExecution()) {
-                        kIEMInstance.getExecution().runExecutionSync();
+                (new Thread(new Runnable() {
+                    public void run() {
+                        if ((KiemPlugin.getDefault().getCurrentMaster() != null)
+                                && KiemPlugin.getDefault().getCurrentMaster()
+                                        .isMasterImplementingGUI()) {
+                            // if a master implements the action
+                            KiemPlugin.getDefault().getCurrentMaster()
+                                    .masterGUI(AbstractDataComponent.MASTER_CMD_RUN);
+                            // currentMaster.masterGUIrun();
+                        } else {
+                            // otherwise default implementation
+                            if (kIEMInstance.initExecution()) {
+                                kIEMInstance.getExecution().runExecutionSync();
+                            }
+                        }
                     }
-                }
-                updateView(true);
+                })).start();
             }
         };
         actionRun.setText(Messages.mActionHintRun);
@@ -1602,8 +1642,8 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
                 if ((KiemPlugin.getDefault().getCurrentMaster() != null)
                         && KiemPlugin.getDefault().getCurrentMaster().isMasterImplementingGUI()) {
                     // if a master implements the action
-                    KiemPlugin.getDefault().getCurrentMaster().masterGUI(
-                            AbstractDataComponent.MASTER_CMD_PAUSE);
+                    KiemPlugin.getDefault().getCurrentMaster()
+                            .masterGUI(AbstractDataComponent.MASTER_CMD_PAUSE);
                     // currentMaster.masterGUIpause();
                 } else {
                     // otherwise default implementation
@@ -1629,6 +1669,8 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
      * All collected timing data will be presented to the user and the execution is being released.
      * A master will also have to do this.
      * 
+     * Use this button also as abortion button iff execution is not yet existing
+     * 
      * @return the action stop
      */
     private Action getActionStop() {
@@ -1638,11 +1680,22 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
         actionStop = new Action() {
             @Override
             public void run() {
-                if ((KiemPlugin.getDefault().getCurrentMaster() != null)
+                // if the execution is not yet fully (!) started then we use the stop button as an
+                // abortion button implicitly
+                if (kIEMInstance == null || kIEMInstance.isInitializingExecution()) {
+                    if (kIEMInstance != null && kIEMInstance.getExecution() != null) {
+                        kIEMInstance.getExecution().abortExecutionAsync();
+                    }
+                    if (kIEMInstance != null && kIEMInstance.isInitializingExecution()) {
+                        kIEMInstance.cancelInitialization();
+                    }
+                    kIEMInstance.setExecution(null);
+                    updateView(true);
+                } else if ((KiemPlugin.getDefault().getCurrentMaster() != null)
                         && KiemPlugin.getDefault().getCurrentMaster().isMasterImplementingGUI()) {
                     // if a master implements the action
-                    KiemPlugin.getDefault().getCurrentMaster().masterGUI(
-                            AbstractDataComponent.MASTER_CMD_STOP);
+                    KiemPlugin.getDefault().getCurrentMaster()
+                            .masterGUI(AbstractDataComponent.MASTER_CMD_STOP);
                     // currentMaster.masterGUIstop();
                 } else {
                     long executionTime = 0;

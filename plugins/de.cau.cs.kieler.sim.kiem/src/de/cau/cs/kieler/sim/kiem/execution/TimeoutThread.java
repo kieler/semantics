@@ -181,6 +181,10 @@ public class TimeoutThread extends Thread {
                 } else if (this.terminate) {
                     // timeout thrad terminated
                     return;
+                } else if (this.execution.getExecutionProgressMonitor().isCanceled()) {
+                    this.execution.abortExecutionAsync();
+                    // this also stops this thread
+                    return;
                 } else if (System.currentTimeMillis() > stopTime) {
                     // timeout is triggered
                     this.execution.showError(Messages.mErrorTimeoutExecution.replace(
