@@ -50,7 +50,8 @@ public class KIEMDataProvider extends JSONObjectDataComponent implements
      * {@inheritDoc}
      */
     public void initialize() throws KiemInitializationException {
-        registerProviderListener(KViDDataDistributor.getInstance());
+        if (!listeners.contains(KViDDataDistributor.getInstance()))
+            registerProviderListener(KViDDataDistributor.getInstance());
         for (IProviderListener listener : listeners) {
             listener.triggerInitialization();
         }

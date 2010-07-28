@@ -139,6 +139,8 @@ public class KViDDataDistributor implements IProviderListener {
 
     public void triggerWrapup() {
         cleanup();
+        editPartsByURI = new HashMap<String, EditPart>();
+        dataByURI = new HashMap<String, KViDDataObject>();
     }
 
 }

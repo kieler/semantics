@@ -105,6 +105,7 @@ public class GMFDrawer implements IDrawer {
             canvas.revalidate();
             canvas.repaint();
         }
+        figuresByURI = new HashMap<String, IKViDFigure>();
     }
 
 }
