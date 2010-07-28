@@ -66,6 +66,8 @@ public class KViDDataObject {
             return Float.parseFloat(data);
         case STRING:
             return data;
+        case BOOLEAN:
+            return Boolean.parseBoolean(data);
         default:
             throw new RuntimeException("Data Type not supported: " + type.name());
         }
@@ -86,6 +88,9 @@ public class KViDDataObject {
         if (data.matches("floatblabla")) {
             //TODO richtigen regex!
             return KViDDataType.FLOAT;
+        }
+        if (data.equalsIgnoreCase("true") || data.equalsIgnoreCase("false")) {
+            return KViDDataType.BOOLEAN;
         }
         return KViDDataType.STRING;
     }
