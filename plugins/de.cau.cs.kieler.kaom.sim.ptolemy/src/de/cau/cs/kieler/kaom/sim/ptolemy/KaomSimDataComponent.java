@@ -245,14 +245,14 @@ public class KaomSimDataComponent extends JSONObjectDataComponent {
             // editor might have been closed -> no problem
         }
 
-            KaomSimPtolemyPlugin.DEBUG("Step in Ptolemy Model...");
+        KaomSimPtolemyPlugin.DEBUG("Step in Ptolemy Model...");
 
         // the return object to construct
         JSONObject returnObj = new JSONObject();
 
         // contains the current state
         String currentState = "";
-        
+
         try {
             // set current input data
             PTOEXE.setData(jSONObject);
@@ -272,7 +272,7 @@ public class KaomSimDataComponent extends JSONObjectDataComponent {
 
         // get the output present signals
         String[] tokenNames = PTOEXE.getInterfaceTokens();
-        String[] tokens     = PTOEXE.getModelOutput();
+        String[] tokens = PTOEXE.getModelOutput();
         for (int c = 0; c < tokens.length; c++) {
             KaomSimPtolemyPlugin.DEBUG("Token:" + tokenNames[c]);
             try {
@@ -281,15 +281,15 @@ public class KaomSimDataComponent extends JSONObjectDataComponent {
                 e.printStackTrace();
             }
         }
-        
+
         KaomSimPtolemyPlugin.DEBUG(returnObj.toString());
 
         // the stateName is the second KIEM property
-        //String stateName = this.getProperties()[1].getValue();
+        // String stateName = this.getProperties()[1].getValue();
 
-        //try {
-        //    returnObj.accumulate(stateName, currentState);
-        //} catch (Exception e) {
+        // try {
+        // returnObj.accumulate(stateName, currentState);
+        // } catch (Exception e) {
         // }
         return returnObj;
     }
@@ -297,11 +297,11 @@ public class KaomSimDataComponent extends JSONObjectDataComponent {
     // -------------------------------------------------------------------------
 
     public boolean isRecursive() {
-       return this.getProperties()[1].getValueAsBoolean();
+        return this.getProperties()[1].getValueAsBoolean();
     }
 
     // -------------------------------------------------------------------------
-    
+
     public JSONObject provideInitialVariables() throws KiemInitializationException {
         JSONObject returnObj = new JSONObject();
 
@@ -322,23 +322,27 @@ public class KaomSimDataComponent extends JSONObjectDataComponent {
             bringProblemsViewToFront();
             // prompt the user
             try {
-                final Shell shell = Display.getCurrent().getShells()[0];
-                MessageDialog
-                        .openWarning(
-                                shell,
-                                "Errors or Warnings exist",
-                                "'"
-                                        + modelEditor.getEditorInput().getName()
-                                        + "'"
-                                        + " contains unsolved problems. Please check the Eclipse Problems View to fix these"
-                                        + ".\n\nNote that while errors or simulation warnings exist, the"
-                                        + " execution of the model is rather unpredictable.");
+                Display.getDefault().syncExec(new Runnable() {
+                    public void run() {
+                        final Shell shell = Display.getCurrent().getShells()[0];
+                        MessageDialog
+                                .openWarning(
+                                        shell,
+                                        "Errors or Warnings exist",
+                                        "'"
+                                                + modelEditor.getEditorInput().getName()
+                                                + "'"
+                                                + " contains unsolved problems. Please check the Eclipse Problems View to fix these"
+                                                + ".\n\nNote that while errors or simulation warnings exist, the"
+                                                + " execution of the model is rather unpredictable.");
+
+                    }
+                });
             } catch (Exception e) {
                 // in case of an error here, do not start simulation
                 throw new KiemInitializationException(
                         "Please fix all errors and KlePto simulation warnings listed "
-                                + "in the Eclipse Problems View before simulating.\n\n", false,
-                        null);
+                                + "in the Eclipse Problems View before simulating.\n\n", false, e);
             }
         }
         try {
@@ -348,7 +352,7 @@ public class KaomSimDataComponent extends JSONObjectDataComponent {
                 returnObj.accumulate(key, "");
             }
         } catch (KiemInitializationException e) {
-            //propagate KiemInitializationException
+            // propagate KiemInitializationException
             throw e;
         } catch (Exception e) {
             throw new KiemInitializationException("Ptolemy Model could not be generated\n\n"
@@ -403,14 +407,14 @@ public class KaomSimDataComponent extends JSONObjectDataComponent {
         View notationElement = ((View) diagramEditor.getDiagramEditPart().getModel());
         EObject myModel = (EObject) notationElement.getElement();
         URI uri = myModel.eResource().getURI();
-        
+
         IWorkspaceRoot myWorkspaceRoot = ResourcesPlugin.getWorkspace().getRoot();
-        
+
         IPath path = new Path(uri.toPlatformString(false));
         IFile file = myWorkspaceRoot.getFile(path);
 
         return file.getLocationURI().getRawPath();
-        //return uri.toPlatformString(false);
+        // return uri.toPlatformString(false);
     }
 
     // -------------------------------------------------------------------------
@@ -454,33 +458,32 @@ public class KaomSimDataComponent extends JSONObjectDataComponent {
         // ptolemyModel = this.getInputModel() + ".moml"; //this.getProperties()[0].getDirectory() +
         // "generated.moml";
 
-         ResourceSet resourceSet = new ResourceSetImpl();
-        //URI fileUri = URI.createFileURI(new File(this.getInputModel() + ".moml")
-        //        .getAbsolutePath());
+        ResourceSet resourceSet = new ResourceSetImpl();
+        // URI fileUri = URI.createFileURI(new File(this.getInputModel() + ".moml")
+        // .getAbsolutePath());
 
         String ptolemyModelFile = null;
         try {
             String modelInput = this.getInputModel();
-            
-            //FIXME: find a better and more generic way to convert file locations / URLs
 
-            ptolemyModelFile = modelInput.substring(0,modelInput.lastIndexOf("."));
+            // FIXME: find a better and more generic way to convert file locations / URLs
+
+            ptolemyModelFile = modelInput.substring(0, modelInput.lastIndexOf("."));
             ptolemyModelFile += ".moml";
-           
+
             // test file for actual existence
             File f = new File(ptolemyModelFile);
-            if (!f.exists() ) {
+            if (!f.exists()) {
                 ptolemyModelFile = null;
             }
-            //ptolemyModelFile = ptolemyModelFile.substring(1, ptolemyModelFile.length());
-        }
-        catch(Exception e) {
+            // ptolemyModelFile = ptolemyModelFile.substring(1, ptolemyModelFile.length());
+        } catch (Exception e) {
             ptolemyModelFile = null;
         }
-        
+
         if (ptolemyModelFile == null) {
-            throw new KiemInitializationException("Original Ptolemy Model could not be found", true,
-                    null);
+            throw new KiemInitializationException("Original Ptolemy Model could not be found",
+                    true, null);
         }
 
         KaomSimPtolemyPlugin.DEBUG("Now creating Ptolemy Model ..." + ptolemyModel);
@@ -489,48 +492,48 @@ public class KaomSimDataComponent extends JSONObjectDataComponent {
         transformationError = false;
 
         // In this case the ptolemy model already exists
-        
-//        final Maybe<IStatus> status = new Maybe<IStatus>();
-//        try {
-//            PlatformUI.getWorkbench().getProgressService().run(false, false,
-//                    new IRunnableWithProgress() {
-//                        public void run(final IProgressMonitor monitor) {
-//                            try {
-//                                status.set(model2ModelTransform(new KielerProgressMonitor(
-//                                                monitor)));
-//                            } catch (KiemInitializationException e) {
-//                                transformationError = true;
-//                                e.printStackTrace();
-//                            }
-//                        }
-//                    });
-//        } catch (InvocationTargetException e) {
-//            transformationError = true;
-//            e.printStackTrace();
-//        } catch (InterruptedException e) {
-//            transformationError = true;
-//            e.printStackTrace();
-//        }
-//
-//        // wait until error or transformation completed
-//        while (!transformationCompleted && !transformationError) {
-//            try {
-//                Thread.sleep(50);
-//            } catch (InterruptedException e) { /* hide sleep error */
-//            }
-//        }// end while
+
+        // final Maybe<IStatus> status = new Maybe<IStatus>();
+        // try {
+        // PlatformUI.getWorkbench().getProgressService().run(false, false,
+        // new IRunnableWithProgress() {
+        // public void run(final IProgressMonitor monitor) {
+        // try {
+        // status.set(model2ModelTransform(new KielerProgressMonitor(
+        // monitor)));
+        // } catch (KiemInitializationException e) {
+        // transformationError = true;
+        // e.printStackTrace();
+        // }
+        // }
+        // });
+        // } catch (InvocationTargetException e) {
+        // transformationError = true;
+        // e.printStackTrace();
+        // } catch (InterruptedException e) {
+        // transformationError = true;
+        // e.printStackTrace();
+        // }
+        //
+        // // wait until error or transformation completed
+        // while (!transformationCompleted && !transformationError) {
+        // try {
+        // Thread.sleep(50);
+        // } catch (InterruptedException e) { /* hide sleep error */
+        // }
+        // }// end while
 
         if (!transformationError) {
-                KaomSimPtolemyPlugin.DEBUG("Now loading Ptolemy Model..." + ptolemyModelFile);
+            KaomSimPtolemyPlugin.DEBUG("Now loading Ptolemy Model..." + ptolemyModelFile);
             // load the Ptolemy Model
             PTOEXE = new ExecutePtolemyModel(ptolemyModelFile);
-                KaomSimPtolemyPlugin.DEBUG("Now initializing Ptolemy Model...");
-                
+            KaomSimPtolemyPlugin.DEBUG("Now initializing Ptolemy Model...");
+
             // recursive deep data outputs
             PTOEXE.setRecursive(this.isRecursive());
-            
+
             PTOEXE.executionInitialize();
-                KaomSimPtolemyPlugin.DEBUG("Now executing Ptolemy Model...");
+            KaomSimPtolemyPlugin.DEBUG("Now executing Ptolemy Model...");
         }// end if
         else {
             throw new KiemInitializationException("Ptolemy Model could not be generated", true,
@@ -550,14 +553,18 @@ public class KaomSimDataComponent extends JSONObjectDataComponent {
 
     // -------------------------------------------------------------------------
     public void bringProblemsViewToFront() {
-        try {
-            IWorkbenchWindow window = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
-            IViewPart vP = window.getActivePage().showView(
-                    org.eclipse.ui.IPageLayout.ID_PROBLEM_VIEW);
-            vP.setFocus();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        Display.getDefault().syncExec(new Runnable() {
+            public void run() {
+                try {
+                    IWorkbenchWindow window = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
+                    IViewPart vP = window.getActivePage().showView(
+                            org.eclipse.ui.IPageLayout.ID_PROBLEM_VIEW);
+                    vP.setFocus();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 
     // -------------------------------------------------------------------------
@@ -678,7 +685,7 @@ public class KaomSimDataComponent extends JSONObjectDataComponent {
             simulatingOldModelVersion = false;
         }
 
-            KaomSimPtolemyPlugin.DEBUG("TIMESTAMP" + modelTimeStamp);
+        KaomSimPtolemyPlugin.DEBUG("TIMESTAMP" + modelTimeStamp);
 
     }
 
