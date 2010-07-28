@@ -28,7 +28,7 @@ import de.cau.cs.kieler.kvid.data.KViDDataObject;
  * @author jjc
  *
  */
-public class KViDGMFFigure extends RoundedRectangle {
+public class KViDGMFFigure extends RoundedRectangle implements IKViDFigure {
     
     private KViDDataObject currentData;
     
@@ -55,11 +55,6 @@ public class KViDGMFFigure extends RoundedRectangle {
         label.setBounds(new Rectangle(0, 0, 10, 10));
         label.setBounds(new Rectangle(0, 0, currentData.getData().toString().length()*10, 10));
         add(label, BorderLayout.CENTER);
-    }
-    
-    @Override
-    public void handleMousePressed(MouseEvent event) {
-        System.out.println("Click");
     }
 
 }

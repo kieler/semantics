@@ -20,6 +20,8 @@ import org.eclipse.draw2d.IFigure;
 import org.eclipse.draw2d.geometry.Point;
 import org.eclipse.gmf.runtime.diagram.ui.editparts.DiagramRootEditPart;
 import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramEditor;
+import org.eclipse.gmf.runtime.draw2d.ui.render.RenderedImage;
+import org.eclipse.gmf.runtime.draw2d.ui.render.factory.RenderedImageFactory;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.PlatformUI;
 
@@ -36,7 +38,7 @@ import de.cau.cs.kieler.sim.kiem.KiemPlugin;
  */
 public class GMFDrawer implements IDrawer {
     
-    private HashMap<String, KViDGMFFigure> figuresByURI = new HashMap<String, KViDGMFFigure>();
+    private HashMap<String, IKViDFigure> figuresByURI = new HashMap<String, IKViDFigure>();
  
     public void draw(final HashMap<String, KViDDataObject> dataSet) {
         //clearing phase
@@ -44,6 +46,9 @@ public class GMFDrawer implements IDrawer {
         
         //update data phase
         int figureCounter = 1; 
+        String path = "/home/jjc/workspace/kieler/de.cau.cs.kieler.kvid/images/drawing.svg";
+        RenderedImage image = RenderedImageFactory.getInstance(path);
+        figuresByURI.put(".model.test", new GMFGraphicsFigure(new KViDDataObject(".model.test", "blub"), image));
         for (String key : dataSet.keySet()) {
             
             if (figuresByURI.containsKey(key)) {
@@ -71,8 +76,8 @@ public class GMFDrawer implements IDrawer {
             }
             
             //animating phase
-            final HashMap<KViDGMFFigure, List<Point>> animatables = 
-                                                      new HashMap<KViDGMFFigure, List<Point>>();
+            final HashMap<IKViDFigure, List<Point>> animatables = 
+                                                      new HashMap<IKViDFigure, List<Point>>();
             for (final String key : dataSet.keySet()) {
                 if (dataSet.get(key).getPath() != null) {
                     animatables.put(figuresByURI.get(key), dataSet.get(key).getPath());
@@ -94,7 +99,7 @@ public class GMFDrawer implements IDrawer {
             final IFigure canvas = ((DiagramEditor) editor).getDiagramEditPart()
                                     .getLayer(DiagramRootEditPart.DECORATION_PRINTABLE_LAYER);
             for (String key : figuresByURI.keySet()) {
-                KViDGMFFigure figure = figuresByURI.get(key);
+                IKViDFigure figure = figuresByURI.get(key);
                 figure.invalidate();
             }
             canvas.revalidate();
