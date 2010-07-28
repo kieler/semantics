@@ -37,6 +37,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import de.cau.cs.kieler.kvid.data.KViDDataObject;
+import de.cau.cs.kieler.kvid.data.KViDDataType;
 import de.cau.cs.kieler.kvid.visual.GMFDrawer;
 import de.cau.cs.kieler.kvid.visual.IDrawer;
 
@@ -54,6 +55,8 @@ public class KViDDataDistributor implements IProviderListener {
     private HashMap<String, EditPart> editPartsByURI = new HashMap<String, EditPart>();
     
     private HashMap<String, KViDDataObject> dataByURI = new HashMap<String, KViDDataObject>();
+    
+    private List<KViDOptionData> knownOptions = new LinkedList<KViDOptionData>();
     
     private IDrawer drawer = new GMFDrawer();
     
@@ -135,12 +138,26 @@ public class KViDDataDistributor implements IProviderListener {
 
     public void triggerInitialization() {
         initialize();
+        initializeOptions();
     }
 
     public void triggerWrapup() {
         cleanup();
         editPartsByURI = new HashMap<String, EditPart>();
         dataByURI = new HashMap<String, KViDDataObject>();
+        knownOptions = new LinkedList<KViDOptionData>();
+    }
+    
+    public List<KViDOptionData> getKnownOptions() {
+        return knownOptions;
+    }
+    
+    public void initializeOptions() {
+        KViDOptionData animatedOption = new KViDOptionData("de.cau.cs.kieler.kvid.animated", "General Options",
+                "Animationen aktivieren",
+                "Wähle TRUE für Animationen und FALSE für statische Darstellung",
+                KViDDataType.BOOLEAN, new String[] {"TRUE", "FALSE"});
+        knownOptions.add(animatedOption);
     }
 
 }
