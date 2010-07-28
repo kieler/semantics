@@ -9,5 +9,17 @@
             name="KViDDataProvider">
       </content>
    </extension>
+   <extension
+         point="org.eclipse.ui.views">
+      <view
+            allowMultiple="false"
+            category="de.cau.cs.kieler"
+            class="de.cau.cs.kieler.kvid.views.KViDView"
+            icon="icons/kieler.png"
+            id="de.cau.cs.kieler.kvid.KViDView"
+            name="Visualization"
+            restorable="true">
+      </view>
+   </extension>
 
 </plugin>
