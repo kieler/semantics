@@ -10,17 +10,6 @@
 
 <plugin>
 
-   <extension point="org.eclipse.emf.ecore.generated_package">
-      <package
-            uri="http://www.eclipse.org/uml2/2.1.0/UML"
-            class="uml.UmlPackage"
-            genModel="models/UML_21_SM.genmodel"/>
-   </extension>
 
-   <extension point="org.eclipse.emf.ecore.extension_parser">
-      <parser
-            type="uml"
-            class="uml.util.UmlResourceFactoryImpl"/>
-   </extension>
 
 </plugin>

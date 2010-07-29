@@ -14,7 +14,7 @@
   	<!-- set up EMF for standalone execution -->
   	<bean class="org.eclipse.emf.mwe.utils.StandaloneSetup" >
     	<platformUri value=".."/>
-   		<registerGeneratedEPackage value="uml.UmlPackage" /> 
+   		<registerGeneratedEPackage value="org.eclipse.uml2.uml.UMLPackage" /> 
   	</bean>
   
 	<!-- load model and store it in slot 'model' -->
