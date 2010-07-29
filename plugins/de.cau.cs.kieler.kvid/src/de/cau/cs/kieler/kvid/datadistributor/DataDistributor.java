@@ -137,11 +137,12 @@ public class DataDistributor implements IProviderListener {
         //get position of found node's parent
         Point parentPosition = new Point();
         KNode parent = currentNode;
-        while (parent.getParent() != null) {
+        while (parent.getParent().getParent() != null) {
             parent = parent.getParent();
-            parentPosition.x += KimlLayoutUtil.getShapeLayout(parent).getXpos();
-            parentPosition.y += KimlLayoutUtil.getShapeLayout(parent).getYpos();
+            parentPosition.x = (int) KimlLayoutUtil.getShapeLayout(parent).getXpos();
+            parentPosition.y = (int) KimlLayoutUtil.getShapeLayout(parent).getYpos();
         }
+        
         
         //create paths from outgoing edges
         for (KPort port : currentNode.getPorts()) {

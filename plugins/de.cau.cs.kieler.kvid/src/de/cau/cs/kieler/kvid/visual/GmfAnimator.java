@@ -48,7 +48,7 @@ public final class GmfAnimator {
                                final int animationTime) {
 
         AnimatingCommand anima = new AnimatingCommand();
-        anima.setDebug(true);
+        //anima.setDebug(true);
         CompoundCommand cc = new CompoundCommand();
         boolean allPathsExeeded = false;
         int pathCounter = 0;
