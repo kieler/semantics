@@ -46,9 +46,9 @@ public class GmfDrawer implements IDrawer {
         
         //update data phase
         int figureCounter = 1; 
-        String path = "/home/jjc/workspace/kieler/de.cau.cs.kieler.kvid/images/drawing.svg";
-        RenderedImage image = RenderedImageFactory.getInstance(path);
-        figuresByURI.put(".model.test", new GmfGraphicsFigure(new DataObject(".model.test", "blub"), image));
+        //String path = "/home/jjc/workspace/kieler/de.cau.cs.kieler.kvid/images/drawing.svg";
+        //RenderedImage image = RenderedImageFactory.getInstance(path);
+        //figuresByURI.put(".model.test", new GmfGraphicsFigure(new DataObject(".model.test", "blub"), image));
         for (String key : dataSet.keySet()) {
             
             if (figuresByURI.containsKey(key)) {
@@ -79,8 +79,8 @@ public class GmfDrawer implements IDrawer {
             final HashMap<IKvidFigure, List<Point>> animatables = 
                                                       new HashMap<IKvidFigure, List<Point>>();
             for (final String key : dataSet.keySet()) {
-                if (dataSet.get(key).getPath() != null) {
-                    animatables.put(figuresByURI.get(key), dataSet.get(key).getPath());
+                if (dataSet.get(key).getPaths().size() > 0) {
+                    animatables.put(figuresByURI.get(key), dataSet.get(key).getPaths().get(0));
                 }
             }
             PlatformUI.getWorkbench().getDisplay().syncExec(new Runnable() {

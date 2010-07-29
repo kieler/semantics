@@ -22,6 +22,7 @@ import java.util.List;
 import org.eclipse.draw2d.ColorConstants;
 import org.eclipse.draw2d.IFigure;
 import org.eclipse.draw2d.geometry.Point;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.util.EcoreUtil;
@@ -36,6 +37,13 @@ import org.eclipse.ui.PlatformUI;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import de.cau.cs.kieler.core.kgraph.KEdge;
+import de.cau.cs.kieler.core.kgraph.KNode;
+import de.cau.cs.kieler.core.kgraph.KPort;
+import de.cau.cs.kieler.core.kgraph.util.KGraphAdapterFactory;
+import de.cau.cs.kieler.kiml.klayoutdata.KPoint;
+import de.cau.cs.kieler.kiml.ui.layout.EclipseLayoutServices;
+import de.cau.cs.kieler.kiml.util.KimlLayoutUtil;
 import de.cau.cs.kieler.kvid.data.DataObject;
 import de.cau.cs.kieler.kvid.data.DataType;
 import de.cau.cs.kieler.kvid.visual.GmfDrawer;
@@ -55,6 +63,8 @@ public class DataDistributor implements IProviderListener {
     private HashMap<String, EditPart> editPartsByURI = new HashMap<String, EditPart>();
     
     private HashMap<String, DataObject> dataByURI = new HashMap<String, DataObject>();
+    
+    private KNode currentDiagramLayout = null;
         
     private IDrawer drawer = new GmfDrawer();
     
@@ -63,43 +73,30 @@ public class DataDistributor implements IProviderListener {
     }
     
     public void initialize() {
-        IEditorPart activeEditor = getActiveEditor();
+        final IEditorPart activeEditor = getActiveEditor();
         if (activeEditor instanceof DiagramEditor) {
-            DiagramEditPart dep = ((DiagramEditor) activeEditor).getDiagramEditPart();
-            Collection<?> editParts = dep.getViewer().getEditPartRegistry()
-                    .values();
-            for (Object object : editParts) {
-                EditPart part = (EditPart) object;
-                if (part.getModel() instanceof EObject) {
-                    EObject eObject = (EObject) part.getModel();
-                    Resource resource = eObject.eResource();
-                    System.out.println(eObject.toString());
-                    String uri = EcoreUtil.getURI(eObject).toString();
-                    editPartsByURI.put(uri, part);
-                    System.out.println(uri);
+            PlatformUI.getWorkbench().getDisplay().syncExec(new Runnable() {
+                public void run() {
+                    currentDiagramLayout = EclipseLayoutServices.getInstance()
+                            .getManager(activeEditor, null)
+                            .buildLayoutGraph(activeEditor, null, false);
                 }
-            }
+            });
         }
     }
     
     public JSONObject update(final JSONObject data) {
         Iterator allKeys = data.keys();
         int figureCounter = 1;
-        final int horizontalConstant = 300;
-        final int movementWidth = 100;
-        final int objectSpacing = 50;
         while (allKeys.hasNext()) {
-            List<Point> randomPath = new LinkedList<Point>();
-            randomPath.add(new Point(horizontalConstant, figureCounter * objectSpacing));
-            randomPath.add(new Point(horizontalConstant + movementWidth, figureCounter * objectSpacing));
-            randomPath.add(new Point(horizontalConstant, figureCounter * objectSpacing));
             Object o = allKeys.next();
+            List<List<Point>> paths = getPathsByNode(o.toString());
             try {
                 String key = o.toString();
                 if (dataByURI.containsKey(key)) {
                     dataByURI.get(key).updateData(data.getString(key));
                 } else {
-                    dataByURI.put(o.toString(), new DataObject(key, data.getString(key), randomPath));
+                    dataByURI.put(o.toString(), new DataObject(key, data.getString(key), paths));
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -108,6 +105,72 @@ public class DataDistributor implements IProviderListener {
         }
         drawer.draw(dataByURI);
         return null;
+    }
+    
+    public List<List<Point>> getPathsByNode(String URI) {
+        List<List<Point>> result = new LinkedList<List<Point>>();
+        
+        //find node that matches URI
+        String[] uriParts = URI.split("\\.");
+        int currentUriPart = 1;
+        String currentFoundUri = ".";
+        KNode currentNode = currentDiagramLayout;
+        while (!currentFoundUri.equals(URI) && !currentNode.getChildren().isEmpty()) {
+            for(KNode node : currentNode.getChildren()) {
+                if (node.getLabel().getText().equals(uriParts[currentUriPart])) {
+                    currentNode = node;
+                    currentFoundUri += node.getLabel().getText();
+                    currentUriPart++;
+                    if (currentUriPart < uriParts.length) {
+                        currentFoundUri += ".";
+                    }
+                    break;
+                }
+            }
+        }
+        
+        //if no node was found, return null
+        if (!currentFoundUri.equals(URI)) {
+            return null;
+        }
+        
+        //get position of found node's parent
+        Point parentPosition = new Point();
+        KNode parent = currentNode;
+        while (parent.getParent() != null) {
+            parent = parent.getParent();
+            parentPosition.x += KimlLayoutUtil.getShapeLayout(parent).getXpos();
+            parentPosition.y += KimlLayoutUtil.getShapeLayout(parent).getYpos();
+        }
+        
+        //create paths from outgoing edges
+        for (KPort port : currentNode.getPorts()) {
+            if (port.getLabel().getText().equals("output")) {
+                for (KEdge edge : port.getEdges()) {
+                    List<Point> path = new LinkedList<Point>();
+                    Point start = new Point(parentPosition);
+                    start.x += KimlLayoutUtil.getShapeLayout(edge.getSource()).getXpos();
+                    start.y += KimlLayoutUtil.getShapeLayout(edge.getSource()).getYpos();
+                    start.x += KimlLayoutUtil.getShapeLayout(port).getXpos();
+                    start.y += KimlLayoutUtil.getShapeLayout(port).getYpos();
+                    path.add(start);
+                    for (KPoint bendPoint : KimlLayoutUtil.getEdgeLayout(edge).getBendPoints()) {
+                        Point pathStep = new Point(parentPosition);
+                        pathStep.x += bendPoint.getX();
+                        pathStep.y += bendPoint.getY();
+                        path.add(pathStep);
+                    }
+                    Point finish = new Point(parentPosition);
+                    finish.x += KimlLayoutUtil.getShapeLayout(edge.getTarget()).getXpos();
+                    finish.y += KimlLayoutUtil.getShapeLayout(edge.getTarget()).getYpos();
+                    finish.x += KimlLayoutUtil.getShapeLayout(edge.getTargetPort()).getXpos();
+                    finish.y += KimlLayoutUtil.getShapeLayout(edge.getTargetPort()).getYpos();
+                    path.add(finish);
+                    result.add(path);
+                } 
+            }
+        }
+        return result;
     }
     
     public void cleanup() {
@@ -146,6 +209,7 @@ public class DataDistributor implements IProviderListener {
         cleanup();
         editPartsByURI = new HashMap<String, EditPart>();
         dataByURI = new HashMap<String, DataObject>();
+        currentDiagramLayout = null;
     }
 
 }

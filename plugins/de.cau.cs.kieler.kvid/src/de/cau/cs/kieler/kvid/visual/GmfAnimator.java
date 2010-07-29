@@ -48,6 +48,7 @@ public final class GmfAnimator {
                                final int animationTime) {
 
         AnimatingCommand anima = new AnimatingCommand();
+        anima.setDebug(true);
         CompoundCommand cc = new CompoundCommand();
         boolean allPathsExeeded = false;
         int pathCounter = 0;
@@ -63,6 +64,9 @@ public final class GmfAnimator {
                     if ((pathCounter + 1) < figuresAndPath.get(figure).size()) {
                         allPathsExeeded = false;
                     }
+                } else {
+                    anima.specifyStep(figure,
+                            figuresAndPath.get(figure).get(figuresAndPath.get(figure).size() - 1));
                 }
             }
             if (!allPathsExeeded) {

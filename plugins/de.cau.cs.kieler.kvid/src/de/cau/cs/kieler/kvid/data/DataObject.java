@@ -42,8 +42,8 @@ public class DataObject {
     /** List that stores values as history if desired. */
     private List<String> history = new LinkedList<String>();
     
-    /** If animation is desired, give the path to follow here. */
-    private List<Point> path;
+    /** If animation is desired, give the paths to follow here. */
+    private List<List<Point>> paths;
     
     public DataObject(final String theURI, final String thedata) {
         this.uri = theURI;
@@ -61,11 +61,11 @@ public class DataObject {
         }
     }
     
-    public DataObject(final String theURI, final String thedata, final List<Point> thepath) {
+    public DataObject(final String theURI, final String thedata, final List<List<Point>> thepaths) {
         this.uri = theURI;
         this.data = thedata;
         this.type = parseDataType(thedata);
-        this.path = thepath;
+        this.paths = thepaths;
     }
     
     public DataObject(final String theURI, final String thedata,
@@ -75,12 +75,12 @@ public class DataObject {
         this.type = thetype;
     }
     
-    public DataObject(final String theURI, final String thedata, final List<Point> thepath,
+    public DataObject(final String theURI, final String thedata, final List<List<Point>> thepaths,
             final DataType thetype) {
         this.uri = theURI;
         this.data = thedata;
         this.type = parseDataType(thedata);
-        this.path = thepath;
+        this.paths = thepaths;
     }
     
     public Object getData() {
@@ -112,8 +112,8 @@ public class DataObject {
         return uri;
     }
     
-    public List<Point> getPath() {
-        return path;
+    public List<List<Point>> getPaths() {
+        return paths;
     }
     
     private DataType parseDataType(String data) {
