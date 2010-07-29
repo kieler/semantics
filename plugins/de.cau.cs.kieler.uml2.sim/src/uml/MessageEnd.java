@@ -28,29 +28,29 @@ package uml;
  * @generated
  */
 public interface MessageEnd extends NamedElement {
-    /**
-     * Returns the value of the '<em><b>Message</b></em>' reference.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * <!-- begin-model-doc -->
-     * References a Message.
-     * <!-- end-model-doc -->
-     * @return the value of the '<em>Message</em>' reference.
-     * @see #setMessage(Message)
-     * @see uml.UmlPackage#getMessageEnd_Message()
-     * @model ordered="false"
-     * @generated
-     */
-    Message getMessage();
+	/**
+	 * Returns the value of the '<em><b>Message</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 * References a Message.
+	 * <!-- end-model-doc -->
+	 * @return the value of the '<em>Message</em>' reference.
+	 * @see #setMessage(Message)
+	 * @see uml.UmlPackage#getMessageEnd_Message()
+	 * @model ordered="false"
+	 * @generated
+	 */
+	Message getMessage();
 
-    /**
-     * Sets the value of the '{@link uml.MessageEnd#getMessage <em>Message</em>}' reference.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Message</em>' reference.
-     * @see #getMessage()
-     * @generated
-     */
-    void setMessage(Message value);
+	/**
+	 * Sets the value of the '{@link uml.MessageEnd#getMessage <em>Message</em>}' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Message</em>' reference.
+	 * @see #getMessage()
+	 * @generated
+	 */
+	void setMessage(Message value);
 
 } // MessageEnd

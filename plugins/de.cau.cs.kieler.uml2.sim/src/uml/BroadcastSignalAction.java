@@ -31,57 +31,57 @@ import org.eclipse.emf.common.util.DiagnosticChain;
  * @generated
  */
 public interface BroadcastSignalAction extends InvocationAction {
-    /**
-     * Returns the value of the '<em><b>Signal</b></em>' reference.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * <!-- begin-model-doc -->
-     * The specification of signal object transmitted to the target objects.
-     * <!-- end-model-doc -->
-     * @return the value of the '<em>Signal</em>' reference.
-     * @see #setSignal(Signal)
-     * @see uml.UmlPackage#getBroadcastSignalAction_Signal()
-     * @model required="true" ordered="false"
-     * @generated
-     */
-    Signal getSignal();
+	/**
+	 * Returns the value of the '<em><b>Signal</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 * The specification of signal object transmitted to the target objects.
+	 * <!-- end-model-doc -->
+	 * @return the value of the '<em>Signal</em>' reference.
+	 * @see #setSignal(Signal)
+	 * @see uml.UmlPackage#getBroadcastSignalAction_Signal()
+	 * @model required="true" ordered="false"
+	 * @generated
+	 */
+	Signal getSignal();
 
-    /**
-     * Sets the value of the '{@link uml.BroadcastSignalAction#getSignal <em>Signal</em>}' reference.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Signal</em>' reference.
-     * @see #getSignal()
-     * @generated
-     */
-    void setSignal(Signal value);
+	/**
+	 * Sets the value of the '{@link uml.BroadcastSignalAction#getSignal <em>Signal</em>}' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Signal</em>' reference.
+	 * @see #getSignal()
+	 * @generated
+	 */
+	void setSignal(Signal value);
 
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * <!-- begin-model-doc -->
-     * The number and order of argument pins must be the same as the number and order of attributes in the signal.
-     * true
-     * @param diagnostics The chain of diagnostics to which problems are to be appended.
-     * @param context The cache of context-specific information.
-     * <!-- end-model-doc -->
-     * @model
-     * @generated
-     */
-    boolean number_and_order(DiagnosticChain diagnostics, Map<Object, Object> context);
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 * The number and order of argument pins must be the same as the number and order of attributes in the signal.
+	 * true
+	 * @param diagnostics The chain of diagnostics to which problems are to be appended.
+	 * @param context The cache of context-specific information.
+	 * <!-- end-model-doc -->
+	 * @model
+	 * @generated
+	 */
+	boolean number_and_order(DiagnosticChain diagnostics, Map<Object, Object> context);
 
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * <!-- begin-model-doc -->
-     * The type, ordering, and multiplicity of an argument pin must be the same as the corresponding attribute of the signal.
-     * true
-     * @param diagnostics The chain of diagnostics to which problems are to be appended.
-     * @param context The cache of context-specific information.
-     * <!-- end-model-doc -->
-     * @model
-     * @generated
-     */
-    boolean type_ordering_multiplicity(DiagnosticChain diagnostics, Map<Object, Object> context);
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 * The type, ordering, and multiplicity of an argument pin must be the same as the corresponding attribute of the signal.
+	 * true
+	 * @param diagnostics The chain of diagnostics to which problems are to be appended.
+	 * @param context The cache of context-specific information.
+	 * <!-- end-model-doc -->
+	 * @model
+	 * @generated
+	 */
+	boolean type_ordering_multiplicity(DiagnosticChain diagnostics, Map<Object, Object> context);
 
 } // BroadcastSignalAction

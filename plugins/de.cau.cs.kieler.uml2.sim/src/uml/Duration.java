@@ -30,44 +30,44 @@ import org.eclipse.emf.common.util.EList;
  * @generated
  */
 public interface Duration extends ValueSpecification {
-    /**
-     * Returns the value of the '<em><b>Expr</b></em>' containment reference.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * <!-- begin-model-doc -->
-     * The value of the Duration.
-     * <!-- end-model-doc -->
-     * @return the value of the '<em>Expr</em>' containment reference.
-     * @see #setExpr(ValueSpecification)
-     * @see uml.UmlPackage#getDuration_Expr()
-     * @model containment="true" ordered="false"
-     * @generated
-     */
-    ValueSpecification getExpr();
+	/**
+	 * Returns the value of the '<em><b>Expr</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 * The value of the Duration.
+	 * <!-- end-model-doc -->
+	 * @return the value of the '<em>Expr</em>' containment reference.
+	 * @see #setExpr(ValueSpecification)
+	 * @see uml.UmlPackage#getDuration_Expr()
+	 * @model containment="true" ordered="false"
+	 * @generated
+	 */
+	ValueSpecification getExpr();
 
-    /**
-     * Sets the value of the '{@link uml.Duration#getExpr <em>Expr</em>}' containment reference.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Expr</em>' containment reference.
-     * @see #getExpr()
-     * @generated
-     */
-    void setExpr(ValueSpecification value);
+	/**
+	 * Sets the value of the '{@link uml.Duration#getExpr <em>Expr</em>}' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Expr</em>' containment reference.
+	 * @see #getExpr()
+	 * @generated
+	 */
+	void setExpr(ValueSpecification value);
 
-    /**
-     * Returns the value of the '<em><b>Observation</b></em>' reference list.
-     * The list contents are of type {@link uml.Observation}.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * <!-- begin-model-doc -->
-     * Refers to the time and duration observations that are involved in expr.
-     * <!-- end-model-doc -->
-     * @return the value of the '<em>Observation</em>' reference list.
-     * @see uml.UmlPackage#getDuration_Observation()
-     * @model ordered="false"
-     * @generated
-     */
-    EList<Observation> getObservation();
+	/**
+	 * Returns the value of the '<em><b>Observation</b></em>' reference list.
+	 * The list contents are of type {@link uml.Observation}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 * Refers to the time and duration observations that are involved in expr.
+	 * <!-- end-model-doc -->
+	 * @return the value of the '<em>Observation</em>' reference list.
+	 * @see uml.UmlPackage#getDuration_Observation()
+	 * @model ordered="false"
+	 * @generated
+	 */
+	EList<Observation> getObservation();
 
 } // Duration

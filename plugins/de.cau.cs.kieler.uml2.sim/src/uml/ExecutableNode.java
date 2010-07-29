@@ -29,21 +29,21 @@ import org.eclipse.emf.common.util.EList;
  * @generated
  */
 public interface ExecutableNode extends ActivityNode {
-    /**
-     * Returns the value of the '<em><b>Handler</b></em>' containment reference list.
-     * The list contents are of type {@link uml.ExceptionHandler}.
-     * It is bidirectional and its opposite is '{@link uml.ExceptionHandler#getProtectedNode <em>Protected Node</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * <!-- begin-model-doc -->
-     * A set of exception handlers that are examined if an uncaught exception propagates to the outer level of the executable node.
-     * <!-- end-model-doc -->
-     * @return the value of the '<em>Handler</em>' containment reference list.
-     * @see uml.UmlPackage#getExecutableNode_Handler()
-     * @see uml.ExceptionHandler#getProtectedNode
-     * @model opposite="protectedNode" containment="true" ordered="false"
-     * @generated
-     */
-    EList<ExceptionHandler> getHandler();
+	/**
+	 * Returns the value of the '<em><b>Handler</b></em>' containment reference list.
+	 * The list contents are of type {@link uml.ExceptionHandler}.
+	 * It is bidirectional and its opposite is '{@link uml.ExceptionHandler#getProtectedNode <em>Protected Node</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 * A set of exception handlers that are examined if an uncaught exception propagates to the outer level of the executable node.
+	 * <!-- end-model-doc -->
+	 * @return the value of the '<em>Handler</em>' containment reference list.
+	 * @see uml.UmlPackage#getExecutableNode_Handler()
+	 * @see uml.ExceptionHandler#getProtectedNode
+	 * @model opposite="protectedNode" containment="true" ordered="false"
+	 * @generated
+	 */
+	EList<ExceptionHandler> getHandler();
 
 } // ExecutableNode

@@ -31,43 +31,43 @@ import org.eclipse.emf.common.util.DiagnosticChain;
  * @generated
  */
 public interface Reception extends BehavioralFeature {
-    /**
-     * Returns the value of the '<em><b>Signal</b></em>' reference.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * <!-- begin-model-doc -->
-     * The signal that this reception handles.
-     * <!-- end-model-doc -->
-     * @return the value of the '<em>Signal</em>' reference.
-     * @see #setSignal(Signal)
-     * @see uml.UmlPackage#getReception_Signal()
-     * @model ordered="false"
-     * @generated
-     */
-    Signal getSignal();
+	/**
+	 * Returns the value of the '<em><b>Signal</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 * The signal that this reception handles.
+	 * <!-- end-model-doc -->
+	 * @return the value of the '<em>Signal</em>' reference.
+	 * @see #setSignal(Signal)
+	 * @see uml.UmlPackage#getReception_Signal()
+	 * @model ordered="false"
+	 * @generated
+	 */
+	Signal getSignal();
 
-    /**
-     * Sets the value of the '{@link uml.Reception#getSignal <em>Signal</em>}' reference.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Signal</em>' reference.
-     * @see #getSignal()
-     * @generated
-     */
-    void setSignal(Signal value);
+	/**
+	 * Sets the value of the '{@link uml.Reception#getSignal <em>Signal</em>}' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Signal</em>' reference.
+	 * @see #getSignal()
+	 * @generated
+	 */
+	void setSignal(Signal value);
 
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * <!-- begin-model-doc -->
-     * A Reception can not be a query.
-     * not self.isQuery
-     * @param diagnostics The chain of diagnostics to which problems are to be appended.
-     * @param context The cache of context-specific information.
-     * <!-- end-model-doc -->
-     * @model
-     * @generated
-     */
-    boolean not_query(DiagnosticChain diagnostics, Map<Object, Object> context);
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 * A Reception can not be a query.
+	 * not self.isQuery
+	 * @param diagnostics The chain of diagnostics to which problems are to be appended.
+	 * @param context The cache of context-specific information.
+	 * <!-- end-model-doc -->
+	 * @model
+	 * @generated
+	 */
+	boolean not_query(DiagnosticChain diagnostics, Map<Object, Object> context);
 
 } // Reception

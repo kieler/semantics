@@ -31,71 +31,71 @@ import org.eclipse.emf.common.util.EList;
  * @generated
  */
 public interface Expression extends ValueSpecification {
-    /**
-     * Returns the value of the '<em><b>Symbol</b></em>' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * <!-- begin-model-doc -->
-     * The symbol associated with the node in the expression tree.
-     * <!-- end-model-doc -->
-     * @return the value of the '<em>Symbol</em>' attribute.
-     * @see #isSetSymbol()
-     * @see #unsetSymbol()
-     * @see #setSymbol(String)
-     * @see uml.UmlPackage#getExpression_Symbol()
-     * @model unsettable="true" dataType="uml.String" ordered="false"
-     * @generated
-     */
-    String getSymbol();
+	/**
+	 * Returns the value of the '<em><b>Symbol</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 * The symbol associated with the node in the expression tree.
+	 * <!-- end-model-doc -->
+	 * @return the value of the '<em>Symbol</em>' attribute.
+	 * @see #isSetSymbol()
+	 * @see #unsetSymbol()
+	 * @see #setSymbol(String)
+	 * @see uml.UmlPackage#getExpression_Symbol()
+	 * @model unsettable="true" dataType="uml.String" ordered="false"
+	 * @generated
+	 */
+	String getSymbol();
 
-    /**
-     * Sets the value of the '{@link uml.Expression#getSymbol <em>Symbol</em>}' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Symbol</em>' attribute.
-     * @see #isSetSymbol()
-     * @see #unsetSymbol()
-     * @see #getSymbol()
-     * @generated
-     */
-    void setSymbol(String value);
+	/**
+	 * Sets the value of the '{@link uml.Expression#getSymbol <em>Symbol</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Symbol</em>' attribute.
+	 * @see #isSetSymbol()
+	 * @see #unsetSymbol()
+	 * @see #getSymbol()
+	 * @generated
+	 */
+	void setSymbol(String value);
 
-    /**
-     * Unsets the value of the '{@link uml.Expression#getSymbol <em>Symbol</em>}' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see #isSetSymbol()
-     * @see #getSymbol()
-     * @see #setSymbol(String)
-     * @generated
-     */
-    void unsetSymbol();
+	/**
+	 * Unsets the value of the '{@link uml.Expression#getSymbol <em>Symbol</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isSetSymbol()
+	 * @see #getSymbol()
+	 * @see #setSymbol(String)
+	 * @generated
+	 */
+	void unsetSymbol();
 
-    /**
-     * Returns whether the value of the '{@link uml.Expression#getSymbol <em>Symbol</em>}' attribute is set.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return whether the value of the '<em>Symbol</em>' attribute is set.
-     * @see #unsetSymbol()
-     * @see #getSymbol()
-     * @see #setSymbol(String)
-     * @generated
-     */
-    boolean isSetSymbol();
+	/**
+	 * Returns whether the value of the '{@link uml.Expression#getSymbol <em>Symbol</em>}' attribute is set.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return whether the value of the '<em>Symbol</em>' attribute is set.
+	 * @see #unsetSymbol()
+	 * @see #getSymbol()
+	 * @see #setSymbol(String)
+	 * @generated
+	 */
+	boolean isSetSymbol();
 
-    /**
-     * Returns the value of the '<em><b>Operand</b></em>' containment reference list.
-     * The list contents are of type {@link uml.ValueSpecification}.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * <!-- begin-model-doc -->
-     * Specifies a sequence of operands.
-     * <!-- end-model-doc -->
-     * @return the value of the '<em>Operand</em>' containment reference list.
-     * @see uml.UmlPackage#getExpression_Operand()
-     * @model containment="true"
-     * @generated
-     */
-    EList<ValueSpecification> getOperand();
+	/**
+	 * Returns the value of the '<em><b>Operand</b></em>' containment reference list.
+	 * The list contents are of type {@link uml.ValueSpecification}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 * Specifies a sequence of operands.
+	 * <!-- end-model-doc -->
+	 * @return the value of the '<em>Operand</em>' containment reference list.
+	 * @see uml.UmlPackage#getExpression_Operand()
+	 * @model containment="true"
+	 * @generated
+	 */
+	EList<ValueSpecification> getOperand();
 
 } // Expression

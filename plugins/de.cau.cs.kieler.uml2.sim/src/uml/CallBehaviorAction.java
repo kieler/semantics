@@ -31,57 +31,57 @@ import org.eclipse.emf.common.util.DiagnosticChain;
  * @generated
  */
 public interface CallBehaviorAction extends CallAction {
-    /**
-     * Returns the value of the '<em><b>Behavior</b></em>' reference.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * <!-- begin-model-doc -->
-     * The invoked behavior. It must be capable of accepting and returning control.
-     * <!-- end-model-doc -->
-     * @return the value of the '<em>Behavior</em>' reference.
-     * @see #setBehavior(Behavior)
-     * @see uml.UmlPackage#getCallBehaviorAction_Behavior()
-     * @model required="true" ordered="false"
-     * @generated
-     */
-    Behavior getBehavior();
+	/**
+	 * Returns the value of the '<em><b>Behavior</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 * The invoked behavior. It must be capable of accepting and returning control.
+	 * <!-- end-model-doc -->
+	 * @return the value of the '<em>Behavior</em>' reference.
+	 * @see #setBehavior(Behavior)
+	 * @see uml.UmlPackage#getCallBehaviorAction_Behavior()
+	 * @model required="true" ordered="false"
+	 * @generated
+	 */
+	Behavior getBehavior();
 
-    /**
-     * Sets the value of the '{@link uml.CallBehaviorAction#getBehavior <em>Behavior</em>}' reference.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Behavior</em>' reference.
-     * @see #getBehavior()
-     * @generated
-     */
-    void setBehavior(Behavior value);
+	/**
+	 * Sets the value of the '{@link uml.CallBehaviorAction#getBehavior <em>Behavior</em>}' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Behavior</em>' reference.
+	 * @see #getBehavior()
+	 * @generated
+	 */
+	void setBehavior(Behavior value);
 
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * <!-- begin-model-doc -->
-     * The number of argument pins and the number of parameters of the behavior of type in and in-out must be equal.
-     * true
-     * @param diagnostics The chain of diagnostics to which problems are to be appended.
-     * @param context The cache of context-specific information.
-     * <!-- end-model-doc -->
-     * @model
-     * @generated
-     */
-    boolean argument_pin_equal_parameter(DiagnosticChain diagnostics, Map<Object, Object> context);
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 * The number of argument pins and the number of parameters of the behavior of type in and in-out must be equal.
+	 * true
+	 * @param diagnostics The chain of diagnostics to which problems are to be appended.
+	 * @param context The cache of context-specific information.
+	 * <!-- end-model-doc -->
+	 * @model
+	 * @generated
+	 */
+	boolean argument_pin_equal_parameter(DiagnosticChain diagnostics, Map<Object, Object> context);
 
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * <!-- begin-model-doc -->
-     * The number of result pins and the number of parameters of the behavior of type return, out, and in-out must be equal.
-     * true
-     * @param diagnostics The chain of diagnostics to which problems are to be appended.
-     * @param context The cache of context-specific information.
-     * <!-- end-model-doc -->
-     * @model
-     * @generated
-     */
-    boolean result_pin_equal_parameter(DiagnosticChain diagnostics, Map<Object, Object> context);
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 * The number of result pins and the number of parameters of the behavior of type return, out, and in-out must be equal.
+	 * true
+	 * @param diagnostics The chain of diagnostics to which problems are to be appended.
+	 * @param context The cache of context-specific information.
+	 * <!-- end-model-doc -->
+	 * @model
+	 * @generated
+	 */
+	boolean result_pin_equal_parameter(DiagnosticChain diagnostics, Map<Object, Object> context);
 
 } // CallBehaviorAction

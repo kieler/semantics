@@ -28,29 +28,29 @@ package uml;
  * @generated
  */
 public interface Manifestation extends Abstraction {
-    /**
-     * Returns the value of the '<em><b>Utilized Element</b></em>' reference.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * <!-- begin-model-doc -->
-     * The model element that is utilized in the manifestation in an Artifact.
-     * <!-- end-model-doc -->
-     * @return the value of the '<em>Utilized Element</em>' reference.
-     * @see #setUtilizedElement(PackageableElement)
-     * @see uml.UmlPackage#getManifestation_UtilizedElement()
-     * @model required="true" ordered="false"
-     * @generated
-     */
-    PackageableElement getUtilizedElement();
+	/**
+	 * Returns the value of the '<em><b>Utilized Element</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 * The model element that is utilized in the manifestation in an Artifact.
+	 * <!-- end-model-doc -->
+	 * @return the value of the '<em>Utilized Element</em>' reference.
+	 * @see #setUtilizedElement(PackageableElement)
+	 * @see uml.UmlPackage#getManifestation_UtilizedElement()
+	 * @model required="true" ordered="false"
+	 * @generated
+	 */
+	PackageableElement getUtilizedElement();
 
-    /**
-     * Sets the value of the '{@link uml.Manifestation#getUtilizedElement <em>Utilized Element</em>}' reference.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Utilized Element</em>' reference.
-     * @see #getUtilizedElement()
-     * @generated
-     */
-    void setUtilizedElement(PackageableElement value);
+	/**
+	 * Sets the value of the '{@link uml.Manifestation#getUtilizedElement <em>Utilized Element</em>}' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Utilized Element</em>' reference.
+	 * @see #getUtilizedElement()
+	 * @generated
+	 */
+	void setUtilizedElement(PackageableElement value);
 
 } // Manifestation

@@ -36,95 +36,95 @@ import org.eclipse.emf.common.util.EList;
  * @generated
  */
 public interface StructuredActivityNode extends Action, Namespace, ActivityGroup {
-    /**
-     * Returns the value of the '<em><b>Variable</b></em>' containment reference list.
-     * The list contents are of type {@link uml.Variable}.
-     * It is bidirectional and its opposite is '{@link uml.Variable#getScope <em>Scope</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * <!-- begin-model-doc -->
-     * A variable defined in the scope of the structured activity node. It has no value and may not be accessed
-     * <!-- end-model-doc -->
-     * @return the value of the '<em>Variable</em>' containment reference list.
-     * @see uml.UmlPackage#getStructuredActivityNode_Variable()
-     * @see uml.Variable#getScope
-     * @model opposite="scope" containment="true" ordered="false"
-     * @generated
-     */
-    EList<Variable> getVariable();
+	/**
+	 * Returns the value of the '<em><b>Variable</b></em>' containment reference list.
+	 * The list contents are of type {@link uml.Variable}.
+	 * It is bidirectional and its opposite is '{@link uml.Variable#getScope <em>Scope</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 * A variable defined in the scope of the structured activity node. It has no value and may not be accessed
+	 * <!-- end-model-doc -->
+	 * @return the value of the '<em>Variable</em>' containment reference list.
+	 * @see uml.UmlPackage#getStructuredActivityNode_Variable()
+	 * @see uml.Variable#getScope
+	 * @model opposite="scope" containment="true" ordered="false"
+	 * @generated
+	 */
+	EList<Variable> getVariable();
 
-    /**
-     * Returns the value of the '<em><b>Edge</b></em>' containment reference list.
-     * The list contents are of type {@link uml.ActivityEdge}.
-     * It is bidirectional and its opposite is '{@link uml.ActivityEdge#getInStructuredNode <em>In Structured Node</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * <!-- begin-model-doc -->
-     * Edges immediately contained in the structured node.
-     * <!-- end-model-doc -->
-     * @return the value of the '<em>Edge</em>' containment reference list.
-     * @see uml.UmlPackage#getStructuredActivityNode_Edge()
-     * @see uml.ActivityEdge#getInStructuredNode
-     * @model opposite="inStructuredNode" containment="true" ordered="false"
-     * @generated
-     */
-    EList<ActivityEdge> getEdge();
+	/**
+	 * Returns the value of the '<em><b>Edge</b></em>' containment reference list.
+	 * The list contents are of type {@link uml.ActivityEdge}.
+	 * It is bidirectional and its opposite is '{@link uml.ActivityEdge#getInStructuredNode <em>In Structured Node</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 * Edges immediately contained in the structured node.
+	 * <!-- end-model-doc -->
+	 * @return the value of the '<em>Edge</em>' containment reference list.
+	 * @see uml.UmlPackage#getStructuredActivityNode_Edge()
+	 * @see uml.ActivityEdge#getInStructuredNode
+	 * @model opposite="inStructuredNode" containment="true" ordered="false"
+	 * @generated
+	 */
+	EList<ActivityEdge> getEdge();
 
-    /**
-     * Returns the value of the '<em><b>Must Isolate</b></em>' attribute.
-     * The default value is <code>"false"</code>.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * <!-- begin-model-doc -->
-     * If true, then the actions in the node execute in isolation from actions outside the node.
-     * <!-- end-model-doc -->
-     * @return the value of the '<em>Must Isolate</em>' attribute.
-     * @see #setMustIsolate(boolean)
-     * @see uml.UmlPackage#getStructuredActivityNode_MustIsolate()
-     * @model default="false" dataType="uml.Boolean" required="true" ordered="false"
-     * @generated
-     */
-    boolean isMustIsolate();
+	/**
+	 * Returns the value of the '<em><b>Must Isolate</b></em>' attribute.
+	 * The default value is <code>"false"</code>.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 * If true, then the actions in the node execute in isolation from actions outside the node.
+	 * <!-- end-model-doc -->
+	 * @return the value of the '<em>Must Isolate</em>' attribute.
+	 * @see #setMustIsolate(boolean)
+	 * @see uml.UmlPackage#getStructuredActivityNode_MustIsolate()
+	 * @model default="false" dataType="uml.Boolean" required="true" ordered="false"
+	 * @generated
+	 */
+	boolean isMustIsolate();
 
-    /**
-     * Sets the value of the '{@link uml.StructuredActivityNode#isMustIsolate <em>Must Isolate</em>}' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Must Isolate</em>' attribute.
-     * @see #isMustIsolate()
-     * @generated
-     */
-    void setMustIsolate(boolean value);
+	/**
+	 * Sets the value of the '{@link uml.StructuredActivityNode#isMustIsolate <em>Must Isolate</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Must Isolate</em>' attribute.
+	 * @see #isMustIsolate()
+	 * @generated
+	 */
+	void setMustIsolate(boolean value);
 
-    /**
-     * Returns the value of the '<em><b>Node</b></em>' containment reference list.
-     * The list contents are of type {@link uml.ActivityNode}.
-     * It is bidirectional and its opposite is '{@link uml.ActivityNode#getInStructuredNode <em>In Structured Node</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * <!-- begin-model-doc -->
-     * Nodes immediately contained in the group.
-     * <!-- end-model-doc -->
-     * @return the value of the '<em>Node</em>' containment reference list.
-     * @see uml.UmlPackage#getStructuredActivityNode_Node()
-     * @see uml.ActivityNode#getInStructuredNode
-     * @model opposite="inStructuredNode" containment="true" ordered="false"
-     * @generated
-     */
-    EList<ActivityNode> getNode();
+	/**
+	 * Returns the value of the '<em><b>Node</b></em>' containment reference list.
+	 * The list contents are of type {@link uml.ActivityNode}.
+	 * It is bidirectional and its opposite is '{@link uml.ActivityNode#getInStructuredNode <em>In Structured Node</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 * Nodes immediately contained in the group.
+	 * <!-- end-model-doc -->
+	 * @return the value of the '<em>Node</em>' containment reference list.
+	 * @see uml.UmlPackage#getStructuredActivityNode_Node()
+	 * @see uml.ActivityNode#getInStructuredNode
+	 * @model opposite="inStructuredNode" containment="true" ordered="false"
+	 * @generated
+	 */
+	EList<ActivityNode> getNode();
 
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * <!-- begin-model-doc -->
-     * The edges owned by a structured node must have source and target nodes in the structured node, and vice versa.
-     * true
-     * @param diagnostics The chain of diagnostics to which problems are to be appended.
-     * @param context The cache of context-specific information.
-     * <!-- end-model-doc -->
-     * @model
-     * @generated
-     */
-    boolean edges(DiagnosticChain diagnostics, Map<Object, Object> context);
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 * The edges owned by a structured node must have source and target nodes in the structured node, and vice versa.
+	 * true
+	 * @param diagnostics The chain of diagnostics to which problems are to be appended.
+	 * @param context The cache of context-specific information.
+	 * <!-- end-model-doc -->
+	 * @model
+	 * @generated
+	 */
+	boolean edges(DiagnosticChain diagnostics, Map<Object, Object> context);
 
 } // StructuredActivityNode

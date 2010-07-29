@@ -28,30 +28,30 @@ package uml;
  * @generated
  */
 public interface LiteralBoolean extends LiteralSpecification {
-    /**
-     * Returns the value of the '<em><b>Value</b></em>' attribute.
-     * The default value is <code>"false"</code>.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * <!-- begin-model-doc -->
-     * The specified Boolean value.
-     * <!-- end-model-doc -->
-     * @return the value of the '<em>Value</em>' attribute.
-     * @see #setValue(boolean)
-     * @see uml.UmlPackage#getLiteralBoolean_Value()
-     * @model default="false" dataType="uml.Boolean" required="true" ordered="false"
-     * @generated
-     */
-    boolean isValue();
+	/**
+	 * Returns the value of the '<em><b>Value</b></em>' attribute.
+	 * The default value is <code>"false"</code>.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 * The specified Boolean value.
+	 * <!-- end-model-doc -->
+	 * @return the value of the '<em>Value</em>' attribute.
+	 * @see #setValue(boolean)
+	 * @see uml.UmlPackage#getLiteralBoolean_Value()
+	 * @model default="false" dataType="uml.Boolean" required="true" ordered="false"
+	 * @generated
+	 */
+	boolean isValue();
 
-    /**
-     * Sets the value of the '{@link uml.LiteralBoolean#isValue <em>Value</em>}' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Value</em>' attribute.
-     * @see #isValue()
-     * @generated
-     */
-    void setValue(boolean value);
+	/**
+	 * Sets the value of the '{@link uml.LiteralBoolean#isValue <em>Value</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Value</em>' attribute.
+	 * @see #isValue()
+	 * @generated
+	 */
+	void setValue(boolean value);
 
 } // LiteralBoolean

@@ -28,67 +28,67 @@ package uml;
  * @generated
  */
 public interface Model extends uml.Package {
-    /**
-     * Returns the value of the '<em><b>Viewpoint</b></em>' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * <!-- begin-model-doc -->
-     * The name of the viewpoint that is expressed by a model (This name may refer to a profile definition).
-     * <!-- end-model-doc -->
-     * @return the value of the '<em>Viewpoint</em>' attribute.
-     * @see #isSetViewpoint()
-     * @see #unsetViewpoint()
-     * @see #setViewpoint(String)
-     * @see uml.UmlPackage#getModel_Viewpoint()
-     * @model unsettable="true" dataType="uml.String" ordered="false"
-     * @generated
-     */
-    String getViewpoint();
+	/**
+	 * Returns the value of the '<em><b>Viewpoint</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 * The name of the viewpoint that is expressed by a model (This name may refer to a profile definition).
+	 * <!-- end-model-doc -->
+	 * @return the value of the '<em>Viewpoint</em>' attribute.
+	 * @see #isSetViewpoint()
+	 * @see #unsetViewpoint()
+	 * @see #setViewpoint(String)
+	 * @see uml.UmlPackage#getModel_Viewpoint()
+	 * @model unsettable="true" dataType="uml.String" ordered="false"
+	 * @generated
+	 */
+	String getViewpoint();
 
-    /**
-     * Sets the value of the '{@link uml.Model#getViewpoint <em>Viewpoint</em>}' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Viewpoint</em>' attribute.
-     * @see #isSetViewpoint()
-     * @see #unsetViewpoint()
-     * @see #getViewpoint()
-     * @generated
-     */
-    void setViewpoint(String value);
+	/**
+	 * Sets the value of the '{@link uml.Model#getViewpoint <em>Viewpoint</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Viewpoint</em>' attribute.
+	 * @see #isSetViewpoint()
+	 * @see #unsetViewpoint()
+	 * @see #getViewpoint()
+	 * @generated
+	 */
+	void setViewpoint(String value);
 
-    /**
-     * Unsets the value of the '{@link uml.Model#getViewpoint <em>Viewpoint</em>}' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see #isSetViewpoint()
-     * @see #getViewpoint()
-     * @see #setViewpoint(String)
-     * @generated
-     */
-    void unsetViewpoint();
+	/**
+	 * Unsets the value of the '{@link uml.Model#getViewpoint <em>Viewpoint</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isSetViewpoint()
+	 * @see #getViewpoint()
+	 * @see #setViewpoint(String)
+	 * @generated
+	 */
+	void unsetViewpoint();
 
-    /**
-     * Returns whether the value of the '{@link uml.Model#getViewpoint <em>Viewpoint</em>}' attribute is set.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return whether the value of the '<em>Viewpoint</em>' attribute is set.
-     * @see #unsetViewpoint()
-     * @see #getViewpoint()
-     * @see #setViewpoint(String)
-     * @generated
-     */
-    boolean isSetViewpoint();
+	/**
+	 * Returns whether the value of the '{@link uml.Model#getViewpoint <em>Viewpoint</em>}' attribute is set.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return whether the value of the '<em>Viewpoint</em>' attribute is set.
+	 * @see #unsetViewpoint()
+	 * @see #getViewpoint()
+	 * @see #setViewpoint(String)
+	 * @generated
+	 */
+	boolean isSetViewpoint();
 
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * <!-- begin-model-doc -->
-     * Determines whether this model is a metamodel.
-     * <!-- end-model-doc -->
-     * @model kind="operation" dataType="uml.Boolean" required="true" ordered="false"
-     * @generated
-     */
-    boolean isMetamodel();
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 * Determines whether this model is a metamodel.
+	 * <!-- end-model-doc -->
+	 * @model kind="operation" dataType="uml.Boolean" required="true" ordered="false"
+	 * @generated
+	 */
+	boolean isMetamodel();
 
 } // Model

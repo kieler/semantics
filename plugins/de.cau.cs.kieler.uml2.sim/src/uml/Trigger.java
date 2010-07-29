@@ -31,44 +31,44 @@ import org.eclipse.emf.common.util.EList;
  * @generated
  */
 public interface Trigger extends NamedElement {
-    /**
-     * Returns the value of the '<em><b>Event</b></em>' reference.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * <!-- begin-model-doc -->
-     * The event that causes the trigger.
-     * <!-- end-model-doc -->
-     * @return the value of the '<em>Event</em>' reference.
-     * @see #setEvent(Event)
-     * @see uml.UmlPackage#getTrigger_Event()
-     * @model required="true" ordered="false"
-     * @generated
-     */
-    Event getEvent();
+	/**
+	 * Returns the value of the '<em><b>Event</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 * The event that causes the trigger.
+	 * <!-- end-model-doc -->
+	 * @return the value of the '<em>Event</em>' reference.
+	 * @see #setEvent(Event)
+	 * @see uml.UmlPackage#getTrigger_Event()
+	 * @model required="true" ordered="false"
+	 * @generated
+	 */
+	Event getEvent();
 
-    /**
-     * Sets the value of the '{@link uml.Trigger#getEvent <em>Event</em>}' reference.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Event</em>' reference.
-     * @see #getEvent()
-     * @generated
-     */
-    void setEvent(Event value);
+	/**
+	 * Sets the value of the '{@link uml.Trigger#getEvent <em>Event</em>}' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Event</em>' reference.
+	 * @see #getEvent()
+	 * @generated
+	 */
+	void setEvent(Event value);
 
-    /**
-     * Returns the value of the '<em><b>Port</b></em>' reference list.
-     * The list contents are of type {@link uml.Port}.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * <!-- begin-model-doc -->
-     * A optional port of the receiver object on which the behavioral feature is invoked.
-     * <!-- end-model-doc -->
-     * @return the value of the '<em>Port</em>' reference list.
-     * @see uml.UmlPackage#getTrigger_Port()
-     * @model ordered="false"
-     * @generated
-     */
-    EList<Port> getPort();
+	/**
+	 * Returns the value of the '<em><b>Port</b></em>' reference list.
+	 * The list contents are of type {@link uml.Port}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 * A optional port of the receiver object on which the behavioral feature is invoked.
+	 * <!-- end-model-doc -->
+	 * @return the value of the '<em>Port</em>' reference list.
+	 * @see uml.UmlPackage#getTrigger_Port()
+	 * @model ordered="false"
+	 * @generated
+	 */
+	EList<Port> getPort();
 
 } // Trigger

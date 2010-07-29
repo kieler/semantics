@@ -32,44 +32,44 @@ import org.eclipse.emf.common.util.DiagnosticChain;
  * @generated
  */
 public interface Pin extends ObjectNode, MultiplicityElement {
-    /**
-     * Returns the value of the '<em><b>Is Control</b></em>' attribute.
-     * The default value is <code>"false"</code>.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * <!-- begin-model-doc -->
-     * Tells whether the pins provide data to the actions, or just controls when it executes it.
-     * <!-- end-model-doc -->
-     * @return the value of the '<em>Is Control</em>' attribute.
-     * @see #setIsControl(boolean)
-     * @see uml.UmlPackage#getPin_IsControl()
-     * @model default="false" dataType="uml.Boolean" required="true" ordered="false"
-     * @generated
-     */
-    boolean isIsControl();
+	/**
+	 * Returns the value of the '<em><b>Is Control</b></em>' attribute.
+	 * The default value is <code>"false"</code>.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 * Tells whether the pins provide data to the actions, or just controls when it executes it.
+	 * <!-- end-model-doc -->
+	 * @return the value of the '<em>Is Control</em>' attribute.
+	 * @see #setIsControl(boolean)
+	 * @see uml.UmlPackage#getPin_IsControl()
+	 * @model default="false" dataType="uml.Boolean" required="true" ordered="false"
+	 * @generated
+	 */
+	boolean isIsControl();
 
-    /**
-     * Sets the value of the '{@link uml.Pin#isIsControl <em>Is Control</em>}' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Is Control</em>' attribute.
-     * @see #isIsControl()
-     * @generated
-     */
-    void setIsControl(boolean value);
+	/**
+	 * Sets the value of the '{@link uml.Pin#isIsControl <em>Is Control</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Is Control</em>' attribute.
+	 * @see #isIsControl()
+	 * @generated
+	 */
+	void setIsControl(boolean value);
 
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * <!-- begin-model-doc -->
-     * Control pins have a control type
-     * isControl implies isControlType
-     * @param diagnostics The chain of diagnostics to which problems are to be appended.
-     * @param context The cache of context-specific information.
-     * <!-- end-model-doc -->
-     * @model
-     * @generated
-     */
-    boolean control_pins(DiagnosticChain diagnostics, Map<Object, Object> context);
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 * Control pins have a control type
+	 * isControl implies isControlType
+	 * @param diagnostics The chain of diagnostics to which problems are to be appended.
+	 * @param context The cache of context-specific information.
+	 * <!-- end-model-doc -->
+	 * @model
+	 * @generated
+	 */
+	boolean control_pins(DiagnosticChain diagnostics, Map<Object, Object> context);
 
 } // Pin

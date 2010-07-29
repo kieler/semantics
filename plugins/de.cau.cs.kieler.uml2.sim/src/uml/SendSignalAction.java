@@ -32,82 +32,82 @@ import org.eclipse.emf.common.util.DiagnosticChain;
  * @generated
  */
 public interface SendSignalAction extends InvocationAction {
-    /**
-     * Returns the value of the '<em><b>Target</b></em>' containment reference.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * <!-- begin-model-doc -->
-     * The target object to which the signal is sent.
-     * <!-- end-model-doc -->
-     * @return the value of the '<em>Target</em>' containment reference.
-     * @see #setTarget(InputPin)
-     * @see uml.UmlPackage#getSendSignalAction_Target()
-     * @model containment="true" required="true" ordered="false"
-     * @generated
-     */
-    InputPin getTarget();
+	/**
+	 * Returns the value of the '<em><b>Target</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 * The target object to which the signal is sent.
+	 * <!-- end-model-doc -->
+	 * @return the value of the '<em>Target</em>' containment reference.
+	 * @see #setTarget(InputPin)
+	 * @see uml.UmlPackage#getSendSignalAction_Target()
+	 * @model containment="true" required="true" ordered="false"
+	 * @generated
+	 */
+	InputPin getTarget();
 
-    /**
-     * Sets the value of the '{@link uml.SendSignalAction#getTarget <em>Target</em>}' containment reference.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Target</em>' containment reference.
-     * @see #getTarget()
-     * @generated
-     */
-    void setTarget(InputPin value);
+	/**
+	 * Sets the value of the '{@link uml.SendSignalAction#getTarget <em>Target</em>}' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Target</em>' containment reference.
+	 * @see #getTarget()
+	 * @generated
+	 */
+	void setTarget(InputPin value);
 
-    /**
-     * Returns the value of the '<em><b>Signal</b></em>' reference.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * <!-- begin-model-doc -->
-     * The type of signal transmitted to the target object.
-     * <!-- end-model-doc -->
-     * @return the value of the '<em>Signal</em>' reference.
-     * @see #setSignal(Signal)
-     * @see uml.UmlPackage#getSendSignalAction_Signal()
-     * @model required="true" ordered="false"
-     * @generated
-     */
-    Signal getSignal();
+	/**
+	 * Returns the value of the '<em><b>Signal</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 * The type of signal transmitted to the target object.
+	 * <!-- end-model-doc -->
+	 * @return the value of the '<em>Signal</em>' reference.
+	 * @see #setSignal(Signal)
+	 * @see uml.UmlPackage#getSendSignalAction_Signal()
+	 * @model required="true" ordered="false"
+	 * @generated
+	 */
+	Signal getSignal();
 
-    /**
-     * Sets the value of the '{@link uml.SendSignalAction#getSignal <em>Signal</em>}' reference.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Signal</em>' reference.
-     * @see #getSignal()
-     * @generated
-     */
-    void setSignal(Signal value);
+	/**
+	 * Sets the value of the '{@link uml.SendSignalAction#getSignal <em>Signal</em>}' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Signal</em>' reference.
+	 * @see #getSignal()
+	 * @generated
+	 */
+	void setSignal(Signal value);
 
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * <!-- begin-model-doc -->
-     * The number and order of argument pins must be the same as the number and order of attributes in the signal.
-     * true
-     * @param diagnostics The chain of diagnostics to which problems are to be appended.
-     * @param context The cache of context-specific information.
-     * <!-- end-model-doc -->
-     * @model
-     * @generated
-     */
-    boolean number_order(DiagnosticChain diagnostics, Map<Object, Object> context);
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 * The number and order of argument pins must be the same as the number and order of attributes in the signal.
+	 * true
+	 * @param diagnostics The chain of diagnostics to which problems are to be appended.
+	 * @param context The cache of context-specific information.
+	 * <!-- end-model-doc -->
+	 * @model
+	 * @generated
+	 */
+	boolean number_order(DiagnosticChain diagnostics, Map<Object, Object> context);
 
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * <!-- begin-model-doc -->
-     * The type, ordering, and multiplicity of an argument pin must be the same as the corresponding attribute of the signal.
-     * true
-     * @param diagnostics The chain of diagnostics to which problems are to be appended.
-     * @param context The cache of context-specific information.
-     * <!-- end-model-doc -->
-     * @model
-     * @generated
-     */
-    boolean type_ordering_multiplicity(DiagnosticChain diagnostics, Map<Object, Object> context);
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 * The type, ordering, and multiplicity of an argument pin must be the same as the corresponding attribute of the signal.
+	 * true
+	 * @param diagnostics The chain of diagnostics to which problems are to be appended.
+	 * @param context The cache of context-specific information.
+	 * <!-- end-model-doc -->
+	 * @model
+	 * @generated
+	 */
+	boolean type_ordering_multiplicity(DiagnosticChain diagnostics, Map<Object, Object> context);
 
 } // SendSignalAction

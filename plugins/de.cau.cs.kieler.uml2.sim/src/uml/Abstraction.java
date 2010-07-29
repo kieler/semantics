@@ -28,29 +28,29 @@ package uml;
  * @generated
  */
 public interface Abstraction extends Dependency {
-    /**
-     * Returns the value of the '<em><b>Mapping</b></em>' containment reference.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * <!-- begin-model-doc -->
-     * An composition of an Expression that states the abstraction relationship between the supplier and the client. In some cases, such as Derivation, it is usually formal and unidirectional; in other cases, such as Trace, it is usually informal and bidirectional. The mapping expression is optional and may be omitted if the precise relationship between the elements is not specified.
-     * <!-- end-model-doc -->
-     * @return the value of the '<em>Mapping</em>' containment reference.
-     * @see #setMapping(OpaqueExpression)
-     * @see uml.UmlPackage#getAbstraction_Mapping()
-     * @model containment="true" ordered="false"
-     * @generated
-     */
-    OpaqueExpression getMapping();
+	/**
+	 * Returns the value of the '<em><b>Mapping</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 * An composition of an Expression that states the abstraction relationship between the supplier and the client. In some cases, such as Derivation, it is usually formal and unidirectional; in other cases, such as Trace, it is usually informal and bidirectional. The mapping expression is optional and may be omitted if the precise relationship between the elements is not specified.
+	 * <!-- end-model-doc -->
+	 * @return the value of the '<em>Mapping</em>' containment reference.
+	 * @see #setMapping(OpaqueExpression)
+	 * @see uml.UmlPackage#getAbstraction_Mapping()
+	 * @model containment="true" ordered="false"
+	 * @generated
+	 */
+	OpaqueExpression getMapping();
 
-    /**
-     * Sets the value of the '{@link uml.Abstraction#getMapping <em>Mapping</em>}' containment reference.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Mapping</em>' containment reference.
-     * @see #getMapping()
-     * @generated
-     */
-    void setMapping(OpaqueExpression value);
+	/**
+	 * Sets the value of the '{@link uml.Abstraction#getMapping <em>Mapping</em>}' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Mapping</em>' containment reference.
+	 * @see #getMapping()
+	 * @generated
+	 */
+	void setMapping(OpaqueExpression value);
 
 } // Abstraction

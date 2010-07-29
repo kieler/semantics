@@ -29,19 +29,19 @@ import org.eclipse.emf.common.util.EList;
  * @generated
  */
 public interface SequenceNode extends StructuredActivityNode {
-    /**
-     * Returns the value of the '<em><b>Executable Node</b></em>' containment reference list.
-     * The list contents are of type {@link uml.ExecutableNode}.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * <!-- begin-model-doc -->
-     * An ordered set of executable nodes.
-     * <!-- end-model-doc -->
-     * @return the value of the '<em>Executable Node</em>' containment reference list.
-     * @see uml.UmlPackage#getSequenceNode_ExecutableNode()
-     * @model containment="true"
-     * @generated
-     */
-    EList<ExecutableNode> getExecutableNode();
+	/**
+	 * Returns the value of the '<em><b>Executable Node</b></em>' containment reference list.
+	 * The list contents are of type {@link uml.ExecutableNode}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 * An ordered set of executable nodes.
+	 * <!-- end-model-doc -->
+	 * @return the value of the '<em>Executable Node</em>' containment reference list.
+	 * @see uml.UmlPackage#getSequenceNode_ExecutableNode()
+	 * @model containment="true"
+	 * @generated
+	 */
+	EList<ExecutableNode> getExecutableNode();
 
 } // SequenceNode

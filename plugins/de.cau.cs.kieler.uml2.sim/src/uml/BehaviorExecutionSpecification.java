@@ -28,29 +28,29 @@ package uml;
  * @generated
  */
 public interface BehaviorExecutionSpecification extends ExecutionSpecification {
-    /**
-     * Returns the value of the '<em><b>Behavior</b></em>' reference.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * <!-- begin-model-doc -->
-     * Behavior whose execution is occurring.
-     * <!-- end-model-doc -->
-     * @return the value of the '<em>Behavior</em>' reference.
-     * @see #setBehavior(Behavior)
-     * @see uml.UmlPackage#getBehaviorExecutionSpecification_Behavior()
-     * @model ordered="false"
-     * @generated
-     */
-    Behavior getBehavior();
+	/**
+	 * Returns the value of the '<em><b>Behavior</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 * Behavior whose execution is occurring.
+	 * <!-- end-model-doc -->
+	 * @return the value of the '<em>Behavior</em>' reference.
+	 * @see #setBehavior(Behavior)
+	 * @see uml.UmlPackage#getBehaviorExecutionSpecification_Behavior()
+	 * @model ordered="false"
+	 * @generated
+	 */
+	Behavior getBehavior();
 
-    /**
-     * Sets the value of the '{@link uml.BehaviorExecutionSpecification#getBehavior <em>Behavior</em>}' reference.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Behavior</em>' reference.
-     * @see #getBehavior()
-     * @generated
-     */
-    void setBehavior(Behavior value);
+	/**
+	 * Sets the value of the '{@link uml.BehaviorExecutionSpecification#getBehavior <em>Behavior</em>}' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Behavior</em>' reference.
+	 * @see #getBehavior()
+	 * @generated
+	 */
+	void setBehavior(Behavior value);
 
 } // BehaviorExecutionSpecification

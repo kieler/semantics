@@ -29,19 +29,19 @@ import org.eclipse.emf.common.util.EList;
  * @generated
  */
 public interface Relationship extends Element {
-    /**
-     * Returns the value of the '<em><b>Related Element</b></em>' reference list.
-     * The list contents are of type {@link uml.Element}.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * <!-- begin-model-doc -->
-     * Specifies the elements related by the Relationship.
-     * <!-- end-model-doc -->
-     * @return the value of the '<em>Related Element</em>' reference list.
-     * @see uml.UmlPackage#getRelationship_RelatedElement()
-     * @model required="true" transient="true" changeable="false" volatile="true" derived="true" ordered="false"
-     * @generated
-     */
-    EList<Element> getRelatedElement();
+	/**
+	 * Returns the value of the '<em><b>Related Element</b></em>' reference list.
+	 * The list contents are of type {@link uml.Element}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 * Specifies the elements related by the Relationship.
+	 * <!-- end-model-doc -->
+	 * @return the value of the '<em>Related Element</em>' reference list.
+	 * @see uml.UmlPackage#getRelationship_RelatedElement()
+	 * @model required="true" transient="true" changeable="false" volatile="true" derived="true" ordered="false"
+	 * @generated
+	 */
+	EList<Element> getRelatedElement();
 
 } // Relationship

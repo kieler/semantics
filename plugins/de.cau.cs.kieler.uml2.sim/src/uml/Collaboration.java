@@ -29,19 +29,19 @@ import org.eclipse.emf.common.util.EList;
  * @generated
  */
 public interface Collaboration extends BehavioredClassifier, StructuredClassifier {
-    /**
-     * Returns the value of the '<em><b>Collaboration Role</b></em>' reference list.
-     * The list contents are of type {@link uml.ConnectableElement}.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * <!-- begin-model-doc -->
-     * References connectable elements (possibly owned by other classifiers) which represent roles that instances may play in this collaboration.
-     * <!-- end-model-doc -->
-     * @return the value of the '<em>Collaboration Role</em>' reference list.
-     * @see uml.UmlPackage#getCollaboration_CollaborationRole()
-     * @model ordered="false"
-     * @generated
-     */
-    EList<ConnectableElement> getCollaborationRole();
+	/**
+	 * Returns the value of the '<em><b>Collaboration Role</b></em>' reference list.
+	 * The list contents are of type {@link uml.ConnectableElement}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 * References connectable elements (possibly owned by other classifiers) which represent roles that instances may play in this collaboration.
+	 * <!-- end-model-doc -->
+	 * @return the value of the '<em>Collaboration Role</em>' reference list.
+	 * @see uml.UmlPackage#getCollaboration_CollaborationRole()
+	 * @model ordered="false"
+	 * @generated
+	 */
+	EList<ConnectableElement> getCollaborationRole();
 
 } // Collaboration

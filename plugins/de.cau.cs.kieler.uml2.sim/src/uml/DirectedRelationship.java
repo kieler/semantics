@@ -30,34 +30,34 @@ import org.eclipse.emf.common.util.EList;
  * @generated
  */
 public interface DirectedRelationship extends Relationship {
-    /**
-     * Returns the value of the '<em><b>Source</b></em>' reference list.
-     * The list contents are of type {@link uml.Element}.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * <!-- begin-model-doc -->
-     * Specifies the sources of the DirectedRelationship.
-     * <!-- end-model-doc -->
-     * @return the value of the '<em>Source</em>' reference list.
-     * @see uml.UmlPackage#getDirectedRelationship_Source()
-     * @model required="true" transient="true" changeable="false" volatile="true" derived="true" ordered="false"
-     * @generated
-     */
-    EList<Element> getSource();
+	/**
+	 * Returns the value of the '<em><b>Source</b></em>' reference list.
+	 * The list contents are of type {@link uml.Element}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 * Specifies the sources of the DirectedRelationship.
+	 * <!-- end-model-doc -->
+	 * @return the value of the '<em>Source</em>' reference list.
+	 * @see uml.UmlPackage#getDirectedRelationship_Source()
+	 * @model required="true" transient="true" changeable="false" volatile="true" derived="true" ordered="false"
+	 * @generated
+	 */
+	EList<Element> getSource();
 
-    /**
-     * Returns the value of the '<em><b>Target</b></em>' reference list.
-     * The list contents are of type {@link uml.Element}.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * <!-- begin-model-doc -->
-     * Specifies the targets of the DirectedRelationship.
-     * <!-- end-model-doc -->
-     * @return the value of the '<em>Target</em>' reference list.
-     * @see uml.UmlPackage#getDirectedRelationship_Target()
-     * @model required="true" transient="true" changeable="false" volatile="true" derived="true" ordered="false"
-     * @generated
-     */
-    EList<Element> getTarget();
+	/**
+	 * Returns the value of the '<em><b>Target</b></em>' reference list.
+	 * The list contents are of type {@link uml.Element}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 * Specifies the targets of the DirectedRelationship.
+	 * <!-- end-model-doc -->
+	 * @return the value of the '<em>Target</em>' reference list.
+	 * @see uml.UmlPackage#getDirectedRelationship_Target()
+	 * @model required="true" transient="true" changeable="false" volatile="true" derived="true" ordered="false"
+	 * @generated
+	 */
+	EList<Element> getTarget();
 
 } // DirectedRelationship

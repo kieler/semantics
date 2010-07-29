@@ -25,18 +25,18 @@ import org.eclipse.emf.common.util.DiagnosticChain;
  * @generated
  */
 public interface WriteLinkAction extends LinkAction {
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * <!-- begin-model-doc -->
-     * The visibility of at least one end must allow access to the class using the action.
-     * true
-     * @param diagnostics The chain of diagnostics to which problems are to be appended.
-     * @param context The cache of context-specific information.
-     * <!-- end-model-doc -->
-     * @model
-     * @generated
-     */
-    boolean allow_access(DiagnosticChain diagnostics, Map<Object, Object> context);
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 * The visibility of at least one end must allow access to the class using the action.
+	 * true
+	 * @param diagnostics The chain of diagnostics to which problems are to be appended.
+	 * @param context The cache of context-specific information.
+	 * <!-- end-model-doc -->
+	 * @model
+	 * @generated
+	 */
+	boolean allow_access(DiagnosticChain diagnostics, Map<Object, Object> context);
 
 } // WriteLinkAction

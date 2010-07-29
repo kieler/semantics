@@ -28,29 +28,29 @@ package uml;
  * @generated
  */
 public interface StateInvariant extends InteractionFragment {
-    /**
-     * Returns the value of the '<em><b>Invariant</b></em>' containment reference.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * <!-- begin-model-doc -->
-     * A Constraint that should hold at runtime for this StateInvariant
-     * <!-- end-model-doc -->
-     * @return the value of the '<em>Invariant</em>' containment reference.
-     * @see #setInvariant(Constraint)
-     * @see uml.UmlPackage#getStateInvariant_Invariant()
-     * @model containment="true" required="true" ordered="false"
-     * @generated
-     */
-    Constraint getInvariant();
+	/**
+	 * Returns the value of the '<em><b>Invariant</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 * A Constraint that should hold at runtime for this StateInvariant
+	 * <!-- end-model-doc -->
+	 * @return the value of the '<em>Invariant</em>' containment reference.
+	 * @see #setInvariant(Constraint)
+	 * @see uml.UmlPackage#getStateInvariant_Invariant()
+	 * @model containment="true" required="true" ordered="false"
+	 * @generated
+	 */
+	Constraint getInvariant();
 
-    /**
-     * Sets the value of the '{@link uml.StateInvariant#getInvariant <em>Invariant</em>}' containment reference.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Invariant</em>' containment reference.
-     * @see #getInvariant()
-     * @generated
-     */
-    void setInvariant(Constraint value);
+	/**
+	 * Sets the value of the '{@link uml.StateInvariant#getInvariant <em>Invariant</em>}' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Invariant</em>' containment reference.
+	 * @see #getInvariant()
+	 * @generated
+	 */
+	void setInvariant(Constraint value);
 
 } // StateInvariant

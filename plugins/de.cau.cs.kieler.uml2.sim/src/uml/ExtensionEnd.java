@@ -26,32 +26,32 @@ import org.eclipse.emf.common.util.DiagnosticChain;
  * @generated
  */
 public interface ExtensionEnd extends Property {
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * <!-- begin-model-doc -->
-     * The multiplicity of ExtensionEnd is 0..1 or 1.
-     * (self->lowerBound() = 0 or self->lowerBound() = 1) and self->upperBound() = 1
-     * @param diagnostics The chain of diagnostics to which problems are to be appended.
-     * @param context The cache of context-specific information.
-     * <!-- end-model-doc -->
-     * @model
-     * @generated
-     */
-    boolean multiplicity(DiagnosticChain diagnostics, Map<Object, Object> context);
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 * The multiplicity of ExtensionEnd is 0..1 or 1.
+	 * (self->lowerBound() = 0 or self->lowerBound() = 1) and self->upperBound() = 1
+	 * @param diagnostics The chain of diagnostics to which problems are to be appended.
+	 * @param context The cache of context-specific information.
+	 * <!-- end-model-doc -->
+	 * @model
+	 * @generated
+	 */
+	boolean multiplicity(DiagnosticChain diagnostics, Map<Object, Object> context);
 
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * <!-- begin-model-doc -->
-     * The aggregation of an ExtensionEnd is composite.
-     * self.aggregation = #composite
-     * @param diagnostics The chain of diagnostics to which problems are to be appended.
-     * @param context The cache of context-specific information.
-     * <!-- end-model-doc -->
-     * @model
-     * @generated
-     */
-    boolean aggregation(DiagnosticChain diagnostics, Map<Object, Object> context);
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 * The aggregation of an ExtensionEnd is composite.
+	 * self.aggregation = #composite
+	 * @param diagnostics The chain of diagnostics to which problems are to be appended.
+	 * @param context The cache of context-specific information.
+	 * <!-- end-model-doc -->
+	 * @model
+	 * @generated
+	 */
+	boolean aggregation(DiagnosticChain diagnostics, Map<Object, Object> context);
 
 } // ExtensionEnd

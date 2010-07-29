@@ -30,30 +30,30 @@ import org.eclipse.emf.common.util.EList;
  * @generated
  */
 public interface ConnectableElement extends TypedElement, ParameterableElement {
-    /**
-     * Returns the value of the '<em><b>End</b></em>' reference list.
-     * The list contents are of type {@link uml.ConnectorEnd}.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * <!-- begin-model-doc -->
-     * Denotes a connector that attaches to this connectable element.
-     * <!-- end-model-doc -->
-     * @return the value of the '<em>End</em>' reference list.
-     * @see uml.UmlPackage#getConnectableElement_End()
-     * @model transient="true" volatile="true" derived="true"
-     * @generated
-     */
-    EList<ConnectorEnd> getEnd();
+	/**
+	 * Returns the value of the '<em><b>End</b></em>' reference list.
+	 * The list contents are of type {@link uml.ConnectorEnd}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 * Denotes a connector that attaches to this connectable element.
+	 * <!-- end-model-doc -->
+	 * @return the value of the '<em>End</em>' reference list.
+	 * @see uml.UmlPackage#getConnectableElement_End()
+	 * @model transient="true" volatile="true" derived="true"
+	 * @generated
+	 */
+	EList<ConnectorEnd> getEnd();
 
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * <!-- begin-model-doc -->
-     * result = ConnectorEnd.allInstances()->select(e | e.role=self)
-     * <!-- end-model-doc -->
-     * @model kind="operation" ordered="false"
-     * @generated
-     */
-    EList<ConnectorEnd> getEnds();
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 * result = ConnectorEnd.allInstances()->select(e | e.role=self)
+	 * <!-- end-model-doc -->
+	 * @model kind="operation" ordered="false"
+	 * @generated
+	 */
+	EList<ConnectorEnd> getEnds();
 
 } // ConnectableElement

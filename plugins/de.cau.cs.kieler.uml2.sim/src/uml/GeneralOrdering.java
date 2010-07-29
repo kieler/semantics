@@ -29,58 +29,58 @@ package uml;
  * @generated
  */
 public interface GeneralOrdering extends NamedElement {
-    /**
-     * Returns the value of the '<em><b>Before</b></em>' reference.
-     * It is bidirectional and its opposite is '{@link uml.OccurrenceSpecification#getToAfter <em>To After</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * <!-- begin-model-doc -->
-     * The OccurrenceSpecification referenced comes before the OccurrenceSpecification referenced by after.
-     * <!-- end-model-doc -->
-     * @return the value of the '<em>Before</em>' reference.
-     * @see #setBefore(OccurrenceSpecification)
-     * @see uml.UmlPackage#getGeneralOrdering_Before()
-     * @see uml.OccurrenceSpecification#getToAfter
-     * @model opposite="toAfter" required="true" ordered="false"
-     * @generated
-     */
-    OccurrenceSpecification getBefore();
+	/**
+	 * Returns the value of the '<em><b>Before</b></em>' reference.
+	 * It is bidirectional and its opposite is '{@link uml.OccurrenceSpecification#getToAfter <em>To After</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 * The OccurrenceSpecification referenced comes before the OccurrenceSpecification referenced by after.
+	 * <!-- end-model-doc -->
+	 * @return the value of the '<em>Before</em>' reference.
+	 * @see #setBefore(OccurrenceSpecification)
+	 * @see uml.UmlPackage#getGeneralOrdering_Before()
+	 * @see uml.OccurrenceSpecification#getToAfter
+	 * @model opposite="toAfter" required="true" ordered="false"
+	 * @generated
+	 */
+	OccurrenceSpecification getBefore();
 
-    /**
-     * Sets the value of the '{@link uml.GeneralOrdering#getBefore <em>Before</em>}' reference.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Before</em>' reference.
-     * @see #getBefore()
-     * @generated
-     */
-    void setBefore(OccurrenceSpecification value);
+	/**
+	 * Sets the value of the '{@link uml.GeneralOrdering#getBefore <em>Before</em>}' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Before</em>' reference.
+	 * @see #getBefore()
+	 * @generated
+	 */
+	void setBefore(OccurrenceSpecification value);
 
-    /**
-     * Returns the value of the '<em><b>After</b></em>' reference.
-     * It is bidirectional and its opposite is '{@link uml.OccurrenceSpecification#getToBefore <em>To Before</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * <!-- begin-model-doc -->
-     * The OccurrenceSpecification referenced comes after the OccurrenceSpecification referenced by before.
-     * <!-- end-model-doc -->
-     * @return the value of the '<em>After</em>' reference.
-     * @see #setAfter(OccurrenceSpecification)
-     * @see uml.UmlPackage#getGeneralOrdering_After()
-     * @see uml.OccurrenceSpecification#getToBefore
-     * @model opposite="toBefore" required="true" ordered="false"
-     * @generated
-     */
-    OccurrenceSpecification getAfter();
+	/**
+	 * Returns the value of the '<em><b>After</b></em>' reference.
+	 * It is bidirectional and its opposite is '{@link uml.OccurrenceSpecification#getToBefore <em>To Before</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 * The OccurrenceSpecification referenced comes after the OccurrenceSpecification referenced by before.
+	 * <!-- end-model-doc -->
+	 * @return the value of the '<em>After</em>' reference.
+	 * @see #setAfter(OccurrenceSpecification)
+	 * @see uml.UmlPackage#getGeneralOrdering_After()
+	 * @see uml.OccurrenceSpecification#getToBefore
+	 * @model opposite="toBefore" required="true" ordered="false"
+	 * @generated
+	 */
+	OccurrenceSpecification getAfter();
 
-    /**
-     * Sets the value of the '{@link uml.GeneralOrdering#getAfter <em>After</em>}' reference.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @param value the new value of the '<em>After</em>' reference.
-     * @see #getAfter()
-     * @generated
-     */
-    void setAfter(OccurrenceSpecification value);
+	/**
+	 * Sets the value of the '{@link uml.GeneralOrdering#getAfter <em>After</em>}' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>After</em>' reference.
+	 * @see #getAfter()
+	 * @generated
+	 */
+	void setAfter(OccurrenceSpecification value);
 
 } // GeneralOrdering

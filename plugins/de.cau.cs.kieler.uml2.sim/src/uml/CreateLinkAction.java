@@ -25,18 +25,18 @@ import org.eclipse.emf.common.util.DiagnosticChain;
  * @generated
  */
 public interface CreateLinkAction extends WriteLinkAction {
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * <!-- begin-model-doc -->
-     * The association cannot be an abstract classifier.
-     * self.association().isAbstract = #false
-     * @param diagnostics The chain of diagnostics to which problems are to be appended.
-     * @param context The cache of context-specific information.
-     * <!-- end-model-doc -->
-     * @model
-     * @generated
-     */
-    boolean association_not_abstract(DiagnosticChain diagnostics, Map<Object, Object> context);
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 * The association cannot be an abstract classifier.
+	 * self.association().isAbstract = #false
+	 * @param diagnostics The chain of diagnostics to which problems are to be appended.
+	 * @param context The cache of context-specific information.
+	 * <!-- end-model-doc -->
+	 * @model
+	 * @generated
+	 */
+	boolean association_not_abstract(DiagnosticChain diagnostics, Map<Object, Object> context);
 
 } // CreateLinkAction

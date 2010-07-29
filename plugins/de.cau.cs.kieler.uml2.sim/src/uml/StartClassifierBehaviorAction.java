@@ -31,57 +31,57 @@ import org.eclipse.emf.common.util.DiagnosticChain;
  * @generated
  */
 public interface StartClassifierBehaviorAction extends Action {
-    /**
-     * Returns the value of the '<em><b>Object</b></em>' containment reference.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * <!-- begin-model-doc -->
-     * Holds the object on which to start the owned behavior.
-     * <!-- end-model-doc -->
-     * @return the value of the '<em>Object</em>' containment reference.
-     * @see #setObject(InputPin)
-     * @see uml.UmlPackage#getStartClassifierBehaviorAction_Object()
-     * @model containment="true" required="true" ordered="false"
-     * @generated
-     */
-    InputPin getObject();
+	/**
+	 * Returns the value of the '<em><b>Object</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 * Holds the object on which to start the owned behavior.
+	 * <!-- end-model-doc -->
+	 * @return the value of the '<em>Object</em>' containment reference.
+	 * @see #setObject(InputPin)
+	 * @see uml.UmlPackage#getStartClassifierBehaviorAction_Object()
+	 * @model containment="true" required="true" ordered="false"
+	 * @generated
+	 */
+	InputPin getObject();
 
-    /**
-     * Sets the value of the '{@link uml.StartClassifierBehaviorAction#getObject <em>Object</em>}' containment reference.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Object</em>' containment reference.
-     * @see #getObject()
-     * @generated
-     */
-    void setObject(InputPin value);
+	/**
+	 * Sets the value of the '{@link uml.StartClassifierBehaviorAction#getObject <em>Object</em>}' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Object</em>' containment reference.
+	 * @see #getObject()
+	 * @generated
+	 */
+	void setObject(InputPin value);
 
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * <!-- begin-model-doc -->
-     * The multiplicity of the input pin is 1..1
-     * true
-     * @param diagnostics The chain of diagnostics to which problems are to be appended.
-     * @param context The cache of context-specific information.
-     * <!-- end-model-doc -->
-     * @model
-     * @generated
-     */
-    boolean multiplicity(DiagnosticChain diagnostics, Map<Object, Object> context);
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 * The multiplicity of the input pin is 1..1
+	 * true
+	 * @param diagnostics The chain of diagnostics to which problems are to be appended.
+	 * @param context The cache of context-specific information.
+	 * <!-- end-model-doc -->
+	 * @model
+	 * @generated
+	 */
+	boolean multiplicity(DiagnosticChain diagnostics, Map<Object, Object> context);
 
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * <!-- begin-model-doc -->
-     * If the input pin has a type, then the type must have a classifier behavior.
-     * true
-     * @param diagnostics The chain of diagnostics to which problems are to be appended.
-     * @param context The cache of context-specific information.
-     * <!-- end-model-doc -->
-     * @model
-     * @generated
-     */
-    boolean type_has_classifier(DiagnosticChain diagnostics, Map<Object, Object> context);
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 * If the input pin has a type, then the type must have a classifier behavior.
+	 * true
+	 * @param diagnostics The chain of diagnostics to which problems are to be appended.
+	 * @param context The cache of context-specific information.
+	 * <!-- end-model-doc -->
+	 * @model
+	 * @generated
+	 */
+	boolean type_has_classifier(DiagnosticChain diagnostics, Map<Object, Object> context);
 
 } // StartClassifierBehaviorAction

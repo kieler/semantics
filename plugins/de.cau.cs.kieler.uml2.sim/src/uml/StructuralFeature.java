@@ -29,30 +29,30 @@ package uml;
  * @generated
  */
 public interface StructuralFeature extends Feature, TypedElement, MultiplicityElement {
-    /**
-     * Returns the value of the '<em><b>Is Read Only</b></em>' attribute.
-     * The default value is <code>"false"</code>.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * <!-- begin-model-doc -->
-     * States whether the feature's value may be modified by a client.
-     * <!-- end-model-doc -->
-     * @return the value of the '<em>Is Read Only</em>' attribute.
-     * @see #setIsReadOnly(boolean)
-     * @see uml.UmlPackage#getStructuralFeature_IsReadOnly()
-     * @model default="false" dataType="uml.Boolean" required="true" ordered="false"
-     * @generated
-     */
-    boolean isIsReadOnly();
+	/**
+	 * Returns the value of the '<em><b>Is Read Only</b></em>' attribute.
+	 * The default value is <code>"false"</code>.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 * States whether the feature's value may be modified by a client.
+	 * <!-- end-model-doc -->
+	 * @return the value of the '<em>Is Read Only</em>' attribute.
+	 * @see #setIsReadOnly(boolean)
+	 * @see uml.UmlPackage#getStructuralFeature_IsReadOnly()
+	 * @model default="false" dataType="uml.Boolean" required="true" ordered="false"
+	 * @generated
+	 */
+	boolean isIsReadOnly();
 
-    /**
-     * Sets the value of the '{@link uml.StructuralFeature#isIsReadOnly <em>Is Read Only</em>}' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Is Read Only</em>' attribute.
-     * @see #isIsReadOnly()
-     * @generated
-     */
-    void setIsReadOnly(boolean value);
+	/**
+	 * Sets the value of the '{@link uml.StructuralFeature#isIsReadOnly <em>Is Read Only</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Is Read Only</em>' attribute.
+	 * @see #isIsReadOnly()
+	 * @generated
+	 */
+	void setIsReadOnly(boolean value);
 
 } // StructuralFeature

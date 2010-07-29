@@ -25,18 +25,18 @@ import org.eclipse.emf.common.util.DiagnosticChain;
  * @generated
  */
 public interface ControlFlow extends ActivityEdge {
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * <!-- begin-model-doc -->
-     * Control flows may not have object nodes at either end, except for object nodes with control type.
-     * true
-     * @param diagnostics The chain of diagnostics to which problems are to be appended.
-     * @param context The cache of context-specific information.
-     * <!-- end-model-doc -->
-     * @model
-     * @generated
-     */
-    boolean object_nodes(DiagnosticChain diagnostics, Map<Object, Object> context);
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 * Control flows may not have object nodes at either end, except for object nodes with control type.
+	 * true
+	 * @param diagnostics The chain of diagnostics to which problems are to be appended.
+	 * @param context The cache of context-specific information.
+	 * <!-- end-model-doc -->
+	 * @model
+	 * @generated
+	 */
+	boolean object_nodes(DiagnosticChain diagnostics, Map<Object, Object> context);
 
 } // ControlFlow
