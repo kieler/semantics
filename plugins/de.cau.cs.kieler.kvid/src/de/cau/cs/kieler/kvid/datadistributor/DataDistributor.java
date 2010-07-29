@@ -55,9 +55,7 @@ public class DataDistributor implements IProviderListener {
     private HashMap<String, EditPart> editPartsByURI = new HashMap<String, EditPart>();
     
     private HashMap<String, DataObject> dataByURI = new HashMap<String, DataObject>();
-    
-    private List<KViDOptionData> knownOptions = new LinkedList<KViDOptionData>();
-    
+        
     private IDrawer drawer = new GmfDrawer();
     
     public static DataDistributor getInstance() {
@@ -142,26 +140,12 @@ public class DataDistributor implements IProviderListener {
 
     public void triggerInitialization() {
         initialize();
-        initializeOptions();
     }
 
     public void triggerWrapup() {
         cleanup();
         editPartsByURI = new HashMap<String, EditPart>();
         dataByURI = new HashMap<String, DataObject>();
-        knownOptions = new LinkedList<KViDOptionData>();
-    }
-    
-    public List<KViDOptionData> getKnownOptions() {
-        return knownOptions;
-    }
-    
-    public void initializeOptions() {
-        KViDOptionData animatedOption = new KViDOptionData("de.cau.cs.kieler.kvid.animated", "General Options",
-                "Animationen aktivieren",
-                "Wähle TRUE für Animationen und FALSE für statische Darstellung",
-                DataType.BOOLEAN, new String[] {"TRUE", "FALSE"});
-        knownOptions.add(animatedOption);
     }
 
 }
