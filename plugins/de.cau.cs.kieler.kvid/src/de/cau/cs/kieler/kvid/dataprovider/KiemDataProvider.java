@@ -19,7 +19,7 @@ import java.util.List;
 import org.json.JSONObject;
 
 import de.cau.cs.kieler.kvid.datadistributor.IProviderListener;
-import de.cau.cs.kieler.kvid.datadistributor.KViDDataDistributor;
+import de.cau.cs.kieler.kvid.datadistributor.DataDistributor;
 import de.cau.cs.kieler.sim.kiem.IJSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.JSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.KiemExecutionException;
@@ -30,8 +30,8 @@ import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
  * @author jjc
  * 
  */
-public class KIEMDataProvider extends JSONObjectDataComponent implements
-        IJSONObjectDataComponent, IKViDDataProvider {
+public class KiemDataProvider extends JSONObjectDataComponent implements
+        IJSONObjectDataComponent, IDataProvider {
 
     private List<IProviderListener> listeners = new LinkedList<IProviderListener>();
     
@@ -50,8 +50,8 @@ public class KIEMDataProvider extends JSONObjectDataComponent implements
      * {@inheritDoc}
      */
     public void initialize() throws KiemInitializationException {
-        if (!listeners.contains(KViDDataDistributor.getInstance()))
-            registerProviderListener(KViDDataDistributor.getInstance());
+        if (!listeners.contains(DataDistributor.getInstance()))
+            registerProviderListener(DataDistributor.getInstance());
         for (IProviderListener listener : listeners) {
             listener.triggerInitialization();
         }

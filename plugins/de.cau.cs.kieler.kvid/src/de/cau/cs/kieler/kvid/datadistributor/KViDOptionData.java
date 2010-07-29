@@ -13,7 +13,7 @@
  */
 package de.cau.cs.kieler.kvid.datadistributor;
 
-import de.cau.cs.kieler.kvid.data.KViDDataType;
+import de.cau.cs.kieler.kvid.data.DataType;
 
 public class KViDOptionData {
     
@@ -25,13 +25,13 @@ public class KViDOptionData {
     
     private String description;
     
-    private KViDDataType type;
+    private DataType type;
     
     private String[] choices;
     
     private int currentValue = 0;
     
-    public KViDOptionData(String theid, String thecategory, String thename, String thedescription, KViDDataType thetype, String[] thechoices) {
+    public KViDOptionData(String theid, String thecategory, String thename, String thedescription, DataType thetype, String[] thechoices) {
         this.id = theid;
         this.category = thecategory;
         this.name = thename;
@@ -72,7 +72,7 @@ public class KViDOptionData {
         }
     }
     
-    public KViDDataType getType() {
+    public DataType getType() {
         return type;
     }
     

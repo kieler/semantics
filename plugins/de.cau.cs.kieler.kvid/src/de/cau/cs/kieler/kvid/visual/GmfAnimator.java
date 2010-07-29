@@ -31,9 +31,9 @@ import de.cau.cs.kieler.sim.kiem.KiemPlugin;
  * @author jjc
  *
  */
-public final class GMFAnimator {
+public final class GmfAnimator {
     
-    private GMFAnimator() { }
+    private GmfAnimator() { }
     
     /**
      * 
@@ -43,7 +43,7 @@ public final class GMFAnimator {
      * @param diagram The diagram in which the animation should take place
      * @param animationTime The time an animation may use to perform
      */
-    public static void animate(final HashMap<IKViDFigure, List<Point>> figuresAndPath,
+    public static void animate(final HashMap<IKvidFigure, List<Point>> figuresAndPath,
                                final DiagramEditPart diagram,
                                final int animationTime) {
 
@@ -54,7 +54,7 @@ public final class GMFAnimator {
         
         while (!allPathsExeeded) {
             allPathsExeeded = true;
-            for (IKViDFigure figure : figuresAndPath.keySet()) {
+            for (IKvidFigure figure : figuresAndPath.keySet()) {
                 if (pathCounter == 0) {
                     anima.initializeAnimatedElement(figure, diagram.getViewer());
                 }

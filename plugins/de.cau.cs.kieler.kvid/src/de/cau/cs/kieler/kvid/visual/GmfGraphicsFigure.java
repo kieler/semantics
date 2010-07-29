@@ -17,21 +17,21 @@ import org.eclipse.draw2d.geometry.Rectangle;
 import org.eclipse.gmf.runtime.draw2d.ui.render.RenderedImage;
 import org.eclipse.gmf.runtime.draw2d.ui.render.figures.ScalableImageFigure;
 
-import de.cau.cs.kieler.kvid.data.KViDDataObject;
+import de.cau.cs.kieler.kvid.data.DataObject;
 
-public class GMFGraphicsFigure extends ScalableImageFigure implements IKViDFigure {
+public class GmfGraphicsFigure extends ScalableImageFigure implements IKvidFigure {
     
     
-    KViDDataObject data;
+    DataObject data;
 
-    public GMFGraphicsFigure(KViDDataObject thedata, RenderedImage image) {
+    public GmfGraphicsFigure(DataObject thedata, RenderedImage image) {
         super(image, true, true, true);
         this.data = thedata;
         this.setBounds(new Rectangle(500, 500, 100, 100));
     }
    
 
-    public void updateData(KViDDataObject thedata) {
+    public void updateData(DataObject thedata) {
         this.data = thedata;       
     }
 

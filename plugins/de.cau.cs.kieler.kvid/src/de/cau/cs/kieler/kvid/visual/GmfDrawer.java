@@ -25,8 +25,8 @@ import org.eclipse.gmf.runtime.draw2d.ui.render.factory.RenderedImageFactory;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.PlatformUI;
 
-import de.cau.cs.kieler.kvid.data.KViDDataObject;
-import de.cau.cs.kieler.kvid.datadistributor.KViDDataDistributor;
+import de.cau.cs.kieler.kvid.data.DataObject;
+import de.cau.cs.kieler.kvid.datadistributor.DataDistributor;
 import de.cau.cs.kieler.sim.kiem.KiemPlugin;
 
 /**
@@ -36,11 +36,11 @@ import de.cau.cs.kieler.sim.kiem.KiemPlugin;
  * @author jjc
  *
  */
-public class GMFDrawer implements IDrawer {
+public class GmfDrawer implements IDrawer {
     
-    private HashMap<String, IKViDFigure> figuresByURI = new HashMap<String, IKViDFigure>();
+    private HashMap<String, IKvidFigure> figuresByURI = new HashMap<String, IKvidFigure>();
  
-    public void draw(final HashMap<String, KViDDataObject> dataSet) {
+    public void draw(final HashMap<String, DataObject> dataSet) {
         //clearing phase
         //clearDrawing();
         
@@ -48,20 +48,20 @@ public class GMFDrawer implements IDrawer {
         int figureCounter = 1; 
         String path = "/home/jjc/workspace/kieler/de.cau.cs.kieler.kvid/images/drawing.svg";
         RenderedImage image = RenderedImageFactory.getInstance(path);
-        figuresByURI.put(".model.test", new GMFGraphicsFigure(new KViDDataObject(".model.test", "blub"), image));
+        figuresByURI.put(".model.test", new GmfGraphicsFigure(new DataObject(".model.test", "blub"), image));
         for (String key : dataSet.keySet()) {
             
             if (figuresByURI.containsKey(key)) {
                 figuresByURI.get(key).updateData(dataSet.get(key));
                 figuresByURI.get(key).setLocation(new Point(300, figureCounter*50));
             } else {
-                figuresByURI.put(key, new KViDGMFFigure(dataSet.get(key)));
+                figuresByURI.put(key, new GmfFigure(dataSet.get(key)));
                 figuresByURI.get(key).setLocation(new Point(300, figureCounter*50));
             }
             figureCounter++;
         }
         
-        final IEditorPart editor = KViDDataDistributor.getInstance().getActiveEditor();
+        final IEditorPart editor = DataDistributor.getInstance().getActiveEditor();
         if (editor instanceof DiagramEditor) {
             //drawing phase
             final IFigure canvas = ((DiagramEditor) editor).getDiagramEditPart()
@@ -76,8 +76,8 @@ public class GMFDrawer implements IDrawer {
             }
             
             //animating phase
-            final HashMap<IKViDFigure, List<Point>> animatables = 
-                                                      new HashMap<IKViDFigure, List<Point>>();
+            final HashMap<IKvidFigure, List<Point>> animatables = 
+                                                      new HashMap<IKvidFigure, List<Point>>();
             for (final String key : dataSet.keySet()) {
                 if (dataSet.get(key).getPath() != null) {
                     animatables.put(figuresByURI.get(key), dataSet.get(key).getPath());
@@ -86,7 +86,7 @@ public class GMFDrawer implements IDrawer {
             PlatformUI.getWorkbench().getDisplay().syncExec(new Runnable() {
                 public void run() {
                     //TODO still not satisfying, maybe check if data is by KIEM and use it then
-                    GMFAnimator.animate(animatables, ((DiagramEditor) editor).getDiagramEditPart(),
+                    GmfAnimator.animate(animatables, ((DiagramEditor) editor).getDiagramEditPart(),
                                         KiemPlugin.getDefault().getAimedStepDuration());
                 }
             }); 
@@ -94,18 +94,18 @@ public class GMFDrawer implements IDrawer {
     }
 
     public void clearDrawing() {
-        IEditorPart editor = KViDDataDistributor.getInstance().getActiveEditor();
+        IEditorPart editor = DataDistributor.getInstance().getActiveEditor();
         if (editor instanceof DiagramEditor) {
             final IFigure canvas = ((DiagramEditor) editor).getDiagramEditPart()
                                     .getLayer(DiagramRootEditPart.DECORATION_PRINTABLE_LAYER);
             for (String key : figuresByURI.keySet()) {
-                IKViDFigure figure = figuresByURI.get(key);
+                IKvidFigure figure = figuresByURI.get(key);
                 figure.invalidate();
             }
             canvas.revalidate();
             canvas.repaint();
         }
-        figuresByURI = new HashMap<String, IKViDFigure>();
+        figuresByURI = new HashMap<String, IKvidFigure>();
     }
 
 }

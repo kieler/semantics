@@ -32,10 +32,10 @@ import org.eclipse.ui.views.properties.IPropertySourceProvider;
 import org.eclipse.ui.views.properties.PropertySheetEntry;
 import org.eclipse.ui.views.properties.PropertySheetPage;
 
-import de.cau.cs.kieler.kvid.KViDPlugin;
+import de.cau.cs.kieler.kvid.KvidPlugin;
 import de.cau.cs.kieler.kvid.datadistributor.KViDPropertySource;
 
-public class KViDView extends ViewPart {
+public class KvidView extends ViewPart {
 
     /** the form container for the property sheet page. */
     private ScrolledForm form;

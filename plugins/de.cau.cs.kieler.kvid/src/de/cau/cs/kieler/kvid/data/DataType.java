@@ -11,14 +11,19 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.kvid.visual;
+package de.cau.cs.kieler.kvid.data;
 
-import org.eclipse.draw2d.IFigure;
-
-import de.cau.cs.kieler.kvid.data.KViDDataObject;
-
-public interface IKViDFigure extends IFigure {
+/**
+ * 
+ * Enum for data types known and processed by KViD.
+ * 
+ * Use STRING as a default if you have data in string representation.
+ * 
+ * @author jjc
+ *
+ */
+public enum DataType {
     
-    void updateData(KViDDataObject thedata);
+    INT, FLOAT, STRING, BOOLEAN
 
 }

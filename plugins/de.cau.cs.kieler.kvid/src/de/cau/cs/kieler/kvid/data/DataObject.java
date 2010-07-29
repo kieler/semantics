@@ -24,7 +24,7 @@ import org.eclipse.draw2d.geometry.Point;
  * @author jjc
  *
  */
-public class KViDDataObject {
+public class DataObject {
     
     /** URI of the model element providing the data. */
     private String uri;
@@ -33,26 +33,26 @@ public class KViDDataObject {
     private String data;
     
     /** The type of the data, given in data types known by KViD. */
-    private KViDDataType type;
+    private DataType type;
     
     /** If animation is desired, give the path to follow here. */
     private List<Point> path;
     
-    public KViDDataObject(final String theURI, final String thedata) {
+    public DataObject(final String theURI, final String thedata) {
         this.uri = theURI;
         this.data = thedata;
         this.type = parseDataType(thedata);
     }
     
-    public KViDDataObject(final String theURI, final String thedata, final List<Point> thepath) {
+    public DataObject(final String theURI, final String thedata, final List<Point> thepath) {
         this.uri = theURI;
         this.data = thedata;
         this.type = parseDataType(thedata);
         this.path = thepath;
     }
     
-    public KViDDataObject(final String theURI, final String thedata,
-            final KViDDataType thetype) {
+    public DataObject(final String theURI, final String thedata,
+            final DataType thetype) {
         this.uri = theURI;
         this.data = thedata;
         this.type = thetype;
@@ -81,18 +81,18 @@ public class KViDDataObject {
         return path;
     }
     
-    private KViDDataType parseDataType(String data) {
+    private DataType parseDataType(String data) {
         if (data.matches("[+-]?[0-9]+")) {
-            return KViDDataType.INT;
+            return DataType.INT;
         }
         if (data.matches("floatblabla")) {
             //TODO richtigen regex!
-            return KViDDataType.FLOAT;
+            return DataType.FLOAT;
         }
         if (data.equalsIgnoreCase("true") || data.equalsIgnoreCase("false")) {
-            return KViDDataType.BOOLEAN;
+            return DataType.BOOLEAN;
         }
-        return KViDDataType.STRING;
+        return DataType.STRING;
     }
 
 }

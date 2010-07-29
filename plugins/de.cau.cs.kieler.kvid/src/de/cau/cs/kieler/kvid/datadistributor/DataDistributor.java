@@ -36,9 +36,9 @@ import org.eclipse.ui.PlatformUI;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import de.cau.cs.kieler.kvid.data.KViDDataObject;
-import de.cau.cs.kieler.kvid.data.KViDDataType;
-import de.cau.cs.kieler.kvid.visual.GMFDrawer;
+import de.cau.cs.kieler.kvid.data.DataObject;
+import de.cau.cs.kieler.kvid.data.DataType;
+import de.cau.cs.kieler.kvid.visual.GmfDrawer;
 import de.cau.cs.kieler.kvid.visual.IDrawer;
 
 /**
@@ -48,19 +48,19 @@ import de.cau.cs.kieler.kvid.visual.IDrawer;
  * @author jjc
  *
  */
-public class KViDDataDistributor implements IProviderListener {
+public class DataDistributor implements IProviderListener {
     
-    private static final KViDDataDistributor INSTANCE = new KViDDataDistributor();
+    private static final DataDistributor INSTANCE = new DataDistributor();
     
     private HashMap<String, EditPart> editPartsByURI = new HashMap<String, EditPart>();
     
-    private HashMap<String, KViDDataObject> dataByURI = new HashMap<String, KViDDataObject>();
+    private HashMap<String, DataObject> dataByURI = new HashMap<String, DataObject>();
     
     private List<KViDOptionData> knownOptions = new LinkedList<KViDOptionData>();
     
-    private IDrawer drawer = new GMFDrawer();
+    private IDrawer drawer = new GmfDrawer();
     
-    public static KViDDataDistributor getInstance() {
+    public static DataDistributor getInstance() {
         return INSTANCE;
     }
     
@@ -98,7 +98,7 @@ public class KViDDataDistributor implements IProviderListener {
             Object o = allKeys.next();
             try {
                 String key = o.toString();
-                dataByURI.put(o.toString(), new KViDDataObject(key, data.getString(key), randomPath));
+                dataByURI.put(o.toString(), new DataObject(key, data.getString(key), randomPath));
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -144,7 +144,7 @@ public class KViDDataDistributor implements IProviderListener {
     public void triggerWrapup() {
         cleanup();
         editPartsByURI = new HashMap<String, EditPart>();
-        dataByURI = new HashMap<String, KViDDataObject>();
+        dataByURI = new HashMap<String, DataObject>();
         knownOptions = new LinkedList<KViDOptionData>();
     }
     
@@ -156,7 +156,7 @@ public class KViDDataDistributor implements IProviderListener {
         KViDOptionData animatedOption = new KViDOptionData("de.cau.cs.kieler.kvid.animated", "General Options",
                 "Animationen aktivieren",
                 "Wähle TRUE für Animationen und FALSE für statische Darstellung",
-                KViDDataType.BOOLEAN, new String[] {"TRUE", "FALSE"});
+                DataType.BOOLEAN, new String[] {"TRUE", "FALSE"});
         knownOptions.add(animatedOption);
     }
 

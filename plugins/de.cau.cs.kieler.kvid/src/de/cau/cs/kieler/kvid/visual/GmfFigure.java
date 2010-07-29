@@ -21,18 +21,18 @@ import org.eclipse.draw2d.MouseEvent;
 import org.eclipse.draw2d.RoundedRectangle;
 import org.eclipse.draw2d.geometry.Rectangle;
 
-import de.cau.cs.kieler.kvid.data.KViDDataObject;
+import de.cau.cs.kieler.kvid.data.DataObject;
 
 /**
  * 
  * @author jjc
  *
  */
-public class KViDGMFFigure extends RoundedRectangle implements IKViDFigure {
+public class GmfFigure extends RoundedRectangle implements IKvidFigure {
     
-    private KViDDataObject currentData;
+    private DataObject currentData;
     
-    public KViDGMFFigure(KViDDataObject thedata) {
+    public GmfFigure(DataObject thedata) {
         super();
         this.currentData = thedata;
         setLayoutManager(new BorderLayout());
@@ -46,7 +46,7 @@ public class KViDGMFFigure extends RoundedRectangle implements IKViDFigure {
         this.addLayoutListener(LayoutAnimator.getDefault());
     }
     
-    public void updateData(KViDDataObject newData) {
+    public void updateData(DataObject newData) {
         currentData = newData;
         removeAll();
         setBounds(new Rectangle(0, 0, currentData.getData().toString().length()*20, 20));

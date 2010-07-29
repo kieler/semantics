@@ -4,7 +4,7 @@
    <extension
          point="de.cau.cs.kieler.sim.kiem.json.datacomponent">
       <content
-            class="de.cau.cs.kieler.kvid.dataprovider.KIEMDataProvider"
+            class="de.cau.cs.kieler.kvid.dataprovider.KiemDataProvider"
             id="de.cau.cs.kieler.kvid.KIEMDataProvider"
             name="KViDDataProvider">
       </content>
@@ -14,7 +14,7 @@
       <view
             allowMultiple="false"
             category="de.cau.cs.kieler"
-            class="de.cau.cs.kieler.kvid.views.KViDView"
+            class="de.cau.cs.kieler.kvid.views.KvidView"
             icon="icons/kieler.png"
             id="de.cau.cs.kieler.kvid.KViDView"
             name="Visualization"
