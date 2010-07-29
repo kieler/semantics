@@ -13,9 +13,7 @@
 «DEFINE sm FOR StateMachine»
 	«FILE this.name.toString() +".maude"»
 	
-	«FOREACH this.getTriggerEvents() AS event SEPARATOR ","-»
-	     «event-»
-	«ENDFOREACH-»
+	«FOREACH this.getTriggerEvents() AS event SEPARATOR ","-»«event-»«ENDFOREACH-»
 	
 	// HERE COMES THE MAUDE CODE //
 	
