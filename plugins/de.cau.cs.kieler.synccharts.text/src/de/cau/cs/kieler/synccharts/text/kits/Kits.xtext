@@ -25,9 +25,9 @@ SingleNestedRegion returns synccharts::Region:
 // ---------------------------------------------------------------------------------------------------
 
 State returns synccharts::State:
-  (  ((isInitial?='init') (isFinal?='final')?) ('State')? (id=ID)? (label=STRING)
-   | ((isFinal?='final') (isInitial?='init')?) ('State')? (id=ID)? (label=STRING)
-   | ((type=StateType))?                       ('State')? (id=ID)? (label=STRING)
+  (  ((isInitial?='init') (isFinal?='final')?) ('State')? (id=ID)? (label=EString)
+   | ((isFinal?='final') (isInitial?='init')?) ('State')? (id=ID)? (label=EString)
+   | ((type=StateType))?                       ('State')? (id=ID)? (label=EString)
    )
   (  (outgoingTransitions+=Transition ("," outgoingTransitions+=Transition)*)? ';'
    | ('{'(
@@ -65,26 +65,31 @@ State returns synccharts::State:
 // ---------------------------------------------------------------------------------------------------
 
 Variable returns expressions::Variable:
-  'var' name=ID ((':=' initialValue=STRING)? ':' type=ValueType) ";";
+  'Var' name=ID ((':=' initialValue=IntegerOrString)? ':' type=ValueType) ";";
+
+// ---------------------------------------------------------------------------------------------------
+
+IntegerOrString :
+   INT | EString;
 
 // ---------------------------------------------------------------------------------------------------
 
 Signal returns expressions::Signal:
 (isInput?='input')?
 	(isOutput?='output')?
-	'signal'
-	(name=STRING)
-	(':=' initialValue=STRING)?
+	'Signal'
+	(name=EString)
+	(':=' initialValue=EString)?
     ((':' type=ValueType)
       |
-     (':' 'combine' type=ValueType 'with' (combineOperator=CombineOperator|hostCombineOperator=STRING) )
+     (':' 'combine' type=ValueType 'with' (combineOperator=CombineOperator|hostCombineOperator=EString) )
     )? ";";
 
 // ---------------------------------------------------------------------------------------------------
 
 Transition returns synccharts::Transition:
 	type=TransitionType 
-	targetState=[synccharts::State|STRING]
+	targetState=[synccharts::State|EString]
 	('<'priority=INT'>')? 
 	('with' (isImmediate?='#')? ("delay:=" delay=INT)? 
 	  ( trigger=Expression)?

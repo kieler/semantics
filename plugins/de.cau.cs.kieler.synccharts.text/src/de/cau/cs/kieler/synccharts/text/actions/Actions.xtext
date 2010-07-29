@@ -12,9 +12,22 @@ import "platform:/resource/de.cau.cs.kieler.core.expressions/model/expressions.e
 // here we only want to have the features isImmediate, delay, trigger and effects
 // the features type, targetState, priority, isHistory are ignored and set as transient
 // you need to override the rule to support transitions properly
+//Transition returns synccharts::Transition:
+//	{synccharts::Transition}
+//	(isImmediate?='#')? (delay=INT)? (trigger=BooleanExpression)? ("/" (effects+=Effect (',')? )*)?; 
+
 Transition returns synccharts::Transition:
 	{synccharts::Transition}
-	(isImmediate?='#')? (delay=INT)? (trigger=BooleanExpression)? ("/" (effects+=Effect (',')? )*)?; 
+	(isImmediate?='#')?
+	(
+	  (trigger=BooleanExpression)
+	 |
+	  (delay=INT)(trigger=BooleanExpression)?
+//	 |
+//	  (trigger=BooleanExpression)
+	)?
+	("/" effects+=Effect ((',') effects+=Effect)*)?; 
+
 
 Action returns synccharts::Action:
     {synccharts::Action}
@@ -25,13 +38,19 @@ Effect returns synccharts::Effect:
 		
 Emission returns synccharts::Emission:
 	signal=[expressions::Signal]	
-	(("(" newValue=ValuedExpression ")")
-   |("(" newValue=BooleanExpression ")") )?;
+	(
+	 ("(" newValue=BooleanExpression ")")
+     |
+     ("(" newValue=ValuedExpression  ")")
+    )?;
 
 Assignment returns synccharts::Assignment:
 	variable=[expressions::Variable] ":=" 
-	 ( expression=ValuedExpression
-	 | expression=BooleanExpression);
+	(
+	  expression=BooleanExpression
+	 |
+	  expression=ValuedExpression
+	);
 
 TextEffect returns synccharts::TextEffect:
  	code=STRING ("(" type=ID ")")?;
