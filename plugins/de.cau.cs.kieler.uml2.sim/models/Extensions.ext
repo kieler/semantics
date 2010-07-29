@@ -4,7 +4,7 @@ import uml;
 
 String trigger2(Transition transition):
   let transitionLabel = transition.name:
-  getTrigger(transitionLabel)
+  getTrigger(transitionLabel.toString())
 ;
 
 //Effect effect2(Transition transition):
