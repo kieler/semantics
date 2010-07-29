@@ -98,7 +98,11 @@ public class DataDistributor implements IProviderListener {
             Object o = allKeys.next();
             try {
                 String key = o.toString();
-                dataByURI.put(o.toString(), new DataObject(key, data.getString(key), randomPath));
+                if (dataByURI.containsKey(key)) {
+                    dataByURI.get(key).updateData(data.getString(key));
+                } else {
+                    dataByURI.put(o.toString(), new DataObject(key, data.getString(key), randomPath));
+                }
             } catch (JSONException e) {
                 e.printStackTrace();
             }

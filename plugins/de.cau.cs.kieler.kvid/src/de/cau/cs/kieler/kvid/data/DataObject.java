@@ -13,6 +13,7 @@
  */
 package de.cau.cs.kieler.kvid.data;
 
+import java.util.LinkedList;
 import java.util.List;
 
 import org.eclipse.draw2d.geometry.Point;
@@ -35,6 +36,12 @@ public class DataObject {
     /** The type of the data, given in data types known by KViD. */
     private DataType type;
     
+    /** Set true to save values in a history list. */
+    private boolean savesHistory = false; 
+    
+    /** List that stores values as history if desired. */
+    private List<String> history = new LinkedList<String>();
+    
     /** If animation is desired, give the path to follow here. */
     private List<Point> path;
     
@@ -42,6 +49,16 @@ public class DataObject {
         this.uri = theURI;
         this.data = thedata;
         this.type = parseDataType(thedata);
+    }
+    
+    public DataObject(final String theURI, final String thedata, final boolean doSaveHistory) {
+        this.uri = theURI;
+        this.data = thedata;
+        this.type = parseDataType(thedata);
+        this.savesHistory = doSaveHistory;
+        if (this.savesHistory) {
+            history.add(thedata);
+        }
     }
     
     public DataObject(final String theURI, final String thedata, final List<Point> thepath) {
@@ -58,6 +75,14 @@ public class DataObject {
         this.type = thetype;
     }
     
+    public DataObject(final String theURI, final String thedata, final List<Point> thepath,
+            final DataType thetype) {
+        this.uri = theURI;
+        this.data = thedata;
+        this.type = parseDataType(thedata);
+        this.path = thepath;
+    }
+    
     public Object getData() {
         switch (type) {
         case INT:
@@ -70,6 +95,16 @@ public class DataObject {
             return Boolean.parseBoolean(data);
         default:
             throw new RuntimeException("Data Type not supported: " + type.name());
+        }
+    }
+    
+    public void updateData(String thedata) {
+        if (!parseDataType(thedata).equals(this.type)) {
+            throw new RuntimeException("Tried to update with a different data type!");
+        }
+        this.data = thedata;
+        if (savesHistory) {
+            this.history.add(thedata);
         }
     }
     
@@ -93,6 +128,14 @@ public class DataObject {
             return DataType.BOOLEAN;
         }
         return DataType.STRING;
+    }
+    
+    public void setSaveHistory(final boolean doSaveHistory) {
+        this.savesHistory = doSaveHistory;
+    }
+    
+    public void clearHistory() {
+        this.history.clear();
     }
 
 }
