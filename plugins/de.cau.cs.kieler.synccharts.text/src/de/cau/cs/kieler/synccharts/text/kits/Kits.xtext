@@ -92,7 +92,7 @@ Transition returns synccharts::Transition:
 	targetState=[synccharts::State|EString]
 	('<'priority=INT'>')? 
 	('with' (isImmediate?='#')? ("delay:=" delay=INT)? 
-	  ( trigger=Expression)?
+	  ( trigger=BooleanExpression)?
       ('/' effects+=Effect (','effects+=Effect)*)?
 	)? 
 	(isHistory?=' history')?;

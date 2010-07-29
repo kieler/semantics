@@ -18,15 +18,7 @@ import "platform:/resource/de.cau.cs.kieler.core.expressions/model/expressions.e
 
 Transition returns synccharts::Transition:
 	{synccharts::Transition}
-	(isImmediate?='#')?
-	(
-	  (trigger=BooleanExpression)
-	 |
-	  (delay=INT)(trigger=BooleanExpression)?
-//	 |
-//	  (trigger=BooleanExpression)
-	)?
-	("/" effects+=Effect ((',') effects+=Effect)*)?; 
+	(isImmediate?='#')? (delay=INT)? (trigger=BooleanExpression)? ("/" effects+=Effect ((',') effects+=Effect)*)?; 
 
 
 Action returns synccharts::Action:
@@ -37,20 +29,10 @@ Effect returns synccharts::Effect:
 	Emission | Assignment | TextEffect;
 		
 Emission returns synccharts::Emission:
-	signal=[expressions::Signal]	
-	(
-	 ("(" newValue=BooleanExpression ")")
-     |
-     ("(" newValue=ValuedExpression  ")")
-    )?;
-
+	signal=[expressions::Signal] ( "(" newValue=Expression ")" )?;
+    
 Assignment returns synccharts::Assignment:
-	variable=[expressions::Variable] ":=" 
-	(
-	  expression=BooleanExpression
-	 |
-	  expression=ValuedExpression
-	);
+	variable=[expressions::Variable] ":=" expression = Expression;
 
 TextEffect returns synccharts::TextEffect:
  	code=STRING ("(" type=ID ")")?;

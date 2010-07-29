@@ -21,8 +21,6 @@ import org.eclipse.xtext.conversion.ValueConverterException;
 import org.eclipse.xtext.parsetree.AbstractNode;
 import org.eclipse.xtext.util.Strings;
 
-
-
 /**
  * @author haf
  *
@@ -55,8 +53,24 @@ public class ActionsValueConverter extends DefaultTerminalConverters {
     }
 
     /**
+     * Primitive integer data type converter provider allowing negative numbers.
+     * @return value converter for standard Java style booleans
+     */
+	@ValueConverter(rule = "INT")
+    public IValueConverter<Integer> INT() {
+    		return new org.eclipse.xtext.conversion.impl.INTValueConverter() 		
+    		{
+    			public String toString(Integer value) {
+    				if (value == null)
+    					throw new ValueConverterException("INT-value may not be null. (null indeed, zero is ok)", null, null);
+    				return value.toString();
+    			}		
+    		}
+	;
+    }
+
+    /**
      * Standard boolean data type converter to convert standard Java style
-     * boolean strings "true" and "false" into Boolean objects and vice versa.
      * @return value converter for standard Java style booleans
      */
     @ValueConverter(rule = "Float")

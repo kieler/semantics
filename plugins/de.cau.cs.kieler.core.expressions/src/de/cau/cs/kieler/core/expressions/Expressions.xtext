@@ -11,7 +11,9 @@ import "http://www.eclipse.org/emf/2002/Ecore" as ecore
 // --------------------------
 
 Expression returns Expression:
-	BooleanExpression;
+	BooleanExpression
+	| ValuedExpression
+	;
 
 // Example: not D and C or ?E = 42 or not (A and (B or C))
 BooleanExpression returns Expression:

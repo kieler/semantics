@@ -18,11 +18,11 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.xtext.parsetree.reconstr.ITransientValueService;
 
+import de.cau.cs.kieler.synccharts.Action;
 import de.cau.cs.kieler.synccharts.SyncchartsPackage;
-import de.cau.cs.kieler.synccharts.Transition;
 
 /**
- * @author haf
+ * @author haf, chsch
  * 
  */
 public class ActionsTransientValueService implements ITransientValueService {
@@ -34,7 +34,6 @@ public class ActionsTransientValueService implements ITransientValueService {
      * (org.eclipse.emf.ecore.EObject, org.eclipse.emf.ecore.EStructuralFeature)
      */
     public boolean isMixedList(EObject owner, EStructuralFeature feature) {
-        // TODO Auto-generated method stub
         return false;
     }
 
@@ -45,21 +44,25 @@ public class ActionsTransientValueService implements ITransientValueService {
      * (org.eclipse.emf.ecore.EObject, org.eclipse.emf.ecore.EStructuralFeature, int)
      */
     public boolean isTransient(EObject owner, EStructuralFeature feature, int index) {
-        if ((owner instanceof Transition && (feature.equals(SyncchartsPackage.eINSTANCE
-            .getTransition_Priority())
+        if (feature.equals(SyncchartsPackage.eINSTANCE.getTransition_Priority())
             || feature.equals(SyncchartsPackage.eINSTANCE.getTransition_Type())
             || feature.equals(SyncchartsPackage.eINSTANCE.getTransition_IsHistory())
             || feature.equals(SyncchartsPackage.eINSTANCE.getTransition_SourceState())
-            || feature.equals(SyncchartsPackage.eINSTANCE.getTransition_TargetState()) || feature
-            .equals(SyncchartsPackage.eINSTANCE.getAction_Label()))))
+            || feature.equals(SyncchartsPackage.eINSTANCE.getTransition_TargetState())
+            || feature.equals(SyncchartsPackage.eINSTANCE.getAction_Label()))
             return true;
-        else
-            return false;
+        
+        // this realizes the non-serialization of transition delay property if it is 1!
+        if (feature.equals(SyncchartsPackage.eINSTANCE.getAction_Delay())) {
+        	return ((Action) owner).getDelay() == 1;
+        }
+        
+        // this realizes the proper serialization of the immediate flag, for instance!
+        return feature.isTransient() || !owner.eIsSet(feature);
     }
 
     public boolean isCheckElementsIndividually(EObject owner, EStructuralFeature feature) {
-        // TODO Auto-generated method stub
-        return false;
+        return true;
     }
 
 }

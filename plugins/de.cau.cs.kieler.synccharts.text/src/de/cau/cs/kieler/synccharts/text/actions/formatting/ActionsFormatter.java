@@ -3,8 +3,10 @@
  */
 package de.cau.cs.kieler.synccharts.text.actions.formatting;
 
-import org.eclipse.xtext.formatting.impl.AbstractDeclarativeFormatter;
 import org.eclipse.xtext.formatting.impl.FormattingConfig;
+
+import de.cau.cs.kieler.core.expressions.formatting.ExpressionsFormatter;
+import de.cau.cs.kieler.synccharts.text.actions.services.ActionsGrammarAccess;
 
 /**
  * This class contains custom formatting description.
@@ -14,16 +16,25 @@ import org.eclipse.xtext.formatting.impl.FormattingConfig;
  * 
  * Also see {@link org.eclipse.xtext.xtext.XtextFormattingTokenSerializer} as an example
  */
-public class ActionsFormatter extends AbstractDeclarativeFormatter {
+public class ActionsFormatter extends ExpressionsFormatter {
 	
 	@Override
 	protected void configureFormatting(FormattingConfig c) {
-		de.cau.cs.kieler.synccharts.text.actions.services.ActionsGrammarAccess f = (de.cau.cs.kieler.synccharts.text.actions.services.ActionsGrammarAccess) getGrammarAccess();
+		ActionsGrammarAccess f = (ActionsGrammarAccess) getGrammarAccess();
+		customConfigerFormatting(c, f);
+	}
 
-		c.setLinewrap(0, 1, 2).before(f.getSL_COMMENTRule());
-		c.setLinewrap(0, 1, 2).before(f.getML_COMMENTRule());
-		c.setLinewrap(0, 1, 1).after(f.getML_COMMENTRule());
-
-		// ...
+	
+	/**
+	 * Method contains actual formatting instructions while GrammarAccess class
+	 * maybe parameterized allowing the reuse within ActionsFormatter. 
+	 * @param c FormattingConfig provided by caller
+	 * @param f GrammarAccess provided by caller
+	 */
+	protected void customConfigerFormatting(FormattingConfig c, ActionsGrammarAccess f) {
+		super.customConfigureFormatting(c, f.getExpressionsGrammarAccess());
+		
+		c.setNoSpace().before(f.getTextEffectAccess().getLeftParenthesisKeyword_1_0());
+		
 	}
 }

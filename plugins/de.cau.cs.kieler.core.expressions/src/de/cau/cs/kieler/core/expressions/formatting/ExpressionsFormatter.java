@@ -18,6 +18,8 @@ import org.eclipse.xtext.formatting.impl.FormattingConfig;
 import org.eclipse.xtext.Keyword;
 import org.eclipse.xtext.util.Pair;
 
+import de.cau.cs.kieler.core.expressions.services.ExpressionsGrammarAccess;
+
 /**
  * This class contains custom formatting description.
  * 
@@ -25,15 +27,28 @@ import org.eclipse.xtext.util.Pair;
  * on how and when to use it 
  * 
  * Also see {@link org.eclipse.xtext.xtext.XtextFormattingTokenSerializer} as an example
+ * 
+ * @author chsch
+ * 
  */
 public class ExpressionsFormatter extends AbstractDeclarativeFormatter {
 	
     /**
-     * {@inheritDoc}
+     * Delegates to customConfigureFormatting.
      */
 	@Override
 	protected void configureFormatting(FormattingConfig c) {
-		de.cau.cs.kieler.core.expressions.services.ExpressionsGrammarAccess f = (de.cau.cs.kieler.core.expressions.services.ExpressionsGrammarAccess) getGrammarAccess();
+		customConfigureFormatting(c, (ExpressionsGrammarAccess) getGrammarAccess());
+	}
+	
+	/**
+	 * Method contains actual formatting instructions while GrammarAccess class
+	 * maybe parameterized allowing the reuse within ActionsFormatter. 
+	 * @param c FormattingConfig provided by caller
+	 * @param f GrammarAccess provided by caller
+	 */
+	protected void customConfigureFormatting(FormattingConfig c, ExpressionsGrammarAccess f) {
+		
 		for(Pair<Keyword, Keyword> pair: f.findKeywordPairs("{", "}")) {
 			c.setIndentation(pair.getFirst(), pair.getSecond());
 			c.setLinewrap(1).after(pair.getFirst());
@@ -43,11 +58,24 @@ public class ExpressionsFormatter extends AbstractDeclarativeFormatter {
 		for(Keyword comma: f.findKeywords(",")) {
 			c.setNoLinewrap().before(comma);
 			c.setNoSpace().before(comma);
-			c.setLinewrap().after(comma);
 		}
+		
 		c.setLinewrap(0, 1, 2).before(f.getSL_COMMENTRule());
 		c.setLinewrap(0, 1, 2).before(f.getML_COMMENTRule());
 		c.setLinewrap(0, 1, 1).after(f.getML_COMMENTRule());
+		
+		
+		// Added by chsch:
+		c.setNoSpace().after(f.getValueTestOperatorRule());
+		for (Keyword lPar : f.findKeywords("(")) {
+			c.setNoSpace().after(lPar);
+		}
+		for (Keyword lPar : f.findKeywords(")")) {
+			c.setNoSpace().before(lPar);
+		}
+		
+		c.setNoSpace().after(f.getPreOperatorRule());
+		c.setNoSpace().before(f.getTextExpressionRule());
 	}
 	
 }
