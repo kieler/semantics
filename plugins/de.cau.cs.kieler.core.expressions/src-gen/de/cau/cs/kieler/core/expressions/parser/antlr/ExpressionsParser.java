@@ -42,7 +42,7 @@ public class ExpressionsParser extends org.eclipse.xtext.parser.antlr.AbstractAn
 	
 	@Override 
 	protected String getDefaultRuleName() {
-		return "SignalReference";
+		return "Expression";
 	}
 	
 	public ExpressionsGrammarAccess getGrammarAccess() {

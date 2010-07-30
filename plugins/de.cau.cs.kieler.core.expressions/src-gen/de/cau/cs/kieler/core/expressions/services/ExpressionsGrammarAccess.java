@@ -17,434 +17,321 @@ import org.eclipse.xtext.common.services.TerminalsGrammarAccess;
 public class ExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 	
 	
-	public class SignalReferenceElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "SignalReference");
-		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Assignment cSignalAssignment_0 = (Assignment)cGroup.eContents().get(0);
-		private final CrossReference cSignalSignalCrossReference_0_0 = (CrossReference)cSignalAssignment_0.eContents().get(0);
-		private final RuleCall cSignalSignalIDTerminalRuleCall_0_0_1 = (RuleCall)cSignalSignalCrossReference_0_0.eContents().get(1);
-		private final Group cGroup_1 = (Group)cGroup.eContents().get(1);
-		private final Keyword cLeftParenthesisKeyword_1_0 = (Keyword)cGroup_1.eContents().get(0);
-		private final Group cGroup_1_1 = (Group)cGroup_1.eContents().get(1);
-		private final Assignment cSubExpressionsAssignment_1_1_0 = (Assignment)cGroup_1_1.eContents().get(0);
-		private final RuleCall cSubExpressionsExpressionParserRuleCall_1_1_0_0 = (RuleCall)cSubExpressionsAssignment_1_1_0.eContents().get(0);
-		private final Keyword cCommaKeyword_1_1_1 = (Keyword)cGroup_1_1.eContents().get(1);
-		private final Keyword cRightParenthesisKeyword_1_2 = (Keyword)cGroup_1.eContents().get(2);
+	public class ExpressionElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Expression");
+		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
+		private final RuleCall cBooleanExpressionParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
+		private final RuleCall cValuedExpressionParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
 		
 		//// --------------------------
 		////
 		////   EXPRESSIONS
 		////
 		//// --------------------------
-		//SignalReference returns expressions::SignalReference:
-		//	signal=[expressions::Signal] ("(" (subExpressions+=Expression ","?)* ")")?;
+		//Expression:
+		//	BooleanExpression | ValuedExpression;
 		public ParserRule getRule() { return rule; }
 
-		//signal=[expressions::Signal] ("(" (subExpressions+=Expression ","?)* ")")?
-		public Group getGroup() { return cGroup; }
-
-		//signal=[expressions::Signal]
-		public Assignment getSignalAssignment_0() { return cSignalAssignment_0; }
-
-		//[expressions::Signal]
-		public CrossReference getSignalSignalCrossReference_0_0() { return cSignalSignalCrossReference_0_0; }
-
-		//ID
-		public RuleCall getSignalSignalIDTerminalRuleCall_0_0_1() { return cSignalSignalIDTerminalRuleCall_0_0_1; }
-
-		//("(" (subExpressions+=Expression ","?)* ")")?
-		public Group getGroup_1() { return cGroup_1; }
-
-		//"("
-		public Keyword getLeftParenthesisKeyword_1_0() { return cLeftParenthesisKeyword_1_0; }
-
-		//(subExpressions+=Expression ","?)*
-		public Group getGroup_1_1() { return cGroup_1_1; }
-
-		//subExpressions+=Expression
-		public Assignment getSubExpressionsAssignment_1_1_0() { return cSubExpressionsAssignment_1_1_0; }
-
-		//Expression
-		public RuleCall getSubExpressionsExpressionParserRuleCall_1_1_0_0() { return cSubExpressionsExpressionParserRuleCall_1_1_0_0; }
-
-		//","?
-		public Keyword getCommaKeyword_1_1_1() { return cCommaKeyword_1_1_1; }
-
-		//")"
-		public Keyword getRightParenthesisKeyword_1_2() { return cRightParenthesisKeyword_1_2; }
-	}
-
-	public class VariableReferenceElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "VariableReference");
-		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Assignment cVariableAssignment_0 = (Assignment)cGroup.eContents().get(0);
-		private final CrossReference cVariableVariableCrossReference_0_0 = (CrossReference)cVariableAssignment_0.eContents().get(0);
-		private final RuleCall cVariableVariableIDTerminalRuleCall_0_0_1 = (RuleCall)cVariableVariableCrossReference_0_0.eContents().get(1);
-		private final Group cGroup_1 = (Group)cGroup.eContents().get(1);
-		private final Keyword cLeftParenthesisKeyword_1_0 = (Keyword)cGroup_1.eContents().get(0);
-		private final Group cGroup_1_1 = (Group)cGroup_1.eContents().get(1);
-		private final Assignment cSubExpressionsAssignment_1_1_0 = (Assignment)cGroup_1_1.eContents().get(0);
-		private final RuleCall cSubExpressionsExpressionParserRuleCall_1_1_0_0 = (RuleCall)cSubExpressionsAssignment_1_1_0.eContents().get(0);
-		private final Keyword cCommaKeyword_1_1_1 = (Keyword)cGroup_1_1.eContents().get(1);
-		private final Keyword cRightParenthesisKeyword_1_2 = (Keyword)cGroup_1.eContents().get(2);
-		
-		//VariableReference returns expressions::VariableReference:
-		//	variable=[expressions::Variable] ("(" (subExpressions+=Expression ","?)* ")")?;
-		public ParserRule getRule() { return rule; }
-
-		//variable=[expressions::Variable] ("(" (subExpressions+=Expression ","?)* ")")?
-		public Group getGroup() { return cGroup; }
-
-		//variable=[expressions::Variable]
-		public Assignment getVariableAssignment_0() { return cVariableAssignment_0; }
-
-		//[expressions::Variable]
-		public CrossReference getVariableVariableCrossReference_0_0() { return cVariableVariableCrossReference_0_0; }
-
-		//ID
-		public RuleCall getVariableVariableIDTerminalRuleCall_0_0_1() { return cVariableVariableIDTerminalRuleCall_0_0_1; }
-
-		//("(" (subExpressions+=Expression ","?)* ")")?
-		public Group getGroup_1() { return cGroup_1; }
-
-		//"("
-		public Keyword getLeftParenthesisKeyword_1_0() { return cLeftParenthesisKeyword_1_0; }
-
-		//(subExpressions+=Expression ","?)*
-		public Group getGroup_1_1() { return cGroup_1_1; }
-
-		//subExpressions+=Expression
-		public Assignment getSubExpressionsAssignment_1_1_0() { return cSubExpressionsAssignment_1_1_0; }
-
-		//Expression
-		public RuleCall getSubExpressionsExpressionParserRuleCall_1_1_0_0() { return cSubExpressionsExpressionParserRuleCall_1_1_0_0; }
-
-		//","?
-		public Keyword getCommaKeyword_1_1_1() { return cCommaKeyword_1_1_1; }
-
-		//")"
-		public Keyword getRightParenthesisKeyword_1_2() { return cRightParenthesisKeyword_1_2; }
-	}
-
-	public class SignalElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Signal");
-		private final Assignment cNameAssignment = (Assignment)rule.eContents().get(1);
-		private final RuleCall cNameIDTerminalRuleCall_0 = (RuleCall)cNameAssignment.eContents().get(0);
-		
-		//Signal returns expressions::Signal:
-		//	name=ID;
-		public ParserRule getRule() { return rule; }
-
-		//name=ID
-		public Assignment getNameAssignment() { return cNameAssignment; }
-
-		//ID
-		public RuleCall getNameIDTerminalRuleCall_0() { return cNameIDTerminalRuleCall_0; }
-	}
-
-	public class VariableElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Variable");
-		private final Assignment cNameAssignment = (Assignment)rule.eContents().get(1);
-		private final RuleCall cNameIDTerminalRuleCall_0 = (RuleCall)cNameAssignment.eContents().get(0);
-		
-		//Variable returns expressions::Variable:
-		//	name=ID;
-		public ParserRule getRule() { return rule; }
-
-		//name=ID
-		public Assignment getNameAssignment() { return cNameAssignment; }
-
-		//ID
-		public RuleCall getNameIDTerminalRuleCall_0() { return cNameIDTerminalRuleCall_0; }
-	}
-
-	public class IntValueElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "IntValue");
-		private final Assignment cValueAssignment = (Assignment)rule.eContents().get(1);
-		private final RuleCall cValueINTTerminalRuleCall_0 = (RuleCall)cValueAssignment.eContents().get(0);
-		
-		//IntValue returns expressions::IntValue:
-		//	value=INT;
-		public ParserRule getRule() { return rule; }
-
-		//value=INT
-		public Assignment getValueAssignment() { return cValueAssignment; }
-
-		//INT
-		public RuleCall getValueINTTerminalRuleCall_0() { return cValueINTTerminalRuleCall_0; }
-	}
-
-	public class FloatValueElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "FloatValue");
-		private final Assignment cValueAssignment = (Assignment)rule.eContents().get(1);
-		private final RuleCall cValueFloatTerminalRuleCall_0 = (RuleCall)cValueAssignment.eContents().get(0);
-		
-		//FloatValue returns expressions::FloatValue:
-		//	value=Float;
-		public ParserRule getRule() { return rule; }
-
-		//value=Float
-		public Assignment getValueAssignment() { return cValueAssignment; }
-
-		//Float
-		public RuleCall getValueFloatTerminalRuleCall_0() { return cValueFloatTerminalRuleCall_0; }
-	}
-
-	public class BooleanValueElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "BooleanValue");
-		private final Assignment cValueAssignment = (Assignment)rule.eContents().get(1);
-		private final RuleCall cValueBooleanTerminalRuleCall_0 = (RuleCall)cValueAssignment.eContents().get(0);
-		
-		//BooleanValue returns expressions::BooleanValue:
-		//	value=Boolean;
-		public ParserRule getRule() { return rule; }
-
-		//value=Boolean
-		public Assignment getValueAssignment() { return cValueAssignment; }
-
-		//Boolean
-		public RuleCall getValueBooleanTerminalRuleCall_0() { return cValueBooleanTerminalRuleCall_0; }
-	}
-
-	public class ValueElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Value");
-		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
-		private final RuleCall cIntValueParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
-		private final RuleCall cFloatValueParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
-		private final RuleCall cBooleanValueParserRuleCall_2 = (RuleCall)cAlternatives.eContents().get(2);
-		
-		//Value returns expressions::Value:
-		//	IntValue | FloatValue | BooleanValue;
-		public ParserRule getRule() { return rule; }
-
-		//IntValue | FloatValue | BooleanValue
+		//BooleanExpression | ValuedExpression
 		public Alternatives getAlternatives() { return cAlternatives; }
 
-		//IntValue
-		public RuleCall getIntValueParserRuleCall_0() { return cIntValueParserRuleCall_0; }
+		//BooleanExpression
+		public RuleCall getBooleanExpressionParserRuleCall_0() { return cBooleanExpressionParserRuleCall_0; }
 
-		//FloatValue
-		public RuleCall getFloatValueParserRuleCall_1() { return cFloatValueParserRuleCall_1; }
-
-		//BooleanValue
-		public RuleCall getBooleanValueParserRuleCall_2() { return cBooleanValueParserRuleCall_2; }
+		//ValuedExpression
+		public RuleCall getValuedExpressionParserRuleCall_1() { return cValuedExpressionParserRuleCall_1; }
 	}
 
-	public class ValOperationElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "ValOperation");
-		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Assignment cOperatorAssignment_0 = (Assignment)cGroup.eContents().get(0);
-		private final RuleCall cOperatorValOperatorEnumRuleCall_0_0 = (RuleCall)cOperatorAssignment_0.eContents().get(0);
-		private final Assignment cSubExpressionsAssignment_1 = (Assignment)cGroup.eContents().get(1);
-		private final RuleCall cSubExpressionsSignalReferenceParserRuleCall_1_0 = (RuleCall)cSubExpressionsAssignment_1.eContents().get(0);
+	public class BooleanExpressionElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "BooleanExpression");
+		private final RuleCall cOrExpressionParserRuleCall = (RuleCall)rule.eContents().get(1);
 		
-		////==============================================================================
-		//// Arithmetic Expressions
-		////==============================================================================
-		//// Example: ?A	
-		//ValOperation returns expressions::OperatorExpression:
-		//	operator=ValOperator subExpressions+=SignalReference;
+		//// Example: not D and C or ?E = 42 or not (A and (B or C))
+		//BooleanExpression returns Expression:
+		//	OrExpression;
 		public ParserRule getRule() { return rule; }
 
-		//operator=ValOperator subExpressions+=SignalReference
+		//OrExpression
+		public RuleCall getOrExpressionParserRuleCall() { return cOrExpressionParserRuleCall; }
+	}
+
+	public class OrExpressionElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "OrExpression");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final RuleCall cAndExpressionParserRuleCall_0 = (RuleCall)cGroup.eContents().get(0);
+		private final Group cGroup_1 = (Group)cGroup.eContents().get(1);
+		private final Action cOperatorExpressionSubExpressionsAction_1_0 = (Action)cGroup_1.eContents().get(0);
+		private final Assignment cOperatorAssignment_1_1 = (Assignment)cGroup_1.eContents().get(1);
+		private final RuleCall cOperatorOrOperatorEnumRuleCall_1_1_0 = (RuleCall)cOperatorAssignment_1_1.eContents().get(0);
+		private final Assignment cSubExpressionsAssignment_1_2 = (Assignment)cGroup_1.eContents().get(2);
+		private final RuleCall cSubExpressionsAndExpressionParserRuleCall_1_2_0 = (RuleCall)cSubExpressionsAssignment_1_2.eContents().get(0);
+		
+		//// Example: A or B, A and B and C, C and B or D and not E, A and B and C
+		//OrExpression returns Expression:
+		//	AndExpression ({OperatorExpression.subExpressions+=current} operator=OrOperator subExpressions+=AndExpression)*;
+		public ParserRule getRule() { return rule; }
+
+		//AndExpression ({OperatorExpression.subExpressions+=current} operator=OrOperator subExpressions+=AndExpression)*
 		public Group getGroup() { return cGroup; }
 
-		//operator=ValOperator
-		public Assignment getOperatorAssignment_0() { return cOperatorAssignment_0; }
+		//AndExpression
+		public RuleCall getAndExpressionParserRuleCall_0() { return cAndExpressionParserRuleCall_0; }
 
-		//ValOperator
-		public RuleCall getOperatorValOperatorEnumRuleCall_0_0() { return cOperatorValOperatorEnumRuleCall_0_0; }
+		//({OperatorExpression.subExpressions+=current} operator=OrOperator subExpressions+=AndExpression)*
+		public Group getGroup_1() { return cGroup_1; }
 
-		//subExpressions+=SignalReference
-		public Assignment getSubExpressionsAssignment_1() { return cSubExpressionsAssignment_1; }
+		//{OperatorExpression.subExpressions+=current}
+		public Action getOperatorExpressionSubExpressionsAction_1_0() { return cOperatorExpressionSubExpressionsAction_1_0; }
 
-		//SignalReference
-		public RuleCall getSubExpressionsSignalReferenceParserRuleCall_1_0() { return cSubExpressionsSignalReferenceParserRuleCall_1_0; }
+		//operator=OrOperator
+		public Assignment getOperatorAssignment_1_1() { return cOperatorAssignment_1_1; }
+
+		//OrOperator
+		public RuleCall getOperatorOrOperatorEnumRuleCall_1_1_0() { return cOperatorOrOperatorEnumRuleCall_1_1_0; }
+
+		//subExpressions+=AndExpression
+		public Assignment getSubExpressionsAssignment_1_2() { return cSubExpressionsAssignment_1_2; }
+
+		//AndExpression
+		public RuleCall getSubExpressionsAndExpressionParserRuleCall_1_2_0() { return cSubExpressionsAndExpressionParserRuleCall_1_2_0; }
+	}
+
+	public class AndExpressionElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "AndExpression");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final RuleCall cCompareOperationParserRuleCall_0 = (RuleCall)cGroup.eContents().get(0);
+		private final Group cGroup_1 = (Group)cGroup.eContents().get(1);
+		private final Action cOperatorExpressionSubExpressionsAction_1_0 = (Action)cGroup_1.eContents().get(0);
+		private final Assignment cOperatorAssignment_1_1 = (Assignment)cGroup_1.eContents().get(1);
+		private final RuleCall cOperatorAndOperatorEnumRuleCall_1_1_0 = (RuleCall)cOperatorAssignment_1_1.eContents().get(0);
+		private final Assignment cSubExpressionsAssignment_1_2 = (Assignment)cGroup_1.eContents().get(2);
+		private final RuleCall cSubExpressionsCompareOperationParserRuleCall_1_2_0 = (RuleCall)cSubExpressionsAssignment_1_2.eContents().get(0);
+		
+		//// Example: A and B, not C and 42 <= ?D
+		//AndExpression returns Expression:
+		//	CompareOperation ({OperatorExpression.subExpressions+=current} operator=AndOperator
+		//	subExpressions+=CompareOperation)*;
+		public ParserRule getRule() { return rule; }
+
+		//CompareOperation ({OperatorExpression.subExpressions+=current} operator=AndOperator subExpressions+=CompareOperation)*
+		public Group getGroup() { return cGroup; }
+
+		//CompareOperation
+		public RuleCall getCompareOperationParserRuleCall_0() { return cCompareOperationParserRuleCall_0; }
+
+		//({OperatorExpression.subExpressions+=current} operator=AndOperator subExpressions+=CompareOperation)*
+		public Group getGroup_1() { return cGroup_1; }
+
+		//{OperatorExpression.subExpressions+=current}
+		public Action getOperatorExpressionSubExpressionsAction_1_0() { return cOperatorExpressionSubExpressionsAction_1_0; }
+
+		//operator=AndOperator
+		public Assignment getOperatorAssignment_1_1() { return cOperatorAssignment_1_1; }
+
+		//AndOperator
+		public RuleCall getOperatorAndOperatorEnumRuleCall_1_1_0() { return cOperatorAndOperatorEnumRuleCall_1_1_0; }
+
+		//subExpressions+=CompareOperation
+		public Assignment getSubExpressionsAssignment_1_2() { return cSubExpressionsAssignment_1_2; }
+
+		//CompareOperation
+		public RuleCall getSubExpressionsCompareOperationParserRuleCall_1_2_0() { return cSubExpressionsCompareOperationParserRuleCall_1_2_0; }
+	}
+
+	public class CompareOperationElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "CompareOperation");
+		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
+		private final Group cGroup_0 = (Group)cAlternatives.eContents().get(0);
+		private final RuleCall cNotOrValuedExpressionParserRuleCall_0_0 = (RuleCall)cGroup_0.eContents().get(0);
+		private final Group cGroup_0_1 = (Group)cGroup_0.eContents().get(1);
+		private final Action cOperatorExpressionSubExpressionsAction_0_1_0 = (Action)cGroup_0_1.eContents().get(0);
+		private final Assignment cOperatorAssignment_0_1_1 = (Assignment)cGroup_0_1.eContents().get(1);
+		private final RuleCall cOperatorCompareOperatorEnumRuleCall_0_1_1_0 = (RuleCall)cOperatorAssignment_0_1_1.eContents().get(0);
+		private final Assignment cSubExpressionsAssignment_0_1_2 = (Assignment)cGroup_0_1.eContents().get(2);
+		private final RuleCall cSubExpressionsNotOrValuedExpressionParserRuleCall_0_1_2_0 = (RuleCall)cSubExpressionsAssignment_0_1_2.eContents().get(0);
+		private final RuleCall cNotExpressionParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
+		
+		//// Example: 42 <= ?A
+		//CompareOperation returns Expression:
+		//	NotOrValuedExpression ({OperatorExpression.subExpressions+=current} operator=CompareOperator
+		//	subExpressions+=NotOrValuedExpression) | NotExpression;
+		public ParserRule getRule() { return rule; }
+
+		//NotOrValuedExpression ({OperatorExpression.subExpressions+=current} operator=CompareOperator
+		//subExpressions+=NotOrValuedExpression) | NotExpression
+		public Alternatives getAlternatives() { return cAlternatives; }
+
+		//NotOrValuedExpression ({OperatorExpression.subExpressions+=current} operator=CompareOperator
+		//subExpressions+=NotOrValuedExpression)
+		public Group getGroup_0() { return cGroup_0; }
+
+		//NotOrValuedExpression
+		public RuleCall getNotOrValuedExpressionParserRuleCall_0_0() { return cNotOrValuedExpressionParserRuleCall_0_0; }
+
+		//{OperatorExpression.subExpressions+=current} operator=CompareOperator subExpressions+=NotOrValuedExpression
+		public Group getGroup_0_1() { return cGroup_0_1; }
+
+		//{OperatorExpression.subExpressions+=current}
+		public Action getOperatorExpressionSubExpressionsAction_0_1_0() { return cOperatorExpressionSubExpressionsAction_0_1_0; }
+
+		//operator=CompareOperator
+		public Assignment getOperatorAssignment_0_1_1() { return cOperatorAssignment_0_1_1; }
+
+		//CompareOperator
+		public RuleCall getOperatorCompareOperatorEnumRuleCall_0_1_1_0() { return cOperatorCompareOperatorEnumRuleCall_0_1_1_0; }
+
+		//subExpressions+=NotOrValuedExpression
+		public Assignment getSubExpressionsAssignment_0_1_2() { return cSubExpressionsAssignment_0_1_2; }
+
+		//NotOrValuedExpression
+		public RuleCall getSubExpressionsNotOrValuedExpressionParserRuleCall_0_1_2_0() { return cSubExpressionsNotOrValuedExpressionParserRuleCall_0_1_2_0; }
+
+		//NotExpression
+		public RuleCall getNotExpressionParserRuleCall_1() { return cNotExpressionParserRuleCall_1; }
+	}
+
+	public class NotOrValuedExpressionElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "NotOrValuedExpression");
+		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
+		private final RuleCall cValuedExpressionParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
+		private final RuleCall cNotExpressionParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
+		
+		//// order IS IMPORTANT
+		//NotOrValuedExpression returns Expression:
+		//	ValuedExpression | NotExpression;
+		public ParserRule getRule() { return rule; }
+
+		//ValuedExpression | NotExpression
+		public Alternatives getAlternatives() { return cAlternatives; }
+
+		//ValuedExpression
+		public RuleCall getValuedExpressionParserRuleCall_0() { return cValuedExpressionParserRuleCall_0; }
+
+		//NotExpression
+		public RuleCall getNotExpressionParserRuleCall_1() { return cNotExpressionParserRuleCall_1; }
 	}
 
 	public class ValuedExpressionElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "ValuedExpression");
-		private final RuleCall cPlusOperationParserRuleCall = (RuleCall)rule.eContents().get(1);
+		private final RuleCall cAddExpressionParserRuleCall = (RuleCall)rule.eContents().get(1);
 		
 		//// everything that evaluates to a primitive number value
-		//ValuedExpression returns expressions::Expression:
-		//	PlusOperation;
+		//ValuedExpression returns Expression:
+		//	AddExpression;
 		public ParserRule getRule() { return rule; }
 
-		//PlusOperation
-		public RuleCall getPlusOperationParserRuleCall() { return cPlusOperationParserRuleCall; }
+		//AddExpression
+		public RuleCall getAddExpressionParserRuleCall() { return cAddExpressionParserRuleCall; }
 	}
 
-	public class ParanthesedValuedExpressionElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "ParanthesedValuedExpression");
-		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
-		private final RuleCall cIntValueParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
-		private final RuleCall cFloatValueParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
-		private final RuleCall cValOperationParserRuleCall_2 = (RuleCall)cAlternatives.eContents().get(2);
-		private final RuleCall cVariableReferenceParserRuleCall_3 = (RuleCall)cAlternatives.eContents().get(3);
-		private final RuleCall cTextExpressionParserRuleCall_4 = (RuleCall)cAlternatives.eContents().get(4);
-		private final Group cGroup_5 = (Group)cAlternatives.eContents().get(5);
-		private final Keyword cLeftParenthesisKeyword_5_0 = (Keyword)cGroup_5.eContents().get(0);
-		private final RuleCall cPlusOperationParserRuleCall_5_1 = (RuleCall)cGroup_5.eContents().get(1);
-		private final Keyword cRightParenthesisKeyword_5_2 = (Keyword)cGroup_5.eContents().get(2);
-		private final Group cGroup_6 = (Group)cAlternatives.eContents().get(6);
-		private final Keyword cLeftParenthesisKeyword_6_0 = (Keyword)cGroup_6.eContents().get(0);
-		private final RuleCall cDivOperationParserRuleCall_6_1 = (RuleCall)cGroup_6.eContents().get(1);
-		private final Keyword cRightParenthesisKeyword_6_2 = (Keyword)cGroup_6.eContents().get(2);
-		
-		//// Example: 42, 42.2, ?A, var1, (1+2*3)
-		//ParanthesedValuedExpression returns expressions::Expression:
-		//	IntValue | FloatValue | ValOperation | VariableReference | TextExpression | "(" PlusOperation ")" | "(" DivOperation
-		//	")";
-		public ParserRule getRule() { return rule; }
-
-		//IntValue | FloatValue | ValOperation | VariableReference | TextExpression | "(" PlusOperation ")" | "(" DivOperation ")"
-		public Alternatives getAlternatives() { return cAlternatives; }
-
-		//IntValue
-		public RuleCall getIntValueParserRuleCall_0() { return cIntValueParserRuleCall_0; }
-
-		//FloatValue
-		public RuleCall getFloatValueParserRuleCall_1() { return cFloatValueParserRuleCall_1; }
-
-		//ValOperation
-		public RuleCall getValOperationParserRuleCall_2() { return cValOperationParserRuleCall_2; }
-
-		//VariableReference
-		public RuleCall getVariableReferenceParserRuleCall_3() { return cVariableReferenceParserRuleCall_3; }
-
-		//TextExpression
-		public RuleCall getTextExpressionParserRuleCall_4() { return cTextExpressionParserRuleCall_4; }
-
-		//"(" PlusOperation ")"
-		public Group getGroup_5() { return cGroup_5; }
-
-		//"("
-		public Keyword getLeftParenthesisKeyword_5_0() { return cLeftParenthesisKeyword_5_0; }
-
-		//PlusOperation
-		public RuleCall getPlusOperationParserRuleCall_5_1() { return cPlusOperationParserRuleCall_5_1; }
-
-		//")"
-		public Keyword getRightParenthesisKeyword_5_2() { return cRightParenthesisKeyword_5_2; }
-
-		//"(" DivOperation ")"
-		public Group getGroup_6() { return cGroup_6; }
-
-		//"("
-		public Keyword getLeftParenthesisKeyword_6_0() { return cLeftParenthesisKeyword_6_0; }
-
-		//DivOperation
-		public RuleCall getDivOperationParserRuleCall_6_1() { return cDivOperationParserRuleCall_6_1; }
-
-		//")"
-		public Keyword getRightParenthesisKeyword_6_2() { return cRightParenthesisKeyword_6_2; }
-	}
-
-	public class PlusOperationElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "PlusOperation");
+	public class AddExpressionElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "AddExpression");
 		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final RuleCall cMultOrDivOperationParserRuleCall_0 = (RuleCall)cGroup.eContents().get(0);
+		private final RuleCall cSubExpressionParserRuleCall_0 = (RuleCall)cGroup.eContents().get(0);
 		private final Group cGroup_1 = (Group)cGroup.eContents().get(1);
 		private final Action cOperatorExpressionSubExpressionsAction_1_0 = (Action)cGroup_1.eContents().get(0);
 		private final Assignment cOperatorAssignment_1_1 = (Assignment)cGroup_1.eContents().get(1);
-		private final RuleCall cOperatorPlusOperatorEnumRuleCall_1_1_0 = (RuleCall)cOperatorAssignment_1_1.eContents().get(0);
+		private final RuleCall cOperatorAddOperatorEnumRuleCall_1_1_0 = (RuleCall)cOperatorAssignment_1_1.eContents().get(0);
 		private final Assignment cSubExpressionsAssignment_1_2 = (Assignment)cGroup_1.eContents().get(2);
-		private final RuleCall cSubExpressionsMultOrDivOperationParserRuleCall_1_2_0 = (RuleCall)cSubExpressionsAssignment_1_2.eContents().get(0);
+		private final RuleCall cSubExpressionsSubExpressionParserRuleCall_1_2_0 = (RuleCall)cSubExpressionsAssignment_1_2.eContents().get(0);
 		
-		//// Example: 1 + 2, varA - ?B
-		//PlusOperation returns expressions::Expression:
-		//	MultOrDivOperation ({expressions::OperatorExpression.subExpressions+=current} operator=PlusOperator
-		//	subExpressions+=MultOrDivOperation)*;
+		//// Example: 1 + 2
+		//AddExpression returns Expression:
+		//	SubExpression ({OperatorExpression.subExpressions+=current} operator=AddOperator subExpressions+=SubExpression)*;
 		public ParserRule getRule() { return rule; }
 
-		//MultOrDivOperation ({expressions::OperatorExpression.subExpressions+=current} operator=PlusOperator
-		//subExpressions+=MultOrDivOperation)*
+		//SubExpression ({OperatorExpression.subExpressions+=current} operator=AddOperator subExpressions+=SubExpression)*
 		public Group getGroup() { return cGroup; }
 
-		//MultOrDivOperation
-		public RuleCall getMultOrDivOperationParserRuleCall_0() { return cMultOrDivOperationParserRuleCall_0; }
+		//SubExpression
+		public RuleCall getSubExpressionParserRuleCall_0() { return cSubExpressionParserRuleCall_0; }
 
-		//({expressions::OperatorExpression.subExpressions+=current} operator=PlusOperator subExpressions+=MultOrDivOperation)*
+		//({OperatorExpression.subExpressions+=current} operator=AddOperator subExpressions+=SubExpression)*
 		public Group getGroup_1() { return cGroup_1; }
 
-		//{expressions::OperatorExpression.subExpressions+=current}
+		//{OperatorExpression.subExpressions+=current}
 		public Action getOperatorExpressionSubExpressionsAction_1_0() { return cOperatorExpressionSubExpressionsAction_1_0; }
 
-		//operator=PlusOperator
+		//operator=AddOperator
 		public Assignment getOperatorAssignment_1_1() { return cOperatorAssignment_1_1; }
 
-		//PlusOperator
-		public RuleCall getOperatorPlusOperatorEnumRuleCall_1_1_0() { return cOperatorPlusOperatorEnumRuleCall_1_1_0; }
+		//AddOperator
+		public RuleCall getOperatorAddOperatorEnumRuleCall_1_1_0() { return cOperatorAddOperatorEnumRuleCall_1_1_0; }
 
-		//subExpressions+=MultOrDivOperation
+		//subExpressions+=SubExpression
 		public Assignment getSubExpressionsAssignment_1_2() { return cSubExpressionsAssignment_1_2; }
 
-		//MultOrDivOperation
-		public RuleCall getSubExpressionsMultOrDivOperationParserRuleCall_1_2_0() { return cSubExpressionsMultOrDivOperationParserRuleCall_1_2_0; }
+		//SubExpression
+		public RuleCall getSubExpressionsSubExpressionParserRuleCall_1_2_0() { return cSubExpressionsSubExpressionParserRuleCall_1_2_0; }
 	}
 
-	public class MultOrDivOperationElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "MultOrDivOperation");
-		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
-		private final RuleCall cMultOperationParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
-		private final Group cGroup_1 = (Group)cAlternatives.eContents().get(1);
-		private final Keyword cLeftParenthesisKeyword_1_0 = (Keyword)cGroup_1.eContents().get(0);
-		private final RuleCall cDivOperationParserRuleCall_1_1 = (RuleCall)cGroup_1.eContents().get(1);
-		private final Keyword cRightParenthesisKeyword_1_2 = (Keyword)cGroup_1.eContents().get(2);
+	public class SubExpressionElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "SubExpression");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final RuleCall cMultExpressionParserRuleCall_0 = (RuleCall)cGroup.eContents().get(0);
+		private final Group cGroup_1 = (Group)cGroup.eContents().get(1);
+		private final Action cOperatorExpressionSubExpressionsAction_1_0 = (Action)cGroup_1.eContents().get(0);
+		private final Assignment cOperatorAssignment_1_1 = (Assignment)cGroup_1.eContents().get(1);
+		private final RuleCall cOperatorSubOperatorEnumRuleCall_1_1_0 = (RuleCall)cOperatorAssignment_1_1.eContents().get(0);
+		private final Assignment cSubExpressionsAssignment_1_2 = (Assignment)cGroup_1.eContents().get(2);
+		private final RuleCall cSubExpressionsMultExpressionParserRuleCall_1_2_0 = (RuleCall)cSubExpressionsAssignment_1_2.eContents().get(0);
 		
-		//MultOrDivOperation returns expressions::Expression:
-		//	MultOperation | "(" DivOperation ")";
+		//// Example: varA - ?B
+		//SubExpression returns Expression:
+		//	MultExpression ({OperatorExpression.subExpressions+=current} operator=SubOperator subExpressions+=MultExpression)*;
 		public ParserRule getRule() { return rule; }
 
-		//MultOperation | "(" DivOperation ")"
-		public Alternatives getAlternatives() { return cAlternatives; }
+		//MultExpression ({OperatorExpression.subExpressions+=current} operator=SubOperator subExpressions+=MultExpression)*
+		public Group getGroup() { return cGroup; }
 
-		//MultOperation
-		public RuleCall getMultOperationParserRuleCall_0() { return cMultOperationParserRuleCall_0; }
+		//MultExpression
+		public RuleCall getMultExpressionParserRuleCall_0() { return cMultExpressionParserRuleCall_0; }
 
-		//"(" DivOperation ")"
+		//({OperatorExpression.subExpressions+=current} operator=SubOperator subExpressions+=MultExpression)*
 		public Group getGroup_1() { return cGroup_1; }
 
-		//"("
-		public Keyword getLeftParenthesisKeyword_1_0() { return cLeftParenthesisKeyword_1_0; }
+		//{OperatorExpression.subExpressions+=current}
+		public Action getOperatorExpressionSubExpressionsAction_1_0() { return cOperatorExpressionSubExpressionsAction_1_0; }
 
-		//DivOperation
-		public RuleCall getDivOperationParserRuleCall_1_1() { return cDivOperationParserRuleCall_1_1; }
+		//operator=SubOperator
+		public Assignment getOperatorAssignment_1_1() { return cOperatorAssignment_1_1; }
 
-		//")"
-		public Keyword getRightParenthesisKeyword_1_2() { return cRightParenthesisKeyword_1_2; }
+		//SubOperator
+		public RuleCall getOperatorSubOperatorEnumRuleCall_1_1_0() { return cOperatorSubOperatorEnumRuleCall_1_1_0; }
+
+		//subExpressions+=MultExpression
+		public Assignment getSubExpressionsAssignment_1_2() { return cSubExpressionsAssignment_1_2; }
+
+		//MultExpression
+		public RuleCall getSubExpressionsMultExpressionParserRuleCall_1_2_0() { return cSubExpressionsMultExpressionParserRuleCall_1_2_0; }
 	}
 
-	public class MultOperationElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "MultOperation");
+	public class MultExpressionElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "MultExpression");
 		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final RuleCall cPreOrNormalValuedExpressionParserRuleCall_0 = (RuleCall)cGroup.eContents().get(0);
+		private final RuleCall cModExpressionParserRuleCall_0 = (RuleCall)cGroup.eContents().get(0);
 		private final Group cGroup_1 = (Group)cGroup.eContents().get(1);
 		private final Action cOperatorExpressionSubExpressionsAction_1_0 = (Action)cGroup_1.eContents().get(0);
 		private final Assignment cOperatorAssignment_1_1 = (Assignment)cGroup_1.eContents().get(1);
 		private final RuleCall cOperatorMultOperatorEnumRuleCall_1_1_0 = (RuleCall)cOperatorAssignment_1_1.eContents().get(0);
 		private final Assignment cSubExpressionsAssignment_1_2 = (Assignment)cGroup_1.eContents().get(2);
-		private final RuleCall cSubExpressionsPreOrNormalValuedExpressionParserRuleCall_1_2_0 = (RuleCall)cSubExpressionsAssignment_1_2.eContents().get(0);
+		private final RuleCall cSubExpressionsModExpressionParserRuleCall_1_2_0 = (RuleCall)cSubExpressionsAssignment_1_2.eContents().get(0);
 		
-		//// Example: 2 * 4, varA mod ?B
-		//MultOperation returns expressions::Expression:
-		//	PreOrNormalValuedExpression ({expressions::OperatorExpression.subExpressions+=current} operator=MultOperator
-		//	subExpressions+=PreOrNormalValuedExpression)*;
+		//// Example: 2 * 4
+		//MultExpression returns Expression:
+		//	ModExpression ({OperatorExpression.subExpressions+=current} operator=MultOperator subExpressions+=ModExpression)*;
 		public ParserRule getRule() { return rule; }
 
-		//PreOrNormalValuedExpression ({expressions::OperatorExpression.subExpressions+=current} operator=MultOperator
-		//subExpressions+=PreOrNormalValuedExpression)*
+		//ModExpression ({OperatorExpression.subExpressions+=current} operator=MultOperator subExpressions+=ModExpression)*
 		public Group getGroup() { return cGroup; }
 
-		//PreOrNormalValuedExpression
-		public RuleCall getPreOrNormalValuedExpressionParserRuleCall_0() { return cPreOrNormalValuedExpressionParserRuleCall_0; }
+		//ModExpression
+		public RuleCall getModExpressionParserRuleCall_0() { return cModExpressionParserRuleCall_0; }
 
-		//({expressions::OperatorExpression.subExpressions+=current} operator=MultOperator
-		//subExpressions+=PreOrNormalValuedExpression)*
+		//({OperatorExpression.subExpressions+=current} operator=MultOperator subExpressions+=ModExpression)*
 		public Group getGroup_1() { return cGroup_1; }
 
-		//{expressions::OperatorExpression.subExpressions+=current}
+		//{OperatorExpression.subExpressions+=current}
 		public Action getOperatorExpressionSubExpressionsAction_1_0() { return cOperatorExpressionSubExpressionsAction_1_0; }
 
 		//operator=MultOperator
@@ -453,432 +340,328 @@ public class ExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		//MultOperator
 		public RuleCall getOperatorMultOperatorEnumRuleCall_1_1_0() { return cOperatorMultOperatorEnumRuleCall_1_1_0; }
 
-		//subExpressions+=PreOrNormalValuedExpression
+		//subExpressions+=ModExpression
 		public Assignment getSubExpressionsAssignment_1_2() { return cSubExpressionsAssignment_1_2; }
 
-		//PreOrNormalValuedExpression
-		public RuleCall getSubExpressionsPreOrNormalValuedExpressionParserRuleCall_1_2_0() { return cSubExpressionsPreOrNormalValuedExpressionParserRuleCall_1_2_0; }
+		//ModExpression
+		public RuleCall getSubExpressionsModExpressionParserRuleCall_1_2_0() { return cSubExpressionsModExpressionParserRuleCall_1_2_0; }
 	}
 
-	public class DivOperationElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "DivOperation");
+	public class ModExpressionElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "ModExpression");
 		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final RuleCall cPreOrNormalValuedExpressionParserRuleCall_0 = (RuleCall)cGroup.eContents().get(0);
+		private final RuleCall cAtomicValuedExpressionParserRuleCall_0 = (RuleCall)cGroup.eContents().get(0);
 		private final Group cGroup_1 = (Group)cGroup.eContents().get(1);
 		private final Action cOperatorExpressionSubExpressionsAction_1_0 = (Action)cGroup_1.eContents().get(0);
 		private final Assignment cOperatorAssignment_1_1 = (Assignment)cGroup_1.eContents().get(1);
-		private final RuleCall cOperatorDivOperatorEnumRuleCall_1_1_0 = (RuleCall)cOperatorAssignment_1_1.eContents().get(0);
+		private final RuleCall cOperatorModOperatorEnumRuleCall_1_1_0 = (RuleCall)cOperatorAssignment_1_1.eContents().get(0);
 		private final Assignment cSubExpressionsAssignment_1_2 = (Assignment)cGroup_1.eContents().get(2);
-		private final RuleCall cSubExpressionsPreOrNormalValuedExpressionParserRuleCall_1_2_0 = (RuleCall)cSubExpressionsAssignment_1_2.eContents().get(0);
+		private final RuleCall cSubExpressionsAtomicValuedExpressionParserRuleCall_1_2_0 = (RuleCall)cSubExpressionsAssignment_1_2.eContents().get(0);
 		
-		//// Example: (2 / 4)
-		//// note: division has to have always parantheses because the '/' sign is also used for trigger/effect delimiter
-		//DivOperation returns expressions::Expression:
-		//	PreOrNormalValuedExpression ({expressions::OperatorExpression.subExpressions+=current} operator=DivOperator
-		//	subExpressions+=PreOrNormalValuedExpression)*;
+		//// Example: varA mod ?B
+		//ModExpression returns Expression:
+		//	AtomicValuedExpression ({OperatorExpression.subExpressions+=current} operator=ModOperator
+		//	subExpressions+=AtomicValuedExpression)?;
 		public ParserRule getRule() { return rule; }
 
-		//PreOrNormalValuedExpression ({expressions::OperatorExpression.subExpressions+=current} operator=DivOperator
-		//subExpressions+=PreOrNormalValuedExpression)*
+		//AtomicValuedExpression ({OperatorExpression.subExpressions+=current} operator=ModOperator
+		//subExpressions+=AtomicValuedExpression)?
 		public Group getGroup() { return cGroup; }
 
-		//PreOrNormalValuedExpression
-		public RuleCall getPreOrNormalValuedExpressionParserRuleCall_0() { return cPreOrNormalValuedExpressionParserRuleCall_0; }
+		//AtomicValuedExpression
+		public RuleCall getAtomicValuedExpressionParserRuleCall_0() { return cAtomicValuedExpressionParserRuleCall_0; }
 
-		//({expressions::OperatorExpression.subExpressions+=current} operator=DivOperator
-		//subExpressions+=PreOrNormalValuedExpression)*
+		//({OperatorExpression.subExpressions+=current} operator=ModOperator subExpressions+=AtomicValuedExpression)?
 		public Group getGroup_1() { return cGroup_1; }
 
-		//{expressions::OperatorExpression.subExpressions+=current}
+		//{OperatorExpression.subExpressions+=current}
 		public Action getOperatorExpressionSubExpressionsAction_1_0() { return cOperatorExpressionSubExpressionsAction_1_0; }
 
-		//operator=DivOperator
+		//operator=ModOperator
 		public Assignment getOperatorAssignment_1_1() { return cOperatorAssignment_1_1; }
 
-		//DivOperator
-		public RuleCall getOperatorDivOperatorEnumRuleCall_1_1_0() { return cOperatorDivOperatorEnumRuleCall_1_1_0; }
+		//ModOperator
+		public RuleCall getOperatorModOperatorEnumRuleCall_1_1_0() { return cOperatorModOperatorEnumRuleCall_1_1_0; }
 
-		//subExpressions+=PreOrNormalValuedExpression
+		//subExpressions+=AtomicValuedExpression
 		public Assignment getSubExpressionsAssignment_1_2() { return cSubExpressionsAssignment_1_2; }
 
-		//PreOrNormalValuedExpression
-		public RuleCall getSubExpressionsPreOrNormalValuedExpressionParserRuleCall_1_2_0() { return cSubExpressionsPreOrNormalValuedExpressionParserRuleCall_1_2_0; }
+		//AtomicValuedExpression
+		public RuleCall getSubExpressionsAtomicValuedExpressionParserRuleCall_1_2_0() { return cSubExpressionsAtomicValuedExpressionParserRuleCall_1_2_0; }
 	}
 
-	public class PreArithmOperationElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "PreArithmOperation");
-		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Assignment cOperatorAssignment_0 = (Assignment)cGroup.eContents().get(0);
-		private final RuleCall cOperatorUnaryParanthesedOperatorEnumRuleCall_0_0 = (RuleCall)cOperatorAssignment_0.eContents().get(0);
-		private final Keyword cLeftParenthesisKeyword_1 = (Keyword)cGroup.eContents().get(1);
-		private final Assignment cSubExpressionsAssignment_2 = (Assignment)cGroup.eContents().get(2);
-		private final RuleCall cSubExpressionsValOperationParserRuleCall_2_0 = (RuleCall)cSubExpressionsAssignment_2.eContents().get(0);
-		private final Keyword cRightParenthesisKeyword_3 = (Keyword)cGroup.eContents().get(3);
-		
-		//// Example: pre (? A)
-		//PreArithmOperation returns expressions::OperatorExpression:
-		//	operator=UnaryParanthesedOperator "(" subExpressions+=ValOperation ")";
-		public ParserRule getRule() { return rule; }
-
-		//operator=UnaryParanthesedOperator "(" subExpressions+=ValOperation ")"
-		public Group getGroup() { return cGroup; }
-
-		//operator=UnaryParanthesedOperator
-		public Assignment getOperatorAssignment_0() { return cOperatorAssignment_0; }
-
-		//UnaryParanthesedOperator
-		public RuleCall getOperatorUnaryParanthesedOperatorEnumRuleCall_0_0() { return cOperatorUnaryParanthesedOperatorEnumRuleCall_0_0; }
-
-		//"("
-		public Keyword getLeftParenthesisKeyword_1() { return cLeftParenthesisKeyword_1; }
-
-		//subExpressions+=ValOperation
-		public Assignment getSubExpressionsAssignment_2() { return cSubExpressionsAssignment_2; }
-
-		//ValOperation
-		public RuleCall getSubExpressionsValOperationParserRuleCall_2_0() { return cSubExpressionsValOperationParserRuleCall_2_0; }
-
-		//")"
-		public Keyword getRightParenthesisKeyword_3() { return cRightParenthesisKeyword_3; }
-	}
-
-	public class PreOrNormalValuedExpressionElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "PreOrNormalValuedExpression");
+	public class NotExpressionElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "NotExpression");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
-		private final RuleCall cPreArithmOperationParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
-		private final RuleCall cParanthesedValuedExpressionParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
-		
-		//PreOrNormalValuedExpression returns expressions::Expression:
-		//	PreArithmOperation | ParanthesedValuedExpression;
-		public ParserRule getRule() { return rule; }
-
-		//PreArithmOperation | ParanthesedValuedExpression
-		public Alternatives getAlternatives() { return cAlternatives; }
-
-		//PreArithmOperation
-		public RuleCall getPreArithmOperationParserRuleCall_0() { return cPreArithmOperationParserRuleCall_0; }
-
-		//ParanthesedValuedExpression
-		public RuleCall getParanthesedValuedExpressionParserRuleCall_1() { return cParanthesedValuedExpressionParserRuleCall_1; }
-	}
-
-	public class CompareOperationElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "CompareOperation");
-		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final RuleCall cValuedExpressionParserRuleCall_0 = (RuleCall)cGroup.eContents().get(0);
-		private final Group cGroup_1 = (Group)cGroup.eContents().get(1);
-		private final Action cOperatorExpressionSubExpressionsAction_1_0 = (Action)cGroup_1.eContents().get(0);
-		private final Assignment cOperatorAssignment_1_1 = (Assignment)cGroup_1.eContents().get(1);
-		private final RuleCall cOperatorCompareOperatorEnumRuleCall_1_1_0 = (RuleCall)cOperatorAssignment_1_1.eContents().get(0);
-		private final Assignment cSubExpressionsAssignment_1_2 = (Assignment)cGroup_1.eContents().get(2);
-		private final RuleCall cSubExpressionsValuedExpressionParserRuleCall_1_2_0 = (RuleCall)cSubExpressionsAssignment_1_2.eContents().get(0);
-		
-		////==============================================================================
-		//// Boolean Expressions
-		////==============================================================================
-		//// Example: 42 <= ?A
-		//CompareOperation returns expressions::Expression:
-		//	ValuedExpression ({expressions::OperatorExpression.subExpressions+=current} operator=CompareOperator
-		//	subExpressions+=ValuedExpression);
-		public ParserRule getRule() { return rule; }
-
-		//ValuedExpression ({expressions::OperatorExpression.subExpressions+=current} operator=CompareOperator
-		//subExpressions+=ValuedExpression)
-		public Group getGroup() { return cGroup; }
-
-		//ValuedExpression
-		public RuleCall getValuedExpressionParserRuleCall_0() { return cValuedExpressionParserRuleCall_0; }
-
-		//{expressions::OperatorExpression.subExpressions+=current} operator=CompareOperator subExpressions+=ValuedExpression
-		public Group getGroup_1() { return cGroup_1; }
-
-		//{expressions::OperatorExpression.subExpressions+=current}
-		public Action getOperatorExpressionSubExpressionsAction_1_0() { return cOperatorExpressionSubExpressionsAction_1_0; }
-
-		//operator=CompareOperator
-		public Assignment getOperatorAssignment_1_1() { return cOperatorAssignment_1_1; }
-
-		//CompareOperator
-		public RuleCall getOperatorCompareOperatorEnumRuleCall_1_1_0() { return cOperatorCompareOperatorEnumRuleCall_1_1_0; }
-
-		//subExpressions+=ValuedExpression
-		public Assignment getSubExpressionsAssignment_1_2() { return cSubExpressionsAssignment_1_2; }
-
-		//ValuedExpression
-		public RuleCall getSubExpressionsValuedExpressionParserRuleCall_1_2_0() { return cSubExpressionsValuedExpressionParserRuleCall_1_2_0; }
-	}
-
-	public class UnaryOperationElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "UnaryOperation");
-		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Assignment cOperatorAssignment_0 = (Assignment)cGroup.eContents().get(0);
-		private final RuleCall cOperatorUnaryOperatorEnumRuleCall_0_0 = (RuleCall)cOperatorAssignment_0.eContents().get(0);
-		private final Assignment cSubExpressionsAssignment_1 = (Assignment)cGroup.eContents().get(1);
-		private final Alternatives cSubExpressionsAlternatives_1_0 = (Alternatives)cSubExpressionsAssignment_1.eContents().get(0);
-		private final RuleCall cSubExpressionsParanthesedBooleanExpressionParserRuleCall_1_0_0 = (RuleCall)cSubExpressionsAlternatives_1_0.eContents().get(0);
-		private final RuleCall cSubExpressionsUnaryParanthesedOperationParserRuleCall_1_0_1 = (RuleCall)cSubExpressionsAlternatives_1_0.eContents().get(1);
+		private final Group cGroup_0 = (Group)cAlternatives.eContents().get(0);
+		private final Action cOperatorExpressionAction_0_0 = (Action)cGroup_0.eContents().get(0);
+		private final Assignment cOperatorAssignment_0_1 = (Assignment)cGroup_0.eContents().get(1);
+		private final RuleCall cOperatorNotOperatorEnumRuleCall_0_1_0 = (RuleCall)cOperatorAssignment_0_1.eContents().get(0);
+		private final Assignment cSubExpressionsAssignment_0_2 = (Assignment)cGroup_0.eContents().get(2);
+		private final RuleCall cSubExpressionsNotExpressionParserRuleCall_0_2_0 = (RuleCall)cSubExpressionsAssignment_0_2.eContents().get(0);
+		private final RuleCall cAtomicExpressionParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
 		
 		//// Example: not A, not false, not (A or B)
 		//// at the latter we need the parans to indicate the right binding
-		//UnaryOperation returns expressions::OperatorExpression:
-		//	operator=UnaryOperator subExpressions+=(ParanthesedBooleanExpression | UnaryParanthesedOperation);
+		//NotExpression returns Expression:
+		//	{OperatorExpression} operator=NotOperator subExpressions+=NotExpression | AtomicExpression;
 		public ParserRule getRule() { return rule; }
 
-		//operator=UnaryOperator subExpressions+=(ParanthesedBooleanExpression | UnaryParanthesedOperation)
-		public Group getGroup() { return cGroup; }
-
-		//operator=UnaryOperator
-		public Assignment getOperatorAssignment_0() { return cOperatorAssignment_0; }
-
-		//UnaryOperator
-		public RuleCall getOperatorUnaryOperatorEnumRuleCall_0_0() { return cOperatorUnaryOperatorEnumRuleCall_0_0; }
-
-		//subExpressions+=(ParanthesedBooleanExpression | UnaryParanthesedOperation)
-		public Assignment getSubExpressionsAssignment_1() { return cSubExpressionsAssignment_1; }
-
-		//ParanthesedBooleanExpression | UnaryParanthesedOperation
-		public Alternatives getSubExpressionsAlternatives_1_0() { return cSubExpressionsAlternatives_1_0; }
-
-		//ParanthesedBooleanExpression
-		public RuleCall getSubExpressionsParanthesedBooleanExpressionParserRuleCall_1_0_0() { return cSubExpressionsParanthesedBooleanExpressionParserRuleCall_1_0_0; }
-
-		//UnaryParanthesedOperation
-		public RuleCall getSubExpressionsUnaryParanthesedOperationParserRuleCall_1_0_1() { return cSubExpressionsUnaryParanthesedOperationParserRuleCall_1_0_1; }
-	}
-
-	public class UnaryParanthesedOperationElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "UnaryParanthesedOperation");
-		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Assignment cOperatorAssignment_0 = (Assignment)cGroup.eContents().get(0);
-		private final RuleCall cOperatorUnaryParanthesedOperatorEnumRuleCall_0_0 = (RuleCall)cOperatorAssignment_0.eContents().get(0);
-		private final Keyword cLeftParenthesisKeyword_1 = (Keyword)cGroup.eContents().get(1);
-		private final Assignment cSubExpressionsAssignment_2 = (Assignment)cGroup.eContents().get(2);
-		private final RuleCall cSubExpressionsBooleanExpressionParserRuleCall_2_0 = (RuleCall)cSubExpressionsAssignment_2.eContents().get(0);
-		private final Keyword cRightParenthesisKeyword_3 = (Keyword)cGroup.eContents().get(3);
-		
-		//UnaryParanthesedOperation returns expressions::OperatorExpression:
-		//	operator=UnaryParanthesedOperator "(" subExpressions+=BooleanExpression ")";
-		public ParserRule getRule() { return rule; }
-
-		//operator=UnaryParanthesedOperator "(" subExpressions+=BooleanExpression ")"
-		public Group getGroup() { return cGroup; }
-
-		//operator=UnaryParanthesedOperator
-		public Assignment getOperatorAssignment_0() { return cOperatorAssignment_0; }
-
-		//UnaryParanthesedOperator
-		public RuleCall getOperatorUnaryParanthesedOperatorEnumRuleCall_0_0() { return cOperatorUnaryParanthesedOperatorEnumRuleCall_0_0; }
-
-		//"("
-		public Keyword getLeftParenthesisKeyword_1() { return cLeftParenthesisKeyword_1; }
-
-		//subExpressions+=BooleanExpression
-		public Assignment getSubExpressionsAssignment_2() { return cSubExpressionsAssignment_2; }
-
-		//BooleanExpression
-		public RuleCall getSubExpressionsBooleanExpressionParserRuleCall_2_0() { return cSubExpressionsBooleanExpressionParserRuleCall_2_0; }
-
-		//")"
-		public Keyword getRightParenthesisKeyword_3() { return cRightParenthesisKeyword_3; }
-	}
-
-	public class UnaryOrNormalExpressionElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "UnaryOrNormalExpression");
-		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
-		private final RuleCall cUnaryOperationParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
-		private final RuleCall cUnaryParanthesedOperationParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
-		private final RuleCall cParanthesedBooleanExpressionParserRuleCall_2 = (RuleCall)cAlternatives.eContents().get(2);
-		
-		//// Example: either negated or normal expression (with parantheses) 
-		//UnaryOrNormalExpression returns expressions::Expression:
-		//	UnaryOperation | UnaryParanthesedOperation | ParanthesedBooleanExpression;
-		public ParserRule getRule() { return rule; }
-
-		//UnaryOperation | UnaryParanthesedOperation | ParanthesedBooleanExpression
+		//{OperatorExpression} operator=NotOperator subExpressions+=NotExpression | AtomicExpression
 		public Alternatives getAlternatives() { return cAlternatives; }
 
-		//UnaryOperation
-		public RuleCall getUnaryOperationParserRuleCall_0() { return cUnaryOperationParserRuleCall_0; }
+		//{OperatorExpression} operator=NotOperator subExpressions+=NotExpression
+		public Group getGroup_0() { return cGroup_0; }
 
-		//UnaryParanthesedOperation
-		public RuleCall getUnaryParanthesedOperationParserRuleCall_1() { return cUnaryParanthesedOperationParserRuleCall_1; }
+		//{OperatorExpression}
+		public Action getOperatorExpressionAction_0_0() { return cOperatorExpressionAction_0_0; }
 
-		//ParanthesedBooleanExpression
-		public RuleCall getParanthesedBooleanExpressionParserRuleCall_2() { return cParanthesedBooleanExpressionParserRuleCall_2; }
+		//operator=NotOperator
+		public Assignment getOperatorAssignment_0_1() { return cOperatorAssignment_0_1; }
+
+		//NotOperator
+		public RuleCall getOperatorNotOperatorEnumRuleCall_0_1_0() { return cOperatorNotOperatorEnumRuleCall_0_1_0; }
+
+		//subExpressions+=NotExpression
+		public Assignment getSubExpressionsAssignment_0_2() { return cSubExpressionsAssignment_0_2; }
+
+		//NotExpression
+		public RuleCall getSubExpressionsNotExpressionParserRuleCall_0_2_0() { return cSubExpressionsNotExpressionParserRuleCall_0_2_0; }
+
+		//AtomicExpression
+		public RuleCall getAtomicExpressionParserRuleCall_1() { return cAtomicExpressionParserRuleCall_1; }
 	}
 
-	public class AndOperationElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "AndOperation");
-		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final RuleCall cUnaryOrNormalExpressionParserRuleCall_0 = (RuleCall)cGroup.eContents().get(0);
-		private final Group cGroup_1 = (Group)cGroup.eContents().get(1);
-		private final Action cOperatorExpressionSubExpressionsAction_1_0 = (Action)cGroup_1.eContents().get(0);
-		private final Assignment cOperatorAssignment_1_1 = (Assignment)cGroup_1.eContents().get(1);
-		private final RuleCall cOperatorOperatorAndEnumRuleCall_1_1_0 = (RuleCall)cOperatorAssignment_1_1.eContents().get(0);
-		private final Assignment cSubExpressionsAssignment_1_2 = (Assignment)cGroup_1.eContents().get(2);
-		private final RuleCall cSubExpressionsUnaryOrNormalExpressionParserRuleCall_1_2_0 = (RuleCall)cSubExpressionsAssignment_1_2.eContents().get(0);
-		
-		//// Example: A and B, not C and 42 <= ?D
-		//AndOperation returns expressions::Expression:
-		//	UnaryOrNormalExpression ({expressions::OperatorExpression.subExpressions+=current} operator=OperatorAnd
-		//	subExpressions+=UnaryOrNormalExpression)*;
-		public ParserRule getRule() { return rule; }
-
-		//UnaryOrNormalExpression ({expressions::OperatorExpression.subExpressions+=current} operator=OperatorAnd
-		//subExpressions+=UnaryOrNormalExpression)*
-		public Group getGroup() { return cGroup; }
-
-		//UnaryOrNormalExpression
-		public RuleCall getUnaryOrNormalExpressionParserRuleCall_0() { return cUnaryOrNormalExpressionParserRuleCall_0; }
-
-		//({expressions::OperatorExpression.subExpressions+=current} operator=OperatorAnd
-		//subExpressions+=UnaryOrNormalExpression)*
-		public Group getGroup_1() { return cGroup_1; }
-
-		//{expressions::OperatorExpression.subExpressions+=current}
-		public Action getOperatorExpressionSubExpressionsAction_1_0() { return cOperatorExpressionSubExpressionsAction_1_0; }
-
-		//operator=OperatorAnd
-		public Assignment getOperatorAssignment_1_1() { return cOperatorAssignment_1_1; }
-
-		//OperatorAnd
-		public RuleCall getOperatorOperatorAndEnumRuleCall_1_1_0() { return cOperatorOperatorAndEnumRuleCall_1_1_0; }
-
-		//subExpressions+=UnaryOrNormalExpression
-		public Assignment getSubExpressionsAssignment_1_2() { return cSubExpressionsAssignment_1_2; }
-
-		//UnaryOrNormalExpression
-		public RuleCall getSubExpressionsUnaryOrNormalExpressionParserRuleCall_1_2_0() { return cSubExpressionsUnaryOrNormalExpressionParserRuleCall_1_2_0; }
-	}
-
-	public class OrOperationElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "OrOperation");
-		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final RuleCall cAndOperationParserRuleCall_0 = (RuleCall)cGroup.eContents().get(0);
-		private final Group cGroup_1 = (Group)cGroup.eContents().get(1);
-		private final Action cOperatorExpressionSubExpressionsAction_1_0 = (Action)cGroup_1.eContents().get(0);
-		private final Assignment cOperatorAssignment_1_1 = (Assignment)cGroup_1.eContents().get(1);
-		private final RuleCall cOperatorOperatorOrEnumRuleCall_1_1_0 = (RuleCall)cOperatorAssignment_1_1.eContents().get(0);
-		private final Assignment cSubExpressionsAssignment_1_2 = (Assignment)cGroup_1.eContents().get(2);
-		private final RuleCall cSubExpressionsAndOperationParserRuleCall_1_2_0 = (RuleCall)cSubExpressionsAssignment_1_2.eContents().get(0);
-		
-		//// Example: A or B, C and B or D and not E 
-		//OrOperation returns expressions::Expression:
-		//	AndOperation ({expressions::OperatorExpression.subExpressions+=current} operator=OperatorOr
-		//	subExpressions+=AndOperation)*;
-		public ParserRule getRule() { return rule; }
-
-		//AndOperation ({expressions::OperatorExpression.subExpressions+=current} operator=OperatorOr
-		//subExpressions+=AndOperation)*
-		public Group getGroup() { return cGroup; }
-
-		//AndOperation
-		public RuleCall getAndOperationParserRuleCall_0() { return cAndOperationParserRuleCall_0; }
-
-		//({expressions::OperatorExpression.subExpressions+=current} operator=OperatorOr subExpressions+=AndOperation)*
-		public Group getGroup_1() { return cGroup_1; }
-
-		//{expressions::OperatorExpression.subExpressions+=current}
-		public Action getOperatorExpressionSubExpressionsAction_1_0() { return cOperatorExpressionSubExpressionsAction_1_0; }
-
-		//operator=OperatorOr
-		public Assignment getOperatorAssignment_1_1() { return cOperatorAssignment_1_1; }
-
-		//OperatorOr
-		public RuleCall getOperatorOperatorOrEnumRuleCall_1_1_0() { return cOperatorOperatorOrEnumRuleCall_1_1_0; }
-
-		//subExpressions+=AndOperation
-		public Assignment getSubExpressionsAssignment_1_2() { return cSubExpressionsAssignment_1_2; }
-
-		//AndOperation
-		public RuleCall getSubExpressionsAndOperationParserRuleCall_1_2_0() { return cSubExpressionsAndOperationParserRuleCall_1_2_0; }
-	}
-
-	public class ParanthesedBooleanExpressionElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "ParanthesedBooleanExpression");
+	public class AtomicExpressionElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "AtomicExpression");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
 		private final RuleCall cBooleanValueParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
-		private final RuleCall cCompareOperationParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
-		private final RuleCall cSignalReferenceParserRuleCall_2 = (RuleCall)cAlternatives.eContents().get(2);
-		private final RuleCall cValOperationParserRuleCall_3 = (RuleCall)cAlternatives.eContents().get(3);
-		private final RuleCall cTextExpressionParserRuleCall_4 = (RuleCall)cAlternatives.eContents().get(4);
-		private final Group cGroup_5 = (Group)cAlternatives.eContents().get(5);
-		private final Keyword cLeftParenthesisKeyword_5_0 = (Keyword)cGroup_5.eContents().get(0);
-		private final RuleCall cOrOperationParserRuleCall_5_1 = (RuleCall)cGroup_5.eContents().get(1);
-		private final Keyword cRightParenthesisKeyword_5_2 = (Keyword)cGroup_5.eContents().get(2);
+		private final RuleCall cValuedObjectTestExpressionParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
+		private final Group cGroup_2 = (Group)cAlternatives.eContents().get(2);
+		private final Keyword cLeftParenthesisKeyword_2_0 = (Keyword)cGroup_2.eContents().get(0);
+		private final RuleCall cBooleanExpressionParserRuleCall_2_1 = (RuleCall)cGroup_2.eContents().get(1);
+		private final Keyword cRightParenthesisKeyword_2_2 = (Keyword)cGroup_2.eContents().get(2);
+		private final RuleCall cTextExpressionParserRuleCall_3 = (RuleCall)cAlternatives.eContents().get(3);
 		
-		//// Example: true, A, 42>var1, (A or B), (not D and C or ?E = 42)
-		//// note that the order of CompareOperation and SignalReference is important. This might be an Xtext bug...
-		//ParanthesedBooleanExpression returns expressions::Expression:
-		//	BooleanValue | CompareOperation | SignalReference | ValOperation | TextExpression | "(" OrOperation ")";
+		//AtomicExpression returns Expression:
+		//	BooleanValue | ValuedObjectTestExpression | "(" BooleanExpression ")" | TextExpression;
 		public ParserRule getRule() { return rule; }
 
-		//BooleanValue | CompareOperation | SignalReference | ValOperation | TextExpression | "(" OrOperation ")"
+		//BooleanValue | ValuedObjectTestExpression | "(" BooleanExpression ")" | TextExpression
 		public Alternatives getAlternatives() { return cAlternatives; }
 
 		//BooleanValue
 		public RuleCall getBooleanValueParserRuleCall_0() { return cBooleanValueParserRuleCall_0; }
 
-		//CompareOperation
-		public RuleCall getCompareOperationParserRuleCall_1() { return cCompareOperationParserRuleCall_1; }
+		//ValuedObjectTestExpression
+		public RuleCall getValuedObjectTestExpressionParserRuleCall_1() { return cValuedObjectTestExpressionParserRuleCall_1; }
 
-		//SignalReference
-		public RuleCall getSignalReferenceParserRuleCall_2() { return cSignalReferenceParserRuleCall_2; }
-
-		//ValOperation
-		public RuleCall getValOperationParserRuleCall_3() { return cValOperationParserRuleCall_3; }
-
-		//TextExpression
-		public RuleCall getTextExpressionParserRuleCall_4() { return cTextExpressionParserRuleCall_4; }
-
-		//"(" OrOperation ")"
-		public Group getGroup_5() { return cGroup_5; }
+		//"(" BooleanExpression ")"
+		public Group getGroup_2() { return cGroup_2; }
 
 		//"("
-		public Keyword getLeftParenthesisKeyword_5_0() { return cLeftParenthesisKeyword_5_0; }
+		public Keyword getLeftParenthesisKeyword_2_0() { return cLeftParenthesisKeyword_2_0; }
 
-		//OrOperation
-		public RuleCall getOrOperationParserRuleCall_5_1() { return cOrOperationParserRuleCall_5_1; }
+		//BooleanExpression
+		public RuleCall getBooleanExpressionParserRuleCall_2_1() { return cBooleanExpressionParserRuleCall_2_1; }
 
 		//")"
-		public Keyword getRightParenthesisKeyword_5_2() { return cRightParenthesisKeyword_5_2; }
+		public Keyword getRightParenthesisKeyword_2_2() { return cRightParenthesisKeyword_2_2; }
+
+		//TextExpression
+		public RuleCall getTextExpressionParserRuleCall_3() { return cTextExpressionParserRuleCall_3; }
 	}
 
-	public class BooleanExpressionElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "BooleanExpression");
-		private final RuleCall cOrOperationParserRuleCall = (RuleCall)rule.eContents().get(1);
-		
-		//// Example: not D and C or ?E = 42 or not (A and (B or C))
-		//BooleanExpression returns expressions::Expression:
-		//	OrOperation;
-		public ParserRule getRule() { return rule; }
-
-		//OrOperation
-		public RuleCall getOrOperationParserRuleCall() { return cOrOperationParserRuleCall; }
-	}
-
-	public class EStringElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "EString");
+	public class AtomicValuedExpressionElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "AtomicValuedExpression");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
-		private final RuleCall cSTRINGTerminalRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
-		private final RuleCall cIDTerminalRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
+		private final RuleCall cIntValueParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
+		private final RuleCall cFloatValueParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
+		private final Group cGroup_2 = (Group)cAlternatives.eContents().get(2);
+		private final Keyword cLeftParenthesisKeyword_2_0 = (Keyword)cGroup_2.eContents().get(0);
+		private final RuleCall cDivExpressionParserRuleCall_2_1 = (RuleCall)cGroup_2.eContents().get(1);
+		private final Keyword cRightParenthesisKeyword_2_2 = (Keyword)cGroup_2.eContents().get(2);
+		private final Group cGroup_3 = (Group)cAlternatives.eContents().get(3);
+		private final Keyword cLeftParenthesisKeyword_3_0 = (Keyword)cGroup_3.eContents().get(0);
+		private final RuleCall cValuedExpressionParserRuleCall_3_1 = (RuleCall)cGroup_3.eContents().get(1);
+		private final Keyword cRightParenthesisKeyword_3_2 = (Keyword)cGroup_3.eContents().get(2);
+		private final RuleCall cAtomicExpressionParserRuleCall_4 = (RuleCall)cAlternatives.eContents().get(4);
 		
-		////==============================================================================
-		//// Misc
-		////==============================================================================
-		////TODO: chsch will comment this :-)
-		//EString returns ecore::EString:
-		//	STRING | ID;
+		//AtomicValuedExpression returns Expression:
+		//	IntValue | FloatValue | "(" DivExpression ")" | "(" ValuedExpression ")" | AtomicExpression;
 		public ParserRule getRule() { return rule; }
 
-		//STRING | ID
+		//IntValue | FloatValue | "(" DivExpression ")" | "(" ValuedExpression ")" | AtomicExpression
 		public Alternatives getAlternatives() { return cAlternatives; }
 
-		//STRING
-		public RuleCall getSTRINGTerminalRuleCall_0() { return cSTRINGTerminalRuleCall_0; }
+		//IntValue
+		public RuleCall getIntValueParserRuleCall_0() { return cIntValueParserRuleCall_0; }
+
+		//FloatValue
+		public RuleCall getFloatValueParserRuleCall_1() { return cFloatValueParserRuleCall_1; }
+
+		//"(" DivExpression ")"
+		public Group getGroup_2() { return cGroup_2; }
+
+		//"("
+		public Keyword getLeftParenthesisKeyword_2_0() { return cLeftParenthesisKeyword_2_0; }
+
+		//DivExpression
+		public RuleCall getDivExpressionParserRuleCall_2_1() { return cDivExpressionParserRuleCall_2_1; }
+
+		//")"
+		public Keyword getRightParenthesisKeyword_2_2() { return cRightParenthesisKeyword_2_2; }
+
+		//"(" ValuedExpression ")"
+		public Group getGroup_3() { return cGroup_3; }
+
+		//"("
+		public Keyword getLeftParenthesisKeyword_3_0() { return cLeftParenthesisKeyword_3_0; }
+
+		//ValuedExpression
+		public RuleCall getValuedExpressionParserRuleCall_3_1() { return cValuedExpressionParserRuleCall_3_1; }
+
+		//")"
+		public Keyword getRightParenthesisKeyword_3_2() { return cRightParenthesisKeyword_3_2; }
+
+		//AtomicExpression
+		public RuleCall getAtomicExpressionParserRuleCall_4() { return cAtomicExpressionParserRuleCall_4; }
+	}
+
+	public class DivExpressionElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "DivExpression");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final RuleCall cAtomicValuedExpressionParserRuleCall_0 = (RuleCall)cGroup.eContents().get(0);
+		private final Action cOperatorExpressionSubExpressionsAction_1 = (Action)cGroup.eContents().get(1);
+		private final Assignment cOperatorAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final RuleCall cOperatorDivOperatorEnumRuleCall_2_0 = (RuleCall)cOperatorAssignment_2.eContents().get(0);
+		private final Assignment cSubExpressionsAssignment_3 = (Assignment)cGroup.eContents().get(3);
+		private final RuleCall cSubExpressionsAtomicValuedExpressionParserRuleCall_3_0 = (RuleCall)cSubExpressionsAssignment_3.eContents().get(0);
+		
+		//// Example: (2 / 4)
+		//// note: division always has to have parantheses because the '/' sign is also used for trigger/effect delimiter
+		//DivExpression returns Expression:
+		//	AtomicValuedExpression {OperatorExpression.subExpressions+=current} operator=DivOperator
+		//	subExpressions+=AtomicValuedExpression;
+		public ParserRule getRule() { return rule; }
+
+		//AtomicValuedExpression {OperatorExpression.subExpressions+=current} operator=DivOperator
+		//subExpressions+=AtomicValuedExpression
+		public Group getGroup() { return cGroup; }
+
+		//AtomicValuedExpression
+		public RuleCall getAtomicValuedExpressionParserRuleCall_0() { return cAtomicValuedExpressionParserRuleCall_0; }
+
+		//{OperatorExpression.subExpressions+=current}
+		public Action getOperatorExpressionSubExpressionsAction_1() { return cOperatorExpressionSubExpressionsAction_1; }
+
+		//operator=DivOperator
+		public Assignment getOperatorAssignment_2() { return cOperatorAssignment_2; }
+
+		//DivOperator
+		public RuleCall getOperatorDivOperatorEnumRuleCall_2_0() { return cOperatorDivOperatorEnumRuleCall_2_0; }
+
+		//subExpressions+=AtomicValuedExpression
+		public Assignment getSubExpressionsAssignment_3() { return cSubExpressionsAssignment_3; }
+
+		//AtomicValuedExpression
+		public RuleCall getSubExpressionsAtomicValuedExpressionParserRuleCall_3_0() { return cSubExpressionsAtomicValuedExpressionParserRuleCall_3_0; }
+	}
+
+	public class ValuedObjectTestExpressionElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "ValuedObjectTestExpression");
+		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
+		private final Group cGroup_0 = (Group)cAlternatives.eContents().get(0);
+		private final Action cOperatorExpressionAction_0_0 = (Action)cGroup_0.eContents().get(0);
+		private final Assignment cOperatorAssignment_0_1 = (Assignment)cGroup_0.eContents().get(1);
+		private final RuleCall cOperatorPreOperatorEnumRuleCall_0_1_0 = (RuleCall)cOperatorAssignment_0_1.eContents().get(0);
+		private final Keyword cLeftParenthesisKeyword_0_2 = (Keyword)cGroup_0.eContents().get(2);
+		private final Assignment cSubExpressionsAssignment_0_3 = (Assignment)cGroup_0.eContents().get(3);
+		private final RuleCall cSubExpressionsValuedObjectTestExpressionParserRuleCall_0_3_0 = (RuleCall)cSubExpressionsAssignment_0_3.eContents().get(0);
+		private final Keyword cRightParenthesisKeyword_0_4 = (Keyword)cGroup_0.eContents().get(4);
+		private final Group cGroup_1 = (Group)cAlternatives.eContents().get(1);
+		private final Action cOperatorExpressionAction_1_0 = (Action)cGroup_1.eContents().get(0);
+		private final Assignment cOperatorAssignment_1_1 = (Assignment)cGroup_1.eContents().get(1);
+		private final RuleCall cOperatorValueTestOperatorEnumRuleCall_1_1_0 = (RuleCall)cOperatorAssignment_1_1.eContents().get(0);
+		private final Assignment cSubExpressionsAssignment_1_2 = (Assignment)cGroup_1.eContents().get(2);
+		private final RuleCall cSubExpressionsValuedObjectReferenceParserRuleCall_1_2_0 = (RuleCall)cSubExpressionsAssignment_1_2.eContents().get(0);
+		private final RuleCall cValuedObjectReferenceParserRuleCall_2 = (RuleCall)cAlternatives.eContents().get(2);
+		
+		//// Example: pre(pre(?A)), pre(pre(A)), ?A, A varX
+		//ValuedObjectTestExpression returns Expression:
+		//	{OperatorExpression} operator=PreOperator "(" subExpressions+=ValuedObjectTestExpression ")" | {OperatorExpression}
+		//	operator=ValueTestOperator subExpressions+=ValuedObjectReference | ValuedObjectReference;
+		public ParserRule getRule() { return rule; }
+
+		//{OperatorExpression} operator=PreOperator "(" subExpressions+=ValuedObjectTestExpression ")" | {OperatorExpression}
+		//operator=ValueTestOperator subExpressions+=ValuedObjectReference | ValuedObjectReference
+		public Alternatives getAlternatives() { return cAlternatives; }
+
+		//{OperatorExpression} operator=PreOperator "(" subExpressions+=ValuedObjectTestExpression ")"
+		public Group getGroup_0() { return cGroup_0; }
+
+		//{OperatorExpression}
+		public Action getOperatorExpressionAction_0_0() { return cOperatorExpressionAction_0_0; }
+
+		//operator=PreOperator
+		public Assignment getOperatorAssignment_0_1() { return cOperatorAssignment_0_1; }
+
+		//PreOperator
+		public RuleCall getOperatorPreOperatorEnumRuleCall_0_1_0() { return cOperatorPreOperatorEnumRuleCall_0_1_0; }
+
+		//"("
+		public Keyword getLeftParenthesisKeyword_0_2() { return cLeftParenthesisKeyword_0_2; }
+
+		//subExpressions+=ValuedObjectTestExpression
+		public Assignment getSubExpressionsAssignment_0_3() { return cSubExpressionsAssignment_0_3; }
+
+		//ValuedObjectTestExpression
+		public RuleCall getSubExpressionsValuedObjectTestExpressionParserRuleCall_0_3_0() { return cSubExpressionsValuedObjectTestExpressionParserRuleCall_0_3_0; }
+
+		//")"
+		public Keyword getRightParenthesisKeyword_0_4() { return cRightParenthesisKeyword_0_4; }
+
+		//{OperatorExpression} operator=ValueTestOperator subExpressions+=ValuedObjectReference
+		public Group getGroup_1() { return cGroup_1; }
+
+		//{OperatorExpression}
+		public Action getOperatorExpressionAction_1_0() { return cOperatorExpressionAction_1_0; }
+
+		//operator=ValueTestOperator
+		public Assignment getOperatorAssignment_1_1() { return cOperatorAssignment_1_1; }
+
+		//ValueTestOperator
+		public RuleCall getOperatorValueTestOperatorEnumRuleCall_1_1_0() { return cOperatorValueTestOperatorEnumRuleCall_1_1_0; }
+
+		//subExpressions+=ValuedObjectReference
+		public Assignment getSubExpressionsAssignment_1_2() { return cSubExpressionsAssignment_1_2; }
+
+		//ValuedObjectReference
+		public RuleCall getSubExpressionsValuedObjectReferenceParserRuleCall_1_2_0() { return cSubExpressionsValuedObjectReferenceParserRuleCall_1_2_0; }
+
+		//ValuedObjectReference
+		public RuleCall getValuedObjectReferenceParserRuleCall_2() { return cValuedObjectReferenceParserRuleCall_2; }
+	}
+
+	public class ValuedObjectReferenceElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "ValuedObjectReference");
+		private final Assignment cValuedObjectAssignment = (Assignment)rule.eContents().get(1);
+		private final CrossReference cValuedObjectValuedObjectCrossReference_0 = (CrossReference)cValuedObjectAssignment.eContents().get(0);
+		private final RuleCall cValuedObjectValuedObjectIDTerminalRuleCall_0_1 = (RuleCall)cValuedObjectValuedObjectCrossReference_0.eContents().get(1);
+		
+		//// Example: A, varB
+		//ValuedObjectReference:
+		//	valuedObject=[ValuedObject];
+		public ParserRule getRule() { return rule; }
+
+		//valuedObject=[ValuedObject]
+		public Assignment getValuedObjectAssignment() { return cValuedObjectAssignment; }
+
+		//[ValuedObject]
+		public CrossReference getValuedObjectValuedObjectCrossReference_0() { return cValuedObjectValuedObjectCrossReference_0; }
 
 		//ID
-		public RuleCall getIDTerminalRuleCall_1() { return cIDTerminalRuleCall_1; }
+		public RuleCall getValuedObjectValuedObjectIDTerminalRuleCall_0_1() { return cValuedObjectValuedObjectIDTerminalRuleCall_0_1; }
 	}
 
 	public class TextExpressionElements extends AbstractParserRuleElementFinder {
@@ -892,7 +675,11 @@ public class ExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cTypeIDTerminalRuleCall_1_1_0 = (RuleCall)cTypeAssignment_1_1.eContents().get(0);
 		private final Keyword cRightParenthesisKeyword_1_2 = (Keyword)cGroup_1.eContents().get(2);
 		
-		//TextExpression returns expressions::TextExpression:
+		//// Taken from oba's kits grammar
+		////TextExpression returns TextExpression: 
+		////	code=STRING ("(" type=ID ")")?; 
+		//// Taken from haf's kits grammar
+		//TextExpression:
 		//	code=STRING ("(" type=ID ")")?;
 		public ParserRule getRule() { return rule; }
 
@@ -921,188 +708,75 @@ public class ExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		public Keyword getRightParenthesisKeyword_1_2() { return cRightParenthesisKeyword_1_2; }
 	}
 
-	public class ExpressionElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Expression");
-		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
-		private final RuleCall cValuedExpressionParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
-		private final RuleCall cBooleanExpressionParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
+	public class IntValueElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "IntValue");
+		private final Assignment cValueAssignment = (Assignment)rule.eContents().get(1);
+		private final RuleCall cValueINTTerminalRuleCall_0 = (RuleCall)cValueAssignment.eContents().get(0);
 		
-		//Expression returns expressions::Expression:
-		//	ValuedExpression | BooleanExpression;
+		//IntValue:
+		//	value=INT;
 		public ParserRule getRule() { return rule; }
 
-		//ValuedExpression | BooleanExpression
-		public Alternatives getAlternatives() { return cAlternatives; }
+		//value=INT
+		public Assignment getValueAssignment() { return cValueAssignment; }
 
-		//ValuedExpression
-		public RuleCall getValuedExpressionParserRuleCall_0() { return cValuedExpressionParserRuleCall_0; }
-
-		//BooleanExpression
-		public RuleCall getBooleanExpressionParserRuleCall_1() { return cBooleanExpressionParserRuleCall_1; }
+		//INT
+		public RuleCall getValueINTTerminalRuleCall_0() { return cValueINTTerminalRuleCall_0; }
 	}
-	
-	
-	public class OperatorTypeElements extends AbstractEnumRuleElementFinder {
-		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "OperatorType");
+
+	public class FloatValueElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "FloatValue");
+		private final Assignment cValueAssignment = (Assignment)rule.eContents().get(1);
+		private final RuleCall cValueFloatTerminalRuleCall_0 = (RuleCall)cValueAssignment.eContents().get(0);
+		
+		//FloatValue:
+		//	value=Float;
+		public ParserRule getRule() { return rule; }
+
+		//value=Float
+		public Assignment getValueAssignment() { return cValueAssignment; }
+
+		//Float
+		public RuleCall getValueFloatTerminalRuleCall_0() { return cValueFloatTerminalRuleCall_0; }
+	}
+
+	public class BooleanValueElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "BooleanValue");
+		private final Assignment cValueAssignment = (Assignment)rule.eContents().get(1);
+		private final RuleCall cValueBooleanTerminalRuleCall_0 = (RuleCall)cValueAssignment.eContents().get(0);
+		
+		//BooleanValue:
+		//	value=Boolean;
+		public ParserRule getRule() { return rule; }
+
+		//value=Boolean
+		public Assignment getValueAssignment() { return cValueAssignment; }
+
+		//Boolean
+		public RuleCall getValueBooleanTerminalRuleCall_0() { return cValueBooleanTerminalRuleCall_0; }
+	}
+
+	public class EStringElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "EString");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
-		private final EnumLiteralDeclaration cEQEnumLiteralDeclaration_0 = (EnumLiteralDeclaration)cAlternatives.eContents().get(0);
-		private final Keyword cEQEqualsSignKeyword_0_0 = (Keyword)cEQEnumLiteralDeclaration_0.eContents().get(0);
-		private final EnumLiteralDeclaration cLTEnumLiteralDeclaration_1 = (EnumLiteralDeclaration)cAlternatives.eContents().get(1);
-		private final Keyword cLTLessThanSignKeyword_1_0 = (Keyword)cLTEnumLiteralDeclaration_1.eContents().get(0);
-		private final EnumLiteralDeclaration cLEQEnumLiteralDeclaration_2 = (EnumLiteralDeclaration)cAlternatives.eContents().get(2);
-		private final Keyword cLEQLessThanSignEqualsSignKeyword_2_0 = (Keyword)cLEQEnumLiteralDeclaration_2.eContents().get(0);
-		private final EnumLiteralDeclaration cGTEnumLiteralDeclaration_3 = (EnumLiteralDeclaration)cAlternatives.eContents().get(3);
-		private final Keyword cGTGreaterThanSignKeyword_3_0 = (Keyword)cGTEnumLiteralDeclaration_3.eContents().get(0);
-		private final EnumLiteralDeclaration cGEQEnumLiteralDeclaration_4 = (EnumLiteralDeclaration)cAlternatives.eContents().get(4);
-		private final Keyword cGEQGreaterThanSignEqualsSignKeyword_4_0 = (Keyword)cGEQEnumLiteralDeclaration_4.eContents().get(0);
-		private final EnumLiteralDeclaration cNOTEnumLiteralDeclaration_5 = (EnumLiteralDeclaration)cAlternatives.eContents().get(5);
-		private final Keyword cNOTNotKeyword_5_0 = (Keyword)cNOTEnumLiteralDeclaration_5.eContents().get(0);
-		private final EnumLiteralDeclaration cNEEnumLiteralDeclaration_6 = (EnumLiteralDeclaration)cAlternatives.eContents().get(6);
-		private final Keyword cNELessThanSignGreaterThanSignKeyword_6_0 = (Keyword)cNEEnumLiteralDeclaration_6.eContents().get(0);
-		private final EnumLiteralDeclaration cANDEnumLiteralDeclaration_7 = (EnumLiteralDeclaration)cAlternatives.eContents().get(7);
-		private final Keyword cANDAndKeyword_7_0 = (Keyword)cANDEnumLiteralDeclaration_7.eContents().get(0);
-		private final EnumLiteralDeclaration cOREnumLiteralDeclaration_8 = (EnumLiteralDeclaration)cAlternatives.eContents().get(8);
-		private final Keyword cOROrKeyword_8_0 = (Keyword)cOREnumLiteralDeclaration_8.eContents().get(0);
-		private final EnumLiteralDeclaration cADDEnumLiteralDeclaration_9 = (EnumLiteralDeclaration)cAlternatives.eContents().get(9);
-		private final Keyword cADDPlusSignKeyword_9_0 = (Keyword)cADDEnumLiteralDeclaration_9.eContents().get(0);
-		private final EnumLiteralDeclaration cSUBEnumLiteralDeclaration_10 = (EnumLiteralDeclaration)cAlternatives.eContents().get(10);
-		private final Keyword cSUBHyphenMinusKeyword_10_0 = (Keyword)cSUBEnumLiteralDeclaration_10.eContents().get(0);
-		private final EnumLiteralDeclaration cMULTEnumLiteralDeclaration_11 = (EnumLiteralDeclaration)cAlternatives.eContents().get(11);
-		private final Keyword cMULTAsteriskKeyword_11_0 = (Keyword)cMULTEnumLiteralDeclaration_11.eContents().get(0);
-		private final EnumLiteralDeclaration cDIVEnumLiteralDeclaration_12 = (EnumLiteralDeclaration)cAlternatives.eContents().get(12);
-		private final Keyword cDIVSolidusKeyword_12_0 = (Keyword)cDIVEnumLiteralDeclaration_12.eContents().get(0);
-		private final EnumLiteralDeclaration cMODEnumLiteralDeclaration_13 = (EnumLiteralDeclaration)cAlternatives.eContents().get(13);
-		private final Keyword cMODModKeyword_13_0 = (Keyword)cMODEnumLiteralDeclaration_13.eContents().get(0);
-		private final EnumLiteralDeclaration cVALEnumLiteralDeclaration_14 = (EnumLiteralDeclaration)cAlternatives.eContents().get(14);
-		private final Keyword cVALQuestionMarkKeyword_14_0 = (Keyword)cVALEnumLiteralDeclaration_14.eContents().get(0);
-		private final EnumLiteralDeclaration cPREEnumLiteralDeclaration_15 = (EnumLiteralDeclaration)cAlternatives.eContents().get(15);
-		private final Keyword cPREPreKeyword_15_0 = (Keyword)cPREEnumLiteralDeclaration_15.eContents().get(0);
+		private final RuleCall cSTRINGTerminalRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
+		private final RuleCall cIDTerminalRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
 		
-		////==============================================================================
-		//// Operators
-		////==============================================================================
-		//enum OperatorType returns expressions::OperatorType:
-		//	EQ="=" | LT="<" | LEQ="<=" | GT=">" | GEQ=">=" | NOT="not" | NE="<>" | AND="and" | OR="or" | ADD="+" | SUB="-" |
-		//	MULT="*" | DIV="/" | MOD="mod" | VAL="?" | PRE="pre";
-		public EnumRule getRule() { return rule; }
+		//EString returns ecore::EString:
+		//	STRING | ID;
+		public ParserRule getRule() { return rule; }
 
-		//EQ="=" | LT="<" | LEQ="<=" | GT=">" | GEQ=">=" | NOT="not" | NE="<>" | AND="and" | OR="or" | ADD="+" | SUB="-" |
-		//MULT="*" | DIV="/" | MOD="mod" | VAL="?" | PRE="pre"
+		//STRING | ID
 		public Alternatives getAlternatives() { return cAlternatives; }
 
-		//EQ="="
-		public EnumLiteralDeclaration getEQEnumLiteralDeclaration_0() { return cEQEnumLiteralDeclaration_0; }
+		//STRING
+		public RuleCall getSTRINGTerminalRuleCall_0() { return cSTRINGTerminalRuleCall_0; }
 
-		//"="
-		public Keyword getEQEqualsSignKeyword_0_0() { return cEQEqualsSignKeyword_0_0; }
-
-		//LT="<"
-		public EnumLiteralDeclaration getLTEnumLiteralDeclaration_1() { return cLTEnumLiteralDeclaration_1; }
-
-		//"<"
-		public Keyword getLTLessThanSignKeyword_1_0() { return cLTLessThanSignKeyword_1_0; }
-
-		//LEQ="<="
-		public EnumLiteralDeclaration getLEQEnumLiteralDeclaration_2() { return cLEQEnumLiteralDeclaration_2; }
-
-		//"<="
-		public Keyword getLEQLessThanSignEqualsSignKeyword_2_0() { return cLEQLessThanSignEqualsSignKeyword_2_0; }
-
-		//GT=">"
-		public EnumLiteralDeclaration getGTEnumLiteralDeclaration_3() { return cGTEnumLiteralDeclaration_3; }
-
-		//">"
-		public Keyword getGTGreaterThanSignKeyword_3_0() { return cGTGreaterThanSignKeyword_3_0; }
-
-		//GEQ=">="
-		public EnumLiteralDeclaration getGEQEnumLiteralDeclaration_4() { return cGEQEnumLiteralDeclaration_4; }
-
-		//">="
-		public Keyword getGEQGreaterThanSignEqualsSignKeyword_4_0() { return cGEQGreaterThanSignEqualsSignKeyword_4_0; }
-
-		//NOT="not"
-		public EnumLiteralDeclaration getNOTEnumLiteralDeclaration_5() { return cNOTEnumLiteralDeclaration_5; }
-
-		//"not"
-		public Keyword getNOTNotKeyword_5_0() { return cNOTNotKeyword_5_0; }
-
-		//NE="<>"
-		public EnumLiteralDeclaration getNEEnumLiteralDeclaration_6() { return cNEEnumLiteralDeclaration_6; }
-
-		//"<>"
-		public Keyword getNELessThanSignGreaterThanSignKeyword_6_0() { return cNELessThanSignGreaterThanSignKeyword_6_0; }
-
-		//AND="and"
-		public EnumLiteralDeclaration getANDEnumLiteralDeclaration_7() { return cANDEnumLiteralDeclaration_7; }
-
-		//"and"
-		public Keyword getANDAndKeyword_7_0() { return cANDAndKeyword_7_0; }
-
-		//OR="or"
-		public EnumLiteralDeclaration getOREnumLiteralDeclaration_8() { return cOREnumLiteralDeclaration_8; }
-
-		//"or"
-		public Keyword getOROrKeyword_8_0() { return cOROrKeyword_8_0; }
-
-		//ADD="+"
-		public EnumLiteralDeclaration getADDEnumLiteralDeclaration_9() { return cADDEnumLiteralDeclaration_9; }
-
-		//"+"
-		public Keyword getADDPlusSignKeyword_9_0() { return cADDPlusSignKeyword_9_0; }
-
-		//SUB="-"
-		public EnumLiteralDeclaration getSUBEnumLiteralDeclaration_10() { return cSUBEnumLiteralDeclaration_10; }
-
-		//"-"
-		public Keyword getSUBHyphenMinusKeyword_10_0() { return cSUBHyphenMinusKeyword_10_0; }
-
-		//MULT="*"
-		public EnumLiteralDeclaration getMULTEnumLiteralDeclaration_11() { return cMULTEnumLiteralDeclaration_11; }
-
-		//"*"
-		public Keyword getMULTAsteriskKeyword_11_0() { return cMULTAsteriskKeyword_11_0; }
-
-		//DIV="/"
-		public EnumLiteralDeclaration getDIVEnumLiteralDeclaration_12() { return cDIVEnumLiteralDeclaration_12; }
-
-		//"/"
-		public Keyword getDIVSolidusKeyword_12_0() { return cDIVSolidusKeyword_12_0; }
-
-		//MOD="mod"
-		public EnumLiteralDeclaration getMODEnumLiteralDeclaration_13() { return cMODEnumLiteralDeclaration_13; }
-
-		//"mod"
-		public Keyword getMODModKeyword_13_0() { return cMODModKeyword_13_0; }
-
-		//VAL="?"
-		public EnumLiteralDeclaration getVALEnumLiteralDeclaration_14() { return cVALEnumLiteralDeclaration_14; }
-
-		//"?"
-		public Keyword getVALQuestionMarkKeyword_14_0() { return cVALQuestionMarkKeyword_14_0; }
-
-		//PRE="pre"
-		public EnumLiteralDeclaration getPREEnumLiteralDeclaration_15() { return cPREEnumLiteralDeclaration_15; }
-
-		//"pre"
-		public Keyword getPREPreKeyword_15_0() { return cPREPreKeyword_15_0; }
+		//ID
+		public RuleCall getIDTerminalRuleCall_1() { return cIDTerminalRuleCall_1; }
 	}
-
-	public class ValOperatorElements extends AbstractEnumRuleElementFinder {
-		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "ValOperator");
-		private final EnumLiteralDeclaration cVALEnumLiteralDeclaration = (EnumLiteralDeclaration)rule.eContents().get(1);
-		private final Keyword cVALQuestionMarkKeyword_0 = (Keyword)cVALEnumLiteralDeclaration.eContents().get(0);
-		
-		//enum ValOperator returns expressions::OperatorType:
-		//	VAL="?";
-		public EnumRule getRule() { return rule; }
-
-		//VAL="?"
-		public EnumLiteralDeclaration getVALEnumLiteralDeclaration() { return cVALEnumLiteralDeclaration; }
-
-		//"?"
-		public Keyword getVALQuestionMarkKeyword_0() { return cVALQuestionMarkKeyword_0; }
-	}
-
+	
+	
 	public class CompareOperatorElements extends AbstractEnumRuleElementFinder {
 		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "CompareOperator");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
@@ -1119,7 +793,7 @@ public class ExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		private final EnumLiteralDeclaration cNEEnumLiteralDeclaration_5 = (EnumLiteralDeclaration)cAlternatives.eContents().get(5);
 		private final Keyword cNELessThanSignGreaterThanSignKeyword_5_0 = (Keyword)cNEEnumLiteralDeclaration_5.eContents().get(0);
 		
-		//enum CompareOperator returns expressions::OperatorType:
+		//enum CompareOperator returns OperatorType:
 		//	EQ="=" | LT="<" | LEQ="<=" | GT=">" | GEQ=">=" | NE="<>";
 		public EnumRule getRule() { return rule; }
 
@@ -1163,30 +837,12 @@ public class ExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		public Keyword getNELessThanSignGreaterThanSignKeyword_5_0() { return cNELessThanSignGreaterThanSignKeyword_5_0; }
 	}
 
-	public class UnaryOperatorElements extends AbstractEnumRuleElementFinder {
-		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "UnaryOperator");
-		private final EnumLiteralDeclaration cNOTEnumLiteralDeclaration = (EnumLiteralDeclaration)rule.eContents().get(1);
-		private final Keyword cNOTNotKeyword_0 = (Keyword)cNOTEnumLiteralDeclaration.eContents().get(0);
-		
-		//// not A	
-		//enum UnaryOperator returns expressions::OperatorType:
-		//	NOT="not";
-		public EnumRule getRule() { return rule; }
-
-		//NOT="not"
-		public EnumLiteralDeclaration getNOTEnumLiteralDeclaration() { return cNOTEnumLiteralDeclaration; }
-
-		//"not"
-		public Keyword getNOTNotKeyword_0() { return cNOTNotKeyword_0; }
-	}
-
-	public class UnaryParanthesedOperatorElements extends AbstractEnumRuleElementFinder {
-		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "UnaryParanthesedOperator");
+	public class PreOperatorElements extends AbstractEnumRuleElementFinder {
+		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "PreOperator");
 		private final EnumLiteralDeclaration cPREEnumLiteralDeclaration = (EnumLiteralDeclaration)rule.eContents().get(1);
 		private final Keyword cPREPreKeyword_0 = (Keyword)cPREEnumLiteralDeclaration.eContents().get(0);
 		
-		//// pre(A)
-		//enum UnaryParanthesedOperator returns expressions::OperatorType:
+		//enum PreOperator returns OperatorType:
 		//	PRE="pre";
 		public EnumRule getRule() { return rule; }
 
@@ -1197,12 +853,12 @@ public class ExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		public Keyword getPREPreKeyword_0() { return cPREPreKeyword_0; }
 	}
 
-	public class OperatorOrElements extends AbstractEnumRuleElementFinder {
-		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "OperatorOr");
+	public class OrOperatorElements extends AbstractEnumRuleElementFinder {
+		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "OrOperator");
 		private final EnumLiteralDeclaration cOREnumLiteralDeclaration = (EnumLiteralDeclaration)rule.eContents().get(1);
 		private final Keyword cOROrKeyword_0 = (Keyword)cOREnumLiteralDeclaration.eContents().get(0);
 		
-		//enum OperatorOr returns expressions::OperatorType:
+		//enum OrOperator returns OperatorType:
 		//	OR="or";
 		public EnumRule getRule() { return rule; }
 
@@ -1213,12 +869,12 @@ public class ExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		public Keyword getOROrKeyword_0() { return cOROrKeyword_0; }
 	}
 
-	public class OperatorAndElements extends AbstractEnumRuleElementFinder {
-		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "OperatorAnd");
+	public class AndOperatorElements extends AbstractEnumRuleElementFinder {
+		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "AndOperator");
 		private final EnumLiteralDeclaration cANDEnumLiteralDeclaration = (EnumLiteralDeclaration)rule.eContents().get(1);
 		private final Keyword cANDAndKeyword_0 = (Keyword)cANDEnumLiteralDeclaration.eContents().get(0);
 		
-		//enum OperatorAnd returns expressions::OperatorType:
+		//enum AndOperator returns OperatorType:
 		//	AND="and";
 		public EnumRule getRule() { return rule; }
 
@@ -1229,76 +885,84 @@ public class ExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		public Keyword getANDAndKeyword_0() { return cANDAndKeyword_0; }
 	}
 
-	public class OperatorPreElements extends AbstractEnumRuleElementFinder {
-		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "OperatorPre");
-		private final EnumLiteralDeclaration cPREEnumLiteralDeclaration = (EnumLiteralDeclaration)rule.eContents().get(1);
-		private final Keyword cPREPreKeyword_0 = (Keyword)cPREEnumLiteralDeclaration.eContents().get(0);
+	public class NotOperatorElements extends AbstractEnumRuleElementFinder {
+		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "NotOperator");
+		private final EnumLiteralDeclaration cNOTEnumLiteralDeclaration = (EnumLiteralDeclaration)rule.eContents().get(1);
+		private final Keyword cNOTNotKeyword_0 = (Keyword)cNOTEnumLiteralDeclaration.eContents().get(0);
 		
-		//enum OperatorPre returns expressions::OperatorType:
-		//	PRE="pre";
+		//enum NotOperator returns OperatorType:
+		//	NOT="not";
 		public EnumRule getRule() { return rule; }
 
-		//PRE="pre"
-		public EnumLiteralDeclaration getPREEnumLiteralDeclaration() { return cPREEnumLiteralDeclaration; }
+		//NOT="not"
+		public EnumLiteralDeclaration getNOTEnumLiteralDeclaration() { return cNOTEnumLiteralDeclaration; }
 
-		//"pre"
-		public Keyword getPREPreKeyword_0() { return cPREPreKeyword_0; }
+		//"not"
+		public Keyword getNOTNotKeyword_0() { return cNOTNotKeyword_0; }
 	}
 
-	public class PlusOperatorElements extends AbstractEnumRuleElementFinder {
-		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "PlusOperator");
-		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
-		private final EnumLiteralDeclaration cADDEnumLiteralDeclaration_0 = (EnumLiteralDeclaration)cAlternatives.eContents().get(0);
-		private final Keyword cADDPlusSignKeyword_0_0 = (Keyword)cADDEnumLiteralDeclaration_0.eContents().get(0);
-		private final EnumLiteralDeclaration cSUBEnumLiteralDeclaration_1 = (EnumLiteralDeclaration)cAlternatives.eContents().get(1);
-		private final Keyword cSUBHyphenMinusKeyword_1_0 = (Keyword)cSUBEnumLiteralDeclaration_1.eContents().get(0);
+	public class AddOperatorElements extends AbstractEnumRuleElementFinder {
+		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "AddOperator");
+		private final EnumLiteralDeclaration cADDEnumLiteralDeclaration = (EnumLiteralDeclaration)rule.eContents().get(1);
+		private final Keyword cADDPlusSignKeyword_0 = (Keyword)cADDEnumLiteralDeclaration.eContents().get(0);
 		
-		//enum PlusOperator returns expressions::OperatorType:
-		//	ADD="+" | SUB="-";
+		//enum AddOperator returns OperatorType:
+		//	ADD="+";
 		public EnumRule getRule() { return rule; }
 
-		//ADD="+" | SUB="-"
-		public Alternatives getAlternatives() { return cAlternatives; }
-
 		//ADD="+"
-		public EnumLiteralDeclaration getADDEnumLiteralDeclaration_0() { return cADDEnumLiteralDeclaration_0; }
+		public EnumLiteralDeclaration getADDEnumLiteralDeclaration() { return cADDEnumLiteralDeclaration; }
 
 		//"+"
-		public Keyword getADDPlusSignKeyword_0_0() { return cADDPlusSignKeyword_0_0; }
+		public Keyword getADDPlusSignKeyword_0() { return cADDPlusSignKeyword_0; }
+	}
+
+	public class SubOperatorElements extends AbstractEnumRuleElementFinder {
+		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "SubOperator");
+		private final EnumLiteralDeclaration cSUBEnumLiteralDeclaration = (EnumLiteralDeclaration)rule.eContents().get(1);
+		private final Keyword cSUBHyphenMinusKeyword_0 = (Keyword)cSUBEnumLiteralDeclaration.eContents().get(0);
+		
+		//enum SubOperator returns OperatorType:
+		//	SUB="-";
+		public EnumRule getRule() { return rule; }
 
 		//SUB="-"
-		public EnumLiteralDeclaration getSUBEnumLiteralDeclaration_1() { return cSUBEnumLiteralDeclaration_1; }
+		public EnumLiteralDeclaration getSUBEnumLiteralDeclaration() { return cSUBEnumLiteralDeclaration; }
 
 		//"-"
-		public Keyword getSUBHyphenMinusKeyword_1_0() { return cSUBHyphenMinusKeyword_1_0; }
+		public Keyword getSUBHyphenMinusKeyword_0() { return cSUBHyphenMinusKeyword_0; }
 	}
 
 	public class MultOperatorElements extends AbstractEnumRuleElementFinder {
 		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "MultOperator");
-		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
-		private final EnumLiteralDeclaration cMULTEnumLiteralDeclaration_0 = (EnumLiteralDeclaration)cAlternatives.eContents().get(0);
-		private final Keyword cMULTAsteriskKeyword_0_0 = (Keyword)cMULTEnumLiteralDeclaration_0.eContents().get(0);
-		private final EnumLiteralDeclaration cMODEnumLiteralDeclaration_1 = (EnumLiteralDeclaration)cAlternatives.eContents().get(1);
-		private final Keyword cMODModKeyword_1_0 = (Keyword)cMODEnumLiteralDeclaration_1.eContents().get(0);
+		private final EnumLiteralDeclaration cMULTEnumLiteralDeclaration = (EnumLiteralDeclaration)rule.eContents().get(1);
+		private final Keyword cMULTAsteriskKeyword_0 = (Keyword)cMULTEnumLiteralDeclaration.eContents().get(0);
 		
-		//enum MultOperator returns expressions::OperatorType:
-		//	MULT="*" | MOD="mod";
+		//enum MultOperator returns OperatorType:
+		//	MULT="*";
 		public EnumRule getRule() { return rule; }
 
-		//MULT="*" | MOD="mod"
-		public Alternatives getAlternatives() { return cAlternatives; }
-
 		//MULT="*"
-		public EnumLiteralDeclaration getMULTEnumLiteralDeclaration_0() { return cMULTEnumLiteralDeclaration_0; }
+		public EnumLiteralDeclaration getMULTEnumLiteralDeclaration() { return cMULTEnumLiteralDeclaration; }
 
 		//"*"
-		public Keyword getMULTAsteriskKeyword_0_0() { return cMULTAsteriskKeyword_0_0; }
+		public Keyword getMULTAsteriskKeyword_0() { return cMULTAsteriskKeyword_0; }
+	}
+
+	public class ModOperatorElements extends AbstractEnumRuleElementFinder {
+		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "ModOperator");
+		private final EnumLiteralDeclaration cMODEnumLiteralDeclaration = (EnumLiteralDeclaration)rule.eContents().get(1);
+		private final Keyword cMODModKeyword_0 = (Keyword)cMODEnumLiteralDeclaration.eContents().get(0);
+		
+		//enum ModOperator returns OperatorType:
+		//	MOD="mod";
+		public EnumRule getRule() { return rule; }
 
 		//MOD="mod"
-		public EnumLiteralDeclaration getMODEnumLiteralDeclaration_1() { return cMODEnumLiteralDeclaration_1; }
+		public EnumLiteralDeclaration getMODEnumLiteralDeclaration() { return cMODEnumLiteralDeclaration; }
 
 		//"mod"
-		public Keyword getMODModKeyword_1_0() { return cMODModKeyword_1_0; }
+		public Keyword getMODModKeyword_0() { return cMODModKeyword_0; }
 	}
 
 	public class DivOperatorElements extends AbstractEnumRuleElementFinder {
@@ -1306,7 +970,7 @@ public class ExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		private final EnumLiteralDeclaration cDIVEnumLiteralDeclaration = (EnumLiteralDeclaration)rule.eContents().get(1);
 		private final Keyword cDIVSolidusKeyword_0 = (Keyword)cDIVEnumLiteralDeclaration.eContents().get(0);
 		
-		//enum DivOperator returns expressions::OperatorType:
+		//enum DivOperator returns OperatorType:
 		//	DIV="/";
 		public EnumRule getRule() { return rule; }
 
@@ -1315,6 +979,22 @@ public class ExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 
 		//"/"
 		public Keyword getDIVSolidusKeyword_0() { return cDIVSolidusKeyword_0; }
+	}
+
+	public class ValueTestOperatorElements extends AbstractEnumRuleElementFinder {
+		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "ValueTestOperator");
+		private final EnumLiteralDeclaration cVALEnumLiteralDeclaration = (EnumLiteralDeclaration)rule.eContents().get(1);
+		private final Keyword cVALQuestionMarkKeyword_0 = (Keyword)cVALEnumLiteralDeclaration.eContents().get(0);
+		
+		//enum ValueTestOperator returns OperatorType:
+		//	VAL="?";
+		public EnumRule getRule() { return rule; }
+
+		//VAL="?"
+		public EnumLiteralDeclaration getVALEnumLiteralDeclaration() { return cVALEnumLiteralDeclaration; }
+
+		//"?"
+		public Keyword getVALQuestionMarkKeyword_0() { return cVALQuestionMarkKeyword_0; }
 	}
 
 	public class ValueTypeElements extends AbstractEnumRuleElementFinder {
@@ -1335,7 +1015,7 @@ public class ExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		
 		/// *
 		//   the following declarations are re-used in Interface.xtext, Kits.xtext 
-		// * /enum ValueType returns expressions::ValueType:
+		// * /enum ValueType:
 		//	PURE | BOOL | UNSIGNED | INT | FLOAT | HOST;
 		public EnumRule getRule() { return rule; }
 
@@ -1399,7 +1079,7 @@ public class ExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		private final EnumLiteralDeclaration cHOSTEnumLiteralDeclaration_7 = (EnumLiteralDeclaration)cAlternatives.eContents().get(7);
 		private final Keyword cHOSTHostKeyword_7_0 = (Keyword)cHOSTEnumLiteralDeclaration_7.eContents().get(0);
 		
-		//enum CombineOperator returns expressions::CombineOperator:
+		//enum CombineOperator:
 		//	NONE | ADD="+" | MULT="*" | MAX="max" | MIN="min" | OR="or" | AND="and" | HOST="host";
 		public EnumRule getRule() { return rule; }
 
@@ -1455,50 +1135,44 @@ public class ExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		public Keyword getHOSTHostKeyword_7_0() { return cHOSTHostKeyword_7_0; }
 	}
 	
-	private SignalReferenceElements pSignalReference;
-	private VariableReferenceElements pVariableReference;
-	private SignalElements pSignal;
-	private VariableElements pVariable;
-	private TerminalRule tINT;
+	private ExpressionElements pExpression;
+	private BooleanExpressionElements pBooleanExpression;
+	private OrExpressionElements pOrExpression;
+	private AndExpressionElements pAndExpression;
+	private CompareOperationElements pCompareOperation;
+	private NotOrValuedExpressionElements pNotOrValuedExpression;
+	private ValuedExpressionElements pValuedExpression;
+	private AddExpressionElements pAddExpression;
+	private SubExpressionElements pSubExpression;
+	private MultExpressionElements pMultExpression;
+	private ModExpressionElements pModExpression;
+	private NotExpressionElements pNotExpression;
+	private AtomicExpressionElements pAtomicExpression;
+	private AtomicValuedExpressionElements pAtomicValuedExpression;
+	private DivExpressionElements pDivExpression;
+	private ValuedObjectTestExpressionElements pValuedObjectTestExpression;
+	private ValuedObjectReferenceElements pValuedObjectReference;
+	private TextExpressionElements pTextExpression;
 	private IntValueElements pIntValue;
 	private FloatValueElements pFloatValue;
 	private BooleanValueElements pBooleanValue;
-	private ValueElements pValue;
-	private TerminalRule tFloat;
-	private TerminalRule tBoolean;
-	private ValOperationElements pValOperation;
-	private ValuedExpressionElements pValuedExpression;
-	private ParanthesedValuedExpressionElements pParanthesedValuedExpression;
-	private PlusOperationElements pPlusOperation;
-	private MultOrDivOperationElements pMultOrDivOperation;
-	private MultOperationElements pMultOperation;
-	private DivOperationElements pDivOperation;
-	private PreArithmOperationElements pPreArithmOperation;
-	private PreOrNormalValuedExpressionElements pPreOrNormalValuedExpression;
-	private CompareOperationElements pCompareOperation;
-	private UnaryOperationElements pUnaryOperation;
-	private UnaryParanthesedOperationElements pUnaryParanthesedOperation;
-	private UnaryOrNormalExpressionElements pUnaryOrNormalExpression;
-	private AndOperationElements pAndOperation;
-	private OrOperationElements pOrOperation;
-	private ParanthesedBooleanExpressionElements pParanthesedBooleanExpression;
-	private BooleanExpressionElements pBooleanExpression;
-	private OperatorTypeElements unknownRuleOperatorType;
-	private ValOperatorElements unknownRuleValOperator;
-	private CompareOperatorElements unknownRuleCompareOperator;
-	private UnaryOperatorElements unknownRuleUnaryOperator;
-	private UnaryParanthesedOperatorElements unknownRuleUnaryParanthesedOperator;
-	private OperatorOrElements unknownRuleOperatorOr;
-	private OperatorAndElements unknownRuleOperatorAnd;
-	private OperatorPreElements unknownRuleOperatorPre;
-	private PlusOperatorElements unknownRulePlusOperator;
-	private MultOperatorElements unknownRuleMultOperator;
-	private DivOperatorElements unknownRuleDivOperator;
 	private EStringElements pEString;
-	private TextExpressionElements pTextExpression;
-	private ExpressionElements pExpression;
+	private CompareOperatorElements unknownRuleCompareOperator;
+	private PreOperatorElements unknownRulePreOperator;
+	private OrOperatorElements unknownRuleOrOperator;
+	private AndOperatorElements unknownRuleAndOperator;
+	private NotOperatorElements unknownRuleNotOperator;
+	private AddOperatorElements unknownRuleAddOperator;
+	private SubOperatorElements unknownRuleSubOperator;
+	private MultOperatorElements unknownRuleMultOperator;
+	private ModOperatorElements unknownRuleModOperator;
+	private DivOperatorElements unknownRuleDivOperator;
+	private ValueTestOperatorElements unknownRuleValueTestOperator;
 	private ValueTypeElements unknownRuleValueType;
 	private CombineOperatorElements unknownRuleCombineOperator;
+	private TerminalRule tINT;
+	private TerminalRule tFloat;
+	private TerminalRule tBoolean;
 	
 	private final GrammarProvider grammarProvider;
 
@@ -1526,57 +1200,212 @@ public class ExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 	////   EXPRESSIONS
 	////
 	//// --------------------------
-	//SignalReference returns expressions::SignalReference:
-	//	signal=[expressions::Signal] ("(" (subExpressions+=Expression ","?)* ")")?;
-	public SignalReferenceElements getSignalReferenceAccess() {
-		return (pSignalReference != null) ? pSignalReference : (pSignalReference = new SignalReferenceElements());
+	//Expression:
+	//	BooleanExpression | ValuedExpression;
+	public ExpressionElements getExpressionAccess() {
+		return (pExpression != null) ? pExpression : (pExpression = new ExpressionElements());
 	}
 	
-	public ParserRule getSignalReferenceRule() {
-		return getSignalReferenceAccess().getRule();
+	public ParserRule getExpressionRule() {
+		return getExpressionAccess().getRule();
 	}
 
-	//VariableReference returns expressions::VariableReference:
-	//	variable=[expressions::Variable] ("(" (subExpressions+=Expression ","?)* ")")?;
-	public VariableReferenceElements getVariableReferenceAccess() {
-		return (pVariableReference != null) ? pVariableReference : (pVariableReference = new VariableReferenceElements());
+	//// Example: not D and C or ?E = 42 or not (A and (B or C))
+	//BooleanExpression returns Expression:
+	//	OrExpression;
+	public BooleanExpressionElements getBooleanExpressionAccess() {
+		return (pBooleanExpression != null) ? pBooleanExpression : (pBooleanExpression = new BooleanExpressionElements());
 	}
 	
-	public ParserRule getVariableReferenceRule() {
-		return getVariableReferenceAccess().getRule();
+	public ParserRule getBooleanExpressionRule() {
+		return getBooleanExpressionAccess().getRule();
 	}
 
-	//Signal returns expressions::Signal:
-	//	name=ID;
-	public SignalElements getSignalAccess() {
-		return (pSignal != null) ? pSignal : (pSignal = new SignalElements());
+	//// Example: A or B, A and B and C, C and B or D and not E, A and B and C
+	//OrExpression returns Expression:
+	//	AndExpression ({OperatorExpression.subExpressions+=current} operator=OrOperator subExpressions+=AndExpression)*;
+	public OrExpressionElements getOrExpressionAccess() {
+		return (pOrExpression != null) ? pOrExpression : (pOrExpression = new OrExpressionElements());
 	}
 	
-	public ParserRule getSignalRule() {
-		return getSignalAccess().getRule();
+	public ParserRule getOrExpressionRule() {
+		return getOrExpressionAccess().getRule();
 	}
 
-	//Variable returns expressions::Variable:
-	//	name=ID;
-	public VariableElements getVariableAccess() {
-		return (pVariable != null) ? pVariable : (pVariable = new VariableElements());
+	//// Example: A and B, not C and 42 <= ?D
+	//AndExpression returns Expression:
+	//	CompareOperation ({OperatorExpression.subExpressions+=current} operator=AndOperator
+	//	subExpressions+=CompareOperation)*;
+	public AndExpressionElements getAndExpressionAccess() {
+		return (pAndExpression != null) ? pAndExpression : (pAndExpression = new AndExpressionElements());
 	}
 	
-	public ParserRule getVariableRule() {
-		return getVariableAccess().getRule();
+	public ParserRule getAndExpressionRule() {
+		return getAndExpressionAccess().getRule();
 	}
 
-	////==============================================================================
-	//// Values
-	////==============================================================================
-	//// redefine INT terminal to allow negative numbers
-	//terminal INT returns ecore::EInt:
-	//	"-"? "0".."9"+;
-	public TerminalRule getINTRule() {
-		return (tINT != null) ? tINT : (tINT = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "INT"));
-	} 
+	//// Example: 42 <= ?A
+	//CompareOperation returns Expression:
+	//	NotOrValuedExpression ({OperatorExpression.subExpressions+=current} operator=CompareOperator
+	//	subExpressions+=NotOrValuedExpression) | NotExpression;
+	public CompareOperationElements getCompareOperationAccess() {
+		return (pCompareOperation != null) ? pCompareOperation : (pCompareOperation = new CompareOperationElements());
+	}
+	
+	public ParserRule getCompareOperationRule() {
+		return getCompareOperationAccess().getRule();
+	}
 
-	//IntValue returns expressions::IntValue:
+	//// order IS IMPORTANT
+	//NotOrValuedExpression returns Expression:
+	//	ValuedExpression | NotExpression;
+	public NotOrValuedExpressionElements getNotOrValuedExpressionAccess() {
+		return (pNotOrValuedExpression != null) ? pNotOrValuedExpression : (pNotOrValuedExpression = new NotOrValuedExpressionElements());
+	}
+	
+	public ParserRule getNotOrValuedExpressionRule() {
+		return getNotOrValuedExpressionAccess().getRule();
+	}
+
+	//// everything that evaluates to a primitive number value
+	//ValuedExpression returns Expression:
+	//	AddExpression;
+	public ValuedExpressionElements getValuedExpressionAccess() {
+		return (pValuedExpression != null) ? pValuedExpression : (pValuedExpression = new ValuedExpressionElements());
+	}
+	
+	public ParserRule getValuedExpressionRule() {
+		return getValuedExpressionAccess().getRule();
+	}
+
+	//// Example: 1 + 2
+	//AddExpression returns Expression:
+	//	SubExpression ({OperatorExpression.subExpressions+=current} operator=AddOperator subExpressions+=SubExpression)*;
+	public AddExpressionElements getAddExpressionAccess() {
+		return (pAddExpression != null) ? pAddExpression : (pAddExpression = new AddExpressionElements());
+	}
+	
+	public ParserRule getAddExpressionRule() {
+		return getAddExpressionAccess().getRule();
+	}
+
+	//// Example: varA - ?B
+	//SubExpression returns Expression:
+	//	MultExpression ({OperatorExpression.subExpressions+=current} operator=SubOperator subExpressions+=MultExpression)*;
+	public SubExpressionElements getSubExpressionAccess() {
+		return (pSubExpression != null) ? pSubExpression : (pSubExpression = new SubExpressionElements());
+	}
+	
+	public ParserRule getSubExpressionRule() {
+		return getSubExpressionAccess().getRule();
+	}
+
+	//// Example: 2 * 4
+	//MultExpression returns Expression:
+	//	ModExpression ({OperatorExpression.subExpressions+=current} operator=MultOperator subExpressions+=ModExpression)*;
+	public MultExpressionElements getMultExpressionAccess() {
+		return (pMultExpression != null) ? pMultExpression : (pMultExpression = new MultExpressionElements());
+	}
+	
+	public ParserRule getMultExpressionRule() {
+		return getMultExpressionAccess().getRule();
+	}
+
+	//// Example: varA mod ?B
+	//ModExpression returns Expression:
+	//	AtomicValuedExpression ({OperatorExpression.subExpressions+=current} operator=ModOperator
+	//	subExpressions+=AtomicValuedExpression)?;
+	public ModExpressionElements getModExpressionAccess() {
+		return (pModExpression != null) ? pModExpression : (pModExpression = new ModExpressionElements());
+	}
+	
+	public ParserRule getModExpressionRule() {
+		return getModExpressionAccess().getRule();
+	}
+
+	//// Example: not A, not false, not (A or B)
+	//// at the latter we need the parans to indicate the right binding
+	//NotExpression returns Expression:
+	//	{OperatorExpression} operator=NotOperator subExpressions+=NotExpression | AtomicExpression;
+	public NotExpressionElements getNotExpressionAccess() {
+		return (pNotExpression != null) ? pNotExpression : (pNotExpression = new NotExpressionElements());
+	}
+	
+	public ParserRule getNotExpressionRule() {
+		return getNotExpressionAccess().getRule();
+	}
+
+	//AtomicExpression returns Expression:
+	//	BooleanValue | ValuedObjectTestExpression | "(" BooleanExpression ")" | TextExpression;
+	public AtomicExpressionElements getAtomicExpressionAccess() {
+		return (pAtomicExpression != null) ? pAtomicExpression : (pAtomicExpression = new AtomicExpressionElements());
+	}
+	
+	public ParserRule getAtomicExpressionRule() {
+		return getAtomicExpressionAccess().getRule();
+	}
+
+	//AtomicValuedExpression returns Expression:
+	//	IntValue | FloatValue | "(" DivExpression ")" | "(" ValuedExpression ")" | AtomicExpression;
+	public AtomicValuedExpressionElements getAtomicValuedExpressionAccess() {
+		return (pAtomicValuedExpression != null) ? pAtomicValuedExpression : (pAtomicValuedExpression = new AtomicValuedExpressionElements());
+	}
+	
+	public ParserRule getAtomicValuedExpressionRule() {
+		return getAtomicValuedExpressionAccess().getRule();
+	}
+
+	//// Example: (2 / 4)
+	//// note: division always has to have parantheses because the '/' sign is also used for trigger/effect delimiter
+	//DivExpression returns Expression:
+	//	AtomicValuedExpression {OperatorExpression.subExpressions+=current} operator=DivOperator
+	//	subExpressions+=AtomicValuedExpression;
+	public DivExpressionElements getDivExpressionAccess() {
+		return (pDivExpression != null) ? pDivExpression : (pDivExpression = new DivExpressionElements());
+	}
+	
+	public ParserRule getDivExpressionRule() {
+		return getDivExpressionAccess().getRule();
+	}
+
+	//// Example: pre(pre(?A)), pre(pre(A)), ?A, A varX
+	//ValuedObjectTestExpression returns Expression:
+	//	{OperatorExpression} operator=PreOperator "(" subExpressions+=ValuedObjectTestExpression ")" | {OperatorExpression}
+	//	operator=ValueTestOperator subExpressions+=ValuedObjectReference | ValuedObjectReference;
+	public ValuedObjectTestExpressionElements getValuedObjectTestExpressionAccess() {
+		return (pValuedObjectTestExpression != null) ? pValuedObjectTestExpression : (pValuedObjectTestExpression = new ValuedObjectTestExpressionElements());
+	}
+	
+	public ParserRule getValuedObjectTestExpressionRule() {
+		return getValuedObjectTestExpressionAccess().getRule();
+	}
+
+	//// Example: A, varB
+	//ValuedObjectReference:
+	//	valuedObject=[ValuedObject];
+	public ValuedObjectReferenceElements getValuedObjectReferenceAccess() {
+		return (pValuedObjectReference != null) ? pValuedObjectReference : (pValuedObjectReference = new ValuedObjectReferenceElements());
+	}
+	
+	public ParserRule getValuedObjectReferenceRule() {
+		return getValuedObjectReferenceAccess().getRule();
+	}
+
+	//// Taken from oba's kits grammar
+	////TextExpression returns TextExpression: 
+	////	code=STRING ("(" type=ID ")")?; 
+	//// Taken from haf's kits grammar
+	//TextExpression:
+	//	code=STRING ("(" type=ID ")")?;
+	public TextExpressionElements getTextExpressionAccess() {
+		return (pTextExpression != null) ? pTextExpression : (pTextExpression = new TextExpressionElements());
+	}
+	
+	public ParserRule getTextExpressionRule() {
+		return getTextExpressionAccess().getRule();
+	}
+
+	//IntValue:
 	//	value=INT;
 	public IntValueElements getIntValueAccess() {
 		return (pIntValue != null) ? pIntValue : (pIntValue = new IntValueElements());
@@ -1586,7 +1415,7 @@ public class ExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		return getIntValueAccess().getRule();
 	}
 
-	//FloatValue returns expressions::FloatValue:
+	//FloatValue:
 	//	value=Float;
 	public FloatValueElements getFloatValueAccess() {
 		return (pFloatValue != null) ? pFloatValue : (pFloatValue = new FloatValueElements());
@@ -1596,7 +1425,7 @@ public class ExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		return getFloatValueAccess().getRule();
 	}
 
-	//BooleanValue returns expressions::BooleanValue:
+	//BooleanValue:
 	//	value=Boolean;
 	public BooleanValueElements getBooleanValueAccess() {
 		return (pBooleanValue != null) ? pBooleanValue : (pBooleanValue = new BooleanValueElements());
@@ -1606,15 +1435,154 @@ public class ExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		return getBooleanValueAccess().getRule();
 	}
 
-	//Value returns expressions::Value:
-	//	IntValue | FloatValue | BooleanValue;
-	public ValueElements getValueAccess() {
-		return (pValue != null) ? pValue : (pValue = new ValueElements());
+	//EString returns ecore::EString:
+	//	STRING | ID;
+	public EStringElements getEStringAccess() {
+		return (pEString != null) ? pEString : (pEString = new EStringElements());
 	}
 	
-	public ParserRule getValueRule() {
-		return getValueAccess().getRule();
+	public ParserRule getEStringRule() {
+		return getEStringAccess().getRule();
 	}
+
+	//enum CompareOperator returns OperatorType:
+	//	EQ="=" | LT="<" | LEQ="<=" | GT=">" | GEQ=">=" | NE="<>";
+	public CompareOperatorElements getCompareOperatorAccess() {
+		return (unknownRuleCompareOperator != null) ? unknownRuleCompareOperator : (unknownRuleCompareOperator = new CompareOperatorElements());
+	}
+	
+	public EnumRule getCompareOperatorRule() {
+		return getCompareOperatorAccess().getRule();
+	}
+
+	//enum PreOperator returns OperatorType:
+	//	PRE="pre";
+	public PreOperatorElements getPreOperatorAccess() {
+		return (unknownRulePreOperator != null) ? unknownRulePreOperator : (unknownRulePreOperator = new PreOperatorElements());
+	}
+	
+	public EnumRule getPreOperatorRule() {
+		return getPreOperatorAccess().getRule();
+	}
+
+	//enum OrOperator returns OperatorType:
+	//	OR="or";
+	public OrOperatorElements getOrOperatorAccess() {
+		return (unknownRuleOrOperator != null) ? unknownRuleOrOperator : (unknownRuleOrOperator = new OrOperatorElements());
+	}
+	
+	public EnumRule getOrOperatorRule() {
+		return getOrOperatorAccess().getRule();
+	}
+
+	//enum AndOperator returns OperatorType:
+	//	AND="and";
+	public AndOperatorElements getAndOperatorAccess() {
+		return (unknownRuleAndOperator != null) ? unknownRuleAndOperator : (unknownRuleAndOperator = new AndOperatorElements());
+	}
+	
+	public EnumRule getAndOperatorRule() {
+		return getAndOperatorAccess().getRule();
+	}
+
+	//enum NotOperator returns OperatorType:
+	//	NOT="not";
+	public NotOperatorElements getNotOperatorAccess() {
+		return (unknownRuleNotOperator != null) ? unknownRuleNotOperator : (unknownRuleNotOperator = new NotOperatorElements());
+	}
+	
+	public EnumRule getNotOperatorRule() {
+		return getNotOperatorAccess().getRule();
+	}
+
+	//enum AddOperator returns OperatorType:
+	//	ADD="+";
+	public AddOperatorElements getAddOperatorAccess() {
+		return (unknownRuleAddOperator != null) ? unknownRuleAddOperator : (unknownRuleAddOperator = new AddOperatorElements());
+	}
+	
+	public EnumRule getAddOperatorRule() {
+		return getAddOperatorAccess().getRule();
+	}
+
+	//enum SubOperator returns OperatorType:
+	//	SUB="-";
+	public SubOperatorElements getSubOperatorAccess() {
+		return (unknownRuleSubOperator != null) ? unknownRuleSubOperator : (unknownRuleSubOperator = new SubOperatorElements());
+	}
+	
+	public EnumRule getSubOperatorRule() {
+		return getSubOperatorAccess().getRule();
+	}
+
+	//enum MultOperator returns OperatorType:
+	//	MULT="*";
+	public MultOperatorElements getMultOperatorAccess() {
+		return (unknownRuleMultOperator != null) ? unknownRuleMultOperator : (unknownRuleMultOperator = new MultOperatorElements());
+	}
+	
+	public EnumRule getMultOperatorRule() {
+		return getMultOperatorAccess().getRule();
+	}
+
+	//enum ModOperator returns OperatorType:
+	//	MOD="mod";
+	public ModOperatorElements getModOperatorAccess() {
+		return (unknownRuleModOperator != null) ? unknownRuleModOperator : (unknownRuleModOperator = new ModOperatorElements());
+	}
+	
+	public EnumRule getModOperatorRule() {
+		return getModOperatorAccess().getRule();
+	}
+
+	//enum DivOperator returns OperatorType:
+	//	DIV="/";
+	public DivOperatorElements getDivOperatorAccess() {
+		return (unknownRuleDivOperator != null) ? unknownRuleDivOperator : (unknownRuleDivOperator = new DivOperatorElements());
+	}
+	
+	public EnumRule getDivOperatorRule() {
+		return getDivOperatorAccess().getRule();
+	}
+
+	//enum ValueTestOperator returns OperatorType:
+	//	VAL="?";
+	public ValueTestOperatorElements getValueTestOperatorAccess() {
+		return (unknownRuleValueTestOperator != null) ? unknownRuleValueTestOperator : (unknownRuleValueTestOperator = new ValueTestOperatorElements());
+	}
+	
+	public EnumRule getValueTestOperatorRule() {
+		return getValueTestOperatorAccess().getRule();
+	}
+
+	/// *
+	//   the following declarations are re-used in Interface.xtext, Kits.xtext 
+	// * /enum ValueType:
+	//	PURE | BOOL | UNSIGNED | INT | FLOAT | HOST;
+	public ValueTypeElements getValueTypeAccess() {
+		return (unknownRuleValueType != null) ? unknownRuleValueType : (unknownRuleValueType = new ValueTypeElements());
+	}
+	
+	public EnumRule getValueTypeRule() {
+		return getValueTypeAccess().getRule();
+	}
+
+	//enum CombineOperator:
+	//	NONE | ADD="+" | MULT="*" | MAX="max" | MIN="min" | OR="or" | AND="and" | HOST="host";
+	public CombineOperatorElements getCombineOperatorAccess() {
+		return (unknownRuleCombineOperator != null) ? unknownRuleCombineOperator : (unknownRuleCombineOperator = new CombineOperatorElements());
+	}
+	
+	public EnumRule getCombineOperatorRule() {
+		return getCombineOperatorAccess().getRule();
+	}
+
+	//// redefine INT terminal to allow negative numbers
+	//terminal INT returns ecore::EInt:
+	//	"-"? "0".."9"+;
+	public TerminalRule getINTRule() {
+		return (tINT != null) ? tINT : (tINT = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "INT"));
+	} 
 
 	//// make sure the Float rule does not shadow the INT rule
 	//terminal Float returns ecore::EFloatObject:
@@ -1628,378 +1596,6 @@ public class ExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 	public TerminalRule getBooleanRule() {
 		return (tBoolean != null) ? tBoolean : (tBoolean = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "Boolean"));
 	} 
-
-	////==============================================================================
-	//// Arithmetic Expressions
-	////==============================================================================
-	//// Example: ?A	
-	//ValOperation returns expressions::OperatorExpression:
-	//	operator=ValOperator subExpressions+=SignalReference;
-	public ValOperationElements getValOperationAccess() {
-		return (pValOperation != null) ? pValOperation : (pValOperation = new ValOperationElements());
-	}
-	
-	public ParserRule getValOperationRule() {
-		return getValOperationAccess().getRule();
-	}
-
-	//// everything that evaluates to a primitive number value
-	//ValuedExpression returns expressions::Expression:
-	//	PlusOperation;
-	public ValuedExpressionElements getValuedExpressionAccess() {
-		return (pValuedExpression != null) ? pValuedExpression : (pValuedExpression = new ValuedExpressionElements());
-	}
-	
-	public ParserRule getValuedExpressionRule() {
-		return getValuedExpressionAccess().getRule();
-	}
-
-	//// Example: 42, 42.2, ?A, var1, (1+2*3)
-	//ParanthesedValuedExpression returns expressions::Expression:
-	//	IntValue | FloatValue | ValOperation | VariableReference | TextExpression | "(" PlusOperation ")" | "(" DivOperation
-	//	")";
-	public ParanthesedValuedExpressionElements getParanthesedValuedExpressionAccess() {
-		return (pParanthesedValuedExpression != null) ? pParanthesedValuedExpression : (pParanthesedValuedExpression = new ParanthesedValuedExpressionElements());
-	}
-	
-	public ParserRule getParanthesedValuedExpressionRule() {
-		return getParanthesedValuedExpressionAccess().getRule();
-	}
-
-	//// Example: 1 + 2, varA - ?B
-	//PlusOperation returns expressions::Expression:
-	//	MultOrDivOperation ({expressions::OperatorExpression.subExpressions+=current} operator=PlusOperator
-	//	subExpressions+=MultOrDivOperation)*;
-	public PlusOperationElements getPlusOperationAccess() {
-		return (pPlusOperation != null) ? pPlusOperation : (pPlusOperation = new PlusOperationElements());
-	}
-	
-	public ParserRule getPlusOperationRule() {
-		return getPlusOperationAccess().getRule();
-	}
-
-	//MultOrDivOperation returns expressions::Expression:
-	//	MultOperation | "(" DivOperation ")";
-	public MultOrDivOperationElements getMultOrDivOperationAccess() {
-		return (pMultOrDivOperation != null) ? pMultOrDivOperation : (pMultOrDivOperation = new MultOrDivOperationElements());
-	}
-	
-	public ParserRule getMultOrDivOperationRule() {
-		return getMultOrDivOperationAccess().getRule();
-	}
-
-	//// Example: 2 * 4, varA mod ?B
-	//MultOperation returns expressions::Expression:
-	//	PreOrNormalValuedExpression ({expressions::OperatorExpression.subExpressions+=current} operator=MultOperator
-	//	subExpressions+=PreOrNormalValuedExpression)*;
-	public MultOperationElements getMultOperationAccess() {
-		return (pMultOperation != null) ? pMultOperation : (pMultOperation = new MultOperationElements());
-	}
-	
-	public ParserRule getMultOperationRule() {
-		return getMultOperationAccess().getRule();
-	}
-
-	//// Example: (2 / 4)
-	//// note: division has to have always parantheses because the '/' sign is also used for trigger/effect delimiter
-	//DivOperation returns expressions::Expression:
-	//	PreOrNormalValuedExpression ({expressions::OperatorExpression.subExpressions+=current} operator=DivOperator
-	//	subExpressions+=PreOrNormalValuedExpression)*;
-	public DivOperationElements getDivOperationAccess() {
-		return (pDivOperation != null) ? pDivOperation : (pDivOperation = new DivOperationElements());
-	}
-	
-	public ParserRule getDivOperationRule() {
-		return getDivOperationAccess().getRule();
-	}
-
-	//// Example: pre (? A)
-	//PreArithmOperation returns expressions::OperatorExpression:
-	//	operator=UnaryParanthesedOperator "(" subExpressions+=ValOperation ")";
-	public PreArithmOperationElements getPreArithmOperationAccess() {
-		return (pPreArithmOperation != null) ? pPreArithmOperation : (pPreArithmOperation = new PreArithmOperationElements());
-	}
-	
-	public ParserRule getPreArithmOperationRule() {
-		return getPreArithmOperationAccess().getRule();
-	}
-
-	//PreOrNormalValuedExpression returns expressions::Expression:
-	//	PreArithmOperation | ParanthesedValuedExpression;
-	public PreOrNormalValuedExpressionElements getPreOrNormalValuedExpressionAccess() {
-		return (pPreOrNormalValuedExpression != null) ? pPreOrNormalValuedExpression : (pPreOrNormalValuedExpression = new PreOrNormalValuedExpressionElements());
-	}
-	
-	public ParserRule getPreOrNormalValuedExpressionRule() {
-		return getPreOrNormalValuedExpressionAccess().getRule();
-	}
-
-	////==============================================================================
-	//// Boolean Expressions
-	////==============================================================================
-	//// Example: 42 <= ?A
-	//CompareOperation returns expressions::Expression:
-	//	ValuedExpression ({expressions::OperatorExpression.subExpressions+=current} operator=CompareOperator
-	//	subExpressions+=ValuedExpression);
-	public CompareOperationElements getCompareOperationAccess() {
-		return (pCompareOperation != null) ? pCompareOperation : (pCompareOperation = new CompareOperationElements());
-	}
-	
-	public ParserRule getCompareOperationRule() {
-		return getCompareOperationAccess().getRule();
-	}
-
-	//// Example: not A, not false, not (A or B)
-	//// at the latter we need the parans to indicate the right binding
-	//UnaryOperation returns expressions::OperatorExpression:
-	//	operator=UnaryOperator subExpressions+=(ParanthesedBooleanExpression | UnaryParanthesedOperation);
-	public UnaryOperationElements getUnaryOperationAccess() {
-		return (pUnaryOperation != null) ? pUnaryOperation : (pUnaryOperation = new UnaryOperationElements());
-	}
-	
-	public ParserRule getUnaryOperationRule() {
-		return getUnaryOperationAccess().getRule();
-	}
-
-	//UnaryParanthesedOperation returns expressions::OperatorExpression:
-	//	operator=UnaryParanthesedOperator "(" subExpressions+=BooleanExpression ")";
-	public UnaryParanthesedOperationElements getUnaryParanthesedOperationAccess() {
-		return (pUnaryParanthesedOperation != null) ? pUnaryParanthesedOperation : (pUnaryParanthesedOperation = new UnaryParanthesedOperationElements());
-	}
-	
-	public ParserRule getUnaryParanthesedOperationRule() {
-		return getUnaryParanthesedOperationAccess().getRule();
-	}
-
-	//// Example: either negated or normal expression (with parantheses) 
-	//UnaryOrNormalExpression returns expressions::Expression:
-	//	UnaryOperation | UnaryParanthesedOperation | ParanthesedBooleanExpression;
-	public UnaryOrNormalExpressionElements getUnaryOrNormalExpressionAccess() {
-		return (pUnaryOrNormalExpression != null) ? pUnaryOrNormalExpression : (pUnaryOrNormalExpression = new UnaryOrNormalExpressionElements());
-	}
-	
-	public ParserRule getUnaryOrNormalExpressionRule() {
-		return getUnaryOrNormalExpressionAccess().getRule();
-	}
-
-	//// Example: A and B, not C and 42 <= ?D
-	//AndOperation returns expressions::Expression:
-	//	UnaryOrNormalExpression ({expressions::OperatorExpression.subExpressions+=current} operator=OperatorAnd
-	//	subExpressions+=UnaryOrNormalExpression)*;
-	public AndOperationElements getAndOperationAccess() {
-		return (pAndOperation != null) ? pAndOperation : (pAndOperation = new AndOperationElements());
-	}
-	
-	public ParserRule getAndOperationRule() {
-		return getAndOperationAccess().getRule();
-	}
-
-	//// Example: A or B, C and B or D and not E 
-	//OrOperation returns expressions::Expression:
-	//	AndOperation ({expressions::OperatorExpression.subExpressions+=current} operator=OperatorOr
-	//	subExpressions+=AndOperation)*;
-	public OrOperationElements getOrOperationAccess() {
-		return (pOrOperation != null) ? pOrOperation : (pOrOperation = new OrOperationElements());
-	}
-	
-	public ParserRule getOrOperationRule() {
-		return getOrOperationAccess().getRule();
-	}
-
-	//// Example: true, A, 42>var1, (A or B), (not D and C or ?E = 42)
-	//// note that the order of CompareOperation and SignalReference is important. This might be an Xtext bug...
-	//ParanthesedBooleanExpression returns expressions::Expression:
-	//	BooleanValue | CompareOperation | SignalReference | ValOperation | TextExpression | "(" OrOperation ")";
-	public ParanthesedBooleanExpressionElements getParanthesedBooleanExpressionAccess() {
-		return (pParanthesedBooleanExpression != null) ? pParanthesedBooleanExpression : (pParanthesedBooleanExpression = new ParanthesedBooleanExpressionElements());
-	}
-	
-	public ParserRule getParanthesedBooleanExpressionRule() {
-		return getParanthesedBooleanExpressionAccess().getRule();
-	}
-
-	//// Example: not D and C or ?E = 42 or not (A and (B or C))
-	//BooleanExpression returns expressions::Expression:
-	//	OrOperation;
-	public BooleanExpressionElements getBooleanExpressionAccess() {
-		return (pBooleanExpression != null) ? pBooleanExpression : (pBooleanExpression = new BooleanExpressionElements());
-	}
-	
-	public ParserRule getBooleanExpressionRule() {
-		return getBooleanExpressionAccess().getRule();
-	}
-
-	////==============================================================================
-	//// Operators
-	////==============================================================================
-	//enum OperatorType returns expressions::OperatorType:
-	//	EQ="=" | LT="<" | LEQ="<=" | GT=">" | GEQ=">=" | NOT="not" | NE="<>" | AND="and" | OR="or" | ADD="+" | SUB="-" |
-	//	MULT="*" | DIV="/" | MOD="mod" | VAL="?" | PRE="pre";
-	public OperatorTypeElements getOperatorTypeAccess() {
-		return (unknownRuleOperatorType != null) ? unknownRuleOperatorType : (unknownRuleOperatorType = new OperatorTypeElements());
-	}
-	
-	public EnumRule getOperatorTypeRule() {
-		return getOperatorTypeAccess().getRule();
-	}
-
-	//enum ValOperator returns expressions::OperatorType:
-	//	VAL="?";
-	public ValOperatorElements getValOperatorAccess() {
-		return (unknownRuleValOperator != null) ? unknownRuleValOperator : (unknownRuleValOperator = new ValOperatorElements());
-	}
-	
-	public EnumRule getValOperatorRule() {
-		return getValOperatorAccess().getRule();
-	}
-
-	//enum CompareOperator returns expressions::OperatorType:
-	//	EQ="=" | LT="<" | LEQ="<=" | GT=">" | GEQ=">=" | NE="<>";
-	public CompareOperatorElements getCompareOperatorAccess() {
-		return (unknownRuleCompareOperator != null) ? unknownRuleCompareOperator : (unknownRuleCompareOperator = new CompareOperatorElements());
-	}
-	
-	public EnumRule getCompareOperatorRule() {
-		return getCompareOperatorAccess().getRule();
-	}
-
-	//// not A	
-	//enum UnaryOperator returns expressions::OperatorType:
-	//	NOT="not";
-	public UnaryOperatorElements getUnaryOperatorAccess() {
-		return (unknownRuleUnaryOperator != null) ? unknownRuleUnaryOperator : (unknownRuleUnaryOperator = new UnaryOperatorElements());
-	}
-	
-	public EnumRule getUnaryOperatorRule() {
-		return getUnaryOperatorAccess().getRule();
-	}
-
-	//// pre(A)
-	//enum UnaryParanthesedOperator returns expressions::OperatorType:
-	//	PRE="pre";
-	public UnaryParanthesedOperatorElements getUnaryParanthesedOperatorAccess() {
-		return (unknownRuleUnaryParanthesedOperator != null) ? unknownRuleUnaryParanthesedOperator : (unknownRuleUnaryParanthesedOperator = new UnaryParanthesedOperatorElements());
-	}
-	
-	public EnumRule getUnaryParanthesedOperatorRule() {
-		return getUnaryParanthesedOperatorAccess().getRule();
-	}
-
-	//enum OperatorOr returns expressions::OperatorType:
-	//	OR="or";
-	public OperatorOrElements getOperatorOrAccess() {
-		return (unknownRuleOperatorOr != null) ? unknownRuleOperatorOr : (unknownRuleOperatorOr = new OperatorOrElements());
-	}
-	
-	public EnumRule getOperatorOrRule() {
-		return getOperatorOrAccess().getRule();
-	}
-
-	//enum OperatorAnd returns expressions::OperatorType:
-	//	AND="and";
-	public OperatorAndElements getOperatorAndAccess() {
-		return (unknownRuleOperatorAnd != null) ? unknownRuleOperatorAnd : (unknownRuleOperatorAnd = new OperatorAndElements());
-	}
-	
-	public EnumRule getOperatorAndRule() {
-		return getOperatorAndAccess().getRule();
-	}
-
-	//enum OperatorPre returns expressions::OperatorType:
-	//	PRE="pre";
-	public OperatorPreElements getOperatorPreAccess() {
-		return (unknownRuleOperatorPre != null) ? unknownRuleOperatorPre : (unknownRuleOperatorPre = new OperatorPreElements());
-	}
-	
-	public EnumRule getOperatorPreRule() {
-		return getOperatorPreAccess().getRule();
-	}
-
-	//enum PlusOperator returns expressions::OperatorType:
-	//	ADD="+" | SUB="-";
-	public PlusOperatorElements getPlusOperatorAccess() {
-		return (unknownRulePlusOperator != null) ? unknownRulePlusOperator : (unknownRulePlusOperator = new PlusOperatorElements());
-	}
-	
-	public EnumRule getPlusOperatorRule() {
-		return getPlusOperatorAccess().getRule();
-	}
-
-	//enum MultOperator returns expressions::OperatorType:
-	//	MULT="*" | MOD="mod";
-	public MultOperatorElements getMultOperatorAccess() {
-		return (unknownRuleMultOperator != null) ? unknownRuleMultOperator : (unknownRuleMultOperator = new MultOperatorElements());
-	}
-	
-	public EnumRule getMultOperatorRule() {
-		return getMultOperatorAccess().getRule();
-	}
-
-	//enum DivOperator returns expressions::OperatorType:
-	//	DIV="/";
-	public DivOperatorElements getDivOperatorAccess() {
-		return (unknownRuleDivOperator != null) ? unknownRuleDivOperator : (unknownRuleDivOperator = new DivOperatorElements());
-	}
-	
-	public EnumRule getDivOperatorRule() {
-		return getDivOperatorAccess().getRule();
-	}
-
-	////==============================================================================
-	//// Misc
-	////==============================================================================
-	////TODO: chsch will comment this :-)
-	//EString returns ecore::EString:
-	//	STRING | ID;
-	public EStringElements getEStringAccess() {
-		return (pEString != null) ? pEString : (pEString = new EStringElements());
-	}
-	
-	public ParserRule getEStringRule() {
-		return getEStringAccess().getRule();
-	}
-
-	//TextExpression returns expressions::TextExpression:
-	//	code=STRING ("(" type=ID ")")?;
-	public TextExpressionElements getTextExpressionAccess() {
-		return (pTextExpression != null) ? pTextExpression : (pTextExpression = new TextExpressionElements());
-	}
-	
-	public ParserRule getTextExpressionRule() {
-		return getTextExpressionAccess().getRule();
-	}
-
-	//Expression returns expressions::Expression:
-	//	ValuedExpression | BooleanExpression;
-	public ExpressionElements getExpressionAccess() {
-		return (pExpression != null) ? pExpression : (pExpression = new ExpressionElements());
-	}
-	
-	public ParserRule getExpressionRule() {
-		return getExpressionAccess().getRule();
-	}
-
-	/// *
-	//   the following declarations are re-used in Interface.xtext, Kits.xtext 
-	// * /enum ValueType returns expressions::ValueType:
-	//	PURE | BOOL | UNSIGNED | INT | FLOAT | HOST;
-	public ValueTypeElements getValueTypeAccess() {
-		return (unknownRuleValueType != null) ? unknownRuleValueType : (unknownRuleValueType = new ValueTypeElements());
-	}
-	
-	public EnumRule getValueTypeRule() {
-		return getValueTypeAccess().getRule();
-	}
-
-	//enum CombineOperator returns expressions::CombineOperator:
-	//	NONE | ADD="+" | MULT="*" | MAX="max" | MIN="min" | OR="or" | AND="and" | HOST="host";
-	public CombineOperatorElements getCombineOperatorAccess() {
-		return (unknownRuleCombineOperator != null) ? unknownRuleCombineOperator : (unknownRuleCombineOperator = new CombineOperatorElements());
-	}
-	
-	public EnumRule getCombineOperatorRule() {
-		return getCombineOperatorAccess().getRule();
-	}
 
 	//terminal ID:
 	//	"^"? ("a".."z" | "A".."Z" | "_") ("a".."z" | "A".."Z" | "_" | "0".."9")*;

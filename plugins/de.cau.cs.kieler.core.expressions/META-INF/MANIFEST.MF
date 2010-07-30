@@ -8,12 +8,14 @@ Bundle-Vendor: Christian-Albrechts-Universität zu Kiel
 Bundle-Localization: plugin
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Export-Package: de.cau.cs.kieler.core.expressions,
+ de.cau.cs.kieler.core.expressions.formatting,
  de.cau.cs.kieler.core.expressions.impl,
- de.cau.cs.kieler.core.expressions.util,
- de.cau.cs.kieler.core.expressions.services,
  de.cau.cs.kieler.core.expressions.parseTreeConstruction,
  de.cau.cs.kieler.core.expressions.parser.antlr,
  de.cau.cs.kieler.core.expressions.parser.antlr.internal,
+ de.cau.cs.kieler.core.expressions.scoping,
+ de.cau.cs.kieler.core.expressions.services,
+ de.cau.cs.kieler.core.expressions.util,
  de.cau.cs.kieler.core.expressions.validation
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.emf.ecore;visibility:=reexport,
