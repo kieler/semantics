@@ -69,15 +69,6 @@ public interface ExpressionsFactory extends EFactory {
     Signal createSignal();
 
     /**
-     * Returns a new object of class '<em>Signal Reference</em>'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return a new object of class '<em>Signal Reference</em>'.
-     * @generated
-     */
-    SignalReference createSignalReference();
-
-    /**
      * Returns a new object of class '<em>Valued Object</em>'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -96,13 +87,13 @@ public interface ExpressionsFactory extends EFactory {
     Variable createVariable();
 
     /**
-     * Returns a new object of class '<em>Variable Reference</em>'.
+     * Returns a new object of class '<em>Valued Object Reference</em>'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return a new object of class '<em>Variable Reference</em>'.
+     * @return a new object of class '<em>Valued Object Reference</em>'.
      * @generated
      */
-    VariableReference createVariableReference();
+    ValuedObjectReference createValuedObjectReference();
 
     /**
      * Returns a new object of class '<em>Value</em>'.

@@ -14,8 +14,8 @@
 package de.cau.cs.kieler.core.expressions.impl;
 
 import de.cau.cs.kieler.core.expressions.ExpressionsPackage;
-import de.cau.cs.kieler.core.expressions.Variable;
-import de.cau.cs.kieler.core.expressions.VariableReference;
+import de.cau.cs.kieler.core.expressions.ValuedObject;
+import de.cau.cs.kieler.core.expressions.ValuedObjectReference;
 
 import org.eclipse.emf.common.notify.Notification;
 
@@ -26,34 +26,34 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
 /**
  * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Variable Reference</b></em>'.
+ * An implementation of the model object '<em><b>Valued Object Reference</b></em>'.
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link de.cau.cs.kieler.core.expressions.impl.VariableReferenceImpl#getVariable <em>Variable</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.core.expressions.impl.ValuedObjectReferenceImpl#getValuedObject <em>Valued Object</em>}</li>
  * </ul>
  * </p>
  *
  * @generated
  */
-public class VariableReferenceImpl extends ComplexExpressionImpl implements VariableReference {
+public class ValuedObjectReferenceImpl extends ComplexExpressionImpl implements ValuedObjectReference {
     /**
-     * The cached value of the '{@link #getVariable() <em>Variable</em>}' reference.
+     * The cached value of the '{@link #getValuedObject() <em>Valued Object</em>}' reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #getVariable()
+     * @see #getValuedObject()
      * @generated
      * @ordered
      */
-    protected Variable variable;
+    protected ValuedObject valuedObject;
 
     /**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    protected VariableReferenceImpl() {
+    protected ValuedObjectReferenceImpl() {
         super();
     }
 
@@ -64,7 +64,7 @@ public class VariableReferenceImpl extends ComplexExpressionImpl implements Vari
      */
     @Override
     protected EClass eStaticClass() {
-        return ExpressionsPackage.Literals.VARIABLE_REFERENCE;
+        return ExpressionsPackage.Literals.VALUED_OBJECT_REFERENCE;
     }
 
     /**
@@ -72,16 +72,16 @@ public class VariableReferenceImpl extends ComplexExpressionImpl implements Vari
      * <!-- end-user-doc -->
      * @generated
      */
-    public Variable getVariable() {
-        if (variable != null && variable.eIsProxy()) {
-            InternalEObject oldVariable = (InternalEObject)variable;
-            variable = (Variable)eResolveProxy(oldVariable);
-            if (variable != oldVariable) {
+    public ValuedObject getValuedObject() {
+        if (valuedObject != null && valuedObject.eIsProxy()) {
+            InternalEObject oldValuedObject = (InternalEObject)valuedObject;
+            valuedObject = (ValuedObject)eResolveProxy(oldValuedObject);
+            if (valuedObject != oldValuedObject) {
                 if (eNotificationRequired())
-                    eNotify(new ENotificationImpl(this, Notification.RESOLVE, ExpressionsPackage.VARIABLE_REFERENCE__VARIABLE, oldVariable, variable));
+                    eNotify(new ENotificationImpl(this, Notification.RESOLVE, ExpressionsPackage.VALUED_OBJECT_REFERENCE__VALUED_OBJECT, oldValuedObject, valuedObject));
             }
         }
-        return variable;
+        return valuedObject;
     }
 
     /**
@@ -89,8 +89,8 @@ public class VariableReferenceImpl extends ComplexExpressionImpl implements Vari
      * <!-- end-user-doc -->
      * @generated
      */
-    public Variable basicGetVariable() {
-        return variable;
+    public ValuedObject basicGetValuedObject() {
+        return valuedObject;
     }
 
     /**
@@ -98,11 +98,11 @@ public class VariableReferenceImpl extends ComplexExpressionImpl implements Vari
      * <!-- end-user-doc -->
      * @generated
      */
-    public void setVariable(Variable newVariable) {
-        Variable oldVariable = variable;
-        variable = newVariable;
+    public void setValuedObject(ValuedObject newValuedObject) {
+        ValuedObject oldValuedObject = valuedObject;
+        valuedObject = newValuedObject;
         if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, ExpressionsPackage.VARIABLE_REFERENCE__VARIABLE, oldVariable, variable));
+            eNotify(new ENotificationImpl(this, Notification.SET, ExpressionsPackage.VALUED_OBJECT_REFERENCE__VALUED_OBJECT, oldValuedObject, valuedObject));
     }
 
     /**
@@ -113,9 +113,9 @@ public class VariableReferenceImpl extends ComplexExpressionImpl implements Vari
     @Override
     public Object eGet(int featureID, boolean resolve, boolean coreType) {
         switch (featureID) {
-            case ExpressionsPackage.VARIABLE_REFERENCE__VARIABLE:
-                if (resolve) return getVariable();
-                return basicGetVariable();
+            case ExpressionsPackage.VALUED_OBJECT_REFERENCE__VALUED_OBJECT:
+                if (resolve) return getValuedObject();
+                return basicGetValuedObject();
         }
         return super.eGet(featureID, resolve, coreType);
     }
@@ -128,8 +128,8 @@ public class VariableReferenceImpl extends ComplexExpressionImpl implements Vari
     @Override
     public void eSet(int featureID, Object newValue) {
         switch (featureID) {
-            case ExpressionsPackage.VARIABLE_REFERENCE__VARIABLE:
-                setVariable((Variable)newValue);
+            case ExpressionsPackage.VALUED_OBJECT_REFERENCE__VALUED_OBJECT:
+                setValuedObject((ValuedObject)newValue);
                 return;
         }
         super.eSet(featureID, newValue);
@@ -143,8 +143,8 @@ public class VariableReferenceImpl extends ComplexExpressionImpl implements Vari
     @Override
     public void eUnset(int featureID) {
         switch (featureID) {
-            case ExpressionsPackage.VARIABLE_REFERENCE__VARIABLE:
-                setVariable((Variable)null);
+            case ExpressionsPackage.VALUED_OBJECT_REFERENCE__VALUED_OBJECT:
+                setValuedObject((ValuedObject)null);
                 return;
         }
         super.eUnset(featureID);
@@ -158,10 +158,10 @@ public class VariableReferenceImpl extends ComplexExpressionImpl implements Vari
     @Override
     public boolean eIsSet(int featureID) {
         switch (featureID) {
-            case ExpressionsPackage.VARIABLE_REFERENCE__VARIABLE:
-                return variable != null;
+            case ExpressionsPackage.VALUED_OBJECT_REFERENCE__VALUED_OBJECT:
+                return valuedObject != null;
         }
         return super.eIsSet(featureID);
     }
 
-} //VariableReferenceImpl
+} //ValuedObjectReferenceImpl

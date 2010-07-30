@@ -64,7 +64,7 @@ public class UpdateResourceFactoryImpl extends XMIResourceFactoryImpl {
     /**
      *
      */
-    public static final Synccharts_MM_Version CURRENT_VERSION = Synccharts_MM_Version.v_0_2_1;
+    public static final Synccharts_MM_Version CURRENT_VERSION = Synccharts_MM_Version.v_0_2_2;
 
     /**
      * The command for reinitializing the diagram.
@@ -247,7 +247,11 @@ public class UpdateResourceFactoryImpl extends XMIResourceFactoryImpl {
         /**
          *
          */
-        v_0_2_1;
+        v_0_2_1,
+        /**
+        *
+        */
+        v_0_2_2;
     }
 
     /**
@@ -538,6 +542,8 @@ public class UpdateResourceFactoryImpl extends XMIResourceFactoryImpl {
             return "xmlns:synccharts=\"http://kieler.cs.cau.de/synccharts/0.2\"";
         case v_0_2_1:
             return "xmlns:synccharts=\"http://kieler.cs.cau.de/synccharts/0.2.1\"";
+        case v_0_2_2:
+            return "xmlns:synccharts=\"http://kieler.cs.cau.de/synccharts/0.2.2\"";
         }
         return null;
     }
@@ -647,7 +653,7 @@ public class UpdateResourceFactoryImpl extends XMIResourceFactoryImpl {
                 Transition trans = (Transition) owner;
                 Region parent = trans.getSourceState().getParentRegion();
 
-                for (State state : parent.getInnerStates()) {
+                for (State state : parent.getStates()) {
                     URI stateURI = EcoreUtil.getURI(state);
                     String uriString = stateURI.toString();
                     uriString = uriString.substring(uriString.indexOf("#") + 1);

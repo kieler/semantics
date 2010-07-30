@@ -20,7 +20,7 @@ public class StateEntryActionItemSemanticEditPolicy extends
      * @generated
      */
     public StateEntryActionItemSemanticEditPolicy() {
-        super(SyncchartsElementTypes.Action_3026);
+        super(SyncchartsElementTypes.Action_3034);
     }
 
     /**
@@ -28,8 +28,8 @@ public class StateEntryActionItemSemanticEditPolicy extends
      */
     protected Command getDestroyElementCommand(DestroyElementRequest req) {
         View view = (View) getHost().getModel();
-        CompositeTransactionalCommand cmd =
-                new CompositeTransactionalCommand(getEditingDomain(), null);
+        CompositeTransactionalCommand cmd = new CompositeTransactionalCommand(
+                getEditingDomain(), null);
         cmd.setTransactionNestingEnabled(false);
         EAnnotation annotation = view.getEAnnotation("Shortcut"); //$NON-NLS-1$
         if (annotation == null) {

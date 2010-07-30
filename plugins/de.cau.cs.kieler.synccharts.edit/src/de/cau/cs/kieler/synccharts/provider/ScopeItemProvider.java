@@ -494,17 +494,12 @@ public class ScopeItemProvider
         newChildDescriptors.add
             (createChildParameter
                 (SyncchartsPackage.Literals.SCOPE__BODY_CONTENTS,
-                 ExpressionsFactory.eINSTANCE.createSignalReference()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (SyncchartsPackage.Literals.SCOPE__BODY_CONTENTS,
                  ExpressionsFactory.eINSTANCE.createVariable()));
 
         newChildDescriptors.add
             (createChildParameter
                 (SyncchartsPackage.Literals.SCOPE__BODY_CONTENTS,
-                 ExpressionsFactory.eINSTANCE.createVariableReference()));
+                 ExpressionsFactory.eINSTANCE.createValuedObjectReference()));
 
         newChildDescriptors.add
             (createChildParameter

@@ -40,9 +40,8 @@ public class SyncchartsOCLFactory {
      */
     public static SyncchartsAbstractExpression getExpression(int index,
             EClassifier context, Map<String, EClassifier> environment) {
-        SyncchartsOCLFactory cached =
-                SyncchartsDiagramEditorPlugin.getInstance()
-                        .getSyncchartsOCLFactory();
+        SyncchartsOCLFactory cached = SyncchartsDiagramEditorPlugin
+                .getInstance().getSyncchartsOCLFactory();
         if (cached == null) {
             SyncchartsDiagramEditorPlugin.getInstance()
                     .setSyncchartsOCLFactory(
@@ -52,16 +51,13 @@ public class SyncchartsOCLFactory {
             throw new IllegalArgumentException();
         }
         if (cached.expressions[index] == null) {
-            final String[] exprBodies =
-                    new String[] { "self.sourceState.outgoingTransitions->size()", //$NON-NLS-1$
-                    };
-            cached.expressions[index] =
-                    getExpression(
-                            exprBodies[index],
-                            context,
-                            environment == null ? Collections
-                                    .<String, EClassifier> emptyMap()
-                                    : environment);
+            final String[] exprBodies = new String[] { "self.sourceState.outgoingTransitions->size()", //$NON-NLS-1$
+            };
+            cached.expressions[index] = getExpression(
+                    exprBodies[index],
+                    context,
+                    environment == null ? Collections
+                            .<String, EClassifier> emptyMap() : environment);
         }
         return cached.expressions[index];
     }
@@ -127,8 +123,8 @@ public class SyncchartsOCLFactory {
                 return null;
             }
             // on the first call, both evalEnvironment and extentMap are clear, for later we have finally, below.
-            EvaluationEnvironment<?, ?, ?, ?, ?> evalEnv =
-                    oclInstance.getEvaluationEnvironment();
+            EvaluationEnvironment<?, ?, ?, ?, ?> evalEnv = oclInstance
+                    .getEvaluationEnvironment();
             // initialize environment
             for (Object nextKey : env.keySet()) {
                 evalEnv.replace((String) nextKey, env.get(nextKey));

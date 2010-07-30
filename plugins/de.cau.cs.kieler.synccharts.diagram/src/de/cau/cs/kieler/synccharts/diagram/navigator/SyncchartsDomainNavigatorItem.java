@@ -17,16 +17,15 @@ public class SyncchartsDomainNavigatorItem extends PlatformObject {
      * @generated
      */
     static {
-        final Class[] supportedTypes =
-                new Class[] { EObject.class, IPropertySource.class };
+        final Class[] supportedTypes = new Class[] { EObject.class,
+                IPropertySource.class };
         Platform.getAdapterManager().registerAdapters(
                 new IAdapterFactory() {
 
                     public Object getAdapter(Object adaptableObject,
                             Class adapterType) {
                         if (adaptableObject instanceof de.cau.cs.kieler.synccharts.diagram.navigator.SyncchartsDomainNavigatorItem) {
-                            de.cau.cs.kieler.synccharts.diagram.navigator.SyncchartsDomainNavigatorItem domainNavigatorItem =
-                                    (de.cau.cs.kieler.synccharts.diagram.navigator.SyncchartsDomainNavigatorItem) adaptableObject;
+                            de.cau.cs.kieler.synccharts.diagram.navigator.SyncchartsDomainNavigatorItem domainNavigatorItem = (de.cau.cs.kieler.synccharts.diagram.navigator.SyncchartsDomainNavigatorItem) adaptableObject;
                             EObject eObject = domainNavigatorItem.getEObject();
                             if (adapterType == EObject.class) {
                                 return eObject;

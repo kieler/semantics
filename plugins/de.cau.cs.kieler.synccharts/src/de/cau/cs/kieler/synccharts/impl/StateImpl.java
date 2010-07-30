@@ -233,7 +233,7 @@ public class StateImpl extends ScopeImpl implements State {
             if (eInternalContainer() != null)
                 msgs = eBasicRemoveFromContainer(msgs);
             if (newParentRegion != null)
-                msgs = ((InternalEObject)newParentRegion).eInverseAdd(this, SyncchartsPackage.REGION__INNER_STATES, Region.class, msgs);
+                msgs = ((InternalEObject)newParentRegion).eInverseAdd(this, SyncchartsPackage.REGION__STATES, Region.class, msgs);
             msgs = basicSetParentRegion(newParentRegion, msgs);
             if (msgs != null) msgs.dispatch();
         }
@@ -359,7 +359,7 @@ public class StateImpl extends ScopeImpl implements State {
     public NotificationChain eBasicRemoveFromContainerFeature(NotificationChain msgs) {
         switch (eContainerFeatureID()) {
             case SyncchartsPackage.STATE__PARENT_REGION:
-                return eInternalContainer().eInverseRemove(this, SyncchartsPackage.REGION__INNER_STATES, Region.class, msgs);
+                return eInternalContainer().eInverseRemove(this, SyncchartsPackage.REGION__STATES, Region.class, msgs);
         }
         return super.eBasicRemoveFromContainerFeature(msgs);
     }

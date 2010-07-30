@@ -19,7 +19,7 @@ Void optimizeSelected(Region rootRegion):
 Void addSuccessorState(State source):
  let target = new State:
  connectStates(source, target) ->
- source.parentRegion.innerStates.add(target) ->
+ source.parentRegion.states.add(target) ->
  setSelection(target)
 ;
  
@@ -31,7 +31,7 @@ Void addSuccessorStates(List[State] states):
 Void addPredecessorState(State target):
 let source = new State:
 connectStates(source,target) ->
-target.parentRegion.innerStates.add(source) ->
+target.parentRegion.states.add(source) ->
 (target.isInitial == true) ?
     (target.setIsInitial(false) ->
     source.setIsInitial(true)) : 
@@ -58,9 +58,9 @@ t1.setPriority(1) ->
 t2.setSourceState(choice) ->
 t2.setTargetState(opt2) ->
 t2.setPriority(2) ->
-source.parentRegion.innerStates.add(choice) ->
-source.parentRegion.innerStates.add(opt1) ->
-source.parentRegion.innerStates.add(opt2)
+source.parentRegion.states.add(choice) ->
+source.parentRegion.states.add(opt1) ->
+source.parentRegion.states.add(opt2)
 ;
 
 //Flips source and target of the 
@@ -79,7 +79,7 @@ Void insertState(Transition t):
  let newState = new State:
  t.setTargetState(newState) ->
  connectStates(newState, target) ->
- source.parentRegion.innerStates.add(newState) ->
+ source.parentRegion.states.add(newState) ->
  setSelection(newState)
 ;
 //Connects two states
@@ -122,7 +122,7 @@ let state = new State:
 let index = parentState.regions.size:
 state.setIsInitial(true) ->
 // haf: no name by default state.setLabel("Initial") ->
-region.innerStates.add(state) ->
+region.states.add(state) ->
 // haf: no name by default region.setLabel("R" + index) ->
 parentState.regions.add(region) ->
 setSelection(state)
@@ -192,7 +192,7 @@ Void encapsulateRegions(State parentState):
     (newState.regions.addAll(regions) ->
     parentState.regions.add(newRegion) ->
     // haf: no default name: newRegion.setLabel("R" + parentState.regions.size) ->
-    newRegion.innerStates.add(newState)) : 
+    newRegion.states.add(newState)) : 
    null
 ;
 
@@ -201,7 +201,7 @@ Void encapsulateRegions(State parentState):
 Void flattenState(State state):
 let parentRegion = state.parentRegion:
 let parentState = parentRegion.parentState:
-let stateSize = parentRegion.innerStates.size:
+let stateSize = parentRegion.states.size:
 parentState.regions.addAll(state.regions) ->
 state.setParentRegion(null) ->
 (stateSize <= 1) ?
@@ -226,7 +226,7 @@ Void encapsulateRegion(Region target):
    newState.setIsInitial(true) ->
    // haf: no default name:  newRegion.setLabel("R" + target.parentState.regions.size) ->
    target.parentState.regions.add(newRegion) ->
-   newRegion.innerStates.add(newState) ->
+   newRegion.states.add(newState) ->
    newState.regions.add(target) ->
    setSelection(newState)
  )
@@ -239,7 +239,7 @@ Void encapsulateRegion(List[Region] targets):
  newState.setIsInitial(true) ->
  // haf: no default name: newRegion.setLabel("R" + parent.regions.size) ->
  parent.regions.add(newRegion) ->
- newRegion.innerStates.add(newState) ->
+ newRegion.states.add(newState) ->
  newState.regions.addAll(targets) ->
  setSelection(newState)
 ;
@@ -247,19 +247,19 @@ Void encapsulateRegion(List[Region] targets):
 Void flattenRegion(Region target):
  let parentState = target.parentState:
  let parentRegion = parentState.parentRegion:
- parentRegion.innerStates.addAll(target.innerStates) ->
+ parentRegion.states.addAll(target.states) ->
  parentState.regions.remove(target) ->
  if (parentState.regions.isEmpty) then
-   parentRegion.innerStates.remove(parentState)
+   parentRegion.states.remove(parentState)
 ;
 
 Void flattenRegion(List[Region] target):
  let parentState = target.get(0).parentState:
  let parentRegion = parentState.parentRegion:
- target.innerStates.setParentRegion(parentRegion) ->
+ target.states.setParentRegion(parentRegion) ->
  parentState.regions.removeAll(target) ->
  if (parentState.regions.isEmpty) then
-   parentRegion.innerStates.remove(parentState)
+   parentRegion.states.remove(parentState)
 ;
 
 /////////////////////////
@@ -279,9 +279,9 @@ state.setLabel(getFileNameOfActiveEditor()) ->
 state.regions.add(region) ->
 // haf: no default name: innerState.setLabel("Initial") ->
 innerState.setIsInitial(true) -> 
-region.innerStates.add(innerState) ->
+region.states.add(innerState) ->
 // haf: no default name: region.setLabel("R0") ->
-rootRegion.innerStates.add(state) ->
+rootRegion.states.add(state) ->
 setSelection(innerState)
 ;
 
@@ -292,11 +292,11 @@ JAVA de.cau.cs.kieler.ksbase.ui.utils.TransformationUtils.getFileNameOfActiveEdi
 //Adds an initial state to a region
 Void addState(Region target):
  let state = new State:
- (if (target.innerStates.isEmpty) then
+ (if (target.states.isEmpty) then
   (// haf: no default name: state.setLabel("Initial") ->
    state.setIsInitial(true))
   ) ->
- target.innerStates.add(state) ->
+ target.states.add(state) ->
  setSelection(state)
 ;
 
@@ -326,23 +326,23 @@ let sigA = new Signal:
 let sigB = new Signal:
 let sigR = new Signal:
 let sigO = new Signal:
-let sigAExpr = new SignalReference:
-let sigBExpr = new SignalReference:
+let sigAExpr = new ValuedObjectReference:
+let sigBExpr = new ValuedObjectReference:
 let sigOExpr = new Emission:
-let sigRExpr = new SignalReference:
+let sigRExpr = new ValuedObjectReference:
 let root = new State:
 //ABRO Root State
 root.setLabel("ABRO") ->
 //ABRO Signal definition:
 sigA.setName("A") ->
 sigA.setIsInput(true) ->
-sigAExpr.setSignal(sigA) ->
+sigAExpr.setValuedObject(sigA) ->
 sigB.setName("B") ->
 sigB.setIsInput(true) ->
-sigBExpr.setSignal(sigB) ->
+sigBExpr.setValuedObject(sigB) ->
 sigR.setName("R") ->
 sigR.setIsInput(true) ->
-sigRExpr.setSignal(sigR) ->
+sigRExpr.setValuedObject(sigR) ->
 sigO.setName("O") ->
 sigO.setIsOutput(true) ->
 sigOExpr.setSignal(sigO) ->
@@ -359,11 +359,11 @@ waitAB.setIsInitial(true) ->
 //Region for 'wait for a' 
 wAInitial.setLabel("wA") ->
 wAInitial.setIsInitial(true) ->
-wA.innerStates.add(wAInitial) ->
+wA.states.add(wAInitial) ->
 wA.setLabel("wA") ->
 wAFinal.setLabel("dA") ->
 wAFinal.setIsFinal(true) ->
-wA.innerStates.add(wAFinal) ->
+wA.states.add(wAFinal) ->
 wATrans.setSourceState(wAInitial) ->
 wATrans.setTargetState(wAFinal) ->
 //wATrans.setTrigger(sigAExpr) ->
@@ -372,11 +372,11 @@ waitAB.regions.add(wA) ->
 //Region for 'wait for b'
 wBInitial.setLabel("wB") ->
 wBInitial.setIsInitial(true) ->
-wB.innerStates.add(wBInitial) ->
+wB.states.add(wBInitial) ->
 wB.setLabel("wB") ->
 wBFinal.setLabel("dB") ->
 wBFinal.setIsFinal(true) ->
-wB.innerStates.add(wBFinal) ->
+wB.states.add(wBFinal) ->
 wBTrans.setSourceState(wBInitial) ->
 wBTrans.setTargetState(wBFinal) ->
 //wBTrans.setTrigger(sigBExpr) ->
@@ -389,19 +389,19 @@ waitABToFinal.setTargetState(ABOFinal) ->
 waitABToFinal.setType(TransitionType::NORMALTERMINATION) ->
 //waitABToFinal.effects.add(sigOExpr) ->
 setLabel(waitABToFinal, "/O") ->
-ABORegion.innerStates.add(waitAB) ->
+ABORegion.states.add(waitAB) ->
 ABORegion.setLabel("ABO") ->
-ABORegion.innerStates.add(ABOFinal) ->
+ABORegion.states.add(ABOFinal) ->
 ABO.regions.add(ABORegion)->
 reset.setSourceState(ABO) ->
 reset.setTargetState(ABO) ->
 reset.setType(TransitionType::STRONGABORT) ->
 //reset.setTrigger(sigRExpr) ->
 setLabel(reset, "R") ->
-innerRootRegion.innerStates.add(ABO) ->
+innerRootRegion.states.add(ABO) ->
 innerRootRegion.setLabel("R0") ->
 root.regions.add(innerRootRegion) ->
-rootRegion.innerStates.add(root)
+rootRegion.states.add(root)
 ;
 
 // determine whether a scope contains signals or variables

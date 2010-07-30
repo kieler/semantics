@@ -256,8 +256,8 @@
       <viewProvider class="de.cau.cs.kieler.synccharts.diagram.providers.SyncchartsViewProvider">
          <Priority name="Lowest"/>
          <context viewClass="org.eclipse.gmf.runtime.notation.Diagram" semanticHints="Synccharts"/>
-         <context viewClass="org.eclipse.gmf.runtime.notation.Node" semanticHints="2003,3023,3024,3025,3026,3027,3028,3029,3030"/>
-         <context viewClass="org.eclipse.gmf.runtime.notation.Edge" semanticHints="4003"/>
+         <context viewClass="org.eclipse.gmf.runtime.notation.Node" semanticHints="2004,3031,3032,3033,3034,3035,3036,3037,3038"/>
+         <context viewClass="org.eclipse.gmf.runtime.notation.Edge" semanticHints="4004"/>
       </viewProvider>
    </extension>
 
@@ -269,16 +269,16 @@
             <method name="getType()" value="Synccharts"/>
          </object>
          <object class="org.eclipse.gmf.runtime.notation.Node" id="generated-nodes">
-            <method name="getType()" value="2003,3023,3024,3025,3026,3027,3028,3029,3030"/>
+            <method name="getType()" value="2004,3031,3032,3033,3034,3035,3036,3037,3038"/>
          </object>
          <object class="org.eclipse.gmf.runtime.notation.Edge" id="generated-links">
-            <method name="getType()" value="4003"/>
+            <method name="getType()" value="4004"/>
          </object>
          <object class="org.eclipse.gmf.runtime.notation.Node" id="generated-labels">
-            <method name="getType()" value="5039,5040,5038,5036,5037,5031,5032,5033,5034,5035"/>
+            <method name="getType()" value="5049,5050,5048,5046,5047,5041,5042,5043,5044,5045"/>
          </object>
          <object class="org.eclipse.gmf.runtime.notation.Node" id="generated-compartments">
-            <method name="getType()" value="7028,7029,7030,7031,7032,7033,7034,7035,7036,7037,7038,7039,7040"/>
+            <method name="getType()" value="7041,7042,7043,7044,7045,7046,7047,7048,7049,7050,7051,7052,7053"/>
          </object>
          <context views="generated-diagram,generated-nodes,generated-links,generated-labels,generated-compartments"/>
       </editpartProvider>
@@ -289,8 +289,8 @@
       <modelingAssistantProvider class="de.cau.cs.kieler.synccharts.diagram.providers.SyncchartsModelingAssistantProvider">
          <Priority name="Lowest"/>
          <object class="de.cau.cs.kieler.synccharts.diagram.edit.parts.RegionEditPart" id="Region_1000"/>
-         <object class="de.cau.cs.kieler.synccharts.diagram.edit.parts.StateEditPart" id="State_2003"/>
-         <context elements="Region_1000,State_2003"/>
+         <object class="de.cau.cs.kieler.synccharts.diagram.edit.parts.StateEditPart" id="State_2004"/>
+         <context elements="Region_1000,State_2004"/>
       </modelingAssistantProvider>
    </extension>
 
@@ -310,7 +310,7 @@
 
    <extension point="org.eclipse.gmf.runtime.emf.type.core.elementTypes" id="element-types">
       <?gmfgen generated="true"?>
-      <metamodel nsURI="http://kieler.cs.cau.de/synccharts/0.2.1">
+      <metamodel nsURI="http://kieler.cs.cau.de/synccharts/0.2.2">
          <metamodelType
                id="de.cau.cs.kieler.synccharts.diagram.Region_1000"
                name="%metatype.name.Region_1000"
@@ -320,99 +320,99 @@
             <param name="semanticHint" value="1000"/>
          </metamodelType>
       </metamodel>
-      <metamodel nsURI="http://kieler.cs.cau.de/synccharts/0.2.1">
+      <metamodel nsURI="http://kieler.cs.cau.de/synccharts/0.2.2">
          <metamodelType
-               id="de.cau.cs.kieler.synccharts.diagram.State_2003"
-               name="%metatype.name.State_2003"
+               id="de.cau.cs.kieler.synccharts.diagram.State_2004"
+               name="%metatype.name.State_2004"
                kind="org.eclipse.gmf.runtime.emf.type.core.IHintedType"
                eclass="State"
                edithelper="de.cau.cs.kieler.synccharts.diagram.edit.helpers.StateEditHelper">
-            <param name="semanticHint" value="2003"/>
+            <param name="semanticHint" value="2004"/>
          </metamodelType>
       </metamodel>
-      <metamodel nsURI="http://kieler.cs.cau.de/synccharts/0.2.1">
+      <metamodel nsURI="http://kieler.cs.cau.de/synccharts/0.2.2">
          <specializationType
-               id="de.cau.cs.kieler.synccharts.diagram.Region_3023"
-               name="%metatype.name.Region_3023"
+               id="de.cau.cs.kieler.synccharts.diagram.Region_3031"
+               name="%metatype.name.Region_3031"
                kind="org.eclipse.gmf.runtime.emf.type.core.IHintedType">
             <specializes id="de.cau.cs.kieler.synccharts.diagram.Region_1000"/>
-            <param name="semanticHint" value="3023"/>
+            <param name="semanticHint" value="3031"/>
          </specializationType>
       </metamodel>
-      <metamodel nsURI="http://kieler.cs.cau.de/synccharts/0.2.1">
+      <metamodel nsURI="http://kieler.cs.cau.de/synccharts/0.2.2">
          <specializationType
-               id="de.cau.cs.kieler.synccharts.diagram.State_3024"
-               name="%metatype.name.State_3024"
+               id="de.cau.cs.kieler.synccharts.diagram.State_3032"
+               name="%metatype.name.State_3032"
                kind="org.eclipse.gmf.runtime.emf.type.core.IHintedType">
-            <specializes id="de.cau.cs.kieler.synccharts.diagram.State_2003"/>
-            <param name="semanticHint" value="3024"/>
+            <specializes id="de.cau.cs.kieler.synccharts.diagram.State_2004"/>
+            <param name="semanticHint" value="3032"/>
          </specializationType>
       </metamodel>
-      <metamodel nsURI="http://kieler.cs.cau.de/expressions">
+      <metamodel nsURI="http://kieler.cs.cau.de/expressions/0.1.1">
          <metamodelType
-               id="de.cau.cs.kieler.synccharts.diagram.Signal_3025"
-               name="%metatype.name.Signal_3025"
+               id="de.cau.cs.kieler.synccharts.diagram.Signal_3033"
+               name="%metatype.name.Signal_3033"
                kind="org.eclipse.gmf.runtime.emf.type.core.IHintedType"
                eclass="Signal"
                edithelper="de.cau.cs.kieler.synccharts.diagram.edit.helpers.SignalEditHelper">
-            <param name="semanticHint" value="3025"/>
+            <param name="semanticHint" value="3033"/>
          </metamodelType>
       </metamodel>
-      <metamodel nsURI="http://kieler.cs.cau.de/synccharts/0.2.1">
+      <metamodel nsURI="http://kieler.cs.cau.de/synccharts/0.2.2">
          <metamodelType
-               id="de.cau.cs.kieler.synccharts.diagram.Action_3026"
-               name="%metatype.name.Action_3026"
+               id="de.cau.cs.kieler.synccharts.diagram.Action_3034"
+               name="%metatype.name.Action_3034"
                kind="org.eclipse.gmf.runtime.emf.type.core.IHintedType"
                eclass="Action"
                edithelper="de.cau.cs.kieler.synccharts.diagram.edit.helpers.ActionEditHelper">
-            <param name="semanticHint" value="3026"/>
+            <param name="semanticHint" value="3034"/>
          </metamodelType>
       </metamodel>
-      <metamodel nsURI="http://kieler.cs.cau.de/synccharts/0.2.1">
+      <metamodel nsURI="http://kieler.cs.cau.de/synccharts/0.2.2">
          <specializationType
-               id="de.cau.cs.kieler.synccharts.diagram.Action_3027"
-               name="%metatype.name.Action_3027"
+               id="de.cau.cs.kieler.synccharts.diagram.Action_3035"
+               name="%metatype.name.Action_3035"
                kind="org.eclipse.gmf.runtime.emf.type.core.IHintedType">
-            <specializes id="de.cau.cs.kieler.synccharts.diagram.Action_3026"/>
-            <param name="semanticHint" value="3027"/>
+            <specializes id="de.cau.cs.kieler.synccharts.diagram.Action_3034"/>
+            <param name="semanticHint" value="3035"/>
          </specializationType>
       </metamodel>
-      <metamodel nsURI="http://kieler.cs.cau.de/synccharts/0.2.1">
+      <metamodel nsURI="http://kieler.cs.cau.de/synccharts/0.2.2">
          <specializationType
-               id="de.cau.cs.kieler.synccharts.diagram.Action_3028"
-               name="%metatype.name.Action_3028"
+               id="de.cau.cs.kieler.synccharts.diagram.Action_3036"
+               name="%metatype.name.Action_3036"
                kind="org.eclipse.gmf.runtime.emf.type.core.IHintedType">
-            <specializes id="de.cau.cs.kieler.synccharts.diagram.Action_3026"/>
-            <param name="semanticHint" value="3028"/>
+            <specializes id="de.cau.cs.kieler.synccharts.diagram.Action_3034"/>
+            <param name="semanticHint" value="3036"/>
          </specializationType>
       </metamodel>
-      <metamodel nsURI="http://kieler.cs.cau.de/synccharts/0.2.1">
+      <metamodel nsURI="http://kieler.cs.cau.de/synccharts/0.2.2">
          <specializationType
-               id="de.cau.cs.kieler.synccharts.diagram.Action_3029"
-               name="%metatype.name.Action_3029"
+               id="de.cau.cs.kieler.synccharts.diagram.Action_3037"
+               name="%metatype.name.Action_3037"
                kind="org.eclipse.gmf.runtime.emf.type.core.IHintedType">
-            <specializes id="de.cau.cs.kieler.synccharts.diagram.Action_3026"/>
-            <param name="semanticHint" value="3029"/>
+            <specializes id="de.cau.cs.kieler.synccharts.diagram.Action_3034"/>
+            <param name="semanticHint" value="3037"/>
          </specializationType>
       </metamodel>
-      <metamodel nsURI="http://kieler.cs.cau.de/expressions">
+      <metamodel nsURI="http://kieler.cs.cau.de/expressions/0.1.1">
          <metamodelType
-               id="de.cau.cs.kieler.synccharts.diagram.TextualCode_3030"
-               name="%metatype.name.TextualCode_3030"
+               id="de.cau.cs.kieler.synccharts.diagram.TextualCode_3038"
+               name="%metatype.name.TextualCode_3038"
                kind="org.eclipse.gmf.runtime.emf.type.core.IHintedType"
                eclass="TextualCode"
                edithelper="de.cau.cs.kieler.synccharts.diagram.edit.helpers.TextualCodeEditHelper">
-            <param name="semanticHint" value="3030"/>
+            <param name="semanticHint" value="3038"/>
          </metamodelType>
       </metamodel>
-      <metamodel nsURI="http://kieler.cs.cau.de/synccharts/0.2.1">
+      <metamodel nsURI="http://kieler.cs.cau.de/synccharts/0.2.2">
          <metamodelType
-               id="de.cau.cs.kieler.synccharts.diagram.Transition_4003"
-               name="%metatype.name.Transition_4003"
+               id="de.cau.cs.kieler.synccharts.diagram.Transition_4004"
+               name="%metatype.name.Transition_4004"
                kind="org.eclipse.gmf.runtime.emf.type.core.IHintedType"
                eclass="Transition"
                edithelper="de.cau.cs.kieler.synccharts.diagram.edit.helpers.TransitionEditHelper">
-            <param name="semanticHint" value="4003"/>
+            <param name="semanticHint" value="4004"/>
          </metamodelType>
       </metamodel>
    </extension>
@@ -428,16 +428,16 @@
       </clientContext> 
       <binding context="de.cau.cs.kieler.synccharts.diagram.TypeContext">
          <elementType ref="de.cau.cs.kieler.synccharts.diagram.Region_1000"/>
-         <elementType ref="de.cau.cs.kieler.synccharts.diagram.State_2003"/>
-         <elementType ref="de.cau.cs.kieler.synccharts.diagram.Region_3023"/>
-         <elementType ref="de.cau.cs.kieler.synccharts.diagram.State_3024"/>
-         <elementType ref="de.cau.cs.kieler.synccharts.diagram.Signal_3025"/>
-         <elementType ref="de.cau.cs.kieler.synccharts.diagram.Action_3026"/>
-         <elementType ref="de.cau.cs.kieler.synccharts.diagram.Action_3027"/>
-         <elementType ref="de.cau.cs.kieler.synccharts.diagram.Action_3028"/>
-         <elementType ref="de.cau.cs.kieler.synccharts.diagram.Action_3029"/>
-         <elementType ref="de.cau.cs.kieler.synccharts.diagram.TextualCode_3030"/>
-         <elementType ref="de.cau.cs.kieler.synccharts.diagram.Transition_4003"/>
+         <elementType ref="de.cau.cs.kieler.synccharts.diagram.State_2004"/>
+         <elementType ref="de.cau.cs.kieler.synccharts.diagram.Region_3031"/>
+         <elementType ref="de.cau.cs.kieler.synccharts.diagram.State_3032"/>
+         <elementType ref="de.cau.cs.kieler.synccharts.diagram.Signal_3033"/>
+         <elementType ref="de.cau.cs.kieler.synccharts.diagram.Action_3034"/>
+         <elementType ref="de.cau.cs.kieler.synccharts.diagram.Action_3035"/>
+         <elementType ref="de.cau.cs.kieler.synccharts.diagram.Action_3036"/>
+         <elementType ref="de.cau.cs.kieler.synccharts.diagram.Action_3037"/>
+         <elementType ref="de.cau.cs.kieler.synccharts.diagram.TextualCode_3038"/>
+         <elementType ref="de.cau.cs.kieler.synccharts.diagram.Transition_4004"/>
          <advice ref="org.eclipse.gmf.runtime.diagram.core.advice.notationDepdendents"/>
       </binding>
    </extension>

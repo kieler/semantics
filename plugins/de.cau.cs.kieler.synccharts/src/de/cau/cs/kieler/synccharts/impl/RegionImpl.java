@@ -42,7 +42,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link de.cau.cs.kieler.synccharts.impl.RegionImpl#getInnerStates <em>Inner States</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.synccharts.impl.RegionImpl#getStates <em>States</em>}</li>
  *   <li>{@link de.cau.cs.kieler.synccharts.impl.RegionImpl#getParentState <em>Parent State</em>}</li>
  * </ul>
  * </p>
@@ -51,15 +51,14 @@ import org.eclipse.emf.ecore.util.InternalEList;
  */
 public class RegionImpl extends ScopeImpl implements Region {
     /**
-     * The cached value of the '{@link #getInnerStates() <em>Inner States</em>}' containment reference list.
+     * The cached value of the '{@link #getStates() <em>States</em>}' containment reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #getInnerStates()
+     * @see #getStates()
      * @generated
      * @ordered
      */
-    protected EList<State> innerStates;
-
+    protected EList<State> states;
     /**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -84,11 +83,11 @@ public class RegionImpl extends ScopeImpl implements Region {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EList<State> getInnerStates() {
-        if (innerStates == null) {
-            innerStates = new EObjectContainmentWithInverseEList<State>(State.class, this, SyncchartsPackage.REGION__INNER_STATES, SyncchartsPackage.STATE__PARENT_REGION);
+    public EList<State> getStates() {
+        if (states == null) {
+            states = new EObjectContainmentWithInverseEList<State>(State.class, this, SyncchartsPackage.REGION__STATES, SyncchartsPackage.STATE__PARENT_REGION);
         }
-        return innerStates;
+        return states;
     }
 
     /**
@@ -141,8 +140,8 @@ public class RegionImpl extends ScopeImpl implements Region {
     @Override
     public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
         switch (featureID) {
-            case SyncchartsPackage.REGION__INNER_STATES:
-                return ((InternalEList<InternalEObject>)(InternalEList<?>)getInnerStates()).basicAdd(otherEnd, msgs);
+            case SyncchartsPackage.REGION__STATES:
+                return ((InternalEList<InternalEObject>)(InternalEList<?>)getStates()).basicAdd(otherEnd, msgs);
             case SyncchartsPackage.REGION__PARENT_STATE:
                 if (eInternalContainer() != null)
                     msgs = eBasicRemoveFromContainer(msgs);
@@ -159,8 +158,8 @@ public class RegionImpl extends ScopeImpl implements Region {
     @Override
     public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
         switch (featureID) {
-            case SyncchartsPackage.REGION__INNER_STATES:
-                return ((InternalEList<?>)getInnerStates()).basicRemove(otherEnd, msgs);
+            case SyncchartsPackage.REGION__STATES:
+                return ((InternalEList<?>)getStates()).basicRemove(otherEnd, msgs);
             case SyncchartsPackage.REGION__PARENT_STATE:
                 return basicSetParentState(null, msgs);
         }
@@ -189,8 +188,8 @@ public class RegionImpl extends ScopeImpl implements Region {
     @Override
     public Object eGet(int featureID, boolean resolve, boolean coreType) {
         switch (featureID) {
-            case SyncchartsPackage.REGION__INNER_STATES:
-                return getInnerStates();
+            case SyncchartsPackage.REGION__STATES:
+                return getStates();
             case SyncchartsPackage.REGION__PARENT_STATE:
                 return getParentState();
         }
@@ -206,9 +205,9 @@ public class RegionImpl extends ScopeImpl implements Region {
     @Override
     public void eSet(int featureID, Object newValue) {
         switch (featureID) {
-            case SyncchartsPackage.REGION__INNER_STATES:
-                getInnerStates().clear();
-                getInnerStates().addAll((Collection<? extends State>)newValue);
+            case SyncchartsPackage.REGION__STATES:
+                getStates().clear();
+                getStates().addAll((Collection<? extends State>)newValue);
                 return;
             case SyncchartsPackage.REGION__PARENT_STATE:
                 setParentState((State)newValue);
@@ -225,8 +224,8 @@ public class RegionImpl extends ScopeImpl implements Region {
     @Override
     public void eUnset(int featureID) {
         switch (featureID) {
-            case SyncchartsPackage.REGION__INNER_STATES:
-                getInnerStates().clear();
+            case SyncchartsPackage.REGION__STATES:
+                getStates().clear();
                 return;
             case SyncchartsPackage.REGION__PARENT_STATE:
                 setParentState((State)null);
@@ -243,8 +242,8 @@ public class RegionImpl extends ScopeImpl implements Region {
     @Override
     public boolean eIsSet(int featureID) {
         switch (featureID) {
-            case SyncchartsPackage.REGION__INNER_STATES:
-                return innerStates != null && !innerStates.isEmpty();
+            case SyncchartsPackage.REGION__STATES:
+                return states != null && !states.isEmpty();
             case SyncchartsPackage.REGION__PARENT_STATE:
                 return getParentState() != null;
         }

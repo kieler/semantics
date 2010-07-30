@@ -34,9 +34,8 @@ public class SyncchartsPropertySection extends AdvancedPropertySection
         }
         AdapterFactory af = getAdapterFactory(object);
         if (af != null) {
-            IItemPropertySource ips =
-                    (IItemPropertySource) af.adapt(object,
-                            IItemPropertySource.class);
+            IItemPropertySource ips = (IItemPropertySource) af.adapt(object,
+                    IItemPropertySource.class);
             if (ips != null) {
                 return new PropertySource(object, ips);
             }
@@ -86,10 +85,9 @@ public class SyncchartsPropertySection extends AdvancedPropertySection
             super.setInput(part, selection);
             return;
         }
-        final StructuredSelection structuredSelection =
-                ((StructuredSelection) selection);
-        ArrayList transformedSelection =
-                new ArrayList(structuredSelection.size());
+        final StructuredSelection structuredSelection = ((StructuredSelection) selection);
+        ArrayList transformedSelection = new ArrayList(
+                structuredSelection.size());
         for (Iterator it = structuredSelection.iterator(); it.hasNext();) {
             Object r = transformSelection(it.next());
             if (r != null) {
@@ -107,8 +105,8 @@ public class SyncchartsPropertySection extends AdvancedPropertySection
             return ((AdapterFactoryEditingDomain) getEditingDomain())
                     .getAdapterFactory();
         }
-        TransactionalEditingDomain editingDomain =
-                TransactionUtil.getEditingDomain(object);
+        TransactionalEditingDomain editingDomain = TransactionUtil
+                .getEditingDomain(object);
         if (editingDomain != null) {
             return ((AdapterFactoryEditingDomain) editingDomain)
                     .getAdapterFactory();

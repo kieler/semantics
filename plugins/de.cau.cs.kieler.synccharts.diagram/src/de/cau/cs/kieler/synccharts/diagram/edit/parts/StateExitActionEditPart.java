@@ -33,7 +33,7 @@ public class StateExitActionEditPart extends ShapeNodeEditPart {
     /**
      * @generated
      */
-    public static final int VISUAL_ID = 3028;
+    public static final int VISUAL_ID = 3036;
 
     /**
      * @generated
@@ -68,26 +68,25 @@ public class StateExitActionEditPart extends ShapeNodeEditPart {
      * @generated
      */
     protected LayoutEditPolicy createLayoutEditPolicy() {
-        org.eclipse.gmf.runtime.diagram.ui.editpolicies.LayoutEditPolicy lep =
-                new org.eclipse.gmf.runtime.diagram.ui.editpolicies.LayoutEditPolicy() {
+        org.eclipse.gmf.runtime.diagram.ui.editpolicies.LayoutEditPolicy lep = new org.eclipse.gmf.runtime.diagram.ui.editpolicies.LayoutEditPolicy() {
 
-                    protected EditPolicy createChildEditPolicy(EditPart child) {
-                        EditPolicy result =
-                                child.getEditPolicy(EditPolicy.PRIMARY_DRAG_ROLE);
-                        if (result == null) {
-                            result = new NonResizableEditPolicy();
-                        }
-                        return result;
-                    }
+            protected EditPolicy createChildEditPolicy(EditPart child) {
+                EditPolicy result = child
+                        .getEditPolicy(EditPolicy.PRIMARY_DRAG_ROLE);
+                if (result == null) {
+                    result = new NonResizableEditPolicy();
+                }
+                return result;
+            }
 
-                    protected Command getMoveChildrenCommand(Request request) {
-                        return null;
-                    }
+            protected Command getMoveChildrenCommand(Request request) {
+                return null;
+            }
 
-                    protected Command getCreateCommand(CreateRequest request) {
-                        return null;
-                    }
-                };
+            protected Command getCreateCommand(CreateRequest request) {
+                return null;
+            }
+        };
         return lep;
     }
 
@@ -166,7 +165,6 @@ public class StateExitActionEditPart extends ShapeNodeEditPart {
      * @generated
      */
     protected NodeFigure createNodePlate() {
-        //StateExitActionEditPart
         DefaultSizeNodeFigure result = new DefaultSizeNodeFigure(20, 20);
         return result;
     }

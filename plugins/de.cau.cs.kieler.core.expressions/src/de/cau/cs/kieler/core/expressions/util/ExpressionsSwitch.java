@@ -120,14 +120,6 @@ public class ExpressionsSwitch<T> {
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
-            case ExpressionsPackage.SIGNAL_REFERENCE: {
-                SignalReference signalReference = (SignalReference)theEObject;
-                T result = caseSignalReference(signalReference);
-                if (result == null) result = caseComplexExpression(signalReference);
-                if (result == null) result = caseExpression(signalReference);
-                if (result == null) result = defaultCase(theEObject);
-                return result;
-            }
             case ExpressionsPackage.VALUED_OBJECT: {
                 ValuedObject valuedObject = (ValuedObject)theEObject;
                 T result = caseValuedObject(valuedObject);
@@ -141,11 +133,11 @@ public class ExpressionsSwitch<T> {
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
-            case ExpressionsPackage.VARIABLE_REFERENCE: {
-                VariableReference variableReference = (VariableReference)theEObject;
-                T result = caseVariableReference(variableReference);
-                if (result == null) result = caseComplexExpression(variableReference);
-                if (result == null) result = caseExpression(variableReference);
+            case ExpressionsPackage.VALUED_OBJECT_REFERENCE: {
+                ValuedObjectReference valuedObjectReference = (ValuedObjectReference)theEObject;
+                T result = caseValuedObjectReference(valuedObjectReference);
+                if (result == null) result = caseComplexExpression(valuedObjectReference);
+                if (result == null) result = caseExpression(valuedObjectReference);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -262,21 +254,6 @@ public class ExpressionsSwitch<T> {
     }
 
     /**
-     * Returns the result of interpreting the object as an instance of '<em>Signal Reference</em>'.
-     * <!-- begin-user-doc -->
-     * This implementation returns null;
-     * returning a non-null result will terminate the switch.
-     * <!-- end-user-doc -->
-     * @param object the target of the switch.
-     * @return the result of interpreting the object as an instance of '<em>Signal Reference</em>'.
-     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-     * @generated
-     */
-    public T caseSignalReference(SignalReference object) {
-        return null;
-    }
-
-    /**
      * Returns the result of interpreting the object as an instance of '<em>Valued Object</em>'.
      * <!-- begin-user-doc -->
      * This implementation returns null;
@@ -307,17 +284,17 @@ public class ExpressionsSwitch<T> {
     }
 
     /**
-     * Returns the result of interpreting the object as an instance of '<em>Variable Reference</em>'.
+     * Returns the result of interpreting the object as an instance of '<em>Valued Object Reference</em>'.
      * <!-- begin-user-doc -->
      * This implementation returns null;
      * returning a non-null result will terminate the switch.
      * <!-- end-user-doc -->
      * @param object the target of the switch.
-     * @return the result of interpreting the object as an instance of '<em>Variable Reference</em>'.
+     * @return the result of interpreting the object as an instance of '<em>Valued Object Reference</em>'.
      * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
      * @generated
      */
-    public T caseVariableReference(VariableReference object) {
+    public T caseValuedObjectReference(ValuedObjectReference object) {
         return null;
     }
 

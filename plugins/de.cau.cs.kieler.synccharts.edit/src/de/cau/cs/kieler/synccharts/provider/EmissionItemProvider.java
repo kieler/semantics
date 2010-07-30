@@ -186,12 +186,7 @@ public class EmissionItemProvider
         newChildDescriptors.add
             (createChildParameter
                 (SyncchartsPackage.Literals.EMISSION__NEW_VALUE,
-                 ExpressionsFactory.eINSTANCE.createSignalReference()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (SyncchartsPackage.Literals.EMISSION__NEW_VALUE,
-                 ExpressionsFactory.eINSTANCE.createVariableReference()));
+                 ExpressionsFactory.eINSTANCE.createValuedObjectReference()));
 
         newChildDescriptors.add
             (createChildParameter

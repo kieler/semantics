@@ -16,14 +16,14 @@ public class StateEntryActionCompartmentItemSemanticEditPolicy extends
      * @generated
      */
     public StateEntryActionCompartmentItemSemanticEditPolicy() {
-        super(SyncchartsElementTypes.State_3024);
+        super(SyncchartsElementTypes.State_3032);
     }
 
     /**
      * @generated
      */
     protected Command getCreateCommand(CreateElementRequest req) {
-        if (SyncchartsElementTypes.Action_3026 == req.getElementType()) {
+        if (SyncchartsElementTypes.Action_3034 == req.getElementType()) {
             return getGEFWrapper(new StateEntryActionCreateCommand(req));
         }
         return super.getCreateCommand(req);

@@ -7,9 +7,9 @@
     xmlns:gmftool="http://www.eclipse.org/gmf/2005/ToolDefinition">
   <nodes>
     <containmentFeature
-        href="synccharts.ecore#//Region/innerStates"/>
+        href="synccharts.ecore#//Region/states"/>
     <childrenFeature
-        href="synccharts.ecore#//Region/innerStates"/>
+        href="synccharts.ecore#//Region/states"/>
     <ownedChild>
       <domainMetaElement
           href="synccharts.ecore#//State"/>
@@ -61,9 +61,9 @@
               compartment="//@nodes.0/@ownedChild/@children.0/@ownedChild/@compartments.0"
               referencedChild="//@nodes.0/@ownedChild">
             <containmentFeature
-                href="synccharts.ecore#//Region/innerStates"/>
+                href="synccharts.ecore#//Region/states"/>
             <childrenFeature
-                href="synccharts.ecore#//Region/innerStates"/>
+                href="synccharts.ecore#//Region/states"/>
           </children>
           <compartments
               children="//@nodes.0/@ownedChild/@children.0/@ownedChild/@children.0">

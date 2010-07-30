@@ -142,7 +142,7 @@
     </children>
     <styles xmi:type="notation:ShapeStyle" xmi:id="_MqMHRXIcEd-MzIgE3mnJQg" fontColor="4210752" fontName="Lucida Grande" fontHeight="10" fillColor="13761016" lineColor="8421504"/>
     <element xmi:type="ecore:EClass" href="synccharts.ecore#//State"/>
-    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_MqMHRnIcEd-MzIgE3mnJQg" x="434" y="15"/>
+    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_MqMHRnIcEd-MzIgE3mnJQg" x="308" y="11"/>
   </children>
   <children xmi:type="notation:Node" xmi:id="_MqN8cnIcEd-MzIgE3mnJQg" type="1005">
     <children xmi:type="notation:Node" xmi:id="_MqOjgHIcEd-MzIgE3mnJQg" type="4010"/>
@@ -460,7 +460,7 @@
     </children>
     <styles xmi:type="notation:ConnectorStyle" xmi:id="_MrV903IcEd-MzIgE3mnJQg" lineColor="4210752"/>
     <styles xmi:type="notation:FontStyle" xmi:id="_MrV91HIcEd-MzIgE3mnJQg" fontColor="4210752" fontName="Lucida Grande" fontHeight="10"/>
-    <element xmi:type="ecore:EReference" href="synccharts.ecore#//Region/innerStates"/>
+    <element xmi:type="ecore:EReference" href="synccharts.ecore#//Region/states"/>
     <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_MrV91XIcEd-MzIgE3mnJQg" points="[0, 0, 31, 0]$[0, 0, 31, 0]$[-31, 0, 0, 0]$[-31, 0, 0, 0]"/>
     <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_wnJo4X0UEd-PzPrMIcpdbQ" id="(0.0059114343979779415,0.11795643397739955)"/>
     <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_wnJo4n0UEd-PzPrMIcpdbQ" id="(1.0029661034335609,0.5293826821409626)"/>

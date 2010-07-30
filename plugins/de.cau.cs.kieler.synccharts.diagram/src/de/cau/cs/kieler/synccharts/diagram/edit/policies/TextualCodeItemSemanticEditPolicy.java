@@ -20,7 +20,7 @@ public class TextualCodeItemSemanticEditPolicy extends
      * @generated
      */
     public TextualCodeItemSemanticEditPolicy() {
-        super(SyncchartsElementTypes.TextualCode_3030);
+        super(SyncchartsElementTypes.TextualCode_3038);
     }
 
     /**
@@ -28,8 +28,8 @@ public class TextualCodeItemSemanticEditPolicy extends
      */
     protected Command getDestroyElementCommand(DestroyElementRequest req) {
         View view = (View) getHost().getModel();
-        CompositeTransactionalCommand cmd =
-                new CompositeTransactionalCommand(getEditingDomain(), null);
+        CompositeTransactionalCommand cmd = new CompositeTransactionalCommand(
+                getEditingDomain(), null);
         cmd.setTransactionNestingEnabled(false);
         EAnnotation annotation = view.getEAnnotation("Shortcut"); //$NON-NLS-1$
         if (annotation == null) {

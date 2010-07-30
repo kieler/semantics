@@ -16,7 +16,7 @@ public class TransitionItemSemanticEditPolicy extends
      * @generated
      */
     public TransitionItemSemanticEditPolicy() {
-        super(SyncchartsElementTypes.Transition_4003);
+        super(SyncchartsElementTypes.Transition_4004);
     }
 
     /**

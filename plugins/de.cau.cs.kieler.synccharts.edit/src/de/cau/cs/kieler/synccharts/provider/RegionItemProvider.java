@@ -80,7 +80,7 @@ public class RegionItemProvider
     public Collection<? extends EStructuralFeature> getChildrenFeatures(Object object) {
         if (childrenFeatures == null) {
             super.getChildrenFeatures(object);
-            childrenFeatures.add(SyncchartsPackage.Literals.REGION__INNER_STATES);
+            childrenFeatures.add(SyncchartsPackage.Literals.REGION__STATES);
         }
         return childrenFeatures;
     }
@@ -135,7 +135,7 @@ public class RegionItemProvider
         updateChildren(notification);
 
         switch (notification.getFeatureID(Region.class)) {
-            case SyncchartsPackage.REGION__INNER_STATES:
+            case SyncchartsPackage.REGION__STATES:
                 fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
                 return;
         }
@@ -155,7 +155,7 @@ public class RegionItemProvider
 
         newChildDescriptors.add
             (createChildParameter
-                (SyncchartsPackage.Literals.REGION__INNER_STATES,
+                (SyncchartsPackage.Literals.REGION__STATES,
                  SyncchartsFactory.eINSTANCE.createState()));
     }
 
@@ -180,7 +180,7 @@ public class RegionItemProvider
             childFeature == SyncchartsPackage.Literals.SCOPE__INNER_ACTIONS ||
             childFeature == SyncchartsPackage.Literals.SCOPE__ENTRY_ACTIONS ||
             childFeature == SyncchartsPackage.Literals.SCOPE__RENAMINGS ||
-            childFeature == SyncchartsPackage.Literals.REGION__INNER_STATES ||
+            childFeature == SyncchartsPackage.Literals.REGION__STATES ||
             childFeature == SyncchartsPackage.Literals.SCOPE__BODY_TEXT;
 
         if (qualify) {

@@ -28,7 +28,7 @@ public class StateEntryActionCompartment2EditPart extends
     /**
      * @generated
      */
-    public static final int VISUAL_ID = 7029;
+    public static final int VISUAL_ID = 7042;
 
     /**
      * @generated
@@ -48,8 +48,8 @@ public class StateEntryActionCompartment2EditPart extends
      * @generated
      */
     public IFigure createFigure() {
-        ResizableCompartmentFigure result =
-                (ResizableCompartmentFigure) super.createFigure();
+        ResizableCompartmentFigure result = (ResizableCompartmentFigure) super
+                .createFigure();
         result.setTitleVisibility(false);
 
         Object border = result.getBorder();

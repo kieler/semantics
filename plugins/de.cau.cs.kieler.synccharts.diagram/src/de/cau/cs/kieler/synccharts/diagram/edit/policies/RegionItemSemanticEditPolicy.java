@@ -27,7 +27,7 @@ public class RegionItemSemanticEditPolicy extends
      * @generated
      */
     protected Command getCreateCommand(CreateElementRequest req) {
-        if (SyncchartsElementTypes.State_2003 == req.getElementType()) {
+        if (SyncchartsElementTypes.State_2004 == req.getElementType()) {
             return getGEFWrapper(new StateCreateCommand(req));
         }
         return super.getCreateCommand(req);
@@ -37,8 +37,8 @@ public class RegionItemSemanticEditPolicy extends
      * @generated
      */
     protected Command getDuplicateCommand(DuplicateElementsRequest req) {
-        TransactionalEditingDomain editingDomain =
-                ((IGraphicalEditPart) getHost()).getEditingDomain();
+        TransactionalEditingDomain editingDomain = ((IGraphicalEditPart) getHost())
+                .getEditingDomain();
         return getGEFWrapper(new DuplicateAnythingCommand(editingDomain, req));
     }
 

@@ -5,7 +5,7 @@ import expressions;
 // Scopes
 
 Boolean signalNotRead(Signal signal, Scope scope):
- scope.eAllContents.typeSelect(SignalReference).select(reference|reference.signal.name.matches(signal.name)).isEmpty
+ scope.eAllContents.typeSelect(ValuedObjectReference).select(reference|reference.signal.name.matches(signal.name)).isEmpty
 ;
 
 Boolean signalNotEmitted(Signal signal, Scope scope):
@@ -31,7 +31,7 @@ context Scope
     ;
 
 Boolean variableNotRead(Variable var, Scope scope):
- scope.eAllContents.typeSelect(VariableReference).select(reference|reference.variable.name == var.name).isEmpty
+ scope.eAllContents.typeSelect(ValuedObjectReference).select(reference|reference.variable.name == var.name).isEmpty
 ;
 
 Boolean variableNotWritten(Variable var, Scope scope):
@@ -84,7 +84,7 @@ context State if (type != StateType::REFERENCE && type != StateType::TEXTUAL)
 // General States 
 context State if (parentRegion != null && parentRegion.parentState != null && isInitial == false) // not checked for root state 
   ERROR "Not reachable state! Every state needs at least one incoming transition!" :
-  (parentRegion.innerStates.exists(e|e.outgoingTransitions.exists(t|t.targetState == this)));
+  (parentRegion.states.exists(e|e.outgoingTransitions.exists(t|t.targetState == this)));
 
 context State
 	ERROR "States need an ID. The tool gives IDs automatically to states. So if a state has no ID, something went wrong. Rename or recreate the state and send a bug report, please!" : 
@@ -92,7 +92,7 @@ context State
 
 context State if (id != null && !id.matches("\\s*"))
 	ERROR "States within a region need to have different IDs (which are created from their labels)." :
-	parentRegion.innerStates.forAll(s| (s.id != id) || (s == this));
+	parentRegion.states.forAll(s| (s.id != id) || (s == this));
 
 context State
 	ERROR "IDs should be of standard identifier type, i.e. only contain characters, numbers and the _ sign." :
@@ -130,7 +130,7 @@ context State if (parentRegion == null || parentRegion.parentState == null)
 context State if (parentRegion == null || parentRegion.parentState == null)
   ERROR "The root state should have at least one Region containing at least one State! 
   Try upgrading the root state!":
-   (regions.size > 0 && regions.forAll(r|r.innerStates.size > 0));
+   (regions.size > 0 && regions.forAll(r|r.states.size > 0));
 
 context State if (parentRegion != null && parentRegion.parentState == null)
   ERROR "There should be exactly one root State which represents the whole SyncChart.":

@@ -67,15 +67,14 @@ public class SyncchartsValidationDecoratorProvider extends AbstractProvider
     /**
      * @generated
      */
-    private static Map/*<String, List<IDecorator>>*/allDecorators =
-            new HashMap();
+    private static Map/*<String, List<IDecorator>>*/allDecorators = new HashMap();
 
     /**
      * @generated
      */
     public void createDecorators(IDecoratorTarget decoratorTarget) {
-        EditPart editPart =
-                (EditPart) decoratorTarget.getAdapter(EditPart.class);
+        EditPart editPart = (EditPart) decoratorTarget
+                .getAdapter(EditPart.class);
         if (editPart instanceof GraphicalEditPart
                 || editPart instanceof AbstractConnectionEditPart) {
             Object model = editPart.getModel();
@@ -103,8 +102,8 @@ public class SyncchartsValidationDecoratorProvider extends AbstractProvider
         if (!(operation instanceof CreateDecoratorsOperation)) {
             return false;
         }
-        IDecoratorTarget decoratorTarget =
-                ((CreateDecoratorsOperation) operation).getDecoratorTarget();
+        IDecoratorTarget decoratorTarget = ((CreateDecoratorsOperation) operation)
+                .getDecoratorTarget();
         View view = (View) decoratorTarget.getAdapter(View.class);
         return view != null
                 && RegionEditPart.MODEL_ID.equals(SyncchartsVisualIDRegistry
@@ -122,8 +121,8 @@ public class SyncchartsValidationDecoratorProvider extends AbstractProvider
      * @generated
      */
     private static void refreshDecorators(String viewId, Diagram diagram) {
-        final List decorators =
-                viewId != null ? (List) allDecorators.get(viewId) : null;
+        final List decorators = viewId != null ? (List) allDecorators
+                .get(viewId) : null;
         if (decorators == null || decorators.isEmpty() || diagram == null) {
             return;
         }
@@ -138,8 +137,8 @@ public class SyncchartsValidationDecoratorProvider extends AbstractProvider
                                 public void run() {
                                     for (Iterator it = decorators.iterator(); it
                                             .hasNext();) {
-                                        IDecorator decorator =
-                                                (IDecorator) it.next();
+                                        IDecorator decorator = (IDecorator) it
+                                                .next();
                                         decorator.refresh();
                                     }
                                 }
@@ -168,15 +167,14 @@ public class SyncchartsValidationDecoratorProvider extends AbstractProvider
         public StatusDecorator(IDecoratorTarget decoratorTarget) {
             super(decoratorTarget);
             try {
-                final View view =
-                        (View) getDecoratorTarget().getAdapter(View.class);
+                final View view = (View) getDecoratorTarget().getAdapter(
+                        View.class);
                 TransactionUtil.getEditingDomain(view).runExclusive(
                         new Runnable() {
 
                             public void run() {
-                                StatusDecorator.this.viewId =
-                                        view != null ? ViewUtil.getIdStr(view)
-                                                : null;
+                                StatusDecorator.this.viewId = view != null ? ViewUtil
+                                        .getIdStr(view) : null;
                             }
                         });
             } catch (Exception e) {
@@ -194,8 +192,8 @@ public class SyncchartsValidationDecoratorProvider extends AbstractProvider
             if (view == null || view.eResource() == null) {
                 return;
             }
-            EditPart editPart =
-                    (EditPart) getDecoratorTarget().getAdapter(EditPart.class);
+            EditPart editPart = (EditPart) getDecoratorTarget().getAdapter(
+                    EditPart.class);
             if (editPart == null || editPart.getViewer() == null) {
                 return;
             }
@@ -207,16 +205,15 @@ public class SyncchartsValidationDecoratorProvider extends AbstractProvider
             }
             int severity = IMarker.SEVERITY_INFO;
             IMarker foundMarker = null;
-            IResource resource =
-                    WorkspaceSynchronizer.getFile(view.eResource());
+            IResource resource = WorkspaceSynchronizer
+                    .getFile(view.eResource());
             if (resource == null || !resource.exists()) {
                 return;
             }
             IMarker[] markers = null;
             try {
-                markers =
-                        resource.findMarkers(MARKER_TYPE, true,
-                                IResource.DEPTH_INFINITE);
+                markers = resource.findMarkers(MARKER_TYPE, true,
+                        IResource.DEPTH_INFINITE);
             } catch (CoreException e) {
                 SyncchartsDiagramEditorPlugin.getInstance().logError(
                         "Validation markers refresh failure", e); //$NON-NLS-1$
@@ -227,21 +224,19 @@ public class SyncchartsValidationDecoratorProvider extends AbstractProvider
             Label toolTip = null;
             for (int i = 0; i < markers.length; i++) {
                 IMarker marker = markers[i];
-                String attribute =
-                        marker.getAttribute(
+                String attribute = marker
+                        .getAttribute(
                                 org.eclipse.gmf.runtime.common.ui.resources.IMarker.ELEMENT_ID,
                                 ""); //$NON-NLS-1$
                 if (attribute.equals(elementId)) {
-                    int nextSeverity =
-                            marker.getAttribute(IMarker.SEVERITY,
-                                    IMarker.SEVERITY_INFO);
+                    int nextSeverity = marker.getAttribute(IMarker.SEVERITY,
+                            IMarker.SEVERITY_INFO);
                     Image nextImage = getImage(nextSeverity);
                     if (foundMarker == null) {
                         foundMarker = marker;
-                        toolTip =
-                                new Label(marker.getAttribute(IMarker.MESSAGE,
-                                        ""), //$NON-NLS-1$
-                                        nextImage);
+                        toolTip = new Label(marker.getAttribute(
+                                IMarker.MESSAGE, ""), //$NON-NLS-1$
+                                nextImage);
                     } else {
                         if (toolTip.getChildren().isEmpty()) {
                             Label comositeLabel = new Label();
@@ -255,8 +250,8 @@ public class SyncchartsValidationDecoratorProvider extends AbstractProvider
                                 IMarker.MESSAGE, ""), //$NON-NLS-1$
                                 nextImage));
                     }
-                    severity =
-                            (nextSeverity > severity) ? nextSeverity : severity;
+                    severity = (nextSeverity > severity) ? nextSeverity
+                            : severity;
                 }
             }
             if (foundMarker == null) {
@@ -271,12 +266,9 @@ public class SyncchartsValidationDecoratorProvider extends AbstractProvider
                 } else {
                     int margin = -1;
                     if (editPart instanceof org.eclipse.gef.GraphicalEditPart) {
-                        margin =
-                                MapModeUtil
-                                        .getMapMode(
-                                                ((org.eclipse.gef.GraphicalEditPart) editPart)
-                                                        .getFigure()).DPtoLP(
-                                                margin);
+                        margin = MapModeUtil.getMapMode(
+                                ((org.eclipse.gef.GraphicalEditPart) editPart)
+                                        .getFigure()).DPtoLP(margin);
                     }
                     setDecoration(getDecoratorTarget()
                             .addShapeDecoration(getImage(severity),
@@ -423,9 +415,8 @@ public class SyncchartsValidationDecoratorProvider extends AbstractProvider
          * @generated
          */
         public void handleMarkerDeleted(IMarker marker, Map attributes) {
-            String viewId =
-                    (String) attributes
-                            .get(org.eclipse.gmf.runtime.common.ui.resources.IMarker.ELEMENT_ID);
+            String viewId = (String) attributes
+                    .get(org.eclipse.gmf.runtime.common.ui.resources.IMarker.ELEMENT_ID);
             refreshDecorators(viewId, diagram);
         }
 
@@ -436,8 +427,8 @@ public class SyncchartsValidationDecoratorProvider extends AbstractProvider
             if (!MARKER_TYPE.equals(getType(marker))) {
                 return;
             }
-            String viewId =
-                    marker.getAttribute(
+            String viewId = marker
+                    .getAttribute(
                             org.eclipse.gmf.runtime.common.ui.resources.IMarker.ELEMENT_ID,
                             ""); //$NON-NLS-1$
             refreshDecorators(viewId, diagram);

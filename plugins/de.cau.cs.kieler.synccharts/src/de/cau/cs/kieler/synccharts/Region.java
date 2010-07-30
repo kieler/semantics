@@ -36,7 +36,7 @@ import org.eclipse.emf.common.util.EList;
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link de.cau.cs.kieler.synccharts.Region#getInnerStates <em>Inner States</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.synccharts.Region#getStates <em>States</em>}</li>
  *   <li>{@link de.cau.cs.kieler.synccharts.Region#getParentState <em>Parent State</em>}</li>
  * </ul>
  * </p>
@@ -47,22 +47,22 @@ import org.eclipse.emf.common.util.EList;
  */
 public interface Region extends Scope {
     /**
-     * Returns the value of the '<em><b>Inner States</b></em>' containment reference list.
+     * Returns the value of the '<em><b>States</b></em>' containment reference list.
      * The list contents are of type {@link de.cau.cs.kieler.synccharts.State}.
      * It is bidirectional and its opposite is '{@link de.cau.cs.kieler.synccharts.State#getParentRegion <em>Parent Region</em>}'.
      * <!-- begin-user-doc -->
      * <p>
-     * If the meaning of the '<em>Inner States</em>' containment reference list isn't clear,
+     * If the meaning of the '<em>States</em>' containment reference list isn't clear,
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
-     * @return the value of the '<em>Inner States</em>' containment reference list.
-     * @see de.cau.cs.kieler.synccharts.SyncchartsPackage#getRegion_InnerStates()
+     * @return the value of the '<em>States</em>' containment reference list.
+     * @see de.cau.cs.kieler.synccharts.SyncchartsPackage#getRegion_States()
      * @see de.cau.cs.kieler.synccharts.State#getParentRegion
      * @model opposite="parentRegion" containment="true"
      * @generated
      */
-    EList<State> getInnerStates();
+    EList<State> getStates();
 
     /**
      * Returns the value of the '<em><b>Parent State</b></em>' container reference.

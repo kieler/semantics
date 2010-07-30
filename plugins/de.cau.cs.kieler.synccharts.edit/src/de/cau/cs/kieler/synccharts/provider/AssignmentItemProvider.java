@@ -186,12 +186,7 @@ public class AssignmentItemProvider
         newChildDescriptors.add
             (createChildParameter
                 (SyncchartsPackage.Literals.ASSIGNMENT__EXPRESSION,
-                 ExpressionsFactory.eINSTANCE.createSignalReference()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (SyncchartsPackage.Literals.ASSIGNMENT__EXPRESSION,
-                 ExpressionsFactory.eINSTANCE.createVariableReference()));
+                 ExpressionsFactory.eINSTANCE.createValuedObjectReference()));
 
         newChildDescriptors.add
             (createChildParameter

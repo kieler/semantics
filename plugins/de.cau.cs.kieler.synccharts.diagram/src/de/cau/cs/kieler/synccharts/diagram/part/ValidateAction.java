@@ -65,8 +65,7 @@ public class ValidateAction extends Action {
         if (workbenchPart != null
                 && workbenchPart instanceof IDiagramWorkbenchPart) {
 
-            final IDiagramWorkbenchPart part =
-                    (IDiagramWorkbenchPart) workbenchPart;
+            final IDiagramWorkbenchPart part = (IDiagramWorkbenchPart) workbenchPart;
             try {
                 new WorkspaceModifyDelegatingOperation(
                         new IRunnableWithProgress() {
@@ -115,9 +114,8 @@ public class ValidateAction extends Action {
      * @generated
      */
     public static void runNonUIValidation(View view) {
-        DiagramEditPart diagramEditPart =
-                OffscreenEditPartFactory.getInstance().createDiagramEditPart(
-                        view.getDiagram());
+        DiagramEditPart diagramEditPart = OffscreenEditPartFactory
+                .getInstance().createDiagramEditPart(view.getDiagram());
         runValidation(diagramEditPart, view);
     }
 
@@ -127,8 +125,8 @@ public class ValidateAction extends Action {
     public static void runValidation(DiagramEditPart diagramEditPart, View view) {
         final DiagramEditPart fpart = diagramEditPart;
         final View fview = view;
-        TransactionalEditingDomain txDomain =
-                TransactionUtil.getEditingDomain(view);
+        TransactionalEditingDomain txDomain = TransactionUtil
+                .getEditingDomain(view);
         SyncchartsValidationProvider.runWithConstraints(txDomain,
                 new Runnable() {
 
@@ -157,17 +155,15 @@ public class ValidateAction extends Action {
      * @generated
      */
     private static void validate(DiagramEditPart diagramEditPart, View view) {
-        IFile target =
-                view.eResource() != null ? WorkspaceSynchronizer.getFile(view
-                        .eResource()) : null;
+        IFile target = view.eResource() != null ? WorkspaceSynchronizer
+                .getFile(view.eResource()) : null;
         if (target != null) {
             SyncchartsMarkerNavigationProvider.deleteMarkers(target);
         }
         Diagnostic diagnostic = runEMFValidator(view);
         createMarkers(target, diagnostic, diagramEditPart);
-        IBatchValidator validator =
-                (IBatchValidator) ModelValidationService.getInstance()
-                        .newValidator(EvaluationMode.BATCH);
+        IBatchValidator validator = (IBatchValidator) ModelValidationService
+                .getInstance().newValidator(EvaluationMode.BATCH);
         validator.setIncludeLiveConstraints(true);
         if (view.isSetElement() && view.getElement() != null) {
             IStatus status = validator.validate(view.getElement());
@@ -185,16 +181,13 @@ public class ValidateAction extends Action {
         }
         final IStatus rootStatus = validationStatus;
         List allStatuses = new ArrayList();
-        SyncchartsDiagramEditorUtil.LazyElement2ViewMap element2ViewMap =
-                new SyncchartsDiagramEditorUtil.LazyElement2ViewMap(
-                        diagramEditPart.getDiagramView(),
-                        collectTargetElements(rootStatus,
-                                new HashSet<EObject>(), allStatuses));
+        SyncchartsDiagramEditorUtil.LazyElement2ViewMap element2ViewMap = new SyncchartsDiagramEditorUtil.LazyElement2ViewMap(
+                diagramEditPart.getDiagramView(), collectTargetElements(
+                        rootStatus, new HashSet<EObject>(), allStatuses));
         for (Iterator it = allStatuses.iterator(); it.hasNext();) {
             IConstraintStatus nextStatus = (IConstraintStatus) it.next();
-            View view =
-                    SyncchartsDiagramEditorUtil.findView(diagramEditPart,
-                            nextStatus.getTarget(), element2ViewMap);
+            View view = SyncchartsDiagramEditorUtil.findView(diagramEditPart,
+                    nextStatus.getTarget(), element2ViewMap);
             addMarker(diagramEditPart.getViewer(), target, view.eResource()
                     .getURIFragment(view), EMFCoreUtil.getQualifiedName(
                     nextStatus.getTarget(), true), nextStatus.getMessage(),
@@ -212,11 +205,9 @@ public class ValidateAction extends Action {
         }
         final Diagnostic rootStatus = emfValidationStatus;
         List allDiagnostics = new ArrayList();
-        SyncchartsDiagramEditorUtil.LazyElement2ViewMap element2ViewMap =
-                new SyncchartsDiagramEditorUtil.LazyElement2ViewMap(
-                        diagramEditPart.getDiagramView(),
-                        collectTargetElements(rootStatus,
-                                new HashSet<EObject>(), allDiagnostics));
+        SyncchartsDiagramEditorUtil.LazyElement2ViewMap element2ViewMap = new SyncchartsDiagramEditorUtil.LazyElement2ViewMap(
+                diagramEditPart.getDiagramView(), collectTargetElements(
+                        rootStatus, new HashSet<EObject>(), allDiagnostics));
         for (Iterator it = emfValidationStatus.getChildren().iterator(); it
                 .hasNext();) {
             Diagnostic nextDiagnostic = (Diagnostic) it.next();
@@ -224,9 +215,8 @@ public class ValidateAction extends Action {
             if (data != null && !data.isEmpty()
                     && data.get(0) instanceof EObject) {
                 EObject element = (EObject) data.get(0);
-                View view =
-                        SyncchartsDiagramEditorUtil.findView(diagramEditPart,
-                                element, element2ViewMap);
+                View view = SyncchartsDiagramEditorUtil.findView(
+                        diagramEditPart, element, element2ViewMap);
                 addMarker(
                         diagramEditPart.getViewer(),
                         target,

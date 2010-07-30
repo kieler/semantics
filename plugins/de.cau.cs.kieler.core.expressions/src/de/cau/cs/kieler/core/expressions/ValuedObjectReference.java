@@ -16,13 +16,13 @@ package de.cau.cs.kieler.core.expressions;
 
 /**
  * <!-- begin-user-doc -->
- * A representation of the model object '<em><b>Variable Reference</b></em>'.
+ * A representation of the model object '<em><b>Valued Object Reference</b></em>'.
  * <!-- end-user-doc -->
  *
  * <!-- begin-model-doc -->
- * A VariableReference has a reference to a Variable object and is a ComplexExpression.
+ * A ValuedObjectReference has a reference to a ValuedObject and is a ComplexExpression.
  * Therefore such reference may have subExpressions. Those can be used to 
- * address a specific value. E.g. the Variable could carry an array
+ * address a specific value. E.g. the ValuedObject could carry an array
  * value and a subExpression could be an IntValue that points to a special entry in 
  * that array. 
  * <p>
@@ -36,39 +36,39 @@ package de.cau.cs.kieler.core.expressions;
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link de.cau.cs.kieler.core.expressions.VariableReference#getVariable <em>Variable</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.core.expressions.ValuedObjectReference#getValuedObject <em>Valued Object</em>}</li>
  * </ul>
  * </p>
  *
- * @see de.cau.cs.kieler.core.expressions.ExpressionsPackage#getVariableReference()
+ * @see de.cau.cs.kieler.core.expressions.ExpressionsPackage#getValuedObjectReference()
  * @model
  * @generated
  */
-public interface VariableReference extends ComplexExpression {
+public interface ValuedObjectReference extends ComplexExpression {
     /**
-     * Returns the value of the '<em><b>Variable</b></em>' reference.
+     * Returns the value of the '<em><b>Valued Object</b></em>' reference.
      * <!-- begin-user-doc -->
      * <p>
-     * If the meaning of the '<em>Variable</em>' reference isn't clear,
+     * If the meaning of the '<em>Valued Object</em>' reference isn't clear,
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
-     * @return the value of the '<em>Variable</em>' reference.
-     * @see #setVariable(Variable)
-     * @see de.cau.cs.kieler.core.expressions.ExpressionsPackage#getVariableReference_Variable()
+     * @return the value of the '<em>Valued Object</em>' reference.
+     * @see #setValuedObject(ValuedObject)
+     * @see de.cau.cs.kieler.core.expressions.ExpressionsPackage#getValuedObjectReference_ValuedObject()
      * @model required="true"
      * @generated
      */
-    Variable getVariable();
+    ValuedObject getValuedObject();
 
     /**
-     * Sets the value of the '{@link de.cau.cs.kieler.core.expressions.VariableReference#getVariable <em>Variable</em>}' reference.
+     * Sets the value of the '{@link de.cau.cs.kieler.core.expressions.ValuedObjectReference#getValuedObject <em>Valued Object</em>}' reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Variable</em>' reference.
-     * @see #getVariable()
+     * @param value the new value of the '<em>Valued Object</em>' reference.
+     * @see #getValuedObject()
      * @generated
      */
-    void setVariable(Variable value);
+    void setValuedObject(ValuedObject value);
 
-} // VariableReference
+} // ValuedObjectReference

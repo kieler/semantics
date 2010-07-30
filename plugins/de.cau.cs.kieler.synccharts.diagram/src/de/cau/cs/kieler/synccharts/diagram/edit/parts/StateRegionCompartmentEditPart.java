@@ -25,7 +25,7 @@ public class StateRegionCompartmentEditPart extends ShapeCompartmentEditPart {
     /**
      * @generated
      */
-    public static final int VISUAL_ID = 7033;
+    public static final int VISUAL_ID = 7046;
 
     /**
      * @generated
@@ -45,8 +45,8 @@ public class StateRegionCompartmentEditPart extends ShapeCompartmentEditPart {
      * @generated
      */
     public IFigure createFigure() {
-        ResizableCompartmentFigure result =
-                (ResizableCompartmentFigure) super.createFigure();
+        ResizableCompartmentFigure result = (ResizableCompartmentFigure) super
+                .createFigure();
         result.setTitleVisibility(false);
 
         Object border = result.getBorder();

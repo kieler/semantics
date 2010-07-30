@@ -261,12 +261,7 @@ public class ActionItemProvider
         newChildDescriptors.add
             (createChildParameter
                 (SyncchartsPackage.Literals.ACTION__TRIGGER,
-                 ExpressionsFactory.eINSTANCE.createSignalReference()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (SyncchartsPackage.Literals.ACTION__TRIGGER,
-                 ExpressionsFactory.eINSTANCE.createVariableReference()));
+                 ExpressionsFactory.eINSTANCE.createValuedObjectReference()));
 
         newChildDescriptors.add
             (createChildParameter

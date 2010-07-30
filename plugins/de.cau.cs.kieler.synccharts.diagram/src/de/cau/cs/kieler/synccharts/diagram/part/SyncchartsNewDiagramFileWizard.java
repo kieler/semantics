@@ -59,10 +59,9 @@ public class SyncchartsNewDiagramFileWizard extends Wizard {
         assert diagramRoot != null : "Doagram root element must be specified"; //$NON-NLS-1$
         assert editingDomain != null : "Editing domain must be specified"; //$NON-NLS-1$
 
-        myFileCreationPage =
-                new WizardNewFileCreationPage(
-                        Messages.SyncchartsNewDiagramFileWizard_CreationPageName,
-                        StructuredSelection.EMPTY);
+        myFileCreationPage = new WizardNewFileCreationPage(
+                Messages.SyncchartsNewDiagramFileWizard_CreationPageName,
+                StructuredSelection.EMPTY);
         myFileCreationPage
                 .setTitle(Messages.SyncchartsNewDiagramFileWizard_CreationPageTitle);
         myFileCreationPage
@@ -70,12 +69,11 @@ public class SyncchartsNewDiagramFileWizard extends Wizard {
                         .bind(Messages.SyncchartsNewDiagramFileWizard_CreationPageDescription,
                                 RegionEditPart.MODEL_ID));
         IPath filePath;
-        String fileName =
-                URI.decode(domainModelURI.trimFileExtension().lastSegment());
+        String fileName = URI.decode(domainModelURI.trimFileExtension()
+                .lastSegment());
         if (domainModelURI.isPlatformResource()) {
-            filePath =
-                    new Path(domainModelURI.trimSegments(1).toPlatformString(
-                            true));
+            filePath = new Path(domainModelURI.trimSegments(1)
+                    .toPlatformString(true));
         } else if (domainModelURI.isFile()) {
             filePath = new Path(domainModelURI.trimSegments(1).toFileString());
         } else {
@@ -87,9 +85,8 @@ public class SyncchartsNewDiagramFileWizard extends Wizard {
         myFileCreationPage.setFileName(SyncchartsDiagramEditorUtil
                 .getUniqueFileName(filePath, fileName, "kids")); //$NON-NLS-1$
 
-        diagramRootElementSelectionPage =
-                new DiagramRootElementSelectionPage(
-                        Messages.SyncchartsNewDiagramFileWizard_RootSelectionPageName);
+        diagramRootElementSelectionPage = new DiagramRootElementSelectionPage(
+                Messages.SyncchartsNewDiagramFileWizard_RootSelectionPageName);
         diagramRootElementSelectionPage
                 .setTitle(Messages.SyncchartsNewDiagramFileWizard_RootSelectionPageTitle);
         diagramRootElementSelectionPage
@@ -115,40 +112,34 @@ public class SyncchartsNewDiagramFileWizard extends Wizard {
         IFile diagramFile = myFileCreationPage.createNewFile();
         SyncchartsDiagramEditorUtil.setCharset(diagramFile);
         affectedFiles.add(diagramFile);
-        URI diagramModelURI =
-                URI.createPlatformResourceURI(diagramFile.getFullPath()
-                        .toString(), true);
+        URI diagramModelURI = URI.createPlatformResourceURI(diagramFile
+                .getFullPath().toString(), true);
         ResourceSet resourceSet = myEditingDomain.getResourceSet();
-        final Resource diagramResource =
-                resourceSet.createResource(diagramModelURI);
-        AbstractTransactionalCommand command =
-                new AbstractTransactionalCommand(
-                        myEditingDomain,
-                        Messages.SyncchartsNewDiagramFileWizard_InitDiagramCommand,
-                        affectedFiles) {
+        final Resource diagramResource = resourceSet
+                .createResource(diagramModelURI);
+        AbstractTransactionalCommand command = new AbstractTransactionalCommand(
+                myEditingDomain,
+                Messages.SyncchartsNewDiagramFileWizard_InitDiagramCommand,
+                affectedFiles) {
 
-                    protected CommandResult doExecuteWithResult(
-                            IProgressMonitor monitor, IAdaptable info)
-                            throws ExecutionException {
-                        int diagramVID =
-                                SyncchartsVisualIDRegistry
-                                        .getDiagramVisualID(diagramRootElementSelectionPage
-                                                .getModelElement());
-                        if (diagramVID != RegionEditPart.VISUAL_ID) {
-                            return CommandResult
-                                    .newErrorCommandResult(Messages.SyncchartsNewDiagramFileWizard_IncorrectRootError);
-                        }
-                        Diagram diagram =
-                                ViewService
-                                        .createDiagram(
-                                                diagramRootElementSelectionPage
-                                                        .getModelElement(),
-                                                RegionEditPart.MODEL_ID,
-                                                SyncchartsDiagramEditorPlugin.DIAGRAM_PREFERENCES_HINT);
-                        diagramResource.getContents().add(diagram);
-                        return CommandResult.newOKCommandResult();
-                    }
-                };
+            protected CommandResult doExecuteWithResult(
+                    IProgressMonitor monitor, IAdaptable info)
+                    throws ExecutionException {
+                int diagramVID = SyncchartsVisualIDRegistry
+                        .getDiagramVisualID(diagramRootElementSelectionPage
+                                .getModelElement());
+                if (diagramVID != RegionEditPart.VISUAL_ID) {
+                    return CommandResult
+                            .newErrorCommandResult(Messages.SyncchartsNewDiagramFileWizard_IncorrectRootError);
+                }
+                Diagram diagram = ViewService.createDiagram(
+                        diagramRootElementSelectionPage.getModelElement(),
+                        RegionEditPart.MODEL_ID,
+                        SyncchartsDiagramEditorPlugin.DIAGRAM_PREFERENCES_HINT);
+                diagramResource.getContents().add(diagram);
+                return CommandResult.newOKCommandResult();
+            }
+        };
         try {
             OperationHistoryFactory.getOperationHistory().execute(command,
                     new NullProgressMonitor(), null);
@@ -195,15 +186,13 @@ public class SyncchartsNewDiagramFileWizard extends Wizard {
                 setErrorMessage(Messages.SyncchartsNewDiagramFileWizard_RootSelectionPageNoSelectionMessage);
                 return false;
             }
-            boolean result =
-                    ViewService
-                            .getInstance()
-                            .provides(
-                                    new CreateDiagramViewOperation(
-                                            new EObjectAdapter(
-                                                    selectedModelElement),
-                                            RegionEditPart.MODEL_ID,
-                                            SyncchartsDiagramEditorPlugin.DIAGRAM_PREFERENCES_HINT));
+            boolean result = ViewService
+                    .getInstance()
+                    .provides(
+                            new CreateDiagramViewOperation(
+                                    new EObjectAdapter(selectedModelElement),
+                                    RegionEditPart.MODEL_ID,
+                                    SyncchartsDiagramEditorPlugin.DIAGRAM_PREFERENCES_HINT));
             setErrorMessage(result ? null
                     : Messages.SyncchartsNewDiagramFileWizard_RootSelectionPageInvalidSelectionMessage);
             return result;

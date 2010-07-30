@@ -81,7 +81,7 @@ Void optimize(Region rootRegion):
 
 // remove methods
 Void removeStateFromRegion(State state):
- state.parentRegion.innerStates.remove(state)
+ state.parentRegion.states.remove(state)
 ;
 Void removeRegionFromState(Region region):
  if region.parentState != null then
@@ -95,7 +95,7 @@ Void optimizeRec(Region region,
  optimizeScope(region) ->
  (if isEnabled("fixIDs") then
     generateRegionId(region)) ->
- (if region.innerStates.isEmpty 
+ (if region.states.isEmpty 
    // region empty, maybe remove it
    then (if (isEnabled("removeDummyRegions") &&
        region.signals.isEmpty &&
@@ -103,7 +103,7 @@ Void optimizeRec(Region region,
        regionsToRemove.add(region))
    else
    // region not empty, go through states recursively
-    region.innerStates.optimizeRec(statesToRemove,
+    region.states.optimizeRec(statesToRemove,
                                    regionsToRemove)
  )
 ;
@@ -152,7 +152,7 @@ Void optimizeRec(State state,
 ;
 
 Boolean signalNotRead(Signal signal, Scope scope):
- scope.eAllContents.typeSelect(SignalReference).select(reference|reference.signal.name.matches(signal.name)).isEmpty
+ scope.eAllContents.typeSelect(ValuedObjectReference).select(reference|reference.signal.name.matches(signal.name)).isEmpty
 ;
 
 Boolean signalNotEmitted(Signal signal, Scope scope):
@@ -164,7 +164,7 @@ List[Signal] getUnReferencedSignals(Scope scope):
 ;
 
 Boolean variableNotRead(expressions::Variable var, Scope scope):
- scope.eAllContents.typeSelect(VariableReference).select(reference|reference.variable.name == var.name).isEmpty
+ scope.eAllContents.typeSelect(ValuedObjectReference).select(reference|reference.variable.name == var.name).isEmpty
 ;
 
 Boolean variableNotWritten(expressions::Variable var, Scope scope):

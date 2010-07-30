@@ -39,7 +39,7 @@ public class ExpressionsFactoryImpl extends EFactoryImpl implements ExpressionsF
      */
     public static ExpressionsFactory init() {
         try {
-            ExpressionsFactory theExpressionsFactory = (ExpressionsFactory)EPackage.Registry.INSTANCE.getEFactory("http://kieler.cs.cau.de/expressions"); 
+            ExpressionsFactory theExpressionsFactory = (ExpressionsFactory)EPackage.Registry.INSTANCE.getEFactory("http://kieler.cs.cau.de/expressions/0.1.1"); 
             if (theExpressionsFactory != null) {
                 return theExpressionsFactory;
             }
@@ -72,10 +72,9 @@ public class ExpressionsFactoryImpl extends EFactoryImpl implements ExpressionsF
             case ExpressionsPackage.EXPRESSION: return createExpression();
             case ExpressionsPackage.TEXTUAL_CODE: return createTextualCode();
             case ExpressionsPackage.SIGNAL: return createSignal();
-            case ExpressionsPackage.SIGNAL_REFERENCE: return createSignalReference();
             case ExpressionsPackage.VALUED_OBJECT: return createValuedObject();
             case ExpressionsPackage.VARIABLE: return createVariable();
-            case ExpressionsPackage.VARIABLE_REFERENCE: return createVariableReference();
+            case ExpressionsPackage.VALUED_OBJECT_REFERENCE: return createValuedObjectReference();
             case ExpressionsPackage.VALUE: return createValue();
             case ExpressionsPackage.INT_VALUE: return createIntValue();
             case ExpressionsPackage.FLOAT_VALUE: return createFloatValue();
@@ -170,16 +169,6 @@ public class ExpressionsFactoryImpl extends EFactoryImpl implements ExpressionsF
      * <!-- end-user-doc -->
      * @generated
      */
-    public SignalReference createSignalReference() {
-        SignalReferenceImpl signalReference = new SignalReferenceImpl();
-        return signalReference;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
     public ValuedObject createValuedObject() {
         ValuedObjectImpl valuedObject = new ValuedObjectImpl();
         return valuedObject;
@@ -200,9 +189,9 @@ public class ExpressionsFactoryImpl extends EFactoryImpl implements ExpressionsF
      * <!-- end-user-doc -->
      * @generated
      */
-    public VariableReference createVariableReference() {
-        VariableReferenceImpl variableReference = new VariableReferenceImpl();
-        return variableReference;
+    public ValuedObjectReference createValuedObjectReference() {
+        ValuedObjectReferenceImpl valuedObjectReference = new ValuedObjectReferenceImpl();
+        return valuedObjectReference;
     }
 
     /**

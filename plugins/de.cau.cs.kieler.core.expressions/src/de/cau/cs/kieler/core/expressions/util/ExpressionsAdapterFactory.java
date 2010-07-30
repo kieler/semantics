@@ -95,10 +95,6 @@ public class ExpressionsAdapterFactory extends AdapterFactoryImpl {
                 return createSignalAdapter();
             }
             @Override
-            public Adapter caseSignalReference(SignalReference object) {
-                return createSignalReferenceAdapter();
-            }
-            @Override
             public Adapter caseValuedObject(ValuedObject object) {
                 return createValuedObjectAdapter();
             }
@@ -107,8 +103,8 @@ public class ExpressionsAdapterFactory extends AdapterFactoryImpl {
                 return createVariableAdapter();
             }
             @Override
-            public Adapter caseVariableReference(VariableReference object) {
-                return createVariableReferenceAdapter();
+            public Adapter caseValuedObjectReference(ValuedObjectReference object) {
+                return createValuedObjectReferenceAdapter();
             }
             @Override
             public Adapter caseValue(Value object) {
@@ -211,20 +207,6 @@ public class ExpressionsAdapterFactory extends AdapterFactoryImpl {
     }
 
     /**
-     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.core.expressions.SignalReference <em>Signal Reference</em>}'.
-     * <!-- begin-user-doc -->
-     * This default implementation returns null so that we can easily ignore cases;
-     * it's useful to ignore a case when inheritance will catch all the cases anyway.
-     * <!-- end-user-doc -->
-     * @return the new adapter.
-     * @see de.cau.cs.kieler.core.expressions.SignalReference
-     * @generated
-     */
-    public Adapter createSignalReferenceAdapter() {
-        return null;
-    }
-
-    /**
      * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.core.expressions.ValuedObject <em>Valued Object</em>}'.
      * <!-- begin-user-doc -->
      * This default implementation returns null so that we can easily ignore cases;
@@ -253,16 +235,16 @@ public class ExpressionsAdapterFactory extends AdapterFactoryImpl {
     }
 
     /**
-     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.core.expressions.VariableReference <em>Variable Reference</em>}'.
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.core.expressions.ValuedObjectReference <em>Valued Object Reference</em>}'.
      * <!-- begin-user-doc -->
      * This default implementation returns null so that we can easily ignore cases;
      * it's useful to ignore a case when inheritance will catch all the cases anyway.
      * <!-- end-user-doc -->
      * @return the new adapter.
-     * @see de.cau.cs.kieler.core.expressions.VariableReference
+     * @see de.cau.cs.kieler.core.expressions.ValuedObjectReference
      * @generated
      */
-    public Adapter createVariableReferenceAdapter() {
+    public Adapter createValuedObjectReferenceAdapter() {
         return null;
     }
 

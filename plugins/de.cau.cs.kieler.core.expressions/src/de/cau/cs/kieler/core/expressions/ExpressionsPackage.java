@@ -49,7 +49,7 @@ public interface ExpressionsPackage extends EPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    String eNS_URI = "http://kieler.cs.cau.de/expressions";
+    String eNS_URI = "http://kieler.cs.cau.de/expressions/0.1.1";
 
     /**
      * The package namespace name.
@@ -159,7 +159,7 @@ public interface ExpressionsPackage extends EPackage {
      * @see de.cau.cs.kieler.core.expressions.impl.ExpressionsPackageImpl#getValuedObject()
      * @generated
      */
-    int VALUED_OBJECT = 5;
+    int VALUED_OBJECT = 4;
 
     /**
      * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -298,43 +298,6 @@ public interface ExpressionsPackage extends EPackage {
     int SIGNAL_FEATURE_COUNT = VALUED_OBJECT_FEATURE_COUNT + 4;
 
     /**
-     * The meta object id for the '{@link de.cau.cs.kieler.core.expressions.impl.SignalReferenceImpl <em>Signal Reference</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.core.expressions.impl.SignalReferenceImpl
-     * @see de.cau.cs.kieler.core.expressions.impl.ExpressionsPackageImpl#getSignalReference()
-     * @generated
-     */
-    int SIGNAL_REFERENCE = 4;
-
-    /**
-     * The feature id for the '<em><b>Sub Expressions</b></em>' containment reference list.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int SIGNAL_REFERENCE__SUB_EXPRESSIONS = COMPLEX_EXPRESSION__SUB_EXPRESSIONS;
-
-    /**
-     * The feature id for the '<em><b>Signal</b></em>' reference.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int SIGNAL_REFERENCE__SIGNAL = COMPLEX_EXPRESSION_FEATURE_COUNT + 0;
-
-    /**
-     * The number of structural features of the '<em>Signal Reference</em>' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int SIGNAL_REFERENCE_FEATURE_COUNT = COMPLEX_EXPRESSION_FEATURE_COUNT + 1;
-
-    /**
      * The meta object id for the '{@link de.cau.cs.kieler.core.expressions.impl.VariableImpl <em>Variable</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -342,7 +305,7 @@ public interface ExpressionsPackage extends EPackage {
      * @see de.cau.cs.kieler.core.expressions.impl.ExpressionsPackageImpl#getVariable()
      * @generated
      */
-    int VARIABLE = 6;
+    int VARIABLE = 5;
 
     /**
      * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -399,14 +362,14 @@ public interface ExpressionsPackage extends EPackage {
     int VARIABLE_FEATURE_COUNT = VALUED_OBJECT_FEATURE_COUNT + 1;
 
     /**
-     * The meta object id for the '{@link de.cau.cs.kieler.core.expressions.impl.VariableReferenceImpl <em>Variable Reference</em>}' class.
+     * The meta object id for the '{@link de.cau.cs.kieler.core.expressions.impl.ValuedObjectReferenceImpl <em>Valued Object Reference</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.core.expressions.impl.VariableReferenceImpl
-     * @see de.cau.cs.kieler.core.expressions.impl.ExpressionsPackageImpl#getVariableReference()
+     * @see de.cau.cs.kieler.core.expressions.impl.ValuedObjectReferenceImpl
+     * @see de.cau.cs.kieler.core.expressions.impl.ExpressionsPackageImpl#getValuedObjectReference()
      * @generated
      */
-    int VARIABLE_REFERENCE = 7;
+    int VALUED_OBJECT_REFERENCE = 6;
 
     /**
      * The feature id for the '<em><b>Sub Expressions</b></em>' containment reference list.
@@ -415,25 +378,25 @@ public interface ExpressionsPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int VARIABLE_REFERENCE__SUB_EXPRESSIONS = COMPLEX_EXPRESSION__SUB_EXPRESSIONS;
+    int VALUED_OBJECT_REFERENCE__SUB_EXPRESSIONS = COMPLEX_EXPRESSION__SUB_EXPRESSIONS;
 
     /**
-     * The feature id for the '<em><b>Variable</b></em>' reference.
+     * The feature id for the '<em><b>Valued Object</b></em>' reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int VARIABLE_REFERENCE__VARIABLE = COMPLEX_EXPRESSION_FEATURE_COUNT + 0;
+    int VALUED_OBJECT_REFERENCE__VALUED_OBJECT = COMPLEX_EXPRESSION_FEATURE_COUNT + 0;
 
     /**
-     * The number of structural features of the '<em>Variable Reference</em>' class.
+     * The number of structural features of the '<em>Valued Object Reference</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int VARIABLE_REFERENCE_FEATURE_COUNT = COMPLEX_EXPRESSION_FEATURE_COUNT + 1;
+    int VALUED_OBJECT_REFERENCE_FEATURE_COUNT = COMPLEX_EXPRESSION_FEATURE_COUNT + 1;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.core.expressions.impl.ValueImpl <em>Value</em>}' class.
@@ -443,7 +406,7 @@ public interface ExpressionsPackage extends EPackage {
      * @see de.cau.cs.kieler.core.expressions.impl.ExpressionsPackageImpl#getValue()
      * @generated
      */
-    int VALUE = 8;
+    int VALUE = 7;
 
     /**
      * The number of structural features of the '<em>Value</em>' class.
@@ -462,7 +425,7 @@ public interface ExpressionsPackage extends EPackage {
      * @see de.cau.cs.kieler.core.expressions.impl.ExpressionsPackageImpl#getIntValue()
      * @generated
      */
-    int INT_VALUE = 9;
+    int INT_VALUE = 8;
 
     /**
      * The feature id for the '<em><b>Value</b></em>' attribute.
@@ -490,7 +453,7 @@ public interface ExpressionsPackage extends EPackage {
      * @see de.cau.cs.kieler.core.expressions.impl.ExpressionsPackageImpl#getFloatValue()
      * @generated
      */
-    int FLOAT_VALUE = 10;
+    int FLOAT_VALUE = 9;
 
     /**
      * The feature id for the '<em><b>Value</b></em>' attribute.
@@ -518,7 +481,7 @@ public interface ExpressionsPackage extends EPackage {
      * @see de.cau.cs.kieler.core.expressions.impl.ExpressionsPackageImpl#getBooleanValue()
      * @generated
      */
-    int BOOLEAN_VALUE = 11;
+    int BOOLEAN_VALUE = 10;
 
     /**
      * The feature id for the '<em><b>Value</b></em>' attribute.
@@ -546,7 +509,7 @@ public interface ExpressionsPackage extends EPackage {
      * @see de.cau.cs.kieler.core.expressions.impl.ExpressionsPackageImpl#getOperatorExpression()
      * @generated
      */
-    int OPERATOR_EXPRESSION = 12;
+    int OPERATOR_EXPRESSION = 11;
 
     /**
      * The feature id for the '<em><b>Sub Expressions</b></em>' containment reference list.
@@ -583,7 +546,7 @@ public interface ExpressionsPackage extends EPackage {
      * @see de.cau.cs.kieler.core.expressions.impl.ExpressionsPackageImpl#getTextExpression()
      * @generated
      */
-    int TEXT_EXPRESSION = 13;
+    int TEXT_EXPRESSION = 12;
 
     /**
      * The feature id for the '<em><b>Sub Expressions</b></em>' containment reference list.
@@ -629,7 +592,7 @@ public interface ExpressionsPackage extends EPackage {
      * @see de.cau.cs.kieler.core.expressions.impl.ExpressionsPackageImpl#getCombineOperator()
      * @generated
      */
-    int COMBINE_OPERATOR = 14;
+    int COMBINE_OPERATOR = 13;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.core.expressions.OperatorType <em>Operator Type</em>}' enum.
@@ -639,7 +602,7 @@ public interface ExpressionsPackage extends EPackage {
      * @see de.cau.cs.kieler.core.expressions.impl.ExpressionsPackageImpl#getOperatorType()
      * @generated
      */
-    int OPERATOR_TYPE = 15;
+    int OPERATOR_TYPE = 14;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.core.expressions.ValueType <em>Value Type</em>}' enum.
@@ -649,7 +612,7 @@ public interface ExpressionsPackage extends EPackage {
      * @see de.cau.cs.kieler.core.expressions.impl.ExpressionsPackageImpl#getValueType()
      * @generated
      */
-    int VALUE_TYPE = 16;
+    int VALUE_TYPE = 15;
 
 
     /**
@@ -770,27 +733,6 @@ public interface ExpressionsPackage extends EPackage {
     EAttribute getSignal_HostCombineOperator();
 
     /**
-     * Returns the meta object for class '{@link de.cau.cs.kieler.core.expressions.SignalReference <em>Signal Reference</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for class '<em>Signal Reference</em>'.
-     * @see de.cau.cs.kieler.core.expressions.SignalReference
-     * @generated
-     */
-    EClass getSignalReference();
-
-    /**
-     * Returns the meta object for the reference '{@link de.cau.cs.kieler.core.expressions.SignalReference#getSignal <em>Signal</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the reference '<em>Signal</em>'.
-     * @see de.cau.cs.kieler.core.expressions.SignalReference#getSignal()
-     * @see #getSignalReference()
-     * @generated
-     */
-    EReference getSignalReference_Signal();
-
-    /**
      * Returns the meta object for class '{@link de.cau.cs.kieler.core.expressions.ValuedObject <em>Valued Object</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -866,25 +808,25 @@ public interface ExpressionsPackage extends EPackage {
     EAttribute getVariable_Const();
 
     /**
-     * Returns the meta object for class '{@link de.cau.cs.kieler.core.expressions.VariableReference <em>Variable Reference</em>}'.
+     * Returns the meta object for class '{@link de.cau.cs.kieler.core.expressions.ValuedObjectReference <em>Valued Object Reference</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for class '<em>Variable Reference</em>'.
-     * @see de.cau.cs.kieler.core.expressions.VariableReference
+     * @return the meta object for class '<em>Valued Object Reference</em>'.
+     * @see de.cau.cs.kieler.core.expressions.ValuedObjectReference
      * @generated
      */
-    EClass getVariableReference();
+    EClass getValuedObjectReference();
 
     /**
-     * Returns the meta object for the reference '{@link de.cau.cs.kieler.core.expressions.VariableReference#getVariable <em>Variable</em>}'.
+     * Returns the meta object for the reference '{@link de.cau.cs.kieler.core.expressions.ValuedObjectReference#getValuedObject <em>Valued Object</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for the reference '<em>Variable</em>'.
-     * @see de.cau.cs.kieler.core.expressions.VariableReference#getVariable()
-     * @see #getVariableReference()
+     * @return the meta object for the reference '<em>Valued Object</em>'.
+     * @see de.cau.cs.kieler.core.expressions.ValuedObjectReference#getValuedObject()
+     * @see #getValuedObjectReference()
      * @generated
      */
-    EReference getVariableReference_Variable();
+    EReference getValuedObjectReference_ValuedObject();
 
     /**
      * Returns the meta object for class '{@link de.cau.cs.kieler.core.expressions.Value <em>Value</em>}'.
@@ -1139,24 +1081,6 @@ public interface ExpressionsPackage extends EPackage {
         EAttribute SIGNAL__HOST_COMBINE_OPERATOR = eINSTANCE.getSignal_HostCombineOperator();
 
         /**
-         * The meta object literal for the '{@link de.cau.cs.kieler.core.expressions.impl.SignalReferenceImpl <em>Signal Reference</em>}' class.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @see de.cau.cs.kieler.core.expressions.impl.SignalReferenceImpl
-         * @see de.cau.cs.kieler.core.expressions.impl.ExpressionsPackageImpl#getSignalReference()
-         * @generated
-         */
-        EClass SIGNAL_REFERENCE = eINSTANCE.getSignalReference();
-
-        /**
-         * The meta object literal for the '<em><b>Signal</b></em>' reference feature.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EReference SIGNAL_REFERENCE__SIGNAL = eINSTANCE.getSignalReference_Signal();
-
-        /**
          * The meta object literal for the '{@link de.cau.cs.kieler.core.expressions.impl.ValuedObjectImpl <em>Valued Object</em>}' class.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
@@ -1217,22 +1141,22 @@ public interface ExpressionsPackage extends EPackage {
         EAttribute VARIABLE__CONST = eINSTANCE.getVariable_Const();
 
         /**
-         * The meta object literal for the '{@link de.cau.cs.kieler.core.expressions.impl.VariableReferenceImpl <em>Variable Reference</em>}' class.
+         * The meta object literal for the '{@link de.cau.cs.kieler.core.expressions.impl.ValuedObjectReferenceImpl <em>Valued Object Reference</em>}' class.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         * @see de.cau.cs.kieler.core.expressions.impl.VariableReferenceImpl
-         * @see de.cau.cs.kieler.core.expressions.impl.ExpressionsPackageImpl#getVariableReference()
+         * @see de.cau.cs.kieler.core.expressions.impl.ValuedObjectReferenceImpl
+         * @see de.cau.cs.kieler.core.expressions.impl.ExpressionsPackageImpl#getValuedObjectReference()
          * @generated
          */
-        EClass VARIABLE_REFERENCE = eINSTANCE.getVariableReference();
+        EClass VALUED_OBJECT_REFERENCE = eINSTANCE.getValuedObjectReference();
 
         /**
-         * The meta object literal for the '<em><b>Variable</b></em>' reference feature.
+         * The meta object literal for the '<em><b>Valued Object</b></em>' reference feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @generated
          */
-        EReference VARIABLE_REFERENCE__VARIABLE = eINSTANCE.getVariableReference_Variable();
+        EReference VALUED_OBJECT_REFERENCE__VALUED_OBJECT = eINSTANCE.getValuedObjectReference_ValuedObject();
 
         /**
          * The meta object literal for the '{@link de.cau.cs.kieler.core.expressions.impl.ValueImpl <em>Value</em>}' class.

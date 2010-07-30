@@ -107,7 +107,7 @@ public interface State extends Scope {
 
     /**
      * Returns the value of the '<em><b>Parent Region</b></em>' container reference.
-     * It is bidirectional and its opposite is '{@link de.cau.cs.kieler.synccharts.Region#getInnerStates <em>Inner States</em>}'.
+     * It is bidirectional and its opposite is '{@link de.cau.cs.kieler.synccharts.Region#getStates <em>States</em>}'.
      * <!-- begin-user-doc -->
      * <p>
      * If the meaning of the '<em>Parent Region</em>' container reference isn't clear,
@@ -117,8 +117,8 @@ public interface State extends Scope {
      * @return the value of the '<em>Parent Region</em>' container reference.
      * @see #setParentRegion(Region)
      * @see de.cau.cs.kieler.synccharts.SyncchartsPackage#getState_ParentRegion()
-     * @see de.cau.cs.kieler.synccharts.Region#getInnerStates
-     * @model opposite="innerStates" required="true" transient="false"
+     * @see de.cau.cs.kieler.synccharts.Region#getStates
+     * @model opposite="states" required="true" transient="false"
      * @generated
      */
     Region getParentRegion();

@@ -52,11 +52,10 @@ public class SyncchartsInitDiagramFileAction implements IObjectActionDelegate {
                 || selection.isEmpty()) {
             return;
         }
-        IFile file =
-                (IFile) ((IStructuredSelection) selection).getFirstElement();
-        domainModelURI =
-                URI.createPlatformResourceURI(file.getFullPath().toString(),
-                        true);
+        IFile file = (IFile) ((IStructuredSelection) selection)
+                .getFirstElement();
+        domainModelURI = URI.createPlatformResourceURI(file.getFullPath()
+                .toString(), true);
         action.setEnabled(true);
     }
 
@@ -71,8 +70,8 @@ public class SyncchartsInitDiagramFileAction implements IObjectActionDelegate {
      * @generated
      */
     public void run(IAction action) {
-        TransactionalEditingDomain editingDomain =
-                GMFEditingDomainFactory.INSTANCE.createEditingDomain();
+        TransactionalEditingDomain editingDomain = GMFEditingDomainFactory.INSTANCE
+                .createEditingDomain();
         ResourceSet resourceSet = editingDomain.getResourceSet();
         EObject diagramRoot = null;
         try {
@@ -88,9 +87,8 @@ public class SyncchartsInitDiagramFileAction implements IObjectActionDelegate {
                     Messages.InitDiagramFile_ResourceErrorDialogMessage);
             return;
         }
-        Wizard wizard =
-                new SyncchartsNewDiagramFileWizard(domainModelURI, diagramRoot,
-                        editingDomain);
+        Wizard wizard = new SyncchartsNewDiagramFileWizard(domainModelURI,
+                diagramRoot, editingDomain);
         wizard.setWindowTitle(NLS.bind(Messages.InitDiagramFile_WizardTitle,
                 RegionEditPart.MODEL_ID));
         SyncchartsDiagramEditorUtil.runWizard(getShell(), wizard,

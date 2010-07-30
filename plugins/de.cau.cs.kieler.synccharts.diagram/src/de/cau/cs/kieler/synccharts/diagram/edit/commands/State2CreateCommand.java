@@ -33,8 +33,8 @@ public class State2CreateCommand extends EditElementCommand {
      * @generated
      */
     protected EObject getElementToEdit() {
-        EObject container =
-                ((CreateElementRequest) getRequest()).getContainer();
+        EObject container = ((CreateElementRequest) getRequest())
+                .getContainer();
         if (container instanceof View) {
             container = ((View) container).getElement();
         }
@@ -57,7 +57,7 @@ public class State2CreateCommand extends EditElementCommand {
         State newElement = SyncchartsFactory.eINSTANCE.createState();
 
         Region owner = (Region) getElementToEdit();
-        owner.getInnerStates().add(newElement);
+        owner.getStates().add(newElement);
 
         doConfigure(newElement, monitor, info);
 
@@ -70,16 +70,15 @@ public class State2CreateCommand extends EditElementCommand {
      */
     protected void doConfigure(State newElement, IProgressMonitor monitor,
             IAdaptable info) throws ExecutionException {
-        IElementType elementType =
-                ((CreateElementRequest) getRequest()).getElementType();
-        ConfigureRequest configureRequest =
-                new ConfigureRequest(getEditingDomain(), newElement,
-                        elementType);
+        IElementType elementType = ((CreateElementRequest) getRequest())
+                .getElementType();
+        ConfigureRequest configureRequest = new ConfigureRequest(
+                getEditingDomain(), newElement, elementType);
         configureRequest.setClientContext(((CreateElementRequest) getRequest())
                 .getClientContext());
         configureRequest.addParameters(getRequest().getParameters());
-        ICommand configureCommand =
-                elementType.getEditCommand(configureRequest);
+        ICommand configureCommand = elementType
+                .getEditCommand(configureRequest);
         if (configureCommand != null && configureCommand.canExecute()) {
             configureCommand.execute(monitor, info);
         }

@@ -32,8 +32,8 @@ public class SyncchartsPaletteFactory {
      * @generated
      */
     private PaletteContainer createSynccharts1Group() {
-        PaletteGroup paletteContainer =
-                new PaletteGroup(Messages.Synccharts1Group_title);
+        PaletteGroup paletteContainer = new PaletteGroup(
+                Messages.Synccharts1Group_title);
         paletteContainer.setId("createSynccharts1Group"); //$NON-NLS-1$
         paletteContainer.add(createState1CreationTool());
         paletteContainer.add(createTransition2CreationTool());
@@ -45,14 +45,14 @@ public class SyncchartsPaletteFactory {
      */
     private ToolEntry createState1CreationTool() {
         ArrayList<IElementType> types = new ArrayList<IElementType>(2);
-        types.add(SyncchartsElementTypes.State_2003);
-        types.add(SyncchartsElementTypes.State_3024);
-        NodeToolEntry entry =
-                new NodeToolEntry(Messages.State1CreationTool_title,
-                        Messages.State1CreationTool_desc, types);
+        types.add(SyncchartsElementTypes.State_2004);
+        types.add(SyncchartsElementTypes.State_3032);
+        NodeToolEntry entry = new NodeToolEntry(
+                Messages.State1CreationTool_title,
+                Messages.State1CreationTool_desc, types);
         entry.setId("createState1CreationTool"); //$NON-NLS-1$
         entry.setSmallIcon(SyncchartsElementTypes
-                .getImageDescriptor(SyncchartsElementTypes.State_2003));
+                .getImageDescriptor(SyncchartsElementTypes.State_2004));
         entry.setLargeIcon(entry.getSmallIcon());
         return entry;
     }
@@ -61,15 +61,14 @@ public class SyncchartsPaletteFactory {
      * @generated
      */
     private ToolEntry createTransition2CreationTool() {
-        LinkToolEntry entry =
-                new LinkToolEntry(
-                        Messages.Transition2CreationTool_title,
-                        Messages.Transition2CreationTool_desc,
-                        Collections
-                                .singletonList(SyncchartsElementTypes.Transition_4003));
+        LinkToolEntry entry = new LinkToolEntry(
+                Messages.Transition2CreationTool_title,
+                Messages.Transition2CreationTool_desc,
+                Collections
+                        .singletonList(SyncchartsElementTypes.Transition_4004));
         entry.setId("createTransition2CreationTool"); //$NON-NLS-1$
         entry.setSmallIcon(SyncchartsElementTypes
-                .getImageDescriptor(SyncchartsElementTypes.Transition_4003));
+                .getImageDescriptor(SyncchartsElementTypes.Transition_4004));
         entry.setLargeIcon(entry.getSmallIcon());
         return entry;
     }

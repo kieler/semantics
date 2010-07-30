@@ -53,14 +53,10 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute expressions.ecore#//TextualCode/type"/>
     </genClasses>
     <genClasses ecoreClass="expressions.ecore#//Signal">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference expressions.ecore#//Signal/value"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute expressions.ecore#//Signal/isInput"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute expressions.ecore#//Signal/isOutput"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute expressions.ecore#//Signal/combineOperator"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute expressions.ecore#//Signal/hostCombineOperator"/>
-    </genClasses>
-    <genClasses ecoreClass="expressions.ecore#//SignalReference">
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference expressions.ecore#//SignalReference/signal"/>
     </genClasses>
     <genClasses ecoreClass="expressions.ecore#//ValuedObject">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute expressions.ecore#//ValuedObject/name"/>
@@ -69,11 +65,10 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute expressions.ecore#//ValuedObject/hostType"/>
     </genClasses>
     <genClasses ecoreClass="expressions.ecore#//Variable">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference expressions.ecore#//Variable/value"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute expressions.ecore#//Variable/const"/>
     </genClasses>
-    <genClasses ecoreClass="expressions.ecore#//VariableReference">
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference expressions.ecore#//VariableReference/variable"/>
+    <genClasses ecoreClass="expressions.ecore#//ValuedObjectReference">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference expressions.ecore#//ValuedObjectReference/valuedObject"/>
     </genClasses>
     <genClasses ecoreClass="expressions.ecore#//Value"/>
     <genClasses ecoreClass="expressions.ecore#//IntValue">

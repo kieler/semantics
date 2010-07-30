@@ -41,7 +41,7 @@ public class SyncchartsFactoryImpl extends EFactoryImpl implements SyncchartsFac
      */
     public static SyncchartsFactory init() {
         try {
-            SyncchartsFactory theSyncchartsFactory = (SyncchartsFactory)EPackage.Registry.INSTANCE.getEFactory("http://kieler.cs.cau.de/synccharts/0.2.1"); 
+            SyncchartsFactory theSyncchartsFactory = (SyncchartsFactory)EPackage.Registry.INSTANCE.getEFactory("http://kieler.cs.cau.de/synccharts/0.2.2"); 
             if (theSyncchartsFactory != null) {
                 return theSyncchartsFactory;
             }

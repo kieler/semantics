@@ -16,14 +16,14 @@ public class StateRegionCompartment2ItemSemanticEditPolicy extends
      * @generated
      */
     public StateRegionCompartment2ItemSemanticEditPolicy() {
-        super(SyncchartsElementTypes.State_3024);
+        super(SyncchartsElementTypes.State_3032);
     }
 
     /**
      * @generated
      */
     protected Command getCreateCommand(CreateElementRequest req) {
-        if (SyncchartsElementTypes.Region_3023 == req.getElementType()) {
+        if (SyncchartsElementTypes.Region_3031 == req.getElementType()) {
             return getGEFWrapper(new RegionCreateCommand(req));
         }
         return super.getCreateCommand(req);

@@ -29,7 +29,7 @@ public class Region2ItemSemanticEditPolicy extends
      * @generated
      */
     public Region2ItemSemanticEditPolicy() {
-        super(SyncchartsElementTypes.Region_3023);
+        super(SyncchartsElementTypes.Region_3031);
     }
 
     /**
@@ -37,8 +37,8 @@ public class Region2ItemSemanticEditPolicy extends
      */
     protected Command getDestroyElementCommand(DestroyElementRequest req) {
         View view = (View) getHost().getModel();
-        CompositeTransactionalCommand cmd =
-                new CompositeTransactionalCommand(getEditingDomain(), null);
+        CompositeTransactionalCommand cmd = new CompositeTransactionalCommand(
+                getEditingDomain(), null);
         cmd.setTransactionNestingEnabled(false);
         EAnnotation annotation = view.getEAnnotation("Shortcut"); //$NON-NLS-1$
         if (annotation == null) {
@@ -72,10 +72,8 @@ public class Region2ItemSemanticEditPolicy extends
                             Edge incomingLink = (Edge) it.next();
                             if (SyncchartsVisualIDRegistry
                                     .getVisualID(incomingLink) == TransitionEditPart.VISUAL_ID) {
-                                DestroyElementRequest r =
-                                        new DestroyElementRequest(
-                                                incomingLink.getElement(),
-                                                false);
+                                DestroyElementRequest r = new DestroyElementRequest(
+                                        incomingLink.getElement(), false);
                                 cmd.add(new DestroyElementCommand(r));
                                 cmd.add(new DeleteCommand(getEditingDomain(),
                                         incomingLink));
@@ -87,10 +85,8 @@ public class Region2ItemSemanticEditPolicy extends
                             Edge outgoingLink = (Edge) it.next();
                             if (SyncchartsVisualIDRegistry
                                     .getVisualID(outgoingLink) == TransitionEditPart.VISUAL_ID) {
-                                DestroyElementRequest r =
-                                        new DestroyElementRequest(
-                                                outgoingLink.getElement(),
-                                                false);
+                                DestroyElementRequest r = new DestroyElementRequest(
+                                        outgoingLink.getElement(), false);
                                 cmd.add(new DestroyElementCommand(r));
                                 cmd.add(new DeleteCommand(getEditingDomain(),
                                         outgoingLink));

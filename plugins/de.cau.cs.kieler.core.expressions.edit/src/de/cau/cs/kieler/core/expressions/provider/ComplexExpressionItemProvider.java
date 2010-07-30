@@ -168,12 +168,7 @@ public class ComplexExpressionItemProvider
         newChildDescriptors.add
             (createChildParameter
                 (ExpressionsPackage.Literals.COMPLEX_EXPRESSION__SUB_EXPRESSIONS,
-                 ExpressionsFactory.eINSTANCE.createSignalReference()));
-
-        newChildDescriptors.add
-            (createChildParameter
-                (ExpressionsPackage.Literals.COMPLEX_EXPRESSION__SUB_EXPRESSIONS,
-                 ExpressionsFactory.eINSTANCE.createVariableReference()));
+                 ExpressionsFactory.eINSTANCE.createValuedObjectReference()));
 
         newChildDescriptors.add
             (createChildParameter

@@ -16,14 +16,14 @@ public class StateSuspensionTriggerCompartment2ItemSemanticEditPolicy extends
      * @generated
      */
     public StateSuspensionTriggerCompartment2ItemSemanticEditPolicy() {
-        super(SyncchartsElementTypes.State_2003);
+        super(SyncchartsElementTypes.State_2004);
     }
 
     /**
      * @generated
      */
     protected Command getCreateCommand(CreateElementRequest req) {
-        if (SyncchartsElementTypes.Action_3029 == req.getElementType()) {
+        if (SyncchartsElementTypes.Action_3037 == req.getElementType()) {
             return getGEFWrapper(new StateSuspensionTriggerCreateCommand(req));
         }
         return super.getCreateCommand(req);

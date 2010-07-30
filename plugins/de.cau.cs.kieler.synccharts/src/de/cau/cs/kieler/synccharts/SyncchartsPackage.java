@@ -55,7 +55,7 @@ public interface SyncchartsPackage extends EPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    String eNS_URI = "http://kieler.cs.cau.de/synccharts/0.2.1";
+    String eNS_URI = "http://kieler.cs.cau.de/synccharts/0.2.2";
 
     /**
      * The package namespace name.
@@ -521,13 +521,13 @@ public interface SyncchartsPackage extends EPackage {
     int REGION__INTERFACE_DECLARATION = SCOPE__INTERFACE_DECLARATION;
 
     /**
-     * The feature id for the '<em><b>Inner States</b></em>' containment reference list.
+     * The feature id for the '<em><b>States</b></em>' containment reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int REGION__INNER_STATES = SCOPE_FEATURE_COUNT + 0;
+    int REGION__STATES = SCOPE_FEATURE_COUNT + 0;
 
     /**
      * The feature id for the '<em><b>Parent State</b></em>' container reference.
@@ -1137,15 +1137,15 @@ public interface SyncchartsPackage extends EPackage {
     EClass getRegion();
 
     /**
-     * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.synccharts.Region#getInnerStates <em>Inner States</em>}'.
+     * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.synccharts.Region#getStates <em>States</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for the containment reference list '<em>Inner States</em>'.
-     * @see de.cau.cs.kieler.synccharts.Region#getInnerStates()
+     * @return the meta object for the containment reference list '<em>States</em>'.
+     * @see de.cau.cs.kieler.synccharts.Region#getStates()
      * @see #getRegion()
      * @generated
      */
-    EReference getRegion_InnerStates();
+    EReference getRegion_States();
 
     /**
      * Returns the meta object for the container reference '{@link de.cau.cs.kieler.synccharts.Region#getParentState <em>Parent State</em>}'.
@@ -1692,12 +1692,12 @@ public interface SyncchartsPackage extends EPackage {
         EClass REGION = eINSTANCE.getRegion();
 
         /**
-         * The meta object literal for the '<em><b>Inner States</b></em>' containment reference list feature.
+         * The meta object literal for the '<em><b>States</b></em>' containment reference list feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @generated
          */
-        EReference REGION__INNER_STATES = eINSTANCE.getRegion_InnerStates();
+        EReference REGION__STATES = eINSTANCE.getRegion_States();
 
         /**
          * The meta object literal for the '<em><b>Parent State</b></em>' container reference feature.

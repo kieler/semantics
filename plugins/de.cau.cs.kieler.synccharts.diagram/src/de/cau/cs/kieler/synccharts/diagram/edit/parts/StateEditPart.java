@@ -26,6 +26,7 @@ import org.eclipse.gmf.runtime.diagram.ui.editpolicies.EditPolicyRoles;
 import org.eclipse.gmf.runtime.draw2d.ui.figures.ConstrainedToolbarLayout;
 import org.eclipse.gmf.runtime.draw2d.ui.figures.WrappingLabel;
 import org.eclipse.gmf.runtime.emf.type.core.IElementType;
+import org.eclipse.gmf.runtime.gef.ui.figures.DefaultSizeNodeFigure;
 import org.eclipse.gmf.runtime.gef.ui.figures.NodeFigure;
 import org.eclipse.gmf.runtime.notation.View;
 import org.eclipse.swt.graphics.Color;
@@ -47,7 +48,7 @@ public class StateEditPart extends ShapeNodeEditPart {
     /**
      * @generated
      */
-    public static final int VISUAL_ID = 2003;
+    public static final int VISUAL_ID = 2004;
 
     /**
      * @generated
@@ -88,26 +89,25 @@ public class StateEditPart extends ShapeNodeEditPart {
      * @generated
      */
     protected LayoutEditPolicy createLayoutEditPolicy() {
-        org.eclipse.gmf.runtime.diagram.ui.editpolicies.LayoutEditPolicy lep =
-                new org.eclipse.gmf.runtime.diagram.ui.editpolicies.LayoutEditPolicy() {
+        org.eclipse.gmf.runtime.diagram.ui.editpolicies.LayoutEditPolicy lep = new org.eclipse.gmf.runtime.diagram.ui.editpolicies.LayoutEditPolicy() {
 
-                    protected EditPolicy createChildEditPolicy(EditPart child) {
-                        EditPolicy result =
-                                child.getEditPolicy(EditPolicy.PRIMARY_DRAG_ROLE);
-                        if (result == null) {
-                            result = new NonResizableEditPolicy();
-                        }
-                        return result;
-                    }
+            protected EditPolicy createChildEditPolicy(EditPart child) {
+                EditPolicy result = child
+                        .getEditPolicy(EditPolicy.PRIMARY_DRAG_ROLE);
+                if (result == null) {
+                    result = new NonResizableEditPolicy();
+                }
+                return result;
+            }
 
-                    protected Command getMoveChildrenCommand(Request request) {
-                        return null;
-                    }
+            protected Command getMoveChildrenCommand(Request request) {
+                return null;
+            }
 
-                    protected Command getCreateCommand(CreateRequest request) {
-                        return null;
-                    }
-                };
+            protected Command getCreateCommand(CreateRequest request) {
+                return null;
+            }
+        };
         return lep;
     }
 
@@ -193,9 +193,7 @@ public class StateEditPart extends ShapeNodeEditPart {
      * @generated
      */
     protected NodeFigure createNodePlate() {
-        //StateEditPart
-        RoundedRectangleFigure result = new RoundedRectangleFigure();
-        result.setCornerDimensions(new Dimension(20, 20));
+        DefaultSizeNodeFigure result = new DefaultSizeNodeFigure(20, 20);
         return result;
     }
 
@@ -290,7 +288,7 @@ public class StateEditPart extends ShapeNodeEditPart {
      */
     public List<IElementType> getMARelTypesOnSource() {
         ArrayList<IElementType> types = new ArrayList<IElementType>(1);
-        types.add(SyncchartsElementTypes.Transition_4003);
+        types.add(SyncchartsElementTypes.Transition_4004);
         return types;
     }
 
@@ -301,10 +299,10 @@ public class StateEditPart extends ShapeNodeEditPart {
             IGraphicalEditPart targetEditPart) {
         LinkedList<IElementType> types = new LinkedList<IElementType>();
         if (targetEditPart instanceof de.cau.cs.kieler.synccharts.diagram.edit.parts.StateEditPart) {
-            types.add(SyncchartsElementTypes.Transition_4003);
+            types.add(SyncchartsElementTypes.Transition_4004);
         }
         if (targetEditPart instanceof State2EditPart) {
-            types.add(SyncchartsElementTypes.Transition_4003);
+            types.add(SyncchartsElementTypes.Transition_4004);
         }
         return types;
     }
@@ -314,9 +312,9 @@ public class StateEditPart extends ShapeNodeEditPart {
      */
     public List<IElementType> getMATypesForTarget(IElementType relationshipType) {
         LinkedList<IElementType> types = new LinkedList<IElementType>();
-        if (relationshipType == SyncchartsElementTypes.Transition_4003) {
-            types.add(SyncchartsElementTypes.State_2003);
-            types.add(SyncchartsElementTypes.State_3024);
+        if (relationshipType == SyncchartsElementTypes.Transition_4004) {
+            types.add(SyncchartsElementTypes.State_2004);
+            types.add(SyncchartsElementTypes.State_3032);
         }
         return types;
     }
@@ -326,7 +324,7 @@ public class StateEditPart extends ShapeNodeEditPart {
      */
     public List<IElementType> getMARelTypesOnTarget() {
         ArrayList<IElementType> types = new ArrayList<IElementType>(1);
-        types.add(SyncchartsElementTypes.Transition_4003);
+        types.add(SyncchartsElementTypes.Transition_4004);
         return types;
     }
 
@@ -335,9 +333,9 @@ public class StateEditPart extends ShapeNodeEditPart {
      */
     public List<IElementType> getMATypesForSource(IElementType relationshipType) {
         LinkedList<IElementType> types = new LinkedList<IElementType>();
-        if (relationshipType == SyncchartsElementTypes.Transition_4003) {
-            types.add(SyncchartsElementTypes.State_2003);
-            types.add(SyncchartsElementTypes.State_3024);
+        if (relationshipType == SyncchartsElementTypes.Transition_4004) {
+            types.add(SyncchartsElementTypes.State_2004);
+            types.add(SyncchartsElementTypes.State_3032);
         }
         return types;
     }

@@ -175,29 +175,6 @@ public class ExpressionsItemProviderAdapterFactory extends ExpressionsAdapterFac
     }
 
     /**
-     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.core.expressions.SignalReference} instances.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    protected SignalReferenceItemProvider signalReferenceItemProvider;
-
-    /**
-     * This creates an adapter for a {@link de.cau.cs.kieler.core.expressions.SignalReference}.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public Adapter createSignalReferenceAdapter() {
-        if (signalReferenceItemProvider == null) {
-            signalReferenceItemProvider = new SignalReferenceItemProvider(this);
-        }
-
-        return signalReferenceItemProvider;
-    }
-
-    /**
      * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.core.expressions.ValuedObject} instances.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -244,26 +221,26 @@ public class ExpressionsItemProviderAdapterFactory extends ExpressionsAdapterFac
     }
 
     /**
-     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.core.expressions.VariableReference} instances.
+     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.core.expressions.ValuedObjectReference} instances.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    protected VariableReferenceItemProvider variableReferenceItemProvider;
+    protected ValuedObjectReferenceItemProvider valuedObjectReferenceItemProvider;
 
     /**
-     * This creates an adapter for a {@link de.cau.cs.kieler.core.expressions.VariableReference}.
+     * This creates an adapter for a {@link de.cau.cs.kieler.core.expressions.ValuedObjectReference}.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
     @Override
-    public Adapter createVariableReferenceAdapter() {
-        if (variableReferenceItemProvider == null) {
-            variableReferenceItemProvider = new VariableReferenceItemProvider(this);
+    public Adapter createValuedObjectReferenceAdapter() {
+        if (valuedObjectReferenceItemProvider == null) {
+            valuedObjectReferenceItemProvider = new ValuedObjectReferenceItemProvider(this);
         }
 
-        return variableReferenceItemProvider;
+        return valuedObjectReferenceItemProvider;
     }
 
     /**
@@ -507,10 +484,9 @@ public class ExpressionsItemProviderAdapterFactory extends ExpressionsAdapterFac
         if (expressionItemProvider != null) expressionItemProvider.dispose();
         if (textualCodeItemProvider != null) textualCodeItemProvider.dispose();
         if (signalItemProvider != null) signalItemProvider.dispose();
-        if (signalReferenceItemProvider != null) signalReferenceItemProvider.dispose();
         if (valuedObjectItemProvider != null) valuedObjectItemProvider.dispose();
         if (variableItemProvider != null) variableItemProvider.dispose();
-        if (variableReferenceItemProvider != null) variableReferenceItemProvider.dispose();
+        if (valuedObjectReferenceItemProvider != null) valuedObjectReferenceItemProvider.dispose();
         if (valueItemProvider != null) valueItemProvider.dispose();
         if (intValueItemProvider != null) intValueItemProvider.dispose();
         if (floatValueItemProvider != null) floatValueItemProvider.dispose();

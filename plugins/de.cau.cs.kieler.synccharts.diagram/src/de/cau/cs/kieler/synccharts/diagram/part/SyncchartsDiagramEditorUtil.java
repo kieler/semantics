@@ -75,13 +75,11 @@ public class SyncchartsDiagramEditorUtil {
     public static boolean openDiagram(Resource diagram)
             throws PartInitException {
         String path = diagram.getURI().toPlatformString(true);
-        IResource workspaceResource =
-                ResourcesPlugin.getWorkspace().getRoot()
-                        .findMember(new Path(path));
+        IResource workspaceResource = ResourcesPlugin.getWorkspace().getRoot()
+                .findMember(new Path(path));
         if (workspaceResource instanceof IFile) {
-            IWorkbenchPage page =
-                    PlatformUI.getWorkbench().getActiveWorkbenchWindow()
-                            .getActivePage();
+            IWorkbenchPage page = PlatformUI.getWorkbench()
+                    .getActiveWorkbenchWindow().getActivePage();
             return null != page.openEditor(new FileEditorInput(
                     (IFile) workspaceResource), SyncchartsDiagramEditor.ID);
         }
@@ -137,13 +135,13 @@ public class SyncchartsDiagramEditorUtil {
      * @generated
      */
     public static void runWizard(Shell shell, Wizard wizard, String settingsKey) {
-        IDialogSettings pluginDialogSettings =
-                SyncchartsDiagramEditorPlugin.getInstance().getDialogSettings();
-        IDialogSettings wizardDialogSettings =
-                pluginDialogSettings.getSection(settingsKey);
+        IDialogSettings pluginDialogSettings = SyncchartsDiagramEditorPlugin
+                .getInstance().getDialogSettings();
+        IDialogSettings wizardDialogSettings = pluginDialogSettings
+                .getSection(settingsKey);
         if (wizardDialogSettings == null) {
-            wizardDialogSettings =
-                    pluginDialogSettings.addNewSection(settingsKey);
+            wizardDialogSettings = pluginDialogSettings
+                    .addNewSection(settingsKey);
         }
         wizard.setDialogSettings(wizardDialogSettings);
         WizardDialog dialog = new WizardDialog(shell, wizard);
@@ -159,56 +157,50 @@ public class SyncchartsDiagramEditorUtil {
      */
     public static Resource createDiagram(URI diagramURI, URI modelURI,
             IProgressMonitor progressMonitor) {
-        TransactionalEditingDomain editingDomain =
-                GMFEditingDomainFactory.INSTANCE.createEditingDomain();
+        TransactionalEditingDomain editingDomain = GMFEditingDomainFactory.INSTANCE
+                .createEditingDomain();
         progressMonitor.beginTask(
                 Messages.SyncchartsDiagramEditorUtil_CreateDiagramProgressTask,
                 3);
-        final Resource diagramResource =
-                editingDomain.getResourceSet().createResource(diagramURI);
-        final Resource modelResource =
-                editingDomain.getResourceSet().createResource(modelURI);
+        final Resource diagramResource = editingDomain.getResourceSet()
+                .createResource(diagramURI);
+        final Resource modelResource = editingDomain.getResourceSet()
+                .createResource(modelURI);
         final String diagramName = diagramURI.lastSegment();
-        AbstractTransactionalCommand command =
-                new AbstractTransactionalCommand(
-                        editingDomain,
-                        Messages.SyncchartsDiagramEditorUtil_CreateDiagramCommandLabel,
-                        Collections.EMPTY_LIST) {
-                    protected CommandResult doExecuteWithResult(
-                            IProgressMonitor monitor, IAdaptable info)
-                            throws ExecutionException {
-                        Region model = createInitialModel();
-                        attachModelToResource(model, modelResource);
+        AbstractTransactionalCommand command = new AbstractTransactionalCommand(
+                editingDomain,
+                Messages.SyncchartsDiagramEditorUtil_CreateDiagramCommandLabel,
+                Collections.EMPTY_LIST) {
+            protected CommandResult doExecuteWithResult(
+                    IProgressMonitor monitor, IAdaptable info)
+                    throws ExecutionException {
+                Region model = createInitialModel();
+                attachModelToResource(model, modelResource);
 
-                        Diagram diagram =
-                                ViewService
-                                        .createDiagram(
-                                                model,
-                                                RegionEditPart.MODEL_ID,
-                                                SyncchartsDiagramEditorPlugin.DIAGRAM_PREFERENCES_HINT);
-                        if (diagram != null) {
-                            diagramResource.getContents().add(diagram);
-                            diagram.setName(diagramName);
-                            diagram.setElement(model);
-                        }
+                Diagram diagram = ViewService.createDiagram(model,
+                        RegionEditPart.MODEL_ID,
+                        SyncchartsDiagramEditorPlugin.DIAGRAM_PREFERENCES_HINT);
+                if (diagram != null) {
+                    diagramResource.getContents().add(diagram);
+                    diagram.setName(diagramName);
+                    diagram.setElement(model);
+                }
 
-                        try {
-                            modelResource
-                                    .save(de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorUtil
-                                            .getSaveOptions());
-                            diagramResource
-                                    .save(de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorUtil
-                                            .getSaveOptions());
-                        } catch (IOException e) {
+                try {
+                    modelResource
+                            .save(de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorUtil
+                                    .getSaveOptions());
+                    diagramResource
+                            .save(de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorUtil
+                                    .getSaveOptions());
+                } catch (IOException e) {
 
-                            SyncchartsDiagramEditorPlugin
-                                    .getInstance()
-                                    .logError(
-                                            "Unable to store model and diagram resources", e); //$NON-NLS-1$
-                        }
-                        return CommandResult.newOKCommandResult();
-                    }
-                };
+                    SyncchartsDiagramEditorPlugin.getInstance().logError(
+                            "Unable to store model and diagram resources", e); //$NON-NLS-1$
+                }
+                return CommandResult.newOKCommandResult();
+            }
+        };
         try {
             OperationHistoryFactory.getOperationHistory().execute(command,
                     new SubProgressMonitor(progressMonitor, 1), null);
@@ -268,13 +260,13 @@ public class SyncchartsDiagramEditorUtil {
      */
     private static int findElementsInDiagramByID(DiagramEditPart diagramPart,
             EObject element, List<EditPart> editPartCollector) {
-        IDiagramGraphicalViewer viewer =
-                (IDiagramGraphicalViewer) diagramPart.getViewer();
+        IDiagramGraphicalViewer viewer = (IDiagramGraphicalViewer) diagramPart
+                .getViewer();
         final int intialNumOfEditParts = editPartCollector.size();
 
         if (element instanceof View) { // support notation element lookup
-            EditPart editPart =
-                    (EditPart) viewer.getEditPartRegistry().get(element);
+            EditPart editPart = (EditPart) viewer.getEditPartRegistry().get(
+                    element);
             if (editPart != null) {
                 editPartCollector.add(editPart);
                 return 1;
@@ -283,9 +275,8 @@ public class SyncchartsDiagramEditorUtil {
 
         String elementID = EMFCoreUtil.getProxyID(element);
         @SuppressWarnings("unchecked")
-        List<EditPart> associatedParts =
-                viewer.findEditPartsForElement(elementID,
-                        IGraphicalEditPart.class);
+        List<EditPart> associatedParts = viewer.findEditPartsForElement(
+                elementID, IGraphicalEditPart.class);
         // perform the possible hierarchy disjoint -> take the top-most parts only
         for (EditPart nextPart : associatedParts) {
             EditPart parentPart = nextPart.getParent();
@@ -317,9 +308,8 @@ public class SyncchartsDiagramEditorUtil {
             EObject targetElement, LazyElement2ViewMap lazyElement2ViewMap) {
         boolean hasStructuralURI = false;
         if (targetElement.eResource() instanceof XMLResource) {
-            hasStructuralURI =
-                    ((XMLResource) targetElement.eResource())
-                            .getID(targetElement) == null;
+            hasStructuralURI = ((XMLResource) targetElement.eResource())
+                    .getID(targetElement) == null;
         }
 
         View view = null;
@@ -330,9 +320,8 @@ public class SyncchartsDiagramEditorUtil {
         } else if (findElementsInDiagramByID(diagramEditPart, targetElement,
                 editPartHolder) > 0) {
             EditPart editPart = editPartHolder.get(0);
-            view =
-                    editPart.getModel() instanceof View ? (View) editPart
-                            .getModel() : null;
+            view = editPart.getModel() instanceof View ? (View) editPart
+                    .getModel() : null;
         }
 
         return (view == null) ? diagramEditPart.getDiagramView() : view;
@@ -408,21 +397,18 @@ public class SyncchartsDiagramEditorUtil {
             boolean complete = false;
             for (Iterator<?> it = parentView.getChildren().iterator(); it
                     .hasNext() && !complete;) {
-                complete =
-                        buildElement2ViewMap((View) it.next(), element2ViewMap,
-                                elements);
+                complete = buildElement2ViewMap((View) it.next(),
+                        element2ViewMap, elements);
             }
             for (Iterator<?> it = parentView.getSourceEdges().iterator(); it
                     .hasNext() && !complete;) {
-                complete =
-                        buildElement2ViewMap((View) it.next(), element2ViewMap,
-                                elements);
+                complete = buildElement2ViewMap((View) it.next(),
+                        element2ViewMap, elements);
             }
             for (Iterator<?> it = parentView.getTargetEdges().iterator(); it
                     .hasNext() && !complete;) {
-                complete =
-                        buildElement2ViewMap((View) it.next(), element2ViewMap,
-                                elements);
+                complete = buildElement2ViewMap((View) it.next(),
+                        element2ViewMap, elements);
             }
             return complete;
         }

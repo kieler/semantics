@@ -31,12 +31,12 @@ import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 
 /**
- * This is the item provider adapter for a {@link de.cau.cs.kieler.core.expressions.VariableReference} object.
+ * This is the item provider adapter for a {@link de.cau.cs.kieler.core.expressions.ValuedObjectReference} object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
  * @generated
  */
-public class VariableReferenceItemProvider
+public class ValuedObjectReferenceItemProvider
     extends ComplexExpressionItemProvider
     implements
         IEditingDomainItemProvider,
@@ -50,7 +50,7 @@ public class VariableReferenceItemProvider
      * <!-- end-user-doc -->
      * @generated
      */
-    public VariableReferenceItemProvider(AdapterFactory adapterFactory) {
+    public ValuedObjectReferenceItemProvider(AdapterFactory adapterFactory) {
         super(adapterFactory);
     }
 
@@ -65,25 +65,25 @@ public class VariableReferenceItemProvider
         if (itemPropertyDescriptors == null) {
             super.getPropertyDescriptors(object);
 
-            addVariablePropertyDescriptor(object);
+            addValuedObjectPropertyDescriptor(object);
         }
         return itemPropertyDescriptors;
     }
 
     /**
-     * This adds a property descriptor for the Variable feature.
+     * This adds a property descriptor for the Valued Object feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    protected void addVariablePropertyDescriptor(Object object) {
+    protected void addValuedObjectPropertyDescriptor(Object object) {
         itemPropertyDescriptors.add
             (createItemPropertyDescriptor
                 (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
                  getResourceLocator(),
-                 getString("_UI_VariableReference_variable_feature"),
-                 getString("_UI_PropertyDescriptor_description", "_UI_VariableReference_variable_feature", "_UI_VariableReference_type"),
-                 ExpressionsPackage.Literals.VARIABLE_REFERENCE__VARIABLE,
+                 getString("_UI_ValuedObjectReference_valuedObject_feature"),
+                 getString("_UI_PropertyDescriptor_description", "_UI_ValuedObjectReference_valuedObject_feature", "_UI_ValuedObjectReference_type"),
+                 ExpressionsPackage.Literals.VALUED_OBJECT_REFERENCE__VALUED_OBJECT,
                  true,
                  false,
                  true,
@@ -93,14 +93,14 @@ public class VariableReferenceItemProvider
     }
 
     /**
-     * This returns VariableReference.gif.
+     * This returns ValuedObjectReference.gif.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
     @Override
     public Object getImage(Object object) {
-        return overlayImage(object, getResourceLocator().getImage("full/obj16/VariableReference"));
+        return overlayImage(object, getResourceLocator().getImage("full/obj16/ValuedObjectReference"));
     }
 
     /**
@@ -111,7 +111,7 @@ public class VariableReferenceItemProvider
      */
     @Override
     public String getText(Object object) {
-        return getString("_UI_VariableReference_type");
+        return getString("_UI_ValuedObjectReference_type");
     }
 
     /**
