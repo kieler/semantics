@@ -5,7 +5,7 @@
 «IMPORT s»
 «IMPORT expressions»
 
-«EXTENSION templates::Extensions»
+«EXTENSION Extensions»
 
 
 «REM»
@@ -87,9 +87,15 @@
 		«ENDFOREACH-»)
 	«ENDIF-»
 «ENDDEFINE»
-«DEFINE expandedExpression FOR SignalReference-»PRESENT(«this.signal.name-»)«ENDDEFINE»
-«DEFINE expandedExpression FOR Expression-»
-«ENDDEFINE»
+
+«REM»
+    soh: Changes due to removal of SignalReference
+«ENDREM»
+«DEFINE expandedExpression FOR ValuedObjectReference-»«EXPAND expandedExpression FOR valuedObject-»«ENDDEFINE»
+«DEFINE expandedExpression FOR Signal-»PRESENT(«this.name-»)«ENDDEFINE»
+«DEFINE expandedExpression FOR ValuedObject-»«ENDDEFINE»
+
+«DEFINE expandedExpression FOR Expression-»«ENDDEFINE»
 
 «REM»
 	Definition of the signaltype including all signals of the SyncChart.

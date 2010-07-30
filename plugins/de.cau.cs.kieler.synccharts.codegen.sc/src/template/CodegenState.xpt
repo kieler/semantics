@@ -6,7 +6,7 @@
 «IMPORT expressions»
 
 «EXTENSION template::Helper»
-
+ 
 «REM»
 	Defines the entry point of a state calls Xpand templated according to their structure. 
 «ENDREM»
@@ -133,7 +133,7 @@
 «ENDREM»
 «DEFINE stateWithOneTransition FOR State-»
 	«EXPAND CodegenMisc::callJSONState-»
-	«IF this.outgoingTransitions.first().trigger.metaType == SignalReference-»
+	«IF this.outgoingTransitions.first().trigger.metaType == ValuedObjectReference-»
 		«EXPAND CodegenTransition::oneTransition FOR this.outgoingTransitions.first()-»
 	«ELSE-»
 		«EXPAND stateWithMoreTransitions FOR this»

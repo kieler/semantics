@@ -14,7 +14,8 @@
 «DEFINE trigger FOR Action-»
 	«IF !(this.label == null)-»
 		«IF !(this.trigger == null)-»
-			«IF (this.trigger.metaType == SignalReference)-»
+			«IF (this.trigger.metaType == ValuedObjectReference 
+			     && ((ValuedObjectReference)this.trigger).valuedObject.metaType == Signal)-»
 				«EXPAND simpleTrigger FOR this-»
 			«ELSEIF (this.trigger.metaType == ComplexExpression)-»
 				«EXPAND complexTrigger FOR this-»

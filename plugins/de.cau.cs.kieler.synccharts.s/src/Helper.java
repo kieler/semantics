@@ -1,4 +1,3 @@
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
@@ -8,6 +7,8 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 
 import de.cau.cs.kieler.core.expressions.Signal;
+import de.cau.cs.kieler.core.expressions.ValuedObject;
+import de.cau.cs.kieler.core.expressions.ValuedObjectReference;
 import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
 import de.cau.cs.kieler.synccharts.Action;
 import de.cau.cs.kieler.synccharts.Effect;
@@ -865,11 +866,16 @@ public final class Helper {
         // search for signals
         boolean hasNext = true;
         while (hasNext && eObject != null) {
-            if (eObject instanceof SignalReference) {
+            if (eObject instanceof ValuedObjectReference) {
                 // put trigger signal into the list
-                Signal triggerSignal = ((SignalReference) eObject).getSignal();
-                if (!triggerSignals.contains(triggerSignal)) {
-                    triggerSignals.add(triggerSignal);
+                ValuedObject valObj = ((ValuedObjectReference) eObject)
+                        .getValuedObject();
+
+                if (valObj instanceof Signal) {
+                    Signal triggerSignal = (Signal) valObj;
+                    if (!triggerSignals.contains(triggerSignal)) {
+                        triggerSignals.add(triggerSignal);
+                    }
                 }
             }
             if (eObject.eAllContents().hasNext()) {

@@ -24,6 +24,8 @@ import de.cau.cs.kieler.core.expressions.OperatorExpression;
 import de.cau.cs.kieler.core.expressions.OperatorType;
 import de.cau.cs.kieler.core.expressions.Signal;
 import de.cau.cs.kieler.core.expressions.Value;
+import de.cau.cs.kieler.core.expressions.ValuedObject;
+import de.cau.cs.kieler.core.expressions.ValuedObjectReference;
 import de.cau.cs.kieler.synccharts.Effect;
 import de.cau.cs.kieler.synccharts.Emission;
 import de.cau.cs.kieler.synccharts.Region;
@@ -375,13 +377,17 @@ public class XtendJava {
                     return returnValue; // shortcut
                 }
             }
-        } else if (expression instanceof SignalReference) {
-            SyncchartsSimPtolemyPlugin.DEBUG(((SignalReference) expression)
-                    .getSignal().getName() + "==" + signal.getName());
-            SignalReference signalReference = (SignalReference) expression;
-            if (signalReference.getSignal() == signal) {
-                return true;
-                // SyncchartsSimPtolemyPlugin.DEBUG("-> NO");
+        } else if (expression instanceof ValuedObjectReference) {
+            ValuedObject valObj = ((ValuedObjectReference) expression)
+                    .getValuedObject();
+            if (valObj instanceof Signal) {
+                Signal sig = (Signal) valObj;
+                SyncchartsSimPtolemyPlugin.DEBUG(sig.getName() + "=="
+                        + signal.getName());
+                if (sig == signal) {
+                    return true;
+                    // SyncchartsSimPtolemyPlugin.DEBUG("-> NO");
+                }
             }
         }
         return returnValue;
@@ -454,14 +460,20 @@ public class XtendJava {
                 expressionString += buildExpression(subExpression);
             }
             expressionString += ")";
-        } else if (expression instanceof SignalReference) {
-            SignalReference signalReference = (SignalReference) expression;
-            String signalName = signalReference.getSignal().getName();
-            if (isLocal(signalReference.getSignal())) {
-                // local signal -> set input signal -> signal i
-                signalName += "i";
+        } else if (expression instanceof ValuedObjectReference) {
+            ValuedObjectReference signalReference = (ValuedObjectReference) expression;
+            ValuedObject valObj = signalReference.getValuedObject();
+
+            if (valObj instanceof Signal) {
+                Signal signal = (Signal) valObj;
+
+                String signalName = signal.getName();
+                if (isLocal(signal)) {
+                    // local signal -> set input signal -> signal i
+                    signalName += "i";
+                }
+                expressionString += signalName + "_isPresent";
             }
-            expressionString += signalName + "_isPresent";
         }
         return expressionString;
     }

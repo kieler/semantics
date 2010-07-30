@@ -258,8 +258,7 @@ create expressions::Signal this transform(expressions::Signal signal):
 	this.setInitialValue(signal.initialValue) ->
 	this.setIsInput(signal.isInput) ->
 	this.setIsOutput(signal.isOutput) ->
-	this.setType(signal.type) ->
-	this.setValue(signal.value)
+	this.setType(signal.type)
 ;
 
 //the following is wrong, we cannot take the same signal-ref because this

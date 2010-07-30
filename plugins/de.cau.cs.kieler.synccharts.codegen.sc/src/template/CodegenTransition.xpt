@@ -35,7 +35,7 @@
 	Template for transitions with simple triggers. The code generations straight forward. 
 «ENDREM»
 «DEFINE simpleTrigger FOR Transition-»
-	if (PRESENT(sig_«((SignalReference)this.trigger).signal.name-»)) {
+	if (PRESENT(sig_«((ValuedObjectReference)this.trigger).valuedObject.name-»)) {
 		«EXPAND CodegenTriggerAndEffect::delayedTrigger»
 		«EXPAND CodegenTriggerAndEffect::effects FOR this-»
 		«EXPAND stateAbortion FOR this-»
@@ -64,7 +64,8 @@
 «DEFINE triggersAndEffects FOR Transition-»
 	«IF (this.label != null)-»
 		«IF (this.trigger != null)-»
-			«IF (this.trigger.metaType == SignalReference)-»
+			«IF (this.trigger.metaType == ValuedObjectReference 
+			     && ((ValuedObjectReference)this.trigger).valuedObject.metaType == Signal)-»
 				«EXPAND simpleTrigger FOR this-»
 			«ELSE-»
 				«EXPAND CodegenTriggerAndEffect::complexTrigger FOR this-»
