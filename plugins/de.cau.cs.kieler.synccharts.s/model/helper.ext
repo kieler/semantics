@@ -11,7 +11,7 @@ extension org::eclipse::xtend::util::stdlib::issues;      // pass messages back 
 
 // Returns the root initial state
 State getInitialState(synccharts::State state):
-	state.regions.first().innerStates.select(s|s.isInitial).first()
+	state.regions.first().states.select(s|s.isInitial).first()
 ;
 
 Boolean isRootState(synccharts::State state):
@@ -48,7 +48,7 @@ String getParentRegionString(synccharts::State state):
 
 // Returns the first inital state of a region
 synccharts::State getInitialState(synccharts::Region region):
-	region.innerStates.select(s|s.isInitial).first()
+	region.states.select(s|s.isInitial).first()
 ;
 
 // converts an int into an IntValue

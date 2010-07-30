@@ -51,7 +51,7 @@ public class AddStateHandler extends AbstractHandler implements IHandler {
     private GraphicalEditPart lastEditCompartment;
     /** view adapter for the last edited compartment. */
     private IAdaptable stateViewAdapter;
-    
+
     /**
      * {@inheritDoc}
      */
@@ -60,10 +60,11 @@ public class AddStateHandler extends AbstractHandler implements IHandler {
         IStructuredSelection selection = (IStructuredSelection) HandlerUtil
                 .getActiveMenuSelection(event);
         if (selection == null) {
-            selection = (IStructuredSelection) HandlerUtil.getCurrentSelection(event);
+            selection = (IStructuredSelection) HandlerUtil
+                    .getCurrentSelection(event);
         }
         if (selection != null) {
-            
+
             // add a state to each selected region
             Iterator<?> selectionIter = selection.iterator();
             while (selectionIter.hasNext()) {
@@ -79,17 +80,20 @@ public class AddStateHandler extends AbstractHandler implements IHandler {
                     }
                 }
             }
-            
+
             if (lastEditCompartment != null) {
                 // set the new State into edit mode
                 final EditPartViewer viewer = lastEditCompartment.getViewer();
-                final EditPart elementPart = (EditPart) viewer.getEditPartRegistry()
-                        .get(stateViewAdapter.getAdapter(View.class));
+                final EditPart elementPart = (EditPart) viewer
+                        .getEditPartRegistry().get(
+                                stateViewAdapter.getAdapter(View.class));
                 if (elementPart != null) {
                     Display.getCurrent().asyncExec(new Runnable() {
                         public void run() {
-                            viewer.setSelection(new StructuredSelection(elementPart));
-                            Request der = new Request(RequestConstants.REQ_DIRECT_EDIT);
+                            viewer.setSelection(new StructuredSelection(
+                                    elementPart));
+                            Request der = new Request(
+                                    RequestConstants.REQ_DIRECT_EDIT);
                             elementPart.performRequest(der);
                         }
                     });
@@ -98,17 +102,19 @@ public class AddStateHandler extends AbstractHandler implements IHandler {
         }
         return null;
     }
-    
+
     /**
      * Adds a state to the given region.
      * 
-     * @param regionEditPart region to which a state shall be added
+     * @param regionEditPart
+     *            region to which a state shall be added
      */
     private void addState(final GraphicalEditPart regionEditPart) {
-        IElementType elementType = regionEditPart instanceof RegionEditPart
-                ? SyncchartsElementTypes.State_2003
-                : SyncchartsElementTypes.State_3024;
-        
+        // FIXME: try to use something else instead of the State_... IDs, they
+        // change very often
+        IElementType elementType = regionEditPart instanceof RegionEditPart ? SyncchartsElementTypes.State_2004
+                : SyncchartsElementTypes.State_3032;
+
         // find the region compartment
         GraphicalEditPart compartment = null;
         Iterator<?> compartmentIter = regionEditPart.getChildren().iterator();
@@ -119,18 +125,22 @@ public class AddStateHandler extends AbstractHandler implements IHandler {
                 break;
             }
         }
-        
-        // The diagram root does not have a compartment, but holds the state itself
+
+        // The diagram root does not have a compartment, but holds the state
+        // itself
         if (compartment == null) {
             compartment = regionEditPart;
         }
-        
+
         // create the new State
-        CreateViewRequest stateRequest = CreateViewRequestFactory.getCreateShapeRequest(
-                elementType, regionEditPart.getDiagramPreferencesHint());
+        CreateViewRequest stateRequest = CreateViewRequestFactory
+                .getCreateShapeRequest(elementType,
+                        regionEditPart.getDiagramPreferencesHint());
         Command createStateCmd = compartment.getCommand(stateRequest);
-        stateViewAdapter = (IAdaptable) ((List<?>) stateRequest.getNewObject()).get(0);
-        compartment.getDiagramEditDomain().getDiagramCommandStack().execute(createStateCmd);
+        stateViewAdapter = (IAdaptable) ((List<?>) stateRequest.getNewObject())
+                .get(0);
+        compartment.getDiagramEditDomain().getDiagramCommandStack()
+                .execute(createStateCmd);
         lastEditCompartment = compartment;
     }
 

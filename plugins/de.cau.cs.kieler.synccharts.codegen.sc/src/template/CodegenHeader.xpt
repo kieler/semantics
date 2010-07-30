@@ -11,11 +11,11 @@
 	Definition of functions for inputs and outputs.
 «ENDREM»
 «DEFINE staticHeader FOR Region-»
-«FILE innerStates.first().label+".h"»
-#ifndef _«innerStates.first().label.toUpperCase()»_H
-#define _«innerStates.first().label.toUpperCase()»_H
+«FILE states.first().label+".h"»
+#ifndef _«states.first().label.toUpperCase()»_H
+#define _«states.first().label.toUpperCase()»_H
   
-  «FOREACH allSignals(this.innerStates.first()) AS signal-»
+  «FOREACH allSignals(this.states.first()) AS signal-»
   	«IF ((Signal)signal).isInput-»
   void «((Scope)((Signal)signal).eContainer).id»_I_«((Signal)signal).name»(«IF ((Signal)signal).type!=ValueType::PURE»int«ENDIF»);
   	«ENDIF-»
@@ -24,8 +24,8 @@
   	«ENDIF-»
   «ENDFOREACH-»
   
-  int «innerStates.first().label»_reset();
-  int «innerStates.first().label»();
+  int «states.first().label»_reset();
+  int «states.first().label»();
   
 #endif
 «ENDFILE»
@@ -72,11 +72,11 @@
 #ifndef MISC_H_
 #define MISC_H_
 
-	«EXPAND CodegenMisc::generateSigType FOR allSignals(this.innerStates.first())-»
+	«EXPAND CodegenMisc::generateSigType FOR allSignals(this.states.first())-»
 extern const char *s2signame[];
 	
 /* Define valued int signals */
-#define _SC_valSigInt_SIZE «allSignals(this.innerStates.first()).size»
+#define _SC_valSigInt_SIZE «allSignals(this.states.first()).size»
 extern int valSigInt[_SC_valSigInt_SIZE];
 extern int valSigIntPre[_SC_valSigInt_SIZE];
 

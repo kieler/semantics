@@ -12,10 +12,10 @@
 	The main template creates the file and starts the process of generating code.
 «ENDREM»
 «DEFINE main FOR Region-»
-	«IF this.innerStates.isEmpty-»
+	«IF this.states.isEmpty-»
 		«error("There is no SyncChart to generate code for!")»
 	«ELSE-»
-		«computeThreadPriorities(this.innerStates.first())»
+		«computeThreadPriorities(this.states.first())»
 		«FILE ((String)(GLOBALVAR name)) + ".c"-»
 		/*****************************************************************************/
 		/* generated SC-code                                                         */
@@ -49,33 +49,33 @@
 	«IF !this.eAllContents.select(e|e.metaType == OperatorExpression && ((OperatorExpression)e).operator==OperatorType::PRE).isEmpty-»
 	#define _SC_USE_PRE //;
 	«ENDIF-»
-	«IF getHighestPriority(this.innerStates.first()) > 31-»
-		#define _SC_ID_MAX  «getHighestPriority(this.innerStates.first())» // Highest thread id in use;
+	«IF getHighestPriority(this.states.first()) > 31-»
+		#define _SC_ID_MAX  «getHighestPriority(this.states.first())» // Highest thread id in use;
 	«ENDIF-»
-	«IF allSignals(this.innerStates.first()).size > 31-»
-		#define _SC_SIG_MAX «allSignals(this.innerStates.first()).size» // Highest signal id in use;
+	«IF allSignals(this.states.first()).size > 31-»
+		#define _SC_SIG_MAX «allSignals(this.states.first()).size» // Highest signal id in use;
 	«ENDIF-»
 	#include "sc.h"
-	#include "«innerStates.first().label».h"
-	«EXPAND CodegenMisc::generateSigType FOR allSignals(this.innerStates.first())-»
-	«EXPAND CodegenMisc::generateSigArray FOR allSignals(this.innerStates.first())-»
-	#define _SC_valSigInt_SIZE «allSignals(this.innerStates.first()).size»
+	#include "«states.first().label».h"
+	«EXPAND CodegenMisc::generateSigType FOR allSignals(this.states.first())-»
+	«EXPAND CodegenMisc::generateSigArray FOR allSignals(this.states.first())-»
+	#define _SC_valSigInt_SIZE «allSignals(this.states.first()).size»
 	
 	int valSigInt[_SC_valSigInt_SIZE];
 	int valSigIntPre[_SC_valSigInt_SIZE];
 	«EXPAND CodegenMisc::generateInitialize FOR this-»
 
-	«FOREACH allSignals(this.innerStates.first()) AS signal-»
+	«FOREACH allSignals(this.states.first()) AS signal-»
 		«IF ((Signal)signal).isInput || !(((Signal)signal).isInput || ((Signal)signal).isOutput)-»
 			«EXPAND CodegenMisc::generateInputSignal FOR ((Signal)signal)»
 		«ENDIF-»
 	«ENDFOREACH-»
-	«EXPAND CodegenMisc::generateCallOutputs FOR allSignals(this.innerStates.first())»
+	«EXPAND CodegenMisc::generateCallOutputs FOR allSignals(this.states.first())»
 	«EXPAND CodegenMisc::generateReset-»
 #ifndef EXTERNTICK
 	
 	int tick(){
-	TICKSTART(«EXPAND CodegenPriority::mainThreadPrio FOR this.innerStates.first()-»);
+	TICKSTART(«EXPAND CodegenPriority::mainThreadPrio FOR this.states.first()-»);
 «ENDDEFINE»
 
 «REM»
@@ -94,7 +94,7 @@
 	Step function of SC file (see SC docu).
 «ENDREM»
 «DEFINE step FOR Region»
-int «innerStates.first().id»(){
+int «states.first().id»(){
   int notdone = tick();
   «IF !this.eAllContents.select(e|e.metaType==ComplexExpression && ((OperatorExpression)e).operator==OperatorType::PRE).isEmpty-»
 	int i;

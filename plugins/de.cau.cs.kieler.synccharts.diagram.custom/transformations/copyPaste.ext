@@ -45,7 +45,7 @@ Void cutInternal(Object obj):
 
 // remove the state from its parent region
 Void cutInternal(State state):
- state.parentRegion.innerStates.remove(state)
+ state.parentRegion.states.remove(state)
 ;
 
 // remove the region from the parent state
@@ -227,7 +227,7 @@ Void paste(Region target):
 ;
 
 Void pasteInternal(Region target, State state):
- target.innerStates.add(state)
+ target.states.add(state)
 ;
 
 Void pasteInternal(Region target, Region region):
@@ -242,7 +242,7 @@ Void pasteRegionIntoRegion(Region region, Region target):
  target.parentState.regions.remove(target)) 
  :
  (dummy.setLabel(getFileNameOfActiveEditor()) ->
- target.innerStates.add(dummy) ->
+ target.states.add(dummy) ->
  dummy.regions.add(region))
 ;
 
@@ -256,7 +256,7 @@ Void pasteInternal(Region target, List[Object] list):
 ;
 
 Void pasteInternalStates(Region target, List[State] states):
- target.innerStates.addAll(states)
+ target.states.addAll(states)
 ;
 
 Void pasteInternalRegions(Region target, List[Region] regions):
@@ -271,7 +271,7 @@ Void pasteRegionsIntoRegion(List[Region] regions, Region target):
   target.parentState.regions.remove(target)) 
  :
  (dummy.regions.addAll(regions) ->
-  target.innerStates.add(dummy) ->
+  target.states.add(dummy) ->
   dummy.setLabel(getFileNameOfActiveEditor()))
 ;
 
@@ -283,8 +283,8 @@ Void pasteInternal(Region target, Transition trans):
 Void pasteTransitionIntoRegion(Region target, Transition trans):
  let srcDummy = new State :
  let destDummy = new State :
- target.innerStates.add(srcDummy) ->
- target.innerStates.add(destDummy) ->
+ target.states.add(srcDummy) ->
+ target.states.add(destDummy) ->
  trans.setSourceState(srcDummy) ->
  trans.setTargetState(destDummy)
 ;
@@ -298,8 +298,8 @@ Void pasteInternalTransitions(Region target, List[Transition] transList):
 Void pasteTransitionsIntoRegion(Region target, List[Transition] transList):
  let srcDummy = new State :
  let destDummy = new State :
- target.innerStates.add(srcDummy) ->
- target.innerStates.add(destDummy) ->
+ target.states.add(srcDummy) ->
+ target.states.add(destDummy) ->
  transList.setSourceState(srcDummy) ->
  transList.setTargetState(destDummy)
 ;
@@ -319,7 +319,7 @@ Void pasteInternal(State target, State state):
 
 // replace the old state with the new one
 Void replaceState(State oldState, State replacement):
- let states = oldState.parentRegion.innerStates:
+ let states = oldState.parentRegion.states:
  states.outgoingTransitions.fixReference(oldState, replacement) ->
  states.add(replacement) ->
  states.remove(oldState)
@@ -354,8 +354,8 @@ Void pasteInternalStates(State target, List[State] states):
  let parent = target.parentRegion:
   target.incomingTransitions.removeAll(target.incomingTransitions) ->
   target.outgoingTransitions.removeAll(target.outgoingTransitions) ->
-  parent.innerStates.remove(target) ->
-  parent.innerStates.addAll(states)
+  parent.states.remove(target) ->
+  parent.states.addAll(states)
 ;
 
 Void pasteInternalRegions(State target, List[Region] regions):
@@ -419,14 +419,14 @@ Void replaceWithStatesFromClipboard(State target):
  let states = (List[State]) getObjectFromClipboard():
  let targetRegion = target.parentRegion:
  target.removeStateFromRegion() ->
- targetRegion.innerStates.addAll(states)
+ targetRegion.states.addAll(states)
 ;
 
 // remove a state from the region
 Void removeStateFromRegion(State state):
  state.outgoingTransitions.removeAll(state.outgoingTransitions) ->
  state.incomingTransitions.removeAll(state.incomingTransitions) ->
- state.parentRegion.innerStates.remove(state)
+ state.parentRegion.states.remove(state)
 ;
 
 // connect two states with the transition in clipboard
@@ -490,7 +490,7 @@ Void pasteRegionList(List[Region] targets, State state):
 // add the state from clipboard to each region
 Void addStateInClipboardToRegion(Region target):
  let state = (State) getObjectFromClipboard():
- target.innerStates.add(state)
+ target.states.add(state)
 ;
 
 Void pasteRegionList(List[Region] targets, Region region):
@@ -523,7 +523,7 @@ Void pasteRegionListStates(List[Region] targets, List[State] states):
 // add all states in clipboard to target region
 Void addStatesFromClipboardToRegion(Region target):
  let states = (List[State]) getObjectFromClipboard():
- target.innerStates.addAll(states)
+ target.states.addAll(states)
 ;
 
 // replace all each region with the all source regions
@@ -555,8 +555,8 @@ Void pasteTransitionFromClipboardIntoRegion(Region target):
  let destDummy = new State:
  trans.setSourceState(srcDummy) ->
  trans.setTargetState(destDummy) ->
- target.innerStates.add(srcDummy) ->
- target.innerStates.add(destDummy)
+ target.states.add(srcDummy) ->
+ target.states.add(destDummy)
 ;
 
 // create two states in each region with all transitions
@@ -569,8 +569,8 @@ Void pasteTransitionsFromClipboardIntoRegion(Region target):
  let transList = (List[Transition]) getObjectFromClipboard():
  let srcDummy = new State:
  let destDummy = new State:
- target.innerStates.add(srcDummy) ->
- target.innerStates.add(destDummy) ->
+ target.states.add(srcDummy) ->
+ target.states.add(destDummy) ->
  srcDummy.outgoingTransitions.addAll(transList) ->
  transList.setTargetState(destDummy)
 ;
@@ -626,14 +626,14 @@ Void pasteStateOnTransition(Transition target, State newState, State transKeeper
  let dest = target.targetState:
  let dummyTrans = new Transition:
  (transKeeper == source ?
-  (source.parentRegion.innerStates.add(newState) ->
+  (source.parentRegion.states.add(newState) ->
    dummyTrans.setSourceState(newState) ->
    dummyTrans.setTargetState(dest) ->
    target.setTargetState(newState)
   )
   :
   (transKeeper == dest ?
-   (source.parentRegion.innerStates.add(newState) ->
+   (source.parentRegion.states.add(newState) ->
     dummyTrans.setSourceState(source) ->
     dummyTrans.setTargetState(newState) ->
     target.setSourceState(newState)
@@ -663,7 +663,7 @@ Void pasteInternalStates(Transition target, List[State] states):
 // encapsulate states in region and paste on transition
 Void pasteStatesOnTransition(Transition target, List[State] states, State transKeeper):
  let region = new Region:
- region.innerStates.addAll(states) ->
+ region.states.addAll(states) ->
  pasteRegionOnTransition(target, region, transKeeper)
 ;
 
@@ -759,7 +759,7 @@ Void pasteStatesInClipboardIntoTransition(Transition target):
  let dummyRegion = new Region:
  let dummyState = new State:
  dummyState.regions.add(dummyRegion) ->
- dummyRegion.innerStates.addAll(states) ->
+ dummyRegion.states.addAll(states) ->
  pasteStateOnTransition(target, dummyState, target.sourceState)
 ;
 

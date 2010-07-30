@@ -49,7 +49,7 @@
 		}
 	}
 
-	«FOREACH allSignals(this.innerStates.first()) AS signal-»
+	«FOREACH allSignals(this.states.first()) AS signal-»
 		«IF !((Signal)signal).isInput-»
 			«EXPAND CodegenMisc::generateOutputSignals FOR ((Signal)signal)»
 		«ENDIF-»
@@ -74,7 +74,7 @@ void setInputs(){
 
 	object = cJSON_Parse(buffer);
 	
-  «FOREACH allSignals(this.innerStates.first()) AS signal-»
+  «FOREACH allSignals(this.states.first()) AS signal-»
   	«IF !((Signal)signal).isOutput-»
   child = cJSON_GetObjectItem(object, "«((Signal)signal).name»");
 	if (child != NULL){

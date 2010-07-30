@@ -138,33 +138,36 @@ public class AddToStateHandler extends AbstractHandler implements IHandler {
      * @param type
      *            type of element to add
      */
-    private void addElement(final ShapeNodeEditPart stateEditPart, final String type) {
+    private void addElement(final ShapeNodeEditPart stateEditPart,
+            final String type) {
+        // FIXME: try to use something else instead of the State_... IDs, they
+        // change very often
         Class<?> class1 = null, class2 = null;
         IElementType elementType = null;
         if (type.equals(VAL_ENTRY_ACTION)) {
             class1 = StateEntryActionCompartmentEditPart.class;
             class2 = StateEntryActionCompartment2EditPart.class;
-            elementType = SyncchartsElementTypes.Action_3026;
+            elementType = SyncchartsElementTypes.Action_3034;
         } else if (type.equals(VAL_EXIT_ACTION)) {
             class1 = StateExitActionCompartmentEditPart.class;
             class2 = StateExitActionCompartment2EditPart.class;
-            elementType = SyncchartsElementTypes.Action_3028;
+            elementType = SyncchartsElementTypes.Action_3035;
         } else if (type.equals(VAL_INSIDE_ACTION)) {
             class1 = StateInnerActionCompartmentEditPart.class;
             class2 = StateInnerActionCompartment2EditPart.class;
-            elementType = SyncchartsElementTypes.Action_3027;
+            elementType = SyncchartsElementTypes.Action_3036;
         } else if (type.equals(VAL_REGION)) {
             class1 = StateRegionCompartmentEditPart.class;
             class2 = StateRegionCompartment2EditPart.class;
-            elementType = SyncchartsElementTypes.Region_3023;
+            elementType = SyncchartsElementTypes.Region_3031;
         } else if (type.equals(VAL_SIGNAL)) {
             class1 = StateSignalCompartmentEditPart.class;
             class2 = StateSignalCompartment2EditPart.class;
-            elementType = SyncchartsElementTypes.Signal_3025;
+            elementType = SyncchartsElementTypes.Signal_3033;
         } else if (type.equals(VAL_SUSPENSION_TRIGGER)) {
             class1 = StateSuspensionTriggerCompartmentEditPart.class;
             class2 = StateSuspensionTriggerCompartment2EditPart.class;
-            elementType = SyncchartsElementTypes.Action_3029;
+            elementType = SyncchartsElementTypes.Action_3037;
         } else {
             return;
         }
@@ -185,8 +188,8 @@ public class AddToStateHandler extends AbstractHandler implements IHandler {
         if (compartment != null) {
             // create element in the chosen compartment
             CreateViewRequest createRequest = CreateViewRequestFactory
-                    .getCreateShapeRequest(elementType, stateEditPart
-                            .getDiagramPreferencesHint());
+                    .getCreateShapeRequest(elementType,
+                            stateEditPart.getDiagramPreferencesHint());
             Command createCmd = compartment.getCommand(createRequest);
             elementViewAdapter = (IAdaptable) ((List<?>) createRequest
                     .getNewObject()).get(0);

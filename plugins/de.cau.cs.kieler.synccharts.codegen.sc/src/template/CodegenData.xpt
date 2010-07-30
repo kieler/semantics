@@ -9,7 +9,7 @@
 «EXTENSION template::Helper»
 
 «DEFINE main FOR Region-»
-«FILE innerStates.first().id + "_data.c"-»
+«FILE states.first().id + "_data.c"-»
 /*****************************************************************************/
 /* generated SC-code                                                         */
 /*****************************************************************************/
@@ -26,7 +26,7 @@
 /*****************************************************************************/
 «EXPAND init-»
 «EXPAND generateSetInputs-»
-«EXPAND generateMain(innerStates.first().id)-»
+«EXPAND generateMain(states.first().id)-»
 «ENDFILE-»
 «ENDDEFINE»
 
@@ -35,14 +35,14 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-#include "«innerStates.first().label».h"
+#include "«states.first().label».h"
 «ENDDEFINE»
 
 «DEFINE generateSetInputs FOR Region»
 void setInputs(){
   int rand = random();
   int i =0;
-  «FOREACH allSignals(this.innerStates.first()) AS signal-»
+  «FOREACH allSignals(this.states.first()) AS signal-»
   	«IF ((Signal)signal).isInput-»
     if ((1<<i) & rand) {
       «((Scope)((Signal)signal).eContainer).id»_I_«((Signal)signal).name»(«IF ((Signal)signal).type!=ValueType::PURE»random()«ENDIF»);
@@ -56,7 +56,7 @@ void setInputs(){
 
 «DEFINE generateMain(String name) FOR Region»
 
-«FOREACH allSignals(this.innerStates.first()) AS signal-»
+«FOREACH allSignals(this.states.first()) AS signal-»
   	«IF ((Signal)signal).isOutput»
   int «((Signal)signal).name»=0;
   void «name»_O_«((Signal)signal).name»(«IF ((Signal)signal).type!=ValueType::PURE»int val«ENDIF»){
@@ -88,7 +88,7 @@ int main(int argc, const char* argv[]){
     duration += (t);
   }   
   
-  «FOREACH allSignals(this.innerStates.first()) AS signal-»
+  «FOREACH allSignals(this.states.first()) AS signal-»
   	«IF ((Signal)signal).isOutput»
   fprintf(stderr,"«((Signal)signal).name»: %d\n", «((Signal)signal).name»);
   	«ENDIF-»

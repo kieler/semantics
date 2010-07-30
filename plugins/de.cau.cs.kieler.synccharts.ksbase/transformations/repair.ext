@@ -152,7 +152,7 @@ Void optimizeRec(State state,
 ;
 
 Boolean signalNotRead(Signal signal, Scope scope):
- scope.eAllContents.typeSelect(ValuedObjectReference).select(reference|reference.signal.name.matches(signal.name)).isEmpty
+ scope.eAllContents.typeSelect(ValuedObjectReference).select(reference|reference.valuedObject.name.matches(signal.name)).isEmpty
 ;
 
 Boolean signalNotEmitted(Signal signal, Scope scope):
@@ -164,7 +164,7 @@ List[Signal] getUnReferencedSignals(Scope scope):
 ;
 
 Boolean variableNotRead(expressions::Variable var, Scope scope):
- scope.eAllContents.typeSelect(ValuedObjectReference).select(reference|reference.variable.name == var.name).isEmpty
+ scope.eAllContents.typeSelect(ValuedObjectReference).select(reference|reference.valuedObject.name == var.name).isEmpty
 ;
 
 Boolean variableNotWritten(expressions::Variable var, Scope scope):

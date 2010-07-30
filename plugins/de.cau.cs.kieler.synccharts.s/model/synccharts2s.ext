@@ -44,23 +44,23 @@ create s::Program this transform(synccharts::Region root):
 	//create states and cache them in mapping list
 	addAllStatesToMappingList(root) ->
 	
-	computeThreadPriorities(root.innerStates.first()) ->
+	computeThreadPriorities(root.states.first()) ->
 	
-	this.setName(root.innerStates.first().id) ->
-	this.setPriority(getMainTreadPriority(root.innerStates.first())) ->
+	this.setName(root.states.first().id) ->
+	this.setPriority(getMainTreadPriority(root.states.first())) ->
 
     //several forks for more then one top level region (otherwise no fork is required)
     //and construct list of s-states	
 	( 
-		if root.innerStates.first().regions.size == 1 then
-			this.setStates(getAllStates(root.innerStates.first()))
+		if root.states.first().regions.size == 1 then
+			this.setStates(getAllStates(root.states.first()))
 		else
 			this.setStates(getStatesOfRegion(root))
 	) ->
 	
 	//signal declaration
 	//TODO: maybe consolidate with synccharts signal declaration?
-	this.setSignals(getStateSignals(root.innerStates.first()))
+	this.setSignals(getStateSignals(root.states.first()))
 ;
 
 
@@ -69,7 +69,7 @@ create s::Program this transform(synccharts::Region root):
 // to geht the s::State from a synccharts::State
 // Start: ----------------------------------------------
 Void addAllStatesToMappingList(synccharts::Region region):
-	region.innerStates.addAllStatesToMappingList()
+	region.states.addAllStatesToMappingList()
 ;
 
 Void addAllStatesToMappingList(synccharts::State state):
@@ -103,8 +103,8 @@ List[s::State] addStateToList(s::State state, List[s::State] states):
 // returns a list of all states of a region
 List[s::State] getStatesOfRegion(synccharts::Region region):
 	let outList = {}:
-	outList.addAll(region.innerStates.getAllStates()) ->
-	outList.addAll(region.innerStates.transform()) ->
+	outList.addAll(region.states.getAllStates()) ->
+	outList.addAll(region.states.transform()) ->
 	outList
 ;
 

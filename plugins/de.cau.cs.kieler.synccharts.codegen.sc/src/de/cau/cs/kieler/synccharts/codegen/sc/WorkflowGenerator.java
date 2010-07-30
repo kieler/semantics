@@ -57,8 +57,9 @@ import de.cau.cs.kieler.synccharts.SyncchartsPackage;
 
 /**
  * 
- * The WorkflowGenerator starts the Xpand process of generating code. Variables will be set to
- * define the out path of the generated files and the model for which to generate code.
+ * The WorkflowGenerator starts the Xpand process of generating code. Variables
+ * will be set to define the out path of the generated files and the model for
+ * which to generate code.
  * 
  * @kieler.rating 2010-06-14 yellow
  * 
@@ -75,28 +76,31 @@ public class WorkflowGenerator {
     private URI uri = null;
 
     /**
-     * The constructor sets the location in the KIELER workspace to save the sc files if you just
-     * generate sc code without simulation. It also sets the variables for the EMF reader.
+     * The constructor sets the location in the KIELER workspace to save the sc
+     * files if you just generate sc code without simulation. It also sets the
+     * variables for the EMF reader.
      */
     public WorkflowGenerator() {
         // location for the sc file in the KIELER workspace
-        IWorkbenchPage activePage = PlatformUI.getWorkbench().getActiveWorkbenchWindow()
-                .getActivePage();
+        IWorkbenchPage activePage = PlatformUI.getWorkbench()
+                .getActiveWorkbenchWindow().getActivePage();
         editor = activePage.getActiveEditor();
         outPath = part2Location(editor);
         uriString = null;
         if (editor instanceof DiagramEditor) {
             DiagramEditor diagramEditor = (DiagramEditor) editor;
             checkForDirtyDiagram(diagramEditor);
-            View notationElement = ((View) diagramEditor.getDiagramEditPart().getModel());
-            myModel = (EObject) notationElement.getElement();
+            View notationElement = ((View) diagramEditor.getDiagramEditPart()
+                    .getModel());
+            myModel = notationElement.getElement();
             uri = myModel.eResource().getURI();
             uriString = uri.toString();
         }
     }
 
     /**
-     * The constructor to use a given diagram (as *.kixs file) for generating code.
+     * The constructor to use a given diagram (as *.kixs file) for generating
+     * code.
      * 
      * @param fileLocation
      *            the location of the given diagram file
@@ -108,15 +112,15 @@ public class WorkflowGenerator {
         ResourceSet resourceSet = new ResourceSetImpl();
         Resource resource = resourceSet.getResource(uri, true);
         Region rootRegion = (Region) resource.getContents().get(0);
-        myModel = (EObject) rootRegion;
+        myModel = rootRegion;
     }
 
     /**
      * Invocation of the workflow. Prepares the environment for generating code.
      * 
      * @param sim
-     *            is false if you just want to generate code and true if you want to generate code
-     *            and simulate it
+     *            is false if you just want to generate code and true if you
+     *            want to generate code and simulate it
      * @param path
      *            the path where the generated files should be written
      */
@@ -127,7 +131,7 @@ public class WorkflowGenerator {
         emfReader.setModelSlot("model");
 
         // name of the file (from root state)
-        String filename = ((Region) myModel).getInnerStates().get(0).getId();
+        String filename = ((Region) myModel).getStates().get(0).getId();
 
         // Meta model
         EmfMetaModel metaModel1 = new EmfMetaModel(ExpressionsPackage.eINSTANCE);
@@ -194,12 +198,14 @@ public class WorkflowGenerator {
             issueValue = IStatus.ERROR;
         }
         if (issueValue > IStatus.OK) {
-            Status status = new Status(issueValue, Activator.PLUGIN_ID, issue.toString(), null);
+            Status status = new Status(issueValue, Activator.PLUGIN_ID,
+                    issue.toString(), null);
             StatusManager.getManager().handle(status, StatusManager.LOG);
         }
 
         try {
-            ResourcesPlugin.getWorkspace().getRoot().refreshLocal(IResource.DEPTH_INFINITE, null);
+            ResourcesPlugin.getWorkspace().getRoot()
+                    .refreshLocal(IResource.DEPTH_INFINITE, null);
         } catch (CoreException e2) {
             e2.printStackTrace();
         }
@@ -228,9 +234,14 @@ public class WorkflowGenerator {
     private static void checkForDirtyDiagram(final DiagramEditor diagramEditor) {
         if (diagramEditor.isDirty()) {
             final Shell shell = Display.getCurrent().getShells()[0];
-            boolean b = MessageDialog.openQuestion(shell, "Save Resource", "'"
-                    + diagramEditor.getEditorInput().getName() + "'"
-                    + " has been modified. Save changes before simulating? (recommended)");
+            boolean b = MessageDialog
+                    .openQuestion(
+                            shell,
+                            "Save Resource",
+                            "'"
+                                    + diagramEditor.getEditorInput().getName()
+                                    + "'"
+                                    + " has been modified. Save changes before simulating? (recommended)");
             if (b) {
                 IEditorSite part = diagramEditor.getEditorSite();
                 part.getPage().saveEditor((IEditorPart) part.getPart(), false);

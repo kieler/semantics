@@ -52,7 +52,7 @@ cached State getRootState(State s):
 
 // Returns the initial state of a region.
 State getInitialState(Region region):
-	region.innerStates.select(s|s.isInitial).first()
+	region.states.select(s|s.isInitial).first()
 ;
 
 // Returns a list of thread priorities.
@@ -99,7 +99,7 @@ cached List allSignals(State state):
 
 // Returns the first inital state.
 State getInitialState(State state):
-	state.regions.first().innerStates.select(s|s.isInitial).first()
+	state.regions.first().states.select(s|s.isInitial).first()
 ;
 
 // Returns the signal list of a state.
@@ -147,7 +147,7 @@ boolean isSimpleHierarchical(State state):
 	state.outgoingTransitions.isEmpty &&
 	state.innerActions.isEmpty &&
 	state.entryActions.isEmpty &&
-	!state.parentRegion.innerStates.exists(s|s.outgoingTransitions.exists(t|t.targetState == state))
+	!state.parentRegion.states.exists(s|s.outgoingTransitions.exists(t|t.targetState == state))
 ;
 
 // Tests if a state has any outgoing immediate transitions or entry actions.
