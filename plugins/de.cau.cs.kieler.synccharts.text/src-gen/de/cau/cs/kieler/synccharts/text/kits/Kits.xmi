@@ -30,8 +30,8 @@
       <type metamodel="/0/@metamodelDeclarations.2">
         <classifier xsi:type="ecore:EClass" href="http://kieler.cs.cau.de/synccharts/0.2.2#//Region"/>
       </type>
-      <alternatives xsi:type="xtext:Group">
-        <elements xsi:type="xtext:Group" cardinality="?">
+      <alternatives xsi:type="xtext:Alternatives">
+        <elements xsi:type="xtext:Group">
           <elements xsi:type="xtext:Keyword" value="Region"/>
           <elements xsi:type="xtext:Assignment" feature="label" operator="=">
             <terminal xsi:type="xtext:RuleCall" rule="/3/@rules.0"/>
@@ -44,10 +44,11 @@
               <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.6"/>
             </elements>
           </elements>
+          <elements xsi:type="xtext:Assignment" cardinality="*" feature="states" operator="+=">
+            <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.3"/>
+          </elements>
         </elements>
-        <elements xsi:type="xtext:Assignment" cardinality="*" feature="states" operator="+=">
-          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.3"/>
-        </elements>
+        <elements xsi:type="xtext:RuleCall" rule="/0/@rules.2"/>
       </alternatives>
     </rules>
     <rules xsi:type="xtext:ParserRule" name="SingleNestedRegion">
@@ -63,53 +64,36 @@
         <classifier xsi:type="ecore:EClass" href="http://kieler.cs.cau.de/synccharts/0.2.2#//State"/>
       </type>
       <alternatives xsi:type="xtext:Group">
+        <elements xsi:type="xtext:Alternatives" cardinality="?">
+          <elements xsi:type="xtext:Group">
+            <elements xsi:type="xtext:Assignment" feature="isInitial" operator="?=">
+              <terminal xsi:type="xtext:Keyword" value="init"/>
+            </elements>
+            <elements xsi:type="xtext:Assignment" cardinality="?" feature="isFinal" operator="?=">
+              <terminal xsi:type="xtext:Keyword" value="final"/>
+            </elements>
+          </elements>
+          <elements xsi:type="xtext:Group">
+            <elements xsi:type="xtext:Assignment" feature="isFinal" operator="?=">
+              <terminal xsi:type="xtext:Keyword" value="final"/>
+            </elements>
+            <elements xsi:type="xtext:Assignment" cardinality="?" feature="isInitial" operator="?=">
+              <terminal xsi:type="xtext:Keyword" value="init"/>
+            </elements>
+          </elements>
+        </elements>
+        <elements xsi:type="xtext:Assignment" cardinality="?" feature="type" operator="=">
+          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.8"/>
+        </elements>
         <elements xsi:type="xtext:Alternatives">
-          <elements xsi:type="xtext:Group">
-            <elements xsi:type="xtext:Group">
-              <elements xsi:type="xtext:Assignment" feature="isInitial" operator="?=">
-                <terminal xsi:type="xtext:Keyword" value="init"/>
-              </elements>
-              <elements xsi:type="xtext:Assignment" cardinality="?" feature="isFinal" operator="?=">
-                <terminal xsi:type="xtext:Keyword" value="final"/>
-              </elements>
-            </elements>
-            <elements xsi:type="xtext:Keyword" cardinality="?" value="State"/>
-            <elements xsi:type="xtext:Assignment" cardinality="?" feature="id" operator="=">
-              <terminal xsi:type="xtext:RuleCall" rule="/3/@rules.0"/>
-            </elements>
-            <elements xsi:type="xtext:Assignment" feature="label" operator="=">
-              <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.21"/>
-            </elements>
-          </elements>
-          <elements xsi:type="xtext:Group">
-            <elements xsi:type="xtext:Group">
-              <elements xsi:type="xtext:Assignment" feature="isFinal" operator="?=">
-                <terminal xsi:type="xtext:Keyword" value="final"/>
-              </elements>
-              <elements xsi:type="xtext:Assignment" cardinality="?" feature="isInitial" operator="?=">
-                <terminal xsi:type="xtext:Keyword" value="init"/>
-              </elements>
-            </elements>
-            <elements xsi:type="xtext:Keyword" cardinality="?" value="State"/>
-            <elements xsi:type="xtext:Assignment" cardinality="?" feature="id" operator="=">
-              <terminal xsi:type="xtext:RuleCall" rule="/3/@rules.0"/>
-            </elements>
-            <elements xsi:type="xtext:Assignment" feature="label" operator="=">
-              <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.21"/>
-            </elements>
-          </elements>
-          <elements xsi:type="xtext:Group">
-            <elements xsi:type="xtext:Assignment" cardinality="?" feature="type" operator="=">
-              <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.8"/>
-            </elements>
-            <elements xsi:type="xtext:Keyword" cardinality="?" value="State"/>
-            <elements xsi:type="xtext:Assignment" cardinality="?" feature="id" operator="=">
-              <terminal xsi:type="xtext:RuleCall" rule="/3/@rules.0"/>
-            </elements>
-            <elements xsi:type="xtext:Assignment" feature="label" operator="=">
-              <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.21"/>
-            </elements>
-          </elements>
+          <elements xsi:type="xtext:Keyword" value="State"/>
+          <elements xsi:type="xtext:Keyword" value="States"/>
+        </elements>
+        <elements xsi:type="xtext:Assignment" cardinality="?" feature="id" operator="=">
+          <terminal xsi:type="xtext:RuleCall" rule="/3/@rules.0"/>
+        </elements>
+        <elements xsi:type="xtext:Assignment" feature="label" operator="=">
+          <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.21"/>
         </elements>
         <elements xsi:type="xtext:Alternatives">
           <elements xsi:type="xtext:Group">
@@ -128,12 +112,40 @@
           </elements>
           <elements xsi:type="xtext:Group">
             <elements xsi:type="xtext:Keyword" value="{"/>
-            <elements xsi:type="xtext:Alternatives">
-              <elements xsi:type="xtext:Assignment" feature="regions" operator="+=">
-                <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.2"/>
+            <elements xsi:type="xtext:Group">
+              <elements xsi:type="xtext:Alternatives" cardinality="*">
+                <elements xsi:type="xtext:Assignment" feature="signals" operator="+=">
+                  <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.6"/>
+                </elements>
+                <elements xsi:type="xtext:Assignment" feature="variables" operator="+=">
+                  <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.4"/>
+                </elements>
+                <elements xsi:type="xtext:Group">
+                  <elements xsi:type="xtext:Keyword" value="onentry"/>
+                  <elements xsi:type="xtext:Assignment" feature="entryActions" operator="+=">
+                    <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.1"/>
+                  </elements>
+                </elements>
+                <elements xsi:type="xtext:Group">
+                  <elements xsi:type="xtext:Keyword" value="oninner"/>
+                  <elements xsi:type="xtext:Assignment" feature="innerActions" operator="+=">
+                    <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.1"/>
+                  </elements>
+                </elements>
+                <elements xsi:type="xtext:Group">
+                  <elements xsi:type="xtext:Keyword" value="onexit"/>
+                  <elements xsi:type="xtext:Assignment" feature="exitActions" operator="+=">
+                    <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.1"/>
+                  </elements>
+                </elements>
+                <elements xsi:type="xtext:Group">
+                  <elements xsi:type="xtext:Keyword" value="suspension"/>
+                  <elements xsi:type="xtext:Assignment" feature="suspensionTrigger" operator="=">
+                    <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.1"/>
+                  </elements>
+                </elements>
               </elements>
               <elements xsi:type="xtext:Group">
-                <elements xsi:type="xtext:Keyword" value="["/>
                 <elements xsi:type="xtext:Assignment" feature="regions" operator="+=">
                   <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.1"/>
                 </elements>
@@ -141,91 +153,6 @@
                   <elements xsi:type="xtext:Keyword" value="||"/>
                   <elements xsi:type="xtext:Assignment" feature="regions" operator="+=">
                     <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.1"/>
-                  </elements>
-                </elements>
-                <elements xsi:type="xtext:Keyword" value="]"/>
-              </elements>
-              <elements xsi:type="xtext:Group">
-                <elements xsi:type="xtext:Alternatives">
-                  <elements xsi:type="xtext:Assignment" feature="signals" operator="+=">
-                    <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.6"/>
-                  </elements>
-                  <elements xsi:type="xtext:Assignment" feature="variables" operator="+=">
-                    <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.4"/>
-                  </elements>
-                  <elements xsi:type="xtext:Group">
-                    <elements xsi:type="xtext:Keyword" value="onentry"/>
-                    <elements xsi:type="xtext:Assignment" feature="entryActions" operator="+=">
-                      <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.1"/>
-                    </elements>
-                  </elements>
-                  <elements xsi:type="xtext:Group">
-                    <elements xsi:type="xtext:Keyword" value="oninner"/>
-                    <elements xsi:type="xtext:Assignment" feature="innerActions" operator="+=">
-                      <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.1"/>
-                    </elements>
-                  </elements>
-                  <elements xsi:type="xtext:Group">
-                    <elements xsi:type="xtext:Keyword" value="onexit"/>
-                    <elements xsi:type="xtext:Assignment" feature="exitActions" operator="+=">
-                      <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.1"/>
-                    </elements>
-                  </elements>
-                  <elements xsi:type="xtext:Group">
-                    <elements xsi:type="xtext:Keyword" value="suspension"/>
-                    <elements xsi:type="xtext:Assignment" feature="suspensionTrigger" operator="=">
-                      <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.1"/>
-                    </elements>
-                  </elements>
-                </elements>
-                <elements xsi:type="xtext:Alternatives" cardinality="*">
-                  <elements xsi:type="xtext:Assignment" feature="signals" operator="+=">
-                    <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.6"/>
-                  </elements>
-                  <elements xsi:type="xtext:Assignment" feature="variables" operator="+=">
-                    <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.4"/>
-                  </elements>
-                  <elements xsi:type="xtext:Group">
-                    <elements xsi:type="xtext:Keyword" value="onentry"/>
-                    <elements xsi:type="xtext:Assignment" feature="entryActions" operator="+=">
-                      <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.1"/>
-                    </elements>
-                  </elements>
-                  <elements xsi:type="xtext:Group">
-                    <elements xsi:type="xtext:Keyword" value="oninner"/>
-                    <elements xsi:type="xtext:Assignment" feature="innerActions" operator="+=">
-                      <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.1"/>
-                    </elements>
-                  </elements>
-                  <elements xsi:type="xtext:Group">
-                    <elements xsi:type="xtext:Keyword" value="onexit"/>
-                    <elements xsi:type="xtext:Assignment" feature="exitActions" operator="+=">
-                      <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.1"/>
-                    </elements>
-                  </elements>
-                  <elements xsi:type="xtext:Group">
-                    <elements xsi:type="xtext:Keyword" value="suspension"/>
-                    <elements xsi:type="xtext:Assignment" feature="suspensionTrigger" operator="=">
-                      <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.1"/>
-                    </elements>
-                  </elements>
-                </elements>
-                <elements xsi:type="xtext:Alternatives" cardinality="?">
-                  <elements xsi:type="xtext:Assignment" feature="regions" operator="+=">
-                    <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.2"/>
-                  </elements>
-                  <elements xsi:type="xtext:Group">
-                    <elements xsi:type="xtext:Keyword" value="["/>
-                    <elements xsi:type="xtext:Assignment" feature="regions" operator="+=">
-                      <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.1"/>
-                    </elements>
-                    <elements xsi:type="xtext:Group" cardinality="*">
-                      <elements xsi:type="xtext:Keyword" value="||"/>
-                      <elements xsi:type="xtext:Assignment" feature="regions" operator="+=">
-                        <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.1"/>
-                      </elements>
-                    </elements>
-                    <elements xsi:type="xtext:Keyword" value="]"/>
                   </elements>
                 </elements>
               </elements>

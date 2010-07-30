@@ -21,7 +21,7 @@ public class ActionsFormatter extends ExpressionsFormatter {
 	@Override
 	protected void configureFormatting(FormattingConfig c) {
 		ActionsGrammarAccess f = (ActionsGrammarAccess) getGrammarAccess();
-		customConfigerFormatting(c, f);
+		customConfigureFormatting(c, f);
 	}
 
 	
@@ -31,10 +31,10 @@ public class ActionsFormatter extends ExpressionsFormatter {
 	 * @param c FormattingConfig provided by caller
 	 * @param f GrammarAccess provided by caller
 	 */
-	protected void customConfigerFormatting(FormattingConfig c, ActionsGrammarAccess f) {
+	protected void customConfigureFormatting(FormattingConfig c, ActionsGrammarAccess f) {
 		super.customConfigureFormatting(c, f.getExpressionsGrammarAccess());
 		
-		c.setNoSpace().before(f.getTextEffectAccess().getLeftParenthesisKeyword_1_0());
-		
+		// avoid space in textual effect like '/ "foo" (java)' -> '/ "foo"(java)' 
+		c.setNoSpace().before(f.getTextEffectAccess().getLeftParenthesisKeyword_1_0());	
 	}
 }

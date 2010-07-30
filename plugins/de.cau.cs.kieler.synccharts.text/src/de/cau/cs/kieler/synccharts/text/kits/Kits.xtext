@@ -14,8 +14,9 @@ Region returns synccharts::Region:
 // ---------------------------------------------------------------------------------------------------
   
 NestedRegion returns synccharts::Region:
-  ('Region' (label=ID) (variables+=Variable|signals+=Signal)* )? 
-  (states+=State)*;
+  ('Region' (label=ID) (variables+=Variable|signals+=Signal)* (states+=State)*)
+  | SingleNestedRegion
+  ;
 
 // ---------------------------------------------------------------------------------------------------
 
@@ -25,41 +26,30 @@ SingleNestedRegion returns synccharts::Region:
 // ---------------------------------------------------------------------------------------------------
 
 State returns synccharts::State:
-  (  ((isInitial?='init') (isFinal?='final')?) ('State')? (id=ID)? (label=EString)
-   | ((isFinal?='final') (isInitial?='init')?) ('State')? (id=ID)? (label=EString)
-   | ((type=StateType))?                       ('State')? (id=ID)? (label=EString)
-   )
-  (  (outgoingTransitions+=Transition ("," outgoingTransitions+=Transition)*)? ';'
-   | ('{'(
-          ( regions+=SingleNestedRegion)
-          | 
-          ( '[' regions+=NestedRegion ('||' regions+=NestedRegion)*  ']' )
-          |
-          (
-            (signals+=Signal                |
-             variables+=Variable            |
-             'onentry' entryActions+=Action |
-             'oninner' innerActions+=Action |
-             'onexit'  exitActions+=Action  |
-             'suspension' suspensionTrigger=Action
-             )
-            (
-             (signals+=Signal                |
-              variables+=Variable            |
-              'onentry' entryActions+=Action |
-              'oninner' innerActions+=Action |
-              'onexit'  exitActions+=Action  |
-              'suspension' suspensionTrigger=Action
-              ))*
-            (
-             ( regions+=SingleNestedRegion)
-              | 
-              ('[' regions+=NestedRegion ('||' regions+=NestedRegion)* ']' )
-             )?
-           )
-          ) 
-       '}' (outgoingTransitions+=Transition ("," outgoingTransitions+=Transition)* ';')?
-      )
+  (
+    ((isInitial?='init') (isFinal?='final')?)
+   |
+    ((isFinal?='final') (isInitial?='init')?)
+   )?
+  
+  (type=StateType)? ('State' | 'States') (id=ID)? (label=EString)
+  
+  (
+    ( (outgoingTransitions+=Transition ("," outgoingTransitions+=Transition)* )? ';')
+   | 
+    ('{'
+        (
+          (signals+=Signal                |
+           variables+=Variable            |
+           'onentry' entryActions+=Action |
+           'oninner' innerActions+=Action |
+           'onexit'  exitActions+=Action  |
+           'suspension' suspensionTrigger=Action)*
+           
+          (regions+=NestedRegion ('||' regions+=NestedRegion)*) )
+           
+        '}' (outgoingTransitions+=Transition ("," outgoingTransitions+=Transition)* ';')?
+     ) 
    );
 
 // ---------------------------------------------------------------------------------------------------

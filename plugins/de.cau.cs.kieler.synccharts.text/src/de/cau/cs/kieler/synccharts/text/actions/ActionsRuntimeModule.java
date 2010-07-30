@@ -1,8 +1,6 @@
 package de.cau.cs.kieler.synccharts.text.actions;
 
 import org.eclipse.xtext.conversion.IValueConverterService;
-import org.eclipse.xtext.parsetree.reconstr.ITokenSerializer;
-import org.eclipse.xtext.parsetree.reconstr.ITokenSerializer.IValueSerializer;
 import org.eclipse.xtext.parsetree.reconstr.ITransientValueService;
 
 import de.cau.cs.kieler.synccharts.text.actions.formatting.ActionsTransientValueService;
