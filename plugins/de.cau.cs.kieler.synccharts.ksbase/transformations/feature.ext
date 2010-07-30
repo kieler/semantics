@@ -72,6 +72,25 @@ Void flipTransition(Transition t):
  t.setTargetState(source) ->
  setSelection(t) 
 ;
+
+//Converts transitions into strong abort
+Void setStrong(Transition t):
+ t.setType(TransitionType::STRONGABORT) ->
+ setSelection(t) 
+;
+
+//Converts transitions into weak abort
+Void setWeak(Transition t):
+ t.setType(TransitionType::WEAKABORT) ->
+ setSelection(t) 
+;
+
+//Converts transitions into normaltermination
+Void setNormalTermination(Transition t):
+ t.setType(TransitionType::NORMALTERMINATION) ->
+ setSelection(t) 
+;
+
 //Inserts a state in a transition
 Void insertState(Transition t):
  let source = t.sourceState:

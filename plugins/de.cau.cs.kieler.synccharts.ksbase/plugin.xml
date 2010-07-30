@@ -189,6 +189,24 @@
                     transformation="optimizeSelected"
                     transformationId="de.cau.cs.kieler.ksbase.optimize">
               </transformation>
+              <transformation
+                    name="Strong abort"
+                    tooltip="Transform transition into strong abortion"
+                    transformation="setStrong"
+                    transformationId="de.cau.cs.kieler.synccharts.ksbase.setStrong">
+              </transformation>
+              <transformation
+                    name="Weak abort"
+                    tooltip="Transform transition into weak abortion"
+                    transformation="setWeak"
+                    transformationId="de.cau.cs.kieler.synccharts.ksbase.setWeak">
+              </transformation>
+              <transformation
+                    name="Normal termination"
+                    tooltip="Transform transition into normal termination"
+                    transformation="setNormalTermination"
+                    transformationId="de.cau.cs.kieler.synccharts.ksbase.setNormalTermination">
+              </transformation>
 			</transformations>
 			<menus>
 				<menuContribution locationURI="menu:de.cau.cs.kieler">
@@ -225,6 +243,15 @@
      <transformationCommand
            transformationId="de.cau.cs.kieler.ksbase.flip">
      </transformationCommand>
+      <transformationCommand
+            transformationId="de.cau.cs.kieler.synccharts.ksbase.setStrong">
+      </transformationCommand>
+      <transformationCommand
+            transformationId="de.cau.cs.kieler.synccharts.ksbase.setWeak">
+      </transformationCommand>
+      <transformationCommand
+            transformationId="de.cau.cs.kieler.synccharts.ksbase.setNormalTermination">
+      </transformationCommand>
      <transformationCommand
            transformationId="de.cau.cs.kieler.ksbase.rerouteTarget">
      </transformationCommand>
@@ -305,7 +332,6 @@
        <transformationCommand
              transformationId="de.cau.cs.kieler.synccharts.ksbase.insertState">
        </transformationCommand>
-          <transformationCommand transformationId="de.cau.cs.kieler.ksbase.flip"></transformationCommand>
           <transformationCommand
                 transformationId="de.cau.cs.kieler.ksbase.rerouteTarget">
           </transformationCommand>
@@ -339,6 +365,16 @@
           <transformationCommand
                 transformationId="de.cau.cs.kieler.ksbase.createDefault">
           </transformationCommand>
+          <transformationCommand transformationId="de.cau.cs.kieler.ksbase.flip"></transformationCommand>
+          <transformationCommand
+                transformationId="de.cau.cs.kieler.synccharts.ksbase.setStrong">
+          </transformationCommand>
+          <transformationCommand
+                transformationId="de.cau.cs.kieler.synccharts.ksbase.setWeak">
+          </transformationCommand>
+          <transformationCommand
+                transformationId="de.cau.cs.kieler.synccharts.ksbase.setNormalTermination">
+          </transformationCommand>
     </menuContribution>
     <menuContribution
           locationURI="popupBar:any">
@@ -364,6 +400,15 @@
              transformationId="de.cau.cs.kieler.synccharts.ksbase.insertState">
        </transformationCommand>
           <transformationCommand transformationId="de.cau.cs.kieler.ksbase.flip">
+          </transformationCommand>
+          <transformationCommand
+                transformationId="de.cau.cs.kieler.synccharts.ksbase.setStrong">
+          </transformationCommand>
+          <transformationCommand
+                transformationId="de.cau.cs.kieler.synccharts.ksbase.setWeak">
+          </transformationCommand>
+          <transformationCommand
+                transformationId="de.cau.cs.kieler.synccharts.ksbase.setNormalTermination">
           </transformationCommand>
           <transformationCommand
                 transformationId="de.cau.cs.kieler.ksbase.encapsulate">
