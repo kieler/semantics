@@ -66,15 +66,21 @@ public class ExpressionsFormatter extends AbstractDeclarativeFormatter {
 		
 		
 		// Added by chsch:
+		
+		//Don't insert space after left parenthesis
 		c.setNoSpace().after(f.getValueTestOperatorRule());
 		for (Keyword lPar : f.findKeywords("(")) {
 			c.setNoSpace().after(lPar);
 		}
+
+		//Don't insert space before right parenthesis
 		for (Keyword lPar : f.findKeywords(")")) {
 			c.setNoSpace().before(lPar);
 		}
 		
+		//Don't insert space after value test operator ('?')
 		c.setNoSpace().after(f.getPreOperatorRule());
+		
 		c.setNoSpace().before(f.getTextExpressionRule());
 	}
 	
