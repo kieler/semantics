@@ -288,7 +288,7 @@ public final class OptimizeUtils {
         // check whether ID is unique
         Region parentRegion = state.getParentRegion();
         if (parentRegion != null) {
-            for (State sibling : parentRegion.getInnerStates()) {
+            for (State sibling : parentRegion.getStates()) {
                 String siblingId = sibling.getId();
                 if (siblingId != null && siblingId.equals(state.getId())
                         && sibling != state) {
@@ -296,8 +296,8 @@ public final class OptimizeUtils {
                     // anonymous states)
 
                     String dummyId = getUniqueString(sibling,
-                            SyncchartsPackage.eINSTANCE.getScope_Id(), sibling
-                                    .getLabel());
+                            SyncchartsPackage.eINSTANCE.getScope_Id(),
+                            sibling.getLabel());
                     sibling.setId(dummyId);
 
                 }
