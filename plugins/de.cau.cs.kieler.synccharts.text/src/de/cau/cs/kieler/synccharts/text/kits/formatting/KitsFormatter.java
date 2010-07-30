@@ -40,7 +40,14 @@ public class KitsFormatter extends AbstractDeclarativeFormatter {
 			c.setNoSpace().before(comma);
 			c.setLinewrap().after(comma);
 		}
-				
+		
+		for (Keyword bracket: f.findKeywords("(","?")) {
+			c.setNoSpace().after(bracket);
+		}
+		for (Keyword bracket: f.findKeywords(")")) {
+			c.setNoSpace().before(bracket);
+		}	
+		
 		c.setLinewrap(2).after(f.getStateRule());
 		c.setLinewrap().before(f.getTransitionRule());
 		c.setLinewrap().after(f.getTransitionRule());

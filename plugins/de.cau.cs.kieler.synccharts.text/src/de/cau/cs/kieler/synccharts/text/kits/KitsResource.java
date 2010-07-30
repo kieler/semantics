@@ -30,6 +30,7 @@ import de.cau.cs.kieler.synccharts.listener.UniqueStringCache;
  *
  */
 
+@SuppressWarnings("deprecation")
 public class KitsResource extends LazyLinkingResource {
 
 	/** copied from TriggerListenerIDs */
@@ -105,7 +106,7 @@ public class KitsResource extends LazyLinkingResource {
 							.getParentState();
 					if (parentScope != null) {
 						EList<Scope> children = (EList<Scope>) (scopeIsState ? ((Region) parentScope)
-								.getInnerStates()
+								.getStates()
 								: ((State) parentScope).getRegions());
 
 						for (Scope sibling : children) {

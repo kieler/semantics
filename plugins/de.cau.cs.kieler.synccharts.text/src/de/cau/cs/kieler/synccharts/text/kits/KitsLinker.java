@@ -24,15 +24,13 @@ import org.eclipse.xtext.GrammarUtil;
 import org.eclipse.xtext.diagnostics.IDiagnosticConsumer;
 import org.eclipse.xtext.linking.ILinkingService;
 import org.eclipse.xtext.linking.impl.AbstractCleaningLinker;
-
 import org.eclipse.xtext.parsetree.AbstractNode;
 import org.eclipse.xtext.parsetree.CompositeNode;
 import org.eclipse.xtext.parsetree.NodeUtil;
 
 import com.google.inject.Inject;
 
-import de.cau.cs.kieler.core.expressions.SignalReference;
-import de.cau.cs.kieler.core.expressions.VariableReference;
+import de.cau.cs.kieler.core.expressions.ValuedObjectReference;
 import de.cau.cs.kieler.synccharts.Assignment;
 import de.cau.cs.kieler.synccharts.Emission;
 import de.cau.cs.kieler.synccharts.Transition;
@@ -63,10 +61,9 @@ public class KitsLinker extends AbstractCleaningLinker {
 
 			/* restrict to elements with cross references */
 			if (obj instanceof Transition
-					|| obj instanceof SignalReference
-					|| obj instanceof VariableReference
 					|| obj instanceof Emission
-					|| obj instanceof Assignment) {
+					|| obj instanceof Assignment
+					|| obj instanceof ValuedObjectReference) {
 			
 				/* reveal the dedicated parse tree element */
 				final CompositeNode node = NodeUtil.getNodeAdapter(obj).getParserNode();

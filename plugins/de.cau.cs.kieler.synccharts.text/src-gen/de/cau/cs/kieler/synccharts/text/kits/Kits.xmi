@@ -5,14 +5,14 @@
       <ePackage href="http://www.eclipse.org/emf/2002/Ecore#/"/>
     </metamodelDeclarations>
     <metamodelDeclarations xsi:type="xtext:ReferencedMetamodel" alias="expressions">
-      <ePackage href="http://kieler.cs.cau.de/expressions#/"/>
+      <ePackage href="http://kieler.cs.cau.de/expressions/0.1.1#/"/>
     </metamodelDeclarations>
     <metamodelDeclarations xsi:type="xtext:ReferencedMetamodel" alias="synccharts">
-      <ePackage href="http://kieler.cs.cau.de/synccharts/0.2.1#/"/>
+      <ePackage href="http://kieler.cs.cau.de/synccharts/0.2.2#/"/>
     </metamodelDeclarations>
     <rules xsi:type="xtext:ParserRule" name="Region">
       <type metamodel="/0/@metamodelDeclarations.2">
-        <classifier xsi:type="ecore:EClass" href="http://kieler.cs.cau.de/synccharts/0.2.1#//Region"/>
+        <classifier xsi:type="ecore:EClass" href="http://kieler.cs.cau.de/synccharts/0.2.2#//Region"/>
       </type>
       <alternatives xsi:type="xtext:Group">
         <elements xsi:type="xtext:Group" cardinality="?">
@@ -21,14 +21,14 @@
             <terminal xsi:type="xtext:RuleCall" rule="/3/@rules.0"/>
           </elements>
         </elements>
-        <elements xsi:type="xtext:Assignment" feature="innerStates" operator="+=">
+        <elements xsi:type="xtext:Assignment" feature="states" operator="+=">
           <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.3"/>
         </elements>
       </alternatives>
     </rules>
     <rules xsi:type="xtext:ParserRule" name="NestedRegion">
       <type metamodel="/0/@metamodelDeclarations.2">
-        <classifier xsi:type="ecore:EClass" href="http://kieler.cs.cau.de/synccharts/0.2.1#//Region"/>
+        <classifier xsi:type="ecore:EClass" href="http://kieler.cs.cau.de/synccharts/0.2.2#//Region"/>
       </type>
       <alternatives xsi:type="xtext:Group">
         <elements xsi:type="xtext:Group" cardinality="?">
@@ -41,26 +41,26 @@
               <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.4"/>
             </elements>
             <elements xsi:type="xtext:Assignment" feature="signals" operator="+=">
-              <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.5"/>
+              <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.6"/>
             </elements>
           </elements>
         </elements>
-        <elements xsi:type="xtext:Assignment" cardinality="*" feature="innerStates" operator="+=">
+        <elements xsi:type="xtext:Assignment" cardinality="*" feature="states" operator="+=">
           <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.3"/>
         </elements>
       </alternatives>
     </rules>
     <rules xsi:type="xtext:ParserRule" name="SingleNestedRegion">
       <type metamodel="/0/@metamodelDeclarations.2">
-        <classifier xsi:type="ecore:EClass" href="http://kieler.cs.cau.de/synccharts/0.2.1#//Region"/>
+        <classifier xsi:type="ecore:EClass" href="http://kieler.cs.cau.de/synccharts/0.2.2#//Region"/>
       </type>
-      <alternatives xsi:type="xtext:Assignment" cardinality="+" feature="innerStates" operator="+=">
+      <alternatives xsi:type="xtext:Assignment" cardinality="+" feature="states" operator="+=">
         <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.3"/>
       </alternatives>
     </rules>
     <rules xsi:type="xtext:ParserRule" name="State">
       <type metamodel="/0/@metamodelDeclarations.2">
-        <classifier xsi:type="ecore:EClass" href="http://kieler.cs.cau.de/synccharts/0.2.1#//State"/>
+        <classifier xsi:type="ecore:EClass" href="http://kieler.cs.cau.de/synccharts/0.2.2#//State"/>
       </type>
       <alternatives xsi:type="xtext:Group">
         <elements xsi:type="xtext:Alternatives">
@@ -78,7 +78,7 @@
               <terminal xsi:type="xtext:RuleCall" rule="/3/@rules.0"/>
             </elements>
             <elements xsi:type="xtext:Assignment" feature="label" operator="=">
-              <terminal xsi:type="xtext:RuleCall" rule="/3/@rules.2"/>
+              <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.21"/>
             </elements>
           </elements>
           <elements xsi:type="xtext:Group">
@@ -95,19 +95,19 @@
               <terminal xsi:type="xtext:RuleCall" rule="/3/@rules.0"/>
             </elements>
             <elements xsi:type="xtext:Assignment" feature="label" operator="=">
-              <terminal xsi:type="xtext:RuleCall" rule="/3/@rules.2"/>
+              <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.21"/>
             </elements>
           </elements>
           <elements xsi:type="xtext:Group">
             <elements xsi:type="xtext:Assignment" cardinality="?" feature="type" operator="=">
-              <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.7"/>
+              <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.8"/>
             </elements>
             <elements xsi:type="xtext:Keyword" cardinality="?" value="State"/>
             <elements xsi:type="xtext:Assignment" cardinality="?" feature="id" operator="=">
               <terminal xsi:type="xtext:RuleCall" rule="/3/@rules.0"/>
             </elements>
             <elements xsi:type="xtext:Assignment" feature="label" operator="=">
-              <terminal xsi:type="xtext:RuleCall" rule="/3/@rules.2"/>
+              <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.21"/>
             </elements>
           </elements>
         </elements>
@@ -115,12 +115,12 @@
           <elements xsi:type="xtext:Group">
             <elements xsi:type="xtext:Group" cardinality="?">
               <elements xsi:type="xtext:Assignment" feature="outgoingTransitions" operator="+=">
-                <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.6"/>
+                <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.7"/>
               </elements>
               <elements xsi:type="xtext:Group" cardinality="*">
                 <elements xsi:type="xtext:Keyword" value=","/>
                 <elements xsi:type="xtext:Assignment" feature="outgoingTransitions" operator="+=">
-                  <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.6"/>
+                  <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.7"/>
                 </elements>
               </elements>
             </elements>
@@ -148,7 +148,7 @@
               <elements xsi:type="xtext:Group">
                 <elements xsi:type="xtext:Alternatives">
                   <elements xsi:type="xtext:Assignment" feature="signals" operator="+=">
-                    <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.5"/>
+                    <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.6"/>
                   </elements>
                   <elements xsi:type="xtext:Assignment" feature="variables" operator="+=">
                     <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.4"/>
@@ -156,31 +156,31 @@
                   <elements xsi:type="xtext:Group">
                     <elements xsi:type="xtext:Keyword" value="onentry"/>
                     <elements xsi:type="xtext:Assignment" feature="entryActions" operator="+=">
-                      <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.0"/>
+                      <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.1"/>
                     </elements>
                   </elements>
                   <elements xsi:type="xtext:Group">
                     <elements xsi:type="xtext:Keyword" value="oninner"/>
                     <elements xsi:type="xtext:Assignment" feature="innerActions" operator="+=">
-                      <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.0"/>
+                      <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.1"/>
                     </elements>
                   </elements>
                   <elements xsi:type="xtext:Group">
                     <elements xsi:type="xtext:Keyword" value="onexit"/>
                     <elements xsi:type="xtext:Assignment" feature="exitActions" operator="+=">
-                      <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.0"/>
+                      <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.1"/>
                     </elements>
                   </elements>
                   <elements xsi:type="xtext:Group">
                     <elements xsi:type="xtext:Keyword" value="suspension"/>
                     <elements xsi:type="xtext:Assignment" feature="suspensionTrigger" operator="=">
-                      <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.0"/>
+                      <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.1"/>
                     </elements>
                   </elements>
                 </elements>
                 <elements xsi:type="xtext:Alternatives" cardinality="*">
                   <elements xsi:type="xtext:Assignment" feature="signals" operator="+=">
-                    <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.5"/>
+                    <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.6"/>
                   </elements>
                   <elements xsi:type="xtext:Assignment" feature="variables" operator="+=">
                     <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.4"/>
@@ -188,25 +188,25 @@
                   <elements xsi:type="xtext:Group">
                     <elements xsi:type="xtext:Keyword" value="onentry"/>
                     <elements xsi:type="xtext:Assignment" feature="entryActions" operator="+=">
-                      <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.0"/>
+                      <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.1"/>
                     </elements>
                   </elements>
                   <elements xsi:type="xtext:Group">
                     <elements xsi:type="xtext:Keyword" value="oninner"/>
                     <elements xsi:type="xtext:Assignment" feature="innerActions" operator="+=">
-                      <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.0"/>
+                      <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.1"/>
                     </elements>
                   </elements>
                   <elements xsi:type="xtext:Group">
                     <elements xsi:type="xtext:Keyword" value="onexit"/>
                     <elements xsi:type="xtext:Assignment" feature="exitActions" operator="+=">
-                      <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.0"/>
+                      <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.1"/>
                     </elements>
                   </elements>
                   <elements xsi:type="xtext:Group">
                     <elements xsi:type="xtext:Keyword" value="suspension"/>
                     <elements xsi:type="xtext:Assignment" feature="suspensionTrigger" operator="=">
-                      <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.0"/>
+                      <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.1"/>
                     </elements>
                   </elements>
                 </elements>
@@ -233,12 +233,12 @@
             <elements xsi:type="xtext:Keyword" value="}"/>
             <elements xsi:type="xtext:Group" cardinality="?">
               <elements xsi:type="xtext:Assignment" feature="outgoingTransitions" operator="+=">
-                <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.6"/>
+                <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.7"/>
               </elements>
               <elements xsi:type="xtext:Group" cardinality="*">
                 <elements xsi:type="xtext:Keyword" value=","/>
                 <elements xsi:type="xtext:Assignment" feature="outgoingTransitions" operator="+=">
-                  <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.6"/>
+                  <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.7"/>
                 </elements>
               </elements>
               <elements xsi:type="xtext:Keyword" value=";"/>
@@ -249,10 +249,10 @@
     </rules>
     <rules xsi:type="xtext:ParserRule" name="Variable">
       <type metamodel="/0/@metamodelDeclarations.1">
-        <classifier xsi:type="ecore:EClass" href="http://kieler.cs.cau.de/expressions#//Variable"/>
+        <classifier xsi:type="ecore:EClass" href="http://kieler.cs.cau.de/expressions/0.1.1#//Variable"/>
       </type>
       <alternatives xsi:type="xtext:Group">
-        <elements xsi:type="xtext:Keyword" value="var"/>
+        <elements xsi:type="xtext:Keyword" value="Var"/>
         <elements xsi:type="xtext:Assignment" feature="name" operator="=">
           <terminal xsi:type="xtext:RuleCall" rule="/3/@rules.0"/>
         </elements>
@@ -260,20 +260,29 @@
           <elements xsi:type="xtext:Group" cardinality="?">
             <elements xsi:type="xtext:Keyword" value=":="/>
             <elements xsi:type="xtext:Assignment" feature="initialValue" operator="=">
-              <terminal xsi:type="xtext:RuleCall" rule="/3/@rules.2"/>
+              <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.5"/>
             </elements>
           </elements>
           <elements xsi:type="xtext:Keyword" value=":"/>
           <elements xsi:type="xtext:Assignment" feature="type" operator="=">
-            <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.41"/>
+            <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.33"/>
           </elements>
         </elements>
         <elements xsi:type="xtext:Keyword" value=";"/>
       </alternatives>
     </rules>
+    <rules xsi:type="xtext:ParserRule" name="IntegerOrString">
+      <type metamodel="/0/@metamodelDeclarations.0">
+        <classifier xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      </type>
+      <alternatives xsi:type="xtext:Alternatives">
+        <elements xsi:type="xtext:RuleCall" rule="/2/@rules.35"/>
+        <elements xsi:type="xtext:RuleCall" rule="/2/@rules.21"/>
+      </alternatives>
+    </rules>
     <rules xsi:type="xtext:ParserRule" name="Signal">
       <type metamodel="/0/@metamodelDeclarations.1">
-        <classifier xsi:type="ecore:EClass" href="http://kieler.cs.cau.de/expressions#//Signal"/>
+        <classifier xsi:type="ecore:EClass" href="http://kieler.cs.cau.de/expressions/0.1.1#//Signal"/>
       </type>
       <alternatives xsi:type="xtext:Group">
         <elements xsi:type="xtext:Assignment" cardinality="?" feature="isInput" operator="?=">
@@ -282,36 +291,36 @@
         <elements xsi:type="xtext:Assignment" cardinality="?" feature="isOutput" operator="?=">
           <terminal xsi:type="xtext:Keyword" value="output"/>
         </elements>
-        <elements xsi:type="xtext:Keyword" value="signal"/>
+        <elements xsi:type="xtext:Keyword" value="Signal"/>
         <elements xsi:type="xtext:Assignment" feature="name" operator="=">
-          <terminal xsi:type="xtext:RuleCall" rule="/3/@rules.2"/>
+          <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.21"/>
         </elements>
         <elements xsi:type="xtext:Group" cardinality="?">
           <elements xsi:type="xtext:Keyword" value=":="/>
           <elements xsi:type="xtext:Assignment" feature="initialValue" operator="=">
-            <terminal xsi:type="xtext:RuleCall" rule="/3/@rules.2"/>
+            <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.21"/>
           </elements>
         </elements>
         <elements xsi:type="xtext:Alternatives" cardinality="?">
           <elements xsi:type="xtext:Group">
             <elements xsi:type="xtext:Keyword" value=":"/>
             <elements xsi:type="xtext:Assignment" feature="type" operator="=">
-              <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.41"/>
+              <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.33"/>
             </elements>
           </elements>
           <elements xsi:type="xtext:Group">
             <elements xsi:type="xtext:Keyword" value=":"/>
             <elements xsi:type="xtext:Keyword" value="combine"/>
             <elements xsi:type="xtext:Assignment" feature="type" operator="=">
-              <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.41"/>
+              <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.33"/>
             </elements>
             <elements xsi:type="xtext:Keyword" value="with"/>
             <elements xsi:type="xtext:Alternatives">
               <elements xsi:type="xtext:Assignment" feature="combineOperator" operator="=">
-                <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.42"/>
+                <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.34"/>
               </elements>
               <elements xsi:type="xtext:Assignment" feature="hostCombineOperator" operator="=">
-                <terminal xsi:type="xtext:RuleCall" rule="/3/@rules.2"/>
+                <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.21"/>
               </elements>
             </elements>
           </elements>
@@ -321,24 +330,24 @@
     </rules>
     <rules xsi:type="xtext:ParserRule" name="Transition">
       <type metamodel="/0/@metamodelDeclarations.2">
-        <classifier xsi:type="ecore:EClass" href="http://kieler.cs.cau.de/synccharts/0.2.1#//Transition"/>
+        <classifier xsi:type="ecore:EClass" href="http://kieler.cs.cau.de/synccharts/0.2.2#//Transition"/>
       </type>
       <alternatives xsi:type="xtext:Group">
         <elements xsi:type="xtext:Assignment" feature="type" operator="=">
-          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.8"/>
+          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.9"/>
         </elements>
         <elements xsi:type="xtext:Assignment" feature="targetState" operator="=">
           <terminal xsi:type="xtext:CrossReference">
             <type metamodel="/0/@metamodelDeclarations.2">
-              <classifier xsi:type="ecore:EClass" href="http://kieler.cs.cau.de/synccharts/0.2.1#//State"/>
+              <classifier xsi:type="ecore:EClass" href="http://kieler.cs.cau.de/synccharts/0.2.2#//State"/>
             </type>
-            <terminal xsi:type="xtext:RuleCall" rule="/3/@rules.2"/>
+            <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.21"/>
           </terminal>
         </elements>
         <elements xsi:type="xtext:Group" cardinality="?">
           <elements xsi:type="xtext:Keyword" value="&lt;"/>
           <elements xsi:type="xtext:Assignment" feature="priority" operator="=">
-            <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.4"/>
+            <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.35"/>
           </elements>
           <elements xsi:type="xtext:Keyword" value=">"/>
         </elements>
@@ -350,21 +359,21 @@
           <elements xsi:type="xtext:Group" cardinality="?">
             <elements xsi:type="xtext:Keyword" value="delay:="/>
             <elements xsi:type="xtext:Assignment" feature="delay" operator="=">
-              <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.4"/>
+              <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.35"/>
             </elements>
           </elements>
           <elements xsi:type="xtext:Assignment" cardinality="?" feature="trigger" operator="=">
-            <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.40"/>
+            <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.1"/>
           </elements>
           <elements xsi:type="xtext:Group" cardinality="?">
             <elements xsi:type="xtext:Keyword" value="/"/>
             <elements xsi:type="xtext:Assignment" feature="effects" operator="+=">
-              <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.1"/>
+              <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.2"/>
             </elements>
             <elements xsi:type="xtext:Group" cardinality="*">
               <elements xsi:type="xtext:Keyword" value=","/>
               <elements xsi:type="xtext:Assignment" feature="effects" operator="+=">
-                <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.1"/>
+                <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.2"/>
               </elements>
             </elements>
           </elements>
@@ -376,42 +385,42 @@
     </rules>
     <rules xsi:type="xtext:EnumRule" name="StateType">
       <type metamodel="/0/@metamodelDeclarations.2">
-        <classifier xsi:type="ecore:EEnum" href="http://kieler.cs.cau.de/synccharts/0.2.1#//StateType"/>
+        <classifier xsi:type="ecore:EEnum" href="http://kieler.cs.cau.de/synccharts/0.2.2#//StateType"/>
       </type>
       <alternatives xsi:type="xtext:Alternatives">
         <elements xsi:type="xtext:EnumLiteralDeclaration">
-          <enumLiteral href="http://kieler.cs.cau.de/synccharts/0.2.1#//StateType/NORMAL"/>
+          <enumLiteral href="http://kieler.cs.cau.de/synccharts/0.2.2#//StateType/NORMAL"/>
           <literal value="NORMAL"/>
         </elements>
         <elements xsi:type="xtext:EnumLiteralDeclaration">
-          <enumLiteral href="http://kieler.cs.cau.de/synccharts/0.2.1#//StateType/CONDITIONAL"/>
+          <enumLiteral href="http://kieler.cs.cau.de/synccharts/0.2.2#//StateType/CONDITIONAL"/>
           <literal value="CONDITIONAL"/>
         </elements>
         <elements xsi:type="xtext:EnumLiteralDeclaration">
-          <enumLiteral href="http://kieler.cs.cau.de/synccharts/0.2.1#//StateType/REFERENCE"/>
+          <enumLiteral href="http://kieler.cs.cau.de/synccharts/0.2.2#//StateType/REFERENCE"/>
           <literal value="REFERENCE"/>
         </elements>
         <elements xsi:type="xtext:EnumLiteralDeclaration">
-          <enumLiteral href="http://kieler.cs.cau.de/synccharts/0.2.1#//StateType/TEXTUAL"/>
+          <enumLiteral href="http://kieler.cs.cau.de/synccharts/0.2.2#//StateType/TEXTUAL"/>
           <literal value="TEXTUAL"/>
         </elements>
       </alternatives>
     </rules>
     <rules xsi:type="xtext:EnumRule" name="TransitionType">
       <type metamodel="/0/@metamodelDeclarations.2">
-        <classifier xsi:type="ecore:EEnum" href="http://kieler.cs.cau.de/synccharts/0.2.1#//TransitionType"/>
+        <classifier xsi:type="ecore:EEnum" href="http://kieler.cs.cau.de/synccharts/0.2.2#//TransitionType"/>
       </type>
       <alternatives xsi:type="xtext:Alternatives">
         <elements xsi:type="xtext:EnumLiteralDeclaration">
-          <enumLiteral href="http://kieler.cs.cau.de/synccharts/0.2.1#//TransitionType/WEAKABORT"/>
+          <enumLiteral href="http://kieler.cs.cau.de/synccharts/0.2.2#//TransitionType/WEAKABORT"/>
           <literal value="-->"/>
         </elements>
         <elements xsi:type="xtext:EnumLiteralDeclaration">
-          <enumLiteral href="http://kieler.cs.cau.de/synccharts/0.2.1#//TransitionType/STRONGABORT"/>
+          <enumLiteral href="http://kieler.cs.cau.de/synccharts/0.2.2#//TransitionType/STRONGABORT"/>
           <literal value="o->"/>
         </elements>
         <elements xsi:type="xtext:EnumLiteralDeclaration">
-          <enumLiteral href="http://kieler.cs.cau.de/synccharts/0.2.1#//TransitionType/NORMALTERMINATION"/>
+          <enumLiteral href="http://kieler.cs.cau.de/synccharts/0.2.2#//TransitionType/NORMALTERMINATION"/>
           <literal value=">->"/>
         </elements>
       </alternatives>
@@ -422,35 +431,68 @@
       <ePackage href="http://www.eclipse.org/emf/2002/Ecore#/"/>
     </metamodelDeclarations>
     <metamodelDeclarations xsi:type="xtext:ReferencedMetamodel" alias="synccharts">
-      <ePackage href="http://kieler.cs.cau.de/synccharts/0.2.1#/"/>
+      <ePackage href="http://kieler.cs.cau.de/synccharts/0.2.2#/"/>
     </metamodelDeclarations>
     <metamodelDeclarations xsi:type="xtext:ReferencedMetamodel" alias="expressions">
-      <ePackage href="http://kieler.cs.cau.de/expressions#/"/>
+      <ePackage href="http://kieler.cs.cau.de/expressions/0.1.1#/"/>
     </metamodelDeclarations>
-    <rules xsi:type="xtext:ParserRule" name="Action">
+    <rules xsi:type="xtext:ParserRule" name="Transition">
       <type metamodel="/1/@metamodelDeclarations.1">
-        <classifier xsi:type="ecore:EClass" href="http://kieler.cs.cau.de/synccharts/0.2.1#//Action"/>
+        <classifier xsi:type="ecore:EClass" href="http://kieler.cs.cau.de/synccharts/0.2.2#//Transition"/>
       </type>
       <alternatives xsi:type="xtext:Group">
         <elements xsi:type="xtext:Action">
           <type metamodel="/1/@metamodelDeclarations.1">
-            <classifier xsi:type="ecore:EClass" href="http://kieler.cs.cau.de/synccharts/0.2.1#//Action"/>
+            <classifier xsi:type="ecore:EClass" href="http://kieler.cs.cau.de/synccharts/0.2.2#//Transition"/>
           </type>
         </elements>
         <elements xsi:type="xtext:Assignment" cardinality="?" feature="isImmediate" operator="?=">
           <terminal xsi:type="xtext:Keyword" value="#"/>
         </elements>
         <elements xsi:type="xtext:Assignment" cardinality="?" feature="delay" operator="=">
-          <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.4"/>
+          <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.35"/>
         </elements>
         <elements xsi:type="xtext:Assignment" cardinality="?" feature="trigger" operator="=">
-          <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.27"/>
+          <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.1"/>
+        </elements>
+        <elements xsi:type="xtext:Group" cardinality="?">
+          <elements xsi:type="xtext:Keyword" value="/"/>
+          <elements xsi:type="xtext:Assignment" feature="effects" operator="+=">
+            <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.2"/>
+          </elements>
+          <elements xsi:type="xtext:Group" cardinality="*">
+            <elements xsi:type="xtext:Keyword" value=","/>
+            <elements xsi:type="xtext:Assignment" feature="effects" operator="+=">
+              <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.2"/>
+            </elements>
+          </elements>
+        </elements>
+      </alternatives>
+    </rules>
+    <rules xsi:type="xtext:ParserRule" name="Action">
+      <type metamodel="/1/@metamodelDeclarations.1">
+        <classifier xsi:type="ecore:EClass" href="http://kieler.cs.cau.de/synccharts/0.2.2#//Action"/>
+      </type>
+      <alternatives xsi:type="xtext:Group">
+        <elements xsi:type="xtext:Action">
+          <type metamodel="/1/@metamodelDeclarations.1">
+            <classifier xsi:type="ecore:EClass" href="http://kieler.cs.cau.de/synccharts/0.2.2#//Action"/>
+          </type>
+        </elements>
+        <elements xsi:type="xtext:Assignment" cardinality="?" feature="isImmediate" operator="?=">
+          <terminal xsi:type="xtext:Keyword" value="#"/>
+        </elements>
+        <elements xsi:type="xtext:Assignment" cardinality="?" feature="delay" operator="=">
+          <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.35"/>
+        </elements>
+        <elements xsi:type="xtext:Assignment" cardinality="?" feature="trigger" operator="=">
+          <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.1"/>
         </elements>
         <elements xsi:type="xtext:Group" cardinality="?">
           <elements xsi:type="xtext:Keyword" value="/"/>
           <elements xsi:type="xtext:Group" cardinality="*">
             <elements xsi:type="xtext:Assignment" feature="effects" operator="+=">
-              <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.1"/>
+              <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.2"/>
             </elements>
             <elements xsi:type="xtext:Keyword" cardinality="?" value=","/>
           </elements>
@@ -459,72 +501,58 @@
     </rules>
     <rules xsi:type="xtext:ParserRule" name="Effect">
       <type metamodel="/1/@metamodelDeclarations.1">
-        <classifier xsi:type="ecore:EClass" href="http://kieler.cs.cau.de/synccharts/0.2.1#//Effect"/>
+        <classifier xsi:type="ecore:EClass" href="http://kieler.cs.cau.de/synccharts/0.2.2#//Effect"/>
       </type>
       <alternatives xsi:type="xtext:Alternatives">
-        <elements xsi:type="xtext:RuleCall" rule="/1/@rules.2"/>
         <elements xsi:type="xtext:RuleCall" rule="/1/@rules.3"/>
         <elements xsi:type="xtext:RuleCall" rule="/1/@rules.4"/>
+        <elements xsi:type="xtext:RuleCall" rule="/1/@rules.5"/>
       </alternatives>
     </rules>
     <rules xsi:type="xtext:ParserRule" name="Emission">
       <type metamodel="/1/@metamodelDeclarations.1">
-        <classifier xsi:type="ecore:EClass" href="http://kieler.cs.cau.de/synccharts/0.2.1#//Emission"/>
+        <classifier xsi:type="ecore:EClass" href="http://kieler.cs.cau.de/synccharts/0.2.2#//Emission"/>
       </type>
       <alternatives xsi:type="xtext:Group">
         <elements xsi:type="xtext:Assignment" feature="signal" operator="=">
           <terminal xsi:type="xtext:CrossReference">
             <type metamodel="/1/@metamodelDeclarations.2">
-              <classifier xsi:type="ecore:EClass" href="http://kieler.cs.cau.de/expressions#//Signal"/>
+              <classifier xsi:type="ecore:EClass" href="http://kieler.cs.cau.de/expressions/0.1.1#//Signal"/>
             </type>
             <terminal xsi:type="xtext:RuleCall" rule="/3/@rules.0"/>
           </terminal>
         </elements>
-        <elements xsi:type="xtext:Alternatives" cardinality="?">
-          <elements xsi:type="xtext:Group">
-            <elements xsi:type="xtext:Keyword" value="("/>
-            <elements xsi:type="xtext:Assignment" feature="newValue" operator="=">
-              <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.12"/>
-            </elements>
-            <elements xsi:type="xtext:Keyword" value=")"/>
+        <elements xsi:type="xtext:Group" cardinality="?">
+          <elements xsi:type="xtext:Keyword" value="("/>
+          <elements xsi:type="xtext:Assignment" feature="newValue" operator="=">
+            <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.0"/>
           </elements>
-          <elements xsi:type="xtext:Group">
-            <elements xsi:type="xtext:Keyword" value="("/>
-            <elements xsi:type="xtext:Assignment" feature="newValue" operator="=">
-              <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.27"/>
-            </elements>
-            <elements xsi:type="xtext:Keyword" value=")"/>
-          </elements>
+          <elements xsi:type="xtext:Keyword" value=")"/>
         </elements>
       </alternatives>
     </rules>
     <rules xsi:type="xtext:ParserRule" name="Assignment">
       <type metamodel="/1/@metamodelDeclarations.1">
-        <classifier xsi:type="ecore:EClass" href="http://kieler.cs.cau.de/synccharts/0.2.1#//Assignment"/>
+        <classifier xsi:type="ecore:EClass" href="http://kieler.cs.cau.de/synccharts/0.2.2#//Assignment"/>
       </type>
       <alternatives xsi:type="xtext:Group">
         <elements xsi:type="xtext:Assignment" feature="variable" operator="=">
           <terminal xsi:type="xtext:CrossReference">
             <type metamodel="/1/@metamodelDeclarations.2">
-              <classifier xsi:type="ecore:EClass" href="http://kieler.cs.cau.de/expressions#//Variable"/>
+              <classifier xsi:type="ecore:EClass" href="http://kieler.cs.cau.de/expressions/0.1.1#//Variable"/>
             </type>
             <terminal xsi:type="xtext:RuleCall" rule="/3/@rules.0"/>
           </terminal>
         </elements>
         <elements xsi:type="xtext:Keyword" value=":="/>
-        <elements xsi:type="xtext:Alternatives">
-          <elements xsi:type="xtext:Assignment" feature="expression" operator="=">
-            <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.12"/>
-          </elements>
-          <elements xsi:type="xtext:Assignment" feature="expression" operator="=">
-            <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.27"/>
-          </elements>
+        <elements xsi:type="xtext:Assignment" feature="expression" operator="=">
+          <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.0"/>
         </elements>
       </alternatives>
     </rules>
     <rules xsi:type="xtext:ParserRule" name="TextEffect">
       <type metamodel="/1/@metamodelDeclarations.1">
-        <classifier xsi:type="ecore:EClass" href="http://kieler.cs.cau.de/synccharts/0.2.1#//TextEffect"/>
+        <classifier xsi:type="ecore:EClass" href="http://kieler.cs.cau.de/synccharts/0.2.2#//TextEffect"/>
       </type>
       <alternatives xsi:type="xtext:Group">
         <elements xsi:type="xtext:Assignment" feature="code" operator="=">
@@ -541,196 +569,235 @@
     </rules>
   </xtext:Grammar>
   <xtext:Grammar name="de.cau.cs.kieler.core.expressions.Expressions" usedGrammars="/3">
-    <metamodelDeclarations xsi:type="xtext:ReferencedMetamodel" alias="expressions">
-      <ePackage href="http://kieler.cs.cau.de/expressions#/"/>
+    <metamodelDeclarations xsi:type="xtext:ReferencedMetamodel">
+      <ePackage href="http://kieler.cs.cau.de/expressions/0.1.1#/"/>
     </metamodelDeclarations>
     <metamodelDeclarations xsi:type="xtext:ReferencedMetamodel" alias="ecore">
       <ePackage href="http://www.eclipse.org/emf/2002/Ecore#/"/>
     </metamodelDeclarations>
-    <rules xsi:type="xtext:ParserRule" name="SignalReference">
+    <rules xsi:type="xtext:ParserRule" name="Expression">
       <type metamodel="/2/@metamodelDeclarations.0">
-        <classifier xsi:type="ecore:EClass" href="http://kieler.cs.cau.de/expressions#//SignalReference"/>
-      </type>
-      <alternatives xsi:type="xtext:Group">
-        <elements xsi:type="xtext:Assignment" feature="signal" operator="=">
-          <terminal xsi:type="xtext:CrossReference">
-            <type metamodel="/2/@metamodelDeclarations.0">
-              <classifier xsi:type="ecore:EClass" href="http://kieler.cs.cau.de/expressions#//Signal"/>
-            </type>
-            <terminal xsi:type="xtext:RuleCall" rule="/3/@rules.0"/>
-          </terminal>
-        </elements>
-        <elements xsi:type="xtext:Group" cardinality="?">
-          <elements xsi:type="xtext:Keyword" value="("/>
-          <elements xsi:type="xtext:Group" cardinality="*">
-            <elements xsi:type="xtext:Assignment" feature="subExpressions" operator="+=">
-              <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.40"/>
-            </elements>
-            <elements xsi:type="xtext:Keyword" cardinality="?" value=","/>
-          </elements>
-          <elements xsi:type="xtext:Keyword" value=")"/>
-        </elements>
-      </alternatives>
-    </rules>
-    <rules xsi:type="xtext:ParserRule" name="VariableReference">
-      <type metamodel="/2/@metamodelDeclarations.0">
-        <classifier xsi:type="ecore:EClass" href="http://kieler.cs.cau.de/expressions#//VariableReference"/>
-      </type>
-      <alternatives xsi:type="xtext:Group">
-        <elements xsi:type="xtext:Assignment" feature="variable" operator="=">
-          <terminal xsi:type="xtext:CrossReference">
-            <type metamodel="/2/@metamodelDeclarations.0">
-              <classifier xsi:type="ecore:EClass" href="http://kieler.cs.cau.de/expressions#//Variable"/>
-            </type>
-            <terminal xsi:type="xtext:RuleCall" rule="/3/@rules.0"/>
-          </terminal>
-        </elements>
-        <elements xsi:type="xtext:Group" cardinality="?">
-          <elements xsi:type="xtext:Keyword" value="("/>
-          <elements xsi:type="xtext:Group" cardinality="*">
-            <elements xsi:type="xtext:Assignment" feature="subExpressions" operator="+=">
-              <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.40"/>
-            </elements>
-            <elements xsi:type="xtext:Keyword" cardinality="?" value=","/>
-          </elements>
-          <elements xsi:type="xtext:Keyword" value=")"/>
-        </elements>
-      </alternatives>
-    </rules>
-    <rules xsi:type="xtext:ParserRule" name="Signal">
-      <type metamodel="/2/@metamodelDeclarations.0">
-        <classifier xsi:type="ecore:EClass" href="http://kieler.cs.cau.de/expressions#//Signal"/>
-      </type>
-      <alternatives xsi:type="xtext:Assignment" feature="name" operator="=">
-        <terminal xsi:type="xtext:RuleCall" rule="/3/@rules.0"/>
-      </alternatives>
-    </rules>
-    <rules xsi:type="xtext:ParserRule" name="Variable">
-      <type metamodel="/2/@metamodelDeclarations.0">
-        <classifier xsi:type="ecore:EClass" href="http://kieler.cs.cau.de/expressions#//Variable"/>
-      </type>
-      <alternatives xsi:type="xtext:Assignment" feature="name" operator="=">
-        <terminal xsi:type="xtext:RuleCall" rule="/3/@rules.0"/>
-      </alternatives>
-    </rules>
-    <rules xsi:type="xtext:TerminalRule" name="INT">
-      <type metamodel="/2/@metamodelDeclarations.1">
-        <classifier xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
-      </type>
-      <alternatives xsi:type="xtext:Group">
-        <elements xsi:type="xtext:Keyword" cardinality="?" value="-"/>
-        <elements xsi:type="xtext:CharacterRange" cardinality="+">
-          <left value="0"/>
-          <right value="9"/>
-        </elements>
-      </alternatives>
-    </rules>
-    <rules xsi:type="xtext:ParserRule" name="IntValue">
-      <type metamodel="/2/@metamodelDeclarations.0">
-        <classifier xsi:type="ecore:EClass" href="http://kieler.cs.cau.de/expressions#//IntValue"/>
-      </type>
-      <alternatives xsi:type="xtext:Assignment" feature="value" operator="=">
-        <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.4"/>
-      </alternatives>
-    </rules>
-    <rules xsi:type="xtext:ParserRule" name="FloatValue">
-      <type metamodel="/2/@metamodelDeclarations.0">
-        <classifier xsi:type="ecore:EClass" href="http://kieler.cs.cau.de/expressions#//FloatValue"/>
-      </type>
-      <alternatives xsi:type="xtext:Assignment" feature="value" operator="=">
-        <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.9"/>
-      </alternatives>
-    </rules>
-    <rules xsi:type="xtext:ParserRule" name="BooleanValue">
-      <type metamodel="/2/@metamodelDeclarations.0">
-        <classifier xsi:type="ecore:EClass" href="http://kieler.cs.cau.de/expressions#//BooleanValue"/>
-      </type>
-      <alternatives xsi:type="xtext:Assignment" feature="value" operator="=">
-        <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.10"/>
-      </alternatives>
-    </rules>
-    <rules xsi:type="xtext:ParserRule" name="Value">
-      <type metamodel="/2/@metamodelDeclarations.0">
-        <classifier xsi:type="ecore:EClass" href="http://kieler.cs.cau.de/expressions#//Value"/>
+        <classifier xsi:type="ecore:EClass" href="http://kieler.cs.cau.de/expressions/0.1.1#//Expression"/>
       </type>
       <alternatives xsi:type="xtext:Alternatives">
-        <elements xsi:type="xtext:RuleCall" rule="/2/@rules.5"/>
+        <elements xsi:type="xtext:RuleCall" rule="/2/@rules.1"/>
         <elements xsi:type="xtext:RuleCall" rule="/2/@rules.6"/>
-        <elements xsi:type="xtext:RuleCall" rule="/2/@rules.7"/>
       </alternatives>
     </rules>
-    <rules xsi:type="xtext:TerminalRule" name="Float">
-      <type metamodel="/2/@metamodelDeclarations.1">
-        <classifier xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EFloatObject"/>
-      </type>
-      <alternatives xsi:type="xtext:Alternatives">
-        <elements xsi:type="xtext:Group">
-          <elements xsi:type="xtext:Alternatives">
-            <elements xsi:type="xtext:Group">
-              <elements xsi:type="xtext:RuleCall" rule="/2/@rules.4"/>
-              <elements xsi:type="xtext:Keyword" value="."/>
-              <elements xsi:type="xtext:RuleCall" rule="/2/@rules.4"/>
-            </elements>
-            <elements xsi:type="xtext:Group">
-              <elements xsi:type="xtext:RuleCall" rule="/2/@rules.4"/>
-              <elements xsi:type="xtext:Group" cardinality="?">
-                <elements xsi:type="xtext:Keyword" value="."/>
-                <elements xsi:type="xtext:RuleCall" rule="/2/@rules.4"/>
-              </elements>
-              <elements xsi:type="xtext:Alternatives">
-                <elements xsi:type="xtext:Keyword" value="e"/>
-                <elements xsi:type="xtext:Keyword" value="E"/>
-              </elements>
-              <elements xsi:type="xtext:Keyword" cardinality="?" value="+"/>
-              <elements xsi:type="xtext:RuleCall" rule="/2/@rules.4"/>
-            </elements>
-          </elements>
-          <elements xsi:type="xtext:Keyword" cardinality="?" value="f"/>
-        </elements>
-        <elements xsi:type="xtext:Group">
-          <elements xsi:type="xtext:RuleCall" rule="/2/@rules.4"/>
-          <elements xsi:type="xtext:Keyword" value="f"/>
-        </elements>
-      </alternatives>
-    </rules>
-    <rules xsi:type="xtext:TerminalRule" name="Boolean">
-      <type metamodel="/2/@metamodelDeclarations.1">
-        <classifier xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EBooleanObject"/>
-      </type>
-      <alternatives xsi:type="xtext:Alternatives">
-        <elements xsi:type="xtext:Keyword" value="true"/>
-        <elements xsi:type="xtext:Keyword" value="false"/>
-      </alternatives>
-    </rules>
-    <rules xsi:type="xtext:ParserRule" name="ValOperation">
+    <rules xsi:type="xtext:ParserRule" name="BooleanExpression">
       <type metamodel="/2/@metamodelDeclarations.0">
-        <classifier xsi:type="ecore:EClass" href="http://kieler.cs.cau.de/expressions#//OperatorExpression"/>
+        <classifier xsi:type="ecore:EClass" href="http://kieler.cs.cau.de/expressions/0.1.1#//Expression"/>
+      </type>
+      <alternatives xsi:type="xtext:RuleCall" rule="/2/@rules.2"/>
+    </rules>
+    <rules xsi:type="xtext:ParserRule" name="OrExpression">
+      <type metamodel="/2/@metamodelDeclarations.0">
+        <classifier xsi:type="ecore:EClass" href="http://kieler.cs.cau.de/expressions/0.1.1#//Expression"/>
       </type>
       <alternatives xsi:type="xtext:Group">
-        <elements xsi:type="xtext:Assignment" feature="operator" operator="=">
-          <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.29"/>
+        <elements xsi:type="xtext:RuleCall" rule="/2/@rules.3"/>
+        <elements xsi:type="xtext:Group" cardinality="*">
+          <elements xsi:type="xtext:Action" feature="subExpressions" operator="+=">
+            <type metamodel="/2/@metamodelDeclarations.0">
+              <classifier xsi:type="ecore:EClass" href="http://kieler.cs.cau.de/expressions/0.1.1#//OperatorExpression"/>
+            </type>
+          </elements>
+          <elements xsi:type="xtext:Assignment" feature="operator" operator="=">
+            <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.24"/>
+          </elements>
+          <elements xsi:type="xtext:Assignment" feature="subExpressions" operator="+=">
+            <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.3"/>
+          </elements>
         </elements>
-        <elements xsi:type="xtext:Assignment" feature="subExpressions" operator="+=">
-          <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.0"/>
+      </alternatives>
+    </rules>
+    <rules xsi:type="xtext:ParserRule" name="AndExpression">
+      <type metamodel="/2/@metamodelDeclarations.0">
+        <classifier xsi:type="ecore:EClass" href="http://kieler.cs.cau.de/expressions/0.1.1#//Expression"/>
+      </type>
+      <alternatives xsi:type="xtext:Group">
+        <elements xsi:type="xtext:RuleCall" rule="/2/@rules.4"/>
+        <elements xsi:type="xtext:Group" cardinality="*">
+          <elements xsi:type="xtext:Action" feature="subExpressions" operator="+=">
+            <type metamodel="/2/@metamodelDeclarations.0">
+              <classifier xsi:type="ecore:EClass" href="http://kieler.cs.cau.de/expressions/0.1.1#//OperatorExpression"/>
+            </type>
+          </elements>
+          <elements xsi:type="xtext:Assignment" feature="operator" operator="=">
+            <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.25"/>
+          </elements>
+          <elements xsi:type="xtext:Assignment" feature="subExpressions" operator="+=">
+            <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.4"/>
+          </elements>
         </elements>
+      </alternatives>
+    </rules>
+    <rules xsi:type="xtext:ParserRule" name="CompareOperation">
+      <type metamodel="/2/@metamodelDeclarations.0">
+        <classifier xsi:type="ecore:EClass" href="http://kieler.cs.cau.de/expressions/0.1.1#//Expression"/>
+      </type>
+      <alternatives xsi:type="xtext:Alternatives">
+        <elements xsi:type="xtext:Group">
+          <elements xsi:type="xtext:RuleCall" rule="/2/@rules.5"/>
+          <elements xsi:type="xtext:Group">
+            <elements xsi:type="xtext:Action" feature="subExpressions" operator="+=">
+              <type metamodel="/2/@metamodelDeclarations.0">
+                <classifier xsi:type="ecore:EClass" href="http://kieler.cs.cau.de/expressions/0.1.1#//OperatorExpression"/>
+              </type>
+            </elements>
+            <elements xsi:type="xtext:Assignment" feature="operator" operator="=">
+              <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.22"/>
+            </elements>
+            <elements xsi:type="xtext:Assignment" feature="subExpressions" operator="+=">
+              <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.5"/>
+            </elements>
+          </elements>
+        </elements>
+        <elements xsi:type="xtext:RuleCall" rule="/2/@rules.11"/>
+      </alternatives>
+    </rules>
+    <rules xsi:type="xtext:ParserRule" name="NotOrValuedExpression">
+      <type metamodel="/2/@metamodelDeclarations.0">
+        <classifier xsi:type="ecore:EClass" href="http://kieler.cs.cau.de/expressions/0.1.1#//Expression"/>
+      </type>
+      <alternatives xsi:type="xtext:Alternatives">
+        <elements xsi:type="xtext:RuleCall" rule="/2/@rules.6"/>
+        <elements xsi:type="xtext:RuleCall" rule="/2/@rules.11"/>
       </alternatives>
     </rules>
     <rules xsi:type="xtext:ParserRule" name="ValuedExpression">
       <type metamodel="/2/@metamodelDeclarations.0">
-        <classifier xsi:type="ecore:EClass" href="http://kieler.cs.cau.de/expressions#//Expression"/>
+        <classifier xsi:type="ecore:EClass" href="http://kieler.cs.cau.de/expressions/0.1.1#//Expression"/>
       </type>
-      <alternatives xsi:type="xtext:RuleCall" rule="/2/@rules.14"/>
+      <alternatives xsi:type="xtext:RuleCall" rule="/2/@rules.7"/>
     </rules>
-    <rules xsi:type="xtext:ParserRule" name="ParanthesedValuedExpression">
+    <rules xsi:type="xtext:ParserRule" name="AddExpression">
       <type metamodel="/2/@metamodelDeclarations.0">
-        <classifier xsi:type="ecore:EClass" href="http://kieler.cs.cau.de/expressions#//Expression"/>
+        <classifier xsi:type="ecore:EClass" href="http://kieler.cs.cau.de/expressions/0.1.1#//Expression"/>
+      </type>
+      <alternatives xsi:type="xtext:Group">
+        <elements xsi:type="xtext:RuleCall" rule="/2/@rules.8"/>
+        <elements xsi:type="xtext:Group" cardinality="*">
+          <elements xsi:type="xtext:Action" feature="subExpressions" operator="+=">
+            <type metamodel="/2/@metamodelDeclarations.0">
+              <classifier xsi:type="ecore:EClass" href="http://kieler.cs.cau.de/expressions/0.1.1#//OperatorExpression"/>
+            </type>
+          </elements>
+          <elements xsi:type="xtext:Assignment" feature="operator" operator="=">
+            <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.27"/>
+          </elements>
+          <elements xsi:type="xtext:Assignment" feature="subExpressions" operator="+=">
+            <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.8"/>
+          </elements>
+        </elements>
+      </alternatives>
+    </rules>
+    <rules xsi:type="xtext:ParserRule" name="SubExpression">
+      <type metamodel="/2/@metamodelDeclarations.0">
+        <classifier xsi:type="ecore:EClass" href="http://kieler.cs.cau.de/expressions/0.1.1#//Expression"/>
+      </type>
+      <alternatives xsi:type="xtext:Group">
+        <elements xsi:type="xtext:RuleCall" rule="/2/@rules.9"/>
+        <elements xsi:type="xtext:Group" cardinality="*">
+          <elements xsi:type="xtext:Action" feature="subExpressions" operator="+=">
+            <type metamodel="/2/@metamodelDeclarations.0">
+              <classifier xsi:type="ecore:EClass" href="http://kieler.cs.cau.de/expressions/0.1.1#//OperatorExpression"/>
+            </type>
+          </elements>
+          <elements xsi:type="xtext:Assignment" feature="operator" operator="=">
+            <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.28"/>
+          </elements>
+          <elements xsi:type="xtext:Assignment" feature="subExpressions" operator="+=">
+            <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.9"/>
+          </elements>
+        </elements>
+      </alternatives>
+    </rules>
+    <rules xsi:type="xtext:ParserRule" name="MultExpression">
+      <type metamodel="/2/@metamodelDeclarations.0">
+        <classifier xsi:type="ecore:EClass" href="http://kieler.cs.cau.de/expressions/0.1.1#//Expression"/>
+      </type>
+      <alternatives xsi:type="xtext:Group">
+        <elements xsi:type="xtext:RuleCall" rule="/2/@rules.10"/>
+        <elements xsi:type="xtext:Group" cardinality="*">
+          <elements xsi:type="xtext:Action" feature="subExpressions" operator="+=">
+            <type metamodel="/2/@metamodelDeclarations.0">
+              <classifier xsi:type="ecore:EClass" href="http://kieler.cs.cau.de/expressions/0.1.1#//OperatorExpression"/>
+            </type>
+          </elements>
+          <elements xsi:type="xtext:Assignment" feature="operator" operator="=">
+            <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.29"/>
+          </elements>
+          <elements xsi:type="xtext:Assignment" feature="subExpressions" operator="+=">
+            <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.10"/>
+          </elements>
+        </elements>
+      </alternatives>
+    </rules>
+    <rules xsi:type="xtext:ParserRule" name="ModExpression">
+      <type metamodel="/2/@metamodelDeclarations.0">
+        <classifier xsi:type="ecore:EClass" href="http://kieler.cs.cau.de/expressions/0.1.1#//Expression"/>
+      </type>
+      <alternatives xsi:type="xtext:Group">
+        <elements xsi:type="xtext:RuleCall" rule="/2/@rules.13"/>
+        <elements xsi:type="xtext:Group" cardinality="?">
+          <elements xsi:type="xtext:Action" feature="subExpressions" operator="+=">
+            <type metamodel="/2/@metamodelDeclarations.0">
+              <classifier xsi:type="ecore:EClass" href="http://kieler.cs.cau.de/expressions/0.1.1#//OperatorExpression"/>
+            </type>
+          </elements>
+          <elements xsi:type="xtext:Assignment" feature="operator" operator="=">
+            <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.30"/>
+          </elements>
+          <elements xsi:type="xtext:Assignment" feature="subExpressions" operator="+=">
+            <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.13"/>
+          </elements>
+        </elements>
+      </alternatives>
+    </rules>
+    <rules xsi:type="xtext:ParserRule" name="NotExpression">
+      <type metamodel="/2/@metamodelDeclarations.0">
+        <classifier xsi:type="ecore:EClass" href="http://kieler.cs.cau.de/expressions/0.1.1#//Expression"/>
       </type>
       <alternatives xsi:type="xtext:Alternatives">
-        <elements xsi:type="xtext:RuleCall" rule="/2/@rules.5"/>
-        <elements xsi:type="xtext:RuleCall" rule="/2/@rules.6"/>
-        <elements xsi:type="xtext:RuleCall" rule="/2/@rules.11"/>
-        <elements xsi:type="xtext:RuleCall" rule="/2/@rules.1"/>
-        <elements xsi:type="xtext:RuleCall" rule="/2/@rules.39"/>
+        <elements xsi:type="xtext:Group">
+          <elements xsi:type="xtext:Action">
+            <type metamodel="/2/@metamodelDeclarations.0">
+              <classifier xsi:type="ecore:EClass" href="http://kieler.cs.cau.de/expressions/0.1.1#//OperatorExpression"/>
+            </type>
+          </elements>
+          <elements xsi:type="xtext:Assignment" feature="operator" operator="=">
+            <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.26"/>
+          </elements>
+          <elements xsi:type="xtext:Assignment" feature="subExpressions" operator="+=">
+            <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.11"/>
+          </elements>
+        </elements>
+        <elements xsi:type="xtext:RuleCall" rule="/2/@rules.12"/>
+      </alternatives>
+    </rules>
+    <rules xsi:type="xtext:ParserRule" name="AtomicExpression">
+      <type metamodel="/2/@metamodelDeclarations.0">
+        <classifier xsi:type="ecore:EClass" href="http://kieler.cs.cau.de/expressions/0.1.1#//Expression"/>
+      </type>
+      <alternatives xsi:type="xtext:Alternatives">
+        <elements xsi:type="xtext:RuleCall" rule="/2/@rules.20"/>
+        <elements xsi:type="xtext:RuleCall" rule="/2/@rules.15"/>
+        <elements xsi:type="xtext:Group">
+          <elements xsi:type="xtext:Keyword" value="("/>
+          <elements xsi:type="xtext:RuleCall" rule="/2/@rules.1"/>
+          <elements xsi:type="xtext:Keyword" value=")"/>
+        </elements>
+        <elements xsi:type="xtext:RuleCall" rule="/2/@rules.17"/>
+      </alternatives>
+    </rules>
+    <rules xsi:type="xtext:ParserRule" name="AtomicValuedExpression">
+      <type metamodel="/2/@metamodelDeclarations.0">
+        <classifier xsi:type="ecore:EClass" href="http://kieler.cs.cau.de/expressions/0.1.1#//Expression"/>
+      </type>
+      <alternatives xsi:type="xtext:Alternatives">
+        <elements xsi:type="xtext:RuleCall" rule="/2/@rules.18"/>
+        <elements xsi:type="xtext:RuleCall" rule="/2/@rules.19"/>
         <elements xsi:type="xtext:Group">
           <elements xsi:type="xtext:Keyword" value="("/>
           <elements xsi:type="xtext:RuleCall" rule="/2/@rules.14"/>
@@ -738,436 +805,83 @@
         </elements>
         <elements xsi:type="xtext:Group">
           <elements xsi:type="xtext:Keyword" value="("/>
-          <elements xsi:type="xtext:RuleCall" rule="/2/@rules.17"/>
+          <elements xsi:type="xtext:RuleCall" rule="/2/@rules.6"/>
           <elements xsi:type="xtext:Keyword" value=")"/>
         </elements>
-      </alternatives>
-    </rules>
-    <rules xsi:type="xtext:ParserRule" name="PlusOperation">
-      <type metamodel="/2/@metamodelDeclarations.0">
-        <classifier xsi:type="ecore:EClass" href="http://kieler.cs.cau.de/expressions#//Expression"/>
-      </type>
-      <alternatives xsi:type="xtext:Group">
-        <elements xsi:type="xtext:RuleCall" rule="/2/@rules.15"/>
-        <elements xsi:type="xtext:Group" cardinality="*">
-          <elements xsi:type="xtext:Action" feature="subExpressions" operator="+=">
-            <type metamodel="/2/@metamodelDeclarations.0">
-              <classifier xsi:type="ecore:EClass" href="http://kieler.cs.cau.de/expressions#//OperatorExpression"/>
-            </type>
-          </elements>
-          <elements xsi:type="xtext:Assignment" feature="operator" operator="=">
-            <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.36"/>
-          </elements>
-          <elements xsi:type="xtext:Assignment" feature="subExpressions" operator="+=">
-            <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.15"/>
-          </elements>
-        </elements>
-      </alternatives>
-    </rules>
-    <rules xsi:type="xtext:ParserRule" name="MultOrDivOperation">
-      <type metamodel="/2/@metamodelDeclarations.0">
-        <classifier xsi:type="ecore:EClass" href="http://kieler.cs.cau.de/expressions#//Expression"/>
-      </type>
-      <alternatives xsi:type="xtext:Alternatives">
-        <elements xsi:type="xtext:RuleCall" rule="/2/@rules.16"/>
-        <elements xsi:type="xtext:Group">
-          <elements xsi:type="xtext:Keyword" value="("/>
-          <elements xsi:type="xtext:RuleCall" rule="/2/@rules.17"/>
-          <elements xsi:type="xtext:Keyword" value=")"/>
-        </elements>
-      </alternatives>
-    </rules>
-    <rules xsi:type="xtext:ParserRule" name="MultOperation">
-      <type metamodel="/2/@metamodelDeclarations.0">
-        <classifier xsi:type="ecore:EClass" href="http://kieler.cs.cau.de/expressions#//Expression"/>
-      </type>
-      <alternatives xsi:type="xtext:Group">
-        <elements xsi:type="xtext:RuleCall" rule="/2/@rules.19"/>
-        <elements xsi:type="xtext:Group" cardinality="*">
-          <elements xsi:type="xtext:Action" feature="subExpressions" operator="+=">
-            <type metamodel="/2/@metamodelDeclarations.0">
-              <classifier xsi:type="ecore:EClass" href="http://kieler.cs.cau.de/expressions#//OperatorExpression"/>
-            </type>
-          </elements>
-          <elements xsi:type="xtext:Assignment" feature="operator" operator="=">
-            <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.37"/>
-          </elements>
-          <elements xsi:type="xtext:Assignment" feature="subExpressions" operator="+=">
-            <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.19"/>
-          </elements>
-        </elements>
-      </alternatives>
-    </rules>
-    <rules xsi:type="xtext:ParserRule" name="DivOperation">
-      <type metamodel="/2/@metamodelDeclarations.0">
-        <classifier xsi:type="ecore:EClass" href="http://kieler.cs.cau.de/expressions#//Expression"/>
-      </type>
-      <alternatives xsi:type="xtext:Group">
-        <elements xsi:type="xtext:RuleCall" rule="/2/@rules.19"/>
-        <elements xsi:type="xtext:Group" cardinality="*">
-          <elements xsi:type="xtext:Action" feature="subExpressions" operator="+=">
-            <type metamodel="/2/@metamodelDeclarations.0">
-              <classifier xsi:type="ecore:EClass" href="http://kieler.cs.cau.de/expressions#//OperatorExpression"/>
-            </type>
-          </elements>
-          <elements xsi:type="xtext:Assignment" feature="operator" operator="=">
-            <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.38"/>
-          </elements>
-          <elements xsi:type="xtext:Assignment" feature="subExpressions" operator="+=">
-            <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.19"/>
-          </elements>
-        </elements>
-      </alternatives>
-    </rules>
-    <rules xsi:type="xtext:ParserRule" name="PreArithmOperation">
-      <type metamodel="/2/@metamodelDeclarations.0">
-        <classifier xsi:type="ecore:EClass" href="http://kieler.cs.cau.de/expressions#//OperatorExpression"/>
-      </type>
-      <alternatives xsi:type="xtext:Group">
-        <elements xsi:type="xtext:Assignment" feature="operator" operator="=">
-          <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.32"/>
-        </elements>
-        <elements xsi:type="xtext:Keyword" value="("/>
-        <elements xsi:type="xtext:Assignment" feature="subExpressions" operator="+=">
-          <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.11"/>
-        </elements>
-        <elements xsi:type="xtext:Keyword" value=")"/>
-      </alternatives>
-    </rules>
-    <rules xsi:type="xtext:ParserRule" name="PreOrNormalValuedExpression">
-      <type metamodel="/2/@metamodelDeclarations.0">
-        <classifier xsi:type="ecore:EClass" href="http://kieler.cs.cau.de/expressions#//Expression"/>
-      </type>
-      <alternatives xsi:type="xtext:Alternatives">
-        <elements xsi:type="xtext:RuleCall" rule="/2/@rules.18"/>
-        <elements xsi:type="xtext:RuleCall" rule="/2/@rules.13"/>
-      </alternatives>
-    </rules>
-    <rules xsi:type="xtext:ParserRule" name="CompareOperation">
-      <type metamodel="/2/@metamodelDeclarations.0">
-        <classifier xsi:type="ecore:EClass" href="http://kieler.cs.cau.de/expressions#//Expression"/>
-      </type>
-      <alternatives xsi:type="xtext:Group">
         <elements xsi:type="xtext:RuleCall" rule="/2/@rules.12"/>
-        <elements xsi:type="xtext:Group">
-          <elements xsi:type="xtext:Action" feature="subExpressions" operator="+=">
-            <type metamodel="/2/@metamodelDeclarations.0">
-              <classifier xsi:type="ecore:EClass" href="http://kieler.cs.cau.de/expressions#//OperatorExpression"/>
-            </type>
-          </elements>
-          <elements xsi:type="xtext:Assignment" feature="operator" operator="=">
-            <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.30"/>
-          </elements>
-          <elements xsi:type="xtext:Assignment" feature="subExpressions" operator="+=">
-            <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.12"/>
-          </elements>
-        </elements>
       </alternatives>
     </rules>
-    <rules xsi:type="xtext:ParserRule" name="UnaryOperation">
+    <rules xsi:type="xtext:ParserRule" name="DivExpression">
       <type metamodel="/2/@metamodelDeclarations.0">
-        <classifier xsi:type="ecore:EClass" href="http://kieler.cs.cau.de/expressions#//OperatorExpression"/>
+        <classifier xsi:type="ecore:EClass" href="http://kieler.cs.cau.de/expressions/0.1.1#//Expression"/>
       </type>
       <alternatives xsi:type="xtext:Group">
+        <elements xsi:type="xtext:RuleCall" rule="/2/@rules.13"/>
+        <elements xsi:type="xtext:Action" feature="subExpressions" operator="+=">
+          <type metamodel="/2/@metamodelDeclarations.0">
+            <classifier xsi:type="ecore:EClass" href="http://kieler.cs.cau.de/expressions/0.1.1#//OperatorExpression"/>
+          </type>
+        </elements>
         <elements xsi:type="xtext:Assignment" feature="operator" operator="=">
           <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.31"/>
         </elements>
         <elements xsi:type="xtext:Assignment" feature="subExpressions" operator="+=">
-          <terminal xsi:type="xtext:Alternatives">
-            <elements xsi:type="xtext:RuleCall" rule="/2/@rules.26"/>
-            <elements xsi:type="xtext:RuleCall" rule="/2/@rules.22"/>
-          </terminal>
+          <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.13"/>
         </elements>
       </alternatives>
     </rules>
-    <rules xsi:type="xtext:ParserRule" name="UnaryParanthesedOperation">
+    <rules xsi:type="xtext:ParserRule" name="ValuedObjectTestExpression">
       <type metamodel="/2/@metamodelDeclarations.0">
-        <classifier xsi:type="ecore:EClass" href="http://kieler.cs.cau.de/expressions#//OperatorExpression"/>
-      </type>
-      <alternatives xsi:type="xtext:Group">
-        <elements xsi:type="xtext:Assignment" feature="operator" operator="=">
-          <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.32"/>
-        </elements>
-        <elements xsi:type="xtext:Keyword" value="("/>
-        <elements xsi:type="xtext:Assignment" feature="subExpressions" operator="+=">
-          <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.27"/>
-        </elements>
-        <elements xsi:type="xtext:Keyword" value=")"/>
-      </alternatives>
-    </rules>
-    <rules xsi:type="xtext:ParserRule" name="UnaryOrNormalExpression">
-      <type metamodel="/2/@metamodelDeclarations.0">
-        <classifier xsi:type="ecore:EClass" href="http://kieler.cs.cau.de/expressions#//Expression"/>
+        <classifier xsi:type="ecore:EClass" href="http://kieler.cs.cau.de/expressions/0.1.1#//Expression"/>
       </type>
       <alternatives xsi:type="xtext:Alternatives">
-        <elements xsi:type="xtext:RuleCall" rule="/2/@rules.21"/>
-        <elements xsi:type="xtext:RuleCall" rule="/2/@rules.22"/>
-        <elements xsi:type="xtext:RuleCall" rule="/2/@rules.26"/>
-      </alternatives>
-    </rules>
-    <rules xsi:type="xtext:ParserRule" name="AndOperation">
-      <type metamodel="/2/@metamodelDeclarations.0">
-        <classifier xsi:type="ecore:EClass" href="http://kieler.cs.cau.de/expressions#//Expression"/>
-      </type>
-      <alternatives xsi:type="xtext:Group">
-        <elements xsi:type="xtext:RuleCall" rule="/2/@rules.23"/>
-        <elements xsi:type="xtext:Group" cardinality="*">
-          <elements xsi:type="xtext:Action" feature="subExpressions" operator="+=">
+        <elements xsi:type="xtext:Group">
+          <elements xsi:type="xtext:Action">
             <type metamodel="/2/@metamodelDeclarations.0">
-              <classifier xsi:type="ecore:EClass" href="http://kieler.cs.cau.de/expressions#//OperatorExpression"/>
+              <classifier xsi:type="ecore:EClass" href="http://kieler.cs.cau.de/expressions/0.1.1#//OperatorExpression"/>
             </type>
           </elements>
           <elements xsi:type="xtext:Assignment" feature="operator" operator="=">
-            <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.34"/>
-          </elements>
-          <elements xsi:type="xtext:Assignment" feature="subExpressions" operator="+=">
             <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.23"/>
           </elements>
+          <elements xsi:type="xtext:Keyword" value="("/>
+          <elements xsi:type="xtext:Assignment" feature="subExpressions" operator="+=">
+            <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.15"/>
+          </elements>
+          <elements xsi:type="xtext:Keyword" value=")"/>
         </elements>
-      </alternatives>
-    </rules>
-    <rules xsi:type="xtext:ParserRule" name="OrOperation">
-      <type metamodel="/2/@metamodelDeclarations.0">
-        <classifier xsi:type="ecore:EClass" href="http://kieler.cs.cau.de/expressions#//Expression"/>
-      </type>
-      <alternatives xsi:type="xtext:Group">
-        <elements xsi:type="xtext:RuleCall" rule="/2/@rules.24"/>
-        <elements xsi:type="xtext:Group" cardinality="*">
-          <elements xsi:type="xtext:Action" feature="subExpressions" operator="+=">
+        <elements xsi:type="xtext:Group">
+          <elements xsi:type="xtext:Action">
             <type metamodel="/2/@metamodelDeclarations.0">
-              <classifier xsi:type="ecore:EClass" href="http://kieler.cs.cau.de/expressions#//OperatorExpression"/>
+              <classifier xsi:type="ecore:EClass" href="http://kieler.cs.cau.de/expressions/0.1.1#//OperatorExpression"/>
             </type>
           </elements>
           <elements xsi:type="xtext:Assignment" feature="operator" operator="=">
-            <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.33"/>
+            <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.32"/>
           </elements>
           <elements xsi:type="xtext:Assignment" feature="subExpressions" operator="+=">
-            <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.24"/>
+            <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.16"/>
           </elements>
         </elements>
+        <elements xsi:type="xtext:RuleCall" rule="/2/@rules.16"/>
       </alternatives>
     </rules>
-    <rules xsi:type="xtext:ParserRule" name="ParanthesedBooleanExpression">
+    <rules xsi:type="xtext:ParserRule" name="ValuedObjectReference">
       <type metamodel="/2/@metamodelDeclarations.0">
-        <classifier xsi:type="ecore:EClass" href="http://kieler.cs.cau.de/expressions#//Expression"/>
+        <classifier xsi:type="ecore:EClass" href="http://kieler.cs.cau.de/expressions/0.1.1#//ValuedObjectReference"/>
       </type>
-      <alternatives xsi:type="xtext:Alternatives">
-        <elements xsi:type="xtext:RuleCall" rule="/2/@rules.7"/>
-        <elements xsi:type="xtext:RuleCall" rule="/2/@rules.20"/>
-        <elements xsi:type="xtext:RuleCall" rule="/2/@rules.0"/>
-        <elements xsi:type="xtext:RuleCall" rule="/2/@rules.11"/>
-        <elements xsi:type="xtext:RuleCall" rule="/2/@rules.39"/>
-        <elements xsi:type="xtext:Group">
-          <elements xsi:type="xtext:Keyword" value="("/>
-          <elements xsi:type="xtext:RuleCall" rule="/2/@rules.25"/>
-          <elements xsi:type="xtext:Keyword" value=")"/>
-        </elements>
-      </alternatives>
-    </rules>
-    <rules xsi:type="xtext:ParserRule" name="BooleanExpression">
-      <type metamodel="/2/@metamodelDeclarations.0">
-        <classifier xsi:type="ecore:EClass" href="http://kieler.cs.cau.de/expressions#//Expression"/>
-      </type>
-      <alternatives xsi:type="xtext:RuleCall" rule="/2/@rules.25"/>
-    </rules>
-    <rules xsi:type="xtext:EnumRule" name="OperatorType">
-      <type metamodel="/2/@metamodelDeclarations.0">
-        <classifier xsi:type="ecore:EEnum" href="http://kieler.cs.cau.de/expressions#//OperatorType"/>
-      </type>
-      <alternatives xsi:type="xtext:Alternatives">
-        <elements xsi:type="xtext:EnumLiteralDeclaration">
-          <enumLiteral href="http://kieler.cs.cau.de/expressions#//OperatorType/EQ"/>
-          <literal value="="/>
-        </elements>
-        <elements xsi:type="xtext:EnumLiteralDeclaration">
-          <enumLiteral href="http://kieler.cs.cau.de/expressions#//OperatorType/LT"/>
-          <literal value="&lt;"/>
-        </elements>
-        <elements xsi:type="xtext:EnumLiteralDeclaration">
-          <enumLiteral href="http://kieler.cs.cau.de/expressions#//OperatorType/LEQ"/>
-          <literal value="&lt;="/>
-        </elements>
-        <elements xsi:type="xtext:EnumLiteralDeclaration">
-          <enumLiteral href="http://kieler.cs.cau.de/expressions#//OperatorType/GT"/>
-          <literal value=">"/>
-        </elements>
-        <elements xsi:type="xtext:EnumLiteralDeclaration">
-          <enumLiteral href="http://kieler.cs.cau.de/expressions#//OperatorType/GEQ"/>
-          <literal value=">="/>
-        </elements>
-        <elements xsi:type="xtext:EnumLiteralDeclaration">
-          <enumLiteral href="http://kieler.cs.cau.de/expressions#//OperatorType/NOT"/>
-          <literal value="not"/>
-        </elements>
-        <elements xsi:type="xtext:EnumLiteralDeclaration">
-          <enumLiteral href="http://kieler.cs.cau.de/expressions#//OperatorType/NE"/>
-          <literal value="&lt;>"/>
-        </elements>
-        <elements xsi:type="xtext:EnumLiteralDeclaration">
-          <enumLiteral href="http://kieler.cs.cau.de/expressions#//OperatorType/AND"/>
-          <literal value="and"/>
-        </elements>
-        <elements xsi:type="xtext:EnumLiteralDeclaration">
-          <enumLiteral href="http://kieler.cs.cau.de/expressions#//OperatorType/OR"/>
-          <literal value="or"/>
-        </elements>
-        <elements xsi:type="xtext:EnumLiteralDeclaration">
-          <enumLiteral href="http://kieler.cs.cau.de/expressions#//OperatorType/ADD"/>
-          <literal value="+"/>
-        </elements>
-        <elements xsi:type="xtext:EnumLiteralDeclaration">
-          <enumLiteral href="http://kieler.cs.cau.de/expressions#//OperatorType/SUB"/>
-          <literal value="-"/>
-        </elements>
-        <elements xsi:type="xtext:EnumLiteralDeclaration">
-          <enumLiteral href="http://kieler.cs.cau.de/expressions#//OperatorType/MULT"/>
-          <literal value="*"/>
-        </elements>
-        <elements xsi:type="xtext:EnumLiteralDeclaration">
-          <enumLiteral href="http://kieler.cs.cau.de/expressions#//OperatorType/DIV"/>
-          <literal value="/"/>
-        </elements>
-        <elements xsi:type="xtext:EnumLiteralDeclaration">
-          <enumLiteral href="http://kieler.cs.cau.de/expressions#//OperatorType/MOD"/>
-          <literal value="mod"/>
-        </elements>
-        <elements xsi:type="xtext:EnumLiteralDeclaration">
-          <enumLiteral href="http://kieler.cs.cau.de/expressions#//OperatorType/VAL"/>
-          <literal value="?"/>
-        </elements>
-        <elements xsi:type="xtext:EnumLiteralDeclaration">
-          <enumLiteral href="http://kieler.cs.cau.de/expressions#//OperatorType/PRE"/>
-          <literal value="pre"/>
-        </elements>
-      </alternatives>
-    </rules>
-    <rules xsi:type="xtext:EnumRule" name="ValOperator">
-      <type metamodel="/2/@metamodelDeclarations.0">
-        <classifier xsi:type="ecore:EEnum" href="http://kieler.cs.cau.de/expressions#//OperatorType"/>
-      </type>
-      <alternatives xsi:type="xtext:EnumLiteralDeclaration">
-        <enumLiteral href="http://kieler.cs.cau.de/expressions#//OperatorType/VAL"/>
-        <literal value="?"/>
-      </alternatives>
-    </rules>
-    <rules xsi:type="xtext:EnumRule" name="CompareOperator">
-      <type metamodel="/2/@metamodelDeclarations.0">
-        <classifier xsi:type="ecore:EEnum" href="http://kieler.cs.cau.de/expressions#//OperatorType"/>
-      </type>
-      <alternatives xsi:type="xtext:Alternatives">
-        <elements xsi:type="xtext:EnumLiteralDeclaration">
-          <enumLiteral href="http://kieler.cs.cau.de/expressions#//OperatorType/EQ"/>
-          <literal value="="/>
-        </elements>
-        <elements xsi:type="xtext:EnumLiteralDeclaration">
-          <enumLiteral href="http://kieler.cs.cau.de/expressions#//OperatorType/LT"/>
-          <literal value="&lt;"/>
-        </elements>
-        <elements xsi:type="xtext:EnumLiteralDeclaration">
-          <enumLiteral href="http://kieler.cs.cau.de/expressions#//OperatorType/LEQ"/>
-          <literal value="&lt;="/>
-        </elements>
-        <elements xsi:type="xtext:EnumLiteralDeclaration">
-          <enumLiteral href="http://kieler.cs.cau.de/expressions#//OperatorType/GT"/>
-          <literal value=">"/>
-        </elements>
-        <elements xsi:type="xtext:EnumLiteralDeclaration">
-          <enumLiteral href="http://kieler.cs.cau.de/expressions#//OperatorType/GEQ"/>
-          <literal value=">="/>
-        </elements>
-        <elements xsi:type="xtext:EnumLiteralDeclaration">
-          <enumLiteral href="http://kieler.cs.cau.de/expressions#//OperatorType/NE"/>
-          <literal value="&lt;>"/>
-        </elements>
-      </alternatives>
-    </rules>
-    <rules xsi:type="xtext:EnumRule" name="UnaryOperator">
-      <type metamodel="/2/@metamodelDeclarations.0">
-        <classifier xsi:type="ecore:EEnum" href="http://kieler.cs.cau.de/expressions#//OperatorType"/>
-      </type>
-      <alternatives xsi:type="xtext:EnumLiteralDeclaration">
-        <enumLiteral href="http://kieler.cs.cau.de/expressions#//OperatorType/NOT"/>
-        <literal value="not"/>
-      </alternatives>
-    </rules>
-    <rules xsi:type="xtext:EnumRule" name="UnaryParanthesedOperator">
-      <type metamodel="/2/@metamodelDeclarations.0">
-        <classifier xsi:type="ecore:EEnum" href="http://kieler.cs.cau.de/expressions#//OperatorType"/>
-      </type>
-      <alternatives xsi:type="xtext:EnumLiteralDeclaration">
-        <enumLiteral href="http://kieler.cs.cau.de/expressions#//OperatorType/PRE"/>
-        <literal value="pre"/>
-      </alternatives>
-    </rules>
-    <rules xsi:type="xtext:EnumRule" name="OperatorOr">
-      <type metamodel="/2/@metamodelDeclarations.0">
-        <classifier xsi:type="ecore:EEnum" href="http://kieler.cs.cau.de/expressions#//OperatorType"/>
-      </type>
-      <alternatives xsi:type="xtext:EnumLiteralDeclaration">
-        <enumLiteral href="http://kieler.cs.cau.de/expressions#//OperatorType/OR"/>
-        <literal value="or"/>
-      </alternatives>
-    </rules>
-    <rules xsi:type="xtext:EnumRule" name="OperatorAnd">
-      <type metamodel="/2/@metamodelDeclarations.0">
-        <classifier xsi:type="ecore:EEnum" href="http://kieler.cs.cau.de/expressions#//OperatorType"/>
-      </type>
-      <alternatives xsi:type="xtext:EnumLiteralDeclaration">
-        <enumLiteral href="http://kieler.cs.cau.de/expressions#//OperatorType/AND"/>
-        <literal value="and"/>
-      </alternatives>
-    </rules>
-    <rules xsi:type="xtext:EnumRule" name="OperatorPre">
-      <type metamodel="/2/@metamodelDeclarations.0">
-        <classifier xsi:type="ecore:EEnum" href="http://kieler.cs.cau.de/expressions#//OperatorType"/>
-      </type>
-      <alternatives xsi:type="xtext:EnumLiteralDeclaration">
-        <enumLiteral href="http://kieler.cs.cau.de/expressions#//OperatorType/PRE"/>
-        <literal value="pre"/>
-      </alternatives>
-    </rules>
-    <rules xsi:type="xtext:EnumRule" name="PlusOperator">
-      <type metamodel="/2/@metamodelDeclarations.0">
-        <classifier xsi:type="ecore:EEnum" href="http://kieler.cs.cau.de/expressions#//OperatorType"/>
-      </type>
-      <alternatives xsi:type="xtext:Alternatives">
-        <elements xsi:type="xtext:EnumLiteralDeclaration">
-          <enumLiteral href="http://kieler.cs.cau.de/expressions#//OperatorType/ADD"/>
-          <literal value="+"/>
-        </elements>
-        <elements xsi:type="xtext:EnumLiteralDeclaration">
-          <enumLiteral href="http://kieler.cs.cau.de/expressions#//OperatorType/SUB"/>
-          <literal value="-"/>
-        </elements>
-      </alternatives>
-    </rules>
-    <rules xsi:type="xtext:EnumRule" name="MultOperator">
-      <type metamodel="/2/@metamodelDeclarations.0">
-        <classifier xsi:type="ecore:EEnum" href="http://kieler.cs.cau.de/expressions#//OperatorType"/>
-      </type>
-      <alternatives xsi:type="xtext:Alternatives">
-        <elements xsi:type="xtext:EnumLiteralDeclaration">
-          <enumLiteral href="http://kieler.cs.cau.de/expressions#//OperatorType/MULT"/>
-          <literal value="*"/>
-        </elements>
-        <elements xsi:type="xtext:EnumLiteralDeclaration">
-          <enumLiteral href="http://kieler.cs.cau.de/expressions#//OperatorType/MOD"/>
-          <literal value="mod"/>
-        </elements>
-      </alternatives>
-    </rules>
-    <rules xsi:type="xtext:EnumRule" name="DivOperator">
-      <type metamodel="/2/@metamodelDeclarations.0">
-        <classifier xsi:type="ecore:EEnum" href="http://kieler.cs.cau.de/expressions#//OperatorType"/>
-      </type>
-      <alternatives xsi:type="xtext:EnumLiteralDeclaration">
-        <enumLiteral href="http://kieler.cs.cau.de/expressions#//OperatorType/DIV"/>
-        <literal value="/"/>
+      <alternatives xsi:type="xtext:Assignment" feature="valuedObject" operator="=">
+        <terminal xsi:type="xtext:CrossReference">
+          <type metamodel="/2/@metamodelDeclarations.0">
+            <classifier xsi:type="ecore:EClass" href="http://kieler.cs.cau.de/expressions/0.1.1#//ValuedObject"/>
+          </type>
+          <terminal xsi:type="xtext:RuleCall" rule="/3/@rules.0"/>
+        </terminal>
       </alternatives>
     </rules>
     <rules xsi:type="xtext:ParserRule" name="TextExpression">
       <type metamodel="/2/@metamodelDeclarations.0">
-        <classifier xsi:type="ecore:EClass" href="http://kieler.cs.cau.de/expressions#//TextExpression"/>
+        <classifier xsi:type="ecore:EClass" href="http://kieler.cs.cau.de/expressions/0.1.1#//TextExpression"/>
       </type>
       <alternatives xsi:type="xtext:Group">
         <elements xsi:type="xtext:Assignment" feature="code" operator="=">
@@ -1182,83 +896,283 @@
         </elements>
       </alternatives>
     </rules>
-    <rules xsi:type="xtext:ParserRule" name="Expression">
+    <rules xsi:type="xtext:ParserRule" name="IntValue">
       <type metamodel="/2/@metamodelDeclarations.0">
-        <classifier xsi:type="ecore:EClass" href="http://kieler.cs.cau.de/expressions#//Expression"/>
+        <classifier xsi:type="ecore:EClass" href="http://kieler.cs.cau.de/expressions/0.1.1#//IntValue"/>
+      </type>
+      <alternatives xsi:type="xtext:Assignment" feature="value" operator="=">
+        <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.35"/>
+      </alternatives>
+    </rules>
+    <rules xsi:type="xtext:ParserRule" name="FloatValue">
+      <type metamodel="/2/@metamodelDeclarations.0">
+        <classifier xsi:type="ecore:EClass" href="http://kieler.cs.cau.de/expressions/0.1.1#//FloatValue"/>
+      </type>
+      <alternatives xsi:type="xtext:Assignment" feature="value" operator="=">
+        <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.36"/>
+      </alternatives>
+    </rules>
+    <rules xsi:type="xtext:ParserRule" name="BooleanValue">
+      <type metamodel="/2/@metamodelDeclarations.0">
+        <classifier xsi:type="ecore:EClass" href="http://kieler.cs.cau.de/expressions/0.1.1#//BooleanValue"/>
+      </type>
+      <alternatives xsi:type="xtext:Assignment" feature="value" operator="=">
+        <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.37"/>
+      </alternatives>
+    </rules>
+    <rules xsi:type="xtext:ParserRule" name="EString">
+      <type metamodel="/2/@metamodelDeclarations.1">
+        <classifier xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
       </type>
       <alternatives xsi:type="xtext:Alternatives">
-        <elements xsi:type="xtext:RuleCall" rule="/2/@rules.12"/>
-        <elements xsi:type="xtext:RuleCall" rule="/2/@rules.27"/>
+        <elements xsi:type="xtext:RuleCall" rule="/3/@rules.2"/>
+        <elements xsi:type="xtext:RuleCall" rule="/3/@rules.0"/>
+      </alternatives>
+    </rules>
+    <rules xsi:type="xtext:EnumRule" name="CompareOperator">
+      <type metamodel="/2/@metamodelDeclarations.0">
+        <classifier xsi:type="ecore:EEnum" href="http://kieler.cs.cau.de/expressions/0.1.1#//OperatorType"/>
+      </type>
+      <alternatives xsi:type="xtext:Alternatives">
+        <elements xsi:type="xtext:EnumLiteralDeclaration">
+          <enumLiteral href="http://kieler.cs.cau.de/expressions/0.1.1#//OperatorType/EQ"/>
+          <literal value="="/>
+        </elements>
+        <elements xsi:type="xtext:EnumLiteralDeclaration">
+          <enumLiteral href="http://kieler.cs.cau.de/expressions/0.1.1#//OperatorType/LT"/>
+          <literal value="&lt;"/>
+        </elements>
+        <elements xsi:type="xtext:EnumLiteralDeclaration">
+          <enumLiteral href="http://kieler.cs.cau.de/expressions/0.1.1#//OperatorType/LEQ"/>
+          <literal value="&lt;="/>
+        </elements>
+        <elements xsi:type="xtext:EnumLiteralDeclaration">
+          <enumLiteral href="http://kieler.cs.cau.de/expressions/0.1.1#//OperatorType/GT"/>
+          <literal value=">"/>
+        </elements>
+        <elements xsi:type="xtext:EnumLiteralDeclaration">
+          <enumLiteral href="http://kieler.cs.cau.de/expressions/0.1.1#//OperatorType/GEQ"/>
+          <literal value=">="/>
+        </elements>
+        <elements xsi:type="xtext:EnumLiteralDeclaration">
+          <enumLiteral href="http://kieler.cs.cau.de/expressions/0.1.1#//OperatorType/NE"/>
+          <literal value="&lt;>"/>
+        </elements>
+      </alternatives>
+    </rules>
+    <rules xsi:type="xtext:EnumRule" name="PreOperator">
+      <type metamodel="/2/@metamodelDeclarations.0">
+        <classifier xsi:type="ecore:EEnum" href="http://kieler.cs.cau.de/expressions/0.1.1#//OperatorType"/>
+      </type>
+      <alternatives xsi:type="xtext:EnumLiteralDeclaration">
+        <enumLiteral href="http://kieler.cs.cau.de/expressions/0.1.1#//OperatorType/PRE"/>
+        <literal value="pre"/>
+      </alternatives>
+    </rules>
+    <rules xsi:type="xtext:EnumRule" name="OrOperator">
+      <type metamodel="/2/@metamodelDeclarations.0">
+        <classifier xsi:type="ecore:EEnum" href="http://kieler.cs.cau.de/expressions/0.1.1#//OperatorType"/>
+      </type>
+      <alternatives xsi:type="xtext:EnumLiteralDeclaration">
+        <enumLiteral href="http://kieler.cs.cau.de/expressions/0.1.1#//OperatorType/OR"/>
+        <literal value="or"/>
+      </alternatives>
+    </rules>
+    <rules xsi:type="xtext:EnumRule" name="AndOperator">
+      <type metamodel="/2/@metamodelDeclarations.0">
+        <classifier xsi:type="ecore:EEnum" href="http://kieler.cs.cau.de/expressions/0.1.1#//OperatorType"/>
+      </type>
+      <alternatives xsi:type="xtext:EnumLiteralDeclaration">
+        <enumLiteral href="http://kieler.cs.cau.de/expressions/0.1.1#//OperatorType/AND"/>
+        <literal value="and"/>
+      </alternatives>
+    </rules>
+    <rules xsi:type="xtext:EnumRule" name="NotOperator">
+      <type metamodel="/2/@metamodelDeclarations.0">
+        <classifier xsi:type="ecore:EEnum" href="http://kieler.cs.cau.de/expressions/0.1.1#//OperatorType"/>
+      </type>
+      <alternatives xsi:type="xtext:EnumLiteralDeclaration">
+        <enumLiteral href="http://kieler.cs.cau.de/expressions/0.1.1#//OperatorType/NOT"/>
+        <literal value="not"/>
+      </alternatives>
+    </rules>
+    <rules xsi:type="xtext:EnumRule" name="AddOperator">
+      <type metamodel="/2/@metamodelDeclarations.0">
+        <classifier xsi:type="ecore:EEnum" href="http://kieler.cs.cau.de/expressions/0.1.1#//OperatorType"/>
+      </type>
+      <alternatives xsi:type="xtext:EnumLiteralDeclaration">
+        <enumLiteral href="http://kieler.cs.cau.de/expressions/0.1.1#//OperatorType/ADD"/>
+        <literal value="+"/>
+      </alternatives>
+    </rules>
+    <rules xsi:type="xtext:EnumRule" name="SubOperator">
+      <type metamodel="/2/@metamodelDeclarations.0">
+        <classifier xsi:type="ecore:EEnum" href="http://kieler.cs.cau.de/expressions/0.1.1#//OperatorType"/>
+      </type>
+      <alternatives xsi:type="xtext:EnumLiteralDeclaration">
+        <enumLiteral href="http://kieler.cs.cau.de/expressions/0.1.1#//OperatorType/SUB"/>
+        <literal value="-"/>
+      </alternatives>
+    </rules>
+    <rules xsi:type="xtext:EnumRule" name="MultOperator">
+      <type metamodel="/2/@metamodelDeclarations.0">
+        <classifier xsi:type="ecore:EEnum" href="http://kieler.cs.cau.de/expressions/0.1.1#//OperatorType"/>
+      </type>
+      <alternatives xsi:type="xtext:EnumLiteralDeclaration">
+        <enumLiteral href="http://kieler.cs.cau.de/expressions/0.1.1#//OperatorType/MULT"/>
+        <literal value="*"/>
+      </alternatives>
+    </rules>
+    <rules xsi:type="xtext:EnumRule" name="ModOperator">
+      <type metamodel="/2/@metamodelDeclarations.0">
+        <classifier xsi:type="ecore:EEnum" href="http://kieler.cs.cau.de/expressions/0.1.1#//OperatorType"/>
+      </type>
+      <alternatives xsi:type="xtext:EnumLiteralDeclaration">
+        <enumLiteral href="http://kieler.cs.cau.de/expressions/0.1.1#//OperatorType/MOD"/>
+        <literal value="mod"/>
+      </alternatives>
+    </rules>
+    <rules xsi:type="xtext:EnumRule" name="DivOperator">
+      <type metamodel="/2/@metamodelDeclarations.0">
+        <classifier xsi:type="ecore:EEnum" href="http://kieler.cs.cau.de/expressions/0.1.1#//OperatorType"/>
+      </type>
+      <alternatives xsi:type="xtext:EnumLiteralDeclaration">
+        <enumLiteral href="http://kieler.cs.cau.de/expressions/0.1.1#//OperatorType/DIV"/>
+        <literal value="/"/>
+      </alternatives>
+    </rules>
+    <rules xsi:type="xtext:EnumRule" name="ValueTestOperator">
+      <type metamodel="/2/@metamodelDeclarations.0">
+        <classifier xsi:type="ecore:EEnum" href="http://kieler.cs.cau.de/expressions/0.1.1#//OperatorType"/>
+      </type>
+      <alternatives xsi:type="xtext:EnumLiteralDeclaration">
+        <enumLiteral href="http://kieler.cs.cau.de/expressions/0.1.1#//OperatorType/VAL"/>
+        <literal value="?"/>
       </alternatives>
     </rules>
     <rules xsi:type="xtext:EnumRule" name="ValueType">
       <type metamodel="/2/@metamodelDeclarations.0">
-        <classifier xsi:type="ecore:EEnum" href="http://kieler.cs.cau.de/expressions#//ValueType"/>
+        <classifier xsi:type="ecore:EEnum" href="http://kieler.cs.cau.de/expressions/0.1.1#//ValueType"/>
       </type>
       <alternatives xsi:type="xtext:Alternatives">
         <elements xsi:type="xtext:EnumLiteralDeclaration">
-          <enumLiteral href="http://kieler.cs.cau.de/expressions#//ValueType/PURE"/>
+          <enumLiteral href="http://kieler.cs.cau.de/expressions/0.1.1#//ValueType/PURE"/>
           <literal value="PURE"/>
         </elements>
         <elements xsi:type="xtext:EnumLiteralDeclaration">
-          <enumLiteral href="http://kieler.cs.cau.de/expressions#//ValueType/BOOL"/>
+          <enumLiteral href="http://kieler.cs.cau.de/expressions/0.1.1#//ValueType/BOOL"/>
           <literal value="BOOL"/>
         </elements>
         <elements xsi:type="xtext:EnumLiteralDeclaration">
-          <enumLiteral href="http://kieler.cs.cau.de/expressions#//ValueType/UNSIGNED"/>
+          <enumLiteral href="http://kieler.cs.cau.de/expressions/0.1.1#//ValueType/UNSIGNED"/>
           <literal value="UNSIGNED"/>
         </elements>
         <elements xsi:type="xtext:EnumLiteralDeclaration">
-          <enumLiteral href="http://kieler.cs.cau.de/expressions#//ValueType/INT"/>
+          <enumLiteral href="http://kieler.cs.cau.de/expressions/0.1.1#//ValueType/INT"/>
           <literal value="INT"/>
         </elements>
         <elements xsi:type="xtext:EnumLiteralDeclaration">
-          <enumLiteral href="http://kieler.cs.cau.de/expressions#//ValueType/FLOAT"/>
+          <enumLiteral href="http://kieler.cs.cau.de/expressions/0.1.1#//ValueType/FLOAT"/>
           <literal value="FLOAT"/>
         </elements>
         <elements xsi:type="xtext:EnumLiteralDeclaration">
-          <enumLiteral href="http://kieler.cs.cau.de/expressions#//ValueType/HOST"/>
+          <enumLiteral href="http://kieler.cs.cau.de/expressions/0.1.1#//ValueType/HOST"/>
           <literal value="HOST"/>
         </elements>
       </alternatives>
     </rules>
     <rules xsi:type="xtext:EnumRule" name="CombineOperator">
       <type metamodel="/2/@metamodelDeclarations.0">
-        <classifier xsi:type="ecore:EEnum" href="http://kieler.cs.cau.de/expressions#//CombineOperator"/>
+        <classifier xsi:type="ecore:EEnum" href="http://kieler.cs.cau.de/expressions/0.1.1#//CombineOperator"/>
       </type>
       <alternatives xsi:type="xtext:Alternatives">
         <elements xsi:type="xtext:EnumLiteralDeclaration">
-          <enumLiteral href="http://kieler.cs.cau.de/expressions#//CombineOperator/NONE"/>
+          <enumLiteral href="http://kieler.cs.cau.de/expressions/0.1.1#//CombineOperator/NONE"/>
           <literal value="NONE"/>
         </elements>
         <elements xsi:type="xtext:EnumLiteralDeclaration">
-          <enumLiteral href="http://kieler.cs.cau.de/expressions#//CombineOperator/ADD"/>
+          <enumLiteral href="http://kieler.cs.cau.de/expressions/0.1.1#//CombineOperator/ADD"/>
           <literal value="+"/>
         </elements>
         <elements xsi:type="xtext:EnumLiteralDeclaration">
-          <enumLiteral href="http://kieler.cs.cau.de/expressions#//CombineOperator/MULT"/>
+          <enumLiteral href="http://kieler.cs.cau.de/expressions/0.1.1#//CombineOperator/MULT"/>
           <literal value="*"/>
         </elements>
         <elements xsi:type="xtext:EnumLiteralDeclaration">
-          <enumLiteral href="http://kieler.cs.cau.de/expressions#//CombineOperator/MAX"/>
+          <enumLiteral href="http://kieler.cs.cau.de/expressions/0.1.1#//CombineOperator/MAX"/>
           <literal value="max"/>
         </elements>
         <elements xsi:type="xtext:EnumLiteralDeclaration">
-          <enumLiteral href="http://kieler.cs.cau.de/expressions#//CombineOperator/MIN"/>
+          <enumLiteral href="http://kieler.cs.cau.de/expressions/0.1.1#//CombineOperator/MIN"/>
           <literal value="min"/>
         </elements>
         <elements xsi:type="xtext:EnumLiteralDeclaration">
-          <enumLiteral href="http://kieler.cs.cau.de/expressions#//CombineOperator/OR"/>
+          <enumLiteral href="http://kieler.cs.cau.de/expressions/0.1.1#//CombineOperator/OR"/>
           <literal value="or"/>
         </elements>
         <elements xsi:type="xtext:EnumLiteralDeclaration">
-          <enumLiteral href="http://kieler.cs.cau.de/expressions#//CombineOperator/AND"/>
+          <enumLiteral href="http://kieler.cs.cau.de/expressions/0.1.1#//CombineOperator/AND"/>
           <literal value="and"/>
         </elements>
         <elements xsi:type="xtext:EnumLiteralDeclaration">
-          <enumLiteral href="http://kieler.cs.cau.de/expressions#//CombineOperator/HOST"/>
+          <enumLiteral href="http://kieler.cs.cau.de/expressions/0.1.1#//CombineOperator/HOST"/>
           <literal value="host"/>
         </elements>
+      </alternatives>
+    </rules>
+    <rules xsi:type="xtext:TerminalRule" name="INT">
+      <type metamodel="/2/@metamodelDeclarations.1">
+        <classifier xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+      </type>
+      <alternatives xsi:type="xtext:Group">
+        <elements xsi:type="xtext:Keyword" cardinality="?" value="-"/>
+        <elements xsi:type="xtext:CharacterRange" cardinality="+">
+          <left value="0"/>
+          <right value="9"/>
+        </elements>
+      </alternatives>
+    </rules>
+    <rules xsi:type="xtext:TerminalRule" name="Float">
+      <type metamodel="/2/@metamodelDeclarations.1">
+        <classifier xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EFloatObject"/>
+      </type>
+      <alternatives xsi:type="xtext:Alternatives">
+        <elements xsi:type="xtext:Group">
+          <elements xsi:type="xtext:Alternatives">
+            <elements xsi:type="xtext:Group">
+              <elements xsi:type="xtext:RuleCall" rule="/2/@rules.35"/>
+              <elements xsi:type="xtext:Keyword" value="."/>
+              <elements xsi:type="xtext:RuleCall" rule="/2/@rules.35"/>
+            </elements>
+            <elements xsi:type="xtext:Group">
+              <elements xsi:type="xtext:RuleCall" rule="/2/@rules.35"/>
+              <elements xsi:type="xtext:Group" cardinality="?">
+                <elements xsi:type="xtext:Keyword" value="."/>
+                <elements xsi:type="xtext:RuleCall" rule="/2/@rules.35"/>
+              </elements>
+              <elements xsi:type="xtext:Alternatives">
+                <elements xsi:type="xtext:Keyword" value="e"/>
+                <elements xsi:type="xtext:Keyword" value="E"/>
+              </elements>
+              <elements xsi:type="xtext:Keyword" cardinality="?" value="+"/>
+              <elements xsi:type="xtext:RuleCall" rule="/2/@rules.35"/>
+            </elements>
+          </elements>
+          <elements xsi:type="xtext:Keyword" cardinality="?" value="f"/>
+        </elements>
+        <elements xsi:type="xtext:Group">
+          <elements xsi:type="xtext:RuleCall" rule="/2/@rules.35"/>
+          <elements xsi:type="xtext:Keyword" value="f"/>
+        </elements>
+      </alternatives>
+    </rules>
+    <rules xsi:type="xtext:TerminalRule" name="Boolean">
+      <type metamodel="/2/@metamodelDeclarations.1">
+        <classifier xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EBooleanObject"/>
+      </type>
+      <alternatives xsi:type="xtext:Alternatives">
+        <elements xsi:type="xtext:Keyword" value="true"/>
+        <elements xsi:type="xtext:Keyword" value="false"/>
       </alternatives>
     </rules>
   </xtext:Grammar>

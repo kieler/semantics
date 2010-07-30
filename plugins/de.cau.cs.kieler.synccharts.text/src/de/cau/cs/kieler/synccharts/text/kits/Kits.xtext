@@ -8,19 +8,19 @@ Region returns synccharts::Region:
   ( 
     ('Region' (label=ID))? // region ID's are introduced by the keyword "region".       
 //     (variables+=Variable|signals+=Signal)* 
-     (innerStates+=State) 
+     (states+=State) 
   );
 
 // ---------------------------------------------------------------------------------------------------
   
 NestedRegion returns synccharts::Region:
   ('Region' (label=ID) (variables+=Variable|signals+=Signal)* )? 
-  (innerStates+=State)*;
+  (states+=State)*;
 
 // ---------------------------------------------------------------------------------------------------
 
 SingleNestedRegion returns synccharts::Region:
-	(innerStates+=State)+;
+	(states+=State)+;
 
 // ---------------------------------------------------------------------------------------------------
 

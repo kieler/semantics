@@ -14,10 +14,15 @@ import org.eclipse.xtext.scoping.impl.AbstractDeclarativeScopeProvider;
 import org.eclipse.xtext.scoping.impl.SimpleScope;
 
 import de.cau.cs.kieler.core.expressions.Expression;
+import de.cau.cs.kieler.core.expressions.ExpressionsPackage;
+import de.cau.cs.kieler.core.expressions.OperatorExpression;
+import de.cau.cs.kieler.core.expressions.OperatorType;
 import de.cau.cs.kieler.core.expressions.Signal;
 import de.cau.cs.kieler.core.expressions.Variable;
 import de.cau.cs.kieler.synccharts.Region;
+import de.cau.cs.kieler.synccharts.Scope;
 import de.cau.cs.kieler.synccharts.State;
+import de.cau.cs.kieler.synccharts.SyncchartsPackage;
 import de.cau.cs.kieler.synccharts.Transition;
 
 /**
@@ -37,32 +42,62 @@ public class KitsScopeProvider extends AbstractDeclarativeScopeProvider {
 	 * @param reference
 	 * @return
 	 */
+	@SuppressWarnings("unchecked")
 	public IScope scope_Transition_targetState(Transition trans, EReference reference) {
 		List<IEObjectDescription> l = new LinkedList<IEObjectDescription>();
-		for (State s : ((Region) trans.eContainer().eContainer()).getInnerStates()) {
+		for (State s : ((Region) trans.eContainer().eContainer()).getStates()) {
 			l.add(new EObjectDescription(s.getLabel(), s, Collections.EMPTY_MAP));
 		}
 		return new SimpleScope(l);
 	}
-	
-	/**
-	 * A naive implementation of scoping for signals and variables.
-	 * Won't be called directly but via reflection by the Xtext runtime.
-	 * Is to be completed.
-	 * @param trans
-	 * @param reference
-	 * @return
-	 */
-	public IScope scope_Transition_trigger(Transition trans, EReference reference) {
+
+	public IScope scope_ValuedObjectReference_valuedObject(EObject obj, EReference reference) {
 		List<IEObjectDescription> l = new LinkedList<IEObjectDescription>();
-		for (Signal s : ((State) trans.eContainer()).getSignals()) {
-			l.add(new EObjectDescription(s.getName(), s, Collections.EMPTY_MAP));
+		EObject container = obj;
+		while (true) {
+			if (SyncchartsPackage.eINSTANCE.getScope().isInstance(container)) {
+				break;
+			}
+			container = container.eContainer();
 		}
-		for (Variable v : ((State) trans.eContainer()).getVariables()) {
-			l.add(new EObjectDescription(v.getName(), v, Collections.EMPTY_MAP));
-		}		
+		
+		Scope scope = (Scope) container;
+		do {
+			for (Signal s : scope.getSignals()) {
+				l.add(new EObjectDescription(s.getName(), s, Collections.EMPTY_MAP));			
+			}
+			scope = (Scope) scope.eContainer();
+		} while (scope != null);
+		
+		
+		// this branch will be entered during linking if the valuedObjectReference
+		// is contained by a '?' OperatorExpression
+		if (ExpressionsPackage.eINSTANCE.getOperatorExpression().isInstance(
+				obj.eContainer())
+				&& (((OperatorExpression) obj.eContainer()).getOperator() == OperatorType.VAL
+						|| ((OperatorExpression) obj.eContainer()).getOperator() == OperatorType.PRE)) {
+			return new SimpleScope(l);
+		}
+		
+		// this branch will be entered computing the content assist proposals
+		// if the text input leads to a valid model!
+		// otherwise used context is nearly unpredictable 
+		if (ExpressionsPackage.eINSTANCE.getOperatorExpression().isInstance(obj)
+				&& (((OperatorExpression) obj).getOperator() == OperatorType.VAL
+						|| ((OperatorExpression) obj).getOperator() == OperatorType.PRE)) {
+			return new SimpleScope(l);
+		}
+		
+		scope = (Scope) container;
+		do {
+			for (Variable v : scope.getVariables()) {
+				l.add(new EObjectDescription(v.getName(), v, Collections.EMPTY_MAP));
+			}
+			scope = (Scope) scope.eContainer();
+		} while (scope != null);
 		return new SimpleScope(l);
 	}
+
 	
 	/** old stuff */
     @SuppressWarnings("unchecked")
@@ -70,7 +105,7 @@ public class KitsScopeProvider extends AbstractDeclarativeScopeProvider {
 //		System.out.println(context.eClass().getName() + "  " + reference.getName());
 		
     	if (context instanceof Transition) {
-    		List<State> states = ((Region) ((Transition) context).eContainer().eContainer()).getInnerStates();
+    		List<State> states = ((Region) ((Transition) context).eContainer().eContainer()).getStates();
     		List<IEObjectDescription> stateDescriptions = new LinkedList<IEObjectDescription>(); 
     		for(State state : states) {
     			stateDescriptions.add(new EObjectDescription(state.getLabel(), state, Collections.EMPTY_MAP));
