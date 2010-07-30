@@ -129,7 +129,6 @@ public class UpdateResourceFactoryImpl extends XMIResourceFactoryImpl {
                     if (s.contains(getVersionURI(CURRENT_VERSION))) {
                         return false;
                     }
-
                 }
 
                 if (lineIndex > 1) {
@@ -271,6 +270,8 @@ public class UpdateResourceFactoryImpl extends XMIResourceFactoryImpl {
         convert(uri, Synccharts_MM_Version.v_0_1);
         monitor.subTask("Converting v0.2 to v0.2.1");
         convert(uri, Synccharts_MM_Version.v_0_2);
+        monitor.subTask("Converting v0.2.1 to v0.2.2");
+        convert(uri, Synccharts_MM_Version.v_0_2_1);
     }
 
     /**
@@ -308,12 +309,15 @@ public class UpdateResourceFactoryImpl extends XMIResourceFactoryImpl {
                 String newString = s;
                 switch (version) {
                 case v_0_1:
-                    newString = convertLineV01To02(s);
+                    newString = convertLineV_0_1ToV_0_2(s);
                     break;
                 case v_0_2:
-                    newString = convertLineV02To021(s);
+                    newString = convertLineV_0_2ToV_0_2_1(s);
                     break;
                 case v_0_2_1:
+                    newString = convertLineV_0_2_1ToV_0_2_2(s);
+                    break;
+                case v_0_2_2:
                     return;
                 }
                 lines.add(newString);
@@ -346,6 +350,43 @@ public class UpdateResourceFactoryImpl extends XMIResourceFactoryImpl {
             e.printStackTrace();
             throw new UpdateException(e);
         }
+    }
+
+    /**
+     * Converts a single line of of version 0.2.1 to 0.2.2.
+     * 
+     * @param s
+     *            the line
+     * @return the result
+     */
+    private String convertLineV_0_2_1ToV_0_2_2(final String s) {
+        String result = s;
+        if (result.contains("xsi:type=\"expressions:SignalReference\"")) {
+            result = result.replaceAll(
+                    "xsi:type=\"expressions:SignalReference\"",
+                    "xsi:type=\"expressions:ValuedObjectReference\"");
+            result = result.replaceAll(" signal=\"", " valuedObject=\"");
+        }
+        if (result.contains("xsi:type=\"expressions:VariableReference\"")) {
+            result = result.replaceAll(
+                    "xsi:type=\"expressions:VariableReference\"",
+                    "xsi:type=\"expressions:ValuedObjectReference\"");
+            result = result.replaceAll(" variable=\"", " valuedObject=\"");
+        }
+        result = result.replaceAll("<innerStates ", "<states ");
+        result = result.replaceAll("</innerStates>", "</states>");
+        result = result.replaceAll("/@innerStates.", "/@states.");
+
+        if (result.contains(getVersionURI(Synccharts_MM_Version.v_0_2_1))) {
+            result = result.replace(
+                    getVersionURI(Synccharts_MM_Version.v_0_2_1),
+                    getVersionURI(Synccharts_MM_Version.v_0_2_2));
+            result = result
+                    .replaceAll(
+                            "xmlns:expressions=\"http://kieler.cs.cau.de/expressions\"",
+                            "xmlns:expressions=\"http://kieler.cs.cau.de/expressions/0.1.1\"");
+        }
+        return result;
     }
 
     /**
@@ -425,10 +466,13 @@ public class UpdateResourceFactoryImpl extends XMIResourceFactoryImpl {
             "IntValue", "BooleanValue", "OperatorExpression", "TextExpression" };
 
     /**
+     * Converts a single line of of version 0.2 to 0.2.1.
+     * 
      * @param s
-     * @return
+     *            the line
+     * @return the result
      */
-    private String convertLineV02To021(final String s) {
+    private String convertLineV_0_2ToV_0_2_1(final String s) {
         String result = s;
         if (result.contains(getVersionURI(Synccharts_MM_Version.v_0_2))) {
             result = result
@@ -459,16 +503,21 @@ public class UpdateResourceFactoryImpl extends XMIResourceFactoryImpl {
         case v_0_2:
             return Synccharts_MM_Version.v_0_2_1;
         case v_0_2_1:
+            return Synccharts_MM_Version.v_0_2_2;
+        case v_0_2_2:
             return null;
         }
         return null;
     }
 
     /**
+     * Converts a single line of of version 0.1 to 0.2.
+     * 
      * @param s
-     * @return
+     *            the line
+     * @return the result
      */
-    private String convertLineV01To02(final String s) {
+    private String convertLineV_0_1ToV_0_2(final String s) {
         // variable types are now in lower case, changed integer to int
         String newString = s.replaceAll("type=\"INTEGER\"", "type=\"int\"");
         newString = newString.replaceAll("type=\"UNSIGNED\"",
