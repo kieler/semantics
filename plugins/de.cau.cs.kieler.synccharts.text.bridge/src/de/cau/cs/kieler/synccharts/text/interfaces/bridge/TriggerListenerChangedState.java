@@ -43,7 +43,7 @@ public class TriggerListenerChangedState extends FireOnceTriggerListener {
      */
     public TriggerListenerChangedState() {
         super(NotificationFilter.createFeatureFilter(
-                SyncchartsPackage.eINSTANCE.getRegion_InnerStates()).and(
+                SyncchartsPackage.eINSTANCE.getRegion_States()).and(
                 NotificationFilter.createEventTypeFilter(Notification.ADD)));
     }
 
@@ -106,7 +106,7 @@ public class TriggerListenerChangedState extends FireOnceTriggerListener {
 
         // call check for every child state
         for (Region r : parent.getRegions()) {
-            for (State s : r.getInnerStates()) {
+            for (State s : r.getStates()) {
                 searchStatesForSignals(cc, s);
             }
         }
@@ -139,7 +139,7 @@ public class TriggerListenerChangedState extends FireOnceTriggerListener {
 
         // call check for every child state
         for (Region r : parent.getRegions()) {
-            for (State s : r.getInnerStates()) {
+            for (State s : r.getStates()) {
                 searchStatesForInterfDecl(cc, s);
             }
         }

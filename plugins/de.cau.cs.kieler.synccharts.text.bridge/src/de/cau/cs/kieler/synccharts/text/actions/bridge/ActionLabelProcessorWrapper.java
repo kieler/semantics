@@ -120,7 +120,7 @@ public class ActionLabelProcessorWrapper {
                 processAffectedActionLabels(changedObject, childRegion, parse);
             }
         } else if (parent instanceof Region) {
-            for (State childState : ((Region) parent).getInnerStates()) {
+            for (State childState : ((Region) parent).getStates()) {
                 for (Transition trans : childState.getOutgoingTransitions()) {
                     processAction(trans, parse);
                 }
@@ -166,7 +166,7 @@ public class ActionLabelProcessorWrapper {
                         childRegion, parse));
             }
         } else if (parent instanceof Region) {
-            for (State childState : ((Region) parent).getInnerStates()) {
+            for (State childState : ((Region) parent).getStates()) {
                 for (Transition trans : childState.getOutgoingTransitions()) {
                     cc.append(getProcessActionCommand(trans, parse));
                 }

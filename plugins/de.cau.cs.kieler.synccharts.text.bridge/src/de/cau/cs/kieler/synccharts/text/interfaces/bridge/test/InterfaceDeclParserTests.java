@@ -63,7 +63,7 @@ public class InterfaceDeclParserTests {
 
         rootState = SyncchartsFactory.eINSTANCE.createState();
         rootState.setLabel("SyncChart");
-        rootRegion.getInnerStates().add(rootState);
+        rootRegion.getStates().add(rootState);
         rootRegion.setId("rootReg");
 
         region = SyncchartsFactory.eINSTANCE.createRegion();

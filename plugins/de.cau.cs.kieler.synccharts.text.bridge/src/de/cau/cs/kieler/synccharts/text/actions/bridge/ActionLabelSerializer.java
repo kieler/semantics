@@ -24,9 +24,8 @@ import de.cau.cs.kieler.core.expressions.FloatValue;
 import de.cau.cs.kieler.core.expressions.IntValue;
 import de.cau.cs.kieler.core.expressions.OperatorExpression;
 import de.cau.cs.kieler.core.expressions.OperatorType;
-import de.cau.cs.kieler.core.expressions.SignalReference;
 import de.cau.cs.kieler.core.expressions.TextualCode;
-import de.cau.cs.kieler.core.expressions.VariableReference;
+import de.cau.cs.kieler.core.expressions.ValuedObjectReference;
 import de.cau.cs.kieler.synccharts.Action;
 import de.cau.cs.kieler.synccharts.Assignment;
 import de.cau.cs.kieler.synccharts.Effect;
@@ -133,11 +132,10 @@ public final class ActionLabelSerializer {
 
     private static String toString(final Expression expression, final boolean isSubExpression) {
         StringBuffer sb = new StringBuffer();
-        if (expression instanceof SignalReference) {
-            return ((SignalReference) expression).getSignal().getName();
-        }
-        if (expression instanceof VariableReference) {
-            return ((VariableReference) expression).getVariable().getName();
+        if (expression instanceof ValuedObjectReference) {
+        	if (((ValuedObjectReference) expression).getValuedObject() != null) {
+        		return ((ValuedObjectReference) expression).getValuedObject().getName();
+        	}
         }
         if (expression instanceof BooleanValue) {
             return ((BooleanValue) expression).getValue().toString();

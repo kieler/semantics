@@ -80,6 +80,11 @@ public class TriggerListenerChangedSignal extends FireOnceTriggerListener {
     @Override
     protected Command trigger(final TransactionalEditingDomain domain,
             final Notification notification) {
+    	return null;
+    }
+
+    protected Command trigger_ori(final TransactionalEditingDomain domain,
+            final Notification notification) {
         // System.out
         // .println("-SIGNALCHANGE " + this.getClass().getSimpleName() + ": " +
         // notification);
