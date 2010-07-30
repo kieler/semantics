@@ -41,7 +41,9 @@ import de.cau.cs.kieler.core.kgraph.KEdge;
 import de.cau.cs.kieler.core.kgraph.KNode;
 import de.cau.cs.kieler.core.kgraph.KPort;
 import de.cau.cs.kieler.core.kgraph.util.KGraphAdapterFactory;
+import de.cau.cs.kieler.kiml.klayoutdata.KInsets;
 import de.cau.cs.kieler.kiml.klayoutdata.KPoint;
+import de.cau.cs.kieler.kiml.options.LayoutOptions;
 import de.cau.cs.kieler.kiml.ui.layout.EclipseLayoutServices;
 import de.cau.cs.kieler.kiml.util.KimlLayoutUtil;
 import de.cau.cs.kieler.kvid.data.DataObject;
@@ -129,6 +131,7 @@ public class DataDistributor implements IProviderListener {
             }
         }
         
+        
         //if no node was found, return null
         if (!currentFoundUri.equals(URI)) {
             return null;
@@ -142,7 +145,9 @@ public class DataDistributor implements IProviderListener {
             parentPosition.x = (int) KimlLayoutUtil.getShapeLayout(parent).getXpos();
             parentPosition.y = (int) KimlLayoutUtil.getShapeLayout(parent).getYpos();
         }
-        
+        KInsets insets = LayoutOptions.getObject(KimlLayoutUtil.getShapeLayout(parent), KInsets.class);
+        parentPosition.x += insets.getLeft();
+        parentPosition.y += insets.getTop();
         
         //create paths from outgoing edges
         for (KPort port : currentNode.getPorts()) {
