@@ -5,7 +5,7 @@ import expressions;
 // Scopes
 
 Boolean signalNotRead(Signal signal, Scope scope):
- scope.eAllContents.typeSelect(ValuedObjectReference).select(reference|reference.signal.name.matches(signal.name)).isEmpty
+ scope.eAllContents.typeSelect(ValuedObjectReference).select(reference|reference.valuedObject.name.matches(signal.name)).isEmpty
 ;
 
 Boolean signalNotEmitted(Signal signal, Scope scope):
@@ -31,7 +31,7 @@ context Scope
     ;
 
 Boolean variableNotRead(Variable var, Scope scope):
- scope.eAllContents.typeSelect(ValuedObjectReference).select(reference|reference.variable.name == var.name).isEmpty
+ scope.eAllContents.typeSelect(ValuedObjectReference).select(reference|reference.valuedObject.name == var.name).isEmpty
 ;
 
 Boolean variableNotWritten(Variable var, Scope scope):
@@ -134,14 +134,14 @@ context State if (parentRegion == null || parentRegion.parentState == null)
 
 context State if (parentRegion != null && parentRegion.parentState == null)
   ERROR "There should be exactly one root State which represents the whole SyncChart.":
-   (parentRegion.innerStates.size == 1);
+   (parentRegion.states.size == 1);
 
 // ================================================================================================
 // Regions
 
 context Region if (parentState != null) // not checked for root state
 	ERROR "Every region should have exactly one initial state!" : 
-	(innerStates.select(s|s.isInitial).size == 1);
+	(states.select(s|s.isInitial).size == 1);
 
 context Region
 	ERROR "IDs should be of standard identifier type, i.e. only contain characters, numbers and the _ sign." :
@@ -151,11 +151,11 @@ context Region if ((parentState.parentRegion.parentState != null) &&
 				   (parentState.outgoingTransitions.exists(t|t.type == TransitionType::NORMALTERMINATION)))
 	ERROR "A hierarchical state with an outgoing normal termination \n"
 		+ "has to contain at least one final state in every parallel region." :
-	(innerStates.select(s|s.isFinal).size > 0);
+	(states.select(s|s.isFinal).size > 0);
 
 context Region 
 	ERROR "An empty Region does not make sense! Remove the Region or add States to it!" : 
-	(innerStates.size > 0);
+	(states.size > 0);
 
 context Region if(parentState != null && parentState.regions.size > 1)
 	ERROR "Regions in a state need to have unique IDs within that state." :

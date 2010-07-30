@@ -40,8 +40,16 @@ context Emission WARNING "KLEPTO: Input signals ("+signal.name+") that are also 
   signal.isInput == false;
 
 //FIXME: This context has no direct representation in the model => warnings are only visible in problems view  
-context SignalReference WARNING "KLEPTO: Output signals ("+signal.name+") that also occur within a trigger are not supported in the simulation!" :
-  signal.isOutput == false;
+context ValuedObjectReference WARNING "KLEPTO: Output signals ("+valuedObject.name+") that also occur within a trigger are not supported in the simulation!" :
+  isOutputSignal(valuedObject) == false;
+
+isOutputSignal(Signal signal):
+ signal.isOutput
+;
+
+isOutputSignal(ValuedObject var):
+ false
+;
   
 //since 28.11. not a warning any more
 //FIXME: This context has no direct representation in the model => warnings are only visible in problems view  
