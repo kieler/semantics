@@ -27,6 +27,7 @@ import org.eclipse.ui.PlatformUI;
 
 import de.cau.cs.kieler.kvid.data.DataObject;
 import de.cau.cs.kieler.kvid.datadistributor.DataDistributor;
+import de.cau.cs.kieler.kvid.datadistributor.RuntimeConfiguration;
 import de.cau.cs.kieler.sim.kiem.KiemPlugin;
 
 /**
@@ -76,20 +77,22 @@ public class GmfDrawer implements IDrawer {
             }
             
             //animating phase
-            final HashMap<IKvidFigure, List<Point>> animatables = 
-                                                      new HashMap<IKvidFigure, List<Point>>();
-            for (final String key : dataSet.keySet()) {
-                if (dataSet.get(key).getPaths().size() > 0) {
-                    animatables.put(figuresByURI.get(key), dataSet.get(key).getPaths().get(0));
+            if (RuntimeConfiguration.getInstance().isAnimating()) {
+                final HashMap<IKvidFigure, List<Point>> animatables = 
+                                                          new HashMap<IKvidFigure, List<Point>>();
+                for (final String key : dataSet.keySet()) {
+                    if (dataSet.get(key).getPaths().size() > 0) {
+                        animatables.put(figuresByURI.get(key), dataSet.get(key).getPaths().get(0));
+                    }
                 }
+                PlatformUI.getWorkbench().getDisplay().syncExec(new Runnable() {
+                    public void run() {
+                        //TODO still not satisfying, maybe check if data is by KIEM and use it then
+                        GmfAnimator.animate(animatables, ((DiagramEditor) editor).getDiagramEditPart(),
+                                            KiemPlugin.getDefault().getAimedStepDuration());
+                    }
+                });
             }
-            PlatformUI.getWorkbench().getDisplay().syncExec(new Runnable() {
-                public void run() {
-                    //TODO still not satisfying, maybe check if data is by KIEM and use it then
-                    GmfAnimator.animate(animatables, ((DiagramEditor) editor).getDiagramEditPart(),
-                                        KiemPlugin.getDefault().getAimedStepDuration());
-                }
-            }); 
         }        
     }
 

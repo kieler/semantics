@@ -22,8 +22,6 @@ import org.eclipse.draw2d.geometry.Point;
 import org.eclipse.gef.commands.CompoundCommand;
 import org.eclipse.gmf.runtime.diagram.ui.editparts.DiagramEditPart;
 
-import de.cau.cs.kieler.sim.kiem.KiemPlugin;
-
 /**
  * 
  * Class handling the animation of data figures in GMF.
