@@ -16,6 +16,12 @@ public class Property {
         }
     }
     
+    public Property(String thename, String thedefaultvalue) {
+        this.name = thename;
+        this.currentValue = thedefaultvalue;
+        values = new String[]{ thedefaultvalue };
+    }
+    
     public String getName() {
         return name;
     }
