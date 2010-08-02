@@ -36,5 +36,8 @@
     <genClasses ecoreClass="annotations.ecore#//FloatAnnotation">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute annotations.ecore#//FloatAnnotation/value"/>
     </genClasses>
+    <genClasses ecoreClass="annotations.ecore#//ContainmentAnnotation">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference annotations.ecore#//ContainmentAnnotation/object"/>
+    </genClasses>
   </genPackages>
 </genmodel:GenModel>
