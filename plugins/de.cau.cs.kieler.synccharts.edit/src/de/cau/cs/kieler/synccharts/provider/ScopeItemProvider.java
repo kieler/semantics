@@ -86,8 +86,9 @@ public class ScopeItemProvider
     /**
      * This adds a property descriptor for the Id feature.
      * <!-- begin-user-doc -->
+     * haf: isSettable set to false in order to disable ID property in UI
      * <!-- end-user-doc -->
-     * @generated
+     * @generated NOT
      */
     protected void addIdPropertyDescriptor(Object object) {
         itemPropertyDescriptors.add
@@ -97,7 +98,7 @@ public class ScopeItemProvider
                  getString("_UI_Scope_id_feature"),
                  getString("_UI_PropertyDescriptor_description", "_UI_Scope_id_feature", "_UI_Scope_type"),
                  SyncchartsPackage.Literals.SCOPE__ID,
-                 true,
+                 false, // haf: isSettable set to false in order to disable ID property in UI
                  false,
                  false,
                  ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
