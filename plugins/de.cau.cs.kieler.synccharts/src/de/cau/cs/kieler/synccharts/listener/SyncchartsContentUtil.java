@@ -107,8 +107,9 @@ public final class SyncchartsContentUtil {
         if(newId == null){
             newId = "";
         }
-        newId = newId.trim().replaceAll("\\s", "_"); // \s = whitespace char
-        if (newId.equals("") || newId.matches("\\w.*")) // \w = non-word character
+        newId = newId.replaceAll("\\W", " "); // strip all special symbols, \\W = non word-char
+        newId = newId.trim().replaceAll("\\s+", "_"); // \s = whitespace char
+        if (newId.equals("") || newId.matches("[^a-zA-Z_].*")) // \W = non-word character
         {
             newId = "_" + newId;
         }
