@@ -2,7 +2,7 @@
 <feature
       id="de.cau.cs.kieler.sim.kiem"
       label="KIELER Execution Manager"
-      version="0.2.0.qualifier"
+      version="0.3.0.qualifier"
       provider-name="Christian-Albrechts-Universität zu Kiel">
 
    <description url="http://www.informatik.uni-kiel.de/rtsys/kieler/wiki/Projects/KIEM">
