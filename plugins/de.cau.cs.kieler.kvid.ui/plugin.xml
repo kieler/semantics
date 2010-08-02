@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         id="de.cau.cs.kvid.ui.views"
+         name="KViD Views"
+         point="org.eclipse.ui.views">
+      <view
+            allowMultiple="false"
+            category="de.cau.cs.kieler"
+            class="de.cau.cs.kieler.kvid.ui.views.PropertiesView"
+            icon="icons/kieler.png"
+            id="de.cau.cs.kieler.kvid.ui.views.PropertiesView"
+            name="Visualization"
+            restorable="true">
+      </view>
+   </extension>
+
+</plugin>
