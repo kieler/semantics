@@ -12,6 +12,7 @@ import de.cau.cs.kieler.esterel.services.EsterelGrammarAccess;
 
 import com.google.inject.Inject;
 
+@SuppressWarnings("all")
 public class EsterelParsetreeConstructor extends AbstractParseTreeConstructor {
 		
 	@Inject
@@ -152,12 +153,9 @@ protected class ThisRootNode extends RootToken {
  * // ==============================================
  * // ===              B.5 Modules               ===
  * // ==============================================
- * 
  * //	help function to allow multiple modules in one document
- * 
- * 
- * Program hidden ( Esterel_SL_Comment , Esterel_ML_Comment , WS ):
- *   module+=Module module+=Module*;
+ * Program hidden(Esterel_SL_Comment, Esterel_ML_Comment, WS):
+ * 	module+=Module module+=Module*;
  *
  **/
 
@@ -290,8 +288,7 @@ protected class Program_ModuleAssignment_1 extends AssignmentToken  {
 /************ begin Rule Module ****************
  *
  * Module:
- *   "module" name=EsterelID ":" modInt=ModuleInterface? modBody=ModuleBody
- *   EndModule;
+ * 	"module" name=EsterelID ":" modInt=ModuleInterface? modBody=ModuleBody EndModule;
  *
  **/
 
@@ -523,13 +520,9 @@ protected class Module_EndModuleParserRuleCall_5 extends UnassignedTextToken {
 
 /************ begin Rule ModuleBody ****************
  *
- * //deprecated
- * 
  * // help function to clearly divide a Module into interface and body	
- * 
- * 
  * ModuleBody:
- *   statement+=Statement;
+ * 	statement+=Statement;
  *
  **/
 
@@ -586,15 +579,13 @@ protected class ModuleBody_StatementAssignment extends AssignmentToken  {
 /************ begin Rule ModuleInterface ****************
  *
  * ModuleInterface:
- *   (intSignalDecl+=SignalDecl|intTypeDecl+=TypeDecl|intSensorDecl+=SensorDecl|
- *   intConstantDecl+=ConstantDecl|intRelationDecl+=RelationDecl|
- *   intFunctionDecl+=FunctionDecl|intProcedureDecl+=ProcedureDecl)+;
+ * 	(intSignalDecl+=SignalDecl | intTypeDecl+=TypeDecl | intSensorDecl+=SensorDecl | intConstantDecl+=ConstantDecl |
+ * 	intRelationDecl+=RelationDecl | intFunctionDecl+=FunctionDecl | intProcedureDecl+=ProcedureDecl)+;
  *
  **/
 
-// (intSignalDecl+=SignalDecl|intTypeDecl+=TypeDecl|intSensorDecl+=SensorDecl|
-// intConstantDecl+=ConstantDecl|intRelationDecl+=RelationDecl|
-// intFunctionDecl+=FunctionDecl|intProcedureDecl+=ProcedureDecl)+
+// (intSignalDecl+=SignalDecl | intTypeDecl+=TypeDecl | intSensorDecl+=SensorDecl | intConstantDecl+=ConstantDecl |
+// intRelationDecl+=RelationDecl | intFunctionDecl+=FunctionDecl | intProcedureDecl+=ProcedureDecl)+
 protected class ModuleInterface_Alternatives extends AlternativesToken {
 
 	public ModuleInterface_Alternatives(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -953,21 +944,16 @@ protected class ModuleInterface_IntProcedureDeclAssignment_6 extends AssignmentT
  * // ----------------------------------------------
  * //            Interface Declarations
  * // ----------------------------------------------
- * 	
  * // ==> Signals and Sensors <==
- * 
- * 
  * SignalDecl:
- *   {Input} "input" signal+=Signal ("," signal+=Signal)* ";"|{Output} "output"
- *   signal+=Signal ("," signal+=Signal)* ";"|{InputOutput} "inputoutput"
- *   signal+=Signal ("," signal+=Signal)* ";"|{Return} "return" signal+=Signal (
- *   "," signal+=Signal)* ";";
+ * 	{Input} "input" signal+=Signal ("," signal+=Signal)* ";" | {Output} "output" signal+=Signal ("," signal+=Signal)* ";"
+ * 	| {InputOutput} "inputoutput" signal+=Signal ("," signal+=Signal)* ";" | {Return} "return" signal+=Signal (","
+ * 	signal+=Signal)* ";";
  *
  **/
 
-// {Input} "input" signal+=Signal ("," signal+=Signal)* ";"|{Output} "output"
-// signal+=Signal ("," signal+=Signal)* ";"|{InputOutput} "inputoutput"
-// signal+=Signal ("," signal+=Signal)* ";"|{Return} "return" signal+=Signal (","
+// {Input} "input" signal+=Signal ("," signal+=Signal)* ";" | {Output} "output" signal+=Signal ("," signal+=Signal)* ";" |
+// {InputOutput} "inputoutput" signal+=Signal ("," signal+=Signal)* ";" | {Return} "return" signal+=Signal (","
 // signal+=Signal)* ";"
 protected class SignalDecl_Alternatives extends AlternativesToken {
 
@@ -1967,11 +1953,9 @@ protected class SignalDecl_SemicolonKeyword_3_4 extends KeywordToken  {
  *
  * //ChannelType:
  * //	//make reference to declared types
- * 	 //Problem: Need reference OR BaseType
- * 
- * 
+ * //Problem: Need reference OR BaseType
  * SensorDecl:
- *   "sensor" sensor+=Sensor ("," sensor+=Sensor)* ";";
+ * 	"sensor" sensor+=Sensor ("," sensor+=Sensor)* ";";
  *
  **/
 
@@ -2193,11 +2177,8 @@ protected class SensorDecl_SemicolonKeyword_3 extends KeywordToken  {
 /************ begin Rule RelationDecl ****************
  *
  * // ==> Relations
- * 
- * 
  * RelationDecl:
- *   {Relation} "relation" relation+=RelationType ("," relation+=RelationType)*
- *   ";";
+ * 	{Relation} "relation" relation+=RelationType ("," relation+=RelationType)* ";";
  *
  **/
 
@@ -2446,11 +2427,11 @@ protected class RelationDecl_SemicolonKeyword_4 extends KeywordToken  {
 /************ begin Rule RelationType ****************
  *
  * RelationType:
- *   RelationImplication|RelationIncompatibility;
+ * 	RelationImplication | RelationIncompatibility;
  *
  **/
 
-// RelationImplication|RelationIncompatibility
+// RelationImplication | RelationIncompatibility
 protected class RelationType_Alternatives extends AlternativesToken {
 
 	public RelationType_Alternatives(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -2560,7 +2541,7 @@ protected class RelationType_RelationIncompatibilityParserRuleCall_1 extends Rul
 /************ begin Rule RelationImplication ****************
  *
  * RelationImplication:
- *   first=[Signal|EsterelID] type="=>" second=[Signal|EsterelID];
+ * 	first=[Signal|EsterelID] type="=>" second=[Signal|EsterelID];
  *
  **/
 
@@ -2653,7 +2634,7 @@ protected class RelationImplication_TypeAssignment_1 extends AssignmentToken  {
 	public IEObjectConsumer tryConsume() {
 		if((value = eObjectConsumer.getConsumable("type",true)) == null) return null;
 		IEObjectConsumer obj = eObjectConsumer.cloneAndConsume("type");
-		if("=>".equals(value)) { // org::eclipse::xtext::impl::KeywordImpl
+		if(keywordSerializer.isValid(obj.getEObject(), grammarAccess.getRelationImplicationAccess().getTypeEqualsSignGreaterThanSignKeyword_1_0(), value, null)) {
 			type = AssignmentType.KEYWORD;
 			element = grammarAccess.getRelationImplicationAccess().getTypeEqualsSignGreaterThanSignKeyword_1_0();
 			return obj;
@@ -2707,13 +2688,11 @@ protected class RelationImplication_SecondAssignment_2 extends AssignmentToken  
 /************ begin Rule RelationIncompatibility ****************
  *
  * RelationIncompatibility:
- *   incomp+=[Signal|EsterelID] type="#" incomp+=[Signal|EsterelID] ("#" incomp+=[
- *   Signal|EsterelID])*;
+ * 	incomp+=[Signal|EsterelID] type="#" incomp+=[Signal|EsterelID] ("#" incomp+=[Signal|EsterelID])*;
  *
  **/
 
-// incomp+=[Signal|EsterelID] type="#" incomp+=[Signal|EsterelID] ("#" incomp+=[
-// Signal|EsterelID])*
+// incomp+=[Signal|EsterelID] type="#" incomp+=[Signal|EsterelID] ("#" incomp+=[Signal|EsterelID])*
 protected class RelationIncompatibility_Group extends GroupToken {
 	
 	public RelationIncompatibility_Group(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -2803,7 +2782,7 @@ protected class RelationIncompatibility_TypeAssignment_1 extends AssignmentToken
 	public IEObjectConsumer tryConsume() {
 		if((value = eObjectConsumer.getConsumable("type",true)) == null) return null;
 		IEObjectConsumer obj = eObjectConsumer.cloneAndConsume("type");
-		if("#".equals(value)) { // org::eclipse::xtext::impl::KeywordImpl
+		if(keywordSerializer.isValid(obj.getEObject(), grammarAccess.getRelationIncompatibilityAccess().getTypeNumberSignKeyword_1_0(), value, null)) {
 			type = AssignmentType.KEYWORD;
 			element = grammarAccess.getRelationIncompatibilityAccess().getTypeNumberSignKeyword_1_0();
 			return obj;
@@ -2940,10 +2919,8 @@ protected class RelationIncompatibility_IncompAssignment_3_1 extends AssignmentT
 /************ begin Rule TypeDecl ****************
  *
  * // ==> Types
- * 
- * 
  * TypeDecl:
- *   "type" type+=Type ("," type+=Type)* ";";
+ * 	"type" type+=Type ("," type+=Type)* ";";
  *
  **/
 
@@ -3165,7 +3142,7 @@ protected class TypeDecl_SemicolonKeyword_3 extends KeywordToken  {
 /************ begin Rule Type ****************
  *
  * Type:
- *   name=EsterelID;
+ * 	name=EsterelID;
  *
  **/
 
@@ -3210,16 +3187,12 @@ protected class Type_NameAssignment extends AssignmentToken  {
 /************ begin Rule ConstantDecl ****************
  *
  * // ==> Constants
- * 
- * 
  * ConstantDecl:
- *   "constant" constant+=OneTypeConstantDecl ("," constant+=OneTypeConstantDecl)*
- *   ";";
+ * 	"constant" constant+=OneTypeConstantDecl ("," constant+=OneTypeConstantDecl)* ";";
  *
  **/
 
-// "constant" constant+=OneTypeConstantDecl ("," constant+=OneTypeConstantDecl)*
-// ";"
+// "constant" constant+=OneTypeConstantDecl ("," constant+=OneTypeConstantDecl)* ";"
 protected class ConstantDecl_Group extends GroupToken {
 	
 	public ConstantDecl_Group(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -3437,12 +3410,11 @@ protected class ConstantDecl_SemicolonKeyword_3 extends KeywordToken  {
 /************ begin Rule OneTypeConstantDecl ****************
  *
  * OneTypeConstantDecl:
- *   constant+=Constant ("," constant+=Constant)* ":" (type=EsterelID|
- *   type=BaseType);
+ * 	constant+=Constant ("," constant+=Constant)* ":" (type=EsterelID | type=BaseType);
  *
  **/
 
-// constant+=Constant ("," constant+=Constant)* ":" (type=EsterelID|type=BaseType)
+// constant+=Constant ("," constant+=Constant)* ":" (type=EsterelID | type=BaseType)
 protected class OneTypeConstantDecl_Group extends GroupToken {
 	
 	public OneTypeConstantDecl_Group(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -3631,7 +3603,7 @@ protected class OneTypeConstantDecl_ColonKeyword_2 extends KeywordToken  {
 
 }
 
-// type=EsterelID|type=BaseType
+// type=EsterelID | type=BaseType
 protected class OneTypeConstantDecl_Alternatives_3 extends AlternativesToken {
 
 	public OneTypeConstantDecl_Alternatives_3(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -3730,7 +3702,7 @@ protected class OneTypeConstantDecl_TypeAssignment_3_1 extends AssignmentToken  
 /************ begin Rule Constant ****************
  *
  * Constant:
- *   name=EsterelID ("=" value=ConstantValue)?;
+ * 	name=EsterelID ("=" value=ConstantValue)?;
  *
  **/
 
@@ -3884,10 +3856,8 @@ protected class Constant_ValueAssignment_1_1 extends AssignmentToken  {
 /************ begin Rule FunctionDecl ****************
  *
  * // ==> Functions
- * 
- * 
  * FunctionDecl:
- *   "function" function+=Function ("," function+=Function)* ";";
+ * 	"function" function+=Function ("," function+=Function)* ";";
  *
  **/
 
@@ -4109,13 +4079,13 @@ protected class FunctionDecl_SemicolonKeyword_3 extends KeywordToken  {
 /************ begin Rule Function ****************
  *
  * Function:
- *   name=EsterelID "(" (idList+=( EsterelID | BaseType ) ("," idList+=( EsterelID
- *   | BaseType ))*)? ")" ":" (type=EsterelID|type=BaseType);
+ * 	name=EsterelID "(" (idList+=(EsterelID | BaseType) ("," idList+=(EsterelID | BaseType))*)? ")" ":" (type=EsterelID |
+ * 	type=BaseType);
  *
  **/
 
-// name=EsterelID "(" (idList+=( EsterelID | BaseType ) ("," idList+=( EsterelID |
-// BaseType ))*)? ")" ":" (type=EsterelID|type=BaseType)
+// name=EsterelID "(" (idList+=(EsterelID | BaseType) ("," idList+=(EsterelID | BaseType))*)? ")" ":" (type=EsterelID |
+// type=BaseType)
 protected class Function_Group extends GroupToken {
 	
 	public Function_Group(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -4199,7 +4169,7 @@ protected class Function_LeftParenthesisKeyword_1 extends KeywordToken  {
 
 }
 
-// (idList+=( EsterelID | BaseType ) ("," idList+=( EsterelID | BaseType ))*)?
+// (idList+=(EsterelID | BaseType) ("," idList+=(EsterelID | BaseType))*)?
 protected class Function_Group_2 extends GroupToken {
 	
 	public Function_Group_2(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -4222,7 +4192,7 @@ protected class Function_Group_2 extends GroupToken {
 
 }
 
-// idList+=( EsterelID | BaseType )
+// idList+=(EsterelID | BaseType)
 protected class Function_IdListAssignment_2_0 extends AssignmentToken  {
 	
 	public Function_IdListAssignment_2_0(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -4261,7 +4231,7 @@ protected class Function_IdListAssignment_2_0 extends AssignmentToken  {
 
 }
 
-// ("," idList+=( EsterelID | BaseType ))*
+// ("," idList+=(EsterelID | BaseType))*
 protected class Function_Group_2_1 extends GroupToken {
 	
 	public Function_Group_2_1(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -4306,7 +4276,7 @@ protected class Function_CommaKeyword_2_1_0 extends KeywordToken  {
 
 }
 
-// idList+=( EsterelID | BaseType )
+// idList+=(EsterelID | BaseType)
 protected class Function_IdListAssignment_2_1_1 extends AssignmentToken  {
 	
 	public Function_IdListAssignment_2_1_1(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -4392,7 +4362,7 @@ protected class Function_ColonKeyword_4 extends KeywordToken  {
 
 }
 
-// type=EsterelID|type=BaseType
+// type=EsterelID | type=BaseType
 protected class Function_Alternatives_5 extends AlternativesToken {
 
 	public Function_Alternatives_5(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -4491,10 +4461,8 @@ protected class Function_TypeAssignment_5_1 extends AssignmentToken  {
 /************ begin Rule ProcedureDecl ****************
  *
  * // ==> Procedures
- * 
- * 
  * ProcedureDecl:
- *   "procedure" procedure+=Procedure ("," procedure+=Procedure)* ";";
+ * 	"procedure" procedure+=Procedure ("," procedure+=Procedure)* ";";
  *
  **/
 
@@ -4716,15 +4684,13 @@ protected class ProcedureDecl_SemicolonKeyword_3 extends KeywordToken  {
 /************ begin Rule Procedure ****************
  *
  * Procedure:
- *   name=EsterelID "(" (idList1+=( EsterelID | BaseType ) ("," idList1+=(
- *   EsterelID | BaseType ))*)? ")" "(" (idList2+=( EsterelID | BaseType ) (","
- *   idList2+=( EsterelID | BaseType ))*)? ")";
+ * 	name=EsterelID "(" (idList1+=(EsterelID | BaseType) ("," idList1+=(EsterelID | BaseType))*)? ")" "("
+ * 	(idList2+=(EsterelID | BaseType) ("," idList2+=(EsterelID | BaseType))*)? ")";
  *
  **/
 
-// name=EsterelID "(" (idList1+=( EsterelID | BaseType ) ("," idList1+=( EsterelID
-// | BaseType ))*)? ")" "(" (idList2+=( EsterelID | BaseType ) ("," idList2+=(
-// EsterelID | BaseType ))*)? ")"
+// name=EsterelID "(" (idList1+=(EsterelID | BaseType) ("," idList1+=(EsterelID | BaseType))*)? ")" "("
+// (idList2+=(EsterelID | BaseType) ("," idList2+=(EsterelID | BaseType))*)? ")"
 protected class Procedure_Group extends GroupToken {
 	
 	public Procedure_Group(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -4808,7 +4774,7 @@ protected class Procedure_LeftParenthesisKeyword_1 extends KeywordToken  {
 
 }
 
-// (idList1+=( EsterelID | BaseType ) ("," idList1+=( EsterelID | BaseType ))*)?
+// (idList1+=(EsterelID | BaseType) ("," idList1+=(EsterelID | BaseType))*)?
 protected class Procedure_Group_2 extends GroupToken {
 	
 	public Procedure_Group_2(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -4831,7 +4797,7 @@ protected class Procedure_Group_2 extends GroupToken {
 
 }
 
-// idList1+=( EsterelID | BaseType )
+// idList1+=(EsterelID | BaseType)
 protected class Procedure_IdList1Assignment_2_0 extends AssignmentToken  {
 	
 	public Procedure_IdList1Assignment_2_0(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -4870,7 +4836,7 @@ protected class Procedure_IdList1Assignment_2_0 extends AssignmentToken  {
 
 }
 
-// ("," idList1+=( EsterelID | BaseType ))*
+// ("," idList1+=(EsterelID | BaseType))*
 protected class Procedure_Group_2_1 extends GroupToken {
 	
 	public Procedure_Group_2_1(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -4915,7 +4881,7 @@ protected class Procedure_CommaKeyword_2_1_0 extends KeywordToken  {
 
 }
 
-// idList1+=( EsterelID | BaseType )
+// idList1+=(EsterelID | BaseType)
 protected class Procedure_IdList1Assignment_2_1_1 extends AssignmentToken  {
 	
 	public Procedure_IdList1Assignment_2_1_1(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -5001,7 +4967,7 @@ protected class Procedure_LeftParenthesisKeyword_4 extends KeywordToken  {
 
 }
 
-// (idList2+=( EsterelID | BaseType ) ("," idList2+=( EsterelID | BaseType ))*)?
+// (idList2+=(EsterelID | BaseType) ("," idList2+=(EsterelID | BaseType))*)?
 protected class Procedure_Group_5 extends GroupToken {
 	
 	public Procedure_Group_5(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -5024,7 +4990,7 @@ protected class Procedure_Group_5 extends GroupToken {
 
 }
 
-// idList2+=( EsterelID | BaseType )
+// idList2+=(EsterelID | BaseType)
 protected class Procedure_IdList2Assignment_5_0 extends AssignmentToken  {
 	
 	public Procedure_IdList2Assignment_5_0(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -5063,7 +5029,7 @@ protected class Procedure_IdList2Assignment_5_0 extends AssignmentToken  {
 
 }
 
-// ("," idList2+=( EsterelID | BaseType ))*
+// ("," idList2+=(EsterelID | BaseType))*
 protected class Procedure_Group_5_1 extends GroupToken {
 	
 	public Procedure_Group_5_1(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -5108,7 +5074,7 @@ protected class Procedure_CommaKeyword_5_1_0 extends KeywordToken  {
 
 }
 
-// idList2+=( EsterelID | BaseType )
+// idList2+=(EsterelID | BaseType)
 protected class Procedure_IdList2Assignment_5_1_1 extends AssignmentToken  {
 	
 	public Procedure_IdList2Assignment_5_1_1(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -5181,10 +5147,8 @@ protected class Procedure_RightParenthesisKeyword_6 extends KeywordToken  {
  * // ==============================================
  * // ===            B.4 Statements              ===
  * // ==============================================
- * 
- * 
  * Statement:
- *   Sequence ({Parallel.list+=current} "||" list+=Sequence)*;
+ * 	Sequence ({Parallel.list+=current} "||" list+=Sequence)*;
  *
  **/
 
@@ -5436,15 +5400,13 @@ protected class Statement_ListAssignment_1_2 extends AssignmentToken  {
 /************ begin Rule AtomicStatement ****************
  *
  * AtomicStatement returns Statement:
- *   Abort|Assignment|Await|Block|ProcCall|Do|Emit|EveryDo|Exit|Halt|IfTest|
- *   LocalSignalDecl|Loop|Nothing|Pause|Present|Repeat|Run|Suspend|Sustain|Trap|
- *   Variable|WeakAbort;
+ * 	Abort | Assignment | Await | Block | ProcCall | Do | Emit | EveryDo | Exit | Halt | IfTest | LocalSignalDecl | Loop |
+ * 	Nothing | Pause | Present | Repeat | Run | Suspend | Sustain | Trap | Variable | WeakAbort;
  *
  **/
 
-// Abort|Assignment|Await|Block|ProcCall|Do|Emit|EveryDo|Exit|Halt|IfTest|
-// LocalSignalDecl|Loop|Nothing|Pause|Present|Repeat|Run|Suspend|Sustain|Trap|
-// Variable|WeakAbort
+// Abort | Assignment | Await | Block | ProcCall | Do | Emit | EveryDo | Exit | Halt | IfTest | LocalSignalDecl | Loop |
+// Nothing | Pause | Present | Repeat | Run | Suspend | Sustain | Trap | Variable | WeakAbort
 protected class AtomicStatement_Alternatives extends AlternativesToken {
 
 	public AtomicStatement_Alternatives(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -6352,10 +6314,8 @@ protected class AtomicStatement_WeakAbortParserRuleCall_22 extends RuleCallToken
 /************ begin Rule Sequence ****************
  *
  * // --> B.4.1 Control Flow Operators <--	
- * 
- * 
  * Sequence returns Statement:
- *   AtomicStatement ({Sequence.list+=current} ";" list+=AtomicStatement)* ";"?;
+ * 	AtomicStatement ({Sequence.list+=current} ";" list+=AtomicStatement)* ";"?;
  *
  **/
 
@@ -6605,7 +6565,7 @@ protected class Sequence_ListAssignment_1_2 extends AssignmentToken  {
 /************ begin Rule Block ****************
  *
  * Block:
- *   "[" statement=Statement "]";
+ * 	"[" statement=Statement "]";
  *
  **/
 
@@ -6734,7 +6694,7 @@ protected class Block_RightSquareBracketKeyword_2 extends KeywordToken  {
 /************ begin Rule Assignment ****************
  *
  * Assignment:
- *   variable=EsterelID ":=" expr=DataExpr;
+ * 	variable=EsterelID ":=" expr=DataExpr;
  *
  **/
 
@@ -6875,10 +6835,8 @@ protected class Assignment_ExprAssignment_2 extends AssignmentToken  {
 /************ begin Rule Abort ****************
  *
  * // --> B.4.2 abort: Strong Preemption
- * 
- * 
  * Abort:
- *   "abort" statement=Statement "when" body=AbortBody;
+ * 	"abort" statement=Statement "when" body=AbortBody;
  *
  **/
 
@@ -7053,11 +7011,11 @@ protected class Abort_BodyAssignment_3 extends AssignmentToken  {
 /************ begin Rule AbortBody ****************
  *
  * AbortBody:
- *   AbortInstance|AbortCase;
+ * 	AbortInstance | AbortCase;
  *
  **/
 
-// AbortInstance|AbortCase
+// AbortInstance | AbortCase
 protected class AbortBody_Alternatives extends AlternativesToken {
 
 	public AbortBody_Alternatives(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -7167,7 +7125,7 @@ protected class AbortBody_AbortCaseParserRuleCall_1 extends RuleCallToken {
 /************ begin Rule AbortInstance ****************
  *
  * AbortInstance:
- *   delay=DelayExpr ("do" statement=Statement "end" "abort"?)?;
+ * 	delay=DelayExpr ("do" statement=Statement "end" "abort"?)?;
  *
  **/
 
@@ -7366,7 +7324,7 @@ protected class AbortInstance_EndKeyword_1_2 extends KeywordToken  {
 /************ begin Rule AbortCase ****************
  *
  * AbortCase:
- *   cases+=AbortCaseSingle cases+=AbortCaseSingle* "end" "abort"?;
+ * 	cases+=AbortCaseSingle cases+=AbortCaseSingle* "end" "abort"?;
  *
  **/
 
@@ -7521,7 +7479,7 @@ protected class AbortCase_EndKeyword_2 extends KeywordToken  {
 /************ begin Rule AbortCaseSingle ****************
  *
  * AbortCaseSingle:
- *   "case" delay=DelayExpr ("do" statement=Statement)?;
+ * 	"case" delay=DelayExpr ("do" statement=Statement)?;
  *
  **/
 
@@ -7720,10 +7678,8 @@ protected class AbortCaseSingle_StatementAssignment_2_1 extends AssignmentToken 
 /************ begin Rule Await ****************
  *
  * // --> B.4.3 await: Strong Preemption
- * 
- * 
  * Await:
- *   "await" body=AwaitBody;
+ * 	"await" body=AwaitBody;
  *
  **/
 
@@ -7830,11 +7786,11 @@ protected class Await_BodyAssignment_1 extends AssignmentToken  {
 /************ begin Rule AwaitBody ****************
  *
  * AwaitBody:
- *   AwaitInstance|AwaitCase;
+ * 	AwaitInstance | AwaitCase;
  *
  **/
 
-// AwaitInstance|AwaitCase
+// AwaitInstance | AwaitCase
 protected class AwaitBody_Alternatives extends AlternativesToken {
 
 	public AwaitBody_Alternatives(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -7945,7 +7901,7 @@ protected class AwaitBody_AwaitCaseParserRuleCall_1 extends RuleCallToken {
 /************ begin Rule AwaitInstance ****************
  *
  * AwaitInstance:
- *   delay=DelayExpr ("do" statement=Statement end=AwaitEnd)?;
+ * 	delay=DelayExpr ("do" statement=Statement end=AwaitEnd)?;
  *
  **/
 
@@ -8156,7 +8112,7 @@ protected class AwaitInstance_EndAssignment_1_2 extends AssignmentToken  {
 /************ begin Rule AwaitCase ****************
  *
  * AwaitCase:
- *   cases+=AbortCaseSingle cases+=AbortCaseSingle* end=AwaitEnd;
+ * 	cases+=AbortCaseSingle cases+=AbortCaseSingle* end=AwaitEnd;
  *
  **/
 
@@ -8323,18 +8279,14 @@ protected class AwaitCase_EndAssignment_2 extends AssignmentToken  {
 /************ begin Rule ProcCall ****************
  *
  * // --> B.4.4 call: Procedure Call
- * 
- * 
  * ProcCall:
- *   "call" proc=[Procedure|EsterelID] "(" varList+=[VariableSingle|EsterelID] (
- *   "," varList+=[VariableSingle|EsterelID])* ")" "(" expr+=DataExpr (","
- *   expr+=DataExpr)* ")";
+ * 	"call" proc=[Procedure|EsterelID] "(" varList+=[VariableSingle|EsterelID] ("," varList+=[VariableSingle|EsterelID])*
+ * 	")" "(" expr+=DataExpr ("," expr+=DataExpr)* ")";
  *
  **/
 
-// "call" proc=[Procedure|EsterelID] "(" varList+=[VariableSingle|EsterelID] (","
-// varList+=[VariableSingle|EsterelID])* ")" "(" expr+=DataExpr (","
-// expr+=DataExpr)* ")"
+// "call" proc=[Procedure|EsterelID] "(" varList+=[VariableSingle|EsterelID] ("," varList+=[VariableSingle|EsterelID])* ")"
+// "(" expr+=DataExpr ("," expr+=DataExpr)* ")"
 protected class ProcCall_Group extends GroupToken {
 	
 	public ProcCall_Group(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -8777,14 +8729,12 @@ protected class ProcCall_RightParenthesisKeyword_9 extends KeywordToken  {
  *
  * // --> B.4.5 do-upto: Conditional Iteration (deprecated)
  * // --> B.4.6 do-watching: Strong Preemption (deprecated)
- * 
- * 
  * Do:
- *   "do" statement=Statement (endUp=DoUpto|endWatch=DoWatching);
+ * 	"do" statement=Statement (endUp=DoUpto | endWatch=DoWatching);
  *
  **/
 
-// "do" statement=Statement (endUp=DoUpto|endWatch=DoWatching)
+// "do" statement=Statement (endUp=DoUpto | endWatch=DoWatching)
 protected class Do_Group extends GroupToken {
 	
 	public Do_Group(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -8880,7 +8830,7 @@ protected class Do_StatementAssignment_1 extends AssignmentToken  {
 	}	
 }
 
-// endUp=DoUpto|endWatch=DoWatching
+// endUp=DoUpto | endWatch=DoWatching
 protected class Do_Alternatives_2 extends AlternativesToken {
 
 	public Do_Alternatives_2(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -9003,7 +8953,7 @@ protected class Do_EndWatchAssignment_2_1 extends AssignmentToken  {
 /************ begin Rule DoUpto ****************
  *
  * DoUpto:
- *   "upto" expr=DelayExpr;
+ * 	"upto" expr=DelayExpr;
  *
  **/
 
@@ -9110,7 +9060,7 @@ protected class DoUpto_ExprAssignment_1 extends AssignmentToken  {
 /************ begin Rule DoWatching ****************
  *
  * DoWatching:
- *   "watching" delay=DelayExpr end=DoWatchingEnd?;
+ * 	"watching" delay=DelayExpr end=DoWatchingEnd?;
  *
  **/
 
@@ -9264,7 +9214,7 @@ protected class DoWatching_EndAssignment_2 extends AssignmentToken  {
 /************ begin Rule DoWatchingEnd ****************
  *
  * DoWatchingEnd:
- *   "timeout" statement=Statement "end" "timeout"?;
+ * 	"timeout" statement=Statement "end" "timeout"?;
  *
  **/
 
@@ -9393,14 +9343,12 @@ protected class DoWatchingEnd_EndKeyword_2 extends KeywordToken  {
 /************ begin Rule Emit ****************
  *
  * // --> B.4.7 emit: Signal Emission <--
- * 
- * 
  * Emit:
- *   "emit" (signal=[Signal|EsterelID]|tick=Tick) ("(" expr=DataExpr ")")?;
+ * 	"emit" (signal=[Signal|EsterelID] | tick=Tick) ("(" expr=DataExpr ")")?;
  *
  **/
 
-// "emit" (signal=[Signal|EsterelID]|tick=Tick) ("(" expr=DataExpr ")")?
+// "emit" (signal=[Signal|EsterelID] | tick=Tick) ("(" expr=DataExpr ")")?
 protected class Emit_Group extends GroupToken {
 	
 	public Emit_Group(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -9451,7 +9399,7 @@ protected class Emit_EmitKeyword_0 extends KeywordToken  {
 
 }
 
-// signal=[Signal|EsterelID]|tick=Tick
+// signal=[Signal|EsterelID] | tick=Tick
 protected class Emit_Alternatives_1 extends AlternativesToken {
 
 	public Emit_Alternatives_1(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -9666,10 +9614,8 @@ protected class Emit_RightParenthesisKeyword_2_2 extends KeywordToken  {
 /************ begin Rule EveryDo ****************
  *
  * // --> B.4.8 every-do: Conditional Iteration
- * 
- * 
  * EveryDo:
- *   "every" delay=DelayExpr "do" statement=Statement "end" "every"?;
+ * 	"every" delay=DelayExpr "do" statement=Statement "end" "every"?;
  *
  **/
 
@@ -9866,10 +9812,8 @@ protected class EveryDo_EndKeyword_4 extends KeywordToken  {
 /************ begin Rule Exit ****************
  *
  * // --> B.4.10 exit: Trap Exit
- * 
- * 
  * Exit:
- *   "exit" trap=[TrapDecl|EsterelID] ("(" dataExpr=DataExpr ")")?;
+ * 	"exit" trap=[TrapDecl|EsterelID] ("(" dataExpr=DataExpr ")")?;
  *
  **/
 
@@ -10081,10 +10025,8 @@ protected class Exit_RightParenthesisKeyword_2_2 extends KeywordToken  {
 /************ begin Rule Halt ****************
  *
  * // --> B.4.11 halt: Wait Forever
- * 
- * 
  * Halt:
- *   "halt" {Halt};
+ * 	"halt" {Halt};
  *
  **/
 
@@ -10172,16 +10114,12 @@ protected class Halt_HaltAction_1 extends ActionToken  {
 /************ begin Rule IfTest ****************
  *
  * // --> B.4.12: if: Conditional for Data
- * 
- * 
  * IfTest:
- *   "if" expr=DataExpr thenPart=ThenPart? elseIf=ElsIfPart? elsePart=ElsePart?
- *   "end" "if"?;
+ * 	"if" expr=DataExpr thenPart=ThenPart? elseIf=ElsIfPart? elsePart=ElsePart? "end" "if"?;
  *
  **/
 
-// "if" expr=DataExpr thenPart=ThenPart? elseIf=ElsIfPart? elsePart=ElsePart? "end"
-// "if"?
+// "if" expr=DataExpr thenPart=ThenPart? elseIf=ElsIfPart? elsePart=ElsePart? "end" "if"?
 protected class IfTest_Group extends GroupToken {
 	
 	public IfTest_Group(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -10450,7 +10388,7 @@ protected class IfTest_EndKeyword_5 extends KeywordToken  {
 /************ begin Rule ElsIfPart ****************
  *
  * ElsIfPart:
- *   elsif+=ElsIf elsif+=ElsIf*;
+ * 	elsif+=ElsIf elsif+=ElsIf*;
  *
  **/
 
@@ -10583,7 +10521,7 @@ protected class ElsIfPart_ElsifAssignment_1 extends AssignmentToken  {
 /************ begin Rule ElsIf ****************
  *
  * ElsIf:
- *   "elsif" expr=DataExpr thenPart=ThenPart?;
+ * 	"elsif" expr=DataExpr thenPart=ThenPart?;
  *
  **/
 
@@ -10737,7 +10675,7 @@ protected class ElsIf_ThenPartAssignment_2 extends AssignmentToken  {
 /************ begin Rule ThenPart ****************
  *
  * ThenPart:
- *   "then" statement=Statement;
+ * 	"then" statement=Statement;
  *
  **/
 
@@ -10844,7 +10782,7 @@ protected class ThenPart_StatementAssignment_1 extends AssignmentToken  {
 /************ begin Rule ElsePart ****************
  *
  * ElsePart:
- *   "else" statement=Statement;
+ * 	"else" statement=Statement;
  *
  **/
 
@@ -10952,14 +10890,12 @@ protected class ElsePart_StatementAssignment_1 extends AssignmentToken  {
  *
  * // --> B.4.13 loop: Infinite Loop
  * // --> B.4.14 loop-each: Condition Iteration
- * 
- * 
  * Loop:
- *   "loop" body=LoopBody (EndLoop|end=LoopEach);
+ * 	"loop" body=LoopBody (EndLoop | end=LoopEach);
  *
  **/
 
-// "loop" body=LoopBody (EndLoop|end=LoopEach)
+// "loop" body=LoopBody (EndLoop | end=LoopEach)
 protected class Loop_Group extends GroupToken {
 	
 	public Loop_Group(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -11055,7 +10991,7 @@ protected class Loop_BodyAssignment_1 extends AssignmentToken  {
 	}	
 }
 
-// EndLoop|end=LoopEach
+// EndLoop | end=LoopEach
 protected class Loop_Alternatives_2 extends AlternativesToken {
 
 	public Loop_Alternatives_2(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -11155,7 +11091,7 @@ protected class Loop_EndAssignment_2_1 extends AssignmentToken  {
 /************ begin Rule LoopEach ****************
  *
  * LoopEach:
- *   "each" LoopDelay;
+ * 	"each" LoopDelay;
  *
  **/
 
@@ -11251,7 +11187,7 @@ protected class LoopEach_LoopDelayParserRuleCall_1 extends RuleCallToken {
 /************ begin Rule LoopDelay ****************
  *
  * LoopDelay:
- *   delay=DelayExpr;
+ * 	delay=DelayExpr;
  *
  **/
 
@@ -11308,7 +11244,7 @@ protected class LoopDelay_DelayAssignment extends AssignmentToken  {
 /************ begin Rule LoopBody ****************
  *
  * LoopBody:
- *   statement=Statement;
+ * 	statement=Statement;
  *
  **/
 
@@ -11365,10 +11301,8 @@ protected class LoopBody_StatementAssignment extends AssignmentToken  {
 /************ begin Rule Nothing ****************
  *
  * // --> B.4.15 nothing: No Operation
- * 
- * 
  * Nothing:
- *   "nothing" {Nothing};
+ * 	"nothing" {Nothing};
  *
  **/
 
@@ -11456,10 +11390,8 @@ protected class Nothing_NothingAction_1 extends ActionToken  {
 /************ begin Rule Pause ****************
  *
  * // --> B.4.16 pause: Unit Delay
- * 
- * 
  * Pause:
- *   "pause" {Pause};
+ * 	"pause" {Pause};
  *
  **/
 
@@ -11547,10 +11479,8 @@ protected class Pause_PauseAction_1 extends ActionToken  {
 /************ begin Rule Present ****************
  *
  * // --> B.4.17 present: Conditional for Signals
- * 
- * 
  * Present:
- *   "present" body=PresentBody elsePart=ElsePart? "end" "present"?;
+ * 	"present" body=PresentBody elsePart=ElsePart? "end" "present"?;
  *
  **/
 
@@ -11726,11 +11656,11 @@ protected class Present_EndKeyword_3 extends KeywordToken  {
 /************ begin Rule PresentBody ****************
  *
  * PresentBody:
- *   PresentEventBody|PresentCaseList;
+ * 	PresentEventBody | PresentCaseList;
  *
  **/
 
-// PresentEventBody|PresentCaseList
+// PresentEventBody | PresentCaseList
 protected class PresentBody_Alternatives extends AlternativesToken {
 
 	public PresentBody_Alternatives(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -11840,7 +11770,7 @@ protected class PresentBody_PresentCaseListParserRuleCall_1 extends RuleCallToke
 /************ begin Rule PresentEventBody ****************
  *
  * PresentEventBody:
- *   event=PresentEvent thenPart=ThenPart?;
+ * 	event=PresentEvent thenPart=ThenPart?;
  *
  **/
 
@@ -11972,7 +11902,7 @@ protected class PresentEventBody_ThenPartAssignment_1 extends AssignmentToken  {
 /************ begin Rule PresentCaseList ****************
  *
  * PresentCaseList:
- *   case+=PresentCase case+=PresentCase*;
+ * 	case+=PresentCase case+=PresentCase*;
  *
  **/
 
@@ -12105,7 +12035,7 @@ protected class PresentCaseList_CaseAssignment_1 extends AssignmentToken  {
 /************ begin Rule PresentCase ****************
  *
  * PresentCase:
- *   "case" event=PresentEvent ("do" statement=Statement)?;
+ * 	"case" event=PresentEvent ("do" statement=Statement)?;
  *
  **/
 
@@ -12304,11 +12234,11 @@ protected class PresentCase_StatementAssignment_2_1 extends AssignmentToken  {
 /************ begin Rule PresentEvent ****************
  *
  * PresentEvent:
- *   expression=SigExpr|"[" expression=SigExpr "]";
+ * 	expression=SigExpr | "[" expression=SigExpr "]";
  *
  **/
 
-// expression=SigExpr|"[" expression=SigExpr "]"
+// expression=SigExpr | "[" expression=SigExpr "]"
 protected class PresentEvent_Alternatives extends AlternativesToken {
 
 	public PresentEvent_Alternatives(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -12502,16 +12432,12 @@ protected class PresentEvent_RightSquareBracketKeyword_1_2 extends KeywordToken 
 /************ begin Rule Repeat ****************
  *
  * // --> B.4.18 repeat: Iterate a Fixed Number of Times
- * 
- * 
  * Repeat:
- *   positive?="positive"? "repeat" dataExpr=DataExpr "times" statement=Statement
- *   "end" "repeat"?;
+ * 	positive?="positive"? "repeat" dataExpr=DataExpr "times" statement=Statement "end" "repeat"?;
  *
  **/
 
-// positive?="positive"? "repeat" dataExpr=DataExpr "times" statement=Statement
-// "end" "repeat"?
+// positive?="positive"? "repeat" dataExpr=DataExpr "times" statement=Statement "end" "repeat"?
 protected class Repeat_Group extends GroupToken {
 	
 	public Repeat_Group(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -12738,16 +12664,15 @@ protected class Repeat_EndKeyword_5 extends KeywordToken  {
 /************ begin Rule Run ****************
  *
  * // --> B.4.19 run: Module Instantiation
- * 
- * 
+ * //deprecated
  * Run:
- *   "run" module=ModuleRenaming ("[" list=RenamingList "]")?|"copymodule"
- *   module=ModuleRenaming ("[" list=RenamingList "]")?;
+ * 	"run" module=ModuleRenaming ("[" list=RenamingList "]")? | "copymodule" module=ModuleRenaming ("[" list=RenamingList
+ * 	"]")?;
  *
  **/
 
-// "run" module=ModuleRenaming ("[" list=RenamingList "]")?|"copymodule"
-// module=ModuleRenaming ("[" list=RenamingList "]")?
+// "run" module=ModuleRenaming ("[" list=RenamingList "]")? | "copymodule" module=ModuleRenaming ("[" list=RenamingList
+// "]")?
 protected class Run_Alternatives extends AlternativesToken {
 
 	public Run_Alternatives(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -13191,11 +13116,8 @@ protected class Run_RightSquareBracketKeyword_1_2_2 extends KeywordToken  {
 
 /************ begin Rule ModuleRenaming ****************
  *
- * //deprecated
- * 
- * 
  * ModuleRenaming:
- *   module=[Module|EsterelID] (renamed?="/" newName=EsterelID)?;
+ * 	module=[Module|EsterelID] (renamed?="/" newName=EsterelID)?;
  *
  **/
 
@@ -13363,7 +13285,7 @@ protected class ModuleRenaming_NewNameAssignment_1_1 extends AssignmentToken  {
 /************ begin Rule RenamingList ****************
  *
  * RenamingList:
- *   list+=Renaming (";" list+=Renaming)*;
+ * 	list+=Renaming (";" list+=Renaming)*;
  *
  **/
 
@@ -13541,16 +13463,14 @@ protected class RenamingList_ListAssignment_1_1 extends AssignmentToken  {
 /************ begin Rule Renaming ****************
  *
  * Renaming:
- *   "type" renaming+=TypeRenaming ("," renaming+=TypeRenaming)*|"constant"
- *   renaming+=ConstantRenaming ("," renaming+=ConstantRenaming)*|"function"
- *   renaming+=FunctionRenaming ("," renaming+=FunctionRenaming)*|"signal"
- *   renaming+=SignalRenaming ("," renaming+=SignalRenaming)*;
+ * 	"type" renaming+=TypeRenaming ("," renaming+=TypeRenaming)* | "constant" renaming+=ConstantRenaming (","
+ * 	renaming+=ConstantRenaming)* | "function" renaming+=FunctionRenaming ("," renaming+=FunctionRenaming)* | "signal"
+ * 	renaming+=SignalRenaming ("," renaming+=SignalRenaming)*;
  *
  **/
 
-// "type" renaming+=TypeRenaming ("," renaming+=TypeRenaming)*|"constant"
-// renaming+=ConstantRenaming ("," renaming+=ConstantRenaming)*|"function"
-// renaming+=FunctionRenaming ("," renaming+=FunctionRenaming)*|"signal"
+// "type" renaming+=TypeRenaming ("," renaming+=TypeRenaming)* | "constant" renaming+=ConstantRenaming (","
+// renaming+=ConstantRenaming)* | "function" renaming+=FunctionRenaming ("," renaming+=FunctionRenaming)* | "signal"
 // renaming+=SignalRenaming ("," renaming+=SignalRenaming)*
 protected class Renaming_Alternatives extends AlternativesToken {
 
@@ -14322,7 +14242,7 @@ protected class Renaming_RenamingAssignment_3_2_1 extends AssignmentToken  {
 /************ begin Rule TypeRenaming ****************
  *
  * TypeRenaming:
- *   newName=[Type|EsterelID] "/" oldName=[Type|EsterelID];
+ * 	newName=[Type|EsterelID] "/" oldName=[Type|EsterelID];
  *
  **/
 
@@ -14457,7 +14377,7 @@ protected class TypeRenaming_OldNameAssignment_2 extends AssignmentToken  {
 /************ begin Rule ConstantRenaming ****************
  *
  * ConstantRenaming:
- *   newName=[Constant|EsterelID] "/" oldName=[Constant|EsterelID];
+ * 	newName=[Constant|EsterelID] "/" oldName=[Constant|EsterelID];
  *
  **/
 
@@ -14592,7 +14512,7 @@ protected class ConstantRenaming_OldNameAssignment_2 extends AssignmentToken  {
 /************ begin Rule FunctionRenaming ****************
  *
  * FunctionRenaming:
- *   newName=[Function|EsterelID] "/" oldName=[Function|EsterelID];
+ * 	newName=[Function|EsterelID] "/" oldName=[Function|EsterelID];
  *
  **/
 
@@ -14727,7 +14647,7 @@ protected class FunctionRenaming_OldNameAssignment_2 extends AssignmentToken  {
 /************ begin Rule ProcedureRenaming ****************
  *
  * ProcedureRenaming:
- *   newName=[Procedure|EsterelID] "/" oldName=[Procedure|EsterelID];
+ * 	newName=[Procedure|EsterelID] "/" oldName=[Procedure|EsterelID];
  *
  **/
 
@@ -14862,7 +14782,7 @@ protected class ProcedureRenaming_OldNameAssignment_2 extends AssignmentToken  {
 /************ begin Rule SignalRenaming ****************
  *
  * SignalRenaming:
- *   newName=[Signal|EsterelID] "/" oldName=[Signal|EsterelID];
+ * 	newName=[Signal|EsterelID] "/" oldName=[Signal|EsterelID];
  *
  **/
 
@@ -14997,10 +14917,8 @@ protected class SignalRenaming_OldNameAssignment_2 extends AssignmentToken  {
 /************ begin Rule LocalSignalDecl ****************
  *
  * // --> B.4.20 signal: Local Signal Declaration <--
- * 
- * 
  * LocalSignalDecl:
- *   "signal" signalList=LocalSignalList "in" statement=Statement "end" "signal"?;
+ * 	"signal" signalList=LocalSignalList "in" statement=Statement "end" "signal"?;
  *
  **/
 
@@ -15197,7 +15115,7 @@ protected class LocalSignalDecl_EndKeyword_4 extends KeywordToken  {
 /************ begin Rule LocalSignalList ****************
  *
  * LocalSignalList:
- *   {LocalSignal} signal+=Signal ("," signal+=Signal)*;
+ * 	{LocalSignal} signal+=Signal ("," signal+=Signal)*;
  *
  **/
 
@@ -15402,10 +15320,8 @@ protected class LocalSignalList_SignalAssignment_2_1 extends AssignmentToken  {
 /************ begin Rule Suspend ****************
  *
  * // --> B.4.21 suspend: Preemption with State Freeze
- * 
- * 
  * Suspend:
- *   "suspend" statement=Statement "when" delay=DelayExpr;
+ * 	"suspend" statement=Statement "when" delay=DelayExpr;
  *
  **/
 
@@ -15580,14 +15496,12 @@ protected class Suspend_DelayAssignment_3 extends AssignmentToken  {
 /************ begin Rule Sustain ****************
  *
  * // --> B.4.22 sustain: Emit a Signal Indefinitely
- * 
- * 
  * Sustain:
- *   "sustain" (signal=[Signal|EsterelID]|tick=Tick) ("(" dataExpr=DataExpr ")")?;
+ * 	"sustain" (signal=[Signal|EsterelID] | tick=Tick) ("(" dataExpr=DataExpr ")")?;
  *
  **/
 
-// "sustain" (signal=[Signal|EsterelID]|tick=Tick) ("(" dataExpr=DataExpr ")")?
+// "sustain" (signal=[Signal|EsterelID] | tick=Tick) ("(" dataExpr=DataExpr ")")?
 protected class Sustain_Group extends GroupToken {
 	
 	public Sustain_Group(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -15638,7 +15552,7 @@ protected class Sustain_SustainKeyword_0 extends KeywordToken  {
 
 }
 
-// signal=[Signal|EsterelID]|tick=Tick
+// signal=[Signal|EsterelID] | tick=Tick
 protected class Sustain_Alternatives_1 extends AlternativesToken {
 
 	public Sustain_Alternatives_1(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -15853,16 +15767,12 @@ protected class Sustain_RightParenthesisKeyword_2_2 extends KeywordToken  {
 /************ begin Rule Trap ****************
  *
  * // --> B.4.23 trap: TrapDeclaration and Handling
- * 
- * 
  * Trap:
- *   "trap" trapDeclList=TrapDeclList "in" statement=Statement
- *   trapHandlerList=TrapHandlerList? "end" "trap"?;
+ * 	"trap" trapDeclList=TrapDeclList "in" statement=Statement trapHandlerList=TrapHandlerList? "end" "trap"?;
  *
  **/
 
-// "trap" trapDeclList=TrapDeclList "in" statement=Statement
-// trapHandlerList=TrapHandlerList? "end" "trap"?
+// "trap" trapDeclList=TrapDeclList "in" statement=Statement trapHandlerList=TrapHandlerList? "end" "trap"?
 protected class Trap_Group extends GroupToken {
 	
 	public Trap_Group(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -16102,7 +16012,7 @@ protected class Trap_EndKeyword_5 extends KeywordToken  {
 /************ begin Rule TrapDeclList ****************
  *
  * TrapDeclList:
- *   trapDecl+=TrapDecl ("," trapDecl+=TrapDecl)*;
+ * 	trapDecl+=TrapDecl ("," trapDecl+=TrapDecl)*;
  *
  **/
 
@@ -16280,7 +16190,7 @@ protected class TrapDeclList_TrapDeclAssignment_1_1 extends AssignmentToken  {
 /************ begin Rule TrapDecl ****************
  *
  * TrapDecl:
- *   name=EsterelID channelDesc=ChannelDescription?;
+ * 	name=EsterelID channelDesc=ChannelDescription?;
  *
  **/
 
@@ -16400,7 +16310,7 @@ protected class TrapDecl_ChannelDescAssignment_1 extends AssignmentToken  {
 /************ begin Rule TrapHandlerList ****************
  *
  * TrapHandlerList:
- *   trapHandler+=TrapHandler trapHandler+=TrapHandler*;
+ * 	trapHandler+=TrapHandler trapHandler+=TrapHandler*;
  *
  **/
 
@@ -16533,7 +16443,7 @@ protected class TrapHandlerList_TrapHandlerAssignment_1 extends AssignmentToken 
 /************ begin Rule TrapHandler ****************
  *
  * TrapHandler:
- *   "handle" trapExpr=TrapExpr "do" statement=Statement;
+ * 	"handle" trapExpr=TrapExpr "do" statement=Statement;
  *
  **/
 
@@ -16708,10 +16618,8 @@ protected class TrapHandler_StatementAssignment_3 extends AssignmentToken  {
 /************ begin Rule Variable ****************
  *
  * // --> B.4.24 var: Local Variable Declaration
- * 
- * 
  * Variable:
- *   "var" varDecl=VariableDecl "in" statement=Statement "end" "var"?;
+ * 	"var" varDecl=VariableDecl "in" statement=Statement "end" "var"?;
  *
  **/
 
@@ -16908,13 +16816,13 @@ protected class Variable_EndKeyword_4 extends KeywordToken  {
 /************ begin Rule VariableDecl ****************
  *
  * VariableDecl:
- *   varList=VariableList ":" (type=EsterelID|type=BaseType) ({VariableDecl.left=
- *   current} "," varList=VariableList ":" (type=EsterelID|type=BaseType))*;
+ * 	varList=VariableList ":" (type=EsterelID | type=BaseType) ({VariableDecl.left=current} "," varList=VariableList ":"
+ * 	(type=EsterelID | type=BaseType))*;
  *
  **/
 
-// varList=VariableList ":" (type=EsterelID|type=BaseType) ({VariableDecl.left=
-// current} "," varList=VariableList ":" (type=EsterelID|type=BaseType))*
+// varList=VariableList ":" (type=EsterelID | type=BaseType) ({VariableDecl.left=current} "," varList=VariableList ":"
+// (type=EsterelID | type=BaseType))*
 protected class VariableDecl_Group extends GroupToken {
 	
 	public VariableDecl_Group(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -17011,7 +16919,7 @@ protected class VariableDecl_ColonKeyword_1 extends KeywordToken  {
 
 }
 
-// type=EsterelID|type=BaseType
+// type=EsterelID | type=BaseType
 protected class VariableDecl_Alternatives_2 extends AlternativesToken {
 
 	public VariableDecl_Alternatives_2(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -17103,8 +17011,7 @@ protected class VariableDecl_TypeAssignment_2_1 extends AssignmentToken  {
 }
 
 
-// ({VariableDecl.left=current} "," varList=VariableList ":" (type=EsterelID|
-// type=BaseType))*
+// ({VariableDecl.left=current} "," varList=VariableList ":" (type=EsterelID | type=BaseType))*
 protected class VariableDecl_Group_3 extends GroupToken {
 	
 	public VariableDecl_Group_3(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -17246,7 +17153,7 @@ protected class VariableDecl_ColonKeyword_3_3 extends KeywordToken  {
 
 }
 
-// type=EsterelID|type=BaseType
+// type=EsterelID | type=BaseType
 protected class VariableDecl_Alternatives_3_4 extends AlternativesToken {
 
 	public VariableDecl_Alternatives_3_4(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -17346,13 +17253,11 @@ protected class VariableDecl_TypeAssignment_3_4_1 extends AssignmentToken  {
 /************ begin Rule VariableList ****************
  *
  * VariableList:
- *   variable+=VariableSingle ({VariableList.left=current} ","
- *   variable+=VariableSingle)*;
+ * 	variable+=VariableSingle ({VariableList.left=current} "," variable+=VariableSingle)*;
  *
  **/
 
-// variable+=VariableSingle ({VariableList.left=current} ","
-// variable+=VariableSingle)*
+// variable+=VariableSingle ({VariableList.left=current} "," variable+=VariableSingle)*
 protected class VariableList_Group extends GroupToken {
 	
 	public VariableList_Group(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -17555,7 +17460,7 @@ protected class VariableList_VariableAssignment_1_2 extends AssignmentToken  {
 /************ begin Rule VariableSingle ****************
  *
  * VariableSingle:
- *   name=EsterelID (":=" expression=DataExpr)?;
+ * 	name=EsterelID (":=" expression=DataExpr)?;
  *
  **/
 
@@ -17720,10 +17625,8 @@ protected class VariableSingle_ExpressionAssignment_1_1 extends AssignmentToken 
 /************ begin Rule WeakAbort ****************
  *
  * // --> B.4.25 weak abort: Weak Preemption
- * 
- * 
  * WeakAbort:
- *   "weak" "abort" statement=Statement "when" weakAbortBody=WeakAbortBody;
+ * 	"weak" "abort" statement=Statement "when" weakAbortBody=WeakAbortBody;
  *
  **/
 
@@ -17920,11 +17823,11 @@ protected class WeakAbort_WeakAbortBodyAssignment_4 extends AssignmentToken  {
 /************ begin Rule WeakAbortBody ****************
  *
  * WeakAbortBody:
- *   WeakAbortInstance|WeakAbortCase;
+ * 	WeakAbortInstance | WeakAbortCase;
  *
  **/
 
-// WeakAbortInstance|WeakAbortCase
+// WeakAbortInstance | WeakAbortCase
 protected class WeakAbortBody_Alternatives extends AlternativesToken {
 
 	public WeakAbortBody_Alternatives(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -18035,7 +17938,7 @@ protected class WeakAbortBody_WeakAbortCaseParserRuleCall_1 extends RuleCallToke
 /************ begin Rule WeakAbortInstance ****************
  *
  * WeakAbortInstance:
- *   delay=DelayExpr ("do" statement=Statement end=WeakAbortEnd)?;
+ * 	delay=DelayExpr ("do" statement=Statement end=WeakAbortEnd)?;
  *
  **/
 
@@ -18246,7 +18149,7 @@ protected class WeakAbortInstance_EndAssignment_1_2 extends AssignmentToken  {
 /************ begin Rule WeakAbortCase ****************
  *
  * WeakAbortCase:
- *   cases+=AbortCaseSingle cases+=AbortCaseSingle* end=WeakAbortEnd;
+ * 	cases+=AbortCaseSingle cases+=AbortCaseSingle* end=WeakAbortEnd;
  *
  **/
 
@@ -18415,16 +18318,13 @@ protected class WeakAbortCase_EndAssignment_2 extends AssignmentToken  {
  * // ==============================================
  * // ===            B.3 Expressions             ===
  * // ==============================================
- * 
  * // --> B.3.1 Data Expressions
- * 
- * 
  * DataExpr:
- *   DataMult ({DataExpr.left=current} (op="+"|op="-"|op="or") right=DataMult)*;
+ * 	DataMult ({DataExpr.left=current} (op="+" | op="-" | op="or") right=DataMult)*;
  *
  **/
 
-// DataMult ({DataExpr.left=current} (op="+"|op="-"|op="or") right=DataMult)*
+// DataMult ({DataExpr.left=current} (op="+" | op="-" | op="or") right=DataMult)*
 protected class DataExpr_Group extends GroupToken {
 	
 	public DataExpr_Group(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -18493,7 +18393,7 @@ protected class DataExpr_DataMultParserRuleCall_0 extends RuleCallToken {
 	}	
 }
 
-// ({DataExpr.left=current} (op="+"|op="-"|op="or") right=DataMult)*
+// ({DataExpr.left=current} (op="+" | op="-" | op="or") right=DataMult)*
 protected class DataExpr_Group_1 extends GroupToken {
 	
 	public DataExpr_Group_1(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -18552,7 +18452,7 @@ protected class DataExpr_DataExprLeftAction_1_0 extends ActionToken  {
 	}
 }
 
-// op="+"|op="-"|op="or"
+// op="+" | op="-" | op="or"
 protected class DataExpr_Alternatives_1_1 extends AlternativesToken {
 
 	public DataExpr_Alternatives_1_1(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -18600,7 +18500,7 @@ protected class DataExpr_OpAssignment_1_1_0 extends AssignmentToken  {
 	public IEObjectConsumer tryConsume() {
 		if((value = eObjectConsumer.getConsumable("op",true)) == null) return null;
 		IEObjectConsumer obj = eObjectConsumer.cloneAndConsume("op");
-		if("+".equals(value)) { // org::eclipse::xtext::impl::KeywordImpl
+		if(keywordSerializer.isValid(obj.getEObject(), grammarAccess.getDataExprAccess().getOpPlusSignKeyword_1_1_0_0(), value, null)) {
 			type = AssignmentType.KEYWORD;
 			element = grammarAccess.getDataExprAccess().getOpPlusSignKeyword_1_1_0_0();
 			return obj;
@@ -18634,7 +18534,7 @@ protected class DataExpr_OpAssignment_1_1_1 extends AssignmentToken  {
 	public IEObjectConsumer tryConsume() {
 		if((value = eObjectConsumer.getConsumable("op",true)) == null) return null;
 		IEObjectConsumer obj = eObjectConsumer.cloneAndConsume("op");
-		if("-".equals(value)) { // org::eclipse::xtext::impl::KeywordImpl
+		if(keywordSerializer.isValid(obj.getEObject(), grammarAccess.getDataExprAccess().getOpHyphenMinusKeyword_1_1_1_0(), value, null)) {
 			type = AssignmentType.KEYWORD;
 			element = grammarAccess.getDataExprAccess().getOpHyphenMinusKeyword_1_1_1_0();
 			return obj;
@@ -18668,7 +18568,7 @@ protected class DataExpr_OpAssignment_1_1_2 extends AssignmentToken  {
 	public IEObjectConsumer tryConsume() {
 		if((value = eObjectConsumer.getConsumable("op",true)) == null) return null;
 		IEObjectConsumer obj = eObjectConsumer.cloneAndConsume("op");
-		if("or".equals(value)) { // org::eclipse::xtext::impl::KeywordImpl
+		if(keywordSerializer.isValid(obj.getEObject(), grammarAccess.getDataExprAccess().getOpOrKeyword_1_1_2_0(), value, null)) {
 			type = AssignmentType.KEYWORD;
 			element = grammarAccess.getDataExprAccess().getOpOrKeyword_1_1_2_0();
 			return obj;
@@ -18733,17 +18633,13 @@ protected class DataExpr_RightAssignment_1_2 extends AssignmentToken  {
 /************ begin Rule DataMult ****************
  *
  * //(DataUnaryExpr ( {DataExpr.left=current} op=DataOp  right=DataExpr)?)
- * 	 //|	(op=DataOp  expr=DataExpr);
- * 
- * 
+ * //|	(op=DataOp  expr=DataExpr);
  * DataMult:
- *   DataEquation ({DataMult.left=current} (op="*"|op="/"|op="mod"|op="and")
- *   right=DataEquation)*;
+ * 	DataEquation ({DataMult.left=current} (op="*" | op="/" | op="mod" | op="and") right=DataEquation)*;
  *
  **/
 
-// DataEquation ({DataMult.left=current} (op="*"|op="/"|op="mod"|op="and")
-// right=DataEquation)*
+// DataEquation ({DataMult.left=current} (op="*" | op="/" | op="mod" | op="and") right=DataEquation)*
 protected class DataMult_Group extends GroupToken {
 	
 	public DataMult_Group(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -18810,7 +18706,7 @@ protected class DataMult_DataEquationParserRuleCall_0 extends RuleCallToken {
 	}	
 }
 
-// ({DataMult.left=current} (op="*"|op="/"|op="mod"|op="and") right=DataEquation)*
+// ({DataMult.left=current} (op="*" | op="/" | op="mod" | op="and") right=DataEquation)*
 protected class DataMult_Group_1 extends GroupToken {
 	
 	public DataMult_Group_1(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -18869,7 +18765,7 @@ protected class DataMult_DataMultLeftAction_1_0 extends ActionToken  {
 	}
 }
 
-// op="*"|op="/"|op="mod"|op="and"
+// op="*" | op="/" | op="mod" | op="and"
 protected class DataMult_Alternatives_1_1 extends AlternativesToken {
 
 	public DataMult_Alternatives_1_1(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -18918,7 +18814,7 @@ protected class DataMult_OpAssignment_1_1_0 extends AssignmentToken  {
 	public IEObjectConsumer tryConsume() {
 		if((value = eObjectConsumer.getConsumable("op",true)) == null) return null;
 		IEObjectConsumer obj = eObjectConsumer.cloneAndConsume("op");
-		if("*".equals(value)) { // org::eclipse::xtext::impl::KeywordImpl
+		if(keywordSerializer.isValid(obj.getEObject(), grammarAccess.getDataMultAccess().getOpAsteriskKeyword_1_1_0_0(), value, null)) {
 			type = AssignmentType.KEYWORD;
 			element = grammarAccess.getDataMultAccess().getOpAsteriskKeyword_1_1_0_0();
 			return obj;
@@ -18952,7 +18848,7 @@ protected class DataMult_OpAssignment_1_1_1 extends AssignmentToken  {
 	public IEObjectConsumer tryConsume() {
 		if((value = eObjectConsumer.getConsumable("op",true)) == null) return null;
 		IEObjectConsumer obj = eObjectConsumer.cloneAndConsume("op");
-		if("/".equals(value)) { // org::eclipse::xtext::impl::KeywordImpl
+		if(keywordSerializer.isValid(obj.getEObject(), grammarAccess.getDataMultAccess().getOpSolidusKeyword_1_1_1_0(), value, null)) {
 			type = AssignmentType.KEYWORD;
 			element = grammarAccess.getDataMultAccess().getOpSolidusKeyword_1_1_1_0();
 			return obj;
@@ -18986,7 +18882,7 @@ protected class DataMult_OpAssignment_1_1_2 extends AssignmentToken  {
 	public IEObjectConsumer tryConsume() {
 		if((value = eObjectConsumer.getConsumable("op",true)) == null) return null;
 		IEObjectConsumer obj = eObjectConsumer.cloneAndConsume("op");
-		if("mod".equals(value)) { // org::eclipse::xtext::impl::KeywordImpl
+		if(keywordSerializer.isValid(obj.getEObject(), grammarAccess.getDataMultAccess().getOpModKeyword_1_1_2_0(), value, null)) {
 			type = AssignmentType.KEYWORD;
 			element = grammarAccess.getDataMultAccess().getOpModKeyword_1_1_2_0();
 			return obj;
@@ -19020,7 +18916,7 @@ protected class DataMult_OpAssignment_1_1_3 extends AssignmentToken  {
 	public IEObjectConsumer tryConsume() {
 		if((value = eObjectConsumer.getConsumable("op",true)) == null) return null;
 		IEObjectConsumer obj = eObjectConsumer.cloneAndConsume("op");
-		if("and".equals(value)) { // org::eclipse::xtext::impl::KeywordImpl
+		if(keywordSerializer.isValid(obj.getEObject(), grammarAccess.getDataMultAccess().getOpAndKeyword_1_1_3_0(), value, null)) {
 			type = AssignmentType.KEYWORD;
 			element = grammarAccess.getDataMultAccess().getOpAndKeyword_1_1_3_0();
 			return obj;
@@ -19085,11 +18981,11 @@ protected class DataMult_RightAssignment_1_2 extends AssignmentToken  {
 /************ begin Rule DataEquation ****************
  *
  * DataEquation:
- *   DataMinus ((op="<"|op=">"|op="<="|op=">="|op="<>"|op="=") right=DataMinus)?;
+ * 	DataMinus ((op="<" | op=">" | op="<=" | op=">=" | op="<>" | op="=") right=DataMinus)?;
  *
  **/
 
-// DataMinus ((op="<"|op=">"|op="<="|op=">="|op="<>"|op="=") right=DataMinus)?
+// DataMinus ((op="<" | op=">" | op="<=" | op=">=" | op="<>" | op="=") right=DataMinus)?
 protected class DataEquation_Group extends GroupToken {
 	
 	public DataEquation_Group(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -19153,7 +19049,7 @@ protected class DataEquation_DataMinusParserRuleCall_0 extends RuleCallToken {
 	}	
 }
 
-// ((op="<"|op=">"|op="<="|op=">="|op="<>"|op="=") right=DataMinus)?
+// ((op="<" | op=">" | op="<=" | op=">=" | op="<>" | op="=") right=DataMinus)?
 protected class DataEquation_Group_1 extends GroupToken {
 	
 	public DataEquation_Group_1(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -19175,7 +19071,7 @@ protected class DataEquation_Group_1 extends GroupToken {
 
 }
 
-// op="<"|op=">"|op="<="|op=">="|op="<>"|op="="
+// op="<" | op=">" | op="<=" | op=">=" | op="<>" | op="="
 protected class DataEquation_Alternatives_1_0 extends AlternativesToken {
 
 	public DataEquation_Alternatives_1_0(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -19226,7 +19122,7 @@ protected class DataEquation_OpAssignment_1_0_0 extends AssignmentToken  {
 	public IEObjectConsumer tryConsume() {
 		if((value = eObjectConsumer.getConsumable("op",true)) == null) return null;
 		IEObjectConsumer obj = eObjectConsumer.cloneAndConsume("op");
-		if("<".equals(value)) { // org::eclipse::xtext::impl::KeywordImpl
+		if(keywordSerializer.isValid(obj.getEObject(), grammarAccess.getDataEquationAccess().getOpLessThanSignKeyword_1_0_0_0(), value, null)) {
 			type = AssignmentType.KEYWORD;
 			element = grammarAccess.getDataEquationAccess().getOpLessThanSignKeyword_1_0_0_0();
 			return obj;
@@ -19260,7 +19156,7 @@ protected class DataEquation_OpAssignment_1_0_1 extends AssignmentToken  {
 	public IEObjectConsumer tryConsume() {
 		if((value = eObjectConsumer.getConsumable("op",true)) == null) return null;
 		IEObjectConsumer obj = eObjectConsumer.cloneAndConsume("op");
-		if(">".equals(value)) { // org::eclipse::xtext::impl::KeywordImpl
+		if(keywordSerializer.isValid(obj.getEObject(), grammarAccess.getDataEquationAccess().getOpGreaterThanSignKeyword_1_0_1_0(), value, null)) {
 			type = AssignmentType.KEYWORD;
 			element = grammarAccess.getDataEquationAccess().getOpGreaterThanSignKeyword_1_0_1_0();
 			return obj;
@@ -19294,7 +19190,7 @@ protected class DataEquation_OpAssignment_1_0_2 extends AssignmentToken  {
 	public IEObjectConsumer tryConsume() {
 		if((value = eObjectConsumer.getConsumable("op",true)) == null) return null;
 		IEObjectConsumer obj = eObjectConsumer.cloneAndConsume("op");
-		if("<=".equals(value)) { // org::eclipse::xtext::impl::KeywordImpl
+		if(keywordSerializer.isValid(obj.getEObject(), grammarAccess.getDataEquationAccess().getOpLessThanSignEqualsSignKeyword_1_0_2_0(), value, null)) {
 			type = AssignmentType.KEYWORD;
 			element = grammarAccess.getDataEquationAccess().getOpLessThanSignEqualsSignKeyword_1_0_2_0();
 			return obj;
@@ -19328,7 +19224,7 @@ protected class DataEquation_OpAssignment_1_0_3 extends AssignmentToken  {
 	public IEObjectConsumer tryConsume() {
 		if((value = eObjectConsumer.getConsumable("op",true)) == null) return null;
 		IEObjectConsumer obj = eObjectConsumer.cloneAndConsume("op");
-		if(">=".equals(value)) { // org::eclipse::xtext::impl::KeywordImpl
+		if(keywordSerializer.isValid(obj.getEObject(), grammarAccess.getDataEquationAccess().getOpGreaterThanSignEqualsSignKeyword_1_0_3_0(), value, null)) {
 			type = AssignmentType.KEYWORD;
 			element = grammarAccess.getDataEquationAccess().getOpGreaterThanSignEqualsSignKeyword_1_0_3_0();
 			return obj;
@@ -19362,7 +19258,7 @@ protected class DataEquation_OpAssignment_1_0_4 extends AssignmentToken  {
 	public IEObjectConsumer tryConsume() {
 		if((value = eObjectConsumer.getConsumable("op",true)) == null) return null;
 		IEObjectConsumer obj = eObjectConsumer.cloneAndConsume("op");
-		if("<>".equals(value)) { // org::eclipse::xtext::impl::KeywordImpl
+		if(keywordSerializer.isValid(obj.getEObject(), grammarAccess.getDataEquationAccess().getOpLessThanSignGreaterThanSignKeyword_1_0_4_0(), value, null)) {
 			type = AssignmentType.KEYWORD;
 			element = grammarAccess.getDataEquationAccess().getOpLessThanSignGreaterThanSignKeyword_1_0_4_0();
 			return obj;
@@ -19396,7 +19292,7 @@ protected class DataEquation_OpAssignment_1_0_5 extends AssignmentToken  {
 	public IEObjectConsumer tryConsume() {
 		if((value = eObjectConsumer.getConsumable("op",true)) == null) return null;
 		IEObjectConsumer obj = eObjectConsumer.cloneAndConsume("op");
-		if("=".equals(value)) { // org::eclipse::xtext::impl::KeywordImpl
+		if(keywordSerializer.isValid(obj.getEObject(), grammarAccess.getDataEquationAccess().getOpEqualsSignKeyword_1_0_5_0(), value, null)) {
 			type = AssignmentType.KEYWORD;
 			element = grammarAccess.getDataEquationAccess().getOpEqualsSignKeyword_1_0_5_0();
 			return obj;
@@ -19461,11 +19357,11 @@ protected class DataEquation_RightAssignment_1_1 extends AssignmentToken  {
 /************ begin Rule DataMinus ****************
  *
  * DataMinus:
- *   (pre="-"|pre="not")? expr=DataUnaryExpr;
+ * 	(pre="-" | pre="not")? expr=DataUnaryExpr;
  *
  **/
 
-// (pre="-"|pre="not")? expr=DataUnaryExpr
+// (pre="-" | pre="not")? expr=DataUnaryExpr
 protected class DataMinus_Group extends GroupToken {
 	
 	public DataMinus_Group(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -19494,7 +19390,7 @@ protected class DataMinus_Group extends GroupToken {
 
 }
 
-// (pre="-"|pre="not")?
+// (pre="-" | pre="not")?
 protected class DataMinus_Alternatives_0 extends AlternativesToken {
 
 	public DataMinus_Alternatives_0(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -19540,7 +19436,7 @@ protected class DataMinus_PreAssignment_0_0 extends AssignmentToken  {
 	public IEObjectConsumer tryConsume() {
 		if((value = eObjectConsumer.getConsumable("pre",true)) == null) return null;
 		IEObjectConsumer obj = eObjectConsumer.cloneAndConsume("pre");
-		if("-".equals(value)) { // org::eclipse::xtext::impl::KeywordImpl
+		if(keywordSerializer.isValid(obj.getEObject(), grammarAccess.getDataMinusAccess().getPreHyphenMinusKeyword_0_0_0(), value, null)) {
 			type = AssignmentType.KEYWORD;
 			element = grammarAccess.getDataMinusAccess().getPreHyphenMinusKeyword_0_0_0();
 			return obj;
@@ -19573,7 +19469,7 @@ protected class DataMinus_PreAssignment_0_1 extends AssignmentToken  {
 	public IEObjectConsumer tryConsume() {
 		if((value = eObjectConsumer.getConsumable("pre",true)) == null) return null;
 		IEObjectConsumer obj = eObjectConsumer.cloneAndConsume("pre");
-		if("not".equals(value)) { // org::eclipse::xtext::impl::KeywordImpl
+		if(keywordSerializer.isValid(obj.getEObject(), grammarAccess.getDataMinusAccess().getPreNotKeyword_0_1_0(), value, null)) {
 			type = AssignmentType.KEYWORD;
 			element = grammarAccess.getDataMinusAccess().getPreNotKeyword_0_1_0();
 			return obj;
@@ -19638,13 +19534,13 @@ protected class DataMinus_ExprAssignment_1 extends AssignmentToken  {
 /************ begin Rule DataUnaryExpr ****************
  *
  * DataUnaryExpr:
- *   {DataTick} Tick|DataValueFloat|DataValueBoolean|DataValueInt|DataValueString|
- *   DataValueID|DataBlock|DataCurrent|DataPre|DataTrap|DataFunction;
+ * 	{DataTick} Tick | DataValueFloat | DataValueBoolean | DataValueInt | DataValueString | DataValueID | DataBlock |
+ * 	DataCurrent | DataPre | DataTrap | DataFunction;
  *
  **/
 
-// {DataTick} Tick|DataValueFloat|DataValueBoolean|DataValueInt|DataValueString|
-// DataValueID|DataBlock|DataCurrent|DataPre|DataTrap|DataFunction
+// {DataTick} Tick | DataValueFloat | DataValueBoolean | DataValueInt | DataValueString | DataValueID | DataBlock |
+// DataCurrent | DataPre | DataTrap | DataFunction
 protected class DataUnaryExpr_Alternatives extends AlternativesToken {
 
 	public DataUnaryExpr_Alternatives(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -20138,7 +20034,7 @@ protected class DataUnaryExpr_DataFunctionParserRuleCall_10 extends RuleCallToke
 /************ begin Rule DataValueID ****************
  *
  * DataValueID:
- *   value=EsterelID;
+ * 	value=EsterelID;
  *
  **/
 
@@ -20183,7 +20079,7 @@ protected class DataValueID_ValueAssignment extends AssignmentToken  {
 /************ begin Rule DataValueFloat ****************
  *
  * DataValueFloat:
- *   value=Float;
+ * 	value=Float;
  *
  **/
 
@@ -20228,7 +20124,7 @@ protected class DataValueFloat_ValueAssignment extends AssignmentToken  {
 /************ begin Rule DataValueBoolean ****************
  *
  * DataValueBoolean:
- *   value=Boolean;
+ * 	value=Boolean;
  *
  **/
 
@@ -20273,7 +20169,7 @@ protected class DataValueBoolean_ValueAssignment extends AssignmentToken  {
 /************ begin Rule DataValueInt ****************
  *
  * DataValueInt:
- *   value=INT;
+ * 	value=INT;
  *
  **/
 
@@ -20318,7 +20214,7 @@ protected class DataValueInt_ValueAssignment extends AssignmentToken  {
 /************ begin Rule DataValueString ****************
  *
  * DataValueString:
- *   value=STRING;
+ * 	value=STRING;
  *
  **/
 
@@ -20363,7 +20259,7 @@ protected class DataValueString_ValueAssignment extends AssignmentToken  {
 /************ begin Rule DataBlock ****************
  *
  * DataBlock:
- *   "(" dataExpr=DataExpr ")";
+ * 	"(" dataExpr=DataExpr ")";
  *
  **/
 
@@ -20492,11 +20388,11 @@ protected class DataBlock_RightParenthesisKeyword_2 extends KeywordToken  {
 /************ begin Rule DataCurrent ****************
  *
  * DataCurrent:
- *   "?" (signal=[Signal|EsterelID]|tick=Tick);
+ * 	"?" (signal=[Signal|EsterelID] | tick=Tick);
  *
  **/
 
-// "?" (signal=[Signal|EsterelID]|tick=Tick)
+// "?" (signal=[Signal|EsterelID] | tick=Tick)
 protected class DataCurrent_Group extends GroupToken {
 	
 	public DataCurrent_Group(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -20546,7 +20442,7 @@ protected class DataCurrent_QuestionMarkKeyword_0 extends KeywordToken  {
 
 }
 
-// signal=[Signal|EsterelID]|tick=Tick
+// signal=[Signal|EsterelID] | tick=Tick
 protected class DataCurrent_Alternatives_1 extends AlternativesToken {
 
 	public DataCurrent_Alternatives_1(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -20648,11 +20544,11 @@ protected class DataCurrent_TickAssignment_1_1 extends AssignmentToken  {
 /************ begin Rule DataPre ****************
  *
  * DataPre:
- *   "pre" "(" "?" (signal=[Signal|EsterelID]|tick=Tick) ")";
+ * 	"pre" "(" "?" (signal=[Signal|EsterelID] | tick=Tick) ")";
  *
  **/
 
-// "pre" "(" "?" (signal=[Signal|EsterelID]|tick=Tick) ")"
+// "pre" "(" "?" (signal=[Signal|EsterelID] | tick=Tick) ")"
 protected class DataPre_Group extends GroupToken {
 	
 	public DataPre_Group(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -20746,7 +20642,7 @@ protected class DataPre_QuestionMarkKeyword_2 extends KeywordToken  {
 
 }
 
-// signal=[Signal|EsterelID]|tick=Tick
+// signal=[Signal|EsterelID] | tick=Tick
 protected class DataPre_Alternatives_3 extends AlternativesToken {
 
 	public DataPre_Alternatives_3(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -20870,7 +20766,7 @@ protected class DataPre_RightParenthesisKeyword_4 extends KeywordToken  {
 /************ begin Rule DataTrap ****************
  *
  * DataTrap:
- *   "??" trap=[TrapDecl|EsterelID];
+ * 	"??" trap=[TrapDecl|EsterelID];
  *
  **/
 
@@ -20968,13 +20864,11 @@ protected class DataTrap_TrapAssignment_1 extends AssignmentToken  {
 /************ begin Rule DataFunction ****************
  *
  * DataFunction:
- *   function=[Function|EsterelID] "(" dataExpr+=DataExpr ("," dataExpr+=DataExpr)
- *   * ")";
+ * 	function=[Function|EsterelID] "(" dataExpr+=DataExpr ("," dataExpr+=DataExpr)* ")";
  *
  **/
 
-// function=[Function|EsterelID] "(" dataExpr+=DataExpr ("," dataExpr+=DataExpr)*
-// ")"
+// function=[Function|EsterelID] "(" dataExpr+=DataExpr ("," dataExpr+=DataExpr)* ")"
 protected class DataFunction_Group extends GroupToken {
 	
 	public DataFunction_Group(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -21230,10 +21124,8 @@ protected class DataFunction_RightParenthesisKeyword_4 extends KeywordToken  {
  *
  * // --> B.3.3 Signal Expressions <--
  * // --> B.3.5 Trap Expressions <--
- * 
- * 
  * TrapExpr:
- *   SigExpr;
+ * 	SigExpr;
  *
  **/
 
@@ -21279,7 +21171,7 @@ protected class TrapExpr_SigExprParserRuleCall extends RuleCallToken {
 /************ begin Rule SigExpr ****************
  *
  * SigExpr:
- *   andExpr+=SigExprAND ("or" andExpr+=SigExprAND)*;
+ * 	andExpr+=SigExprAND ("or" andExpr+=SigExprAND)*;
  *
  **/
 
@@ -21457,7 +21349,7 @@ protected class SigExpr_AndExprAssignment_1_1 extends AssignmentToken  {
 /************ begin Rule SigExprAND ****************
  *
  * SigExprAND:
- *   unaExpr+=SigExprUnary ("and" unaExpr+=SigExprUnary)*;
+ * 	unaExpr+=SigExprUnary ("and" unaExpr+=SigExprUnary)*;
  *
  **/
 
@@ -21635,11 +21527,11 @@ protected class SigExprAND_UnaExprAssignment_1_1 extends AssignmentToken  {
 /************ begin Rule SigExprUnary ****************
  *
  * SigExprUnary:
- *   expr=EsterelID|"(" sigExpr=SigExpr ")"|"not" sigExpr=SigExprUnary;
+ * 	expr=EsterelID | "(" sigExpr=SigExpr ")" | "not" sigExpr=SigExprUnary;
  *
  **/
 
-// expr=EsterelID|"(" sigExpr=SigExpr ")"|"not" sigExpr=SigExprUnary
+// expr=EsterelID | "(" sigExpr=SigExpr ")" | "not" sigExpr=SigExprUnary
 protected class SigExprUnary_Alternatives extends AlternativesToken {
 
 	public SigExprUnary_Alternatives(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -21912,14 +21804,12 @@ protected class SigExprUnary_SigExprAssignment_2_1 extends AssignmentToken  {
 /************ begin Rule DelayExpr ****************
  *
  * // --> B.3.4 Delay Expressions <--
- * 
- * 
  * DelayExpr:
- *   event=DelayEvent|expr=DataExpr event=DelayEvent;
+ * 	event=DelayEvent | expr=DataExpr event=DelayEvent;
  *
  **/
 
-// event=DelayEvent|expr=DataExpr event=DelayEvent
+// event=DelayEvent | expr=DataExpr event=DelayEvent
 protected class DelayExpr_Alternatives extends AlternativesToken {
 
 	public DelayExpr_Alternatives(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -22115,13 +22005,11 @@ protected class DelayExpr_EventAssignment_1_1 extends AssignmentToken  {
 /************ begin Rule DelayEvent ****************
  *
  * DelayEvent:
- *   (signal=[Signal|EsterelID]|tick=Tick)|"pre" "(" preSigExpr=SigExpr ")"|"["
- *   blockSigExpr=SigExpr "]";
+ * 	(signal=[Signal|EsterelID] | tick=Tick) | "pre" "(" preSigExpr=SigExpr ")" | "[" blockSigExpr=SigExpr "]";
  *
  **/
 
-// (signal=[Signal|EsterelID]|tick=Tick)|"pre" "(" preSigExpr=SigExpr ")"|"["
-// blockSigExpr=SigExpr "]"
+// (signal=[Signal|EsterelID] | tick=Tick) | "pre" "(" preSigExpr=SigExpr ")" | "[" blockSigExpr=SigExpr "]"
 protected class DelayEvent_Alternatives extends AlternativesToken {
 
 	public DelayEvent_Alternatives(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -22152,7 +22040,7 @@ protected class DelayEvent_Alternatives extends AlternativesToken {
 
 }
 
-// signal=[Signal|EsterelID]|tick=Tick
+// signal=[Signal|EsterelID] | tick=Tick
 protected class DelayEvent_Alternatives_0 extends AlternativesToken {
 
 	public DelayEvent_Alternatives_0(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -22500,18 +22388,13 @@ protected class DelayEvent_RightSquareBracketKeyword_2_2 extends KeywordToken  {
  * // ==============================================
  * // === B.2 Namespaces and Predefined Objects  ===
  * // ==============================================
- * 
  * // ==> Signals <==
- * 
- * 
  * ChannelDescription:
- *   ":" type=ChannelType|"(" type=ChannelType ")"|":=" dataExpr=DataExpr ":"
- *   type=ChannelType;
+ * 	":" type=ChannelType | "(" type=ChannelType ")" | ":=" dataExpr=DataExpr ":" type=ChannelType;
  *
  **/
 
-// ":" type=ChannelType|"(" type=ChannelType ")"|":=" dataExpr=DataExpr ":"
-// type=ChannelType
+// ":" type=ChannelType | "(" type=ChannelType ")" | ":=" dataExpr=DataExpr ":" type=ChannelType
 protected class ChannelDescription_Alternatives extends AlternativesToken {
 
 	public ChannelDescription_Alternatives(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -22909,13 +22792,13 @@ protected class ChannelDescription_TypeAssignment_2_3 extends AssignmentToken  {
 /************ begin Rule ChannelType ****************
  *
  * ChannelType:
- *   (type=EsterelID|type=BaseType)|"combine" (type=EsterelID|type=BaseType)
- *   "with" (func=[Function|EsterelID]|op=DataOp);
+ * 	(type=EsterelID | type=BaseType) | "combine" (type=EsterelID | type=BaseType) "with" (func=[Function|EsterelID] |
+ * 	op=DataOp);
  *
  **/
 
-// (type=EsterelID|type=BaseType)|"combine" (type=EsterelID|type=BaseType) "with" (
-// func=[Function|EsterelID]|op=DataOp)
+// (type=EsterelID | type=BaseType) | "combine" (type=EsterelID | type=BaseType) "with" (func=[Function|EsterelID] |
+// op=DataOp)
 protected class ChannelType_Alternatives extends AlternativesToken {
 
 	public ChannelType_Alternatives(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -22945,7 +22828,7 @@ protected class ChannelType_Alternatives extends AlternativesToken {
 
 }
 
-// type=EsterelID|type=BaseType
+// type=EsterelID | type=BaseType
 protected class ChannelType_Alternatives_0 extends AlternativesToken {
 
 	public ChannelType_Alternatives_0(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -23035,8 +22918,7 @@ protected class ChannelType_TypeAssignment_0_1 extends AssignmentToken  {
 }
 
 
-// "combine" (type=EsterelID|type=BaseType) "with" (func=[Function|EsterelID]|
-// op=DataOp)
+// "combine" (type=EsterelID | type=BaseType) "with" (func=[Function|EsterelID] | op=DataOp)
 protected class ChannelType_Group_1 extends GroupToken {
 	
 	public ChannelType_Group_1(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -23079,7 +22961,7 @@ protected class ChannelType_CombineKeyword_1_0 extends KeywordToken  {
 
 }
 
-// type=EsterelID|type=BaseType
+// type=EsterelID | type=BaseType
 protected class ChannelType_Alternatives_1_1 extends AlternativesToken {
 
 	public ChannelType_Alternatives_1_1(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -23193,7 +23075,7 @@ protected class ChannelType_WithKeyword_1_2 extends KeywordToken  {
 
 }
 
-// func=[Function|EsterelID]|op=DataOp
+// func=[Function|EsterelID] | op=DataOp
 protected class ChannelType_Alternatives_1_3 extends AlternativesToken {
 
 	public ChannelType_Alternatives_1_3(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -23296,7 +23178,7 @@ protected class ChannelType_OpAssignment_1_3_1 extends AssignmentToken  {
 /************ begin Rule Signal ****************
  *
  * Signal:
- *   name=EsterelID channel=ChannelDescription?;
+ * 	name=EsterelID channel=ChannelDescription?;
  *
  **/
 
@@ -23417,13 +23299,11 @@ protected class Signal_ChannelAssignment_1 extends AssignmentToken  {
 /************ begin Rule Sensor ****************
  *
  * Sensor:
- *   name=EsterelID ":" (type=EsterelID|type=BaseType)|name=EsterelID "(" (
- *   type=EsterelID|type=BaseType) ")";
+ * 	name=EsterelID ":" (type=EsterelID | type=BaseType) | name=EsterelID "(" (type=EsterelID | type=BaseType) ")";
  *
  **/
 
-// name=EsterelID ":" (type=EsterelID|type=BaseType)|name=EsterelID "(" (
-// type=EsterelID|type=BaseType) ")"
+// name=EsterelID ":" (type=EsterelID | type=BaseType) | name=EsterelID "(" (type=EsterelID | type=BaseType) ")"
 protected class Sensor_Alternatives extends AlternativesToken {
 
 	public Sensor_Alternatives(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -23453,7 +23333,7 @@ protected class Sensor_Alternatives extends AlternativesToken {
 
 }
 
-// name=EsterelID ":" (type=EsterelID|type=BaseType)
+// name=EsterelID ":" (type=EsterelID | type=BaseType)
 protected class Sensor_Group_0 extends GroupToken {
 	
 	public Sensor_Group_0(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -23530,7 +23410,7 @@ protected class Sensor_ColonKeyword_0_1 extends KeywordToken  {
 
 }
 
-// type=EsterelID|type=BaseType
+// type=EsterelID | type=BaseType
 protected class Sensor_Alternatives_0_2 extends AlternativesToken {
 
 	public Sensor_Alternatives_0_2(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -23623,7 +23503,7 @@ protected class Sensor_TypeAssignment_0_2_1 extends AssignmentToken  {
 
 
 
-// name=EsterelID "(" (type=EsterelID|type=BaseType) ")"
+// name=EsterelID "(" (type=EsterelID | type=BaseType) ")"
 protected class Sensor_Group_1 extends GroupToken {
 	
 	public Sensor_Group_1(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -23700,7 +23580,7 @@ protected class Sensor_LeftParenthesisKeyword_1_1 extends KeywordToken  {
 
 }
 
-// type=EsterelID|type=BaseType
+// type=EsterelID | type=BaseType
 protected class Sensor_Alternatives_1_2 extends AlternativesToken {
 
 	public Sensor_Alternatives_1_2(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
