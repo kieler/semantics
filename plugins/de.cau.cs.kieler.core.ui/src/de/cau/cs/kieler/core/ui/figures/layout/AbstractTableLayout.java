@@ -467,13 +467,14 @@ public abstract class AbstractTableLayout extends AbstractHintLayout {
                 points.addPoint(new Point(Math.max(left, right),
                         regionSeparatorHeight));
                 regionSeparator.setPoints(points);
+                
                 // have to set bounds also
-                Rectangle sepBounds = regionSeparator.getBounds();
-                sepBounds.x = left;
-                sepBounds.y = regionSeparatorHeight;
-                sepBounds.height = 2;
-                sepBounds.width = right - left;
-                regionSeparator.setBounds(sepBounds);
+                // Rectangle sepBounds = regionSeparator.getBounds();
+                // sepBounds.x = left;
+                // sepBounds.y = regionSeparatorHeight;
+                // sepBounds.height = 2;
+                // sepBounds.width = right - left;
+                // regionSeparator.setBounds(sepBounds);
 
             }
 
