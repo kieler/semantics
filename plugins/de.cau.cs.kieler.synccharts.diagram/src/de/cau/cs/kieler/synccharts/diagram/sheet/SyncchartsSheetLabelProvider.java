@@ -72,8 +72,9 @@ public class SyncchartsSheetLabelProvider extends BaseLabelProvider implements
             if (etype != null) {
                 return etype;
             }
-            view = view.eContainer() instanceof View ? (View) view.eContainer()
-                    : null;
+            view =
+                    view.eContainer() instanceof View ? (View) view
+                            .eContainer() : null;
         }
         return null;
     }

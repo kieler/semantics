@@ -14,12 +14,14 @@ public abstract class SyncchartsAbstractNavigatorItem extends PlatformObject {
      * @generated
      */
     static {
-        final Class[] supportedTypes = new Class[] { ITabbedPropertySheetPageContributor.class };
-        final ITabbedPropertySheetPageContributor propertySheetPageContributor = new ITabbedPropertySheetPageContributor() {
-            public String getContributorId() {
-                return "de.cau.cs.kieler.synccharts.diagram"; //$NON-NLS-1$
-            }
-        };
+        final Class[] supportedTypes =
+                new Class[] { ITabbedPropertySheetPageContributor.class };
+        final ITabbedPropertySheetPageContributor propertySheetPageContributor =
+                new ITabbedPropertySheetPageContributor() {
+                    public String getContributorId() {
+                        return "de.cau.cs.kieler.synccharts.diagram"; //$NON-NLS-1$
+                    }
+                };
         Platform.getAdapterManager().registerAdapters(
                 new IAdapterFactory() {
 

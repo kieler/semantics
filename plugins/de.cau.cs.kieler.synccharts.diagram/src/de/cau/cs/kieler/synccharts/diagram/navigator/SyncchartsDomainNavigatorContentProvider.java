@@ -60,11 +60,11 @@ public class SyncchartsDomainNavigatorContentProvider implements
      * @generated
      */
     public SyncchartsDomainNavigatorContentProvider() {
-        myAdapterFctoryContentProvier = new AdapterFactoryContentProvider(
-                SyncchartsDiagramEditorPlugin.getInstance()
-                        .getItemProvidersAdapterFactory());
-        TransactionalEditingDomain editingDomain = GMFEditingDomainFactory.INSTANCE
-                .createEditingDomain();
+        myAdapterFctoryContentProvier =
+                new AdapterFactoryContentProvider(SyncchartsDiagramEditorPlugin
+                        .getInstance().getItemProvidersAdapterFactory());
+        TransactionalEditingDomain editingDomain =
+                GMFEditingDomainFactory.INSTANCE.createEditingDomain();
         myEditingDomain = (AdapterFactoryEditingDomain) editingDomain;
         myEditingDomain.setResourceToReadOnlyMap(new HashMap() {
             public Object get(Object key) {
@@ -81,30 +81,33 @@ public class SyncchartsDomainNavigatorContentProvider implements
                 }
             }
         };
-        myWorkspaceSynchronizer = new WorkspaceSynchronizer(editingDomain,
-                new WorkspaceSynchronizer.Delegate() {
-                    public void dispose() {
-                    }
+        myWorkspaceSynchronizer =
+                new WorkspaceSynchronizer(editingDomain,
+                        new WorkspaceSynchronizer.Delegate() {
+                            public void dispose() {
+                            }
 
-                    public boolean handleResourceChanged(final Resource resource) {
-                        unloadAllResources();
-                        asyncRefresh();
-                        return true;
-                    }
+                            public boolean handleResourceChanged(
+                                    final Resource resource) {
+                                unloadAllResources();
+                                asyncRefresh();
+                                return true;
+                            }
 
-                    public boolean handleResourceDeleted(Resource resource) {
-                        unloadAllResources();
-                        asyncRefresh();
-                        return true;
-                    }
+                            public boolean handleResourceDeleted(
+                                    Resource resource) {
+                                unloadAllResources();
+                                asyncRefresh();
+                                return true;
+                            }
 
-                    public boolean handleResourceMoved(Resource resource,
-                            final URI newURI) {
-                        unloadAllResources();
-                        asyncRefresh();
-                        return true;
-                    }
-                });
+                            public boolean handleResourceMoved(
+                                    Resource resource, final URI newURI) {
+                                unloadAllResources();
+                                asyncRefresh();
+                                return true;
+                            }
+                        });
     }
 
     /**
@@ -178,10 +181,11 @@ public class SyncchartsDomainNavigatorContentProvider implements
     public Object[] getChildren(Object parentElement) {
         if (parentElement instanceof IFile) {
             IFile file = (IFile) parentElement;
-            URI fileURI = URI.createPlatformResourceURI(file.getFullPath()
-                    .toString(), true);
-            Resource resource = myEditingDomain.getResourceSet().getResource(
-                    fileURI, true);
+            URI fileURI =
+                    URI.createPlatformResourceURI(
+                            file.getFullPath().toString(), true);
+            Resource resource =
+                    myEditingDomain.getResourceSet().getResource(fileURI, true);
             return wrapEObjects(
                     myAdapterFctoryContentProvier.getChildren(resource),
                     parentElement);
@@ -215,7 +219,8 @@ public class SyncchartsDomainNavigatorContentProvider implements
      */
     public Object getParent(Object element) {
         if (element instanceof SyncchartsAbstractNavigatorItem) {
-            SyncchartsAbstractNavigatorItem abstractNavigatorItem = (SyncchartsAbstractNavigatorItem) element;
+            SyncchartsAbstractNavigatorItem abstractNavigatorItem =
+                    (SyncchartsAbstractNavigatorItem) element;
             return abstractNavigatorItem.getParent();
         }
         return null;

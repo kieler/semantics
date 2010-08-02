@@ -207,9 +207,10 @@ public class TextualCodeEditPart extends CompartmentEditPart implements
         String text = null;
         EObject parserElement = getParserElement();
         if (parserElement != null && getParser() != null) {
-            text = getParser().getPrintString(
-                    new EObjectAdapter(parserElement),
-                    getParserOptions().intValue());
+            text =
+                    getParser().getPrintString(
+                            new EObjectAdapter(parserElement),
+                            getParserOptions().intValue());
         }
         if (text == null || text.length() == 0) {
             text = defaultText;
@@ -264,18 +265,19 @@ public class TextualCodeEditPart extends CompartmentEditPart implements
                     final EObject element = getParserElement();
                     final IParser parser = getParser();
                     try {
-                        IParserEditStatus valid = (IParserEditStatus) getEditingDomain()
-                                .runExclusive(
-                                        new RunnableWithResult.Impl<IParserEditStatus>() {
+                        IParserEditStatus valid =
+                                (IParserEditStatus) getEditingDomain()
+                                        .runExclusive(
+                                                new RunnableWithResult.Impl<IParserEditStatus>() {
 
-                                            public void run() {
-                                                setResult(parser
-                                                        .isValidEditString(
-                                                                new EObjectAdapter(
-                                                                        element),
-                                                                (String) value));
-                                            }
-                                        });
+                                                    public void run() {
+                                                        setResult(parser
+                                                                .isValidEditString(
+                                                                        new EObjectAdapter(
+                                                                                element),
+                                                                        (String) value));
+                                                    }
+                                                });
                         return valid.getCode() == ParserEditStatus.EDITABLE ? null
                                 : valid.getMessage();
                     } catch (InterruptedException ie) {
@@ -312,12 +314,13 @@ public class TextualCodeEditPart extends CompartmentEditPart implements
      */
     public IParser getParser() {
         if (parser == null) {
-            parser = SyncchartsParserProvider
-                    .getParser(
-                            SyncchartsElementTypes.TextualCode_3038,
-                            getParserElement(),
-                            SyncchartsVisualIDRegistry
-                                    .getType(de.cau.cs.kieler.synccharts.diagram.edit.parts.TextualCodeEditPart.VISUAL_ID));
+            parser =
+                    SyncchartsParserProvider
+                            .getParser(
+                                    SyncchartsElementTypes.TextualCode_3038,
+                                    getParserElement(),
+                                    SyncchartsVisualIDRegistry
+                                            .getType(de.cau.cs.kieler.synccharts.diagram.edit.parts.TextualCodeEditPart.VISUAL_ID));
         }
         return parser;
     }
@@ -383,13 +386,15 @@ public class TextualCodeEditPart extends CompartmentEditPart implements
                         if (theRequest
                                 .getExtendedData()
                                 .get(RequestConstants.REQ_DIRECTEDIT_EXTENDEDDATA_INITIAL_CHAR) instanceof Character) {
-                            Character initialChar = (Character) theRequest
-                                    .getExtendedData()
-                                    .get(RequestConstants.REQ_DIRECTEDIT_EXTENDEDDATA_INITIAL_CHAR);
+                            Character initialChar =
+                                    (Character) theRequest
+                                            .getExtendedData()
+                                            .get(RequestConstants.REQ_DIRECTEDIT_EXTENDEDDATA_INITIAL_CHAR);
                             performDirectEdit(initialChar.charValue());
                         } else if ((theRequest instanceof DirectEditRequest)
                                 && (getEditText().equals(getLabelText()))) {
-                            DirectEditRequest editRequest = (DirectEditRequest) theRequest;
+                            DirectEditRequest editRequest =
+                                    (DirectEditRequest) theRequest;
                             performDirectEdit(editRequest.getLocation());
                         } else {
                             performDirectEdit();
@@ -436,8 +441,9 @@ public class TextualCodeEditPart extends CompartmentEditPart implements
      * @generated
      */
     protected void refreshUnderline() {
-        FontStyle style = (FontStyle) getFontStyleOwnerView().getStyle(
-                NotationPackage.eINSTANCE.getFontStyle());
+        FontStyle style =
+                (FontStyle) getFontStyleOwnerView().getStyle(
+                        NotationPackage.eINSTANCE.getFontStyle());
         if (style != null && getFigure() instanceof WrappingLabel) {
             ((WrappingLabel) getFigure()).setTextUnderline(style.isUnderline());
         }
@@ -447,8 +453,9 @@ public class TextualCodeEditPart extends CompartmentEditPart implements
      * @generated
      */
     protected void refreshStrikeThrough() {
-        FontStyle style = (FontStyle) getFontStyleOwnerView().getStyle(
-                NotationPackage.eINSTANCE.getFontStyle());
+        FontStyle style =
+                (FontStyle) getFontStyleOwnerView().getStyle(
+                        NotationPackage.eINSTANCE.getFontStyle());
         if (style != null && getFigure() instanceof WrappingLabel) {
             ((WrappingLabel) getFigure()).setTextStrikeThrough(style
                     .isStrikeThrough());
@@ -459,13 +466,15 @@ public class TextualCodeEditPart extends CompartmentEditPart implements
      * @generated
      */
     protected void refreshFont() {
-        FontStyle style = (FontStyle) getFontStyleOwnerView().getStyle(
-                NotationPackage.eINSTANCE.getFontStyle());
+        FontStyle style =
+                (FontStyle) getFontStyleOwnerView().getStyle(
+                        NotationPackage.eINSTANCE.getFontStyle());
         if (style != null) {
-            FontData fontData = new FontData(style.getFontName(),
-                    style.getFontHeight(), (style.isBold() ? SWT.BOLD
-                            : SWT.NORMAL)
-                            | (style.isItalic() ? SWT.ITALIC : SWT.NORMAL));
+            FontData fontData =
+                    new FontData(style.getFontName(), style.getFontHeight(),
+                            (style.isBold() ? SWT.BOLD : SWT.NORMAL)
+                                    | (style.isItalic() ? SWT.ITALIC
+                                            : SWT.NORMAL));
             setFont(fontData);
         }
     }
@@ -483,8 +492,9 @@ public class TextualCodeEditPart extends CompartmentEditPart implements
     protected void addSemanticListeners() {
         if (getParser() instanceof ISemanticParser) {
             EObject element = resolveSemanticElement();
-            parserElements = ((ISemanticParser) getParser())
-                    .getSemanticElementsBeingParsed(element);
+            parserElements =
+                    ((ISemanticParser) getParser())
+                            .getSemanticElementsBeingParsed(element);
             for (int i = 0; i < parserElements.size(); i++) {
                 addListenerFilter(
                         "SemanticModel" + i, this, (EObject) parserElements.get(i)); //$NON-NLS-1$

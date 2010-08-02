@@ -47,8 +47,8 @@ public class StateSignalCompartmentEditPart extends ShapeCompartmentEditPart {
      * @generated
      */
     public IFigure createFigure() {
-        ResizableCompartmentFigure result = (ResizableCompartmentFigure) super
-                .createFigure();
+        ResizableCompartmentFigure result =
+                (ResizableCompartmentFigure) super.createFigure();
         result.setTitleVisibility(false);
 
         Object border = result.getBorder();
