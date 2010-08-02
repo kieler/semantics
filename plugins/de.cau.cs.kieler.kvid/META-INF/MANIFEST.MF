@@ -17,6 +17,7 @@ Require-Bundle: org.eclipse.core.runtime,
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-ActivationPolicy: lazy
 Export-Package: de.cau.cs.kieler.kvid.data,
+ de.cau.cs.kieler.kvid.datadistributor,
  muvitorkit.animation;
   uses:="org.eclipse.jface.action,
    org.eclipse.emf.ecore,

@@ -57,7 +57,8 @@ public class GmfDrawer implements IDrawer {
             } else {
                 figuresByURI.put(key, new GmfFigure(dataSet.get(key)));
             }
-            if (RuntimeConfiguration.getInstance().isAnimating()) {
+            if (RuntimeConfiguration.getInstance()
+                    .currentValueOfProperty("Animation enabled").equals("true")) {
                 for (List<Point> path : dataSet.get(key).getPaths()) {
                     figuresByURI.get(key).setLocation(path.get(0));
                 }
@@ -82,7 +83,8 @@ public class GmfDrawer implements IDrawer {
             }
             
             //animating phase
-            if (RuntimeConfiguration.getInstance().isAnimating()) {
+            if (RuntimeConfiguration.getInstance()
+                    .currentValueOfProperty("Animation enabled").equals("true")) {
                 final HashMap<IKvidFigure, List<Point>> animatables = 
                                                           new HashMap<IKvidFigure, List<Point>>();
                 for (final String key : dataSet.keySet()) {
