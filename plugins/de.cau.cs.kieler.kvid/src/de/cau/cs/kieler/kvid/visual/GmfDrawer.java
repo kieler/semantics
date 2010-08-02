@@ -54,10 +54,15 @@ public class GmfDrawer implements IDrawer {
             
             if (figuresByURI.containsKey(key)) {
                 figuresByURI.get(key).updateData(dataSet.get(key));
-                figuresByURI.get(key).setLocation(new Point(300, figureCounter*50));
             } else {
                 figuresByURI.put(key, new GmfFigure(dataSet.get(key)));
-                figuresByURI.get(key).setLocation(new Point(300, figureCounter*50));
+            }
+            if (RuntimeConfiguration.getInstance().isAnimating()) {
+                for (List<Point> path : dataSet.get(key).getPaths()) {
+                    figuresByURI.get(key).setLocation(path.get(0));
+                }
+            } else {
+                //TODO
             }
             figureCounter++;
         }
