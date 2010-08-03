@@ -93,7 +93,8 @@ public class PropertiesView extends ViewPart {
             
             @Override
             protected CellEditor getCellEditor(Object element) {
-                return new ComboBoxCellEditor(tableViewer.getTable(), ((Property) element).getValueNames());
+                ComboBoxCellEditor box = new ComboBoxCellEditor(tableViewer.getTable(), ((Property) element).getValueNames());
+                return box;
             }
             
             @Override

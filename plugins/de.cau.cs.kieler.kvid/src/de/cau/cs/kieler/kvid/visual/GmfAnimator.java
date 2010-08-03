@@ -18,9 +18,14 @@ import java.util.List;
 
 import muvitorkit.animation.AnimatingCommand;
 
+import org.eclipse.draw2d.IFigure;
 import org.eclipse.draw2d.geometry.Point;
 import org.eclipse.gef.commands.CompoundCommand;
 import org.eclipse.gmf.runtime.diagram.ui.editparts.DiagramEditPart;
+import org.eclipse.gmf.runtime.diagram.ui.editparts.DiagramRootEditPart;
+import org.eclipse.ui.PlatformUI;
+
+import de.cau.cs.kieler.kvid.datadistributor.RuntimeConfiguration;
 
 /**
  * 
@@ -41,12 +46,18 @@ public final class GmfAnimator {
      * @param diagram The diagram in which the animation should take place
      * @param animationTime The time an animation may use to perform
      */
+    @SuppressWarnings("static-access")
     public static void animate(final HashMap<IKvidFigure, List<Point>> figuresAndPath,
                                final DiagramEditPart diagram,
                                final int animationTime) {
+        
+        final IFigure canvas = diagram.getLayer(DiagramRootEditPart.DECORATION_PRINTABLE_LAYER);
 
         AnimatingCommand anima = new AnimatingCommand();
-        //anima.setDebug(true);
+        if (RuntimeConfiguration.getInstance()
+                .currentValueOfProperty("Debug drawing activated").equals("true")) {
+            anima.setDebug(true);
+        } 
         CompoundCommand cc = new CompoundCommand();
         boolean allPathsExeeded = false;
         int pathCounter = 0;
@@ -76,6 +87,23 @@ public final class GmfAnimator {
         anima.setCompleteDuration(animationTime / 2);
         cc.add(anima);
         diagram.getDiagramEditDomain().getDiagramCommandStack().execute(cc);
+        
+        if (RuntimeConfiguration.getInstance()
+                .currentValueOfProperty("Behavior after Animation")
+                .equals("Stay at last location")) {
+            for (final IKvidFigure figure : figuresAndPath.keySet()) {
+                Point lastLocation = anima.getFinalLocation(figure);
+                lastLocation.x -= figure.getBounds().width / 2;
+                lastLocation.y -= figure.getBounds().height / 2;
+                figure.setLocation(lastLocation);
+                PlatformUI.getWorkbench().getDisplay().syncExec(new Runnable() {
+                    public void run() {
+                        canvas.add(figure);
+                    }
+                });
+                canvas.repaint();
+            }
+        }
     }
     
 }
