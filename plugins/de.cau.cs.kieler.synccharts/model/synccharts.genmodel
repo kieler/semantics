@@ -62,7 +62,7 @@
       <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference synccharts.ecore#//Transition/sourceState"/>
     </genClasses>
     <genClasses image="false" ecoreClass="synccharts.ecore#//Scope">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute synccharts.ecore#//Scope/id"/>
+      <genFeatures property="Readonly" createChild="false" ecoreFeature="ecore:EAttribute synccharts.ecore#//Scope/id"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute synccharts.ecore#//Scope/label"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference synccharts.ecore#//Scope/signals"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference synccharts.ecore#//Scope/variables"/>
