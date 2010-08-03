@@ -190,22 +190,27 @@
                     transformationId="de.cau.cs.kieler.ksbase.optimize">
               </transformation>
               <transformation
+                    icon="icons/strongAbort.gif"
                     name="Strong abort"
                     tooltip="Transform transition into strong abortion"
                     transformation="setStrong"
-                    transformationId="de.cau.cs.kieler.synccharts.ksbase.setStrong">
+                    transformationId="de.cau.cs.kieler.synccharts.ksbase.setStrong"
+                    validation="isSourceNotASimpleState">
               </transformation>
               <transformation
+                    icon="icons/weakAbort.gif"
                     name="Weak abort"
                     tooltip="Transform transition into weak abortion"
                     transformation="setWeak"
                     transformationId="de.cau.cs.kieler.synccharts.ksbase.setWeak">
               </transformation>
               <transformation
+                    icon="icons/normalTermination.gif"
                     name="Normal termination"
                     tooltip="Transform transition into normal termination"
                     transformation="setNormalTermination"
-                    transformationId="de.cau.cs.kieler.synccharts.ksbase.setNormalTermination">
+                    transformationId="de.cau.cs.kieler.synccharts.ksbase.setNormalTermination"
+                    validation="isSourceNotASimpleState">
               </transformation>
 			</transformations>
 			<menus>

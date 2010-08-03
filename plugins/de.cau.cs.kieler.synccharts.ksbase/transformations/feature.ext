@@ -201,6 +201,27 @@ Boolean hasNoRootState(Transition t, State s):
  s.parentRegion.parentState != null
 ;
 
+Boolean isSimpleState(State s):
+ !s.hasSignalsVariables() 
+    && s.regions.isEmpty 
+    && s.entryActions.isEmpty 
+    && s.innerActions.isEmpty
+    && s.exitActions.isEmpty
+    && s.suspensionTrigger == null
+;
+
+Boolean isNotASimpleState(State s):
+ !s.isSimpleState()
+;
+
+Boolean isSourceASimpleState(Transition t):
+ t.sourceState.isSimpleState()
+;
+
+Boolean isSourceNotASimpleState(Transition t):
+ t.sourceState.isNotASimpleState()
+;
+
 // Add a state to the parent state and add all Regions
 // to that new State
 Void encapsulateRegions(State parentState):
