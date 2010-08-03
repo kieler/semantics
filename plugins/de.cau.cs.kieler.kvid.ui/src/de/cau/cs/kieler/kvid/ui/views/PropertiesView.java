@@ -1,3 +1,16 @@
+/*
+ * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
+ *
+ * http://www.informatik.uni-kiel.de/rtsys/kieler/
+ * 
+ * Copyright 2009 by
+ * + Christian-Albrechts-University of Kiel
+ *   + Department of Computer Science
+ *     + Real-Time and Embedded Systems Group
+ * 
+ * This code is provided under the terms of the Eclipse Public License (EPL).
+ * See the file epl-v10.html for the license text.
+ */
 package de.cau.cs.kieler.kvid.ui.views;
 
 import org.eclipse.jface.viewers.ArrayContentProvider;
@@ -10,22 +23,30 @@ import org.eclipse.jface.viewers.TableViewerColumn;
 import org.eclipse.jface.viewers.ViewerCell;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Table;
-import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.ui.part.ViewPart;
 
 import de.cau.cs.kieler.kvid.datadistributor.Property;
 import de.cau.cs.kieler.kvid.datadistributor.RuntimeConfiguration;
-import de.cau.cs.kieler.kvid.ui.providers.PropertyContentProvider;
-import de.cau.cs.kieler.kvid.ui.providers.PropertyLabelProvider;
 
+/**
+ * 
+ * Eclipse view for editing KViD properties by hand.
+ * 
+ * @author jjc
+ *
+ */
 public class PropertiesView extends ViewPart {
     
     private TableViewer tableViewer;
+    
+    private static final int COLUMN_WIDTH = 250;
 
     @Override
-    public void createPartControl(Composite parent) {       
+    /**
+     * {@inheritDoc}
+     */
+    public void createPartControl(final Composite parent) {       
         tableViewer = new TableViewer(parent, SWT.NONE);
         Table propertyTable = tableViewer.getTable();
         propertyTable.setHeaderVisible(true);
@@ -33,11 +54,11 @@ public class PropertiesView extends ViewPart {
         
         TableViewerColumn viewerPropertyColumn = new TableViewerColumn(tableViewer, SWT.NONE);
         viewerPropertyColumn.getColumn().setText("Property");
-        viewerPropertyColumn.getColumn().setWidth(250);
+        viewerPropertyColumn.getColumn().setWidth(COLUMN_WIDTH);
         
         TableViewerColumn viewerValueColumn = new TableViewerColumn(tableViewer, SWT.NONE);
         viewerValueColumn.getColumn().setText("Value");
-        viewerValueColumn.getColumn().setWidth(250);
+        viewerValueColumn.getColumn().setWidth(COLUMN_WIDTH);
         
         tableViewer.setContentProvider(ArrayContentProvider.getInstance());
                 
@@ -45,7 +66,7 @@ public class PropertiesView extends ViewPart {
             
             @Override
             public void update(ViewerCell cell) {
-                cell.setText(((Property)(cell.getElement())).getName());
+                cell.setText(((Property) (cell.getElement())).getName());
             }
         });
         
@@ -53,7 +74,7 @@ public class PropertiesView extends ViewPart {
             
             @Override
             public void update(ViewerCell cell) {
-                cell.setText(((Property)(cell.getElement())).getCurrentValue());
+                cell.setText(((Property) (cell.getElement())).getCurrentValue());
             }
         });
         
