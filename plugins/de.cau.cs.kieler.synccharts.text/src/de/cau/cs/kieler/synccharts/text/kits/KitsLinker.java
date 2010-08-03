@@ -30,6 +30,8 @@ import org.eclipse.xtext.parsetree.NodeUtil;
 
 import com.google.inject.Inject;
 
+import de.cau.cs.kieler.core.annotations.AnnotationsPackage;
+import de.cau.cs.kieler.core.annotations.StringAnnotation;
 import de.cau.cs.kieler.core.expressions.ValuedObjectReference;
 import de.cau.cs.kieler.synccharts.Assignment;
 import de.cau.cs.kieler.synccharts.Emission;
@@ -58,6 +60,10 @@ public class KitsLinker extends AbstractCleaningLinker {
 		/* iterate on all semantic elements of the synccharts model */
 		for (EObject obj = null; it.hasNext();) {
 			obj = it.next();
+			
+			if (AnnotationsPackage.eINSTANCE.getStringAnnotation().isInstance(obj)) {
+				((StringAnnotation) obj).setValue("Hans");
+			}
 
 			/* restrict to elements with cross references */
 			if (obj instanceof Transition

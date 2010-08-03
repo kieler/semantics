@@ -6,6 +6,7 @@ import org.eclipse.xtext.parsetree.reconstr.impl.DefaultTransientValueService;
 
 import de.cau.cs.kieler.synccharts.StateType;
 import de.cau.cs.kieler.synccharts.SyncchartsPackage;
+import de.cau.cs.kieler.synccharts.Transition;
 
 public class KitsTransientValueService extends DefaultTransientValueService {
 
@@ -16,17 +17,21 @@ public class KitsTransientValueService extends DefaultTransientValueService {
 			|| feature == SyncchartsPackage.eINSTANCE.getScope_InterfaceDeclaration()
 			|| feature == SyncchartsPackage.eINSTANCE.getState_IncomingTransitions()
 			|| feature == SyncchartsPackage.eINSTANCE.getRegion_ParentState()
-//			|| feature == SyncchartsPackage.eINSTANCE.getScope_Id()
 			|| feature == SyncchartsPackage.eINSTANCE.getTransition_SourceState()
-			|| feature == SyncchartsPackage.eINSTANCE.getAction_Label()) {
+			) {
 			return true;
 		}
 		
 		if (feature == SyncchartsPackage.eINSTANCE.getState_Type()) {
-			boolean b =  owner.eGet(feature).equals(StateType.NORMAL);				
-			return b;
+			return owner.eGet(feature).equals(StateType.NORMAL);
 		}
-		return feature.isTransient() || !owner.eIsSet(feature);
+		
+		if (feature == SyncchartsPackage.eINSTANCE.getTransition_Priority()) {
+			if (SyncchartsPackage.eINSTANCE.getTransition().isInstance(owner)) {
+				return ((Transition) owner).getSourceState().getOutgoingTransitions().size() == 1;
+			}
+		}
+		return !owner.eIsSet(feature); // || feature.isTransient();
 	}
 	
 }

@@ -1,12 +1,13 @@
 grammar de.cau.cs.kieler.synccharts.text.kits.Kits with de.cau.cs.kieler.synccharts.text.actions.Actions
 
 import "http://www.eclipse.org/emf/2002/Ecore" as ecore
+import "platform:/resource/de.cau.cs.kieler.core.annotations/model/annotations.ecore" as annotations
 import "platform:/resource/de.cau.cs.kieler.core.expressions/model/expressions.ecore" as expressions 
 import "platform:/resource/de.cau.cs.kieler.synccharts/model/synccharts.ecore" as synccharts
 
 Region returns synccharts::Region:
   ( 
-    ('Region' (label=ID))? // region ID's are introduced by the keyword "region".       
+    ('region' (label=ID))? // region ID's are introduced by the keyword "region".       
 //     (variables+=Variable|signals+=Signal)* 
      (states+=State) 
   );
@@ -14,7 +15,7 @@ Region returns synccharts::Region:
 // ---------------------------------------------------------------------------------------------------
   
 NestedRegion returns synccharts::Region:
-  ('Region' (label=ID) (variables+=Variable|signals+=Signal)* (states+=State)*)
+  ('region' (label=ID) (variables+=Variable|signals+=Signal)* (states+=State)*)
   | SingleNestedRegion
   ;
 
@@ -25,14 +26,24 @@ SingleNestedRegion returns synccharts::Region:
 
 // ---------------------------------------------------------------------------------------------------
 
+//terminal ML_COMMENT	: '/***' -> '*/';
+
+terminal T_ANNOTATION returns ecore::EString: 
+			"/+" -> "+/";
+
+StringAnnotation returns annotations::Annotation:
+	{annotations::StringAnnotation} value=T_ANNOTATION
+    ;
+
 State returns synccharts::State:
+//  ( annotations += StringAnnotation )*
   (
     ((isInitial?='init') (isFinal?='final')?)
    |
     ((isFinal?='final') (isInitial?='init')?)
    )?
   
-  (type=StateType)? ('State' | 'States') (id=ID)? (label=EString)
+  (type=StateType)? ('state')? (id=ID)? (label=EString)
   
   (
     ( (outgoingTransitions+=Transition ("," outgoingTransitions+=Transition)* )? ';')
@@ -55,7 +66,7 @@ State returns synccharts::State:
 // ---------------------------------------------------------------------------------------------------
 
 Variable returns expressions::Variable:
-  'Var' name=ID ((':=' initialValue=IntegerOrString)? ':' type=ValueType) ";";
+  'var' name=ID ((':=' initialValue=IntegerOrString)? ':' type=ValueType) ";";
 
 // ---------------------------------------------------------------------------------------------------
 
@@ -67,7 +78,7 @@ IntegerOrString :
 Signal returns expressions::Signal:
 (isInput?='input')?
 	(isOutput?='output')?
-	'Signal'
+	'signal'
 	(name=EString)
 	(':=' initialValue=EString)?
     ((':' type=ValueType)
@@ -85,10 +96,10 @@ Transition returns synccharts::Transition:
 	  ( trigger=BooleanExpression)?
       ('/' effects+=Effect (','effects+=Effect)*)?
 	)? 
-	(isHistory?=' history')?;
+	(isHistory?='history')? (label=STRING)?;
 
 enum StateType returns synccharts::StateType:
-	NORMAL = 'NORMAL' | CONDITIONAL = 'CONDITIONAL' | REFERENCE = 'REFERENCE' | TEXTUAL = 'TEXTUAL';
+	NORMAL = 'normal' | CONDITIONAL = 'conditional' | REFERENCE = 'reference' | TEXTUAL = 'textual';
 
 enum TransitionType returns synccharts::TransitionType:
 	WEAKABORT = '-->' | STRONGABORT = 'o->' | NORMALTERMINATION = '>->';

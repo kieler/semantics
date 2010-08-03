@@ -29,20 +29,20 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cStatesStateParserRuleCall_1_0 = (RuleCall)cStatesAssignment_1.eContents().get(0);
 		
 		//Region returns synccharts::Region:
-		//	("Region" label=ID)? // region ID's are introduced by the keyword "region".       
+		//	("region" label=ID)? // region ID's are introduced by the keyword "region".       
 		//	//     (variables+=Variable|signals+=Signal)* 
 		//	states+=State;
 		public ParserRule getRule() { return rule; }
 
-		//("Region" label=ID)? // region ID's are introduced by the keyword "region".       
+		//("region" label=ID)? // region ID's are introduced by the keyword "region".       
 		////     (variables+=Variable|signals+=Signal)* 
 		//states+=State
 		public Group getGroup() { return cGroup; }
 
-		//("Region" label=ID)?
+		//("region" label=ID)?
 		public Group getGroup_0() { return cGroup_0; }
 
-		//"Region"
+		//"region"
 		public Keyword getRegionKeyword_0_0() { return cRegionKeyword_0_0; }
 
 		//label=ID
@@ -76,16 +76,16 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//// ---------------------------------------------------------------------------------------------------
 		//NestedRegion returns synccharts::Region:
-		//	"Region" label=ID (variables+=Variable | signals+=Signal)* states+=State* | SingleNestedRegion;
+		//	"region" label=ID (variables+=Variable | signals+=Signal)* states+=State* | SingleNestedRegion;
 		public ParserRule getRule() { return rule; }
 
-		//"Region" label=ID (variables+=Variable | signals+=Signal)* states+=State* | SingleNestedRegion
+		//"region" label=ID (variables+=Variable | signals+=Signal)* states+=State* | SingleNestedRegion
 		public Alternatives getAlternatives() { return cAlternatives; }
 
-		//"Region" label=ID (variables+=Variable | signals+=Signal)* states+=State*
+		//"region" label=ID (variables+=Variable | signals+=Signal)* states+=State*
 		public Group getGroup_0() { return cGroup_0; }
 
-		//"Region"
+		//"region"
 		public Keyword getRegionKeyword_0_0() { return cRegionKeyword_0_0; }
 
 		//label=ID
@@ -136,6 +136,30 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 		public RuleCall getStatesStateParserRuleCall_0() { return cStatesStateParserRuleCall_0; }
 	}
 
+	public class StringAnnotationElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "StringAnnotation");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Action cStringAnnotationAction_0 = (Action)cGroup.eContents().get(0);
+		private final Assignment cValueAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final RuleCall cValueT_ANNOTATIONTerminalRuleCall_1_0 = (RuleCall)cValueAssignment_1.eContents().get(0);
+		
+		//StringAnnotation returns annotations::Annotation:
+		//	{annotations::StringAnnotation} value=T_ANNOTATION;
+		public ParserRule getRule() { return rule; }
+
+		//{annotations::StringAnnotation} value=T_ANNOTATION
+		public Group getGroup() { return cGroup; }
+
+		//{annotations::StringAnnotation}
+		public Action getStringAnnotationAction_0() { return cStringAnnotationAction_0; }
+
+		//value=T_ANNOTATION
+		public Assignment getValueAssignment_1() { return cValueAssignment_1; }
+
+		//T_ANNOTATION
+		public RuleCall getValueT_ANNOTATIONTerminalRuleCall_1_0() { return cValueT_ANNOTATIONTerminalRuleCall_1_0; }
+	}
+
 	public class StateElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "State");
 		private final Group cGroup = (Group)rule.eContents().get(1);
@@ -152,9 +176,7 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cIsInitialInitKeyword_0_1_1_0 = (Keyword)cIsInitialAssignment_0_1_1.eContents().get(0);
 		private final Assignment cTypeAssignment_1 = (Assignment)cGroup.eContents().get(1);
 		private final RuleCall cTypeStateTypeEnumRuleCall_1_0 = (RuleCall)cTypeAssignment_1.eContents().get(0);
-		private final Alternatives cAlternatives_2 = (Alternatives)cGroup.eContents().get(2);
-		private final Keyword cStateKeyword_2_0 = (Keyword)cAlternatives_2.eContents().get(0);
-		private final Keyword cStatesKeyword_2_1 = (Keyword)cAlternatives_2.eContents().get(1);
+		private final Keyword cStateKeyword_2 = (Keyword)cGroup.eContents().get(2);
 		private final Assignment cIdAssignment_3 = (Assignment)cGroup.eContents().get(3);
 		private final RuleCall cIdIDTerminalRuleCall_3_0 = (RuleCall)cIdAssignment_3.eContents().get(0);
 		private final Assignment cLabelAssignment_4 = (Assignment)cGroup.eContents().get(4);
@@ -210,23 +232,25 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cOutgoingTransitionsTransitionParserRuleCall_5_1_3_1_1_0 = (RuleCall)cOutgoingTransitionsAssignment_5_1_3_1_1.eContents().get(0);
 		private final Keyword cSemicolonKeyword_5_1_3_2 = (Keyword)cGroup_5_1_3.eContents().get(2);
 		
-		//// ---------------------------------------------------------------------------------------------------
 		//State returns synccharts::State:
-		//	(isInitial?="init" isFinal?="final"? | isFinal?="final" isInitial?="init"?)? type=StateType? ("State" | "States")
-		//	id=ID? label=EString ((outgoingTransitions+=Transition ("," outgoingTransitions+=Transition)*)? ";" | "{"
-		//	((signals+=Signal | variables+=Variable | "onentry" entryActions+=Action | "oninner" innerActions+=Action | "onexit"
-		//	exitActions+=Action | "suspension" suspensionTrigger=Action)* (regions+=NestedRegion ("||" regions+=NestedRegion)*))
-		//	"}" (outgoingTransitions+=Transition ("," outgoingTransitions+=Transition)* ";")?);
+		//	(isInitial?="init" isFinal?="final"? //  ( annotations += StringAnnotation )*
+		//	| isFinal?="final" isInitial?="init"?)? type=StateType? "state"? id=ID? label=EString ((outgoingTransitions+=Transition
+		//	("," outgoingTransitions+=Transition)*)? ";" | "{" ((signals+=Signal | variables+=Variable | "onentry"
+		//	entryActions+=Action | "oninner" innerActions+=Action | "onexit" exitActions+=Action | "suspension"
+		//	suspensionTrigger=Action)* (regions+=NestedRegion ("||" regions+=NestedRegion)*)) "}" (outgoingTransitions+=Transition
+		//	("," outgoingTransitions+=Transition)* ";")?);
 		public ParserRule getRule() { return rule; }
 
-		//(isInitial?="init" isFinal?="final"? | isFinal?="final" isInitial?="init"?)? type=StateType? ("State" | "States") id=ID?
-		//label=EString ((outgoingTransitions+=Transition ("," outgoingTransitions+=Transition)*)? ";" | "{" ((signals+=Signal |
-		//variables+=Variable | "onentry" entryActions+=Action | "oninner" innerActions+=Action | "onexit" exitActions+=Action |
-		//"suspension" suspensionTrigger=Action)* (regions+=NestedRegion ("||" regions+=NestedRegion)*)) "}"
-		//(outgoingTransitions+=Transition ("," outgoingTransitions+=Transition)* ";")?)
+		//(isInitial?="init" isFinal?="final"? //  ( annotations += StringAnnotation )*
+		//| isFinal?="final" isInitial?="init"?)? type=StateType? "state"? id=ID? label=EString ((outgoingTransitions+=Transition
+		//("," outgoingTransitions+=Transition)*)? ";" | "{" ((signals+=Signal | variables+=Variable | "onentry"
+		//entryActions+=Action | "oninner" innerActions+=Action | "onexit" exitActions+=Action | "suspension"
+		//suspensionTrigger=Action)* (regions+=NestedRegion ("||" regions+=NestedRegion)*)) "}" (outgoingTransitions+=Transition
+		//("," outgoingTransitions+=Transition)* ";")?)
 		public Group getGroup() { return cGroup; }
 
-		//(isInitial?="init" isFinal?="final"? | isFinal?="final" isInitial?="init"?)?
+		//(isInitial?="init" isFinal?="final"? //  ( annotations += StringAnnotation )*
+		//| isFinal?="final" isInitial?="init"?)?
 		public Alternatives getAlternatives_0() { return cAlternatives_0; }
 
 		//isInitial?="init" isFinal?="final"?
@@ -265,14 +289,8 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 		//StateType
 		public RuleCall getTypeStateTypeEnumRuleCall_1_0() { return cTypeStateTypeEnumRuleCall_1_0; }
 
-		//"State" | "States"
-		public Alternatives getAlternatives_2() { return cAlternatives_2; }
-
-		//"State"
-		public Keyword getStateKeyword_2_0() { return cStateKeyword_2_0; }
-
-		//"States"
-		public Keyword getStatesKeyword_2_1() { return cStatesKeyword_2_1; }
+		//"state"?
+		public Keyword getStateKeyword_2() { return cStateKeyword_2; }
 
 		//id=ID?
 		public Assignment getIdAssignment_3() { return cIdAssignment_3; }
@@ -462,13 +480,13 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//// ---------------------------------------------------------------------------------------------------
 		//Variable returns expressions::Variable:
-		//	"Var" name=ID ((":=" initialValue=IntegerOrString)? ":" type=ValueType) ";";
+		//	"var" name=ID ((":=" initialValue=IntegerOrString)? ":" type=ValueType) ";";
 		public ParserRule getRule() { return rule; }
 
-		//"Var" name=ID ((":=" initialValue=IntegerOrString)? ":" type=ValueType) ";"
+		//"var" name=ID ((":=" initialValue=IntegerOrString)? ":" type=ValueType) ";"
 		public Group getGroup() { return cGroup; }
 
-		//"Var"
+		//"var"
 		public Keyword getVarKeyword_0() { return cVarKeyword_0; }
 
 		//name=ID
@@ -560,11 +578,11 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//// ---------------------------------------------------------------------------------------------------
 		//Signal returns expressions::Signal:
-		//	isInput?="input"? isOutput?="output"? "Signal" name=EString (":=" initialValue=EString)? (":" type=ValueType | ":"
+		//	isInput?="input"? isOutput?="output"? "signal" name=EString (":=" initialValue=EString)? (":" type=ValueType | ":"
 		//	"combine" type=ValueType "with" (combineOperator=CombineOperator | hostCombineOperator=EString))? ";";
 		public ParserRule getRule() { return rule; }
 
-		//isInput?="input"? isOutput?="output"? "Signal" name=EString (":=" initialValue=EString)? (":" type=ValueType | ":"
+		//isInput?="input"? isOutput?="output"? "signal" name=EString (":=" initialValue=EString)? (":" type=ValueType | ":"
 		//"combine" type=ValueType "with" (combineOperator=CombineOperator | hostCombineOperator=EString))? ";"
 		public Group getGroup() { return cGroup; }
 
@@ -580,7 +598,7 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 		//"output"
 		public Keyword getIsOutputOutputKeyword_1_0() { return cIsOutputOutputKeyword_1_0; }
 
-		//"Signal"
+		//"signal"
 		public Keyword getSignalKeyword_2() { return cSignalKeyword_2; }
 
 		//name=EString
@@ -687,16 +705,19 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cEffectsEffectParserRuleCall_3_4_2_1_0 = (RuleCall)cEffectsAssignment_3_4_2_1.eContents().get(0);
 		private final Assignment cIsHistoryAssignment_4 = (Assignment)cGroup.eContents().get(4);
 		private final Keyword cIsHistoryHistoryKeyword_4_0 = (Keyword)cIsHistoryAssignment_4.eContents().get(0);
+		private final Assignment cLabelAssignment_5 = (Assignment)cGroup.eContents().get(5);
+		private final RuleCall cLabelSTRINGTerminalRuleCall_5_0 = (RuleCall)cLabelAssignment_5.eContents().get(0);
 		
 		//// ---------------------------------------------------------------------------------------------------
 		//Transition returns synccharts::Transition:
 		//	type=TransitionType targetState=[synccharts::State|EString] ("<" priority=INT ">")? ("with" isImmediate?="#"?
 		//	("delay:=" delay=INT)? trigger=BooleanExpression? ("/" effects+=Effect ("," effects+=Effect)*)?)?
-		//	isHistory?=" history"?;
+		//	isHistory?="history"? label=STRING?;
 		public ParserRule getRule() { return rule; }
 
 		//type=TransitionType targetState=[synccharts::State|EString] ("<" priority=INT ">")? ("with" isImmediate?="#"? ("delay:="
-		//delay=INT)? trigger=BooleanExpression? ("/" effects+=Effect ("," effects+=Effect)*)?)? isHistory?=" history"?
+		//delay=INT)? trigger=BooleanExpression? ("/" effects+=Effect ("," effects+=Effect)*)?)? isHistory?="history"?
+		//label=STRING?
 		public Group getGroup() { return cGroup; }
 
 		//type=TransitionType
@@ -784,11 +805,17 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 		//Effect
 		public RuleCall getEffectsEffectParserRuleCall_3_4_2_1_0() { return cEffectsEffectParserRuleCall_3_4_2_1_0; }
 
-		//isHistory?=" history"?
+		//isHistory?="history"?
 		public Assignment getIsHistoryAssignment_4() { return cIsHistoryAssignment_4; }
 
-		//" history"
+		//"history"
 		public Keyword getIsHistoryHistoryKeyword_4_0() { return cIsHistoryHistoryKeyword_4_0; }
+
+		//label=STRING?
+		public Assignment getLabelAssignment_5() { return cLabelAssignment_5; }
+
+		//STRING
+		public RuleCall getLabelSTRINGTerminalRuleCall_5_0() { return cLabelSTRINGTerminalRuleCall_5_0; }
 	}
 	
 	
@@ -796,44 +823,44 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "StateType");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
 		private final EnumLiteralDeclaration cNORMALEnumLiteralDeclaration_0 = (EnumLiteralDeclaration)cAlternatives.eContents().get(0);
-		private final Keyword cNORMALNORMALKeyword_0_0 = (Keyword)cNORMALEnumLiteralDeclaration_0.eContents().get(0);
+		private final Keyword cNORMALNormalKeyword_0_0 = (Keyword)cNORMALEnumLiteralDeclaration_0.eContents().get(0);
 		private final EnumLiteralDeclaration cCONDITIONALEnumLiteralDeclaration_1 = (EnumLiteralDeclaration)cAlternatives.eContents().get(1);
-		private final Keyword cCONDITIONALCONDITIONALKeyword_1_0 = (Keyword)cCONDITIONALEnumLiteralDeclaration_1.eContents().get(0);
+		private final Keyword cCONDITIONALConditionalKeyword_1_0 = (Keyword)cCONDITIONALEnumLiteralDeclaration_1.eContents().get(0);
 		private final EnumLiteralDeclaration cREFERENCEEnumLiteralDeclaration_2 = (EnumLiteralDeclaration)cAlternatives.eContents().get(2);
-		private final Keyword cREFERENCEREFERENCEKeyword_2_0 = (Keyword)cREFERENCEEnumLiteralDeclaration_2.eContents().get(0);
+		private final Keyword cREFERENCEReferenceKeyword_2_0 = (Keyword)cREFERENCEEnumLiteralDeclaration_2.eContents().get(0);
 		private final EnumLiteralDeclaration cTEXTUALEnumLiteralDeclaration_3 = (EnumLiteralDeclaration)cAlternatives.eContents().get(3);
-		private final Keyword cTEXTUALTEXTUALKeyword_3_0 = (Keyword)cTEXTUALEnumLiteralDeclaration_3.eContents().get(0);
+		private final Keyword cTEXTUALTextualKeyword_3_0 = (Keyword)cTEXTUALEnumLiteralDeclaration_3.eContents().get(0);
 		
 		//enum StateType returns synccharts::StateType:
-		//	NORMAL | CONDITIONAL | REFERENCE | TEXTUAL;
+		//	NORMAL="normal" | CONDITIONAL="conditional" | REFERENCE="reference" | TEXTUAL="textual";
 		public EnumRule getRule() { return rule; }
 
-		//NORMAL | CONDITIONAL | REFERENCE | TEXTUAL
+		//NORMAL="normal" | CONDITIONAL="conditional" | REFERENCE="reference" | TEXTUAL="textual"
 		public Alternatives getAlternatives() { return cAlternatives; }
 
-		//NORMAL
+		//NORMAL="normal"
 		public EnumLiteralDeclaration getNORMALEnumLiteralDeclaration_0() { return cNORMALEnumLiteralDeclaration_0; }
 
-		//"NORMAL"
-		public Keyword getNORMALNORMALKeyword_0_0() { return cNORMALNORMALKeyword_0_0; }
+		//"normal"
+		public Keyword getNORMALNormalKeyword_0_0() { return cNORMALNormalKeyword_0_0; }
 
-		//CONDITIONAL
+		//CONDITIONAL="conditional"
 		public EnumLiteralDeclaration getCONDITIONALEnumLiteralDeclaration_1() { return cCONDITIONALEnumLiteralDeclaration_1; }
 
-		//"CONDITIONAL"
-		public Keyword getCONDITIONALCONDITIONALKeyword_1_0() { return cCONDITIONALCONDITIONALKeyword_1_0; }
+		//"conditional"
+		public Keyword getCONDITIONALConditionalKeyword_1_0() { return cCONDITIONALConditionalKeyword_1_0; }
 
-		//REFERENCE
+		//REFERENCE="reference"
 		public EnumLiteralDeclaration getREFERENCEEnumLiteralDeclaration_2() { return cREFERENCEEnumLiteralDeclaration_2; }
 
-		//"REFERENCE"
-		public Keyword getREFERENCEREFERENCEKeyword_2_0() { return cREFERENCEREFERENCEKeyword_2_0; }
+		//"reference"
+		public Keyword getREFERENCEReferenceKeyword_2_0() { return cREFERENCEReferenceKeyword_2_0; }
 
-		//TEXTUAL
+		//TEXTUAL="textual"
 		public EnumLiteralDeclaration getTEXTUALEnumLiteralDeclaration_3() { return cTEXTUALEnumLiteralDeclaration_3; }
 
-		//"TEXTUAL"
-		public Keyword getTEXTUALTEXTUALKeyword_3_0() { return cTEXTUALTEXTUALKeyword_3_0; }
+		//"textual"
+		public Keyword getTEXTUALTextualKeyword_3_0() { return cTEXTUALTextualKeyword_3_0; }
 	}
 
 	public class TransitionTypeElements extends AbstractEnumRuleElementFinder {
@@ -875,6 +902,8 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 	private RegionElements pRegion;
 	private NestedRegionElements pNestedRegion;
 	private SingleNestedRegionElements pSingleNestedRegion;
+	private TerminalRule tT_ANNOTATION;
+	private StringAnnotationElements pStringAnnotation;
 	private StateElements pState;
 	private VariableElements pVariable;
 	private IntegerOrStringElements pIntegerOrString;
@@ -905,7 +934,7 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 
 	
 	//Region returns synccharts::Region:
-	//	("Region" label=ID)? // region ID's are introduced by the keyword "region".       
+	//	("region" label=ID)? // region ID's are introduced by the keyword "region".       
 	//	//     (variables+=Variable|signals+=Signal)* 
 	//	states+=State;
 	public RegionElements getRegionAccess() {
@@ -918,7 +947,7 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 
 	//// ---------------------------------------------------------------------------------------------------
 	//NestedRegion returns synccharts::Region:
-	//	"Region" label=ID (variables+=Variable | signals+=Signal)* states+=State* | SingleNestedRegion;
+	//	"region" label=ID (variables+=Variable | signals+=Signal)* states+=State* | SingleNestedRegion;
 	public NestedRegionElements getNestedRegionAccess() {
 		return (pNestedRegion != null) ? pNestedRegion : (pNestedRegion = new NestedRegionElements());
 	}
@@ -939,12 +968,30 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//// ---------------------------------------------------------------------------------------------------
+	////terminal ML_COMMENT	: '/ ***' -> '* /';
+	//terminal T_ANNOTATION:
+	//	"/+"->"+/";
+	public TerminalRule getT_ANNOTATIONRule() {
+		return (tT_ANNOTATION != null) ? tT_ANNOTATION : (tT_ANNOTATION = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "T_ANNOTATION"));
+	} 
+
+	//StringAnnotation returns annotations::Annotation:
+	//	{annotations::StringAnnotation} value=T_ANNOTATION;
+	public StringAnnotationElements getStringAnnotationAccess() {
+		return (pStringAnnotation != null) ? pStringAnnotation : (pStringAnnotation = new StringAnnotationElements());
+	}
+	
+	public ParserRule getStringAnnotationRule() {
+		return getStringAnnotationAccess().getRule();
+	}
+
 	//State returns synccharts::State:
-	//	(isInitial?="init" isFinal?="final"? | isFinal?="final" isInitial?="init"?)? type=StateType? ("State" | "States")
-	//	id=ID? label=EString ((outgoingTransitions+=Transition ("," outgoingTransitions+=Transition)*)? ";" | "{"
-	//	((signals+=Signal | variables+=Variable | "onentry" entryActions+=Action | "oninner" innerActions+=Action | "onexit"
-	//	exitActions+=Action | "suspension" suspensionTrigger=Action)* (regions+=NestedRegion ("||" regions+=NestedRegion)*))
-	//	"}" (outgoingTransitions+=Transition ("," outgoingTransitions+=Transition)* ";")?);
+	//	(isInitial?="init" isFinal?="final"? //  ( annotations += StringAnnotation )*
+	//	| isFinal?="final" isInitial?="init"?)? type=StateType? "state"? id=ID? label=EString ((outgoingTransitions+=Transition
+	//	("," outgoingTransitions+=Transition)*)? ";" | "{" ((signals+=Signal | variables+=Variable | "onentry"
+	//	entryActions+=Action | "oninner" innerActions+=Action | "onexit" exitActions+=Action | "suspension"
+	//	suspensionTrigger=Action)* (regions+=NestedRegion ("||" regions+=NestedRegion)*)) "}" (outgoingTransitions+=Transition
+	//	("," outgoingTransitions+=Transition)* ";")?);
 	public StateElements getStateAccess() {
 		return (pState != null) ? pState : (pState = new StateElements());
 	}
@@ -955,7 +1002,7 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 
 	//// ---------------------------------------------------------------------------------------------------
 	//Variable returns expressions::Variable:
-	//	"Var" name=ID ((":=" initialValue=IntegerOrString)? ":" type=ValueType) ";";
+	//	"var" name=ID ((":=" initialValue=IntegerOrString)? ":" type=ValueType) ";";
 	public VariableElements getVariableAccess() {
 		return (pVariable != null) ? pVariable : (pVariable = new VariableElements());
 	}
@@ -977,7 +1024,7 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 
 	//// ---------------------------------------------------------------------------------------------------
 	//Signal returns expressions::Signal:
-	//	isInput?="input"? isOutput?="output"? "Signal" name=EString (":=" initialValue=EString)? (":" type=ValueType | ":"
+	//	isInput?="input"? isOutput?="output"? "signal" name=EString (":=" initialValue=EString)? (":" type=ValueType | ":"
 	//	"combine" type=ValueType "with" (combineOperator=CombineOperator | hostCombineOperator=EString))? ";";
 	public SignalElements getSignalAccess() {
 		return (pSignal != null) ? pSignal : (pSignal = new SignalElements());
@@ -991,7 +1038,7 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 	//Transition returns synccharts::Transition:
 	//	type=TransitionType targetState=[synccharts::State|EString] ("<" priority=INT ">")? ("with" isImmediate?="#"?
 	//	("delay:=" delay=INT)? trigger=BooleanExpression? ("/" effects+=Effect ("," effects+=Effect)*)?)?
-	//	isHistory?=" history"?;
+	//	isHistory?="history"? label=STRING?;
 	public TransitionElements getTransitionAccess() {
 		return (pTransition != null) ? pTransition : (pTransition = new TransitionElements());
 	}
@@ -1001,7 +1048,7 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//enum StateType returns synccharts::StateType:
-	//	NORMAL | CONDITIONAL | REFERENCE | TEXTUAL;
+	//	NORMAL="normal" | CONDITIONAL="conditional" | REFERENCE="reference" | TEXTUAL="textual";
 	public StateTypeElements getStateTypeAccess() {
 		return (unknownRuleStateType != null) ? unknownRuleStateType : (unknownRuleStateType = new StateTypeElements());
 	}
