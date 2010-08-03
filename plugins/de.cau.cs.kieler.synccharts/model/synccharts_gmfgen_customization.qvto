@@ -91,7 +91,7 @@ mapping inout GenCompartment::compartmentNames(inout signalIndex : Integer, inou
 // Changing back to polyline for now.
 mapping inout InnerClassViewmap::changePolylineShapeToPolyline(){
     var temp : String := self.classBody;
-    temp := temp.replace("PolylineShape", "Polyline");
+    temp := temp.replace("org.eclipse.draw2d.PolylineShape", "de.cau.cs.kieler.core.ui.figures.TranslatablePolyline");
     self.classBody := temp;
 }
 

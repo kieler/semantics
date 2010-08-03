@@ -60,67 +60,56 @@ public class SyncchartsElementTypes {
     /**
      * @generated
      */
-    public static final IElementType Region_1000 =
-            getElementType("de.cau.cs.kieler.synccharts.diagram.Region_1000"); //$NON-NLS-1$
+    public static final IElementType Region_1000 = getElementType("de.cau.cs.kieler.synccharts.diagram.Region_1000"); //$NON-NLS-1$
     /**
      * @generated
      */
-    public static final IElementType State_2004 =
-            getElementType("de.cau.cs.kieler.synccharts.diagram.State_2004"); //$NON-NLS-1$
+    public static final IElementType State_2004 = getElementType("de.cau.cs.kieler.synccharts.diagram.State_2004"); //$NON-NLS-1$
 
     /**
      * @generated
      */
-    public static final IElementType Region_3031 =
-            getElementType("de.cau.cs.kieler.synccharts.diagram.Region_3031"); //$NON-NLS-1$
+    public static final IElementType Region_3031 = getElementType("de.cau.cs.kieler.synccharts.diagram.Region_3031"); //$NON-NLS-1$
 
     /**
      * @generated
      */
-    public static final IElementType State_3032 =
-            getElementType("de.cau.cs.kieler.synccharts.diagram.State_3032"); //$NON-NLS-1$
+    public static final IElementType State_3032 = getElementType("de.cau.cs.kieler.synccharts.diagram.State_3032"); //$NON-NLS-1$
 
     /**
      * @generated
      */
-    public static final IElementType Signal_3033 =
-            getElementType("de.cau.cs.kieler.synccharts.diagram.Signal_3033"); //$NON-NLS-1$
+    public static final IElementType Signal_3033 = getElementType("de.cau.cs.kieler.synccharts.diagram.Signal_3033"); //$NON-NLS-1$
 
     /**
      * @generated
      */
-    public static final IElementType Action_3034 =
-            getElementType("de.cau.cs.kieler.synccharts.diagram.Action_3034"); //$NON-NLS-1$
+    public static final IElementType Action_3034 = getElementType("de.cau.cs.kieler.synccharts.diagram.Action_3034"); //$NON-NLS-1$
 
     /**
      * @generated
      */
-    public static final IElementType Action_3035 =
-            getElementType("de.cau.cs.kieler.synccharts.diagram.Action_3035"); //$NON-NLS-1$
+    public static final IElementType Action_3035 = getElementType("de.cau.cs.kieler.synccharts.diagram.Action_3035"); //$NON-NLS-1$
 
     /**
      * @generated
      */
-    public static final IElementType Action_3036 =
-            getElementType("de.cau.cs.kieler.synccharts.diagram.Action_3036"); //$NON-NLS-1$
+    public static final IElementType Action_3036 = getElementType("de.cau.cs.kieler.synccharts.diagram.Action_3036"); //$NON-NLS-1$
 
     /**
      * @generated
      */
-    public static final IElementType Action_3037 =
-            getElementType("de.cau.cs.kieler.synccharts.diagram.Action_3037"); //$NON-NLS-1$
+    public static final IElementType Action_3037 = getElementType("de.cau.cs.kieler.synccharts.diagram.Action_3037"); //$NON-NLS-1$
 
     /**
      * @generated
      */
-    public static final IElementType TextualCode_3038 =
-            getElementType("de.cau.cs.kieler.synccharts.diagram.TextualCode_3038"); //$NON-NLS-1$
+    public static final IElementType TextualCode_3038 = getElementType("de.cau.cs.kieler.synccharts.diagram.TextualCode_3038"); //$NON-NLS-1$
 
     /**
      * @generated
      */
-    public static final IElementType Transition_4004 =
-            getElementType("de.cau.cs.kieler.synccharts.diagram.Transition_4004"); //$NON-NLS-1$
+    public static final IElementType Transition_4004 = getElementType("de.cau.cs.kieler.synccharts.diagram.Transition_4004"); //$NON-NLS-1$
 
     /**
      * @generated
@@ -142,26 +131,22 @@ public class SyncchartsElementTypes {
     /**
      * @generated
      */
-    private static ImageDescriptor getProvidedImageDescriptor(
-            ENamedElement element) {
+    private static ImageDescriptor getProvidedImageDescriptor(ENamedElement element) {
         if (element instanceof EStructuralFeature) {
             EStructuralFeature feature = ((EStructuralFeature) element);
             EClass eContainingClass = feature.getEContainingClass();
             EClassifier eType = feature.getEType();
             if (eContainingClass != null && !eContainingClass.isAbstract()) {
                 element = eContainingClass;
-            } else if (eType instanceof EClass
-                    && !((EClass) eType).isAbstract()) {
+            } else if (eType instanceof EClass && !((EClass) eType).isAbstract()) {
                 element = eType;
             }
         }
         if (element instanceof EClass) {
             EClass eClass = (EClass) element;
             if (!eClass.isAbstract()) {
-                return SyncchartsDiagramEditorPlugin.getInstance()
-                        .getItemImageDescriptor(
-                                eClass.getEPackage().getEFactoryInstance()
-                                        .create(eClass));
+                return SyncchartsDiagramEditorPlugin.getInstance().getItemImageDescriptor(
+                        eClass.getEPackage().getEFactoryInstance().create(eClass));
             }
         }
         // TODO : support structural features
@@ -191,8 +176,7 @@ public class SyncchartsElementTypes {
         String key = getImageRegistryKey(element);
         Image image = getImageRegistry().get(key);
         if (image == null) {
-            ImageDescriptor imageDescriptor =
-                    getProvidedImageDescriptor(element);
+            ImageDescriptor imageDescriptor = getProvidedImageDescriptor(element);
             if (imageDescriptor == null) {
                 imageDescriptor = ImageDescriptor.getMissingImageDescriptor();
             }
@@ -252,11 +236,9 @@ public class SyncchartsElementTypes {
 
             elements.put(Action_3037, SyncchartsPackage.eINSTANCE.getAction());
 
-            elements.put(TextualCode_3038,
-                    ExpressionsPackage.eINSTANCE.getTextualCode());
+            elements.put(TextualCode_3038, ExpressionsPackage.eINSTANCE.getTextualCode());
 
-            elements.put(Transition_4004,
-                    SyncchartsPackage.eINSTANCE.getTransition());
+            elements.put(Transition_4004, SyncchartsPackage.eINSTANCE.getTransition());
         }
         return (ENamedElement) elements.get(type);
     }

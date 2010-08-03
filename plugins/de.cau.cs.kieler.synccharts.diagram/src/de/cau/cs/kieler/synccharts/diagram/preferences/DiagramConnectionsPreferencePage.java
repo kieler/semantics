@@ -28,8 +28,7 @@ public class DiagramConnectionsPreferencePage extends ConnectionsPreferencePage 
      * @generated
      */
     public DiagramConnectionsPreferencePage() {
-        setPreferenceStore(SyncchartsDiagramEditorPlugin.getInstance()
-                .getPreferenceStore());
+        setPreferenceStore(SyncchartsDiagramEditorPlugin.getInstance().getPreferenceStore());
     }
 
     /**
@@ -49,10 +48,8 @@ public class DiagramConnectionsPreferencePage extends ConnectionsPreferencePage 
         super.addFieldEditors(composite);
 
         // spline mode
-        splineModeFieldEditor =
-                new ComboFieldEditor(SplineConnection.PREF_SPLINE_MODE,
-                        SPLINE_LABEL, composite, ComboFieldEditor.INT_TYPE,
-                        true, 0, 0, true);
+        splineModeFieldEditor = new ComboFieldEditor(SplineConnection.PREF_SPLINE_MODE, SPLINE_LABEL,
+                composite, ComboFieldEditor.INT_TYPE, true, 0, 0, true);
         splineModeFieldEditor.autoStorage = true;
         addField(splineModeFieldEditor);
         Combo splineModeCombo = splineModeFieldEditor.getComboControl();
@@ -77,8 +74,7 @@ public class DiagramConnectionsPreferencePage extends ConnectionsPreferencePage 
                     for (IEditorReference er : ers) {
                         IEditorPart editor = er.getEditor(true);
                         if (editor instanceof SyncchartsDiagramEditor) {
-                            SyncchartsDiagramEditor sde =
-                                    (SyncchartsDiagramEditor) editor;
+                            SyncchartsDiagramEditor sde = (SyncchartsDiagramEditor) editor;
                             applySplineMode(sde.getDiagramEditPart());
                         }
                     }
@@ -95,8 +91,8 @@ public class DiagramConnectionsPreferencePage extends ConnectionsPreferencePage 
         if (part instanceof TransitionEditPart) {
             Connection c = ((TransitionEditPart) part).getConnectionFigure();
             if (c instanceof SplineConnection) {
-                ((SplineConnection) c).setSplineMode(getPreferenceStore()
-                        .getInt(SplineConnection.PREF_SPLINE_MODE));
+                ((SplineConnection) c).setSplineMode(getPreferenceStore().getInt(
+                        SplineConnection.PREF_SPLINE_MODE));
             }
         }
         if (part instanceof ShapeNodeEditPart) {

@@ -20,8 +20,7 @@ import org.eclipse.gmf.runtime.draw2d.ui.figures.WrappingLabel;
 /**
  * @generated
  */
-public class SyncchartsTextNonResizableEditPolicy extends
-        NonResizableEditPolicyEx {
+public class SyncchartsTextNonResizableEditPolicy extends NonResizableEditPolicyEx {
 
     /**
      * @generated
@@ -60,8 +59,7 @@ public class SyncchartsTextNonResizableEditPolicy extends
             ((WrappingLabel) getHostFigure()).setFocus(false);
         } else {
             hideSelection();
-            addFeedback(selectionFeedbackFigure =
-                    createSelectionFeedbackFigure());
+            addFeedback(selectionFeedbackFigure = createSelectionFeedbackFigure());
             getHostFigure().addFigureListener(getHostPositionListener());
             refreshSelectionFeedback();
             hideFocus();
@@ -135,10 +133,8 @@ public class SyncchartsTextNonResizableEditPolicy extends
         if (getHostFigure() instanceof Label) {
             Label feedbackFigure = new Label();
             feedbackFigure.setOpaque(true);
-            feedbackFigure
-                    .setBackgroundColor(ColorConstants.menuBackgroundSelected);
-            feedbackFigure
-                    .setForegroundColor(ColorConstants.menuForegroundSelected);
+            feedbackFigure.setBackgroundColor(ColorConstants.menuBackgroundSelected);
+            feedbackFigure.setForegroundColor(ColorConstants.menuForegroundSelected);
             return feedbackFigure;
         } else {
             RectangleFigure feedbackFigure = new RectangleFigure();
@@ -178,8 +174,7 @@ public class SyncchartsTextNonResizableEditPolicy extends
                 updateLabel((Label) selectionFeedbackFigure);
                 selectionFeedbackFigure.setBounds(getFeedbackBounds());
             } else {
-                selectionFeedbackFigure.setBounds(getFeedbackBounds().expand(5,
-                        5));
+                selectionFeedbackFigure.setBounds(getFeedbackBounds().expand(5, 5));
             }
         }
     }

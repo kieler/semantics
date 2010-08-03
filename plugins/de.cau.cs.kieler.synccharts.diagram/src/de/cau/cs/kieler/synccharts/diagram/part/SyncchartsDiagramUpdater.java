@@ -94,19 +94,15 @@ public class SyncchartsDiagramUpdater {
     /**
      * @generated
      */
-    public static List<SyncchartsNodeDescriptor> getRegion_1000SemanticChildren(
-            View view) {
+    public static List<SyncchartsNodeDescriptor> getRegion_1000SemanticChildren(View view) {
         if (!view.isSetElement()) {
             return Collections.emptyList();
         }
         Region modelElement = (Region) view.getElement();
-        LinkedList<SyncchartsNodeDescriptor> result =
-                new LinkedList<SyncchartsNodeDescriptor>();
+        LinkedList<SyncchartsNodeDescriptor> result = new LinkedList<SyncchartsNodeDescriptor>();
         for (Iterator<?> it = modelElement.getStates().iterator(); it.hasNext();) {
             State childElement = (State) it.next();
-            int visualID =
-                    SyncchartsVisualIDRegistry.getNodeVisualID(view,
-                            childElement);
+            int visualID = SyncchartsVisualIDRegistry.getNodeVisualID(view, childElement);
             if (visualID == StateEditPart.VISUAL_ID) {
                 result.add(new SyncchartsNodeDescriptor(childElement, visualID));
                 continue;
@@ -118,19 +114,15 @@ public class SyncchartsDiagramUpdater {
     /**
      * @generated
      */
-    public static List<SyncchartsNodeDescriptor> getState_2004SemanticChildren(
-            View view) {
+    public static List<SyncchartsNodeDescriptor> getState_2004SemanticChildren(View view) {
         if (!view.isSetElement()) {
             return Collections.emptyList();
         }
         State modelElement = (State) view.getElement();
-        LinkedList<SyncchartsNodeDescriptor> result =
-                new LinkedList<SyncchartsNodeDescriptor>();
+        LinkedList<SyncchartsNodeDescriptor> result = new LinkedList<SyncchartsNodeDescriptor>();
         {
             TextualCode childElement = modelElement.getBodyText();
-            int visualID =
-                    SyncchartsVisualIDRegistry.getNodeVisualID(view,
-                            childElement);
+            int visualID = SyncchartsVisualIDRegistry.getNodeVisualID(view, childElement);
             if (visualID == TextualCodeEditPart.VISUAL_ID) {
                 result.add(new SyncchartsNodeDescriptor(childElement, visualID));
             }
@@ -141,19 +133,15 @@ public class SyncchartsDiagramUpdater {
     /**
      * @generated
      */
-    public static List<SyncchartsNodeDescriptor> getState_3032SemanticChildren(
-            View view) {
+    public static List<SyncchartsNodeDescriptor> getState_3032SemanticChildren(View view) {
         if (!view.isSetElement()) {
             return Collections.emptyList();
         }
         State modelElement = (State) view.getElement();
-        LinkedList<SyncchartsNodeDescriptor> result =
-                new LinkedList<SyncchartsNodeDescriptor>();
+        LinkedList<SyncchartsNodeDescriptor> result = new LinkedList<SyncchartsNodeDescriptor>();
         {
             TextualCode childElement = modelElement.getBodyText();
-            int visualID =
-                    SyncchartsVisualIDRegistry.getNodeVisualID(view,
-                            childElement);
+            int visualID = SyncchartsVisualIDRegistry.getNodeVisualID(view, childElement);
             if (visualID == TextualCodeEditPart.VISUAL_ID) {
                 result.add(new SyncchartsNodeDescriptor(childElement, visualID));
             }
@@ -164,8 +152,7 @@ public class SyncchartsDiagramUpdater {
     /**
      * @generated
      */
-    public static List<SyncchartsNodeDescriptor> getStateSignal_7041SemanticChildren(
-            View view) {
+    public static List<SyncchartsNodeDescriptor> getStateSignal_7041SemanticChildren(View view) {
         if (false == view.eContainer() instanceof View) {
             return Collections.emptyList();
         }
@@ -174,14 +161,10 @@ public class SyncchartsDiagramUpdater {
             return Collections.emptyList();
         }
         State modelElement = (State) containerView.getElement();
-        LinkedList<SyncchartsNodeDescriptor> result =
-                new LinkedList<SyncchartsNodeDescriptor>();
-        for (Iterator<?> it = modelElement.getSignals().iterator(); it
-                .hasNext();) {
+        LinkedList<SyncchartsNodeDescriptor> result = new LinkedList<SyncchartsNodeDescriptor>();
+        for (Iterator<?> it = modelElement.getSignals().iterator(); it.hasNext();) {
             Signal childElement = (Signal) it.next();
-            int visualID =
-                    SyncchartsVisualIDRegistry.getNodeVisualID(view,
-                            childElement);
+            int visualID = SyncchartsVisualIDRegistry.getNodeVisualID(view, childElement);
             if (visualID == SignalEditPart.VISUAL_ID) {
                 result.add(new SyncchartsNodeDescriptor(childElement, visualID));
                 continue;
@@ -193,8 +176,7 @@ public class SyncchartsDiagramUpdater {
     /**
      * @generated
      */
-    public static List<SyncchartsNodeDescriptor> getStateOnEntryAction_7042SemanticChildren(
-            View view) {
+    public static List<SyncchartsNodeDescriptor> getStateOnEntryAction_7042SemanticChildren(View view) {
         if (false == view.eContainer() instanceof View) {
             return Collections.emptyList();
         }
@@ -203,14 +185,10 @@ public class SyncchartsDiagramUpdater {
             return Collections.emptyList();
         }
         State modelElement = (State) containerView.getElement();
-        LinkedList<SyncchartsNodeDescriptor> result =
-                new LinkedList<SyncchartsNodeDescriptor>();
-        for (Iterator<?> it = modelElement.getEntryActions().iterator(); it
-                .hasNext();) {
+        LinkedList<SyncchartsNodeDescriptor> result = new LinkedList<SyncchartsNodeDescriptor>();
+        for (Iterator<?> it = modelElement.getEntryActions().iterator(); it.hasNext();) {
             Action childElement = (Action) it.next();
-            int visualID =
-                    SyncchartsVisualIDRegistry.getNodeVisualID(view,
-                            childElement);
+            int visualID = SyncchartsVisualIDRegistry.getNodeVisualID(view, childElement);
             if (visualID == StateEntryActionEditPart.VISUAL_ID) {
                 result.add(new SyncchartsNodeDescriptor(childElement, visualID));
                 continue;
@@ -222,8 +200,7 @@ public class SyncchartsDiagramUpdater {
     /**
      * @generated
      */
-    public static List<SyncchartsNodeDescriptor> getStateOnInsideAction_7043SemanticChildren(
-            View view) {
+    public static List<SyncchartsNodeDescriptor> getStateOnInsideAction_7043SemanticChildren(View view) {
         if (false == view.eContainer() instanceof View) {
             return Collections.emptyList();
         }
@@ -232,14 +209,10 @@ public class SyncchartsDiagramUpdater {
             return Collections.emptyList();
         }
         State modelElement = (State) containerView.getElement();
-        LinkedList<SyncchartsNodeDescriptor> result =
-                new LinkedList<SyncchartsNodeDescriptor>();
-        for (Iterator<?> it = modelElement.getInnerActions().iterator(); it
-                .hasNext();) {
+        LinkedList<SyncchartsNodeDescriptor> result = new LinkedList<SyncchartsNodeDescriptor>();
+        for (Iterator<?> it = modelElement.getInnerActions().iterator(); it.hasNext();) {
             Action childElement = (Action) it.next();
-            int visualID =
-                    SyncchartsVisualIDRegistry.getNodeVisualID(view,
-                            childElement);
+            int visualID = SyncchartsVisualIDRegistry.getNodeVisualID(view, childElement);
             if (visualID == StateInnerActionEditPart.VISUAL_ID) {
                 result.add(new SyncchartsNodeDescriptor(childElement, visualID));
                 continue;
@@ -251,8 +224,7 @@ public class SyncchartsDiagramUpdater {
     /**
      * @generated
      */
-    public static List<SyncchartsNodeDescriptor> getStateOnExitAction_7044SemanticChildren(
-            View view) {
+    public static List<SyncchartsNodeDescriptor> getStateOnExitAction_7044SemanticChildren(View view) {
         if (false == view.eContainer() instanceof View) {
             return Collections.emptyList();
         }
@@ -261,14 +233,10 @@ public class SyncchartsDiagramUpdater {
             return Collections.emptyList();
         }
         State modelElement = (State) containerView.getElement();
-        LinkedList<SyncchartsNodeDescriptor> result =
-                new LinkedList<SyncchartsNodeDescriptor>();
-        for (Iterator<?> it = modelElement.getExitActions().iterator(); it
-                .hasNext();) {
+        LinkedList<SyncchartsNodeDescriptor> result = new LinkedList<SyncchartsNodeDescriptor>();
+        for (Iterator<?> it = modelElement.getExitActions().iterator(); it.hasNext();) {
             Action childElement = (Action) it.next();
-            int visualID =
-                    SyncchartsVisualIDRegistry.getNodeVisualID(view,
-                            childElement);
+            int visualID = SyncchartsVisualIDRegistry.getNodeVisualID(view, childElement);
             if (visualID == StateExitActionEditPart.VISUAL_ID) {
                 result.add(new SyncchartsNodeDescriptor(childElement, visualID));
                 continue;
@@ -280,8 +248,7 @@ public class SyncchartsDiagramUpdater {
     /**
      * @generated
      */
-    public static List<SyncchartsNodeDescriptor> getStateSuspend_7045SemanticChildren(
-            View view) {
+    public static List<SyncchartsNodeDescriptor> getStateSuspend_7045SemanticChildren(View view) {
         if (false == view.eContainer() instanceof View) {
             return Collections.emptyList();
         }
@@ -290,13 +257,10 @@ public class SyncchartsDiagramUpdater {
             return Collections.emptyList();
         }
         State modelElement = (State) containerView.getElement();
-        LinkedList<SyncchartsNodeDescriptor> result =
-                new LinkedList<SyncchartsNodeDescriptor>();
+        LinkedList<SyncchartsNodeDescriptor> result = new LinkedList<SyncchartsNodeDescriptor>();
         {
             Action childElement = modelElement.getSuspensionTrigger();
-            int visualID =
-                    SyncchartsVisualIDRegistry.getNodeVisualID(view,
-                            childElement);
+            int visualID = SyncchartsVisualIDRegistry.getNodeVisualID(view, childElement);
             if (visualID == StateSuspensionTriggerEditPart.VISUAL_ID) {
                 result.add(new SyncchartsNodeDescriptor(childElement, visualID));
             }
@@ -307,8 +271,7 @@ public class SyncchartsDiagramUpdater {
     /**
      * @generated
      */
-    public static List<SyncchartsNodeDescriptor> getStateRegionCompartment_7046SemanticChildren(
-            View view) {
+    public static List<SyncchartsNodeDescriptor> getStateRegionCompartment_7046SemanticChildren(View view) {
         if (false == view.eContainer() instanceof View) {
             return Collections.emptyList();
         }
@@ -317,14 +280,10 @@ public class SyncchartsDiagramUpdater {
             return Collections.emptyList();
         }
         State modelElement = (State) containerView.getElement();
-        LinkedList<SyncchartsNodeDescriptor> result =
-                new LinkedList<SyncchartsNodeDescriptor>();
-        for (Iterator<?> it = modelElement.getRegions().iterator(); it
-                .hasNext();) {
+        LinkedList<SyncchartsNodeDescriptor> result = new LinkedList<SyncchartsNodeDescriptor>();
+        for (Iterator<?> it = modelElement.getRegions().iterator(); it.hasNext();) {
             Region childElement = (Region) it.next();
-            int visualID =
-                    SyncchartsVisualIDRegistry.getNodeVisualID(view,
-                            childElement);
+            int visualID = SyncchartsVisualIDRegistry.getNodeVisualID(view, childElement);
             if (visualID == Region2EditPart.VISUAL_ID) {
                 result.add(new SyncchartsNodeDescriptor(childElement, visualID));
                 continue;
@@ -336,8 +295,7 @@ public class SyncchartsDiagramUpdater {
     /**
      * @generated
      */
-    public static List<SyncchartsNodeDescriptor> getRegionStateCompartment_7047SemanticChildren(
-            View view) {
+    public static List<SyncchartsNodeDescriptor> getRegionStateCompartment_7047SemanticChildren(View view) {
         if (false == view.eContainer() instanceof View) {
             return Collections.emptyList();
         }
@@ -346,13 +304,10 @@ public class SyncchartsDiagramUpdater {
             return Collections.emptyList();
         }
         Region modelElement = (Region) containerView.getElement();
-        LinkedList<SyncchartsNodeDescriptor> result =
-                new LinkedList<SyncchartsNodeDescriptor>();
+        LinkedList<SyncchartsNodeDescriptor> result = new LinkedList<SyncchartsNodeDescriptor>();
         for (Iterator<?> it = modelElement.getStates().iterator(); it.hasNext();) {
             State childElement = (State) it.next();
-            int visualID =
-                    SyncchartsVisualIDRegistry.getNodeVisualID(view,
-                            childElement);
+            int visualID = SyncchartsVisualIDRegistry.getNodeVisualID(view, childElement);
             if (visualID == State2EditPart.VISUAL_ID) {
                 result.add(new SyncchartsNodeDescriptor(childElement, visualID));
                 continue;
@@ -364,8 +319,7 @@ public class SyncchartsDiagramUpdater {
     /**
      * @generated
      */
-    public static List<SyncchartsNodeDescriptor> getStateSignal_7048SemanticChildren(
-            View view) {
+    public static List<SyncchartsNodeDescriptor> getStateSignal_7048SemanticChildren(View view) {
         if (false == view.eContainer() instanceof View) {
             return Collections.emptyList();
         }
@@ -374,14 +328,10 @@ public class SyncchartsDiagramUpdater {
             return Collections.emptyList();
         }
         State modelElement = (State) containerView.getElement();
-        LinkedList<SyncchartsNodeDescriptor> result =
-                new LinkedList<SyncchartsNodeDescriptor>();
-        for (Iterator<?> it = modelElement.getSignals().iterator(); it
-                .hasNext();) {
+        LinkedList<SyncchartsNodeDescriptor> result = new LinkedList<SyncchartsNodeDescriptor>();
+        for (Iterator<?> it = modelElement.getSignals().iterator(); it.hasNext();) {
             Signal childElement = (Signal) it.next();
-            int visualID =
-                    SyncchartsVisualIDRegistry.getNodeVisualID(view,
-                            childElement);
+            int visualID = SyncchartsVisualIDRegistry.getNodeVisualID(view, childElement);
             if (visualID == SignalEditPart.VISUAL_ID) {
                 result.add(new SyncchartsNodeDescriptor(childElement, visualID));
                 continue;
@@ -393,8 +343,7 @@ public class SyncchartsDiagramUpdater {
     /**
      * @generated
      */
-    public static List<SyncchartsNodeDescriptor> getStateOnEntryAction_7049SemanticChildren(
-            View view) {
+    public static List<SyncchartsNodeDescriptor> getStateOnEntryAction_7049SemanticChildren(View view) {
         if (false == view.eContainer() instanceof View) {
             return Collections.emptyList();
         }
@@ -403,14 +352,10 @@ public class SyncchartsDiagramUpdater {
             return Collections.emptyList();
         }
         State modelElement = (State) containerView.getElement();
-        LinkedList<SyncchartsNodeDescriptor> result =
-                new LinkedList<SyncchartsNodeDescriptor>();
-        for (Iterator<?> it = modelElement.getEntryActions().iterator(); it
-                .hasNext();) {
+        LinkedList<SyncchartsNodeDescriptor> result = new LinkedList<SyncchartsNodeDescriptor>();
+        for (Iterator<?> it = modelElement.getEntryActions().iterator(); it.hasNext();) {
             Action childElement = (Action) it.next();
-            int visualID =
-                    SyncchartsVisualIDRegistry.getNodeVisualID(view,
-                            childElement);
+            int visualID = SyncchartsVisualIDRegistry.getNodeVisualID(view, childElement);
             if (visualID == StateEntryActionEditPart.VISUAL_ID) {
                 result.add(new SyncchartsNodeDescriptor(childElement, visualID));
                 continue;
@@ -422,8 +367,7 @@ public class SyncchartsDiagramUpdater {
     /**
      * @generated
      */
-    public static List<SyncchartsNodeDescriptor> getStateOnInsideAction_7050SemanticChildren(
-            View view) {
+    public static List<SyncchartsNodeDescriptor> getStateOnInsideAction_7050SemanticChildren(View view) {
         if (false == view.eContainer() instanceof View) {
             return Collections.emptyList();
         }
@@ -432,14 +376,10 @@ public class SyncchartsDiagramUpdater {
             return Collections.emptyList();
         }
         State modelElement = (State) containerView.getElement();
-        LinkedList<SyncchartsNodeDescriptor> result =
-                new LinkedList<SyncchartsNodeDescriptor>();
-        for (Iterator<?> it = modelElement.getInnerActions().iterator(); it
-                .hasNext();) {
+        LinkedList<SyncchartsNodeDescriptor> result = new LinkedList<SyncchartsNodeDescriptor>();
+        for (Iterator<?> it = modelElement.getInnerActions().iterator(); it.hasNext();) {
             Action childElement = (Action) it.next();
-            int visualID =
-                    SyncchartsVisualIDRegistry.getNodeVisualID(view,
-                            childElement);
+            int visualID = SyncchartsVisualIDRegistry.getNodeVisualID(view, childElement);
             if (visualID == StateInnerActionEditPart.VISUAL_ID) {
                 result.add(new SyncchartsNodeDescriptor(childElement, visualID));
                 continue;
@@ -451,8 +391,7 @@ public class SyncchartsDiagramUpdater {
     /**
      * @generated
      */
-    public static List<SyncchartsNodeDescriptor> getStateOnExitAction_7051SemanticChildren(
-            View view) {
+    public static List<SyncchartsNodeDescriptor> getStateOnExitAction_7051SemanticChildren(View view) {
         if (false == view.eContainer() instanceof View) {
             return Collections.emptyList();
         }
@@ -461,14 +400,10 @@ public class SyncchartsDiagramUpdater {
             return Collections.emptyList();
         }
         State modelElement = (State) containerView.getElement();
-        LinkedList<SyncchartsNodeDescriptor> result =
-                new LinkedList<SyncchartsNodeDescriptor>();
-        for (Iterator<?> it = modelElement.getExitActions().iterator(); it
-                .hasNext();) {
+        LinkedList<SyncchartsNodeDescriptor> result = new LinkedList<SyncchartsNodeDescriptor>();
+        for (Iterator<?> it = modelElement.getExitActions().iterator(); it.hasNext();) {
             Action childElement = (Action) it.next();
-            int visualID =
-                    SyncchartsVisualIDRegistry.getNodeVisualID(view,
-                            childElement);
+            int visualID = SyncchartsVisualIDRegistry.getNodeVisualID(view, childElement);
             if (visualID == StateExitActionEditPart.VISUAL_ID) {
                 result.add(new SyncchartsNodeDescriptor(childElement, visualID));
                 continue;
@@ -480,8 +415,7 @@ public class SyncchartsDiagramUpdater {
     /**
      * @generated
      */
-    public static List<SyncchartsNodeDescriptor> getStateSuspend_7052SemanticChildren(
-            View view) {
+    public static List<SyncchartsNodeDescriptor> getStateSuspend_7052SemanticChildren(View view) {
         if (false == view.eContainer() instanceof View) {
             return Collections.emptyList();
         }
@@ -490,13 +424,10 @@ public class SyncchartsDiagramUpdater {
             return Collections.emptyList();
         }
         State modelElement = (State) containerView.getElement();
-        LinkedList<SyncchartsNodeDescriptor> result =
-                new LinkedList<SyncchartsNodeDescriptor>();
+        LinkedList<SyncchartsNodeDescriptor> result = new LinkedList<SyncchartsNodeDescriptor>();
         {
             Action childElement = modelElement.getSuspensionTrigger();
-            int visualID =
-                    SyncchartsVisualIDRegistry.getNodeVisualID(view,
-                            childElement);
+            int visualID = SyncchartsVisualIDRegistry.getNodeVisualID(view, childElement);
             if (visualID == StateSuspensionTriggerEditPart.VISUAL_ID) {
                 result.add(new SyncchartsNodeDescriptor(childElement, visualID));
             }
@@ -507,8 +438,7 @@ public class SyncchartsDiagramUpdater {
     /**
      * @generated
      */
-    public static List<SyncchartsNodeDescriptor> getStateRegionCompartment_7053SemanticChildren(
-            View view) {
+    public static List<SyncchartsNodeDescriptor> getStateRegionCompartment_7053SemanticChildren(View view) {
         if (false == view.eContainer() instanceof View) {
             return Collections.emptyList();
         }
@@ -517,14 +447,10 @@ public class SyncchartsDiagramUpdater {
             return Collections.emptyList();
         }
         State modelElement = (State) containerView.getElement();
-        LinkedList<SyncchartsNodeDescriptor> result =
-                new LinkedList<SyncchartsNodeDescriptor>();
-        for (Iterator<?> it = modelElement.getRegions().iterator(); it
-                .hasNext();) {
+        LinkedList<SyncchartsNodeDescriptor> result = new LinkedList<SyncchartsNodeDescriptor>();
+        for (Iterator<?> it = modelElement.getRegions().iterator(); it.hasNext();) {
             Region childElement = (Region) it.next();
-            int visualID =
-                    SyncchartsVisualIDRegistry.getNodeVisualID(view,
-                            childElement);
+            int visualID = SyncchartsVisualIDRegistry.getNodeVisualID(view, childElement);
             if (visualID == Region2EditPart.VISUAL_ID) {
                 result.add(new SyncchartsNodeDescriptor(childElement, visualID));
                 continue;
@@ -625,19 +551,16 @@ public class SyncchartsDiagramUpdater {
     /**
      * @generated
      */
-    public static List<SyncchartsLinkDescriptor> getRegion_1000ContainedLinks(
-            View view) {
+    public static List<SyncchartsLinkDescriptor> getRegion_1000ContainedLinks(View view) {
         return Collections.emptyList();
     }
 
     /**
      * @generated
      */
-    public static List<SyncchartsLinkDescriptor> getState_2004ContainedLinks(
-            View view) {
+    public static List<SyncchartsLinkDescriptor> getState_2004ContainedLinks(View view) {
         State modelElement = (State) view.getElement();
-        LinkedList<SyncchartsLinkDescriptor> result =
-                new LinkedList<SyncchartsLinkDescriptor>();
+        LinkedList<SyncchartsLinkDescriptor> result = new LinkedList<SyncchartsLinkDescriptor>();
         result.addAll(getContainedTypeModelFacetLinks_Transition_4004(modelElement));
         return result;
     }
@@ -645,19 +568,16 @@ public class SyncchartsDiagramUpdater {
     /**
      * @generated
      */
-    public static List<SyncchartsLinkDescriptor> getRegion_3031ContainedLinks(
-            View view) {
+    public static List<SyncchartsLinkDescriptor> getRegion_3031ContainedLinks(View view) {
         return Collections.emptyList();
     }
 
     /**
      * @generated
      */
-    public static List<SyncchartsLinkDescriptor> getState_3032ContainedLinks(
-            View view) {
+    public static List<SyncchartsLinkDescriptor> getState_3032ContainedLinks(View view) {
         State modelElement = (State) view.getElement();
-        LinkedList<SyncchartsLinkDescriptor> result =
-                new LinkedList<SyncchartsLinkDescriptor>();
+        LinkedList<SyncchartsLinkDescriptor> result = new LinkedList<SyncchartsLinkDescriptor>();
         result.addAll(getContainedTypeModelFacetLinks_Transition_4004(modelElement));
         return result;
     }
@@ -665,163 +585,138 @@ public class SyncchartsDiagramUpdater {
     /**
      * @generated
      */
-    public static List<SyncchartsLinkDescriptor> getSignal_3033ContainedLinks(
-            View view) {
+    public static List<SyncchartsLinkDescriptor> getSignal_3033ContainedLinks(View view) {
         return Collections.emptyList();
     }
 
     /**
      * @generated
      */
-    public static List<SyncchartsLinkDescriptor> getAction_3034ContainedLinks(
-            View view) {
+    public static List<SyncchartsLinkDescriptor> getAction_3034ContainedLinks(View view) {
         return Collections.emptyList();
     }
 
     /**
      * @generated
      */
-    public static List<SyncchartsLinkDescriptor> getAction_3035ContainedLinks(
-            View view) {
+    public static List<SyncchartsLinkDescriptor> getAction_3035ContainedLinks(View view) {
         return Collections.emptyList();
     }
 
     /**
      * @generated
      */
-    public static List<SyncchartsLinkDescriptor> getAction_3036ContainedLinks(
-            View view) {
+    public static List<SyncchartsLinkDescriptor> getAction_3036ContainedLinks(View view) {
         return Collections.emptyList();
     }
 
     /**
      * @generated
      */
-    public static List<SyncchartsLinkDescriptor> getAction_3037ContainedLinks(
-            View view) {
+    public static List<SyncchartsLinkDescriptor> getAction_3037ContainedLinks(View view) {
         return Collections.emptyList();
     }
 
     /**
      * @generated
      */
-    public static List<SyncchartsLinkDescriptor> getTextualCode_3038ContainedLinks(
-            View view) {
+    public static List<SyncchartsLinkDescriptor> getTextualCode_3038ContainedLinks(View view) {
         return Collections.emptyList();
     }
 
     /**
      * @generated
      */
-    public static List<SyncchartsLinkDescriptor> getTransition_4004ContainedLinks(
-            View view) {
+    public static List<SyncchartsLinkDescriptor> getTransition_4004ContainedLinks(View view) {
         return Collections.emptyList();
     }
 
     /**
      * @generated
      */
-    public static List<SyncchartsLinkDescriptor> getState_2004IncomingLinks(
-            View view) {
+    public static List<SyncchartsLinkDescriptor> getState_2004IncomingLinks(View view) {
         State modelElement = (State) view.getElement();
-        Map<EObject, Collection<EStructuralFeature.Setting>> crossReferences =
-                EcoreUtil.CrossReferencer.find(view.eResource()
-                        .getResourceSet().getResources());
-        LinkedList<SyncchartsLinkDescriptor> result =
-                new LinkedList<SyncchartsLinkDescriptor>();
-        result.addAll(getIncomingTypeModelFacetLinks_Transition_4004(
-                modelElement, crossReferences));
+        Map<EObject, Collection<EStructuralFeature.Setting>> crossReferences = EcoreUtil.CrossReferencer
+                .find(view.eResource().getResourceSet().getResources());
+        LinkedList<SyncchartsLinkDescriptor> result = new LinkedList<SyncchartsLinkDescriptor>();
+        result.addAll(getIncomingTypeModelFacetLinks_Transition_4004(modelElement, crossReferences));
         return result;
     }
 
     /**
      * @generated
      */
-    public static List<SyncchartsLinkDescriptor> getRegion_3031IncomingLinks(
-            View view) {
+    public static List<SyncchartsLinkDescriptor> getRegion_3031IncomingLinks(View view) {
         return Collections.emptyList();
     }
 
     /**
      * @generated
      */
-    public static List<SyncchartsLinkDescriptor> getState_3032IncomingLinks(
-            View view) {
+    public static List<SyncchartsLinkDescriptor> getState_3032IncomingLinks(View view) {
         State modelElement = (State) view.getElement();
-        Map<EObject, Collection<EStructuralFeature.Setting>> crossReferences =
-                EcoreUtil.CrossReferencer.find(view.eResource()
-                        .getResourceSet().getResources());
-        LinkedList<SyncchartsLinkDescriptor> result =
-                new LinkedList<SyncchartsLinkDescriptor>();
-        result.addAll(getIncomingTypeModelFacetLinks_Transition_4004(
-                modelElement, crossReferences));
+        Map<EObject, Collection<EStructuralFeature.Setting>> crossReferences = EcoreUtil.CrossReferencer
+                .find(view.eResource().getResourceSet().getResources());
+        LinkedList<SyncchartsLinkDescriptor> result = new LinkedList<SyncchartsLinkDescriptor>();
+        result.addAll(getIncomingTypeModelFacetLinks_Transition_4004(modelElement, crossReferences));
         return result;
     }
 
     /**
      * @generated
      */
-    public static List<SyncchartsLinkDescriptor> getSignal_3033IncomingLinks(
-            View view) {
+    public static List<SyncchartsLinkDescriptor> getSignal_3033IncomingLinks(View view) {
         return Collections.emptyList();
     }
 
     /**
      * @generated
      */
-    public static List<SyncchartsLinkDescriptor> getAction_3034IncomingLinks(
-            View view) {
+    public static List<SyncchartsLinkDescriptor> getAction_3034IncomingLinks(View view) {
         return Collections.emptyList();
     }
 
     /**
      * @generated
      */
-    public static List<SyncchartsLinkDescriptor> getAction_3035IncomingLinks(
-            View view) {
+    public static List<SyncchartsLinkDescriptor> getAction_3035IncomingLinks(View view) {
         return Collections.emptyList();
     }
 
     /**
      * @generated
      */
-    public static List<SyncchartsLinkDescriptor> getAction_3036IncomingLinks(
-            View view) {
+    public static List<SyncchartsLinkDescriptor> getAction_3036IncomingLinks(View view) {
         return Collections.emptyList();
     }
 
     /**
      * @generated
      */
-    public static List<SyncchartsLinkDescriptor> getAction_3037IncomingLinks(
-            View view) {
+    public static List<SyncchartsLinkDescriptor> getAction_3037IncomingLinks(View view) {
         return Collections.emptyList();
     }
 
     /**
      * @generated
      */
-    public static List<SyncchartsLinkDescriptor> getTextualCode_3038IncomingLinks(
-            View view) {
+    public static List<SyncchartsLinkDescriptor> getTextualCode_3038IncomingLinks(View view) {
         return Collections.emptyList();
     }
 
     /**
      * @generated
      */
-    public static List<SyncchartsLinkDescriptor> getTransition_4004IncomingLinks(
-            View view) {
+    public static List<SyncchartsLinkDescriptor> getTransition_4004IncomingLinks(View view) {
         return Collections.emptyList();
     }
 
     /**
      * @generated
      */
-    public static List<SyncchartsLinkDescriptor> getState_2004OutgoingLinks(
-            View view) {
+    public static List<SyncchartsLinkDescriptor> getState_2004OutgoingLinks(View view) {
         State modelElement = (State) view.getElement();
-        LinkedList<SyncchartsLinkDescriptor> result =
-                new LinkedList<SyncchartsLinkDescriptor>();
+        LinkedList<SyncchartsLinkDescriptor> result = new LinkedList<SyncchartsLinkDescriptor>();
         result.addAll(getOutgoingTypeModelFacetLinks_Transition_4004(modelElement));
         return result;
     }
@@ -829,19 +724,16 @@ public class SyncchartsDiagramUpdater {
     /**
      * @generated
      */
-    public static List<SyncchartsLinkDescriptor> getRegion_3031OutgoingLinks(
-            View view) {
+    public static List<SyncchartsLinkDescriptor> getRegion_3031OutgoingLinks(View view) {
         return Collections.emptyList();
     }
 
     /**
      * @generated
      */
-    public static List<SyncchartsLinkDescriptor> getState_3032OutgoingLinks(
-            View view) {
+    public static List<SyncchartsLinkDescriptor> getState_3032OutgoingLinks(View view) {
         State modelElement = (State) view.getElement();
-        LinkedList<SyncchartsLinkDescriptor> result =
-                new LinkedList<SyncchartsLinkDescriptor>();
+        LinkedList<SyncchartsLinkDescriptor> result = new LinkedList<SyncchartsLinkDescriptor>();
         result.addAll(getOutgoingTypeModelFacetLinks_Transition_4004(modelElement));
         return result;
     }
@@ -849,56 +741,49 @@ public class SyncchartsDiagramUpdater {
     /**
      * @generated
      */
-    public static List<SyncchartsLinkDescriptor> getSignal_3033OutgoingLinks(
-            View view) {
+    public static List<SyncchartsLinkDescriptor> getSignal_3033OutgoingLinks(View view) {
         return Collections.emptyList();
     }
 
     /**
      * @generated
      */
-    public static List<SyncchartsLinkDescriptor> getAction_3034OutgoingLinks(
-            View view) {
+    public static List<SyncchartsLinkDescriptor> getAction_3034OutgoingLinks(View view) {
         return Collections.emptyList();
     }
 
     /**
      * @generated
      */
-    public static List<SyncchartsLinkDescriptor> getAction_3035OutgoingLinks(
-            View view) {
+    public static List<SyncchartsLinkDescriptor> getAction_3035OutgoingLinks(View view) {
         return Collections.emptyList();
     }
 
     /**
      * @generated
      */
-    public static List<SyncchartsLinkDescriptor> getAction_3036OutgoingLinks(
-            View view) {
+    public static List<SyncchartsLinkDescriptor> getAction_3036OutgoingLinks(View view) {
         return Collections.emptyList();
     }
 
     /**
      * @generated
      */
-    public static List<SyncchartsLinkDescriptor> getAction_3037OutgoingLinks(
-            View view) {
+    public static List<SyncchartsLinkDescriptor> getAction_3037OutgoingLinks(View view) {
         return Collections.emptyList();
     }
 
     /**
      * @generated
      */
-    public static List<SyncchartsLinkDescriptor> getTextualCode_3038OutgoingLinks(
-            View view) {
+    public static List<SyncchartsLinkDescriptor> getTextualCode_3038OutgoingLinks(View view) {
         return Collections.emptyList();
     }
 
     /**
      * @generated
      */
-    public static List<SyncchartsLinkDescriptor> getTransition_4004OutgoingLinks(
-            View view) {
+    public static List<SyncchartsLinkDescriptor> getTransition_4004OutgoingLinks(View view) {
         return Collections.emptyList();
     }
 
@@ -907,10 +792,8 @@ public class SyncchartsDiagramUpdater {
      */
     private static Collection<SyncchartsLinkDescriptor> getContainedTypeModelFacetLinks_Transition_4004(
             State container) {
-        LinkedList<SyncchartsLinkDescriptor> result =
-                new LinkedList<SyncchartsLinkDescriptor>();
-        for (Iterator<?> links = container.getOutgoingTransitions().iterator(); links
-                .hasNext();) {
+        LinkedList<SyncchartsLinkDescriptor> result = new LinkedList<SyncchartsLinkDescriptor>();
+        for (Iterator<?> links = container.getOutgoingTransitions().iterator(); links.hasNext();) {
             EObject linkObject = (EObject) links.next();
             if (false == linkObject instanceof Transition) {
                 continue;
@@ -923,8 +806,7 @@ public class SyncchartsDiagramUpdater {
             State dst = link.getTargetState();
             State src = link.getSourceState();
             result.add(new SyncchartsLinkDescriptor(src, dst, link,
-                    SyncchartsElementTypes.Transition_4004,
-                    TransitionEditPart.VISUAL_ID));
+                    SyncchartsElementTypes.Transition_4004, TransitionEditPart.VISUAL_ID));
         }
         return result;
     }
@@ -933,16 +815,12 @@ public class SyncchartsDiagramUpdater {
      * @generated
      */
     private static Collection<SyncchartsLinkDescriptor> getIncomingTypeModelFacetLinks_Transition_4004(
-            State target,
-            Map<EObject, Collection<EStructuralFeature.Setting>> crossReferences) {
-        LinkedList<SyncchartsLinkDescriptor> result =
-                new LinkedList<SyncchartsLinkDescriptor>();
-        Collection<EStructuralFeature.Setting> settings =
-                crossReferences.get(target);
+            State target, Map<EObject, Collection<EStructuralFeature.Setting>> crossReferences) {
+        LinkedList<SyncchartsLinkDescriptor> result = new LinkedList<SyncchartsLinkDescriptor>();
+        Collection<EStructuralFeature.Setting> settings = crossReferences.get(target);
         for (EStructuralFeature.Setting setting : settings) {
             if (setting.getEStructuralFeature() != SyncchartsPackage.eINSTANCE
-                    .getTransition_TargetState()
-                    || false == setting.getEObject() instanceof Transition) {
+                    .getTransition_TargetState() || false == setting.getEObject() instanceof Transition) {
                 continue;
             }
             Transition link = (Transition) setting.getEObject();
@@ -952,8 +830,7 @@ public class SyncchartsDiagramUpdater {
             }
             State src = link.getSourceState();
             result.add(new SyncchartsLinkDescriptor(src, target, link,
-                    SyncchartsElementTypes.Transition_4004,
-                    TransitionEditPart.VISUAL_ID));
+                    SyncchartsElementTypes.Transition_4004, TransitionEditPart.VISUAL_ID));
         }
         return result;
     }
@@ -967,8 +844,8 @@ public class SyncchartsDiagramUpdater {
         // Find container element for the link.
         // Climb up by containment hierarchy starting from the source
         // and return the first element that is instance of the container class.
-        for (EObject element = source; element != null && container == null; element =
-                element.eContainer()) {
+        for (EObject element = source; element != null && container == null; element = element
+                .eContainer()) {
             if (element instanceof State) {
                 container = (State) element;
             }
@@ -976,10 +853,8 @@ public class SyncchartsDiagramUpdater {
         if (container == null) {
             return Collections.emptyList();
         }
-        LinkedList<SyncchartsLinkDescriptor> result =
-                new LinkedList<SyncchartsLinkDescriptor>();
-        for (Iterator<?> links = container.getOutgoingTransitions().iterator(); links
-                .hasNext();) {
+        LinkedList<SyncchartsLinkDescriptor> result = new LinkedList<SyncchartsLinkDescriptor>();
+        for (Iterator<?> links = container.getOutgoingTransitions().iterator(); links.hasNext();) {
             EObject linkObject = (EObject) links.next();
             if (false == linkObject instanceof Transition) {
                 continue;
@@ -995,8 +870,7 @@ public class SyncchartsDiagramUpdater {
                 continue;
             }
             result.add(new SyncchartsLinkDescriptor(src, dst, link,
-                    SyncchartsElementTypes.Transition_4004,
-                    TransitionEditPart.VISUAL_ID));
+                    SyncchartsElementTypes.Transition_4004, TransitionEditPart.VISUAL_ID));
         }
         return result;
     }
