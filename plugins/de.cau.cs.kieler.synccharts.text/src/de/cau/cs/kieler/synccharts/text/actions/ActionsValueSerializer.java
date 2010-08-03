@@ -9,11 +9,19 @@ import org.eclipse.xtext.parsetree.reconstr.impl.ValueSerializer;
 
 import de.cau.cs.kieler.synccharts.SyncchartsPackage;
 
+/**
+ * Class is currently NOT used.
+ * 
+ * @author chsch
+ *
+ */
 public class ActionsValueSerializer extends ValueSerializer {
 
 	/**
-	 * Customized Computation of serialized ouput fragments.
-	 * In particular this is to suppress the explicit '1' of the action's delay attribute. 
+	 * Customized Computation of serialized output fragments.
+	 * In particular this is to suppress the explicit '1' of the action's delay attribute.
+	 * 
+	 * Method is currently not used, behavior will be realized by the transient value service.
 	 */
 	public String serializeAssignedValue(EObject context, RuleCall ruleCall, Object value, AbstractNode node) {
 		if (SyncchartsPackage.eINSTANCE.getAction().isInstance(context)
