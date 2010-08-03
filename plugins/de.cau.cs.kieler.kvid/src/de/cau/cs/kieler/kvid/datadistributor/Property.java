@@ -46,6 +46,7 @@ public class Property {
     public void setCurrentValue(int optionNumber) {
         if (0 <= optionNumber && optionNumber < values.length) {
             currentValue = values[optionNumber];
+            RuntimeConfiguration.getInstance().triggerPropertyChanged(this);
         } else {
             throw new RuntimeException("Tried to set a non-existing option.");
         }
@@ -55,10 +56,16 @@ public class Property {
         for (String option : values) {
             if (optionName.equals(option)) {
                 currentValue = option;
+                RuntimeConfiguration.getInstance().triggerPropertyChanged(this);
                 return;
             }
         }
         throw new RuntimeException("Tried to set a non-existing option.");
+    }
+    
+    @Override
+    public String toString() {
+        return getName() + ": " + getCurrentValue();
     }
 
 }

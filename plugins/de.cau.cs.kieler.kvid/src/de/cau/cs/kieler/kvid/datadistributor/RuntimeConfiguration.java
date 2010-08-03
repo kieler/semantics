@@ -13,14 +13,26 @@
  */
 package de.cau.cs.kieler.kvid.datadistributor;
 
+import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
+/**
+ * 
+ * Class for handling configuration that happens during runtime.
+ * Will be lost if program is closed.
+ * 
+ * @author jjc
+ *
+ */
 public class RuntimeConfiguration {
     
     private static RuntimeConfiguration instance = new RuntimeConfiguration();
     
     private List<Property> knownProperties = new ArrayList<Property>();
+    
+    private List<IPropertyListener> listeners = new LinkedList<IPropertyListener>();
     
     private RuntimeConfiguration() {
         knownProperties.add(new Property("Animation enabled", new String[]{"true", "false"}));
@@ -33,7 +45,7 @@ public class RuntimeConfiguration {
         return instance;
     }
     
-    public String currentValueOfProperty(String propertyName) {
+    public String currentValueOfProperty(final String propertyName) {
         for (Property property : knownProperties) {
             if (property.getName().equals(propertyName)) {
                 return property.getCurrentValue();
@@ -42,13 +54,44 @@ public class RuntimeConfiguration {
         throw new RuntimeException("Unknown property name!");
     }
     
-    public List<Property> getKnownOptions() {
+    public List<Property> getKnownProperties() {
         return knownProperties;
+    }
+    
+    public void addProperty(final Property theproperty) {
+        knownProperties.add(theproperty);
+        for (IPropertyListener listener : listeners) {
+            listener.triggerPropertyListChanged();       
+        }
+    }
+    
+    public void removeProperty(final Property theproperty) {
+        knownProperties.remove(theproperty);
+        for (IPropertyListener listener : listeners) {
+            listener.triggerPropertyListChanged();       
+        }
+    }
+    
+    public void addPropertyListener(final IPropertyListener thelistener) {
+        listeners.add(thelistener);
+    }
+    
+    public void removePropertyListener(final IPropertyListener thelistener) {
+        listeners.remove(thelistener);
+    }
+    
+    public void triggerPropertyChanged(Property theproperty) {
+        for (IPropertyListener listener : listeners) {
+            listener.triggerPropertyChanged(theproperty);                
+        }
     }
     
     public void resetToDefault() {
         for (Property property : knownProperties) {
-            property.setCurrentValue(0);            
+            property.setCurrentValue(0);
+            for (IPropertyListener listener : listeners) {
+                listener.triggerPropertyChanged(property);                
+            }
         }
     }
     

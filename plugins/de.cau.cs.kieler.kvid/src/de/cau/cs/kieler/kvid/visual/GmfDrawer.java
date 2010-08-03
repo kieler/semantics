@@ -27,6 +27,7 @@ import org.eclipse.ui.PlatformUI;
 
 import de.cau.cs.kieler.kvid.data.DataObject;
 import de.cau.cs.kieler.kvid.datadistributor.DataDistributor;
+import de.cau.cs.kieler.kvid.datadistributor.Property;
 import de.cau.cs.kieler.kvid.datadistributor.RuntimeConfiguration;
 import de.cau.cs.kieler.sim.kiem.KiemPlugin;
 
@@ -56,6 +57,9 @@ public class GmfDrawer implements IDrawer {
                 figuresByURI.get(key).updateData(dataSet.get(key));
             } else {
                 figuresByURI.put(key, new GmfFigure(dataSet.get(key)));
+                RuntimeConfiguration.getInstance().getKnownProperties().add(
+                        new Property("Display status " + key, new String[]{"Animating", 
+                                "Static on Source Node", "Static on Target Node", "Invisible"}));
             }
             if (RuntimeConfiguration.getInstance()
                     .currentValueOfProperty("Animation enabled").equals("true")) {

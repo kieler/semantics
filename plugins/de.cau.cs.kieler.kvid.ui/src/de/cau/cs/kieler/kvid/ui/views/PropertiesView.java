@@ -26,6 +26,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.ui.part.ViewPart;
 
+import de.cau.cs.kieler.kvid.datadistributor.IPropertyListener;
 import de.cau.cs.kieler.kvid.datadistributor.Property;
 import de.cau.cs.kieler.kvid.datadistributor.RuntimeConfiguration;
 
@@ -36,7 +37,7 @@ import de.cau.cs.kieler.kvid.datadistributor.RuntimeConfiguration;
  * @author jjc
  *
  */
-public class PropertiesView extends ViewPart {
+public class PropertiesView extends ViewPart implements IPropertyListener {
     
     private TableViewer tableViewer;
     
@@ -47,6 +48,8 @@ public class PropertiesView extends ViewPart {
      * {@inheritDoc}
      */
     public void createPartControl(final Composite parent) {       
+        RuntimeConfiguration.getInstance().addPropertyListener(this);
+        
         tableViewer = new TableViewer(parent, SWT.NONE);
         Table propertyTable = tableViewer.getTable();
         propertyTable.setHeaderVisible(true);
@@ -65,7 +68,7 @@ public class PropertiesView extends ViewPart {
         viewerPropertyColumn.setLabelProvider(new CellLabelProvider() {
             
             @Override
-            public void update(ViewerCell cell) {
+            public void update(final ViewerCell cell) {
                 cell.setText(((Property) (cell.getElement())).getName());
             }
         });
@@ -73,7 +76,7 @@ public class PropertiesView extends ViewPart {
         viewerValueColumn.setLabelProvider(new CellLabelProvider() {
             
             @Override
-            public void update(ViewerCell cell) {
+            public void update(final ViewerCell cell) {
                 cell.setText(((Property) (cell.getElement())).getCurrentValue());
             }
         });
@@ -81,35 +84,54 @@ public class PropertiesView extends ViewPart {
         viewerValueColumn.setEditingSupport(new EditingSupport(tableViewer) {
             
             @Override
-            protected void setValue(Object element, Object value) {
+            protected void setValue(final Object element, final Object value) {
                 ((Property) element).setCurrentValue((Integer) value);
                 tableViewer.refresh(element);
             }
             
             @Override
-            protected Object getValue(Object element) {
+            protected Object getValue(final Object element) {
                 return ((Property) element).getCurrentValueNumber();
             }
             
             @Override
-            protected CellEditor getCellEditor(Object element) {
+            protected CellEditor getCellEditor(final Object element) {
                 ComboBoxCellEditor box = new ComboBoxCellEditor(tableViewer.getTable(),
                         ((Property) element).getValueNames(), SWT.READ_ONLY);
                 return box;
             }
             
             @Override
-            protected boolean canEdit(Object element) {
+            protected boolean canEdit(final Object element) {
                 return true;
             }
         });
         
-        tableViewer.setInput(RuntimeConfiguration.getInstance().getKnownOptions());
+        tableViewer.setInput(RuntimeConfiguration.getInstance().getKnownProperties());
     }
 
     @Override
+    /**
+     * {@inheritDoc}
+     */
     public void setFocus() {
         tableViewer.getControl().setFocus();
+    }
+
+    /* (non-Javadoc)
+     * @see de.cau.cs.kieler.kvid.datadistributor.IPropertyListener#triggerPropertyChanged(de.cau.cs.kieler.kvid.datadistributor.Property)
+     */
+    public void triggerPropertyChanged(Property changedProperty) {
+        // TODO Auto-generated method stub
+        
+    }
+
+    /* (non-Javadoc)
+     * @see de.cau.cs.kieler.kvid.datadistributor.IPropertyListener#triggerPropertyListChanged()
+     */
+    public void triggerPropertyListChanged() {
+        System.out.println(RuntimeConfiguration.getInstance().getKnownProperties());
+        tableViewer.setInput(RuntimeConfiguration.getInstance().getKnownProperties());
     }
 
 }
