@@ -450,8 +450,8 @@ public abstract class AbstractTableLayout extends AbstractHintLayout {
                 /* TODO : had problems with old calculation via stateWidth, therefore fallback to
                  * getParent().getBounds() as this gives right result. Old calculation resulted in 
                  * separator overhanging the (right) state-border*/
-                int right = regionSeparator.getParent().getBounds().width - 1
-                        - layout.padding;
+                Rectangle parentBounds = regionSeparator.getParent().getBounds();
+                int right = parentBounds.width - 1 - layout.padding;
 
                 /* It gets layouted direct under the predecessing row */
                 int regionSeparatorHeight = clientArea.y + offsetY;
@@ -462,6 +462,10 @@ public abstract class AbstractTableLayout extends AbstractHintLayout {
                     left++;
                     right--;
                 }
+                
+                // add an offset, since Polylines' coordinates are relative
+                left += parentBounds.x;
+                right += parentBounds.x;
 
                 points.addPoint(new Point(left, regionSeparatorHeight));
                 points.addPoint(new Point(Math.max(left, right),
