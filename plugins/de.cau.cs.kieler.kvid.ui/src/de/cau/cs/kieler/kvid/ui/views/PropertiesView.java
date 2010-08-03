@@ -1,7 +1,10 @@
 package de.cau.cs.kieler.kvid.ui.views;
 
 import org.eclipse.jface.viewers.ArrayContentProvider;
+import org.eclipse.jface.viewers.CellEditor;
 import org.eclipse.jface.viewers.CellLabelProvider;
+import org.eclipse.jface.viewers.ComboBoxCellEditor;
+import org.eclipse.jface.viewers.EditingSupport;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TableViewerColumn;
 import org.eclipse.jface.viewers.ViewerCell;
@@ -37,6 +40,7 @@ public class PropertiesView extends ViewPart {
         viewerValueColumn.getColumn().setWidth(250);
         
         tableViewer.setContentProvider(ArrayContentProvider.getInstance());
+                
         viewerPropertyColumn.setLabelProvider(new CellLabelProvider() {
             
             @Override
@@ -44,7 +48,39 @@ public class PropertiesView extends ViewPart {
                 cell.setText(((Property)(cell.getElement())).getName());
             }
         });
-
+        
+        viewerValueColumn.setLabelProvider(new CellLabelProvider() {
+            
+            @Override
+            public void update(ViewerCell cell) {
+                cell.setText(((Property)(cell.getElement())).getCurrentValue());
+            }
+        });
+        
+        viewerValueColumn.setEditingSupport(new EditingSupport(tableViewer) {
+            
+            @Override
+            protected void setValue(Object element, Object value) {
+                ((Property) element).setCurrentValue((Integer) value);
+                tableViewer.refresh(element);
+            }
+            
+            @Override
+            protected Object getValue(Object element) {
+                return ((Property) element).getCurrentValueNumber();
+            }
+            
+            @Override
+            protected CellEditor getCellEditor(Object element) {
+                return new ComboBoxCellEditor(tableViewer.getTable(), ((Property) element).getValueNames());
+            }
+            
+            @Override
+            protected boolean canEdit(Object element) {
+                return true;
+            }
+        });
+        
         tableViewer.setInput(RuntimeConfiguration.getInstance().getKnownOptions());
     }
 
