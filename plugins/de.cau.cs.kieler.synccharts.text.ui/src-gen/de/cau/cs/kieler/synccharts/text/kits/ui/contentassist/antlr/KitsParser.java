@@ -37,8 +37,8 @@ public class KitsParser extends AbstractContentAssistParser {
 			nameMappings = new HashMap<AbstractElement, String>() {
 				private static final long serialVersionUID = 1L;
 				{
-					put(grammarAccess.getNestedRegionAccess().getAlternatives(), "rule__NestedRegion__Alternatives");
-					put(grammarAccess.getNestedRegionAccess().getAlternatives_0_2(), "rule__NestedRegion__Alternatives_0_2");
+					put(grammarAccess.getRegionAccess().getAlternatives(), "rule__Region__Alternatives");
+					put(grammarAccess.getRegionAccess().getAlternatives_0_3(), "rule__Region__Alternatives_0_3");
 					put(grammarAccess.getStateAccess().getAlternatives_0(), "rule__State__Alternatives_0");
 					put(grammarAccess.getStateAccess().getAlternatives_5(), "rule__State__Alternatives_5");
 					put(grammarAccess.getStateAccess().getAlternatives_5_1_1_0(), "rule__State__Alternatives_5_1_1_0");
@@ -59,9 +59,7 @@ public class KitsParser extends AbstractContentAssistParser {
 					put(grammarAccess.getCompareOperatorAccess().getAlternatives(), "rule__CompareOperator__Alternatives");
 					put(grammarAccess.getValueTypeAccess().getAlternatives(), "rule__ValueType__Alternatives");
 					put(grammarAccess.getCombineOperatorAccess().getAlternatives(), "rule__CombineOperator__Alternatives");
-					put(grammarAccess.getRegionAccess().getGroup(), "rule__Region__Group__0");
 					put(grammarAccess.getRegionAccess().getGroup_0(), "rule__Region__Group_0__0");
-					put(grammarAccess.getNestedRegionAccess().getGroup_0(), "rule__NestedRegion__Group_0__0");
 					put(grammarAccess.getStringAnnotationAccess().getGroup(), "rule__StringAnnotation__Group__0");
 					put(grammarAccess.getStateAccess().getGroup(), "rule__State__Group__0");
 					put(grammarAccess.getStateAccess().getGroup_0_0(), "rule__State__Group_0_0__0");
@@ -123,13 +121,12 @@ public class KitsParser extends AbstractContentAssistParser {
 					put(grammarAccess.getValuedObjectTestExpressionAccess().getGroup_1(), "rule__ValuedObjectTestExpression__Group_1__0");
 					put(grammarAccess.getTextExpressionAccess().getGroup(), "rule__TextExpression__Group__0");
 					put(grammarAccess.getTextExpressionAccess().getGroup_1(), "rule__TextExpression__Group_1__0");
-					put(grammarAccess.getRegionAccess().getLabelAssignment_0_1(), "rule__Region__LabelAssignment_0_1");
+					put(grammarAccess.getRegionAccess().getIdAssignment_0_1(), "rule__Region__IdAssignment_0_1");
+					put(grammarAccess.getRegionAccess().getLabelAssignment_0_2(), "rule__Region__LabelAssignment_0_2");
+					put(grammarAccess.getRegionAccess().getVariablesAssignment_0_3_0(), "rule__Region__VariablesAssignment_0_3_0");
+					put(grammarAccess.getRegionAccess().getSignalsAssignment_0_3_1(), "rule__Region__SignalsAssignment_0_3_1");
+					put(grammarAccess.getRegionAccess().getStatesAssignment_0_4(), "rule__Region__StatesAssignment_0_4");
 					put(grammarAccess.getRegionAccess().getStatesAssignment_1(), "rule__Region__StatesAssignment_1");
-					put(grammarAccess.getNestedRegionAccess().getLabelAssignment_0_1(), "rule__NestedRegion__LabelAssignment_0_1");
-					put(grammarAccess.getNestedRegionAccess().getVariablesAssignment_0_2_0(), "rule__NestedRegion__VariablesAssignment_0_2_0");
-					put(grammarAccess.getNestedRegionAccess().getSignalsAssignment_0_2_1(), "rule__NestedRegion__SignalsAssignment_0_2_1");
-					put(grammarAccess.getNestedRegionAccess().getStatesAssignment_0_3(), "rule__NestedRegion__StatesAssignment_0_3");
-					put(grammarAccess.getSingleNestedRegionAccess().getStatesAssignment(), "rule__SingleNestedRegion__StatesAssignment");
 					put(grammarAccess.getStringAnnotationAccess().getValueAssignment_1(), "rule__StringAnnotation__ValueAssignment_1");
 					put(grammarAccess.getStateAccess().getIsInitialAssignment_0_0_0(), "rule__State__IsInitialAssignment_0_0_0");
 					put(grammarAccess.getStateAccess().getIsFinalAssignment_0_0_1(), "rule__State__IsFinalAssignment_0_0_1");

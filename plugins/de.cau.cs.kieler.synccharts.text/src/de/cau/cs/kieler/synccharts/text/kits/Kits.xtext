@@ -5,25 +5,26 @@ import "platform:/resource/de.cau.cs.kieler.core.annotations/model/annotations.e
 import "platform:/resource/de.cau.cs.kieler.core.expressions/model/expressions.ecore" as expressions 
 import "platform:/resource/de.cau.cs.kieler.synccharts/model/synccharts.ecore" as synccharts
 
-Region returns synccharts::Region:
-  ( 
-    ('region' (label=ID))? // region ID's are introduced by the keyword "region".       
-//     (variables+=Variable|signals+=Signal)* 
-     (states+=State) 
-  );
-
-// ---------------------------------------------------------------------------------------------------
+//Region returns synccharts::Region:
+//  ( 
+//    ('region' (label=ID))? // region ID's are introduced by the keyword "region".       
+////     (variables+=Variable|signals+=Signal)* 
+//     (states+=State) 
+//  );
+//
+//// ---------------------------------------------------------------------------------------------------
   
-NestedRegion returns synccharts::Region:
-  ('region' (label=ID) (variables+=Variable|signals+=Signal)* (states+=State)*)
-  | SingleNestedRegion
+//Nested
+Region returns synccharts::Region:
+  ('region' (id=ID)? (label=EString) (variables+=Variable|signals+=Signal)* (states+=State)*)
+  | (states+=State)+
   ;
 
 // ---------------------------------------------------------------------------------------------------
-
-SingleNestedRegion returns synccharts::Region:
-	(states+=State)+;
-
+//
+//UnnamedRegion returns synccharts::Region:
+//	(states+=State)+;
+//
 // ---------------------------------------------------------------------------------------------------
 
 //terminal ML_COMMENT	: '/***' -> '*/';
@@ -57,7 +58,7 @@ State returns synccharts::State:
            'onexit'  exitActions+=Action  |
            'suspension' suspensionTrigger=Action)*
            
-          (regions+=NestedRegion ('||' regions+=NestedRegion)*) )
+          (regions+=Region ('||' regions+=Region)*) )
            
         '}' (outgoingTransitions+=Transition ("," outgoingTransitions+=Transition)* ';')?
      ) 

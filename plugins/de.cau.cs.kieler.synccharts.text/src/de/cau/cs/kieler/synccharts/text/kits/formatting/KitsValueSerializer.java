@@ -40,12 +40,18 @@ public class KitsValueSerializer extends ValueSerializer {
 	/**
 	 * Declares any value of a state's label to be accepted.
 	 * This is needed for serialization of empty labels.
+	 * One Exception: Don't mention the root region!
 	 */
 	public boolean isValid(EObject context, RuleCall ruleCall, Object value, IErrorAcceptor errorAcceptor) {
 		
+		// Don't mention the root region!
+		if (context.eContainer() == null) {
+			return false;
+		}
+		
 		// if we have a state under consideration and are processing the call of a
 		//  parser rule called from an assignment to a ecore feature of the state
-		if (SyncchartsPackage.eINSTANCE.getState().isInstance(context)
+		if (SyncchartsPackage.eINSTANCE.getScope().isInstance(context)
 				&& XtextPackage.eINSTANCE.getAssignment().isInstance(ruleCall.eContainer())) {
 			
 			Assignment a = (Assignment) ruleCall.eContainer();
@@ -69,7 +75,7 @@ public class KitsValueSerializer extends ValueSerializer {
 		
 		// if we have a state under consideration and are processing the call of a
 		//  parser rule called from an assignment to a ecore feature of the state
-		if (SyncchartsPackage.eINSTANCE.getState().isInstance(context)
+		if (SyncchartsPackage.eINSTANCE.getScope().isInstance(context)
 				&& XtextPackage.eINSTANCE.getAssignment().isInstance(ruleCall.eContainer())) {
 			
 			Assignment a = (Assignment) ruleCall.eContainer();

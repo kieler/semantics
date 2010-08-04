@@ -45,7 +45,7 @@ public class KitsTransientValueService extends DefaultTransientValueService {
 			return true;
 		}
 		if (feature == SyncchartsPackage.eINSTANCE.getScope_Id()) {
-			if (SyncchartsPackage.eINSTANCE.getRegion().isInstance(owner)) {
+			if (owner.eContainer() == null ) {
 				return true;
 			}
 			Scope scope = (Scope) owner;
@@ -63,7 +63,10 @@ public class KitsTransientValueService extends DefaultTransientValueService {
 		}
 		
 		if (feature == SyncchartsPackage.eINSTANCE.getScope_Label()
-				&& SyncchartsPackage.eINSTANCE.getState().isInstance(owner)) {
+				&& SyncchartsPackage.eINSTANCE.getScope().isInstance(owner)) {
+			if (owner.eContainer() == null ) {
+				return true;
+			}
 			if (!owner.eIsSet(feature)) {
 				
 				// this is a heavy hack making sure a label is present to be serialized

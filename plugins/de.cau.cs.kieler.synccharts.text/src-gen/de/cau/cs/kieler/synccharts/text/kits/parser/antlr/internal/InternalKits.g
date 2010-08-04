@@ -102,9 +102,9 @@ ruleRegion returns [EObject current=null]
     }
 (
 (
-		lv_label_1_0=RULE_ID
+		lv_id_1_0=RULE_ID
 		{
-			createLeafNode(grammarAccess.getRegionAccess().getLabelIDTerminalRuleCall_0_1_0(), "label"); 
+			createLeafNode(grammarAccess.getRegionAccess().getIdIDTerminalRuleCall_0_1_0(), "id"); 
 		}
 		{
 	        if ($current==null) {
@@ -114,8 +114,8 @@ ruleRegion returns [EObject current=null]
 	        try {
 	       		set(
 	       			$current, 
-	       			"label",
-	        		lv_label_1_0, 
+	       			"id",
+	        		lv_id_1_0, 
 	        		"ID", 
 	        		lastConsumedNode);
 	        } catch (ValueConverterException vce) {
@@ -124,22 +124,22 @@ ruleRegion returns [EObject current=null]
 	    }
 
 )
-))?(
+)?(
 (
 		{ 
-	        currentNode=createCompositeNode(grammarAccess.getRegionAccess().getStatesStateParserRuleCall_1_0(), currentNode); 
+	        currentNode=createCompositeNode(grammarAccess.getRegionAccess().getLabelEStringParserRuleCall_0_2_0(), currentNode); 
 	    }
-		lv_states_2_0=ruleState		{
+		lv_label_2_0=ruleEString		{
 	        if ($current==null) {
 	            $current = factory.create(grammarAccess.getRegionRule().getType().getClassifier());
 	            associateNodeWithAstElement(currentNode.getParent(), $current);
 	        }
 	        try {
-	       		add(
+	       		set(
 	       			$current, 
-	       			"states",
-	        		lv_states_2_0, 
-	        		"State", 
+	       			"label",
+	        		lv_label_2_0, 
+	        		"EString", 
 	        		currentNode);
 	        } catch (ValueConverterException vce) {
 				handleValueConverterException(vce);
@@ -148,72 +148,21 @@ ruleRegion returns [EObject current=null]
 	    }
 
 )
-))
-;
-
-
-
-
-
-// Entry rule entryRuleNestedRegion
-entryRuleNestedRegion returns [EObject current=null] 
-	:
-	{ currentNode = createCompositeNode(grammarAccess.getNestedRegionRule(), currentNode); }
-	 iv_ruleNestedRegion=ruleNestedRegion 
-	 { $current=$iv_ruleNestedRegion.current; } 
-	 EOF 
-;
-
-// Rule NestedRegion
-ruleNestedRegion returns [EObject current=null] 
-    @init { EObject temp=null; setCurrentLookahead(); resetLookahead(); 
-    }
-    @after { resetLookahead(); 
-    	lastConsumedNode = currentNode;
-    }:
-((	'region' 
-    {
-        createLeafNode(grammarAccess.getNestedRegionAccess().getRegionKeyword_0_0(), null); 
-    }
-(
-(
-		lv_label_1_0=RULE_ID
-		{
-			createLeafNode(grammarAccess.getNestedRegionAccess().getLabelIDTerminalRuleCall_0_1_0(), "label"); 
-		}
-		{
-	        if ($current==null) {
-	            $current = factory.create(grammarAccess.getNestedRegionRule().getType().getClassifier());
-	            associateNodeWithAstElement(currentNode, $current);
-	        }
-	        try {
-	       		set(
-	       			$current, 
-	       			"label",
-	        		lv_label_1_0, 
-	        		"ID", 
-	        		lastConsumedNode);
-	        } catch (ValueConverterException vce) {
-				handleValueConverterException(vce);
-	        }
-	    }
-
-)
 )((
 (
 		{ 
-	        currentNode=createCompositeNode(grammarAccess.getNestedRegionAccess().getVariablesVariableParserRuleCall_0_2_0_0(), currentNode); 
+	        currentNode=createCompositeNode(grammarAccess.getRegionAccess().getVariablesVariableParserRuleCall_0_3_0_0(), currentNode); 
 	    }
-		lv_variables_2_0=ruleVariable		{
+		lv_variables_3_0=ruleVariable		{
 	        if ($current==null) {
-	            $current = factory.create(grammarAccess.getNestedRegionRule().getType().getClassifier());
+	            $current = factory.create(grammarAccess.getRegionRule().getType().getClassifier());
 	            associateNodeWithAstElement(currentNode.getParent(), $current);
 	        }
 	        try {
 	       		add(
 	       			$current, 
 	       			"variables",
-	        		lv_variables_2_0, 
+	        		lv_variables_3_0, 
 	        		"Variable", 
 	        		currentNode);
 	        } catch (ValueConverterException vce) {
@@ -227,18 +176,18 @@ ruleNestedRegion returns [EObject current=null]
     |(
 (
 		{ 
-	        currentNode=createCompositeNode(grammarAccess.getNestedRegionAccess().getSignalsSignalParserRuleCall_0_2_1_0(), currentNode); 
+	        currentNode=createCompositeNode(grammarAccess.getRegionAccess().getSignalsSignalParserRuleCall_0_3_1_0(), currentNode); 
 	    }
-		lv_signals_3_0=ruleSignal		{
+		lv_signals_4_0=ruleSignal		{
 	        if ($current==null) {
-	            $current = factory.create(grammarAccess.getNestedRegionRule().getType().getClassifier());
+	            $current = factory.create(grammarAccess.getRegionRule().getType().getClassifier());
 	            associateNodeWithAstElement(currentNode.getParent(), $current);
 	        }
 	        try {
 	       		add(
 	       			$current, 
 	       			"signals",
-	        		lv_signals_3_0, 
+	        		lv_signals_4_0, 
 	        		"Signal", 
 	        		currentNode);
 	        } catch (ValueConverterException vce) {
@@ -251,18 +200,18 @@ ruleNestedRegion returns [EObject current=null]
 ))*(
 (
 		{ 
-	        currentNode=createCompositeNode(grammarAccess.getNestedRegionAccess().getStatesStateParserRuleCall_0_3_0(), currentNode); 
+	        currentNode=createCompositeNode(grammarAccess.getRegionAccess().getStatesStateParserRuleCall_0_4_0(), currentNode); 
 	    }
-		lv_states_4_0=ruleState		{
+		lv_states_5_0=ruleState		{
 	        if ($current==null) {
-	            $current = factory.create(grammarAccess.getNestedRegionRule().getType().getClassifier());
+	            $current = factory.create(grammarAccess.getRegionRule().getType().getClassifier());
 	            associateNodeWithAstElement(currentNode.getParent(), $current);
 	        }
 	        try {
 	       		add(
 	       			$current, 
 	       			"states",
-	        		lv_states_4_0, 
+	        		lv_states_5_0, 
 	        		"State", 
 	        		currentNode);
 	        } catch (ValueConverterException vce) {
@@ -273,56 +222,21 @@ ruleNestedRegion returns [EObject current=null]
 
 )
 )*)
-    |
-	{ 
-	  /* */ 
-	}
-    { 
-        currentNode=createCompositeNode(grammarAccess.getNestedRegionAccess().getSingleNestedRegionParserRuleCall_1(), currentNode); 
-    }
-    this_SingleNestedRegion_5=ruleSingleNestedRegion
-    { 
-        $current = $this_SingleNestedRegion_5.current; 
-        currentNode = currentNode.getParent();
-    }
-)
-;
-
-
-
-
-
-// Entry rule entryRuleSingleNestedRegion
-entryRuleSingleNestedRegion returns [EObject current=null] 
-	:
-	{ currentNode = createCompositeNode(grammarAccess.getSingleNestedRegionRule(), currentNode); }
-	 iv_ruleSingleNestedRegion=ruleSingleNestedRegion 
-	 { $current=$iv_ruleSingleNestedRegion.current; } 
-	 EOF 
-;
-
-// Rule SingleNestedRegion
-ruleSingleNestedRegion returns [EObject current=null] 
-    @init { EObject temp=null; setCurrentLookahead(); resetLookahead(); 
-    }
-    @after { resetLookahead(); 
-    	lastConsumedNode = currentNode;
-    }:
-(
+    |(
 (
 		{ 
-	        currentNode=createCompositeNode(grammarAccess.getSingleNestedRegionAccess().getStatesStateParserRuleCall_0(), currentNode); 
+	        currentNode=createCompositeNode(grammarAccess.getRegionAccess().getStatesStateParserRuleCall_1_0(), currentNode); 
 	    }
-		lv_states_0_0=ruleState		{
+		lv_states_6_0=ruleState		{
 	        if ($current==null) {
-	            $current = factory.create(grammarAccess.getSingleNestedRegionRule().getType().getClassifier());
+	            $current = factory.create(grammarAccess.getRegionRule().getType().getClassifier());
 	            associateNodeWithAstElement(currentNode.getParent(), $current);
 	        }
 	        try {
 	       		add(
 	       			$current, 
 	       			"states",
-	        		lv_states_0_0, 
+	        		lv_states_6_0, 
 	        		"State", 
 	        		currentNode);
 	        } catch (ValueConverterException vce) {
@@ -332,7 +246,7 @@ ruleSingleNestedRegion returns [EObject current=null]
 	    }
 
 )
-)+
+)+)
 ;
 
 
@@ -747,9 +661,9 @@ ruleState returns [EObject current=null]
 )))*((
 (
 		{ 
-	        currentNode=createCompositeNode(grammarAccess.getStateAccess().getRegionsNestedRegionParserRuleCall_5_1_1_1_0_0(), currentNode); 
+	        currentNode=createCompositeNode(grammarAccess.getStateAccess().getRegionsRegionParserRuleCall_5_1_1_1_0_0(), currentNode); 
 	    }
-		lv_regions_23_0=ruleNestedRegion		{
+		lv_regions_23_0=ruleRegion		{
 	        if ($current==null) {
 	            $current = factory.create(grammarAccess.getStateRule().getType().getClassifier());
 	            associateNodeWithAstElement(currentNode.getParent(), $current);
@@ -759,7 +673,7 @@ ruleState returns [EObject current=null]
 	       			$current, 
 	       			"regions",
 	        		lv_regions_23_0, 
-	        		"NestedRegion", 
+	        		"Region", 
 	        		currentNode);
 	        } catch (ValueConverterException vce) {
 				handleValueConverterException(vce);
@@ -775,9 +689,9 @@ ruleState returns [EObject current=null]
 (
 (
 		{ 
-	        currentNode=createCompositeNode(grammarAccess.getStateAccess().getRegionsNestedRegionParserRuleCall_5_1_1_1_1_1_0(), currentNode); 
+	        currentNode=createCompositeNode(grammarAccess.getStateAccess().getRegionsRegionParserRuleCall_5_1_1_1_1_1_0(), currentNode); 
 	    }
-		lv_regions_25_0=ruleNestedRegion		{
+		lv_regions_25_0=ruleRegion		{
 	        if ($current==null) {
 	            $current = factory.create(grammarAccess.getStateRule().getType().getClassifier());
 	            associateNodeWithAstElement(currentNode.getParent(), $current);
@@ -787,7 +701,7 @@ ruleState returns [EObject current=null]
 	       			$current, 
 	       			"regions",
 	        		lv_regions_25_0, 
-	        		"NestedRegion", 
+	        		"Region", 
 	        		currentNode);
 	        } catch (ValueConverterException vce) {
 				handleValueConverterException(vce);

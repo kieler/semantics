@@ -20,120 +20,83 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public class RegionElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Region");
-		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Group cGroup_0 = (Group)cGroup.eContents().get(0);
+		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
+		private final Group cGroup_0 = (Group)cAlternatives.eContents().get(0);
 		private final Keyword cRegionKeyword_0_0 = (Keyword)cGroup_0.eContents().get(0);
-		private final Assignment cLabelAssignment_0_1 = (Assignment)cGroup_0.eContents().get(1);
-		private final RuleCall cLabelIDTerminalRuleCall_0_1_0 = (RuleCall)cLabelAssignment_0_1.eContents().get(0);
-		private final Assignment cStatesAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final Assignment cIdAssignment_0_1 = (Assignment)cGroup_0.eContents().get(1);
+		private final RuleCall cIdIDTerminalRuleCall_0_1_0 = (RuleCall)cIdAssignment_0_1.eContents().get(0);
+		private final Assignment cLabelAssignment_0_2 = (Assignment)cGroup_0.eContents().get(2);
+		private final RuleCall cLabelEStringParserRuleCall_0_2_0 = (RuleCall)cLabelAssignment_0_2.eContents().get(0);
+		private final Alternatives cAlternatives_0_3 = (Alternatives)cGroup_0.eContents().get(3);
+		private final Assignment cVariablesAssignment_0_3_0 = (Assignment)cAlternatives_0_3.eContents().get(0);
+		private final RuleCall cVariablesVariableParserRuleCall_0_3_0_0 = (RuleCall)cVariablesAssignment_0_3_0.eContents().get(0);
+		private final Assignment cSignalsAssignment_0_3_1 = (Assignment)cAlternatives_0_3.eContents().get(1);
+		private final RuleCall cSignalsSignalParserRuleCall_0_3_1_0 = (RuleCall)cSignalsAssignment_0_3_1.eContents().get(0);
+		private final Assignment cStatesAssignment_0_4 = (Assignment)cGroup_0.eContents().get(4);
+		private final RuleCall cStatesStateParserRuleCall_0_4_0 = (RuleCall)cStatesAssignment_0_4.eContents().get(0);
+		private final Assignment cStatesAssignment_1 = (Assignment)cAlternatives.eContents().get(1);
 		private final RuleCall cStatesStateParserRuleCall_1_0 = (RuleCall)cStatesAssignment_1.eContents().get(0);
 		
+		////Region returns synccharts::Region:
+		////  ( 
+		////    ('region' (label=ID))? // region ID's are introduced by the keyword "region".       
+		//////     (variables+=Variable|signals+=Signal)* 
+		////     (states+=State) 
+		////  );
+		////
+		////// ---------------------------------------------------------------------------------------------------
+		////Nested
 		//Region returns synccharts::Region:
-		//	("region" label=ID)? // region ID's are introduced by the keyword "region".       
-		//	//     (variables+=Variable|signals+=Signal)* 
-		//	states+=State;
+		//	"region" id=ID? label=EString (variables+=Variable | signals+=Signal)* states+=State* | states+=State+;
 		public ParserRule getRule() { return rule; }
 
-		//("region" label=ID)? // region ID's are introduced by the keyword "region".       
-		////     (variables+=Variable|signals+=Signal)* 
-		//states+=State
-		public Group getGroup() { return cGroup; }
+		//"region" id=ID? label=EString (variables+=Variable | signals+=Signal)* states+=State* | states+=State+
+		public Alternatives getAlternatives() { return cAlternatives; }
 
-		//("region" label=ID)?
+		//"region" id=ID? label=EString (variables+=Variable | signals+=Signal)* states+=State*
 		public Group getGroup_0() { return cGroup_0; }
 
 		//"region"
 		public Keyword getRegionKeyword_0_0() { return cRegionKeyword_0_0; }
 
-		//label=ID
-		public Assignment getLabelAssignment_0_1() { return cLabelAssignment_0_1; }
+		//id=ID?
+		public Assignment getIdAssignment_0_1() { return cIdAssignment_0_1; }
 
 		//ID
-		public RuleCall getLabelIDTerminalRuleCall_0_1_0() { return cLabelIDTerminalRuleCall_0_1_0; }
+		public RuleCall getIdIDTerminalRuleCall_0_1_0() { return cIdIDTerminalRuleCall_0_1_0; }
 
-		//states+=State
+		//label=EString
+		public Assignment getLabelAssignment_0_2() { return cLabelAssignment_0_2; }
+
+		//EString
+		public RuleCall getLabelEStringParserRuleCall_0_2_0() { return cLabelEStringParserRuleCall_0_2_0; }
+
+		//(variables+=Variable | signals+=Signal)*
+		public Alternatives getAlternatives_0_3() { return cAlternatives_0_3; }
+
+		//variables+=Variable
+		public Assignment getVariablesAssignment_0_3_0() { return cVariablesAssignment_0_3_0; }
+
+		//Variable
+		public RuleCall getVariablesVariableParserRuleCall_0_3_0_0() { return cVariablesVariableParserRuleCall_0_3_0_0; }
+
+		//signals+=Signal
+		public Assignment getSignalsAssignment_0_3_1() { return cSignalsAssignment_0_3_1; }
+
+		//Signal
+		public RuleCall getSignalsSignalParserRuleCall_0_3_1_0() { return cSignalsSignalParserRuleCall_0_3_1_0; }
+
+		//states+=State*
+		public Assignment getStatesAssignment_0_4() { return cStatesAssignment_0_4; }
+
+		//State
+		public RuleCall getStatesStateParserRuleCall_0_4_0() { return cStatesStateParserRuleCall_0_4_0; }
+
+		//states+=State+
 		public Assignment getStatesAssignment_1() { return cStatesAssignment_1; }
 
 		//State
 		public RuleCall getStatesStateParserRuleCall_1_0() { return cStatesStateParserRuleCall_1_0; }
-	}
-
-	public class NestedRegionElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "NestedRegion");
-		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
-		private final Group cGroup_0 = (Group)cAlternatives.eContents().get(0);
-		private final Keyword cRegionKeyword_0_0 = (Keyword)cGroup_0.eContents().get(0);
-		private final Assignment cLabelAssignment_0_1 = (Assignment)cGroup_0.eContents().get(1);
-		private final RuleCall cLabelIDTerminalRuleCall_0_1_0 = (RuleCall)cLabelAssignment_0_1.eContents().get(0);
-		private final Alternatives cAlternatives_0_2 = (Alternatives)cGroup_0.eContents().get(2);
-		private final Assignment cVariablesAssignment_0_2_0 = (Assignment)cAlternatives_0_2.eContents().get(0);
-		private final RuleCall cVariablesVariableParserRuleCall_0_2_0_0 = (RuleCall)cVariablesAssignment_0_2_0.eContents().get(0);
-		private final Assignment cSignalsAssignment_0_2_1 = (Assignment)cAlternatives_0_2.eContents().get(1);
-		private final RuleCall cSignalsSignalParserRuleCall_0_2_1_0 = (RuleCall)cSignalsAssignment_0_2_1.eContents().get(0);
-		private final Assignment cStatesAssignment_0_3 = (Assignment)cGroup_0.eContents().get(3);
-		private final RuleCall cStatesStateParserRuleCall_0_3_0 = (RuleCall)cStatesAssignment_0_3.eContents().get(0);
-		private final RuleCall cSingleNestedRegionParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
-		
-		//// ---------------------------------------------------------------------------------------------------
-		//NestedRegion returns synccharts::Region:
-		//	"region" label=ID (variables+=Variable | signals+=Signal)* states+=State* | SingleNestedRegion;
-		public ParserRule getRule() { return rule; }
-
-		//"region" label=ID (variables+=Variable | signals+=Signal)* states+=State* | SingleNestedRegion
-		public Alternatives getAlternatives() { return cAlternatives; }
-
-		//"region" label=ID (variables+=Variable | signals+=Signal)* states+=State*
-		public Group getGroup_0() { return cGroup_0; }
-
-		//"region"
-		public Keyword getRegionKeyword_0_0() { return cRegionKeyword_0_0; }
-
-		//label=ID
-		public Assignment getLabelAssignment_0_1() { return cLabelAssignment_0_1; }
-
-		//ID
-		public RuleCall getLabelIDTerminalRuleCall_0_1_0() { return cLabelIDTerminalRuleCall_0_1_0; }
-
-		//(variables+=Variable | signals+=Signal)*
-		public Alternatives getAlternatives_0_2() { return cAlternatives_0_2; }
-
-		//variables+=Variable
-		public Assignment getVariablesAssignment_0_2_0() { return cVariablesAssignment_0_2_0; }
-
-		//Variable
-		public RuleCall getVariablesVariableParserRuleCall_0_2_0_0() { return cVariablesVariableParserRuleCall_0_2_0_0; }
-
-		//signals+=Signal
-		public Assignment getSignalsAssignment_0_2_1() { return cSignalsAssignment_0_2_1; }
-
-		//Signal
-		public RuleCall getSignalsSignalParserRuleCall_0_2_1_0() { return cSignalsSignalParserRuleCall_0_2_1_0; }
-
-		//states+=State*
-		public Assignment getStatesAssignment_0_3() { return cStatesAssignment_0_3; }
-
-		//State
-		public RuleCall getStatesStateParserRuleCall_0_3_0() { return cStatesStateParserRuleCall_0_3_0; }
-
-		//SingleNestedRegion
-		public RuleCall getSingleNestedRegionParserRuleCall_1() { return cSingleNestedRegionParserRuleCall_1; }
-	}
-
-	public class SingleNestedRegionElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "SingleNestedRegion");
-		private final Assignment cStatesAssignment = (Assignment)rule.eContents().get(1);
-		private final RuleCall cStatesStateParserRuleCall_0 = (RuleCall)cStatesAssignment.eContents().get(0);
-		
-		//// ---------------------------------------------------------------------------------------------------
-		//SingleNestedRegion returns synccharts::Region:
-		//	states+=State+;
-		public ParserRule getRule() { return rule; }
-
-		//states+=State+
-		public Assignment getStatesAssignment() { return cStatesAssignment; }
-
-		//State
-		public RuleCall getStatesStateParserRuleCall_0() { return cStatesStateParserRuleCall_0; }
 	}
 
 	public class StringAnnotationElements extends AbstractParserRuleElementFinder {
@@ -217,11 +180,11 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cSuspensionTriggerActionParserRuleCall_5_1_1_0_5_1_0 = (RuleCall)cSuspensionTriggerAssignment_5_1_1_0_5_1.eContents().get(0);
 		private final Group cGroup_5_1_1_1 = (Group)cGroup_5_1_1.eContents().get(1);
 		private final Assignment cRegionsAssignment_5_1_1_1_0 = (Assignment)cGroup_5_1_1_1.eContents().get(0);
-		private final RuleCall cRegionsNestedRegionParserRuleCall_5_1_1_1_0_0 = (RuleCall)cRegionsAssignment_5_1_1_1_0.eContents().get(0);
+		private final RuleCall cRegionsRegionParserRuleCall_5_1_1_1_0_0 = (RuleCall)cRegionsAssignment_5_1_1_1_0.eContents().get(0);
 		private final Group cGroup_5_1_1_1_1 = (Group)cGroup_5_1_1_1.eContents().get(1);
 		private final Keyword cVerticalLineVerticalLineKeyword_5_1_1_1_1_0 = (Keyword)cGroup_5_1_1_1_1.eContents().get(0);
 		private final Assignment cRegionsAssignment_5_1_1_1_1_1 = (Assignment)cGroup_5_1_1_1_1.eContents().get(1);
-		private final RuleCall cRegionsNestedRegionParserRuleCall_5_1_1_1_1_1_0 = (RuleCall)cRegionsAssignment_5_1_1_1_1_1.eContents().get(0);
+		private final RuleCall cRegionsRegionParserRuleCall_5_1_1_1_1_1_0 = (RuleCall)cRegionsAssignment_5_1_1_1_1_1.eContents().get(0);
 		private final Keyword cRightCurlyBracketKeyword_5_1_2 = (Keyword)cGroup_5_1.eContents().get(2);
 		private final Group cGroup_5_1_3 = (Group)cGroup_5_1.eContents().get(3);
 		private final Assignment cOutgoingTransitionsAssignment_5_1_3_0 = (Assignment)cGroup_5_1_3.eContents().get(0);
@@ -237,16 +200,16 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 		//	| isFinal?="final" isInitial?="init"?)? type=StateType? "state"? id=ID? label=EString ((outgoingTransitions+=Transition
 		//	("," outgoingTransitions+=Transition)*)? ";" | "{" ((signals+=Signal | variables+=Variable | "onentry"
 		//	entryActions+=Action | "oninner" innerActions+=Action | "onexit" exitActions+=Action | "suspension"
-		//	suspensionTrigger=Action)* (regions+=NestedRegion ("||" regions+=NestedRegion)*)) "}" (outgoingTransitions+=Transition
-		//	("," outgoingTransitions+=Transition)* ";")?);
+		//	suspensionTrigger=Action)* (regions+=Region ("||" regions+=Region)*)) "}" (outgoingTransitions+=Transition (","
+		//	outgoingTransitions+=Transition)* ";")?);
 		public ParserRule getRule() { return rule; }
 
 		//(isInitial?="init" isFinal?="final"? //  ( annotations += StringAnnotation )*
 		//| isFinal?="final" isInitial?="init"?)? type=StateType? "state"? id=ID? label=EString ((outgoingTransitions+=Transition
 		//("," outgoingTransitions+=Transition)*)? ";" | "{" ((signals+=Signal | variables+=Variable | "onentry"
 		//entryActions+=Action | "oninner" innerActions+=Action | "onexit" exitActions+=Action | "suspension"
-		//suspensionTrigger=Action)* (regions+=NestedRegion ("||" regions+=NestedRegion)*)) "}" (outgoingTransitions+=Transition
-		//("," outgoingTransitions+=Transition)* ";")?)
+		//suspensionTrigger=Action)* (regions+=Region ("||" regions+=Region)*)) "}" (outgoingTransitions+=Transition (","
+		//outgoingTransitions+=Transition)* ";")?)
 		public Group getGroup() { return cGroup; }
 
 		//(isInitial?="init" isFinal?="final"? //  ( annotations += StringAnnotation )*
@@ -306,8 +269,8 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 
 		//(outgoingTransitions+=Transition ("," outgoingTransitions+=Transition)*)? ";" | "{" ((signals+=Signal |
 		//variables+=Variable | "onentry" entryActions+=Action | "oninner" innerActions+=Action | "onexit" exitActions+=Action |
-		//"suspension" suspensionTrigger=Action)* (regions+=NestedRegion ("||" regions+=NestedRegion)*)) "}"
-		//(outgoingTransitions+=Transition ("," outgoingTransitions+=Transition)* ";")?
+		//"suspension" suspensionTrigger=Action)* (regions+=Region ("||" regions+=Region)*)) "}" (outgoingTransitions+=Transition
+		//("," outgoingTransitions+=Transition)* ";")?
 		public Alternatives getAlternatives_5() { return cAlternatives_5; }
 
 		//(outgoingTransitions+=Transition ("," outgoingTransitions+=Transition)*)? ";"
@@ -338,15 +301,15 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 		public Keyword getSemicolonKeyword_5_0_1() { return cSemicolonKeyword_5_0_1; }
 
 		//"{" ((signals+=Signal | variables+=Variable | "onentry" entryActions+=Action | "oninner" innerActions+=Action | "onexit"
-		//exitActions+=Action | "suspension" suspensionTrigger=Action)* (regions+=NestedRegion ("||" regions+=NestedRegion)*))
-		//"}" (outgoingTransitions+=Transition ("," outgoingTransitions+=Transition)* ";")?
+		//exitActions+=Action | "suspension" suspensionTrigger=Action)* (regions+=Region ("||" regions+=Region)*)) "}"
+		//(outgoingTransitions+=Transition ("," outgoingTransitions+=Transition)* ";")?
 		public Group getGroup_5_1() { return cGroup_5_1; }
 
 		//"{"
 		public Keyword getLeftCurlyBracketKeyword_5_1_0() { return cLeftCurlyBracketKeyword_5_1_0; }
 
 		//(signals+=Signal | variables+=Variable | "onentry" entryActions+=Action | "oninner" innerActions+=Action | "onexit"
-		//exitActions+=Action | "suspension" suspensionTrigger=Action)* (regions+=NestedRegion ("||" regions+=NestedRegion)*)
+		//exitActions+=Action | "suspension" suspensionTrigger=Action)* (regions+=Region ("||" regions+=Region)*)
 		public Group getGroup_5_1_1() { return cGroup_5_1_1; }
 
 		//(signals+=Signal | variables+=Variable | "onentry" entryActions+=Action | "oninner" innerActions+=Action | "onexit"
@@ -413,26 +376,26 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 		//Action
 		public RuleCall getSuspensionTriggerActionParserRuleCall_5_1_1_0_5_1_0() { return cSuspensionTriggerActionParserRuleCall_5_1_1_0_5_1_0; }
 
-		//regions+=NestedRegion ("||" regions+=NestedRegion)*
+		//regions+=Region ("||" regions+=Region)*
 		public Group getGroup_5_1_1_1() { return cGroup_5_1_1_1; }
 
-		//regions+=NestedRegion
+		//regions+=Region
 		public Assignment getRegionsAssignment_5_1_1_1_0() { return cRegionsAssignment_5_1_1_1_0; }
 
-		//NestedRegion
-		public RuleCall getRegionsNestedRegionParserRuleCall_5_1_1_1_0_0() { return cRegionsNestedRegionParserRuleCall_5_1_1_1_0_0; }
+		//Region
+		public RuleCall getRegionsRegionParserRuleCall_5_1_1_1_0_0() { return cRegionsRegionParserRuleCall_5_1_1_1_0_0; }
 
-		//("||" regions+=NestedRegion)*
+		//("||" regions+=Region)*
 		public Group getGroup_5_1_1_1_1() { return cGroup_5_1_1_1_1; }
 
 		//"||"
 		public Keyword getVerticalLineVerticalLineKeyword_5_1_1_1_1_0() { return cVerticalLineVerticalLineKeyword_5_1_1_1_1_0; }
 
-		//regions+=NestedRegion
+		//regions+=Region
 		public Assignment getRegionsAssignment_5_1_1_1_1_1() { return cRegionsAssignment_5_1_1_1_1_1; }
 
-		//NestedRegion
-		public RuleCall getRegionsNestedRegionParserRuleCall_5_1_1_1_1_1_0() { return cRegionsNestedRegionParserRuleCall_5_1_1_1_1_1_0; }
+		//Region
+		public RuleCall getRegionsRegionParserRuleCall_5_1_1_1_1_1_0() { return cRegionsRegionParserRuleCall_5_1_1_1_1_1_0; }
 
 		//"}"
 		public Keyword getRightCurlyBracketKeyword_5_1_2() { return cRightCurlyBracketKeyword_5_1_2; }
@@ -900,8 +863,6 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	private RegionElements pRegion;
-	private NestedRegionElements pNestedRegion;
-	private SingleNestedRegionElements pSingleNestedRegion;
 	private TerminalRule tT_ANNOTATION;
 	private StringAnnotationElements pStringAnnotation;
 	private StateElements pState;
@@ -933,10 +894,17 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	
+	////Region returns synccharts::Region:
+	////  ( 
+	////    ('region' (label=ID))? // region ID's are introduced by the keyword "region".       
+	//////     (variables+=Variable|signals+=Signal)* 
+	////     (states+=State) 
+	////  );
+	////
+	////// ---------------------------------------------------------------------------------------------------
+	////Nested
 	//Region returns synccharts::Region:
-	//	("region" label=ID)? // region ID's are introduced by the keyword "region".       
-	//	//     (variables+=Variable|signals+=Signal)* 
-	//	states+=State;
+	//	"region" id=ID? label=EString (variables+=Variable | signals+=Signal)* states+=State* | states+=State+;
 	public RegionElements getRegionAccess() {
 		return (pRegion != null) ? pRegion : (pRegion = new RegionElements());
 	}
@@ -946,27 +914,10 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//// ---------------------------------------------------------------------------------------------------
-	//NestedRegion returns synccharts::Region:
-	//	"region" label=ID (variables+=Variable | signals+=Signal)* states+=State* | SingleNestedRegion;
-	public NestedRegionElements getNestedRegionAccess() {
-		return (pNestedRegion != null) ? pNestedRegion : (pNestedRegion = new NestedRegionElements());
-	}
-	
-	public ParserRule getNestedRegionRule() {
-		return getNestedRegionAccess().getRule();
-	}
-
-	//// ---------------------------------------------------------------------------------------------------
-	//SingleNestedRegion returns synccharts::Region:
-	//	states+=State+;
-	public SingleNestedRegionElements getSingleNestedRegionAccess() {
-		return (pSingleNestedRegion != null) ? pSingleNestedRegion : (pSingleNestedRegion = new SingleNestedRegionElements());
-	}
-	
-	public ParserRule getSingleNestedRegionRule() {
-		return getSingleNestedRegionAccess().getRule();
-	}
-
+	////
+	////UnnamedRegion returns synccharts::Region:
+	////	(states+=State)+;
+	////
 	//// ---------------------------------------------------------------------------------------------------
 	////terminal ML_COMMENT	: '/ ***' -> '* /';
 	//terminal T_ANNOTATION:
@@ -990,8 +941,8 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 	//	| isFinal?="final" isInitial?="init"?)? type=StateType? "state"? id=ID? label=EString ((outgoingTransitions+=Transition
 	//	("," outgoingTransitions+=Transition)*)? ";" | "{" ((signals+=Signal | variables+=Variable | "onentry"
 	//	entryActions+=Action | "oninner" innerActions+=Action | "onexit" exitActions+=Action | "suspension"
-	//	suspensionTrigger=Action)* (regions+=NestedRegion ("||" regions+=NestedRegion)*)) "}" (outgoingTransitions+=Transition
-	//	("," outgoingTransitions+=Transition)* ";")?);
+	//	suspensionTrigger=Action)* (regions+=Region ("||" regions+=Region)*)) "}" (outgoingTransitions+=Transition (","
+	//	outgoingTransitions+=Transition)* ";")?);
 	public StateElements getStateAccess() {
 		return (pState != null) ? pState : (pState = new StateElements());
 	}
