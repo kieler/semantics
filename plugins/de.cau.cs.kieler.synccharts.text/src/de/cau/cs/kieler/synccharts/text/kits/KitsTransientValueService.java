@@ -22,6 +22,7 @@ import org.eclipse.emf.transaction.impl.TransactionChangeRecorder;
 import org.eclipse.xtext.parsetree.reconstr.ITransientValueService;
 import org.eclipse.xtext.parsetree.reconstr.impl.DefaultTransientValueService;
 
+import de.cau.cs.kieler.synccharts.Region;
 import de.cau.cs.kieler.synccharts.Scope;
 import de.cau.cs.kieler.synccharts.StateType;
 import de.cau.cs.kieler.synccharts.SyncchartsPackage;
@@ -36,6 +37,7 @@ public class KitsTransientValueService extends DefaultTransientValueService {
 
 	@Override
 	public boolean isTransient(EObject owner, EStructuralFeature feature, int index) {
+		
 		if (feature == SyncchartsPackage.eINSTANCE.getState_ParentRegion() 
 			|| feature == SyncchartsPackage.eINSTANCE.getScope_InterfaceDeclaration()
 			|| feature == SyncchartsPackage.eINSTANCE.getState_IncomingTransitions()
@@ -44,27 +46,38 @@ public class KitsTransientValueService extends DefaultTransientValueService {
 			) {
 			return true;
 		}
+		
+
+		/* scope ids are suppressed in case of:
+		 * a) the root region
+		 * b) a region has no label -> whole region declaration will be skipped
+		 * c) scope label != null (maybe "") and id is equal to label (label is unique)  
+		 */		
 		if (feature == SyncchartsPackage.eINSTANCE.getScope_Id()) {
-			if (owner.eContainer() == null ) {
+			if (SyncchartsPackage.eINSTANCE.getRegion().isInstance(owner)
+					&& (owner.eContainer() == null 
+							|| ((Region) owner).getLabel() == null
+							|| ((Region) owner).getLabel().equals(""))) {
 				return true;
 			}
 			Scope scope = (Scope) owner;
 			return scope.getLabel() != null 
 					&& (scope.getId() == null || scope.getLabel().equals(scope.getId()));
-		}		
-		if (feature == SyncchartsPackage.eINSTANCE.getState_Type()) {
-			return owner.eGet(feature).equals(StateType.NORMAL);
 		}
+
 		
-		if (feature == SyncchartsPackage.eINSTANCE.getTransition_Priority()) {
-			if (SyncchartsPackage.eINSTANCE.getTransition().isInstance(owner)) {
-				return ((Transition) owner).getSourceState().getOutgoingTransitions().size() == 1;
-			}
-		}
-		
-		if (feature == SyncchartsPackage.eINSTANCE.getScope_Label()
-				&& SyncchartsPackage.eINSTANCE.getScope().isInstance(owner)) {
-			if (owner.eContainer() == null ) {
+		/* scope labels are suppressed in case of:
+		 * a) the root region
+		 * b) a region has no label -> whole region declaration will be skipped
+		 * 
+		 * states MUST have defined labels -> define empty ones if necessary!
+		 * For sure, THIS IS EVIL!!!
+		 */		
+		if (feature == SyncchartsPackage.eINSTANCE.getScope_Label()) {
+			if (SyncchartsPackage.eINSTANCE.getRegion().isInstance(owner)
+					&& (owner.eContainer() == null 
+							|| ((Region) owner).getLabel() == null
+							|| ((Region) owner).getLabel().equals(""))) {
 				return true;
 			}
 			if (!owner.eIsSet(feature)) {
@@ -78,9 +91,25 @@ public class KitsTransientValueService extends DefaultTransientValueService {
 				}
 			}
 			return false;
+		}		
+		
+		/* suppress the 'normal' attribute of a state */
+		if (feature == SyncchartsPackage.eINSTANCE.getState_Type()) {
+			return owner.eGet(feature).equals(StateType.NORMAL);
 		}
+		
+		/* suppress the transition's priority if it's the only outgoing one of its source state*/
+		if (feature == SyncchartsPackage.eINSTANCE.getTransition_Priority()) {
+			if (SyncchartsPackage.eINSTANCE.getTransition().isInstance(owner)) {
+				return ((Transition) owner).getSourceState().getOutgoingTransitions().size() == 1;
+			}
+		}		
+		
+		/* suppress further undefined features */
 		return !owner.eIsSet(feature); // || feature.isTransient();
 	}
+
+	
 	
 	/**
 	 * This is part of a rather heavy hack!

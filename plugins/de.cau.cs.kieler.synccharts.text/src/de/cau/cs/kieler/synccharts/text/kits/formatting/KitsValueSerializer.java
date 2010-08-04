@@ -24,6 +24,7 @@ import org.eclipse.xtext.parsetree.reconstr.impl.ValueSerializer;
 
 import com.google.inject.Inject;
 
+import de.cau.cs.kieler.synccharts.Region;
 import de.cau.cs.kieler.synccharts.SyncchartsPackage;
 
 /**
@@ -44,8 +45,11 @@ public class KitsValueSerializer extends ValueSerializer {
 	 */
 	public boolean isValid(EObject context, RuleCall ruleCall, Object value, IErrorAcceptor errorAcceptor) {
 		
-		// Don't mention the root region!
-		if (context.eContainer() == null) {
+		// Don't mention the root region and unnamed regions!
+		if (SyncchartsPackage.eINSTANCE.getRegion().isInstance(context)
+				&& (context.eContainer() == null 
+						|| ((Region) context).getLabel() == null
+						|| ((Region) context).getLabel().equals(""))) {
 			return false;
 		}
 		

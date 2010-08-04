@@ -110,7 +110,7 @@ public class KitsResource extends LazyLinkingResource {
 	 * and {@link #setupPriorities(State)}. 
 	 */
 	private void consolidateModel() {
-		HashSet<String> m = new HashSet<String>();
+		HashMap<Scope, HashSet<String>> m = new HashMap<Scope, HashSet<String>>();
 		EObject o = null;
 		for (Iterator<EObject> i = this.getAllContents(); i.hasNext();) {
 			o = i.next();
@@ -130,9 +130,29 @@ public class KitsResource extends LazyLinkingResource {
 	 * If no Id is present compute one from the label if possible
 	 * otherwise assemble it mechanically. 
 	 */
-	private void setupScopeID(Scope scope, HashSet<String> names) {
+	private void setupScopeID(Scope scope, HashMap<Scope, HashSet<String>> allNames) {
 		String newId = null, newId2 = null;
-
+		HashSet<String> names = null;
+		
+		/* The construct in the up coming lines are in charge of "scoped"
+		 * id computation. I accomplish this, the map will be filled with
+		 * sets containing the already reserved ids, s.t. every set of ids
+		 * is related to the children collection of a scope.
+		 * Eventually, the scope serves as the corresponding key. */ 
+		if (scope.eContainer() == null) {
+			// this is for the root region / root state that are not inteneded
+			// to have siblings! Hence, this provides just an alibi set.
+			names = new HashSet<String>();
+			
+		} else {
+			names = allNames.get(scope.eContainer());
+			if (names == null) {
+				names = new HashSet<String>();
+				allNames.put((Scope) scope.eContainer(), names);
+			}
+		}
+		
+		/* The actual computation of the scope id */
 		if (!scope.eIsSet(SyncchartsPackage.eINSTANCE.getScope_Id())) {
 			Boolean isState = SyncchartsPackage.eINSTANCE.getState()
 					.isInstance(scope);
