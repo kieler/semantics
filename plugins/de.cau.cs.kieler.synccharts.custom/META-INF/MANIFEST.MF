@@ -35,6 +35,7 @@ Export-Package: de.cau.cs.kieler.synccharts.custom,
  de.cau.cs.kieler.synccharts.custom.contentassist.part,
  de.cau.cs.kieler.synccharts.custom.contentassist.providers,
  de.cau.cs.kieler.synccharts.custom.layout,
+ de.cau.cs.kieler.synccharts.custom.providers,
  de.cau.cs.kieler.synccharts.custom.update
 Bundle-Vendor: Christian-Albrechts-Universität zu Kiel
 Bundle-RequiredExecutionEnvironment: J2SE-1.5

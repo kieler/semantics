@@ -5,16 +5,19 @@ import java.util.LinkedList;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.util.ResourceLocator;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
+import org.eclipse.gmf.runtime.notation.NotationPackage;
+import org.eclipse.gmf.runtime.notation.Style;
 import org.eclipse.gmf.runtime.notation.View;
 
 /**
- * A specialized ItemPropertyDescriptor that has a manipulated list of choice values
- * used in any combo selection box. This list will have all objects of type View removed, because
- * their toString methods reveal very long String representations and the user will usually not
- * reference a view in a State.
+ * A specialized ItemPropertyDescriptor that has a manipulated list of choice values used in any
+ * combo selection box. This list will have all objects of type View removed, because their toString
+ * methods reveal very long String representations and the user will usually not reference a view in
+ * a State.
  * 
  * @author haf
  */
@@ -30,7 +33,8 @@ public class NoViewItemPropertyDescriptor extends ItemPropertyDescriptor {
         Collection<?> list = super.getChoiceOfValues(object);
         Collection<Object> removeList = new LinkedList<Object>();
         for (Object choice : list) {
-            if (choice instanceof View) {
+            if (choice instanceof EObject
+                && ((EObject) choice).eClass().getEPackage() == NotationPackage.eINSTANCE) {
                 removeList.add(choice);
             }
         }
@@ -40,15 +44,15 @@ public class NoViewItemPropertyDescriptor extends ItemPropertyDescriptor {
         }
         return list;
     }
-    
+
     /*
-     * The original class has a very long list of constructors. Unfortunately we have to
-     * override all of them to keep the original API.
+     * The original class has a very long list of constructors. Unfortunately we have to override
+     * all of them to keep the original API.
      */
     // CHECKSTYLEOFF Final Parameters
     // CHECKSTYLEOFF Method Javadoc
     // CHECKSTYLEOFF Maximum Parameters
-    
+
     public NoViewItemPropertyDescriptor(AdapterFactory adapterFactory, String displayName,
         String description, EStructuralFeature feature) {
         super(adapterFactory, displayName, description, feature);

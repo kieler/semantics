@@ -17,5 +17,6 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.emf.ecore;visibility:=reexport,
  org.eclipse.emf.ecore.edit;visibility:=reexport,
  de.cau.cs.kieler.core.expressions;visibility:=reexport,
- de.cau.cs.kieler.core.expressions.edit;visibility:=reexport
+ de.cau.cs.kieler.core.expressions.edit;visibility:=reexport,
+ de.cau.cs.kieler.synccharts.custom;bundle-version="0.3.0"
 Bundle-ActivationPolicy: lazy

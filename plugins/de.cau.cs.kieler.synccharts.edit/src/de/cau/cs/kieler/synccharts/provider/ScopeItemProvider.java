@@ -149,8 +149,8 @@ public class ScopeItemProvider
      */
     protected void addBodyReferencePropertyDescriptor(Object object) {
         itemPropertyDescriptors.add
-            (createItemPropertyDescriptor
-                (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+            (new de.cau.cs.kieler.synccharts.custom.providers.NoViewItemPropertyDescriptor(
+                ((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
                  getResourceLocator(),
                  getString("_UI_Scope_bodyReference_feature"),
                  getString("_UI_PropertyDescriptor_description", "_UI_Scope_bodyReference_feature", "_UI_Scope_type"),
