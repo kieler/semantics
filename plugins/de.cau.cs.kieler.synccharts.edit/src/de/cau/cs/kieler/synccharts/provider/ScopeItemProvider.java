@@ -145,7 +145,6 @@ public class ScopeItemProvider
      * This adds a property descriptor for the Body Reference feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
      */
     protected void addBodyReferencePropertyDescriptor(Object object) {
         itemPropertyDescriptors.add
