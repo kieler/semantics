@@ -21,5 +21,46 @@
             restorable="true">
       </view>
    </extension>
+   <extension
+         id="de.cau.cs.kieler.kvid.elementTypes"
+         name="KViDElementTypes"
+         point="org.eclipse.gmf.runtime.emf.type.core.elementTypes">
+      <elementTypeFactory
+            factory="org.eclipse.gmf.runtime.diagram.ui.internal.type.NotationTypeFactory"
+            kind="org.eclipse.gmf.runtime.diagram.ui.util.INotationType"
+            params="semanticHint">
+      </elementTypeFactory>
+      <specializationType
+            icon="icons/datanode.gif"
+            id="de.cau.cs.kieler.kvid.visual.complex.datanode"
+            kind="org.eclipse.gmf.runtime.diagram.ui.util.INotationType"
+            name="%DataNode.Label">
+         <specializes
+               id="de.cau.cs.kieler.kvid.specializes1">
+         </specializes>
+      </specializationType>
+   </extension>
+   <extension
+         point="org.eclipse.gmf.runtime.diagram.core.viewProviders">
+      <viewProvider
+            class="de.cau.cs.kieler.kvid.visual.complex.DataDisplayViewProvider">
+         <Priority
+               name="Lowest">
+         </Priority>
+         <context
+               semanticHints="DataNode"
+               viewClass="org.eclipse.gmf.runtime.notation.Node">
+         </context>
+      </viewProvider>
+   </extension>
+   <extension
+         point="org.eclipse.gmf.runtime.diagram.ui.editpartProviders">
+      <editpartProvider
+            class="de.cau.cs.kieler.kvid.visual.complex.DataDisplayEditPartProvider">
+         <Priority
+               name="Lowest">
+         </Priority>
+      </editpartProvider>
+   </extension>
 
 </plugin>
