@@ -56,13 +56,6 @@ public class GmfDrawer implements IDrawer {
                 figuresByURI.get(key).updateData(dataSet.get(key));
             } else {
                 figuresByURI.put(key, new GmfFigure(dataSet.get(key)));
-                RuntimeConfiguration
-                        .getInstance()
-                        .getKnownProperties()
-                        .add(new Property("Display status " + key,
-                                new String[] { "Animating",
-                                        "Static on Source Node",
-                                        "Static on Target Node", "Invisible" }));
             }
             if (RuntimeConfiguration.getInstance()
                     .currentValueOfProperty("Animation enabled").equals("true")) {
@@ -115,6 +108,14 @@ public class GmfDrawer implements IDrawer {
                                             .equals("Static on Source Node")) {
                                         Point newPoint = centerFigureOnPoint(dataSet.get(key).getPaths()
                                                 .get(0).get(0), currentFigure);
+                                        currentFigure.setLocation(newPoint);
+                                        currentFigure.setVisible(true);
+                                    } else if (property.getCurrentValue()
+                                            .equals("Static on middlemost Bend Point")) {
+                                        int middle = dataSet.get(key).getPaths()
+                                                .get(0).size() / 2;
+                                        Point newPoint = centerFigureOnPoint(dataSet.get(key).getPaths()
+                                                .get(0).get(middle), currentFigure);
                                         currentFigure.setLocation(newPoint);
                                         currentFigure.setVisible(true);
                                     } else if (property.getCurrentValue()

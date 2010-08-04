@@ -13,7 +13,6 @@
  */
 package de.cau.cs.kieler.kvid.datadistributor;
 
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -22,12 +21,7 @@ import java.util.List;
 import org.eclipse.draw2d.ColorConstants;
 import org.eclipse.draw2d.IFigure;
 import org.eclipse.draw2d.geometry.Point;
-import org.eclipse.emf.common.util.EList;
-import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.resource.Resource;
-import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.gef.EditPart;
-import org.eclipse.gmf.runtime.diagram.ui.editparts.DiagramEditPart;
 import org.eclipse.gmf.runtime.diagram.ui.editparts.GraphicalEditPart;
 import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramEditor;
 import org.eclipse.ui.IEditorPart;
@@ -40,14 +34,12 @@ import org.json.JSONObject;
 import de.cau.cs.kieler.core.kgraph.KEdge;
 import de.cau.cs.kieler.core.kgraph.KNode;
 import de.cau.cs.kieler.core.kgraph.KPort;
-import de.cau.cs.kieler.core.kgraph.util.KGraphAdapterFactory;
 import de.cau.cs.kieler.kiml.klayoutdata.KInsets;
 import de.cau.cs.kieler.kiml.klayoutdata.KPoint;
 import de.cau.cs.kieler.kiml.options.LayoutOptions;
 import de.cau.cs.kieler.kiml.ui.layout.EclipseLayoutServices;
 import de.cau.cs.kieler.kiml.util.KimlLayoutUtil;
 import de.cau.cs.kieler.kvid.data.DataObject;
-import de.cau.cs.kieler.kvid.data.DataType;
 import de.cau.cs.kieler.kvid.visual.GmfDrawer;
 import de.cau.cs.kieler.kvid.visual.IDrawer;
 
@@ -88,6 +80,7 @@ public class DataDistributor implements IProviderListener {
     }
     
     public JSONObject update(final JSONObject data) {
+        @SuppressWarnings("rawtypes")
         Iterator allKeys = data.keys();
         int figureCounter = 1;
         while (allKeys.hasNext()) {
@@ -99,6 +92,14 @@ public class DataDistributor implements IProviderListener {
                     dataByURI.get(key).updateData(data.getString(key));
                 } else {
                     dataByURI.put(o.toString(), new DataObject(key, data.getString(key), paths));
+                    RuntimeConfiguration
+                    .getInstance()
+                    .getKnownProperties()
+                    .add(new Property("Display status " + key,
+                            new String[] { "Animating",
+                                    "Static on Source Node",
+                                    "Static on middlemost Bend Point", 
+                                    "Static on Target Node", "Invisible" }));
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
