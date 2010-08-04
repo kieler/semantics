@@ -150,6 +150,7 @@ public class GmfDrawer implements IDrawer {
     }
 
     public void clearDrawing() {
+        //FIXME doesnt do what it is supposed to!
         IEditorPart editor = DataDistributor.getInstance().getActiveEditor();
         if (editor instanceof DiagramEditor) {
             final IFigure canvas = ((DiagramEditor) editor)
