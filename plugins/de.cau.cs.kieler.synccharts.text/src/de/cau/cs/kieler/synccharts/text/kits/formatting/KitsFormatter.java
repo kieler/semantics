@@ -23,7 +23,7 @@ public class KitsFormatter extends ActionsFormatter {
 	
 	/**
 	 * Method contains actual formatting instructions while GrammarAccess class
-	 * maybe parameterized allowing the reuse within ActionsFormatter. 
+	 * maybe parameterized allowing the reuse within other Formatters. 
 	 * @param c FormattingConfig provided by caller
 	 * @param f GrammarAccess provided by caller
 	 */
