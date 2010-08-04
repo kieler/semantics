@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.5"?>
+<plugin>
+   <extension
+         point="org.eclipse.ui.editors">
+      <editor
+            class="your subclass of MuvitorTreeEditor"
+            contributorClass="your subclass of muvitorkit.actions.MuvitorActionBarContributor"
+            default="true"
+            extensions="mvt"
+            icon="icons/someicon16.png"
+            id="some unique id, e.g. what you put below as class"
+            name="My Editor">
+      </editor>
+   </extension>
+   <extension
+         point="org.eclipse.ui.views">
+       <view
+             allowMultiple="true"
+             class="your subclass of MuvitorPageBookView"
+             icon="icons/someicon16.png"
+             id="some unique id, e.g. what you put below as class"
+             name="SomeView"/>
+   </extension>
+   <extension
+         point="org.eclipse.ui.perspectives">
+      <perspective
+            class="your implementation of IPerspectiveFactory"
+            icon="icons/someicon16.png"
+            id="some unique id, e.g. what you put below as class"
+            name="a name for your perspective, e.g. the editor name"/>
+   </extension>
+   <extension
+         point="org.eclipse.ui.newWizards">
+      <wizard
+            class="muvitorkit.ui.wizards.MuvitorFileCreationWizard"
+            hasPages="true"
+            icon="icons/someicon16.png"
+            id="muvitorkit.ui.wizards.MuvitorFileCreationWizard"
+            name="&quot;your Editor name here!&quot; File Creation Wizard"/>
+   </extension>
+
+</plugin>
