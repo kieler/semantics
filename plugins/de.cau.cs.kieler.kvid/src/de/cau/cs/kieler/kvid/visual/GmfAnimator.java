@@ -16,7 +16,7 @@ package de.cau.cs.kieler.kvid.visual;
 import java.util.HashMap;
 import java.util.List;
 
-import muvitorkit.animation.AnimatingCommand;
+import de.tu_berlin.cs.tfs.muvitorkit.animation.AnimatingCommand;
 
 import org.eclipse.draw2d.IFigure;
 import org.eclipse.draw2d.geometry.Point;

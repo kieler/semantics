@@ -13,16 +13,9 @@ Require-Bundle: org.eclipse.core.runtime,
  de.cau.cs.kieler.core.model;bundle-version="0.2.0",
  org.eclipse.gmf.runtime.draw2d.ui.render;bundle-version="1.4.0",
  de.cau.cs.kieler.core.kgraph;bundle-version="0.2.0",
- de.cau.cs.kieler.kiml.ui;bundle-version="0.2.0"
+ de.cau.cs.kieler.kiml.ui;bundle-version="0.2.0",
+ de.tu_berlin.cs.tfs.muvitorkit;bundle-version="1.0.0"
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-ActivationPolicy: lazy
 Export-Package: de.cau.cs.kieler.kvid.data,
- de.cau.cs.kieler.kvid.datadistributor,
- muvitorkit.animation;
-  uses:="org.eclipse.jface.action,
-   org.eclipse.emf.ecore,
-   org.eclipse.gef.commands,
-   org.eclipse.draw2d.geometry,
-   org.eclipse.draw2d,
-   org.eclipse.swt.widgets,
-   org.eclipse.gef"
+ de.cau.cs.kieler.kvid.datadistributor
