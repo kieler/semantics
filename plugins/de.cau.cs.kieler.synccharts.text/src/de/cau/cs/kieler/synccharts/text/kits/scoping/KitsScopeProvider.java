@@ -1,9 +1,24 @@
+/*
+ * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
+ *
+ * http://www.informatik.uni-kiel.de/rtsys/kieler/
+ * 
+ * Copyright 2010 by
+ * + Christian-Albrechts-University of Kiel
+ *   + Department of Computer Science
+ *     + Real-Time and Embedded Systems Group
+ * 
+ * This code is provided under the terms of the Eclipse Public License (EPL).
+ * See the file epl-v10.html for the license text.
+ */
 package de.cau.cs.kieler.synccharts.text.kits.scoping;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
@@ -28,15 +43,13 @@ import de.cau.cs.kieler.synccharts.Transition;
 /**
  * This class contains custom scoping description.
  * 
- * see : http://www.eclipse.org/Xtext/documentation/latest/xtext.html#scoping
- * on how and when to use it 
- *
+ * @author chsch
  */
 public class KitsScopeProvider extends AbstractDeclarativeScopeProvider {
 
 	
 	/**
-	 * A naive implementation of scoping for signals and variables.
+	 * A implementation of scoping for transitions' targets.
 	 * Won't be called directly but via reflection by the Xtext runtime.
 	 * @param trans
 	 * @param reference
@@ -45,12 +58,28 @@ public class KitsScopeProvider extends AbstractDeclarativeScopeProvider {
 	@SuppressWarnings("unchecked")
 	public IScope scope_Transition_targetState(Transition trans, EReference reference) {
 		List<IEObjectDescription> l = new LinkedList<IEObjectDescription>();
+		HashSet<String> m = new HashSet<String>();
+		String key = null;
 		for (State s : ((Region) trans.eContainer().eContainer()).getStates()) {
-			l.add(new EObjectDescription(s.getLabel(), s, Collections.EMPTY_MAP));
+			key = s.getId();
+			if (m.contains(key)) {
+				key = s.getId();
+			}
+			l.add(new EObjectDescription(key, s, Collections.EMPTY_MAP));
+			m.add(key);
+			
 		}
 		return new SimpleScope(l);
 	}
 
+	/**
+	 * A implementation of scoping for signals and variables.
+	 * Won't be called directly but via reflection by the Xtext runtime.
+	 * @param trans
+	 * @param reference
+	 * @return
+	 */
+	@SuppressWarnings("unchecked")
 	public IScope scope_ValuedObjectReference_valuedObject(EObject obj, EReference reference) {
 		List<IEObjectDescription> l = new LinkedList<IEObjectDescription>();
 		EObject container = obj;
@@ -64,7 +93,7 @@ public class KitsScopeProvider extends AbstractDeclarativeScopeProvider {
 		Scope scope = (Scope) container;
 		do {
 			for (Signal s : scope.getSignals()) {
-				l.add(new EObjectDescription(s.getName(), s, Collections.EMPTY_MAP));			
+				l.add(new EObjectDescription(s.getName(), s, (Map<String, String>) Collections.EMPTY_MAP));			
 			}
 			scope = (Scope) scope.eContainer();
 		} while (scope != null);
@@ -102,7 +131,6 @@ public class KitsScopeProvider extends AbstractDeclarativeScopeProvider {
 	/** old stuff */
     @SuppressWarnings("unchecked")
 	public IScope getScopeOld(EObject context, EReference reference) {
-//		System.out.println(context.eClass().getName() + "  " + reference.getName());
 		
     	if (context instanceof Transition) {
     		List<State> states = ((Region) ((Transition) context).eContainer().eContainer()).getStates();
@@ -116,13 +144,6 @@ public class KitsScopeProvider extends AbstractDeclarativeScopeProvider {
     	if (context instanceof Expression) {
     		return createHierarchicScope(((Expression) context));
     	}
-//    	if (context instanceof SignalReference) {
-//    		return createHierarchicScope(((SignalReference) context));
-//    	}
-//		if (context instanceof Emission) {
-//			return createHierarchicScope(((Emission) context));
-//    	}
-
     	return super.getScope(context, reference);
     }
     
@@ -137,21 +158,22 @@ public class KitsScopeProvider extends AbstractDeclarativeScopeProvider {
     	}
     }
     
-    private Iterable<IEObjectDescription> getElements(EObject parent){
+    @SuppressWarnings("unchecked")
+	private Iterable<IEObjectDescription> getElements(EObject parent){
     	ArrayList<IEObjectDescription> elements = new ArrayList<IEObjectDescription>();
 		if (parent != null && parent instanceof Region) {
 			List<Signal> signals = ((Region) parent).getSignals();
 			for (Signal signal : signals) {
-				elements.add(new EObjectDescription(signal.getName(), signal, Collections.EMPTY_MAP));
+				elements.add(new EObjectDescription(signal.getName(), signal, (Map<String, String>) Collections.EMPTY_MAP));
 			}
 			List<Variable> variables = ((Region) parent).getVariables();
 			for (Variable variable : variables) {
-				elements.add(new EObjectDescription(variable.getName(), variable, Collections.EMPTY_MAP));
+				elements.add(new EObjectDescription(variable.getName(), variable, (Map<String, String>) Collections.EMPTY_MAP));
 			}
 		} else if (parent != null && parent instanceof State) {
 			List<Signal> signals = ((State) parent).getSignals();
 			for (Signal signal : signals) {
-				elements.add(new EObjectDescription(signal.getName(), signal, Collections.EMPTY_MAP));
+				elements.add(new EObjectDescription(signal.getName(), signal, (Map<String, String>) Collections.EMPTY_MAP));
 			}
 		}
 		return elements;
