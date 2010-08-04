@@ -151,11 +151,11 @@ public class AddToStateHandler extends AbstractHandler implements IHandler {
         } else if (type.equals(VAL_EXIT_ACTION)) {
             class1 = StateExitActionCompartmentEditPart.class;
             class2 = StateExitActionCompartment2EditPart.class;
-            elementType = SyncchartsElementTypes.Action_3043;
+            elementType = SyncchartsElementTypes.Action_3044;
         } else if (type.equals(VAL_INSIDE_ACTION)) {
             class1 = StateInnerActionCompartmentEditPart.class;
             class2 = StateInnerActionCompartment2EditPart.class;
-            elementType = SyncchartsElementTypes.Action_3044;
+            elementType = SyncchartsElementTypes.Action_3043;
         } else if (type.equals(VAL_REGION)) {
             class1 = StateRegionCompartmentEditPart.class;
             class2 = StateRegionCompartment2EditPart.class;
