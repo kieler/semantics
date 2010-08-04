@@ -199,10 +199,6 @@ public enum OperatorType implements Enumerator {
     /**
      * The '<em><b>EQ</b></em>' literal value.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of '<em><b>EQ</b></em>' literal object isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * <!-- begin-model-doc -->
      * Equals operator
@@ -217,10 +213,6 @@ public enum OperatorType implements Enumerator {
     /**
      * The '<em><b>LT</b></em>' literal value.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of '<em><b>LT</b></em>' literal object isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * <!-- begin-model-doc -->
      * Less than operator. (Not commutative!)
@@ -235,10 +227,6 @@ public enum OperatorType implements Enumerator {
     /**
      * The '<em><b>LEQ</b></em>' literal value.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of '<em><b>LEQ</b></em>' literal object isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * <!-- begin-model-doc -->
      * Less or Equal operator. (Not commutative!)
@@ -253,10 +241,6 @@ public enum OperatorType implements Enumerator {
     /**
      * The '<em><b>GT</b></em>' literal value.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of '<em><b>GT</b></em>' literal object isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * <!-- begin-model-doc -->
      * Greater than operator. (Not commutative!)
@@ -271,10 +255,6 @@ public enum OperatorType implements Enumerator {
     /**
      * The '<em><b>GEQ</b></em>' literal value.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of '<em><b>GEQ</b></em>' literal object isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * <!-- begin-model-doc -->
      * Greater or Equal operator. (Not commutative!)
@@ -289,10 +269,6 @@ public enum OperatorType implements Enumerator {
     /**
      * The '<em><b>NOT</b></em>' literal value.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of '<em><b>NOT</b></em>' literal object isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * <!-- begin-model-doc -->
      * Logical Negation operator (unary)
@@ -307,10 +283,6 @@ public enum OperatorType implements Enumerator {
     /**
      * The '<em><b>VAL</b></em>' literal value.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of '<em><b>VAL</b></em>' literal object isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * <!-- begin-model-doc -->
      * Value operator. Returns the value of a Signal referenced by a SignalReference.
@@ -325,10 +297,6 @@ public enum OperatorType implements Enumerator {
     /**
      * The '<em><b>PRE</b></em>' literal value.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of '<em><b>PRE</b></em>' literal object isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * <!-- begin-model-doc -->
      * Pre operator, returns the previous state of a Signal referenced by a SignalReference.
@@ -343,10 +311,6 @@ public enum OperatorType implements Enumerator {
     /**
      * The '<em><b>NE</b></em>' literal value.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of '<em><b>NE</b></em>' literal object isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * <!-- begin-model-doc -->
      * Not Equal operator.
@@ -362,10 +326,6 @@ public enum OperatorType implements Enumerator {
     /**
      * The '<em><b>AND</b></em>' literal value.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of '<em><b>AND</b></em>' literal object isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * <!-- begin-model-doc -->
      * Logical AND operator.
@@ -381,10 +341,6 @@ public enum OperatorType implements Enumerator {
     /**
      * The '<em><b>OR</b></em>' literal value.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of '<em><b>OR</b></em>' literal object isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * <!-- begin-model-doc -->
      * Logical OR operator.
@@ -399,10 +355,6 @@ public enum OperatorType implements Enumerator {
     /**
      * The '<em><b>ADD</b></em>' literal value.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of '<em><b>ADD</b></em>' literal object isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * <!-- begin-model-doc -->
      * Arithmetic addition operator.
@@ -417,10 +369,6 @@ public enum OperatorType implements Enumerator {
     /**
      * The '<em><b>SUB</b></em>' literal value.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of '<em><b>SUB</b></em>' literal object isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * <!-- begin-model-doc -->
      * Arithmetic subtraction operator. (Not commutative!)
@@ -435,10 +383,6 @@ public enum OperatorType implements Enumerator {
     /**
      * The '<em><b>MULT</b></em>' literal value.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of '<em><b>MULT</b></em>' literal object isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * <!-- begin-model-doc -->
      * Arithmetic multiplication operator.
@@ -453,10 +397,6 @@ public enum OperatorType implements Enumerator {
     /**
      * The '<em><b>DIV</b></em>' literal value.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of '<em><b>DIV</b></em>' literal object isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * <!-- begin-model-doc -->
      * Aithmetic division operator. (Not commutative!)
@@ -471,10 +411,6 @@ public enum OperatorType implements Enumerator {
     /**
      * The '<em><b>MOD</b></em>' literal value.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of '<em><b>MOD</b></em>' literal object isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * <!-- begin-model-doc -->
      * Arithmetic modulo operation. (Not commutative!)

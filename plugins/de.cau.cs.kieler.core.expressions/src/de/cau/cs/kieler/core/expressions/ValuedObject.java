@@ -54,7 +54,7 @@ public interface ValuedObject extends EObject {
      * @return the value of the '<em>Name</em>' attribute.
      * @see #setName(String)
      * @see de.cau.cs.kieler.core.expressions.ExpressionsPackage#getValuedObject_Name()
-     * @model id="true" required="true"
+     * @model required="true"
      * @generated
      */
     String getName();

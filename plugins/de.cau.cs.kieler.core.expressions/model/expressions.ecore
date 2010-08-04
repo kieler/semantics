@@ -2,7 +2,7 @@
 <ecore:EPackage xmi:version="2.0"
     xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="expressions"
-    nsURI="http://kieler.cs.cau.de/expressions/0.1.1" nsPrefix="expressions">
+    nsURI="http://kieler.cs.cau.de/expressions/0.1.2" nsPrefix="expressions">
   <eClassifiers xsi:type="ecore:EEnum" name="CombineOperator">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
       <details key="documentation" value="Built-in operators that can be used as Signal combine operators."/>
@@ -168,8 +168,7 @@
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
       <details key="documentation" value="Base Class for Variables and Signals. A ValuedObject has a name and may carry a value. &#xA;Therefore the class has a type attribute which specifies the type of the value. &#xA;The type might either be given from a predefined list of internal (primitive) types or by the hostType String that &#xA;references some type in the target language, e.g. a Type in C or Java. An initial value can be given in String format.&#xA;"/>
     </eAnnotations>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
-        iD="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" lowerBound="1" eType="#//ValueType"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="initialValue" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="hostType" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>

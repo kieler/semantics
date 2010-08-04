@@ -13,7 +13,6 @@
  */
 package de.cau.cs.kieler.core.expressions;
 
-import org.eclipse.emf.ecore.EObject;
 
 /**
  * <!-- begin-user-doc -->

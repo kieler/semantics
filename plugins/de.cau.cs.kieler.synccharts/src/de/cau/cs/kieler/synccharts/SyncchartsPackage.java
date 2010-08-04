@@ -10,12 +10,11 @@
  * 
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
- *
- * $Id$
  */
 package de.cau.cs.kieler.synccharts;
 
 import de.cau.cs.kieler.core.annotations.AnnotationsPackage;
+
 import de.cau.cs.kieler.core.expressions.ExpressionsPackage;
 
 import org.eclipse.emf.ecore.EAttribute;
@@ -42,6 +41,13 @@ import org.eclipse.emf.ecore.EReference;
  */
 public interface SyncchartsPackage extends EPackage {
     /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    String copyright = "KIELER - Kiel Integrated Environment for Layout Eclipse RichClient\n\nhttp://www.informatik.uni-kiel.de/rtsys/kieler/\n\nCopyright 2009 by\n+ Christian-Albrechts-University of Kiel\n  + Department of Computer Science\n    + Real-Time and Embedded Systems Group\n\nThis code is provided under the terms of the Eclipse Public License (EPL).\nSee the file epl-v10.html for the license text.";
+
+    /**
      * The package name.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -55,7 +61,7 @@ public interface SyncchartsPackage extends EPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    String eNS_URI = "http://kieler.cs.cau.de/synccharts/0.2.2";
+    String eNS_URI = "http://kieler.cs.cau.de/synccharts/0.2.3";
 
     /**
      * The package namespace name.

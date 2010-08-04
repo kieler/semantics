@@ -147,27 +147,27 @@ public class AddToStateHandler extends AbstractHandler implements IHandler {
         if (type.equals(VAL_ENTRY_ACTION)) {
             class1 = StateEntryActionCompartmentEditPart.class;
             class2 = StateEntryActionCompartment2EditPart.class;
-            elementType = SyncchartsElementTypes.Action_3034;
+            elementType = SyncchartsElementTypes.Action_3042;
         } else if (type.equals(VAL_EXIT_ACTION)) {
             class1 = StateExitActionCompartmentEditPart.class;
             class2 = StateExitActionCompartment2EditPart.class;
-            elementType = SyncchartsElementTypes.Action_3036;
+            elementType = SyncchartsElementTypes.Action_3043;
         } else if (type.equals(VAL_INSIDE_ACTION)) {
             class1 = StateInnerActionCompartmentEditPart.class;
             class2 = StateInnerActionCompartment2EditPart.class;
-            elementType = SyncchartsElementTypes.Action_3035;
+            elementType = SyncchartsElementTypes.Action_3044;
         } else if (type.equals(VAL_REGION)) {
             class1 = StateRegionCompartmentEditPart.class;
             class2 = StateRegionCompartment2EditPart.class;
-            elementType = SyncchartsElementTypes.Region_3031;
+            elementType = SyncchartsElementTypes.Region_3039;
         } else if (type.equals(VAL_SIGNAL)) {
             class1 = StateSignalCompartmentEditPart.class;
             class2 = StateSignalCompartment2EditPart.class;
-            elementType = SyncchartsElementTypes.Signal_3033;
+            elementType = SyncchartsElementTypes.Signal_3041;
         } else if (type.equals(VAL_SUSPENSION_TRIGGER)) {
             class1 = StateSuspensionTriggerCompartmentEditPart.class;
             class2 = StateSuspensionTriggerCompartment2EditPart.class;
-            elementType = SyncchartsElementTypes.Action_3037;
+            elementType = SyncchartsElementTypes.Action_3045;
         } else {
             return;
         }

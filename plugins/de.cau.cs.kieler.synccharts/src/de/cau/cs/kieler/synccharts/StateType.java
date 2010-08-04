@@ -10,8 +10,6 @@
  * 
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
- *
- * $Id$
  */
 package de.cau.cs.kieler.synccharts;
 
@@ -77,12 +75,15 @@ public enum StateType implements Enumerator {
     TEXTUAL(0, "TEXTUAL", "TEXTUAL");
 
     /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public static final String copyright = "KIELER - Kiel Integrated Environment for Layout Eclipse RichClient\n\nhttp://www.informatik.uni-kiel.de/rtsys/kieler/\n\nCopyright 2009 by\n+ Christian-Albrechts-University of Kiel\n  + Department of Computer Science\n    + Real-Time and Embedded Systems Group\n\nThis code is provided under the terms of the Eclipse Public License (EPL).\nSee the file epl-v10.html for the license text.";
+
+    /**
      * The '<em><b>NORMAL</b></em>' literal value.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of '<em><b>NORMAL</b></em>' literal object isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * <!-- begin-model-doc -->
      * Simple or
@@ -98,10 +99,6 @@ public enum StateType implements Enumerator {
     /**
      * The '<em><b>CONDITIONAL</b></em>' literal value.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of '<em><b>CONDITIONAL</b></em>' literal object isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * <!-- begin-model-doc -->
      * A CONDITIONAL State is only a
@@ -118,10 +115,6 @@ public enum StateType implements Enumerator {
     /**
      * The '<em><b>REFERENCE</b></em>' literal value.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of '<em><b>REFERENCE</b></em>' literal object isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * <!-- begin-model-doc -->
      * A REFERENCE
@@ -140,10 +133,6 @@ public enum StateType implements Enumerator {
     /**
      * The '<em><b>TEXTUAL</b></em>' literal value.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of '<em><b>TEXTUAL</b></em>' literal object isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * <!-- begin-model-doc -->
      * A TEXTUAL

@@ -103,10 +103,6 @@ public enum ValueType implements Enumerator {
     /**
      * The '<em><b>PURE</b></em>' literal value.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of '<em><b>PURE</b></em>' literal object isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * <!-- begin-model-doc -->
      * Default value is the PURE type which means that the
@@ -183,10 +179,6 @@ public enum ValueType implements Enumerator {
     /**
      * The '<em><b>HOST</b></em>' literal value.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of '<em><b>HOST</b></em>' literal object isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * <!-- begin-model-doc -->
      * HOST means that no actual type is given but the

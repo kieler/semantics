@@ -115,10 +115,6 @@ public enum CombineOperator implements Enumerator {
     /**
      * The '<em><b>NONE</b></em>' literal value.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of '<em><b>NONE</b></em>' literal object isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * <!-- begin-model-doc -->
      * Specifies that no combine operator is given. 
@@ -133,10 +129,6 @@ public enum CombineOperator implements Enumerator {
     /**
      * The '<em><b>ADD</b></em>' literal value.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of '<em><b>ADD</b></em>' literal object isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * <!-- begin-model-doc -->
      * Arithmetic addition.
@@ -151,10 +143,6 @@ public enum CombineOperator implements Enumerator {
     /**
      * The '<em><b>MULT</b></em>' literal value.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of '<em><b>MULT</b></em>' literal object isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * <!-- begin-model-doc -->
      * Arithmetic multiplication.
@@ -170,10 +158,6 @@ public enum CombineOperator implements Enumerator {
     /**
      * The '<em><b>MAX</b></em>' literal value.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of '<em><b>MAX</b></em>' literal object isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * <!-- begin-model-doc -->
      * The maximum function. Takes the greater of the given two.
@@ -188,10 +172,6 @@ public enum CombineOperator implements Enumerator {
     /**
      * The '<em><b>MIN</b></em>' literal value.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of '<em><b>MIN</b></em>' literal object isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * <!-- begin-model-doc -->
      * The minimum function. Takes the lesser of the given two.
@@ -206,10 +186,6 @@ public enum CombineOperator implements Enumerator {
     /**
      * The '<em><b>OR</b></em>' literal value.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of '<em><b>OR</b></em>' literal object isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * <!-- begin-model-doc -->
      * Logical or function for boolean valued signals.
@@ -224,10 +200,6 @@ public enum CombineOperator implements Enumerator {
     /**
      * The '<em><b>AND</b></em>' literal value.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of '<em><b>AND</b></em>' literal object isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * <!-- begin-model-doc -->
      * Logical and for boolean valued signals.
@@ -242,10 +214,6 @@ public enum CombineOperator implements Enumerator {
     /**
      * The '<em><b>HOST</b></em>' literal value.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of '<em><b>HOST</b></em>' literal object isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * <!-- begin-model-doc -->
      * Specifies that no built-in combine operator should be used 

@@ -49,7 +49,7 @@ public interface ExpressionsPackage extends EPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    String eNS_URI = "http://kieler.cs.cau.de/expressions/0.1.1";
+    String eNS_URI = "http://kieler.cs.cau.de/expressions/0.1.2";
 
     /**
      * The package namespace name.

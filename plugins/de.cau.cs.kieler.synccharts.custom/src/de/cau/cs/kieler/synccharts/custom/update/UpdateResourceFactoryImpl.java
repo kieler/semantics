@@ -22,6 +22,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.lang.reflect.InvocationTargetException;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -48,7 +49,13 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.FileEditorInput;
 
+import de.cau.cs.kieler.core.expressions.Signal;
+import de.cau.cs.kieler.core.expressions.ValuedObject;
+import de.cau.cs.kieler.core.expressions.ValuedObjectReference;
+import de.cau.cs.kieler.core.expressions.Variable;
 import de.cau.cs.kieler.core.ui.commands.ReInitDiagramCommand;
+import de.cau.cs.kieler.synccharts.Action;
+import de.cau.cs.kieler.synccharts.Emission;
 import de.cau.cs.kieler.synccharts.Region;
 import de.cau.cs.kieler.synccharts.State;
 import de.cau.cs.kieler.synccharts.Transition;
@@ -64,7 +71,7 @@ public class UpdateResourceFactoryImpl extends XMIResourceFactoryImpl {
     /**
      *
      */
-    public static final Synccharts_MM_Version CURRENT_VERSION = Synccharts_MM_Version.v_0_2_2;
+    public static final Synccharts_MM_Version CURRENT_VERSION = Synccharts_MM_Version.v_0_2_3;
 
     /**
      * The command for reinitializing the diagram.
@@ -250,7 +257,11 @@ public class UpdateResourceFactoryImpl extends XMIResourceFactoryImpl {
         /**
         *
         */
-        v_0_2_2;
+        v_0_2_2,
+        /**
+         * 
+         */
+        v_0_2_3;
     }
 
     /**
@@ -272,6 +283,8 @@ public class UpdateResourceFactoryImpl extends XMIResourceFactoryImpl {
         convert(uri, Synccharts_MM_Version.v_0_2);
         monitor.subTask("Converting v0.2.1 to v0.2.2");
         convert(uri, Synccharts_MM_Version.v_0_2_1);
+        monitor.subTask("Converting v0.2.2 to v0.2.3");
+        convert(uri, Synccharts_MM_Version.v_0_2_2);
     }
 
     /**
@@ -318,6 +331,9 @@ public class UpdateResourceFactoryImpl extends XMIResourceFactoryImpl {
                     newString = convertLineV_0_2_1ToV_0_2_2(s);
                     break;
                 case v_0_2_2:
+                    newString = convertLineV_0_2_2ToV_0_2_3(s);
+                    break;
+                case v_0_2_3:
                     return;
                 }
                 lines.add(newString);
@@ -350,6 +366,32 @@ public class UpdateResourceFactoryImpl extends XMIResourceFactoryImpl {
             e.printStackTrace();
             throw new UpdateException(e);
         }
+    }
+
+    /**
+     * @param s
+     * @return
+     */
+    private String convertLineV_0_2_2ToV_0_2_3(final String s) {
+        String result = s;
+        if (result.contains(getVersionURI(Synccharts_MM_Version.v_0_2_2))) {
+            result = result.replace(
+                    getVersionURI(Synccharts_MM_Version.v_0_2_2),
+                    getVersionURI(Synccharts_MM_Version.v_0_2_3));
+            result = result
+                    .replaceAll(
+                            "xmlns:expressions=\"http://kieler.cs.cau.de/expressions/0.1.1\"",
+                            "xmlns:expressions=\"http://kieler.cs.cau.de/expressions/0.1.2\"");
+        }
+        if (result.contains("xsi:type=\"expressions:ValuedObjectReference\"")) {
+            result = result.replaceAll(" valuedObject=\"",
+                    " DUMMY_valuedObject=\"");
+            System.out.println(result);
+        }
+        if (result.contains("xsi:type=\"synccharts:Emission\"")) {
+            result = result.replaceAll(" signal=\"", " DUMMY_signal=\"");
+        }
+        return result;
     }
 
     /**
@@ -505,6 +547,8 @@ public class UpdateResourceFactoryImpl extends XMIResourceFactoryImpl {
         case v_0_2_1:
             return Synccharts_MM_Version.v_0_2_2;
         case v_0_2_2:
+            return Synccharts_MM_Version.v_0_2_3;
+        case v_0_2_3:
             return null;
         }
         return null;
@@ -593,6 +637,8 @@ public class UpdateResourceFactoryImpl extends XMIResourceFactoryImpl {
             return "xmlns:synccharts=\"http://kieler.cs.cau.de/synccharts/0.2.1\"";
         case v_0_2_2:
             return "xmlns:synccharts=\"http://kieler.cs.cau.de/synccharts/0.2.2\"";
+        case v_0_2_3:
+            return "xmlns:synccharts=\"http://kieler.cs.cau.de/synccharts/0.2.3\"";
         }
         return null;
     }
@@ -698,7 +744,32 @@ public class UpdateResourceFactoryImpl extends XMIResourceFactoryImpl {
          */
         private boolean handleUnknownFeature(final EObject owner,
                 final EStructuralFeature f, final Object value) {
-            if (f.getName().equals("DUMMY_targetState")) {
+            System.out.println(owner);
+            System.out.println(f);
+            System.out.println(value);
+            System.out.println();
+            if (f.getName().equals("DUMMY_signal")) {
+                Emission em = (Emission) owner;
+                EObject container = em.eContainer();
+                if (container instanceof Action) {
+                    ValuedObject val = findValuedObject((String) value,
+                            (Action) container);
+                    if (val != null && val instanceof Signal) {
+                        em.setSignal((Signal) val);
+                    }
+                }
+            } else if (f.getName().equals("DUMMY_valuedObject")) {
+                ValuedObjectReference valObj = (ValuedObjectReference) owner;
+                EObject container = valObj;
+                while (!(container instanceof Action)) {
+                    container = container.eContainer();
+                }
+                ValuedObject val = findValuedObject((String) value,
+                        (Action) container);
+                if (val != null) {
+                    valObj.setValuedObject(val);
+                }
+            } else if (f.getName().equals("DUMMY_targetState")) {
                 Transition trans = (Transition) owner;
                 Region parent = trans.getSourceState().getParentRegion();
 
@@ -711,8 +782,7 @@ public class UpdateResourceFactoryImpl extends XMIResourceFactoryImpl {
                         return true;
                     }
                 }
-            }
-            if (f.getName().equals("DUMMY_id")) {
+            } else if (f.getName().equals("DUMMY_id")) {
                 if (owner instanceof Region) {
                     Region region = (Region) owner;
                     region.setId((String) value);
@@ -724,6 +794,43 @@ public class UpdateResourceFactoryImpl extends XMIResourceFactoryImpl {
                 }
             }
             return false;
+        }
+
+        private Map<String, ValuedObject> cashedValuedObject = new HashMap<String, ValuedObject>();
+
+        /**
+         * @param value
+         * @return
+         */
+        private ValuedObject findValuedObject(final String value,
+                final Action parent) {
+            if (cashedValuedObject.containsKey(value)) {
+                return cashedValuedObject.get(value);
+            }
+            State parentState = null;
+            EObject par = parent.eContainer();
+            if (parent instanceof Transition) {
+                parentState = ((Transition) parent).getSourceState()
+                        .getParentRegion().getParentState();
+            } else if (par instanceof State) {
+                parentState = (State) par;
+            }
+            while (parentState != null) {
+                for (Signal s : parentState.getSignals()) {
+                    if (s.getName().equals(value)) {
+                        cashedValuedObject.put(value, s);
+                        return s;
+                    }
+                }
+                for (Variable s : parentState.getVariables()) {
+                    if (s.getName().equals(value)) {
+                        cashedValuedObject.put(value, s);
+                        return s;
+                    }
+                }
+                parentState = parentState.getParentRegion().getParentState();
+            }
+            return null;
         }
     }
 

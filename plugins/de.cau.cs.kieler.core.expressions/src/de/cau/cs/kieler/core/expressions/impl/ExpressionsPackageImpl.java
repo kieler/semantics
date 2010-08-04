@@ -13,13 +13,6 @@
  */
 package de.cau.cs.kieler.core.expressions.impl;
 
-import org.eclipse.emf.ecore.EAttribute;
-import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EEnum;
-import org.eclipse.emf.ecore.EPackage;
-import org.eclipse.emf.ecore.EReference;
-import org.eclipse.emf.ecore.impl.EPackageImpl;
-
 import de.cau.cs.kieler.core.expressions.BooleanValue;
 import de.cau.cs.kieler.core.expressions.CombineOperator;
 import de.cau.cs.kieler.core.expressions.ComplexExpression;
@@ -39,119 +32,143 @@ import de.cau.cs.kieler.core.expressions.ValuedObject;
 import de.cau.cs.kieler.core.expressions.ValuedObjectReference;
 import de.cau.cs.kieler.core.expressions.Variable;
 
+import org.eclipse.emf.ecore.EAttribute;
+import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EEnum;
+import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.EReference;
+
+import org.eclipse.emf.ecore.impl.EPackageImpl;
+
 /**
- * <!-- begin-user-doc --> An implementation of the model <b>Package</b>. <!--
- * end-user-doc -->
+ * <!-- begin-user-doc -->
+ * An implementation of the model <b>Package</b>.
+ * <!-- end-user-doc -->
  * @generated
  */
-public class ExpressionsPackageImpl extends EPackageImpl implements
-        ExpressionsPackage {
+public class ExpressionsPackageImpl extends EPackageImpl implements ExpressionsPackage {
     /**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
     private EClass complexExpressionEClass = null;
 
     /**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
     private EClass expressionEClass = null;
 
     /**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
     private EClass textualCodeEClass = null;
 
     /**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
     private EClass signalEClass = null;
 
     /**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
     private EClass valuedObjectEClass = null;
 
     /**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
     private EClass variableEClass = null;
 
     /**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
     private EClass valuedObjectReferenceEClass = null;
 
     /**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
     private EClass valueEClass = null;
 
     /**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
     private EClass intValueEClass = null;
 
     /**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
     private EClass floatValueEClass = null;
 
     /**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
     private EClass booleanValueEClass = null;
 
     /**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
     private EClass operatorExpressionEClass = null;
 
     /**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
     private EClass textExpressionEClass = null;
 
     /**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
     private EEnum combineOperatorEEnum = null;
 
     /**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
     private EEnum operatorTypeEEnum = null;
 
     /**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
     private EEnum valueTypeEEnum = null;
 
     /**
      * Creates an instance of the model <b>Package</b>, registered with
-     * {@link org.eclipse.emf.ecore.EPackage.Registry EPackage.Registry} by the
-     * package package URI value.
-     * <p>
-     * Note: the correct way to create the package is via the static factory
-     * method {@link #init init()}, which also performs initialization of the
-     * package, or returns the registered package, if one already exists. <!--
-     * begin-user-doc --> <!-- end-user-doc -->
-     * 
+     * {@link org.eclipse.emf.ecore.EPackage.Registry EPackage.Registry} by the package
+     * package URI value.
+     * <p>Note: the correct way to create the package is via the static
+     * factory method {@link #init init()}, which also performs
+     * initialization of the package, or returns the registered package,
+     * if one already exists.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
      * @see org.eclipse.emf.ecore.EPackage.Registry
      * @see de.cau.cs.kieler.core.expressions.ExpressionsPackage#eNS_URI
      * @see #init()
@@ -162,21 +179,19 @@ public class ExpressionsPackageImpl extends EPackageImpl implements
     }
 
     /**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
     private static boolean isInited = false;
 
     /**
-     * Creates, registers, and initializes the <b>Package</b> for this model,
-     * and for any others upon which it depends.
+     * Creates, registers, and initializes the <b>Package</b> for this model, and for any others upon which it depends.
      * 
-     * <p>
-     * This method is used to initialize {@link ExpressionsPackage#eINSTANCE}
-     * when that field is accessed. Clients should not invoke it directly.
-     * Instead, they should simply access that field to obtain the package. <!--
-     * begin-user-doc --> <!-- end-user-doc -->
-     * 
+     * <p>This method is used to initialize {@link ExpressionsPackage#eINSTANCE} when that field is accessed.
+     * Clients should not invoke it directly. Instead, they should simply access that field to obtain the package.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
      * @see #eNS_URI
      * @see #createPackageContents()
      * @see #initializePackageContents()
@@ -206,7 +221,8 @@ public class ExpressionsPackageImpl extends EPackageImpl implements
     }
 
     /**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
     public EClass getComplexExpression() {
@@ -214,7 +230,8 @@ public class ExpressionsPackageImpl extends EPackageImpl implements
     }
 
     /**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
     public EReference getComplexExpression_SubExpressions() {
@@ -222,7 +239,8 @@ public class ExpressionsPackageImpl extends EPackageImpl implements
     }
 
     /**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
     public EClass getExpression() {
@@ -230,7 +248,8 @@ public class ExpressionsPackageImpl extends EPackageImpl implements
     }
 
     /**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
     public EClass getTextualCode() {
@@ -238,7 +257,8 @@ public class ExpressionsPackageImpl extends EPackageImpl implements
     }
 
     /**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
     public EAttribute getTextualCode_Code() {
@@ -246,7 +266,8 @@ public class ExpressionsPackageImpl extends EPackageImpl implements
     }
 
     /**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
     public EAttribute getTextualCode_Type() {
@@ -254,7 +275,8 @@ public class ExpressionsPackageImpl extends EPackageImpl implements
     }
 
     /**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
     public EClass getSignal() {
@@ -262,7 +284,8 @@ public class ExpressionsPackageImpl extends EPackageImpl implements
     }
 
     /**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
     public EAttribute getSignal_IsInput() {
@@ -270,7 +293,8 @@ public class ExpressionsPackageImpl extends EPackageImpl implements
     }
 
     /**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
     public EAttribute getSignal_IsOutput() {
@@ -278,7 +302,8 @@ public class ExpressionsPackageImpl extends EPackageImpl implements
     }
 
     /**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
     public EAttribute getSignal_CombineOperator() {
@@ -286,7 +311,8 @@ public class ExpressionsPackageImpl extends EPackageImpl implements
     }
 
     /**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
     public EAttribute getSignal_HostCombineOperator() {
@@ -294,7 +320,8 @@ public class ExpressionsPackageImpl extends EPackageImpl implements
     }
 
     /**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
     public EClass getValuedObject() {
@@ -302,7 +329,8 @@ public class ExpressionsPackageImpl extends EPackageImpl implements
     }
 
     /**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
     public EAttribute getValuedObject_Name() {
@@ -310,7 +338,8 @@ public class ExpressionsPackageImpl extends EPackageImpl implements
     }
 
     /**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
     public EAttribute getValuedObject_Type() {
@@ -318,7 +347,8 @@ public class ExpressionsPackageImpl extends EPackageImpl implements
     }
 
     /**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
     public EAttribute getValuedObject_InitialValue() {
@@ -326,7 +356,8 @@ public class ExpressionsPackageImpl extends EPackageImpl implements
     }
 
     /**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
     public EAttribute getValuedObject_HostType() {
@@ -334,7 +365,8 @@ public class ExpressionsPackageImpl extends EPackageImpl implements
     }
 
     /**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
     public EClass getVariable() {
@@ -342,7 +374,8 @@ public class ExpressionsPackageImpl extends EPackageImpl implements
     }
 
     /**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
     public EAttribute getVariable_Const() {
@@ -350,7 +383,8 @@ public class ExpressionsPackageImpl extends EPackageImpl implements
     }
 
     /**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
     public EClass getValuedObjectReference() {
@@ -358,7 +392,8 @@ public class ExpressionsPackageImpl extends EPackageImpl implements
     }
 
     /**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
     public EReference getValuedObjectReference_ValuedObject() {
@@ -366,7 +401,8 @@ public class ExpressionsPackageImpl extends EPackageImpl implements
     }
 
     /**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
     public EClass getValue() {
@@ -374,7 +410,8 @@ public class ExpressionsPackageImpl extends EPackageImpl implements
     }
 
     /**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
     public EClass getIntValue() {
@@ -382,7 +419,8 @@ public class ExpressionsPackageImpl extends EPackageImpl implements
     }
 
     /**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
     public EAttribute getIntValue_Value() {
@@ -390,7 +428,8 @@ public class ExpressionsPackageImpl extends EPackageImpl implements
     }
 
     /**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
     public EClass getFloatValue() {
@@ -398,7 +437,8 @@ public class ExpressionsPackageImpl extends EPackageImpl implements
     }
 
     /**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
     public EAttribute getFloatValue_Value() {
@@ -406,7 +446,8 @@ public class ExpressionsPackageImpl extends EPackageImpl implements
     }
 
     /**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
     public EClass getBooleanValue() {
@@ -414,7 +455,8 @@ public class ExpressionsPackageImpl extends EPackageImpl implements
     }
 
     /**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
     public EAttribute getBooleanValue_Value() {
@@ -422,7 +464,8 @@ public class ExpressionsPackageImpl extends EPackageImpl implements
     }
 
     /**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
     public EClass getOperatorExpression() {
@@ -430,7 +473,8 @@ public class ExpressionsPackageImpl extends EPackageImpl implements
     }
 
     /**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
     public EAttribute getOperatorExpression_Operator() {
@@ -438,7 +482,8 @@ public class ExpressionsPackageImpl extends EPackageImpl implements
     }
 
     /**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
     public EClass getTextExpression() {
@@ -446,7 +491,8 @@ public class ExpressionsPackageImpl extends EPackageImpl implements
     }
 
     /**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
     public EEnum getCombineOperator() {
@@ -454,7 +500,8 @@ public class ExpressionsPackageImpl extends EPackageImpl implements
     }
 
     /**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
     public EEnum getOperatorType() {
@@ -462,7 +509,8 @@ public class ExpressionsPackageImpl extends EPackageImpl implements
     }
 
     /**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
     public EEnum getValueType() {
@@ -470,7 +518,8 @@ public class ExpressionsPackageImpl extends EPackageImpl implements
     }
 
     /**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
     public ExpressionsFactory getExpressionsFactory() {
@@ -478,7 +527,8 @@ public class ExpressionsPackageImpl extends EPackageImpl implements
     }
 
     /**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
     private boolean isCreated = false;
@@ -545,16 +595,17 @@ public class ExpressionsPackageImpl extends EPackageImpl implements
     }
 
     /**
-     * <!-- begin-user-doc --> <!-- end-user-doc -->
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
     private boolean isInitialized = false;
 
     /**
-     * Complete the initialization of the package and its meta-model. This
-     * method is guarded to have no affect on any invocation but its first. <!--
-     * begin-user-doc --> <!-- end-user-doc -->
-     * 
+     * Complete the initialization of the package and its meta-model.  This
+     * method is guarded to have no affect on any invocation but its first.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
     public void initializePackageContents() {
@@ -600,7 +651,7 @@ public class ExpressionsPackageImpl extends EPackageImpl implements
         initEAttribute(getSignal_HostCombineOperator(), ecorePackage.getEString(), "hostCombineOperator", null, 0, 1, Signal.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(valuedObjectEClass, ValuedObject.class, "ValuedObject", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-        initEAttribute(getValuedObject_Name(), ecorePackage.getEString(), "name", null, 1, 1, ValuedObject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getValuedObject_Name(), ecorePackage.getEString(), "name", null, 1, 1, ValuedObject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getValuedObject_Type(), this.getValueType(), "type", null, 1, 1, ValuedObject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getValuedObject_InitialValue(), ecorePackage.getEString(), "initialValue", null, 0, 1, ValuedObject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getValuedObject_HostType(), ecorePackage.getEString(), "hostType", null, 0, 1, ValuedObject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -668,4 +719,4 @@ public class ExpressionsPackageImpl extends EPackageImpl implements
         createResource(eNS_URI);
     }
 
-} // ExpressionsPackageImpl
+} //ExpressionsPackageImpl

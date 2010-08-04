@@ -10,8 +10,6 @@
  * 
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
- *
- * $Id$
  */
 package de.cau.cs.kieler.synccharts;
 
@@ -66,12 +64,15 @@ public enum TransitionType implements Enumerator {
     NORMALTERMINATION(2, "NORMALTERMINATION", "NORMALTERMINATION");
 
     /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public static final String copyright = "KIELER - Kiel Integrated Environment for Layout Eclipse RichClient\n\nhttp://www.informatik.uni-kiel.de/rtsys/kieler/\n\nCopyright 2009 by\n+ Christian-Albrechts-University of Kiel\n  + Department of Computer Science\n    + Real-Time and Embedded Systems Group\n\nThis code is provided under the terms of the Eclipse Public License (EPL).\nSee the file epl-v10.html for the license text.";
+
+    /**
      * The '<em><b>WEAKABORT</b></em>' literal value.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of '<em><b>WEAKABORT</b></em>' literal object isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * <!-- begin-model-doc -->
      * A WEAKABORT transition allows the
@@ -87,10 +88,6 @@ public enum TransitionType implements Enumerator {
     /**
      * The '<em><b>STRONGABORT</b></em>' literal value.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of '<em><b>STRONGABORT</b></em>' literal object isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * <!-- begin-model-doc -->
      * A STRONGABORT will immediately
@@ -107,10 +104,6 @@ public enum TransitionType implements Enumerator {
     /**
      * The '<em><b>NORMALTERMINATION</b></em>' literal value.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of '<em><b>NORMALTERMINATION</b></em>' literal object isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * <!-- begin-model-doc -->
      * A NORMALTERMINATION will leave a State whenever all contained

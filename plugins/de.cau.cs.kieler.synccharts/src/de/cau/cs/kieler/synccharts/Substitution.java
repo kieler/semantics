@@ -10,8 +10,6 @@
  * 
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
- *
- * $Id$
  */
 package de.cau.cs.kieler.synccharts;
 
@@ -36,6 +34,13 @@ import org.eclipse.emf.ecore.EObject;
  * @generated
  */
 public interface Substitution extends EObject {
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    String copyright = "KIELER - Kiel Integrated Environment for Layout Eclipse RichClient\n\nhttp://www.informatik.uni-kiel.de/rtsys/kieler/\n\nCopyright 2009 by\n+ Christian-Albrechts-University of Kiel\n  + Department of Computer Science\n    + Real-Time and Embedded Systems Group\n\nThis code is provided under the terms of the Eclipse Public License (EPL).\nSee the file epl-v10.html for the license text.";
+
     /**
      * Returns the value of the '<em><b>Parent Scope</b></em>' container reference.
      * It is bidirectional and its opposite is '{@link de.cau.cs.kieler.synccharts.Scope#getRenamings <em>Renamings</em>}'.
