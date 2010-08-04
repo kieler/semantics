@@ -35,8 +35,12 @@
             id="de.cau.cs.kieler.kvid.visual.complex.datanode"
             kind="org.eclipse.gmf.runtime.diagram.ui.util.INotationType"
             name="%DataNode.Label">
+         <param
+               name="semanticHint"
+               value="DataNode">
+         </param>
          <specializes
-               id="de.cau.cs.kieler.kvid.specializes1">
+               id="org.eclipse.gmf.runtime.emf.type.core.null">
          </specializes>
       </specializationType>
    </extension>

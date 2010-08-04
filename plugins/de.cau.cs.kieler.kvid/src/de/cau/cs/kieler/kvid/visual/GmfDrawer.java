@@ -18,8 +18,15 @@ import java.util.List;
 
 import org.eclipse.draw2d.IFigure;
 import org.eclipse.draw2d.geometry.Point;
+import org.eclipse.gef.commands.Command;
+import org.eclipse.gef.commands.CompoundCommand;
+import org.eclipse.gmf.runtime.diagram.core.preferences.PreferencesHint;
 import org.eclipse.gmf.runtime.diagram.ui.editparts.DiagramRootEditPart;
 import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramEditor;
+import org.eclipse.gmf.runtime.diagram.ui.requests.CreateViewRequest;
+import org.eclipse.gmf.runtime.diagram.ui.requests.CreateViewRequestFactory;
+import org.eclipse.gmf.runtime.emf.type.core.ElementTypeRegistry;
+import org.eclipse.gmf.runtime.emf.type.core.IElementType;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.PlatformUI;
 
@@ -71,6 +78,20 @@ public class GmfDrawer implements IDrawer {
                 .getActiveEditor();
         if (editor instanceof DiagramEditor) {
             // drawing phase
+            
+            boolean testDrawing = false;
+            if (testDrawing) {
+                IElementType DATA_NODE = ElementTypeRegistry.getInstance().getType(
+                "de.cau.cs.kieler.kvid.visual.complex.datanode");
+                CreateViewRequest createNoteRequest = CreateViewRequestFactory
+                .getCreateShapeRequest(DATA_NODE,
+                        PreferencesHint.USE_DEFAULTS);
+                Command createNodeCommand = ((DiagramEditor) editor).getDiagramEditPart().getCommand(createNoteRequest);
+                CompoundCommand cc = new CompoundCommand();
+                cc.add(createNodeCommand);
+                ((DiagramEditor) editor).getDiagramEditDomain().getDiagramCommandStack().execute(cc);
+            }
+            
             final IFigure canvas = ((DiagramEditor) editor)
                     .getDiagramEditPart().getLayer(
                             DiagramRootEditPart.DECORATION_PRINTABLE_LAYER);
