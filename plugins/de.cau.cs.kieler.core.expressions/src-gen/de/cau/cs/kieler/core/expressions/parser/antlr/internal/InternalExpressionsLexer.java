@@ -12,34 +12,34 @@ import java.util.ArrayList;
 
 @SuppressWarnings("all")
 public class InternalExpressionsLexer extends Lexer {
-    public static final int T21=21;
-    public static final int RULE_ML_COMMENT=9;
-    public static final int T14=14;
-    public static final int T29=29;
-    public static final int RULE_ID=4;
-    public static final int T22=22;
-    public static final int RULE_STRING=5;
-    public static final int T28=28;
-    public static final int T23=23;
-    public static final int RULE_FLOAT=7;
-    public static final int T13=13;
-    public static final int T20=20;
-    public static final int T25=25;
-    public static final int T18=18;
-    public static final int RULE_WS=11;
-    public static final int T26=26;
-    public static final int T15=15;
-    public static final int RULE_INT=6;
-    public static final int EOF=-1;
     public static final int RULE_BOOLEAN=8;
-    public static final int T17=17;
-    public static final int Tokens=31;
+    public static final int RULE_ID=4;
     public static final int RULE_ANY_OTHER=12;
-    public static final int T16=16;
+    public static final int T29=29;
+    public static final int T28=28;
     public static final int T27=27;
-    public static final int RULE_SL_COMMENT=10;
-    public static final int T30=30;
+    public static final int T26=26;
+    public static final int T25=25;
+    public static final int RULE_FLOAT=7;
+    public static final int Tokens=31;
     public static final int T24=24;
+    public static final int EOF=-1;
+    public static final int RULE_SL_COMMENT=10;
+    public static final int T23=23;
+    public static final int T22=22;
+    public static final int T21=21;
+    public static final int T20=20;
+    public static final int RULE_ML_COMMENT=9;
+    public static final int RULE_STRING=5;
+    public static final int RULE_INT=6;
+    public static final int T13=13;
+    public static final int T14=14;
+    public static final int RULE_WS=11;
+    public static final int T15=15;
+    public static final int T16=16;
+    public static final int T17=17;
+    public static final int T18=18;
+    public static final int T30=30;
     public static final int T19=19;
     public InternalExpressionsLexer() {;} 
     public InternalExpressionsLexer(CharStream input) {

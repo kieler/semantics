@@ -12,34 +12,34 @@ import java.util.ArrayList;
 
 @SuppressWarnings("all")
 public class InternalExpressionsLexer extends Lexer {
-    public static final int T21=21;
-    public static final int RULE_ML_COMMENT=9;
-    public static final int T14=14;
-    public static final int T29=29;
-    public static final int RULE_ID=4;
-    public static final int T22=22;
-    public static final int RULE_STRING=5;
-    public static final int T28=28;
-    public static final int T23=23;
-    public static final int RULE_FLOAT=7;
-    public static final int T13=13;
-    public static final int T20=20;
-    public static final int T25=25;
-    public static final int T18=18;
-    public static final int RULE_WS=11;
-    public static final int T26=26;
-    public static final int T15=15;
-    public static final int RULE_INT=6;
-    public static final int EOF=-1;
     public static final int RULE_BOOLEAN=8;
-    public static final int T17=17;
-    public static final int Tokens=31;
+    public static final int RULE_ID=4;
     public static final int RULE_ANY_OTHER=12;
-    public static final int T16=16;
+    public static final int T29=29;
+    public static final int T28=28;
     public static final int T27=27;
-    public static final int RULE_SL_COMMENT=10;
-    public static final int T30=30;
+    public static final int T26=26;
+    public static final int T25=25;
+    public static final int RULE_FLOAT=7;
+    public static final int Tokens=31;
     public static final int T24=24;
+    public static final int EOF=-1;
+    public static final int RULE_SL_COMMENT=10;
+    public static final int T23=23;
+    public static final int T22=22;
+    public static final int T21=21;
+    public static final int T20=20;
+    public static final int RULE_ML_COMMENT=9;
+    public static final int RULE_STRING=5;
+    public static final int RULE_INT=6;
+    public static final int T13=13;
+    public static final int T14=14;
+    public static final int RULE_WS=11;
+    public static final int T15=15;
+    public static final int T16=16;
+    public static final int T17=17;
+    public static final int T18=18;
+    public static final int T30=30;
     public static final int T19=19;
     public InternalExpressionsLexer() {;} 
     public InternalExpressionsLexer(CharStream input) {
@@ -1419,7 +1419,7 @@ public class InternalExpressionsLexer extends Lexer {
     static final String DFA19_acceptS =
         "\5\uffff\1\5\1\uffff\1\7\2\uffff\1\12\1\13\2\uffff\1\21\1\22\4\uffff"+
         "\1\26\2\uffff\1\32\1\33\1\uffff\1\26\3\uffff\1\5\1\uffff\1\6\1\7"+
-        "\1\uffff\1\30\1\31\1\11\1\12\1\13\1\20\1\15\1\14\1\17\1\16\1\21"+
+        "\1\uffff\1\30\1\31\1\11\1\12\1\13\1\15\1\20\1\14\1\17\1\16\1\21"+
         "\1\22\1\23\1\24\2\uffff\1\27\1\32\1\uffff\1\2\5\uffff\1\1\1\3\1"+
         "\4\1\10\2\uffff\1\25\1\uffff";
     static final String DFA19_specialS =
@@ -1440,7 +1440,7 @@ public class InternalExpressionsLexer extends Lexer {
             "\1\43\4\uffff\1\44",
             "",
             "",
-            "\1\51\1\50",
+            "\1\50\1\51",
             "\1\53",
             "",
             "",

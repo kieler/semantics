@@ -5,9 +5,6 @@
 				<include name="**/*.java" />
 				<include name="../message.properties" />
 			</fileset>
-			<fileset dir="icons">
-				<include name="**/*.*" />
-			</fileset>
 			<fileset dir="META-INF">
 			    <include name="MANIFEST.MF" />
 			</fileset>

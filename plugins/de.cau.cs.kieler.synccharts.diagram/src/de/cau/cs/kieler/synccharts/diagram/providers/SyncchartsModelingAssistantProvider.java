@@ -43,91 +43,93 @@ import de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorPlugin;
 /**
  * @generated
  */
-public class SyncchartsModelingAssistantProvider extends ModelingAssistantProvider {
+public class SyncchartsModelingAssistantProvider extends
+        ModelingAssistantProvider {
 
     /**
      * @generated
      */
     public List getTypesForPopupBar(IAdaptable host) {
-        IGraphicalEditPart editPart = (IGraphicalEditPart) host.getAdapter(IGraphicalEditPart.class);
+        IGraphicalEditPart editPart = (IGraphicalEditPart) host
+                .getAdapter(IGraphicalEditPart.class);
         if (editPart instanceof RegionEditPart) {
             ArrayList<IElementType> types = new ArrayList<IElementType>(1);
-            types.add(SyncchartsElementTypes.State_2004);
+            types.add(SyncchartsElementTypes.State_2005);
             return types;
         }
         if (editPart instanceof StateEditPart) {
             ArrayList<IElementType> types = new ArrayList<IElementType>(1);
-            types.add(SyncchartsElementTypes.TextualCode_3038);
+            types.add(SyncchartsElementTypes.TextualCode_3046);
             return types;
         }
         if (editPart instanceof State2EditPart) {
             ArrayList<IElementType> types = new ArrayList<IElementType>(1);
-            types.add(SyncchartsElementTypes.TextualCode_3038);
+            types.add(SyncchartsElementTypes.TextualCode_3046);
             return types;
         }
         if (editPart instanceof StateSignalCompartment2EditPart) {
             ArrayList<IElementType> types = new ArrayList<IElementType>(1);
-            types.add(SyncchartsElementTypes.Signal_3033);
+            types.add(SyncchartsElementTypes.Signal_3041);
             return types;
         }
         if (editPart instanceof StateEntryActionCompartment2EditPart) {
             ArrayList<IElementType> types = new ArrayList<IElementType>(1);
-            types.add(SyncchartsElementTypes.Action_3034);
+            types.add(SyncchartsElementTypes.Action_3042);
             return types;
         }
         if (editPart instanceof StateInnerActionCompartment2EditPart) {
             ArrayList<IElementType> types = new ArrayList<IElementType>(1);
-            types.add(SyncchartsElementTypes.Action_3035);
+            types.add(SyncchartsElementTypes.Action_3043);
             return types;
         }
         if (editPart instanceof StateExitActionCompartment2EditPart) {
             ArrayList<IElementType> types = new ArrayList<IElementType>(1);
-            types.add(SyncchartsElementTypes.Action_3036);
+            types.add(SyncchartsElementTypes.Action_3044);
             return types;
         }
         if (editPart instanceof StateSuspensionTriggerCompartment2EditPart) {
             ArrayList<IElementType> types = new ArrayList<IElementType>(1);
-            types.add(SyncchartsElementTypes.Action_3037);
+            types.add(SyncchartsElementTypes.Action_3045);
             return types;
         }
         if (editPart instanceof StateRegionCompartmentEditPart) {
             ArrayList<IElementType> types = new ArrayList<IElementType>(1);
-            types.add(SyncchartsElementTypes.Region_3031);
+            types.add(SyncchartsElementTypes.Region_3039);
             return types;
         }
         if (editPart instanceof RegionStateCompartmentEditPart) {
             ArrayList<IElementType> types = new ArrayList<IElementType>(1);
-            types.add(SyncchartsElementTypes.State_3032);
+            types.add(SyncchartsElementTypes.State_3040);
             return types;
         }
         if (editPart instanceof StateSignalCompartmentEditPart) {
             ArrayList<IElementType> types = new ArrayList<IElementType>(1);
-            types.add(SyncchartsElementTypes.Signal_3033);
+            types.add(SyncchartsElementTypes.Signal_3041);
             return types;
         }
         if (editPart instanceof StateEntryActionCompartmentEditPart) {
             ArrayList<IElementType> types = new ArrayList<IElementType>(1);
-            types.add(SyncchartsElementTypes.Action_3034);
+            types.add(SyncchartsElementTypes.Action_3042);
             return types;
         }
         if (editPart instanceof StateInnerActionCompartmentEditPart) {
             ArrayList<IElementType> types = new ArrayList<IElementType>(1);
-            types.add(SyncchartsElementTypes.Action_3035);
+            types.add(SyncchartsElementTypes.Action_3043);
             return types;
         }
         if (editPart instanceof StateExitActionCompartmentEditPart) {
             ArrayList<IElementType> types = new ArrayList<IElementType>(1);
-            types.add(SyncchartsElementTypes.Action_3036);
+            types.add(SyncchartsElementTypes.Action_3044);
             return types;
         }
         if (editPart instanceof StateSuspensionTriggerCompartmentEditPart) {
             ArrayList<IElementType> types = new ArrayList<IElementType>(1);
-            types.add(SyncchartsElementTypes.Action_3037);
+            types.add(SyncchartsElementTypes.Action_3045);
             return types;
         }
         if (editPart instanceof StateRegionCompartment2EditPart) {
             ArrayList<IElementType> types = new ArrayList<IElementType>(1);
-            types.add(SyncchartsElementTypes.Region_3031);
+            types.add(SyncchartsElementTypes.Region_3039);
             return types;
         }
         return Collections.EMPTY_LIST;
@@ -166,16 +168,19 @@ public class SyncchartsModelingAssistantProvider extends ModelingAssistantProvid
     /**
      * @generated
      */
-    public List getRelTypesOnSourceAndTarget(IAdaptable source, IAdaptable target) {
+    public List getRelTypesOnSourceAndTarget(IAdaptable source,
+            IAdaptable target) {
         IGraphicalEditPart sourceEditPart = (IGraphicalEditPart) source
                 .getAdapter(IGraphicalEditPart.class);
         IGraphicalEditPart targetEditPart = (IGraphicalEditPart) target
                 .getAdapter(IGraphicalEditPart.class);
         if (sourceEditPart instanceof StateEditPart) {
-            return ((StateEditPart) sourceEditPart).getMARelTypesOnSourceAndTarget(targetEditPart);
+            return ((StateEditPart) sourceEditPart)
+                    .getMARelTypesOnSourceAndTarget(targetEditPart);
         }
         if (sourceEditPart instanceof State2EditPart) {
-            return ((State2EditPart) sourceEditPart).getMARelTypesOnSourceAndTarget(targetEditPart);
+            return ((State2EditPart) sourceEditPart)
+                    .getMARelTypesOnSourceAndTarget(targetEditPart);
         }
         return Collections.EMPTY_LIST;
     }
@@ -183,14 +188,17 @@ public class SyncchartsModelingAssistantProvider extends ModelingAssistantProvid
     /**
      * @generated
      */
-    public List getTypesForSource(IAdaptable target, IElementType relationshipType) {
+    public List getTypesForSource(IAdaptable target,
+            IElementType relationshipType) {
         IGraphicalEditPart targetEditPart = (IGraphicalEditPart) target
                 .getAdapter(IGraphicalEditPart.class);
         if (targetEditPart instanceof StateEditPart) {
-            return ((StateEditPart) targetEditPart).getMATypesForSource(relationshipType);
+            return ((StateEditPart) targetEditPart)
+                    .getMATypesForSource(relationshipType);
         }
         if (targetEditPart instanceof State2EditPart) {
-            return ((State2EditPart) targetEditPart).getMATypesForSource(relationshipType);
+            return ((State2EditPart) targetEditPart)
+                    .getMATypesForSource(relationshipType);
         }
         return Collections.EMPTY_LIST;
     }
@@ -198,14 +206,17 @@ public class SyncchartsModelingAssistantProvider extends ModelingAssistantProvid
     /**
      * @generated
      */
-    public List getTypesForTarget(IAdaptable source, IElementType relationshipType) {
+    public List getTypesForTarget(IAdaptable source,
+            IElementType relationshipType) {
         IGraphicalEditPart sourceEditPart = (IGraphicalEditPart) source
                 .getAdapter(IGraphicalEditPart.class);
         if (sourceEditPart instanceof StateEditPart) {
-            return ((StateEditPart) sourceEditPart).getMATypesForTarget(relationshipType);
+            return ((StateEditPart) sourceEditPart)
+                    .getMATypesForTarget(relationshipType);
         }
         if (sourceEditPart instanceof State2EditPart) {
-            return ((State2EditPart) sourceEditPart).getMATypesForTarget(relationshipType);
+            return ((State2EditPart) sourceEditPart)
+                    .getMATypesForTarget(relationshipType);
         }
         return Collections.EMPTY_LIST;
     }
@@ -213,15 +224,19 @@ public class SyncchartsModelingAssistantProvider extends ModelingAssistantProvid
     /**
      * @generated
      */
-    public EObject selectExistingElementForSource(IAdaptable target, IElementType relationshipType) {
-        return selectExistingElement(target, getTypesForSource(target, relationshipType));
+    public EObject selectExistingElementForSource(IAdaptable target,
+            IElementType relationshipType) {
+        return selectExistingElement(target,
+                getTypesForSource(target, relationshipType));
     }
 
     /**
      * @generated
      */
-    public EObject selectExistingElementForTarget(IAdaptable source, IElementType relationshipType) {
-        return selectExistingElement(source, getTypesForTarget(source, relationshipType));
+    public EObject selectExistingElementForTarget(IAdaptable source,
+            IElementType relationshipType) {
+        return selectExistingElement(source,
+                getTypesForTarget(source, relationshipType));
     }
 
     /**
@@ -231,13 +246,15 @@ public class SyncchartsModelingAssistantProvider extends ModelingAssistantProvid
         if (types.isEmpty()) {
             return null;
         }
-        IGraphicalEditPart editPart = (IGraphicalEditPart) host.getAdapter(IGraphicalEditPart.class);
+        IGraphicalEditPart editPart = (IGraphicalEditPart) host
+                .getAdapter(IGraphicalEditPart.class);
         if (editPart == null) {
             return null;
         }
         Diagram diagram = (Diagram) editPart.getRoot().getContents().getModel();
         HashSet<EObject> elements = new HashSet<EObject>();
-        for (Iterator<EObject> it = diagram.getElement().eAllContents(); it.hasNext();) {
+        for (Iterator<EObject> it = diagram.getElement().eAllContents(); it
+                .hasNext();) {
             EObject element = it.next();
             if (isApplicableElement(element, types)) {
                 elements.add(element);
@@ -246,14 +263,16 @@ public class SyncchartsModelingAssistantProvider extends ModelingAssistantProvid
         if (elements.isEmpty()) {
             return null;
         }
-        return selectElement((EObject[]) elements.toArray(new EObject[elements.size()]));
+        return selectElement((EObject[]) elements.toArray(new EObject[elements
+                .size()]));
     }
 
     /**
      * @generated
      */
     protected boolean isApplicableElement(EObject element, Collection types) {
-        IElementType type = ElementTypeRegistry.getInstance().getElementType(element);
+        IElementType type = ElementTypeRegistry.getInstance().getElementType(
+                element);
         return types.contains(type);
     }
 
@@ -262,9 +281,11 @@ public class SyncchartsModelingAssistantProvider extends ModelingAssistantProvid
      */
     protected EObject selectElement(EObject[] elements) {
         Shell shell = Display.getCurrent().getActiveShell();
-        ILabelProvider labelProvider = new AdapterFactoryLabelProvider(SyncchartsDiagramEditorPlugin
-                .getInstance().getItemProvidersAdapterFactory());
-        ElementListSelectionDialog dialog = new ElementListSelectionDialog(shell, labelProvider);
+        ILabelProvider labelProvider = new AdapterFactoryLabelProvider(
+                SyncchartsDiagramEditorPlugin.getInstance()
+                        .getItemProvidersAdapterFactory());
+        ElementListSelectionDialog dialog = new ElementListSelectionDialog(
+                shell, labelProvider);
         dialog.setMessage(Messages.SyncchartsModelingAssistantProviderMessage);
         dialog.setTitle(Messages.SyncchartsModelingAssistantProviderTitle);
         dialog.setMultipleSelection(false);

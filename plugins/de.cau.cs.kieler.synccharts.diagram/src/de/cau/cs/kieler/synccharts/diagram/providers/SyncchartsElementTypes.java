@@ -64,52 +64,43 @@ public class SyncchartsElementTypes {
     /**
      * @generated
      */
-    public static final IElementType State_2004 = getElementType("de.cau.cs.kieler.synccharts.diagram.State_2004"); //$NON-NLS-1$
-
+    public static final IElementType State_2005 = getElementType("de.cau.cs.kieler.synccharts.diagram.State_2005"); //$NON-NLS-1$
     /**
      * @generated
      */
-    public static final IElementType Region_3031 = getElementType("de.cau.cs.kieler.synccharts.diagram.Region_3031"); //$NON-NLS-1$
-
+    public static final IElementType Region_3039 = getElementType("de.cau.cs.kieler.synccharts.diagram.Region_3039"); //$NON-NLS-1$
     /**
      * @generated
      */
-    public static final IElementType State_3032 = getElementType("de.cau.cs.kieler.synccharts.diagram.State_3032"); //$NON-NLS-1$
-
+    public static final IElementType State_3040 = getElementType("de.cau.cs.kieler.synccharts.diagram.State_3040"); //$NON-NLS-1$
     /**
      * @generated
      */
-    public static final IElementType Signal_3033 = getElementType("de.cau.cs.kieler.synccharts.diagram.Signal_3033"); //$NON-NLS-1$
-
+    public static final IElementType Signal_3041 = getElementType("de.cau.cs.kieler.synccharts.diagram.Signal_3041"); //$NON-NLS-1$
     /**
      * @generated
      */
-    public static final IElementType Action_3034 = getElementType("de.cau.cs.kieler.synccharts.diagram.Action_3034"); //$NON-NLS-1$
-
+    public static final IElementType Action_3042 = getElementType("de.cau.cs.kieler.synccharts.diagram.Action_3042"); //$NON-NLS-1$
     /**
      * @generated
      */
-    public static final IElementType Action_3035 = getElementType("de.cau.cs.kieler.synccharts.diagram.Action_3035"); //$NON-NLS-1$
-
+    public static final IElementType Action_3043 = getElementType("de.cau.cs.kieler.synccharts.diagram.Action_3043"); //$NON-NLS-1$
     /**
      * @generated
      */
-    public static final IElementType Action_3036 = getElementType("de.cau.cs.kieler.synccharts.diagram.Action_3036"); //$NON-NLS-1$
-
+    public static final IElementType Action_3044 = getElementType("de.cau.cs.kieler.synccharts.diagram.Action_3044"); //$NON-NLS-1$
     /**
      * @generated
      */
-    public static final IElementType Action_3037 = getElementType("de.cau.cs.kieler.synccharts.diagram.Action_3037"); //$NON-NLS-1$
-
+    public static final IElementType Action_3045 = getElementType("de.cau.cs.kieler.synccharts.diagram.Action_3045"); //$NON-NLS-1$
     /**
      * @generated
      */
-    public static final IElementType TextualCode_3038 = getElementType("de.cau.cs.kieler.synccharts.diagram.TextualCode_3038"); //$NON-NLS-1$
-
+    public static final IElementType TextualCode_3046 = getElementType("de.cau.cs.kieler.synccharts.diagram.TextualCode_3046"); //$NON-NLS-1$
     /**
      * @generated
      */
-    public static final IElementType Transition_4004 = getElementType("de.cau.cs.kieler.synccharts.diagram.Transition_4004"); //$NON-NLS-1$
+    public static final IElementType Transition_4005 = getElementType("de.cau.cs.kieler.synccharts.diagram.Transition_4005"); //$NON-NLS-1$
 
     /**
      * @generated
@@ -131,22 +122,26 @@ public class SyncchartsElementTypes {
     /**
      * @generated
      */
-    private static ImageDescriptor getProvidedImageDescriptor(ENamedElement element) {
+    private static ImageDescriptor getProvidedImageDescriptor(
+            ENamedElement element) {
         if (element instanceof EStructuralFeature) {
             EStructuralFeature feature = ((EStructuralFeature) element);
             EClass eContainingClass = feature.getEContainingClass();
             EClassifier eType = feature.getEType();
             if (eContainingClass != null && !eContainingClass.isAbstract()) {
                 element = eContainingClass;
-            } else if (eType instanceof EClass && !((EClass) eType).isAbstract()) {
+            } else if (eType instanceof EClass
+                    && !((EClass) eType).isAbstract()) {
                 element = eType;
             }
         }
         if (element instanceof EClass) {
             EClass eClass = (EClass) element;
             if (!eClass.isAbstract()) {
-                return SyncchartsDiagramEditorPlugin.getInstance().getItemImageDescriptor(
-                        eClass.getEPackage().getEFactoryInstance().create(eClass));
+                return SyncchartsDiagramEditorPlugin.getInstance()
+                        .getItemImageDescriptor(
+                                eClass.getEPackage().getEFactoryInstance()
+                                        .create(eClass));
             }
         }
         // TODO : support structural features
@@ -220,25 +215,27 @@ public class SyncchartsElementTypes {
 
             elements.put(Region_1000, SyncchartsPackage.eINSTANCE.getRegion());
 
-            elements.put(State_2004, SyncchartsPackage.eINSTANCE.getState());
+            elements.put(State_2005, SyncchartsPackage.eINSTANCE.getState());
 
-            elements.put(Region_3031, SyncchartsPackage.eINSTANCE.getRegion());
+            elements.put(Region_3039, SyncchartsPackage.eINSTANCE.getRegion());
 
-            elements.put(State_3032, SyncchartsPackage.eINSTANCE.getState());
+            elements.put(State_3040, SyncchartsPackage.eINSTANCE.getState());
 
-            elements.put(Signal_3033, ExpressionsPackage.eINSTANCE.getSignal());
+            elements.put(Signal_3041, ExpressionsPackage.eINSTANCE.getSignal());
 
-            elements.put(Action_3034, SyncchartsPackage.eINSTANCE.getAction());
+            elements.put(Action_3042, SyncchartsPackage.eINSTANCE.getAction());
 
-            elements.put(Action_3035, SyncchartsPackage.eINSTANCE.getAction());
+            elements.put(Action_3043, SyncchartsPackage.eINSTANCE.getAction());
 
-            elements.put(Action_3036, SyncchartsPackage.eINSTANCE.getAction());
+            elements.put(Action_3044, SyncchartsPackage.eINSTANCE.getAction());
 
-            elements.put(Action_3037, SyncchartsPackage.eINSTANCE.getAction());
+            elements.put(Action_3045, SyncchartsPackage.eINSTANCE.getAction());
 
-            elements.put(TextualCode_3038, ExpressionsPackage.eINSTANCE.getTextualCode());
+            elements.put(TextualCode_3046,
+                    ExpressionsPackage.eINSTANCE.getTextualCode());
 
-            elements.put(Transition_4004, SyncchartsPackage.eINSTANCE.getTransition());
+            elements.put(Transition_4005,
+                    SyncchartsPackage.eINSTANCE.getTransition());
         }
         return (ENamedElement) elements.get(type);
     }
@@ -257,16 +254,16 @@ public class SyncchartsElementTypes {
         if (KNOWN_ELEMENT_TYPES == null) {
             KNOWN_ELEMENT_TYPES = new HashSet<IElementType>();
             KNOWN_ELEMENT_TYPES.add(Region_1000);
-            KNOWN_ELEMENT_TYPES.add(State_2004);
-            KNOWN_ELEMENT_TYPES.add(Region_3031);
-            KNOWN_ELEMENT_TYPES.add(State_3032);
-            KNOWN_ELEMENT_TYPES.add(Signal_3033);
-            KNOWN_ELEMENT_TYPES.add(Action_3034);
-            KNOWN_ELEMENT_TYPES.add(Action_3035);
-            KNOWN_ELEMENT_TYPES.add(Action_3036);
-            KNOWN_ELEMENT_TYPES.add(Action_3037);
-            KNOWN_ELEMENT_TYPES.add(TextualCode_3038);
-            KNOWN_ELEMENT_TYPES.add(Transition_4004);
+            KNOWN_ELEMENT_TYPES.add(State_2005);
+            KNOWN_ELEMENT_TYPES.add(Region_3039);
+            KNOWN_ELEMENT_TYPES.add(State_3040);
+            KNOWN_ELEMENT_TYPES.add(Signal_3041);
+            KNOWN_ELEMENT_TYPES.add(Action_3042);
+            KNOWN_ELEMENT_TYPES.add(Action_3043);
+            KNOWN_ELEMENT_TYPES.add(Action_3044);
+            KNOWN_ELEMENT_TYPES.add(Action_3045);
+            KNOWN_ELEMENT_TYPES.add(TextualCode_3046);
+            KNOWN_ELEMENT_TYPES.add(Transition_4005);
         }
         return KNOWN_ELEMENT_TYPES.contains(elementType);
     }
@@ -279,25 +276,25 @@ public class SyncchartsElementTypes {
         case RegionEditPart.VISUAL_ID:
             return Region_1000;
         case StateEditPart.VISUAL_ID:
-            return State_2004;
+            return State_2005;
         case Region2EditPart.VISUAL_ID:
-            return Region_3031;
+            return Region_3039;
         case State2EditPart.VISUAL_ID:
-            return State_3032;
+            return State_3040;
         case SignalEditPart.VISUAL_ID:
-            return Signal_3033;
+            return Signal_3041;
         case StateEntryActionEditPart.VISUAL_ID:
-            return Action_3034;
+            return Action_3042;
         case StateInnerActionEditPart.VISUAL_ID:
-            return Action_3035;
+            return Action_3043;
         case StateExitActionEditPart.VISUAL_ID:
-            return Action_3036;
+            return Action_3044;
         case StateSuspensionTriggerEditPart.VISUAL_ID:
-            return Action_3037;
+            return Action_3045;
         case TextualCodeEditPart.VISUAL_ID:
-            return TextualCode_3038;
+            return TextualCode_3046;
         case TransitionEditPart.VISUAL_ID:
-            return Transition_4004;
+            return Transition_4005;
         }
         return null;
     }
