@@ -222,6 +222,18 @@ Boolean isSourceNotASimpleState(Transition t):
  t.sourceState.isNotASimpleState()
 ;
 
+Boolean canTurnIntoNormalTermination(Transition t):
+ t.isSourceNotASimpleState() && t.type != TransitionType::NORMALTERMINATION
+;
+
+Boolean canTurnIntoStrongAbort(Transition t):
+ t.isSourceNotASimpleState() && t.type != TransitionType::STRONGABORT
+;
+
+Boolean canTurnIntoWeakAbort(Transition t):
+ t.type != TransitionType::WEAKABORT
+;
+
 // Add a state to the parent state and add all Regions
 // to that new State
 Void encapsulateRegions(State parentState):

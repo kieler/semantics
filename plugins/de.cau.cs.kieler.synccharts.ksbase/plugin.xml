@@ -195,14 +195,15 @@
                     tooltip="Transform transition into strong abortion"
                     transformation="setStrong"
                     transformationId="de.cau.cs.kieler.synccharts.ksbase.setStrong"
-                    validation="isSourceNotASimpleState">
+                    validation="canTurnIntoStrongAbort">
               </transformation>
               <transformation
                     icon="icons/weakAbort.gif"
                     name="Weak abort"
                     tooltip="Transform transition into weak abortion"
                     transformation="setWeak"
-                    transformationId="de.cau.cs.kieler.synccharts.ksbase.setWeak">
+                    transformationId="de.cau.cs.kieler.synccharts.ksbase.setWeak"
+                    validation="canTurnIntoWeakAbort">
               </transformation>
               <transformation
                     icon="icons/normalTermination.gif"
@@ -210,7 +211,7 @@
                     tooltip="Transform transition into normal termination"
                     transformation="setNormalTermination"
                     transformationId="de.cau.cs.kieler.synccharts.ksbase.setNormalTermination"
-                    validation="isSourceNotASimpleState">
+                    validation="canTurnIntoNormalTermination">
               </transformation>
 			</transformations>
 			<menus>
