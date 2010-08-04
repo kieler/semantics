@@ -371,7 +371,7 @@ public abstract class ReInitDiagramCommand extends AbstractHandler {
      * @param diagramPath
      *            the destination file.
      */
-    private void reinitializeDiagram(final IFile modelPath,
+    public void reinitializeDiagram(final IFile modelPath,
             final IFile diagramPath) {
         String[] array = modelPath.toString().split("/");
         StringBuilder builder = new StringBuilder();
@@ -415,7 +415,7 @@ public abstract class ReInitDiagramCommand extends AbstractHandler {
      *            the destination file
      * @return true if the creation was successful
      */
-    protected abstract boolean createNewDiagram(final EObject diagramRoot,
+    public abstract boolean createNewDiagram(final EObject diagramRoot,
             final TransactionalEditingDomain editingDomain,
             final IFile diagramPath);
 

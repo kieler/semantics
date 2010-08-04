@@ -107,12 +107,12 @@ public class ReInitSyncchartsDiagramCommand extends ReInitDiagramCommand {
      *            the root element.
      * @param editingDomain
      *            the editing domain.
-     * @param kidsPath
+     * @param diagramFile
      *            the destination file
      * @return true if the creation was successful
      */
     @Override
-    protected boolean createNewDiagram(final EObject diagramRoot,
+    public boolean createNewDiagram(final EObject diagramRoot,
             final TransactionalEditingDomain editingDomain,
             final IFile diagramFile) {
         List<IFile> affectedFiles = new LinkedList<IFile>();
