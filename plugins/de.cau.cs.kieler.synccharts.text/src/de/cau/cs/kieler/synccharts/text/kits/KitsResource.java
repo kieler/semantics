@@ -21,20 +21,17 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
 
-import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtext.linking.lazy.LazyLinkingResource;
 import org.eclipse.xtext.parser.IParseResult;
 import org.eclipse.xtext.resource.SaveOptions;
 
-import de.cau.cs.kieler.core.expressions.Expression;
 import de.cau.cs.kieler.core.expressions.ExpressionsFactory;
 import de.cau.cs.kieler.core.expressions.Signal;
 import de.cau.cs.kieler.core.expressions.ValueType;
 import de.cau.cs.kieler.synccharts.Region;
 import de.cau.cs.kieler.synccharts.Scope;
 import de.cau.cs.kieler.synccharts.State;
-import de.cau.cs.kieler.synccharts.SyncchartsFactory;
 import de.cau.cs.kieler.synccharts.SyncchartsPackage;
 
 /**
@@ -138,7 +135,7 @@ public class KitsResource extends LazyLinkingResource {
 	
 	
 	/**
-	 * Provides the implicit signal 'tick' within the root region.
+	 * Provides the implicit signal 'tick' within the root region. (#1088)
 	 * Signal is created if it is not present, yet, i.e. not declared textual. 
 	 * @param r model root region
 	 */

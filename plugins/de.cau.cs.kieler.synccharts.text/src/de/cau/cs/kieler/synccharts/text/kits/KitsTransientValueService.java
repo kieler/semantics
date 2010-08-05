@@ -22,7 +22,6 @@ import org.eclipse.emf.transaction.impl.TransactionChangeRecorder;
 import org.eclipse.xtext.parsetree.reconstr.ITransientValueService;
 import org.eclipse.xtext.parsetree.reconstr.impl.DefaultTransientValueService;
 
-import de.cau.cs.kieler.core.expressions.Signal;
 import de.cau.cs.kieler.synccharts.Region;
 import de.cau.cs.kieler.synccharts.Scope;
 import de.cau.cs.kieler.synccharts.StateType;
@@ -36,9 +35,28 @@ import de.cau.cs.kieler.synccharts.Transition;
  */
 public class KitsTransientValueService extends DefaultTransientValueService {
 
-	@Override
+	/**
+	 * Decides whether each element of an owners feature needs to be checked.
+	 * Here, I want this to be false except while serializing the signals of
+	 * the root region: The 'tick' signal should not be serialized. 
+	 */
+	public boolean isCheckElementsIndividually(EObject owner, EStructuralFeature feature) {
+		
+		if (feature == SyncchartsPackage.eINSTANCE.getScope_Signals()
+				&& SyncchartsPackage.eINSTANCE.getRegion().isInstance(owner)
+				&& owner.eContainer() == null) {
+			return true;
+		}
+		return false;
+	}
+	
+	
+	/**
+	 * Decides whether an owner's feature (or one of its elements are not to be serialized).
+	 */
 	public boolean isTransient(EObject owner, EStructuralFeature feature, int index) {
 		
+		/* suppress the implicit (mostly EOpposites) features */
 		if (feature == SyncchartsPackage.eINSTANCE.getState_ParentRegion() 
 			|| feature == SyncchartsPackage.eINSTANCE.getScope_InterfaceDeclaration()
 			|| feature == SyncchartsPackage.eINSTANCE.getState_IncomingTransitions()
@@ -92,12 +110,14 @@ public class KitsTransientValueService extends DefaultTransientValueService {
 				}
 			}
 			return false;
-		}		
+		}
+
 		
 		/* suppress the 'normal' attribute of a state */
 		if (feature == SyncchartsPackage.eINSTANCE.getState_Type()) {
 			return owner.eGet(feature).equals(StateType.NORMAL);
 		}
+		
 		
 		/* suppress the transition's priority if it's the only outgoing one of its source state*/
 		if (feature == SyncchartsPackage.eINSTANCE.getTransition_Priority()) {
@@ -106,29 +126,19 @@ public class KitsTransientValueService extends DefaultTransientValueService {
 			}
 		}	
 		
-		/* */
+		
+		/* do not serialized the implicit 'tick' signal! */
 		if (feature == SyncchartsPackage.eINSTANCE.getScope_Signals()
 				&& SyncchartsPackage.eINSTANCE.getRegion().isInstance(owner)
-				&& owner.eContainer() == null) {
-			Region region = (Region) owner;
-			if  (region.getSignals().get(index).getName().equals("tick") ) {
-				return true;
-			}
+				&& owner.eContainer() == null) {			
+			return  ((Region) owner).getSignals().get(index).getName().equals("tick");
 		}
+		
 		
 		/* suppress further undefined features */
 		return !owner.eIsSet(feature); // || feature.isTransient();
 	}
 
-	public boolean isCheckElementsIndividually(EObject owner, EStructuralFeature feature) {
-		if (feature == SyncchartsPackage.eINSTANCE.getScope_Signals()
-				&& SyncchartsPackage.eINSTANCE.getRegion().isInstance(owner)
-				&& owner.eContainer() == null) {
-			return true;
-		}
-		return false;
-	}
-	
 	
 	/**
 	 * This is part of a rather heavy hack!
