@@ -22,6 +22,7 @@ import org.eclipse.emf.transaction.impl.TransactionChangeRecorder;
 import org.eclipse.xtext.parsetree.reconstr.ITransientValueService;
 import org.eclipse.xtext.parsetree.reconstr.impl.DefaultTransientValueService;
 
+import de.cau.cs.kieler.core.expressions.Signal;
 import de.cau.cs.kieler.synccharts.Region;
 import de.cau.cs.kieler.synccharts.Scope;
 import de.cau.cs.kieler.synccharts.StateType;
@@ -103,12 +104,30 @@ public class KitsTransientValueService extends DefaultTransientValueService {
 			if (SyncchartsPackage.eINSTANCE.getTransition().isInstance(owner)) {
 				return ((Transition) owner).getSourceState().getOutgoingTransitions().size() == 1;
 			}
-		}		
+		}	
+		
+		/* */
+		if (feature == SyncchartsPackage.eINSTANCE.getScope_Signals()
+				&& SyncchartsPackage.eINSTANCE.getRegion().isInstance(owner)
+				&& owner.eContainer() == null) {
+			Region region = (Region) owner;
+			if  (region.getSignals().get(index).getName().equals("tick") ) {
+				return true;
+			}
+		}
 		
 		/* suppress further undefined features */
 		return !owner.eIsSet(feature); // || feature.isTransient();
 	}
 
+	public boolean isCheckElementsIndividually(EObject owner, EStructuralFeature feature) {
+		if (feature == SyncchartsPackage.eINSTANCE.getScope_Signals()
+				&& SyncchartsPackage.eINSTANCE.getRegion().isInstance(owner)
+				&& owner.eContainer() == null) {
+			return true;
+		}
+		return false;
+	}
 	
 	
 	/**

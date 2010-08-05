@@ -21,13 +21,20 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
 
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtext.linking.lazy.LazyLinkingResource;
 import org.eclipse.xtext.parser.IParseResult;
 import org.eclipse.xtext.resource.SaveOptions;
 
+import de.cau.cs.kieler.core.expressions.Expression;
+import de.cau.cs.kieler.core.expressions.ExpressionsFactory;
+import de.cau.cs.kieler.core.expressions.Signal;
+import de.cau.cs.kieler.core.expressions.ValueType;
+import de.cau.cs.kieler.synccharts.Region;
 import de.cau.cs.kieler.synccharts.Scope;
 import de.cau.cs.kieler.synccharts.State;
+import de.cau.cs.kieler.synccharts.SyncchartsFactory;
 import de.cau.cs.kieler.synccharts.SyncchartsPackage;
 
 /**
@@ -97,7 +104,10 @@ public class KitsResource extends LazyLinkingResource {
 				&& getContents().size() != 0
 				&& !getContents().get(0).equals(parseResult.getRootASTElement())) {
 			unload(getContents().get(0));
-			getContents().remove(getContents().get(0));
+			getContents().remove(0);
+			while (!getContents().isEmpty()) {
+				getContents().remove(0);
+			}
 		}
 		super.updateInternalState(parseResult);
 	}
@@ -106,10 +116,13 @@ public class KitsResource extends LazyLinkingResource {
 	// ---------------------------------------------------------------------------------------
 	
 	/**
-	 * Iterates on the parsed model and delegates to {@link #setupScopeID(Scope, HashSet)}
-	 * and {@link #setupPriorities(State)}. 
+	 * Iterates on the parsed model and delegates to {@link #setupTickSignal(Region)}, 
+	 * {@link #setupScopeID(Scope, HashSet)} and {@link #setupPriorities(State)}. 
 	 */
 	private void consolidateModel() {
+
+		setupTickSignal(((Region) this.getContents().get(0)));
+		
 		HashMap<Scope, HashSet<String>> m = new HashMap<Scope, HashSet<String>>();
 		EObject o = null;
 		for (Iterator<EObject> i = this.getAllContents(); i.hasNext();) {
@@ -119,11 +132,30 @@ public class KitsResource extends LazyLinkingResource {
 			}
 			if (SyncchartsPackage.eINSTANCE.getState().isInstance(o)) {
 				setupPriorities((State) o);
-			}
-			
+			}			
 		}
 	}
 	
+	
+	/**
+	 * Provides the implicit signal 'tick' within the root region.
+	 * Signal is created if it is not present, yet, i.e. not declared textual. 
+	 * @param r model root region
+	 */
+	private void setupTickSignal(Region r) {
+		
+		if (r != null) {
+			for (Signal s : r.getSignals()) {
+				if (s.getName().equals("tick")) {
+					return;
+				}
+			}
+			Signal tick = ExpressionsFactory.eINSTANCE.createSignal();
+			tick.setName("tick");
+			tick.setType(ValueType.PURE);
+			r.getSignals().add(tick);
+		}			
+	}
 	
 	/** 
 	 * Consolidates the scope's id.
