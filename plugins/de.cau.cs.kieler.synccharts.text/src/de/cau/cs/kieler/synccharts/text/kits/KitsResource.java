@@ -118,7 +118,9 @@ public class KitsResource extends LazyLinkingResource {
 	 */
 	private void consolidateModel() {
 
-		setupTickSignal(((Region) this.getContents().get(0)));
+		if (!this.getContents().isEmpty()) {
+			setupTickSignal(((Region) this.getContents().get(0)));
+		}
 		
 		HashMap<Scope, HashSet<String>> m = new HashMap<Scope, HashSet<String>>();
 		EObject o = null;
