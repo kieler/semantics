@@ -149,7 +149,7 @@ public final class ValidationManager {
         if (check == null) {
             return null;
         }
-        return check.enabled;
+        return check.isEnabled();
     }
 
     /**
@@ -288,7 +288,7 @@ public final class ValidationManager {
      *            the file
      */
     private static void register(final CheckFile checkFile) {
-        if (checkFile.enabled) {
+        if (checkFile.isEnabled()) {
             CheckRegistry.getInstance().registerCheckFile(checkFile.ePackage,
                     checkFile.file, checkFile.isWrapExistingValidator,
                     checkFile.referencedEPackageNsURIs);
@@ -471,11 +471,19 @@ public final class ValidationManager {
          *            true if it should be visible
          */
         public void setEnabled(final boolean enabledParam) {
+            String pref = PREFERENCE_PREFIX + id;
             boolean oldValue = enabled;
             enabled = enabledParam;
             new InstanceScope().getNode(CoreModelPlugin.PLUGIN_ID).putBoolean(
-                    PREFERENCE_PREFIX + file, enabled);
+                    pref, enabled);
+            IPreferenceStore store = CoreModelPlugin.getDefault()
+                    .getPreferenceStore();
+            store.setValue(pref, enabled);
             firePropertyChangedEvent(file, oldValue, enabled);
+        }
+
+        public boolean isEnabled() {
+            return enabled;
         }
 
         /** The package. */
