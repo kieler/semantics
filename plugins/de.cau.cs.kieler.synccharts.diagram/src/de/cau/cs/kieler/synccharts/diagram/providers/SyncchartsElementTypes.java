@@ -60,47 +60,58 @@ public class SyncchartsElementTypes {
     /**
      * @generated
      */
-    public static final IElementType Region_1000 = getElementType("de.cau.cs.kieler.synccharts.diagram.Region_1000"); //$NON-NLS-1$
+    public static final IElementType Region_1000 =
+            getElementType("de.cau.cs.kieler.synccharts.diagram.Region_1000"); //$NON-NLS-1$
     /**
      * @generated
      */
-    public static final IElementType State_2005 = getElementType("de.cau.cs.kieler.synccharts.diagram.State_2005"); //$NON-NLS-1$
+    public static final IElementType State_2005 =
+            getElementType("de.cau.cs.kieler.synccharts.diagram.State_2005"); //$NON-NLS-1$
     /**
      * @generated
      */
-    public static final IElementType Region_3039 = getElementType("de.cau.cs.kieler.synccharts.diagram.Region_3039"); //$NON-NLS-1$
+    public static final IElementType Region_3039 =
+            getElementType("de.cau.cs.kieler.synccharts.diagram.Region_3039"); //$NON-NLS-1$
     /**
      * @generated
      */
-    public static final IElementType State_3040 = getElementType("de.cau.cs.kieler.synccharts.diagram.State_3040"); //$NON-NLS-1$
+    public static final IElementType State_3040 =
+            getElementType("de.cau.cs.kieler.synccharts.diagram.State_3040"); //$NON-NLS-1$
     /**
      * @generated
      */
-    public static final IElementType Signal_3041 = getElementType("de.cau.cs.kieler.synccharts.diagram.Signal_3041"); //$NON-NLS-1$
+    public static final IElementType Signal_3041 =
+            getElementType("de.cau.cs.kieler.synccharts.diagram.Signal_3041"); //$NON-NLS-1$
     /**
      * @generated
      */
-    public static final IElementType Action_3042 = getElementType("de.cau.cs.kieler.synccharts.diagram.Action_3042"); //$NON-NLS-1$
+    public static final IElementType Action_3042 =
+            getElementType("de.cau.cs.kieler.synccharts.diagram.Action_3042"); //$NON-NLS-1$
     /**
      * @generated
      */
-    public static final IElementType Action_3043 = getElementType("de.cau.cs.kieler.synccharts.diagram.Action_3043"); //$NON-NLS-1$
+    public static final IElementType Action_3043 =
+            getElementType("de.cau.cs.kieler.synccharts.diagram.Action_3043"); //$NON-NLS-1$
     /**
      * @generated
      */
-    public static final IElementType Action_3044 = getElementType("de.cau.cs.kieler.synccharts.diagram.Action_3044"); //$NON-NLS-1$
+    public static final IElementType Action_3044 =
+            getElementType("de.cau.cs.kieler.synccharts.diagram.Action_3044"); //$NON-NLS-1$
     /**
      * @generated
      */
-    public static final IElementType Action_3045 = getElementType("de.cau.cs.kieler.synccharts.diagram.Action_3045"); //$NON-NLS-1$
+    public static final IElementType Action_3045 =
+            getElementType("de.cau.cs.kieler.synccharts.diagram.Action_3045"); //$NON-NLS-1$
     /**
      * @generated
      */
-    public static final IElementType TextualCode_3046 = getElementType("de.cau.cs.kieler.synccharts.diagram.TextualCode_3046"); //$NON-NLS-1$
+    public static final IElementType TextualCode_3046 =
+            getElementType("de.cau.cs.kieler.synccharts.diagram.TextualCode_3046"); //$NON-NLS-1$
     /**
      * @generated
      */
-    public static final IElementType Transition_4005 = getElementType("de.cau.cs.kieler.synccharts.diagram.Transition_4005"); //$NON-NLS-1$
+    public static final IElementType Transition_4005 =
+            getElementType("de.cau.cs.kieler.synccharts.diagram.Transition_4005"); //$NON-NLS-1$
 
     /**
      * @generated
@@ -171,7 +182,8 @@ public class SyncchartsElementTypes {
         String key = getImageRegistryKey(element);
         Image image = getImageRegistry().get(key);
         if (image == null) {
-            ImageDescriptor imageDescriptor = getProvidedImageDescriptor(element);
+            ImageDescriptor imageDescriptor =
+                    getProvidedImageDescriptor(element);
             if (imageDescriptor == null) {
                 imageDescriptor = ImageDescriptor.getMissingImageDescriptor();
             }

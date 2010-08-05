@@ -110,11 +110,11 @@ public class SyncchartsViewProvider extends AbstractProvider implements
      */
     protected boolean provides(CreateViewForKindOperation op) {
         /*
-        		if (op.getViewKind() == Node.class)
-        			return getNodeViewClass(op.getSemanticAdapter(), op.getContainerView(), op.getSemanticHint()) != null;
-        		if (op.getViewKind() == Edge.class)
-        			return getEdgeViewClass(op.getSemanticAdapter(), op.getContainerView(), op.getSemanticHint()) != null;
-        */
+         if (op.getViewKind() == Node.class)
+         return getNodeViewClass(op.getSemanticAdapter(), op.getContainerView(), op.getSemanticHint()) != null;
+         if (op.getViewKind() == Edge.class)
+         return getEdgeViewClass(op.getSemanticAdapter(), op.getContainerView(), op.getSemanticHint()) != null;
+         */
         return true;
     }
 
@@ -135,8 +135,8 @@ public class SyncchartsViewProvider extends AbstractProvider implements
         if (op.getContainerView() == null) {
             return false;
         }
-        IElementType elementType = getSemanticElementType(op
-                .getSemanticAdapter());
+        IElementType elementType =
+                getSemanticElementType(op.getSemanticAdapter());
         EObject domainElement = getSemanticElement(op.getSemanticAdapter());
         int visualID;
         if (op.getSemanticHint() == null) {
@@ -146,18 +146,20 @@ public class SyncchartsViewProvider extends AbstractProvider implements
             if (elementType != null || domainElement == null) {
                 return false;
             }
-            visualID = SyncchartsVisualIDRegistry.getNodeVisualID(
-                    op.getContainerView(), domainElement);
+            visualID =
+                    SyncchartsVisualIDRegistry.getNodeVisualID(
+                            op.getContainerView(), domainElement);
         } else {
-            visualID = SyncchartsVisualIDRegistry.getVisualID(op
-                    .getSemanticHint());
+            visualID =
+                    SyncchartsVisualIDRegistry
+                            .getVisualID(op.getSemanticHint());
             if (elementType != null) {
                 if (!SyncchartsElementTypes.isKnownElementType(elementType)
                         || (!(elementType instanceof IHintedType))) {
                     return false; // foreign element type
                 }
-                String elementTypeHint = ((IHintedType) elementType)
-                        .getSemanticHint();
+                String elementTypeHint =
+                        ((IHintedType) elementType).getSemanticHint();
                 if (!op.getSemanticHint().equals(elementTypeHint)) {
                     return false; // if semantic hint is specified it should be the same as in element type
                 }
@@ -209,8 +211,8 @@ public class SyncchartsViewProvider extends AbstractProvider implements
      * @generated
      */
     protected boolean provides(CreateEdgeViewOperation op) {
-        IElementType elementType = getSemanticElementType(op
-                .getSemanticAdapter());
+        IElementType elementType =
+                getSemanticElementType(op.getSemanticAdapter());
         if (!SyncchartsElementTypes.isKnownElementType(elementType)
                 || (!(elementType instanceof IHintedType))) {
             return false; // foreign element type
@@ -253,8 +255,9 @@ public class SyncchartsViewProvider extends AbstractProvider implements
         final EObject domainElement = getSemanticElement(semanticAdapter);
         final int visualID;
         if (semanticHint == null) {
-            visualID = SyncchartsVisualIDRegistry.getNodeVisualID(
-                    containerView, domainElement);
+            visualID =
+                    SyncchartsVisualIDRegistry.getNodeVisualID(containerView,
+                            domainElement);
         } else {
             visualID = SyncchartsVisualIDRegistry.getVisualID(semanticHint);
         }
@@ -321,39 +324,46 @@ public class SyncchartsViewProvider extends AbstractProvider implements
         node.setElement(domainElement);
         stampShortcut(containerView, node);
         // initializeFromPreferences 
-        final IPreferenceStore prefStore = (IPreferenceStore) preferencesHint
-                .getPreferenceStore();
+        final IPreferenceStore prefStore =
+                (IPreferenceStore) preferencesHint.getPreferenceStore();
 
-        org.eclipse.swt.graphics.RGB lineRGB = PreferenceConverter.getColor(
-                prefStore, IPreferenceConstants.PREF_LINE_COLOR);
+        org.eclipse.swt.graphics.RGB lineRGB =
+                PreferenceConverter.getColor(prefStore,
+                        IPreferenceConstants.PREF_LINE_COLOR);
         ViewUtil.setStructuralFeatureValue(node,
                 NotationPackage.eINSTANCE.getLineStyle_LineColor(),
                 FigureUtilities.RGBToInteger(lineRGB));
-        FontStyle nodeFontStyle = (FontStyle) node
-                .getStyle(NotationPackage.Literals.FONT_STYLE);
+        FontStyle nodeFontStyle =
+                (FontStyle) node.getStyle(NotationPackage.Literals.FONT_STYLE);
         if (nodeFontStyle != null) {
-            FontData fontData = PreferenceConverter.getFontData(prefStore,
-                    IPreferenceConstants.PREF_DEFAULT_FONT);
+            FontData fontData =
+                    PreferenceConverter.getFontData(prefStore,
+                            IPreferenceConstants.PREF_DEFAULT_FONT);
             nodeFontStyle.setFontName(fontData.getName());
             nodeFontStyle.setFontHeight(fontData.getHeight());
             nodeFontStyle.setBold((fontData.getStyle() & SWT.BOLD) != 0);
             nodeFontStyle.setItalic((fontData.getStyle() & SWT.ITALIC) != 0);
-            org.eclipse.swt.graphics.RGB fontRGB = PreferenceConverter
-                    .getColor(prefStore, IPreferenceConstants.PREF_FONT_COLOR);
+            org.eclipse.swt.graphics.RGB fontRGB =
+                    PreferenceConverter.getColor(prefStore,
+                            IPreferenceConstants.PREF_FONT_COLOR);
             nodeFontStyle.setFontColor(FigureUtilities.RGBToInteger(fontRGB)
                     .intValue());
         }
-        org.eclipse.swt.graphics.RGB fillRGB = PreferenceConverter.getColor(
-                prefStore, IPreferenceConstants.PREF_FILL_COLOR);
+        org.eclipse.swt.graphics.RGB fillRGB =
+                PreferenceConverter.getColor(prefStore,
+                        IPreferenceConstants.PREF_FILL_COLOR);
         ViewUtil.setStructuralFeatureValue(node,
                 NotationPackage.eINSTANCE.getFillStyle_FillColor(),
                 FigureUtilities.RGBToInteger(fillRGB));
-        Node label5059 = createLabel(node,
-                SyncchartsVisualIDRegistry
-                        .getType(StateLabelEditPart.VISUAL_ID));
-        Node label5060 = createLabel(node,
-                SyncchartsVisualIDRegistry
-                        .getType(StateInterfaceDeclarationEditPart.VISUAL_ID));
+        Node label5059 =
+                createLabel(node,
+                        SyncchartsVisualIDRegistry
+                                .getType(StateLabelEditPart.VISUAL_ID));
+        Node label5060 =
+                createLabel(
+                        node,
+                        SyncchartsVisualIDRegistry
+                                .getType(StateInterfaceDeclarationEditPart.VISUAL_ID));
         createCompartment(node,
                 SyncchartsVisualIDRegistry
                         .getType(StateSignalCompartment2EditPart.VISUAL_ID),
@@ -397,36 +407,41 @@ public class SyncchartsViewProvider extends AbstractProvider implements
         ViewUtil.insertChildView(containerView, node, index, persisted);
         node.setElement(domainElement);
         // initializeFromPreferences 
-        final IPreferenceStore prefStore = (IPreferenceStore) preferencesHint
-                .getPreferenceStore();
+        final IPreferenceStore prefStore =
+                (IPreferenceStore) preferencesHint.getPreferenceStore();
 
-        org.eclipse.swt.graphics.RGB lineRGB = PreferenceConverter.getColor(
-                prefStore, IPreferenceConstants.PREF_LINE_COLOR);
+        org.eclipse.swt.graphics.RGB lineRGB =
+                PreferenceConverter.getColor(prefStore,
+                        IPreferenceConstants.PREF_LINE_COLOR);
         ViewUtil.setStructuralFeatureValue(node,
                 NotationPackage.eINSTANCE.getLineStyle_LineColor(),
                 FigureUtilities.RGBToInteger(lineRGB));
-        FontStyle nodeFontStyle = (FontStyle) node
-                .getStyle(NotationPackage.Literals.FONT_STYLE);
+        FontStyle nodeFontStyle =
+                (FontStyle) node.getStyle(NotationPackage.Literals.FONT_STYLE);
         if (nodeFontStyle != null) {
-            FontData fontData = PreferenceConverter.getFontData(prefStore,
-                    IPreferenceConstants.PREF_DEFAULT_FONT);
+            FontData fontData =
+                    PreferenceConverter.getFontData(prefStore,
+                            IPreferenceConstants.PREF_DEFAULT_FONT);
             nodeFontStyle.setFontName(fontData.getName());
             nodeFontStyle.setFontHeight(fontData.getHeight());
             nodeFontStyle.setBold((fontData.getStyle() & SWT.BOLD) != 0);
             nodeFontStyle.setItalic((fontData.getStyle() & SWT.ITALIC) != 0);
-            org.eclipse.swt.graphics.RGB fontRGB = PreferenceConverter
-                    .getColor(prefStore, IPreferenceConstants.PREF_FONT_COLOR);
+            org.eclipse.swt.graphics.RGB fontRGB =
+                    PreferenceConverter.getColor(prefStore,
+                            IPreferenceConstants.PREF_FONT_COLOR);
             nodeFontStyle.setFontColor(FigureUtilities.RGBToInteger(fontRGB)
                     .intValue());
         }
-        org.eclipse.swt.graphics.RGB fillRGB = PreferenceConverter.getColor(
-                prefStore, IPreferenceConstants.PREF_FILL_COLOR);
+        org.eclipse.swt.graphics.RGB fillRGB =
+                PreferenceConverter.getColor(prefStore,
+                        IPreferenceConstants.PREF_FILL_COLOR);
         ViewUtil.setStructuralFeatureValue(node,
                 NotationPackage.eINSTANCE.getFillStyle_FillColor(),
                 FigureUtilities.RGBToInteger(fillRGB));
-        Node label5058 = createLabel(node,
-                SyncchartsVisualIDRegistry
-                        .getType(RegionLabelEditPart.VISUAL_ID));
+        Node label5058 =
+                createLabel(node,
+                        SyncchartsVisualIDRegistry
+                                .getType(RegionLabelEditPart.VISUAL_ID));
         createCompartment(node,
                 SyncchartsVisualIDRegistry
                         .getType(RegionStateCompartmentEditPart.VISUAL_ID),
@@ -446,39 +461,46 @@ public class SyncchartsViewProvider extends AbstractProvider implements
         ViewUtil.insertChildView(containerView, node, index, persisted);
         node.setElement(domainElement);
         // initializeFromPreferences 
-        final IPreferenceStore prefStore = (IPreferenceStore) preferencesHint
-                .getPreferenceStore();
+        final IPreferenceStore prefStore =
+                (IPreferenceStore) preferencesHint.getPreferenceStore();
 
-        org.eclipse.swt.graphics.RGB lineRGB = PreferenceConverter.getColor(
-                prefStore, IPreferenceConstants.PREF_LINE_COLOR);
+        org.eclipse.swt.graphics.RGB lineRGB =
+                PreferenceConverter.getColor(prefStore,
+                        IPreferenceConstants.PREF_LINE_COLOR);
         ViewUtil.setStructuralFeatureValue(node,
                 NotationPackage.eINSTANCE.getLineStyle_LineColor(),
                 FigureUtilities.RGBToInteger(lineRGB));
-        FontStyle nodeFontStyle = (FontStyle) node
-                .getStyle(NotationPackage.Literals.FONT_STYLE);
+        FontStyle nodeFontStyle =
+                (FontStyle) node.getStyle(NotationPackage.Literals.FONT_STYLE);
         if (nodeFontStyle != null) {
-            FontData fontData = PreferenceConverter.getFontData(prefStore,
-                    IPreferenceConstants.PREF_DEFAULT_FONT);
+            FontData fontData =
+                    PreferenceConverter.getFontData(prefStore,
+                            IPreferenceConstants.PREF_DEFAULT_FONT);
             nodeFontStyle.setFontName(fontData.getName());
             nodeFontStyle.setFontHeight(fontData.getHeight());
             nodeFontStyle.setBold((fontData.getStyle() & SWT.BOLD) != 0);
             nodeFontStyle.setItalic((fontData.getStyle() & SWT.ITALIC) != 0);
-            org.eclipse.swt.graphics.RGB fontRGB = PreferenceConverter
-                    .getColor(prefStore, IPreferenceConstants.PREF_FONT_COLOR);
+            org.eclipse.swt.graphics.RGB fontRGB =
+                    PreferenceConverter.getColor(prefStore,
+                            IPreferenceConstants.PREF_FONT_COLOR);
             nodeFontStyle.setFontColor(FigureUtilities.RGBToInteger(fontRGB)
                     .intValue());
         }
-        org.eclipse.swt.graphics.RGB fillRGB = PreferenceConverter.getColor(
-                prefStore, IPreferenceConstants.PREF_FILL_COLOR);
+        org.eclipse.swt.graphics.RGB fillRGB =
+                PreferenceConverter.getColor(prefStore,
+                        IPreferenceConstants.PREF_FILL_COLOR);
         ViewUtil.setStructuralFeatureValue(node,
                 NotationPackage.eINSTANCE.getFillStyle_FillColor(),
                 FigureUtilities.RGBToInteger(fillRGB));
-        Node label5056 = createLabel(node,
-                SyncchartsVisualIDRegistry
-                        .getType(StateLabel2EditPart.VISUAL_ID));
-        Node label5057 = createLabel(node,
-                SyncchartsVisualIDRegistry
-                        .getType(StateInterfaceDeclaration2EditPart.VISUAL_ID));
+        Node label5056 =
+                createLabel(node,
+                        SyncchartsVisualIDRegistry
+                                .getType(StateLabel2EditPart.VISUAL_ID));
+        Node label5057 =
+                createLabel(
+                        node,
+                        SyncchartsVisualIDRegistry
+                                .getType(StateInterfaceDeclaration2EditPart.VISUAL_ID));
         createCompartment(node,
                 SyncchartsVisualIDRegistry
                         .getType(StateSignalCompartmentEditPart.VISUAL_ID),
@@ -521,36 +543,41 @@ public class SyncchartsViewProvider extends AbstractProvider implements
         ViewUtil.insertChildView(containerView, node, index, persisted);
         node.setElement(domainElement);
         // initializeFromPreferences 
-        final IPreferenceStore prefStore = (IPreferenceStore) preferencesHint
-                .getPreferenceStore();
+        final IPreferenceStore prefStore =
+                (IPreferenceStore) preferencesHint.getPreferenceStore();
 
-        org.eclipse.swt.graphics.RGB lineRGB = PreferenceConverter.getColor(
-                prefStore, IPreferenceConstants.PREF_LINE_COLOR);
+        org.eclipse.swt.graphics.RGB lineRGB =
+                PreferenceConverter.getColor(prefStore,
+                        IPreferenceConstants.PREF_LINE_COLOR);
         ViewUtil.setStructuralFeatureValue(node,
                 NotationPackage.eINSTANCE.getLineStyle_LineColor(),
                 FigureUtilities.RGBToInteger(lineRGB));
-        FontStyle nodeFontStyle = (FontStyle) node
-                .getStyle(NotationPackage.Literals.FONT_STYLE);
+        FontStyle nodeFontStyle =
+                (FontStyle) node.getStyle(NotationPackage.Literals.FONT_STYLE);
         if (nodeFontStyle != null) {
-            FontData fontData = PreferenceConverter.getFontData(prefStore,
-                    IPreferenceConstants.PREF_DEFAULT_FONT);
+            FontData fontData =
+                    PreferenceConverter.getFontData(prefStore,
+                            IPreferenceConstants.PREF_DEFAULT_FONT);
             nodeFontStyle.setFontName(fontData.getName());
             nodeFontStyle.setFontHeight(fontData.getHeight());
             nodeFontStyle.setBold((fontData.getStyle() & SWT.BOLD) != 0);
             nodeFontStyle.setItalic((fontData.getStyle() & SWT.ITALIC) != 0);
-            org.eclipse.swt.graphics.RGB fontRGB = PreferenceConverter
-                    .getColor(prefStore, IPreferenceConstants.PREF_FONT_COLOR);
+            org.eclipse.swt.graphics.RGB fontRGB =
+                    PreferenceConverter.getColor(prefStore,
+                            IPreferenceConstants.PREF_FONT_COLOR);
             nodeFontStyle.setFontColor(FigureUtilities.RGBToInteger(fontRGB)
                     .intValue());
         }
-        org.eclipse.swt.graphics.RGB fillRGB = PreferenceConverter.getColor(
-                prefStore, IPreferenceConstants.PREF_FILL_COLOR);
+        org.eclipse.swt.graphics.RGB fillRGB =
+                PreferenceConverter.getColor(prefStore,
+                        IPreferenceConstants.PREF_FILL_COLOR);
         ViewUtil.setStructuralFeatureValue(node,
                 NotationPackage.eINSTANCE.getFillStyle_FillColor(),
                 FigureUtilities.RGBToInteger(fillRGB));
-        Node label5051 = createLabel(node,
-                SyncchartsVisualIDRegistry
-                        .getType(SignalNameEditPart.VISUAL_ID));
+        Node label5051 =
+                createLabel(node,
+                        SyncchartsVisualIDRegistry
+                                .getType(SignalNameEditPart.VISUAL_ID));
         return node;
     }
 
@@ -566,36 +593,42 @@ public class SyncchartsViewProvider extends AbstractProvider implements
         ViewUtil.insertChildView(containerView, node, index, persisted);
         node.setElement(domainElement);
         // initializeFromPreferences 
-        final IPreferenceStore prefStore = (IPreferenceStore) preferencesHint
-                .getPreferenceStore();
+        final IPreferenceStore prefStore =
+                (IPreferenceStore) preferencesHint.getPreferenceStore();
 
-        org.eclipse.swt.graphics.RGB lineRGB = PreferenceConverter.getColor(
-                prefStore, IPreferenceConstants.PREF_LINE_COLOR);
+        org.eclipse.swt.graphics.RGB lineRGB =
+                PreferenceConverter.getColor(prefStore,
+                        IPreferenceConstants.PREF_LINE_COLOR);
         ViewUtil.setStructuralFeatureValue(node,
                 NotationPackage.eINSTANCE.getLineStyle_LineColor(),
                 FigureUtilities.RGBToInteger(lineRGB));
-        FontStyle nodeFontStyle = (FontStyle) node
-                .getStyle(NotationPackage.Literals.FONT_STYLE);
+        FontStyle nodeFontStyle =
+                (FontStyle) node.getStyle(NotationPackage.Literals.FONT_STYLE);
         if (nodeFontStyle != null) {
-            FontData fontData = PreferenceConverter.getFontData(prefStore,
-                    IPreferenceConstants.PREF_DEFAULT_FONT);
+            FontData fontData =
+                    PreferenceConverter.getFontData(prefStore,
+                            IPreferenceConstants.PREF_DEFAULT_FONT);
             nodeFontStyle.setFontName(fontData.getName());
             nodeFontStyle.setFontHeight(fontData.getHeight());
             nodeFontStyle.setBold((fontData.getStyle() & SWT.BOLD) != 0);
             nodeFontStyle.setItalic((fontData.getStyle() & SWT.ITALIC) != 0);
-            org.eclipse.swt.graphics.RGB fontRGB = PreferenceConverter
-                    .getColor(prefStore, IPreferenceConstants.PREF_FONT_COLOR);
+            org.eclipse.swt.graphics.RGB fontRGB =
+                    PreferenceConverter.getColor(prefStore,
+                            IPreferenceConstants.PREF_FONT_COLOR);
             nodeFontStyle.setFontColor(FigureUtilities.RGBToInteger(fontRGB)
                     .intValue());
         }
-        org.eclipse.swt.graphics.RGB fillRGB = PreferenceConverter.getColor(
-                prefStore, IPreferenceConstants.PREF_FILL_COLOR);
+        org.eclipse.swt.graphics.RGB fillRGB =
+                PreferenceConverter.getColor(prefStore,
+                        IPreferenceConstants.PREF_FILL_COLOR);
         ViewUtil.setStructuralFeatureValue(node,
                 NotationPackage.eINSTANCE.getFillStyle_FillColor(),
                 FigureUtilities.RGBToInteger(fillRGB));
-        Node label5052 = createLabel(node,
-                SyncchartsVisualIDRegistry
-                        .getType(StateEntryActionLabelEditPart.VISUAL_ID));
+        Node label5052 =
+                createLabel(
+                        node,
+                        SyncchartsVisualIDRegistry
+                                .getType(StateEntryActionLabelEditPart.VISUAL_ID));
         return node;
     }
 
@@ -611,36 +644,42 @@ public class SyncchartsViewProvider extends AbstractProvider implements
         ViewUtil.insertChildView(containerView, node, index, persisted);
         node.setElement(domainElement);
         // initializeFromPreferences 
-        final IPreferenceStore prefStore = (IPreferenceStore) preferencesHint
-                .getPreferenceStore();
+        final IPreferenceStore prefStore =
+                (IPreferenceStore) preferencesHint.getPreferenceStore();
 
-        org.eclipse.swt.graphics.RGB lineRGB = PreferenceConverter.getColor(
-                prefStore, IPreferenceConstants.PREF_LINE_COLOR);
+        org.eclipse.swt.graphics.RGB lineRGB =
+                PreferenceConverter.getColor(prefStore,
+                        IPreferenceConstants.PREF_LINE_COLOR);
         ViewUtil.setStructuralFeatureValue(node,
                 NotationPackage.eINSTANCE.getLineStyle_LineColor(),
                 FigureUtilities.RGBToInteger(lineRGB));
-        FontStyle nodeFontStyle = (FontStyle) node
-                .getStyle(NotationPackage.Literals.FONT_STYLE);
+        FontStyle nodeFontStyle =
+                (FontStyle) node.getStyle(NotationPackage.Literals.FONT_STYLE);
         if (nodeFontStyle != null) {
-            FontData fontData = PreferenceConverter.getFontData(prefStore,
-                    IPreferenceConstants.PREF_DEFAULT_FONT);
+            FontData fontData =
+                    PreferenceConverter.getFontData(prefStore,
+                            IPreferenceConstants.PREF_DEFAULT_FONT);
             nodeFontStyle.setFontName(fontData.getName());
             nodeFontStyle.setFontHeight(fontData.getHeight());
             nodeFontStyle.setBold((fontData.getStyle() & SWT.BOLD) != 0);
             nodeFontStyle.setItalic((fontData.getStyle() & SWT.ITALIC) != 0);
-            org.eclipse.swt.graphics.RGB fontRGB = PreferenceConverter
-                    .getColor(prefStore, IPreferenceConstants.PREF_FONT_COLOR);
+            org.eclipse.swt.graphics.RGB fontRGB =
+                    PreferenceConverter.getColor(prefStore,
+                            IPreferenceConstants.PREF_FONT_COLOR);
             nodeFontStyle.setFontColor(FigureUtilities.RGBToInteger(fontRGB)
                     .intValue());
         }
-        org.eclipse.swt.graphics.RGB fillRGB = PreferenceConverter.getColor(
-                prefStore, IPreferenceConstants.PREF_FILL_COLOR);
+        org.eclipse.swt.graphics.RGB fillRGB =
+                PreferenceConverter.getColor(prefStore,
+                        IPreferenceConstants.PREF_FILL_COLOR);
         ViewUtil.setStructuralFeatureValue(node,
                 NotationPackage.eINSTANCE.getFillStyle_FillColor(),
                 FigureUtilities.RGBToInteger(fillRGB));
-        Node label5053 = createLabel(node,
-                SyncchartsVisualIDRegistry
-                        .getType(StateInnerActionLabelEditPart.VISUAL_ID));
+        Node label5053 =
+                createLabel(
+                        node,
+                        SyncchartsVisualIDRegistry
+                                .getType(StateInnerActionLabelEditPart.VISUAL_ID));
         return node;
     }
 
@@ -656,36 +695,42 @@ public class SyncchartsViewProvider extends AbstractProvider implements
         ViewUtil.insertChildView(containerView, node, index, persisted);
         node.setElement(domainElement);
         // initializeFromPreferences 
-        final IPreferenceStore prefStore = (IPreferenceStore) preferencesHint
-                .getPreferenceStore();
+        final IPreferenceStore prefStore =
+                (IPreferenceStore) preferencesHint.getPreferenceStore();
 
-        org.eclipse.swt.graphics.RGB lineRGB = PreferenceConverter.getColor(
-                prefStore, IPreferenceConstants.PREF_LINE_COLOR);
+        org.eclipse.swt.graphics.RGB lineRGB =
+                PreferenceConverter.getColor(prefStore,
+                        IPreferenceConstants.PREF_LINE_COLOR);
         ViewUtil.setStructuralFeatureValue(node,
                 NotationPackage.eINSTANCE.getLineStyle_LineColor(),
                 FigureUtilities.RGBToInteger(lineRGB));
-        FontStyle nodeFontStyle = (FontStyle) node
-                .getStyle(NotationPackage.Literals.FONT_STYLE);
+        FontStyle nodeFontStyle =
+                (FontStyle) node.getStyle(NotationPackage.Literals.FONT_STYLE);
         if (nodeFontStyle != null) {
-            FontData fontData = PreferenceConverter.getFontData(prefStore,
-                    IPreferenceConstants.PREF_DEFAULT_FONT);
+            FontData fontData =
+                    PreferenceConverter.getFontData(prefStore,
+                            IPreferenceConstants.PREF_DEFAULT_FONT);
             nodeFontStyle.setFontName(fontData.getName());
             nodeFontStyle.setFontHeight(fontData.getHeight());
             nodeFontStyle.setBold((fontData.getStyle() & SWT.BOLD) != 0);
             nodeFontStyle.setItalic((fontData.getStyle() & SWT.ITALIC) != 0);
-            org.eclipse.swt.graphics.RGB fontRGB = PreferenceConverter
-                    .getColor(prefStore, IPreferenceConstants.PREF_FONT_COLOR);
+            org.eclipse.swt.graphics.RGB fontRGB =
+                    PreferenceConverter.getColor(prefStore,
+                            IPreferenceConstants.PREF_FONT_COLOR);
             nodeFontStyle.setFontColor(FigureUtilities.RGBToInteger(fontRGB)
                     .intValue());
         }
-        org.eclipse.swt.graphics.RGB fillRGB = PreferenceConverter.getColor(
-                prefStore, IPreferenceConstants.PREF_FILL_COLOR);
+        org.eclipse.swt.graphics.RGB fillRGB =
+                PreferenceConverter.getColor(prefStore,
+                        IPreferenceConstants.PREF_FILL_COLOR);
         ViewUtil.setStructuralFeatureValue(node,
                 NotationPackage.eINSTANCE.getFillStyle_FillColor(),
                 FigureUtilities.RGBToInteger(fillRGB));
-        Node label5054 = createLabel(node,
-                SyncchartsVisualIDRegistry
-                        .getType(StateExitActionLabelEditPart.VISUAL_ID));
+        Node label5054 =
+                createLabel(
+                        node,
+                        SyncchartsVisualIDRegistry
+                                .getType(StateExitActionLabelEditPart.VISUAL_ID));
         return node;
     }
 
@@ -701,36 +746,42 @@ public class SyncchartsViewProvider extends AbstractProvider implements
         ViewUtil.insertChildView(containerView, node, index, persisted);
         node.setElement(domainElement);
         // initializeFromPreferences 
-        final IPreferenceStore prefStore = (IPreferenceStore) preferencesHint
-                .getPreferenceStore();
+        final IPreferenceStore prefStore =
+                (IPreferenceStore) preferencesHint.getPreferenceStore();
 
-        org.eclipse.swt.graphics.RGB lineRGB = PreferenceConverter.getColor(
-                prefStore, IPreferenceConstants.PREF_LINE_COLOR);
+        org.eclipse.swt.graphics.RGB lineRGB =
+                PreferenceConverter.getColor(prefStore,
+                        IPreferenceConstants.PREF_LINE_COLOR);
         ViewUtil.setStructuralFeatureValue(node,
                 NotationPackage.eINSTANCE.getLineStyle_LineColor(),
                 FigureUtilities.RGBToInteger(lineRGB));
-        FontStyle nodeFontStyle = (FontStyle) node
-                .getStyle(NotationPackage.Literals.FONT_STYLE);
+        FontStyle nodeFontStyle =
+                (FontStyle) node.getStyle(NotationPackage.Literals.FONT_STYLE);
         if (nodeFontStyle != null) {
-            FontData fontData = PreferenceConverter.getFontData(prefStore,
-                    IPreferenceConstants.PREF_DEFAULT_FONT);
+            FontData fontData =
+                    PreferenceConverter.getFontData(prefStore,
+                            IPreferenceConstants.PREF_DEFAULT_FONT);
             nodeFontStyle.setFontName(fontData.getName());
             nodeFontStyle.setFontHeight(fontData.getHeight());
             nodeFontStyle.setBold((fontData.getStyle() & SWT.BOLD) != 0);
             nodeFontStyle.setItalic((fontData.getStyle() & SWT.ITALIC) != 0);
-            org.eclipse.swt.graphics.RGB fontRGB = PreferenceConverter
-                    .getColor(prefStore, IPreferenceConstants.PREF_FONT_COLOR);
+            org.eclipse.swt.graphics.RGB fontRGB =
+                    PreferenceConverter.getColor(prefStore,
+                            IPreferenceConstants.PREF_FONT_COLOR);
             nodeFontStyle.setFontColor(FigureUtilities.RGBToInteger(fontRGB)
                     .intValue());
         }
-        org.eclipse.swt.graphics.RGB fillRGB = PreferenceConverter.getColor(
-                prefStore, IPreferenceConstants.PREF_FILL_COLOR);
+        org.eclipse.swt.graphics.RGB fillRGB =
+                PreferenceConverter.getColor(prefStore,
+                        IPreferenceConstants.PREF_FILL_COLOR);
         ViewUtil.setStructuralFeatureValue(node,
                 NotationPackage.eINSTANCE.getFillStyle_FillColor(),
                 FigureUtilities.RGBToInteger(fillRGB));
-        Node label5055 = createLabel(node,
-                SyncchartsVisualIDRegistry
-                        .getType(StateSuspensionTriggerLabelEditPart.VISUAL_ID));
+        Node label5055 =
+                createLabel(
+                        node,
+                        SyncchartsVisualIDRegistry
+                                .getType(StateSuspensionTriggerLabelEditPart.VISUAL_ID));
         return node;
     }
 
@@ -757,10 +808,10 @@ public class SyncchartsViewProvider extends AbstractProvider implements
             PreferencesHint preferencesHint) {
         Connector edge = NotationFactory.eINSTANCE.createConnector();
         edge.getStyles().add(NotationFactory.eINSTANCE.createFontStyle());
-        RelativeBendpoints bendpoints = NotationFactory.eINSTANCE
-                .createRelativeBendpoints();
-        ArrayList<RelativeBendpoint> points = new ArrayList<RelativeBendpoint>(
-                2);
+        RelativeBendpoints bendpoints =
+                NotationFactory.eINSTANCE.createRelativeBendpoints();
+        ArrayList<RelativeBendpoint> points =
+                new ArrayList<RelativeBendpoint>(2);
         points.add(new RelativeBendpoint());
         points.add(new RelativeBendpoint());
         bendpoints.setPoints(points);
@@ -770,46 +821,52 @@ public class SyncchartsViewProvider extends AbstractProvider implements
                 .getType(TransitionEditPart.VISUAL_ID));
         edge.setElement(domainElement);
         // initializePreferences
-        final IPreferenceStore prefStore = (IPreferenceStore) preferencesHint
-                .getPreferenceStore();
+        final IPreferenceStore prefStore =
+                (IPreferenceStore) preferencesHint.getPreferenceStore();
 
-        org.eclipse.swt.graphics.RGB lineRGB = PreferenceConverter.getColor(
-                prefStore, IPreferenceConstants.PREF_LINE_COLOR);
+        org.eclipse.swt.graphics.RGB lineRGB =
+                PreferenceConverter.getColor(prefStore,
+                        IPreferenceConstants.PREF_LINE_COLOR);
         ViewUtil.setStructuralFeatureValue(edge,
                 NotationPackage.eINSTANCE.getLineStyle_LineColor(),
                 FigureUtilities.RGBToInteger(lineRGB));
-        FontStyle edgeFontStyle = (FontStyle) edge
-                .getStyle(NotationPackage.Literals.FONT_STYLE);
+        FontStyle edgeFontStyle =
+                (FontStyle) edge.getStyle(NotationPackage.Literals.FONT_STYLE);
         if (edgeFontStyle != null) {
-            FontData fontData = PreferenceConverter.getFontData(prefStore,
-                    IPreferenceConstants.PREF_DEFAULT_FONT);
+            FontData fontData =
+                    PreferenceConverter.getFontData(prefStore,
+                            IPreferenceConstants.PREF_DEFAULT_FONT);
             edgeFontStyle.setFontName(fontData.getName());
             edgeFontStyle.setFontHeight(fontData.getHeight());
             edgeFontStyle.setBold((fontData.getStyle() & SWT.BOLD) != 0);
             edgeFontStyle.setItalic((fontData.getStyle() & SWT.ITALIC) != 0);
-            org.eclipse.swt.graphics.RGB fontRGB = PreferenceConverter
-                    .getColor(prefStore, IPreferenceConstants.PREF_FONT_COLOR);
+            org.eclipse.swt.graphics.RGB fontRGB =
+                    PreferenceConverter.getColor(prefStore,
+                            IPreferenceConstants.PREF_FONT_COLOR);
             edgeFontStyle.setFontColor(FigureUtilities.RGBToInteger(fontRGB)
                     .intValue());
         }
-        Routing routing = Routing.get(prefStore
-                .getInt(IPreferenceConstants.PREF_LINE_STYLE));
+        Routing routing =
+                Routing.get(prefStore
+                        .getInt(IPreferenceConstants.PREF_LINE_STYLE));
         if (routing != null) {
             ViewUtil.setStructuralFeatureValue(edge,
                     NotationPackage.eINSTANCE.getRoutingStyle_Routing(),
                     routing);
         }
-        Node label6009 = createLabel(edge,
-                SyncchartsVisualIDRegistry
-                        .getType(TransitionLabelEditPart.VISUAL_ID));
+        Node label6009 =
+                createLabel(edge,
+                        SyncchartsVisualIDRegistry
+                                .getType(TransitionLabelEditPart.VISUAL_ID));
         label6009.setLayoutConstraint(NotationFactory.eINSTANCE
                 .createLocation());
         Location location6009 = (Location) label6009.getLayoutConstraint();
         location6009.setX(0);
         location6009.setY(40);
-        Node label6010 = createLabel(edge,
-                SyncchartsVisualIDRegistry
-                        .getType(TransitionPriorityEditPart.VISUAL_ID));
+        Node label6010 =
+                createLabel(edge,
+                        SyncchartsVisualIDRegistry
+                                .getType(TransitionPriorityEditPart.VISUAL_ID));
         label6010.setLayoutConstraint(NotationFactory.eINSTANCE
                 .createLocation());
         Location location6010 = (Location) label6010.getLayoutConstraint();
@@ -824,8 +881,8 @@ public class SyncchartsViewProvider extends AbstractProvider implements
     private void stampShortcut(View containerView, Node target) {
         if (!RegionEditPart.MODEL_ID.equals(SyncchartsVisualIDRegistry
                 .getModelID(containerView))) {
-            EAnnotation shortcutAnnotation = EcoreFactory.eINSTANCE
-                    .createEAnnotation();
+            EAnnotation shortcutAnnotation =
+                    EcoreFactory.eINSTANCE.createEAnnotation();
             shortcutAnnotation.setSource("Shortcut"); //$NON-NLS-1$
             shortcutAnnotation.getDetails().put(
                     "modelID", RegionEditPart.MODEL_ID); //$NON-NLS-1$

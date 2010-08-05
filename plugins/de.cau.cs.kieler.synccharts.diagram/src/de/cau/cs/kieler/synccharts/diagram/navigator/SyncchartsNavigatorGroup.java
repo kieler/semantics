@@ -79,7 +79,8 @@ public class SyncchartsNavigatorGroup extends SyncchartsAbstractNavigatorItem {
      */
     public boolean equals(Object obj) {
         if (obj instanceof de.cau.cs.kieler.synccharts.diagram.navigator.SyncchartsNavigatorGroup) {
-            de.cau.cs.kieler.synccharts.diagram.navigator.SyncchartsNavigatorGroup anotherGroup = (de.cau.cs.kieler.synccharts.diagram.navigator.SyncchartsNavigatorGroup) obj;
+            de.cau.cs.kieler.synccharts.diagram.navigator.SyncchartsNavigatorGroup anotherGroup =
+                    (de.cau.cs.kieler.synccharts.diagram.navigator.SyncchartsNavigatorGroup) obj;
             if (getGroupName().equals(anotherGroup.getGroupName())) {
                 return getParent().equals(anotherGroup.getParent());
             }

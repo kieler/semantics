@@ -49,9 +49,10 @@ public class DiagramConnectionsPreferencePage extends ConnectionsPreferencePage 
         super.addFieldEditors(composite);
 
         // spline mode
-        splineModeFieldEditor = new ComboFieldEditor(
-                SplineConnection.PREF_SPLINE_MODE, SPLINE_LABEL, composite,
-                ComboFieldEditor.INT_TYPE, true, 0, 0, true);
+        splineModeFieldEditor =
+                new ComboFieldEditor(SplineConnection.PREF_SPLINE_MODE,
+                        SPLINE_LABEL, composite, ComboFieldEditor.INT_TYPE,
+                        true, 0, 0, true);
         splineModeFieldEditor.autoStorage = true;
         addField(splineModeFieldEditor);
         Combo splineModeCombo = splineModeFieldEditor.getComboControl();
@@ -76,7 +77,8 @@ public class DiagramConnectionsPreferencePage extends ConnectionsPreferencePage 
                     for (IEditorReference er : ers) {
                         IEditorPart editor = er.getEditor(true);
                         if (editor instanceof SyncchartsDiagramEditor) {
-                            SyncchartsDiagramEditor sde = (SyncchartsDiagramEditor) editor;
+                            SyncchartsDiagramEditor sde =
+                                    (SyncchartsDiagramEditor) editor;
                             applySplineMode(sde.getDiagramEditPart());
                         }
                     }

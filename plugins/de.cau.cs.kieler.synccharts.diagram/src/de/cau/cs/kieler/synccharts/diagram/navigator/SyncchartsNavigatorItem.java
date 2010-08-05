@@ -15,7 +15,8 @@ public class SyncchartsNavigatorItem extends SyncchartsAbstractNavigatorItem {
      * @generated
      */
     static {
-        final Class[] supportedTypes = new Class[] { View.class, EObject.class };
+        final Class[] supportedTypes =
+                new Class[] { View.class, EObject.class };
         Platform.getAdapterManager().registerAdapters(
                 new IAdapterFactory() {
 

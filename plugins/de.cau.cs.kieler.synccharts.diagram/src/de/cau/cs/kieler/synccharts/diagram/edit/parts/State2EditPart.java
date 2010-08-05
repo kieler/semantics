@@ -88,25 +88,26 @@ public class State2EditPart extends ShapeNodeEditPart {
      * @generated
      */
     protected LayoutEditPolicy createLayoutEditPolicy() {
-        org.eclipse.gmf.runtime.diagram.ui.editpolicies.LayoutEditPolicy lep = new org.eclipse.gmf.runtime.diagram.ui.editpolicies.LayoutEditPolicy() {
+        org.eclipse.gmf.runtime.diagram.ui.editpolicies.LayoutEditPolicy lep =
+                new org.eclipse.gmf.runtime.diagram.ui.editpolicies.LayoutEditPolicy() {
 
-            protected EditPolicy createChildEditPolicy(EditPart child) {
-                EditPolicy result = child
-                        .getEditPolicy(EditPolicy.PRIMARY_DRAG_ROLE);
-                if (result == null) {
-                    result = new NonResizableEditPolicy();
-                }
-                return result;
-            }
+                    protected EditPolicy createChildEditPolicy(EditPart child) {
+                        EditPolicy result =
+                                child.getEditPolicy(EditPolicy.PRIMARY_DRAG_ROLE);
+                        if (result == null) {
+                            result = new NonResizableEditPolicy();
+                        }
+                        return result;
+                    }
 
-            protected Command getMoveChildrenCommand(Request request) {
-                return null;
-            }
+                    protected Command getMoveChildrenCommand(Request request) {
+                        return null;
+                    }
 
-            protected Command getCreateCommand(CreateRequest request) {
-                return null;
-            }
-        };
+                    protected Command getCreateCommand(CreateRequest request) {
+                        return null;
+                    }
+                };
         return lep;
     }
 
@@ -193,7 +194,8 @@ public class State2EditPart extends ShapeNodeEditPart {
      */
     protected NodeFigure createNodePlate() {
         RoundedRectangleFigure result = new RoundedRectangleFigure();
-        result.setCornerDimensions(new Dimension(20, 20));
+        result.setCornerDimensions(new Dimension(StateLayout.MIN_WIDTH,
+                StateLayout.MIN_HEIGHT));
         return result;
     }
 

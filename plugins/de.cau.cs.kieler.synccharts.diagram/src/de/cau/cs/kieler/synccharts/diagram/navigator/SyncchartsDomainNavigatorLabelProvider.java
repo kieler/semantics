@@ -18,9 +18,9 @@ public class SyncchartsDomainNavigatorLabelProvider implements
     /**
      * @generated
      */
-    private AdapterFactoryLabelProvider myAdapterFactoryLabelProvider = new AdapterFactoryLabelProvider(
-            SyncchartsDiagramEditorPlugin.getInstance()
-                    .getItemProvidersAdapterFactory());
+    private AdapterFactoryLabelProvider myAdapterFactoryLabelProvider =
+            new AdapterFactoryLabelProvider(SyncchartsDiagramEditorPlugin
+                    .getInstance().getItemProvidersAdapterFactory());
 
     /**
      * @generated

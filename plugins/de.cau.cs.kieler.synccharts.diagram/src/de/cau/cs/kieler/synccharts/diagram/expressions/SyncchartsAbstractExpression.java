@@ -30,8 +30,9 @@ public abstract class SyncchartsAbstractExpression {
      */
     protected void setStatus(int severity, String message, Throwable throwable) {
         String pluginID = SyncchartsDiagramEditorPlugin.ID;
-        this.status = new Status(severity, pluginID, -1,
-                (message != null) ? message : "", throwable); //$NON-NLS-1$
+        this.status =
+                new Status(severity, pluginID, -1, (message != null) ? message
+                        : "", throwable); //$NON-NLS-1$
         if (!this.status.isOK()) {
             SyncchartsDiagramEditorPlugin
                     .getInstance()
