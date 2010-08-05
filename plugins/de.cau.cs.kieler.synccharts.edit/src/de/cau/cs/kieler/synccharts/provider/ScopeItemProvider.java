@@ -25,6 +25,8 @@ import de.cau.cs.kieler.synccharts.Scope;
 import de.cau.cs.kieler.synccharts.SyncchartsFactory;
 import de.cau.cs.kieler.synccharts.SyncchartsPackage;
 
+import de.cau.cs.kieler.synccharts.custom.providers.NoViewItemPropertyDescriptor;
+
 import java.util.Collection;
 import java.util.List;
 
@@ -104,8 +106,7 @@ public class ScopeItemProvider
      * @generated
      */
     protected void addIdPropertyDescriptor(Object object) {
-        itemPropertyDescriptors.add
-            (createItemPropertyDescriptor
+        itemPropertyDescriptors.add(createItemPropertyDescriptor
                 (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
                  getResourceLocator(),
                  getString("_UI_Scope_id_feature"),
@@ -126,8 +127,7 @@ public class ScopeItemProvider
      * @generated
      */
     protected void addLabelPropertyDescriptor(Object object) {
-        itemPropertyDescriptors.add
-            (createItemPropertyDescriptor
+        itemPropertyDescriptors.add(createItemPropertyDescriptor
                 (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
                  getResourceLocator(),
                  getString("_UI_Scope_label_feature"),
@@ -145,11 +145,13 @@ public class ScopeItemProvider
      * This adds a property descriptor for the Body Reference feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
+     * @generated
      */
     protected void addBodyReferencePropertyDescriptor(Object object) {
         itemPropertyDescriptors.add
-            (new de.cau.cs.kieler.synccharts.custom.providers.NoViewItemPropertyDescriptor(
-                ((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+            (new NoViewItemPropertyDescriptor
+        
+                (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
                  getResourceLocator(),
                  getString("_UI_Scope_bodyReference_feature"),
                  getString("_UI_PropertyDescriptor_description", "_UI_Scope_bodyReference_feature", "_UI_Scope_type"),
@@ -169,8 +171,7 @@ public class ScopeItemProvider
      * @generated
      */
     protected void addInterfaceDeclarationPropertyDescriptor(Object object) {
-        itemPropertyDescriptors.add
-            (createItemPropertyDescriptor
+        itemPropertyDescriptors.add(createItemPropertyDescriptor
                 (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
                  getResourceLocator(),
                  getString("_UI_Scope_interfaceDeclaration_feature"),

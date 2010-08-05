@@ -90,8 +90,7 @@ public class EmissionItemProvider
      * @generated
      */
     protected void addSignalPropertyDescriptor(Object object) {
-        itemPropertyDescriptors.add
-            (createItemPropertyDescriptor
+        itemPropertyDescriptors.add(createItemPropertyDescriptor
                 (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
                  getResourceLocator(),
                  getString("_UI_Emission_signal_feature"),

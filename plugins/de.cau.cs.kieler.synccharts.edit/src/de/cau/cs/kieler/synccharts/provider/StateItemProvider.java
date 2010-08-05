@@ -95,8 +95,7 @@ public class StateItemProvider
      * @generated
      */
     protected void addTypePropertyDescriptor(Object object) {
-        itemPropertyDescriptors.add
-            (createItemPropertyDescriptor
+        itemPropertyDescriptors.add(createItemPropertyDescriptor
                 (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
                  getResourceLocator(),
                  getString("_UI_State_type_feature"),
@@ -117,8 +116,7 @@ public class StateItemProvider
      * @generated
      */
     protected void addIsInitialPropertyDescriptor(Object object) {
-        itemPropertyDescriptors.add
-            (createItemPropertyDescriptor
+        itemPropertyDescriptors.add(createItemPropertyDescriptor
                 (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
                  getResourceLocator(),
                  getString("_UI_State_isInitial_feature"),
@@ -139,8 +137,7 @@ public class StateItemProvider
      * @generated
      */
     protected void addIsFinalPropertyDescriptor(Object object) {
-        itemPropertyDescriptors.add
-            (createItemPropertyDescriptor
+        itemPropertyDescriptors.add(createItemPropertyDescriptor
                 (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
                  getResourceLocator(),
                  getString("_UI_State_isFinal_feature"),
@@ -161,8 +158,7 @@ public class StateItemProvider
      * @generated
      */
     protected void addIncomingTransitionsPropertyDescriptor(Object object) {
-        itemPropertyDescriptors.add
-            (createItemPropertyDescriptor
+        itemPropertyDescriptors.add(createItemPropertyDescriptor
                 (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
                  getResourceLocator(),
                  getString("_UI_State_incomingTransitions_feature"),

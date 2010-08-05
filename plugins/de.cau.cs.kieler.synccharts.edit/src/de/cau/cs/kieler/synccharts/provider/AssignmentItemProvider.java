@@ -90,8 +90,7 @@ public class AssignmentItemProvider
      * @generated
      */
     protected void addVariablePropertyDescriptor(Object object) {
-        itemPropertyDescriptors.add
-            (createItemPropertyDescriptor
+        itemPropertyDescriptors.add(createItemPropertyDescriptor
                 (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
                  getResourceLocator(),
                  getString("_UI_Assignment_variable_feature"),

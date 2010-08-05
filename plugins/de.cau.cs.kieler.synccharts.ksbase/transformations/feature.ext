@@ -234,6 +234,14 @@ Boolean canTurnIntoWeakAbort(Transition t):
  t.type != TransitionType::WEAKABORT
 ;
 
+Void toggleInitial(State s):
+ s.setIsInitial(!s.isInitial)
+;
+
+Void toggleFinal(State s):
+ s.setIsFinal(!s.isFinal)
+;
+
 // Add a state to the parent state and add all Regions
 // to that new State
 Void encapsulateRegions(State parentState):

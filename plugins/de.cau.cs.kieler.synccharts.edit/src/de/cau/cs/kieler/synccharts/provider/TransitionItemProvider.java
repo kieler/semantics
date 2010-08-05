@@ -90,8 +90,7 @@ public class TransitionItemProvider
      * @generated
      */
     protected void addPriorityPropertyDescriptor(Object object) {
-        itemPropertyDescriptors.add
-            (createItemPropertyDescriptor
+        itemPropertyDescriptors.add(createItemPropertyDescriptor
                 (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
                  getResourceLocator(),
                  getString("_UI_Transition_priority_feature"),
@@ -112,8 +111,7 @@ public class TransitionItemProvider
      * @generated
      */
     protected void addTypePropertyDescriptor(Object object) {
-        itemPropertyDescriptors.add
-            (createItemPropertyDescriptor
+        itemPropertyDescriptors.add(createItemPropertyDescriptor
                 (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
                  getResourceLocator(),
                  getString("_UI_Transition_type_feature"),
@@ -134,8 +132,7 @@ public class TransitionItemProvider
      * @generated
      */
     protected void addTargetStatePropertyDescriptor(Object object) {
-        itemPropertyDescriptors.add
-            (createItemPropertyDescriptor
+        itemPropertyDescriptors.add(createItemPropertyDescriptor
                 (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
                  getResourceLocator(),
                  getString("_UI_Transition_targetState_feature"),
@@ -156,8 +153,7 @@ public class TransitionItemProvider
      * @generated
      */
     protected void addIsHistoryPropertyDescriptor(Object object) {
-        itemPropertyDescriptors.add
-            (createItemPropertyDescriptor
+        itemPropertyDescriptors.add(createItemPropertyDescriptor
                 (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
                  getResourceLocator(),
                  getString("_UI_Transition_isHistory_feature"),

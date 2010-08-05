@@ -91,8 +91,7 @@ public class SubstitutionItemProvider
      * @generated
      */
     protected void addFormalPropertyDescriptor(Object object) {
-        itemPropertyDescriptors.add
-            (createItemPropertyDescriptor
+        itemPropertyDescriptors.add(createItemPropertyDescriptor
                 (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
                  getResourceLocator(),
                  getString("_UI_Substitution_formal_feature"),
@@ -113,8 +112,7 @@ public class SubstitutionItemProvider
      * @generated
      */
     protected void addActualPropertyDescriptor(Object object) {
-        itemPropertyDescriptors.add
-            (createItemPropertyDescriptor
+        itemPropertyDescriptors.add(createItemPropertyDescriptor
                 (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
                  getResourceLocator(),
                  getString("_UI_Substitution_actual_feature"),
