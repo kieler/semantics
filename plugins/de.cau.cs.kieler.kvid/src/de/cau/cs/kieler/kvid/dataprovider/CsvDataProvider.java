@@ -25,6 +25,8 @@ import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import de.cau.cs.kieler.kvid.datadistributor.DataDistributor;
 import de.cau.cs.kieler.kvid.datadistributor.IProviderListener;
@@ -43,6 +45,8 @@ public class CsvDataProvider implements IDataProvider {
     
     private String[] uris;
     
+    private int linePointer;
+    
     /**
      * 
      */
@@ -55,6 +59,7 @@ public class CsvDataProvider implements IDataProvider {
         csvLines = getCsvLines();
         if (csvLines.length > 0) {
             uris = csvLines[0].split(";");
+            linePointer = 1;
         } else {
             throw new RuntimeException("Loaded empty CSV file");
         }
@@ -80,7 +85,29 @@ public class CsvDataProvider implements IDataProvider {
         }
         return cache.split("\n");
     }
-
+    
+    public void initialize() {
+        linePointer = 1;
+        for (IProviderListener listener : listeners) {
+            listener.triggerInitialization();
+        }
+    }
+    
+    public void step() {
+        String[] currentValues = csvLines[linePointer].split(";");
+        try {
+            JSONObject stepData = new JSONObject();
+            for (int i = 0; i < uris.length; i++) {
+                stepData.append(uris[i], currentValues[i]);
+            }
+            for (IProviderListener listener : listeners) {
+                listener.update(stepData);
+            }
+        } catch (JSONException ex) {
+            ex.printStackTrace();
+        }
+    }
+    
     /* (non-Javadoc)
      * @see de.cau.cs.kieler.kvid.dataprovider.IDataProvider#registerProviderListener(de.cau.cs.kieler.kvid.datadistributor.IProviderListener)
      */
