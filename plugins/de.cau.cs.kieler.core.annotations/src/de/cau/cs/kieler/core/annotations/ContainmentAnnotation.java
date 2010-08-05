@@ -43,29 +43,29 @@ import org.eclipse.emf.ecore.EObject;
  */
 public interface ContainmentAnnotation extends Annotation {
     /**
-     * Returns the value of the '<em><b>Object</b></em>' containment reference.
-     * <!-- begin-user-doc -->
+	 * Returns the value of the '<em><b>Object</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
      * <p>
      * If the meaning of the '<em>Object</em>' containment reference isn't clear,
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
-     * @return the value of the '<em>Object</em>' containment reference.
-     * @see #setObject(EObject)
-     * @see de.cau.cs.kieler.core.annotations.AnnotationsPackage#getContainmentAnnotation_Object()
-     * @model containment="true" required="true"
-     * @generated
-     */
+	 * @return the value of the '<em>Object</em>' containment reference.
+	 * @see #setObject(EObject)
+	 * @see de.cau.cs.kieler.core.annotations.AnnotationsPackage#getContainmentAnnotation_Object()
+	 * @model containment="true" required="true"
+	 * @generated
+	 */
     EObject getObject();
 
     /**
-     * Sets the value of the '{@link de.cau.cs.kieler.core.annotations.ContainmentAnnotation#getObject <em>Object</em>}' containment reference.
-     * <!-- begin-user-doc -->
+	 * Sets the value of the '{@link de.cau.cs.kieler.core.annotations.ContainmentAnnotation#getObject <em>Object</em>}' containment reference.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Object</em>' containment reference.
-     * @see #getObject()
-     * @generated
-     */
+	 * @param value the new value of the '<em>Object</em>' containment reference.
+	 * @see #getObject()
+	 * @generated
+	 */
     void setObject(EObject value);
 
 } // ContainmentAnnotation
