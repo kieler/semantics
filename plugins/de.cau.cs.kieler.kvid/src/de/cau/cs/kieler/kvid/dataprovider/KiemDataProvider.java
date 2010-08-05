@@ -40,6 +40,7 @@ public class KiemDataProvider extends JSONObjectDataComponent implements
      */
     public JSONObject step(final JSONObject jSONObject)
             throws KiemExecutionException {
+        //new CsvDataProvider("test/test.csv");
         for (IProviderListener listener : listeners) {
             listener.update(jSONObject);
         }
