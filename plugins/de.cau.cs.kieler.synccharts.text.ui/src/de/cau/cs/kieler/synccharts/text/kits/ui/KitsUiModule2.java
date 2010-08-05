@@ -21,7 +21,7 @@ public class KitsUiModule2 extends de.cau.cs.kieler.synccharts.text.kits.ui.Abst
 		return org.eclipse.xtext.ui.editor.IXtextEditorCallback.NullImpl.class;
 	}
     public Class<? extends DefaultAntlrTokenToAttributeIdMapper> bindAbstractAntlrTokenToAttributeIdMapper() {
-    	return CustomAntlrTokenToAttributeIdMapper.class;
+    	return KitsAntlrTokenToAttributeIdMapper.class;
     }
 	
 //    public Class<? extends DefaultHighlightingConfiguration> bindILexicalHighlightingConfiguration() {

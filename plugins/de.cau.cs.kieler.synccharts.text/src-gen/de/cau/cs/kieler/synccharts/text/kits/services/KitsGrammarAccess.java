@@ -37,15 +37,6 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cStatesAssignment_1 = (Assignment)cAlternatives.eContents().get(1);
 		private final RuleCall cStatesStateParserRuleCall_1_0 = (RuleCall)cStatesAssignment_1.eContents().get(0);
 		
-		////Region returns synccharts::Region:
-		////  ( 
-		////    ('region' (label=ID))? // region ID's are introduced by the keyword "region".       
-		//////     (variables+=Variable|signals+=Signal)* 
-		////     (states+=State) 
-		////  );
-		////
-		////// ---------------------------------------------------------------------------------------------------
-		////Nested
 		//Region returns synccharts::Region:
 		//	"region" id=ID? label=EString (variables+=Variable | signals+=Signal)* states+=State* | states+=State+;
 		public ParserRule getRule() { return rule; }
@@ -669,18 +660,18 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cIsHistoryAssignment_4 = (Assignment)cGroup.eContents().get(4);
 		private final Keyword cIsHistoryHistoryKeyword_4_0 = (Keyword)cIsHistoryAssignment_4.eContents().get(0);
 		private final Assignment cLabelAssignment_5 = (Assignment)cGroup.eContents().get(5);
-		private final RuleCall cLabelSTRINGTerminalRuleCall_5_0 = (RuleCall)cLabelAssignment_5.eContents().get(0);
+		private final RuleCall cLabelTRANSITION_LABELTerminalRuleCall_5_0 = (RuleCall)cLabelAssignment_5.eContents().get(0);
 		
 		//// ---------------------------------------------------------------------------------------------------
 		//Transition returns synccharts::Transition:
 		//	type=TransitionType targetState=[synccharts::State|EString] ("<" priority=INT ">")? ("with" isImmediate?="#"?
 		//	("delay:=" delay=INT)? trigger=BooleanExpression? ("/" effects+=Effect ("," effects+=Effect)*)?)?
-		//	isHistory?="history"? label=STRING?;
+		//	isHistory?="history"? label=TRANSITION_LABEL?;
 		public ParserRule getRule() { return rule; }
 
 		//type=TransitionType targetState=[synccharts::State|EString] ("<" priority=INT ">")? ("with" isImmediate?="#"? ("delay:="
 		//delay=INT)? trigger=BooleanExpression? ("/" effects+=Effect ("," effects+=Effect)*)?)? isHistory?="history"?
-		//label=STRING?
+		//label=TRANSITION_LABEL?
 		public Group getGroup() { return cGroup; }
 
 		//type=TransitionType
@@ -774,11 +765,11 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 		//"history"
 		public Keyword getIsHistoryHistoryKeyword_4_0() { return cIsHistoryHistoryKeyword_4_0; }
 
-		//label=STRING?
+		//label=TRANSITION_LABEL?
 		public Assignment getLabelAssignment_5() { return cLabelAssignment_5; }
 
-		//STRING
-		public RuleCall getLabelSTRINGTerminalRuleCall_5_0() { return cLabelSTRINGTerminalRuleCall_5_0; }
+		//TRANSITION_LABEL
+		public RuleCall getLabelTRANSITION_LABELTerminalRuleCall_5_0() { return cLabelTRANSITION_LABELTerminalRuleCall_5_0; }
 	}
 	
 	
@@ -863,6 +854,7 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	private RegionElements pRegion;
+	private TerminalRule tTRANSITION_LABEL;
 	private TerminalRule tT_ANNOTATION;
 	private StringAnnotationElements pStringAnnotation;
 	private StateElements pState;
@@ -894,15 +886,6 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	
-	////Region returns synccharts::Region:
-	////  ( 
-	////    ('region' (label=ID))? // region ID's are introduced by the keyword "region".       
-	//////     (variables+=Variable|signals+=Signal)* 
-	////     (states+=State) 
-	////  );
-	////
-	////// ---------------------------------------------------------------------------------------------------
-	////Nested
 	//Region returns synccharts::Region:
 	//	"region" id=ID? label=EString (variables+=Variable | signals+=Signal)* states+=State* | states+=State+;
 	public RegionElements getRegionAccess() {
@@ -913,13 +896,13 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 		return getRegionAccess().getRule();
 	}
 
-	//// ---------------------------------------------------------------------------------------------------
-	////
-	////UnnamedRegion returns synccharts::Region:
-	////	(states+=State)+;
-	////
-	//// ---------------------------------------------------------------------------------------------------
 	////terminal ML_COMMENT	: '/ ***' -> '* /';
+	//terminal TRANSITION_LABEL:
+	//	"%"->"%";
+	public TerminalRule getTRANSITION_LABELRule() {
+		return (tTRANSITION_LABEL != null) ? tTRANSITION_LABEL : (tTRANSITION_LABEL = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "TRANSITION_LABEL"));
+	} 
+
 	//terminal T_ANNOTATION:
 	//	"/+"->"+/";
 	public TerminalRule getT_ANNOTATIONRule() {
@@ -989,7 +972,7 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 	//Transition returns synccharts::Transition:
 	//	type=TransitionType targetState=[synccharts::State|EString] ("<" priority=INT ">")? ("with" isImmediate?="#"?
 	//	("delay:=" delay=INT)? trigger=BooleanExpression? ("/" effects+=Effect ("," effects+=Effect)*)?)?
-	//	isHistory?="history"? label=STRING?;
+	//	isHistory?="history"? label=TRANSITION_LABEL?;
 	public TransitionElements getTransitionAccess() {
 		return (pTransition != null) ? pTransition : (pTransition = new TransitionElements());
 	}

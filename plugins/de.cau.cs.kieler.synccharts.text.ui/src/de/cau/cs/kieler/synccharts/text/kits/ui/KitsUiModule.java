@@ -17,7 +17,7 @@ public class KitsUiModule extends de.cau.cs.kieler.synccharts.text.kits.ui.Abstr
 
 	/* declare '-->' '>->' to be highlighted like usual keywords */
 	public Class<? extends org.eclipse.xtext.ui.editor.syntaxcoloring.antlr.DefaultAntlrTokenToAttributeIdMapper> bindAbstractAntlrTokenToAttributeIdMapper() {
-    	return CustomAntlrTokenToAttributeIdMapper.class;
+    	return KitsAntlrTokenToAttributeIdMapper.class;
     }
 	
 	/* the registration in KitsRuntimeModule will be overwritten by DefaultUIModule so it is here again */

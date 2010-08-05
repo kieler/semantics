@@ -8233,8 +8233,8 @@ rule__Transition__LabelAssignment_5
     }
 :
 (
-{ before(grammarAccess.getTransitionAccess().getLabelSTRINGTerminalRuleCall_5_0()); }
-	RULE_STRING{ after(grammarAccess.getTransitionAccess().getLabelSTRINGTerminalRuleCall_5_0()); }
+{ before(grammarAccess.getTransitionAccess().getLabelTRANSITION_LABELTerminalRuleCall_5_0()); }
+	RULE_TRANSITION_LABEL{ after(grammarAccess.getTransitionAccess().getLabelTRANSITION_LABELTerminalRuleCall_5_0()); }
 )
 
 ;
@@ -8832,6 +8832,8 @@ finally {
 	restoreStackSize(stackSize);
 }
 
+
+RULE_TRANSITION_LABEL : '%' ( options {greedy=false;} : . )*'%';
 
 RULE_T_ANNOTATION : '/+' ( options {greedy=false;} : . )*'+/';
 

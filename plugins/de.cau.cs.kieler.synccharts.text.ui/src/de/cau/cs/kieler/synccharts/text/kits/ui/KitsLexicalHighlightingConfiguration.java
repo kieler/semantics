@@ -3,7 +3,7 @@ package de.cau.cs.kieler.synccharts.text.kits.ui;
 import org.eclipse.xtext.ui.editor.syntaxcoloring.DefaultHighlightingConfiguration;
 import org.eclipse.xtext.ui.editor.syntaxcoloring.IHighlightingConfigurationAcceptor;
 
-public class CustomLexicalHighlightingConfiguration extends
+public class KitsLexicalHighlightingConfiguration extends
 		DefaultHighlightingConfiguration {
 
     public static final String WEAKABORT_KEYWORD = "-->";

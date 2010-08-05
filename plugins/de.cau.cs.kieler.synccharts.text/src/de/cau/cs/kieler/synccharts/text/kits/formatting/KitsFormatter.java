@@ -37,13 +37,6 @@ public class KitsFormatter extends ActionsFormatter {
 			c.setLinewrap(1).after(pair.getSecond());
 		}
 
-		for(Pair<Keyword, Keyword> pair: f.findKeywordPairs("[", "]")) {
-			c.setIndentation(pair.getFirst(), pair.getSecond());
-			c.setLinewrap(1).after(pair.getFirst());
-			c.setLinewrap(1).before(pair.getSecond());
-			c.setLinewrap(1).after(pair.getSecond());
-		}
-
 		// let the parallel operator be the single element on its line  
 		for (Keyword keyword: f.findKeywords("||")) {
 			c.setLinewrap().before(keyword);

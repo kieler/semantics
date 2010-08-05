@@ -93,5 +93,27 @@ public class ActionsValueConverter extends DefaultTerminalConverters {
             };
     }
 
+    /**
+     * Standard boolean data type converter to convert standard Java style
+     * @return value converter for standard Java style booleans
+     */
+    @ValueConverter(rule = "TRANSITION_LABEL")
+    public IValueConverter<String> String() {
+            return new IValueConverter<String>() {
+                    
+                    public String toValue(String string, AbstractNode node) {
+                        return string.replace('%', ' ').trim();
+                    }
+
+                    public String toString(String value) {
+                        if (Strings.isEmpty(value)) {
+                        	return null;
+                        } else {
+                        	return "  % " + value + " %";
+                        }
+                    }
+            };
+    }
+
     
 }

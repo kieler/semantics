@@ -1416,9 +1416,9 @@ ruleTransition returns [EObject current=null]
 )
 )?(
 (
-		lv_label_15_0=RULE_STRING
+		lv_label_15_0=RULE_TRANSITION_LABEL
 		{
-			createLeafNode(grammarAccess.getTransitionAccess().getLabelSTRINGTerminalRuleCall_5_0(), "label"); 
+			createLeafNode(grammarAccess.getTransitionAccess().getLabelTRANSITION_LABELTerminalRuleCall_5_0(), "label"); 
 		}
 		{
 	        if ($current==null) {
@@ -1430,7 +1430,7 @@ ruleTransition returns [EObject current=null]
 	       			$current, 
 	       			"label",
 	        		lv_label_15_0, 
-	        		"STRING", 
+	        		"TRANSITION_LABEL", 
 	        		lastConsumedNode);
 	        } catch (ValueConverterException vce) {
 				handleValueConverterException(vce);
@@ -3964,6 +3964,8 @@ ruleCombineOperator returns [Enumerator current=null]
 ));
 
 
+
+RULE_TRANSITION_LABEL : '%' ( options {greedy=false;} : . )*'%';
 
 RULE_T_ANNOTATION : '/+' ( options {greedy=false;} : . )*'+/';
 
