@@ -60,7 +60,7 @@ Workflow {
 			}
 				
 			// the Antlr parser
-			fragment = de.itemis.xtext.antlr.XtextAntlrGeneratorFragment {
+			fragment = org.eclipse.xtext.generator.parser.antlr.XtextAntlrGeneratorFragment {
 				options = {
 					classSplitting = true
 					backtrack = true
@@ -101,14 +101,14 @@ Workflow {
 			// the following fragment tries to use the Antlr based content assist 
 			//     fragment which can be downloaded from http://www.itemis.com 
 			//     and will be ignored if it's not available. 
-			fragment = de.itemis.xtext.antlr.XtextAntlrUiGeneratorFragment { 
+			fragment = org.eclipse.xtext.generator.parser.antlr.XtextAntlrUiGeneratorFragment { 
 				options = {
 					classSplitting = true
 					backtrack = true
 				}
 			}
 
-			fragment = builder.BuilderIntegrationFragment {}
+//			fragment = builder.BuilderIntegrationFragment {}
 
 			// project wizard (optional) 
 			/*
@@ -120,6 +120,11 @@ Workflow {
 			
 			// quickfix API 
 			fragment = quickfix.QuickfixProviderFragment {}			
+
+//			fragment = org.eclipse.xtext.generator.parser.antlr.ex.ExternalAntlrLexerFragment {
+//				lexerGrammar = "de.cau.cs.kieler.synccharts.text.kits.ui.KitsHighlighting"
+//				highlighting = true
+//			}
 		}
 	}
 }

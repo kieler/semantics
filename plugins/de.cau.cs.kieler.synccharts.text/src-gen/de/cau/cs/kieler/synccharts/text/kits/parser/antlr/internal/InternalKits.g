@@ -388,11 +388,15 @@ ruleKeyValueAnnotation returns [EObject current=null]
     @after { resetLookahead(); 
     	lastConsumedNode = currentNode;
     }:
-((
+(	'@' 
+    {
+        createLeafNode(grammarAccess.getKeyValueAnnotationAccess().getCommercialAtKeyword_0(), null); 
+    }
 (
-		lv_name_0_0=RULE_ANNOTATION_KEY
+(
+		lv_name_1_0=RULE_ID
 		{
-			createLeafNode(grammarAccess.getKeyValueAnnotationAccess().getNameANNOTATION_KEYTerminalRuleCall_0_0(), "name"); 
+			createLeafNode(grammarAccess.getKeyValueAnnotationAccess().getNameIDTerminalRuleCall_1_0(), "name"); 
 		}
 		{
 	        if ($current==null) {
@@ -403,8 +407,8 @@ ruleKeyValueAnnotation returns [EObject current=null]
 	       		set(
 	       			$current, 
 	       			"name",
-	        		lv_name_0_0, 
-	        		"ANNOTATION_KEY", 
+	        		lv_name_1_0, 
+	        		"ID", 
 	        		lastConsumedNode);
 	        } catch (ValueConverterException vce) {
 				handleValueConverterException(vce);
@@ -415,9 +419,9 @@ ruleKeyValueAnnotation returns [EObject current=null]
 )(
 (
 		{ 
-	        currentNode=createCompositeNode(grammarAccess.getKeyValueAnnotationAccess().getValueEStringParserRuleCall_1_0(), currentNode); 
+	        currentNode=createCompositeNode(grammarAccess.getKeyValueAnnotationAccess().getValueEStringParserRuleCall_2_0(), currentNode); 
 	    }
-		lv_value_1_0=ruleEString		{
+		lv_value_2_0=ruleEString		{
 	        if ($current==null) {
 	            $current = factory.create(grammarAccess.getKeyValueAnnotationRule().getType().getClassifier());
 	            associateNodeWithAstElement(currentNode.getParent(), $current);
@@ -426,7 +430,7 @@ ruleKeyValueAnnotation returns [EObject current=null]
 	       		set(
 	       			$current, 
 	       			"value",
-	        		lv_value_1_0, 
+	        		lv_value_2_0, 
 	        		"EString", 
 	        		currentNode);
 	        } catch (ValueConverterException vce) {
@@ -1129,15 +1133,11 @@ ruleTransition returns [EObject current=null]
 	    }
 
 )
-)?(	'delay:=' 
-    {
-        createLeafNode(grammarAccess.getTransitionAccess().getDelayKeyword_4_2_0(), null); 
-    }
+)?(
 (
-(
-		lv_delay_9_0=RULE_INT
+		lv_delay_8_0=RULE_INT
 		{
-			createLeafNode(grammarAccess.getTransitionAccess().getDelayINTTerminalRuleCall_4_2_1_0(), "delay"); 
+			createLeafNode(grammarAccess.getTransitionAccess().getDelayINTTerminalRuleCall_4_2_0(), "delay"); 
 		}
 		{
 	        if ($current==null) {
@@ -1148,7 +1148,7 @@ ruleTransition returns [EObject current=null]
 	       		set(
 	       			$current, 
 	       			"delay",
-	        		lv_delay_9_0, 
+	        		lv_delay_8_0, 
 	        		"INT", 
 	        		lastConsumedNode);
 	        } catch (ValueConverterException vce) {
@@ -1157,12 +1157,12 @@ ruleTransition returns [EObject current=null]
 	    }
 
 )
-))?(
+)?(
 (
 		{ 
 	        currentNode=createCompositeNode(grammarAccess.getTransitionAccess().getTriggerBooleanExpressionParserRuleCall_4_3_0(), currentNode); 
 	    }
-		lv_trigger_10_0=ruleBooleanExpression		{
+		lv_trigger_9_0=ruleBooleanExpression		{
 	        if ($current==null) {
 	            $current = factory.create(grammarAccess.getTransitionRule().getType().getClassifier());
 	            associateNodeWithAstElement(currentNode.getParent(), $current);
@@ -1171,7 +1171,7 @@ ruleTransition returns [EObject current=null]
 	       		set(
 	       			$current, 
 	       			"trigger",
-	        		lv_trigger_10_0, 
+	        		lv_trigger_9_0, 
 	        		"BooleanExpression", 
 	        		currentNode);
 	        } catch (ValueConverterException vce) {
@@ -1190,7 +1190,7 @@ ruleTransition returns [EObject current=null]
 		{ 
 	        currentNode=createCompositeNode(grammarAccess.getTransitionAccess().getEffectsEffectParserRuleCall_4_4_1_0(), currentNode); 
 	    }
-		lv_effects_12_0=ruleEffect		{
+		lv_effects_11_0=ruleEffect		{
 	        if ($current==null) {
 	            $current = factory.create(grammarAccess.getTransitionRule().getType().getClassifier());
 	            associateNodeWithAstElement(currentNode.getParent(), $current);
@@ -1199,7 +1199,7 @@ ruleTransition returns [EObject current=null]
 	       		add(
 	       			$current, 
 	       			"effects",
-	        		lv_effects_12_0, 
+	        		lv_effects_11_0, 
 	        		"Effect", 
 	        		currentNode);
 	        } catch (ValueConverterException vce) {
@@ -1218,7 +1218,7 @@ ruleTransition returns [EObject current=null]
 		{ 
 	        currentNode=createCompositeNode(grammarAccess.getTransitionAccess().getEffectsEffectParserRuleCall_4_4_2_1_0(), currentNode); 
 	    }
-		lv_effects_14_0=ruleEffect		{
+		lv_effects_13_0=ruleEffect		{
 	        if ($current==null) {
 	            $current = factory.create(grammarAccess.getTransitionRule().getType().getClassifier());
 	            associateNodeWithAstElement(currentNode.getParent(), $current);
@@ -1227,7 +1227,7 @@ ruleTransition returns [EObject current=null]
 	       		add(
 	       			$current, 
 	       			"effects",
-	        		lv_effects_14_0, 
+	        		lv_effects_13_0, 
 	        		"Effect", 
 	        		currentNode);
 	        } catch (ValueConverterException vce) {
@@ -1239,7 +1239,7 @@ ruleTransition returns [EObject current=null]
 )
 ))*)?)?(
 (
-		lv_isHistory_15_0=	'history' 
+		lv_isHistory_14_0=	'history' 
     {
         createLeafNode(grammarAccess.getTransitionAccess().getIsHistoryHistoryKeyword_5_0(), "isHistory"); 
     }
@@ -1260,7 +1260,7 @@ ruleTransition returns [EObject current=null]
 )
 )?(
 (
-		lv_label_16_0=RULE_TRANSITION_LABEL
+		lv_label_15_0=RULE_TRANSITION_LABEL
 		{
 			createLeafNode(grammarAccess.getTransitionAccess().getLabelTRANSITION_LABELTerminalRuleCall_6_0(), "label"); 
 		}
@@ -1273,7 +1273,7 @@ ruleTransition returns [EObject current=null]
 	       		set(
 	       			$current, 
 	       			"label",
-	        		lv_label_16_0, 
+	        		lv_label_15_0, 
 	        		"TRANSITION_LABEL", 
 	        		lastConsumedNode);
 	        } catch (ValueConverterException vce) {
@@ -4252,8 +4252,6 @@ ruleCombineOperator returns [Enumerator current=null]
 RULE_TRANSITION_LABEL : '%' ( options {greedy=false;} : . )*'%';
 
 RULE_COMMENT_ANNOTATION : '/+' ( options {greedy=false;} : . )*'+/';
-
-RULE_ANNOTATION_KEY : '@' RULE_ID;
 
 RULE_INT : '-'? ('0'..'9')+;
 

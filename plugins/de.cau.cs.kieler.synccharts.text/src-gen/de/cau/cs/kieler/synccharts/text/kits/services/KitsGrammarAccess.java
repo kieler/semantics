@@ -106,6 +106,8 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cCommentAnnotationParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
 		private final RuleCall cKeyValueAnnotationParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
 		
+		////terminal ANNOTATION_KEY returns ecore::EString:
+		////    '@' ID;
 		//StringAnnotation returns annotations::Annotation:
 		//	CommentAnnotation | KeyValueAnnotation;
 		public ParserRule getRule() { return rule; }
@@ -139,29 +141,33 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 	public class KeyValueAnnotationElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "KeyValueAnnotation");
 		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Assignment cNameAssignment_0 = (Assignment)cGroup.eContents().get(0);
-		private final RuleCall cNameANNOTATION_KEYTerminalRuleCall_0_0 = (RuleCall)cNameAssignment_0.eContents().get(0);
-		private final Assignment cValueAssignment_1 = (Assignment)cGroup.eContents().get(1);
-		private final RuleCall cValueEStringParserRuleCall_1_0 = (RuleCall)cValueAssignment_1.eContents().get(0);
+		private final Keyword cCommercialAtKeyword_0 = (Keyword)cGroup.eContents().get(0);
+		private final Assignment cNameAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final RuleCall cNameIDTerminalRuleCall_1_0 = (RuleCall)cNameAssignment_1.eContents().get(0);
+		private final Assignment cValueAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final RuleCall cValueEStringParserRuleCall_2_0 = (RuleCall)cValueAssignment_2.eContents().get(0);
 		
 		//KeyValueAnnotation returns annotations::StringAnnotation:
-		//	name=ANNOTATION_KEY value=EString;
+		//	"@" name=ID value=EString;
 		public ParserRule getRule() { return rule; }
 
-		//name=ANNOTATION_KEY value=EString
+		//"@" name=ID value=EString
 		public Group getGroup() { return cGroup; }
 
-		//name=ANNOTATION_KEY
-		public Assignment getNameAssignment_0() { return cNameAssignment_0; }
+		//"@"
+		public Keyword getCommercialAtKeyword_0() { return cCommercialAtKeyword_0; }
 
-		//ANNOTATION_KEY
-		public RuleCall getNameANNOTATION_KEYTerminalRuleCall_0_0() { return cNameANNOTATION_KEYTerminalRuleCall_0_0; }
+		//name=ID
+		public Assignment getNameAssignment_1() { return cNameAssignment_1; }
+
+		//ID
+		public RuleCall getNameIDTerminalRuleCall_1_0() { return cNameIDTerminalRuleCall_1_0; }
 
 		//value=EString
-		public Assignment getValueAssignment_1() { return cValueAssignment_1; }
+		public Assignment getValueAssignment_2() { return cValueAssignment_2; }
 
 		//EString
-		public RuleCall getValueEStringParserRuleCall_1_0() { return cValueEStringParserRuleCall_1_0; }
+		public RuleCall getValueEStringParserRuleCall_2_0() { return cValueEStringParserRuleCall_2_0; }
 	}
 
 	public class StateElements extends AbstractParserRuleElementFinder {
@@ -492,10 +498,8 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cWithKeyword_4_0 = (Keyword)cGroup_4.eContents().get(0);
 		private final Assignment cIsImmediateAssignment_4_1 = (Assignment)cGroup_4.eContents().get(1);
 		private final Keyword cIsImmediateNumberSignKeyword_4_1_0 = (Keyword)cIsImmediateAssignment_4_1.eContents().get(0);
-		private final Group cGroup_4_2 = (Group)cGroup_4.eContents().get(2);
-		private final Keyword cDelayKeyword_4_2_0 = (Keyword)cGroup_4_2.eContents().get(0);
-		private final Assignment cDelayAssignment_4_2_1 = (Assignment)cGroup_4_2.eContents().get(1);
-		private final RuleCall cDelayINTTerminalRuleCall_4_2_1_0 = (RuleCall)cDelayAssignment_4_2_1.eContents().get(0);
+		private final Assignment cDelayAssignment_4_2 = (Assignment)cGroup_4.eContents().get(2);
+		private final RuleCall cDelayINTTerminalRuleCall_4_2_0 = (RuleCall)cDelayAssignment_4_2.eContents().get(0);
 		private final Assignment cTriggerAssignment_4_3 = (Assignment)cGroup_4.eContents().get(3);
 		private final RuleCall cTriggerBooleanExpressionParserRuleCall_4_3_0 = (RuleCall)cTriggerAssignment_4_3.eContents().get(0);
 		private final Group cGroup_4_4 = (Group)cGroup_4.eContents().get(4);
@@ -514,13 +518,13 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 		//// ---------------------------------------------------------------------------------------------------
 		//Transition returns synccharts::Transition:
 		//	annotations+=StringAnnotation* type=TransitionType targetState=[synccharts::State|EString] ("<" priority=INT ">")?
-		//	("with" isImmediate?="#"? ("delay:=" delay=INT)? trigger=BooleanExpression? ("/" effects+=Effect (","
-		//	effects+=Effect)*)?)? isHistory?="history"? label=TRANSITION_LABEL?;
+		//	("with" isImmediate?="#"? delay=INT? trigger=BooleanExpression? ("/" effects+=Effect ("," effects+=Effect)*)?)?
+		//	isHistory?="history"? label=TRANSITION_LABEL?;
 		public ParserRule getRule() { return rule; }
 
 		//annotations+=StringAnnotation* type=TransitionType targetState=[synccharts::State|EString] ("<" priority=INT ">")?
-		//("with" isImmediate?="#"? ("delay:=" delay=INT)? trigger=BooleanExpression? ("/" effects+=Effect (","
-		//effects+=Effect)*)?)? isHistory?="history"? label=TRANSITION_LABEL?
+		//("with" isImmediate?="#"? delay=INT? trigger=BooleanExpression? ("/" effects+=Effect ("," effects+=Effect)*)?)?
+		//isHistory?="history"? label=TRANSITION_LABEL?
 		public Group getGroup() { return cGroup; }
 
 		//annotations+=StringAnnotation*
@@ -559,8 +563,7 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 		//">"
 		public Keyword getGreaterThanSignKeyword_3_2() { return cGreaterThanSignKeyword_3_2; }
 
-		//("with" isImmediate?="#"? ("delay:=" delay=INT)? trigger=BooleanExpression? ("/" effects+=Effect (","
-		//effects+=Effect)*)?)?
+		//("with" isImmediate?="#"? delay=INT? trigger=BooleanExpression? ("/" effects+=Effect ("," effects+=Effect)*)?)?
 		public Group getGroup_4() { return cGroup_4; }
 
 		//"with"
@@ -572,17 +575,11 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 		//"#"
 		public Keyword getIsImmediateNumberSignKeyword_4_1_0() { return cIsImmediateNumberSignKeyword_4_1_0; }
 
-		//("delay:=" delay=INT)?
-		public Group getGroup_4_2() { return cGroup_4_2; }
-
-		//"delay:="
-		public Keyword getDelayKeyword_4_2_0() { return cDelayKeyword_4_2_0; }
-
-		//delay=INT
-		public Assignment getDelayAssignment_4_2_1() { return cDelayAssignment_4_2_1; }
+		//delay=INT?
+		public Assignment getDelayAssignment_4_2() { return cDelayAssignment_4_2; }
 
 		//INT
-		public RuleCall getDelayINTTerminalRuleCall_4_2_1_0() { return cDelayINTTerminalRuleCall_4_2_1_0; }
+		public RuleCall getDelayINTTerminalRuleCall_4_2_0() { return cDelayINTTerminalRuleCall_4_2_0; }
 
 		//trigger=BooleanExpression?
 		public Assignment getTriggerAssignment_4_3() { return cTriggerAssignment_4_3; }
@@ -939,7 +936,6 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 	private RegionElements pRegion;
 	private TerminalRule tTRANSITION_LABEL;
 	private TerminalRule tCOMMENT_ANNOTATION;
-	private TerminalRule tANNOTATION_KEY;
 	private StringAnnotationElements pStringAnnotation;
 	private CommentAnnotationElements pCommentAnnotation;
 	private KeyValueAnnotationElements pKeyValueAnnotation;
@@ -995,12 +991,8 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 		return (tCOMMENT_ANNOTATION != null) ? tCOMMENT_ANNOTATION : (tCOMMENT_ANNOTATION = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "COMMENT_ANNOTATION"));
 	} 
 
-	//terminal ANNOTATION_KEY:
-	//	"@" ID;
-	public TerminalRule getANNOTATION_KEYRule() {
-		return (tANNOTATION_KEY != null) ? tANNOTATION_KEY : (tANNOTATION_KEY = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "ANNOTATION_KEY"));
-	} 
-
+	////terminal ANNOTATION_KEY returns ecore::EString:
+	////    '@' ID;
 	//StringAnnotation returns annotations::Annotation:
 	//	CommentAnnotation | KeyValueAnnotation;
 	public StringAnnotationElements getStringAnnotationAccess() {
@@ -1022,7 +1014,7 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//KeyValueAnnotation returns annotations::StringAnnotation:
-	//	name=ANNOTATION_KEY value=EString;
+	//	"@" name=ID value=EString;
 	public KeyValueAnnotationElements getKeyValueAnnotationAccess() {
 		return (pKeyValueAnnotation != null) ? pKeyValueAnnotation : (pKeyValueAnnotation = new KeyValueAnnotationElements());
 	}
@@ -1049,8 +1041,8 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 	//// ---------------------------------------------------------------------------------------------------
 	//Transition returns synccharts::Transition:
 	//	annotations+=StringAnnotation* type=TransitionType targetState=[synccharts::State|EString] ("<" priority=INT ">")?
-	//	("with" isImmediate?="#"? ("delay:=" delay=INT)? trigger=BooleanExpression? ("/" effects+=Effect (","
-	//	effects+=Effect)*)?)? isHistory?="history"? label=TRANSITION_LABEL?;
+	//	("with" isImmediate?="#"? delay=INT? trigger=BooleanExpression? ("/" effects+=Effect ("," effects+=Effect)*)?)?
+	//	isHistory?="history"? label=TRANSITION_LABEL?;
 	public TransitionElements getTransitionAccess() {
 		return (pTransition != null) ? pTransition : (pTransition = new TransitionElements());
 	}

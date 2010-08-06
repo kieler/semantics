@@ -21,7 +21,7 @@ import org.eclipse.xtext.ui.editor.syntaxcoloring.IHighlightingConfigurationAcce
 import org.eclipse.xtext.ui.editor.utils.TextStyle;
 
 /**
- * Custom {@link IHighlightingConfiguration}.
+ * Custom {@link IHighlightingConfiguration} contributing to the Kits editor.
  * Provides profile for key value annotations' keys highlighting.
  * 
  * @author chsch

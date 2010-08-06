@@ -81,7 +81,6 @@ public class KitsParser extends AbstractContentAssistParser {
 					put(grammarAccess.getTransitionAccess().getGroup(), "rule__Transition__Group__0");
 					put(grammarAccess.getTransitionAccess().getGroup_3(), "rule__Transition__Group_3__0");
 					put(grammarAccess.getTransitionAccess().getGroup_4(), "rule__Transition__Group_4__0");
-					put(grammarAccess.getTransitionAccess().getGroup_4_2(), "rule__Transition__Group_4_2__0");
 					put(grammarAccess.getTransitionAccess().getGroup_4_4(), "rule__Transition__Group_4_4__0");
 					put(grammarAccess.getTransitionAccess().getGroup_4_4_2(), "rule__Transition__Group_4_4_2__0");
 					put(grammarAccess.getSignalAccess().getGroup(), "rule__Signal__Group__0");
@@ -130,8 +129,8 @@ public class KitsParser extends AbstractContentAssistParser {
 					put(grammarAccess.getRegionAccess().getStatesAssignment_0_5(), "rule__Region__StatesAssignment_0_5");
 					put(grammarAccess.getRegionAccess().getStatesAssignment_1(), "rule__Region__StatesAssignment_1");
 					put(grammarAccess.getCommentAnnotationAccess().getValueAssignment(), "rule__CommentAnnotation__ValueAssignment");
-					put(grammarAccess.getKeyValueAnnotationAccess().getNameAssignment_0(), "rule__KeyValueAnnotation__NameAssignment_0");
-					put(grammarAccess.getKeyValueAnnotationAccess().getValueAssignment_1(), "rule__KeyValueAnnotation__ValueAssignment_1");
+					put(grammarAccess.getKeyValueAnnotationAccess().getNameAssignment_1(), "rule__KeyValueAnnotation__NameAssignment_1");
+					put(grammarAccess.getKeyValueAnnotationAccess().getValueAssignment_2(), "rule__KeyValueAnnotation__ValueAssignment_2");
 					put(grammarAccess.getStateAccess().getAnnotationsAssignment_0(), "rule__State__AnnotationsAssignment_0");
 					put(grammarAccess.getStateAccess().getIsInitialAssignment_1_0_0(), "rule__State__IsInitialAssignment_1_0_0");
 					put(grammarAccess.getStateAccess().getIsFinalAssignment_1_0_1(), "rule__State__IsFinalAssignment_1_0_1");
@@ -157,7 +156,7 @@ public class KitsParser extends AbstractContentAssistParser {
 					put(grammarAccess.getTransitionAccess().getTargetStateAssignment_2(), "rule__Transition__TargetStateAssignment_2");
 					put(grammarAccess.getTransitionAccess().getPriorityAssignment_3_1(), "rule__Transition__PriorityAssignment_3_1");
 					put(grammarAccess.getTransitionAccess().getIsImmediateAssignment_4_1(), "rule__Transition__IsImmediateAssignment_4_1");
-					put(grammarAccess.getTransitionAccess().getDelayAssignment_4_2_1(), "rule__Transition__DelayAssignment_4_2_1");
+					put(grammarAccess.getTransitionAccess().getDelayAssignment_4_2(), "rule__Transition__DelayAssignment_4_2");
 					put(grammarAccess.getTransitionAccess().getTriggerAssignment_4_3(), "rule__Transition__TriggerAssignment_4_3");
 					put(grammarAccess.getTransitionAccess().getEffectsAssignment_4_4_1(), "rule__Transition__EffectsAssignment_4_4_1");
 					put(grammarAccess.getTransitionAccess().getEffectsAssignment_4_4_2_1(), "rule__Transition__EffectsAssignment_4_4_2_1");

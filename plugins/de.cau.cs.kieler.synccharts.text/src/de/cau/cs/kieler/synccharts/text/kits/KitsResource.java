@@ -36,7 +36,7 @@ import de.cau.cs.kieler.synccharts.SyncchartsPackage;
 
 /**
  * A customized {@link LazyLinkingResource}.
- * Modifies the parsed model and fixes some runtime bugs
+ * Modifies the parsed model and fixes some runtime bugs.
  *
  * @author chsch
  */

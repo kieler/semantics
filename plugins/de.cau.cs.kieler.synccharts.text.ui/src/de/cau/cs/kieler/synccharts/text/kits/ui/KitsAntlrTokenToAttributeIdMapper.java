@@ -14,10 +14,12 @@
 package de.cau.cs.kieler.synccharts.text.kits.ui;
 
 import org.eclipse.xtext.ui.editor.syntaxcoloring.DefaultHighlightingConfiguration;
+import org.eclipse.xtext.ui.editor.syntaxcoloring.antlr.AbstractAntlrTokenToAttributeIdMapper;
 import org.eclipse.xtext.ui.editor.syntaxcoloring.antlr.DefaultAntlrTokenToAttributeIdMapper;
 
 /**
- * Custom mappings of keywords and terminals to highlighting configurations.  
+ * Custom {@link AbstractAntlrTokenToAttributeIdMapper} contributing to the Kits editor.
+ * Defines custom mappings of keywords and terminals to highlighting configurations.  
  * 
  * @author chsch
  */

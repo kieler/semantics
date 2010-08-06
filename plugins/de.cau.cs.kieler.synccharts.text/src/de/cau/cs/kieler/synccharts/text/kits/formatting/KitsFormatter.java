@@ -1,6 +1,7 @@
 package de.cau.cs.kieler.synccharts.text.kits.formatting;
 
 import org.eclipse.xtext.Keyword;
+import org.eclipse.xtext.formatting.IFormatter;
 import org.eclipse.xtext.formatting.impl.FormattingConfig;
 import org.eclipse.xtext.util.Pair;
 
@@ -8,7 +9,7 @@ import de.cau.cs.kieler.synccharts.text.actions.formatting.ActionsFormatter;
 import de.cau.cs.kieler.synccharts.text.kits.services.KitsGrammarAccess;
 
 /**
- * This class contains custom formatting description.
+ * Custom {@link IFormatter} contributing to Kits serialization.
  * 
  * @author chsch
  */
@@ -50,7 +51,9 @@ public class KitsFormatter extends ActionsFormatter {
 		
 		c.setLinewrap().after(f.getStringAnnotationRule());
 		c.setLinewrap().after(f.getCOMMENT_ANNOTATIONRule());
-		c.setLinewrap().after(f.getKeyValueAnnotationAccess().getValueEStringParserRuleCall_1_0());
+		
+		c.setNoSpace().after(f.getKeyValueAnnotationAccess().getCommercialAtKeyword_0());
+		c.setLinewrap().after(f.getKeyValueAnnotationAccess().getValueEStringParserRuleCall_2_0());
 		
 		c.setLinewrap().before(f.getRegionRule());
 		c.setLinewrap().after(f.getRegionAccess().getLabelAssignment_0_3());

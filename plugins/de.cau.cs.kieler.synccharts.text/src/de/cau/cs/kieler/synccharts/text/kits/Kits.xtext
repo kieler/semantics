@@ -21,8 +21,8 @@ terminal TRANSITION_LABEL returns ecore::EString:
 terminal COMMENT_ANNOTATION returns ecore::EString: 
     "/+" -> "+/";
     
-terminal ANNOTATION_KEY returns ecore::EString:
-    '@' ID;
+//terminal ANNOTATION_KEY returns ecore::EString:
+//    '@' ID;
 
 StringAnnotation returns annotations::Annotation:
 	CommentAnnotation
@@ -33,7 +33,7 @@ CommentAnnotation returns annotations::StringAnnotation:
 	value=COMMENT_ANNOTATION;
     
 KeyValueAnnotation returns annotations::StringAnnotation:
-	name=ANNOTATION_KEY value=EString;
+	'@' name=ID value=EString;
 
 State returns synccharts::State:
   (annotations += StringAnnotation)*
@@ -70,8 +70,8 @@ Transition returns synccharts::Transition:
 	type=TransitionType 
 	targetState=[synccharts::State|EString]
 	('<'priority=INT'>')? 
-	('with' (isImmediate?='#')? ("delay:=" delay=INT)? 
-	  ( trigger=BooleanExpression)?
+	('with' (isImmediate?='#')? (delay=INT)? 
+	  (trigger=BooleanExpression)?
       ('/' effects+=Effect (','effects+=Effect)*)?
 	)? 
 	(isHistory?='history')? (label=TRANSITION_LABEL)?;

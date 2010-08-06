@@ -13,9 +13,8 @@
  */
 package de.cau.cs.kieler.synccharts.text.kits.ui;
 
-
 /**
- * Use this class to register components to be used within the IDE.
+ * Custom {@link com.google.inject.Module} contributing to the Kits editor.
  * 
  * @author chsch
  */
@@ -38,6 +37,11 @@ public class KitsUiModule extends de.cau.cs.kieler.synccharts.text.kits.ui.Abstr
 	public Class<? extends org.eclipse.xtext.ui.editor.syntaxcoloring.DefaultHighlightingConfiguration> bindIHighlightingConfiguration() {
     	return KitsHighlightingConfiguration.class;
     }
+	
+	/* provides a few additional highlighting rules */
+	public Class<? extends org.eclipse.xtext.ui.editor.syntaxcoloring.ISemanticHighlightingCalculator> bindISemanticHighlightingCalculator() {
+		return KitsSemanticHighlightingCalculator.class;
+	}
 	
 	/* the registration in KitsRuntimeModule will be overwritten by DefaultUIModule so it is here again */
 	public Class<? extends org.eclipse.xtext.formatting.IIndentationInformation> bindIIndentationInformation() {
