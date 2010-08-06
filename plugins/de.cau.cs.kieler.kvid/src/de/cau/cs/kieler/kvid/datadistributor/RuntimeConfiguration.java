@@ -17,6 +17,8 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
+import de.cau.cs.kieler.kvid.dataprovider.CsvDataProvider;
+
 /**
  * 
  * Class for handling configuration that happens during runtime.
@@ -80,22 +82,30 @@ public class RuntimeConfiguration {
         listeners.remove(thelistener);
     }
     
-    public void triggerPropertyChanged(Property theproperty) {
+    public void triggerPropertyChanged(final Property theproperty) {
         if (theproperty.getName().equals("Data Source")) {
-            if (theproperty.getCurrentValue().equals("CSV")) {
-                knownProperties.add(knownProperties.indexOf(theproperty) + 1, 
-                        new Property("Path to CSV File", "<project>/<file.csv>"));
-            } else {
-                for (Property property : knownProperties) {
-                    if (property.getName().equals("Path to CSV File")) {
-                        knownProperties.remove(property);
-                        break;
-                    }
-                }
-            }
+            dataSourcePropertyChanged(theproperty);
+        }
+        if (theproperty.getName().equals("Path to CSV File")) {
+            String path = theproperty.getCurrentValue();
+            DataDistributor.getInstance().changeDataProvider(new CsvDataProvider(path));
         }
         for (IPropertyListener listener : listeners) {
             listener.triggerPropertyChanged(theproperty);                
+        }
+    }
+    
+    private void dataSourcePropertyChanged(final Property theproperty) {
+        if (theproperty.getCurrentValue().equals("CSV")) {
+            knownProperties.add(knownProperties.indexOf(theproperty) + 1, 
+                    new Property("Path to CSV File", "<project>/<file.csv>"));
+        } else {
+            for (Property property : knownProperties) {
+                if (property.getName().equals("Path to CSV File")) {
+                    knownProperties.remove(property);
+                    break;
+                }
+            }
         }
     }
     

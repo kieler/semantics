@@ -20,6 +20,7 @@ import org.eclipse.jface.viewers.ComboBoxCellEditor;
 import org.eclipse.jface.viewers.EditingSupport;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TableViewerColumn;
+import org.eclipse.jface.viewers.TextCellEditor;
 import org.eclipse.jface.viewers.ViewerCell;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
@@ -96,9 +97,14 @@ public class PropertiesView extends ViewPart implements IPropertyListener {
             
             @Override
             protected CellEditor getCellEditor(final Object element) {
-                ComboBoxCellEditor box = new ComboBoxCellEditor(tableViewer.getTable(),
-                        ((Property) element).getValueNames(), SWT.READ_ONLY);
-                return box;
+                CellEditor cell;
+                if (((Property) element).isFreeText()) {
+                    cell = new TextCellEditor(tableViewer.getTable());
+                } else {
+                    cell = new ComboBoxCellEditor(tableViewer.getTable(),
+                            ((Property) element).getValueNames(), SWT.READ_ONLY);
+                }
+                return cell;
             }
             
             @Override

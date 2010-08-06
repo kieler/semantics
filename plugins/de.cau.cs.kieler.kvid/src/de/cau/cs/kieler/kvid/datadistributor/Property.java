@@ -8,18 +8,22 @@ public class Property {
     
     private String currentValue;
     
+    private boolean isFreeText;
+    
     public Property(String thename, String[] thevalues) {
         this.name = thename;
         this.values = thevalues;
         if (0 < thevalues.length) {
             currentValue = thevalues[0];
         }
+        this.isFreeText = false;
     }
     
     public Property(String thename, String thedefaultvalue) {
         this.name = thename;
         this.currentValue = thedefaultvalue;
         values = new String[]{ thedefaultvalue };
+        this.isFreeText = true;
     }
     
     public String getName() {
@@ -28,6 +32,10 @@ public class Property {
     
     public String getCurrentValue() {
         return currentValue;
+    }
+    
+    public boolean isFreeText() {
+        return isFreeText;
     }
     
     public int getCurrentValueNumber() {
