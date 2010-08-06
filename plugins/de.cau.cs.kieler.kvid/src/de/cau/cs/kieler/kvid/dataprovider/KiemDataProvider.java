@@ -20,6 +20,7 @@ import org.json.JSONObject;
 
 import de.cau.cs.kieler.kvid.datadistributor.IProviderListener;
 import de.cau.cs.kieler.kvid.datadistributor.DataDistributor;
+import de.cau.cs.kieler.kvid.datadistributor.RuntimeConfiguration;
 import de.cau.cs.kieler.sim.kiem.IJSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.JSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.KiemExecutionException;
@@ -34,12 +35,15 @@ public class KiemDataProvider extends JSONObjectDataComponent implements
         IJSONObjectDataComponent, IDataProvider {
 
     private List<IProviderListener> listeners = new LinkedList<IProviderListener>();
-        
+    
     /**
      * {@inheritDoc}
      */
     public JSONObject step(final JSONObject jSONObject)
             throws KiemExecutionException {
+        if (RuntimeConfiguration.getInstance().currentValueOfProperty("Data Source").equals("KIEM")) {
+            DataDistributor.getInstance().changeDataProvider(this);
+        }
         for (IProviderListener listener : listeners) {
             listener.update(jSONObject);
         }
@@ -50,8 +54,8 @@ public class KiemDataProvider extends JSONObjectDataComponent implements
      * {@inheritDoc}
      */
     public void initialize() throws KiemInitializationException {
-        if (!listeners.contains(DataDistributor.getInstance())) {
-            registerProviderListener(DataDistributor.getInstance());
+        if (RuntimeConfiguration.getInstance().currentValueOfProperty("Data Source").equals("KIEM")) {
+            DataDistributor.getInstance().changeDataProvider(this);
         }
         for (IProviderListener listener : listeners) {
             listener.triggerInitialization();
@@ -62,6 +66,9 @@ public class KiemDataProvider extends JSONObjectDataComponent implements
      * {@inheritDoc}
      */
     public void wrapup() throws KiemInitializationException {
+        if (RuntimeConfiguration.getInstance().currentValueOfProperty("Data Source").equals("KIEM")) {
+            DataDistributor.getInstance().changeDataProvider(this);
+        }
         for (IProviderListener listener : listeners) {
             listener.triggerWrapup();
         }

@@ -40,6 +40,8 @@ import de.cau.cs.kieler.kiml.options.LayoutOptions;
 import de.cau.cs.kieler.kiml.ui.layout.EclipseLayoutServices;
 import de.cau.cs.kieler.kiml.util.KimlLayoutUtil;
 import de.cau.cs.kieler.kvid.data.DataObject;
+import de.cau.cs.kieler.kvid.dataprovider.IDataProvider;
+import de.cau.cs.kieler.kvid.dataprovider.KiemDataProvider;
 import de.cau.cs.kieler.kvid.visual.GmfDrawer;
 import de.cau.cs.kieler.kvid.visual.IDrawer;
 
@@ -62,8 +64,18 @@ public class DataDistributor implements IProviderListener {
         
     private IDrawer drawer = new GmfDrawer();
     
+    private IDataProvider currentProvider;
+    
     public static DataDistributor getInstance() {
         return INSTANCE;
+    }
+    
+    public void changeDataProvider(IDataProvider newprovider) {
+        if (currentProvider != null) {
+            currentProvider.removeProviderListener(this);
+        }
+        currentProvider = newprovider;
+        currentProvider.registerProviderListener(this);
     }
     
     public void initialize() {

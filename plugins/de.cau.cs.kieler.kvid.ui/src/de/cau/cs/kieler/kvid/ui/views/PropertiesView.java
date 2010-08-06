@@ -122,7 +122,7 @@ public class PropertiesView extends ViewPart implements IPropertyListener {
      * @see de.cau.cs.kieler.kvid.datadistributor.IPropertyListener#triggerPropertyChanged(de.cau.cs.kieler.kvid.datadistributor.Property)
      */
     public void triggerPropertyChanged(Property changedProperty) {
-        // TODO Need to handle this?
+        tableViewer.setInput(RuntimeConfiguration.getInstance().getKnownProperties());
     }
 
     /* (non-Javadoc)
