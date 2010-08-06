@@ -20,5 +20,11 @@ public interface IDataProvider {
     void registerProviderListener(IProviderListener listener);
     
     void removeProviderListener(IProviderListener listener);
+    
+    void start();
+    
+    void step();
+    
+    void stop();
 
 }

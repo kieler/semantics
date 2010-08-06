@@ -18,4 +18,5 @@ Require-Bundle: org.eclipse.core.runtime,
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-ActivationPolicy: lazy
 Export-Package: de.cau.cs.kieler.kvid.data,
- de.cau.cs.kieler.kvid.datadistributor
+ de.cau.cs.kieler.kvid.datadistributor,
+ de.cau.cs.kieler.kvid.dataprovider

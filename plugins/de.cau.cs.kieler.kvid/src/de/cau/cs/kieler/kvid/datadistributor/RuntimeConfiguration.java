@@ -88,7 +88,9 @@ public class RuntimeConfiguration {
         }
         if (theproperty.getName().equals("Path to CSV File")) {
             String path = theproperty.getCurrentValue();
-            DataDistributor.getInstance().changeDataProvider(new CsvDataProvider(path));
+            CsvDataProvider newProvider = new CsvDataProvider(path);
+            newProvider.start();
+            DataDistributor.getInstance().changeDataProvider(newProvider);
         }
         for (IPropertyListener listener : listeners) {
             listener.triggerPropertyChanged(theproperty);                

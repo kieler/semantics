@@ -13,6 +13,7 @@
  */
 package de.cau.cs.kieler.kvid.ui.views;
 
+import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.CellEditor;
 import org.eclipse.jface.viewers.CellLabelProvider;
@@ -30,6 +31,7 @@ import org.eclipse.ui.part.ViewPart;
 import de.cau.cs.kieler.kvid.datadistributor.IPropertyListener;
 import de.cau.cs.kieler.kvid.datadistributor.Property;
 import de.cau.cs.kieler.kvid.datadistributor.RuntimeConfiguration;
+import de.cau.cs.kieler.kvid.ui.KViDUIPlugin;
 
 /**
  * 
@@ -41,6 +43,8 @@ import de.cau.cs.kieler.kvid.datadistributor.RuntimeConfiguration;
 public class PropertiesView extends ViewPart implements IPropertyListener {
     
     private TableViewer tableViewer;
+    
+    private Step step;
     
     private static final int COLUMN_WIDTH = 250;
 
@@ -121,6 +125,13 @@ public class PropertiesView extends ViewPart implements IPropertyListener {
             }
         });
         
+        IToolBarManager toolBarManager = getViewSite().getActionBars().getToolBarManager();
+        step = new Step();
+        step.setImageDescriptor(KViDUIPlugin.imageDescriptorFromPlugin(KViDUIPlugin.PLUGIN_ID, "icons/stepIcon.png"));
+        step.setDisabledImageDescriptor(KViDUIPlugin.imageDescriptorFromPlugin(KViDUIPlugin.PLUGIN_ID, "icons/stepIconDisabled.png"));
+        step.setEnabled(false);
+        toolBarManager.add(step);
+        
         tableViewer.setInput(RuntimeConfiguration.getInstance().getKnownProperties());
     }
 
@@ -136,6 +147,14 @@ public class PropertiesView extends ViewPart implements IPropertyListener {
      * @see de.cau.cs.kieler.kvid.datadistributor.IPropertyListener#triggerPropertyChanged(de.cau.cs.kieler.kvid.datadistributor.Property)
      */
     public void triggerPropertyChanged(Property changedProperty) {
+        if (changedProperty.getName().equals("Path to CSV File")) {
+            step.setEnabled(true);
+        }
+        if (changedProperty.getName().equals("Data Source")) {
+            if (changedProperty.getCurrentValue().equals("KIEM")) {
+                step.setEnabled(false);
+            }
+        }
         tableViewer.setInput(RuntimeConfiguration.getInstance().getKnownProperties());
     }
 

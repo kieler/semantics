@@ -99,4 +99,25 @@ public class KiemDataProvider extends JSONObjectDataComponent implements
         listeners.remove(listener);
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    public void start() {
+        //not needed here, handled by kiem
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public void step() {
+        //not needed here, handled by kiem      
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public void stop() {
+        //not needed here, handled by kiem        
+    }
+
 }

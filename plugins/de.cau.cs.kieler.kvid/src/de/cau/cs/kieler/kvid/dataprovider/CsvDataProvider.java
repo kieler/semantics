@@ -86,8 +86,9 @@ public class CsvDataProvider implements IDataProvider {
         return cache.split("\n");
     }
     
-    public void initialize() {
+    public void start() {
         linePointer = 1;
+        DataDistributor.getInstance().initialize();
         for (IProviderListener listener : listeners) {
             listener.triggerInitialization();
         }
@@ -108,6 +109,12 @@ public class CsvDataProvider implements IDataProvider {
             ex.printStackTrace();
         }
     }
+    
+   public void stop() {
+       for (IProviderListener listener : listeners) {
+           listener.triggerWrapup();
+       }
+   }
     
     /* (non-Javadoc)
      * @see de.cau.cs.kieler.kvid.dataprovider.IDataProvider#registerProviderListener(de.cau.cs.kieler.kvid.datadistributor.IProviderListener)

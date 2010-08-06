@@ -78,6 +78,10 @@ public class DataDistributor implements IProviderListener {
         currentProvider.registerProviderListener(this);
     }
     
+    public IDataProvider getCurrentProvider() {
+        return this.currentProvider;
+    }
+    
     public void initialize() {
         final IEditorPart activeEditor = getActiveEditor();
         if (activeEditor instanceof DiagramEditor) {

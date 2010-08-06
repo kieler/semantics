@@ -64,6 +64,7 @@ public class Property {
         if (isFreeText) {
             currentValue = optionName;
             values[0] = optionName;
+            RuntimeConfiguration.getInstance().triggerPropertyChanged(this);
             return;
         }
         for (String option : values) {
