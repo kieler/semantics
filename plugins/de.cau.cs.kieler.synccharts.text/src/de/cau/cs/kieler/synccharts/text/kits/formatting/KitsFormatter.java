@@ -48,25 +48,32 @@ public class KitsFormatter extends ActionsFormatter {
 			c.setNoSpace().before(keyword);
 		}
 		
-		c.setLinewrap(2).before(f.getRegionAccess().getRegionKeyword_0_0());
-		c.setLinewrap().after(f.getRegionAccess().getLabelAssignment_0_2());
+		c.setLinewrap().after(f.getStringAnnotationRule());
+		c.setLinewrap().after(f.getCOMMENT_ANNOTATIONRule());
+		c.setLinewrap().after(f.getKeyValueAnnotationAccess().getValueEStringParserRuleCall_1_0());
+		
+		c.setLinewrap().before(f.getRegionRule());
+		c.setLinewrap().after(f.getRegionAccess().getLabelAssignment_0_3());
 		
 		// have a blank between states
 		// unfortunately, the first declaration doesn't work as intended
 		// c.setLinewrap(2).after(f.getStateRule());
-		c.setLinewrap(2).after(f.getStateAccess().getSemicolonKeyword_5_0_1());
-		c.setLinewrap(2).after(f.getStateAccess().getSemicolonKeyword_5_1_3_2());
+		c.setLinewrap(2).after(f.getStateAccess().getSemicolonKeyword_6_0_1());
+		c.setLinewrap(2).after(f.getStateAccess().getSemicolonKeyword_6_1_3_2());
 		
 		c.setLinewrap().after(f.getSignalRule());
+		//c.setLinewrap().after(f.getSignalAccess().getSemicolonKeyword_7());
+
 		c.setLinewrap().after(f.getVariableRule());
+		// c.setLinewrap().after(f.getVariableAccess().getSemicolonKeyword_4());
 		
 		// let each transition declaration begin on a new line
 		// unfortunately, the first declaration doesn't work as intended
 		// c.setLinewrap().before(f.getTransitionRule());
-		c.setLinewrap().before(f.getTransitionAccess().getTypeTransitionTypeEnumRuleCall_0_0());
+		c.setLinewrap().before(f.getTransitionAccess().getTypeTransitionTypeEnumRuleCall_1_0());
 		
 		// let the priority statement be compressed, i.e. <1> not < 1 >
-		c.setNoSpace().after(f.getTransitionAccess().getLessThanSignKeyword_2_0());
-		c.setNoSpace().before(f.getTransitionAccess().getGreaterThanSignKeyword_2_2());
+		c.setNoSpace().after(f.getTransitionAccess().getLessThanSignKeyword_3_0());
+		c.setNoSpace().before(f.getTransitionAccess().getGreaterThanSignKeyword_3_2());
 	}
 }

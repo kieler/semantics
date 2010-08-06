@@ -20,17 +20,16 @@ public class KitsRuntimeModule extends de.cau.cs.kieler.synccharts.text.kits.Abs
 		return KitsTransientValueService.class;
 	}
 	
-	public Class<? extends org.eclipse.xtext.formatting.IIndentationInformation> bindIIndentationInformation() {
-		return de.cau.cs.kieler.synccharts.text.kits.formatting.KitsIndentionInformation.class;
-	}
-
-    @Override
     public Class<? extends org.eclipse.xtext.conversion.IValueConverterService> bindIValueConverterService() {
-        return de.cau.cs.kieler.synccharts.text.actions.formatting.ActionsValueConverter.class;
+        return de.cau.cs.kieler.synccharts.text.kits.formatting.KitsValueConverter.class;
     }
 
     public Class<? extends org.eclipse.xtext.parsetree.reconstr.ITokenSerializer.IValueSerializer> bindIValueSerializer() {
 		return de.cau.cs.kieler.synccharts.text.kits.formatting.KitsValueSerializer.class;
 	}
 	
+	public Class<? extends org.eclipse.xtext.formatting.IIndentationInformation> bindIIndentationInformation() {
+		return de.cau.cs.kieler.synccharts.text.kits.formatting.KitsIndentionInformation.class;
+	}
+
 }

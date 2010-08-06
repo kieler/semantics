@@ -26,11 +26,13 @@ import com.google.inject.Inject;
 
 import de.cau.cs.kieler.synccharts.Region;
 import de.cau.cs.kieler.synccharts.SyncchartsPackage;
+import de.cau.cs.kieler.synccharts.text.kits.services.KitsGrammarAccess;
 
 /**
  * customized {@link ITokenSerializer.IValueSerializer}.
- * Realizes the output of the optional keyword state
- * and empty state labels
+ * Realizes the output of the optional keyword state and empty state labels.
+ * 
+ * @author chsch
  */
 public class KitsValueSerializer extends ValueSerializer {
 	
@@ -118,7 +120,8 @@ public class KitsValueSerializer extends ValueSerializer {
 	 */
 	public String serializeUnassignedValue(EObject context, RuleCall ruleCall, AbstractNode node) {
 		if (SyncchartsPackage.eINSTANCE.getState().isInstance(context)) {
-			return new String("state");
+			// in case we face a state object just return "state"
+			return ((KitsGrammarAccess) grammarAccess).getStateAccess().getStateKeyword_3().getValue();	
 		}
 		return super.serializeUnassignedValue(context, ruleCall, node);
 	}

@@ -11,7 +11,15 @@ var runtimeProject = "../${projectName}"
 
 Workflow {
 	bean = StandaloneSetup {
+		uriMap = Mapping {
+			from = "platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore"
+			to = "http://www.eclipse.org/emf/2002/Ecore"
+		}
 		platformUri = "${runtimeProject}/.."
+
+		registerGeneratedEPackage = "org.eclipse.emf.ecore.EcorePackage"		
+		registerGeneratedEPackage = "de.cau.cs.kieler.core.annotations.AnnotationsPackage"		
+		registerGeneratedEPackage = "de.cau.cs.kieler.core.expressions.ExpressionsPackage"		
 		registerGeneratedEPackage = "de.cau.cs.kieler.synccharts.SyncchartsPackage"
 	}
 	

@@ -22,6 +22,8 @@ import org.eclipse.emf.transaction.impl.TransactionChangeRecorder;
 import org.eclipse.xtext.parsetree.reconstr.ITransientValueService;
 import org.eclipse.xtext.parsetree.reconstr.impl.DefaultTransientValueService;
 
+import de.cau.cs.kieler.core.annotations.Annotatable;
+import de.cau.cs.kieler.core.annotations.AnnotationsPackage;
 import de.cau.cs.kieler.synccharts.Region;
 import de.cau.cs.kieler.synccharts.Scope;
 import de.cau.cs.kieler.synccharts.StateType;
@@ -37,11 +39,14 @@ public class KitsTransientValueService extends DefaultTransientValueService {
 
 	/**
 	 * Decides whether each element of an owners feature needs to be checked.
-	 * Here, I want this to be false except while serializing the signals of
-	 * the root region: The 'tick' signal should not be serialized. 
+	 * Here, I want this to be false except while serializing annotations and
+	 * the signals of the root region: The 'tick' signal should not be serialized. 
 	 */
 	public boolean isCheckElementsIndividually(EObject owner, EStructuralFeature feature) {
 		
+		if (feature == AnnotationsPackage.eINSTANCE.getAnnotatable_Annotations()) {
+			return true;
+		}
 		if (feature == SyncchartsPackage.eINSTANCE.getScope_Signals()
 				&& SyncchartsPackage.eINSTANCE.getRegion().isInstance(owner)
 				&& owner.eContainer() == null) {
@@ -135,8 +140,15 @@ public class KitsTransientValueService extends DefaultTransientValueService {
 		}
 		
 		
-		/* suppress further undefined features */
-		return !owner.eIsSet(feature); // || feature.isTransient();
+		/* try not to serialize annotations that are of type unequal to StringAnnotations */
+		if (feature == AnnotationsPackage.eINSTANCE.getAnnotatable_Annotations()) {
+			return !AnnotationsPackage.eINSTANCE.getStringAnnotation().isInstance(
+					((Annotatable) owner).getAnnotations().get(index));
+		}
+		
+		
+		/* suppress residual uninitialized features */
+		return !owner.eIsSet(feature) || feature.isTransient();
 	}
 
 	

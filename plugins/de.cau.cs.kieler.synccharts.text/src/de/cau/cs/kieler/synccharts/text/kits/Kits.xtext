@@ -7,24 +7,36 @@ import "platform:/resource/de.cau.cs.kieler.synccharts/model/synccharts.ecore" a
 
 
 Region returns synccharts::Region:
-  ('region' (id=ID)? (label=EString) (variables+=Variable|signals+=Signal)* (states+=State)*)
+  (
+    (annotations += StringAnnotation)*
+    'region' (id=ID)? (label=EString)
+    (variables+=Variable|signals+=Signal)* (states+=State)*
+   )
   | (states+=State)+
   ;
 
-//terminal ML_COMMENT	: '/***' -> '*/';
-
 terminal TRANSITION_LABEL returns ecore::EString: 
-			"%" -> "%";
+    "%" -> "%";
 
-terminal T_ANNOTATION returns ecore::EString: 
-			"/+" -> "+/";
+terminal COMMENT_ANNOTATION returns ecore::EString: 
+    "/+" -> "+/";
+    
+terminal ANNOTATION_KEY returns ecore::EString:
+    '@' ID;
 
 StringAnnotation returns annotations::Annotation:
-	{annotations::StringAnnotation} value=T_ANNOTATION
-    ;
+	CommentAnnotation
+	| KeyValueAnnotation
+	;
+
+CommentAnnotation returns annotations::StringAnnotation:
+	value=COMMENT_ANNOTATION;
+    
+KeyValueAnnotation returns annotations::StringAnnotation:
+	name=ANNOTATION_KEY value=EString;
 
 State returns synccharts::State:
-//  ( annotations += StringAnnotation )*
+  (annotations += StringAnnotation)*
   (
     ((isInitial?='init') (isFinal?='final')?)
    |
@@ -53,30 +65,8 @@ State returns synccharts::State:
 
 // ---------------------------------------------------------------------------------------------------
 
-Variable returns expressions::Variable:
-  'var' name=ID ((':=' initialValue=IntegerOrString)? ':' type=ValueType) ";";
-
-// ---------------------------------------------------------------------------------------------------
-
-IntegerOrString :
-   INT | EString;
-
-// ---------------------------------------------------------------------------------------------------
-
-Signal returns expressions::Signal:
-(isInput?='input')?
-	(isOutput?='output')?
-	'signal'
-	(name=EString)
-	(':=' initialValue=EString)?
-    ((':' type=ValueType)
-      |
-     (':' 'combine' type=ValueType 'with' (combineOperator=CombineOperator|hostCombineOperator=EString) )
-    )? ";";
-
-// ---------------------------------------------------------------------------------------------------
-
 Transition returns synccharts::Transition:
+    (annotations += StringAnnotation)*
 	type=TransitionType 
 	targetState=[synccharts::State|EString]
 	('<'priority=INT'>')? 
@@ -85,6 +75,31 @@ Transition returns synccharts::Transition:
       ('/' effects+=Effect (','effects+=Effect)*)?
 	)? 
 	(isHistory?='history')? (label=TRANSITION_LABEL)?;
+
+// ---------------------------------------------------------------------------------------------------
+
+Signal returns expressions::Signal:
+    (annotations += StringAnnotation)*
+    (isInput?='input')?
+	(isOutput?='output')?
+	'signal'
+	(name=ID)
+	(':=' initialValue=EString)?
+    ((':' type=ValueType)
+      |
+     (':' 'combine' type=ValueType 'with' (combineOperator=CombineOperator|hostCombineOperator=EString) )
+    )? ";";
+
+// ---------------------------------------------------------------------------------------------------
+
+Variable returns expressions::Variable:
+    (annotations += StringAnnotation)*
+    'var' name=ID ((':=' initialValue=IntegerOrString)? ':' type=ValueType) ";";
+
+// ---------------------------------------------------------------------------------------------------
+
+IntegerOrString returns ecore::EString:
+    INT | EString;
 
 enum StateType returns synccharts::StateType:
 	NORMAL = 'normal' | CONDITIONAL = 'conditional' | REFERENCE = 'reference' | TEXTUAL = 'textual';

@@ -23,97 +23,82 @@ import org.eclipse.xtext.util.Strings;
 
 /**
  * @author haf
- *
+ * 
  */
 public class ActionsValueConverter extends DefaultTerminalConverters {
 
-    /**
-     * Standard boolean data type converter to convert standard Java style
-     * boolean strings "true" and "false" into Boolean objects and vice versa.
-     * @return value converter for standard Java style booleans
-     */
-    @ValueConverter(rule = "Boolean")
-    public IValueConverter<Boolean> Boolean() {
-            return new IValueConverter<Boolean>() {
-                    
-                    public Boolean toValue(String string, AbstractNode node) {
-                            if (Strings.isEmpty(string))
-                                    throw new ValueConverterException("Couldn't convert empty string to boolean", node, null);
-                            try {
-                                    return Boolean.valueOf(string);
-                            } catch (NumberFormatException e) {
-                                    throw new ValueConverterException("Couldn't convert '"+string+"' to boolean", node, e);
-                            }
-                    }
+	/**
+	 * Standard boolean data type converter to convert standard Java style
+	 * boolean strings "true" and "false" into Boolean objects and vice versa.
+	 * 
+	 * @return value converter for standard Java style booleans
+	 */
+	@ValueConverter(rule = "Boolean")
+	public IValueConverter<Boolean> Boolean() {
+		return new IValueConverter<Boolean>() {
 
-                    public String toString(Boolean value) {
-                            return value.toString();
-                    }
-            };
-    }
+			public Boolean toValue(String string, AbstractNode node) {
+				if (Strings.isEmpty(string))
+					throw new ValueConverterException(
+							"Couldn't convert empty string to boolean", node,
+							null);
+				try {
+					return Boolean.valueOf(string);
+				} catch (NumberFormatException e) {
+					throw new ValueConverterException("Couldn't convert '"
+							+ string + "' to boolean", node, e);
+				}
+			}
 
-    /**
-     * Primitive integer data type converter provider allowing negative numbers.
-     * @return value converter for standard Java style booleans
-     */
+			public String toString(Boolean value) {
+				return value.toString();
+			}
+		};
+	}
+
+	/**
+	 * Primitive integer data type converter provider allowing negative numbers.
+	 * 
+	 * @return value converter for standard Java style booleans
+	 */
 	@ValueConverter(rule = "INT")
-    public IValueConverter<Integer> INT() {
-    		return new org.eclipse.xtext.conversion.impl.INTValueConverter() 		
-    		{
-    			public String toString(Integer value) {
-    				if (value == null)
-    					throw new ValueConverterException("INT-value may not be null. (null indeed, zero is ok)", null, null);
-    				return value.toString();
-    			}		
-    		}
-	;
-    }
+	public IValueConverter<Integer> INT() {
+		return new org.eclipse.xtext.conversion.impl.INTValueConverter() {
+			public String toString(Integer value) {
+				if (value == null)
+					throw new ValueConverterException(
+							"INT-value may not be null. (null indeed, zero is ok)",
+							null, null);
+				return value.toString();
+			}
+		};
+	}
 
-    /**
-     * Standard boolean data type converter to convert standard Java style
-     * @return value converter for standard Java style booleans
-     */
-    @ValueConverter(rule = "Float")
-    public IValueConverter<Float> Float() {
-            return new IValueConverter<Float>() {
-                    
-                    public Float toValue(String string, AbstractNode node) {
-                            if (Strings.isEmpty(string))
-                                    throw new ValueConverterException("Couldn't convert empty string to float", node, null);
-                            try {
-                                    return Float.valueOf(string);
-                            } catch (NumberFormatException e) {
-                                    throw new ValueConverterException("Couldn't convert '"+string+"' to float", node, e);
-                            }
-                    }
+	/**
+	 * Standard boolean data type converter to convert standard Java style
+	 * 
+	 * @return value converter for standard Java style booleans
+	 */
+	@ValueConverter(rule = "Float")
+	public IValueConverter<Float> Float() {
+		return new IValueConverter<Float>() {
 
-                    public String toString(Float value) {
-                            return value.toString();
-                    }
-            };
-    }
+			public Float toValue(String string, AbstractNode node) {
+				if (Strings.isEmpty(string))
+					throw new ValueConverterException(
+							"Couldn't convert empty string to float", node,
+							null);
+				try {
+					return Float.valueOf(string);
+				} catch (NumberFormatException e) {
+					throw new ValueConverterException("Couldn't convert '"
+							+ string + "' to float", node, e);
+				}
+			}
 
-    /**
-     * Standard boolean data type converter to convert standard Java style
-     * @return value converter for standard Java style booleans
-     */
-    @ValueConverter(rule = "TRANSITION_LABEL")
-    public IValueConverter<String> String() {
-            return new IValueConverter<String>() {
-                    
-                    public String toValue(String string, AbstractNode node) {
-                        return string.replace('%', ' ').trim();
-                    }
-
-                    public String toString(String value) {
-                        if (Strings.isEmpty(value)) {
-                        	return null;
-                        } else {
-                        	return "  % " + value + " %";
-                        }
-                    }
-            };
-    }
-
-    
+			public String toString(Float value) {
+				return value.toString();
+			}
+		};
+	}
 }
