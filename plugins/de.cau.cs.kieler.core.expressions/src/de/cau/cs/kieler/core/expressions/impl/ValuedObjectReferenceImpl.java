@@ -39,129 +39,129 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  */
 public class ValuedObjectReferenceImpl extends ComplexExpressionImpl implements ValuedObjectReference {
     /**
-     * The cached value of the '{@link #getValuedObject() <em>Valued Object</em>}' reference.
-     * <!-- begin-user-doc -->
+	 * The cached value of the '{@link #getValuedObject() <em>Valued Object</em>}' reference.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #getValuedObject()
-     * @generated
-     * @ordered
-     */
+	 * @see #getValuedObject()
+	 * @generated
+	 * @ordered
+	 */
     protected ValuedObject valuedObject;
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     protected ValuedObjectReferenceImpl() {
-        super();
-    }
+		super();
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     protected EClass eStaticClass() {
-        return ExpressionsPackage.Literals.VALUED_OBJECT_REFERENCE;
-    }
+		return ExpressionsPackage.Literals.VALUED_OBJECT_REFERENCE;
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public ValuedObject getValuedObject() {
-        if (valuedObject != null && valuedObject.eIsProxy()) {
-            InternalEObject oldValuedObject = (InternalEObject)valuedObject;
-            valuedObject = (ValuedObject)eResolveProxy(oldValuedObject);
-            if (valuedObject != oldValuedObject) {
-                if (eNotificationRequired())
-                    eNotify(new ENotificationImpl(this, Notification.RESOLVE, ExpressionsPackage.VALUED_OBJECT_REFERENCE__VALUED_OBJECT, oldValuedObject, valuedObject));
-            }
-        }
-        return valuedObject;
-    }
+		if (valuedObject != null && valuedObject.eIsProxy()) {
+			InternalEObject oldValuedObject = (InternalEObject)valuedObject;
+			valuedObject = (ValuedObject)eResolveProxy(oldValuedObject);
+			if (valuedObject != oldValuedObject) {
+				if (eNotificationRequired())
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, ExpressionsPackage.VALUED_OBJECT_REFERENCE__VALUED_OBJECT, oldValuedObject, valuedObject));
+			}
+		}
+		return valuedObject;
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public ValuedObject basicGetValuedObject() {
-        return valuedObject;
-    }
+		return valuedObject;
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public void setValuedObject(ValuedObject newValuedObject) {
-        ValuedObject oldValuedObject = valuedObject;
-        valuedObject = newValuedObject;
-        if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, ExpressionsPackage.VALUED_OBJECT_REFERENCE__VALUED_OBJECT, oldValuedObject, valuedObject));
-    }
+		ValuedObject oldValuedObject = valuedObject;
+		valuedObject = newValuedObject;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, ExpressionsPackage.VALUED_OBJECT_REFERENCE__VALUED_OBJECT, oldValuedObject, valuedObject));
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public Object eGet(int featureID, boolean resolve, boolean coreType) {
-        switch (featureID) {
-            case ExpressionsPackage.VALUED_OBJECT_REFERENCE__VALUED_OBJECT:
-                if (resolve) return getValuedObject();
-                return basicGetValuedObject();
-        }
-        return super.eGet(featureID, resolve, coreType);
-    }
+		switch (featureID) {
+			case ExpressionsPackage.VALUED_OBJECT_REFERENCE__VALUED_OBJECT:
+				if (resolve) return getValuedObject();
+				return basicGetValuedObject();
+		}
+		return super.eGet(featureID, resolve, coreType);
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public void eSet(int featureID, Object newValue) {
-        switch (featureID) {
-            case ExpressionsPackage.VALUED_OBJECT_REFERENCE__VALUED_OBJECT:
-                setValuedObject((ValuedObject)newValue);
-                return;
-        }
-        super.eSet(featureID, newValue);
-    }
+		switch (featureID) {
+			case ExpressionsPackage.VALUED_OBJECT_REFERENCE__VALUED_OBJECT:
+				setValuedObject((ValuedObject)newValue);
+				return;
+		}
+		super.eSet(featureID, newValue);
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public void eUnset(int featureID) {
-        switch (featureID) {
-            case ExpressionsPackage.VALUED_OBJECT_REFERENCE__VALUED_OBJECT:
-                setValuedObject((ValuedObject)null);
-                return;
-        }
-        super.eUnset(featureID);
-    }
+		switch (featureID) {
+			case ExpressionsPackage.VALUED_OBJECT_REFERENCE__VALUED_OBJECT:
+				setValuedObject((ValuedObject)null);
+				return;
+		}
+		super.eUnset(featureID);
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public boolean eIsSet(int featureID) {
-        switch (featureID) {
-            case ExpressionsPackage.VALUED_OBJECT_REFERENCE__VALUED_OBJECT:
-                return valuedObject != null;
-        }
-        return super.eIsSet(featureID);
-    }
+		switch (featureID) {
+			case ExpressionsPackage.VALUED_OBJECT_REFERENCE__VALUED_OBJECT:
+				return valuedObject != null;
+		}
+		return super.eIsSet(featureID);
+	}
 
 } //ValuedObjectReferenceImpl

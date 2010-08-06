@@ -45,454 +45,454 @@ import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
  */
 public class ExpressionsItemProviderAdapterFactory extends ExpressionsAdapterFactory implements ComposeableAdapterFactory, IChangeNotifier, IDisposable {
     /**
-     * This keeps track of the root adapter factory that delegates to this adapter factory.
-     * <!-- begin-user-doc -->
+	 * This keeps track of the root adapter factory that delegates to this adapter factory.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     protected ComposedAdapterFactory parentAdapterFactory;
 
     /**
-     * This is used to implement {@link org.eclipse.emf.edit.provider.IChangeNotifier}.
-     * <!-- begin-user-doc -->
+	 * This is used to implement {@link org.eclipse.emf.edit.provider.IChangeNotifier}.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     protected IChangeNotifier changeNotifier = new ChangeNotifier();
 
     /**
-     * This keeps track of all the supported types checked by {@link #isFactoryForType isFactoryForType}.
-     * <!-- begin-user-doc -->
+	 * This keeps track of all the supported types checked by {@link #isFactoryForType isFactoryForType}.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     protected Collection<Object> supportedTypes = new ArrayList<Object>();
 
     /**
-     * This constructs an instance.
-     * <!-- begin-user-doc -->
+	 * This constructs an instance.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public ExpressionsItemProviderAdapterFactory() {
-        supportedTypes.add(IEditingDomainItemProvider.class);
-        supportedTypes.add(IStructuredItemContentProvider.class);
-        supportedTypes.add(ITreeItemContentProvider.class);
-        supportedTypes.add(IItemLabelProvider.class);
-        supportedTypes.add(IItemPropertySource.class);
-    }
+		supportedTypes.add(IEditingDomainItemProvider.class);
+		supportedTypes.add(IStructuredItemContentProvider.class);
+		supportedTypes.add(ITreeItemContentProvider.class);
+		supportedTypes.add(IItemLabelProvider.class);
+		supportedTypes.add(IItemPropertySource.class);
+	}
 
     /**
-     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.core.expressions.ComplexExpression} instances.
-     * <!-- begin-user-doc -->
+	 * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.core.expressions.ComplexExpression} instances.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     protected ComplexExpressionItemProvider complexExpressionItemProvider;
 
     /**
-     * This creates an adapter for a {@link de.cau.cs.kieler.core.expressions.ComplexExpression}.
-     * <!-- begin-user-doc -->
+	 * This creates an adapter for a {@link de.cau.cs.kieler.core.expressions.ComplexExpression}.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public Adapter createComplexExpressionAdapter() {
-        if (complexExpressionItemProvider == null) {
-            complexExpressionItemProvider = new ComplexExpressionItemProvider(this);
-        }
+		if (complexExpressionItemProvider == null) {
+			complexExpressionItemProvider = new ComplexExpressionItemProvider(this);
+		}
 
-        return complexExpressionItemProvider;
-    }
+		return complexExpressionItemProvider;
+	}
 
     /**
-     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.core.expressions.Expression} instances.
-     * <!-- begin-user-doc -->
+	 * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.core.expressions.Expression} instances.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     protected ExpressionItemProvider expressionItemProvider;
 
     /**
-     * This creates an adapter for a {@link de.cau.cs.kieler.core.expressions.Expression}.
-     * <!-- begin-user-doc -->
+	 * This creates an adapter for a {@link de.cau.cs.kieler.core.expressions.Expression}.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public Adapter createExpressionAdapter() {
-        if (expressionItemProvider == null) {
-            expressionItemProvider = new ExpressionItemProvider(this);
-        }
+		if (expressionItemProvider == null) {
+			expressionItemProvider = new ExpressionItemProvider(this);
+		}
 
-        return expressionItemProvider;
-    }
+		return expressionItemProvider;
+	}
 
     /**
-     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.core.expressions.TextualCode} instances.
-     * <!-- begin-user-doc -->
+	 * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.core.expressions.TextualCode} instances.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     protected TextualCodeItemProvider textualCodeItemProvider;
 
     /**
-     * This creates an adapter for a {@link de.cau.cs.kieler.core.expressions.TextualCode}.
-     * <!-- begin-user-doc -->
+	 * This creates an adapter for a {@link de.cau.cs.kieler.core.expressions.TextualCode}.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public Adapter createTextualCodeAdapter() {
-        if (textualCodeItemProvider == null) {
-            textualCodeItemProvider = new TextualCodeItemProvider(this);
-        }
+		if (textualCodeItemProvider == null) {
+			textualCodeItemProvider = new TextualCodeItemProvider(this);
+		}
 
-        return textualCodeItemProvider;
-    }
+		return textualCodeItemProvider;
+	}
 
     /**
-     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.core.expressions.Signal} instances.
-     * <!-- begin-user-doc -->
+	 * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.core.expressions.Signal} instances.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     protected SignalItemProvider signalItemProvider;
 
     /**
-     * This creates an adapter for a {@link de.cau.cs.kieler.core.expressions.Signal}.
-     * <!-- begin-user-doc -->
+	 * This creates an adapter for a {@link de.cau.cs.kieler.core.expressions.Signal}.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public Adapter createSignalAdapter() {
-        if (signalItemProvider == null) {
-            signalItemProvider = new SignalItemProvider(this);
-        }
+		if (signalItemProvider == null) {
+			signalItemProvider = new SignalItemProvider(this);
+		}
 
-        return signalItemProvider;
-    }
+		return signalItemProvider;
+	}
 
     /**
-     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.core.expressions.ValuedObject} instances.
-     * <!-- begin-user-doc -->
+	 * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.core.expressions.ValuedObject} instances.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     protected ValuedObjectItemProvider valuedObjectItemProvider;
 
     /**
-     * This creates an adapter for a {@link de.cau.cs.kieler.core.expressions.ValuedObject}.
-     * <!-- begin-user-doc -->
+	 * This creates an adapter for a {@link de.cau.cs.kieler.core.expressions.ValuedObject}.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public Adapter createValuedObjectAdapter() {
-        if (valuedObjectItemProvider == null) {
-            valuedObjectItemProvider = new ValuedObjectItemProvider(this);
-        }
+		if (valuedObjectItemProvider == null) {
+			valuedObjectItemProvider = new ValuedObjectItemProvider(this);
+		}
 
-        return valuedObjectItemProvider;
-    }
+		return valuedObjectItemProvider;
+	}
 
     /**
-     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.core.expressions.Variable} instances.
-     * <!-- begin-user-doc -->
+	 * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.core.expressions.Variable} instances.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     protected VariableItemProvider variableItemProvider;
 
     /**
-     * This creates an adapter for a {@link de.cau.cs.kieler.core.expressions.Variable}.
-     * <!-- begin-user-doc -->
+	 * This creates an adapter for a {@link de.cau.cs.kieler.core.expressions.Variable}.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public Adapter createVariableAdapter() {
-        if (variableItemProvider == null) {
-            variableItemProvider = new VariableItemProvider(this);
-        }
+		if (variableItemProvider == null) {
+			variableItemProvider = new VariableItemProvider(this);
+		}
 
-        return variableItemProvider;
-    }
+		return variableItemProvider;
+	}
 
     /**
-     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.core.expressions.ValuedObjectReference} instances.
-     * <!-- begin-user-doc -->
+	 * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.core.expressions.ValuedObjectReference} instances.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     protected ValuedObjectReferenceItemProvider valuedObjectReferenceItemProvider;
 
     /**
-     * This creates an adapter for a {@link de.cau.cs.kieler.core.expressions.ValuedObjectReference}.
-     * <!-- begin-user-doc -->
+	 * This creates an adapter for a {@link de.cau.cs.kieler.core.expressions.ValuedObjectReference}.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public Adapter createValuedObjectReferenceAdapter() {
-        if (valuedObjectReferenceItemProvider == null) {
-            valuedObjectReferenceItemProvider = new ValuedObjectReferenceItemProvider(this);
-        }
+		if (valuedObjectReferenceItemProvider == null) {
+			valuedObjectReferenceItemProvider = new ValuedObjectReferenceItemProvider(this);
+		}
 
-        return valuedObjectReferenceItemProvider;
-    }
+		return valuedObjectReferenceItemProvider;
+	}
 
     /**
-     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.core.expressions.Value} instances.
-     * <!-- begin-user-doc -->
+	 * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.core.expressions.Value} instances.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     protected ValueItemProvider valueItemProvider;
 
     /**
-     * This creates an adapter for a {@link de.cau.cs.kieler.core.expressions.Value}.
-     * <!-- begin-user-doc -->
+	 * This creates an adapter for a {@link de.cau.cs.kieler.core.expressions.Value}.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public Adapter createValueAdapter() {
-        if (valueItemProvider == null) {
-            valueItemProvider = new ValueItemProvider(this);
-        }
+		if (valueItemProvider == null) {
+			valueItemProvider = new ValueItemProvider(this);
+		}
 
-        return valueItemProvider;
-    }
+		return valueItemProvider;
+	}
 
     /**
-     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.core.expressions.IntValue} instances.
-     * <!-- begin-user-doc -->
+	 * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.core.expressions.IntValue} instances.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     protected IntValueItemProvider intValueItemProvider;
 
     /**
-     * This creates an adapter for a {@link de.cau.cs.kieler.core.expressions.IntValue}.
-     * <!-- begin-user-doc -->
+	 * This creates an adapter for a {@link de.cau.cs.kieler.core.expressions.IntValue}.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public Adapter createIntValueAdapter() {
-        if (intValueItemProvider == null) {
-            intValueItemProvider = new IntValueItemProvider(this);
-        }
+		if (intValueItemProvider == null) {
+			intValueItemProvider = new IntValueItemProvider(this);
+		}
 
-        return intValueItemProvider;
-    }
+		return intValueItemProvider;
+	}
 
     /**
-     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.core.expressions.FloatValue} instances.
-     * <!-- begin-user-doc -->
+	 * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.core.expressions.FloatValue} instances.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     protected FloatValueItemProvider floatValueItemProvider;
 
     /**
-     * This creates an adapter for a {@link de.cau.cs.kieler.core.expressions.FloatValue}.
-     * <!-- begin-user-doc -->
+	 * This creates an adapter for a {@link de.cau.cs.kieler.core.expressions.FloatValue}.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public Adapter createFloatValueAdapter() {
-        if (floatValueItemProvider == null) {
-            floatValueItemProvider = new FloatValueItemProvider(this);
-        }
+		if (floatValueItemProvider == null) {
+			floatValueItemProvider = new FloatValueItemProvider(this);
+		}
 
-        return floatValueItemProvider;
-    }
+		return floatValueItemProvider;
+	}
 
     /**
-     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.core.expressions.BooleanValue} instances.
-     * <!-- begin-user-doc -->
+	 * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.core.expressions.BooleanValue} instances.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     protected BooleanValueItemProvider booleanValueItemProvider;
 
     /**
-     * This creates an adapter for a {@link de.cau.cs.kieler.core.expressions.BooleanValue}.
-     * <!-- begin-user-doc -->
+	 * This creates an adapter for a {@link de.cau.cs.kieler.core.expressions.BooleanValue}.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public Adapter createBooleanValueAdapter() {
-        if (booleanValueItemProvider == null) {
-            booleanValueItemProvider = new BooleanValueItemProvider(this);
-        }
+		if (booleanValueItemProvider == null) {
+			booleanValueItemProvider = new BooleanValueItemProvider(this);
+		}
 
-        return booleanValueItemProvider;
-    }
+		return booleanValueItemProvider;
+	}
 
     /**
-     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.core.expressions.OperatorExpression} instances.
-     * <!-- begin-user-doc -->
+	 * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.core.expressions.OperatorExpression} instances.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     protected OperatorExpressionItemProvider operatorExpressionItemProvider;
 
     /**
-     * This creates an adapter for a {@link de.cau.cs.kieler.core.expressions.OperatorExpression}.
-     * <!-- begin-user-doc -->
+	 * This creates an adapter for a {@link de.cau.cs.kieler.core.expressions.OperatorExpression}.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public Adapter createOperatorExpressionAdapter() {
-        if (operatorExpressionItemProvider == null) {
-            operatorExpressionItemProvider = new OperatorExpressionItemProvider(this);
-        }
+		if (operatorExpressionItemProvider == null) {
+			operatorExpressionItemProvider = new OperatorExpressionItemProvider(this);
+		}
 
-        return operatorExpressionItemProvider;
-    }
+		return operatorExpressionItemProvider;
+	}
 
     /**
-     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.core.expressions.TextExpression} instances.
-     * <!-- begin-user-doc -->
+	 * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.core.expressions.TextExpression} instances.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     protected TextExpressionItemProvider textExpressionItemProvider;
 
     /**
-     * This creates an adapter for a {@link de.cau.cs.kieler.core.expressions.TextExpression}.
-     * <!-- begin-user-doc -->
+	 * This creates an adapter for a {@link de.cau.cs.kieler.core.expressions.TextExpression}.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public Adapter createTextExpressionAdapter() {
-        if (textExpressionItemProvider == null) {
-            textExpressionItemProvider = new TextExpressionItemProvider(this);
-        }
+		if (textExpressionItemProvider == null) {
+			textExpressionItemProvider = new TextExpressionItemProvider(this);
+		}
 
-        return textExpressionItemProvider;
-    }
+		return textExpressionItemProvider;
+	}
 
     /**
-     * This returns the root adapter factory that contains this factory.
-     * <!-- begin-user-doc -->
+	 * This returns the root adapter factory that contains this factory.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public ComposeableAdapterFactory getRootAdapterFactory() {
-        return parentAdapterFactory == null ? this : parentAdapterFactory.getRootAdapterFactory();
-    }
+		return parentAdapterFactory == null ? this : parentAdapterFactory.getRootAdapterFactory();
+	}
 
     /**
-     * This sets the composed adapter factory that contains this factory.
-     * <!-- begin-user-doc -->
+	 * This sets the composed adapter factory that contains this factory.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public void setParentAdapterFactory(ComposedAdapterFactory parentAdapterFactory) {
-        this.parentAdapterFactory = parentAdapterFactory;
-    }
+		this.parentAdapterFactory = parentAdapterFactory;
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public boolean isFactoryForType(Object type) {
-        return supportedTypes.contains(type) || super.isFactoryForType(type);
-    }
+		return supportedTypes.contains(type) || super.isFactoryForType(type);
+	}
 
     /**
-     * This implementation substitutes the factory itself as the key for the adapter.
-     * <!-- begin-user-doc -->
+	 * This implementation substitutes the factory itself as the key for the adapter.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public Adapter adapt(Notifier notifier, Object type) {
-        return super.adapt(notifier, this);
-    }
+		return super.adapt(notifier, this);
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public Object adapt(Object object, Object type) {
-        if (isFactoryForType(type)) {
-            Object adapter = super.adapt(object, type);
-            if (!(type instanceof Class<?>) || (((Class<?>)type).isInstance(adapter))) {
-                return adapter;
-            }
-        }
+		if (isFactoryForType(type)) {
+			Object adapter = super.adapt(object, type);
+			if (!(type instanceof Class<?>) || (((Class<?>)type).isInstance(adapter))) {
+				return adapter;
+			}
+		}
 
-        return null;
-    }
+		return null;
+	}
 
     /**
-     * This adds a listener.
-     * <!-- begin-user-doc -->
+	 * This adds a listener.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public void addListener(INotifyChangedListener notifyChangedListener) {
-        changeNotifier.addListener(notifyChangedListener);
-    }
+		changeNotifier.addListener(notifyChangedListener);
+	}
 
     /**
-     * This removes a listener.
-     * <!-- begin-user-doc -->
+	 * This removes a listener.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public void removeListener(INotifyChangedListener notifyChangedListener) {
-        changeNotifier.removeListener(notifyChangedListener);
-    }
+		changeNotifier.removeListener(notifyChangedListener);
+	}
 
     /**
-     * This delegates to {@link #changeNotifier} and to {@link #parentAdapterFactory}.
-     * <!-- begin-user-doc -->
+	 * This delegates to {@link #changeNotifier} and to {@link #parentAdapterFactory}.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public void fireNotifyChanged(Notification notification) {
-        changeNotifier.fireNotifyChanged(notification);
+		changeNotifier.fireNotifyChanged(notification);
 
-        if (parentAdapterFactory != null) {
-            parentAdapterFactory.fireNotifyChanged(notification);
-        }
-    }
+		if (parentAdapterFactory != null) {
+			parentAdapterFactory.fireNotifyChanged(notification);
+		}
+	}
 
     /**
-     * This disposes all of the item providers created by this factory. 
-     * <!-- begin-user-doc -->
+	 * This disposes all of the item providers created by this factory. 
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public void dispose() {
-        if (complexExpressionItemProvider != null) complexExpressionItemProvider.dispose();
-        if (expressionItemProvider != null) expressionItemProvider.dispose();
-        if (textualCodeItemProvider != null) textualCodeItemProvider.dispose();
-        if (signalItemProvider != null) signalItemProvider.dispose();
-        if (valuedObjectItemProvider != null) valuedObjectItemProvider.dispose();
-        if (variableItemProvider != null) variableItemProvider.dispose();
-        if (valuedObjectReferenceItemProvider != null) valuedObjectReferenceItemProvider.dispose();
-        if (valueItemProvider != null) valueItemProvider.dispose();
-        if (intValueItemProvider != null) intValueItemProvider.dispose();
-        if (floatValueItemProvider != null) floatValueItemProvider.dispose();
-        if (booleanValueItemProvider != null) booleanValueItemProvider.dispose();
-        if (operatorExpressionItemProvider != null) operatorExpressionItemProvider.dispose();
-        if (textExpressionItemProvider != null) textExpressionItemProvider.dispose();
-    }
+		if (complexExpressionItemProvider != null) complexExpressionItemProvider.dispose();
+		if (expressionItemProvider != null) expressionItemProvider.dispose();
+		if (textualCodeItemProvider != null) textualCodeItemProvider.dispose();
+		if (signalItemProvider != null) signalItemProvider.dispose();
+		if (valuedObjectItemProvider != null) valuedObjectItemProvider.dispose();
+		if (variableItemProvider != null) variableItemProvider.dispose();
+		if (valuedObjectReferenceItemProvider != null) valuedObjectReferenceItemProvider.dispose();
+		if (valueItemProvider != null) valueItemProvider.dispose();
+		if (intValueItemProvider != null) intValueItemProvider.dispose();
+		if (floatValueItemProvider != null) floatValueItemProvider.dispose();
+		if (booleanValueItemProvider != null) booleanValueItemProvider.dispose();
+		if (operatorExpressionItemProvider != null) operatorExpressionItemProvider.dispose();
+		if (textExpressionItemProvider != null) textExpressionItemProvider.dispose();
+	}
 
 }

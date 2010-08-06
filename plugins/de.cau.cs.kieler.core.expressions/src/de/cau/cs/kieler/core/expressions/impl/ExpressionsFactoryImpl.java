@@ -32,306 +32,306 @@ import org.eclipse.emf.ecore.plugin.EcorePlugin;
  */
 public class ExpressionsFactoryImpl extends EFactoryImpl implements ExpressionsFactory {
     /**
-     * Creates the default factory implementation.
-     * <!-- begin-user-doc -->
+	 * Creates the default factory implementation.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public static ExpressionsFactory init() {
-        try {
-            ExpressionsFactory theExpressionsFactory = (ExpressionsFactory)EPackage.Registry.INSTANCE.getEFactory("http://kieler.cs.cau.de/expressions/0.1.2"); 
-            if (theExpressionsFactory != null) {
-                return theExpressionsFactory;
-            }
-        }
-        catch (Exception exception) {
-            EcorePlugin.INSTANCE.log(exception);
-        }
-        return new ExpressionsFactoryImpl();
-    }
+		try {
+			ExpressionsFactory theExpressionsFactory = (ExpressionsFactory)EPackage.Registry.INSTANCE.getEFactory("http://kieler.cs.cau.de/expressions/0.1.2"); 
+			if (theExpressionsFactory != null) {
+				return theExpressionsFactory;
+			}
+		}
+		catch (Exception exception) {
+			EcorePlugin.INSTANCE.log(exception);
+		}
+		return new ExpressionsFactoryImpl();
+	}
 
     /**
-     * Creates an instance of the factory.
-     * <!-- begin-user-doc -->
+	 * Creates an instance of the factory.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public ExpressionsFactoryImpl() {
-        super();
-    }
+		super();
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public EObject create(EClass eClass) {
-        switch (eClass.getClassifierID()) {
-            case ExpressionsPackage.COMPLEX_EXPRESSION: return createComplexExpression();
-            case ExpressionsPackage.EXPRESSION: return createExpression();
-            case ExpressionsPackage.TEXTUAL_CODE: return createTextualCode();
-            case ExpressionsPackage.SIGNAL: return createSignal();
-            case ExpressionsPackage.VALUED_OBJECT: return createValuedObject();
-            case ExpressionsPackage.VARIABLE: return createVariable();
-            case ExpressionsPackage.VALUED_OBJECT_REFERENCE: return createValuedObjectReference();
-            case ExpressionsPackage.VALUE: return createValue();
-            case ExpressionsPackage.INT_VALUE: return createIntValue();
-            case ExpressionsPackage.FLOAT_VALUE: return createFloatValue();
-            case ExpressionsPackage.BOOLEAN_VALUE: return createBooleanValue();
-            case ExpressionsPackage.OPERATOR_EXPRESSION: return createOperatorExpression();
-            case ExpressionsPackage.TEXT_EXPRESSION: return createTextExpression();
-            default:
-                throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
-        }
-    }
+		switch (eClass.getClassifierID()) {
+			case ExpressionsPackage.COMPLEX_EXPRESSION: return createComplexExpression();
+			case ExpressionsPackage.EXPRESSION: return createExpression();
+			case ExpressionsPackage.TEXTUAL_CODE: return createTextualCode();
+			case ExpressionsPackage.SIGNAL: return createSignal();
+			case ExpressionsPackage.VALUED_OBJECT: return createValuedObject();
+			case ExpressionsPackage.VARIABLE: return createVariable();
+			case ExpressionsPackage.VALUED_OBJECT_REFERENCE: return createValuedObjectReference();
+			case ExpressionsPackage.VALUE: return createValue();
+			case ExpressionsPackage.INT_VALUE: return createIntValue();
+			case ExpressionsPackage.FLOAT_VALUE: return createFloatValue();
+			case ExpressionsPackage.BOOLEAN_VALUE: return createBooleanValue();
+			case ExpressionsPackage.OPERATOR_EXPRESSION: return createOperatorExpression();
+			case ExpressionsPackage.TEXT_EXPRESSION: return createTextExpression();
+			default:
+				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
+		}
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public Object createFromString(EDataType eDataType, String initialValue) {
-        switch (eDataType.getClassifierID()) {
-            case ExpressionsPackage.COMBINE_OPERATOR:
-                return createCombineOperatorFromString(eDataType, initialValue);
-            case ExpressionsPackage.OPERATOR_TYPE:
-                return createOperatorTypeFromString(eDataType, initialValue);
-            case ExpressionsPackage.VALUE_TYPE:
-                return createValueTypeFromString(eDataType, initialValue);
-            default:
-                throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
-        }
-    }
+		switch (eDataType.getClassifierID()) {
+			case ExpressionsPackage.COMBINE_OPERATOR:
+				return createCombineOperatorFromString(eDataType, initialValue);
+			case ExpressionsPackage.OPERATOR_TYPE:
+				return createOperatorTypeFromString(eDataType, initialValue);
+			case ExpressionsPackage.VALUE_TYPE:
+				return createValueTypeFromString(eDataType, initialValue);
+			default:
+				throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
+		}
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public String convertToString(EDataType eDataType, Object instanceValue) {
-        switch (eDataType.getClassifierID()) {
-            case ExpressionsPackage.COMBINE_OPERATOR:
-                return convertCombineOperatorToString(eDataType, instanceValue);
-            case ExpressionsPackage.OPERATOR_TYPE:
-                return convertOperatorTypeToString(eDataType, instanceValue);
-            case ExpressionsPackage.VALUE_TYPE:
-                return convertValueTypeToString(eDataType, instanceValue);
-            default:
-                throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
-        }
-    }
+		switch (eDataType.getClassifierID()) {
+			case ExpressionsPackage.COMBINE_OPERATOR:
+				return convertCombineOperatorToString(eDataType, instanceValue);
+			case ExpressionsPackage.OPERATOR_TYPE:
+				return convertOperatorTypeToString(eDataType, instanceValue);
+			case ExpressionsPackage.VALUE_TYPE:
+				return convertValueTypeToString(eDataType, instanceValue);
+			default:
+				throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
+		}
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public ComplexExpression createComplexExpression() {
-        ComplexExpressionImpl complexExpression = new ComplexExpressionImpl();
-        return complexExpression;
-    }
+		ComplexExpressionImpl complexExpression = new ComplexExpressionImpl();
+		return complexExpression;
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public Expression createExpression() {
-        ExpressionImpl expression = new ExpressionImpl();
-        return expression;
-    }
+		ExpressionImpl expression = new ExpressionImpl();
+		return expression;
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public TextualCode createTextualCode() {
-        TextualCodeImpl textualCode = new TextualCodeImpl();
-        return textualCode;
-    }
+		TextualCodeImpl textualCode = new TextualCodeImpl();
+		return textualCode;
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public Signal createSignal() {
-        SignalImpl signal = new SignalImpl();
-        return signal;
-    }
+		SignalImpl signal = new SignalImpl();
+		return signal;
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public ValuedObject createValuedObject() {
-        ValuedObjectImpl valuedObject = new ValuedObjectImpl();
-        return valuedObject;
-    }
+		ValuedObjectImpl valuedObject = new ValuedObjectImpl();
+		return valuedObject;
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public Variable createVariable() {
-        VariableImpl variable = new VariableImpl();
-        return variable;
-    }
+		VariableImpl variable = new VariableImpl();
+		return variable;
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public ValuedObjectReference createValuedObjectReference() {
-        ValuedObjectReferenceImpl valuedObjectReference = new ValuedObjectReferenceImpl();
-        return valuedObjectReference;
-    }
+		ValuedObjectReferenceImpl valuedObjectReference = new ValuedObjectReferenceImpl();
+		return valuedObjectReference;
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public Value createValue() {
-        ValueImpl value = new ValueImpl();
-        return value;
-    }
+		ValueImpl value = new ValueImpl();
+		return value;
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public IntValue createIntValue() {
-        IntValueImpl intValue = new IntValueImpl();
-        return intValue;
-    }
+		IntValueImpl intValue = new IntValueImpl();
+		return intValue;
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public FloatValue createFloatValue() {
-        FloatValueImpl floatValue = new FloatValueImpl();
-        return floatValue;
-    }
+		FloatValueImpl floatValue = new FloatValueImpl();
+		return floatValue;
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public BooleanValue createBooleanValue() {
-        BooleanValueImpl booleanValue = new BooleanValueImpl();
-        return booleanValue;
-    }
+		BooleanValueImpl booleanValue = new BooleanValueImpl();
+		return booleanValue;
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public OperatorExpression createOperatorExpression() {
-        OperatorExpressionImpl operatorExpression = new OperatorExpressionImpl();
-        return operatorExpression;
-    }
+		OperatorExpressionImpl operatorExpression = new OperatorExpressionImpl();
+		return operatorExpression;
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public TextExpression createTextExpression() {
-        TextExpressionImpl textExpression = new TextExpressionImpl();
-        return textExpression;
-    }
+		TextExpressionImpl textExpression = new TextExpressionImpl();
+		return textExpression;
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public CombineOperator createCombineOperatorFromString(EDataType eDataType, String initialValue) {
-        CombineOperator result = CombineOperator.get(initialValue);
-        if (result == null) throw new IllegalArgumentException("The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'");
-        return result;
-    }
+		CombineOperator result = CombineOperator.get(initialValue);
+		if (result == null) throw new IllegalArgumentException("The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'");
+		return result;
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public String convertCombineOperatorToString(EDataType eDataType, Object instanceValue) {
-        return instanceValue == null ? null : instanceValue.toString();
-    }
+		return instanceValue == null ? null : instanceValue.toString();
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public OperatorType createOperatorTypeFromString(EDataType eDataType, String initialValue) {
-        OperatorType result = OperatorType.get(initialValue);
-        if (result == null) throw new IllegalArgumentException("The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'");
-        return result;
-    }
+		OperatorType result = OperatorType.get(initialValue);
+		if (result == null) throw new IllegalArgumentException("The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'");
+		return result;
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public String convertOperatorTypeToString(EDataType eDataType, Object instanceValue) {
-        return instanceValue == null ? null : instanceValue.toString();
-    }
+		return instanceValue == null ? null : instanceValue.toString();
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public ValueType createValueTypeFromString(EDataType eDataType, String initialValue) {
-        ValueType result = ValueType.get(initialValue);
-        if (result == null) throw new IllegalArgumentException("The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'");
-        return result;
-    }
+		ValueType result = ValueType.get(initialValue);
+		if (result == null) throw new IllegalArgumentException("The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'");
+		return result;
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public String convertValueTypeToString(EDataType eDataType, Object instanceValue) {
-        return instanceValue == null ? null : instanceValue.toString();
-    }
+		return instanceValue == null ? null : instanceValue.toString();
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public ExpressionsPackage getExpressionsPackage() {
-        return (ExpressionsPackage)getEPackage();
-    }
+		return (ExpressionsPackage)getEPackage();
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @deprecated
-     * @generated
-     */
+	 * @deprecated
+	 * @generated
+	 */
     @Deprecated
     public static ExpressionsPackage getPackage() {
-        return ExpressionsPackage.eINSTANCE;
-    }
+		return ExpressionsPackage.eINSTANCE;
+	}
 
 } //ExpressionsFactoryImpl
