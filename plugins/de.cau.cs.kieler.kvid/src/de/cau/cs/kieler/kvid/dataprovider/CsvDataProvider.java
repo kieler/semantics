@@ -103,6 +103,7 @@ public class CsvDataProvider implements IDataProvider {
             for (IProviderListener listener : listeners) {
                 listener.update(stepData);
             }
+            linePointer++;
         } catch (JSONException ex) {
             ex.printStackTrace();
         }

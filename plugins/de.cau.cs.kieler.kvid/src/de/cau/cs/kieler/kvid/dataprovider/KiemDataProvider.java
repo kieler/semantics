@@ -34,13 +34,12 @@ public class KiemDataProvider extends JSONObjectDataComponent implements
         IJSONObjectDataComponent, IDataProvider {
 
     private List<IProviderListener> listeners = new LinkedList<IProviderListener>();
-    
+        
     /**
      * {@inheritDoc}
      */
     public JSONObject step(final JSONObject jSONObject)
             throws KiemExecutionException {
-        //new CsvDataProvider("test/test.csv");
         for (IProviderListener listener : listeners) {
             listener.update(jSONObject);
         }
@@ -51,8 +50,9 @@ public class KiemDataProvider extends JSONObjectDataComponent implements
      * {@inheritDoc}
      */
     public void initialize() throws KiemInitializationException {
-        if (!listeners.contains(DataDistributor.getInstance()))
+        if (!listeners.contains(DataDistributor.getInstance())) {
             registerProviderListener(DataDistributor.getInstance());
+        }
         for (IProviderListener listener : listeners) {
             listener.triggerInitialization();
         }

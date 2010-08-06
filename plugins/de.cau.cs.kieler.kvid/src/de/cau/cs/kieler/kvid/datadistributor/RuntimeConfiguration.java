@@ -13,7 +13,6 @@
  */
 package de.cau.cs.kieler.kvid.datadistributor;
 
-import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -35,6 +34,7 @@ public class RuntimeConfiguration {
     private List<IPropertyListener> listeners = new LinkedList<IPropertyListener>();
     
     private RuntimeConfiguration() {
+        knownProperties.add(new Property("Data Source", new String[]{"KIEM", "CSV"}));
         knownProperties.add(new Property("Animation enabled", new String[]{"true", "false"}));
         knownProperties.add(new Property("Behavior after Animation", new String[]{"Disappear",
                                                                    "Stay at last location"}));
@@ -81,6 +81,19 @@ public class RuntimeConfiguration {
     }
     
     public void triggerPropertyChanged(Property theproperty) {
+        if (theproperty.getName().equals("Data Source")) {
+            if (theproperty.getCurrentValue().equals("CSV")) {
+                knownProperties.add(knownProperties.indexOf(theproperty) + 1, 
+                        new Property("Path to CSV File", "<project>/<file.csv>"));
+            } else {
+                for (Property property : knownProperties) {
+                    if (property.getName().equals("Path to CSV File")) {
+                        knownProperties.remove(property);
+                        break;
+                    }
+                }
+            }
+        }
         for (IPropertyListener listener : listeners) {
             listener.triggerPropertyChanged(theproperty);                
         }
