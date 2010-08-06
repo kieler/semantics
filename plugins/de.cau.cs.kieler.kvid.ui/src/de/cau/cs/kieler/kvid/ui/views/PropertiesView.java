@@ -86,13 +86,21 @@ public class PropertiesView extends ViewPart implements IPropertyListener {
             
             @Override
             protected void setValue(final Object element, final Object value) {
-                ((Property) element).setCurrentValue((Integer) value);
+                if (((Property) element).isFreeText()) {
+                    ((Property) element).setCurrentValue(String.valueOf(value));
+                } else {
+                    ((Property) element).setCurrentValue((Integer) value);
+                }
                 tableViewer.refresh(element);
             }
             
             @Override
             protected Object getValue(final Object element) {
-                return ((Property) element).getCurrentValueNumber();
+                if (((Property) element).isFreeText()) {
+                    return ((Property) element).getCurrentValue();
+                } else {
+                    return ((Property) element).getCurrentValueNumber();
+                }
             }
             
             @Override

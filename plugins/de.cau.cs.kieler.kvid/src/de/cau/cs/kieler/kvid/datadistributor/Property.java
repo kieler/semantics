@@ -61,6 +61,11 @@ public class Property {
     }
     
     public void setCurrentValue(String optionName) {
+        if (isFreeText) {
+            currentValue = optionName;
+            values[0] = optionName;
+            return;
+        }
         for (String option : values) {
             if (optionName.equals(option)) {
                 currentValue = option;
