@@ -55,6 +55,7 @@ public class KitsFormatter extends ActionsFormatter {
 		c.setNoSpace().after(f.getKeyValueAnnotationAccess().getCommercialAtKeyword_0());
 		c.setLinewrap().after(f.getKeyValueAnnotationAccess().getValueEStringParserRuleCall_2_0());
 		
+		// why does this not work as intended :-(
 		c.setLinewrap().before(f.getRegionRule());
 		c.setLinewrap().after(f.getRegionAccess().getLabelAssignment_0_3());
 		
@@ -63,7 +64,7 @@ public class KitsFormatter extends ActionsFormatter {
 		// c.setLinewrap(2).after(f.getStateRule());
 		c.setLinewrap(2).after(f.getStateAccess().getSemicolonKeyword_6_0_1());
 		c.setLinewrap(2).after(f.getStateAccess().getSemicolonKeyword_6_1_3_2());
-		
+				
 		c.setLinewrap().after(f.getSignalRule());
 		//c.setLinewrap().after(f.getSignalAccess().getSemicolonKeyword_7());
 
