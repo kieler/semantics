@@ -1108,15 +1108,15 @@ protected class State_TypeAssignment_2 extends AssignmentToken  {
 }
 
 // "state"
-protected class State_StateKeyword_3 extends KeywordToken  {
+protected class State_StateKeyword_3 extends UnassignedTextToken  {
 	
 	public State_StateKeyword_3(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
 		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
 	}
 	
 	@Override
-	public Keyword getGrammarElement() {
-		return grammarAccess.getStateAccess().getStateKeyword_3();
+	public RuleCall getGrammarElement() {
+		return grammarAccess.getStateAccess().getIdIDTerminalRuleCall_4_0();
 	}
 
     @Override
