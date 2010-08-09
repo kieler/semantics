@@ -144,12 +144,13 @@ public class SyncchartsCreationWizard extends Wizard implements INewWizard {
      */
     public boolean performFinish() {
 
-//        if (domainModelFilePage.getFileName().matches("default\\d*.\\w*")) {
-//            String name = diagramModelFilePage.getFileName();
-//            String domainFileName = name.replace(".kids", "");
-//            domainFileName += ".kixs";
-//            domainModelFilePage.setFileName(domainFileName);
-//        }
+        if (domainModelFilePage.getFileName().matches("default\\d*.\\w*")
+        		&& domainModelFilePage.getFileName().endsWith("kixs")) {
+            String name = diagramModelFilePage.getFileName();
+            String domainFileName = name.replace(".kids", "");
+            domainFileName += ".kixs";
+            domainModelFilePage.setFileName(domainFileName);
+        }
 
         IRunnableWithProgress op = new WorkspaceModifyOperation(null) {
 
