@@ -14,12 +14,7 @@
 package de.cau.cs.kieler.kvid.visual.complex;
 
 
-import org.eclipse.draw2d.geometry.Rectangle;
-import org.eclipse.gmf.runtime.common.ui.util.DisplayUtils;
 import org.eclipse.gmf.runtime.diagram.ui.editparts.ShapeNodeEditPart;
-import org.eclipse.gmf.runtime.diagram.ui.figures.ResizableCompartmentFigure;
-import org.eclipse.gmf.runtime.draw2d.ui.internal.mapmode.HiMetricMapMode;
-import org.eclipse.gmf.runtime.draw2d.ui.internal.mapmode.IdentityMapMode;
 import org.eclipse.gmf.runtime.draw2d.ui.render.RenderedImage;
 import org.eclipse.gmf.runtime.draw2d.ui.render.factory.RenderedImageFactory;
 import org.eclipse.gmf.runtime.gef.ui.figures.NodeFigure;
