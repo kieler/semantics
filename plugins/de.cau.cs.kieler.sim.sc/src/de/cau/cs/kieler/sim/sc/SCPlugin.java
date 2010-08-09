@@ -25,7 +25,7 @@ import org.osgi.framework.BundleContext;
  * @author tam
  * 
  */
-public class Activator extends AbstractUIPlugin {
+public class SCPlugin extends AbstractUIPlugin {
 
     /**
      *  The plug-in ID.
@@ -33,12 +33,12 @@ public class Activator extends AbstractUIPlugin {
     public static final String PLUGIN_ID = "de.cau.cs.kieler.sim.sc";
 
     // The shared instance
-    private static Activator plugin;
+    private static SCPlugin plugin;
 
     /**
      * The constructor (empty).
      */
-    public Activator() {
+    public SCPlugin() {
     }
 
     /*
@@ -68,7 +68,7 @@ public class Activator extends AbstractUIPlugin {
      * 
      * @return the shared instance
      */
-    public static Activator getDefault() {
+    public static SCPlugin getDefault() {
         return plugin;
     }
 

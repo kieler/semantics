@@ -3,7 +3,7 @@ Bundle-ManifestVersion: 2
 Bundle-Name: SynchCharts simulation
 Bundle-SymbolicName: de.cau.cs.kieler.sim.sc;singleton:=true
 Bundle-Version: 0.0.1.qualifier
-Bundle-Activator: de.cau.cs.kieler.sim.sc.Activator
+Bundle-Activator: de.cau.cs.kieler.sim.sc.SCPlugin
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  de.cau.cs.kieler.sim.kiem;bundle-version="0.1.0",
