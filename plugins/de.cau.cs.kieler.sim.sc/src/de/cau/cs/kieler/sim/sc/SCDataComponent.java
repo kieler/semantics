@@ -29,7 +29,15 @@ import java.util.Random;
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramEditor;
+import org.eclipse.gmf.runtime.notation.View;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.ui.IEditorPart;
+import org.eclipse.ui.IWorkbenchPage;
+import org.eclipse.ui.IWorkbenchWindow;
+import org.eclipse.ui.PlatformUI;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -49,8 +57,7 @@ import de.cau.cs.kieler.synccharts.Region;
 import de.cau.cs.kieler.synccharts.codegen.sc.WorkflowGenerator;
 
 /**
- * This is the data component to handle the communication between KIEM and the
- * external SC-Program.
+ * This is the data component to handle the communication between KIEM and the external SC-Program.
  * 
  * @kieler.rating 2010-06-14 proposed yellow
  * 
@@ -75,10 +82,9 @@ public class SCDataComponent extends AbstractAutomatedProducer {
 
     /**
      * 
-     * This method fetches the location of the used sc- and header files. With
-     * the resulting files and the folder for the output files it starts the
-     * compilation of the program. After compiling a process with the execution
-     * of the resulting program is started.
+     * This method fetches the location of the used sc- and header files. With the resulting files
+     * and the folder for the output files it starts the compilation of the program. After compiling
+     * a process with the execution of the resulting program is started.
      * 
      * {@inheritDoc}
      */
@@ -88,21 +94,18 @@ public class SCDataComponent extends AbstractAutomatedProducer {
         ValidationManager.validateActiveEditor();
 
         // building path to bundle
-        Bundle bundle = Platform
-                .getBundle("de.cau.cs.kieler.synccharts.codegen.sc");
+        Bundle bundle = Platform.getBundle("de.cau.cs.kieler.synccharts.codegen.sc");
 
         URL url = null;
         try {
-            url = FileLocator.toFileURL(FileLocator.find(bundle, new Path(
-                    "simulation"), null));
+            url = FileLocator.toFileURL(FileLocator.find(bundle, new Path("simulation"), null));
         } catch (IOException e2) {
             e2.printStackTrace();
         }
 
         String bundleLocation = url.getFile();
         // because of windows vs. linux
-        bundleLocation = bundleLocation.replaceAll("[/\\\\]+", "\\"
-                + File.separator);
+        bundleLocation = bundleLocation.replaceAll("[/\\\\]+", "\\" + File.separator);
         if (bundleLocation.startsWith("\\")) {
             bundleLocation = bundleLocation.substring(1);
         }
@@ -114,21 +117,9 @@ public class SCDataComponent extends AbstractAutomatedProducer {
             if (!validation || (validation && newValidation)) {
                 // compile
                 String compiler = (getProperties()[0]).getValue();
-                String compile = compiler
-                        + " "
-                        + outPath
-                        + "sim.c "
-                        + outPath
-                        + "sim_data.c "
-                        + outPath
-                        + "misc.c "
-                        + bundleLocation
-                        + "cJSON.c "
-                        + "-I "
-                        + bundleLocation
-                        + " "
-                        + "-o "
-                        + outPath
+                String compile = compiler + " " + outPath + "sim.c " + outPath + "sim_data.c "
+                        + outPath + "misc.c " + bundleLocation + "cJSON.c " + "-I "
+                        + bundleLocation + " " + "-o " + outPath
                         + "simulation -lm -D_SC_NOTRACE -D_SC_SUPPRESS_ERROR_DETECT -D_SC_USE_PRE";
                 process = Runtime.getRuntime().exec(compile);
                 System.out.println(compile);
@@ -149,10 +140,9 @@ public class SCDataComponent extends AbstractAutomatedProducer {
                 int exitValue = process.waitFor();
 
                 if (exitValue != 0) {
-                    throw new KiemInitializationException("could not compile",
-                            true, new Exception(errorString));
+                    throw new KiemInitializationException("could not compile", true, new Exception(
+                            errorString));
                 }
-
             }
 
             // start compiled sc code
@@ -160,12 +150,9 @@ public class SCDataComponent extends AbstractAutomatedProducer {
 
             process = Runtime.getRuntime().exec(executable);
 
-            toSC = new PrintWriter(new OutputStreamWriter(
-                    process.getOutputStream()));
-            fromSC = new BufferedReader(new InputStreamReader(
-                    process.getInputStream()));
-            error = new BufferedReader(new InputStreamReader(
-                    process.getErrorStream()));
+            toSC = new PrintWriter(new OutputStreamWriter(process.getOutputStream()));
+            fromSC = new BufferedReader(new InputStreamReader(process.getInputStream()));
+            error = new BufferedReader(new InputStreamReader(process.getErrorStream()));
         } catch (IOException e) {
             System.err.println(e.getMessage());
             if (process != null) {
@@ -173,12 +160,11 @@ public class SCDataComponent extends AbstractAutomatedProducer {
             }
             String compileError = "";
             if (!compiled) {
-                compileError = "No compiler found! Please select one in the"
+                compileError = "No compiler found! Please select one in the "
                         + "\"SC simulation\" component in the Execution Manager";
                 throw new KiemInitializationException(compileError, true, null);
             } else {
-                throw new KiemInitializationException("could not simulate",
-                        true, e);
+                throw new KiemInitializationException("could not simulate", true, e);
             }
 
         } catch (InterruptedException e) {
@@ -193,13 +179,11 @@ public class SCDataComponent extends AbstractAutomatedProducer {
     /**
      * {@inheritDoc}
      * 
-     * The step method handles the communication between the generated sc
-     * program and KIEM. For communication JSON Strings are exchanged via std.
-     * I/O.
+     * The step method handles the communication between the generated sc program and KIEM. For
+     * communication JSON Strings are exchanged via std. I/O.
      * 
      */
-    public JSONObject step(final JSONObject jSONObject)
-            throws KiemExecutionException {
+    public JSONObject step(final JSONObject jSONObject) throws KiemExecutionException {
         JSONObject out = null;
         try {
             jSONObject.remove("state");
@@ -277,17 +261,15 @@ public class SCDataComponent extends AbstractAutomatedProducer {
         // TODO: only complete hierarchie is supported yet
         String[] items = { "complete hierarchie" };
         KiemPropertyTypeChoice choice = new KiemPropertyTypeChoice(items);
-        properties[2] = new KiemProperty("label names for SC code", choice,
-                items[0]);
+        properties[2] = new KiemProperty("label names for SC code", choice, items[0]);
 
         return properties;
     }
 
     /**
      * 
-     * On stopping the simulation the sc process will be destroyed (if it was
-     * not closed normally). If the simulation files are generated into a temp
-     * folder it will be deleted.
+     * On stopping the simulation the sc process will be destroyed (if it was not closed normally).
+     * If the simulation files are generated into a temp folder it will be deleted.
      * 
      * {@inheritDoc}
      */
@@ -296,27 +278,70 @@ public class SCDataComponent extends AbstractAutomatedProducer {
         // delete temp folder if no validation
         if (!validation) {
             File folder = new File(outPath);
-            if (folder.getAbsolutePath().contains(
-                    System.getProperty("java.io.tmpdir"))) {
+            if (folder.getAbsolutePath().contains(System.getProperty("java.io.tmpdir"))) {
                 boolean folderDeleted = deleteFolder(folder);
                 if (folderDeleted) {
-                    System.out.println("temp folder " + folder
-                            + " successfully deleted");
+                    System.out.println("temp folder " + folder + " successfully deleted");
                 } else {
-                    System.err.println("error while deleting temp folder: "
-                            + folder);
+                    System.err.println("error while deleting temp folder: " + folder);
                 }
             }
         }
     }
 
+    // -------------------------------------------------------------------------
+
+    private DiagramEditor diagramEditor = null;
+    private boolean diagramEditorFlag = false;
+
+    DiagramEditor getInputEditor() {
+        String kiemEditorProperty = this.getProperties()[0].getValue();
+        diagramEditorFlag = false;
+
+        Display.getDefault().syncExec(new Runnable() {
+            public void run() {
+                // get the active editor as a default case (if property is empty)
+                IWorkbenchWindow window = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
+                IWorkbenchPage activePage = window.getActivePage();
+                IEditorPart editor = activePage.getActiveEditor();
+                if (editor instanceof DiagramEditor) {
+                    diagramEditor = (DiagramEditor) editor;
+                }
+                diagramEditorFlag = true;
+            }
+        });
+
+        while (!diagramEditorFlag) {
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return diagramEditor;
+    }
+
+    // -------------------------------------------------------------------------
+
+    public String getInputModel() {
+        DiagramEditor inputEditor = this.getInputEditor();
+        // now extract the file
+        View notationElement = ((View) inputEditor.getDiagramEditPart().getModel());
+        EObject myModel = (EObject) notationElement.getElement();
+        URI uri = myModel.eResource().getURI();
+
+        return uri.toPlatformString(false);
+    } 
+    
+    // -------------------------------------------------------------------------
+
     /**
-     * @return {@link JSONObject} the initial JSON object before the simulation
-     *         could be started.
+     * @return {@link JSONObject} the initial JSON object before the simulation could be started.
      * 
-     *         A path for the output files will be determined. A differentiation
-     *         between simulation or validation will be made. After these
-     *         initializations the codegen process will be started.
+     *         A path for the output files will be determined. A differentiation between simulation
+     *         or validation will be made. After these initializations the codegen process will be
+     *         started.
      * 
      */
     @Override
@@ -330,8 +355,7 @@ public class SCDataComponent extends AbstractAutomatedProducer {
             if (tempDir.endsWith("\\")) {
                 tempDir = tempDir.substring(0, tempDir.length() - 1);
             }
-            outPath = tempDir + File.separator + randomString()
-                    + File.separator;
+            outPath = tempDir + File.separator + randomString() + File.separator;
         } else {
             outPath = (getProperties()[1]).getValue();
             if (!outPath.endsWith(File.separator)) {
@@ -340,8 +364,8 @@ public class SCDataComponent extends AbstractAutomatedProducer {
         }
 
         if (validation) {
-            outPath = System.getProperty("java.io.tmpdir") + File.separator
-                    + "SC_Validation" + File.separator;
+            outPath = System.getProperty("java.io.tmpdir") + File.separator + "SC_Validation"
+                    + File.separator;
         }
 
         // will be skipped if a validation is triggered once again for the same
@@ -350,7 +374,8 @@ public class SCDataComponent extends AbstractAutomatedProducer {
             if (validation) {
                 wf = new WorkflowGenerator(fileLocation);
             } else {
-                wf = new WorkflowGenerator();
+                String fileLocation2 = this.getInputModel();
+                wf = new WorkflowGenerator(fileLocation2);
             }
             // generate Code from SyncChart
             // true sets the flag for simulation
@@ -360,12 +385,10 @@ public class SCDataComponent extends AbstractAutomatedProducer {
         // has been created
         // at least for the first validation of a model.
         EObject myModel = wf.getModel();
-        List<Signal> signalList = ((Region) myModel).getStates().get(0)
-                .getSignals();
+        List<Signal> signalList = ((Region) myModel).getStates().get(0).getSignals();
         for (int i = 0; i < signalList.size(); i++) {
             try {
-                returnObj.accumulate(signalList.get(i).getName(),
-                        JSONSignalValues.newValue(false));
+                returnObj.accumulate(signalList.get(i).getName(), JSONSignalValues.newValue(false));
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -390,8 +413,7 @@ public class SCDataComponent extends AbstractAutomatedProducer {
     }
 
     /*
-     * Returns a list of signals of the model.
-     * Not used at the moment but might be useful later.
+     * Returns a list of signals of the model. Not used at the moment but might be useful later.
      */
     @SuppressWarnings("unused")
     private String[] getSignals() {
@@ -408,8 +430,8 @@ public class SCDataComponent extends AbstractAutomatedProducer {
     }
 
     /*
-     * Converts the inputs for true and false given by the user in the
-     * data table to valid true and false for SC
+     * Converts the inputs for true and false given by the user in the data table to valid true and
+     * false for SC
      * 
      * example: t, true, 1 = true
      */
@@ -488,8 +510,7 @@ public class SCDataComponent extends AbstractAutomatedProducer {
     /**
      * {@inheritDoc}
      * 
-     * Is called _before_ provideInitialVariables. Sets the flags for
-     * validation.
+     * Is called _before_ provideInitialVariables. Sets the flags for validation.
      * 
      */
     @Override
