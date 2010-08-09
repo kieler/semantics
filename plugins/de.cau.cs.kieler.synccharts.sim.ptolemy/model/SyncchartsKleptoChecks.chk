@@ -19,7 +19,7 @@ context State if (type != StateType::NORMAL) WARNING "KLEPTO: Only normal states
 context State WARNING "KLEPTO: Exit actions cannot be simulated yet!" :
   exitActions.size == 0;
 
-context State WARNING "KLEPTO: Enty actions cannot be simulated yet!" :
+context State WARNING "KLEPTO: Entry actions cannot be simulated yet!" :
   entryActions.size == 0;
 
 context State WARNING "KLEPTO: Inner actions cannot be simulated yet!" :
@@ -35,15 +35,25 @@ context Region WARNING "KLEPTO: Variables are not supported in the simulation!" 
 //context Transition WARNING "KLEPTO: Output signals that also occur within a trigger are not supported in the simulation!" : 
 //  (((SignalReference)trigger).signal == null) || ((SignalReference)trigger).signal.isOutput == false;
 
+//since 09.08.10 not a warning any more
 //FIXME: This context has no direct representation in the model => warnings are only visible in problems view  
-context Emission WARNING "KLEPTO: Input signals ("+signal.name+") that are also emitted are not supported in the simulation!" :
-  signal.isInput == false;
+//context Emission WARNING "KLEPTO: Input signals ("+signal.name+") that are also emitted are not supported in the simulation!" :
+//  signal.isInput == false;
 
+//since 09.08.10 not a warning any more
 //FIXME: This context has no direct representation in the model => warnings are only visible in problems view  
-context SignalReference WARNING "KLEPTO: Output signals ("+signal.name+") that also occur within a trigger are not supported in the simulation!" :
-  signal.isOutput == false;
+//context ValuedObjectReference WARNING "KLEPTO: Output signals ("+valuedObject.name+") that also occur within a trigger are not supported in the simulation!" :
+//  isOutputSignal(valuedObject) == false;
+
+isOutputSignal(Signal signal):
+ signal.isOutput
+;
+
+isOutputSignal(ValuedObject var):
+ false
+;
   
-//since 28.11. not a warning any more
+//since 28.11.09 not a warning any more
 //FIXME: This context has no direct representation in the model => warnings are only visible in problems view  
 //context Emission if ((Transition)parentEAction).type == TransitionType::NORMALTERMINATION WARNING "KLEPTO: Local signals ("+signal.name+") that occur within a trigger of a normal termination transition are not supported in the simulation! Please consider using a weak abort instead." :
 //context SignalReference if (((Transition)parentAction).type == TransitionType::NORMALTERMINATION) WARNING "KLEPTO: Local signals ("+signal.name+") that occur within a trigger of a normal termination transition are not supported in the simulation! Please consider using a weak abort instead." :
