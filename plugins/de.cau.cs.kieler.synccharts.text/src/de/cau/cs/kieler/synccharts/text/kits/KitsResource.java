@@ -25,10 +25,14 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtext.linking.lazy.LazyLinkingResource;
 import org.eclipse.xtext.parser.IParseResult;
 import org.eclipse.xtext.resource.SaveOptions;
+import org.eclipse.xtext.util.Strings;
 
+import de.cau.cs.kieler.core.expressions.CombineOperator;
 import de.cau.cs.kieler.core.expressions.ExpressionsFactory;
+import de.cau.cs.kieler.core.expressions.ExpressionsPackage;
 import de.cau.cs.kieler.core.expressions.Signal;
 import de.cau.cs.kieler.core.expressions.ValueType;
+import de.cau.cs.kieler.core.expressions.ValuedObject;
 import de.cau.cs.kieler.synccharts.Region;
 import de.cau.cs.kieler.synccharts.Scope;
 import de.cau.cs.kieler.synccharts.State;
@@ -138,7 +142,10 @@ public class KitsResource extends LazyLinkingResource {
 			}
 			if (SyncchartsPackage.eINSTANCE.getState().isInstance(o)) {
 				setupPriorities((State) o);
-			}			
+			}
+			if (ExpressionsPackage.eINSTANCE.getValuedObject().isInstance(o)) {
+				setupTypes((ValuedObject) o);
+			}
 		}
 	}
 	
@@ -215,6 +222,7 @@ public class KitsResource extends LazyLinkingResource {
 		}
 	}
 	
+	
 	/**
 	 * Sets up transitions priorities if needed. Setup priorities of parsed
 	 * transitions if the priority of the first transition is not set. (it's
@@ -232,6 +240,17 @@ public class KitsResource extends LazyLinkingResource {
 		}
 	}
      
+	
+	private void setupTypes(ValuedObject v) {
+		if (!Strings.isEmpty(v.getHostType())) {
+			v.setType(ValueType.HOST);
+		}
+		if (ExpressionsPackage.eINSTANCE.getSignal().isInstance(v)) {
+			if (!Strings.isEmpty(((Signal) v).getHostCombineOperator())) {
+				((Signal) v).setCombineOperator(CombineOperator.HOST);
+			}
+		}
+	}
 	
 	
 	

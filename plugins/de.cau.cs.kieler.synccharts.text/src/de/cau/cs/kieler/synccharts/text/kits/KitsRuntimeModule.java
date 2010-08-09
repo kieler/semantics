@@ -28,6 +28,10 @@ public class KitsRuntimeModule extends de.cau.cs.kieler.synccharts.text.kits.Abs
 		return de.cau.cs.kieler.synccharts.text.kits.formatting.KitsValueSerializer.class;
 	}
 	
+    public Class<? extends org.eclipse.xtext.parsetree.reconstr.ITokenSerializer.IEnumLiteralSerializer> bindIEnumLiteralSerializer() {
+		return de.cau.cs.kieler.synccharts.text.kits.formatting.KitsEnumLiteralSerializer.class;
+	}
+	
 	public Class<? extends org.eclipse.xtext.formatting.IIndentationInformation> bindIIndentationInformation() {
 		return de.cau.cs.kieler.synccharts.text.kits.formatting.KitsIndentionInformation.class;
 	}

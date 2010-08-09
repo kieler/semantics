@@ -17,9 +17,15 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.xtext.parsetree.reconstr.ITransientValueService;
 import org.eclipse.xtext.parsetree.reconstr.impl.DefaultTransientValueService;
+import org.eclipse.xtext.util.Strings;
 
 import de.cau.cs.kieler.core.annotations.Annotatable;
 import de.cau.cs.kieler.core.annotations.AnnotationsPackage;
+import de.cau.cs.kieler.core.expressions.CombineOperator;
+import de.cau.cs.kieler.core.expressions.ExpressionsPackage;
+import de.cau.cs.kieler.core.expressions.Signal;
+import de.cau.cs.kieler.core.expressions.ValueType;
+import de.cau.cs.kieler.core.expressions.ValuedObject;
 import de.cau.cs.kieler.synccharts.Region;
 import de.cau.cs.kieler.synccharts.Scope;
 import de.cau.cs.kieler.synccharts.StateType;
@@ -137,6 +143,55 @@ public class KitsTransientValueService extends DefaultTransientValueService {
 		/* suppress the 'normal' attribute of a state */
 		if (feature == SyncchartsPackage.eINSTANCE.getState_Type()) {
 			return owner.eGet(feature).equals(StateType.NORMAL);
+		}
+		
+		
+		/* suppress the 'initialValue' feature if null or "" */
+		if (feature == ExpressionsPackage.eINSTANCE.getValuedObject_InitialValue()) {
+			return Strings.isEmpty((String) owner.eGet(feature));
+		}
+		
+		
+		/* suppress the enum value of a valueObjects's 'type' feature if
+		 * a) type == host && hostType is set
+		 * b) type == pure && combineOperator != none
+		 */
+		if (feature == ExpressionsPackage.eINSTANCE.getValuedObject_Type()) {
+			if (owner.eGet(feature).equals(ValueType.HOST)) {
+				return !this.isTransient(owner, ExpressionsPackage.eINSTANCE
+							.getValuedObject_HostType(), index);
+			}
+			if (ExpressionsPackage.eINSTANCE.getSignal().isInstance(owner)) {
+				return owner.eGet(feature).equals(ValueType.PURE)
+						&& ((Signal) owner).getCombineOperator().equals(
+								CombineOperator.NONE);
+			}
+		}		
+		
+		/* do not serialize a host type if 'host' is not selected in 'type' */
+		if (feature == ExpressionsPackage.eINSTANCE.getValuedObject_HostType()) {
+			return !((ValuedObject) owner).getType().equals(ValueType.HOST)
+				|| Strings.isEmpty((String) owner.eGet(feature));
+		}
+		
+		
+		/* suppress the enum value of a signal's 'combineOperator' feature if
+		 * a) combineOperator == host && hostCombineOperator is set
+		 * b) combineOperator == none
+		 */
+		if (feature == ExpressionsPackage.eINSTANCE.getSignal_CombineOperator()) {
+			if (owner.eGet(feature).equals(CombineOperator.HOST)) {
+				return !this.isTransient(owner,
+					ExpressionsPackage.eINSTANCE.getSignal_HostCombineOperator(), index);
+			}
+			return owner.eGet(feature).equals(CombineOperator.NONE);
+		}
+		
+		
+		/* do not serialize a hostCombineOperator if 'host' is not selected in 'combineOperator' */
+		if (feature == ExpressionsPackage.eINSTANCE.getSignal_HostCombineOperator()) {
+			return !((Signal) owner).getCombineOperator().equals(CombineOperator.HOST)
+				|| Strings.isEmpty((String) owner.eGet(feature));
 		}
 		
 		

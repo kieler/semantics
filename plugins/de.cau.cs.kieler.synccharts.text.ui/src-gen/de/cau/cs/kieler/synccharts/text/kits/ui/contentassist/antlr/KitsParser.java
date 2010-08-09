@@ -44,6 +44,8 @@ public class KitsParser extends AbstractContentAssistParser {
 					put(grammarAccess.getStateAccess().getAlternatives_6(), "rule__State__Alternatives_6");
 					put(grammarAccess.getStateAccess().getAlternatives_6_1_1_0(), "rule__State__Alternatives_6_1_1_0");
 					put(grammarAccess.getSignalAccess().getAlternatives_6(), "rule__Signal__Alternatives_6");
+					put(grammarAccess.getSignalAccess().getAlternatives_6_0_1(), "rule__Signal__Alternatives_6_0_1");
+					put(grammarAccess.getSignalAccess().getAlternatives_6_1_2(), "rule__Signal__Alternatives_6_1_2");
 					put(grammarAccess.getSignalAccess().getAlternatives_6_1_4(), "rule__Signal__Alternatives_6_1_4");
 					put(grammarAccess.getIntegerOrStringAccess().getAlternatives(), "rule__IntegerOrString__Alternatives");
 					put(grammarAccess.getEffectAccess().getAlternatives(), "rule__Effect__Alternatives");
@@ -89,7 +91,6 @@ public class KitsParser extends AbstractContentAssistParser {
 					put(grammarAccess.getSignalAccess().getGroup_6_1(), "rule__Signal__Group_6_1__0");
 					put(grammarAccess.getVariableAccess().getGroup(), "rule__Variable__Group__0");
 					put(grammarAccess.getVariableAccess().getGroup_3(), "rule__Variable__Group_3__0");
-					put(grammarAccess.getVariableAccess().getGroup_3_0(), "rule__Variable__Group_3_0__0");
 					put(grammarAccess.getActionAccess().getGroup(), "rule__Action__Group__0");
 					put(grammarAccess.getActionAccess().getGroup_4(), "rule__Action__Group_4__0");
 					put(grammarAccess.getActionAccess().getGroup_4_1(), "rule__Action__Group_4_1__0");
@@ -167,14 +168,16 @@ public class KitsParser extends AbstractContentAssistParser {
 					put(grammarAccess.getSignalAccess().getIsOutputAssignment_2(), "rule__Signal__IsOutputAssignment_2");
 					put(grammarAccess.getSignalAccess().getNameAssignment_4(), "rule__Signal__NameAssignment_4");
 					put(grammarAccess.getSignalAccess().getInitialValueAssignment_5_1(), "rule__Signal__InitialValueAssignment_5_1");
-					put(grammarAccess.getSignalAccess().getTypeAssignment_6_0_1(), "rule__Signal__TypeAssignment_6_0_1");
-					put(grammarAccess.getSignalAccess().getTypeAssignment_6_1_2(), "rule__Signal__TypeAssignment_6_1_2");
+					put(grammarAccess.getSignalAccess().getTypeAssignment_6_0_1_0(), "rule__Signal__TypeAssignment_6_0_1_0");
+					put(grammarAccess.getSignalAccess().getHostTypeAssignment_6_0_1_1(), "rule__Signal__HostTypeAssignment_6_0_1_1");
+					put(grammarAccess.getSignalAccess().getTypeAssignment_6_1_2_0(), "rule__Signal__TypeAssignment_6_1_2_0");
+					put(grammarAccess.getSignalAccess().getHostTypeAssignment_6_1_2_1(), "rule__Signal__HostTypeAssignment_6_1_2_1");
 					put(grammarAccess.getSignalAccess().getCombineOperatorAssignment_6_1_4_0(), "rule__Signal__CombineOperatorAssignment_6_1_4_0");
 					put(grammarAccess.getSignalAccess().getHostCombineOperatorAssignment_6_1_4_1(), "rule__Signal__HostCombineOperatorAssignment_6_1_4_1");
 					put(grammarAccess.getVariableAccess().getAnnotationsAssignment_0(), "rule__Variable__AnnotationsAssignment_0");
 					put(grammarAccess.getVariableAccess().getNameAssignment_2(), "rule__Variable__NameAssignment_2");
-					put(grammarAccess.getVariableAccess().getInitialValueAssignment_3_0_1(), "rule__Variable__InitialValueAssignment_3_0_1");
-					put(grammarAccess.getVariableAccess().getTypeAssignment_3_2(), "rule__Variable__TypeAssignment_3_2");
+					put(grammarAccess.getVariableAccess().getInitialValueAssignment_3_1(), "rule__Variable__InitialValueAssignment_3_1");
+					put(grammarAccess.getVariableAccess().getTypeAssignment_5(), "rule__Variable__TypeAssignment_5");
 					put(grammarAccess.getActionAccess().getIsImmediateAssignment_1(), "rule__Action__IsImmediateAssignment_1");
 					put(grammarAccess.getActionAccess().getDelayAssignment_2(), "rule__Action__DelayAssignment_2");
 					put(grammarAccess.getActionAccess().getTriggerAssignment_3(), "rule__Action__TriggerAssignment_3");
