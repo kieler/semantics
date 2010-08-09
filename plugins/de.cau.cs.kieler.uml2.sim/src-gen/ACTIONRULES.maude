@@ -1,0 +1,14 @@
+mod ACTIONRULES is
+  including ACTIONS .
+  including VALUATIONS .
+  sort PAState SAState AState .  
+  subsort PAState SAState < AState .  
+
+  var astate : AState .
+  
+  op__: ParActions Valuation -> PAState .
+  op__: SeqActions Valuation -> SAState .
+  op__: Action Valuation -> AState .
+  
+
+endm

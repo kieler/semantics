@@ -1,0 +1,86 @@
+load STATES
+fmod T-ST is
+	including STATES .
+	
+	ops SA SB SC SD SE SF SG SH SI SJ SK SL SM SUSP FIN : -> ModState .
+	ops RA RB RC RD RE : -> Region .
+	eq RA = root(R "0") .
+	eq SUSP = RA : C "susp" .
+	eq SA = RA : C "A" .
+	eq RB = SA : R "B" .
+	eq RC = SA : R "C" .
+	eq SB = RB : C "B" .
+	eq SC = RB : C "C" .
+	eq SD = RB : C "D" .
+	eq SJ = RC : C "J" .
+	eq SK = RC : C "K" .
+	eq SL = RC : C "L" .
+	eq SM = RC : C "M" .
+	eq RD = SC : R "D" .
+	eq RE = SC : R "E" .
+	eq SE = RD : C "E" .
+	eq SF = RD : C "F" .
+	eq SG = RD : C "G" .
+	eq SH = RE : C "H" .
+	eq SI = RE : C "I" .
+	ops FE FD : -> ModState .
+	eq FE = RE : F "E" .
+	eq FD = RD : F "D" .
+	
+
+	ops DHst SHst : -> ModState .
+	eq DHst = RB : H* .
+	eq SHst = RC : H .
+
+	op allVerts : -> Verts .
+	eq allVerts = FD, SUSP, SA, SB, SC, SD, SE, SF, SG, SH, SI, SJ, SK, SL, SM, RA, RB, RC, RD, RE .
+	 
+	op finAndHisVerts : -> Verts .
+	eq finAndHisVerts = allVerts, FE, FD . 
+	
+	ops cSA cSB cSC cSD cSE cSF cSG cSH cSI cSX cSY cSZ : -> ModState .
+	ops cR0 cR1 cR2 cR3 cR4 cRroot cRand : -> Region .
+	eq cRroot = root(R "root") .
+	eq cSZ = cRroot : C "Z" .
+	eq cRand = cSZ : R "and" .
+	eq cSX = cRand : C "X" .
+	eq cSY = cRand : C "Y" .	
+	eq cR0 = cSZ : R "0" . 
+	eq cSG = cR0 : C "G" .
+	eq cSH = cR0 : C "H" .
+	eq cR1 = cSG : R "1" .
+	eq cR2 = cSG : R "2" .
+	eq cR3 = cSG : R "3" .
+	eq cSA = cR1 : C "A" .
+	eq cSB = cR2 : C "B" .
+	eq cSC = cR3 : C "C" .
+	eq cSD = cR1 : C "D" .
+	eq cSE = cR2 : C "E" .
+	eq cSF = cR3 : C "F" .
+	eq cR4 = cSB : R "4" .
+	eq cSI = cR4 : C "I" .
+	
+	op allConflVerts : -> Verts .
+	eq allConflVerts = cSA, cSB, cSC, cSD, cSE, cSF, cSG, cSH, cSI, cSX, cSY, cSZ, cRand, cRroot, cR0, cR1, cR2, cR3, cR4 .
+
+endfm
+
+***(
+red prettyVerts allVerts .
+
+red prefix SA SA .
+red prefix SA SD .
+red prefix RA SA .
+red prefix SA RA .
+red start allVerts .
+red prettyVerts(getSubStates (RB) SD, SA, SB, SC) .
+red prettyVerts(getSubStates (RB) allVerts) .
+red prettyVerts(getSubRegions (SA) allVerts) .
+red prettyVerts(getSubs RB allVerts) .
+red prettyVerts(getSubs SA allVerts) .
+red prettyVerts(downset RA) .
+red prettyVerts(downset SC) .
+red prettyVerts(upset SC allVerts) .
+red prettyVerts(upset RA allVerts) .
+red prettyVerts(upset SB allVerts) .
+)***

@@ -1,0 +1,394 @@
+fmod STATE-ACTION is
+  including STATES .
+  including ACTIONS .
+  sort EntryAction ExitAction .
+  op entryAc__ : Vert Action -> EntryAction  [ctor format (b o d n)] .
+  op exitAc__ : Vert Action -> ExitAction [ctor format (b o d n)] .
+endfm
+
+view EntryAction from TRIV to STATE-ACTION is
+  sort Elt to EntryAction .
+endv
+
+view ExitAction from TRIV to STATE-ACTION is
+  sort Elt to ExitAction .
+endv
+
+
+fmod STATE-DEFAULT is
+  including STATES .
+  sort Default .
+  op _default_ : Region ModState -> Default [ctor format (d b o n)] .
+endfm
+
+view Default from TRIV to STATE-DEFAULT is
+  sort Elt to Default .
+endv
+
+fmod DEEP-DEFAULT is
+  including STATES .
+  sort DeepDefault .
+  op _deepdefault_ : Region ModState -> DeepDefault [ctor format (d b o n)] .
+endfm
+
+view DeepDefault from TRIV to DEEP-DEFAULT is
+  sort Elt to DeepDefault .
+endv
+
+fmod SHALLOW-DEFAULT is
+  including STATES .
+  sort ShallowDefault .
+  op _shallowdefault_ : Region ModState -> ShallowDefault [ctor format (d b o n)] .
+endfm
+
+view ShallowDefault from TRIV to SHALLOW-DEFAULT is
+  sort Elt to ShallowDefault .
+endv
+
+fmod HISTORY-CONF is
+  including STATES .
+  sort HistoryConf .
+  var r : Region .
+  var s : ModState .
+  var V : Verts .
+
+  *** function history is a set of tuples of regions and their last active
+  *** state
+  op historyconf __ : Region ModState ->  HistoryConf [ctor format (b o d n)]  .
+  op $prettyHConf_ : HistoryConf -> HistoryConf .
+  eq $prettyHConf (historyconf r s) = (historyconf (prettyVerts r) (prettyVerts s)) .
+
+  op $prettyHCToHC__ : Verts HistoryConf -> HistoryConf .
+  eq $prettyHCToHC V (historyconf r s) = (historyconf (prettyVToV V r) (prettyVToV V s)) .
+  
+  
+endfm
+
+view HistoryConf from TRIV to HISTORY-CONF is
+  sort Elt to HistoryConf .
+endv
+
+fmod STATEMACHINE is
+  including TRANSITIONS .
+  including STATES .
+  including STATE-DEFAULT .
+  including DEEP-DEFAULT .
+  including SHALLOW-DEFAULT .
+  including HISTORY-CONF .
+  including STATE-ACTION .
+  including SET{Default} * (sort Set{Default} to Defaults, sort NeSet{Default} to NeDefaults) .
+  including SET{DeepDefault} * (sort Set{DeepDefault} to DeepDefaults, sort NeSet{DeepDefault} to NeDeepDefaults) .
+  including SET{ShallowDefault} * (sort Set{ShallowDefault} to ShallowDefaults, sort NeSet{ShallowDefault} to NeShallowDefaults) .
+  including SET{HistoryConf} * (sort Set{HistoryConf} to HistoryConfs, sort NeSet{HistoryConf} to NeHistoryConfs) .
+  including SET{EntryAction} * (sort Set{EntryAction} to EntryActions, sort NeSet{EntryAction} to NeEntryActions) .
+  including SET{ExitAction} * (sort Set{ExitAction} to ExitActions, sort NeSet{ExitAction} to NeExitActions) .
+
+  *** sorts
+  sorts StateMachine .
+
+  ***(
+    a state machine is a tuple of:
+    - a set of states, pseudostates and regions,
+    - default initial, shallow, deep history, state entry actions and state exit actions relations and
+    - a set of transitions
+  )***
+
+
+  op SM_____ : Verts Defaults ShallowDefaults DeepDefaults Transitions -> 
+    StateMachine [ctor format (n d d d d d d)] .
+
+  op SM_______ : Verts Defaults ShallowDefaults DeepDefaults EntryActions ExitActions Transitions -> 
+    StateMachine [ctor format (n d d d d d d d d)] .
+
+  op emptySM : -> StateMachine [ctor] .
+
+
+  vars shn : HistShallowName .
+  vars dhn : HistDeepName .
+  vars D smDefaults : Defaults .
+  vars d : Default .
+  vars SH : ShallowDefaults .
+  vars sh : ShallowDefault .
+  vars DH : DeepDefaults .
+  vars dh : DeepDefault .
+  vars  ENA : EntryActions .
+  vars  EXA : ExitActions .
+  vars  ena : EntryActions .
+  vars  exa : ExitActions .   
+  vars T T1 T2 F : Transitions .
+  vars t t1 t2 : ModTransition .
+  vars c : CompositeName .
+  var str : String .
+  vars HC : HistoryConfs .
+  vars hc : HistoryConf .
+  vars e e2 : Event .
+  vars g g2 : Guard .
+  vars a : Action .
+  vars A af aj a2 af2 aj2 actions : Actions .
+  var sm : StateMachine .
+  vars S S2 : States .
+  vars hst s s2 s3 ds1 ds2 : ModState .
+  vars R : Regions .
+  vars r r2 r3 : Region .
+  vars V V2 src tgt C src2 tgt2 smAllVerts curVerts tgtStates curVert : Verts .  
+  vars v v2 lreg lreg2 : Vert .
+  
+  ***( 
+  - sm for static information
+  - configuration 
+  - targets 
+  - current vert state or region
+  
+  )***
+  op getEntryAc____ : StateMachine HistoryConfs Verts Verts -> Actions [format (g o d d d d)] .
+  eq getEntryAc sm HC tgt (v, V2) = 
+        ($getEntryAc (getAlldefaults sm) (getAllShallowdefaults sm)  (getAllDeepdefaults sm) (getAllEntry sm) (getVerts sm) HC tgt v) 
+        (getEntryAc sm HC tgt V2) .
+  eq getEntryAc sm HC tgt empty = nil .
+  
+  
+  op getEntryAc________ : Defaults ShallowDefaults DeepDefaults EntryActions Verts HistoryConfs Verts Verts -> Actions .
+  eq getEntryAc D SH DH ENA C HC tgt (v, V2) = ($getEntryAc D SH DH ENA C HC tgt v) (getEntryAc D SH DH ENA C HC tgt V2) .
+  eq getEntryAc D SH DH ENA C HC tgt empty = nil .
+
+  op $getEntryAc________ : Defaults ShallowDefaults DeepDefaults EntryActions Verts HistoryConfs Verts Vert -> Actions .
+  ceq $getEntryAc D SH DH ENA C HC tgt v = $getEntryAc D SH DH ENA C HC tgt (getshallowdefault v SH)
+    if ((v : H) in tgt) and (nonVisited v HC) [label 2a] .
+  ceq $getEntryAc D SH DH ENA C HC tgt v = $getEntryAc D SH DH ENA C HC tgt (getdeepdefault v DH)
+    if ((v : H*) in tgt) and (nonVisited v HC) [label 2b] .  
+  ceq $getEntryAc D SH DH ENA C HC tgt v = $getEntryAc D SH DH ENA C HC tgt (getHC v HC)
+    if ((v : H) in tgt) and not (nonVisited v HC) and (getHC v HC) =/= empty [label 3] .
+  ceq $getEntryAc D SH DH ENA C HC tgt v = getEntryAc D SH DH ENA C HC ((tgt \(v : H*)), (genDeepTgts (getHC v HC) C)) (getHC v HC) 
+    if (v : H* in tgt) and not (nonVisited v HC) [label 4] .
+  ceq $getEntryAc D SH DH ENA C HC tgt v = $$getEntryAc ENA v
+    if typeState v and |(getSubRegions v C)| == 0 . 
+  ceq $getEntryAc D SH DH ENA C HC tgt v =
+    seq (($$getEntryAc ENA v) (getEntryAc D SH DH ENA C HC tgt (getSubRegions v C)))
+    if typeState v and |(getSubRegions v C)| == 1 .
+  ceq $getEntryAc D SH DH ENA C HC tgt v = 
+        seq (($$getEntryAc ENA v) par (getEntryAc D SH DH ENA C HC tgt (getSubRegions v C))) 
+        if typeState v and |(getSubRegions v C)| > 1 . 
+  ceq $getEntryAc D SH DH ENA C HC tgt v = ($getEntryAc D SH DH ENA C HC tgt (getSubStToTgt v tgt C)) 
+    if (typeRegion v) and not (typeHistory (getSubStToTgt v tgt C)) and
+    ((len v) < (comparelen v tgt)) and intersection((upset v C), tgt) =/= empty [label 5] . 
+  *** 6  
+  eq $getEntryAc D SH DH ENA C HC tgt v = ($getEntryAc D SH DH ENA C HC tgt (getdefault v D)) [owise] .
+
+
+
+          
+  op $$getEntryAc__ : EntryActions Vert -> Action [format (g o d d)] .
+  eq $$getEntryAc ((entryAc v a), ENA) v = a .
+  eq $$getEntryAc ENA v = nil [owise] .  
+    
+    
+    
+  op getExitAc___ : StateMachine Verts Verts -> Actions [format (g o d d d)]  .
+  eq getExitAc sm C (v, V2) = 
+        ($getExitAc sm C v) 
+        (getExitAc sm C V2) .
+  eq getExitAc sm C empty = nil .
+  
+  op $getExitAc___ : StateMachine Verts Vert -> Action [format (g o d d d)] .
+  ceq $getExitAc (SM V D SH DH ENA EXA T) C v = 
+        seq (par (getExitAc (SM V D SH DH ENA EXA T) C (getSubs v C)) ($$getExitAc EXA v)) 
+        if (getSubs v C) =/= empty and typeState v .
+  ceq $getExitAc sm C v = 
+        getExitAc sm C (getSubs v C) 
+        if (getSubs v C) =/= empty and typeRegion v .
+  ceq $getExitAc (SM V D SH DH ENA EXA T) C v = 
+        ($$getExitAc EXA v) 
+        if (getSubs v C) == empty and typeState v .
+  eq $getExitAc sm C v = nil [owise] .
+        
+
+
+
+  
+  op $$getExitAc__ : ExitActions Vert -> Action [format (g o d d)] .
+  eq $$getExitAc ((exitAc v a), EXA) v = a .
+  eq $$getExitAc EXA v = nil [owise] .  
+   
+  op getVerts_ : StateMachine -> Verts .
+  eq getVerts(SM V D SH DH ENA EXA T) = V .
+  eq getVerts(SM V D SH DH T) = V .
+
+  op getTrans_ : StateMachine -> Transitions .
+  eq getTrans(SM V D SH DH ENA EXA T) = T .
+  eq getTrans(SM V D SH DH T) = T .
+
+  *** get default states of regions from default relation
+  op getAlldefaults_ : StateMachine -> Defaults .
+  eq getAlldefaults(SM V D SH DH ENA EXA T) = D .
+  eq getAlldefaults(SM V D SH DH T) = D .
+  
+  *** get default states of regions from default relation
+  op getAllShallowdefaults_ : StateMachine -> ShallowDefaults .
+  eq getAllShallowdefaults(SM V D SH DH ENA EXA T) = SH .
+  eq getAllShallowdefaults(SM V D SH DH T) = SH .
+
+  *** get default states of regions from default relation
+  op getAllDeepdefaults_ : StateMachine -> DeepDefaults .
+  eq getAllDeepdefaults(SM V D SH DH ENA EXA T) = DH .
+  eq getAllDeepdefaults(SM V D SH DH T) = DH .
+      
+   *** get default states of regions from default relation
+  op getAllEntry_ : StateMachine -> EntryActions .
+  eq getAllEntry(SM V D SH DH ENA EXA T) = ENA .
+  eq getAllEntry(SM V D SH DH T) = empty .
+ 
+  *** get default states of regions from default relation
+  op getdefault __ : Regions Defaults -> States [format (g o d n)] .
+  eq getdefault R empty = empty .
+  eq getdefault empty D = empty .
+  eq getdefault r (r default v) = v .
+  ceq getdefault r (r2 default v) = empty if r =/= r2 .
+  eq getdefault r (d ,  D) = (getdefault r d) ,  (getdefault r D) .
+  eq getdefault (r ,  R) D = (getdefault r D) ,  (getdefault R D) .
+
+  op getdefault __ : ModState Defaults -> States [format (g o d n)] .
+  ceq getdefault s D = getdefault (start s) D if typeFinal s .
+  
+    *** get the history default state of 
+  op getdeepdefault __ : Region DeepDefaults -> ModState .
+  ceq getdeepdefault r (DH ,  (r2 deepdefault v)) = getdeepdefault r DH
+    if r =/= r2 .
+  eq getdeepdefault r (DH ,  (r deepdefault v)) = v .
+
+  op getshallowdefault __ : Region ShallowDefaults -> ModState .
+  eq getshallowdefault r (SH ,  (r shallowdefault v)) = v .
+  ceq getshallowdefault r (SH  ,   (r2 shallowdefault v)) = 
+    getshallowdefault r SH if r =/= r2 .
+  eq getshallowdefault r (r shallowdefault v) = v .
+  eq getshallowdefault r (r2 shallowdefault v) = empty [owise] .
+  
+  
+  op gethistoryconf __ : Verts HistoryConfs -> States [format (g o d n)] .
+  eq gethistoryconf (v, V) HC = ($gethistoryconf v HC) , (gethistoryconf V HC) .
+  eq gethistoryconf empty HC = empty .
+     
+  op $gethistoryconf __ : Vert HistoryConfs -> States [format (g o d n)] .
+  eq $gethistoryconf v (hc, HC) = ($gethistoryconf v hc), ($gethistoryconf v HC) .
+  eq $gethistoryconf v2 (historyconf v2 v) = v .
+  eq $gethistoryconf v empty = empty [owise] .
+  eq $gethistoryconf v hc = empty [owise] .
+
+
+  op getHC__ : Verts HistoryConfs -> States [format (g o d n) memo] .
+  eq getHC (V, v) HC = (getHC V HC), ($getHC v HC) .
+  eq getHC empty HC = empty  .
+
+  op $getHC__ : Vert HistoryConfs -> States [format (g o d n) memo] .
+  eq $getHC v (HC, (historyconf v s)) = s .
+  eq $getHC v HC = empty [owise] .
+  
+  op nonVisited __ : Region HistoryConfs -> Bool .
+  eq nonVisited r HC = ((getHC r HC) == empty) or
+    (typeFinal (getHC r HC)) .
+
+
+  op genDeepTgts__ : ModState Verts -> States .
+  ceq genDeepTgts v V = $genDeepTgts (getSubRegions v V) 
+        if |(getSubs v V)| > 0 . 
+  eq genDeepTgts v V = empty [owise] .
+
+  op $genDeepTgts_ : Verts -> Verts .
+  eq $genDeepTgts (v, V) = ($$genDeepTgts v), ($genDeepTgts V) .
+  eq $genDeepTgts empty = empty [owise] .
+
+  op $$genDeepTgts_ : Verts -> Vert .
+  eq $$genDeepTgts v = v : H* .
+  
+  
+  op activate___ : StateMachine HistoryConfs ModTransition -> Verts .    
+  eq activate sm HC t = activate (getVerts sm) (getAlldefaults sm) (getAllShallowdefaults sm)
+    (getAllDeepdefaults sm) HC (region t) (target t) . 
+  op activate _______ : Verts Defaults ShallowDefaults DeepDefaults HistoryConfs 
+    Verts Verts -> Verts [format (g y c y c y c r n)] .
+  eq activate V2 D SH DH HC empty tgt = empty .  
+  eq activate V2 D SH DH HC (v, V) tgt = ($activate V2 D SH DH HC v tgt),  
+    (activate V2 D SH DH HC V tgt) .  
+
+  op activate___ : StateMachine HistoryConfs ModTransition -> Verts .    
+  eq activate sm HC t = activate (getVerts sm) (getAlldefaults sm) (getAllShallowdefaults sm)
+    (getAllDeepdefaults sm) HC (region t) (target t) . 
+  op activate _______ : Verts Defaults ShallowDefaults DeepDefaults HistoryConfs 
+    Verts Verts -> Verts [format (g y c y c y c r n)] .
+  eq activate V2 D SH DH HC empty tgt = empty .  
+  eq activate V2 D SH DH HC (v, V) tgt = ($activate V2 D SH DH HC v tgt),  
+    (activate V2 D SH DH HC V tgt) .  
+        
+  op $activate _______ : Verts Defaults ShallowDefaults DeepDefaults HistoryConfs 
+    Vert Verts -> Verts [format (g n n n n n n n n)] .
+  eq $activate V2 D SH DH HC empty tgt = empty .  
+  ceq $activate V2 D SH DH HC v tgt = v, 
+    $activate V2 D SH DH HC (getshallowdefault v SH) tgt
+    if ((v : H) in tgt) and (nonVisited v HC) [label 2a] .
+  ceq $activate V2 D SH DH HC v tgt = v, 
+    $activate V2 D SH DH HC (getdeepdefault v DH) tgt
+    if ((v : H*) in tgt) and (nonVisited v HC) [label 2b] .  
+  ceq $activate V2 D SH DH HC v tgt = v,
+    $activate V2 D SH DH HC (getHC v HC) tgt
+    if ((v : H) in tgt) and not (nonVisited v HC) and (getHC v HC) =/= empty [label 3] .
+  ceq $activate V2 D SH DH HC v tgt = v, 
+    (activate V2 D SH DH HC (getHC v HC) ((tgt \(v : H*)), (genDeepTgts (getHC v HC) V2))) 
+    if (v : H* in tgt) and not (nonVisited v HC) [label 4] .
+  ceq $activate V2 D SH DH HC v tgt = v 
+    if typeState v and |(getSubRegions v V2)| == 0 . 
+  ceq $activate V2 D SH DH HC v tgt = v, 
+    (activate V2 D SH DH HC (getSubRegions v V2) tgt)
+    if typeState v and |(getSubRegions v V2)| > 0 . 
+  ceq $activate V2 D SH DH HC v tgt = v ,  ($activate V2 D SH DH HC (getSubStToTgt v tgt V2) tgt) 
+    if (typeRegion v) and not (typeHistory (getSubStToTgt v tgt V2)) and
+    ((len v) < (comparelen v tgt)) and intersection((upset v V2), tgt) =/= empty [label 5] . 
+  *** 6  
+  ceq $activate V2 D SH DH HC v tgt = 
+    (activate V2 D SH DH HC (getdefault v D) tgt)
+    if typeFinal v . 
+  eq $activate V2 D SH DH HC v tgt = v , ($activate V2 D SH DH HC (getdefault v D) tgt) [owise] .
+
+  op enterH___ : StateMachine HistoryConfs Transitions -> Verts .
+  eq enterH sm HC T = enterH (getVerts sm) (getAlldefaults sm) (getAllShallowdefaults sm)
+    (getAllDeepdefaults sm) HC T . 
+  eq enterH sm HC empty = empty .
+  op enterH______ : Verts Defaults ShallowDefaults DeepDefaults HistoryConfs 
+     Transitions -> Verts .
+  eq enterH V2 D SH DH HC ((src e g A af aj tgt lreg) , T) = 
+     (($activate V2 D SH DH HC lreg tgt) \ lreg) , (enterH V2 D SH DH HC T) .
+  eq enterH V2 D SH DH HC empty = empty .   
+
+
+  
+
+
+
+
+
+
+  op succC____ : StateMachine HistoryConfs Transitions Verts -> Verts .
+  eq succC sm HC T C = (C \ (leave C T)) , (enterH sm HC T) .
+  op succC_______ : Verts Defaults ShallowDefaults DeepDefaults HistoryConfs 
+     Transitions Verts -> Verts .
+  eq succC V D SH DH HC T C = (C \ (leave C T)) , (enterH V D SH DH HC T) .
+  eq succC V D SH DH HC empty C = C [owise] .
+  
+  op succHC__ : Verts HistoryConfs -> HistoryConfs .
+  eq succHC (V, r) (HC, (historyconf r s)) = (succHC V HC), (historyconf r (getsub r V)) .
+  ceq succHC V (HC, (historyconf r s)) = (succHC V HC), (historyconf r s) if not(r in V) .
+  eq succHC (V, r) empty = (succHC V empty), (historyconf r (getsub r V)) .
+  eq succHC V empty = empty [owise] .
+  
+  op prettySm_ : StateMachine -> StateMachine .
+  eq prettySm emptySM = (SM empty empty empty empty empty) .
+  eq prettySm (SM V D SH DH ENA EXA T) = (SM (prettyVerts V) empty empty empty ENA EXA (prettyTrans T)) .
+  eq prettySm (SM V D SH DH T) = (SM (prettyVerts V) empty empty empty (prettyTrans T)) .
+   
+  op prettyHc_ : HistoryConfs -> HistoryConfs [memo] .
+  eq prettyHc (HC, (historyconf r s)) = (prettyHc HC), (historyconf (prettyVerts r) (prettyVerts s)) .
+  eq prettyHc empty = empty .   
+
+  op prettyHCToHC__ : Verts HistoryConfs -> HistoryConfs [memo] .
+  eq prettyHCToHC V (HC, (historyconf r s)) = (prettyHCToHC V HC), (historyconf (prettyVToV V r) (prettyVToV V s)) .
+  eq prettyHCToHC V empty = empty .
+
+endfm

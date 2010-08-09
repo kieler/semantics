@@ -12,15 +12,15 @@
   <elementImport xmi:id="_bVLU8otKEd-ytPyqQutekg">
     <importedElement xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"/>
   </elementImport>
-  <packagedElement xmi:type="uml:StateMachine" xmi:id="_I1o44IuJEd-yoIYGk1D8vA" name="TransitionExecutionExample">
-    <region xmi:id="_I9WqcIuJEd-yoIYGk1D8vA" name="Region">
+  <packagedElement xmi:type="uml:StateMachine" xmi:id="_I1o44IuJEd-yoIYGk1D8vA" name="Test">
+    <region xmi:id="_I9WqcIuJEd-yoIYGk1D8vA" name="root">
       <subvertex xmi:type="uml:State" xmi:id="_PpBRMIuJEd-yoIYGk1D8vA" name="outer">
-        <region xmi:id="_PpLpQIuJEd-yoIYGk1D8vA" name="Region">
+        <region xmi:id="_PpLpQIuJEd-yoIYGk1D8vA" name="inOuter">
           <subvertex xmi:type="uml:Pseudostate" xmi:id="_XkAKwIuJEd-yoIYGk1D8vA" kind="fork"/>
           <subvertex xmi:type="uml:Pseudostate" xmi:id="_YUvEIIuJEd-yoIYGk1D8vA"/>
           <subvertex xmi:type="uml:State" xmi:id="_aCTZMIuJEd-yoIYGk1D8vA" name="B"/>
           <subvertex xmi:type="uml:State" xmi:id="_cUPmoIuJEd-yoIYGk1D8vA" name="inner">
-            <region xmi:id="_cUYJgIuJEd-yoIYGk1D8vA" name="Region">
+            <region xmi:id="_cUYJgIuJEd-yoIYGk1D8vA" name="inInner0">
               <subvertex xmi:type="uml:State" xmi:id="_fj2WMIuJEd-yoIYGk1D8vA" name="E"/>
               <subvertex xmi:type="uml:State" xmi:id="_gmI5oIuJEd-yoIYGk1D8vA" name="G"/>
               <subvertex xmi:type="uml:Pseudostate" xmi:id="_h7XAIIuJEd-yoIYGk1D8vA"/>
@@ -29,7 +29,7 @@
               <transition xmi:id="_VgYQsIuKEd-yoIYGk1D8vA" source="_gmI5oIuJEd-yoIYGk1D8vA" target="_Uhp-oIuKEd-yoIYGk1D8vA"/>
               <transition xmi:id="_Zk1koIuKEd-yoIYGk1D8vA" name="ee1/a3" source="_gmI5oIuJEd-yoIYGk1D8vA" target="_XKHOoIuKEd-yoIYGk1D8vA"/>
             </region>
-            <region xmi:id="_QBCTIIuKEd-yoIYGk1D8vA">
+            <region xmi:id="_QBCTIIuKEd-yoIYGk1D8vA" name="inInner1">
               <subvertex xmi:type="uml:State" xmi:id="_RL-cQIuKEd-yoIYGk1D8vA" name="N"/>
               <subvertex xmi:type="uml:Pseudostate" xmi:id="_R5WfoIuKEd-yoIYGk1D8vA"/>
               <transition xmi:id="_SZjCoIuKEd-yoIYGk1D8vA" source="_R5WfoIuKEd-yoIYGk1D8vA" target="_RL-cQIuKEd-yoIYGk1D8vA"/>

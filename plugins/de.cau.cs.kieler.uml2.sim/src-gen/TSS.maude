@@ -1,0 +1,124 @@
+load TSM
+load STEPSEM
+load model-checker.maude
+
+mod TSS is
+	including SATISFACTION .
+	including STEPSEM .
+	including TSM .
+	including T-ST .
+	including T-TR .
+	including LTL .
+	including MODEL-CHECKER .
+	including LTL-SIMPLIFIER .
+	
+	op init : -> MState .
+	eq init = (maState "UML" ($stableC (prettyVerts cf1) empty) (ee0, ee1, ee2, ee3, ee4)) .
+	
+	var msst mastate : MState .
+	vars V V2 : Verts .
+	var ac ac2 : Actions .
+	var T : Transitions .
+	var ES : EventSS .
+	var mode : String .
+	vars HC : HistoryConfs .
+	
+	subsort MState < State .
+	op preState : -> MState .
+	op someMState : -> MState .
+	eq preState = machineState "UML" sm1 cf4 (ee2 ee1 ee0 ee1 ee1) .
+	
+	op aCf : Actions -> Prop .
+	op inC : Verts -> Prop .
+	eq maState mode ($stableC V HC) ES |= inC(V2) = (prettyVerts V2) subset V  .
+	eq maState mode ($unstableC V HC T ac) ES |= aCf(ac2) = actionConflict par (ac ac2) .
+	eq maState mode ($unstableC V HC T ac) ES |= aCf(nil) = actionConflict ac .
+endm
+
+
+ 
+***search (maState "UML" (stableC smHCA cf1 hcst) (ee0 ee1 ee2 ee3 ee4)) =>* mastate such that inConf mastate (SK,SI) . 
+*** search (maState "UML" (stableC smHCA cf1 hcst) (ee0 ee1 ee2 ee3 ee4)) =>* mastate such that (firesT mastate trHC) and (inHConf mastate (SH,SF)) . 
+*** search (maState "UML" (stableC smHCA cf1 hcst) (ee0 ee1 ee2 ee3 ee4)) =>* mastate such that acConfl mastate . 
+*** search (maState "UML" (stableC smFHA cf1 empty) (ee0 ee1 ee2 ee3 ee4)) =>* mastate such that acConfl mastate . 
+search (maState "UML" ($stableC (prettyVerts cf1) empty) (ee0 ee1 ee2 ee3 ee4)) =>* mastate such that inConf mastate (SC,SK) . 
+*** search (maState "SC" ($stableC (prettyVerts cf1) empty) (ee0 ee1 ee2 ee3 ee4)) =>* mastate such that (inHConf mastate (SH,SF)) . 
+*** search (maState "SC" ($stableC (prettyVerts cf1) empty) (ee0 ee1 ee2 ee3 ee4)) =>* mastate such that (firesT mastate trHC) and (inHConf mastate (SH,SF)) . 
+*** search (maState "SC" ($stableC (prettyVerts cf1) empty) (ee0 ee1 ee2 ee3 ee4)) =>* mastate such that (inConf mastate (SC,SK)) . 
+search (maState "UML" ($stableC (prettyVerts cf1) empty) (ee0, ee1, ee2)) =>* mastate such that acConfl mastate . 
+red modelCheck(init, (<> inC(SUSP))) .
+***(
+red prettyFS ($fire mode (getVerts SMINT) ee1 (enabled (prettyVToV (getVerts SMINT) (C "A", C "C", C "E", C "H", C "K", R "B", R "C", R "D", R "E", root R "0")) ee1 (getTrans SMINT)) empty) .
+red prettyTrans (enabled (prettyVToV (getVerts SMINT) (C "A", C "C", C "E", C "H", C "K", R "B", R "C", R "D", R "E", root R "0")) ee1 (getTrans SMINT)) .
+red prettyFS ($$fireUML (getVerts SMINT) ee1 (enabled (prettyVToV (getVerts SMINT) (C "A", C "C", C "E", C "H", C "K", R "B", R "C", R "D", R "E", root R "0")) ee1 (getTrans SMINT)) empty) .
+*** can SD be reached without interference
+*** red modelCheck(init,  ~ ((~ aCf(nil)) U inC(SD))) .
+
+red ($fire mode (getVerts SMINT) ee1 (enabled (prettyVToV (getVerts SMINT) (C "A", C "C", C "E", C "H", C "K", R "B", R "C", R "D", R "E", root R "0")) e
+e1 (getTrans SMINT)) empty) .
+search (maState "UML" ($stableC (prettyVerts cf1) empty) (ee0, ee1, ee2, ee3, ee4)) =>* mastate such that acConfl mastate . 
+red modelCheck(init, (<> inC(SUSP))) .
+red modelCheck(init, (<> inC(SD)) \/([]<> inC(SUSP))) .
+red modelCheck(init, (~(aCf(nil)) U inC(SD)) \/([]<> inC(SUSP))) .
+red modelCheck(init, ([] ~ (aCf(nil)) )\/([]<> inC(SUSP))) .
+
+search (maState "UML" ($stableC (prettyVerts cf1) empty) (ee0, ee1, ee2, ee3, ee4)) =>* mastate such that acConfl mastate . 
+
+
+search (maState "UML" ($stableC (prettyVerts cf1) empty) (ee0, ee1, ee2)) =>* mastate such that (inHConf mastate (SE,SM)) . 
+search (maState "UML" ($stableC (prettyVerts cf1) empty) (ee0, ee1, ee2, ee3, ee4)) =>* mastate such that (inHConf mastate (SG,SM)) . 
+
+
+red fire "UML" cf1 ee4 (enabled cf1 ee4 trHC) empty .
+red source trHC .
+red (source trHC) subset cf1 .
+red (event trHC) .
+red (event trHC)== ee4 .
+red ((source trHC) subset cf1) and (event trHC)== ee4 .
+red enabled cf1 ee4 trHC .
+red fire "UML" cf1 ee4 (enabled cf1 ee4 (getTrans smHC)) empty .
+
+red enterH sm1 empty tr7 .
+
+red enterH allVerts (getAlldefaults sm1) empty empty empty tr7 .
+
+
+red inHConf (maState "UML" (stableC smHCA cf1 hcst) (ee0 ee1 ee2 ee3 ee4)) (SH, SF) . 
+red inHConf (maState "UML" (stableC smHCA cf1 hcst) (ee0 ee1 ee2 ee3 ee4)) (SI, SF) . 
+
+
+***red enterH smHC hcst trHC .
+red prettyHc hcst .
+red prettyVerts(activate smHC empty trHC) .
+red prettyVerts(activate smHC hcst trHC) .
+
+red (RB : H*) in DHst .
+red nonVisited RB hcst .
+red getHC (RE, RD) hcst .
+red $activate allVerts allDefs allSDefs allDDefs hcst RB DHst .
+
+
+red prettyVerts($activate allVerts allDefs allSDefs allDDefs hcst SA DHst) .
+red prettyVerts($activate allVerts allDefs allSDefs allDDefs hcst RC DHst) .
+red $activate allVerts allDefs allSDefs allDDefs hcst RB DHst .
+
+
+
+red $activate (getVerts sm1) (getAlldefaults sm1) (getAllShallowdefaults sm1) (getAllDeepdefaults sm1) empty (region tr7) (target tr7) .
+
+search maState "UML" (stableC sm2 cf1 empty) (ee0 ee1 ee2 ee4) =>* mastate such that actionConflict mastate .
+red getEntryAc sm2 cf1 (target tr4) (region tr4) .
+red getEntryAc sm2 cf5 (target tr6) (region tr6) .
+red getEntryAc sm2 cf5 (target tr8) (region tr8) .
+red getSubs SK allVerts .
+
+***rew maState "UML" (stableC sm2 cf1) (ee0 ee2 ee1 ee4) .
+*** show path 4 .
+red actionConflict(par (seq (exB seq (a4 a4 a4)) seq (exB seq (a1 a1 a1)))) .
+
+red getExitAc sm2 cf2 (RA) .
+
+red actionConflict (maState "UML" (unstableC sm2 cf1 allTrans par (a1 a1)) (ee0 ee2 ee1 ee4)) .
+red actionConflict seq (a1  a1 a1 a1 par (a1 a2) par (seq (a2 a3 a3 a3 a3 a3) seq (a4 a4 a4 a4 a4 a4 a4 a4 a4 a3))) .
+
+)***

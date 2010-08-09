@@ -4,19 +4,123 @@
 
 «DEFINE main FOR Model»
    «EXPAND sm FOREACH packagedElement»
+   «EXPAND checkLoads FOREACH packagedElement»
 «ENDDEFINE»
 
 «DEFINE main FOR Package»
    «EXPAND sm FOREACH packagedElement»
+   «EXPAND checkLoads FOREACH packagedElement»
+«ENDDEFINE»
+
+
+«DEFINE checkLoads FOR StateMachine»
+	«FILE "checkLoads.maude"»
+load model-checker.maude
+load STATES
+load EVENTS
+load ACTIONS
+load TRANS
+load SM
+load STEPSEM
+	«ENDFILE»
 «ENDDEFINE»
 
 «DEFINE sm FOR StateMachine»
 	«FILE this.name.toString() +".maude"»
+load model-checker.maude
+load STATES
+load EVENTS
+load ACTIONS
+load TRANS
+load SM
+load STEPSEM
+
+fmod eclipseInterface is
+ including STATEMACHINE .
+ including TRANSITIONS .
+ including STATES .
+*** // Events //
+  ops «FOREACH this.getTriggerEvents() AS event SEPARATOR " "-»«event-»«ENDFOREACH-» : -> Event .
+  op allEvents : -> Events .
+
+*** // allActions //	
+  ops «FOREACH this.getAction() AS action SEPARATOR " "-»«action-»«ENDFOREACH-» : -> Action .
+
+***// States //
+  ops «FOREACH this.getStates() AS state SEPARATOR " "-»«((State)state).getMaudeLabel()-»«ENDFOREACH-» : -> ModState .	
+	«FOREACH this.getMaudeStates() AS state SEPARATOR " .\n"-»«state-»«ENDFOREACH-» .	
+***// Regions //
+  ops «FOREACH this.getRegions() AS region SEPARATOR " "-»«region.getMaudeLabel()-»«ENDFOREACH-» : -> Region .
+	«FOREACH this.getMaudeRegions() AS region SEPARATOR " .\n"-»«region-»«ENDFOREACH-» .
+***// allVerts //
+  op allVerts : -> Verts .
+  eq allVerts = «FOREACH this.getRegions() AS region SEPARATOR ", "-»«region.getMaudeLabel()-»«ENDFOREACH-» , «FOREACH this.getStates() AS state SEPARATOR ", "-»«((State)state).getMaudeLabel()-»«ENDFOREACH-» .
 	
-	«FOREACH this.getTriggerEvents() AS event SEPARATOR ","-»«event-»«ENDFOREACH-»
+***// defaults //
+  ops «FOREACH this.getRegions() AS region SEPARATOR " "-»«"def"+region.getMaudeLabel()-»«ENDFOREACH-» : -> Default .
+  «FOREACH this.getInitialTransitions() AS transition SEPARATOR ""-»«transition.genDefault()-»«ENDFOREACH-»
+  op allDefs : -> Defaults .
+  eq allDefs = «FOREACH this.getRegions() AS region SEPARATOR ", "-»«"def"+region.getMaudeLabel()-»«ENDFOREACH-» .
+  
+***// deep defaults //
+  ops «FOREACH this.getRegions() AS region SEPARATOR " "-»«"dDef"+region.getMaudeLabel()-»«ENDFOREACH-» : -> DeepDefault .
+  «FOREACH this.getDHDTransitions() AS transition SEPARATOR ""-»«transition.genDHDefault()-»«ENDFOREACH-»
+  op allDHDefs : -> DeepDefaults .
+  eq allDHDefs = «FOREACH this.getRegions() AS region SEPARATOR ", "-»«"dDef"+region.getMaudeLabel()-»«ENDFOREACH-» .
+
+***// shallow defaults //
+  ops «FOREACH this.getRegions() AS region SEPARATOR " "-»«"sDef"+region.getMaudeLabel()-»«ENDFOREACH-» : -> ShallowDefault .
+  «FOREACH this.getSHDTransitions() AS transition SEPARATOR ""-»«transition.genSHDefault()-»«ENDFOREACH-»
+  
+  op allSHDefs : -> ShallowDefaults .
+  eq allSHDefs = «FOREACH this.getRegions() AS region SEPARATOR ", "-»«"sDef"+region.getMaudeLabel()-»«ENDFOREACH-» .
+
+*** Transitions 
+*** ToDo: (Important): Compute sources and targets sets
+*** ToDo: Remove initial states transitions 
+  ops «FOREACH this.getTransitions() AS transition SEPARATOR "  "-»«transition.transMID()-»«ENDFOREACH-» :-> ModTransition .
+  «FOREACH this.getTransitions() AS transition SEPARATOR '\n'-»«transition.genMaude()-»«ENDFOREACH-»
+  
+  op allTrans :-> Transitons .
+  eq allTrans = «FOREACH this.getTransitions() AS transition SEPARATOR "  "-»«transition.transMID()-»«ENDFOREACH-» .
+
+
+***/// A state machine consits of Vertices Defaultsstatesfunction ShallowDefaultstatesfunction DeepDefaultstatesfunction EntryActionsfunction ExitActionsFunction Transitions 
+  op SMINT : -> StateMachine .
+  ***// ToDo: add entry/exit actions//
+  eq SMINT = (SM allVerts allDefs allSHDefs allDHDefs empty empty allTrans) .
+
+  
+endfm
+***(
+mod TSS is
+	including SATISFACTION .
+	including STEPSEM .
+	including eclipseInterface .
+	including LTL .
+	including MODEL-CHECKER .
+	including LTL-SIMPLIFIER .
+***(
+	op init : -> MState .
+	eq init = (maState "UML" ($stableC (prettyVerts cf1) empty) (ee0, ee1, ee2, ee3, ee4)) .
+)***	
+	var msst mastate : MState .
+	vars V V2 : Verts .
+	var ac ac2 : Actions .
+	var T : Transitions .
+	var ES : EventSS .
+	var mode : String .
+	vars HC : HistoryConfs .
 	
-	// HERE COMES THE MAUDE CODE //
+	subsort MState < State .
 	
+	op aCf : Actions -> Prop .
+	op inC : Verts -> Prop .
+	eq maState mode ($stableC V HC) ES |= inC(V2) = (prettyVerts V2) subset V  .
+	eq maState mode ($unstableC V HC T ac) ES |= aCf(ac2) = actionConflict par (ac ac2) .
+	eq maState mode ($unstableC V HC T ac) ES |= aCf(nil) = actionConflict ac .
+endm
+)***
 	«ENDFILE»
 «ENDDEFINE»
 
