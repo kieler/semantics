@@ -90,7 +90,7 @@
    <feature url="features/de.cau.cs.kieler.kev.source_0.2.1.qualifier.jar" id="de.cau.cs.kieler.kev.source" version="0.2.1.qualifier">
       <category name="KIELER sources"/>
    </feature>
-   <feature url="features/net.ogdf.lib_1.0.0.qualifier.jar" id="net.ogdf.lib" version="1.0.0.qualifier" os="linux,macosx,solaris,win32" arch="sparc,x86,x86_64">
+   <feature url="features/net.ogdf.lib_2.0.0.qualifier.jar" id="net.ogdf.lib" version="2.0.0.qualifier" os="linux,macosx,solaris,win32" arch="sparc,x86,x86_64">
       <category name="KIELER"/>
    </feature>
    <feature url="features/net.ogdf.lib.source_1.0.0.qualifier.jar" id="net.ogdf.lib.source" version="1.0.0.qualifier" os="linux,macosx,solaris,win32" arch="sparc,x86,x86_64">
