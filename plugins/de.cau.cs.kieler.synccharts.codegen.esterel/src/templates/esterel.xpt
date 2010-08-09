@@ -4,17 +4,17 @@
 «EXTENSION templates::helper»
 
 «DEFINE main FOR Region-»
-«FILE innerStates.first().label + ".strl"-»
-module «innerStates.first().label» : 
-«FOREACH innerStates.first().signals AS sig -»«IF sig.isInput»input «sig.name» «EXPAND SignalType FOR sig»;«ENDIF-»«IF sig.isOutput»output «sig.name» «EXPAND SignalType FOR sig»;«ENDIF-» 
+«FILE states.first().label + ".strl"-»
+module «states.first().label» : 
+«FOREACH states.first().signals AS sig -»«IF sig.isInput»input «sig.name» «EXPAND SignalType FOR sig»;«ENDIF-»«IF sig.isOutput»output «sig.name» «EXPAND SignalType FOR sig»;«ENDIF-» 
 «ENDFOREACH-»
-«IF !innerStates.first().locals().isEmpty»
+«IF !states.first().locals().isEmpty»
 signal
- «FOREACH innerStates.first().locals() AS sig  SEPARATOR ","-»«sig.name» «EXPAND SignalType FOR sig»«ENDFOREACH»
+ «FOREACH states.first().locals() AS sig  SEPARATOR ","-»«sig.name» «EXPAND SignalType FOR sig»«ENDFOREACH»
 in
 «ENDIF»
-  «FOREACH innerStates.first().regions AS region SEPARATOR " || "»«EXPAND Constelation FOR region»«ENDFOREACH-»
-«IF !innerStates.first().locals().isEmpty»
+  «FOREACH states.first().regions AS region SEPARATOR " || "»«EXPAND Constelation FOR region»«ENDFOREACH-»
+«IF !states.first().locals().isEmpty»
 end signal
 «ENDIF»
 end module
@@ -23,26 +23,26 @@ end module
 
 «DEFINE Constelation FOR Region-»
 «IF canTerminate()»trap done in «ENDIF»
-  signal T_«innerStates.first().id»«FOREACH this.innerStates AS state-», goto_«state.id»«ENDFOREACH» in
+  signal T_«states.first().id»«FOREACH this.states AS state-», goto_«state.id»«ENDFOREACH» in
     emit goto_«this.initial().id»;
     loop
       weak abort 
-        «FOREACH this.innerStates.sortStates() AS state-»
+        «FOREACH this.states.sortStates() AS state-»
         present goto_«state.id» then
         «IF state.canBeTransient()»signal start_«state.id» in emit start_«state.id»;«ENDIF»     
             «EXPAND Star FOR state-»                
          «IF state.canBeTransient()»
             present start_«state.id» else
-              emit T_«innerStates.first().id»;pause;
+              emit T_«states.first().id»;pause;
             end present   
           end signal
           «ELSE»
-            emit T_«innerStates.first().id»;pause;
+            emit T_«states.first().id»;pause;
           «ENDIF»
         end present;
         «ENDFOREACH-»
         halt;
-      when T_«innerStates.first().id»;
+      when T_«states.first().id»;
     end loop;
   end signal;
 «IF canTerminate()»end trap«ENDIF»
@@ -149,8 +149,8 @@ end module
 «DEFINE Trigger FOR IntValue»«value»«ENDDEFINE»
 «DEFINE Trigger FOR FloatValue»«value»«ENDDEFINE»
 «DEFINE Trigger FOR BooleanValue»«IF value»true«ELSE»false«ENDIF»«ENDDEFINE»
-«DEFINE Trigger FOR VariableReference»«variable.name»«ENDDEFINE»
-«DEFINE Trigger FOR SignalReference»«signal.name»«ENDDEFINE»
+«REM»«DEFINE Trigger FOR VariableReference»«variable.name»«ENDDEFINE»«ENDREM»
+«DEFINE Trigger FOR ValuedObjectReference»«valuedObject.name»«ENDDEFINE»
 «DEFINE Trigger FOR TextualCode»«code»«ENDDEFINE»
 «DEFINE Trigger FOR expressions::Expression»//ERROR: unknown expression«ENDDEFINE»
 

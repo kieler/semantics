@@ -33,10 +33,10 @@ List[Signal] locals(State s):
   s.signals.select(e | !e.isInput && !e.isOutput);
 
 State initial(Region r):
-  r.innerStates.select(e|e.isInitial).first();
+  r.states.select(e|e.isInitial).first();
   
 Boolean canTerminate(Region r):
-  !r.innerStates.select(e|e.isFinal).isEmpty;
+  !r.states.select(e|e.isFinal).isEmpty;
 
 Boolean canBeTransient(State s):
   !s.outgoingTransitions.select(e|e.isImmediate || e.type==TransitionType::NORMALTERMINATION).isEmpty;
