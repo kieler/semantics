@@ -36,11 +36,11 @@ Void createIf(If ifInstr, Transition transition) :
 ;
 
 
-Expression createExpression(SignalReference signalReference) :
-	let newSignalReference = new SignalReference :
-	let triggerSignal = ((SignalReference)signalReference).signal :
-	newSignalReference.setSignal((Signal)triggerSignal.getSingleTraceTarget("S")) ->
-	newSignalReference
+Expression createExpression(ValuedObjectReference valuedObjectReference) :
+	let newValuedObjectReference = new ValuedObjectReference :
+	let triggerSignal = ((ValuedObjectReference)valuedObjectReference).valuedObject :
+	newValuedObjectReference.setValuedObject((Signal)triggerSignal.getSingleTraceTarget("S")) ->
+	newValuedObjectReference
 ;
 
 Expression createExpression(OperatorExpression operatorExpression) :
