@@ -21,16 +21,16 @@ import org.osgi.framework.BundleContext;
  * 
  * @author ctr
  */
-public class Activator extends Plugin {
+public class EsterelPlugin extends Plugin {
 
     /** The plug-in ID. */
     public static final String PLUGIN_ID = "de.cau.cs.kieler.synccharts.codegen.esterel";
 
     // The shared instance
-    private static Activator plugin;
+    private static EsterelPlugin plugin;
 
     /** The constructor. */
-    public Activator() {
+    public EsterelPlugin() {
     }
 
     @Override
@@ -50,7 +50,7 @@ public class Activator extends Plugin {
      * 
      * @return the shared instance
      */
-    public static Activator getDefault() {
+    public static EsterelPlugin getDefault() {
         return plugin;
     }
 

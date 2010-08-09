@@ -126,7 +126,7 @@ public class WorkflowGenerator {
         }
 
         StatusManager.getManager().handle(
-                new Status(status, Activator.PLUGIN_ID, issue.toString(), null), StatusManager.LOG);
+                new Status(status, EsterelPlugin.PLUGIN_ID, issue.toString(), null), StatusManager.LOG);
 
     }
 }
