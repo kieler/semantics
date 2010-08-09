@@ -4,7 +4,7 @@
 «EXTENSION templates::helper»
 
 «DEFINE main FOR Region-»
-«FILE states.first().label.toLowerCase() + ".strl"-»
+«FILE states.first().label + ".strl"-»
 module «states.first().label» : 
 «FOREACH states.first().signals AS sig -»«IF sig.isInput»input «sig.name» «EXPAND ValueType FOR sig»;«ENDIF-»«IF sig.isOutput»output «sig.name» «EXPAND ValueType FOR sig»;«ENDIF-» 
 «ENDFOREACH-»
