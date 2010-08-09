@@ -55,363 +55,363 @@ import org.eclipse.emf.ecore.util.InternalEList;
  */
 public class ActionImpl extends AnnotatableImpl implements Action {
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public static final String copyright = "KIELER - Kiel Integrated Environment for Layout Eclipse RichClient\n\nhttp://www.informatik.uni-kiel.de/rtsys/kieler/\n\nCopyright 2009 by\n+ Christian-Albrechts-University of Kiel\n  + Department of Computer Science\n    + Real-Time and Embedded Systems Group\n\nThis code is provided under the terms of the Eclipse Public License (EPL).\nSee the file epl-v10.html for the license text.";
 
     /**
-     * The cached value of the '{@link #getEffects() <em>Effects</em>}' containment reference list.
-     * <!-- begin-user-doc -->
+	 * The cached value of the '{@link #getEffects() <em>Effects</em>}' containment reference list.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #getEffects()
-     * @generated
-     * @ordered
-     */
+	 * @see #getEffects()
+	 * @generated
+	 * @ordered
+	 */
     protected EList<Effect> effects;
 
     /**
-     * The cached value of the '{@link #getTrigger() <em>Trigger</em>}' containment reference.
-     * <!-- begin-user-doc -->
+	 * The cached value of the '{@link #getTrigger() <em>Trigger</em>}' containment reference.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #getTrigger()
-     * @generated
-     * @ordered
-     */
+	 * @see #getTrigger()
+	 * @generated
+	 * @ordered
+	 */
     protected Expression trigger;
 
     /**
-     * The default value of the '{@link #getDelay() <em>Delay</em>}' attribute.
-     * <!-- begin-user-doc -->
+	 * The default value of the '{@link #getDelay() <em>Delay</em>}' attribute.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #getDelay()
-     * @generated
-     * @ordered
-     */
+	 * @see #getDelay()
+	 * @generated
+	 * @ordered
+	 */
     protected static final int DELAY_EDEFAULT = 1;
 
     /**
-     * The cached value of the '{@link #getDelay() <em>Delay</em>}' attribute.
-     * <!-- begin-user-doc -->
+	 * The cached value of the '{@link #getDelay() <em>Delay</em>}' attribute.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #getDelay()
-     * @generated
-     * @ordered
-     */
+	 * @see #getDelay()
+	 * @generated
+	 * @ordered
+	 */
     protected int delay = DELAY_EDEFAULT;
 
     /**
-     * The default value of the '{@link #isIsImmediate() <em>Is Immediate</em>}' attribute.
-     * <!-- begin-user-doc -->
+	 * The default value of the '{@link #isIsImmediate() <em>Is Immediate</em>}' attribute.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #isIsImmediate()
-     * @generated
-     * @ordered
-     */
+	 * @see #isIsImmediate()
+	 * @generated
+	 * @ordered
+	 */
     protected static final boolean IS_IMMEDIATE_EDEFAULT = false;
 
     /**
-     * The cached value of the '{@link #isIsImmediate() <em>Is Immediate</em>}' attribute.
-     * <!-- begin-user-doc -->
+	 * The cached value of the '{@link #isIsImmediate() <em>Is Immediate</em>}' attribute.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #isIsImmediate()
-     * @generated
-     * @ordered
-     */
+	 * @see #isIsImmediate()
+	 * @generated
+	 * @ordered
+	 */
     protected boolean isImmediate = IS_IMMEDIATE_EDEFAULT;
 
     /**
-     * The default value of the '{@link #getLabel() <em>Label</em>}' attribute.
-     * <!-- begin-user-doc -->
+	 * The default value of the '{@link #getLabel() <em>Label</em>}' attribute.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #getLabel()
-     * @generated
-     * @ordered
-     */
+	 * @see #getLabel()
+	 * @generated
+	 * @ordered
+	 */
     protected static final String LABEL_EDEFAULT = null;
 
     /**
-     * The cached value of the '{@link #getLabel() <em>Label</em>}' attribute.
-     * <!-- begin-user-doc -->
+	 * The cached value of the '{@link #getLabel() <em>Label</em>}' attribute.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #getLabel()
-     * @generated
-     * @ordered
-     */
+	 * @see #getLabel()
+	 * @generated
+	 * @ordered
+	 */
     protected String label = LABEL_EDEFAULT;
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     protected ActionImpl() {
-        super();
-    }
+		super();
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     protected EClass eStaticClass() {
-        return SyncchartsPackage.Literals.ACTION;
-    }
+		return SyncchartsPackage.Literals.ACTION;
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public EList<Effect> getEffects() {
-        if (effects == null) {
-            effects = new EObjectContainmentEList<Effect>(Effect.class, this, SyncchartsPackage.ACTION__EFFECTS);
-        }
-        return effects;
-    }
+		if (effects == null) {
+			effects = new EObjectContainmentEList<Effect>(Effect.class, this, SyncchartsPackage.ACTION__EFFECTS);
+		}
+		return effects;
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public Expression getTrigger() {
-        return trigger;
-    }
+		return trigger;
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public NotificationChain basicSetTrigger(Expression newTrigger, NotificationChain msgs) {
-        Expression oldTrigger = trigger;
-        trigger = newTrigger;
-        if (eNotificationRequired()) {
-            ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, SyncchartsPackage.ACTION__TRIGGER, oldTrigger, newTrigger);
-            if (msgs == null) msgs = notification; else msgs.add(notification);
-        }
-        return msgs;
-    }
+		Expression oldTrigger = trigger;
+		trigger = newTrigger;
+		if (eNotificationRequired()) {
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, SyncchartsPackage.ACTION__TRIGGER, oldTrigger, newTrigger);
+			if (msgs == null) msgs = notification; else msgs.add(notification);
+		}
+		return msgs;
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public void setTrigger(Expression newTrigger) {
-        if (newTrigger != trigger) {
-            NotificationChain msgs = null;
-            if (trigger != null)
-                msgs = ((InternalEObject)trigger).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - SyncchartsPackage.ACTION__TRIGGER, null, msgs);
-            if (newTrigger != null)
-                msgs = ((InternalEObject)newTrigger).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - SyncchartsPackage.ACTION__TRIGGER, null, msgs);
-            msgs = basicSetTrigger(newTrigger, msgs);
-            if (msgs != null) msgs.dispatch();
-        }
-        else if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, SyncchartsPackage.ACTION__TRIGGER, newTrigger, newTrigger));
-    }
+		if (newTrigger != trigger) {
+			NotificationChain msgs = null;
+			if (trigger != null)
+				msgs = ((InternalEObject)trigger).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - SyncchartsPackage.ACTION__TRIGGER, null, msgs);
+			if (newTrigger != null)
+				msgs = ((InternalEObject)newTrigger).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - SyncchartsPackage.ACTION__TRIGGER, null, msgs);
+			msgs = basicSetTrigger(newTrigger, msgs);
+			if (msgs != null) msgs.dispatch();
+		}
+		else if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, SyncchartsPackage.ACTION__TRIGGER, newTrigger, newTrigger));
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public int getDelay() {
-        return delay;
-    }
+		return delay;
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public void setDelay(int newDelay) {
-        int oldDelay = delay;
-        delay = newDelay;
-        if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, SyncchartsPackage.ACTION__DELAY, oldDelay, delay));
-    }
+		int oldDelay = delay;
+		delay = newDelay;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, SyncchartsPackage.ACTION__DELAY, oldDelay, delay));
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public boolean isIsImmediate() {
-        return isImmediate;
-    }
+		return isImmediate;
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public void setIsImmediate(boolean newIsImmediate) {
-        boolean oldIsImmediate = isImmediate;
-        isImmediate = newIsImmediate;
-        if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, SyncchartsPackage.ACTION__IS_IMMEDIATE, oldIsImmediate, isImmediate));
-    }
+		boolean oldIsImmediate = isImmediate;
+		isImmediate = newIsImmediate;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, SyncchartsPackage.ACTION__IS_IMMEDIATE, oldIsImmediate, isImmediate));
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public String getLabel() {
-        return label;
-    }
+		return label;
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public void setLabel(String newLabel) {
-        String oldLabel = label;
-        label = newLabel;
-        if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, SyncchartsPackage.ACTION__LABEL, oldLabel, label));
-    }
+		String oldLabel = label;
+		label = newLabel;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, SyncchartsPackage.ACTION__LABEL, oldLabel, label));
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
-        switch (featureID) {
-            case SyncchartsPackage.ACTION__EFFECTS:
-                return ((InternalEList<?>)getEffects()).basicRemove(otherEnd, msgs);
-            case SyncchartsPackage.ACTION__TRIGGER:
-                return basicSetTrigger(null, msgs);
-        }
-        return super.eInverseRemove(otherEnd, featureID, msgs);
-    }
+		switch (featureID) {
+			case SyncchartsPackage.ACTION__EFFECTS:
+				return ((InternalEList<?>)getEffects()).basicRemove(otherEnd, msgs);
+			case SyncchartsPackage.ACTION__TRIGGER:
+				return basicSetTrigger(null, msgs);
+		}
+		return super.eInverseRemove(otherEnd, featureID, msgs);
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public Object eGet(int featureID, boolean resolve, boolean coreType) {
-        switch (featureID) {
-            case SyncchartsPackage.ACTION__EFFECTS:
-                return getEffects();
-            case SyncchartsPackage.ACTION__TRIGGER:
-                return getTrigger();
-            case SyncchartsPackage.ACTION__DELAY:
-                return getDelay();
-            case SyncchartsPackage.ACTION__IS_IMMEDIATE:
-                return isIsImmediate();
-            case SyncchartsPackage.ACTION__LABEL:
-                return getLabel();
-        }
-        return super.eGet(featureID, resolve, coreType);
-    }
+		switch (featureID) {
+			case SyncchartsPackage.ACTION__EFFECTS:
+				return getEffects();
+			case SyncchartsPackage.ACTION__TRIGGER:
+				return getTrigger();
+			case SyncchartsPackage.ACTION__DELAY:
+				return getDelay();
+			case SyncchartsPackage.ACTION__IS_IMMEDIATE:
+				return isIsImmediate();
+			case SyncchartsPackage.ACTION__LABEL:
+				return getLabel();
+		}
+		return super.eGet(featureID, resolve, coreType);
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @SuppressWarnings("unchecked")
     @Override
     public void eSet(int featureID, Object newValue) {
-        switch (featureID) {
-            case SyncchartsPackage.ACTION__EFFECTS:
-                getEffects().clear();
-                getEffects().addAll((Collection<? extends Effect>)newValue);
-                return;
-            case SyncchartsPackage.ACTION__TRIGGER:
-                setTrigger((Expression)newValue);
-                return;
-            case SyncchartsPackage.ACTION__DELAY:
-                setDelay((Integer)newValue);
-                return;
-            case SyncchartsPackage.ACTION__IS_IMMEDIATE:
-                setIsImmediate((Boolean)newValue);
-                return;
-            case SyncchartsPackage.ACTION__LABEL:
-                setLabel((String)newValue);
-                return;
-        }
-        super.eSet(featureID, newValue);
-    }
+		switch (featureID) {
+			case SyncchartsPackage.ACTION__EFFECTS:
+				getEffects().clear();
+				getEffects().addAll((Collection<? extends Effect>)newValue);
+				return;
+			case SyncchartsPackage.ACTION__TRIGGER:
+				setTrigger((Expression)newValue);
+				return;
+			case SyncchartsPackage.ACTION__DELAY:
+				setDelay((Integer)newValue);
+				return;
+			case SyncchartsPackage.ACTION__IS_IMMEDIATE:
+				setIsImmediate((Boolean)newValue);
+				return;
+			case SyncchartsPackage.ACTION__LABEL:
+				setLabel((String)newValue);
+				return;
+		}
+		super.eSet(featureID, newValue);
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public void eUnset(int featureID) {
-        switch (featureID) {
-            case SyncchartsPackage.ACTION__EFFECTS:
-                getEffects().clear();
-                return;
-            case SyncchartsPackage.ACTION__TRIGGER:
-                setTrigger((Expression)null);
-                return;
-            case SyncchartsPackage.ACTION__DELAY:
-                setDelay(DELAY_EDEFAULT);
-                return;
-            case SyncchartsPackage.ACTION__IS_IMMEDIATE:
-                setIsImmediate(IS_IMMEDIATE_EDEFAULT);
-                return;
-            case SyncchartsPackage.ACTION__LABEL:
-                setLabel(LABEL_EDEFAULT);
-                return;
-        }
-        super.eUnset(featureID);
-    }
+		switch (featureID) {
+			case SyncchartsPackage.ACTION__EFFECTS:
+				getEffects().clear();
+				return;
+			case SyncchartsPackage.ACTION__TRIGGER:
+				setTrigger((Expression)null);
+				return;
+			case SyncchartsPackage.ACTION__DELAY:
+				setDelay(DELAY_EDEFAULT);
+				return;
+			case SyncchartsPackage.ACTION__IS_IMMEDIATE:
+				setIsImmediate(IS_IMMEDIATE_EDEFAULT);
+				return;
+			case SyncchartsPackage.ACTION__LABEL:
+				setLabel(LABEL_EDEFAULT);
+				return;
+		}
+		super.eUnset(featureID);
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public boolean eIsSet(int featureID) {
-        switch (featureID) {
-            case SyncchartsPackage.ACTION__EFFECTS:
-                return effects != null && !effects.isEmpty();
-            case SyncchartsPackage.ACTION__TRIGGER:
-                return trigger != null;
-            case SyncchartsPackage.ACTION__DELAY:
-                return delay != DELAY_EDEFAULT;
-            case SyncchartsPackage.ACTION__IS_IMMEDIATE:
-                return isImmediate != IS_IMMEDIATE_EDEFAULT;
-            case SyncchartsPackage.ACTION__LABEL:
-                return LABEL_EDEFAULT == null ? label != null : !LABEL_EDEFAULT.equals(label);
-        }
-        return super.eIsSet(featureID);
-    }
+		switch (featureID) {
+			case SyncchartsPackage.ACTION__EFFECTS:
+				return effects != null && !effects.isEmpty();
+			case SyncchartsPackage.ACTION__TRIGGER:
+				return trigger != null;
+			case SyncchartsPackage.ACTION__DELAY:
+				return delay != DELAY_EDEFAULT;
+			case SyncchartsPackage.ACTION__IS_IMMEDIATE:
+				return isImmediate != IS_IMMEDIATE_EDEFAULT;
+			case SyncchartsPackage.ACTION__LABEL:
+				return LABEL_EDEFAULT == null ? label != null : !LABEL_EDEFAULT.equals(label);
+		}
+		return super.eIsSet(featureID);
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public String toString() {
-        if (eIsProxy()) return super.toString();
+		if (eIsProxy()) return super.toString();
 
-        StringBuffer result = new StringBuffer(super.toString());
-        result.append(" (delay: ");
-        result.append(delay);
-        result.append(", isImmediate: ");
-        result.append(isImmediate);
-        result.append(", label: ");
-        result.append(label);
-        result.append(')');
-        return result.toString();
-    }
+		StringBuffer result = new StringBuffer(super.toString());
+		result.append(" (delay: ");
+		result.append(delay);
+		result.append(", isImmediate: ");
+		result.append(isImmediate);
+		result.append(", label: ");
+		result.append(label);
+		result.append(')');
+		return result.toString();
+	}
 
 } //ActionImpl
