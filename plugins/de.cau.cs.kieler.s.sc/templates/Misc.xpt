@@ -192,7 +192,7 @@
 		/* initialize all valued integer signals */
 		«FOREACH allSignals(this) AS signal-»
 			«IF ((Signal)signal).type == ValueType::PURE-»
-				valSigInt[sig_«((Signal)signal).name»] = «EXPAND getIntegerSignalValue FOR (Signal)signal-»;
+«REM» TODO:				valSigInt[sig_«((Signal)signal).name»] = «EXPAND getIntegerSignalValue FOR (Signal)signal-»; «ENDREM»
 			«ENDIF-»
 		«ENDFOREACH-»
 		return 0;
