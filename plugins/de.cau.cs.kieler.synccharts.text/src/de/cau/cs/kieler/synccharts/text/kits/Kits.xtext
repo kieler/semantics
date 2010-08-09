@@ -43,7 +43,7 @@ State returns synccharts::State:
     ((isFinal?='final') (isInitial?='init')?)
    )?
   
-  (type=StateType)? ('state') (id=ID)? (label=EString)
+  (type=StateType)? ('state')? (id=ID)? (label=EString)
   
   (
     ( (outgoingTransitions+=Transition ("," outgoingTransitions+=Transition)* )? ';')

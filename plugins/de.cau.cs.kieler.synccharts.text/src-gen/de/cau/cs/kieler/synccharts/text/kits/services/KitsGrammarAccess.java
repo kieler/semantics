@@ -246,7 +246,7 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//State returns synccharts::State:
 		//	annotations+=StringAnnotation* (isInitial?="init" isFinal?="final"? | isFinal?="final" isInitial?="init"?)?
-		//	type=StateType? "state" id=ID? label=EString ((outgoingTransitions+=Transition (","
+		//	type=StateType? "state"? id=ID? label=EString ((outgoingTransitions+=Transition (","
 		//	outgoingTransitions+=Transition)*)? ";" | "{" ((signals+=Signal | variables+=Variable | "onentry" entryActions+=Action
 		//	| "oninner" innerActions+=Action | "onexit" exitActions+=Action | "suspension" suspensionTrigger=Action)*
 		//	(regions+=Region ("||" regions+=Region)*)) "}" (outgoingTransitions+=Transition ("," outgoingTransitions+=Transition)*
@@ -254,10 +254,11 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 		public ParserRule getRule() { return rule; }
 
 		//annotations+=StringAnnotation* (isInitial?="init" isFinal?="final"? | isFinal?="final" isInitial?="init"?)?
-		//type=StateType? "state" id=ID? label=EString ((outgoingTransitions+=Transition ("," outgoingTransitions+=Transition)*)?
-		//";" | "{" ((signals+=Signal | variables+=Variable | "onentry" entryActions+=Action | "oninner" innerActions+=Action |
-		//"onexit" exitActions+=Action | "suspension" suspensionTrigger=Action)* (regions+=Region ("||" regions+=Region)*)) "}"
-		//(outgoingTransitions+=Transition ("," outgoingTransitions+=Transition)* ";")?)
+		//type=StateType? "state"? id=ID? label=EString ((outgoingTransitions+=Transition (","
+		//outgoingTransitions+=Transition)*)? ";" | "{" ((signals+=Signal | variables+=Variable | "onentry" entryActions+=Action
+		//| "oninner" innerActions+=Action | "onexit" exitActions+=Action | "suspension" suspensionTrigger=Action)*
+		//(regions+=Region ("||" regions+=Region)*)) "}" (outgoingTransitions+=Transition ("," outgoingTransitions+=Transition)*
+		//";")?)
 		public Group getGroup() { return cGroup; }
 
 		//annotations+=StringAnnotation*
@@ -305,7 +306,7 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 		//StateType
 		public RuleCall getTypeStateTypeEnumRuleCall_2_0() { return cTypeStateTypeEnumRuleCall_2_0; }
 
-		//"state"
+		//"state"?
 		public Keyword getStateKeyword_3() { return cStateKeyword_3; }
 
 		//id=ID?
@@ -1044,7 +1045,7 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 
 	//State returns synccharts::State:
 	//	annotations+=StringAnnotation* (isInitial?="init" isFinal?="final"? | isFinal?="final" isInitial?="init"?)?
-	//	type=StateType? "state" id=ID? label=EString ((outgoingTransitions+=Transition (","
+	//	type=StateType? "state"? id=ID? label=EString ((outgoingTransitions+=Transition (","
 	//	outgoingTransitions+=Transition)*)? ";" | "{" ((signals+=Signal | variables+=Variable | "onentry" entryActions+=Action
 	//	| "oninner" innerActions+=Action | "onexit" exitActions+=Action | "suspension" suspensionTrigger=Action)*
 	//	(regions+=Region ("||" regions+=Region)*)) "}" (outgoingTransitions+=Transition ("," outgoingTransitions+=Transition)*

@@ -2503,9 +2503,9 @@ rule__State__Group__3__Impl
 :
 (
 { before(grammarAccess.getStateAccess().getStateKeyword_3()); }
-
+(
 	'state' 
-
+)?
 { after(grammarAccess.getStateAccess().getStateKeyword_3()); }
 )
 

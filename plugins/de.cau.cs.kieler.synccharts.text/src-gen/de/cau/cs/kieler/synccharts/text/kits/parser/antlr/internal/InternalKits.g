@@ -596,11 +596,11 @@ ruleState returns [EObject current=null]
 	    }
 
 )
-)?	'state' 
+)?(	'state' 
     {
         createLeafNode(grammarAccess.getStateAccess().getStateKeyword_3(), null); 
     }
-(
+)?(
 (
 		lv_id_7_0=RULE_ID
 		{
