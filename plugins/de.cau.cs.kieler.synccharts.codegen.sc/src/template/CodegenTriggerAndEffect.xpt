@@ -51,8 +51,8 @@
 		«EXPAND getValue FOR this.trigger-»
 	«ELSEIF this.trigger.metaType == OperatorExpression-»
 		«EXPAND complexExpression FOR ((OperatorExpression)this.trigger)-»
-	«ELSEIF this.trigger.metaType == SignalReference-»
-		PRESENT(sig_«((SignalReference)this.trigger).signal.name-»)
+	«ELSEIF this.trigger.metaType == ValuedObjectReference-»
+		PRESENT(sig_«((ValuedObjectReference)this.trigger).valuedObject.name-»)
 	«ELSE-»
 		/* unknown if request */
 	«ENDIF-»
@@ -141,9 +141,9 @@
 		«EXPAND checkExpression FOR this.subExpressions.get(0)-»
 	«ELSEIF this.operator == OperatorType::VAL-»
 		«IF (this.eContainer.metaType == expressions::OperatorExpression)-»
-			VALPRE(sig_«((SignalReference)this.subExpressions.get(0)).signal.name-»)
+			VALPRE(sig_«((ValuedObjectReference)this.subExpressions.get(0)).valuedObject.name-»)
 		«ELSE-»
-			VAL(sig_«((SignalReference)this.subExpressions.get(0)).signal.name-»)
+			VAL(sig_«((ValuedObjectReference)this.subExpressions.get(0)).valuedObject.name-»)
 		«ENDIF-»
 	«ELSE-»
 		«EXPAND checkExpression FOR this.subExpressions.get(0)-»
@@ -155,8 +155,8 @@
 «REM»
 	simple signal reference 
 «ENDREM»
-«DEFINE signalReference FOR SignalReference-»
-	PRESENT(sig_«this.signal.name»)
+«DEFINE valuedObjectReference FOR ValuedObjectReference-»
+	PRESENT(sig_«this.valuedObject.name»)
 «ENDDEFINE»
 
 «REM»
@@ -165,8 +165,8 @@
 «DEFINE preOperator FOR Expression-»
 	«IF this.metaType == OperatorExpression-»
 		«EXPAND complexExpression FOR (OperatorExpression) this-»
-	«ELSEIF this.metaType == SignalReference-»
-		PRESENTPRE(sig_«((SignalReference)this).signal.name-»)
+	«ELSEIF this.metaType == ValuedObjectReference-»
+		PRESENTPRE(sig_«((ValuedObjectReference)this).valuedObject.name-»)
 	«ELSE»
 		«EXPAND getValue FOR this-»
 	«ENDIF»
@@ -178,8 +178,8 @@
 «DEFINE checkExpression FOR Expression-»
 	«IF this.metaType == OperatorExpression-»
 		(«EXPAND complexExpression FOR (OperatorExpression)this-»)
-	«ELSEIF this.metaType == SignalReference-»
-		«EXPAND signalReference FOR (SignalReference)this-»
+	«ELSEIF this.metaType == ValuedObjectReference-»
+		«EXPAND valuedObjectReference FOR (ValuedObjectReference)this-»
 	«ELSE»
 		«EXPAND getValue FOR this-»
 	«ENDIF»
