@@ -4,13 +4,13 @@
 «EXTENSION templates::helper»
 
 «DEFINE main FOR Region-»
-«FILE states.first().label + ".strl"-»
+«FILE states.first().label.toLowerCase() + ".strl"-»
 module «states.first().label» : 
-«FOREACH states.first().signals AS sig -»«IF sig.isInput»input «sig.name» «EXPAND SignalType FOR sig»;«ENDIF-»«IF sig.isOutput»output «sig.name» «EXPAND SignalType FOR sig»;«ENDIF-» 
+«FOREACH states.first().signals AS sig -»«IF sig.isInput»input «sig.name» «EXPAND ValueType FOR sig»;«ENDIF-»«IF sig.isOutput»output «sig.name» «EXPAND ValueType FOR sig»;«ENDIF-» 
 «ENDFOREACH-»
 «IF !states.first().locals().isEmpty»
 signal
- «FOREACH states.first().locals() AS sig  SEPARATOR ","-»«sig.name» «EXPAND SignalType FOR sig»«ENDFOREACH»
+ «FOREACH states.first().locals() AS sig  SEPARATOR ","-»«sig.name» «EXPAND ValueType FOR sig»«ENDFOREACH»
 in
 «ENDIF»
   «FOREACH states.first().regions AS region SEPARATOR " || "»«EXPAND Constelation FOR region»«ENDFOREACH-»
@@ -49,7 +49,7 @@ end module
 «ENDDEFINE»
 
 
-«DEFINE SignalType FOR Signal»
+«DEFINE ValueType FOR Signal»
 «IF type != ValueType::PURE» «IF initialValue.length>0»:= «initialValue.asInteger()»«ENDIF-» : «IF this.combineOperator!=CombineOperator::NONE» combine«ENDIF» integer 
 «IF combineOperator!=CombineOperator::NONE» with «EXPAND CombineOperator FOR combineOperator»«ENDIF»
 «ENDIF-»
@@ -79,7 +79,7 @@ end module
  «IF !this.locals().isEmpty»
  signal 
  «FOREACH this.locals() AS s SEPARATOR ", "»
-    «s.name» «EXPAND SignalType FOR s»
+    «s.name» «EXPAND ValueType FOR s»
  «ENDFOREACH-»
  in
  «ENDIF»

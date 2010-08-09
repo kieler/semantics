@@ -17,6 +17,7 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.mwe.core.WorkflowContext;
 import org.eclipse.emf.mwe.core.WorkflowContextDefaultImpl;
 import org.eclipse.emf.mwe.core.issues.Issues;
@@ -35,6 +36,8 @@ import org.eclipse.xpand2.Generator;
 import org.eclipse.xpand2.output.Outlet;
 import org.eclipse.xtend.typesystem.emf.EmfMetaModel;
 
+import de.cau.cs.kieler.core.annotations.AnnotationsPackage;
+import de.cau.cs.kieler.core.expressions.ExpressionsPackage;
 import de.cau.cs.kieler.synccharts.SyncchartsPackage;
 
 /**
@@ -67,6 +70,10 @@ public class WorkflowGenerator {
         final IWorkbenchPage activePage = PlatformUI.getWorkbench().getActiveWorkbenchWindow()
                 .getActivePage();
 
+        final EPackage p1 = SyncchartsPackage.eINSTANCE;
+        final EPackage p2 = ExpressionsPackage.eINSTANCE;
+        final EPackage p3 = AnnotationsPackage.eINSTANCE;
+        
         editor = activePage.getActiveEditor();
         outPath = part2Location(editor);
         uriString = null;
@@ -83,7 +90,9 @@ public class WorkflowGenerator {
         emfReader.setModelSlot("model");
 
         // Meta model
-        final EmfMetaModel metaModel = new EmfMetaModel(SyncchartsPackage.eINSTANCE);
+        final EmfMetaModel metaModel1 = new EmfMetaModel(p1);
+        final EmfMetaModel metaModel2 = new EmfMetaModel(p2);
+        final EmfMetaModel metaModel3 = new EmfMetaModel(p3);
 
         // outPath =part2location( uri.path(); //"/home/ctr/";
 
@@ -95,7 +104,9 @@ public class WorkflowGenerator {
         // Generator
 
         final Generator esterelGenerator = new Generator();
-        esterelGenerator.addMetaModel(metaModel);
+        esterelGenerator.addMetaModel(metaModel1);
+        esterelGenerator.addMetaModel(metaModel2);
+        esterelGenerator.addMetaModel(metaModel3);
         esterelGenerator.addOutlet(outlet);
 
         esterelGenerator.setExpand("templates::esterel::main FOR model");
