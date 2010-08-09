@@ -86,8 +86,10 @@ public class «creationWizardClassName»
 		addPage(diagramModelFilePage);
 	«IF standaloneDomainModel(self)-»
 
+	    «REM»CHSCH: Besides the default domain file extension allow kits to be chosen as domain file«ENDREM»
 		domainModelFilePage = new «getCreationWizardPageQualifiedClassName()»(
-				"DomainModelFile", getSelection(), "«editorGen.domainFileExtension»") { //$NON-NLS-1$ //$NON-NLS-2$
+				"DomainModelFile", getSelection(), "«editorGen.domainFileExtension»,kits") { //$NON-NLS-1$ //$NON-NLS-2$
+        «REM»Custom code end«ENDREM»  
 
 			public void setVisible(boolean visible) {
 				if (visible) {
@@ -113,7 +115,10 @@ public class «creationWizardClassName»
 	public boolean performFinish() {
 	«REM»This is new in order to set the domain file to the same as the diagram file if the 
 	     domain file was not set at all «ENDREM»
-	   if (domainModelFilePage.getFileName().matches("default\\d*.\\w*")) {
+	«REM»CHSCH: added more severe criterion«ENDREM»
+	   if (domainModelFilePage.getFileName().matches("default\\d*.\\w*")
+	   		// don't suppress the creation of default.kits !!!
+        		&& domainModelFilePage.getFileName().endsWith("kixs")) {
             String name = diagramModelFilePage.getFileName();
             String domainFileName = name.replace(
                     ".«editorGen.diagramFileExtension»", "");

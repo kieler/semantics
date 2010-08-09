@@ -86,6 +86,24 @@ public class «creationWizardPageClassName» extends
 		if (!super.validatePage()) {
 			return false;
 		}
+		«REM»custom code: allow several extensions to be accepted (CHSCH)«ENDREM»
+        String extension = getExtension();
+        if (extension != null) {
+        	java.util.StringTokenizer t = new java.util.StringTokenizer(extension, ",");
+        	String ext = null;
+        	while(t.hasMoreTokens()) {
+        		ext = t.nextToken();
+                if (getFilePath().toString().endsWith("." + ext)) {
+                    return true;
+                }
+        	}
+            setErrorMessage(org.eclipse.osgi.util.NLS.bind(
+                    «EXPAND xpt::Externalizer::accessorCall(i18nKeyForCreationWizardPageExtensionError(self)) FOR editorGen», extension));
+        }
+        return false;
+		«REM»custom code end«ENDREM»
+
+		«REM» original code: 
 		String extension = getExtension();
 		if (extension != null && !getFilePath().toString().endsWith("." + extension)) {
 			setErrorMessage(org.eclipse.osgi.util.NLS.bind(
@@ -93,6 +111,7 @@ public class «creationWizardPageClassName» extends
 			return false;
 		}
 		return true;
+		«ENDREM»
 	}
 	«EXPAND additions-»
 }
