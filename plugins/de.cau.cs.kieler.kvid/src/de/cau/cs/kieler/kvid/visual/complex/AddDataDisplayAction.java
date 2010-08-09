@@ -11,11 +11,22 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
+package de.cau.cs.kieler.kvid.visual.complex;
+
+import org.eclipse.gmf.runtime.diagram.ui.actions.AttachShapeAction;
+import org.eclipse.ui.IWorkbenchPage;
 
 /**
- * Package holding classes which visually represent data or draw and animate them.
- * 
  * @author jjc
+ *
  */
-package de.cau.cs.kieler.kvid.visual;
+public class AddDataDisplayAction extends AttachShapeAction {
 
+    /**
+     * @param workbenchPage
+     */
+    public AddDataDisplayAction(IWorkbenchPage workbenchPage) {
+        super(workbenchPage);
+    }
+
+}

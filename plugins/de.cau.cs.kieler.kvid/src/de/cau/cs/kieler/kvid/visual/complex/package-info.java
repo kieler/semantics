@@ -13,9 +13,9 @@
  */
 
 /**
- * Package holding classes which visually represent data or draw and animate them.
+ * Package holding classes which visually represent data in a more complex way.
  * 
  * @author jjc
  */
-package de.cau.cs.kieler.kvid.visual;
+package de.cau.cs.kieler.kvid.visual.complex;
 

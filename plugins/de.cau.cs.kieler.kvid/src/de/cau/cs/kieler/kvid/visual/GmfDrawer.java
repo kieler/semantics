@@ -52,11 +52,6 @@ public class GmfDrawer implements IDrawer {
         // clearDrawing();
 
         // update data phase
-        // String path =
-        // "/home/jjc/workspace/kieler/de.cau.cs.kieler.kvid/images/drawing.svg";
-        // RenderedImage image = RenderedImageFactory.getInstance(path);
-        // figuresByURI.put(".model.test", new GmfGraphicsFigure(new
-        // DataObject(".model.test", "blub"), image));
         for (String key : dataSet.keySet()) {
 
             if (figuresByURI.containsKey(key)) {
