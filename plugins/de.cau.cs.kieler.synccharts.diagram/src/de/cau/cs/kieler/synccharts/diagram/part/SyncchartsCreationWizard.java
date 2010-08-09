@@ -112,7 +112,7 @@ public class SyncchartsCreationWizard extends Wizard implements INewWizard {
 
         domainModelFilePage =
                 new SyncchartsCreationWizardPage(
-                        "DomainModelFile", getSelection(), "kixs") { //$NON-NLS-1$ //$NON-NLS-2$
+                        "DomainModelFile", getSelection(), "kixs,kits") { //$NON-NLS-1$ //$NON-NLS-2$
 
                     public void setVisible(boolean visible) {
                         if (visible) {
@@ -144,12 +144,12 @@ public class SyncchartsCreationWizard extends Wizard implements INewWizard {
      */
     public boolean performFinish() {
 
-        if (domainModelFilePage.getFileName().matches("default\\d*.\\w*")) {
-            String name = diagramModelFilePage.getFileName();
-            String domainFileName = name.replace(".kids", "");
-            domainFileName += ".kixs";
-            domainModelFilePage.setFileName(domainFileName);
-        }
+//        if (domainModelFilePage.getFileName().matches("default\\d*.\\w*")) {
+//            String name = diagramModelFilePage.getFileName();
+//            String domainFileName = name.replace(".kids", "");
+//            domainFileName += ".kixs";
+//            domainModelFilePage.setFileName(domainFileName);
+//        }
 
         IRunnableWithProgress op = new WorkspaceModifyOperation(null) {
 

@@ -1,5 +1,7 @@
 package de.cau.cs.kieler.synccharts.diagram.part;
 
+import java.util.StringTokenizer;
+
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.emf.common.util.URI;
@@ -80,13 +82,19 @@ public class SyncchartsCreationWizardPage extends WizardNewFileCreationPage {
             return false;
         }
         String extension = getExtension();
-        if (extension != null
-                && !getFilePath().toString().endsWith("." + extension)) {
+        if (extension != null) {
+        	StringTokenizer t = new StringTokenizer(extension, ",");
+        	String ext = null;
+        	while(t.hasMoreTokens()) {
+        		ext = t.nextToken();
+                if (getFilePath().toString().endsWith("." + ext)) {
+                    return true;
+                }
+        	}
             setErrorMessage(NLS.bind(
                     Messages.SyncchartsCreationWizardPageExtensionError,
                     extension));
-            return false;
         }
-        return true;
+        return false;
     }
 }
