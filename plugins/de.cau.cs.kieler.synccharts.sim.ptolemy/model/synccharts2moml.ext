@@ -383,7 +383,7 @@ Void inputSignalTransformationNewSignals(List[Signal] inputSignalList,
  let newRegion = new Region:
  let newState = new State:
  let newTransition = new Transition:
- let newSignalReference = new SignalReference:
+ let newValuedObjectReference = new ValuedObjectReference:
  let newEmission = new Emission: 
  //make original signal a local signal
  inputSignal.setIsInput(false) ->
@@ -396,9 +396,9 @@ Void inputSignalTransformationNewSignals(List[Signal] inputSignalList,
  newSignal.setIsOutput(false) ->
  newSignal.setName(newSignalName) ->
  //construct new region
- newSignalReference.setSignal(newSignal) ->
+ newValuedObjectReference.setValuedObject(newSignal) ->
  newEmission.setSignal(inputSignal) ->
- newTransition.setTrigger(newSignalReference) ->
+ newTransition.setTrigger(newValuedObjectReference) ->
  newTransition.effects.add(newEmission) ->
  newTransition.setTargetState(newState) ->
  newState.outgoingTransitions.add(newTransition) ->
@@ -472,7 +472,7 @@ Void n2wBuildTriggerState(List[synccharts::Region] regionList,
   let region = regionList.first():
   let regionSignalName = "finished_" + hash(region.states.flatten().toString()):
   let regionSignal = new expressions::Signal:
-  let signalReference = new expressions::SignalReference:
+  let valuedObjectReference = new expressions::ValuedObjectReference:
   let trigger = weakAbortTransition.trigger:
    //construct a new (local) signal
    regionSignal.setName(regionSignalName) ->
@@ -480,8 +480,8 @@ Void n2wBuildTriggerState(List[synccharts::Region] regionList,
    //add signal to main state
    mainState.signals.add(regionSignal) ->
    //construct a new signal reference (for trigger) and add it
-   signalReference.setSignal(regionSignal) ->
-   ((OperatorExpression)trigger).subExpressions.add(signalReference) ->
+   valuedObjectReference.setValuedObject(regionSignal) ->
+   ((OperatorExpression)trigger).subExpressions.add(valuedObjectReference) ->
  
   (regionList.withoutFirst().size > 0) ?
   	 n2wBuildTriggerState(regionList.withoutFirst(), mainState, weakAbortTransition) : null ->
