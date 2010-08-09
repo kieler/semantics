@@ -110,8 +110,7 @@ public class DataDistributor implements IProviderListener {
                     dataByURI.put(o.toString(), new DataObject(key, data.getString(key), paths));
                     RuntimeConfiguration
                     .getInstance()
-                    .getKnownProperties()
-                    .add(new Property("Display status " + key,
+                    .addProperty(new Property("Display status " + key,
                             new String[] { "Animating",
                                     "Static on Source Node",
                                     "Static on middlemost Bend Point", 
