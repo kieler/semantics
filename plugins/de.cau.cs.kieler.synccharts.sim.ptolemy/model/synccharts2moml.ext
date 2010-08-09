@@ -225,8 +225,8 @@ Void outputSignalTransformationNewEmissionsRegions(List[Region] regionList,
     											outputSignalList, 
     											topState) 
     	: null ->
-   (region.innerStates.size > 0) ?
-   		outputSignalTransformationNewEmissionsStates(region.innerStates, 
+   (region.states.size > 0) ?
+   		outputSignalTransformationNewEmissionsStates(region.states, 
    											   outputSignalList, 
    											   topState) 
    		: null
@@ -403,7 +403,7 @@ Void inputSignalTransformationNewSignals(List[Signal] inputSignalList,
  newTransition.setTargetState(newState) ->
  newState.outgoingTransitions.add(newTransition) ->
  newState.setIsInitial(true) ->
- newRegion.innerStates.add(newState) ->
+ newRegion.states.add(newState) ->
  //add new region to original state
  ((State)inputSignal.eContainer).regions.add(newRegion) ->
  (inputSignalList.withoutFirst().size > 0) ? 
@@ -440,8 +440,8 @@ Void n2wState(List[synccharts::Region] regionList) :
   let region = regionList.first():
   (regionList.withoutFirst().size > 0) ?
      n2wState(regionList.withoutFirst()) : null ->
-  (region.innerStates.size > 0) ?
-  	 n2wRegion(region.innerStates) : null
+  (region.states.size > 0) ?
+  	 n2wRegion(region.states) : null
 ;
 
 Void n2wTransition(List[synccharts::Transition] transitionList, synccharts::State state) :
@@ -470,7 +470,7 @@ Void n2wBuildTriggerState(List[synccharts::Region] regionList,
 					             synccharts::State mainState, 
 					        synccharts::Transition weakAbortTransition) :
   let region = regionList.first():
-  let regionSignalName = "finished_" + hash(region.innerStates.flatten().toString()):
+  let regionSignalName = "finished_" + hash(region.states.flatten().toString()):
   let regionSignal = new expressions::Signal:
   let signalReference = new expressions::SignalReference:
   let trigger = weakAbortTransition.trigger:
@@ -485,8 +485,8 @@ Void n2wBuildTriggerState(List[synccharts::Region] regionList,
  
   (regionList.withoutFirst().size > 0) ?
   	 n2wBuildTriggerState(regionList.withoutFirst(), mainState, weakAbortTransition) : null ->
-  (region.innerStates.size > 0) ?
-  	n2wBuildTriggerRegion(region.innerStates, mainState, weakAbortTransition, regionSignal) : null
+  (region.states.size > 0) ?
+  	n2wBuildTriggerRegion(region.states, mainState, weakAbortTransition, regionSignal) : null
 ;
 
 Void n2wBuildTriggerRegion(List[synccharts::State] stateList, 
@@ -540,7 +540,7 @@ List[synccharts::Transition] incomingTransitions(synccharts::State targetState) 
   let list = createTransitionList():
   list.removeAll(list) ->
   (parentRegion != null) ?
-      incomgingTransitionsHelperStates(parentRegion.innerStates, targetState, list) : null ->
+      incomgingTransitionsHelperStates(parentRegion.states, targetState, list) : null ->
   list
 ;
 create List[synccharts::Transition] createTransitionList () :
@@ -584,8 +584,8 @@ Void localSignalShiftPreprocessingState(List[synccharts::Region] regionList, syn
   let region = regionList.first():
   (regionList.withoutFirst().size > 0) ?
      localSignalShiftPreprocessingState(regionList.withoutFirst(), mainState) : null ->
-  (region.innerStates.size > 0) ?
-  	 localSignalShiftPreprocessingRegion(region.innerStates, mainState) : null
+  (region.states.size > 0) ?
+  	 localSignalShiftPreprocessingRegion(region.states, mainState) : null
 ;
 
 Void localSignalShiftPreprocessingSignal(List[Signal] signalList, synccharts::State state, synccharts::State mainState) :
@@ -616,8 +616,8 @@ Void localSignalRenamingPreprocessingState(List[synccharts::Region] regionList) 
   let region = regionList.first():
   (regionList.withoutFirst().size > 0) ?
      localSignalRenamingPreprocessingState(regionList.withoutFirst()) : null ->
-  (region.innerStates.size > 0) ?
-  	 localSignalRenamingPreprocessingRegion(region.innerStates) : null
+  (region.states.size > 0) ?
+  	 localSignalRenamingPreprocessingRegion(region.states) : null
 ;
 
 Void localSignalRenamingPreprocessingSignal(List[Signal] signalList, synccharts::State state) :
@@ -634,16 +634,16 @@ Void localSignalRenamingPreprocessingSignal(List[Signal] signalList, synccharts:
 
 //Create basic / outer most enclosing entity.	
 create EntityType this createBaseEntity(synccharts::Region mainRegion):
-	let outerStateURIHash = getStateId(mainRegion.innerStates.get(0)):
+	let outerStateURIHash = getStateId(mainRegion.states.get(0)):
    	this.setName(outerStateURIHash + "_simulation") ->
   	this.setClass1("ptolemy.actor.TypedCompositeActor") ->
   	//consider output signals that may be used in triggers 
   	//REMOVED SINCE ONLY EXPERIMENTAL YET
-    outputSignalTransformation(mainRegion.innerStates.get(0)) ->  	
+    outputSignalTransformation(mainRegion.states.get(0)) ->  	
   	
   	//consider input signals that may be used in outputs 
   	//REMOVED SINCE ONLY EXPERIMENTAL YET
-    inputSignalTransformation(mainRegion.innerStates.get(0)) ->
+    inputSignalTransformation(mainRegion.states.get(0)) ->
     //ATTENTION: this method can oly be used iff we remove ANY output port from modal model
     //actors whose connected/adjacent input ports appear in triggers of strong abortion transitions
     //This is because such a syncchart would not be constructive. Without this modification the
@@ -651,29 +651,29 @@ create EntityType this createBaseEntity(synccharts::Region mainRegion):
     //about relations from outputs to inputs!
 
   	//normal termination preprocessing
-    n2wRegion(mainRegion.innerStates) ->
+    n2wRegion(mainRegion.states) ->
 
   	//rename all local signals (in order to shift them later)
-    localSignalRenamingPreprocessingRegion(mainRegion.innerStates) ->
+    localSignalRenamingPreprocessingRegion(mainRegion.states) ->
     //shift them to the upper most state!
-    localSignalShiftPreprocessingRegion(mainRegion.innerStates, mainRegion.innerStates.get(0)) ->
+    localSignalShiftPreprocessingRegion(mainRegion.states, mainRegion.states.get(0)) ->
   	
 
-    dump("signalList after renaming2: "+mainRegion.innerStates.get(0).signals.flatten().toString()) -> 
+    dump("signalList after renaming2: "+mainRegion.states.get(0).signals.flatten().toString()) -> 
     
-    dump("REGIONS COUNT:" + mainRegion.innerStates.get(0).regions.size) ->
+    dump("REGIONS COUNT:" + mainRegion.states.get(0).regions.size) ->
   	
 // FIXME: changed to test if SRDirector is ok
-//   	this.createMainSyncChartDirector(mainRegion.innerStates.get(0).signals
+//   	this.createMainSyncChartDirector(mainRegion.states.get(0).signals
 //   												.select(e|e.isLocal()).name) ->
-   	this.createSRDirector(mainRegion.innerStates.get(0).signals
+   	this.createSRDirector(mainRegion.states.get(0).signals
   												.select(e|e.isLocal()).name) ->
    	//mainRegion has exactly ONE top most state
    	//iterate over all regions within this top most state
    	//the  of this containing Entity is derived from this
    	//   top most state, w/ " simulation" added
-    IterateRegions(mainRegion.innerStates.get(0).regions, this, mainRegion
-    											.innerStates.get(0).signals) ->
+    IterateRegions(mainRegion.states.get(0).regions, this, mainRegion
+    											.states.get(0).signals) ->
     //add "this" EntityType so that IterateRegions is able to add 
     //new entities or properties
     
@@ -1334,11 +1334,11 @@ create EntityType this createModalModelEntity(synccharts::Region region,
 //  	//then add termination signal (outer)
 //  	addTerminationSignalToModalModel(this, region) ->
 //  	//then add termination signals (inner)
-//  	addTerminationSignalsToModalModel(this, region.innerStates) ->
+//  	addTerminationSignalsToModalModel(this, region.states) ->
   	//then create simple states and macro state declarations
    	this.entity.add(createModalControllerEntity(region, signalList)) ->
    	//then add macro state refinements (for all macro states)
-   	IterateStatesRefinement(region.innerStates, this, signalList)
+   	IterateStatesRefinement(region.states, this, signalList)
 ;
 //Create ModalController == Region-Declaration (simple states and macro
 // states declarations).
@@ -1356,10 +1356,10 @@ create EntityType this createModalControllerEntity(synccharts::Region region,
 //  	//add termination signal
 //	this.addTerminationSignalToModalController(null, region.parentState) ->
 //  	//add termination signals 
-//	this.addTerminationSignalsToModalController(null, region.innerStates) ->
+//	this.addTerminationSignalsToModalController(null, region.states) ->
   	//then iterated all states (if any in this region)
-	(region.innerStates.size > 0) ? 
-		IterateStates(region.innerStates, this) : null
+	(region.states.size > 0) ? 
+		IterateStates(region.states, this) : null
 ;
 
 
