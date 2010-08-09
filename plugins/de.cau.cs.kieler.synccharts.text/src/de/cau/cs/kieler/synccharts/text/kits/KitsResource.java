@@ -32,6 +32,7 @@ import de.cau.cs.kieler.core.expressions.ValueType;
 import de.cau.cs.kieler.synccharts.Region;
 import de.cau.cs.kieler.synccharts.Scope;
 import de.cau.cs.kieler.synccharts.State;
+import de.cau.cs.kieler.synccharts.SyncchartsFactory;
 import de.cau.cs.kieler.synccharts.SyncchartsPackage;
 
 /**
@@ -117,10 +118,16 @@ public class KitsResource extends LazyLinkingResource {
 	 * {@link #setupScopeID(Scope, HashSet)} and {@link #setupPriorities(State)}. 
 	 */
 	private void consolidateModel() {
-
-		if (!this.getContents().isEmpty()) {
-			setupTickSignal(((Region) this.getContents().get(0)));
+		
+		if (this.getContents().isEmpty()) {
+			Region root = SyncchartsFactory.eINSTANCE.createRegion();
+			root.setLabel("root");
+			this.getContents().add(root);
 		}
+
+//		if (!this.getContents().isEmpty()) {
+			setupTickSignal(((Region) this.getContents().get(0)));
+//		}
 		
 		HashMap<Scope, HashSet<String>> m = new HashMap<Scope, HashSet<String>>();
 		EObject o = null;

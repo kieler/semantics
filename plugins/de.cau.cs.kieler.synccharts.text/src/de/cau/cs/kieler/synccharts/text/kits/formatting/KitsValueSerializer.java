@@ -20,17 +20,19 @@ import org.eclipse.xtext.RuleCall;
 import org.eclipse.xtext.XtextPackage;
 import org.eclipse.xtext.parsetree.AbstractNode;
 import org.eclipse.xtext.parsetree.reconstr.ITokenSerializer;
+import org.eclipse.xtext.parsetree.reconstr.ITransientValueService;
 import org.eclipse.xtext.parsetree.reconstr.impl.ValueSerializer;
 
 import com.google.inject.Inject;
 
-import de.cau.cs.kieler.synccharts.Region;
 import de.cau.cs.kieler.synccharts.SyncchartsPackage;
+import de.cau.cs.kieler.synccharts.text.kits.KitsTransientValueService;
 import de.cau.cs.kieler.synccharts.text.kits.services.KitsGrammarAccess;
 
 /**
  * customized {@link ITokenSerializer.IValueSerializer}.
  * Realizes the output of the optional keyword state and empty state labels.
+ * Works hand-in-hand with {@link KitsTransientValueService}.
  * 
  * @author chsch
  */
@@ -39,24 +41,18 @@ public class KitsValueSerializer extends ValueSerializer {
 	@Inject
 	IGrammarAccess grammarAccess;
 
+	@Inject
+	ITransientValueService transientValueService;
 	
-	/**
-	 * Declares any value of a state's label to be accepted.
-	 * This is needed for serialization of empty labels.
-	 * One Exception: Don't mention the root region!
+	/** Decides whether a feature value of an EObject is valid to be serialized.
+	 * In case the assignment of a scope label is processed delegate to
+	 * {@link KitsTransientValueService}, delegate to {@link ValueSerializer} otherwise.
 	 */
 	public boolean isValid(EObject context, RuleCall ruleCall, Object value, IErrorAcceptor errorAcceptor) {
 		
-		// Don't mention the root region and unnamed regions!
-		if (SyncchartsPackage.eINSTANCE.getRegion().isInstance(context)
-				&& (context.eContainer() == null 
-						|| ((Region) context).getLabel() == null
-						|| ((Region) context).getLabel().equals(""))) {
-			return false;
-		}
-		
 		// if we have a state under consideration and are processing the call of a
-		//  parser rule called from an assignment to a ecore feature of the state
+		//  parser rule called from an assignment to a feature of the state
+		//  here: ... label = EString ... ,i.e. the call of the EString rule
 		if (SyncchartsPackage.eINSTANCE.getScope().isInstance(context)
 				&& XtextPackage.eINSTANCE.getAssignment().isInstance(ruleCall.eContainer())) {
 			
@@ -65,8 +61,9 @@ public class KitsValueSerializer extends ValueSerializer {
 			// if the feature the assignment is made to is the label feature
 			if (a.getFeature().equals(SyncchartsPackage.eINSTANCE.getScope_Label().getName())) {
 				
-				// any value is OK
-				return true;
+				// ask the transientValueService;
+				// note that the return inverse value semantics!
+				return !transientValueService.isTransient(context, SyncchartsPackage.eINSTANCE.getScope_Label(), -1);
 			}
 		}
 		return super.isValid(context, ruleCall, value, errorAcceptor);
