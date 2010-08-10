@@ -80,23 +80,28 @@ public class WorkflowGenerator {
      * files if you just generate sc code without simulation. It also sets the
      * variables for the EMF reader.
      */
-    public WorkflowGenerator() {
+//    public WorkflowGenerator() {
         // location for the sc file in the KIELER workspace
-        IWorkbenchPage activePage = PlatformUI.getWorkbench()
-                .getActiveWorkbenchWindow().getActivePage();
-        editor = activePage.getActiveEditor();
-        outPath = part2Location(editor);
-        uriString = null;
-        if (editor instanceof DiagramEditor) {
-            DiagramEditor diagramEditor = (DiagramEditor) editor;
-            checkForDirtyDiagram(diagramEditor);
-            View notationElement = ((View) diagramEditor.getDiagramEditPart()
-                    .getModel());
-            myModel = notationElement.getElement();
-            uri = myModel.eResource().getURI();
-            uriString = uri.toString();
-        }
-    }
+        
+        // changes by cmot:
+        // Its not possible to do this here because we are NOT in the UI thread.
+        // Therefore we have to wait for the UI thread to continue.
+        
+//        IWorkbenchPage activePage = PlatformUI.getWorkbench()
+//                .getActiveWorkbenchWindow().getActivePage();
+//        editor = activePage.getActiveEditor();
+//        outPath = part2Location(editor);
+//        uriString = null;
+//        if (editor instanceof DiagramEditor) {
+//            DiagramEditor diagramEditor = (DiagramEditor) editor;
+//            checkForDirtyDiagram(diagramEditor);
+//            View notationElement = ((View) diagramEditor.getDiagramEditPart()
+//                    .getModel());
+//            myModel = notationElement.getElement();
+//            uri = myModel.eResource().getURI();
+//            uriString = uri.toString();
+//        }
+//    }
 
     /**
      * The constructor to use a given diagram (as *.kixs file) for generating
