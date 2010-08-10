@@ -2,7 +2,7 @@ package de.cau.cs.kieler.synccharts.sim.ptolemy;
 
 import java.io.File;
 
-import Moml.impl.*;
+import org.ptolemy.moml.Moml.impl.*;
 import de.cau.cs.kieler.synccharts.impl.*;
 
 public class Synccharts2Moml {

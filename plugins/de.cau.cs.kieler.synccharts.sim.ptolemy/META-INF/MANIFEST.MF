@@ -28,7 +28,8 @@ Require-Bundle: org.eclipse.core.runtime,
  org.apache.log4j;bundle-version="1.2.15",
  de.cau.cs.kieler.core.annotations;bundle-version="0.1.0",
  de.cau.cs.kieler.core.expressions;bundle-version="0.1.0",
- de.cau.cs.kieler.core.model;bundle-version="0.2.0"
+ de.cau.cs.kieler.core.model;bundle-version="0.2.0",
+ org.ptolemy.moml;bundle-version="1.0.0"
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-ActivationPolicy: lazy
 Bundle-ClassPath: .,
@@ -40,6 +41,3 @@ Import-Package: de.cau.cs.kieler.synccharts,
  org.eclipse.emf.mwe.core,
  org.eclipse.emf.mwe.utils,
  org.eclipse.ui
-Export-Package: Moml,
- Moml.impl,
- Moml.util

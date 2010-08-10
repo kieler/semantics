@@ -33,6 +33,8 @@ import de.cau.cs.kieler.synccharts.State;
 import de.cau.cs.kieler.synccharts.Transition;
 import de.cau.cs.kieler.synccharts.sim.ptolemy.SyncchartsSimPtolemyPlugin;
 
+import org.ptolemy.moml.Moml.*;
+
 /**
  * The class XtendJava implements some Java escape code used in the model2model
  * Xtend transformation.
@@ -41,7 +43,7 @@ import de.cau.cs.kieler.synccharts.sim.ptolemy.SyncchartsSimPtolemyPlugin;
  */
 public class XtendJava {
 
-    static LinkedList<Moml.EntityType> modalModels = null;
+    static LinkedList<EntityType> modalModels = null;
     static LinkedList<String> portNames = null;
 
     public final static void resetQueue2Delete() {
@@ -57,10 +59,10 @@ public class XtendJava {
         }
     }
 
-    public final static void enqueue2Delete(final Moml.EntityType modalModel,
+    public final static void enqueue2Delete(final EntityType modalModel,
             final String portName) {
         if (modalModels == null) {
-            modalModels = new LinkedList<Moml.EntityType>();
+            modalModels = new LinkedList<EntityType>();
             portNames = new LinkedList<String>();
         }
         modalModels.push(modalModel);
@@ -75,7 +77,7 @@ public class XtendJava {
         }
     }
 
-    public final static Moml.EntityType popModalModel2Delete() {
+    public final static EntityType popModalModel2Delete() {
         if (modalModels == null || modalModels.size() > 0) {
             return modalModels.pop();
         } else {
