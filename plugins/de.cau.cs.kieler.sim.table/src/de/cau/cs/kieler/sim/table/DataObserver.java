@@ -17,6 +17,7 @@ package de.cau.cs.kieler.sim.table;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IViewPart;
 import org.eclipse.ui.IWorkbenchWindow;
 
@@ -63,7 +64,7 @@ public class DataObserver extends JSONStringDataComponent implements IJSONString
     }
 
     // -------------------------------------------------------------------------
-    
+
     /**
      * {@inheritDoc}
      */
@@ -172,15 +173,19 @@ public class DataObserver extends JSONStringDataComponent implements IJSONString
      * This method brings the Table view to the front.
      */
     public void bringToFront() {
-        // bring TABLE view to the front (lazy loading)
-        try {
-            IWorkbenchWindow window = TablePlugin.getDefault().getWorkbench()
-                    .getActiveWorkbenchWindow();
-            IViewPart vP = window.getActivePage().showView(TABLEVIEWID);
-            vP.setFocus();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        Display.getDefault().syncExec(new Runnable() {
+            public void run() {
+                // bring TABLE view to the front (lazy loading)
+                try {
+                    IWorkbenchWindow window = TablePlugin.getDefault().getWorkbench()
+                            .getActiveWorkbenchWindow();
+                    IViewPart vP = window.getActivePage().showView(TABLEVIEWID);
+                    vP.setFocus();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 
     // -------------------------------------------------------------------------
@@ -192,22 +197,21 @@ public class DataObserver extends JSONStringDataComponent implements IJSONString
         // bring Table view to front
         bringToFront();
 
-        
-// DEPRECATED CODE FOLLOWING        
-//        // make an entry of all global interface variables/signals
-//        String[] variableKeys = this.getInitialVariables()
-//        .getInterfaceKeys();
-//        for (int c = 0; c < variableKeys.length; c++) {
-//            String key = variableKeys[c];
-//            String value = "";
-//            // add to list
-//            TableDataList.getInstance().add(
-//                    new TableData(TableDataList.getInstance(), false, key, value));
-//        }
-        
+        // DEPRECATED CODE FOLLOWING
+        // // make an entry of all global interface variables/signals
+        // String[] variableKeys = this.getInitialVariables()
+        // .getInterfaceKeys();
+        // for (int c = 0; c < variableKeys.length; c++) {
+        // String key = variableKeys[c];
+        // String value = "";
+        // // add to list
+        // TableDataList.getInstance().add(
+        // new TableData(TableDataList.getInstance(), false, key, value));
+        // }
+
         // consider global variable initializations
         step(this.getInitialVariables());
-        
+
         // update the table
         TableDataList.getInstance().updateViewAsync();
     }
