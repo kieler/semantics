@@ -20,13 +20,16 @@ import java.util.Map;
 
 import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.resources.IResource;
+import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.workspace.util.WorkspaceSynchronizer;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gmf.runtime.diagram.core.util.ViewUtil;
 import org.eclipse.gmf.runtime.notation.View;
+import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.statushandlers.StatusAdapter;
 import org.eclipse.ui.statushandlers.StatusManager;
 
@@ -131,34 +134,8 @@ public class ModelErrorHandler implements StatusListener {
      */
     public static void addMarker(final String msg, final EObject target)
             throws KielerException {
-        try {
-            String elementID = ""; //$NON-NLS-1$
-            EditPart editPart = ModelingUtil.getEditPart(target);
-            View view = (View) editPart.getModel();
-            elementID = ViewUtil.getIdStr(view);
-
-            IResource resource = WorkspaceSynchronizer
-                    .getFile(view.eResource());
-            IMarker marker = resource
-                    .createMarker("de.cau.cs.kieler.synccharts.diagram.diagnostic");
-            marker.setAttribute(IMarker.MESSAGE, msg);
-            marker.setAttribute(IMarker.PRIORITY, IMarker.PRIORITY_HIGH);
-            marker.setAttribute(IMarker.SEVERITY, IMarker.SEVERITY_ERROR);
-            marker
-                    .setAttribute(
-                            org.eclipse.gmf.runtime.common.ui.resources.IMarker.ELEMENT_ID,
-                            elementID);
-
-            List<IMarker> myMarkers = markers.get(target);
-            if (myMarkers == null) {
-                myMarkers = new ArrayList<IMarker>();
-                markers.put(target, myMarkers);
-            }
-            myMarkers.add(marker);
-        } catch (Exception e) {
-            throw new KielerException(
-                    Messages.ModelErrorHandler_MarkerCreationError, e);
-        }
+        Job job = new AddMarkerJob(msg, target);
+        job.schedule();
     }
 
     /**
@@ -181,6 +158,90 @@ public class ModelErrorHandler implements StatusListener {
             myMarkers.clear();
         } catch (Exception e) { /* nothing */
         }
+    }
+
+    private static class AddMarkerJob extends Job {
+
+        private String msg;
+
+        private EObject target;
+
+        private Status status;
+
+        private AddMarkerJob thisJob;
+
+        private int count = 0;
+
+        /**
+         * Creates a new AddMarkerJob.
+         * 
+         * @param msgParam
+         *            the message
+         * @param targetParam
+         *            the target
+         */
+        public AddMarkerJob(final String msgParam, final EObject targetParam) {
+            super("Add Marker");
+            this.msg = msgParam;
+            this.target = targetParam;
+        }
+
+        @Override
+        protected IStatus run(final IProgressMonitor monitor) {
+            thisJob = this;
+
+            PlatformUI.getWorkbench().getDisplay().syncExec(new Runnable() {
+
+                public void run() {
+                    try {
+                        String elementID = ""; //$NON-NLS-1$
+                        EditPart editPart = ModelingUtil.getEditPart(target);
+
+                        if (editPart != null) {
+                            View view = (View) editPart.getModel();
+                            elementID = ViewUtil.getIdStr(view);
+                            IResource resource = WorkspaceSynchronizer
+                                    .getFile(view.eResource());
+                            IMarker marker = resource
+                                    .createMarker("de.cau.cs.kieler.synccharts.diagram.diagnostic");
+                            marker.setAttribute(IMarker.MESSAGE, msg);
+                            marker.setAttribute(IMarker.PRIORITY,
+                                    IMarker.PRIORITY_HIGH);
+                            marker.setAttribute(IMarker.SEVERITY,
+                                    IMarker.SEVERITY_ERROR);
+                            marker.setAttribute(
+                                    org.eclipse.gmf.runtime.common.ui.resources.IMarker.ELEMENT_ID,
+                                    elementID);
+                            List<IMarker> myMarkers = markers.get(target);
+                            if (myMarkers == null) {
+                                myMarkers = new ArrayList<IMarker>();
+                                markers.put(target, myMarkers);
+                            }
+                            myMarkers.add(marker);
+                        } else {
+                            count++;
+                            if (count < 4) {
+                                thisJob.schedule(count * 5000);
+                            }
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        status = new Status(
+                                IStatus.ERROR,
+                                "de.cau.cs.kieler.core.model",
+                                msg,
+                                new KielerException(
+                                        Messages.ModelErrorHandler_MarkerCreationError,
+                                        e));
+                    }
+                }
+            });
+            if (status != null) {
+                return status;
+            }
+            return new Status(IStatus.OK, "de.cau.cs.kieler.core.model", "");
+        }
+
     }
 
 }

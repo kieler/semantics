@@ -111,7 +111,7 @@ public final class Utils {
             try {
                 xmiResource.load(bais, defaultLoadOptions);
             } catch (IOException ex) {
-                ex.printStackTrace();
+                // ex.printStackTrace();
             }
 
             EList<EObject> results = xmiResource.getContents();

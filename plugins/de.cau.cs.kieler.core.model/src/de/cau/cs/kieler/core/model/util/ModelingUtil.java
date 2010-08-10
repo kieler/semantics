@@ -405,7 +405,10 @@ public final class ModelingUtil {
             DiagramEditPart dep = editor.getDiagramEditPart();
             EditPart editPart = dep.findEditPart(dep, eObject);
             if (editPart == null) {
-                dep.getViewer().getEditPartRegistry().get(eObject);
+                Object o = dep.getViewer().getEditPartRegistry().get(eObject);
+                if (o instanceof EditPart) {
+                    editPart = (EditPart) o;
+                }
             }
             // have to search registry manually
             if (editPart == null) {
@@ -414,8 +417,8 @@ public final class ModelingUtil {
                         .getEditPartRegistry().values();
                 for (Object object : editParts) {
                     try {
-                        editPart = (EditPart) object;
-                        EObject model = ((View) ((EditPart) object).getModel())
+                        EditPart theEditPart = (EditPart) object;
+                        EObject model = ((View) theEditPart.getModel())
                                 .getElement();
                         if (model == eObject) {
                             // search the most valid parent
@@ -432,14 +435,14 @@ public final class ModelingUtil {
                             // same
                             // EObject. Here we will
                             // return only the outermost parent EditPart
-                            while (editPart.getParent() != null) {
-                                EditPart parentPart = editPart.getParent();
+                            while (theEditPart.getParent() != null) {
+                                EditPart parentPart = theEditPart.getParent();
                                 Object view = parentPart.getModel();
                                 if (view instanceof View) {
                                     EObject parentModel = ((View) view)
                                             .getElement();
                                     if (parentModel == eObject) {
-                                        editPart = parentPart;
+                                        theEditPart = parentPart;
                                     }
                                 } else {
                                     break;
@@ -447,7 +450,7 @@ public final class ModelingUtil {
                                   // so
                                   // we will stop searching there
                             }
-                            return editPart;
+                            return theEditPart;
                         }
 
                     } catch (Exception e) {
