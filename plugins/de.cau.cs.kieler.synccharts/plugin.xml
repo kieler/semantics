@@ -77,6 +77,7 @@
          <Checkfile
                ePackageId="de.cau.cs.kieler.synccharts"
                id="de.cau.cs.kieler.synccharts.SyncchartsChecks"
+               isEnabledByDefault="true"
                isWrapExistingValidator="false"
                name="Synccharts Checks"
                path="model/SyncchartsChecks.chk"
@@ -88,6 +89,7 @@
          <Checkfile
                ePackageId="de.cau.cs.kieler.synccharts"
                id="de.cau.cs.kieler.synccharts.KleptoChecks"
+               isEnabledByDefault="false"
                isWrapExistingValidator="true"
                name="Klepto Checks"
                path="model/SyncchartsKleptoChecks.chk"
@@ -99,6 +101,7 @@
          <Checkfile
                ePackageId="de.cau.cs.kieler.synccharts"
                id="de.cau.cs.kieler.synccharts.ScChecks"
+               isEnabledByDefault="false"
                isWrapExistingValidator="true"
                name="SC Checks"
                path="model/SyncchartsScChecks.chk"
