@@ -7,12 +7,14 @@ Bundle-ClassPath: .
 Bundle-Vendor: Christian-Albrechts-Universität zu Kiel
 Bundle-Localization: plugin
 Export-Package: de.cau.cs.kieler.core.annotations,
+ de.cau.cs.kieler.core.annotations.formatting,
  de.cau.cs.kieler.core.annotations.impl,
- de.cau.cs.kieler.core.annotations.util,
- de.cau.cs.kieler.core.annotations.services,
  de.cau.cs.kieler.core.annotations.parseTreeConstruction,
  de.cau.cs.kieler.core.annotations.parser.antlr,
  de.cau.cs.kieler.core.annotations.parser.antlr.internal,
+ de.cau.cs.kieler.core.annotations.scoping,
+ de.cau.cs.kieler.core.annotations.services,
+ de.cau.cs.kieler.core.annotations.util,
  de.cau.cs.kieler.core.annotations.validation
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.emf.ecore,

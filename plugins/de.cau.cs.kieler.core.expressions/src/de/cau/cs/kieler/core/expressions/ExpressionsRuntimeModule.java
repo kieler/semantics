@@ -8,4 +8,8 @@ package de.cau.cs.kieler.core.expressions;
  */
 public class ExpressionsRuntimeModule extends de.cau.cs.kieler.core.expressions.AbstractExpressionsRuntimeModule {
 
+    public Class<? extends org.eclipse.xtext.conversion.IValueConverterService> bindIValueConverterService() {
+        return de.cau.cs.kieler.core.expressions.formatting.ExpressionsValueConverter.class;
+    }
+
 }

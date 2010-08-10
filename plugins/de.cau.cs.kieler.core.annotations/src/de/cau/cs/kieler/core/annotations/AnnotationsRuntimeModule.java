@@ -8,4 +8,8 @@ package de.cau.cs.kieler.core.annotations;
  */
 public class AnnotationsRuntimeModule extends de.cau.cs.kieler.core.annotations.AbstractAnnotationsRuntimeModule {
 
+    public Class<? extends org.eclipse.xtext.conversion.IValueConverterService> bindIValueConverterService() {
+        return de.cau.cs.kieler.core.annotations.formatting.AnnotationsValueConverter.class;
+    }
+
 }
