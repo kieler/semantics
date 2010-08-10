@@ -12,6 +12,7 @@ import org.eclipse.xtext.service.GrammarProvider;
 import org.eclipse.xtext.service.AbstractElementFinder.*;
 
 import de.cau.cs.kieler.core.expressions.services.ExpressionsGrammarAccess;
+import de.cau.cs.kieler.core.annotations.services.AnnotationsGrammarAccess;
 
 @Singleton
 public class SGrammarAccess extends AbstractGrammarElementFinder {
@@ -1423,9 +1424,6 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 		return getValuedObjectReferenceAccess().getRule();
 	}
 
-	//// Taken from oba's kits grammar
-	////TextExpression returns TextExpression: 
-	////	code=STRING ("(" type=ID ")")?; 
 	//// Taken from haf's kits grammar
 	//TextExpression:
 	//	code=STRING ("(" type=ID ")")?;
@@ -1467,14 +1465,17 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 		return getBooleanValueAccess().getRule();
 	}
 
-	//EString returns ecore::EString:
-	//	STRING | ID;
-	public ExpressionsGrammarAccess.EStringElements getEStringAccess() {
-		return gaExpressions.getEStringAccess();
+	//// data type rule allowing any kind of value to be accepted,
+	//// e.g. as initialValues of valuedObjects
+	//// used in Kits.xtext 
+	//AnyType returns ecore::EString:
+	//	Boolean | INT | Float | EString;
+	public ExpressionsGrammarAccess.AnyTypeElements getAnyTypeAccess() {
+		return gaExpressions.getAnyTypeAccess();
 	}
 	
-	public ParserRule getEStringRule() {
-		return getEStringAccess().getRule();
+	public ParserRule getAnyTypeRule() {
+		return getAnyTypeAccess().getRule();
 	}
 
 	//enum CompareOperator returns OperatorType:
@@ -1588,9 +1589,9 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	/// *
-	//   the following declarations are re-used in Interface.xtext, Kits.xtext 
+	//   the following declarations are re-used in Actions.xtext, Interface.xtext, Kits.xtext 
 	// * /enum ValueType:
-	//	PURE | BOOL | UNSIGNED | INT | FLOAT | HOST;
+	//	PURE="pure" | BOOL="bool" | UNSIGNED="unsigned" | INT="int" | FLOAT="float" | HOST="host";
 	public ExpressionsGrammarAccess.ValueTypeElements getValueTypeAccess() {
 		return gaExpressions.getValueTypeAccess();
 	}
@@ -1600,7 +1601,7 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//enum CombineOperator:
-	//	NONE | ADD="+" | MULT="*" | MAX="max" | MIN="min" | OR="or" | AND="and" | HOST="host";
+	//	NONE="none" | ADD="+" | MULT="*" | MAX="max" | MIN="min" | OR="or" | AND="and" | HOST="host";
 	public ExpressionsGrammarAccess.CombineOperatorElements getCombineOperatorAccess() {
 		return gaExpressions.getCombineOperatorAccess();
 	}
@@ -1623,10 +1624,76 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 		return gaExpressions.getFloatRule();
 	} 
 
+	//// introduce boolean values
 	//terminal Boolean returns ecore::EBooleanObject:
 	//	"true" | "false";
 	public TerminalRule getBooleanRule() {
 		return gaExpressions.getBooleanRule();
+	} 
+
+	//// --------------------------
+	////
+	////   EXPRESSIONS
+	////
+	//// --------------------------
+	//// introduction of parsing rules for annotations
+	//// are to be moved into Annotations.xtext in the future!!
+	//StringAnnotation returns Annotation:
+	//	CommentAnnotation | KeyValueAnnotation;
+	public AnnotationsGrammarAccess.StringAnnotationElements getStringAnnotationAccess() {
+		return gaExpressions.getStringAnnotationAccess();
+	}
+	
+	public ParserRule getStringAnnotationRule() {
+		return getStringAnnotationAccess().getRule();
+	}
+
+	//// e.g.: / ** semantic comment * /
+	//CommentAnnotation returns StringAnnotation:
+	//	value=COMMENT_ANNOTATION;
+	public AnnotationsGrammarAccess.CommentAnnotationElements getCommentAnnotationAccess() {
+		return gaExpressions.getCommentAnnotationAccess();
+	}
+	
+	public ParserRule getCommentAnnotationRule() {
+		return getCommentAnnotationAccess().getRule();
+	}
+
+	//// e.g.: @layouter dot; @layoutOptions "margin 5, dir top-down";    
+	//KeyValueAnnotation returns StringAnnotation:
+	//	"@" name=ID value=EString;
+	public AnnotationsGrammarAccess.KeyValueAnnotationElements getKeyValueAnnotationAccess() {
+		return gaExpressions.getKeyValueAnnotationAccess();
+	}
+	
+	public ParserRule getKeyValueAnnotationRule() {
+		return getKeyValueAnnotationAccess().getRule();
+	}
+
+	//// allow strings without quotes as they don'c contain spaces
+	//EString returns ecore::EString:
+	//	STRING | ID;
+	public AnnotationsGrammarAccess.EStringElements getEStringAccess() {
+		return gaExpressions.getEStringAccess();
+	}
+	
+	public ParserRule getEStringRule() {
+		return getEStringAccess().getRule();
+	}
+
+	//// custom terminal rule introducing semantic comments
+	//terminal COMMENT_ANNOTATION:
+	//	"/ **"->"* /";
+	public TerminalRule getCOMMENT_ANNOTATIONRule() {
+		return gaExpressions.getCOMMENT_ANNOTATIONRule();
+	} 
+
+	//// modified version of Terminals.ML_COMMENT as
+	//// COMMENT_ANNOTATION is not recognized correctly with original one 
+	//terminal ML_COMMENT:
+	//	"/ *" !"*"->"* /";
+	public TerminalRule getML_COMMENTRule() {
+		return gaExpressions.getML_COMMENTRule();
 	} 
 
 	//terminal ID:
@@ -1640,12 +1707,6 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 	//	"f" | "r" | "\"" | "\'" | "\\") | !("\\" | "\'"))* "\'";
 	public TerminalRule getSTRINGRule() {
 		return gaExpressions.getSTRINGRule();
-	} 
-
-	//terminal ML_COMMENT:
-	//	"/ *"->"* /";
-	public TerminalRule getML_COMMENTRule() {
-		return gaExpressions.getML_COMMENTRule();
 	} 
 
 	//terminal SL_COMMENT:

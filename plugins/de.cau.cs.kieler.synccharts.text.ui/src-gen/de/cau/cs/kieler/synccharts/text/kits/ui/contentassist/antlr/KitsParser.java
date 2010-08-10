@@ -39,7 +39,6 @@ public class KitsParser extends AbstractContentAssistParser {
 				{
 					put(grammarAccess.getRegionAccess().getAlternatives(), "rule__Region__Alternatives");
 					put(grammarAccess.getRegionAccess().getAlternatives_0_4(), "rule__Region__Alternatives_0_4");
-					put(grammarAccess.getStringAnnotationAccess().getAlternatives(), "rule__StringAnnotation__Alternatives");
 					put(grammarAccess.getStateAccess().getAlternatives_1(), "rule__State__Alternatives_1");
 					put(grammarAccess.getStateAccess().getAlternatives_6(), "rule__State__Alternatives_6");
 					put(grammarAccess.getStateAccess().getAlternatives_6_1_1_0(), "rule__State__Alternatives_6_1_1_0");
@@ -47,7 +46,6 @@ public class KitsParser extends AbstractContentAssistParser {
 					put(grammarAccess.getSignalAccess().getAlternatives_6_0_1(), "rule__Signal__Alternatives_6_0_1");
 					put(grammarAccess.getSignalAccess().getAlternatives_6_1_2(), "rule__Signal__Alternatives_6_1_2");
 					put(grammarAccess.getSignalAccess().getAlternatives_6_1_4(), "rule__Signal__Alternatives_6_1_4");
-					put(grammarAccess.getIntegerOrStringAccess().getAlternatives(), "rule__IntegerOrString__Alternatives");
 					put(grammarAccess.getEffectAccess().getAlternatives(), "rule__Effect__Alternatives");
 					put(grammarAccess.getExpressionAccess().getAlternatives(), "rule__Expression__Alternatives");
 					put(grammarAccess.getCompareOperationAccess().getAlternatives(), "rule__CompareOperation__Alternatives");
@@ -56,6 +54,8 @@ public class KitsParser extends AbstractContentAssistParser {
 					put(grammarAccess.getAtomicExpressionAccess().getAlternatives(), "rule__AtomicExpression__Alternatives");
 					put(grammarAccess.getAtomicValuedExpressionAccess().getAlternatives(), "rule__AtomicValuedExpression__Alternatives");
 					put(grammarAccess.getValuedObjectTestExpressionAccess().getAlternatives(), "rule__ValuedObjectTestExpression__Alternatives");
+					put(grammarAccess.getAnyTypeAccess().getAlternatives(), "rule__AnyType__Alternatives");
+					put(grammarAccess.getStringAnnotationAccess().getAlternatives(), "rule__StringAnnotation__Alternatives");
 					put(grammarAccess.getEStringAccess().getAlternatives(), "rule__EString__Alternatives");
 					put(grammarAccess.getStateTypeAccess().getAlternatives(), "rule__StateType__Alternatives");
 					put(grammarAccess.getTransitionTypeAccess().getAlternatives(), "rule__TransitionType__Alternatives");
@@ -63,7 +63,6 @@ public class KitsParser extends AbstractContentAssistParser {
 					put(grammarAccess.getValueTypeAccess().getAlternatives(), "rule__ValueType__Alternatives");
 					put(grammarAccess.getCombineOperatorAccess().getAlternatives(), "rule__CombineOperator__Alternatives");
 					put(grammarAccess.getRegionAccess().getGroup_0(), "rule__Region__Group_0__0");
-					put(grammarAccess.getKeyValueAnnotationAccess().getGroup(), "rule__KeyValueAnnotation__Group__0");
 					put(grammarAccess.getStateAccess().getGroup(), "rule__State__Group__0");
 					put(grammarAccess.getStateAccess().getGroup_1_0(), "rule__State__Group_1_0__0");
 					put(grammarAccess.getStateAccess().getGroup_1_1(), "rule__State__Group_1_1__0");
@@ -122,6 +121,7 @@ public class KitsParser extends AbstractContentAssistParser {
 					put(grammarAccess.getValuedObjectTestExpressionAccess().getGroup_1(), "rule__ValuedObjectTestExpression__Group_1__0");
 					put(grammarAccess.getTextExpressionAccess().getGroup(), "rule__TextExpression__Group__0");
 					put(grammarAccess.getTextExpressionAccess().getGroup_1(), "rule__TextExpression__Group_1__0");
+					put(grammarAccess.getKeyValueAnnotationAccess().getGroup(), "rule__KeyValueAnnotation__Group__0");
 					put(grammarAccess.getRegionAccess().getAnnotationsAssignment_0_0(), "rule__Region__AnnotationsAssignment_0_0");
 					put(grammarAccess.getRegionAccess().getIdAssignment_0_2(), "rule__Region__IdAssignment_0_2");
 					put(grammarAccess.getRegionAccess().getLabelAssignment_0_3(), "rule__Region__LabelAssignment_0_3");
@@ -129,9 +129,6 @@ public class KitsParser extends AbstractContentAssistParser {
 					put(grammarAccess.getRegionAccess().getSignalsAssignment_0_4_1(), "rule__Region__SignalsAssignment_0_4_1");
 					put(grammarAccess.getRegionAccess().getStatesAssignment_0_5(), "rule__Region__StatesAssignment_0_5");
 					put(grammarAccess.getRegionAccess().getStatesAssignment_1(), "rule__Region__StatesAssignment_1");
-					put(grammarAccess.getCommentAnnotationAccess().getValueAssignment(), "rule__CommentAnnotation__ValueAssignment");
-					put(grammarAccess.getKeyValueAnnotationAccess().getNameAssignment_1(), "rule__KeyValueAnnotation__NameAssignment_1");
-					put(grammarAccess.getKeyValueAnnotationAccess().getValueAssignment_2(), "rule__KeyValueAnnotation__ValueAssignment_2");
 					put(grammarAccess.getStateAccess().getAnnotationsAssignment_0(), "rule__State__AnnotationsAssignment_0");
 					put(grammarAccess.getStateAccess().getIsInitialAssignment_1_0_0(), "rule__State__IsInitialAssignment_1_0_0");
 					put(grammarAccess.getStateAccess().getIsFinalAssignment_1_0_1(), "rule__State__IsFinalAssignment_1_0_1");
@@ -216,6 +213,9 @@ public class KitsParser extends AbstractContentAssistParser {
 					put(grammarAccess.getIntValueAccess().getValueAssignment(), "rule__IntValue__ValueAssignment");
 					put(grammarAccess.getFloatValueAccess().getValueAssignment(), "rule__FloatValue__ValueAssignment");
 					put(grammarAccess.getBooleanValueAccess().getValueAssignment(), "rule__BooleanValue__ValueAssignment");
+					put(grammarAccess.getCommentAnnotationAccess().getValueAssignment(), "rule__CommentAnnotation__ValueAssignment");
+					put(grammarAccess.getKeyValueAnnotationAccess().getNameAssignment_1(), "rule__KeyValueAnnotation__NameAssignment_1");
+					put(grammarAccess.getKeyValueAnnotationAccess().getValueAssignment_2(), "rule__KeyValueAnnotation__ValueAssignment_2");
 				}
 			};
 		}

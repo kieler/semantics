@@ -15,26 +15,6 @@ Region returns synccharts::Region:
   | (states+=State)+
   ;
 
-terminal TRANSITION_LABEL returns ecore::EString: 
-    "%" -> "%";
-
-terminal COMMENT_ANNOTATION returns ecore::EString: 
-    "/+" -> "+/";
-    
-//terminal ANNOTATION_KEY returns ecore::EString:
-//    '@' ID;
-
-StringAnnotation returns annotations::Annotation:
-	CommentAnnotation
-	| KeyValueAnnotation
-	;
-
-CommentAnnotation returns annotations::StringAnnotation:
-	value=COMMENT_ANNOTATION;
-    
-KeyValueAnnotation returns annotations::StringAnnotation:
-	'@' name=ID value=EString;
-
 State returns synccharts::State:
   (annotations += StringAnnotation)*
   (
@@ -82,7 +62,7 @@ Signal returns expressions::Signal:
     (annotations += StringAnnotation)*
     (isInput?='input')?
 	(isOutput?='output')?
-	'signal' name=ID (':=' initialValue=IntegerOrString)?
+	'signal' name=ID (':=' initialValue=AnyType)?
     ((':' (type = ValueType | hostType = EString))
       |
      (':' 'combine' (type = ValueType | hostType = EString) 'with'
@@ -93,12 +73,9 @@ Signal returns expressions::Signal:
 
 Variable returns expressions::Variable:
     (annotations += StringAnnotation)*
-    'var' name=ID (':=' initialValue=IntegerOrString)? ':' type=ValueType ";";
+    'var' name=ID (':=' initialValue=AnyType)? ':' type=ValueType ";";
 
 // ---------------------------------------------------------------------------------------------------
-
-IntegerOrString returns ecore::EString:
-    INT | EString;
 
 enum StateType returns synccharts::StateType:
 	NORMAL = 'normal' | CONDITIONAL = 'conditional' | REFERENCE = 'reference' | TEXTUAL = 'textual';
@@ -106,3 +83,7 @@ enum StateType returns synccharts::StateType:
 enum TransitionType returns synccharts::TransitionType:
 	WEAKABORT = '-->' | STRONGABORT = 'o->' | NORMALTERMINATION = '>->';
 
+
+// custom terminal rule allowing to save transition label string as they are
+terminal TRANSITION_LABEL returns ecore::EString: 
+    "%" -> "%";

@@ -64,7 +64,7 @@
             <type metamodel="/0/@metamodelDeclarations.1">
               <classifier xsi:type="ecore:EClass" href="http://kieler.cs.cau.de/synccharts/0.2.3#//Region"/>
             </type>
-            <terminal xsi:type="xtext:RuleCall" rule="/3/@rules.0"/>
+            <terminal xsi:type="xtext:RuleCall" rule="/4/@rules.0"/>
           </terminal>
         </elements>
         <elements xsi:type="xtext:Keyword" value=":"/>
@@ -226,11 +226,11 @@
       </type>
       <alternatives xsi:type="xtext:Alternatives">
         <elements xsi:type="xtext:Assignment" feature="name" operator="=">
-          <terminal xsi:type="xtext:RuleCall" rule="/3/@rules.0"/>
+          <terminal xsi:type="xtext:RuleCall" rule="/4/@rules.0"/>
         </elements>
         <elements xsi:type="xtext:Group">
           <elements xsi:type="xtext:Assignment" feature="name" operator="=">
-            <terminal xsi:type="xtext:RuleCall" rule="/3/@rules.0"/>
+            <terminal xsi:type="xtext:RuleCall" rule="/4/@rules.0"/>
           </elements>
           <elements xsi:type="xtext:Keyword" value=":"/>
           <elements xsi:type="xtext:Assignment" feature="type" operator="=">
@@ -239,7 +239,7 @@
         </elements>
         <elements xsi:type="xtext:Group">
           <elements xsi:type="xtext:Assignment" feature="name" operator="=">
-            <terminal xsi:type="xtext:RuleCall" rule="/3/@rules.0"/>
+            <terminal xsi:type="xtext:RuleCall" rule="/4/@rules.0"/>
           </elements>
           <elements xsi:type="xtext:Group">
             <elements xsi:type="xtext:Keyword" value=":="/>
@@ -250,7 +250,7 @@
         </elements>
         <elements xsi:type="xtext:Group">
           <elements xsi:type="xtext:Assignment" feature="name" operator="=">
-            <terminal xsi:type="xtext:RuleCall" rule="/3/@rules.0"/>
+            <terminal xsi:type="xtext:RuleCall" rule="/4/@rules.0"/>
           </elements>
           <elements xsi:type="xtext:Group">
             <elements xsi:type="xtext:Keyword" value=":="/>
@@ -265,7 +265,7 @@
         </elements>
         <elements xsi:type="xtext:Group">
           <elements xsi:type="xtext:Assignment" feature="name" operator="=">
-            <terminal xsi:type="xtext:RuleCall" rule="/3/@rules.0"/>
+            <terminal xsi:type="xtext:RuleCall" rule="/4/@rules.0"/>
           </elements>
           <elements xsi:type="xtext:Group">
             <elements xsi:type="xtext:Keyword" value=":="/>
@@ -286,7 +286,7 @@
         </elements>
         <elements xsi:type="xtext:Group">
           <elements xsi:type="xtext:Assignment" feature="name" operator="=">
-            <terminal xsi:type="xtext:RuleCall" rule="/3/@rules.0"/>
+            <terminal xsi:type="xtext:RuleCall" rule="/4/@rules.0"/>
           </elements>
           <elements xsi:type="xtext:Keyword" value=":"/>
           <elements xsi:type="xtext:Assignment" feature="hostType" operator="=">
@@ -295,7 +295,7 @@
         </elements>
         <elements xsi:type="xtext:Group">
           <elements xsi:type="xtext:Assignment" feature="name" operator="=">
-            <terminal xsi:type="xtext:RuleCall" rule="/3/@rules.0"/>
+            <terminal xsi:type="xtext:RuleCall" rule="/4/@rules.0"/>
           </elements>
           <elements xsi:type="xtext:Group">
             <elements xsi:type="xtext:Keyword" value=":="/>
@@ -310,7 +310,7 @@
         </elements>
         <elements xsi:type="xtext:Group">
           <elements xsi:type="xtext:Assignment" feature="name" operator="=">
-            <terminal xsi:type="xtext:RuleCall" rule="/3/@rules.0"/>
+            <terminal xsi:type="xtext:RuleCall" rule="/4/@rules.0"/>
           </elements>
           <elements xsi:type="xtext:Group">
             <elements xsi:type="xtext:Keyword" value=":="/>
@@ -331,7 +331,7 @@
         </elements>
         <elements xsi:type="xtext:Group">
           <elements xsi:type="xtext:Assignment" feature="name" operator="=">
-            <terminal xsi:type="xtext:RuleCall" rule="/3/@rules.0"/>
+            <terminal xsi:type="xtext:RuleCall" rule="/4/@rules.0"/>
           </elements>
           <elements xsi:type="xtext:Group">
             <elements xsi:type="xtext:Keyword" value="combine"/>
@@ -346,7 +346,7 @@
         </elements>
         <elements xsi:type="xtext:Group">
           <elements xsi:type="xtext:Assignment" feature="name" operator="=">
-            <terminal xsi:type="xtext:RuleCall" rule="/3/@rules.0"/>
+            <terminal xsi:type="xtext:RuleCall" rule="/4/@rules.0"/>
           </elements>
           <elements xsi:type="xtext:Group">
             <elements xsi:type="xtext:Keyword" value="combine"/>
@@ -367,11 +367,11 @@
       </type>
       <alternatives xsi:type="xtext:Alternatives">
         <elements xsi:type="xtext:Assignment" feature="name" operator="=">
-          <terminal xsi:type="xtext:RuleCall" rule="/3/@rules.0"/>
+          <terminal xsi:type="xtext:RuleCall" rule="/4/@rules.0"/>
         </elements>
         <elements xsi:type="xtext:Group">
           <elements xsi:type="xtext:Assignment" feature="name" operator="=">
-            <terminal xsi:type="xtext:RuleCall" rule="/3/@rules.0"/>
+            <terminal xsi:type="xtext:RuleCall" rule="/4/@rules.0"/>
           </elements>
           <elements xsi:type="xtext:Keyword" value=":"/>
           <elements xsi:type="xtext:Assignment" feature="type" operator="=">
@@ -380,7 +380,7 @@
         </elements>
         <elements xsi:type="xtext:Group">
           <elements xsi:type="xtext:Assignment" feature="name" operator="=">
-            <terminal xsi:type="xtext:RuleCall" rule="/3/@rules.0"/>
+            <terminal xsi:type="xtext:RuleCall" rule="/4/@rules.0"/>
           </elements>
           <elements xsi:type="xtext:Group">
             <elements xsi:type="xtext:Keyword" value=":="/>
@@ -391,7 +391,7 @@
         </elements>
         <elements xsi:type="xtext:Group">
           <elements xsi:type="xtext:Assignment" feature="name" operator="=">
-            <terminal xsi:type="xtext:RuleCall" rule="/3/@rules.0"/>
+            <terminal xsi:type="xtext:RuleCall" rule="/4/@rules.0"/>
           </elements>
           <elements xsi:type="xtext:Group">
             <elements xsi:type="xtext:Keyword" value=":="/>
@@ -406,7 +406,7 @@
         </elements>
         <elements xsi:type="xtext:Group">
           <elements xsi:type="xtext:Assignment" feature="name" operator="=">
-            <terminal xsi:type="xtext:RuleCall" rule="/3/@rules.0"/>
+            <terminal xsi:type="xtext:RuleCall" rule="/4/@rules.0"/>
           </elements>
           <elements xsi:type="xtext:Keyword" value=":"/>
           <elements xsi:type="xtext:Assignment" feature="hostType" operator="=">
@@ -415,7 +415,7 @@
         </elements>
         <elements xsi:type="xtext:Group">
           <elements xsi:type="xtext:Assignment" feature="name" operator="=">
-            <terminal xsi:type="xtext:RuleCall" rule="/3/@rules.0"/>
+            <terminal xsi:type="xtext:RuleCall" rule="/4/@rules.0"/>
           </elements>
           <elements xsi:type="xtext:Group">
             <elements xsi:type="xtext:Keyword" value=":="/>
@@ -596,7 +596,7 @@
             <type metamodel="/1/@metamodelDeclarations.2">
               <classifier xsi:type="ecore:EClass" href="http://kieler.cs.cau.de/expressions/0.1.2#//Signal"/>
             </type>
-            <terminal xsi:type="xtext:RuleCall" rule="/3/@rules.0"/>
+            <terminal xsi:type="xtext:RuleCall" rule="/4/@rules.0"/>
           </terminal>
         </elements>
         <elements xsi:type="xtext:Group" cardinality="?">
@@ -618,7 +618,7 @@
             <type metamodel="/1/@metamodelDeclarations.2">
               <classifier xsi:type="ecore:EClass" href="http://kieler.cs.cau.de/expressions/0.1.2#//Variable"/>
             </type>
-            <terminal xsi:type="xtext:RuleCall" rule="/3/@rules.0"/>
+            <terminal xsi:type="xtext:RuleCall" rule="/4/@rules.0"/>
           </terminal>
         </elements>
         <elements xsi:type="xtext:Keyword" value=":="/>
@@ -633,12 +633,12 @@
       </type>
       <alternatives xsi:type="xtext:Group">
         <elements xsi:type="xtext:Assignment" feature="code" operator="=">
-          <terminal xsi:type="xtext:RuleCall" rule="/3/@rules.2"/>
+          <terminal xsi:type="xtext:RuleCall" rule="/4/@rules.2"/>
         </elements>
         <elements xsi:type="xtext:Group" cardinality="?">
           <elements xsi:type="xtext:Keyword" value="("/>
           <elements xsi:type="xtext:Assignment" feature="type" operator="=">
-            <terminal xsi:type="xtext:RuleCall" rule="/3/@rules.0"/>
+            <terminal xsi:type="xtext:RuleCall" rule="/4/@rules.0"/>
           </elements>
           <elements xsi:type="xtext:Keyword" value=")"/>
         </elements>
@@ -648,6 +648,9 @@
   <xtext:Grammar name="de.cau.cs.kieler.core.expressions.Expressions" usedGrammars="/3">
     <metamodelDeclarations xsi:type="xtext:ReferencedMetamodel">
       <ePackage href="http://kieler.cs.cau.de/expressions/0.1.2#/"/>
+    </metamodelDeclarations>
+    <metamodelDeclarations xsi:type="xtext:ReferencedMetamodel" alias="annotations">
+      <ePackage href="http://kieler.cs.cau.de/annotations#/"/>
     </metamodelDeclarations>
     <metamodelDeclarations xsi:type="xtext:ReferencedMetamodel" alias="ecore">
       <ePackage href="http://www.eclipse.org/emf/2002/Ecore#/"/>
@@ -952,7 +955,7 @@
           <type metamodel="/2/@metamodelDeclarations.0">
             <classifier xsi:type="ecore:EClass" href="http://kieler.cs.cau.de/expressions/0.1.2#//ValuedObject"/>
           </type>
-          <terminal xsi:type="xtext:RuleCall" rule="/3/@rules.0"/>
+          <terminal xsi:type="xtext:RuleCall" rule="/4/@rules.0"/>
         </terminal>
       </alternatives>
     </rules>
@@ -962,12 +965,12 @@
       </type>
       <alternatives xsi:type="xtext:Group">
         <elements xsi:type="xtext:Assignment" feature="code" operator="=">
-          <terminal xsi:type="xtext:RuleCall" rule="/3/@rules.2"/>
+          <terminal xsi:type="xtext:RuleCall" rule="/4/@rules.2"/>
         </elements>
         <elements xsi:type="xtext:Group" cardinality="?">
           <elements xsi:type="xtext:Keyword" value="("/>
           <elements xsi:type="xtext:Assignment" feature="type" operator="=">
-            <terminal xsi:type="xtext:RuleCall" rule="/3/@rules.0"/>
+            <terminal xsi:type="xtext:RuleCall" rule="/4/@rules.0"/>
           </elements>
           <elements xsi:type="xtext:Keyword" value=")"/>
         </elements>
@@ -997,13 +1000,15 @@
         <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.37"/>
       </alternatives>
     </rules>
-    <rules xsi:type="xtext:ParserRule" name="EString">
-      <type metamodel="/2/@metamodelDeclarations.1">
+    <rules xsi:type="xtext:ParserRule" name="AnyType">
+      <type metamodel="/2/@metamodelDeclarations.2">
         <classifier xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
       </type>
       <alternatives xsi:type="xtext:Alternatives">
-        <elements xsi:type="xtext:RuleCall" rule="/3/@rules.2"/>
-        <elements xsi:type="xtext:RuleCall" rule="/3/@rules.0"/>
+        <elements xsi:type="xtext:RuleCall" rule="/2/@rules.37"/>
+        <elements xsi:type="xtext:RuleCall" rule="/2/@rules.35"/>
+        <elements xsi:type="xtext:RuleCall" rule="/2/@rules.36"/>
+        <elements xsi:type="xtext:RuleCall" rule="/3/@rules.3"/>
       </alternatives>
     </rules>
     <rules xsi:type="xtext:EnumRule" name="CompareOperator">
@@ -1134,27 +1139,27 @@
       <alternatives xsi:type="xtext:Alternatives">
         <elements xsi:type="xtext:EnumLiteralDeclaration">
           <enumLiteral href="http://kieler.cs.cau.de/expressions/0.1.2#//ValueType/PURE"/>
-          <literal value="PURE"/>
+          <literal value="pure"/>
         </elements>
         <elements xsi:type="xtext:EnumLiteralDeclaration">
           <enumLiteral href="http://kieler.cs.cau.de/expressions/0.1.2#//ValueType/BOOL"/>
-          <literal value="BOOL"/>
+          <literal value="bool"/>
         </elements>
         <elements xsi:type="xtext:EnumLiteralDeclaration">
           <enumLiteral href="http://kieler.cs.cau.de/expressions/0.1.2#//ValueType/UNSIGNED"/>
-          <literal value="UNSIGNED"/>
+          <literal value="unsigned"/>
         </elements>
         <elements xsi:type="xtext:EnumLiteralDeclaration">
           <enumLiteral href="http://kieler.cs.cau.de/expressions/0.1.2#//ValueType/INT"/>
-          <literal value="INT"/>
+          <literal value="int"/>
         </elements>
         <elements xsi:type="xtext:EnumLiteralDeclaration">
           <enumLiteral href="http://kieler.cs.cau.de/expressions/0.1.2#//ValueType/FLOAT"/>
-          <literal value="FLOAT"/>
+          <literal value="float"/>
         </elements>
         <elements xsi:type="xtext:EnumLiteralDeclaration">
           <enumLiteral href="http://kieler.cs.cau.de/expressions/0.1.2#//ValueType/HOST"/>
-          <literal value="HOST"/>
+          <literal value="host"/>
         </elements>
       </alternatives>
     </rules>
@@ -1165,7 +1170,7 @@
       <alternatives xsi:type="xtext:Alternatives">
         <elements xsi:type="xtext:EnumLiteralDeclaration">
           <enumLiteral href="http://kieler.cs.cau.de/expressions/0.1.2#//CombineOperator/NONE"/>
-          <literal value="NONE"/>
+          <literal value="none"/>
         </elements>
         <elements xsi:type="xtext:EnumLiteralDeclaration">
           <enumLiteral href="http://kieler.cs.cau.de/expressions/0.1.2#//CombineOperator/ADD"/>
@@ -1198,7 +1203,7 @@
       </alternatives>
     </rules>
     <rules xsi:type="xtext:TerminalRule" name="INT">
-      <type metamodel="/2/@metamodelDeclarations.1">
+      <type metamodel="/2/@metamodelDeclarations.2">
         <classifier xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
       </type>
       <alternatives xsi:type="xtext:Group">
@@ -1210,7 +1215,7 @@
       </alternatives>
     </rules>
     <rules xsi:type="xtext:TerminalRule" name="Float">
-      <type metamodel="/2/@metamodelDeclarations.1">
+      <type metamodel="/2/@metamodelDeclarations.2">
         <classifier xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EFloatObject"/>
       </type>
       <alternatives xsi:type="xtext:Alternatives">
@@ -1244,7 +1249,7 @@
       </alternatives>
     </rules>
     <rules xsi:type="xtext:TerminalRule" name="Boolean">
-      <type metamodel="/2/@metamodelDeclarations.1">
+      <type metamodel="/2/@metamodelDeclarations.2">
         <classifier xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EBooleanObject"/>
       </type>
       <alternatives xsi:type="xtext:Alternatives">
@@ -1253,12 +1258,85 @@
       </alternatives>
     </rules>
   </xtext:Grammar>
-  <xtext:Grammar name="org.eclipse.xtext.common.Terminals" definesHiddenTokens="true" hiddenTokens="/3/@rules.5 /3/@rules.3 /3/@rules.4">
+  <xtext:Grammar name="de.cau.cs.kieler.core.annotations.Annotations" usedGrammars="/4">
+    <metamodelDeclarations xsi:type="xtext:ReferencedMetamodel">
+      <ePackage href="http://kieler.cs.cau.de/annotations#/"/>
+    </metamodelDeclarations>
+    <metamodelDeclarations xsi:type="xtext:ReferencedMetamodel" alias="ecore">
+      <ePackage href="http://www.eclipse.org/emf/2002/Ecore#/"/>
+    </metamodelDeclarations>
+    <rules xsi:type="xtext:ParserRule" name="StringAnnotation">
+      <type metamodel="/3/@metamodelDeclarations.0">
+        <classifier xsi:type="ecore:EClass" href="http://kieler.cs.cau.de/annotations#//Annotation"/>
+      </type>
+      <alternatives xsi:type="xtext:Alternatives">
+        <elements xsi:type="xtext:RuleCall" rule="/3/@rules.1"/>
+        <elements xsi:type="xtext:RuleCall" rule="/3/@rules.2"/>
+      </alternatives>
+    </rules>
+    <rules xsi:type="xtext:ParserRule" name="CommentAnnotation">
+      <type metamodel="/3/@metamodelDeclarations.0">
+        <classifier xsi:type="ecore:EClass" href="http://kieler.cs.cau.de/annotations#//StringAnnotation"/>
+      </type>
+      <alternatives xsi:type="xtext:Assignment" feature="value" operator="=">
+        <terminal xsi:type="xtext:RuleCall" rule="/3/@rules.4"/>
+      </alternatives>
+    </rules>
+    <rules xsi:type="xtext:ParserRule" name="KeyValueAnnotation">
+      <type metamodel="/3/@metamodelDeclarations.0">
+        <classifier xsi:type="ecore:EClass" href="http://kieler.cs.cau.de/annotations#//StringAnnotation"/>
+      </type>
+      <alternatives xsi:type="xtext:Group">
+        <elements xsi:type="xtext:Keyword" value="@"/>
+        <elements xsi:type="xtext:Assignment" feature="name" operator="=">
+          <terminal xsi:type="xtext:RuleCall" rule="/4/@rules.0"/>
+        </elements>
+        <elements xsi:type="xtext:Assignment" feature="value" operator="=">
+          <terminal xsi:type="xtext:RuleCall" rule="/3/@rules.3"/>
+        </elements>
+      </alternatives>
+    </rules>
+    <rules xsi:type="xtext:ParserRule" name="EString">
+      <type metamodel="/3/@metamodelDeclarations.1">
+        <classifier xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      </type>
+      <alternatives xsi:type="xtext:Alternatives">
+        <elements xsi:type="xtext:RuleCall" rule="/4/@rules.2"/>
+        <elements xsi:type="xtext:RuleCall" rule="/4/@rules.0"/>
+      </alternatives>
+    </rules>
+    <rules xsi:type="xtext:TerminalRule" name="COMMENT_ANNOTATION">
+      <type metamodel="/3/@metamodelDeclarations.1">
+        <classifier xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      </type>
+      <alternatives xsi:type="xtext:Group">
+        <elements xsi:type="xtext:Keyword" value="/**"/>
+        <elements xsi:type="xtext:UntilToken">
+          <terminal xsi:type="xtext:Keyword" value="*/"/>
+        </elements>
+      </alternatives>
+    </rules>
+    <rules xsi:type="xtext:TerminalRule" name="ML_COMMENT">
+      <type metamodel="/3/@metamodelDeclarations.1">
+        <classifier xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      </type>
+      <alternatives xsi:type="xtext:Group">
+        <elements xsi:type="xtext:Keyword" value="/*"/>
+        <elements xsi:type="xtext:NegatedToken">
+          <terminal xsi:type="xtext:Keyword" value="*"/>
+        </elements>
+        <elements xsi:type="xtext:UntilToken">
+          <terminal xsi:type="xtext:Keyword" value="*/"/>
+        </elements>
+      </alternatives>
+    </rules>
+  </xtext:Grammar>
+  <xtext:Grammar name="org.eclipse.xtext.common.Terminals" definesHiddenTokens="true" hiddenTokens="/4/@rules.5 /3/@rules.5 /4/@rules.4">
     <metamodelDeclarations xsi:type="xtext:ReferencedMetamodel" alias="ecore">
       <ePackage href="http://www.eclipse.org/emf/2002/Ecore#/"/>
     </metamodelDeclarations>
     <rules xsi:type="xtext:TerminalRule" name="ID">
-      <type metamodel="/3/@metamodelDeclarations.0">
+      <type metamodel="/4/@metamodelDeclarations.0">
         <classifier xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
       </type>
       <alternatives xsi:type="xtext:Group">
@@ -1292,7 +1370,7 @@
       </alternatives>
     </rules>
     <rules xsi:type="xtext:TerminalRule" name="INT">
-      <type metamodel="/3/@metamodelDeclarations.0">
+      <type metamodel="/4/@metamodelDeclarations.0">
         <classifier xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
       </type>
       <alternatives xsi:type="xtext:CharacterRange" cardinality="+">
@@ -1301,7 +1379,7 @@
       </alternatives>
     </rules>
     <rules xsi:type="xtext:TerminalRule" name="STRING">
-      <type metamodel="/3/@metamodelDeclarations.0">
+      <type metamodel="/4/@metamodelDeclarations.0">
         <classifier xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
       </type>
       <alternatives xsi:type="xtext:Alternatives">
@@ -1358,7 +1436,7 @@
       </alternatives>
     </rules>
     <rules xsi:type="xtext:TerminalRule" name="ML_COMMENT">
-      <type metamodel="/3/@metamodelDeclarations.0">
+      <type metamodel="/4/@metamodelDeclarations.0">
         <classifier xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
       </type>
       <alternatives xsi:type="xtext:Group">
@@ -1369,7 +1447,7 @@
       </alternatives>
     </rules>
     <rules xsi:type="xtext:TerminalRule" name="SL_COMMENT">
-      <type metamodel="/3/@metamodelDeclarations.0">
+      <type metamodel="/4/@metamodelDeclarations.0">
         <classifier xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
       </type>
       <alternatives xsi:type="xtext:Group">
@@ -1387,7 +1465,7 @@
       </alternatives>
     </rules>
     <rules xsi:type="xtext:TerminalRule" name="WS">
-      <type metamodel="/3/@metamodelDeclarations.0">
+      <type metamodel="/4/@metamodelDeclarations.0">
         <classifier xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
       </type>
       <alternatives xsi:type="xtext:Alternatives" cardinality="+">
@@ -1398,7 +1476,7 @@
       </alternatives>
     </rules>
     <rules xsi:type="xtext:TerminalRule" name="ANY_OTHER">
-      <type metamodel="/3/@metamodelDeclarations.0">
+      <type metamodel="/4/@metamodelDeclarations.0">
         <classifier xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
       </type>
       <alternatives xsi:type="xtext:Wildcard"/>

@@ -44,7 +44,7 @@ public class KitsSemanticHighlightingCalculator implements
 		for (AbstractNode node : allNodes) {
 			grammarElement = node.getGrammarElement();
 			
-			// color '@' keywords like 'ANNOTATION_KEY' config 
+			// color '@' keywords like 'ANNOTATION_KEY' config
 			if (grammarElement == g.getKeyValueAnnotationAccess().getCommercialAtKeyword_0()) {
 				acceptor.addPosition(node.getOffset(), node.getLength(), KitsHighlightingConfiguration.ANNOTATION_KEY);
 			}

@@ -7,32 +7,31 @@ package de.cau.cs.kieler.s.ui.contentassist.antlr.internal;
 import org.eclipse.xtext.ui.editor.contentassist.antlr.internal.Lexer;
 }
 
-T13 : 'pre' ;
-T14 : 'or' ;
-T15 : 'and' ;
-T16 : 'not' ;
-T17 : '+' ;
-T18 : '-' ;
-T19 : '*' ;
-T20 : 'mod' ;
-T21 : '/' ;
-T22 : '?' ;
-T23 : '=' ;
-T24 : '<' ;
-T25 : '<=' ;
-T26 : '>' ;
-T27 : '>=' ;
-T28 : '<>' ;
-T29 : 'PURE' ;
-T30 : 'BOOL' ;
-T31 : 'UNSIGNED' ;
-T32 : 'INT' ;
-T33 : 'FLOAT' ;
-T34 : 'HOST' ;
-T35 : 'NONE' ;
-T36 : 'max' ;
-T37 : 'min' ;
-T38 : 'host' ;
+T14 : 'pre' ;
+T15 : 'or' ;
+T16 : 'and' ;
+T17 : 'not' ;
+T18 : '+' ;
+T19 : '-' ;
+T20 : '*' ;
+T21 : 'mod' ;
+T22 : '/' ;
+T23 : '?' ;
+T24 : '=' ;
+T25 : '<' ;
+T26 : '<=' ;
+T27 : '>' ;
+T28 : '>=' ;
+T29 : '<>' ;
+T30 : 'pure' ;
+T31 : 'bool' ;
+T32 : 'unsigned' ;
+T33 : 'int' ;
+T34 : 'float' ;
+T35 : 'host' ;
+T36 : 'none' ;
+T37 : 'max' ;
+T38 : 'min' ;
 T39 : 'Synchronous Program' ;
 T40 : '(' ;
 T41 : ')' ;
@@ -58,34 +57,38 @@ T60 : 'FORKE' ;
 T61 : 'EMIT' ;
 T62 : 'AWAIT' ;
 T63 : 'PRIO' ;
-T64 : 'input' ;
-T65 : 'output' ;
+T64 : '@' ;
+T65 : 'input' ;
+T66 : 'output' ;
 
-// $ANTLR src "../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g" 8560
+// $ANTLR src "../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g" 8761
 RULE_INT : '-'? ('0'..'9')+;
 
-// $ANTLR src "../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g" 8562
+// $ANTLR src "../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g" 8763
 RULE_FLOAT : ((RULE_INT '.' RULE_INT|RULE_INT ('.' RULE_INT)? ('e'|'E') '+'? RULE_INT) 'f'?|RULE_INT 'f');
 
-// $ANTLR src "../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g" 8564
+// $ANTLR src "../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g" 8765
 RULE_BOOLEAN : ('true'|'false');
 
-// $ANTLR src "../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g" 8566
+// $ANTLR src "../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g" 8767
+RULE_COMMENT_ANNOTATION : '/**' ( options {greedy=false;} : . )*'*/';
+
+// $ANTLR src "../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g" 8769
+RULE_ML_COMMENT : '/*' ~('*') ( options {greedy=false;} : . )*'*/';
+
+// $ANTLR src "../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g" 8771
 RULE_ID : '^'? ('a'..'z'|'A'..'Z'|'_') ('a'..'z'|'A'..'Z'|'_'|'0'..'9')*;
 
-// $ANTLR src "../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g" 8568
+// $ANTLR src "../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g" 8773
 RULE_STRING : ('"' ('\\' ('b'|'t'|'n'|'f'|'r'|'"'|'\''|'\\')|~(('\\'|'"')))* '"'|'\'' ('\\' ('b'|'t'|'n'|'f'|'r'|'"'|'\''|'\\')|~(('\\'|'\'')))* '\'');
 
-// $ANTLR src "../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g" 8570
-RULE_ML_COMMENT : '/*' ( options {greedy=false;} : . )*'*/';
-
-// $ANTLR src "../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g" 8572
+// $ANTLR src "../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g" 8775
 RULE_SL_COMMENT : '//' ~(('\n'|'\r'))* ('\r'? '\n')?;
 
-// $ANTLR src "../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g" 8574
+// $ANTLR src "../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g" 8777
 RULE_WS : (' '|'\t'|'\r'|'\n')+;
 
-// $ANTLR src "../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g" 8576
+// $ANTLR src "../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g" 8779
 RULE_ANY_OTHER : .;
 
 

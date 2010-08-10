@@ -47,6 +47,8 @@ public class SParser extends AbstractContentAssistParser {
 					put(grammarAccess.getAtomicExpressionAccess().getAlternatives(), "rule__AtomicExpression__Alternatives");
 					put(grammarAccess.getAtomicValuedExpressionAccess().getAlternatives(), "rule__AtomicValuedExpression__Alternatives");
 					put(grammarAccess.getValuedObjectTestExpressionAccess().getAlternatives(), "rule__ValuedObjectTestExpression__Alternatives");
+					put(grammarAccess.getAnyTypeAccess().getAlternatives(), "rule__AnyType__Alternatives");
+					put(grammarAccess.getStringAnnotationAccess().getAlternatives(), "rule__StringAnnotation__Alternatives");
 					put(grammarAccess.getEStringAccess().getAlternatives(), "rule__EString__Alternatives");
 					put(grammarAccess.getCompareOperatorAccess().getAlternatives(), "rule__CompareOperator__Alternatives");
 					put(grammarAccess.getValueTypeAccess().getAlternatives(), "rule__ValueType__Alternatives");
@@ -102,6 +104,7 @@ public class SParser extends AbstractContentAssistParser {
 					put(grammarAccess.getValuedObjectTestExpressionAccess().getGroup_1(), "rule__ValuedObjectTestExpression__Group_1__0");
 					put(grammarAccess.getTextExpressionAccess().getGroup(), "rule__TextExpression__Group__0");
 					put(grammarAccess.getTextExpressionAccess().getGroup_1(), "rule__TextExpression__Group_1__0");
+					put(grammarAccess.getKeyValueAnnotationAccess().getGroup(), "rule__KeyValueAnnotation__Group__0");
 					put(grammarAccess.getProgramAccess().getNameAssignment_1(), "rule__Program__NameAssignment_1");
 					put(grammarAccess.getProgramAccess().getPriorityAssignment_3(), "rule__Program__PriorityAssignment_3");
 					put(grammarAccess.getProgramAccess().getSignalsAssignment_5(), "rule__Program__SignalsAssignment_5");
@@ -166,6 +169,9 @@ public class SParser extends AbstractContentAssistParser {
 					put(grammarAccess.getIntValueAccess().getValueAssignment(), "rule__IntValue__ValueAssignment");
 					put(grammarAccess.getFloatValueAccess().getValueAssignment(), "rule__FloatValue__ValueAssignment");
 					put(grammarAccess.getBooleanValueAccess().getValueAssignment(), "rule__BooleanValue__ValueAssignment");
+					put(grammarAccess.getCommentAnnotationAccess().getValueAssignment(), "rule__CommentAnnotation__ValueAssignment");
+					put(grammarAccess.getKeyValueAnnotationAccess().getNameAssignment_1(), "rule__KeyValueAnnotation__NameAssignment_1");
+					put(grammarAccess.getKeyValueAnnotationAccess().getValueAssignment_2(), "rule__KeyValueAnnotation__ValueAssignment_2");
 				}
 			};
 		}
