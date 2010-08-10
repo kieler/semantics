@@ -1,4 +1,3 @@
-
 import ecore;
 import expressions;
 import synccharts;

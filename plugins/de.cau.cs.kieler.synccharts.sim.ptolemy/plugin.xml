@@ -6,7 +6,7 @@
       <content
             class="de.cau.cs.kieler.synccharts.sim.ptolemy.SyncchartsSimDataComponent"
             id="de.cau.cs.kieler.synccharts.sim.ptolemy"
-            name="Synccharts Ptolemy Simulator">
+            name="SyncCharts Ptolemy Simulator">
       </content>
    </extension>
 
