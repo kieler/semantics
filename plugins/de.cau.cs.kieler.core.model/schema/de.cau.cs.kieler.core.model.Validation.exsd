@@ -103,6 +103,13 @@
                </documentation>
             </annotation>
          </attribute>
+         <attribute name="isEnabledByDefault" type="boolean">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
+            </annotation>
+         </attribute>
       </complexType>
    </element>
 

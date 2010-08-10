@@ -119,6 +119,9 @@ public class ValidationInformationCollector implements IStartup, IPartListener {
         String isWrapExisting = element.getAttribute("isWrapExistingValidator");
         boolean isWrap = isWrapExisting.equals("true");
 
+        String isEnabledByDefaultExisting = element.getAttribute("isEnabledByDefault");
+        boolean isEnabledByDefault = isEnabledByDefaultExisting.equals("true");
+        
         CheckfileDefinition definition = new CheckfileDefinition();
         definition.id = id;
         definition.ePackageId = ePackageId;
@@ -126,6 +129,7 @@ public class ValidationInformationCollector implements IStartup, IPartListener {
         definition.path = path;
         definition.tooltip = tooltip;
         definition.isWrapExistingValidator = isWrap;
+        definition.isEnabledByDefault = isEnabledByDefault;
         definition.referencedURIs = new LinkedList<String>();
 
         for (IConfigurationElement child : element.getChildren()) {
@@ -187,6 +191,8 @@ public class ValidationInformationCollector implements IStartup, IPartListener {
 
         private boolean isWrapExistingValidator;
 
+        private boolean isEnabledByDefault;
+
         private List<String> referencedURIs;
 
     }
@@ -200,7 +206,7 @@ public class ValidationInformationCollector implements IStartup, IPartListener {
 
         ValidationManager.registerCheckFile(check.id, ePackage, check.path,
                 check.isWrapExistingValidator, check.referencedURIs,
-                check.name, check.tooltip);
+                check.name, check.tooltip, check.isEnabledByDefault);
     }
 
     /**

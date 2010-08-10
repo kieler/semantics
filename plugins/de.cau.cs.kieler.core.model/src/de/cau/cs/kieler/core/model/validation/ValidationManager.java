@@ -202,11 +202,15 @@ public final class ValidationManager {
             final EPackage ePackage, final String file,
             final boolean isWrapExistingValidator,
             final List<String> referencedEPackageNsURIs, final String name,
-            final String tooltip) {
+            final String tooltip, final boolean isEnabledByDefault) {
         if (!packages.containsKey(ePackage)) {
             packages.put(ePackage, null);
         }
 
+        // if nothing can be found user the extension point setting to 
+        // determine whether the validation is enabled or not
+        // --> isEnabledByDefault
+        
         // determine whether or the file should be allowed to show its markers
         IPreferenceStore store = CoreModelPlugin.getDefault()
                 .getPreferenceStore();
@@ -219,7 +223,7 @@ public final class ValidationManager {
             // if value not found try accessing the persistent memory on disc
             IEclipsePreferences prefs = new InstanceScope()
                     .getNode(CoreModelPlugin.PLUGIN_ID);
-            value = prefs.getBoolean(key, true);
+            value = prefs.getBoolean(key, isEnabledByDefault);
             store.setValue(key, value);
         }
 
