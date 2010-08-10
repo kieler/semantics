@@ -802,7 +802,7 @@ Void ConsiderTransitionPriorities_State(EntityType modalController,
 ;
 
 
-String getTrigger(Moml::RelationType relation) :
+String getTrigger(RelationType relation) :
 	relation.property.select(e|e.name.matches("guardExpression")).get(0).value
 ;
 
@@ -994,16 +994,16 @@ Void deleteModalModelPort(EntityType modalModel, String portName) :
 ;
 
 
-Void enqueue2Delete(Moml::EntityType modalModel, String portName) :
+Void enqueue2Delete(EntityType modalModel, String portName) :
 	JAVA de.cau.cs.kieler.synccharts.sim.ptolemy.oaw.XtendJava.enqueue2Delete(
-			 org.ptolemy.moml.Moml.EntityType, java.lang.String) 
+			 org.ptolemy.moml.EntityType, java.lang.String) 
 ;
 
 String popPortName2Delete() :
 	JAVA de.cau.cs.kieler.synccharts.sim.ptolemy.oaw.XtendJava.popPortName2Delete()
 ;
 
-Moml::EntityType popModalModel2Delete() :
+EntityType popModalModel2Delete() :
 	JAVA de.cau.cs.kieler.synccharts.sim.ptolemy.oaw.XtendJava.popModalModel2Delete()
 ;
 
