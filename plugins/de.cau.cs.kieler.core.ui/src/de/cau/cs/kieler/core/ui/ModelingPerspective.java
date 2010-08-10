@@ -37,18 +37,19 @@ public class ModelingPerspective implements IPerspectiveFactory {
 
     /* To find view IDs, see cookbook in project trac */
     /* IDs of views */
-    private static final String VIEW_KEV = "de.cau.cs.kieler.kev.views.EnvironmentView"; //$NON-NLS-1$
+    private static final String VIEW_KEV = "de.cau.cs.kieler.kev.views.KevView"; //$NON-NLS-1$
     private static final String VIEW_KIML_EXECUTION = "de.cau.cs.kieler.kiml.viewer.execution"; //$NON-NLS-1$
     private static final String VIEW_KIML_LAYOUTGRAPH = "de.cau.cs.kieler.kiml.viewer.layoutGraph"; //$NON-NLS-1$
     private static final String VIEW_KIML_LAYOUT = "de.cau.cs.kieler.kiml.views.layout"; //$NON-NLS-1$
     private static final String VIEW_KIEM = "de.cau.cs.kieler.sim.kiem.view"; //$NON-NLS-1$
-    private static final String VIEW_KIEM_TABLE = "de.cau.cs.kieler.sim.table.views.KiemTable"; //$NON-NLS-1$
+    private static final String VIEW_KIEM_TABLE = "de.cau.cs.kieler.sim.table.view"; //$NON-NLS-1$
     private static final String VIEW_VIEWMANAGEMENT = "de.cau.cs.kieler.viewmanagement.VMControl"; //$NON-NLS-1$
 
     /* IDs of New-Wizards */
     private static final String WIZ_SYNCCHART = "de.cau.cs.kieler.synccharts.diagram.part.SyncchartsCreationWizardID"; //$NON-NLS-1$
-    private static final String WIZ_DATAFLOW = "de.cau.cs.kieler.dataflow.diagram.part.DataflowCreationWizardID"; //$NON-NLS-1$
-    private static final String WIZ_DATAFLOW_RANDOM = "de.cau.cs.kieler.dataflow.ui.wizards.CreateRandomModelWizard"; //$NON-NLS-1$
+    private static final String WIZ_KAOM = "de.cau.cs.kieler.kaom.diagram.part.KaomCreationWizardID"; //$NON-NLS-1$
+    private static final String WIZ_GRAPHS = "de.cau.cs.kieler.graphs.diagram.part.GraphsCreationWizardID"; //$NON-NLS-1$
+    private static final String WIZ_GRAPHS_RANDOM = "de.cau.cs.kieler.graphs.wizards.randomGraph"; //$NON-NLS-1$
     private static final String WIZ_FILE = "org.eclipse.ui.wizards.new.file"; //$NON-NLS-1$
     private static final String WIZ_PROJECT = "org.eclipse.ui.wizards.new.project"; //$NON-NLS-1$
 
@@ -132,8 +133,9 @@ public class ModelingPerspective implements IPerspectiveFactory {
         layout.addNewWizardShortcut(WIZ_PROJECT);
         layout.addNewWizardShortcut(WIZ_FILE);
         layout.addNewWizardShortcut(WIZ_SYNCCHART);
-        layout.addNewWizardShortcut(WIZ_DATAFLOW);
-        layout.addNewWizardShortcut(WIZ_DATAFLOW_RANDOM);
+        layout.addNewWizardShortcut(WIZ_KAOM);
+        layout.addNewWizardShortcut(WIZ_GRAPHS);
+        layout.addNewWizardShortcut(WIZ_GRAPHS_RANDOM);
     }
 
     /**
