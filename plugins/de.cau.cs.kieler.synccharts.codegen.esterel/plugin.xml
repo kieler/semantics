@@ -18,6 +18,23 @@
                label="Generate Esterel code"
                mnemonic="generate Esterel code"
                style="push">
+               <visibleWhen
+                  checkEnabled="false">
+               <with
+                     variable="selection">
+                  <iterate>
+                     <and>
+                        <instanceof
+                              value="org.eclipse.core.resources.IFile">
+                        </instanceof>
+                        <test
+                              property="org.eclipse.core.resources.extension"
+                              value="kixs">
+                        </test>
+                     </and>
+                  </iterate>
+               </with>
+            </visibleWhen>
          </command>
       </menuContribution>
    </extension>
