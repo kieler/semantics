@@ -33,7 +33,7 @@ import de.cau.cs.kieler.synccharts.State;
 import de.cau.cs.kieler.synccharts.Transition;
 import de.cau.cs.kieler.synccharts.sim.ptolemy.SyncchartsSimPtolemyPlugin;
 
-import org.ptolemy.moml.Moml.*;
+import org.ptolemy.moml.*;
 
 /**
  * The class XtendJava implements some Java escape code used in the model2model

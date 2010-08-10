@@ -1,9 +1,9 @@
-import ecore;
+//import annotatations;
+//import ecore;
 import expressions;
 import synccharts;
-//import annotatations;
 
-import Moml;
+import moml;
 
 //-----------------------------------------------------------------------------
 //--     S Y N C C H A R T S - 2 - P T O     T R A N S F O R M A T I O N     --

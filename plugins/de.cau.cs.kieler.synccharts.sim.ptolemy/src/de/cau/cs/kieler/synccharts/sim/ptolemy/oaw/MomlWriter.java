@@ -32,7 +32,7 @@ import org.eclipse.emf.mwe.core.issues.Issues;
 import org.eclipse.emf.mwe.core.monitor.ProgressMonitor;
 import org.eclipse.emf.mwe.utils.AbstractEMFWorkflowComponent;
 
-import org.ptolemy.moml.Moml.util.MomlResourceFactoryImpl;
+import org.ptolemy.moml.util.MomlResourceFactoryImpl;
 
 /**
  * The class MomlWriter implements an EMFWorkflowComponent that is able to 

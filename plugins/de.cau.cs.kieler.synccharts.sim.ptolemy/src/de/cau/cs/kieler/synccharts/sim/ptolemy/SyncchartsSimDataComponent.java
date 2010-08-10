@@ -243,7 +243,7 @@ public class SyncchartsSimDataComponent extends JSONObjectDataComponent {
                     de.cau.cs.kieler.core.expressions.ExpressionsPackage.eINSTANCE);
             EmfMetaModel metaModel1 = new EmfMetaModel(
                     de.cau.cs.kieler.synccharts.SyncchartsPackage.eINSTANCE);
-            EmfMetaModel metaModel2 = new EmfMetaModel(org.ptolemy.moml.Moml.MomlPackage.eINSTANCE);
+            EmfMetaModel metaModel2 = new EmfMetaModel(org.ptolemy.moml.MomlPackage.eINSTANCE);
 
             // XtendComponent
             XtendComponent xtendComponent = new XtendComponent();
