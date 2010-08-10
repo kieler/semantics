@@ -12,7 +12,7 @@
  * See the file epl-v10.html for the license text.
  *
  *****************************************************************************/
-package de.cau.cs.kieler.sim.sc;
+package de.cau.cs.kieler.synccharts.sim.sc;
 
 import java.io.BufferedReader;
 import java.io.File;

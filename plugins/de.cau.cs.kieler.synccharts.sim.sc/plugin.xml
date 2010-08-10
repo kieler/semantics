@@ -4,7 +4,7 @@
    <extension
          point="de.cau.cs.kieler.sim.kiem.json.datacomponent">
       <content
-            class="de.cau.cs.kieler.sim.sc.SCDataComponent"
+            class="de.cau.cs.kieler.synccharts.sim.sc.SCDataComponent"
             id="de.cau.cs.kieler.sim.sc"
             name="SyncCharts SC Simulator">
       </content>

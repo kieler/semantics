@@ -18,4 +18,4 @@
  * de.cau.cs.kieler.synccharts.codegen.sc by using the
  * KIEM plugin.
  */
-package de.cau.cs.kieler.sim.sc;
+package de.cau.cs.kieler.synccharts.sim.sc;
