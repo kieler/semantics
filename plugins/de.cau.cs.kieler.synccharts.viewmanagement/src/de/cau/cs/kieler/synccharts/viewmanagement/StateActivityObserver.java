@@ -317,13 +317,13 @@ public class StateActivityObserver extends JSONObjectDataComponent implements
     public void initialize() throws KiemInitializationException {
         try {
             // bring to front VM
-            bringToFront();
+            //bringToFront();
             rootEditPart = getInputEditor().getDiagramEditPart();
             if (RunLogic.getInstance() == null) {
                 throw new KiemInitializationException(
                         "Cannot initialize view management!", true, null);
             }
-            RunLogic.getInstance().registerListeners();
+            //RunLogic.getInstance().registerListeners();
         } catch (Exception e) {
             throw new KiemInitializationException(
                     "Cannot initialize view management!", true, e);
