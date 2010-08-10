@@ -89,7 +89,7 @@ public class GmfDrawer implements IDrawer {
             
             final IFigure canvas = ((DiagramEditor) editor)
                     .getDiagramEditPart().getLayer(
-                            DiagramRootEditPart.DECORATION_PRINTABLE_LAYER);
+                            DiagramRootEditPart.CONNECTION_LAYER);
             for (final String key : figuresByURI.keySet()) {
                 PlatformUI.getWorkbench().getDisplay().syncExec(new Runnable() {
                     public void run() {

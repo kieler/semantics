@@ -199,14 +199,6 @@ public class DataDistributor implements IProviderListener {
         drawer.clearDrawing();
     }
     
-    public void markPartByURI(String fragmentURI) {
-        EditPart marked = getEditPartByURI(fragmentURI);
-        if (marked instanceof GraphicalEditPart) {
-            IFigure markable = ((GraphicalEditPart) marked).getFigure();
-            markable.setBackgroundColor(ColorConstants.blue);
-        }
-    }
-    
     public EditPart getEditPartByURI(String fragmentURI) {
         return editPartsByURI.get(fragmentURI);
     }
