@@ -996,7 +996,7 @@ Void deleteModalModelPort(EntityType modalModel, String portName) :
 
 Void enqueue2Delete(Moml::EntityType modalModel, String portName) :
 	JAVA de.cau.cs.kieler.synccharts.sim.ptolemy.oaw.XtendJava.enqueue2Delete(
-			 Moml.EntityType, java.lang.String) 
+			 org.ptolemy.moml.Moml.EntityType, java.lang.String) 
 ;
 
 String popPortName2Delete() :
