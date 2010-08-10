@@ -93,3 +93,4 @@ Export-Package: com.microstar.xml,
  ptolemy.vergil.modal,
  ptolemy.vergil.modal.modal,
  util.testsuite
+Require-Bundle: org.ptolemy.tiny;bundle-version="0.2.0"
