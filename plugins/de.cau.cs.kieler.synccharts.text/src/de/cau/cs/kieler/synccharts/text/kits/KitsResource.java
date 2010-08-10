@@ -206,7 +206,7 @@ public class KitsResource extends LazyLinkingResource {
 			if (newId == null || newId.trim().equals("")) {
 				newId = isState ? "state" : "region";
 			} else {
-				newId = newId.replace(' ', '_').replace('\"', ' ').trim();
+				newId = newId.replace(' ', '_');
 			}
 			
 			int n = 0;
@@ -217,9 +217,9 @@ public class KitsResource extends LazyLinkingResource {
 			names.add(newId);
 			scope.setId(newId);
 		}
-		if (scope.getLabel() != null) {
-			scope.setLabel(scope.getLabel().replace('"', ' ').trim());
-		}
+//		if (scope.getLabel() != null) {
+//			scope.setLabel(scope.getLabel().replace('"', ' ').trim());
+//		}
 	}
 	
 	
