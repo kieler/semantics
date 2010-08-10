@@ -11,7 +11,7 @@ import org.eclipse.xtext.*;
 import org.eclipse.xtext.service.GrammarProvider;
 import org.eclipse.xtext.service.AbstractElementFinder.*;
 
-import org.eclipse.xtext.common.services.TerminalsGrammarAccess;
+import de.cau.cs.kieler.core.annotations.services.AnnotationsGrammarAccess;
 
 @Singleton
 public class ExpressionsGrammarAccess extends AbstractGrammarElementFinder {
@@ -675,9 +675,6 @@ public class ExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cTypeIDTerminalRuleCall_1_1_0 = (RuleCall)cTypeAssignment_1_1.eContents().get(0);
 		private final Keyword cRightParenthesisKeyword_1_2 = (Keyword)cGroup_1.eContents().get(2);
 		
-		//// Taken from oba's kits grammar
-		////TextExpression returns TextExpression: 
-		////	code=STRING ("(" type=ID ")")?; 
 		//// Taken from haf's kits grammar
 		//TextExpression:
 		//	code=STRING ("(" type=ID ")")?;
@@ -756,24 +753,35 @@ public class ExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		public RuleCall getValueBooleanTerminalRuleCall_0() { return cValueBooleanTerminalRuleCall_0; }
 	}
 
-	public class EStringElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "EString");
+	public class AnyTypeElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "AnyType");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
-		private final RuleCall cSTRINGTerminalRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
-		private final RuleCall cIDTerminalRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
+		private final RuleCall cBooleanTerminalRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
+		private final RuleCall cINTTerminalRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
+		private final RuleCall cFloatTerminalRuleCall_2 = (RuleCall)cAlternatives.eContents().get(2);
+		private final RuleCall cEStringParserRuleCall_3 = (RuleCall)cAlternatives.eContents().get(3);
 		
-		//EString returns ecore::EString:
-		//	STRING | ID;
+		//// data type rule allowing any kind of value to be accepted,
+		//// e.g. as initialValues of valuedObjects
+		//// used in Kits.xtext 
+		//AnyType returns ecore::EString:
+		//	Boolean | INT | Float | EString;
 		public ParserRule getRule() { return rule; }
 
-		//STRING | ID
+		//Boolean | INT | Float | EString
 		public Alternatives getAlternatives() { return cAlternatives; }
 
-		//STRING
-		public RuleCall getSTRINGTerminalRuleCall_0() { return cSTRINGTerminalRuleCall_0; }
+		//Boolean
+		public RuleCall getBooleanTerminalRuleCall_0() { return cBooleanTerminalRuleCall_0; }
 
-		//ID
-		public RuleCall getIDTerminalRuleCall_1() { return cIDTerminalRuleCall_1; }
+		//INT
+		public RuleCall getINTTerminalRuleCall_1() { return cINTTerminalRuleCall_1; }
+
+		//Float
+		public RuleCall getFloatTerminalRuleCall_2() { return cFloatTerminalRuleCall_2; }
+
+		//EString
+		public RuleCall getEStringParserRuleCall_3() { return cEStringParserRuleCall_3; }
 	}
 	
 	
@@ -1001,69 +1009,69 @@ public class ExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "ValueType");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
 		private final EnumLiteralDeclaration cPUREEnumLiteralDeclaration_0 = (EnumLiteralDeclaration)cAlternatives.eContents().get(0);
-		private final Keyword cPUREPUREKeyword_0_0 = (Keyword)cPUREEnumLiteralDeclaration_0.eContents().get(0);
+		private final Keyword cPUREPureKeyword_0_0 = (Keyword)cPUREEnumLiteralDeclaration_0.eContents().get(0);
 		private final EnumLiteralDeclaration cBOOLEnumLiteralDeclaration_1 = (EnumLiteralDeclaration)cAlternatives.eContents().get(1);
-		private final Keyword cBOOLBOOLKeyword_1_0 = (Keyword)cBOOLEnumLiteralDeclaration_1.eContents().get(0);
+		private final Keyword cBOOLBoolKeyword_1_0 = (Keyword)cBOOLEnumLiteralDeclaration_1.eContents().get(0);
 		private final EnumLiteralDeclaration cUNSIGNEDEnumLiteralDeclaration_2 = (EnumLiteralDeclaration)cAlternatives.eContents().get(2);
-		private final Keyword cUNSIGNEDUNSIGNEDKeyword_2_0 = (Keyword)cUNSIGNEDEnumLiteralDeclaration_2.eContents().get(0);
+		private final Keyword cUNSIGNEDUnsignedKeyword_2_0 = (Keyword)cUNSIGNEDEnumLiteralDeclaration_2.eContents().get(0);
 		private final EnumLiteralDeclaration cINTEnumLiteralDeclaration_3 = (EnumLiteralDeclaration)cAlternatives.eContents().get(3);
-		private final Keyword cINTINTKeyword_3_0 = (Keyword)cINTEnumLiteralDeclaration_3.eContents().get(0);
+		private final Keyword cINTIntKeyword_3_0 = (Keyword)cINTEnumLiteralDeclaration_3.eContents().get(0);
 		private final EnumLiteralDeclaration cFLOATEnumLiteralDeclaration_4 = (EnumLiteralDeclaration)cAlternatives.eContents().get(4);
-		private final Keyword cFLOATFLOATKeyword_4_0 = (Keyword)cFLOATEnumLiteralDeclaration_4.eContents().get(0);
+		private final Keyword cFLOATFloatKeyword_4_0 = (Keyword)cFLOATEnumLiteralDeclaration_4.eContents().get(0);
 		private final EnumLiteralDeclaration cHOSTEnumLiteralDeclaration_5 = (EnumLiteralDeclaration)cAlternatives.eContents().get(5);
-		private final Keyword cHOSTHOSTKeyword_5_0 = (Keyword)cHOSTEnumLiteralDeclaration_5.eContents().get(0);
+		private final Keyword cHOSTHostKeyword_5_0 = (Keyword)cHOSTEnumLiteralDeclaration_5.eContents().get(0);
 		
 		/// *
-		//   the following declarations are re-used in Interface.xtext, Kits.xtext 
+		//   the following declarations are re-used in Actions.xtext, Interface.xtext, Kits.xtext 
 		// * /enum ValueType:
-		//	PURE | BOOL | UNSIGNED | INT | FLOAT | HOST;
+		//	PURE="pure" | BOOL="bool" | UNSIGNED="unsigned" | INT="int" | FLOAT="float" | HOST="host";
 		public EnumRule getRule() { return rule; }
 
-		//PURE | BOOL | UNSIGNED | INT | FLOAT | HOST
+		//PURE="pure" | BOOL="bool" | UNSIGNED="unsigned" | INT="int" | FLOAT="float" | HOST="host"
 		public Alternatives getAlternatives() { return cAlternatives; }
 
-		//PURE
+		//PURE="pure"
 		public EnumLiteralDeclaration getPUREEnumLiteralDeclaration_0() { return cPUREEnumLiteralDeclaration_0; }
 
-		//"PURE"
-		public Keyword getPUREPUREKeyword_0_0() { return cPUREPUREKeyword_0_0; }
+		//"pure"
+		public Keyword getPUREPureKeyword_0_0() { return cPUREPureKeyword_0_0; }
 
-		//BOOL
+		//BOOL="bool"
 		public EnumLiteralDeclaration getBOOLEnumLiteralDeclaration_1() { return cBOOLEnumLiteralDeclaration_1; }
 
-		//"BOOL"
-		public Keyword getBOOLBOOLKeyword_1_0() { return cBOOLBOOLKeyword_1_0; }
+		//"bool"
+		public Keyword getBOOLBoolKeyword_1_0() { return cBOOLBoolKeyword_1_0; }
 
-		//UNSIGNED
+		//UNSIGNED="unsigned"
 		public EnumLiteralDeclaration getUNSIGNEDEnumLiteralDeclaration_2() { return cUNSIGNEDEnumLiteralDeclaration_2; }
 
-		//"UNSIGNED"
-		public Keyword getUNSIGNEDUNSIGNEDKeyword_2_0() { return cUNSIGNEDUNSIGNEDKeyword_2_0; }
+		//"unsigned"
+		public Keyword getUNSIGNEDUnsignedKeyword_2_0() { return cUNSIGNEDUnsignedKeyword_2_0; }
 
-		//INT
+		//INT="int"
 		public EnumLiteralDeclaration getINTEnumLiteralDeclaration_3() { return cINTEnumLiteralDeclaration_3; }
 
-		//"INT"
-		public Keyword getINTINTKeyword_3_0() { return cINTINTKeyword_3_0; }
+		//"int"
+		public Keyword getINTIntKeyword_3_0() { return cINTIntKeyword_3_0; }
 
-		//FLOAT
+		//FLOAT="float"
 		public EnumLiteralDeclaration getFLOATEnumLiteralDeclaration_4() { return cFLOATEnumLiteralDeclaration_4; }
 
-		//"FLOAT"
-		public Keyword getFLOATFLOATKeyword_4_0() { return cFLOATFLOATKeyword_4_0; }
+		//"float"
+		public Keyword getFLOATFloatKeyword_4_0() { return cFLOATFloatKeyword_4_0; }
 
-		//HOST
+		//HOST="host"
 		public EnumLiteralDeclaration getHOSTEnumLiteralDeclaration_5() { return cHOSTEnumLiteralDeclaration_5; }
 
-		//"HOST"
-		public Keyword getHOSTHOSTKeyword_5_0() { return cHOSTHOSTKeyword_5_0; }
+		//"host"
+		public Keyword getHOSTHostKeyword_5_0() { return cHOSTHostKeyword_5_0; }
 	}
 
 	public class CombineOperatorElements extends AbstractEnumRuleElementFinder {
 		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "CombineOperator");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
 		private final EnumLiteralDeclaration cNONEEnumLiteralDeclaration_0 = (EnumLiteralDeclaration)cAlternatives.eContents().get(0);
-		private final Keyword cNONENONEKeyword_0_0 = (Keyword)cNONEEnumLiteralDeclaration_0.eContents().get(0);
+		private final Keyword cNONENoneKeyword_0_0 = (Keyword)cNONEEnumLiteralDeclaration_0.eContents().get(0);
 		private final EnumLiteralDeclaration cADDEnumLiteralDeclaration_1 = (EnumLiteralDeclaration)cAlternatives.eContents().get(1);
 		private final Keyword cADDPlusSignKeyword_1_0 = (Keyword)cADDEnumLiteralDeclaration_1.eContents().get(0);
 		private final EnumLiteralDeclaration cMULTEnumLiteralDeclaration_2 = (EnumLiteralDeclaration)cAlternatives.eContents().get(2);
@@ -1080,17 +1088,17 @@ public class ExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cHOSTHostKeyword_7_0 = (Keyword)cHOSTEnumLiteralDeclaration_7.eContents().get(0);
 		
 		//enum CombineOperator:
-		//	NONE | ADD="+" | MULT="*" | MAX="max" | MIN="min" | OR="or" | AND="and" | HOST="host";
+		//	NONE="none" | ADD="+" | MULT="*" | MAX="max" | MIN="min" | OR="or" | AND="and" | HOST="host";
 		public EnumRule getRule() { return rule; }
 
-		//NONE | ADD="+" | MULT="*" | MAX="max" | MIN="min" | OR="or" | AND="and" | HOST="host"
+		//NONE="none" | ADD="+" | MULT="*" | MAX="max" | MIN="min" | OR="or" | AND="and" | HOST="host"
 		public Alternatives getAlternatives() { return cAlternatives; }
 
-		//NONE
+		//NONE="none"
 		public EnumLiteralDeclaration getNONEEnumLiteralDeclaration_0() { return cNONEEnumLiteralDeclaration_0; }
 
-		//"NONE"
-		public Keyword getNONENONEKeyword_0_0() { return cNONENONEKeyword_0_0; }
+		//"none"
+		public Keyword getNONENoneKeyword_0_0() { return cNONENoneKeyword_0_0; }
 
 		//ADD="+"
 		public EnumLiteralDeclaration getADDEnumLiteralDeclaration_1() { return cADDEnumLiteralDeclaration_1; }
@@ -1156,7 +1164,7 @@ public class ExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 	private IntValueElements pIntValue;
 	private FloatValueElements pFloatValue;
 	private BooleanValueElements pBooleanValue;
-	private EStringElements pEString;
+	private AnyTypeElements pAnyType;
 	private CompareOperatorElements unknownRuleCompareOperator;
 	private PreOperatorElements unknownRulePreOperator;
 	private OrOperatorElements unknownRuleOrOperator;
@@ -1176,13 +1184,13 @@ public class ExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 	
 	private final GrammarProvider grammarProvider;
 
-	private TerminalsGrammarAccess gaTerminals;
+	private AnnotationsGrammarAccess gaAnnotations;
 
 	@Inject
 	public ExpressionsGrammarAccess(GrammarProvider grammarProvider,
-		TerminalsGrammarAccess gaTerminals) {
+		AnnotationsGrammarAccess gaAnnotations) {
 		this.grammarProvider = grammarProvider;
-		this.gaTerminals = gaTerminals;
+		this.gaAnnotations = gaAnnotations;
 	}
 	
 	public Grammar getGrammar() {	
@@ -1190,8 +1198,8 @@ public class ExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 
-	public TerminalsGrammarAccess getTerminalsGrammarAccess() {
-		return gaTerminals;
+	public AnnotationsGrammarAccess getAnnotationsGrammarAccess() {
+		return gaAnnotations;
 	}
 
 	
@@ -1391,9 +1399,6 @@ public class ExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		return getValuedObjectReferenceAccess().getRule();
 	}
 
-	//// Taken from oba's kits grammar
-	////TextExpression returns TextExpression: 
-	////	code=STRING ("(" type=ID ")")?; 
 	//// Taken from haf's kits grammar
 	//TextExpression:
 	//	code=STRING ("(" type=ID ")")?;
@@ -1435,14 +1440,17 @@ public class ExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		return getBooleanValueAccess().getRule();
 	}
 
-	//EString returns ecore::EString:
-	//	STRING | ID;
-	public EStringElements getEStringAccess() {
-		return (pEString != null) ? pEString : (pEString = new EStringElements());
+	//// data type rule allowing any kind of value to be accepted,
+	//// e.g. as initialValues of valuedObjects
+	//// used in Kits.xtext 
+	//AnyType returns ecore::EString:
+	//	Boolean | INT | Float | EString;
+	public AnyTypeElements getAnyTypeAccess() {
+		return (pAnyType != null) ? pAnyType : (pAnyType = new AnyTypeElements());
 	}
 	
-	public ParserRule getEStringRule() {
-		return getEStringAccess().getRule();
+	public ParserRule getAnyTypeRule() {
+		return getAnyTypeAccess().getRule();
 	}
 
 	//enum CompareOperator returns OperatorType:
@@ -1556,9 +1564,9 @@ public class ExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	/// *
-	//   the following declarations are re-used in Interface.xtext, Kits.xtext 
+	//   the following declarations are re-used in Actions.xtext, Interface.xtext, Kits.xtext 
 	// * /enum ValueType:
-	//	PURE | BOOL | UNSIGNED | INT | FLOAT | HOST;
+	//	PURE="pure" | BOOL="bool" | UNSIGNED="unsigned" | INT="int" | FLOAT="float" | HOST="host";
 	public ValueTypeElements getValueTypeAccess() {
 		return (unknownRuleValueType != null) ? unknownRuleValueType : (unknownRuleValueType = new ValueTypeElements());
 	}
@@ -1568,7 +1576,7 @@ public class ExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//enum CombineOperator:
-	//	NONE | ADD="+" | MULT="*" | MAX="max" | MIN="min" | OR="or" | AND="and" | HOST="host";
+	//	NONE="none" | ADD="+" | MULT="*" | MAX="max" | MIN="min" | OR="or" | AND="and" | HOST="host";
 	public CombineOperatorElements getCombineOperatorAccess() {
 		return (unknownRuleCombineOperator != null) ? unknownRuleCombineOperator : (unknownRuleCombineOperator = new CombineOperatorElements());
 	}
@@ -1591,46 +1599,106 @@ public class ExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		return (tFloat != null) ? tFloat : (tFloat = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "Float"));
 	} 
 
+	//// introduce boolean values
 	//terminal Boolean returns ecore::EBooleanObject:
 	//	"true" | "false";
 	public TerminalRule getBooleanRule() {
 		return (tBoolean != null) ? tBoolean : (tBoolean = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "Boolean"));
 	} 
 
+	//// --------------------------
+	////
+	////   EXPRESSIONS
+	////
+	//// --------------------------
+	//// introduction of parsing rules for annotations
+	//// are to be moved into Annotations.xtext in the future!!
+	//StringAnnotation returns Annotation:
+	//	CommentAnnotation | KeyValueAnnotation;
+	public AnnotationsGrammarAccess.StringAnnotationElements getStringAnnotationAccess() {
+		return gaAnnotations.getStringAnnotationAccess();
+	}
+	
+	public ParserRule getStringAnnotationRule() {
+		return getStringAnnotationAccess().getRule();
+	}
+
+	//// e.g.: / ** semantic comment * /
+	//CommentAnnotation returns StringAnnotation:
+	//	value=COMMENT_ANNOTATION;
+	public AnnotationsGrammarAccess.CommentAnnotationElements getCommentAnnotationAccess() {
+		return gaAnnotations.getCommentAnnotationAccess();
+	}
+	
+	public ParserRule getCommentAnnotationRule() {
+		return getCommentAnnotationAccess().getRule();
+	}
+
+	//// e.g.: @layouter dot; @layoutOptions "margin 5, dir top-down";    
+	//KeyValueAnnotation returns StringAnnotation:
+	//	"@" name=ID value=EString;
+	public AnnotationsGrammarAccess.KeyValueAnnotationElements getKeyValueAnnotationAccess() {
+		return gaAnnotations.getKeyValueAnnotationAccess();
+	}
+	
+	public ParserRule getKeyValueAnnotationRule() {
+		return getKeyValueAnnotationAccess().getRule();
+	}
+
+	//// allow strings without quotes as they don'c contain spaces
+	//EString returns ecore::EString:
+	//	STRING | ID;
+	public AnnotationsGrammarAccess.EStringElements getEStringAccess() {
+		return gaAnnotations.getEStringAccess();
+	}
+	
+	public ParserRule getEStringRule() {
+		return getEStringAccess().getRule();
+	}
+
+	//// custom terminal rule introducing semantic comments
+	//terminal COMMENT_ANNOTATION:
+	//	"/ **"->"* /";
+	public TerminalRule getCOMMENT_ANNOTATIONRule() {
+		return gaAnnotations.getCOMMENT_ANNOTATIONRule();
+	} 
+
+	//// modified version of Terminals.ML_COMMENT as
+	//// COMMENT_ANNOTATION is not recognized correctly with original one 
+	//terminal ML_COMMENT:
+	//	"/ *" !"*"->"* /";
+	public TerminalRule getML_COMMENTRule() {
+		return gaAnnotations.getML_COMMENTRule();
+	} 
+
 	//terminal ID:
 	//	"^"? ("a".."z" | "A".."Z" | "_") ("a".."z" | "A".."Z" | "_" | "0".."9")*;
 	public TerminalRule getIDRule() {
-		return gaTerminals.getIDRule();
+		return gaAnnotations.getIDRule();
 	} 
 
 	//terminal STRING:
 	//	"\"" ("\\" ("b" | "t" | "n" | "f" | "r" | "\"" | "\'" | "\\") | !("\\" | "\""))* "\"" | "\'" ("\\" ("b" | "t" | "n" |
 	//	"f" | "r" | "\"" | "\'" | "\\") | !("\\" | "\'"))* "\'";
 	public TerminalRule getSTRINGRule() {
-		return gaTerminals.getSTRINGRule();
-	} 
-
-	//terminal ML_COMMENT:
-	//	"/ *"->"* /";
-	public TerminalRule getML_COMMENTRule() {
-		return gaTerminals.getML_COMMENTRule();
+		return gaAnnotations.getSTRINGRule();
 	} 
 
 	//terminal SL_COMMENT:
 	//	"//" !("\n" | "\r")* ("\r"? "\n")?;
 	public TerminalRule getSL_COMMENTRule() {
-		return gaTerminals.getSL_COMMENTRule();
+		return gaAnnotations.getSL_COMMENTRule();
 	} 
 
 	//terminal WS:
 	//	(" " | "\t" | "\r" | "\n")+;
 	public TerminalRule getWSRule() {
-		return gaTerminals.getWSRule();
+		return gaAnnotations.getWSRule();
 	} 
 
 	//terminal ANY_OTHER:
 	//	.;
 	public TerminalRule getANY_OTHERRule() {
-		return gaTerminals.getANY_OTHERRule();
+		return gaAnnotations.getANY_OTHERRule();
 	} 
 }

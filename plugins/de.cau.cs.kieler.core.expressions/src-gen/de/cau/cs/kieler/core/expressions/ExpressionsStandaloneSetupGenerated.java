@@ -15,7 +15,7 @@ import com.google.inject.Injector;
 public class ExpressionsStandaloneSetupGenerated implements ISetup {
 
 	public Injector createInjectorAndDoEMFRegistration() {
-		org.eclipse.xtext.common.TerminalsStandaloneSetup.doSetup();
+		de.cau.cs.kieler.core.annotations.AnnotationsStandaloneSetup.doSetup();
 
 		Injector injector = createInjector();
 		register(injector);
