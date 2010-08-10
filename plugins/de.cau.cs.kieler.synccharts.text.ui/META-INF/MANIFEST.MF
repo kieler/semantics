@@ -14,8 +14,9 @@ Require-Bundle: org.eclipse.xtext.ui,
  org.antlr.runtime,
  de.cau.cs.kieler.core.annotations;bundle-version="0.1.0",
  de.cau.cs.kieler.core.annotations.ui;bundle-version="0.1.0",
+ de.cau.cs.kieler.core.expressions;bundle-version="0.1.0",
  de.cau.cs.kieler.core.expressions.ui;bundle-version="0.1.0",
- de.cau.cs.kieler.synccharts.text;visibility:=reexport
+ de.cau.cs.kieler.synccharts.text
 Import-Package: org.apache.log4j
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Export-Package: de.cau.cs.kieler.synccharts.text.actions.ui.contentassist.antlr,
