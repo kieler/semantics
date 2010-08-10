@@ -89,7 +89,7 @@
          <Checkfile
                ePackageId="de.cau.cs.kieler.synccharts"
                id="de.cau.cs.kieler.synccharts.KleptoChecks"
-               isEnabledByDefault="false"
+               isEnabledByDefault="true"
                isWrapExistingValidator="true"
                name="Klepto Checks"
                path="model/SyncchartsKleptoChecks.chk"
