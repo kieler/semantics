@@ -1,5 +1,11 @@
 import uml;
 
+extension org::eclipse::xtend::util::stdlib::io;          // debug printouts
+extension org::eclipse::xtend::util::stdlib::crossref;    // find elements that reference others
+extension org::eclipse::xtend::util::stdlib::cloning;     // copy model elements and whole trees
+extension org::eclipse::xtend::util::stdlib::tracing;     // create map between transformed objects
+extension org::eclipse::xtend::util::stdlib::issues;      // pass messages back to java (e.g. to UI)
+
 //extension Extensions reexport;
 
 String trigger2(Transition transition):
