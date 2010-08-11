@@ -36,6 +36,8 @@ public class DataObject {
     /** The type of the data, given in data types known by KViD. */
     private DataType type;
     
+    private List<IDataListener> listeners = new LinkedList<IDataListener>();
+    
     /** Set true to save values in a history list. */
     private boolean savesHistory = false; 
     
@@ -106,6 +108,9 @@ public class DataObject {
         if (savesHistory) {
             this.history.add(thedata);
         }
+        for (IDataListener listener : listeners) {
+            listener.triggerDataChanged();
+        }
     }
     
     public String getURI() {
@@ -134,8 +139,38 @@ public class DataObject {
         this.savesHistory = doSaveHistory;
     }
     
+    public int getHistoryLength() {
+        return history.size();
+    }
+    
+    public Object getHistoryValue(int which) {
+        if (which < 0 || history.size() <= which) {
+            throw new RuntimeException("Tried to receive a non existing history value");
+        }
+        switch (type) {
+        case INT:
+            return Integer.parseInt(history.get(which));
+        case FLOAT:
+            return Float.parseFloat(history.get(which));
+        case STRING:
+            return history.get(which);
+        case BOOLEAN:
+            return Boolean.parseBoolean(history.get(which));
+        default:
+            throw new RuntimeException("Data Type not supported: " + type.name());
+        }
+    }
+    
     public void clearHistory() {
         this.history.clear();
+    }
+    
+    public void registerDataListener(IDataListener thelistener) {
+        listeners.add(thelistener);
+    }
+    
+    public void removeDataListener(IDataListener thelistener) {
+        listeners.remove(thelistener);
     }
 
 }
