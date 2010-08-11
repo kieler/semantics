@@ -12,7 +12,7 @@
    <extension
          point="de.cau.cs.kieler.sim.kiem.config.DefaultScheduleContributor">
       <executionFile
-            file="execution/sc.execution">
+            file="execution/synccharts_sc.execution">
          <editor
                id="de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorID"
                name="SyncChart Editor"
