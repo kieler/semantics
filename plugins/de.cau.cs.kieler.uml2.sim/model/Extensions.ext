@@ -181,6 +181,16 @@ String getTrigger(String transitionLabel):
 
 //-----------------------------------------------------------------------------
 
+// Checks whether a transition is eligible to be considered by the maude code
+// generation or in the other case is already handled by the maude simulatior
+// implicitly. 
+Boolean isConsidered(Transition transition):
+  let sourceVertex = transition.source:
+  !(sourceVertex.isInitial() || sourceVertex.isDH() || sourceVertex.isSH())
+;
+
+//-----------------------------------------------------------------------------
+
 // Test whether a vertex is of type Initial
 Boolean isInitial(Vertex vertex):
   JAVA de.cau.cs.kieler.uml2.sim.JavaEscape.isInitial(org.eclipse.uml2.uml.Vertex)
