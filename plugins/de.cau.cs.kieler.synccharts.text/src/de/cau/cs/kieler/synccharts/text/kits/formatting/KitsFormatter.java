@@ -54,13 +54,13 @@ public class KitsFormatter extends ActionsFormatter {
 		
 		// why does this not work as intended :-(
 		c.setLinewrap().before(f.getRegionRule());
-		c.setLinewrap().after(f.getRegionAccess().getLabelAssignment_1_0_3());
-		c.setLinewrap().after(f.getRegionAccess().getImportURIAssignment_0_1_1());
+                c.setLinewrap().after(f.getRegionAccess().getLabelAssignment_0_3());
+//                c.setLinewrap().after(f.getRootRegionAccess().getLabelAssignment_0_1_3());
 		
 		// have a blank between states
 		// unfortunately, the first declaration doesn't work as intended
 		// c.setLinewrap(2).after(f.getStateRule());
-		c.setLinewrap(2).after(f.getStateAccess().getSemicolonKeyword_6_0_2());
+		c.setLinewrap(2).after(f.getStateAccess().getSemicolonKeyword_6_0_1());
 		c.setLinewrap(2).after(f.getStateAccess().getSemicolonKeyword_6_1_3_2());
 				
 		c.setLinewrap().after(f.getSignalRule());
