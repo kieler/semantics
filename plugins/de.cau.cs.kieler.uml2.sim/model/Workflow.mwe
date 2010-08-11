@@ -27,7 +27,7 @@
 	<component class="org.eclipse.xpand2.Generator">
 		<metaModel idRef="mm_emf"/>
 		<expand
-			value="models::Template::main FOR model" />
+			value="model::Template::main FOR model" />
 		<outlet path="${src-gen}" >
 			<postprocessor class="org.eclipse.xpand2.output.JavaBeautifier" />
 		</outlet>

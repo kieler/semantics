@@ -181,12 +181,6 @@ String getTrigger(String transitionLabel):
 
 //-----------------------------------------------------------------------------
 
-Boolean isInitialTransition(Transition transition):
-	((org::eclipse::uml2::uml::Transition)transition).
-;
-
-//-----------------------------------------------------------------------------
-
 // Test whether a vertex is of type Initial
 Boolean isInitial(Vertex vertex):
   JAVA de.cau.cs.kieler.uml2.sim.JavaEscape.isInitial(org.eclipse.uml2.uml.Vertex)
