@@ -796,13 +796,22 @@
         
         <ant antfile="${eclipse.pdebuild.scripts}/productBuild/productBuild.xml" />
 
-        <!-- setting the executable flag on launcher binaries
+        <!-- setting the executable flag on launcher binaries and added a corrected config.ini
              CAUTION: foreach is a ant-contrib task declared above! -->
         <foreach param="zipfile" target="update.launcher">
             <path id="products">
                 <fileset dir="${buildLabel}" includes="*.zip" excludes="*win32*" />
             </path>
         </foreach>
+        
+        <!-- modifying the kieler.ini
+             CAUTION: foreach is a ant-contrib task declared above! -->
+        <foreach param="zipfile" target="update.config">
+            <path id="products">
+                <fileset dir="${buildLabel}" includes="*.zip" excludes="*macosx*" />
+            </path>
+        </foreach>
+
     </target>
     
     <!-- =========================================================================================== -->
@@ -822,7 +831,8 @@
             <patternset includes="${basename}/${basename}" />
             <patternset includes="${executables}" />
         </unzip>
-	<copy file="${config.dir}/config.ini" tofile="${basedir}/${buildLabel}/${platform}/kieler/configuration/config.ini" overwrite="true" />
+        <copy file="${config.dir}/config.ini" tofile="${basedir}/${buildLabel}/${platform}/kieler/configuration/config.ini" overwrite="true" />
+
         <touch>
             <fileset dir="${basedir}/${buildLabel}/${platform}" />
         </touch>
@@ -831,6 +841,25 @@
         </zip>
         <delete dir="${basedir}/${buildLabel}/${platform}" />
 
+    </target>
+    
+    <!-- =========================================================================================== -->
+
+    <target name="update.config"
+        description="private target for modifying the ${basename}.ini for more PermGen memory">
+
+        <basename file="${zipfile}" property="platform" suffix="zip" />
+        <unzip dest="${basedir}/${buildLabel}/${platform}" src="${zipfile}">
+            <patternset includes="${basename}/${basename}.ini" />
+            <patternset includes="${executables}" />
+        </unzip>
+
+        <concat destfile="${basedir}/${buildLabel}/${platform}/${basename}/${basename}.ini" append="true">-XX:MaxPermSize=256m</concat>
+
+        <zip destfile="${zipfile}" update="true">
+            <zipfileset dir="${basedir}/${buildLabel}/${platform}" />
+        </zip>
+        <delete dir="${basedir}/${buildLabel}/${platform}" />
     </target>
     
     <!-- =========================================================================================== -->
