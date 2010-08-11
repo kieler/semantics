@@ -22,12 +22,13 @@
             name="Interfaces Editor">
         </editor>
         <editor
-            class="de.cau.cs.kieler.synccharts.text.kits.ui.CustomizedKitsExecutableExtensionFactory:org.eclipse.xtext.ui.editor.XtextEditor"
-            contributorClass="org.eclipse.ui.editors.text.TextEditorActionContributor"
-            default="true"
-            extensions="kits"
-            id="de.cau.cs.kieler.synccharts.text.kits.Kits"
-            name="Kits Editor">
+              class="de.cau.cs.kieler.synccharts.text.kits.ui.CustomizedKitsExecutableExtensionFactory:org.eclipse.xtext.ui.editor.XtextEditor"
+              contributorClass="org.eclipse.ui.editors.text.TextEditorActionContributor"
+              default="true"
+              extensions="kits"
+              icon="icons/obj16/SyncchartsTextFile.gif"
+              id="de.cau.cs.kieler.synccharts.text.kits.Kits"
+              name="Kits Editor">
         </editor>        
     </extension>
     <extension
