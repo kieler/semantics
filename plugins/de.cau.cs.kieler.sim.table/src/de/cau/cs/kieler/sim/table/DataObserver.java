@@ -169,10 +169,13 @@ public class DataObserver extends JSONStringDataComponent implements IJSONString
 
     // -------------------------------------------------------------------------
 
+    private boolean broughtToFront;
+
     /**
      * This method brings the Table view to the front.
      */
     public void bringToFront() {
+        broughtToFront = false;
         Display.getDefault().syncExec(new Runnable() {
             public void run() {
                 // bring TABLE view to the front (lazy loading)
@@ -186,6 +189,13 @@ public class DataObserver extends JSONStringDataComponent implements IJSONString
                 }
             }
         });
+        while (!broughtToFront) {
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     // -------------------------------------------------------------------------
