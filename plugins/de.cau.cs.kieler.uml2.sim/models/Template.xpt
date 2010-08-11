@@ -78,7 +78,7 @@ fmod eclipseInterface is
 *** Transitions 
 *** ToDo: (Important): Compute sources and targets sets
 *** ToDo: Remove initial states transitions 
-  ops «FOREACH this.getTransitions() AS transition SEPARATOR "  "-»«transition.getId()-»«ENDFOREACH-» :-> ModTransition .
+  ops «FOREACH this.getTransitions().select(e|e.getSource().isInitial()) AS transition SEPARATOR "  "-»«transition.getId()-»«ENDFOREACH-» :-> ModTransition .
   «FOREACH this.getTransitions() AS transition SEPARATOR '\n'-»«transition.genMaude()-»«ENDFOREACH-»
   
   op allTrans :-> Transitons .
