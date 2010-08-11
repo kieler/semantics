@@ -182,18 +182,15 @@ String getAction(String transitionLabel):
 String getTrigger(String transitionLabel):
   JAVA de.cau.cs.kieler.uml2.sim.JavaEscape.getTrigger(java.lang.String)
 ;
-Boolean isInitial(Vertex v):
-  (v.metaType != Pseudostate) ? false : v.isInitial()
-;
-Boolean isInitial(Pseudostate pstate):
-  JAVA de.cau.cs.kieler.uml2.sim.JavaEscape.isInitial(org.eclipse.uml2.uml.Pseudostate)
+Boolean isInitial(Vertex vertex):
+  JAVA de.cau.cs.kieler.uml2.sim.JavaEscape.isInitial(org.eclipse.uml2.uml.Vertex)
 ;
 // check wether the state is a deep history pseudostate
-Boolean isDH(Pseudostate pstate):
-  JAVA de.cau.cs.kieler.uml2.sim.JavaEscape.isDH(org.eclipse.uml2.uml.Pseudostate)
+Boolean isDH(Vertex vertex):
+  JAVA de.cau.cs.kieler.uml2.sim.JavaEscape.isDH(org.eclipse.uml2.uml.Vertex)
 ;
-Boolean isSH(Pseudostate pstate):
-  JAVA de.cau.cs.kieler.uml2.sim.JavaEscape.isSH(org.eclipse.uml2.uml.Pseudostate)
+Boolean isSH(Vertex vertex):
+  JAVA de.cau.cs.kieler.uml2.sim.JavaEscape.isSH(org.eclipse.uml2.uml.Vertex)
 ;
 
 String transID(String transid):

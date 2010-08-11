@@ -12,73 +12,73 @@ fmod eclipseInterface is
  including TRANSITIONS .
  including STATES .
 *** // Events //
-  ops ee0 susp ee0 ee1 ee1 res : -> Event .
+  ops ee1 ee0 ee0 res ee1 susp : -> Event .
   op allEvents : -> Events .
 
 *** // allActions //	
-  ops a4  a4 a3 a1  : -> Action .
+  ops a3 a4 a4  a1  : -> Action .
 
 ***// States //
-  ops Cinner CN CG Csusp CB CE Couter : -> ModState .	
-    eq Cinner = root(R "root") : C "outer" : R "inOuter" : C "inner" .
-    eq CN = root(R "root") : C "outer" : R "inOuter" : C "inner" : R "inInner1" : C "N" .
-    eq CG = root(R "root") : C "outer" : R "inOuter" : C "inner" : R "inInner0" : C "G" .
-    eq Csusp = root(R "root") : C "susp" .
+  ops CB CG Cinner CE Csusp CN Couter : -> ModState .	
     eq CB = root(R "root") : C "outer" : R "inOuter" : C "B" .
+    eq CG = root(R "root") : C "outer" : R "inOuter" : C "inner" : R "inInner0" : C "G" .
+    eq Cinner = root(R "root") : C "outer" : R "inOuter" : C "inner" .
     eq CE = root(R "root") : C "outer" : R "inOuter" : C "inner" : R "inInner0" : C "E" .
+    eq Csusp = root(R "root") : C "susp" .
+    eq CN = root(R "root") : C "outer" : R "inOuter" : C "inner" : R "inInner1" : C "N" .
     eq Couter = root(R "root") : C "outer" .	
 ***// Regions //
-  ops RinInner0 RinInner1 Rroot RinOuter : -> Region .
-    eq RinInner0 = root(R "root") : C "outer" : R "inOuter" : C "inner" : R "inInner0" .
+  ops RinInner1 RinOuter RinInner0 Rroot : -> Region .
     eq RinInner1 = root(R "root") : C "outer" : R "inOuter" : C "inner" : R "inInner1" .
-    eq Rroot = root(R "root") .
     eq RinOuter = root(R "root") : C "outer" : R "inOuter" .
+    eq RinInner0 = root(R "root") : C "outer" : R "inOuter" : C "inner" : R "inInner0" .
+    eq Rroot = root(R "root") .
 ***// allVerts //
   op allVerts : -> Verts .
-  eq allVerts = RinInner0, RinInner1, Rroot, RinOuter , Cinner, CN, CG, Csusp, CB, CE, Couter .
+  eq allVerts = RinInner1, RinOuter, RinInner0, Rroot , CB, CG, Cinner, CE, Csusp, CN, Couter .
 	
 ***// defaults //
-  ops defRinInner0 defRinInner1 defRroot defRinOuter : -> Default .
- eq defRinInner0 = RinInner0 default CE .
- eq defRinInner1 = RinInner1 default CN .
+  ops defRinInner1 defRinOuter defRinInner0 defRroot : -> Default .
  eq defRroot = Rroot default Couter .
  eq defRinOuter = RinOuter default CB .
+ eq defRinInner0 = RinInner0 default CE .
+ eq defRinInner1 = RinInner1 default CN .
   op allDefs : -> Defaults .
-  eq allDefs = defRinInner0, defRinInner1, defRroot, defRinOuter .
+  eq allDefs = defRinInner1, defRinOuter, defRinInner0, defRroot .
   
 ***// deep defaults //
-  ops dDefRinInner0 dDefRinInner1 dDefRroot dDefRinOuter : -> DeepDefault .
+  ops dDefRinInner1 dDefRinOuter dDefRinInner0 dDefRroot : -> DeepDefault .
  eq dDefRinOuter = RinOuter deepdefault CB .
   op allDHDefs : -> DeepDefaults .
-  eq allDHDefs = dDefRinInner0, dDefRinInner1, dDefRroot, dDefRinOuter .
+  eq allDHDefs = dDefRinInner1, dDefRinOuter, dDefRinInner0, dDefRroot .
 
 ***// shallow defaults //
-  ops sDefRinInner0 sDefRinInner1 sDefRroot sDefRinOuter : -> ShallowDefault .
+  ops sDefRinInner1 sDefRinOuter sDefRinInner0 sDefRroot : -> ShallowDefault .
   
   op allSHDefs : -> ShallowDefaults .
-  eq allSHDefs = sDefRinInner0, sDefRinInner1, sDefRroot, sDefRinOuter .
+  eq allSHDefs = sDefRinInner1, sDefRinOuter, sDefRinInner0, sDefRroot .
 
 *** Transitions 
 *** ToDo: (Important): Compute sources and targets sets
 *** ToDo: Remove initial states transitions 
-  ops tr8ceeea  trf18e8e  tr56860b  tr15311bd  tr7a5a19  tr1cd107f  tr1589e56  tre753  tr5b0668  trb122a1  tr1687e7c  tr14835fb  tr1033a6f  tr1f64158  trb1aebf :-> ModTransition .
-eq tr8ceeea = org.eclipse.uml2.uml.internal.impl.PseudostateImpl@e79839 (name: <unset>, visibility: <unset>) (kind: initial)null nil skip empty empty empty RinInner0 .
-eq trf18e8e = org.eclipse.uml2.uml.internal.impl.PseudostateImpl@3cc262 (name: <unset>, visibility: <unset>) (kind: join)ee0 nil a4 empty empty empty RinOuter .
-eq tr56860b = org.eclipse.uml2.uml.internal.impl.PseudostateImpl@eac5a (name: <unset>, visibility: <unset>) (kind: fork)null nil skip empty empty empty RinOuter .
-eq tr15311bd = org.eclipse.uml2.uml.internal.impl.StateImpl@59fb21 (name: outer, visibility: <unset>) (isLeaf: false)susp nil  empty empty empty Rroot .
-eq tr7a5a19 = org.eclipse.uml2.uml.internal.impl.StateImpl@11bed71 (name: B, visibility: <unset>) (isLeaf: false)ee0 nil a4 empty empty empty RinOuter .
-eq tr1cd107f = org.eclipse.uml2.uml.internal.impl.PseudostateImpl@1c50507 (name: <unset>, visibility: <unset>) (kind: initial)null nil skip empty empty empty RinInner1 .
-eq tr1589e56 = org.eclipse.uml2.uml.internal.impl.PseudostateImpl@3c2378 (name: <unset>, visibility: <unset>) (kind: deepHistory)null nil skip empty empty empty RinOuter .
-eq tre753 = org.eclipse.uml2.uml.internal.impl.PseudostateImpl@50ca0c (name: <unset>, visibility: <unset>) (kind: initial)null nil skip empty empty empty Rroot .
-eq tr5b0668 = org.eclipse.uml2.uml.internal.impl.StateImpl@1e1dadb (name: G, visibility: <unset>) (isLeaf: false)ee1 nil a3 empty empty empty RinInner0 .
-eq trb122a1 = org.eclipse.uml2.uml.internal.impl.PseudostateImpl@1addb59 (name: <unset>, visibility: <unset>) (kind: initial)null nil skip empty empty empty RinOuter .
-eq tr1687e7c = org.eclipse.uml2.uml.internal.impl.StateImpl@19f3736 (name: E, visibility: <unset>) (isLeaf: false)ee1 nil a1 empty empty empty RinInner0 .
-eq tr14835fb = org.eclipse.uml2.uml.internal.impl.StateImpl@1e1dadb (name: G, visibility: <unset>) (isLeaf: false)null nil skip empty empty empty RinInner0 .
-eq tr1033a6f = org.eclipse.uml2.uml.internal.impl.PseudostateImpl@eac5a (name: <unset>, visibility: <unset>) (kind: fork)null nil skip empty empty empty RinOuter .
-eq tr1f64158 = org.eclipse.uml2.uml.internal.impl.StateImpl@701a27 (name: N, visibility: <unset>) (isLeaf: false)null nil skip empty empty empty RinInner1 .
-eq trb1aebf = org.eclipse.uml2.uml.internal.impl.StateImpl@c623af (name: susp, visibility: <unset>) (isLeaf: false)res nil  empty empty empty Rroot .  
+  ops trf18e8e  tr1d5a0  tr15311bd  tr7a5a19  tr1589e56  trc623af  trb122a1  tr1478a43  tr3c2378  tr1cffeb4  tr14835fb  tr1033a6f  tr995a79  tr1f64158  trb1aebf :-> ModTransition .
+eq trf18e8e = org.eclipse.uml2.uml.internal.impl.PseudostateImpl@15575e0 (name: <unset>, visibility: <unset>) (kind: fork)null nil skip empty empty empty RinOuter .
+eq tr1d5a0 = org.eclipse.uml2.uml.internal.impl.StateImpl@e79839 (name: G, visibility: <unset>) (isLeaf: false)ee1 nil a3 empty empty empty RinInner0 .
+eq tr15311bd = org.eclipse.uml2.uml.internal.impl.PseudostateImpl@e753 (name: <unset>, visibility: <unset>) (kind: initial)null nil skip empty empty empty Rroot .
+eq tr7a5a19 = org.eclipse.uml2.uml.internal.impl.PseudostateImpl@15575e0 (name: <unset>, visibility: <unset>) (kind: fork)null nil skip empty empty empty RinOuter .
+eq tr1589e56 = org.eclipse.uml2.uml.internal.impl.PseudostateImpl@11bed71 (name: <unset>, visibility: <unset>) (kind: initial)null nil skip empty empty empty RinOuter .
+eq trc623af = org.eclipse.uml2.uml.internal.impl.PseudostateImpl@fdb00d (name: <unset>, visibility: <unset>) (kind: join)ee0 nil a4 empty empty empty RinOuter .
+eq trb122a1 = org.eclipse.uml2.uml.internal.impl.StateImpl@81b1fb (name: B, visibility: <unset>) (isLeaf: false)ee0 nil a4 empty empty empty RinOuter .
+eq tr1478a43 = org.eclipse.uml2.uml.internal.impl.StateImpl@50ca0c (name: susp, visibility: <unset>) (isLeaf: false)res nil  empty empty empty Rroot .
+eq tr3c2378 = org.eclipse.uml2.uml.internal.impl.StateImpl@1c50507 (name: N, visibility: <unset>) (isLeaf: false)null nil skip empty empty empty RinInner1 .
+eq tr1cffeb4 = org.eclipse.uml2.uml.internal.impl.StateImpl@e79839 (name: G, visibility: <unset>) (isLeaf: false)null nil skip empty empty empty RinInner0 .
+eq tr14835fb = org.eclipse.uml2.uml.internal.impl.StateImpl@1e1dadb (name: E, visibility: <unset>) (isLeaf: false)ee1 nil a1 empty empty empty RinInner0 .
+eq tr1033a6f = org.eclipse.uml2.uml.internal.impl.PseudostateImpl@3cc262 (name: <unset>, visibility: <unset>) (kind: deepHistory)null nil skip empty empty empty RinOuter .
+eq tr995a79 = org.eclipse.uml2.uml.internal.impl.PseudostateImpl@bac9b9 (name: <unset>, visibility: <unset>) (kind: initial)null nil skip empty empty empty RinInner0 .
+eq tr1f64158 = org.eclipse.uml2.uml.internal.impl.PseudostateImpl@1cd107f (name: <unset>, visibility: <unset>) (kind: initial)null nil skip empty empty empty RinInner1 .
+eq trb1aebf = org.eclipse.uml2.uml.internal.impl.StateImpl@1766806 (name: outer, visibility: <unset>) (isLeaf: false)susp nil  empty empty empty Rroot .  
   op allTrans :-> Transitons .
-  eq allTrans = tr8ceeea  trf18e8e  tr56860b  tr15311bd  tr7a5a19  tr1cd107f  tr1589e56  tre753  tr5b0668  trb122a1  tr1687e7c  tr14835fb  tr1033a6f  tr1f64158  trb1aebf .
+  eq allTrans = trf18e8e  tr1d5a0  tr15311bd  tr7a5a19  tr1589e56  trc623af  trb122a1  tr1478a43  tr3c2378  tr1cffeb4  tr14835fb  tr1033a6f  tr995a79  tr1f64158  trb1aebf .
 
 
 ***/// A state machine consits of Vertices Defaultsstatesfunction ShallowDefaultstatesfunction DeepDefaultstatesfunction EntryActionsfunction ExitActionsFunction Transitions 

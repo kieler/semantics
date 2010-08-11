@@ -29,13 +29,19 @@ public class JavaEscape {
     	return (this.contains(str)); 
     }
 
-    public Boolean isInitial(org.eclipse.uml2.uml.Pseudostate pstate) {
-    	return ((pstate.getKind()).getValue() == org.eclipse.uml2.uml.PseudostateKind.INITIAL); 
+    public Boolean isInitial(org.eclipse.uml2.uml.Vertex pstate) {
+    	// only a Pseudostate can be an initial state
+    	if (!(pstate instanceof Pseudostate)) return false;
+    	return ((((Pseudostate)pstate).getKind()).getValue() == org.eclipse.uml2.uml.PseudostateKind.INITIAL); 
     }
-    public Boolean isDH(org.eclipse.uml2.uml.Pseudostate pstate) {
-    	return ((pstate.getKind()).getValue() == org.eclipse.uml2.uml.PseudostateKind.DEEP_HISTORY); 
+    public Boolean isDH(org.eclipse.uml2.uml.Vertex pstate) {
+    	// only a Pseudostate can be a deep history state
+    	if (!(pstate instanceof Pseudostate)) return false;
+    	return ((((Pseudostate)pstate).getKind()).getValue() == org.eclipse.uml2.uml.PseudostateKind.DEEP_HISTORY); 
     }
-    public Boolean isSH(org.eclipse.uml2.uml.Pseudostate pstate) {
-    	return ((pstate.getKind()).getValue() == org.eclipse.uml2.uml.PseudostateKind.SHALLOW_HISTORY); 
+    public Boolean isSH(org.eclipse.uml2.uml.Vertex pstate) {
+    	// only a Pseudostate can be a shallow history state
+    	if (!(pstate instanceof Pseudostate)) return false;
+    	return ((((Pseudostate)pstate).getKind()).getValue() == org.eclipse.uml2.uml.PseudostateKind.SHALLOW_HISTORY); 
     }
 }
