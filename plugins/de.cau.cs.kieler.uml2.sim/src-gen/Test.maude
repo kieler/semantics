@@ -61,24 +61,24 @@ fmod eclipseInterface is
 *** Transitions 
 *** ToDo: (Important): Compute sources and targets sets
 *** ToDo: Remove initial states transitions 
-  ops trf18e8e  tr1d5a0  tr15311bd  tr7a5a19  tr1589e56  trc623af  trb122a1  tr1478a43  tr3c2378  tr1cffeb4  tr14835fb  tr1033a6f  tr995a79  tr1f64158  trb1aebf :-> ModTransition .
-eq trf18e8e = org.eclipse.uml2.uml.internal.impl.PseudostateImpl@15575e0 (name: <unset>, visibility: <unset>) (kind: fork)null nil skip empty empty empty RinOuter .
-eq tr1d5a0 = org.eclipse.uml2.uml.internal.impl.StateImpl@e79839 (name: G, visibility: <unset>) (isLeaf: false)ee1 nil a3 empty empty empty RinInner0 .
-eq tr15311bd = org.eclipse.uml2.uml.internal.impl.PseudostateImpl@e753 (name: <unset>, visibility: <unset>) (kind: initial)null nil skip empty empty empty Rroot .
-eq tr7a5a19 = org.eclipse.uml2.uml.internal.impl.PseudostateImpl@15575e0 (name: <unset>, visibility: <unset>) (kind: fork)null nil skip empty empty empty RinOuter .
-eq tr1589e56 = org.eclipse.uml2.uml.internal.impl.PseudostateImpl@11bed71 (name: <unset>, visibility: <unset>) (kind: initial)null nil skip empty empty empty RinOuter .
-eq trc623af = org.eclipse.uml2.uml.internal.impl.PseudostateImpl@fdb00d (name: <unset>, visibility: <unset>) (kind: join)ee0 nil a4 empty empty empty RinOuter .
-eq trb122a1 = org.eclipse.uml2.uml.internal.impl.StateImpl@81b1fb (name: B, visibility: <unset>) (isLeaf: false)ee0 nil a4 empty empty empty RinOuter .
-eq tr1478a43 = org.eclipse.uml2.uml.internal.impl.StateImpl@50ca0c (name: susp, visibility: <unset>) (isLeaf: false)res nil  empty empty empty Rroot .
-eq tr3c2378 = org.eclipse.uml2.uml.internal.impl.StateImpl@1c50507 (name: N, visibility: <unset>) (isLeaf: false)null nil skip empty empty empty RinInner1 .
-eq tr1cffeb4 = org.eclipse.uml2.uml.internal.impl.StateImpl@e79839 (name: G, visibility: <unset>) (isLeaf: false)null nil skip empty empty empty RinInner0 .
-eq tr14835fb = org.eclipse.uml2.uml.internal.impl.StateImpl@1e1dadb (name: E, visibility: <unset>) (isLeaf: false)ee1 nil a1 empty empty empty RinInner0 .
-eq tr1033a6f = org.eclipse.uml2.uml.internal.impl.PseudostateImpl@3cc262 (name: <unset>, visibility: <unset>) (kind: deepHistory)null nil skip empty empty empty RinOuter .
-eq tr995a79 = org.eclipse.uml2.uml.internal.impl.PseudostateImpl@bac9b9 (name: <unset>, visibility: <unset>) (kind: initial)null nil skip empty empty empty RinInner0 .
-eq tr1f64158 = org.eclipse.uml2.uml.internal.impl.PseudostateImpl@1cd107f (name: <unset>, visibility: <unset>) (kind: initial)null nil skip empty empty empty RinInner1 .
-eq trb1aebf = org.eclipse.uml2.uml.internal.impl.StateImpl@1766806 (name: outer, visibility: <unset>) (isLeaf: false)susp nil  empty empty empty Rroot .  
+  ops _S-ydsIuKEd-yoIYGk1D8vA  _Zk1koIuKEd-yoIYGk1D8vA  _H6AhoIuKEd-yoIYGk1D8vA  _ob7KIIuJEd-yoIYGk1D8vA  _ub69sIuJEd-yoIYGk1D8vA  _XzxPoIuKEd-yoIYGk1D8vA  _qDngsIuJEd-yoIYGk1D8vA  _LbxYMIuKEd-yoIYGk1D8vA  _WOFEMIuKEd-yoIYGk1D8vA  _VgYQsIuKEd-yoIYGk1D8vA  _lT5CMIuJEd-yoIYGk1D8vA  _NM-3IIuKEd-yoIYGk1D8vA  _jRuWIIuJEd-yoIYGk1D8vA  _SZjCoIuKEd-yoIYGk1D8vA  _I39-sIuKEd-yoIYGk1D8vA :-> ModTransition .
+eq tr_S-ydsIuKEd-yoIYGk1D8vA = _XkAKwIuJEd-yoIYGk1D8vA null nil skip empty empty empty RinOuter .
+eq tr_Zk1koIuKEd-yoIYGk1D8vA = _gmI5oIuJEd-yoIYGk1D8vA ee1 nil a3 empty empty empty RinInner0 .
+eq tr_H6AhoIuKEd-yoIYGk1D8vA = _HONyoIuKEd-yoIYGk1D8vA null nil skip empty empty empty Rroot .
+eq tr_ob7KIIuJEd-yoIYGk1D8vA = _XkAKwIuJEd-yoIYGk1D8vA null nil skip empty empty empty RinOuter .
+eq tr_ub69sIuJEd-yoIYGk1D8vA = _YUvEIIuJEd-yoIYGk1D8vA null nil skip empty empty empty RinOuter .
+eq tr_XzxPoIuKEd-yoIYGk1D8vA = _Uhp-oIuKEd-yoIYGk1D8vA ee0 nil a4 empty empty empty RinOuter .
+eq tr_qDngsIuJEd-yoIYGk1D8vA = _aCTZMIuJEd-yoIYGk1D8vA ee0 nil a4 empty empty empty RinOuter .
+eq tr_LbxYMIuKEd-yoIYGk1D8vA = _FiQnIIuKEd-yoIYGk1D8vA res nil  empty empty empty Rroot .
+eq tr_WOFEMIuKEd-yoIYGk1D8vA = _RL-cQIuKEd-yoIYGk1D8vA null nil skip empty empty empty RinInner1 .
+eq tr_VgYQsIuKEd-yoIYGk1D8vA = _gmI5oIuJEd-yoIYGk1D8vA null nil skip empty empty empty RinInner0 .
+eq tr_lT5CMIuJEd-yoIYGk1D8vA = _fj2WMIuJEd-yoIYGk1D8vA ee1 nil a1 empty empty empty RinInner0 .
+eq tr_NM-3IIuKEd-yoIYGk1D8vA = _KS5roIuKEd-yoIYGk1D8vA null nil skip empty empty empty RinOuter .
+eq tr_jRuWIIuJEd-yoIYGk1D8vA = _h7XAIIuJEd-yoIYGk1D8vA null nil skip empty empty empty RinInner0 .
+eq tr_SZjCoIuKEd-yoIYGk1D8vA = _R5WfoIuKEd-yoIYGk1D8vA null nil skip empty empty empty RinInner1 .
+eq tr_I39-sIuKEd-yoIYGk1D8vA = _PpBRMIuJEd-yoIYGk1D8vA susp nil  empty empty empty Rroot .  
   op allTrans :-> Transitons .
-  eq allTrans = trf18e8e  tr1d5a0  tr15311bd  tr7a5a19  tr1589e56  trc623af  trb122a1  tr1478a43  tr3c2378  tr1cffeb4  tr14835fb  tr1033a6f  tr995a79  tr1f64158  trb1aebf .
+  eq allTrans = _S-ydsIuKEd-yoIYGk1D8vA  _Zk1koIuKEd-yoIYGk1D8vA  _H6AhoIuKEd-yoIYGk1D8vA  _ob7KIIuJEd-yoIYGk1D8vA  _ub69sIuJEd-yoIYGk1D8vA  _XzxPoIuKEd-yoIYGk1D8vA  _qDngsIuJEd-yoIYGk1D8vA  _LbxYMIuKEd-yoIYGk1D8vA  _WOFEMIuKEd-yoIYGk1D8vA  _VgYQsIuKEd-yoIYGk1D8vA  _lT5CMIuJEd-yoIYGk1D8vA  _NM-3IIuKEd-yoIYGk1D8vA  _jRuWIIuJEd-yoIYGk1D8vA  _SZjCoIuKEd-yoIYGk1D8vA  _I39-sIuKEd-yoIYGk1D8vA .
 
 
 ***/// A state machine consits of Vertices Defaultsstatesfunction ShallowDefaultstatesfunction DeepDefaultstatesfunction EntryActionsfunction ExitActionsFunction Transitions 

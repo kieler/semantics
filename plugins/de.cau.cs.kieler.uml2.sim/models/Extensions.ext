@@ -13,10 +13,6 @@ String action2(Transition transition):
   getAction(transitionLabel.toString())
 ;
 
-// ToDo: Use better ID (not changing)
-String transID2(Transition transition):
-  transID(transition.toString())
-;
 
 //Effect effect2(Transition transition):
 //  let effect = new Trigger:
@@ -81,9 +77,9 @@ String getMaudeLabel(Region n):
 String genMaude(Transition n):
  // ToDo: generate source and target sets
  //(n.source).toString() + '   ' + (n.target).toString() + '   ' + n.trigger2() + '   ' + n.action2()+ '   ' +((Region)n.container).getMaudeLabel()
- 'eq '+n.transMID()+ ' = '+
+ 'eq tr'+n.getId()+ ' = '+
 // sources (States only)
- (n.source).toString() +
+ (n.source.getId()) + ' ' +
 // 'empty '+ 
 // Triggerevent
  n.trigger2() + 
@@ -193,12 +189,25 @@ Boolean isSH(Vertex vertex):
   JAVA de.cau.cs.kieler.uml2.sim.JavaEscape.isSH(org.eclipse.uml2.uml.Vertex)
 ;
 
-String transID(String transid):
-  JAVA de.cau.cs.kieler.uml2.sim.JavaEscape.transID(java.lang.String)
+String getId(Vertex vertex):
+  JAVA de.cau.cs.kieler.uml2.sim.JavaEscape.getId(org.eclipse.uml2.uml.Vertex)
 ;
-String transMID(Transition n):
-  'tr'+n.transID2()
+
+String getId(Transition transition):
+  JAVA de.cau.cs.kieler.uml2.sim.JavaEscape.getId(org.eclipse.uml2.uml.Transition)
 ;
+
+String hash(String string):
+  JAVA de.cau.cs.kieler.uml2.sim.JavaEscape.hash(java.lang.String)
+;
+
+//String transID(String transid):
+//  JAVA de.cau.cs.kieler.uml2.sim.JavaEscape.transID(java.lang.String)
+//;
+//String transMID(Transition n):
+//  'tr'+n.transID2()
+//;
+
 //Void test():
 //  let transition = new Transition :
 //  let transitionList = new List[Transition] : 
