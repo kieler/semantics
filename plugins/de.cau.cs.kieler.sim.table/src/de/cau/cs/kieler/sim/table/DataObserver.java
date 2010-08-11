@@ -184,6 +184,8 @@ public class DataObserver extends JSONStringDataComponent implements IJSONString
                             .getActiveWorkbenchWindow();
                     IViewPart vP = window.getActivePage().showView(TABLEVIEWID);
                     vP.setFocus();
+                    // set done flag
+                    broughtToFront = true;
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
