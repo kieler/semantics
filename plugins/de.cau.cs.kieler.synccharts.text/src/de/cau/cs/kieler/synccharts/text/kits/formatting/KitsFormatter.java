@@ -49,20 +49,18 @@ public class KitsFormatter extends ActionsFormatter {
 			c.setNoSpace().before(keyword);
 		}
 		
-		c.setLinewrap().after(f.getStringAnnotationRule());
-		c.setLinewrap().after(f.getCOMMENT_ANNOTATIONRule());
-		
-		c.setNoSpace().after(f.getKeyValueAnnotationAccess().getCommercialAtKeyword_0());
-		c.setLinewrap().after(f.getKeyValueAnnotationAccess().getValueEStringParserRuleCall_2_0());
+//		c.setLinewrap().after(f.getStringAnnotationRule());
+//		c.setLinewrap().after(f.getCOMMENT_ANNOTATIONRule());
 		
 		// why does this not work as intended :-(
 		c.setLinewrap().before(f.getRegionRule());
-		c.setLinewrap().after(f.getRegionAccess().getLabelAssignment_0_3());
+		c.setLinewrap().after(f.getRegionAccess().getLabelAssignment_1_0_3());
+		c.setLinewrap().after(f.getRegionAccess().getImportURIAssignment_0_1_1());
 		
 		// have a blank between states
 		// unfortunately, the first declaration doesn't work as intended
 		// c.setLinewrap(2).after(f.getStateRule());
-		c.setLinewrap(2).after(f.getStateAccess().getSemicolonKeyword_6_0_1());
+		c.setLinewrap(2).after(f.getStateAccess().getSemicolonKeyword_6_0_2());
 		c.setLinewrap(2).after(f.getStateAccess().getSemicolonKeyword_6_1_3_2());
 				
 		c.setLinewrap().after(f.getSignalRule());

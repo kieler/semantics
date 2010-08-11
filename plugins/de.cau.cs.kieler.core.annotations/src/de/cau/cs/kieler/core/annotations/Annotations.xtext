@@ -11,7 +11,6 @@ import "http://www.eclipse.org/emf/2002/Ecore" as ecore
 // --------------------------
 
 // introduction of parsing rules for annotations
-// are to be moved into Annotations.xtext in the future!!
 StringAnnotation returns Annotation:
 	CommentAnnotation
 	| KeyValueAnnotation
