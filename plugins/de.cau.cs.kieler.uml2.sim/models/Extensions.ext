@@ -77,7 +77,7 @@ String getMaudeLabel(Region n):
 String genMaude(Transition n):
  // ToDo: generate source and target sets
  //(n.source).toString() + '   ' + (n.target).toString() + '   ' + n.trigger2() + '   ' + n.action2()+ '   ' +((Region)n.container).getMaudeLabel()
- 'eq tr'+n.getId()+ ' = '+
+ 'eq tr_'+n.getId()+ ' = '+
 // sources (States only)
  (n.source.getId()) + ' ' +
 // 'empty '+ 
@@ -178,35 +178,52 @@ String getAction(String transitionLabel):
 String getTrigger(String transitionLabel):
   JAVA de.cau.cs.kieler.uml2.sim.JavaEscape.getTrigger(java.lang.String)
 ;
+
+//-----------------------------------------------------------------------------
+
+// Test whether a vertex is of type Initial
 Boolean isInitial(Vertex vertex):
   JAVA de.cau.cs.kieler.uml2.sim.JavaEscape.isInitial(org.eclipse.uml2.uml.Vertex)
 ;
-// check wether the state is a deep history pseudostate
+
+// Test whether a vertex is of type Deep History
 Boolean isDH(Vertex vertex):
   JAVA de.cau.cs.kieler.uml2.sim.JavaEscape.isDH(org.eclipse.uml2.uml.Vertex)
 ;
+
+// Test whether a vertex is of type Shallow History
 Boolean isSH(Vertex vertex):
   JAVA de.cau.cs.kieler.uml2.sim.JavaEscape.isSH(org.eclipse.uml2.uml.Vertex)
 ;
 
+// Test whether a vertex is of type Fork
+Boolean isFork(Vertex vertex):
+  JAVA de.cau.cs.kieler.uml2.sim.JavaEscape.isFork(org.eclipse.uml2.uml.Vertex)
+;
+
+// Test whether a vertex is of type Join
+Boolean isJoin(Vertex vertex):
+  JAVA de.cau.cs.kieler.uml2.sim.JavaEscape.isJoin(org.eclipse.uml2.uml.Vertex)
+;
+
+//-----------------------------------------------------------------------------
+
+// Get the ID of a vertex
 String getId(Vertex vertex):
   JAVA de.cau.cs.kieler.uml2.sim.JavaEscape.getId(org.eclipse.uml2.uml.Vertex)
 ;
 
+// Get the ID of a transition
 String getId(Transition transition):
   JAVA de.cau.cs.kieler.uml2.sim.JavaEscape.getId(org.eclipse.uml2.uml.Transition)
 ;
 
+// Get the hash value of a String
 String hash(String string):
   JAVA de.cau.cs.kieler.uml2.sim.JavaEscape.hash(java.lang.String)
 ;
 
-//String transID(String transid):
-//  JAVA de.cau.cs.kieler.uml2.sim.JavaEscape.transID(java.lang.String)
-//;
-//String transMID(Transition n):
-//  'tr'+n.transID2()
-//;
+//-----------------------------------------------------------------------------
 
 //Void test():
 //  let transition = new Transition :
