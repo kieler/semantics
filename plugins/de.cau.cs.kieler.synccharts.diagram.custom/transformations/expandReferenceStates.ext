@@ -43,7 +43,7 @@ State expandSyncChartsState (State referencingState):
 ;
 
 getExpandedStateName(State referencingState, State referencedState) :
-    referencingState.label + "_AT_" + referencedState.label;
+    "\"" + referencingState.label + "@" + referencedState.label + "\"";
 
 changeTypeToNormal(State s) :
 	s.setType(StateType::NORMAL) ->
@@ -57,9 +57,9 @@ Void executeSubstitution(Substitution renaming) :
     let oldID = renaming.formal :
     let newID = renaming.actual :
     let newSignal = getSignalForName(referencingState, newID) :
-    let signalReferences = referencingState.eAllContents.typeSelect(SignalReference).select(e|e.signal.name==oldID) :
+    let signalReferences = referencingState.eAllContents.typeSelect(ValuedObjectReference).select(e|Signal.isInstance(e) && e.valuedObject.name==oldID) :
     let emissions = referencingState.eAllContents.typeSelect(Emission).select(e|e.signal.name==oldID) :
-    (signalReferences.size > 0 ? renameSignalReference(signalReferences, newSignal) : null) ->
+    (signalReferences.size > 0 ? renameValuedObjectReference(signalReferences, newSignal) : null) ->
     (emissions.size > 0 ? renameEmission(emissions, newSignal) : null)
     ;
     
@@ -78,8 +78,8 @@ Void deleteSubstitution(Substitution renaming) :
 ;
 
     
-Void renameSignalReference(List[SignalReference] signalReferences, Signal newSignal) :
-    signalReferences.setSignal(newSignal);
+Void renameValuedObjectReference(List[ValuedObjectReference] valuedObjectReferences, ValuedObject newVO) :
+    valuedObjectReferences.setValuedObject(newVO);
 
 Void renameEmission(List[Emission] emission, Signal newSignal) :
     emission.setSignal(newSignal);

@@ -13,7 +13,9 @@
  */
 package de.cau.cs.kieler.synccharts.diagram.custom.handlers;
 
+import java.util.Arrays;
 import java.util.Iterator;
+import java.util.List;
 
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
@@ -21,8 +23,6 @@ import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.expressions.EvaluationContext;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.ecore.resource.URIConverter;
-import org.eclipse.emf.ecore.resource.impl.ExtensibleURIConverterImpl;
 import org.eclipse.emf.mwe.core.WorkflowContext;
 import org.eclipse.emf.mwe.core.WorkflowContextDefaultImpl;
 import org.eclipse.emf.mwe.core.issues.Issues;
@@ -34,8 +34,6 @@ import org.eclipse.emf.mwe.utils.Writer;
 import org.eclipse.xtend.XtendComponent;
 import org.eclipse.xtend.typesystem.emf.EmfMetaModel;
 
-import de.cau.cs.kieler.synccharts.SyncchartsPackage;
-
 /**
  * A command that expands all referenceMacroStates in a given file <name>[.kixs] and writes the expanded
  * superstate to a new file <name>_EXPANDED.kixs
@@ -45,7 +43,8 @@ import de.cau.cs.kieler.synccharts.SyncchartsPackage;
 public class ExpandMacroStatesCommand extends AbstractHandler {
 
     /** File extension for model files. */
-    private static final String MODEL_EXTENSION = "kixs";
+    
+    private static final List<String> MODEL_EXTENSIONS = Arrays.asList(new String[]{ "kixs","kits" });
 
     /**
      * 
@@ -65,7 +64,7 @@ public class ExpandMacroStatesCommand extends AbstractHandler {
                     Object o = iter.next();
                     if (o instanceof org.eclipse.core.internal.resources.File) {
                         IPath path = ((org.eclipse.core.internal.resources.File) o).getFullPath();
-                        if (path.getFileExtension().equals(MODEL_EXTENSION)) {
+                        if (MODEL_EXTENSIONS.contains(path.getFileExtension())) {
                             super.setBaseEnabled(true);
                             return;
                         }
@@ -108,7 +107,8 @@ public class ExpandMacroStatesCommand extends AbstractHandler {
     }
 
     private void expandMacroStates(final IPath path) {
-    	IPath target;
+ 
+   	IPath target;
         Workflow workflow;
         WorkflowContext wfx;
         NullProgressMonitor monitor;
@@ -120,8 +120,9 @@ public class ExpandMacroStatesCommand extends AbstractHandler {
     	
     	target = (IPath) path.clone();
         target = target.removeFileExtension();
-        String filename = target.lastSegment() + "_EXPANDED.kixs";
-        String filename2 = target.lastSegment() + "_EXPANDED.mwe";
+        String ext = path.getFileExtension();
+        String filename = target.lastSegment() + "_EXPANDED." + ext;
+//        String filename2 = target.lastSegment() + "_EXPANDED.mwe";
         target = target.removeLastSegments(1).append(filename);
         
 
@@ -147,7 +148,7 @@ public class ExpandMacroStatesCommand extends AbstractHandler {
         URI fileURI = URI.createPlatformResourceURI(path.toOSString(), true);
 
         //create a URI converter in order to resolve the file
-        URIConverter uriConverter = new ExtensibleURIConverterImpl();
+//        URIConverter uriConverter = new ExtensibleURIConverterImpl();
 
         xmiReader.setUri(fileURI.toString());
         
