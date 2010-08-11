@@ -26,6 +26,7 @@ import org.eclipse.jface.viewers.ViewerCell;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Table;
+import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
 
 import de.cau.cs.kieler.kvid.datadistributor.IPropertyListener;
@@ -155,14 +156,22 @@ public class PropertiesView extends ViewPart implements IPropertyListener {
                 step.setEnabled(false);
             }
         }
-        tableViewer.setInput(RuntimeConfiguration.getInstance().getKnownProperties());
+        PlatformUI.getWorkbench().getDisplay().syncExec(new Runnable() {
+            public void run() {
+                tableViewer.setInput(RuntimeConfiguration.getInstance().getKnownProperties());
+            }
+        });
     }
 
     /* (non-Javadoc)
      * @see de.cau.cs.kieler.kvid.datadistributor.IPropertyListener#triggerPropertyListChanged()
      */
     public void triggerPropertyListChanged() {
-        tableViewer.setInput(RuntimeConfiguration.getInstance().getKnownProperties());
+        PlatformUI.getWorkbench().getDisplay().syncExec(new Runnable() {
+            public void run() {
+                tableViewer.setInput(RuntimeConfiguration.getInstance().getKnownProperties());
+            }
+        });
     }
 
 }
