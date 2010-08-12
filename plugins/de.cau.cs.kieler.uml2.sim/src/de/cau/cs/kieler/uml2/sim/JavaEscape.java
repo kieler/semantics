@@ -2,6 +2,8 @@ package de.cau.cs.kieler.uml2.sim;
 
 import java.util.LinkedList;
 
+import org.eclipse.emf.common.util.BasicEList;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.uml2.uml.Pseudostate;
 import org.eclipse.uml2.uml.PseudostateKind;
 import org.eclipse.uml2.uml.Vertex;
@@ -151,4 +153,10 @@ public class JavaEscape {
 	}
 
 	// ------------------------------------------------------------------------
+	
+	public static EList<Vertex> getSourceNodes(Pseudostate pseudostate) {
+		EList<Vertex> returnList = new BasicEList<Vertex>();
+		//pseudostate.eAllContents().
+		return returnList;
+	}
 }

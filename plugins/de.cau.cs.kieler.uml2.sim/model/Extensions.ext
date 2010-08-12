@@ -187,7 +187,19 @@ String getTrigger(String transitionLabel):
 
 
 //-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
 
+List[Transition] getIncomingTransitions(Vertex vertex) :
+   vertex.eAllContents.select(e|e.metaType == Transition && ((Transition)e).target == vertex)
+;
+
+//-----------------------------------------------------------------------------
+
+List[Transition] getOutgoingTransitions(Vertex vertex) :
+   vertex.eAllContents.select(e|e.metaType == Transition && ((Transition)e).source == vertex)
+;
+
+//-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 
 // Checks whether a transition is eligible to be considered by the maude code
@@ -199,6 +211,98 @@ Boolean isConsidered(Transition transition):
   !(source.isInitial() || source.isDH() || source.isSH() || source.isFork() || source.isJoin()
   || target.isFork() || target.isJoin())
 ;
+
+//-----------------------------------------------------------------------------
+
+// Returns true iff the vertex (pseudostate fork or join) has already been
+// checked and not needs to be visited again.
+// It means that already exists a transition containing it.
+boolean isDone(Vertex vertex):
+  JAVA de.cau.cs.kieler.uml2.sim.JavaEscape.isCheckedVertex(org.eclipse.uml2.uml.Vertex)  
+;
+
+//-----------------------------------------------------------------------------
+
+// This returns all nodes for a join or fork pseudostate
+// It will return null otherwise
+Set[Vertex] getPseudoSourceVertices(Pseudostate pseudostate) :
+    // get all transitions that have a fork or join as a target
+    let transitionList = getAllPseudostateTransitions(pseudostate).select(e|e.target.metaType == Pseudostate
+         && ( e.target.isJoin() || e.target.isFork() )) :
+    // Return all source vertices
+    transitionList.source
+;
+
+//-----------------------------------------------------------------------------
+
+// This returns all nodes for a join or fork pseudostate
+// It will return null otherwise
+Set[Vertex] getPseudoTargetVertices(Pseudostate pseudostate) :
+    // get all transitions that have a fork or join as a target
+    let transitionList = getAllPseudostateTransitions(pseudostate).select(e|e.source.metaType == Pseudostate
+         && ( e.source.isJoin() || e.source.isFork() )) :
+    // Return all target vertices
+    transitionList.target
+;
+
+//-----------------------------------------------------------------------------
+
+Set[Transition] getAllPseudostateTransitions(Pseudostate pseudostate) :
+   let incomingList = (List[Transition])pseudostate.getIncomingTransitions():
+   let outgoingList = (List[Transition])pseudostate.getOutgoingTransitions():
+   getAllPseudostateTransitions2(outgoingList).addAll(
+   				getAllPseudostateTransitions2(incomingList))
+;
+
+Set[Transition] getAllPseudostateTransitions2(List[Transition] transitionList) :
+  let firstTransition = transitionList.first():
+  let firstTransitionSource = firstTransition.source:
+  let firstTransitionTarget = firstTransition.target:
+  let outList = {}:
+  // add incoming transitions from 'normal vertices'
+  if (!firstTransitionSource.isFork() && !firstTransitionSource.isJoin()) then
+     outList.add(firstTransition)
+  else
+     outList.addAll(getAllPseudostateTransitions((Pseudostate)firstTransitionSource))
+  ->
+  // add outgoing transitions to 'normal vertices'
+  if (!firstTransitionTarget.isFork() && !firstTransitionTarget.isJoin()) then
+     outList.add(firstTransition)
+  else
+     outList.addAll(getAllPseudostateTransitions((Pseudostate)firstTransitionTarget))
+  ->
+  // add possibly other transitions
+  if (transitionList.withoutFirst().size > 0) then
+     outList.addAll(getAllPseudostateTransitions2(transitionList.withoutFirst()))
+  else 
+     null
+  ->
+  outList
+;
+
+
+
+// This returns all nodes for a join or fork pseudostate
+// It will return null otherwise
+//Set[Vertex] getSourceNodes(Pseudostate pseudostate) :
+//  JAVA de.cau.cs.kieler.uml2.sim.JavaEscape.getTargetNodes(Pseudostate)  
+//;
+
+//-----------------------------------------------------------------------------
+// if (pseudostate.isFork() || pseudostate.isJoin()) then (
+// 	if (pseudostate.isFork()) then
+// /   	pseudostate.eAllContents.select(e|(e.metaType == Vertex))
+// 	else 
+//    	pseudostate.eAllContents.select(e|(e.metaType == Vertex))
+// ) 
+// else 
+//    null//
+//;
+
+//-----------------------------------------------------------------------------
+
+//Set[Vertex] getSourceNodesFork(Pseudostate)
+//;
 
 //-----------------------------------------------------------------------------
 

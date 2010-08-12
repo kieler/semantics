@@ -77,33 +77,17 @@ eq tr_susp2DH_LbxYMIuKEd-yoIYGk1D8vA = susp_FiQnIIuKEd-yoIYGk1D8vA res nil  empt
 
   
 endfm
-***(
-mod TSS is
-	including SATISFACTION .
-	including STEPSEM .
-	including eclipseInterface .
-	including LTL .
-	including MODEL-CHECKER .
-	including LTL-SIMPLIFIER .
-***(
-	op init : -> MState .
-	eq init = (maState "UML" ($stableC (prettyVerts cf1) empty) (ee0, ee1, ee2, ee3, ee4)) .
-)***	
-	var msst mastate : MState .
-	vars V V2 : Verts .
-	var ac ac2 : Actions .
-	var T : Transitions .
-	var ES : EventSS .
-	var mode : String .
-	vars HC : HistoryConfs .
-	
-	subsort MState < State .
-	
-	op aCf : Actions -> Prop .
-	op inC : Verts -> Prop .
-	eq maState mode ($stableC V HC) ES |= inC(V2) = (prettyVerts V2) subset V  .
-	eq maState mode ($unstableC V HC T ac) ES |= aCf(ac2) = actionConflict par (ac ac2) .
-	eq maState mode ($unstableC V HC T ac) ES |= aCf(nil) = actionConflict ac .
-endm
+****(
+#####################################################
+Vorschlag Interface fuer Eclipse 
+#####################################################
+search (maState "UML" ($stableC <Konfiguration> <HistoryKonfiguration> <Events>) =>* mastate such that isDone mastate .
+
+- <Konfiguration>: eine durch "," getrennte Menge von Regionen und States. Diese muss den Anforderungen im Standard entsprechen.
+  z.B: Rroot, Csusp (aus Test.maude)
+- <HistoryKonfiguration>: kann erstmal empty sein
+- <Events>: eine durch "," getrennte Menge von Events die abgearbeitet werden soll
+
+search (maState "UML" ($stableC (Rroot, Csusp) empty res .
 )***
 	
