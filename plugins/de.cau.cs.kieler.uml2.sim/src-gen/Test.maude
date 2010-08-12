@@ -69,11 +69,11 @@ fmod eclipseInterface is
 eq tr_outer2susp_I39-sIuKEd-yoIYGk1D8vA = outer_PpBRMIuJEd-yoIYGk1D8vA susp nil  empty empty empty Rroot .
 eq tr_G2T_Zk1koIuKEd-yoIYGk1D8vA = G_gmI5oIuJEd-yoIYGk1D8vA ee1 nil a3 empty empty empty RinInner0 .
 eq tr_E2G_lT5CMIuJEd-yoIYGk1D8vA = E_fj2WMIuJEd-yoIYGk1D8vA ee1 nil a1 empty empty empty RinInner0 .
-eq tr_susp2DH_LbxYMIuKEd-yoIYGk1D8vA = susp_FiQnIIuKEd-yoIYGk1D8vA res nil  empty empty empty Rroot .      [[org.eclipse.uml2.uml.internal.impl.StateImpl@11bed71 (name: B, visibility: <unset>) (isLeaf: false)]]
+eq tr_susp2DH_LbxYMIuKEd-yoIYGk1D8vA = susp_FiQnIIuKEd-yoIYGk1D8vA res nil  empty empty empty Rroot .      [[B]]
     to 
     [[]]
   
-    [[org.eclipse.uml2.uml.internal.impl.StateImpl@1e1dadb (name: G, visibility: <unset>) (isLeaf: false), org.eclipse.uml2.uml.internal.impl.StateImpl@701a27 (name: N, visibility: <unset>) (isLeaf: false)]]
+    [[G, N]]
     to 
     [[]]
   
