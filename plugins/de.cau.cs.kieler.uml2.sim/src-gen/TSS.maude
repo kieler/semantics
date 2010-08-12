@@ -15,7 +15,7 @@ mod TSS is
 	op init : -> MState .
 	eq init = (maState "UML" ($stableC (prettyVerts cf1) empty) (ee0, ee1, ee2, ee3, ee4)) .
 	
-	var msst mastate : MState .
+	vars msst mastate : MState .
 	vars V V2 : Verts .
 	var ac ac2 : Actions .
 	var T : Transitions .
@@ -33,41 +33,95 @@ mod TSS is
 	eq maState mode ($stableC V HC) ES |= inC(V2) = (prettyVerts V2) subset V  .
 	eq maState mode ($unstableC V HC T ac) ES |= aCf(ac2) = actionConflict par (ac ac2) .
 	eq maState mode ($unstableC V HC T ac) ES |= aCf(nil) = actionConflict ac .
+	
+	op isDone_ : MState -> Bool .
+	eq isDone (maState mode ($doneC V HC) empty) = true .
+	eq isDone msst = false [owise] .
 endm
+
+ 
+set break on .
+break select finishedRTCESINT discardFSetESINT .
+***(
+#####################################################
+Vorschlag Interface fuer Eclipse 
+#####################################################
+search (maState "UML" ($stableC <Konfiguration> <HistoryKonfiguration> <Events>) =>* mastate such that isDone mastate .
+
+- <Konfiguration>: eine durch "," getrennte Menge von Regionen und States. Diese muss den Anforderungen im Standard entsprechen.
+  z.B: Rroot, Csusp (aus Test.maude)
+- <HistoryKonfiguration>: kann erstmal empty sein
+- <Events>: eine durch "," getrennte Menge von Events die abgearbeitet werden soll
+
+search (maState "UML" ($stableC (Rroot, Csusp) empty res .
+)***
+search (maState "UML" ($stableC (prettyVerts cf1) empty) (ee0)) =>* mastate such that isDone mastate .
+***(
+search (maState "UML" ($stableC (prettyVerts cf1) empty) (ee1)) =>* mastate such that isDone mastate .
+search (maState "UML" ($stableC (prettyVerts cf1) empty) (ee2)) =>* mastate such that isDone mastate .
+search (maState "UML" ($stableC (prettyVerts cf1) empty) (ee2, ee1, ee2)) =>* mastate such that isDone mastate .
+)***
+***(
+rew (maState "UML" ($stableC (prettyVerts cf1) empty) (ee0)) .
+rew (maState "UML" ($stableC (prettyVerts cf1) empty) (ee2)) .
+
+
+debug rew (maState "UML" ($stableC (prettyVerts cf1) empty) (ee0, ee1, ee2)) . 
+resume .
+where .
+)***
+***(
+rew (maState "UML" $unstableC (C "A", C "B", C "J", R "B", R "C",
+    root R "0") empty (C "B" ee0 Gd a4 a4 a4 (C "E", C "H") R "B", C "J" ee0 Gd a1 a1 a1 C "K" R "C"
+) par nil (ee0, ee1, ee2)) .
+)***
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
  
-***search (maState "UML" (stableC smHCA cf1 hcst) (ee0 ee1 ee2 ee3 ee4)) =>* mastate such that inConf mastate (SK,SI) . 
+*** search (maState "UML" (stableC smHCA cf1 hcst) (ee0 ee1 ee2 ee3 ee4)) =>* mastate such that inConf mastate (SK,SI) . 
 *** search (maState "UML" (stableC smHCA cf1 hcst) (ee0 ee1 ee2 ee3 ee4)) =>* mastate such that (firesT mastate trHC) and (inHConf mastate (SH,SF)) . 
 *** search (maState "UML" (stableC smHCA cf1 hcst) (ee0 ee1 ee2 ee3 ee4)) =>* mastate such that acConfl mastate . 
 *** search (maState "UML" (stableC smFHA cf1 empty) (ee0 ee1 ee2 ee3 ee4)) =>* mastate such that acConfl mastate . 
-search (maState "UML" ($stableC (prettyVerts cf1) empty) (ee0 ee1 ee2 ee3 ee4)) =>* mastate such that inConf mastate (SC,SK) . 
+*** search (maState "UML" ($stableC (prettyVerts cf1) empty) (ee0 ee1 ee2 ee3 ee4)) =>* mastate such that inConf mastate (SC,SK) . 
 *** search (maState "SC" ($stableC (prettyVerts cf1) empty) (ee0 ee1 ee2 ee3 ee4)) =>* mastate such that (inHConf mastate (SH,SF)) . 
 *** search (maState "SC" ($stableC (prettyVerts cf1) empty) (ee0 ee1 ee2 ee3 ee4)) =>* mastate such that (firesT mastate trHC) and (inHConf mastate (SH,SF)) . 
 *** search (maState "SC" ($stableC (prettyVerts cf1) empty) (ee0 ee1 ee2 ee3 ee4)) =>* mastate such that (inConf mastate (SC,SK)) . 
-search (maState "UML" ($stableC (prettyVerts cf1) empty) (ee0, ee1, ee2)) =>* mastate such that acConfl mastate . 
-red modelCheck(init, (<> inC(SUSP))) .
-***(
-red prettyFS ($fire mode (getVerts SMINT) ee1 (enabled (prettyVToV (getVerts SMINT) (C "A", C "C", C "E", C "H", C "K", R "B", R "C", R "D", R "E", root R "0")) ee1 (getTrans SMINT)) empty) .
-red prettyTrans (enabled (prettyVToV (getVerts SMINT) (C "A", C "C", C "E", C "H", C "K", R "B", R "C", R "D", R "E", root R "0")) ee1 (getTrans SMINT)) .
-red prettyFS ($$fireUML (getVerts SMINT) ee1 (enabled (prettyVToV (getVerts SMINT) (C "A", C "C", C "E", C "H", C "K", R "B", R "C", R "D", R "E", root R "0")) ee1 (getTrans SMINT)) empty) .
+*** search (maState "UML" ($stableC (prettyVerts cf1) empty) (ee0, ee1, ee2)) =>* mastate such that acConfl mastate . 
+*** red modelCheck(init, (<> inC(SUSP))) .
+*** red prettyFS ($fire mode (getVerts SMINT) ee1 (enabled (prettyVToV (getVerts SMINT) (C "A", C "C", C "E", C "H", C "K", R "B", R "C", R "D", R "E", root R "0")) ee1 (getTrans SMINT)) empty) .
+*** red prettyTrans (enabled (prettyVToV (getVerts SMINT) (C "A", C "C", C "E", C "H", C "K", R "B", R "C", R "D", R "E", root R "0")) ee1 (getTrans SMINT)) .
+*** red prettyFS ($$fireUML (getVerts SMINT) ee1 (enabled (prettyVToV (getVerts SMINT) (C "A", C "C", C "E", C "H", C "K", R "B", R "C", R "D", R "E", root R "0")) ee1 (getTrans SMINT)) empty) .
 *** can SD be reached without interference
 *** red modelCheck(init,  ~ ((~ aCf(nil)) U inC(SD))) .
 
-red ($fire mode (getVerts SMINT) ee1 (enabled (prettyVToV (getVerts SMINT) (C "A", C "C", C "E", C "H", C "K", R "B", R "C", R "D", R "E", root R "0")) e
-e1 (getTrans SMINT)) empty) .
-search (maState "UML" ($stableC (prettyVerts cf1) empty) (ee0, ee1, ee2, ee3, ee4)) =>* mastate such that acConfl mastate . 
-red modelCheck(init, (<> inC(SUSP))) .
-red modelCheck(init, (<> inC(SD)) \/([]<> inC(SUSP))) .
-red modelCheck(init, (~(aCf(nil)) U inC(SD)) \/([]<> inC(SUSP))) .
-red modelCheck(init, ([] ~ (aCf(nil)) )\/([]<> inC(SUSP))) .
+*** red ($fire mode (getVerts SMINT) ee1 (enabled (prettyVToV (getVerts SMINT) (C "A", C "C", C "E", C "H", C "K", R "B", R "C", R "D", R "E", root R "0")) e
+*** e1 (getTrans SMINT)) empty) .
+*** search (maState "UML" ($stableC (prettyVerts cf1) empty) (ee0, ee1, ee2, ee3, ee4)) =>* mastate such that acConfl mastate . 
+*** red modelCheck(init, (<> inC(SUSP))) .
+*** red modelCheck(init, (<> inC(SD)) \/([]<> inC(SUSP))) .
+*** red modelCheck(init, (~(aCf(nil)) U inC(SD)) \/([]<> inC(SUSP))) .
+*** red modelCheck(init, ([] ~ (aCf(nil)) )\/([]<> inC(SUSP))) .
 
-search (maState "UML" ($stableC (prettyVerts cf1) empty) (ee0, ee1, ee2, ee3, ee4)) =>* mastate such that acConfl mastate . 
+*** search (maState "UML" ($stableC (prettyVerts cf1) empty) (ee0, ee1, ee2, ee3, ee4)) =>* mastate such that acConfl mastate . 
 
 
-search (maState "UML" ($stableC (prettyVerts cf1) empty) (ee0, ee1, ee2)) =>* mastate such that (inHConf mastate (SE,SM)) . 
-search (maState "UML" ($stableC (prettyVerts cf1) empty) (ee0, ee1, ee2, ee3, ee4)) =>* mastate such that (inHConf mastate (SG,SM)) . 
+*** search (maState "UML" ($stableC (prettyVerts cf1) empty) (ee0, ee1, ee2)) =>* mastate such that (inHConf mastate (SE,SM)) . 
+*** search (maState "UML" ($stableC (prettyVerts cf1) empty) (ee0, ee1, ee2, ee3, ee4)) =>* mastate such that (inHConf mastate (SG,SM)) . 
 
+***(
 
 red fire "UML" cf1 ee4 (enabled cf1 ee4 trHC) empty .
 red source trHC .

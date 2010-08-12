@@ -44,6 +44,8 @@ mod STEPSEM is
     op $unstableC____ : Verts HistoryConfs Transitions Action -> Configuration .
     op $stableC__ : Verts HistoryConfs -> Configuration .
     op $prestepC___ : Verts HistoryConfs Firesets -> Configuration .
+    op $doneC__ : Verts HistoryConfs -> Configuration .
+    op $eventSelC___ : Verts HistoryConfs Event -> Configuration .
 
 	sort MState .	
 	var mode : String .
@@ -181,7 +183,15 @@ mod STEPSEM is
 		maState mode ($prestepC V HC ($fire mode (getVerts SMINT) e (enabled (prettyVToV (getVerts SMINT) V) e (getTrans SMINT)) empty)) (e, ES) if
 		(enabled (prettyVToV (getVerts SMINT) V) e (getTrans SMINT)) =/= empty .
 )***
-	crl [computeFSetESINT] : maState mode ($stableC V HC) (e, ES) => 
+	rl [doneFSetESINT] : maState mode ($stableC V HC) empty => 
+    maState mode ($doneC V HC) empty . 
+    *** ToDo: Currently events are consumed
+	crl [selectEventFSetESINT] : maState mode ($stableC V HC) (e, ES) => 
+	maState mode ($eventSelC V HC e) (ES) if e =/= empty .
+	crl [discardFSetESINT] : maState mode ($eventSelC V HC e) (ES) => 
+		maState mode ($stableC V HC) (ES) if 
+		(enabled (prettyVToV (getVerts SMINT) V) e (getTrans SMINT)) == empty .
+	crl [computeFSetESINT] : maState mode ($eventSelC V HC e) (ES) => 
 		maState mode ($fireC V HC 
 			(fireIter 
 				(remLowPrio 
@@ -191,7 +201,7 @@ mod STEPSEM is
 					)
 				) 
 			empty) 
-		) (e, ES) if
+		) (ES) if 
 		(enabled (prettyVToV (getVerts SMINT) V) e (getTrans SMINT)) =/= empty .
 	rl [fireFSetESINT] : maState mode ($fireC V HC (mm(T), MN)) ES => 
 		maState mode ($unstableC V HC (prettyTrans T) (par nil)) ES .
@@ -200,61 +210,18 @@ mod STEPSEM is
 		maState mode ($stableC V HC) (e, ES) if
 		(fire mode (getVerts SMINT) e (enabled (prettyVToV (getVerts SMINT) V) e (getTrans SMINT)) empty) == empty .
 	)***	
+*** ToDo: generation of actions missing, compare revision 7199
 	rl [execTransESINT] : maState mode ($unstableC V HC (t, T) (par A)) ES => 
 		maState mode ($unstableC prettyVerts(((prettyVToV (getVerts SMINT) V) \ (leave (prettyVToV (getVerts SMINT) V) (prettyTToT (getTrans SMINT) t))) , (enterH SMINT (prettyHCToHC (getVerts SMINT) HC) (prettyTToT (getTrans SMINT) t))) HC T 
-		(par (A 
-			seq(
-				(getExitAc SMINT (prettyVToV (getVerts SMINT) V) (region (prettyTToT (getTrans SMINT) t))) 
-				(getAcExp (prettyTToT (getTrans SMINT) t))
-				(getEntryAc SMINT (prettyHCToHC (getVerts SMINT) HC) (target (prettyTToT (getTrans SMINT) t)) (region (prettyTToT (getTrans SMINT) t)))
-				)
-		))) 
+		(par A)) 
 		ES .
 	rl [finishedRTCESINT] : maState mode ($unstableC V HC empty (par A)) ES => 
 		maState mode ($stableC V prettyHc(succHC (prettyVToV (getVerts SMINT) V) (prettyHCToHC (getVerts SMINT) HC))) ES .
 		
-	crl [fireTransINT] : maState mode ($stableC V HC) (E e E2) => 
-		maState mode ($unstableC V HC (fire mode (getVerts SMINT) e (enabled (prettyVToV (getVerts SMINT) V) e (getTrans SMINT)) empty) (par nil)) (E E2 e) if
-		(fire mode (getVerts SMINT) e (enabled (prettyVToV (getVerts SMINT) V) e (getTrans SMINT)) empty) =/= empty .
-	crl [discardINT] : maState mode ($stableC V HC) (E e E2) => 
-		maState mode ($stableC V HC) (E E2 e) if
-		(fire mode (getVerts SMINT) e (enabled (prettyVToV (getVerts SMINT) V) e (getTrans SMINT)) empty) == empty .
-
-	rl [execTransINT] : maState mode ($unstableC V HC (t, T) (par A)) E => 
-		maState mode ($unstableC prettyVerts(((prettyVToV (getVerts SMINT) V) \ (leave (prettyVToV (getVerts SMINT) V) t)) , (enterH SMINT (prettyHCToHC (getVerts SMINT) HC) t)) HC T 
-		(par (A 
-			seq(
-				(getExitAc SMINT (prettyVToV (getVerts SMINT) V) (region t)) 
-				(getAcExp t)
-				(getEntryAc SMINT (prettyHCToHC (getVerts SMINT) HC) (target t) (region t))
-				)
-		))) 
-		E .
-	rl [finishedRTCINT] : maState mode ($unstableC V HC empty (par A)) E => 
-		maState mode ($stableC V prettyHc(succHC (prettyVToV (getVerts SMINT) V) (prettyHCToHC (getVerts SMINT) HC))) E .
-	
-	crl [fireTrans] : maState mode (stableC sm V HC) (E e E2) => 
-		maState mode (unstableC sm V HC (fire mode (getVerts sm) e (enabled V e (getTrans sm)) empty) (par nil)) (E E2 e) if
-		(fire mode (getVerts sm) e (enabled V e (getTrans sm)) empty) =/= empty .
-
-	crl [discard] : maState mode (stableC sm V HC) (E e E2) => 
-		maState mode (stableC sm V HC) (E E2 e) if
-		(fire mode (getVerts sm) e (enabled V e (getTrans sm)) empty) == empty .
-	rl [execTrans] : maState mode (unstableC sm V HC (t, T) (par A)) E => 
-		maState mode (unstableC sm ((V \ (leave V t)) , (enterH sm HC t)) HC T 
-		(par (A 
-			seq(
-				(getExitAc sm V (region t)) 
-				(getAcExp t)
-				(getEntryAc sm HC (target t) (region t))
-				)
-		))) 
-		E .
-	rl [finishedRTC] : maState mode (unstableC sm V HC empty (par A)) E => 
-		maState mode (stableC sm V (succHC V HC)) E .
     
    	op prettyConf_ : Configuration -> Configuration .
     eq prettyConf (unstableC sm V HC T a) = unstableC (prettySm sm) (prettyVerts V) HC (prettyTrans T) a .
     eq prettyConf (stableC sm V HC) = stableC (prettySm sm) (prettyVerts V) HC .
+  
   
 endm
