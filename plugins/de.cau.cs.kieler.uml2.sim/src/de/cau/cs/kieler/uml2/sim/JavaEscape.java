@@ -22,7 +22,7 @@ public class JavaEscape {
 
 	// Save a new root region iff it has a smaller hierarchy level 
 	// otherwise keep the old one
-	public static void setRootRegion(Region region) {
+	public static void setLastRootRegion(Region region) {
 		if (lastRootRegion == null) {
 			lastRootRegion = region;
 		}

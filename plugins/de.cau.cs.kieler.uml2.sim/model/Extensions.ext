@@ -237,22 +237,23 @@ boolean markDone(Vertex vertex, String id):
   JAVA de.cau.cs.kieler.uml2.sim.JavaEscape.markDone(org.eclipse.uml2.uml.Vertex, java.lang.String)  
 ;
 
+
+
 //-----------------------------------------------------------------------------
 
-// This returns all nodes for a join or fork pseudostate
-// It will return null otherwise
-Set[Vertex] getPseudoSourceVertices(Pseudostate pseudostate) :
-    // get all transitions that have a fork or join as a target
-    let transitionList = getAllPseudostateTransitions(pseudostate,"INCOMING").select(e|e.target.metaType == Pseudostate
-         && ( e.target.isJoin() || e.target.isFork() )) :
-    //Mark all source vertices
-    //transitionList.source.markDoneOutgoing() ->
-    // Return all source vertices
-    transitionList.source
+// Set a new last root region iff the new region is on a higher hierarchy level
+Void setLastRootRegion(Region region) :
+  JAVA de.cau.cs.kieler.uml2.sim.JavaEscape.setLastRootRegion(org.eclipse.uml2.uml.Region)  
 ;
 
+// Reset the last root region
+Void resetLastRootRegion() :
+  JAVA de.cau.cs.kieler.uml2.sim.JavaEscape.resetLastRootRegion()  
+;
 
-Region getPseudoRootRegion(Pseudostate pseudostate):
+// Get the last root region
+Region getLastRootRegion() :
+  JAVA de.cau.cs.kieler.uml2.sim.JavaEscape.getLastRootRegion()  
 ;
 
 //-----------------------------------------------------------------------------
@@ -260,6 +261,7 @@ Region getPseudoRootRegion(Pseudostate pseudostate):
 // This returns all nodes for a join or fork pseudostate
 // It will return null otherwise
 Set[Vertex] getPseudoTargetVertices(Pseudostate pseudostate) :
+    let reset = resetLastRootRegion():
     // get all transitions that have a fork or join as a target
     let transitionList = getAllPseudostateTransitions(pseudostate,"OUTGOING").select(e|e.source.metaType == Pseudostate
          && ( e.source.isJoin() || e.source.isFork() )) :
@@ -271,6 +273,21 @@ Set[Vertex] getPseudoTargetVertices(Pseudostate pseudostate) :
 
 //-----------------------------------------------------------------------------
 
+// This returns all nodes for a join or fork pseudostate
+// It will return null otherwise
+Set[Vertex] getPseudoSourceVertices(Pseudostate pseudostate) :
+    let reset = resetLastRootRegion():
+    // get all transitions that have a fork or join as a target
+    let transitionList = getAllPseudostateTransitions(pseudostate,"INCOMING").select(e|e.target.metaType == Pseudostate
+         && ( e.target.isJoin() || e.target.isFork() )) :
+    //Mark all source vertices
+    //transitionList.source.markDoneOutgoing() ->
+    // Return all source vertices
+    transitionList.source
+;
+
+//-----------------------------------------------------------------------------
+
 Set[Transition] getAllPseudostateTransitions(Pseudostate pseudostate, String id) :
    let incomingList = (List[Transition])pseudostate.getIncomingTransitions():
    let outgoingList = (List[Transition])pseudostate.getOutgoingTransitions():
@@ -278,6 +295,7 @@ Set[Transition] getAllPseudostateTransitions(Pseudostate pseudostate, String id)
    incomingOutgoingList.addAll(incomingList) ->
    incomingOutgoingList.addAll(outgoingList) ->
   if (markDone(pseudostate, id)) then (
+     setLastRootRegion(((Region)pseudostate.eContainer())) ->
      getAllPseudostateTransitions2(incomingOutgoingList, id)
   ) else
      {}

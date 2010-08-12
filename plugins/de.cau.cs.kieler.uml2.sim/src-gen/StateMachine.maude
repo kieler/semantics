@@ -62,8 +62,7 @@ fmod eclipseInterface is
 *** ToDo: (Important): Compute sources and targets sets
 *** ToDo: Remove initial states transitions (DONE? -> isConsidered) 
   ops J2F_8oXd4KVqEd-uwMsarPjhnQ  J2J_398WIKVqEd-uwMsarPjhnQ  J2G_9yJJYKVqEd-uwMsarPjhnQ  F2J_8EWx4KVqEd-uwMsarPjhnQ  B2J_12e6YKVqEd-uwMsarPjhnQ  C2J_4oFfUKVqEd-uwMsarPjhnQ  A2J_1SeOYKVqEd-uwMsarPjhnQ  D2F_59nu4KVqEd-uwMsarPjhnQ  F2E_6nvC4KVqEd-uwMsarPjhnQ  J2F_5cgl4KVqEd-uwMsarPjhnQ :-> ModTransition .
-   eq tr_F_t5l8UKVqEd-uwMsarPjhnQ = {D,B,A,C} nil nil nil {F,G,E}
-  
+   eq tr_F_t5l8UKVqEd-uwMsarPjhnQ = {D,B,A,C} nil nil nil {F,G,E} RRegion     
   
   
   
