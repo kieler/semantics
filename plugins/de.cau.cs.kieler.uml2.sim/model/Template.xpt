@@ -87,7 +87,7 @@ fmod eclipseInterface is
   «FOREACH this.getForkJoin() AS pseudostate SEPARATOR '\n'-»
     [«pseudostate.getPseudoSourceVertices().flatten().toString()»]
     to 
-    [«pseudostate.getPseudoSourceVertices().flatten().toString()»]
+    [«pseudostate.getPseudoTargetVertices().flatten().toString()»]
   «ENDFOREACH-»
   
   op allTrans :-> Transitons .

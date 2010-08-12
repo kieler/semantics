@@ -194,13 +194,13 @@ String getTrigger(String transitionLabel):
 //-----------------------------------------------------------------------------
 
 List[Transition] getIncomingTransitions(Vertex vertex) :
-   vertex.eAllContents.select(e|e.metaType == Transition && ((Transition)e).target == vertex)
+   vertex.eRootContainer.eAllContents.select(e|e.metaType == Transition && ((Transition)e).target == vertex)
 ;
 
 //-----------------------------------------------------------------------------
 
 List[Transition] getOutgoingTransitions(Vertex vertex) :
-   vertex.eAllContents.select(e|e.metaType == Transition && ((Transition)e).source == vertex)
+   vertex.eRootContainer.eAllContents.select(e|e.metaType == Transition && ((Transition)e).source == vertex)
 ;
 
 //-----------------------------------------------------------------------------
@@ -279,8 +279,17 @@ Set[Vertex] getPseudoTargetVertices(Pseudostate pseudostate) :
 Set[Transition] getAllPseudostateTransitions(Pseudostate pseudostate) :
    let incomingList = (List[Transition])pseudostate.getIncomingTransitions():
    let outgoingList = (List[Transition])pseudostate.getOutgoingTransitions():
-   getAllPseudostateTransitions2(outgoingList).addAll(
-   				getAllPseudostateTransitions2(incomingList))
+   let incomingOutgoingList = {}:
+   incomingOutgoingList.addAll(incomingList) ->
+   incomingOutgoingList.addAll(outgoingList) ->
+   info("find transition for " + pseudostate.getAlias()) ->
+//    info(pseudostate.kind.toString()) ->
+//    info(incomingList.size) ->
+//    info(outgoingList.size) ->
+//    info(incomingOutgoingList.size) ->
+  info("trans list in:" + incomingList.source.getAlias()) ->
+  info("trans list out:" + outgoingList.target.getAlias()) ->
+   getAllPseudostateTransitions2(incomingOutgoingList)
 ;
 
 Set[Transition] getAllPseudostateTransitions2(List[Transition] transitionList) :
@@ -288,11 +297,17 @@ Set[Transition] getAllPseudostateTransitions2(List[Transition] transitionList) :
   let firstTransitionSource = firstTransition.source:
   let firstTransitionTarget = firstTransition.target:
   let outList = {}:
+  info(firstTransitionSource.getAlias()) ->
+  info(firstTransitionTarget.getAlias()) ->
   // add incoming transitions from 'normal vertices'
   if (!firstTransitionSource.isFork() && !firstTransitionSource.isJoin()) then
-     outList.add(firstTransition)
-  else
+	 (info("BLA") ->
+	 null
+   //outList.add(firstTransition)
+     )
+  else (
      outList.addAll(getAllPseudostateTransitions((Pseudostate)firstTransitionSource))
+  )
   ->
   // add outgoing transitions to 'normal vertices'
   if (!firstTransitionTarget.isFork() && !firstTransitionTarget.isJoin()) then
@@ -306,6 +321,7 @@ Set[Transition] getAllPseudostateTransitions2(List[Transition] transitionList) :
   else 
      null
   ->
+  info(((List[Transition])outList).flatten()) ->
   outList
 ;
 
@@ -334,6 +350,11 @@ Set[Transition] getAllPseudostateTransitions2(List[Transition] transitionList) :
 //;
 
 //-----------------------------------------------------------------------------
+
+// Get the alias of a vertex
+String getAlias(Vertex vertex):
+  JAVA de.cau.cs.kieler.uml2.sim.JavaEscape.getAlias(org.eclipse.uml2.uml.Vertex)
+;
 
 // Test whether a vertex is of type Initial
 Boolean isInitial(Vertex vertex):
