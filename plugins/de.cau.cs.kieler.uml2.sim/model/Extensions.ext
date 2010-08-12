@@ -223,27 +223,17 @@ Void clearDoneVertices():
   JAVA de.cau.cs.kieler.uml2.sim.JavaEscape.clearDoneVertices()  
 ;
 
+
 // Returns true iff the vertex (pseudostate fork or join) has already been
 // checked and not needs to be visited again.
 // It means that already exists a transition containing it.
-boolean isDoneIncoming(Vertex vertex):
-  JAVA de.cau.cs.kieler.uml2.sim.JavaEscape.isDoneIncoming(org.eclipse.uml2.uml.Vertex)  
-;
-// Returns true iff the vertex (pseudostate fork or join) has already been
-// checked and not needs to be visited again.
-// It means that already exists a transition containing it.
-boolean isDoneOutgoing(Vertex vertex):
-  JAVA de.cau.cs.kieler.uml2.sim.JavaEscape.isDoneOutgoing(org.eclipse.uml2.uml.Vertex)  
+boolean isDone(Vertex vertex, String id):
+  JAVA de.cau.cs.kieler.uml2.sim.JavaEscape.isDone(org.eclipse.uml2.uml.Vertex, java.lang.String)  
 ;
 
 // Mark a vertex (pseudostate fork or join) that has just been visited
-boolean markDoneIncoming(Vertex vertex):
-  JAVA de.cau.cs.kieler.uml2.sim.JavaEscape.markDoneIncoming(org.eclipse.uml2.uml.Vertex)  
-;
-
-// Mark a vertex (pseudostate fork or join) that has just been visited
-boolean markDoneOutgoing(Vertex vertex):
-  JAVA de.cau.cs.kieler.uml2.sim.JavaEscape.markDoneOutgoing(org.eclipse.uml2.uml.Vertex)  
+boolean markDone(Vertex vertex, String id):
+  JAVA de.cau.cs.kieler.uml2.sim.JavaEscape.markDone(org.eclipse.uml2.uml.Vertex, java.lang.String)  
 ;
 
 //-----------------------------------------------------------------------------
@@ -252,7 +242,7 @@ boolean markDoneOutgoing(Vertex vertex):
 // It will return null otherwise
 Set[Vertex] getPseudoSourceVertices(Pseudostate pseudostate) :
     // get all transitions that have a fork or join as a target
-    let transitionList = getAllPseudostateTransitions(pseudostate).select(e|e.target.metaType == Pseudostate
+    let transitionList = getAllPseudostateTransitions(pseudostate,"INCOMING").select(e|e.target.metaType == Pseudostate
          && ( e.target.isJoin() || e.target.isFork() )) :
     //Mark all source vertices
     //transitionList.source.markDoneOutgoing() ->
@@ -266,7 +256,7 @@ Set[Vertex] getPseudoSourceVertices(Pseudostate pseudostate) :
 // It will return null otherwise
 Set[Vertex] getPseudoTargetVertices(Pseudostate pseudostate) :
     // get all transitions that have a fork or join as a target
-    let transitionList = getAllPseudostateTransitions(pseudostate).select(e|e.source.metaType == Pseudostate
+    let transitionList = getAllPseudostateTransitions(pseudostate,"OUTGOING").select(e|e.source.metaType == Pseudostate
          && ( e.source.isJoin() || e.source.isFork() )) :
     //Mark all source vertices
     //transitionList.source.markDoneIncoming() ->
@@ -276,51 +266,51 @@ Set[Vertex] getPseudoTargetVertices(Pseudostate pseudostate) :
 
 //-----------------------------------------------------------------------------
 
-Set[Transition] getAllPseudostateTransitions(Pseudostate pseudostate) :
+Set[Transition] getAllPseudostateTransitions(Pseudostate pseudostate, String id) :
    let incomingList = (List[Transition])pseudostate.getIncomingTransitions():
    let outgoingList = (List[Transition])pseudostate.getOutgoingTransitions():
    let incomingOutgoingList = {}:
    incomingOutgoingList.addAll(incomingList) ->
    incomingOutgoingList.addAll(outgoingList) ->
-  if (markDoneOutgoing(pseudostate)) then (
-     getAllPseudostateTransitions2(incomingOutgoingList)
+  if (markDone(pseudostate, id)) then (
+     getAllPseudostateTransitions2(incomingOutgoingList, id)
   ) else
      {}
 ;
 
 
-Set[Transition] helperTarget(Vertex firstTransitionTarget, Transition firstTransition) :
+Set[Transition] helperTarget(Vertex firstTransitionTarget, Transition firstTransition, String id) :
   let outList = {}:
   // add outgoing transitions to 'normal vertices'
   if (!firstTransitionTarget.isFork() && !firstTransitionTarget.isJoin()) then
       outList.add(firstTransition)
   else
-     outList.addAll(getAllPseudostateTransitions((Pseudostate)firstTransitionTarget))
+     outList.addAll(getAllPseudostateTransitions((Pseudostate)firstTransitionTarget, id))
   ->
   outList
 ;
 
-Set[Transition] helperSource(Vertex firstTransitionSource, Transition firstTransition) :
+Set[Transition] helperSource(Vertex firstTransitionSource, Transition firstTransition, String id) :
   let outList = {}:
   // add incoming transitions from 'normal vertices'
   if (!firstTransitionSource.isFork() && !firstTransitionSource.isJoin()) then
       outList.add(firstTransition)
   else 
-     outList.addAll(getAllPseudostateTransitions((Pseudostate)firstTransitionSource))
+     outList.addAll(getAllPseudostateTransitions((Pseudostate)firstTransitionSource, id))
   ->
   outList
 ;
 
-Set[Transition] getAllPseudostateTransitions2(List[Transition] transitionList) :
+Set[Transition] getAllPseudostateTransitions2(List[Transition] transitionList, String id) :
   let firstTransition = transitionList.first():
   let firstTransitionSource = firstTransition.source:
   let firstTransitionTarget = firstTransition.target:
   let outList = {}:
-  outList.addAll(helperTarget(firstTransitionTarget, firstTransition)) ->
-  outList.addAll(helperSource(firstTransitionSource, firstTransition)) ->
+  outList.addAll(helperTarget(firstTransitionTarget, firstTransition, id)) ->
+  outList.addAll(helperSource(firstTransitionSource, firstTransition, id)) ->
   // add possibly other transitions
   if (transitionList.withoutFirst().size > 0) then
-     outList.addAll(getAllPseudostateTransitions2(transitionList.withoutFirst()))
+     outList.addAll(getAllPseudostateTransitions2(transitionList.withoutFirst(), id))
   else 
      {}
   ->

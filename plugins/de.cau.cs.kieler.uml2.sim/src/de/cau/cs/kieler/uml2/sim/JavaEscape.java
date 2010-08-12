@@ -12,56 +12,55 @@ import org.eclipse.uml2.uml.Transition;
 
 public class JavaEscape {
 
-    private static LinkedList<Vertex> doneVerticesIncoming = new LinkedList<Vertex>();
-    private static LinkedList<Vertex> doneVerticesOutgoing = new LinkedList<Vertex>();
+	private static LinkedList<Vertex> doneVerticesIncoming = new LinkedList<Vertex>();
+	private static LinkedList<Vertex> doneVerticesOutgoing = new LinkedList<Vertex>();
 
 	// ------------------------------------------------------------------------
-    
-    // Clear list of checked vertices
-    public static void clearDoneVertices() {
-    	doneVerticesIncoming.clear();
-    	doneVerticesOutgoing.clear();
-    }
-	
-    // ------------------------------------------------------------------------
-    
-    // Add a Vertex iff it is not already checked
-    public static boolean markDoneIncoming(Vertex vertex) {
-    	if (!isDoneIncoming(vertex)) {
-        	doneVerticesIncoming.add(vertex);
-        	return true;
-    	}
-    	return false;
-    }
 
-    // Add a Vertex iff it is not already checked
-    public static boolean markDoneOutgoing(Vertex vertex) {
-    	if (!isDoneOutgoing(vertex)) {
-        	doneVerticesOutgoing.add(vertex);
-        	return true;
-    	}
-    	return false;
-    }
-    
+	// Clear list of checked vertices
+	public static void clearDoneVertices() {
+		doneVerticesIncoming.clear();
+		doneVerticesOutgoing.clear();
+	}
+
 	// ------------------------------------------------------------------------
 
-    // Ask whether a Vertex is checked
-    public static boolean isDoneIncoming(Vertex vertex) {
-    	if (doneVerticesIncoming.contains(vertex)) {
-    		return true;
-    	}
-    	return false;
-    }
-    
-    // Ask whether a Vertex is checked
-    public static boolean isDoneOutgoing(Vertex vertex) {
-    	if (doneVerticesOutgoing.contains(vertex)) {
-    		return true;
-    	}
-    	return false;
-    }
+	// Add a Vertex iff it is not already checked
+	public static boolean markDone(Vertex vertex, String id) {
+		if (id.equals("INCOMING")) {
+			if (!isDone(vertex, id)) {
+				doneVerticesIncoming.add(vertex);
+				return true;
+			}
+		}
+		if (id.equals("OUTGOING")) {
+			if (!isDone(vertex, id)) {
+				doneVerticesOutgoing.add(vertex);
+				return true;
+			}
+		}
+		return false;
 
-    // ------------------------------------------------------------------------
+	}
+
+	// ------------------------------------------------------------------------
+
+	// Ask whether a Vertex is checked
+	public static boolean isDone(Vertex vertex, String id) {
+		if (id.equals("INCOMING")) {
+			if (doneVerticesIncoming.contains(vertex)) {
+				return true;
+			}
+		}
+		if (id.equals("OUTGOING")) {
+			if (doneVerticesOutgoing.contains(vertex)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	// ------------------------------------------------------------------------
 
 	// Get the Fragment URI ID of a Vertex
 	public static String getId(Vertex vertex) {
@@ -95,9 +94,9 @@ public class JavaEscape {
 	// Get Alias of a Transition for better traceability
 	public static String getAlias(Transition transition) {
 		return getAlias(transition.getSource()) + "2"
-		+ getAlias(transition.getTarget());
+				+ getAlias(transition.getTarget());
 	}
-	
+
 	// ------------------------------------------------------------------------
 
 	// Get the Fragment URI ID of a Tranistion
@@ -152,13 +151,13 @@ public class JavaEscape {
 			return false;
 		return ((((Pseudostate) vertex).getKind()).getValue() == PseudostateKind.INITIAL);
 	}
-	
+
 	public static Boolean isFinal(Vertex vertex) {
 		// only a Pseudostate can be an initial state
 		if (!(vertex instanceof FinalState))
 			return false;
 		return true;
-	}	
+	}
 
 	public static Boolean isDH(Vertex vertex) {
 		// only a Pseudostate can be a deep history state
@@ -189,10 +188,10 @@ public class JavaEscape {
 	}
 
 	// ------------------------------------------------------------------------
-	
+
 	public static EList<Vertex> getSourceNodes(Pseudostate pseudostate) {
 		EList<Vertex> returnList = new BasicEList<Vertex>();
-		//pseudostate.eAllContents().
+		// pseudostate.eAllContents().
 		return returnList;
 	}
 }
