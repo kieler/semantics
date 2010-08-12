@@ -4,6 +4,7 @@ import java.util.LinkedList;
 
 import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.uml2.uml.FinalState;
 import org.eclipse.uml2.uml.Pseudostate;
 import org.eclipse.uml2.uml.PseudostateKind;
 import org.eclipse.uml2.uml.Vertex;
@@ -74,6 +75,8 @@ public class JavaEscape {
 	public static String getAlias(Vertex vertex) {
 		if (isInitial(vertex))
 			return "I";
+		if (isFinal(vertex))
+			return "T";
 		if (isDH(vertex))
 			return "DH";
 		if (isSH(vertex))
@@ -89,10 +92,17 @@ public class JavaEscape {
 
 	// ------------------------------------------------------------------------
 
+	// Get Alias of a Transition for better traceability
+	public static String getAlias(Transition transition) {
+		return getAlias(transition.getSource()) + "2"
+		+ getAlias(transition.getTarget());
+	}
+	
+	// ------------------------------------------------------------------------
+
 	// Get the Fragment URI ID of a Tranistion
 	public static String getId(Transition transition) {
-		return getAlias(transition.getSource()) + "2"
-				+ getAlias(transition.getTarget())
+		return getAlias(transition)
 				+ transition.eResource().getURIFragment(transition);
 	}
 
@@ -142,6 +152,13 @@ public class JavaEscape {
 			return false;
 		return ((((Pseudostate) vertex).getKind()).getValue() == PseudostateKind.INITIAL);
 	}
+	
+	public static Boolean isFinal(Vertex vertex) {
+		// only a Pseudostate can be an initial state
+		if (!(vertex instanceof FinalState))
+			return false;
+		return true;
+	}	
 
 	public static Boolean isDH(Vertex vertex) {
 		// only a Pseudostate can be a deep history state

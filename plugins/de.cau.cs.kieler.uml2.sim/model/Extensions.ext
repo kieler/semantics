@@ -237,12 +237,12 @@ boolean isDoneOutgoing(Vertex vertex):
 ;
 
 // Mark a vertex (pseudostate fork or join) that has just been visited
-Void markDoneIncoming(Vertex vertex):
+boolean markDoneIncoming(Vertex vertex):
   JAVA de.cau.cs.kieler.uml2.sim.JavaEscape.markDoneIncoming(org.eclipse.uml2.uml.Vertex)  
 ;
 
 // Mark a vertex (pseudostate fork or join) that has just been visited
-Void markDoneOutgoing(Vertex vertex):
+boolean markDoneOutgoing(Vertex vertex):
   JAVA de.cau.cs.kieler.uml2.sim.JavaEscape.markDoneOutgoing(org.eclipse.uml2.uml.Vertex)  
 ;
 
@@ -255,7 +255,7 @@ Set[Vertex] getPseudoSourceVertices(Pseudostate pseudostate) :
     let transitionList = getAllPseudostateTransitions(pseudostate).select(e|e.target.metaType == Pseudostate
          && ( e.target.isJoin() || e.target.isFork() )) :
     //Mark all source vertices
-    transitionList.source.markDoneOutgoing() ->
+    //transitionList.source.markDoneOutgoing() ->
     // Return all source vertices
     transitionList.source
 ;
@@ -269,7 +269,7 @@ Set[Vertex] getPseudoTargetVertices(Pseudostate pseudostate) :
     let transitionList = getAllPseudostateTransitions(pseudostate).select(e|e.source.metaType == Pseudostate
          && ( e.source.isJoin() || e.source.isFork() )) :
     //Mark all source vertices
-    transitionList.source.markDoneIncoming() ->
+    //transitionList.source.markDoneIncoming() ->
     // Return all target vertices
     transitionList.target
 ;
@@ -282,14 +282,50 @@ Set[Transition] getAllPseudostateTransitions(Pseudostate pseudostate) :
    let incomingOutgoingList = {}:
    incomingOutgoingList.addAll(incomingList) ->
    incomingOutgoingList.addAll(outgoingList) ->
-   info("find transition for " + pseudostate.getAlias()) ->
+   
 //    info(pseudostate.kind.toString()) ->
 //    info(incomingList.size) ->
 //    info(outgoingList.size) ->
 //    info(incomingOutgoingList.size) ->
-  info("trans list in:" + incomingList.source.getAlias()) ->
-  info("trans list out:" + outgoingList.target.getAlias()) ->
-   getAllPseudostateTransitions2(incomingOutgoingList)
+  if (markDoneOutgoing(pseudostate)) then (
+     info("find transition for " + pseudostate.getAlias()) ->
+     info("trans list in:" + incomingList.source.getAlias()) ->
+     info("trans list out:" + outgoingList.target.getAlias()) ->
+     getAllPseudostateTransitions2(incomingOutgoingList)
+  ) else
+     {}
+;
+
+
+Set[Transition] helperTarget(Vertex firstTransitionTarget, Transition firstTransition) :
+  let outList = {}:
+  // add outgoing transitions to 'normal vertices'
+  if (!firstTransitionTarget.isFork() && !firstTransitionTarget.isJoin()) then
+	 (info("BLA-T1") ->
+      outList.add(firstTransition)
+     )
+  else
+	 (info("BLA-T2") ->
+     outList.addAll(getAllPseudostateTransitions((Pseudostate)firstTransitionTarget))
+     )
+  ->
+  outList
+;
+
+Set[Transition] helperSource(Vertex firstTransitionSource, Transition firstTransition) :
+  let outList = {}:
+  // add incoming transitions from 'normal vertices'
+  if (!firstTransitionSource.isFork() && !firstTransitionSource.isJoin()) then
+	 (info("BLA-S1") ->
+      outList.add(firstTransition)
+     )
+  else (
+	 (info("BLA-S2") ->
+     outList.addAll(getAllPseudostateTransitions((Pseudostate)firstTransitionSource))
+     )
+  )
+  ->
+  outList
 ;
 
 Set[Transition] getAllPseudostateTransitions2(List[Transition] transitionList) :
@@ -297,31 +333,15 @@ Set[Transition] getAllPseudostateTransitions2(List[Transition] transitionList) :
   let firstTransitionSource = firstTransition.source:
   let firstTransitionTarget = firstTransition.target:
   let outList = {}:
-  info(firstTransitionSource.getAlias()) ->
-  info(firstTransitionTarget.getAlias()) ->
-  // add incoming transitions from 'normal vertices'
-  if (!firstTransitionSource.isFork() && !firstTransitionSource.isJoin()) then
-	 (info("BLA") ->
-	 null
-   //outList.add(firstTransition)
-     )
-  else (
-     outList.addAll(getAllPseudostateTransitions((Pseudostate)firstTransitionSource))
-  )
-  ->
-  // add outgoing transitions to 'normal vertices'
-  if (!firstTransitionTarget.isFork() && !firstTransitionTarget.isJoin()) then
-     outList.add(firstTransition)
-  else
-     outList.addAll(getAllPseudostateTransitions((Pseudostate)firstTransitionTarget))
-  ->
+  info(firstTransitionSource.getAlias() + "->" + firstTransitionTarget.getAlias()) ->
+  outList.addAll(helperTarget(firstTransitionTarget, firstTransition)) ->
+  outList.addAll(helperSource(firstTransitionSource, firstTransition)) ->
   // add possibly other transitions
   if (transitionList.withoutFirst().size > 0) then
      outList.addAll(getAllPseudostateTransitions2(transitionList.withoutFirst()))
   else 
      null
   ->
-  info(((List[Transition])outList).flatten()) ->
   outList
 ;
 
@@ -354,6 +374,11 @@ Set[Transition] getAllPseudostateTransitions2(List[Transition] transitionList) :
 // Get the alias of a vertex
 String getAlias(Vertex vertex):
   JAVA de.cau.cs.kieler.uml2.sim.JavaEscape.getAlias(org.eclipse.uml2.uml.Vertex)
+;
+
+// Get the alias of a transition
+String getAlias(Transition transition):
+  JAVA de.cau.cs.kieler.uml2.sim.JavaEscape.getAlias(org.eclipse.uml2.uml.Transition)
 ;
 
 // Test whether a vertex is of type Initial
