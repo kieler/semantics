@@ -84,13 +84,10 @@ fmod eclipseInterface is
 *** ToDo: Remove initial states transitions (DONE? -> isConsidered) 
   ops «FOREACH this.getTransitions() AS transition SEPARATOR "  "-»«transition.getId()-»«ENDFOREACH-» :-> ModTransition .
   «FOREACH this.getTransitions().select(e|e.isConsidered()) AS transition SEPARATOR '\n'-»«transition.genMaude()-»«ENDFOREACH-»
-  
-  «REM»
-  We now work thru the Fork and Join nodes. For all CCs ending with non Fork/Join nodes, we just construct ONE combined transition.
-  «ENDREM»
+  «REM» We now work thru the Fork and Join nodes. For all CCs ending with non Fork/Join nodes, we just construct ONE combined transition. «ENDREM»
   «FOREACH this.getForkJoin() AS pseudostate SEPARATOR '\n'-»
    «IF !pseudostate.isDone("OUTGOING")-»
-   eq tr_«pseudostate.getId()» = {«FOREACH pseudostate.getPseudoSourceVertices() AS source SEPARATOR ','-»«source.getAlias()-»«ENDFOREACH-»} nil nil nil {«FOREACH pseudostate.getPseudoTargetVertices() AS target SEPARATOR ','-»«target.getAlias()-»«ENDFOREACH-»} «getLastRootRegion().getMaudeLabel()-» .
+   eq tr_«pseudostate.getId()» = {«FOREACH pseudostate.getPseudoSourceVertices() AS source SEPARATOR ','-»«source.getAlias()-»«ENDFOREACH-»} nil nil nil {«FOREACH pseudostate.getPseudoTargetVertices() AS target SEPARATOR ','-»«target.getAlias()-»«ENDFOREACH-»} «getLastRootRegion().getMaudeLabel()-» . «resetLastRootRegion()-»
    «ENDIF-»
   «ENDFOREACH-»
   

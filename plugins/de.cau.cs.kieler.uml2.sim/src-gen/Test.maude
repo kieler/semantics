@@ -70,11 +70,8 @@ fmod eclipseInterface is
    eq tr_G2T_Zk1koIuKEd-yoIYGk1D8vA = G_gmI5oIuJEd-yoIYGk1D8vA ee1 nil a3 empty empty empty RinInner0 .
    eq tr_E2G_lT5CMIuJEd-yoIYGk1D8vA = E_fj2WMIuJEd-yoIYGk1D8vA ee1 nil a1 empty empty empty RinInner0 .
    eq tr_susp2DH_LbxYMIuKEd-yoIYGk1D8vA = susp_FiQnIIuKEd-yoIYGk1D8vA res nil  empty empty empty Rroot .  
-  
-   eq tr_F_XkAKwIuJEd-yoIYGk1D8vA = {B} nil nil nil {E,N} RinOuter .
-  
-   eq tr_J_Uhp-oIuKEd-yoIYGk1D8vA = {G,N} nil nil nil {T} RinOuter .
-  
+   eq tr_F_XkAKwIuJEd-yoIYGk1D8vA = {B} nil nil nil {E,N} RinOuter .      
+   eq tr_J_Uhp-oIuKEd-yoIYGk1D8vA = {G,N} nil nil nil {T} RinOuter .        
   op allTrans :-> Transitons .
   eq allTrans = I2E_jRuWIIuJEd-yoIYGk1D8vA  J2T_XzxPoIuKEd-yoIYGk1D8vA  F2E_ob7KIIuJEd-yoIYGk1D8vA  outer2susp_I39-sIuKEd-yoIYGk1D8vA  B2F_qDngsIuJEd-yoIYGk1D8vA  I2N_SZjCoIuKEd-yoIYGk1D8vA  DH2B_NM-3IIuKEd-yoIYGk1D8vA  I2outer_H6AhoIuKEd-yoIYGk1D8vA  G2T_Zk1koIuKEd-yoIYGk1D8vA  I2B_ub69sIuJEd-yoIYGk1D8vA  E2G_lT5CMIuJEd-yoIYGk1D8vA  G2J_VgYQsIuKEd-yoIYGk1D8vA  F2N_S-ydsIuKEd-yoIYGk1D8vA  N2J_WOFEMIuKEd-yoIYGk1D8vA  susp2DH_LbxYMIuKEd-yoIYGk1D8vA .
 
