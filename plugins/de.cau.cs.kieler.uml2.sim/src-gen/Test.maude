@@ -16,64 +16,67 @@ fmod eclipseInterface is
  including TRANSITIONS .
  including STATES .
 *** // Events //
-  ops ee1 res ee0 ee0 susp ee1 : -> Event .
+  ops ee0 susp ee0 ee1 ee1 res : -> Event .
   op allEvents : -> Events .
 
 *** // allActions //	
-  ops a3  a4 a4  a1 : -> Action .
+  ops a4  a4 a3 a1  : -> Action .
 
 ***// States //
-  ops CE CB CN Csusp Cinner Couter CG : -> ModState .	
-    eq CE = root(R "root") : C "outer" : R "inOuter" : C "inner" : R "inInner0" : C "E" .
-    eq CB = root(R "root") : C "outer" : R "inOuter" : C "B" .
-    eq CN = root(R "root") : C "outer" : R "inOuter" : C "inner" : R "inInner1" : C "N" .
-    eq Csusp = root(R "root") : C "susp" .
+  ops Cinner CN CG Csusp CB CE Couter : -> ModState .	
     eq Cinner = root(R "root") : C "outer" : R "inOuter" : C "inner" .
-    eq Couter = root(R "root") : C "outer" .
-    eq CG = root(R "root") : C "outer" : R "inOuter" : C "inner" : R "inInner0" : C "G" .	
+    eq CN = root(R "root") : C "outer" : R "inOuter" : C "inner" : R "inInner1" : C "N" .
+    eq CG = root(R "root") : C "outer" : R "inOuter" : C "inner" : R "inInner0" : C "G" .
+    eq Csusp = root(R "root") : C "susp" .
+    eq CB = root(R "root") : C "outer" : R "inOuter" : C "B" .
+    eq CE = root(R "root") : C "outer" : R "inOuter" : C "inner" : R "inInner0" : C "E" .
+    eq Couter = root(R "root") : C "outer" .	
 ***// Regions //
-  ops RinOuter Rroot RinInner0 RinInner1 : -> Region .
-    eq RinOuter = root(R "root") : C "outer" : R "inOuter" .
-    eq Rroot = root(R "root") .
+  ops RinInner0 RinInner1 Rroot RinOuter : -> Region .
     eq RinInner0 = root(R "root") : C "outer" : R "inOuter" : C "inner" : R "inInner0" .
     eq RinInner1 = root(R "root") : C "outer" : R "inOuter" : C "inner" : R "inInner1" .
+    eq Rroot = root(R "root") .
+    eq RinOuter = root(R "root") : C "outer" : R "inOuter" .
 ***// allVerts //
   op allVerts : -> Verts .
-  eq allVerts = RinOuter, Rroot, RinInner0, RinInner1 , CE, CB, CN, Csusp, Cinner, Couter, CG .
+  eq allVerts = RinInner0, RinInner1, Rroot, RinOuter , Cinner, CN, CG, Csusp, CB, CE, Couter .
 	
 ***// defaults //
-  ops defRinOuter defRroot defRinInner0 defRinInner1 : -> Default .
+  ops defRinInner0 defRinInner1 defRroot defRinOuter : -> Default .
  eq defRinInner0 = RinInner0 default CE .
  eq defRinInner1 = RinInner1 default CN .
- eq defRinOuter = RinOuter default CB .
  eq defRroot = Rroot default Couter .
+ eq defRinOuter = RinOuter default CB .
   op allDefs : -> Defaults .
-  eq allDefs = defRinOuter, defRroot, defRinInner0, defRinInner1 .
+  eq allDefs = defRinInner0, defRinInner1, defRroot, defRinOuter .
   
 ***// deep defaults //
-  ops dDefRinOuter dDefRroot dDefRinInner0 dDefRinInner1 : -> DeepDefault .
+  ops dDefRinInner0 dDefRinInner1 dDefRroot dDefRinOuter : -> DeepDefault .
  eq dDefRinOuter = RinOuter deepdefault CB .
   op allDHDefs : -> DeepDefaults .
-  eq allDHDefs = dDefRinOuter, dDefRroot, dDefRinInner0, dDefRinInner1 .
+  eq allDHDefs = dDefRinInner0, dDefRinInner1, dDefRroot, dDefRinOuter .
 
 ***// shallow defaults //
-  ops sDefRinOuter sDefRroot sDefRinInner0 sDefRinInner1 : -> ShallowDefault .
+  ops sDefRinInner0 sDefRinInner1 sDefRroot sDefRinOuter : -> ShallowDefault .
   
   op allSHDefs : -> ShallowDefaults .
-  eq allSHDefs = sDefRinOuter, sDefRroot, sDefRinInner0, sDefRinInner1 .
+  eq allSHDefs = sDefRinInner0, sDefRinInner1, sDefRroot, sDefRinOuter .
 
 *** Transitions 
 *** ToDo: (Important): Compute sources and targets sets
 *** ToDo: Remove initial states transitions (DONE? -> isConsidered) 
-  ops DH2B_NM-3IIuKEd-yoIYGk1D8vA  I2E_jRuWIIuJEd-yoIYGk1D8vA  G2T_Zk1koIuKEd-yoIYGk1D8vA  susp2DH_LbxYMIuKEd-yoIYGk1D8vA  B2F_qDngsIuJEd-yoIYGk1D8vA  F2N_S-ydsIuKEd-yoIYGk1D8vA  G2J_VgYQsIuKEd-yoIYGk1D8vA  J2T_XzxPoIuKEd-yoIYGk1D8vA  F2E_ob7KIIuJEd-yoIYGk1D8vA  outer2susp_I39-sIuKEd-yoIYGk1D8vA  I2N_SZjCoIuKEd-yoIYGk1D8vA  N2J_WOFEMIuKEd-yoIYGk1D8vA  E2G_lT5CMIuJEd-yoIYGk1D8vA  I2B_ub69sIuJEd-yoIYGk1D8vA  I2outer_H6AhoIuKEd-yoIYGk1D8vA :-> ModTransition .
-   eq tr_G2T_Zk1koIuKEd-yoIYGk1D8vA = G_gmI5oIuJEd-yoIYGk1D8vA ee1 nil a3 empty empty empty RinInner0 .
-   eq tr_susp2DH_LbxYMIuKEd-yoIYGk1D8vA = susp_FiQnIIuKEd-yoIYGk1D8vA res nil  empty empty empty Rroot .
+  ops I2E_jRuWIIuJEd-yoIYGk1D8vA  J2T_XzxPoIuKEd-yoIYGk1D8vA  F2E_ob7KIIuJEd-yoIYGk1D8vA  outer2susp_I39-sIuKEd-yoIYGk1D8vA  B2F_qDngsIuJEd-yoIYGk1D8vA  I2N_SZjCoIuKEd-yoIYGk1D8vA  DH2B_NM-3IIuKEd-yoIYGk1D8vA  I2outer_H6AhoIuKEd-yoIYGk1D8vA  G2T_Zk1koIuKEd-yoIYGk1D8vA  I2B_ub69sIuJEd-yoIYGk1D8vA  E2G_lT5CMIuJEd-yoIYGk1D8vA  G2J_VgYQsIuKEd-yoIYGk1D8vA  F2N_S-ydsIuKEd-yoIYGk1D8vA  N2J_WOFEMIuKEd-yoIYGk1D8vA  susp2DH_LbxYMIuKEd-yoIYGk1D8vA :-> ModTransition .
    eq tr_outer2susp_I39-sIuKEd-yoIYGk1D8vA = outer_PpBRMIuJEd-yoIYGk1D8vA susp nil  empty empty empty Rroot .
-   eq tr_E2G_lT5CMIuJEd-yoIYGk1D8vA = E_fj2WMIuJEd-yoIYGk1D8vA ee1 nil a1 empty empty empty RinInner0 .  
-   eq tr_F_XkAKwIuJEd-yoIYGk1D8vA = {B} nil nil nil {N,E} RinOuter     
-   eq tr_J_Uhp-oIuKEd-yoIYGk1D8vA = {G,N} nil nil nil {T} RinOuter       
+   eq tr_G2T_Zk1koIuKEd-yoIYGk1D8vA = G_gmI5oIuJEd-yoIYGk1D8vA ee1 nil a3 empty empty empty RinInner0 .
+   eq tr_E2G_lT5CMIuJEd-yoIYGk1D8vA = E_fj2WMIuJEd-yoIYGk1D8vA ee1 nil a1 empty empty empty RinInner0 .
+   eq tr_susp2DH_LbxYMIuKEd-yoIYGk1D8vA = susp_FiQnIIuKEd-yoIYGk1D8vA res nil  empty empty empty Rroot .  
+  
+   eq tr_F_XkAKwIuJEd-yoIYGk1D8vA = {B} nil nil nil {E,N} RinOuter .
+  
+   eq tr_J_Uhp-oIuKEd-yoIYGk1D8vA = {G,N} nil nil nil {T} RinOuter .
+  
   op allTrans :-> Transitons .
-  eq allTrans = DH2B_NM-3IIuKEd-yoIYGk1D8vA  I2E_jRuWIIuJEd-yoIYGk1D8vA  G2T_Zk1koIuKEd-yoIYGk1D8vA  susp2DH_LbxYMIuKEd-yoIYGk1D8vA  B2F_qDngsIuJEd-yoIYGk1D8vA  F2N_S-ydsIuKEd-yoIYGk1D8vA  G2J_VgYQsIuKEd-yoIYGk1D8vA  J2T_XzxPoIuKEd-yoIYGk1D8vA  F2E_ob7KIIuJEd-yoIYGk1D8vA  outer2susp_I39-sIuKEd-yoIYGk1D8vA  I2N_SZjCoIuKEd-yoIYGk1D8vA  N2J_WOFEMIuKEd-yoIYGk1D8vA  E2G_lT5CMIuJEd-yoIYGk1D8vA  I2B_ub69sIuJEd-yoIYGk1D8vA  I2outer_H6AhoIuKEd-yoIYGk1D8vA .
+  eq allTrans = I2E_jRuWIIuJEd-yoIYGk1D8vA  J2T_XzxPoIuKEd-yoIYGk1D8vA  F2E_ob7KIIuJEd-yoIYGk1D8vA  outer2susp_I39-sIuKEd-yoIYGk1D8vA  B2F_qDngsIuJEd-yoIYGk1D8vA  I2N_SZjCoIuKEd-yoIYGk1D8vA  DH2B_NM-3IIuKEd-yoIYGk1D8vA  I2outer_H6AhoIuKEd-yoIYGk1D8vA  G2T_Zk1koIuKEd-yoIYGk1D8vA  I2B_ub69sIuJEd-yoIYGk1D8vA  E2G_lT5CMIuJEd-yoIYGk1D8vA  G2J_VgYQsIuKEd-yoIYGk1D8vA  F2N_S-ydsIuKEd-yoIYGk1D8vA  N2J_WOFEMIuKEd-yoIYGk1D8vA  susp2DH_LbxYMIuKEd-yoIYGk1D8vA .
 
 
 ***/// A state machine consits of Vertices Defaultsstatesfunction ShallowDefaultstatesfunction DeepDefaultstatesfunction EntryActionsfunction ExitActionsFunction Transitions 

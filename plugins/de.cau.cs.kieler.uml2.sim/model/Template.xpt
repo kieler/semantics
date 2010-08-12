@@ -90,7 +90,7 @@ fmod eclipseInterface is
   «ENDREM»
   «FOREACH this.getForkJoin() AS pseudostate SEPARATOR '\n'-»
    «IF !pseudostate.isDone("OUTGOING")-»
-   eq tr_«pseudostate.getId()» = {«FOREACH pseudostate.getPseudoSourceVertices() AS source SEPARATOR ','-»«source.getAlias()-»«ENDFOREACH-»} nil nil nil {«FOREACH pseudostate.getPseudoTargetVertices() AS target SEPARATOR ','-»«target.getAlias()-»«ENDFOREACH-»} «getLastRootRegion().getMaudeLabel()-»
+   eq tr_«pseudostate.getId()» = {«FOREACH pseudostate.getPseudoSourceVertices() AS source SEPARATOR ','-»«source.getAlias()-»«ENDFOREACH-»} nil nil nil {«FOREACH pseudostate.getPseudoTargetVertices() AS target SEPARATOR ','-»«target.getAlias()-»«ENDFOREACH-»} «getLastRootRegion().getMaudeLabel()-» .
    «ENDIF-»
   «ENDFOREACH-»
   
