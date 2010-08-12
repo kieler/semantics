@@ -4,9 +4,11 @@ import java.util.LinkedList;
 
 import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.uml2.uml.FinalState;
 import org.eclipse.uml2.uml.Pseudostate;
 import org.eclipse.uml2.uml.PseudostateKind;
+import org.eclipse.uml2.uml.Region;
 import org.eclipse.uml2.uml.Vertex;
 import org.eclipse.uml2.uml.Transition;
 
@@ -14,7 +16,46 @@ public class JavaEscape {
 
 	private static LinkedList<Vertex> doneVerticesIncoming = new LinkedList<Vertex>();
 	private static LinkedList<Vertex> doneVerticesOutgoing = new LinkedList<Vertex>();
+	private static Region lastRootRegion = null;
 
+	// ------------------------------------------------------------------------
+
+	// Save a new root region iff it has a smaller hierarchy level 
+	// otherwise keep the old one
+	public static void setRootRegion(Region region) {
+		if (lastRootRegion == null) {
+			lastRootRegion = region;
+		}
+		else if (getHierarchyLevel(lastRootRegion) > getHierarchyLevel(region)) {
+			lastRootRegion = region;
+		}
+	}
+	
+	// ------------------------------------------------------------------------
+
+	// Get the last RootRegion, that is the one with the smallest hierarchy level
+	public static Region getLastRootRegion() {
+		return lastRootRegion;
+	}
+	
+	// ------------------------------------------------------------------------
+
+	public static void resetLastRootRegion() {
+		lastRootRegion = null;
+	}
+	
+	// ------------------------------------------------------------------------
+	
+	// For any EObject return the hierarchy level
+	public static int getHierarchyLevel(EObject eObject) {
+		int c = 0;
+		while (eObject.eContainer() != null) {
+			c++;
+			eObject = eObject.eContainer();
+		}
+		return c;
+	}
+	
 	// ------------------------------------------------------------------------
 
 	// Clear list of checked vertices
@@ -66,6 +107,13 @@ public class JavaEscape {
 	public static String getId(Vertex vertex) {
 		return getAlias(vertex)
 				+ vertex.eResource().getURIFragment(vertex).toString();
+	}
+
+	// ------------------------------------------------------------------------
+
+	// Get the Fragment URI ID of a Region
+	public static String getId(Region region) {
+		return region.eResource().getURIFragment(region).toString();
 	}
 
 	// ------------------------------------------------------------------------

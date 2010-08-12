@@ -86,7 +86,7 @@ fmod eclipseInterface is
   «FOREACH this.getTransitions().select(e|e.isConsidered()) AS transition SEPARATOR '\n'-»«transition.genMaude()-»«ENDFOREACH-»
   «FOREACH this.getForkJoin() AS pseudostate SEPARATOR '\n'-»
    «IF !pseudostate.isDone("OUTGOING")-»
-   eq tr_«pseudostate.getId()» = {«FOREACH pseudostate.getPseudoSourceVertices() AS source SEPARATOR ','-»«source.getAlias()-»«ENDFOREACH-»} nil nil nil {«FOREACH pseudostate.getPseudoTargetVertices() AS target SEPARATOR ','-»«target.getAlias()-»«ENDFOREACH-»}
+   eq tr_«pseudostate.getId()» = {«FOREACH pseudostate.getPseudoSourceVertices() AS source SEPARATOR ','-»«source.getAlias()-»«ENDFOREACH-»} nil nil nil {«FOREACH pseudostate.getPseudoTargetVertices() AS target SEPARATOR ','-»«target.getAlias()-»«ENDFOREACH-»} «pseudostate.getPseudoRootRegion().getMaudeLabel()-»
    «ENDIF-»
   «ENDFOREACH-»
   

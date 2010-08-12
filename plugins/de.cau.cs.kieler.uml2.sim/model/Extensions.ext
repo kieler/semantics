@@ -251,6 +251,10 @@ Set[Vertex] getPseudoSourceVertices(Pseudostate pseudostate) :
     transitionList.source
 ;
 
+
+Region getPseudoRootRegion(Pseudostate pseudostate):
+;
+
 //-----------------------------------------------------------------------------
 
 // This returns all nodes for a join or fork pseudostate
