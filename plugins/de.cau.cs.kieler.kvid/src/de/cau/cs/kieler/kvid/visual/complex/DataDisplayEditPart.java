@@ -155,22 +155,22 @@ public class DataDisplayEditPart extends ShapeNodeEditPart implements IDataListe
         this.referredObjectURI = URI;
         DataDistributor.getInstance().getDataObjectByURI(URI).setSaveHistory(true);
         DataDistributor.getInstance().getDataObjectByURI(URI).registerDataListener(this);
-        PlatformUI.getWorkbench().getDisplay().syncExec(new Runnable() {
+        /*PlatformUI.getWorkbench().getDisplay().syncExec(new Runnable() {
             public void run() {
                 refresh();
             }
-        });
+        });*/
     }
     
     /* (non-Javadoc)
      * @see de.cau.cs.kieler.kvid.data.IDataListener#triggerDataChanged()
      */
     public void triggerDataChanged() {
-        PlatformUI.getWorkbench().getDisplay().syncExec(new Runnable() {
+        /*PlatformUI.getWorkbench().getDisplay().syncExec(new Runnable() {
             public void run() {
                 refreshVisuals();
             }
-        });
+        });*/
     }
     
     

@@ -79,7 +79,7 @@ public class ScopeNodeHandler extends AbstractHandler {
                                                                 PreferencesHint.USE_DEFAULTS);
             createScopeRequest.setLocation(targetEditPart.getLocation());
             
-            Command createDisplayCommand = diagEditor.getDiagramEditPart().getCommand(createScopeRequest);
+            Command createDisplayCommand = targetEditPart.getParent().getCommand(createScopeRequest);
             CompositeCommand noteAttachmentCC = new CompositeCommand("Create a note attachment");
 
             @SuppressWarnings("rawtypes")
