@@ -66,5 +66,48 @@
          </Priority>
       </editpartProvider>
    </extension>
+   <extension
+         point="org.eclipse.ui.commands">
+      <command
+            categoryId="de.cau.cs.kieler"
+            defaultHandler="de.cau.cs.kieler.kvid.visual.complex.ScopeNodeHandler"
+            id="de.cau.cs.kieler.kvid.addScopeCommand"
+            name="Add Scope Node">
+      </command>
+   </extension>
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            locationURI="popup:de.cau.cs.kieler">
+         <command
+               commandId="de.cau.cs.kieler.kvid.addScopeCommand"
+               disabledIcon="icons/datanode_disabled.gif"
+               icon="icons/datanode.gif"
+               label="Add Scope Node"
+               mnemonic="S"
+               style="push">
+            <visibleWhen
+                  checkEnabled="false">
+               <and>
+                  <reference
+                        definitionId="de.cau.cs.kieler.expression.editorActive">
+                  </reference>
+                  <count
+                        value="1">
+                  </count>
+                  <not>
+                     <reference
+                           definitionId="de.cau.cs.kieler.expression.diagramSelected">
+                     </reference></not>
+                  <not>
+                     <reference
+                           definitionId="de.cau.cs.kieler.expression.onlyConnectionsSelected">
+                     </reference>
+                  </not>
+               </and>
+            </visibleWhen>
+         </command>
+      </menuContribution>
+   </extension>
 
 </plugin>

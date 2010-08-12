@@ -40,10 +40,11 @@ import org.eclipse.ui.IWorkbenchPage;
 
 /**
  * @author jjc
- *
+ * @deprecated use ScopeNodeHandler instead
  */
 public class AddDataDisplayAction extends AttachShapeAction {
 
+    protected int bal;
     /**
      * @param workbenchPage The referred workbench page
      */
