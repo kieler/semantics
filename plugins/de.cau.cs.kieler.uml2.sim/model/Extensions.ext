@@ -191,8 +191,10 @@ String getTrigger(String transitionLabel):
 // generation or in the other case is already handled by the maude simulatior
 // implicitly. 
 Boolean isConsidered(Transition transition):
-  let sourceVertex = transition.source:
-  !(sourceVertex.isInitial() || sourceVertex.isDH() || sourceVertex.isSH())
+  let source = transition.source:
+  let target = transition.target:
+  !(source.isInitial() || source.isDH() || source.isSH() || source.isFork() || source.isJoin()
+  || target.isFork() || target.isJoin())
 ;
 
 //-----------------------------------------------------------------------------
