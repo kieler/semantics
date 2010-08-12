@@ -185,6 +185,9 @@ String getTrigger(String transitionLabel):
   JAVA de.cau.cs.kieler.uml2.sim.JavaEscape.getTrigger(java.lang.String)
 ;
 
+
+//-----------------------------------------------------------------------------
+
 //-----------------------------------------------------------------------------
 
 // Checks whether a transition is eligible to be considered by the maude code

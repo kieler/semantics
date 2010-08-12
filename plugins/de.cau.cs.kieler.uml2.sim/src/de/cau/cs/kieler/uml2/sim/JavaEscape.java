@@ -1,13 +1,48 @@
 package de.cau.cs.kieler.uml2.sim;
 
+import java.util.LinkedList;
+
 import org.eclipse.uml2.uml.Pseudostate;
+import org.eclipse.uml2.uml.PseudostateKind;
+import org.eclipse.uml2.uml.Vertex;
+import org.eclipse.uml2.uml.Transition;
 
 public class JavaEscape {
 
+    private static LinkedList<Vertex> checkedVertices = new LinkedList<Vertex>();
+
+	// ------------------------------------------------------------------------
+    
+    // Clear list of checked vertices
+    public static void clearCheckedVertices() {
+    	checkedVertices.clear();
+    }
+	
+    // ------------------------------------------------------------------------
+    
+    // Add a Vertex iff it is not already checked
+    public static boolean addCheckedVertex(Vertex vertex) {
+    	if (!isCheckedVertex(vertex)) {
+        	checkedVertices.add(vertex);
+        	return true;
+    	}
+    	return false;
+    }
+    
+	// ------------------------------------------------------------------------
+
+    // Ask whether a Vertex is checked
+    public static boolean isCheckedVertex(Vertex vertex) {
+    	if (checkedVertices.contains(vertex)) {
+    		return true;
+    	}
+    	return false;
+    }
+    
 	// ------------------------------------------------------------------------
 
 	// Get the Fragment URI ID of a Vertex
-	public static String getId(org.eclipse.uml2.uml.Vertex vertex) {
+	public static String getId(Vertex vertex) {
 		return getAlias(vertex)
 				+ vertex.eResource().getURIFragment(vertex).toString();
 	}
@@ -15,7 +50,7 @@ public class JavaEscape {
 	// ------------------------------------------------------------------------
 
 	// Get Alias of a Vertex for better traceability
-	public static String getAlias(org.eclipse.uml2.uml.Vertex vertex) {
+	public static String getAlias(Vertex vertex) {
 		if (isInitial(vertex))
 			return "I";
 		if (isDH(vertex))
@@ -34,7 +69,7 @@ public class JavaEscape {
 	// ------------------------------------------------------------------------
 
 	// Get the Fragment URI ID of a Tranistion
-	public static String getId(org.eclipse.uml2.uml.Transition transition) {
+	public static String getId(Transition transition) {
 		return getAlias(transition.getSource()) + "2"
 				+ getAlias(transition.getTarget())
 				+ transition.eResource().getURIFragment(transition);
@@ -80,39 +115,39 @@ public class JavaEscape {
 
 	// ------------------------------------------------------------------------
 
-	public static Boolean isInitial(org.eclipse.uml2.uml.Vertex vertex) {
+	public static Boolean isInitial(Vertex vertex) {
 		// only a Pseudostate can be an initial state
 		if (!(vertex instanceof Pseudostate))
 			return false;
-		return ((((Pseudostate) vertex).getKind()).getValue() == org.eclipse.uml2.uml.PseudostateKind.INITIAL);
+		return ((((Pseudostate) vertex).getKind()).getValue() == PseudostateKind.INITIAL);
 	}
 
-	public static Boolean isDH(org.eclipse.uml2.uml.Vertex vertex) {
+	public static Boolean isDH(Vertex vertex) {
 		// only a Pseudostate can be a deep history state
 		if (!(vertex instanceof Pseudostate))
 			return false;
-		return ((((Pseudostate) vertex).getKind()).getValue() == org.eclipse.uml2.uml.PseudostateKind.DEEP_HISTORY);
+		return ((((Pseudostate) vertex).getKind()).getValue() == PseudostateKind.DEEP_HISTORY);
 	}
 
-	public static Boolean isFork(org.eclipse.uml2.uml.Vertex vertex) {
+	public static Boolean isFork(Vertex vertex) {
 		// only a Pseudostate can be a deep history state
 		if (!(vertex instanceof Pseudostate))
 			return false;
-		return ((((Pseudostate) vertex).getKind()).getValue() == org.eclipse.uml2.uml.PseudostateKind.FORK);
+		return ((((Pseudostate) vertex).getKind()).getValue() == PseudostateKind.FORK);
 	}
 
-	public static Boolean isJoin(org.eclipse.uml2.uml.Vertex vertex) {
+	public static Boolean isJoin(Vertex vertex) {
 		// only a Pseudostate can be a deep history state
 		if (!(vertex instanceof Pseudostate))
 			return false;
-		return ((((Pseudostate) vertex).getKind()).getValue() == org.eclipse.uml2.uml.PseudostateKind.JOIN);
+		return ((((Pseudostate) vertex).getKind()).getValue() == PseudostateKind.JOIN);
 	}
 
-	public static Boolean isSH(org.eclipse.uml2.uml.Vertex vertex) {
+	public static Boolean isSH(Vertex vertex) {
 		// only a Pseudostate can be a shallow history state
 		if (!(vertex instanceof Pseudostate))
 			return false;
-		return ((((Pseudostate) vertex).getKind()).getValue() == org.eclipse.uml2.uml.PseudostateKind.SHALLOW_HISTORY);
+		return ((((Pseudostate) vertex).getKind()).getValue() == PseudostateKind.SHALLOW_HISTORY);
 	}
 
 	// ------------------------------------------------------------------------
