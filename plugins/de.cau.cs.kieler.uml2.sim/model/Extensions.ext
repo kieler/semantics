@@ -106,6 +106,7 @@ String genMaude(Transition n):
 ;
 
 
+
 Set[Transition] getTransitionsOP(StateMachine sm):
   let transitions = sm.getTransitions() :
   transitions.select(e|(e.source).metaType == Pseudostate)

@@ -23,24 +23,24 @@ fmod eclipseInterface is
   ops  : -> Action .
 
 ***// States //
-  ops CB CF CE CG CD CInnerState2 CInnerState1 CC CA : -> ModState .	
+  ops CC CA CB CE CInnerState2 CInnerState1 CD CG CF : -> ModState .	
+    eq CC = root(R "Region") : C "InnerState1" : R "Region" : C "C" .
+    eq CA = root(R "Region") : C "InnerState1" : R "Region" : C "A" .
     eq CB = root(R "Region") : C "InnerState1" : R "Region" : C "InnerState2" : R "Region" : C "B" .
-    eq CF = root(R "Region") : C "InnerState1" : R "Region" : C "F" .
     eq CE = root(R "Region") : C "InnerState1" : R "Region" : C "E" .
-    eq CG = root(R "Region") : C "G" .
-    eq CD = root(R "Region") : C "InnerState1" : R "Region" : C "D" .
     eq CInnerState2 = root(R "Region") : C "InnerState1" : R "Region" : C "InnerState2" .
     eq CInnerState1 = root(R "Region") : C "InnerState1" .
-    eq CC = root(R "Region") : C "InnerState1" : R "Region" : C "C" .
-    eq CA = root(R "Region") : C "InnerState1" : R "Region" : C "A" .	
+    eq CD = root(R "Region") : C "InnerState1" : R "Region" : C "D" .
+    eq CG = root(R "Region") : C "G" .
+    eq CF = root(R "Region") : C "InnerState1" : R "Region" : C "F" .	
 ***// Regions //
   ops RRegion RRegion RRegion : -> Region .
     eq RRegion = root(R "Region") : C "InnerState1" : R "Region" : C "InnerState2" : R "Region" .
-    eq RRegion = root(R "Region") .
     eq RRegion = root(R "Region") : C "InnerState1" : R "Region" .
+    eq RRegion = root(R "Region") .
 ***// allVerts //
   op allVerts : -> Verts .
-  eq allVerts = RRegion, RRegion, RRegion , CB, CF, CE, CG, CD, CInnerState2, CInnerState1, CC, CA .
+  eq allVerts = RRegion, RRegion, RRegion , CC, CA, CB, CE, CInnerState2, CInnerState1, CD, CG, CF .
 	
 ***// defaults //
   ops defRRegion defRRegion defRRegion : -> Default .
@@ -61,21 +61,14 @@ fmod eclipseInterface is
 *** Transitions 
 *** ToDo: (Important): Compute sources and targets sets
 *** ToDo: Remove initial states transitions (DONE? -> isConsidered) 
-  ops J2F_8oXd4KVqEd-uwMsarPjhnQ  J2J_398WIKVqEd-uwMsarPjhnQ  J2G_9yJJYKVqEd-uwMsarPjhnQ  F2J_8EWx4KVqEd-uwMsarPjhnQ  B2J_12e6YKVqEd-uwMsarPjhnQ  C2J_4oFfUKVqEd-uwMsarPjhnQ  A2J_1SeOYKVqEd-uwMsarPjhnQ  D2F_59nu4KVqEd-uwMsarPjhnQ  F2E_6nvC4KVqEd-uwMsarPjhnQ  J2F_5cgl4KVqEd-uwMsarPjhnQ :-> ModTransition .
-    
-    [[D, B, A, C]]
-    to 
-    [[F, G, E]]
-    
+  ops J2J_398WIKVqEd-uwMsarPjhnQ  D2F_59nu4KVqEd-uwMsarPjhnQ  B2J_12e6YKVqEd-uwMsarPjhnQ  F2E_6nvC4KVqEd-uwMsarPjhnQ  J2F_5cgl4KVqEd-uwMsarPjhnQ  F2J_8EWx4KVqEd-uwMsarPjhnQ  J2G_9yJJYKVqEd-uwMsarPjhnQ  J2F_8oXd4KVqEd-uwMsarPjhnQ  A2J_1SeOYKVqEd-uwMsarPjhnQ  C2J_4oFfUKVqEd-uwMsarPjhnQ :-> ModTransition .
+    {B,A,C,D} nil nil nil {E,G,F}
   
-    
   
-    
   
-    
   
   op allTrans :-> Transitons .
-  eq allTrans = J2F_8oXd4KVqEd-uwMsarPjhnQ  J2J_398WIKVqEd-uwMsarPjhnQ  J2G_9yJJYKVqEd-uwMsarPjhnQ  F2J_8EWx4KVqEd-uwMsarPjhnQ  B2J_12e6YKVqEd-uwMsarPjhnQ  C2J_4oFfUKVqEd-uwMsarPjhnQ  A2J_1SeOYKVqEd-uwMsarPjhnQ  D2F_59nu4KVqEd-uwMsarPjhnQ  F2E_6nvC4KVqEd-uwMsarPjhnQ  J2F_5cgl4KVqEd-uwMsarPjhnQ .
+  eq allTrans = J2J_398WIKVqEd-uwMsarPjhnQ  D2F_59nu4KVqEd-uwMsarPjhnQ  B2J_12e6YKVqEd-uwMsarPjhnQ  F2E_6nvC4KVqEd-uwMsarPjhnQ  J2F_5cgl4KVqEd-uwMsarPjhnQ  F2J_8EWx4KVqEd-uwMsarPjhnQ  J2G_9yJJYKVqEd-uwMsarPjhnQ  J2F_8oXd4KVqEd-uwMsarPjhnQ  A2J_1SeOYKVqEd-uwMsarPjhnQ  C2J_4oFfUKVqEd-uwMsarPjhnQ .
 
 
 ***/// A state machine consits of Vertices Defaultsstatesfunction ShallowDefaultstatesfunction DeepDefaultstatesfunction EntryActionsfunction ExitActionsFunction Transitions 
