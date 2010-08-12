@@ -18,6 +18,8 @@ import java.util.List;
 
 import org.eclipse.draw2d.geometry.Point;
 
+import de.cau.cs.kieler.kvid.datadistributor.IDataListener;
+
 /**
  * 
  * Class for storing all important data for KViD to visualize.
@@ -108,9 +110,6 @@ public class DataObject {
         if (savesHistory) {
             this.history.add(thedata);
         }
-        for (IDataListener listener : listeners) {
-            listener.triggerDataChanged();
-        }
     }
     
     public String getURI() {
@@ -163,14 +162,6 @@ public class DataObject {
     
     public void clearHistory() {
         this.history.clear();
-    }
-    
-    public void registerDataListener(IDataListener thelistener) {
-        listeners.add(thelistener);
-    }
-    
-    public void removeDataListener(IDataListener thelistener) {
-        listeners.remove(thelistener);
     }
 
 }

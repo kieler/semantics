@@ -32,6 +32,7 @@ import org.eclipse.ui.PlatformUI;
 
 import de.cau.cs.kieler.kvid.data.DataObject;
 import de.cau.cs.kieler.kvid.datadistributor.DataDistributor;
+import de.cau.cs.kieler.kvid.datadistributor.IDataListener;
 import de.cau.cs.kieler.kvid.datadistributor.Property;
 import de.cau.cs.kieler.kvid.datadistributor.RuntimeConfiguration;
 import de.cau.cs.kieler.sim.kiem.KiemPlugin;
@@ -43,9 +44,15 @@ import de.cau.cs.kieler.sim.kiem.KiemPlugin;
  * @author jjc
  * 
  */
-public class GmfDrawer implements IDrawer {
+public class GmfDrawer implements IDrawer, IDataListener {
 
     private HashMap<String, IKvidFigure> figuresByURI = new HashMap<String, IKvidFigure>();
+    
+    private static GmfDrawer instance = new GmfDrawer();
+    
+    public static GmfDrawer getInstance() {
+        return instance;
+    }
 
     public void draw(final HashMap<String, DataObject> dataSet) {
         // clearing phase
@@ -187,6 +194,13 @@ public class GmfDrawer implements IDrawer {
         result.x -= thefigure.getBounds().width / 2;
         result.y -= thefigure.getBounds().height / 2;
         return result;
+    }
+
+    /* (non-Javadoc)
+     * @see de.cau.cs.kieler.kvid.datadistributor.IDataListener#triggerDataChanged()
+     */
+    public void triggerDataChanged() {
+        draw(DataDistributor.getInstance().getData());
     }
 
 }

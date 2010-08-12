@@ -18,11 +18,18 @@ import java.awt.image.BufferedImage;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.eclipse.draw2d.ColorConstants;
 import org.eclipse.draw2d.LineBorder;
+import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.gmf.runtime.diagram.ui.editparts.ShapeNodeEditPart;
 import org.eclipse.gmf.runtime.gef.ui.figures.NodeFigure;
 import org.eclipse.gmf.runtime.gef.ui.figures.WrapperNodeFigure;
+import org.eclipse.gmf.runtime.notation.Connector;
+import org.eclipse.gmf.runtime.notation.Node;
+import org.eclipse.gmf.runtime.notation.Shape;
 import org.eclipse.gmf.runtime.notation.View;
+import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.ImageData;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.PlatformUI;
@@ -30,8 +37,8 @@ import org.eclipse.ui.PlatformUI;
 import ptolemy.plot.Plot;
 import de.cau.cs.kieler.kvid.KvidUtil;
 import de.cau.cs.kieler.kvid.data.DataObject;
-import de.cau.cs.kieler.kvid.data.IDataListener;
 import de.cau.cs.kieler.kvid.datadistributor.DataDistributor;
+import de.cau.cs.kieler.kvid.datadistributor.IDataListener;
 import de.cau.cs.kieler.kvid.visual.GmfImageFigure;
 
 /**
@@ -46,17 +53,36 @@ public class ScopeEditPart extends ShapeNodeEditPart implements IDataListener {
     
     private GmfImageFigure currentScope;
     
-    public static List<ScopeEditPart> instances = new LinkedList<ScopeEditPart>();
+    private int steps = 0;
     
     /**
      * 
      * @param view The view connected to this edit part
      */
+    @SuppressWarnings({ "rawtypes", "unchecked" })
     public ScopeEditPart(final View view) {
         super(view);
-        instances.add(this);
+        DataDistributor.getInstance().registerDataListener(this);
         plot = new Plot();
+        plot.setBars(true);
+        plot.setXLabel("Step");
+        plot.setYLabel("Value");
         plot.setSize(200, 200);
+        EList list = view.getSourceEdges();
+        list.addAll(view.getTargetEdges());
+        if (list.size() == 1) {
+            Connector con = (Connector) list.get(0);
+            Node connected;
+            if (con.getSource() != view) {
+                connected = (Node) con.getSource();
+            } else {
+                connected = (Node) con.getTarget();
+            }
+            EObject model = connected.getElement();
+            referredObjectURI = ".rampAdd.";
+            referredObjectURI += model.toString().substring(model.toString().indexOf(":") + 2, model.toString().lastIndexOf(")"));
+            System.out.println(referredObjectURI);
+        }
     }
 
     /* (non-Javadoc)
@@ -79,10 +105,8 @@ public class ScopeEditPart extends ShapeNodeEditPart implements IDataListener {
     public void setReferredObjectURI(String URI) {
         this.referredObjectURI = URI;
         DataDistributor.getInstance().getDataObjectByURI(URI).setSaveHistory(true);
-        DataDistributor.getInstance().getDataObjectByURI(URI).registerDataListener(this);
         if (referredObjectURI != null) {
             DataObject data = DataDistributor.getInstance().getDataObjectByURI(referredObjectURI);
-            plot.setBars(true);
             plot.setXRange(0, data.getHistoryLength());
             double[] values = new double[data.getHistoryLength()];
             double maxValue = Double.NEGATIVE_INFINITY;
@@ -101,10 +125,9 @@ public class ScopeEditPart extends ShapeNodeEditPart implements IDataListener {
                 minValue = 0;
             }
             plot.setYRange(minValue, maxValue);
-            plot.setXLabel("Step");
-            plot.setYLabel("Value");
             for (int i = 0; i < values.length; i++) {
                 plot.addPoint(0, i, values[i], false);
+                steps++;
             }
         }
     }
@@ -115,9 +138,10 @@ public class ScopeEditPart extends ShapeNodeEditPart implements IDataListener {
     public void triggerDataChanged() {
         if (referredObjectURI != null) {
             DataObject data = DataDistributor.getInstance().getDataObjectByURI(referredObjectURI);
-            plot.setBars(true);
-            plot.setXRange(0, data.getHistoryLength());
-            double[] values = new double[data.getHistoryLength()];
+            plot.addPoint(0, steps, Double.valueOf(data.getData().toString()), false);
+            steps++;
+            plot.fillPlot();
+            /*double[] values = new double[data.getHistoryLength()];
             double maxValue = Double.NEGATIVE_INFINITY;
             double minValue = Double.POSITIVE_INFINITY;
             for (int i = 0; i < data.getHistoryLength(); i++) {
@@ -134,11 +158,26 @@ public class ScopeEditPart extends ShapeNodeEditPart implements IDataListener {
                 minValue = 0;
             }
             plot.setYRange(minValue, maxValue);
-            plot.setXLabel("Step");
-            plot.setYLabel("Value");
             for (int i = 0; i < values.length; i++) {
                 plot.addPoint(0, i, values[i], false);
+            }*/
+        } else {
+            View view = this.getNotationView();
+            EList list = view.getSourceEdges();
+            list.addAll(view.getTargetEdges());
+            if (list.size() == 1) {
+                Connector con = (Connector) list.get(0);
+                Node connected;
+                if (con.getSource() != view) {
+                    connected = (Node) con.getSource();
+                } else {
+                    connected = (Node) con.getTarget();
+                }
+                EObject model = connected.getElement();
+                referredObjectURI = ".rampAdd.";
+                referredObjectURI += model.toString().substring(model.toString().indexOf(":") + 2, model.toString().lastIndexOf(")"));
             }
+            DataDistributor.getInstance().getDataObjectByURI(referredObjectURI).setSaveHistory(true);
         }
         plot.repaint();
         BufferedImage image = plot.exportImage();
@@ -146,7 +185,7 @@ public class ScopeEditPart extends ShapeNodeEditPart implements IDataListener {
         getFigure().remove(currentScope);
         currentScope = new GmfImageFigure(new org.eclipse.swt.graphics.Image(Display.getCurrent(), data));
         getFigure().add(currentScope);
-        getFigure().setBorder(new LineBorder());
+        currentScope.setBorder(new LineBorder());
         PlatformUI.getWorkbench().getDisplay().syncExec(new Runnable() {
             public void run() {
                 refreshVisuals();

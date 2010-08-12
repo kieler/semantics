@@ -18,11 +18,8 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.eclipse.draw2d.ColorConstants;
-import org.eclipse.draw2d.IFigure;
 import org.eclipse.draw2d.geometry.Point;
 import org.eclipse.gef.EditPart;
-import org.eclipse.gmf.runtime.diagram.ui.editparts.GraphicalEditPart;
 import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramEditor;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IWorkbenchPage;
@@ -41,7 +38,6 @@ import de.cau.cs.kieler.kiml.ui.layout.EclipseLayoutServices;
 import de.cau.cs.kieler.kiml.util.KimlLayoutUtil;
 import de.cau.cs.kieler.kvid.data.DataObject;
 import de.cau.cs.kieler.kvid.dataprovider.IDataProvider;
-import de.cau.cs.kieler.kvid.dataprovider.KiemDataProvider;
 import de.cau.cs.kieler.kvid.visual.GmfDrawer;
 import de.cau.cs.kieler.kvid.visual.IDrawer;
 import de.cau.cs.kieler.kvid.visual.complex.ScopeEditPart;
@@ -61,9 +57,9 @@ public class DataDistributor implements IProviderListener {
     
     private HashMap<String, DataObject> dataByURI = new HashMap<String, DataObject>();
     
+    private List<IDataListener> listeners = new LinkedList<IDataListener>();
+    
     private KNode currentDiagramLayout = null;
-        
-    private IDrawer drawer = new GmfDrawer();
     
     private IDataProvider currentProvider;
     
@@ -84,6 +80,7 @@ public class DataDistributor implements IProviderListener {
     }
     
     public void initialize() {
+        registerDataListener(GmfDrawer.getInstance());
         final IEditorPart activeEditor = getActiveEditor();
         if (activeEditor instanceof DiagramEditor) {
             PlatformUI.getWorkbench().getDisplay().syncExec(new Runnable() {
@@ -99,7 +96,6 @@ public class DataDistributor implements IProviderListener {
     public JSONObject update(final JSONObject data) {
         @SuppressWarnings("rawtypes")
         Iterator allKeys = data.keys();
-        int figureCounter = 1;
         while (allKeys.hasNext()) {
             Object o = allKeys.next();
             List<List<Point>> paths = getPathsByNode(o.toString());
@@ -120,10 +116,10 @@ public class DataDistributor implements IProviderListener {
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-            figureCounter++;
         }
-        drawer.draw(dataByURI);
-        ScopeEditPart.instances.get(0).setReferredObjectURI(".rampAdd.Ramp");
+        for (IDataListener listener : listeners) {
+            listener.triggerDataChanged();
+        }
         return null;
     }
     
@@ -197,12 +193,12 @@ public class DataDistributor implements IProviderListener {
         return result;
     }
     
-    public void cleanup() {
-        drawer.clearDrawing();
-    }
-    
     public DataObject getDataObjectByURI(String URI) {
         return dataByURI.get(URI);
+    }
+    
+    public HashMap<String, DataObject> getData() {
+        return dataByURI;
     }
     
     public EditPart getEditPartByURI(String fragmentURI) {
@@ -226,10 +222,17 @@ public class DataDistributor implements IProviderListener {
     }
 
     public void triggerWrapup() {
-        cleanup();
         editPartsByURI = new HashMap<String, EditPart>();
         dataByURI = new HashMap<String, DataObject>();
         currentDiagramLayout = null;
+    }
+    
+    public void registerDataListener(IDataListener thelistener) {
+        listeners.add(thelistener);
+    }
+    
+    public void removeDataListener(IDataListener thelistener) {
+        listeners.remove(thelistener);
     }
 
 }
