@@ -44,7 +44,7 @@ import de.cau.cs.kieler.kvid.dataprovider.IDataProvider;
 import de.cau.cs.kieler.kvid.dataprovider.KiemDataProvider;
 import de.cau.cs.kieler.kvid.visual.GmfDrawer;
 import de.cau.cs.kieler.kvid.visual.IDrawer;
-import de.cau.cs.kieler.kvid.visual.complex.DataDisplayEditPart;
+import de.cau.cs.kieler.kvid.visual.complex.ScopeEditPart;
 
 /**
  * This class organizes the distribution of the collected data to the object that
@@ -123,7 +123,7 @@ public class DataDistributor implements IProviderListener {
             figureCounter++;
         }
         drawer.draw(dataByURI);
-        DataDisplayEditPart.instances.get(0).setReferredObjectURI(".rampAdd.Ramp");
+        ScopeEditPart.instances.get(0).setReferredObjectURI(".rampAdd.Ramp");
         return null;
     }
     

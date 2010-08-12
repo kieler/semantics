@@ -59,7 +59,7 @@ public class DataDisplayEditPartProvider implements IEditPartProvider {
      * @see org.eclipse.gmf.runtime.diagram.ui.internal.services.editpart.IEditPartProvider#createGraphicEditPart(org.eclipse.gmf.runtime.notation.View)
      */
     public IGraphicalEditPart createGraphicEditPart(View view) {
-        IGraphicalEditPart part = new DataDisplayEditPart(view);
+        IGraphicalEditPart part = new ScopeEditPart(view);
         return part;
     }
 
