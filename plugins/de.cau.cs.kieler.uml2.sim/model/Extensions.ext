@@ -32,6 +32,10 @@ Set[Transition] getTransitions(StateMachine sm):
  ((Set[Transition])sm.eAllContents.select(e|e.metaType == Transition))
 ;
 
+Set[Pseudostate] getForkJoin(StateMachine sm):
+ ((Set[Transition])sm.eAllContents.select(e|e.metaType == Pseudostate && ( ((Vertex)e).isJoin() || ((Vertex)e).isFork() ) ))
+;
+
 Set[Vertex] getStates(StateMachine sm):
  ((Set[Vertex])sm.eAllContents.select(e|e.metaType == State))
 ;
@@ -214,11 +218,32 @@ Boolean isConsidered(Transition transition):
 
 //-----------------------------------------------------------------------------
 
+// Clear all done marked vertices
+Void clearDoneVertices():
+  JAVA de.cau.cs.kieler.uml2.sim.JavaEscape.clearDoneVertices()  
+;
+
 // Returns true iff the vertex (pseudostate fork or join) has already been
 // checked and not needs to be visited again.
 // It means that already exists a transition containing it.
-boolean isDone(Vertex vertex):
-  JAVA de.cau.cs.kieler.uml2.sim.JavaEscape.isCheckedVertex(org.eclipse.uml2.uml.Vertex)  
+boolean isDoneIncoming(Vertex vertex):
+  JAVA de.cau.cs.kieler.uml2.sim.JavaEscape.isDoneIncoming(org.eclipse.uml2.uml.Vertex)  
+;
+// Returns true iff the vertex (pseudostate fork or join) has already been
+// checked and not needs to be visited again.
+// It means that already exists a transition containing it.
+boolean isDoneOutgoing(Vertex vertex):
+  JAVA de.cau.cs.kieler.uml2.sim.JavaEscape.isDoneOutgoing(org.eclipse.uml2.uml.Vertex)  
+;
+
+// Mark a vertex (pseudostate fork or join) that has just been visited
+Void markDoneIncoming(Vertex vertex):
+  JAVA de.cau.cs.kieler.uml2.sim.JavaEscape.markDoneIncoming(org.eclipse.uml2.uml.Vertex)  
+;
+
+// Mark a vertex (pseudostate fork or join) that has just been visited
+Void markDoneOutgoing(Vertex vertex):
+  JAVA de.cau.cs.kieler.uml2.sim.JavaEscape.markDoneOutgoing(org.eclipse.uml2.uml.Vertex)  
 ;
 
 //-----------------------------------------------------------------------------
@@ -229,6 +254,8 @@ Set[Vertex] getPseudoSourceVertices(Pseudostate pseudostate) :
     // get all transitions that have a fork or join as a target
     let transitionList = getAllPseudostateTransitions(pseudostate).select(e|e.target.metaType == Pseudostate
          && ( e.target.isJoin() || e.target.isFork() )) :
+    //Mark all source vertices
+    transitionList.source.markDoneOutgoing() ->
     // Return all source vertices
     transitionList.source
 ;
@@ -241,6 +268,8 @@ Set[Vertex] getPseudoTargetVertices(Pseudostate pseudostate) :
     // get all transitions that have a fork or join as a target
     let transitionList = getAllPseudostateTransitions(pseudostate).select(e|e.source.metaType == Pseudostate
          && ( e.source.isJoin() || e.source.isFork() )) :
+    //Mark all source vertices
+    transitionList.source.markDoneIncoming() ->
     // Return all target vertices
     transitionList.target
 ;

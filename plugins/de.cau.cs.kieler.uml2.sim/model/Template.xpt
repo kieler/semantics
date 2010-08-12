@@ -27,6 +27,10 @@ load STEPSEM
 
 «DEFINE sm FOR StateMachine»
 	«FILE this.name.toString() +".maude"»
+
+«REM»Clear marked vertices«ENDREM»
+«clearDoneVertices()»
+	
 load model-checker.maude
 load STATES
 load EVENTS
@@ -80,6 +84,11 @@ fmod eclipseInterface is
 *** ToDo: Remove initial states transitions (DONE? -> isConsidered) 
   ops «FOREACH this.getTransitions() AS transition SEPARATOR "  "-»«transition.getId()-»«ENDFOREACH-» :-> ModTransition .
   «FOREACH this.getTransitions().select(e|e.isConsidered()) AS transition SEPARATOR '\n'-»«transition.genMaude()-»«ENDFOREACH-»
+  «FOREACH this.getForkJoin() AS pseudostate SEPARATOR '\n'-»
+    [«pseudostate.getPseudoSourceVertices().flatten().toString()»]
+    to 
+    [«pseudostate.getPseudoSourceVertices().flatten().toString()»]
+  «ENDFOREACH-»
   
   op allTrans :-> Transitons .
   eq allTrans = «FOREACH this.getTransitions() AS transition SEPARATOR "  "-»«transition.getId()-»«ENDFOREACH-» .

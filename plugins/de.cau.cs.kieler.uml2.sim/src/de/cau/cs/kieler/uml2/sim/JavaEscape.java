@@ -11,21 +11,32 @@ import org.eclipse.uml2.uml.Transition;
 
 public class JavaEscape {
 
-    private static LinkedList<Vertex> checkedVertices = new LinkedList<Vertex>();
+    private static LinkedList<Vertex> doneVerticesIncoming = new LinkedList<Vertex>();
+    private static LinkedList<Vertex> doneVerticesOutgoing = new LinkedList<Vertex>();
 
 	// ------------------------------------------------------------------------
     
     // Clear list of checked vertices
-    public static void clearCheckedVertices() {
-    	checkedVertices.clear();
+    public static void clearDoneVertices() {
+    	doneVerticesIncoming.clear();
+    	doneVerticesOutgoing.clear();
     }
 	
     // ------------------------------------------------------------------------
     
     // Add a Vertex iff it is not already checked
-    public static boolean addCheckedVertex(Vertex vertex) {
-    	if (!isCheckedVertex(vertex)) {
-        	checkedVertices.add(vertex);
+    public static boolean markDoneIncoming(Vertex vertex) {
+    	if (!isDoneIncoming(vertex)) {
+        	doneVerticesIncoming.add(vertex);
+        	return true;
+    	}
+    	return false;
+    }
+
+    // Add a Vertex iff it is not already checked
+    public static boolean markDoneOutgoing(Vertex vertex) {
+    	if (!isDoneOutgoing(vertex)) {
+        	doneVerticesOutgoing.add(vertex);
         	return true;
     	}
     	return false;
@@ -34,14 +45,22 @@ public class JavaEscape {
 	// ------------------------------------------------------------------------
 
     // Ask whether a Vertex is checked
-    public static boolean isCheckedVertex(Vertex vertex) {
-    	if (checkedVertices.contains(vertex)) {
+    public static boolean isDoneIncoming(Vertex vertex) {
+    	if (doneVerticesIncoming.contains(vertex)) {
     		return true;
     	}
     	return false;
     }
     
-	// ------------------------------------------------------------------------
+    // Ask whether a Vertex is checked
+    public static boolean isDoneOutgoing(Vertex vertex) {
+    	if (doneVerticesOutgoing.contains(vertex)) {
+    		return true;
+    	}
+    	return false;
+    }
+
+    // ------------------------------------------------------------------------
 
 	// Get the Fragment URI ID of a Vertex
 	public static String getId(Vertex vertex) {
