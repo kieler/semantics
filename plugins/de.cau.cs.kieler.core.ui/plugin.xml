@@ -39,7 +39,8 @@
       <menuContribution
             locationURI="toolbar:org.eclipse.ui.main.toolbar?after=additions">
          <toolbar
-               id="de.cau.cs.kieler">
+               id="de.cau.cs.kieler"
+               label="KIELER">
          </toolbar>
       </menuContribution>
       <menuContribution
