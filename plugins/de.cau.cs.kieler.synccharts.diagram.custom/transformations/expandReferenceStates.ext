@@ -43,7 +43,7 @@ State expandSyncChartsState (State referencingState):
 ;
 
 getExpandedStateName(State referencingState, State referencedState) :
-    "\"" + referencingState.label + "@" + referencedState.label + "\"";
+    referencingState.label + "@" + referencedState.label;
 
 changeTypeToNormal(State s) :
 	s.setType(StateType::NORMAL) ->
