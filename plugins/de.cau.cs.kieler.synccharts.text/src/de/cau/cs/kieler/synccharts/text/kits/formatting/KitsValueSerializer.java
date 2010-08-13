@@ -53,19 +53,34 @@ public class KitsValueSerializer extends ValueSerializer {
         // if we have a state under consideration and are processing the call of a
         // parser rule called from an assignment to a feature of the state
         // here: ... label = EString ... ,i.e. the call of the EString rule
-        if (SyncchartsPackage.eINSTANCE.getScope().isInstance(context)
+        if ((SyncchartsPackage.eINSTANCE.getScope().isInstance(context)
+                || SyncchartsPackage.eINSTANCE.getAction().isInstance(context))
                 && XtextPackage.eINSTANCE.getAssignment().isInstance(ruleCall.eContainer())) {
 
             Assignment a = (Assignment) ruleCall.eContainer();
 
             // if the feature the assignment is made to is the label feature
-            if (a.getFeature().equals(SyncchartsPackage.eINSTANCE.getScope_Label().getName())) {
+            if (SyncchartsPackage.eINSTANCE.getScope().isInstance(context)) {
+                if (a.getFeature().equals(SyncchartsPackage.eINSTANCE.getScope_Label().getName())) {
 
-                // ask the transientValueService;
-                // note that the return inverse value semantics!
-                
-                return !transientValueService.isTransient(context,
-                        SyncchartsPackage.eINSTANCE.getScope_Label(), -1);
+                    // ask the transientValueService;
+                    // note that the return inverse value semantics!
+
+                    return !transientValueService.isTransient(context,
+                            SyncchartsPackage.eINSTANCE.getScope_Label(), -1);
+                }
+            } else {
+                if (SyncchartsPackage.eINSTANCE.getAction().isInstance(context)) {
+                    if (a.getFeature().equals(
+                            SyncchartsPackage.eINSTANCE.getAction_Label().getName())) {
+
+                        // ask the transientValueService;
+                        // note that the return inverse value semantics!
+
+                        return !transientValueService.isTransient(context,
+                                SyncchartsPackage.eINSTANCE.getAction_Label(), -1);
+                    }
+                }
             }
         }
 
