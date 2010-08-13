@@ -448,6 +448,30 @@ String hash(String string):
 
 //-----------------------------------------------------------------------------
 
+// Do not print out a string
+Void ignore(String string) :
+  null  
+;
+
+//-----------------------------------------------------------------------------
+
+// Add a Pseudostate to a temporary list
+Void addPseudostate(Pseudostate pseudostate) :
+  JAVA de.cau.cs.kieler.uml2.sim.JavaEscape.addPseudostate(org.eclipse.uml2.uml.Pseudostate)
+;
+	
+// Get the saved Pseudostates
+List[Pseudostate] getPseudostates() :
+  JAVA de.cau.cs.kieler.uml2.sim.JavaEscape.getPseudostates()
+;
+	
+// Reset the Pseudostates
+Void resetPseudostates() :
+ JAVA de.cau.cs.kieler.uml2.sim.JavaEscape.resetPseudostates()
+;	
+
+//-----------------------------------------------------------------------------
+
 //Void test():
 //  let transition = new Transition :
 //  let transitionList = new List[Transition] : 

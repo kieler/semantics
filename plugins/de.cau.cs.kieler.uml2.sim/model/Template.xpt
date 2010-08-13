@@ -65,8 +65,6 @@ search (maState "UML" ($stableC (prettyVerts (Rroot, Csusp)) empty) res) =>* mas
 «DEFINE sm FOR StateMachine»
 	«FILE this.name.toString() +".maude"»
 
-«REM»Clear marked vertices«ENDREM»
-«clearDoneVertices()»
 	
 load model-checker.maude
 load STATES
@@ -120,20 +118,37 @@ fmod eclipseInterface is
   op allSHDefs : -> ShallowDefaults .
   eq allSHDefs = «FOREACH this.getRegions() AS region SEPARATOR ", "-»«"sDef"+region.getId()-»«ENDFOREACH-» .
 
-*** Transitions 
-*** ToDo: add complex-jhens-transition ids to ops and alltrans!! 
+*** Transitions
+«REM» First calculate psudostates (Fork / Join) for complex transition ids «ENDREM»
+«clearDoneVertices()-»
+«FOREACH this.getForkJoin() AS pseudostate-»
+   «IF !pseudostate.isDone("OUTGOING")-»
+   «ignore(pseudostate.getPseudoSourceVertices().toString())-»
+   «addPseudostate(pseudostate)-»
+   «ENDIF-»
+«ENDFOREACH-»
+«REM»No getPseudostates() can be queried«ENDREM»
 *** ToDo: Add trigger statt noevent!!
-  ops «FOREACH this.getTransitions().select(e|e.isConsidered())  AS transition SEPARATOR "  "-»tr«transition.getId()-»«ENDFOREACH-» : -> ModTransition .
+  ops «FOREACH this.getTransitions().select(e|e.isConsidered())  AS transition SEPARATOR "  "-»tr«transition.getId()-»«ENDFOREACH-»
+      «FOREACH getPseudostates()  AS pseudostate SEPARATOR " "-»tr«pseudostate.getId()-»«ENDFOREACH-»
+      : -> ModTransition .
+  
   «FOREACH this.getTransitions().select(e|e.isConsidered()) AS transition SEPARATOR '\n'-»«transition.genMaude()-»«ENDFOREACH-»
   «REM» We now work thru the Fork and Join nodes. For all CCs ending with non Fork/Join nodes, we just construct ONE combined transition. «ENDREM»
+  «resetPseudostates()-»
+  «REM»Clear marked vertices«ENDREM»
+  «clearDoneVertices()-»
   «FOREACH this.getForkJoin() AS pseudostate SEPARATOR '\n'-»
    «IF !pseudostate.isDone("OUTGOING")-»
-   eq tr«pseudostate.getId()» = («FOREACH pseudostate.getPseudoSourceVertices() AS source SEPARATOR ','-»«source.getId()-»«ENDFOREACH-») (ev: "noevent") Gd skip skip skip («FOREACH pseudostate.getPseudoTargetVertices() AS target SEPARATOR ','-»«target.getId()-»«ENDFOREACH-») «getLastRootRegion().getId()-» . «resetLastRootRegion()-»
+   eq tr«pseudostate.getId()-» = («FOREACH pseudostate.getPseudoSourceVertices() AS source SEPARATOR ','-»«source.getId()-»«ENDFOREACH-») (ev: "noevent") Gd skip skip skip («FOREACH pseudostate.getPseudoTargetVertices() AS target SEPARATOR ','-»«target.getId()-»«ENDFOREACH-») «getLastRootRegion().getId()-» . «resetLastRootRegion()-»
+   «addPseudostate(pseudostate)-»
    «ENDIF-»
   «ENDFOREACH-»
   
   op allTrans : -> Transitions .
-  eq allTrans = «FOREACH this.getTransitions().select(e|e.isConsidered())  AS transition SEPARATOR ",  "-»tr«transition.getId()-»«ENDFOREACH-» .
+  eq allTrans = «FOREACH this.getTransitions().select(e|e.isConsidered())  AS transition SEPARATOR ",  "-»tr«transition.getId()-»«ENDFOREACH-»
+  				«IF getPseudostates().size > 0-»,«ENDIF-»
+                «FOREACH getPseudostates()  AS pseudostate SEPARATOR ",  "-»tr«pseudostate.getId()-»«ENDFOREACH-» .
 
 
 ***/// A state machine consits of Vertices Defaultsstatesfunction ShallowDefaultstatesfunction DeepDefaultstatesfunction EntryActionsfunction ExitActionsFunction Transitions 

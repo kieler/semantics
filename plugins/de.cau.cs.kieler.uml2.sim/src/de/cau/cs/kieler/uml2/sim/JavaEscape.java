@@ -16,8 +16,26 @@ public class JavaEscape {
 
 	private static LinkedList<Vertex> doneVerticesIncoming = new LinkedList<Vertex>();
 	private static LinkedList<Vertex> doneVerticesOutgoing = new LinkedList<Vertex>();
+	private static EList<Pseudostate> savedPseudostates = new BasicEList<Pseudostate>();
 	private static Region lastRootRegion = null;
 
+	// ------------------------------------------------------------------------
+	
+	// Add a Pseudostate to a temporary list
+	public static void addPseudostate(Pseudostate pseudostate) {
+		savedPseudostates.add(pseudostate);
+	}
+	
+	// Get the saved Pseudostates
+	public static EList<Pseudostate> getPseudostates() {
+		return savedPseudostates;
+	}
+	
+	// Reset the Pseudostates
+	public static void resetPseudostates() {
+		savedPseudostates.clear();
+	}
+	
 	// ------------------------------------------------------------------------
 
 	// Save a new root region iff it has a smaller hierarchy level 
