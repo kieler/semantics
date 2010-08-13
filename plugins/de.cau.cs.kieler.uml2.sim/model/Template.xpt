@@ -4,24 +4,34 @@
 
 «DEFINE main FOR Model»
    «EXPAND sm FOREACH packagedElement»
-   «EXPAND checkLoads FOREACH packagedElement»
+   «EXPAND init FOREACH packagedElement»
 «ENDDEFINE»
 
 «DEFINE main FOR Package»
    «EXPAND sm FOREACH packagedElement»
-   «EXPAND checkLoads FOREACH packagedElement»
+   «EXPAND init FOREACH packagedElement»
 «ENDDEFINE»
 
 
-«DEFINE checkLoads FOR StateMachine»
-	«FILE "checkLoads.maude"»
-load model-checker.maude
-load STATES
-load EVENTS
-load ACTIONS
-load TRANS
-load SM
+«DEFINE init FOR StateMachine»
+	«FILE "INIT.maude"»
+	
+load «this.name.toString()»
+
 load STEPSEM
+****(
+#####################################################
+Vorschlag Interface fuer Eclipse 
+#####################################################
+search (maState "UML" ($stableC <Konfiguration> <HistoryKonfiguration> <Events>) =>* mastate such that isDone mastate .
+
+- <Konfiguration>: eine durch "," getrennte Menge von Regionen und States. Diese muss den Anforderungen im Standard entsprechen.
+  z.B: Rroot, Csusp (aus Test.maude)
+- <HistoryKonfiguration>: kann erstmal empty sein
+- <Events>: eine durch "," getrennte Menge von Events die abgearbeitet werden soll
+
+search (maState "UML" ($stableC (Rroot, Csusp) empty res .
+)***
 	«ENDFILE»
 «ENDDEFINE»
 
@@ -37,7 +47,6 @@ load EVENTS
 load ACTIONS
 load TRANS
 load SM
-load STEPSEM
 
 fmod eclipseInterface is
  including STATEMACHINE .
@@ -102,19 +111,7 @@ fmod eclipseInterface is
 
   
 endfm
-****(
-#####################################################
-Vorschlag Interface fuer Eclipse 
-#####################################################
-search (maState "UML" ($stableC <Konfiguration> <HistoryKonfiguration> <Events>) =>* mastate such that isDone mastate .
 
-- <Konfiguration>: eine durch "," getrennte Menge von Regionen und States. Diese muss den Anforderungen im Standard entsprechen.
-  z.B: Rroot, Csusp (aus Test.maude)
-- <HistoryKonfiguration>: kann erstmal empty sein
-- <Events>: eine durch "," getrennte Menge von Events die abgearbeitet werden soll
-
-search (maState "UML" ($stableC (Rroot, Csusp) empty res .
-)***
 	«ENDFILE»
 «ENDDEFINE»
 

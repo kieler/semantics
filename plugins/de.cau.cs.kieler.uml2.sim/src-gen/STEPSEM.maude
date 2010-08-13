@@ -1,5 +1,4 @@
 load TSM 
-
 fmod FIRESET is
   including TRANSITIONS .
   sort Fireset .
@@ -15,6 +14,7 @@ mod STEPSEM is
     
     including STATEMACHINE .
     including TSM .
+    including eclipseInterface .
 	var FSet : Firesets .
 	var fs : Fireset .
 
@@ -26,8 +26,8 @@ mod STEPSEM is
 	
     sorts LtsState .
 
-	op SMINT : -> StateMachine .
-	eq SMINT = smHCFPB .
+	***op SMINT : -> StateMachine .
+	***eq SMINT = smHCFPB .
 	
 	*** eq SMINT = smHCConflB .
 
