@@ -86,7 +86,7 @@ String getMaudeLabel(Region n):
 // sources Triggerevent guard Action ListofForkActions ListofJoinActions targets containingRegion
 String genMaude(Transition n):
  // ToDo: generate source and target sets
- //(n.source).toString() + '   ' + (n.target).toString() + '   ' + n.trigger2() + '   ' + n.action2()+ '   ' +((Region)n.container).getMaudeLabel()
+ //(n.source).toString() + '   ' + (n.target).toString() + '   ' + n.trigger2() + '   ' + n.action2()+ '   ' +((Region)n.container).getId()
  '   eq tr-'+n.getId()+ ' = '+
 // sources (States only)
  '('+(n.source.getId()) + ') ' +
@@ -136,25 +136,25 @@ Set[Transition] getSHDTransitions(StateMachine sm):
 
 String genDefault(Transition tr):
   let region = ((Pseudostate) tr.source).getParent() :
-  ' eq def'+region.getMaudeLabel()+ ' = ' + region.getMaudeLabel() + ' default ' + ((State)tr.target).getMaudeLabel()+ ' .\n'  
+  ' eq def'+region.getId()+ ' = ' + region.getId() + ' default ' + ((State)tr.target).getId()+ ' .\n'  
 ;
 
 String genDHDefault(Transition tr):
   let region = ((Pseudostate) tr.source).getParent() :
-  ' eq dDef'+region.getMaudeLabel()+ ' = ' + region.getMaudeLabel() + ' deepdefault ' + ((State)tr.target).getMaudeLabel()+ ' .\n'  
+  ' eq dDef'+region.getId()+ ' = ' + region.getId() + ' deepdefault ' + ((State)tr.target).getId()+ ' .\n'  
 ;
 String genSHDefault(Transition tr):
   let region = ((Pseudostate) tr.source).getParent() :
-  ' eq sDef'+region.getMaudeLabel()+ ' = ' + region.getMaudeLabel() + ' shallowdefault ' + ((State)tr.target).getMaudeLabel()+ ' .\n'  
+  ' eq sDef'+region.getId()+ ' = ' + region.getId() + ' shallowdefault ' + ((State)tr.target).getId()+ ' .\n'  
 ;
 
 String fullyHelp(Region n):
- //'op R'+n.getLabel()+' : -> Region .\n'+
- '    eq R'+n.getLabel()+' = '+ n.fullyQualifiedName()
+ //'op R'+n.getId()+' : -> Region .\n'+
+ '    eq '+n.getId()+' = '+ n.fullyQualifiedName()
 ;
 String fullyHelp(State n):
- //'op C'+n.getLabel()+' : -> ModState .\n'+
- '    eq C'+n.getLabel()+' = '+ n.fullyQualifiedName()
+ //'op C'+n.getId()+' : -> ModState .\n'+
+ '    eq '+n.getId()+' = '+ n.fullyQualifiedName()
 ;
 
 Set[Vertex] allVertexs(StateMachine sm):
@@ -162,11 +162,11 @@ Set[Vertex] allVertexs(StateMachine sm):
 ; 
 
 
-String fullyQualifiedName(Region n) : n.getParent().metaType == StateMachine ? 'root(R "'+n.getLabel()+'")' :
-   fullyQualifiedName(n.getParent())+' : R "'+n.getLabel()+'"'
+String fullyQualifiedName(Region n) : n.getParent().metaType == StateMachine ? 'root(R "'+n.getId()+'")' :
+   fullyQualifiedName(n.getParent())+' : R "'+n.getId()+'"'
 ;
-String fullyQualifiedName(State n) : n.getParent() == null ? n.getLabel() :
-   fullyQualifiedName(n.getParent())+' : C "'+n.getLabel()+'"'
+String fullyQualifiedName(State n) : n.getParent() == null ? n.getId() :
+   fullyQualifiedName(n.getParent())+' : C "'+n.getId()+'"'
 ;
 
 Set[String] getTriggerEvents(StateMachine sm):

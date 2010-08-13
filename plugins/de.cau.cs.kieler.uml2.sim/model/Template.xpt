@@ -60,33 +60,33 @@ fmod eclipseInterface is
   ops «FOREACH this.getAction() AS action SEPARATOR " "-»«action-»«ENDFOREACH-» : -> Action .
 
 ***// States //
-  ops «FOREACH this.getStates() AS state SEPARATOR " "-»«((State)state).getMaudeLabel()-»«ENDFOREACH-» : -> ModState .	
+  ops «FOREACH this.getStates() AS state SEPARATOR " "-»«((State)state).getId()-»«ENDFOREACH-» : -> ModState .	
 	«FOREACH this.getMaudeStates() AS state SEPARATOR " .\n"-»«state-»«ENDFOREACH-» .	
 ***// Regions //
-  ops «FOREACH this.getRegions() AS region SEPARATOR " "-»«region.getMaudeLabel()-»«ENDFOREACH-» : -> Region .
+  ops «FOREACH this.getRegions() AS region SEPARATOR " "-»«region.getId()-»«ENDFOREACH-» : -> Region .
 	«FOREACH this.getMaudeRegions() AS region SEPARATOR " .\n"-»«region-»«ENDFOREACH-» .
 ***// allVerts //
   op allVerts : -> Verts .
-  eq allVerts = «FOREACH this.getRegions() AS region SEPARATOR ", "-»«region.getMaudeLabel()-»«ENDFOREACH-» , «FOREACH this.getStates() AS state SEPARATOR ", "-»«((State)state).getMaudeLabel()-»«ENDFOREACH-» .
+  eq allVerts = «FOREACH this.getRegions() AS region SEPARATOR ", "-»«region.getId()-»«ENDFOREACH-» , «FOREACH this.getStates() AS state SEPARATOR ", "-»«((State)state).getId()-»«ENDFOREACH-» .
 	
 ***// defaults //
-  ops «FOREACH this.getRegions() AS region SEPARATOR " "-»«"def"+region.getMaudeLabel()-»«ENDFOREACH-» : -> Default .
+  ops «FOREACH this.getRegions() AS region SEPARATOR " "-»«"def"+region.getId()-»«ENDFOREACH-» : -> Default .
   «FOREACH this.getInitialTransitions() AS transition SEPARATOR ""-»«transition.genDefault()-»«ENDFOREACH-»
   op allDefs : -> Defaults .
-  eq allDefs = «FOREACH this.getRegions() AS region SEPARATOR ", "-»«"def"+region.getMaudeLabel()-»«ENDFOREACH-» .
+  eq allDefs = «FOREACH this.getRegions() AS region SEPARATOR ", "-»«"def"+region.getId()-»«ENDFOREACH-» .
   
 ***// deep defaults //
-  ops «FOREACH this.getRegions() AS region SEPARATOR " "-»«"dDef"+region.getMaudeLabel()-»«ENDFOREACH-» : -> DeepDefault .
+  ops «FOREACH this.getRegions() AS region SEPARATOR " "-»«"dDef"+region.getId()-»«ENDFOREACH-» : -> DeepDefault .
   «FOREACH this.getDHDTransitions() AS transition SEPARATOR ""-»«transition.genDHDefault()-»«ENDFOREACH-»
   op allDHDefs : -> DeepDefaults .
-  eq allDHDefs = «FOREACH this.getRegions() AS region SEPARATOR ", "-»«"dDef"+region.getMaudeLabel()-»«ENDFOREACH-» .
+  eq allDHDefs = «FOREACH this.getRegions() AS region SEPARATOR ", "-»«"dDef"+region.getId()-»«ENDFOREACH-» .
 
 ***// shallow defaults //
-  ops «FOREACH this.getRegions() AS region SEPARATOR " "-»«"sDef"+region.getMaudeLabel()-»«ENDFOREACH-» : -> ShallowDefault .
+  ops «FOREACH this.getRegions() AS region SEPARATOR " "-»«"sDef"+region.getId()-»«ENDFOREACH-» : -> ShallowDefault .
   «FOREACH this.getSHDTransitions() AS transition SEPARATOR ""-»«transition.genSHDefault()-»«ENDFOREACH-»
   
   op allSHDefs : -> ShallowDefaults .
-  eq allSHDefs = «FOREACH this.getRegions() AS region SEPARATOR ", "-»«"sDef"+region.getMaudeLabel()-»«ENDFOREACH-» .
+  eq allSHDefs = «FOREACH this.getRegions() AS region SEPARATOR ", "-»«"sDef"+region.getId()-»«ENDFOREACH-» .
 
 *** Transitions 
 *** ToDo: (Important): Compute sources and targets sets
