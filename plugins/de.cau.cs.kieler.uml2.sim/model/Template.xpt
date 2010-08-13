@@ -18,7 +18,7 @@
 	
 load «this.name.toString()»
 
-load STEPSEM
+load ../maude/STEPSEM
 
 mod INIT is
 	including STEPSEM .
@@ -66,12 +66,12 @@ search (maState "UML" ($stableC (prettyVerts (Rroot, Csusp)) empty) res) =>* mas
 	«FILE this.name.toString() +".maude"»
 
 	
-load model-checker.maude
-load STATES
-load EVENTS
-load ACTIONS
-load TRANS
-load SM
+*** load ../maude/model-checker.maude
+load ../maude/STATES
+load ../maude/EVENTS
+load ../maude/ACTIONS
+load ../maude/TRANS
+load ../maude/SM
 
 fmod eclipseInterface is
  including STATEMACHINE .

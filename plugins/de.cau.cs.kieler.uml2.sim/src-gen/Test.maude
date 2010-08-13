@@ -1,12 +1,12 @@
 
 
 	
-load model-checker.maude
-load STATES
-load EVENTS
-load ACTIONS
-load TRANS
-load SM
+*** load ../maude/model-checker.maude
+load ../maude/STATES
+load ../maude/EVENTS
+load ../maude/ACTIONS
+load ../maude/TRANS
+load ../maude/SM
 
 fmod eclipseInterface is
  including STATEMACHINE .

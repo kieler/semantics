@@ -2,7 +2,7 @@
 	
 load Test
 
-load STEPSEM
+load ../maude/STEPSEM
 
 mod INIT is
 	including STEPSEM .
