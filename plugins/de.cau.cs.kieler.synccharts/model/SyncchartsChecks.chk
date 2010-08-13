@@ -13,11 +13,11 @@ Boolean signalNotEmitted(Signal signal, Scope scope):
 ;
 
 List[Signal] getUnreadSignals(Scope scope):
- scope.signals.select(e|(e.isInput || !e.isOutput) && e.signalNotRead(scope))
+ scope.signals.select(e|(e.isInput || !e.isOutput) && e.signalNotRead(scope) && e.name != "tick")
 ;
 
 List[Signal] getUnemittedSignals(Scope scope):
- scope.signals.select(e|(e.isOutput || !e.isInput) && e.signalNotEmitted(scope))
+ scope.signals.select(e|(e.isOutput || !e.isInput) && e.signalNotEmitted(scope) && e.name != "tick")
 ;
 
 context Scope

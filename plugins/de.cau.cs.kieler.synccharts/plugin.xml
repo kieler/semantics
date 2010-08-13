@@ -56,6 +56,9 @@
       <triggerListener
             class="de.cau.cs.kieler.synccharts.listener.TriggerListenerRecursiveAdd">
       </triggerListener>
+      <triggerListener
+            class="de.cau.cs.kieler.synccharts.listener.NoteSynchronizationTriggerListener">
+      </triggerListener>
    </extension>
       <extension
          point="org.eclipse.gmf.runtime.diagram.ui.editpolicyProviders">
