@@ -420,7 +420,7 @@ waitAB.setIsInitial(true) ->
 wAInitial.setLabel("wA") ->
 wAInitial.setIsInitial(true) ->
 wA.states.add(wAInitial) ->
-wA.setLabel("wA") ->
+//wA.setLabel("wA") -> use anonymous regions for ABRO
 wAFinal.setLabel("dA") ->
 wAFinal.setIsFinal(true) ->
 wA.states.add(wAFinal) ->
@@ -433,7 +433,7 @@ waitAB.regions.add(wA) ->
 wBInitial.setLabel("wB") ->
 wBInitial.setIsInitial(true) ->
 wB.states.add(wBInitial) ->
-wB.setLabel("wB") ->
+//wB.setLabel("wB") -> use anonymous regions for ABRO
 wBFinal.setLabel("dB") ->
 wBFinal.setIsFinal(true) ->
 wB.states.add(wBFinal) ->
@@ -450,7 +450,7 @@ waitABToFinal.setType(TransitionType::NORMALTERMINATION) ->
 //waitABToFinal.effects.add(sigOExpr) ->
 setLabel(waitABToFinal, "/O") ->
 ABORegion.states.add(waitAB) ->
-ABORegion.setLabel("ABO") ->
+//ABORegion.setLabel("ABO") -> use anonymous regions for ABRO
 ABORegion.states.add(ABOFinal) ->
 ABO.regions.add(ABORegion)->
 reset.setSourceState(ABO) ->
@@ -459,7 +459,7 @@ reset.setType(TransitionType::STRONGABORT) ->
 //reset.setTrigger(sigRExpr) ->
 setLabel(reset, "R") ->
 innerRootRegion.states.add(ABO) ->
-innerRootRegion.setLabel("R0") ->
+//innerRootRegion.setLabel("R0") -> use anonymous regions for ABRO
 root.regions.add(innerRootRegion) ->
 rootRegion.states.add(root)
 ;
