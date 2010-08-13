@@ -89,7 +89,7 @@ String genMaude(Transition n):
  //(n.source).toString() + '   ' + (n.target).toString() + '   ' + n.trigger2() + '   ' + n.action2()+ '   ' +((Region)n.container).getMaudeLabel()
  '   eq tr_'+n.getId()+ ' = '+
 // sources (States only)
- (n.source.getId()) + ' ' +
+ '('+(n.source.getId()) + ') ' +
 // 'empty '+ 
 // Triggerevent
  n.trigger2() + 
@@ -100,7 +100,7 @@ String genMaude(Transition n):
 // ListofForkActions ListofJoinActions
  ' empty empty ' +
 // targets (States and history pseudostates only)
- 'empty '+
+ '('+n.target.getId()+') ' +
 // containingRegion
  ((Region)n.eContainer()).getMaudeLabel() + ' .'   
 ;

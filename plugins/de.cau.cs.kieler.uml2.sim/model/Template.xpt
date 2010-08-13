@@ -87,7 +87,7 @@ fmod eclipseInterface is
   «REM» We now work thru the Fork and Join nodes. For all CCs ending with non Fork/Join nodes, we just construct ONE combined transition. «ENDREM»
   «FOREACH this.getForkJoin() AS pseudostate SEPARATOR '\n'-»
    «IF !pseudostate.isDone("OUTGOING")-»
-   eq tr_«pseudostate.getId()» = {«FOREACH pseudostate.getPseudoSourceVertices() AS source SEPARATOR ','-»«source.getAlias()-»«ENDFOREACH-»} nil nil nil {«FOREACH pseudostate.getPseudoTargetVertices() AS target SEPARATOR ','-»«target.getAlias()-»«ENDFOREACH-»} «getLastRootRegion().getMaudeLabel()-» . «resetLastRootRegion()-»
+   eq tr_«pseudostate.getId()» = («FOREACH pseudostate.getPseudoSourceVertices() AS source SEPARATOR ','-»«source.getAlias()-»«ENDFOREACH-») nil nil nil («FOREACH pseudostate.getPseudoTargetVertices() AS target SEPARATOR ','-»«target.getAlias()-»«ENDFOREACH-») «getLastRootRegion().getMaudeLabel()-» . «resetLastRootRegion()-»
    «ENDIF-»
   «ENDFOREACH-»
   
