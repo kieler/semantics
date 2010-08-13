@@ -64,7 +64,7 @@ fmod eclipseInterface is
 *** Transitions 
 *** ToDo: (Important): Compute sources and targets sets
 *** ToDo: Remove initial states transitions (DONE? -> isConsidered) 
-  ops I2E-1577786698  J2T-1020006047  F2E1324507091  outer2susp1444566273  B2F1684531342  I2N1928850471  DH2B-189198798  I2outer-2039796516  G2T-2040602862  I2B1483154098  E2G-525037410  G2J-1708705716  F2N1674475112  N2J-273752032  susp2DH1714787712 :-> ModTransition .
+  ops tr-outer2susp1444566273  tr-G2T-2040602862  tr-E2G-525037410  tr-susp2DH1714787712 :-> ModTransition .
    eq tr-outer2susp1444566273 = (outer1526898296) susp nil  empty empty (susp441237549) R-990928836 .
    eq tr-G2T-2040602862 = (G1874547736) ee1 nil a3 empty empty (T924601121) R1540734801 .
    eq tr-E2G-525037410 = (E690055665) ee1 nil a1 empty empty (G1874547736) R1540734801 .
@@ -72,13 +72,13 @@ fmod eclipseInterface is
    eq tr-F148389467 = (B-910885872) nil nil nil (E690055665,N-1229428651) R-1819018424 .      
    eq tr-J-242782697 = (G1874547736,N-1229428651) nil nil nil (T924601121) R-1819018424 .        
   op allTrans :-> Transitons .
-  eq allTrans = I2E-1577786698  J2T-1020006047  F2E1324507091  outer2susp1444566273  B2F1684531342  I2N1928850471  DH2B-189198798  I2outer-2039796516  G2T-2040602862  I2B1483154098  E2G-525037410  G2J-1708705716  F2N1674475112  N2J-273752032  susp2DH1714787712 .
+  eq allTrans = tr-outer2susp1444566273,  tr-G2T-2040602862,  tr-E2G-525037410,  tr-susp2DH1714787712 .
 
 
 ***/// A state machine consits of Vertices Defaultsstatesfunction ShallowDefaultstatesfunction DeepDefaultstatesfunction EntryActionsfunction ExitActionsFunction Transitions 
   op SMINT : -> StateMachine .
   ***// ToDo: add entry/exit actions//
-  eq SMINT = (SM allVerts allDefs allSHDefs allDHDefs empty empty allTrans) .
+  eq SMINT = (SM allVerts allDefs allSHDefs allDHDefs (empty).EntryActions (empty).ExitActions allTrans) .
 
   
 endfm
