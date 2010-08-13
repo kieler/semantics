@@ -16,6 +16,7 @@ import org.eclipse.gef.palette.PaletteRoot;
 import org.eclipse.gmf.runtime.common.ui.services.marker.MarkerNavigationService;
 import org.eclipse.gmf.runtime.diagram.core.preferences.PreferencesHint;
 import org.eclipse.gmf.runtime.diagram.ui.actions.ActionIds;
+import org.eclipse.gmf.runtime.diagram.ui.editpolicies.CanonicalEditPolicy;
 import org.eclipse.gmf.runtime.diagram.ui.resources.editor.document.IDiagramDocument;
 import org.eclipse.gmf.runtime.diagram.ui.resources.editor.document.IDocument;
 import org.eclipse.gmf.runtime.diagram.ui.resources.editor.document.IDocumentProvider;
@@ -41,25 +42,68 @@ import org.eclipse.ui.part.FileEditorInput;
 import org.eclipse.ui.part.IShowInTargetList;
 import org.eclipse.ui.part.ShowInContext;
 
+import de.cau.cs.kieler.core.KielerRuntimeException;
+import de.cau.cs.kieler.synccharts.Region;
 import de.cau.cs.kieler.synccharts.diagram.navigator.SyncchartsNavigatorItem;
+import de.cau.cs.kieler.synccharts.text.actions.bridge.ActionLabelProcessorWrapper;
 
 /**
  * @generated
  */
-public class SyncchartsDiagramEditor extends DiagramDocumentEditor implements
-        IGotoMarker {
+public class SyncchartsDiagramEditor extends DiagramDocumentEditor implements IGotoMarker {
+
+    protected void initializeGraphicalViewerContents() {
+        Diagram d = getDiagram();
+//        CompoundCommand CC = new CompoundCommand();
+//        Object o = null;
+//        for (Iterator<?> it = d.eAllContents(); it.hasNext();) {
+//            o = it.next();
+//            if (NotationPackage.eINSTANCE.getView().isInstance(o)
+//                    && ((InternalEObject) ((View) o).getElement()).eIsProxy()) {
+//                if (NotationPackage.eINSTANCE.getConnector().isInstance(o)) {
+//                    CC.append(new RemoveCommand(getEditingDomain(), ((Connector) o).getSource()
+//                            .getSourceEdges(), o));
+//                    CC.append(new RemoveCommand(getEditingDomain(), ((Connector) o).getTarget()
+//                            .getTargetEdges(), o));
+//                    CC.append(new RemoveCommand(getEditingDomain(), getDiagram()
+//                            .getPersistedEdges(), o));
+//                } else {
+//                    CC.append(new RemoveCommand(getEditingDomain(),
+//                            ((View) ((View) o).eContainer()).getPersistedChildren(), o));
+//                }
+//            }
+//        }
+//        getEditingDomain().getCommandStack().execute(CC);
+//
+        // new de.cau.cs.kieler.synccharts.text.actions.bridge.ActionLabelSerializeCommand
+        if (d.getElement() instanceof Region) {
+            try {
+                ActionLabelProcessorWrapper.processActionLabels(d.getElement(),
+                        ActionLabelProcessorWrapper.SERIALIZE);
+            } catch (Exception e) {
+                throw new KielerRuntimeException("Transition labels could not be serialized properly.");
+            }
+        }
+
+        super.initializeGraphicalViewerContents();
+
+        for (CanonicalEditPolicy c : CanonicalEditPolicy.getRegisteredEditPolicies(d.getElement())) {
+            c.refresh();
+        }
+
+        getGraphicalViewer().flush();
+
+    }
 
     /**
      * @generated
      */
-    public static final String ID =
-            "de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorID"; //$NON-NLS-1$
+    public static final String ID = "de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorID"; //$NON-NLS-1$
 
     /**
      * @generated
      */
-    public static final String CONTEXT_ID =
-            "de.cau.cs.kieler.synccharts.diagram.ui.diagramContext"; //$NON-NLS-1$
+    public static final String CONTEXT_ID = "de.cau.cs.kieler.synccharts.diagram.ui.diagramContext"; //$NON-NLS-1$
 
     /**
      * @generated
@@ -117,10 +161,8 @@ public class SyncchartsDiagramEditor extends DiagramDocumentEditor implements
      * @generated
      */
     protected IDocumentProvider getDocumentProvider(IEditorInput input) {
-        if (input instanceof IFileEditorInput
-                || input instanceof URIEditorInput) {
-            return SyncchartsDiagramEditorPlugin.getInstance()
-                    .getDocumentProvider();
+        if (input instanceof IFileEditorInput || input instanceof URIEditorInput) {
+            return SyncchartsDiagramEditorPlugin.getInstance().getDocumentProvider();
         }
         return super.getDocumentProvider(input);
     }
@@ -129,9 +171,8 @@ public class SyncchartsDiagramEditor extends DiagramDocumentEditor implements
      * @generated
      */
     public TransactionalEditingDomain getEditingDomain() {
-        IDocument document =
-                getEditorInput() != null ? getDocumentProvider().getDocument(
-                        getEditorInput()) : null;
+        IDocument document = getEditorInput() != null ? getDocumentProvider().getDocument(
+                getEditorInput()) : null;
         if (document instanceof IDiagramDocument) {
             return ((IDiagramDocument) document).getEditingDomain();
         }
@@ -142,10 +183,8 @@ public class SyncchartsDiagramEditor extends DiagramDocumentEditor implements
      * @generated
      */
     protected void setDocumentProvider(IEditorInput input) {
-        if (input instanceof IFileEditorInput
-                || input instanceof URIEditorInput) {
-            setDocumentProvider(SyncchartsDiagramEditorPlugin.getInstance()
-                    .getDocumentProvider());
+        if (input instanceof IFileEditorInput || input instanceof URIEditorInput) {
+            setDocumentProvider(SyncchartsDiagramEditorPlugin.getInstance().getDocumentProvider());
         } else {
             super.setDocumentProvider(input);
         }
@@ -179,9 +218,8 @@ public class SyncchartsDiagramEditor extends DiagramDocumentEditor implements
         Shell shell = getSite().getShell();
         IEditorInput input = getEditorInput();
         SaveAsDialog dialog = new SaveAsDialog(shell);
-        IFile original =
-                input instanceof IFileEditorInput ? ((IFileEditorInput) input)
-                        .getFile() : null;
+        IFile original = input instanceof IFileEditorInput ? ((IFileEditorInput) input).getFile()
+                : null;
         if (original != null) {
             dialog.setOriginalFile(original);
         }
@@ -192,10 +230,8 @@ public class SyncchartsDiagramEditor extends DiagramDocumentEditor implements
             return;
         }
         if (provider.isDeleted(input) && original != null) {
-            String message =
-                    NLS.bind(
-                            Messages.SyncchartsDiagramEditor_SavingDeletedFile,
-                            original.getName());
+            String message = NLS.bind(Messages.SyncchartsDiagramEditor_SavingDeletedFile,
+                    original.getName());
             dialog.setErrorMessage(null);
             dialog.setMessage(message, IMessageProvider.WARNING);
         }
@@ -216,15 +252,13 @@ public class SyncchartsDiagramEditor extends DiagramDocumentEditor implements
         IFile file = workspaceRoot.getFile(filePath);
         final IEditorInput newInput = new FileEditorInput(file);
         // Check if the editor is already open
-        IEditorMatchingStrategy matchingStrategy =
-                getEditorDescriptor().getEditorMatchingStrategy();
-        IEditorReference[] editorRefs =
-                PlatformUI.getWorkbench().getActiveWorkbenchWindow()
-                        .getActivePage().getEditorReferences();
+        IEditorMatchingStrategy matchingStrategy = getEditorDescriptor()
+                .getEditorMatchingStrategy();
+        IEditorReference[] editorRefs = PlatformUI.getWorkbench().getActiveWorkbenchWindow()
+                .getActivePage().getEditorReferences();
         for (int i = 0; i < editorRefs.length; i++) {
             if (matchingStrategy.matches(editorRefs[i], newInput)) {
-                MessageDialog.openWarning(shell,
-                        Messages.SyncchartsDiagramEditor_SaveAsErrorTitle,
+                MessageDialog.openWarning(shell, Messages.SyncchartsDiagramEditor_SaveAsErrorTitle,
                         Messages.SyncchartsDiagramEditor_SaveAsErrorMessage);
                 return;
             }
@@ -232,17 +266,14 @@ public class SyncchartsDiagramEditor extends DiagramDocumentEditor implements
         boolean success = false;
         try {
             provider.aboutToChange(newInput);
-            getDocumentProvider(newInput).saveDocument(progressMonitor,
-                    newInput,
+            getDocumentProvider(newInput).saveDocument(progressMonitor, newInput,
                     getDocumentProvider().getDocument(getEditorInput()), true);
             success = true;
         } catch (CoreException x) {
             IStatus status = x.getStatus();
             if (status == null || status.getSeverity() != IStatus.CANCEL) {
-                ErrorDialog.openError(shell,
-                        Messages.SyncchartsDiagramEditor_SaveErrorTitle,
-                        Messages.SyncchartsDiagramEditor_SaveErrorMessage,
-                        x.getStatus());
+                ErrorDialog.openError(shell, Messages.SyncchartsDiagramEditor_SaveErrorTitle,
+                        Messages.SyncchartsDiagramEditor_SaveErrorMessage, x.getStatus());
             }
         } finally {
             provider.changed(newInput);
@@ -273,8 +304,7 @@ public class SyncchartsDiagramEditor extends DiagramDocumentEditor implements
         Diagram diagram = document.getDiagram();
         IFile file = WorkspaceSynchronizer.getFile(diagram.eResource());
         if (file != null) {
-            SyncchartsNavigatorItem item =
-                    new SyncchartsNavigatorItem(diagram, file, false);
+            SyncchartsNavigatorItem item = new SyncchartsNavigatorItem(diagram, file, false);
             return new StructuredSelection(item);
         }
         return StructuredSelection.EMPTY;
@@ -285,12 +315,11 @@ public class SyncchartsDiagramEditor extends DiagramDocumentEditor implements
      */
     protected void configureGraphicalViewer() {
         super.configureGraphicalViewer();
-        DiagramEditorContextMenuProvider provider =
-                new DiagramEditorContextMenuProvider(this,
-                        getDiagramGraphicalViewer());
+        DiagramEditorContextMenuProvider provider = new DiagramEditorContextMenuProvider(this,
+                getDiagramGraphicalViewer());
         getDiagramGraphicalViewer().setContextMenu(provider);
-        getSite().registerContextMenu(ActionIds.DIAGRAM_EDITOR_CONTEXT_MENU,
-                provider, getDiagramGraphicalViewer());
+        getSite().registerContextMenu(ActionIds.DIAGRAM_EDITOR_CONTEXT_MENU, provider,
+                getDiagramGraphicalViewer());
     }
 
 }
