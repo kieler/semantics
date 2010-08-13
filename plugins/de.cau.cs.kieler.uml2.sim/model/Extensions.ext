@@ -89,7 +89,7 @@ String genMaude(Transition n):
  //(n.source).toString() + '   ' + (n.target).toString() + '   ' + n.trigger2() + '   ' + n.action2()+ '   ' +((Region)n.container).getMaudeLabel()
  '   eq tr_'+n.getId()+ ' = '+
 // sources (States only)
- '('+(n.source.getId()) + ') ' +
+ '( "'+(n.source.getId()) + ') ' +
 // 'empty '+ 
 // Triggerevent
  n.trigger2() + 
@@ -102,7 +102,7 @@ String genMaude(Transition n):
 // targets (States and history pseudostates only)
  '('+n.target.getId()+') ' +
 // containingRegion
- ((Region)n.eContainer()).getMaudeLabel() + ' .'   
+ ((Region)n.eContainer()).getId() + ' .'   
 ;
 
 
@@ -402,6 +402,11 @@ Boolean isJoin(Vertex vertex):
 ;
 
 //-----------------------------------------------------------------------------
+
+// Get the ID of a region
+String getId(Region region):
+  JAVA de.cau.cs.kieler.uml2.sim.JavaEscape.getId(org.eclipse.uml2.uml.Region)
+;
 
 // Get the ID of a vertex
 String getId(Vertex vertex):
