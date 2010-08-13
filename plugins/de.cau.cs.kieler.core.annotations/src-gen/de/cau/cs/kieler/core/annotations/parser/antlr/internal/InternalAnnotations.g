@@ -249,6 +249,8 @@ ruleKeyValueAnnotation returns [EObject current=null]
 
 
 
+
+
 // Entry rule entryRuleEString
 entryRuleEString returns [String current=null] 
 	:

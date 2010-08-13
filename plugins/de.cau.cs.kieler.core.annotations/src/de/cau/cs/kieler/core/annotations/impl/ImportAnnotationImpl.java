@@ -14,7 +14,7 @@
 package de.cau.cs.kieler.core.annotations.impl;
 
 import de.cau.cs.kieler.core.annotations.AnnotationsPackage;
-import de.cau.cs.kieler.core.annotations.IntAnnotation;
+import de.cau.cs.kieler.core.annotations.ImportAnnotation;
 
 import org.eclipse.emf.common.notify.Notification;
 
@@ -24,44 +24,44 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
 /**
  * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Int Annotation</b></em>'.
+ * An implementation of the model object '<em><b>Import Annotation</b></em>'.
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link de.cau.cs.kieler.core.annotations.impl.IntAnnotationImpl#getValue <em>Value</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.core.annotations.impl.ImportAnnotationImpl#getImportURI <em>Import URI</em>}</li>
  * </ul>
  * </p>
  *
  * @generated
  */
-public class IntAnnotationImpl extends AnnotationImpl implements IntAnnotation {
+public class ImportAnnotationImpl extends AnnotationImpl implements ImportAnnotation {
     /**
-     * The default value of the '{@link #getValue() <em>Value</em>}' attribute.
+     * The default value of the '{@link #getImportURI() <em>Import URI</em>}' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #getValue()
+     * @see #getImportURI()
      * @generated
      * @ordered
      */
-    protected static final int VALUE_EDEFAULT = 0;
+    protected static final String IMPORT_URI_EDEFAULT = null;
 
     /**
-     * The cached value of the '{@link #getValue() <em>Value</em>}' attribute.
+     * The cached value of the '{@link #getImportURI() <em>Import URI</em>}' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #getValue()
+     * @see #getImportURI()
      * @generated
      * @ordered
      */
-    protected int value = VALUE_EDEFAULT;
+    protected String importURI = IMPORT_URI_EDEFAULT;
 
     /**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    protected IntAnnotationImpl() {
+    protected ImportAnnotationImpl() {
         super();
     }
 
@@ -72,7 +72,7 @@ public class IntAnnotationImpl extends AnnotationImpl implements IntAnnotation {
      */
     @Override
     protected EClass eStaticClass() {
-        return AnnotationsPackage.Literals.INT_ANNOTATION;
+        return AnnotationsPackage.Literals.IMPORT_ANNOTATION;
     }
 
     /**
@@ -80,8 +80,8 @@ public class IntAnnotationImpl extends AnnotationImpl implements IntAnnotation {
      * <!-- end-user-doc -->
      * @generated
      */
-    public int getValue() {
-        return value;
+    public String getImportURI() {
+        return importURI;
     }
 
     /**
@@ -89,11 +89,11 @@ public class IntAnnotationImpl extends AnnotationImpl implements IntAnnotation {
      * <!-- end-user-doc -->
      * @generated
      */
-    public void setValue(int newValue) {
-        int oldValue = value;
-        value = newValue;
+    public void setImportURI(String newImportURI) {
+        String oldImportURI = importURI;
+        importURI = newImportURI;
         if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, AnnotationsPackage.INT_ANNOTATION__VALUE, oldValue, value));
+            eNotify(new ENotificationImpl(this, Notification.SET, AnnotationsPackage.IMPORT_ANNOTATION__IMPORT_URI, oldImportURI, importURI));
     }
 
     /**
@@ -104,8 +104,8 @@ public class IntAnnotationImpl extends AnnotationImpl implements IntAnnotation {
     @Override
     public Object eGet(int featureID, boolean resolve, boolean coreType) {
         switch (featureID) {
-            case AnnotationsPackage.INT_ANNOTATION__VALUE:
-                return getValue();
+            case AnnotationsPackage.IMPORT_ANNOTATION__IMPORT_URI:
+                return getImportURI();
         }
         return super.eGet(featureID, resolve, coreType);
     }
@@ -118,8 +118,8 @@ public class IntAnnotationImpl extends AnnotationImpl implements IntAnnotation {
     @Override
     public void eSet(int featureID, Object newValue) {
         switch (featureID) {
-            case AnnotationsPackage.INT_ANNOTATION__VALUE:
-                setValue((Integer)newValue);
+            case AnnotationsPackage.IMPORT_ANNOTATION__IMPORT_URI:
+                setImportURI((String)newValue);
                 return;
         }
         super.eSet(featureID, newValue);
@@ -133,8 +133,8 @@ public class IntAnnotationImpl extends AnnotationImpl implements IntAnnotation {
     @Override
     public void eUnset(int featureID) {
         switch (featureID) {
-            case AnnotationsPackage.INT_ANNOTATION__VALUE:
-                setValue(VALUE_EDEFAULT);
+            case AnnotationsPackage.IMPORT_ANNOTATION__IMPORT_URI:
+                setImportURI(IMPORT_URI_EDEFAULT);
                 return;
         }
         super.eUnset(featureID);
@@ -148,8 +148,8 @@ public class IntAnnotationImpl extends AnnotationImpl implements IntAnnotation {
     @Override
     public boolean eIsSet(int featureID) {
         switch (featureID) {
-            case AnnotationsPackage.INT_ANNOTATION__VALUE:
-                return value != VALUE_EDEFAULT;
+            case AnnotationsPackage.IMPORT_ANNOTATION__IMPORT_URI:
+                return IMPORT_URI_EDEFAULT == null ? importURI != null : !IMPORT_URI_EDEFAULT.equals(importURI);
         }
         return super.eIsSet(featureID);
     }
@@ -164,10 +164,10 @@ public class IntAnnotationImpl extends AnnotationImpl implements IntAnnotation {
         if (eIsProxy()) return super.toString();
 
         StringBuffer result = new StringBuffer(super.toString());
-        result.append(" (value: ");
-        result.append(value);
+        result.append(" (importURI: ");
+        result.append(importURI);
         result.append(')');
         return result.toString();
     }
 
-} //IntAnnotationImpl
+} //ImportAnnotationImpl

@@ -15,7 +15,7 @@ package de.cau.cs.kieler.core.annotations.provider;
 
 
 import de.cau.cs.kieler.core.annotations.AnnotationsPackage;
-import de.cau.cs.kieler.core.annotations.StringAnnotation;
+import de.cau.cs.kieler.core.annotations.ImportAnnotation;
 
 import java.util.Collection;
 import java.util.List;
@@ -34,12 +34,12 @@ import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 
 /**
- * This is the item provider adapter for a {@link de.cau.cs.kieler.core.annotations.StringAnnotation} object.
+ * This is the item provider adapter for a {@link de.cau.cs.kieler.core.annotations.ImportAnnotation} object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
  * @generated
  */
-public class StringAnnotationItemProvider
+public class ImportAnnotationItemProvider
     extends AnnotationItemProvider
     implements
         IEditingDomainItemProvider,
@@ -53,7 +53,7 @@ public class StringAnnotationItemProvider
      * <!-- end-user-doc -->
      * @generated
      */
-    public StringAnnotationItemProvider(AdapterFactory adapterFactory) {
+    public ImportAnnotationItemProvider(AdapterFactory adapterFactory) {
         super(adapterFactory);
     }
 
@@ -68,25 +68,25 @@ public class StringAnnotationItemProvider
         if (itemPropertyDescriptors == null) {
             super.getPropertyDescriptors(object);
 
-            addValuePropertyDescriptor(object);
+            addImportURIPropertyDescriptor(object);
         }
         return itemPropertyDescriptors;
     }
 
     /**
-     * This adds a property descriptor for the Value feature.
+     * This adds a property descriptor for the Import URI feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    protected void addValuePropertyDescriptor(Object object) {
+    protected void addImportURIPropertyDescriptor(Object object) {
         itemPropertyDescriptors.add
             (createItemPropertyDescriptor
                 (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
                  getResourceLocator(),
-                 getString("_UI_StringAnnotation_value_feature"),
-                 getString("_UI_PropertyDescriptor_description", "_UI_StringAnnotation_value_feature", "_UI_StringAnnotation_type"),
-                 AnnotationsPackage.Literals.STRING_ANNOTATION__VALUE,
+                 getString("_UI_ImportAnnotation_importURI_feature"),
+                 getString("_UI_PropertyDescriptor_description", "_UI_ImportAnnotation_importURI_feature", "_UI_ImportAnnotation_type"),
+                 AnnotationsPackage.Literals.IMPORT_ANNOTATION__IMPORT_URI,
                  true,
                  false,
                  false,
@@ -96,14 +96,14 @@ public class StringAnnotationItemProvider
     }
 
     /**
-     * This returns StringAnnotation.gif.
+     * This returns ImportAnnotation.gif.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
     @Override
     public Object getImage(Object object) {
-        return overlayImage(object, getResourceLocator().getImage("full/obj16/StringAnnotation"));
+        return overlayImage(object, getResourceLocator().getImage("full/obj16/ImportAnnotation"));
     }
 
     /**
@@ -114,10 +114,10 @@ public class StringAnnotationItemProvider
      */
     @Override
     public String getText(Object object) {
-        String label = ((StringAnnotation)object).getName();
+        String label = ((ImportAnnotation)object).getName();
         return label == null || label.length() == 0 ?
-            getString("_UI_StringAnnotation_type") :
-            getString("_UI_StringAnnotation_type") + " " + label;
+            getString("_UI_ImportAnnotation_type") :
+            getString("_UI_ImportAnnotation_type") + " " + label;
     }
 
     /**
@@ -131,8 +131,8 @@ public class StringAnnotationItemProvider
     public void notifyChanged(Notification notification) {
         updateChildren(notification);
 
-        switch (notification.getFeatureID(StringAnnotation.class)) {
-            case AnnotationsPackage.STRING_ANNOTATION__VALUE:
+        switch (notification.getFeatureID(ImportAnnotation.class)) {
+            case AnnotationsPackage.IMPORT_ANNOTATION__IMPORT_URI:
                 fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
                 return;
         }

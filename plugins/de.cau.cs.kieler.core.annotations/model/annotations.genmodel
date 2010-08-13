@@ -39,5 +39,8 @@
     <genClasses ecoreClass="annotations.ecore#//ContainmentAnnotation">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference annotations.ecore#//ContainmentAnnotation/object"/>
     </genClasses>
+    <genClasses ecoreClass="annotations.ecore#//ImportAnnotation">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute annotations.ecore#//ImportAnnotation/importURI"/>
+    </genClasses>
   </genPackages>
 </genmodel:GenModel>

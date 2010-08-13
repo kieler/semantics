@@ -50,5 +50,7 @@ public class AnnotationsFormatter extends AbstractDeclarativeFormatter {
             
             c.setNoSpace().after(f.getKeyValueAnnotationAccess().getCommercialAtKeyword_0());
             c.setLinewrap().after(f.getKeyValueAnnotationAccess().getValueEStringParserRuleCall_2_0());
+            
+            c.setLinewrap().after(f.getImportAnnotationRule());
 	}
 }

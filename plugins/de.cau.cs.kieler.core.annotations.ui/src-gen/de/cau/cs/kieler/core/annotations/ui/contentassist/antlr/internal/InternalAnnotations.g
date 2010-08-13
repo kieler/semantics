@@ -142,6 +142,8 @@ finally {
 
 
 
+
+
 // Entry rule entryRuleEString
 entryRuleEString 
 :
@@ -312,6 +314,7 @@ finally {
 
 
 
+
 rule__CommentAnnotation__ValueAssignment
     @init {
 		int stackSize = keepStackSize();
@@ -356,6 +359,7 @@ rule__KeyValueAnnotation__ValueAssignment_2
 finally {
 	restoreStackSize(stackSize);
 }
+
 
 
 RULE_COMMENT_ANNOTATION : '/**' ( options {greedy=false;} : . )*'*/';

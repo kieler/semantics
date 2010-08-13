@@ -27,6 +27,11 @@ KeyValueAnnotation returns StringAnnotation:
 	'@' name=ID value=EString;
 
 
+// needed for importing other resources
+ImportAnnotation returns ImportAnnotation:
+    'import' importURI=STRING;
+
+
 // allow strings without quotes as they don'c contain spaces
 EString returns ecore::EString:
 	STRING | ID;

@@ -29,7 +29,6 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 		////
 		//// --------------------------
 		//// introduction of parsing rules for annotations
-		//// are to be moved into Annotations.xtext in the future!!
 		//StringAnnotation returns Annotation:
 		//	CommentAnnotation | KeyValueAnnotation;
 		public ParserRule getRule() { return rule; }
@@ -94,6 +93,31 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 		public RuleCall getValueEStringParserRuleCall_2_0() { return cValueEStringParserRuleCall_2_0; }
 	}
 
+	public class ImportAnnotationElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "ImportAnnotation");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Keyword cImportKeyword_0 = (Keyword)cGroup.eContents().get(0);
+		private final Assignment cImportURIAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final RuleCall cImportURISTRINGTerminalRuleCall_1_0 = (RuleCall)cImportURIAssignment_1.eContents().get(0);
+		
+		//// needed for importing other resources
+		//ImportAnnotation:
+		//	"import" importURI=STRING;
+		public ParserRule getRule() { return rule; }
+
+		//"import" importURI=STRING
+		public Group getGroup() { return cGroup; }
+
+		//"import"
+		public Keyword getImportKeyword_0() { return cImportKeyword_0; }
+
+		//importURI=STRING
+		public Assignment getImportURIAssignment_1() { return cImportURIAssignment_1; }
+
+		//STRING
+		public RuleCall getImportURISTRINGTerminalRuleCall_1_0() { return cImportURISTRINGTerminalRuleCall_1_0; }
+	}
+
 	public class EStringElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "EString");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
@@ -119,6 +143,7 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 	private StringAnnotationElements pStringAnnotation;
 	private CommentAnnotationElements pCommentAnnotation;
 	private KeyValueAnnotationElements pKeyValueAnnotation;
+	private ImportAnnotationElements pImportAnnotation;
 	private EStringElements pEString;
 	private TerminalRule tCOMMENT_ANNOTATION;
 	private TerminalRule tML_COMMENT;
@@ -150,7 +175,6 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 	////
 	//// --------------------------
 	//// introduction of parsing rules for annotations
-	//// are to be moved into Annotations.xtext in the future!!
 	//StringAnnotation returns Annotation:
 	//	CommentAnnotation | KeyValueAnnotation;
 	public StringAnnotationElements getStringAnnotationAccess() {
@@ -181,6 +205,17 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public ParserRule getKeyValueAnnotationRule() {
 		return getKeyValueAnnotationAccess().getRule();
+	}
+
+	//// needed for importing other resources
+	//ImportAnnotation:
+	//	"import" importURI=STRING;
+	public ImportAnnotationElements getImportAnnotationAccess() {
+		return (pImportAnnotation != null) ? pImportAnnotation : (pImportAnnotation = new ImportAnnotationElements());
+	}
+	
+	public ParserRule getImportAnnotationRule() {
+		return getImportAnnotationAccess().getRule();
 	}
 
 	//// allow strings without quotes as they don'c contain spaces

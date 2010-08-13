@@ -759,16 +759,17 @@ public class ExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cBooleanTerminalRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
 		private final RuleCall cINTTerminalRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
 		private final RuleCall cFloatTerminalRuleCall_2 = (RuleCall)cAlternatives.eContents().get(2);
-		private final RuleCall cEStringParserRuleCall_3 = (RuleCall)cAlternatives.eContents().get(3);
+		private final RuleCall cIDTerminalRuleCall_3 = (RuleCall)cAlternatives.eContents().get(3);
+		private final RuleCall cSTRINGTerminalRuleCall_4 = (RuleCall)cAlternatives.eContents().get(4);
 		
 		//// data type rule allowing any kind of value to be accepted,
 		//// e.g. as initialValues of valuedObjects
 		//// used in Kits.xtext 
 		//AnyType returns ecore::EString:
-		//	Boolean | INT | Float | EString;
+		//	Boolean | INT | Float | ID | STRING;
 		public ParserRule getRule() { return rule; }
 
-		//Boolean | INT | Float | EString
+		//Boolean | INT | Float | ID | STRING
 		public Alternatives getAlternatives() { return cAlternatives; }
 
 		//Boolean
@@ -780,8 +781,11 @@ public class ExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		//Float
 		public RuleCall getFloatTerminalRuleCall_2() { return cFloatTerminalRuleCall_2; }
 
-		//EString
-		public RuleCall getEStringParserRuleCall_3() { return cEStringParserRuleCall_3; }
+		//ID
+		public RuleCall getIDTerminalRuleCall_3() { return cIDTerminalRuleCall_3; }
+
+		//STRING
+		public RuleCall getSTRINGTerminalRuleCall_4() { return cSTRINGTerminalRuleCall_4; }
 	}
 	
 	
@@ -1181,6 +1185,8 @@ public class ExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 	private TerminalRule tINT;
 	private TerminalRule tFloat;
 	private TerminalRule tBoolean;
+	private TerminalRule tSTRING;
+	private TerminalRule tHOSTCODE;
 	
 	private final GrammarProvider grammarProvider;
 
@@ -1444,7 +1450,7 @@ public class ExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 	//// e.g. as initialValues of valuedObjects
 	//// used in Kits.xtext 
 	//AnyType returns ecore::EString:
-	//	Boolean | INT | Float | EString;
+	//	Boolean | INT | Float | ID | STRING;
 	public AnyTypeElements getAnyTypeAccess() {
 		return (pAnyType != null) ? pAnyType : (pAnyType = new AnyTypeElements());
 	}
@@ -1606,13 +1612,26 @@ public class ExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		return (tBoolean != null) ? tBoolean : (tBoolean = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "Boolean"));
 	} 
 
+	//// custom terminal rule allowing to save transition label string as they are
+	//terminal STRING:
+	//	"\"" ("\\" ("b" | "t" | "n" | "f" | "r" | "\"" | "\'" | "\\") | !("\\" | "\""))* "\"";
+	public TerminalRule getSTRINGRule() {
+		return (tSTRING != null) ? tSTRING : (tSTRING = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "STRING"));
+	} 
+
+	//// custom terminal rule allowing to save transition label string as they are
+	//terminal HOSTCODE:
+	//	"\'" ("\\" ("b" | "t" | "n" | "f" | "r" | "\"" | "\'" | "\\") | !("\\" | "\'"))* "\'";
+	public TerminalRule getHOSTCODERule() {
+		return (tHOSTCODE != null) ? tHOSTCODE : (tHOSTCODE = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "HOSTCODE"));
+	} 
+
 	//// --------------------------
 	////
 	////   EXPRESSIONS
 	////
 	//// --------------------------
 	//// introduction of parsing rules for annotations
-	//// are to be moved into Annotations.xtext in the future!!
 	//StringAnnotation returns Annotation:
 	//	CommentAnnotation | KeyValueAnnotation;
 	public AnnotationsGrammarAccess.StringAnnotationElements getStringAnnotationAccess() {
@@ -1645,6 +1664,17 @@ public class ExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		return getKeyValueAnnotationAccess().getRule();
 	}
 
+	//// needed for importing other resources
+	//ImportAnnotation:
+	//	"import" importURI=STRING;
+	public AnnotationsGrammarAccess.ImportAnnotationElements getImportAnnotationAccess() {
+		return gaAnnotations.getImportAnnotationAccess();
+	}
+	
+	public ParserRule getImportAnnotationRule() {
+		return getImportAnnotationAccess().getRule();
+	}
+
 	//// allow strings without quotes as they don'c contain spaces
 	//EString returns ecore::EString:
 	//	STRING | ID;
@@ -1675,13 +1705,6 @@ public class ExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 	//	"^"? ("a".."z" | "A".."Z" | "_") ("a".."z" | "A".."Z" | "_" | "0".."9")*;
 	public TerminalRule getIDRule() {
 		return gaAnnotations.getIDRule();
-	} 
-
-	//terminal STRING:
-	//	"\"" ("\\" ("b" | "t" | "n" | "f" | "r" | "\"" | "\'" | "\\") | !("\\" | "\""))* "\"" | "\'" ("\\" ("b" | "t" | "n" |
-	//	"f" | "r" | "\"" | "\'" | "\\") | !("\\" | "\'"))* "\'";
-	public TerminalRule getSTRINGRule() {
-		return gaAnnotations.getSTRINGRule();
 	} 
 
 	//terminal SL_COMMENT:

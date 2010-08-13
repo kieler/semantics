@@ -34,6 +34,7 @@ protected class ThisRootNode extends RootToken {
 			case 0: return new StringAnnotation_Alternatives(this, this, 0, inst);
 			case 1: return new CommentAnnotation_ValueAssignment(this, this, 1, inst);
 			case 2: return new KeyValueAnnotation_Group(this, this, 2, inst);
+			case 3: return new ImportAnnotation_Group(this, this, 3, inst);
 			default: return null;
 		}	
 	}	
@@ -48,7 +49,6 @@ protected class ThisRootNode extends RootToken {
  * //
  * // --------------------------
  * // introduction of parsing rules for annotations
- * // are to be moved into Annotations.xtext in the future!!
  * StringAnnotation returns Annotation:
  * 	CommentAnnotation | KeyValueAnnotation;
  *
@@ -77,7 +77,7 @@ protected class StringAnnotation_Alternatives extends AlternativesToken {
 
     @Override
 	public IEObjectConsumer tryConsume() {
-		if(getEObject().eClass() != grammarAccess.getCommentAnnotationRule().getType().getClassifier())
+		if(getEObject().eClass() != grammarAccess.getKeyValueAnnotationRule().getType().getClassifier())
 			return null;
 		return eObjectConsumer;
 	}
@@ -330,6 +330,102 @@ protected class KeyValueAnnotation_ValueAssignment_2 extends AssignmentToken  {
 
 
 /************ end Rule KeyValueAnnotation ****************/
+
+
+/************ begin Rule ImportAnnotation ****************
+ *
+ * // needed for importing other resources
+ * ImportAnnotation:
+ * 	"import" importURI=STRING;
+ *
+ **/
+
+// "import" importURI=STRING
+protected class ImportAnnotation_Group extends GroupToken {
+	
+	public ImportAnnotation_Group(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
+		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
+	}
+	
+	@Override
+	public Group getGrammarElement() {
+		return grammarAccess.getImportAnnotationAccess().getGroup();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
+		switch(index) {
+			case 0: return new ImportAnnotation_ImportURIAssignment_1(lastRuleCallOrigin, this, 0, inst);
+			default: return null;
+		}	
+	}
+
+    @Override
+	public IEObjectConsumer tryConsume() {
+		if(getEObject().eClass() != grammarAccess.getImportAnnotationRule().getType().getClassifier())
+			return null;
+		return eObjectConsumer;
+	}
+
+}
+
+// "import"
+protected class ImportAnnotation_ImportKeyword_0 extends KeywordToken  {
+	
+	public ImportAnnotation_ImportKeyword_0(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
+		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
+	}
+	
+	@Override
+	public Keyword getGrammarElement() {
+		return grammarAccess.getImportAnnotationAccess().getImportKeyword_0();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
+		switch(index) {
+			default: return lastRuleCallOrigin.createFollowerAfterReturn(this, index, index, inst);
+		}	
+	}
+
+}
+
+// importURI=STRING
+protected class ImportAnnotation_ImportURIAssignment_1 extends AssignmentToken  {
+	
+	public ImportAnnotation_ImportURIAssignment_1(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
+		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
+	}
+	
+	@Override
+	public Assignment getGrammarElement() {
+		return grammarAccess.getImportAnnotationAccess().getImportURIAssignment_1();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
+		switch(index) {
+			case 0: return new ImportAnnotation_ImportKeyword_0(lastRuleCallOrigin, this, 0, inst);
+			default: return null;
+		}	
+	}
+
+    @Override	
+	public IEObjectConsumer tryConsume() {
+		if((value = eObjectConsumer.getConsumable("importURI",true)) == null) return null;
+		IEObjectConsumer obj = eObjectConsumer.cloneAndConsume("importURI");
+		if(valueSerializer.isValid(obj.getEObject(), grammarAccess.getImportAnnotationAccess().getImportURISTRINGTerminalRuleCall_1_0(), value, null)) {
+			type = AssignmentType.TERMINAL_RULE_CALL;
+			element = grammarAccess.getImportAnnotationAccess().getImportURISTRINGTerminalRuleCall_1_0();
+			return obj;
+		}
+		return null;
+	}
+
+}
+
+
+/************ end Rule ImportAnnotation ****************/
 
 
 }

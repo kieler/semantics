@@ -24,83 +24,80 @@ import de.cau.cs.kieler.core.annotations.formatting.AnnotationsValueConverter;
 /**
  * @author chsch
  * @author haf
- *
+ * 
  */
 public class ExpressionsValueConverter extends AnnotationsValueConverter {
 
-/**
-	 * Standard boolean data type converter to convert standard Java style
-	 * boolean strings "true" and "false" into Boolean objects and vice versa.
-	 * 
-	 * @return value converter for standard Java style booleans
-	 */
-	@ValueConverter(rule = "Boolean")
-	public IValueConverter<Boolean> Boolean() {
-		return new IValueConverter<Boolean>() {
+    /**
+     * Standard boolean data type converter to convert standard Java style boolean strings "true"
+     * and "false" into Boolean objects and vice versa.
+     * 
+     * @return value converter for standard Java style booleans
+     */
+    @ValueConverter(rule = "Boolean")
+    public IValueConverter<Boolean> Boolean() {
+        return new IValueConverter<Boolean>() {
 
-			public Boolean toValue(String string, AbstractNode node) {
-				if (Strings.isEmpty(string))
-					throw new ValueConverterException(
-							"Couldn't convert empty string to boolean", node,
-							null);
-				try {
-					return Boolean.valueOf(string);
-				} catch (NumberFormatException e) {
-					throw new ValueConverterException("Couldn't convert '"
-							+ string + "' to boolean", node, e);
-				}
-			}
+            public Boolean toValue(String string, AbstractNode node) {
+                if (Strings.isEmpty(string))
+                    throw new ValueConverterException("Couldn't convert empty string to boolean",
+                            node, null);
+                try {
+                    return Boolean.valueOf(string);
+                } catch (NumberFormatException e) {
+                    throw new ValueConverterException("Couldn't convert '" + string
+                            + "' to boolean", node, e);
+                }
+            }
 
-			public String toString(Boolean value) {
-				return value.toString();
-			}
-		};
-	}
+            public String toString(Boolean value) {
+                return value.toString();
+            }
+        };
+    }
 
-	/**
-	 * Primitive integer data type converter provider allowing negative numbers.
-	 * 
-	 * @return value converter for standard Java style booleans
-	 */
-	@ValueConverter(rule = "INT")
-	public IValueConverter<Integer> INT() {
-		return new org.eclipse.xtext.conversion.impl.INTValueConverter() {
-			public String toString(Integer value) {
-				if (value == null)
-					throw new ValueConverterException(
-							"INT-value may not be null. (null indeed, zero is ok)",
-							null, null);
-				return value.toString();
-			}
-		};
-	}
+    /**
+     * Primitive integer data type converter provider allowing negative numbers.
+     * 
+     * @return value converter for standard Java style booleans
+     */
+    @ValueConverter(rule = "INT")
+    public IValueConverter<Integer> INT() {
+        return new org.eclipse.xtext.conversion.impl.INTValueConverter() {
+            public String toString(Integer value) {
+                if (value == null)
+                    throw new ValueConverterException(
+                            "INT-value may not be null. (null indeed, zero is ok)", null, null);
+                return value.toString();
+            }
+        };
+    }
 
-	/**
-	 * Standard boolean data type converter to convert standard Java style
-	 * 
-	 * @return value converter for standard Java style booleans
-	 */
-	@ValueConverter(rule = "Float")
-	public IValueConverter<Float> Float() {
-		return new IValueConverter<Float>() {
+    /**
+     * Standard boolean data type converter to convert standard Java style
+     * 
+     * @return value converter for standard Java style booleans
+     */
+    @ValueConverter(rule = "Float")
+    public IValueConverter<Float> Float() {
+        return new IValueConverter<Float>() {
 
-			public Float toValue(String string, AbstractNode node) {
-				if (Strings.isEmpty(string))
-					throw new ValueConverterException(
-							"Couldn't convert empty string to float", node,
-							null);
-				try {
-					return Float.valueOf(string);
-				} catch (NumberFormatException e) {
-					throw new ValueConverterException("Couldn't convert '"
-							+ string + "' to float", node, e);
-				}
-			}
+            public Float toValue(String string, AbstractNode node) {
+                if (Strings.isEmpty(string))
+                    throw new ValueConverterException("Couldn't convert empty string to float",
+                            node, null);
+                try {
+                    return Float.valueOf(string);
+                } catch (NumberFormatException e) {
+                    throw new ValueConverterException("Couldn't convert '" + string + "' to float",
+                            node, e);
+                }
+            }
 
-			public String toString(Float value) {
-				return value.toString();
-			}
-		};
-	}
+            public String toString(Float value) {
+                return value.toString();
+            }
+        };
+    }
 
 }

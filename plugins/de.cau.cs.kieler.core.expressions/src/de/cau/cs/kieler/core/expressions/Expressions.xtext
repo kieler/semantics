@@ -136,7 +136,7 @@ BooleanValue returns BooleanValue:
 // e.g. as initialValues of valuedObjects
 // used in Kits.xtext 
 AnyType returns ecore::EString:
-    Boolean | INT |Float | EString;
+    Boolean | INT |Float | ID | STRING;
 
 
 enum CompareOperator returns OperatorType:
@@ -199,3 +199,13 @@ terminal Float returns ecore::EFloatObject :
 // introduce boolean values
 terminal Boolean returns ecore::EBooleanObject :
     "true" | "false";
+
+
+// custom terminal rule allowing to save transition label string as they are
+terminal STRING returns ecore::EString: 
+    '"' ( '\\' ('b'|'t'|'n'|'f'|'r'|'"'|"'"|'\\') | !('\\'|'"') )* '"';
+
+
+// custom terminal rule allowing to save transition label string as they are
+terminal HOSTCODE returns ecore::EString: 
+	"'" ( '\\' ('b'|'t'|'n'|'f'|'r'|'"'|"'"|'\\') | !('\\'|"'") )* "'";
