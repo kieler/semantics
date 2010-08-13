@@ -134,10 +134,8 @@
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
       <details key="documentation" value="A Scope is the abstract superclass for State and Region. &#xA;&lt;p>&#xA;The fields label and id are there to identify such object, where the label&#xA;may be an arbitrary String and the id may be used as identifier in programming languages. Therefore the&#xA;id should be unique within its containing scope, should start with a word character (letter, underscore) and should not&#xA;contain whitespace.&#xA;&lt;p>&#xA;The interfaceDeclaration is a String text field containing the interface declaration in a textual representation. &#xA;The user of a model instance needs to take care that this textual representation gets parsed correctly and &#xA;translated into proper Interface objects (e.g. Signals and Variables). For example the SyncCharts editor uses&#xA;an Xtext grammar/parser to do this.&#xA;&lt;p>&#xA;A Scope may carry lists of entry-, inner- or exit {@link Action}s that are executed on either Scope entry, staying a tick&#xA;in the Scope or exiting the Scope. A suspensionTrigger Action guards the suspension of a Scope. When this trigger&#xA;is evaluated to true, then the contents of the Scope is no longer evaluated until the guard gets false again."/>
     </eAnnotations>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="id" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
-        defaultValueLiteral=""/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="label" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
-        defaultValueLiteral=""/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="id" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="label" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="signals" upperBound="-1"
         eType="ecore:EClass ../../de.cau.cs.kieler.core.expressions/model/expressions.ecore#//Signal"
         containment="true"/>
