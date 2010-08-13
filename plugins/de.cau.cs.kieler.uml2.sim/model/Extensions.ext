@@ -24,7 +24,7 @@ String action2(Transition transition):
   if (returnAction != null && returnAction.length > 0) then
     returnAction
   else
-    'nil'
+    'skip'
 ;
 
 
@@ -45,13 +45,21 @@ Set[Pseudostate] getForkJoin(StateMachine sm):
 ;
 
 Set[Vertex] getStates(StateMachine sm):
- ((Set[Vertex])sm.eAllContents.select(e|e.metaType == State))
+ //ToDo: FinalState is State ?!?
+ ((Set[Vertex])sm.eRootContainer.eAllContents.select(e|e.metaType == State || e.metaType == FinalState))
+;
+
+Set[Vertex] getHistoryStates(StateMachine sm):
+ ((Set[Vertex])sm.eRootContainer.eAllContents.select(e|e.metaType == Pseudostate && ((((Vertex)e).isDH())||((Vertex)e).isSH())))
+;
+
+Set[String] getHistoryMaudeStates(StateMachine sm):
+ ((Set[State])sm.getHistoryStates()).fullyHistoryHelp()
 ;
 
 Set[String] getMaudeStates(StateMachine sm):
  ((Set[State])sm.getStates()).fullyHelp()
 ;
-
 
 Set[Region] getRegions(StateMachine sm):
  ((Set[Region])sm.eAllContents.select(e|e.metaType == Region))
@@ -102,11 +110,11 @@ String genMaude(Transition n):
 // Triggerevent
  n.trigger2() + 
 // guard 
- ' nil ' + 
+ ' Gd ' + 
 // Action
  n.action2() + 
 // ListofForkActions ListofJoinActions
- ' nil nil ' +
+ ' skip skip ' +
 // targets (States and history pseudostates only)
  '('+n.target.getId()+') ' +
 // containingRegion
@@ -163,6 +171,13 @@ String fullyHelp(Region n):
 String fullyHelp(State n):
  //'op C'+n.getId()+' : -> ModState .\n'+
  '    eq '+n.getId()+' = '+ n.fullyQualifiedName()
+;
+String fullyHistoryHelp(Pseudostate n):
+ //'op C'+n.getId()+' : -> ModState .\n'+
+  if (n.isDH()) then
+ '    eq '+n.getId()+' = '+ ((Region)n.eContainer()).fullyQualifiedName() + ' : H*'
+ else
+ '    eq '+n.getId()+' = '+ ((Region)n.eContainer()).fullyQualifiedName() + ' : H'
 ;
 
 Set[Vertex] allVertexs(StateMachine sm):

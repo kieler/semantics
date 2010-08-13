@@ -19,18 +19,43 @@
 load «this.name.toString()»
 
 load STEPSEM
-****(
+
+mod INIT is
+	including STEPSEM .
+	
+	vars msst mastate : MState .
+	vars V V2 : Verts .
+	var ac ac2 : Actions .
+	var T : Transitions .
+	var ES : EventSS .
+	var mode : String .
+	vars HC : HistoryConfs .
+	
+	op isDone_ : MState -> Bool .
+	eq isDone (maState mode ($doneC V HC) empty) = true .
+	eq isDone msst = false [owise] .
+endm
+
+***(
+set break on .
+break select finishedRTCESINT discardFSetESINT .
+)***
+
+***(
 #####################################################
 Vorschlag Interface fuer Eclipse 
 #####################################################
-search (maState "UML" ($stableC <Konfiguration> <HistoryKonfiguration> <Events>) =>* mastate such that isDone mastate .
+search (maState "UML" ($stableC prettyVerts(<Konfiguration>) prettyHc(<HistoryKonfiguration>)) <Events>) =>* mastate such that isDone mastate .
 
 - <Konfiguration>: eine durch "," getrennte Menge von Regionen und States. Diese muss den Anforderungen im Standard entsprechen.
   z.B: Rroot, Csusp (aus Test.maude)
 - <HistoryKonfiguration>: kann erstmal empty sein
 - <Events>: eine durch "," getrennte Menge von Events die abgearbeitet werden soll
 
-search (maState "UML" ($stableC (Rroot, Csusp) empty res .
+(Rroot = R-990928836 , Csusp = susp441237549)
+search (maState "UML" ($stableC (prettyVerts (R-990928836 , susp441237549)) empty) res) =>* mastate such that isDone mastate .
+
+search (maState "UML" ($stableC (prettyVerts (Rroot, Csusp)) empty) res) =>* mastate such that isDone mastate .
 )***
 	«ENDFILE»
 «ENDDEFINE»
@@ -56,12 +81,17 @@ fmod eclipseInterface is
   ops «FOREACH this.getTriggerEvents() AS event SEPARATOR " "-»«event-»«ENDFOREACH-» : -> Event .
   op allEvents : -> Events .
 
-*** // allActions //	
+*** // allActions //
+«REM»ToDo: no double entries, no nils? nil == falsche transitionen, fehlende beschriftung«ENDREM»	
   ops «FOREACH this.getAction() AS action SEPARATOR " "-»«action-»«ENDFOREACH-» : -> Action .
 
 ***// States //
   ops «FOREACH this.getStates() AS state SEPARATOR " "-»«((State)state).getId()-»«ENDFOREACH-» : -> ModState .	
 	«FOREACH this.getMaudeStates() AS state SEPARATOR " .\n"-»«state-»«ENDFOREACH-» .	
+«REM»also generate history and deep history states«ENDREM» 
+***// PseudoStates //
+  ops «FOREACH this.getHistoryStates() AS pseudostate SEPARATOR " "-»«((Pseudostate)pseudostate).getId()-»«ENDFOREACH-» : -> ModState .	
+	«FOREACH this.getHistoryMaudeStates() AS state SEPARATOR " .\n"-»«state-»«ENDFOREACH-» .	
 ***// Regions //
   ops «FOREACH this.getRegions() AS region SEPARATOR " "-»«region.getId()-»«ENDFOREACH-» : -> Region .
 	«FOREACH this.getMaudeRegions() AS region SEPARATOR " .\n"-»«region-»«ENDFOREACH-» .
@@ -89,18 +119,18 @@ fmod eclipseInterface is
   eq allSHDefs = «FOREACH this.getRegions() AS region SEPARATOR ", "-»«"sDef"+region.getId()-»«ENDFOREACH-» .
 
 *** Transitions 
-*** ToDo: (Important): Compute sources and targets sets
-*** ToDo: Remove initial states transitions (DONE? -> isConsidered) 
-  ops «FOREACH this.getTransitions().select(e|e.isConsidered())  AS transition SEPARATOR "  "-»tr«transition.getId()-»«ENDFOREACH-» :-> ModTransition .
+*** ToDo: add complex-jhens-transition ids to ops and alltrans!! 
+*** ToDo: Add trigger statt noevent!!
+  ops «FOREACH this.getTransitions().select(e|e.isConsidered())  AS transition SEPARATOR "  "-»tr«transition.getId()-»«ENDFOREACH-» : -> ModTransition .
   «FOREACH this.getTransitions().select(e|e.isConsidered()) AS transition SEPARATOR '\n'-»«transition.genMaude()-»«ENDFOREACH-»
   «REM» We now work thru the Fork and Join nodes. For all CCs ending with non Fork/Join nodes, we just construct ONE combined transition. «ENDREM»
   «FOREACH this.getForkJoin() AS pseudostate SEPARATOR '\n'-»
    «IF !pseudostate.isDone("OUTGOING")-»
-   eq tr«pseudostate.getId()» = («FOREACH pseudostate.getPseudoSourceVertices() AS source SEPARATOR ','-»«source.getId()-»«ENDFOREACH-») nil nil nil («FOREACH pseudostate.getPseudoTargetVertices() AS target SEPARATOR ','-»«target.getId()-»«ENDFOREACH-») «getLastRootRegion().getId()-» . «resetLastRootRegion()-»
+   eq tr«pseudostate.getId()» = («FOREACH pseudostate.getPseudoSourceVertices() AS source SEPARATOR ','-»«source.getId()-»«ENDFOREACH-») (ev: "noevent") Gd skip skip skip («FOREACH pseudostate.getPseudoTargetVertices() AS target SEPARATOR ','-»«target.getId()-»«ENDFOREACH-») «getLastRootRegion().getId()-» . «resetLastRootRegion()-»
    «ENDIF-»
   «ENDFOREACH-»
   
-  op allTrans :-> Transitions .
+  op allTrans : -> Transitions .
   eq allTrans = «FOREACH this.getTransitions().select(e|e.isConsidered())  AS transition SEPARATOR ",  "-»tr«transition.getId()-»«ENDFOREACH-» .
 
 

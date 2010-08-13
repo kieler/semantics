@@ -3,17 +3,37 @@
 load Test
 
 load STEPSEM
-****(
+
+mod INIT is
+	including STEPSEM .
+	
+	vars msst mastate : MState .
+	vars V V2 : Verts .
+	var ac ac2 : Actions .
+	var T : Transitions .
+	var ES : EventSS .
+	var mode : String .
+	vars HC : HistoryConfs .
+	
+	op isDone_ : MState -> Bool .
+	eq isDone (maState mode ($doneC V HC) empty) = true .
+	eq isDone msst = false [owise] .
+endm
+
+***(
 #####################################################
 Vorschlag Interface fuer Eclipse 
 #####################################################
-search (maState "UML" ($stableC <Konfiguration> <HistoryKonfiguration> <Events>) =>* mastate such that isDone mastate .
+search (maState "UML" ($stableC <Konfiguration> <HistoryKonfiguration>) <Events>) =>* mastate such that isDone mastate .
 
 - <Konfiguration>: eine durch "," getrennte Menge von Regionen und States. Diese muss den Anforderungen im Standard entsprechen.
   z.B: Rroot, Csusp (aus Test.maude)
 - <HistoryKonfiguration>: kann erstmal empty sein
 - <Events>: eine durch "," getrennte Menge von Events die abgearbeitet werden soll
 
-search (maState "UML" ($stableC (Rroot, Csusp) empty res .
+(Rroot = inner2046796885, Csusp = susp441237549)
+search (maState "UML" ($stableC (inner2046796885, susp441237549) empty) res) =>* mastate such that isDone mastate .
+
+search (maState "UML" ($stableC (Rroot, Csusp) empty) res) =>* mastate such that isDone mastate .
 )***
 	

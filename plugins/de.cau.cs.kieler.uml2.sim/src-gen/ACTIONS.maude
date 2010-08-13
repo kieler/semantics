@@ -11,7 +11,7 @@ fmod ACTION is
   
   
   
-  op skip : -> Action [ctor] .
+  *** op skip : -> Action [ctor] .
   
   
   
