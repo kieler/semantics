@@ -81,20 +81,7 @@ Region getParent(Pseudostate state):
  (Region)state.eContainer()
 ;
 
-String getLabel(State n):
- n.getLabel()
-;
-String getLabel(Region n):
- n.getLabel()
-;
-
-String getMaudeLabel(State n):
- 'C'+n.getLabel()
-;
-String getMaudeLabel(Region n):
- 'R'+n.getLabel()
-;
-  // 
+// 
 //Set[Vertex] getSourceStates(Transition n)
 //  
 //;
