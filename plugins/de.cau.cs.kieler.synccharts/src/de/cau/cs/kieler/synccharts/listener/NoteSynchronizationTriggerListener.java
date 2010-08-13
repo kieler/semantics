@@ -126,16 +126,13 @@ public class NoteSynchronizationTriggerListener extends FireOnceTriggerListener 
      */
     private void handleNewDescription(Shape note) {
         String description = note.getDescription();
-        System.out.println(description);
 
         View parent = (View) note.eContainer();
         EObject semanticParent = (EObject) parent.getElement();
-        System.out.println("Parent: " + semanticParent);
 
         View connectedNode = getConnectedView(note);
         if (connectedNode != null) {
             EObject semanticPartner = (EObject) connectedNode.getElement();
-            System.out.println("Partner: " + semanticPartner);
             addStringComment(semanticPartner, description, note);
         } else {
             /*
@@ -216,8 +213,6 @@ public class NoteSynchronizationTriggerListener extends FireOnceTriggerListener 
                         success = true;
                     }
                     catch(Exception e){
-                        System.out.println("EEEEEEXception");
-                        e.printStackTrace();
                         try {
                             this.sleep(sleepTime);
                         } catch (InterruptedException e1) {
@@ -251,10 +246,9 @@ public class NoteSynchronizationTriggerListener extends FireOnceTriggerListener 
                         success = true;
                     }
                     catch(Exception e){
-                        System.out.println("EEEEEEXception");
                         e.printStackTrace();
                         try {
-                            this.sleep(sleepTime);
+                            sleep(sleepTime);
                         } catch (InterruptedException e1) {
                             /* nothing */
                         }
