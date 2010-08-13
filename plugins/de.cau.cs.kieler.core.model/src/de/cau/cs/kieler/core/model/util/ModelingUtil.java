@@ -374,7 +374,8 @@ public final class ModelingUtil {
                     Object next = it.next();
                     if (next instanceof EditPart) {
                         Object model = ((EditPart) next).getModel();
-                        if (model instanceof View) {
+                        if (model instanceof View && ((View) model).getElement() != null) {
+                            // null check because Notes in a Diagram do not have semantic counterpart
                             eo.add(((View) model).getElement());
                         }
                     }
