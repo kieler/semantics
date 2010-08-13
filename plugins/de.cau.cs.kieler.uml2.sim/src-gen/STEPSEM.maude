@@ -1,4 +1,4 @@
-load TSM 
+***load TSM 
 fmod FIRESET is
   including TRANSITIONS .
   sort Fireset .
@@ -13,7 +13,7 @@ mod STEPSEM is
     including SET{Fireset} * (sort Set{Fireset} to Firesets, sort NeSet{Fireset} to NeFiresets) .
     
     including STATEMACHINE .
-    including TSM .
+    ***including TSM .
     including eclipseInterface .
 	var FSet : Firesets .
 	var fs : Fireset .
