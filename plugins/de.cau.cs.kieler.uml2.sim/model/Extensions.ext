@@ -10,13 +10,21 @@ extension org::eclipse::xtend::util::stdlib::issues;      // pass messages back 
 
 String trigger2(Transition transition):
   let transitionLabel = transition.name:
-  getTrigger(transitionLabel.toString())
+  let returnTrigger = getTrigger(transitionLabel.toString()):
+  if (returnTrigger != null && returnTrigger.length > 0) then
+    returnTrigger
+  else
+    'nil'
 ;
 
 
 String action2(Transition transition):
   let transitionLabel = transition.name:
-  getAction(transitionLabel.toString())
+  let returnAction = getAction(transitionLabel.toString()):
+  if (returnAction != null && returnAction.length > 0) then
+    returnAction
+  else
+    'nil'
 ;
 
 
@@ -87,7 +95,7 @@ String getMaudeLabel(Region n):
 String genMaude(Transition n):
  // ToDo: generate source and target sets
  //(n.source).toString() + '   ' + (n.target).toString() + '   ' + n.trigger2() + '   ' + n.action2()+ '   ' +((Region)n.container).getId()
- '   eq tr-'+n.getId()+ ' = '+
+ '   eq tr'+n.getId()+ ' = '+
 // sources (States only)
  '('+(n.source.getId()) + ') ' +
 // 'empty '+ 
@@ -98,7 +106,7 @@ String genMaude(Transition n):
 // Action
  n.action2() + 
 // ListofForkActions ListofJoinActions
- ' empty empty ' +
+ ' nil nil ' +
 // targets (States and history pseudostates only)
  '('+n.target.getId()+') ' +
 // containingRegion
@@ -171,12 +179,12 @@ String fullyQualifiedName(State n) : n.getParent() == null ? n.getId() :
 
 Set[String] getTriggerEvents(StateMachine sm):
  let transitions = sm.getTransitions() :
- (transitions.select(e|e.name.contains("/"))).trigger2()
+ (transitions.select(e|e.name.contains(('/')))).trigger2()
 ;
 
 Set[String] getAction(StateMachine sm):
  let transitions = sm.getTransitions() :
- (transitions.select(e|((String)e.name).contains("/"))).action2()
+ (transitions.select(e|((String)e.name).contains('/'))).action2()
 ;
 
 Boolean contains(String str):
