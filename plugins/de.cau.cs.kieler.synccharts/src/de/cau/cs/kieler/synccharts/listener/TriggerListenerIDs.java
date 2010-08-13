@@ -14,6 +14,7 @@ import org.eclipse.emf.transaction.RollbackException;
 import org.eclipse.emf.transaction.TransactionalEditingDomain;
 
 import de.cau.cs.kieler.core.model.util.PossiblyEmptyCompoundCommand;
+import de.cau.cs.kieler.synccharts.Region;
 import de.cau.cs.kieler.synccharts.Scope;
 import de.cau.cs.kieler.synccharts.SyncchartsPackage;
 
@@ -79,6 +80,12 @@ public class TriggerListenerIDs extends FireOnceTriggerListener {
     private Command handleScope(final Scope scope) {
         PossiblyEmptyCompoundCommand cc = new PossiblyEmptyCompoundCommand();
         if (scope != null) {
+            // we decided to allow empty Region IDs, so don't force them here
+            if(scope instanceof Region && scope.getLabel() == null || scope.getLabel().equals("")){
+                cc.append(new SetCommand(getTarget(), scope,
+                    SyncchartsPackage.eINSTANCE.getScope_Id(), "")); // empty ID
+                return cc;
+            }
             String newId = getUniqueString(scope,
                     SyncchartsContentUtil.getValidId(scope.getLabel()));
             cc.append(new SetCommand(getTarget(), scope,
