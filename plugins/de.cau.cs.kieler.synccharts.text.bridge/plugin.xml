@@ -20,21 +20,6 @@
                </with>
             </visibleWhen>
          </command>
-         <command
-               commandId="de.cau.cs.kieler.synccharts.text.bridge.serializeTransitionlabel"
-               label="Serialize Labels"
-               style="push"
-               tooltip="Serialize all transition and action labels of current SyncChart.">
-            <visibleWhen
-                  checkEnabled="true">
-               <with
-                     variable="activeEditorId">
-                  <equals
-                        value="de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorID">
-                  </equals>
-               </with>
-            </visibleWhen>
-         </command>
       </menuContribution>
    </extension>
    <extension
@@ -45,13 +30,6 @@
             description="Re-parse all transition and action labels of the current SyncChart."
             id="de.cau.cs.kieler.synccharts.text.bridge.parseTransitionlabel"
             name="Parse all action labels">
-      </command>
-      <command
-            categoryId="de.cau.cs.kieler"
-            defaultHandler="de.cau.cs.kieler.synccharts.text.actions.bridge.ActionLabelSerializeHandler"
-            description="Serialize all transition and action labels of the current SyncChart."
-            id="de.cau.cs.kieler.synccharts.text.bridge.serializeTransitionlabel"
-            name="Serialize all action labels">
       </command>
    </extension>
    <extension
