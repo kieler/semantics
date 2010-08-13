@@ -26,9 +26,12 @@ import de.cau.cs.kieler.core.expressions.ExpressionsPackage;
 import de.cau.cs.kieler.core.expressions.Signal;
 import de.cau.cs.kieler.core.expressions.ValueType;
 import de.cau.cs.kieler.core.expressions.ValuedObject;
+import de.cau.cs.kieler.synccharts.Action;
 import de.cau.cs.kieler.synccharts.Region;
 import de.cau.cs.kieler.synccharts.Scope;
+import de.cau.cs.kieler.synccharts.State;
 import de.cau.cs.kieler.synccharts.StateType;
+import de.cau.cs.kieler.synccharts.SyncchartsFactory;
 import de.cau.cs.kieler.synccharts.SyncchartsPackage;
 import de.cau.cs.kieler.synccharts.Transition;
 import de.cau.cs.kieler.synccharts.text.kits.formatting.KitsValueSerializer;
@@ -41,186 +44,188 @@ import de.cau.cs.kieler.synccharts.text.kits.formatting.KitsValueSerializer;
  */
 public class KitsTransientValueService extends DefaultTransientValueService {
 
-	/**
-	 * Decides whether each element of an owners feature needs to be checked.
-	 * Here, I want this to be false except while serializing annotations and
-	 * the signals of the root region: The 'tick' signal should not be serialized.
-	 * 
-	 * Serialization of entryActions,... especially for regions is NOT considered yet!!
-	 * 
-	 */
-	public boolean isCheckElementsIndividually(EObject owner, EStructuralFeature feature) {
-		
-		if (feature == AnnotationsPackage.eINSTANCE.getAnnotatable_Annotations()) {
-			return true;
-		}
-		if (feature == SyncchartsPackage.eINSTANCE.getScope_Signals()
-				&& SyncchartsPackage.eINSTANCE.getRegion().isInstance(owner)
-				&& owner.eContainer() == null) {
-			return true;
-		}
-		return false;
-	}
-	
-	
-	/**
-	 * Decides whether an owner's feature (or one of its elements are not to be serialized).
-	 */
-	public boolean isTransient(EObject owner, EStructuralFeature feature, int index) {
-		
-		/* suppress the implicit (mostly EOpposites) features */
-		if (feature == SyncchartsPackage.eINSTANCE.getState_ParentRegion() 
-			|| feature == SyncchartsPackage.eINSTANCE.getScope_InterfaceDeclaration()
-			|| feature == SyncchartsPackage.eINSTANCE.getState_IncomingTransitions()
-			|| feature == SyncchartsPackage.eINSTANCE.getRegion_ParentState()
-			|| feature == SyncchartsPackage.eINSTANCE.getTransition_SourceState()
-			) {
-			return true;
-		}
-		
+    /**
+     * Decides whether each element of an owners feature needs to be checked. Here, I want this to
+     * be false except while serializing annotations and the signals of the root region: The 'tick'
+     * signal should not be serialized.
+     * 
+     * Serialization of entryActions,... especially for regions is NOT considered yet!!
+     * 
+     */
+    public boolean isCheckElementsIndividually(EObject owner, EStructuralFeature feature) {
 
-		/* scope ids are suppressed in case of:
-		 * a) the root region (only one region is allowed -> no naming problems may occur!
-		 * b) a region has no label -> whole region declaration will be skipped
-		 * c) scope label != null (maybe "") and id is equal to label (label is unique)  
-		 */		
-		if (feature == SyncchartsPackage.eINSTANCE.getScope_Id()) {
-			if (SyncchartsPackage.eINSTANCE.getRegion().isInstance(owner)) {
-				if ((owner.eContainer() == null 
-						|| ((Region) owner).getLabel() == null
-						|| ((Region) owner).getLabel().equals(""))) {
-					return true;
-				}
-			}
-			Scope scope = (Scope) owner;
-			return scope.getLabel() != null 
-					&& (scope.getId() == null || scope.getLabel().equals(scope.getId()));
-		}
+        if (feature == AnnotationsPackage.eINSTANCE.getAnnotatable_Annotations()) {
+            return true;
+        }
+        if (feature == SyncchartsPackage.eINSTANCE.getScope_Signals()
+                && SyncchartsPackage.eINSTANCE.getRegion().isInstance(owner)
+                && owner.eContainer() == null) {
+            return true;
+        }
+        return false;
+    }
+    
+    private Action t = SyncchartsFactory.eINSTANCE.createAction();
 
-		
-		/* scope labels are suppressed in case of:
-		 * a) region contains states and the root region
-		 * b) region contains states and has no label -> whole region declaration will be skipped
-		 * 
-		 * scope labels are enforced in case of:
-		 * a) scope is a state
-		 * b) scope is an empty region
-		 */		
-		if (feature == SyncchartsPackage.eINSTANCE.getScope_Label()) {
+    /**
+     * Decides whether an owner's feature (or one of its elements are not to be serialized).
+     */
+    public boolean isTransient(EObject owner, EStructuralFeature feature, int index) {
 
-/* is obsolete as fixed by the default value config of Scope.label, Scope.id */
-//			if (!owner.eIsSet(feature)) {
-//				
-//				// states MUST have defined labels -> define empty ones if necessary!
-//				// For sure, THIS IS EVIL!!!
-//				EditingDomain d = getEditingDomain(owner);
-//				if (d != null) {
-//					d.getCommandStack().execute(new SetCommand(d, owner, feature, new String()));
-//				} else {
-//					owner.eSet(feature, "");
-//				}
-//			}
+        /* suppress the implicit (mostly EOpposites) features */
+        if (feature == SyncchartsPackage.eINSTANCE.getState_ParentRegion()
+                || feature == SyncchartsPackage.eINSTANCE.getScope_InterfaceDeclaration()
+                || feature == SyncchartsPackage.eINSTANCE.getState_IncomingTransitions()
+                || feature == SyncchartsPackage.eINSTANCE.getRegion_ParentState()
+                || feature == SyncchartsPackage.eINSTANCE.getTransition_SourceState()) {
+            return true;
+        }
 
-			
-			if (SyncchartsPackage.eINSTANCE.getRegion().isInstance(owner)) {
+ 
+        /*
+         * scope ids are suppressed in case of:
+         * a) the root region (only one region is allowed -> no naming problems may occur!
+         * b) a region has no label -> whole region declaration will be skipped
+         * c) scope label != null (maybe "") and id is equal to label (label is unique)
+         */
+        if (feature == SyncchartsPackage.eINSTANCE.getScope_Label()) {
+            if (SyncchartsPackage.eINSTANCE.getRegion().isInstance(owner)) {
+                if (owner.eContainer() == null || Strings.isEmpty(((Region) owner).getLabel())) {
+                    return true;
+                }
+            }
+            Scope scope = (Scope) owner;
+            return (scope.getLabel() == null || scope.getLabel().equals(scope.getId()));
+        }
 
-				// regions has no states -> take the 'region' ... alternative
-				if (((Region) owner).getStates().isEmpty()) {
-					return false;
-				}
-				if ((owner.eContainer() == null 
-							|| ((Region) owner).getLabel() == null
-							|| ((Region) owner).getLabel().equals(""))) {
-					return true;
-				}
-			}
-			
-			// in case the label is not initialized (Ksbase,... )
-			return false;
-		}
+        
+//        /*
+//         * scope labels are suppressed in case of: a) region contains states and the root region b)
+//         * region contains states and has no label -> whole region declaration will be skipped
+//         * 
+//         * scope labels are enforced in case of: a) scope is a state b) scope is an empty region
+//         */
+//        if (feature == SyncchartsPackage.eINSTANCE.getScope_Id()) {
+//
+//            /* is obsolete as fixed by the default value config of Scope.label, Scope.id */
+//            // if (!owner.eIsSet(feature)) {
+//            //
+//            // // states MUST have defined labels -> define empty ones if necessary!
+//            // // For sure, THIS IS EVIL!!!
+//            // EditingDomain d = getEditingDomain(owner);
+//            // if (d != null) {
+//            // d.getCommandStack().execute(new SetCommand(d, owner, feature, new String()));
+//            // } else {
+//            // owner.eSet(feature, "");
+//            // }
+//            // }
+//
+//            if (SyncchartsPackage.eINSTANCE.getRegion().isInstance(owner)) {
+//
+//                if (owner.eContainer() == null || ((State) owner.eContainer()).getRegions().size() == 1) {
+//                    return true;
+//                }
+//            }
+//            return false;
+//        }
 
-		
-		/* suppress the 'normal' attribute of a state */
-		if (feature == SyncchartsPackage.eINSTANCE.getState_Type()) {
-			return owner.eGet(feature).equals(StateType.NORMAL);
-		}
-		
-		
-		/* suppress the 'initialValue' feature if null or "" */
-		if (feature == ExpressionsPackage.eINSTANCE.getValuedObject_InitialValue()) {
-			return Strings.isEmpty((String) owner.eGet(feature));
-		}
-		
-		
-		/* suppress the enum value of a valueObjects's 'type' feature if
-		 * a) type == host && hostType is set
-		 * b) type == pure && combineOperator != none
-		 */
-		if (feature == ExpressionsPackage.eINSTANCE.getValuedObject_Type()) {
-			if (owner.eGet(feature).equals(ValueType.HOST)) {
-				return !this.isTransient(owner, ExpressionsPackage.eINSTANCE
-							.getValuedObject_HostType(), index);
-			}
-			if (ExpressionsPackage.eINSTANCE.getSignal().isInstance(owner)) {
-				return owner.eGet(feature).equals(ValueType.PURE)
-						&& ((Signal) owner).getCombineOperator().equals(
-								CombineOperator.NONE);
-			}
-		}		
-		
-		/* do not serialize a host type if 'host' is not selected in 'type' */
-		if (feature == ExpressionsPackage.eINSTANCE.getValuedObject_HostType()) {
-			return !((ValuedObject) owner).getType().equals(ValueType.HOST)
-				|| Strings.isEmpty((String) owner.eGet(feature));
-		}
-		
-		
-		/* suppress the enum value of a signal's 'combineOperator' feature if
-		 * a) combineOperator == host && hostCombineOperator is set
-		 * b) combineOperator == none
-		 */
-		if (feature == ExpressionsPackage.eINSTANCE.getSignal_CombineOperator()) {
-			if (owner.eGet(feature).equals(CombineOperator.HOST)) {
-				return !this.isTransient(owner,
-					ExpressionsPackage.eINSTANCE.getSignal_HostCombineOperator(), index);
-			}
-			return owner.eGet(feature).equals(CombineOperator.NONE);
-		}
-		
-		
-		/* do not serialize a hostCombineOperator if 'host' is not selected in 'combineOperator' */
-		if (feature == ExpressionsPackage.eINSTANCE.getSignal_HostCombineOperator()) {
-			return !((Signal) owner).getCombineOperator().equals(CombineOperator.HOST)
-				|| Strings.isEmpty((String) owner.eGet(feature));
-		}
-		
-		
-		/* suppress the transition's priority if it's the only outgoing one of its source state*/
-		if (feature == SyncchartsPackage.eINSTANCE.getTransition_Priority()) {
-			if (SyncchartsPackage.eINSTANCE.getTransition().isInstance(owner)) {
-				return ((Transition) owner).getSourceState().getOutgoingTransitions().size() == 1;
-			}
-		}	
-		
-		
-		/* do not serialized the implicit 'tick' signal! */
-		if (feature == SyncchartsPackage.eINSTANCE.getScope_Signals()
-				&& SyncchartsPackage.eINSTANCE.getRegion().isInstance(owner)
-				&& owner.eContainer() == null) {			
-			return  ((Region) owner).getSignals().get(index).getName().equals("tick");
-		}
-		
-		
-		/* try not to serialize annotations that are of type unequal to StringAnnotations */
-		if (feature == AnnotationsPackage.eINSTANCE.getAnnotatable_Annotations()) {
-			return !AnnotationsPackage.eINSTANCE.getStringAnnotation().isInstance(
-					((Annotatable) owner).getAnnotations().get(index));
-		}
-		
-		
-		/* suppress residual uninitialized features */
-		return !owner.eIsSet(feature) || feature.isTransient();
-	}
+        
+        /* suppress the 'normal' attribute of a state */
+        if (feature == SyncchartsPackage.eINSTANCE.getState_Type()) {
+            return owner.eGet(feature).equals(StateType.NORMAL);
+        }
+
+        
+        /* suppress the 'initialValue' feature if null or "" */
+        if (feature == ExpressionsPackage.eINSTANCE.getValuedObject_InitialValue()) {
+            return Strings.isEmpty((String) owner.eGet(feature));
+        }
+
+        
+        /*
+         * suppress the enum value of a valueObjects's 'type' feature if a) type == host && hostType
+         * is set b) type == pure && combineOperator != none
+         */
+        if (feature == ExpressionsPackage.eINSTANCE.getValuedObject_Type()) {
+            if (owner.eGet(feature).equals(ValueType.HOST)) {
+                return !this.isTransient(owner,
+                        ExpressionsPackage.eINSTANCE.getValuedObject_HostType(), index);
+            }
+            if (ExpressionsPackage.eINSTANCE.getSignal().isInstance(owner)) {
+                return owner.eGet(feature).equals(ValueType.PURE)
+                        && ((Signal) owner).getCombineOperator().equals(CombineOperator.NONE);
+            }
+        }
+
+        
+        /* do not serialize a host type if 'host' is not selected in 'type' */
+        if (feature == ExpressionsPackage.eINSTANCE.getValuedObject_HostType()) {
+            return !((ValuedObject) owner).getType().equals(ValueType.HOST)
+                    || Strings.isEmpty((String) owner.eGet(feature));
+        }
+
+        
+        /*
+         * suppress the enum value of a signal's 'combineOperator' feature if a) combineOperator ==
+         * host && hostCombineOperator is set b) combineOperator == none
+         */
+        if (feature == ExpressionsPackage.eINSTANCE.getSignal_CombineOperator()) {
+            if (owner.eGet(feature).equals(CombineOperator.HOST)) {
+                return !this.isTransient(owner,
+                        ExpressionsPackage.eINSTANCE.getSignal_HostCombineOperator(), index);
+            }
+            return owner.eGet(feature).equals(CombineOperator.NONE);
+        }
+
+        
+        /* do not serialize a hostCombineOperator if 'host' is not selected in 'combineOperator' */
+        if (feature == ExpressionsPackage.eINSTANCE.getSignal_HostCombineOperator()) {
+            return !((Signal) owner).getCombineOperator().equals(CombineOperator.HOST)
+                    || Strings.isEmpty((String) owner.eGet(feature));
+        }
+
+        
+        if (feature == SyncchartsPackage.eINSTANCE.getAction_Label()) {
+            return Strings.isEmpty((String) owner.eGet(feature)) || !actionIsEmpty((Action) owner);
+        }
+        
+        
+//        /* suppress the transition's priority if it's the only outgoing one of its source state */
+//        if (feature == SyncchartsPackage.eINSTANCE.getTransition_Priority()) {
+//            if (SyncchartsPackage.eINSTANCE.getTransition().isInstance(owner)) {
+//                return ((Transition) owner).getSourceState().getOutgoingTransitions().size() == 1;
+//            }
+//        }
+
+        
+        /* do not serialized the implicit 'tick' signal! */
+        if (feature == SyncchartsPackage.eINSTANCE.getScope_Signals()
+                && SyncchartsPackage.eINSTANCE.getRegion().isInstance(owner)
+                && owner.eContainer() == null) {
+            return ((Region) owner).getSignals().get(index).getName().equals("tick");
+        }
+
+        
+        /* try not to serialize annotations that are of type unequal to StringAnnotations */
+        if (feature == AnnotationsPackage.eINSTANCE.getAnnotatable_Annotations()) {
+            if (AnnotationsPackage.eINSTANCE.getImportAnnotation().isInstance(
+                    ((Annotatable) owner).getAnnotations().get(index))) {
+                return false;
+            }
+            return !AnnotationsPackage.eINSTANCE.getStringAnnotation().isInstance(
+                    ((Annotatable) owner).getAnnotations().get(index));
+        }
+
+        
+        /* suppress residual uninitialized features */
+        return !owner.eIsSet(feature) || feature.isTransient();
+    }
+    
+    
+    private boolean actionIsEmpty(Action a) {
+        return a.getDelay() == 1 && a.isIsImmediate() == false
+          && a.getTrigger() == null && a.getEffects().isEmpty();
+    }
 
 /* is obsolete as fixed by the default value config of Scope.label, Scope.id */	
 //	/**

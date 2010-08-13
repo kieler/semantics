@@ -19,33 +19,33 @@ package de.cau.cs.kieler.synccharts.text.kits.ui;
  * @author chsch
  */
 public class KitsUiModule extends de.cau.cs.kieler.synccharts.text.kits.ui.AbstractKitsUiModule {
-	public KitsUiModule(org.eclipse.ui.plugin.AbstractUIPlugin plugin) {
-		super(plugin);
-	}
-	
-	/* get rid of the dawn XtextNature question */
-	public Class<? extends org.eclipse.xtext.ui.editor.IXtextEditorCallback> bindIXtextEditorCallback() {
-		return org.eclipse.xtext.ui.editor.IXtextEditorCallback.NullImpl.class;
-	}
+    public KitsUiModule(org.eclipse.ui.plugin.AbstractUIPlugin plugin) {
+        super(plugin);
+    }
 
-	/* e.g. declares '-->' '>->' to be highlighted as usual keywords */
-	public Class<? extends org.eclipse.xtext.ui.editor.syntaxcoloring.antlr.DefaultAntlrTokenToAttributeIdMapper> bindAbstractAntlrTokenToAttributeIdMapper() {
-    	return KitsAntlrTokenToAttributeIdMapper.class;
+    /* get rid of the dawn XtextNature question */
+    public Class<? extends org.eclipse.xtext.ui.editor.IXtextEditorCallback> bindIXtextEditorCallback() {
+        return org.eclipse.xtext.ui.editor.IXtextEditorCallback.NullImpl.class;
     }
-	
-	/* introduces new highlighting profiles (e.g. annotationKey) */
-	public Class<? extends org.eclipse.xtext.ui.editor.syntaxcoloring.DefaultHighlightingConfiguration> bindIHighlightingConfiguration() {
-    	return KitsHighlightingConfiguration.class;
+
+    /* e.g. declares '-->' '>->' to be highlighted as usual keywords */
+    public Class<? extends org.eclipse.xtext.ui.editor.syntaxcoloring.antlr.DefaultAntlrTokenToAttributeIdMapper> bindAbstractAntlrTokenToAttributeIdMapper() {
+        return KitsAntlrTokenToAttributeIdMapper.class;
     }
-	
-	/* provides a few additional highlighting rules */
-	public Class<? extends org.eclipse.xtext.ui.editor.syntaxcoloring.ISemanticHighlightingCalculator> bindISemanticHighlightingCalculator() {
-		return KitsSemanticHighlightingCalculator.class;
-	}
-	
-	/* the registration in KitsRuntimeModule will be overwritten by DefaultUIModule so it is here again */
-	public Class<? extends org.eclipse.xtext.formatting.IIndentationInformation> bindIIndentationInformation() {
-		return de.cau.cs.kieler.synccharts.text.kits.formatting.KitsIndentionInformation.class;
-	}
-	
+
+    /* introduces new highlighting profiles (e.g. annotationKey) */
+    public Class<? extends org.eclipse.xtext.ui.editor.syntaxcoloring.DefaultHighlightingConfiguration> bindIHighlightingConfiguration() {
+        return KitsHighlightingConfiguration.class;
+    }
+
+    /* provides a few additional highlighting rules */
+    public Class<? extends org.eclipse.xtext.ui.editor.syntaxcoloring.ISemanticHighlightingCalculator> bindISemanticHighlightingCalculator() {
+        return KitsSemanticHighlightingCalculator.class;
+    }
+
+    /* the registration in KitsRuntimeModule will be overwritten by DefaultUIModule so it is here again */
+    public Class<? extends org.eclipse.xtext.formatting.IIndentationInformation> bindIIndentationInformation() {
+        return de.cau.cs.kieler.synccharts.text.kits.formatting.KitsIndentionInformation.class;
+    }
+
 }

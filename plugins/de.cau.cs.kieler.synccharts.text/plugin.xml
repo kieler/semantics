@@ -7,7 +7,12 @@
     <package 
        uri = "http://www.cau.de/cs/kieler/synccharts/interfacedeclparser/InterfaceDecl" 
        class = "de.cau.cs.kieler.synccharts.text.interfaces.interfaceDecl.InterfaceDeclPackage"
-       genModel = "de/cau/cs/kieler/synccharts/text/interfaces/Interfaces.genmodel" /> 
+       genModel = "de/cau/cs/kieler/synccharts/text/interfaces/Interfaces.genmodel" />
+    <package
+          class="de.cau.cs.kieler.synccharts.text.kits.syncchartsExtended.SyncchartsExtendedPackage"
+          genModel="model/syncchartsExtended.genmodel"
+          uri="http://kieler.cs.cau.de/syncchartsExtended/0.2.3">
+    </package> 
 	
   </extension>
 

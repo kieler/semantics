@@ -12,27 +12,29 @@ import "platform:/resource/de.cau.cs.kieler.core.expressions/model/expressions.e
 // here we only want to have the features isImmediate, delay, trigger and effects
 // the features type, targetState, priority, isHistory are ignored and set as transient
 // you need to override the rule to support transitions properly
-//Transition returns synccharts::Transition:
-//	{synccharts::Transition}
-//	(isImmediate?='#')? (delay=INT)? (trigger=BooleanExpression)? ("/" (effects+=Effect (',')? )*)?; 
 
 Transition returns synccharts::Transition:
 	{synccharts::Transition}
 	(isImmediate?='#')? (delay=INT)? (trigger=BooleanExpression)? ("/" effects+=Effect ((',') effects+=Effect)*)?; 
 
 
+// chsch: The action rule is used in Kits.xtext for entry-, inner-, exitActions, suspensionTrigger 
 Action returns synccharts::Action:
     {synccharts::Action}
 	(isImmediate?='#')? (delay=INT)? (trigger=BooleanExpression)? ("/" (effects+=Effect (',')? )*)?; 		
 
+
 Effect returns synccharts::Effect: 
 	Emission | Assignment | TextEffect;
+
 		
 Emission returns synccharts::Emission:
 	signal=[expressions::Signal] ( "(" newValue=Expression ")" )?;
+
     
 Assignment returns synccharts::Assignment:
 	variable=[expressions::Variable] ":=" expression = Expression;
+
 
 TextEffect returns synccharts::TextEffect:
  	code=STRING ("(" type=ID ")")?;

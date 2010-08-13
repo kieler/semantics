@@ -1242,9 +1242,6 @@ public class InterfacesGrammarAccess extends AbstractGrammarElementFinder {
 	//// here we only want to have the features isImmediate, delay, trigger and effects
 	//// the features type, targetState, priority, isHistory are ignored and set as transient
 	//// you need to override the rule to support transitions properly
-	////Transition returns synccharts::Transition:
-	////	{synccharts::Transition}
-	////	(isImmediate?='#')? (delay=INT)? (trigger=BooleanExpression)? ("/" (effects+=Effect (',')? )*)?; 
 	//Transition returns synccharts::Transition:
 	//	{synccharts::Transition} isImmediate?="#"? delay=INT? trigger=BooleanExpression? ("/" effects+=Effect (","
 	//	effects+=Effect)*)?;
@@ -1256,6 +1253,7 @@ public class InterfacesGrammarAccess extends AbstractGrammarElementFinder {
 		return getTransitionAccess().getRule();
 	}
 
+	//// chsch: The action rule is used in Kits.xtext for entry-, inner-, exitActions, suspensionTrigger 
 	//Action returns synccharts::Action:
 	//	{synccharts::Action} isImmediate?="#"? delay=INT? trigger=BooleanExpression? ("/" (effects+=Effect ","?)*)?;
 	public ActionsGrammarAccess.ActionElements getActionAccess() {
@@ -1547,7 +1545,7 @@ public class InterfacesGrammarAccess extends AbstractGrammarElementFinder {
 	//// e.g. as initialValues of valuedObjects
 	//// used in Kits.xtext 
 	//AnyType returns ecore::EString:
-	//	Boolean | INT | Float | EString;
+	//	Boolean | INT | Float | ID | STRING;
 	public ExpressionsGrammarAccess.AnyTypeElements getAnyTypeAccess() {
 		return gaActions.getAnyTypeAccess();
 	}
@@ -1709,13 +1707,26 @@ public class InterfacesGrammarAccess extends AbstractGrammarElementFinder {
 		return gaActions.getBooleanRule();
 	} 
 
+	//// custom terminal rule allowing to save transition label string as they are
+	//terminal STRING:
+	//	"\"" ("\\" ("b" | "t" | "n" | "f" | "r" | "\"" | "\'" | "\\") | !("\\" | "\""))* "\"";
+	public TerminalRule getSTRINGRule() {
+		return gaActions.getSTRINGRule();
+	} 
+
+	//// custom terminal rule allowing to save transition label string as they are
+	//terminal HOSTCODE:
+	//	"\'" ("\\" ("b" | "t" | "n" | "f" | "r" | "\"" | "\'" | "\\") | !("\\" | "\'"))* "\'";
+	public TerminalRule getHOSTCODERule() {
+		return gaActions.getHOSTCODERule();
+	} 
+
 	//// --------------------------
 	////
 	////   EXPRESSIONS
 	////
 	//// --------------------------
 	//// introduction of parsing rules for annotations
-	//// are to be moved into Annotations.xtext in the future!!
 	//StringAnnotation returns Annotation:
 	//	CommentAnnotation | KeyValueAnnotation;
 	public AnnotationsGrammarAccess.StringAnnotationElements getStringAnnotationAccess() {
@@ -1748,6 +1759,17 @@ public class InterfacesGrammarAccess extends AbstractGrammarElementFinder {
 		return getKeyValueAnnotationAccess().getRule();
 	}
 
+	//// needed for importing other resources
+	//ImportAnnotation:
+	//	"import" importURI=STRING;
+	public AnnotationsGrammarAccess.ImportAnnotationElements getImportAnnotationAccess() {
+		return gaActions.getImportAnnotationAccess();
+	}
+	
+	public ParserRule getImportAnnotationRule() {
+		return getImportAnnotationAccess().getRule();
+	}
+
 	//// allow strings without quotes as they don'c contain spaces
 	//EString returns ecore::EString:
 	//	STRING | ID;
@@ -1778,13 +1800,6 @@ public class InterfacesGrammarAccess extends AbstractGrammarElementFinder {
 	//	"^"? ("a".."z" | "A".."Z" | "_") ("a".."z" | "A".."Z" | "_" | "0".."9")*;
 	public TerminalRule getIDRule() {
 		return gaActions.getIDRule();
-	} 
-
-	//terminal STRING:
-	//	"\"" ("\\" ("b" | "t" | "n" | "f" | "r" | "\"" | "\'" | "\\") | !("\\" | "\""))* "\"" | "\'" ("\\" ("b" | "t" | "n" |
-	//	"f" | "r" | "\"" | "\'" | "\\") | !("\\" | "\'"))* "\'";
-	public TerminalRule getSTRINGRule() {
-		return gaActions.getSTRINGRule();
 	} 
 
 	//terminal SL_COMMENT:

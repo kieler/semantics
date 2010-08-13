@@ -42,7 +42,7 @@ public class KitsParser extends org.eclipse.xtext.parser.antlr.AbstractAntlrPars
 	
 	@Override 
 	protected String getDefaultRuleName() {
-		return "Region";
+		return "RootRegion";
 	}
 	
 	public KitsGrammarAccess getGrammarAccess() {

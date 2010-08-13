@@ -27,76 +27,82 @@ import de.cau.cs.kieler.core.expressions.ExpressionsPackage;
 import de.cau.cs.kieler.synccharts.SyncchartsPackage;
 import de.cau.cs.kieler.synccharts.text.kits.KitsTransientValueService;
 
-
 /**
- * Customized {@link IEnumLiteralSerializer}.
- * Realizes the mapping of special terminal symbols to model content.
- * Here, it serves just to drop default values of enumerations.
+ * Customized {@link IEnumLiteralSerializer}. Realizes the mapping of special terminal symbols to
+ * model content. Here, it serves just to drop default values of enumerations.
  * 
  * @author chsch
  */
 public class KitsEnumLiteralSerializer extends EnumLiteralSerializer {
 
-	@Inject
-	ITransientValueService transientValueService;
-	
-	/** Decides whether a feature value of an EObject is valid to be serialized.
-	 * In case the assignment of a valuedObject type is processed delegate to
-	 * {@link KitsTransientValueService}, delegate to {@link ValueSerializer} otherwise.
-	 */
-	public boolean isValid(EObject context, RuleCall ruleCall, Object value, IErrorAcceptor errorAcceptor) {
-		
-		// if we have a valuedObject under consideration and are processing the call of a
-		//  parser rule called from an assignment to a feature of the valuedObject
-		//  here: ... type = ValueType  ... ,i.e. the call of the ValueType rule
-		if (ExpressionsPackage.eINSTANCE.getValuedObject().isInstance(context)
-				&& XtextPackage.eINSTANCE.getAssignment().isInstance(ruleCall.eContainer())) {
-			
-			Assignment a = (Assignment) ruleCall.eContainer();
-			
-			// if the feature the assignment is made to is the 'type' feature
-			if (a.getFeature().equals(ExpressionsPackage.eINSTANCE.getValuedObject_Type().getName())) {
-				
-				// ask the transientValueService;
-				// note that the return inverse value semantics!
-				return !transientValueService.isTransient(context, ExpressionsPackage.eINSTANCE.getValuedObject_Type(), -1);
-			}
-		}
-		
-		// if we have a signal under consideration and are processing the call of a
-		//  parser rule called from an assignment to a feature of the signal
-		//  here: ... combineOperator = CombineOperator  ... ,i.e. the call of the CombineOperator rule
-		if (ExpressionsPackage.eINSTANCE.getSignal().isInstance(context)
-				&& XtextPackage.eINSTANCE.getAssignment().isInstance(ruleCall.eContainer())) {
-			
-			Assignment a = (Assignment) ruleCall.eContainer();
-			
-			// if the feature the assignment is made to is the 'type' feature
-			if (a.getFeature().equals(ExpressionsPackage.eINSTANCE.getSignal_CombineOperator().getName())) {
-				
-				// ask the transientValueService;
-				// note that the return inverse value semantics!
-				return !transientValueService.isTransient(context, ExpressionsPackage.eINSTANCE.getSignal_CombineOperator(), -1);
-			}
-		}
-		
-		// if we have a state under consideration and are processing the call of a
-		//  parser rule called from an assignment to a feature of the state
-		//  here: ... type = StateType  ... ,i.e. the call of the StateType rule
-		if (SyncchartsPackage.eINSTANCE.getState().isInstance(context)
-				&& XtextPackage.eINSTANCE.getAssignment().isInstance(ruleCall.eContainer())) {
-			
-			Assignment a = (Assignment) ruleCall.eContainer();
-			
-			// if the feature the assignment is made to is the 'type' feature
-			if (a.getFeature().equals(SyncchartsPackage.eINSTANCE.getState_Type().getName())) {
-				
-				// ask the transientValueService;
-				// note that the return inverse value semantics!
-				return !transientValueService.isTransient(context, SyncchartsPackage.eINSTANCE.getState_Type(), -1);
-			}
-		}
-		
-		return super.isValid(context, ruleCall, value, errorAcceptor);
-	}
+    @Inject
+    ITransientValueService transientValueService;
+
+    /**
+     * Decides whether a feature value of an EObject is valid to be serialized. In case the
+     * assignment of a valuedObject type is processed delegate to {@link KitsTransientValueService},
+     * delegate to {@link ValueSerializer} otherwise.
+     */
+    public boolean isValid(EObject context, RuleCall ruleCall, Object value,
+            IErrorAcceptor errorAcceptor) {
+
+        // if we have a valuedObject under consideration and are processing the call of a
+        // parser rule called from an assignment to a feature of the valuedObject
+        // here: ... type = ValueType ... ,i.e. the call of the ValueType rule
+        if (ExpressionsPackage.eINSTANCE.getValuedObject().isInstance(context)
+                && XtextPackage.eINSTANCE.getAssignment().isInstance(ruleCall.eContainer())) {
+
+            Assignment a = (Assignment) ruleCall.eContainer();
+
+            // if the feature the assignment is made to is the 'type' feature
+            if (a.getFeature()
+                    .equals(ExpressionsPackage.eINSTANCE.getValuedObject_Type().getName())) {
+
+                // ask the transientValueService;
+                // note that the return inverse value semantics!
+                return !transientValueService.isTransient(context,
+                        ExpressionsPackage.eINSTANCE.getValuedObject_Type(), -1);
+            }
+        }
+
+        // if we have a signal under consideration and are processing the call of a
+        // parser rule called from an assignment to a feature of the signal
+        // here: ... combineOperator = CombineOperator ... ,i.e. the call of the CombineOperator
+        // rule
+        if (ExpressionsPackage.eINSTANCE.getSignal().isInstance(context)
+                && XtextPackage.eINSTANCE.getAssignment().isInstance(ruleCall.eContainer())) {
+
+            Assignment a = (Assignment) ruleCall.eContainer();
+
+            // if the feature the assignment is made to is the 'type' feature
+            if (a.getFeature().equals(
+                    ExpressionsPackage.eINSTANCE.getSignal_CombineOperator().getName())) {
+
+                // ask the transientValueService;
+                // note that the return inverse value semantics!
+                return !transientValueService.isTransient(context,
+                        ExpressionsPackage.eINSTANCE.getSignal_CombineOperator(), -1);
+            }
+        }
+
+        // if we have a state under consideration and are processing the call of a
+        // parser rule called from an assignment to a feature of the state
+        // here: ... type = StateType ... ,i.e. the call of the StateType rule
+        if (SyncchartsPackage.eINSTANCE.getState().isInstance(context)
+                && XtextPackage.eINSTANCE.getAssignment().isInstance(ruleCall.eContainer())) {
+
+            Assignment a = (Assignment) ruleCall.eContainer();
+
+            // if the feature the assignment is made to is the 'type' feature
+            if (a.getFeature().equals(SyncchartsPackage.eINSTANCE.getState_Type().getName())) {
+
+                // ask the transientValueService;
+                // note that the return inverse value semantics!
+                return !transientValueService.isTransient(context,
+                        SyncchartsPackage.eINSTANCE.getState_Type(), -1);
+            }
+        }
+
+        return super.isValid(context, ruleCall, value, errorAcceptor);
+    }
 }
