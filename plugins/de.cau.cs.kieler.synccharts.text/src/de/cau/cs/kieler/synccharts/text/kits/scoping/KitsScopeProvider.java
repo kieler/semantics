@@ -24,6 +24,7 @@ import java.util.Map;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
+import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.xtext.resource.EObjectDescription;
 import org.eclipse.xtext.resource.IEObjectDescription;
@@ -85,7 +86,7 @@ public class KitsScopeProvider extends AbstractDeclarativeScopeProvider {
                 EObject obj = null;
                 for (Iterator<EObject> it = r.getAllContents(); it.hasNext();) {
                     obj = it.next();
-                    if (SyncchartsPackage.eINSTANCE.getState().isInstance(obj)) {
+                    if (!((InternalEObject) obj).eIsProxy() && SyncchartsPackage.eINSTANCE.getState().isInstance(obj)) {
                         l.add(new EObjectDescription(((State) obj).getId(), obj,
                                 Collections.EMPTY_MAP));
                     }

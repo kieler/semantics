@@ -190,12 +190,12 @@ public class KitsTransientValueService extends DefaultTransientValueService {
         }
         
         
-//        /* suppress the transition's priority if it's the only outgoing one of its source state */
-//        if (feature == SyncchartsPackage.eINSTANCE.getTransition_Priority()) {
-//            if (SyncchartsPackage.eINSTANCE.getTransition().isInstance(owner)) {
-//                return ((Transition) owner).getSourceState().getOutgoingTransitions().size() == 1;
-//            }
-//        }
+        /* suppress the transition's priority if it's the only outgoing one of its source state */
+        if (feature == SyncchartsPackage.eINSTANCE.getTransition_Priority()) {
+            if (SyncchartsPackage.eINSTANCE.getTransition().isInstance(owner)) {
+                return ((Transition) owner).getSourceState().getOutgoingTransitions().size() == 1;
+            }
+        }
 
         
         /* do not serialized the implicit 'tick' signal! */

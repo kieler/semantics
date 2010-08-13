@@ -70,8 +70,6 @@ public class KitsFormatter extends ActionsFormatter {
         // unfortunately, the first declaration doesn't work as intended
         c.setLinewrap(2).before(f.getStateRule());
         c.setLinewrap(2).after(f.getStateRule());
-//        c.setLinewrap(2).after(f.getStateAccess().getSemicolonKeyword_6_0_2());
-//        c.setLinewrap(2).after(f.getStateAccess().getSemicolonKeyword_6_1_3_2());
 
         c.setLinewrap().after(f.getSignalRule());
         // c.setLinewrap().after(f.getSignalAccess().getSemicolonKeyword_7());
