@@ -87,7 +87,7 @@ String getMaudeLabel(Region n):
 String genMaude(Transition n):
  // ToDo: generate source and target sets
  //(n.source).toString() + '   ' + (n.target).toString() + '   ' + n.trigger2() + '   ' + n.action2()+ '   ' +((Region)n.container).getMaudeLabel()
- '   eq tr_'+n.getId()+ ' = '+
+ '   eq tr-'+n.getId()+ ' = '+
 // sources (States only)
  '('+(n.source.getId()) + ') ' +
 // 'empty '+ 
