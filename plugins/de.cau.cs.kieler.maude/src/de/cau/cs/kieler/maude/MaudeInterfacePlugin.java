@@ -14,8 +14,12 @@
 
 package de.cau.cs.kieler.maude;
 
+import java.util.LinkedList;
+
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
+
+import de.cau.cs.kieler.maude.internal.MaudeSession;
 
 /**
  * This activator class controls the life cycle of the MaudeInterfacePlugin. It also provides the
@@ -34,12 +38,15 @@ public class MaudeInterfacePlugin extends AbstractUIPlugin {
     // The shared instance
     private static MaudeInterfacePlugin plugin;
 
+    private LinkedList<MaudeSession> sessions;
+    
     // ---------------------------------------------------------------------
 
     /**
      * The constructor
      */
     public MaudeInterfacePlugin() {
+        sessions = new LinkedList<MaudeSession>();
     }
 
     // ---------------------------------------------------------------------
@@ -79,6 +86,125 @@ public class MaudeInterfacePlugin extends AbstractUIPlugin {
     }
 
     // -------------------------------------------------------------------------
+    
+    /**
+     * Creates a new maude session.
+     * 
+     * @param pathToMaudeParam
+     *            the path to maude.exe
+     * @param pathToMaudeCodeParam
+     *            the path to the maude code 
+     * @return the int
+     */
+    public int createMaudeSession(String pathToMaudeParam, String pathToMaudeCodeParam) {
+        MaudeSession session = new MaudeSession(pathToMaudeParam,pathToMaudeCodeParam);
+        
+        sessions.add(session);
+        
+        return session.hashCode();
+    }
 
+    // -------------------------------------------------------------------------
+    
+    /**
+     * Gets the maude session to a given session id.
+     * 
+     * @param maudeSessionId
+     *            the maude session id
+     * @return the maude session
+     */
+    private MaudeSession getMaudeSession(int maudeSessionId) {
+        for (MaudeSession session: sessions) {
+            if (session.hashCode() == maudeSessionId) {
+                return session;
+            }
+        }
+        return null;
+    }
+    
+    // -------------------------------------------------------------------------
+    
+    /**
+     * Gets the maude session index to a given session id.
+     * 
+     * @param maudeSessionId
+     *            the maude session id
+     * @return the maude session index
+     */
+    private int getMaudeSessionIndex (int maudeSessionId) {
+        int index = 0;
+        for (MaudeSession session: sessions) {
+            if (session.hashCode() == maudeSessionId) {
+                return index;
+            }
+            index++;
+        }
+        return -1;
+    }
+    
+    // -------------------------------------------------------------------------
+    
+    /**
+     * Closes a maude session and removes all links to it.
+     * 
+     * @param maudeSessionId
+     *            the maude session id
+     * @return true, if successful
+     */
+    public boolean closeMaudeSession(int maudeSessionId) {
+        MaudeSession session =  getMaudeSession(maudeSessionId);
+        int sessionIndex     = getMaudeSessionIndex(maudeSessionId);
+        if (session == null) {
+            return false;
+        }
+        // stop the session
+        session.stopSession();
+        // remove any links to it
+        sessions.remove(sessionIndex);
+        return true;
+    }
+    
+    // -------------------------------------------------------------------------
 
+    /**
+     * Query maude with a string returning a string for a given maude session id.
+     * 
+     * @param queryRequest
+     *            the query request
+     * @param maudeSessionId
+     *            the maude session id
+     * @return the string
+     * @throws Exception
+     *             the exception
+     */
+    public String queryMaude(String queryRequest, int maudeSessionId) throws Exception {
+        MaudeSession session =  getMaudeSession(maudeSessionId);
+        if (session == null) {
+            throw (new Exception("Maude session with id "+maudeSessionId+" not found."));
+        }
+        if (!session.isStarted()) {
+            throw (new Exception("Maude session with id "+maudeSessionId+" not started yet."));
+        }
+        return session.queryMaude(queryRequest);
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Starts a  maude session.
+     * 
+     * @param maudeSessionId
+     *            the maude session id
+     * @throws Exception
+     *             the exception
+     */
+    public void startMaudeSession(int maudeSessionId) throws Exception {
+        MaudeSession session =  getMaudeSession(maudeSessionId);
+        if (session == null) {
+            throw (new Exception("Maude session with id "+maudeSessionId+" not found."));
+        }
+        session.startSession();
+    }
+    
+    // -------------------------------------------------------------------------
 }
