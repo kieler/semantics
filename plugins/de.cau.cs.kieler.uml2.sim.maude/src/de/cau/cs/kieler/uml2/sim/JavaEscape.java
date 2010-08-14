@@ -5,6 +5,7 @@ import java.util.LinkedList;
 import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.uml2.uml.Element;
 import org.eclipse.uml2.uml.FinalState;
 import org.eclipse.uml2.uml.Pseudostate;
 import org.eclipse.uml2.uml.PseudostateKind;
@@ -109,6 +110,13 @@ public class JavaEscape {
 		savedGuard.clear();
 	}
 
+	// ------------------------------------------------------------------------
+
+	// Returns the model element's container 
+	public static Element getParent(Element me) {
+	    return (Element)me.eContainer();
+	}
+	
 	// ------------------------------------------------------------------------
 
 	// Add a Pseudostate to a temporary list

@@ -1,4 +1,6 @@
 import uml;
+import ecore;
+//import "http://www.eclipse.org/emf/2002/Ecore";
 
 extension org::eclipse::xtend::util::stdlib::io;          // debug printouts
 extension org::eclipse::xtend::util::stdlib::crossref;    // find elements that reference others
@@ -133,9 +135,9 @@ String fullyHelp(State n):
 String fullyHistoryHelp(Pseudostate n):
  //'op C'+n.getId()+' : -> ModState .\n'+
   if (n.isDH()) then
- '    eq '+n.getId()+' = '+ ((Region)n.eContainer()).fullyQualifiedName() + ' : H*'
+ '    eq '+n.getId()+' = '+ ((Region)n.getParent()).fullyQualifiedName() + ' : H*'
  else
- '    eq '+n.getId()+' = '+ ((Region)n.eContainer()).fullyQualifiedName() + ' : H'
+ '    eq '+n.getId()+' = '+ ((Region)n.getParent()).fullyQualifiedName() + ' : H'
 ;
 
 // INTERNAL: Helpermethod to get the fully qualified name of a region
@@ -152,17 +154,29 @@ String fullyQualifiedName(State n) : n.getParent() == null ? n.getId() :
 
 // INTERNAL: Helper method toe get the parent state of a region
 State getParent(Region region):
- (State)region.eContainer()
+ (State)getElementParent((Element)region)
 ;
 
 // INTERNAL: Helper method toe get the parent region of a state
 Region getParent(State state):
- (Region)state.eContainer()
+ (Region)getElementParent((Element)state)
 ;
 
 // INTERNAL: Helper method toe get the parent region of a pseudo state
 Region getParent(Pseudostate state):
- (Region)state.eContainer()
+ (Region)getElementParent((Element)state)
+;
+
+// INTERNAL: Helper method toe get the parent region of a pseudo state
+Region getParent(Transition transition):
+ (Region)getElementParent((Element)transition)
+;
+
+//-----------------------------------------------------------------------------
+
+// Returns the model element (calling eContainer)
+Element getElementParent(Element me) :
+  JAVA de.cau.cs.kieler.uml2.sim.JavaEscape.getParent(org.eclipse.uml2.uml.Element)  
 ;
 
 //-----------------------------------------------------------------------------
@@ -190,7 +204,7 @@ String genMaude(Transition n):
 // targets (States and history pseudostates only)
  '('+n.target.getId()+') ' +
 // containingRegion
- ((Region)n.eContainer()).getId() + ' .'   
+ ((Region)n.getParent()).getId() + ' .'   
 ;
 
 //-----------------------------------------------------------------------------
@@ -333,7 +347,7 @@ Set[Transition] getAllPseudostateTransitions(Pseudostate pseudostate, String id)
   if (markDone(pseudostate, id)) then (
   	 // Set the last root region of this pseudostate, if it is hierarchically higher
   	 // than it will be saved, otherwise it will be ignored
-     setLastRootRegion(((Region)pseudostate.eContainer())) ->
+     setLastRootRegion(((Region)pseudostate.getParent())) ->
      getAllPseudostateTransitions2(incomingOutgoingList, id)
   ) else
      {}
