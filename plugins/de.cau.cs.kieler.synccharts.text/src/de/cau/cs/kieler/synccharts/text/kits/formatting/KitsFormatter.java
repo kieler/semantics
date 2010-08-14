@@ -54,8 +54,11 @@ public class KitsFormatter extends ActionsFormatter {
         // c.setLinewrap().after(f.getStringAnnotationRule());
         // c.setLinewrap().after(f.getCOMMENT_ANNOTATIONRule());
 
+        c.setNoLinewrap().before(f.getRootRegionRule());
+        
         // why does this not work as intended :-(
-        c.setLinewrap().before(f.getRegionRule());
+        c.setLinewrap(2).before(f.getRegionRule());
+        c.setLinewrap(2).before(f.getSingleRegionRule());
 
         c.setNoSpace().before(f.getRegionAccess().getColonKeyword_4());
         c.setLinewrap().after(f.getRegionAccess().getColonKeyword_4());
@@ -68,8 +71,9 @@ public class KitsFormatter extends ActionsFormatter {
 
         // have a blank between states
         // unfortunately, the first declaration doesn't work as intended
-        c.setLinewrap(2).before(f.getStateRule());
         c.setLinewrap(2).after(f.getStateRule());
+        c.setLinewrap(1).before(f.getStateRule());
+        c.setLinewrap(1).before(f.getStateAccess().getRightCurlyBracketKeyword_6_1_2());
 
         c.setLinewrap().after(f.getSignalRule());
         // c.setLinewrap().after(f.getSignalAccess().getSemicolonKeyword_7());
@@ -81,7 +85,8 @@ public class KitsFormatter extends ActionsFormatter {
         // unfortunately, the first declaration doesn't work as intended
         // c.setLinewrap().before(f.getTransitionRule());
         c.setLinewrap().before(f.getTransitionAccess().getTypeTransitionTypeEnumRuleCall_1_0());
-        c.setLinewrap().after(f.getTransitionRule());
+        c.setLinewrap().before(f.getTransitionRule());
+        c.setLinewrap(2).after(f.getTransitionRule());
 
         // let the priority statement be compressed, i.e. <1> not < 1 >
         c.setNoSpace().after(f.getTransitionAccess().getLessThanSignKeyword_3_0());

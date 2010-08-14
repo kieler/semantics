@@ -28,25 +28,22 @@ import de.cau.cs.kieler.synccharts.text.actions.formatting.ActionsValueConverter
  */
 public class KitsValueConverter extends ActionsValueConverter {
 
-    /**
-     * Provides customized string converter specializing
-     * {@link org.eclipse.xtext.conversion.impl.STRINGValueConverter}.
-     * 
-     * @return dedicated value converter
-     */
-    @ValueConverter(rule = "STRING")
-    public IValueConverter<String> STRING() {
-        return new org.eclipse.xtext.conversion.impl.STRINGValueConverter() {
-
-            public String toString(String value) {
-                if (value == null) {
-                    return "";
-                } else {
-                    return super.toString(value);
-                }
-            }
-        };
-    }
+//    /**
+//     * Provides customized string converter specializing
+//     * {@link org.eclipse.xtext.conversion.impl.STRINGValueConverter}.
+//     * 
+//     * @return dedicated value converter
+//     */
+//    @ValueConverter(rule = "STRING")
+//    public IValueConverter<String> STRING() {
+//        return new org.eclipse.xtext.conversion.impl.STRINGValueConverter() {
+//
+//            public String toString(String value) {
+//                return value == null ? new String("") : super.toString(value);
+//            }            
+//        };
+//    }
+    
     
     /**
      * Provides transition label converter dropping/attaching the leading/trailing character.

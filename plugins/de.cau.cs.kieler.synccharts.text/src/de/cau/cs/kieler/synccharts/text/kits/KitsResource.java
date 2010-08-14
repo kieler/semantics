@@ -28,7 +28,6 @@ import org.eclipse.xtext.resource.SaveOptions;
 import org.eclipse.xtext.util.Strings;
 
 import de.cau.cs.kieler.core.expressions.CombineOperator;
-import de.cau.cs.kieler.core.expressions.ExpressionsFactory;
 import de.cau.cs.kieler.core.expressions.ExpressionsPackage;
 import de.cau.cs.kieler.core.expressions.Signal;
 import de.cau.cs.kieler.core.expressions.ValueType;
@@ -116,16 +115,12 @@ public class KitsResource extends LazyLinkingResource {
     private void consolidateModel() {
 
         if (this.getContents().isEmpty()) {
-            Region root = SyncchartsFactory.eINSTANCE.createRegion();
-            root.setLabel("root");
-            this.getContents().add(root);
+            this.getContents().add(SyncchartsFactory.eINSTANCE.createRegion());
         }
 
-        // if (!this.getContents().isEmpty()) {
 //        setupTickSignal(((Region) this.getContents().get(0)));
-        // }
 
-        HashMap<Scope, HashSet<String>> m = new HashMap<Scope, HashSet<String>>();
+//        HashMap<Scope, HashSet<String>> m = new HashMap<Scope, HashSet<String>>();
         EObject o = null;
         for (Iterator<EObject> i = this.getAllContents(); i.hasNext();) {
             o = i.next();
@@ -142,27 +137,27 @@ public class KitsResource extends LazyLinkingResource {
         }
     }
 
-    /**
-     * Provides the implicit signal 'tick' within the root region. (#1088) Signal is created if it
-     * is not present, yet, i.e. not declared textual.
-     * 
-     * @param r
-     *            model root region
-     */
-    private void setupTickSignal(Region r) {
-
-        if (r != null) {
-            for (Signal s : r.getSignals()) {
-                if (s.getName().equals("tick")) {
-                    return;
-                }
-            }
-            Signal tick = ExpressionsFactory.eINSTANCE.createSignal();
-            tick.setName("tick");
-            tick.setType(ValueType.PURE);
-            r.getSignals().add(tick);
-        }
-    }
+//    /**
+//     * Provides the implicit signal 'tick' within the root region. (#1088) Signal is created if it
+//     * is not present, yet, i.e. not declared textual.
+//     * 
+//     * @param r
+//     *            model root region
+//     */
+//    private void setupTickSignal(Region r) {
+//
+//        if (r != null) {
+//            for (Signal s : r.getSignals()) {
+//                if (s.getName().equals("tick")) {
+//                    return;
+//                }
+//            }
+//            Signal tick = ExpressionsFactory.eINSTANCE.createSignal();
+//            tick.setName("tick");
+//            tick.setType(ValueType.PURE);
+//            r.getSignals().add(tick);
+//        }
+//    }
 
     
     private void setupScopeLabel(Scope scope) {
@@ -173,53 +168,53 @@ public class KitsResource extends LazyLinkingResource {
     }
 
     
-    /**
-     * Consolidates the scope's id. If no Id is present compute one from the label if possible
-     * otherwise assemble it mechanically.
-     */
-    private void setupScopeID(Scope scope, HashMap<Scope, HashSet<String>> allNames) {
-        String newId = null, newId2 = null;
-        HashSet<String> names = null;
-
-        /*
-         * The construct in the up coming lines are in charge of "scoped" id computation. I
-         * accomplish this, the map will be filled with sets containing the already reserved ids,
-         * s.t. every set of ids is related to the children collection of a scope. Eventually, the
-         * scope serves as the corresponding key.
-         */
-        if (scope.eContainer() == null) {
-            // this is for the root region / root state that are not inteneded
-            // to have siblings! Hence, this provides just an alibi set.
-            names = new HashSet<String>();
-
-        } else {
-            names = allNames.get(scope.eContainer());
-            if (names == null) {
-                names = new HashSet<String>();
-                allNames.put((Scope) scope.eContainer(), names);
-            }
-        }
-
-        /* The actual computation of the scope id */
-        if (!scope.eIsSet(SyncchartsPackage.eINSTANCE.getScope_Id())) {
-            Boolean isState = SyncchartsPackage.eINSTANCE.getState().isInstance(scope);
-            newId = scope.getLabel();
-
-            if (newId == null || newId.trim().equals("")) {
-                newId = isState ? "state" : "region";
-            } else {
-                newId = newId.replace(' ', '_').replace("@", "_AT_");
-            }
-
-            int n = 0;
-            newId2 = newId;
-            while (names.contains(newId)) {
-                newId = newId2 + Integer.toString(n++);
-            }
-            names.add(newId);
-            scope.setId(newId);
-        }
-    }
+//    /**
+//     * Consolidates the scope's id. If no Id is present compute one from the label if possible
+//     * otherwise assemble it mechanically.
+//     */
+//    private void setupScopeID(Scope scope, HashMap<Scope, HashSet<String>> allNames) {
+//        String newId = null, newId2 = null;
+//        HashSet<String> names = null;
+//
+//        /*
+//         * The construct in the up coming lines are in charge of "scoped" id computation. I
+//         * accomplish this, the map will be filled with sets containing the already reserved ids,
+//         * s.t. every set of ids is related to the children collection of a scope. Eventually, the
+//         * scope serves as the corresponding key.
+//         */
+//        if (scope.eContainer() == null) {
+//            // this is for the root region / root state that are not inteneded
+//            // to have siblings! Hence, this provides just an alibi set.
+//            names = new HashSet<String>();
+//
+//        } else {
+//            names = allNames.get(scope.eContainer());
+//            if (names == null) {
+//                names = new HashSet<String>();
+//                allNames.put((Scope) scope.eContainer(), names);
+//            }
+//        }
+//
+//        /* The actual computation of the scope id */
+//        if (!scope.eIsSet(SyncchartsPackage.eINSTANCE.getScope_Id())) {
+//            Boolean isState = SyncchartsPackage.eINSTANCE.getState().isInstance(scope);
+//            newId = scope.getLabel();
+//
+//            if (newId == null || newId.trim().equals("")) {
+//                newId = isState ? "state" : "region";
+//            } else {
+//                newId = newId.replace(' ', '_').replace("@", "_AT_");
+//            }
+//
+//            int n = 0;
+//            newId2 = newId;
+//            while (names.contains(newId)) {
+//                newId = newId2 + Integer.toString(n++);
+//            }
+//            names.add(newId);
+//            scope.setId(newId);
+//        }
+//    }
 
     /**
      * Sets up transitions priorities if needed. Setup priorities of parsed transitions if the

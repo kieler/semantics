@@ -18,6 +18,7 @@ import org.eclipse.xtext.Assignment;
 import org.eclipse.xtext.IGrammarAccess;
 import org.eclipse.xtext.RuleCall;
 import org.eclipse.xtext.XtextPackage;
+import org.eclipse.xtext.parsetree.AbstractNode;
 import org.eclipse.xtext.parsetree.reconstr.ITokenSerializer;
 import org.eclipse.xtext.parsetree.reconstr.ITransientValueService;
 import org.eclipse.xtext.parsetree.reconstr.impl.ValueSerializer;
@@ -25,6 +26,7 @@ import org.eclipse.xtext.parsetree.reconstr.impl.ValueSerializer;
 import com.google.inject.Inject;
 
 import de.cau.cs.kieler.core.expressions.ExpressionsPackage;
+import de.cau.cs.kieler.synccharts.Scope;
 import de.cau.cs.kieler.synccharts.SyncchartsPackage;
 import de.cau.cs.kieler.synccharts.text.kits.KitsTransientValueService;
 
@@ -50,36 +52,30 @@ public class KitsValueSerializer extends ValueSerializer {
     public boolean isValid(EObject context, RuleCall ruleCall, Object value,
             IErrorAcceptor errorAcceptor) {
 
-        // if we have a state under consideration and are processing the call of a
-        // parser rule called from an assignment to a feature of the state
-        // here: ... label = EString ... ,i.e. the call of the EString rule
-        if ((SyncchartsPackage.eINSTANCE.getScope().isInstance(context)
-                || SyncchartsPackage.eINSTANCE.getAction().isInstance(context))
-                && XtextPackage.eINSTANCE.getAssignment().isInstance(ruleCall.eContainer())) {
+        // if we are processing the call of a parser rule called from an assignment
+        // onto a feature of context:
+        // here: ... label = STRING ... ,i.e. the call of the STRING rule
+        if (XtextPackage.eINSTANCE.getAssignment().isInstance(ruleCall.eContainer())) {
 
             Assignment a = (Assignment) ruleCall.eContainer();
 
-            // if the feature the assignment is made to is the label feature
-            if (SyncchartsPackage.eINSTANCE.getScope().isInstance(context)) {
-                if (a.getFeature().equals(SyncchartsPackage.eINSTANCE.getScope_Label().getName())) {
+            // if the assignment is made to a scope's label feature
+            if (SyncchartsPackage.eINSTANCE.getScope().isInstance(context)
+                    && a.getFeature().equals(SyncchartsPackage.eINSTANCE.getScope_Label().getName())) {
+
+                // ask the transientValueService;
+                // note that the return inverse value semantics!
+                return !transientValueService.isTransient(context,
+                        SyncchartsPackage.eINSTANCE.getScope_Label(), -1);
+            } else {
+                // if the assignment is made to an action's label feature
+                if (SyncchartsPackage.eINSTANCE.getAction().isInstance(context)
+                        && a.getFeature().equals(SyncchartsPackage.eINSTANCE.getAction_Label().getName())) {
 
                     // ask the transientValueService;
                     // note that the return inverse value semantics!
-
                     return !transientValueService.isTransient(context,
-                            SyncchartsPackage.eINSTANCE.getScope_Label(), -1);
-                }
-            } else {
-                if (SyncchartsPackage.eINSTANCE.getAction().isInstance(context)) {
-                    if (a.getFeature().equals(
-                            SyncchartsPackage.eINSTANCE.getAction_Label().getName())) {
-
-                        // ask the transientValueService;
-                        // note that the return inverse value semantics!
-
-                        return !transientValueService.isTransient(context,
-                                SyncchartsPackage.eINSTANCE.getAction_Label(), -1);
-                    }
+                            SyncchartsPackage.eINSTANCE.getAction_Label(), -1);
                 }
             }
         }
@@ -124,6 +120,26 @@ public class KitsValueSerializer extends ValueSerializer {
             }
         }
         return super.isValid(context, ruleCall, value, errorAcceptor);
+    }
+    
+    
+    public String serializeAssignedValue(EObject context, RuleCall ruleCall, Object value,
+            AbstractNode node) {
+
+        if (SyncchartsPackage.eINSTANCE.getScope().isInstance(context)
+                && XtextPackage.eINSTANCE.getAssignment().isInstance(ruleCall.eContainer())) {
+
+            Assignment a = (Assignment) ruleCall.eContainer();
+
+            // if the feature the assignment is made to is the 'initialValue' feature
+            if (a.getFeature().equals(SyncchartsPackage.eINSTANCE.getScope_Id().getName())) {
+
+                if (((Scope) context).getLabel() == null) {
+                    return super.serializeAssignedValue(context, ruleCall, value, node) + " \"\"";
+                }
+            }
+        }
+        return super.serializeAssignedValue(context, ruleCall, value, node);
     }
 
 }

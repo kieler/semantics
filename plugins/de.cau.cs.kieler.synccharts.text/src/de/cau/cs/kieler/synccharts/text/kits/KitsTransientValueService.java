@@ -29,9 +29,7 @@ import de.cau.cs.kieler.core.expressions.ValuedObject;
 import de.cau.cs.kieler.synccharts.Action;
 import de.cau.cs.kieler.synccharts.Region;
 import de.cau.cs.kieler.synccharts.Scope;
-import de.cau.cs.kieler.synccharts.State;
 import de.cau.cs.kieler.synccharts.StateType;
-import de.cau.cs.kieler.synccharts.SyncchartsFactory;
 import de.cau.cs.kieler.synccharts.SyncchartsPackage;
 import de.cau.cs.kieler.synccharts.Transition;
 import de.cau.cs.kieler.synccharts.text.kits.formatting.KitsValueSerializer;
@@ -65,8 +63,6 @@ public class KitsTransientValueService extends DefaultTransientValueService {
         return false;
     }
     
-    private Action t = SyncchartsFactory.eINSTANCE.createAction();
-
     /**
      * Decides whether an owner's feature (or one of its elements are not to be serialized).
      */

@@ -53,7 +53,8 @@ public class KitsKeywordSerializer extends KeywordSerializer {
                 || keyword == grammarAccess.getSingleRegionAccess().getRegionKeyword_1_0()
                 || keyword == grammarAccess.getSingleRegionAccess().getColonKeyword_1_3()) {
             Region region = (Region) context;
-            if (region.getLabel() == null
+            if (region.getId() == null
+                    && region.getLabel() == null
                     && (region.getSignals() == null || region.getSignals().isEmpty())
                     && (region.getVariables() == null || region.getVariables().isEmpty())) {
                 return null;
