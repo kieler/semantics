@@ -100,16 +100,19 @@ Set[Transition] getSHDTransitions(StateMachine sm):
 
 //-----------------------------------------------------------------------------
 
-Set[String] getHistoryMaudeStates(StateMachine sm):
- ((Set[Pseudostate])sm.getHistoryStates()).fullyHistoryHelp()
-;
-
+// Get qualified maude states for template
 Set[String] getMaudeStates(StateMachine sm):
  ((Set[State])sm.getStates()).fullyHelp()
 ;
 
+// Get qualified maude regions for template
 Set[String] getMaudeRegions(StateMachine sm):
  ((Set[Region])sm.getRegions()).fullyHelp()
+;
+
+// Get qualified history maude states for template
+Set[String] getHistoryMaudeStates(StateMachine sm):
+ ((Set[Pseudostate])sm.getHistoryStates()).fullyHistoryHelp()
 ;
 
 //-----------------------------------------------------------------------------
@@ -164,10 +167,9 @@ Region getParent(Pseudostate state):
 
 //-----------------------------------------------------------------------------
 
-// 
-//Set[Vertex] getSourceStates(Transition n)
+// Base helpermethod for generation normal (simple) transitions, complex one
+// that include join/fork nodes as targets are generated NOT using this method! 
 //  
-//;
 // Transitions are tuples of:
 // sources Triggerevent guard Action ListofForkActions ListofJoinActions targets containingRegion
 String genMaude(Transition n):
@@ -193,35 +195,35 @@ String genMaude(Transition n):
 
 //-----------------------------------------------------------------------------
 
+// Helper method for generating transition definitions
 String genDefault(Transition tr):
   let region = ((Pseudostate) tr.source).getParent() :
   ' eq def'+region.getId()+ ' = ' + region.getId() + ' default ' + ((State)tr.target).getId()+ ' .\n'  
 ;
 
+// Helper method for generating transition definitions
 String genDHDefault(Transition tr):
   let region = ((Pseudostate) tr.source).getParent() :
   ' eq dDef'+region.getId()+ ' = ' + region.getId() + ' deepdefault ' + ((State)tr.target).getId()+ ' .\n'  
 ;
+
+// Helper method for generating transition definitions
 String genSHDefault(Transition tr):
   let region = ((Pseudostate) tr.source).getParent() :
   ' eq sDef'+region.getId()+ ' = ' + region.getId() + ' shallowdefault ' + ((State)tr.target).getId()+ ' .\n'  
 ;
 
-
-
-//-----------------------------------------------------------------------------
-
-
-
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 
+// Get all incoming transitions of a vertex
 List[Transition] getIncomingTransitions(Vertex vertex) :
    vertex.eRootContainer.eAllContents.select(e|e.metaType == Transition && ((Transition)e).target == vertex)
 ;
 
 //-----------------------------------------------------------------------------
 
+// Get all outgoing transitions of a vertex
 List[Transition] getOutgoingTransitions(Vertex vertex) :
    vertex.eRootContainer.eAllContents.select(e|e.metaType == Transition && ((Transition)e).source == vertex)
 ;

@@ -13,73 +13,73 @@ fmod eclipseInterface is
  including TRANSITIONS .
  including STATES .
 *** // Events //
-  ops ee1 res ee0 ee0 susp ee1 : -> Event .
+  ops ee1 ee0 ee0 res ee1 susp : -> Event .
   op allEvents : -> Events .
 
 *** // allActions //
 	
-  ops a3 skip a4 a4 skip a1 : -> Action .
+  ops a3 a4 a4 skip a1 skip : -> Action .
 
 ***// States //
-  ops E690055665 B-910885872 T924601121 N-1229428651 susp441237549 inner2046796885 outer1526898296 G1874547736 : -> ModState .	
-    eq E690055665 = root(R "R-990928836") : C "outer1526898296" : R "R-1819018424" : C "inner2046796885" : R "R1540734801" : C "E690055665" .
+  ops B-910885872 G1874547736 inner2046796885 T924601121 E690055665 susp441237549 N-1229428651 outer1526898296 : -> ModState .	
     eq B-910885872 = root(R "R-990928836") : C "outer1526898296" : R "R-1819018424" : C "B-910885872" .
-    eq T924601121 = root(R "R-990928836") : C "outer1526898296" : R "R-1819018424" : C "T924601121" .
-    eq N-1229428651 = root(R "R-990928836") : C "outer1526898296" : R "R-1819018424" : C "inner2046796885" : R "R1754707855" : C "N-1229428651" .
-    eq susp441237549 = root(R "R-990928836") : C "susp441237549" .
+    eq G1874547736 = root(R "R-990928836") : C "outer1526898296" : R "R-1819018424" : C "inner2046796885" : R "R1540734801" : C "G1874547736" .
     eq inner2046796885 = root(R "R-990928836") : C "outer1526898296" : R "R-1819018424" : C "inner2046796885" .
-    eq outer1526898296 = root(R "R-990928836") : C "outer1526898296" .
-    eq G1874547736 = root(R "R-990928836") : C "outer1526898296" : R "R-1819018424" : C "inner2046796885" : R "R1540734801" : C "G1874547736" .	
+    eq T924601121 = root(R "R-990928836") : C "outer1526898296" : R "R-1819018424" : C "T924601121" .
+    eq E690055665 = root(R "R-990928836") : C "outer1526898296" : R "R-1819018424" : C "inner2046796885" : R "R1540734801" : C "E690055665" .
+    eq susp441237549 = root(R "R-990928836") : C "susp441237549" .
+    eq N-1229428651 = root(R "R-990928836") : C "outer1526898296" : R "R-1819018424" : C "inner2046796885" : R "R1754707855" : C "N-1229428651" .
+    eq outer1526898296 = root(R "R-990928836") : C "outer1526898296" .	
  
 ***// PseudoStates //
   ops DH-1268649620 : -> ModState .	
     eq DH-1268649620 = root(R "R-990928836") : C "outer1526898296" : R "R-1819018424" : H* .	
 ***// Regions //
-  ops R-1819018424 R-990928836 R1540734801 R1754707855 : -> Region .
-    eq R-1819018424 = root(R "R-990928836") : C "outer1526898296" : R "R-1819018424" .
-    eq R-990928836 = root(R "R-990928836") .
-    eq R1540734801 = root(R "R-990928836") : C "outer1526898296" : R "R-1819018424" : C "inner2046796885" : R "R1540734801" .
+  ops R1754707855 R-1819018424 R1540734801 R-990928836 : -> Region .
     eq R1754707855 = root(R "R-990928836") : C "outer1526898296" : R "R-1819018424" : C "inner2046796885" : R "R1754707855" .
+    eq R-1819018424 = root(R "R-990928836") : C "outer1526898296" : R "R-1819018424" .
+    eq R1540734801 = root(R "R-990928836") : C "outer1526898296" : R "R-1819018424" : C "inner2046796885" : R "R1540734801" .
+    eq R-990928836 = root(R "R-990928836") .
 ***// allVerts //
   op allVerts : -> Verts .
-  eq allVerts = R-1819018424, R-990928836, R1540734801, R1754707855 , E690055665, B-910885872, T924601121, N-1229428651, susp441237549, inner2046796885, outer1526898296, G1874547736 .
+  eq allVerts = R1754707855, R-1819018424, R1540734801, R-990928836 , B-910885872, G1874547736, inner2046796885, T924601121, E690055665, susp441237549, N-1229428651, outer1526898296 .
 	
 ***// defaults //
-  ops defR-1819018424 defR-990928836 defR1540734801 defR1754707855 : -> Default .
+  ops defR1754707855 defR-1819018424 defR1540734801 defR-990928836 : -> Default .
+ eq defR-990928836 = R-990928836 default outer1526898296 .
+ eq defR-1819018424 = R-1819018424 default B-910885872 .
  eq defR1540734801 = R1540734801 default E690055665 .
  eq defR1754707855 = R1754707855 default N-1229428651 .
- eq defR-1819018424 = R-1819018424 default B-910885872 .
- eq defR-990928836 = R-990928836 default outer1526898296 .
   op allDefs : -> Defaults .
-  eq allDefs = defR-1819018424, defR-990928836, defR1540734801, defR1754707855 .
+  eq allDefs = defR1754707855, defR-1819018424, defR1540734801, defR-990928836 .
   
 ***// deep defaults //
-  ops dDefR-1819018424 dDefR-990928836 dDefR1540734801 dDefR1754707855 : -> DeepDefault .
+  ops dDefR1754707855 dDefR-1819018424 dDefR1540734801 dDefR-990928836 : -> DeepDefault .
  eq dDefR-1819018424 = R-1819018424 deepdefault B-910885872 .
   op allDHDefs : -> DeepDefaults .
-  eq allDHDefs = dDefR-1819018424, dDefR-990928836, dDefR1540734801, dDefR1754707855 .
+  eq allDHDefs = dDefR1754707855, dDefR-1819018424, dDefR1540734801, dDefR-990928836 .
 
 ***// shallow defaults //
-  ops sDefR-1819018424 sDefR-990928836 sDefR1540734801 sDefR1754707855 : -> ShallowDefault .
+  ops sDefR1754707855 sDefR-1819018424 sDefR1540734801 sDefR-990928836 : -> ShallowDefault .
   
   op allSHDefs : -> ShallowDefaults .
-  eq allSHDefs = sDefR-1819018424, sDefR-990928836, sDefR1540734801, sDefR1754707855 .
+  eq allSHDefs = sDefR1754707855, sDefR-1819018424, sDefR1540734801, sDefR-990928836 .
 
 *** Transitions
 
 
 *** ToDo: Add trigger statt noevent!!
-  ops trG2T-2040602862  trsusp2DH1714787712  trouter2susp1444566273  trE2G-525037410      trF148389467 trJ-242782697      : -> ModTransition .
+  ops trG2T-2040602862  trsusp2DH1714787712  trE2G-525037410  trouter2susp1444566273      trJ-242782697 trF148389467      : -> ModTransition .
   
    eq trG2T-2040602862 = (G1874547736) ee1 Gd a3 skip skip (T924601121) R1540734801 .
    eq trsusp2DH1714787712 = (susp441237549) res Gd skip skip skip (DH-1268649620) R-990928836 .
-   eq trouter2susp1444566273 = (outer1526898296) susp Gd skip skip skip (susp441237549) R-990928836 .
-   eq trE2G-525037410 = (E690055665) ee1 Gd a1 skip skip (G1874547736) R1540734801 .  
+   eq trE2G-525037410 = (E690055665) ee1 Gd a1 skip skip (G1874547736) R1540734801 .
+   eq trouter2susp1444566273 = (outer1526898296) susp Gd skip skip skip (susp441237549) R-990928836 .  
   
-   eq trF148389467 = (B-910885872) ee0 Gd a4 skip skip (N-1229428651,E690055665) R-1819018424 .         
-   eq trJ-242782697 = (G1874547736,N-1229428651) ee0 Gd a4 skip skip (T924601121) R-1819018424 .           
+   eq trJ-242782697 = (N-1229428651,G1874547736) ee0 Gd a4 skip skip (T924601121) R-1819018424 .         
+   eq trF148389467 = (B-910885872) ee0 Gd a4 skip skip (N-1229428651,E690055665) R-1819018424 .           
   op allTrans : -> Transitions .
-  eq allTrans = trG2T-2040602862,  trsusp2DH1714787712,  trouter2susp1444566273,  trE2G-525037410  				,                trF148389467,  trJ-242782697 .
+  eq allTrans = trG2T-2040602862,  trsusp2DH1714787712,  trE2G-525037410,  trouter2susp1444566273  				,                trJ-242782697,  trF148389467 .
 
 
 ***/// A state machine consits of Vertices Defaultsstatesfunction ShallowDefaultstatesfunction DeepDefaultstatesfunction EntryActionsfunction ExitActionsFunction Transitions 
