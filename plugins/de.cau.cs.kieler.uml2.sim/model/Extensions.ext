@@ -52,50 +52,117 @@ Set[String] getAction(StateMachine sm):
 
 //-----------------------------------------------------------------------------
 
+// Get all transition of the state machine
 Set[Transition] getTransitions(StateMachine sm):
  ((Set[Transition])sm.eAllContents.select(e|e.metaType == Transition))
 ;
 
+// Get all Fork or Join vertices of the state machine (these are Pseudostates)
 Set[Pseudostate] getForkJoin(StateMachine sm):
  ((Set[Transition])sm.eAllContents.select(e|e.metaType == Pseudostate && ( ((Vertex)e).isJoin() || ((Vertex)e).isFork() ) ))
 ;
 
+// Get all States of the state machine
 Set[Vertex] getStates(StateMachine sm):
  //ToDo: FinalState is State ?!?
  ((Set[Vertex])sm.eRootContainer.eAllContents.select(e|e.metaType == State || e.metaType == FinalState))
 ;
 
-Set[Vertex] getHistoryStates(StateMachine sm):
+// Get all history states of the sate machine (these are Pseudostates of subtype DH or SH)
+Set[Pseudostate] getHistoryStates(StateMachine sm):
  ((Set[Vertex])sm.eRootContainer.eAllContents.select(e|e.metaType == Pseudostate && ((((Vertex)e).isDH())||((Vertex)e).isSH())))
 ;
 
+// get all regions of the state machine
+Set[Region] getRegions(StateMachine sm):
+ ((Set[Region])sm.eAllContents.select(e|e.metaType == Region))
+;
+
+//-----------------------------------------------------------------------------
+
+// Get all initial transitions of a state machine
+Set[Transition] getInitialTransitions(StateMachine sm):
+  let transitions = sm.getTransitions().select(e|(e.source).metaType == Pseudostate) :
+  transitions.select(e|(e.source).isInitial())
+;
+
+// Get all deep history transitions of a state machine
+Set[Transition] getDHDTransitions(StateMachine sm):
+  let transitions = sm.getTransitions().select(e|(e.source).metaType == Pseudostate) :
+  transitions.select(e|(e.source).isDH())
+;
+
+// Get all shallow history transitions of a state machine
+Set[Transition] getSHDTransitions(StateMachine sm):
+  let transitions = sm.getTransitions().select(e|(e.source).metaType == Pseudostate) :
+  transitions.select(e|(e.source).isSH())
+;
+
+//-----------------------------------------------------------------------------
+
 Set[String] getHistoryMaudeStates(StateMachine sm):
- ((Set[State])sm.getHistoryStates()).fullyHistoryHelp()
+ ((Set[Pseudostate])sm.getHistoryStates()).fullyHistoryHelp()
 ;
 
 Set[String] getMaudeStates(StateMachine sm):
  ((Set[State])sm.getStates()).fullyHelp()
 ;
 
-Set[Region] getRegions(StateMachine sm):
- ((Set[Region])sm.eAllContents.select(e|e.metaType == Region))
-;
-
 Set[String] getMaudeRegions(StateMachine sm):
  ((Set[Region])sm.getRegions()).fullyHelp()
 ;
 
+//-----------------------------------------------------------------------------
+
+// INTERNAL: Helpermethod to get the fully qualified name of a region
+String fullyHelp(Region n):
+ //'op R'+n.getId()+' : -> Region .\n'+
+ '    eq '+n.getId()+' = '+ n.fullyQualifiedName()
+;
+
+// INTERNAL: Helpermethod to get the fully qualified name of a state
+String fullyHelp(State n):
+ //'op C'+n.getId()+' : -> ModState .\n'+
+ '    eq '+n.getId()+' = '+ n.fullyQualifiedName()
+;
+
+// INTERNAL: Helpermethod to get the fully qualified name of a history pseudostate
+String fullyHistoryHelp(Pseudostate n):
+ //'op C'+n.getId()+' : -> ModState .\n'+
+  if (n.isDH()) then
+ '    eq '+n.getId()+' = '+ ((Region)n.eContainer()).fullyQualifiedName() + ' : H*'
+ else
+ '    eq '+n.getId()+' = '+ ((Region)n.eContainer()).fullyQualifiedName() + ' : H'
+;
+
+// INTERNAL: Helpermethod to get the fully qualified name of a region
+String fullyQualifiedName(Region n) : n.getParent().metaType == StateMachine ? 'root(R "'+n.getId()+'")' :
+   fullyQualifiedName(n.getParent())+' : R "'+n.getId()+'"'
+;
+
+// INTERNAL: Helpermethod to get the fully qualified name of a state
+String fullyQualifiedName(State n) : n.getParent() == null ? n.getId() :
+   fullyQualifiedName(n.getParent())+' : C "'+n.getId()+'"'
+;
+
+//-----------------------------------------------------------------------------
+
+// INTERNAL: Helper method toe get the parent state of a region
 State getParent(Region region):
  (State)region.eContainer()
 ;
 
+// INTERNAL: Helper method toe get the parent region of a state
 Region getParent(State state):
  (Region)state.eContainer()
 ;
 
+// INTERNAL: Helper method toe get the parent region of a pseudo state
 Region getParent(Pseudostate state):
  (Region)state.eContainer()
 ;
+
+//-----------------------------------------------------------------------------
 
 // 
 //Set[Vertex] getSourceStates(Transition n)
@@ -124,28 +191,7 @@ String genMaude(Transition n):
  ((Region)n.eContainer()).getId() + ' .'   
 ;
 
-
-
-Set[Transition] getTransitionsOP(StateMachine sm):
-  let transitions = sm.getTransitions() :
-  transitions.select(e|(e.source).metaType == Pseudostate)
-;
-
-Set[Transition] getInitialTransitions(StateMachine sm):
-  let transitions = sm.getTransitionsOP() :
-  transitions.select(e|(e.source).isInitial())
-;
-
-Set[Transition] getDHDTransitions(StateMachine sm):
-  let transitions = sm.getTransitionsOP() :
-  transitions.select(e|(e.source).isDH())
-;
-
-Set[Transition] getSHDTransitions(StateMachine sm):
-  let transitions = sm.getTransitionsOP() :
-  transitions.select(e|(e.source).isSH())
-;
-
+//-----------------------------------------------------------------------------
 
 String genDefault(Transition tr):
   let region = ((Pseudostate) tr.source).getParent() :
@@ -161,34 +207,9 @@ String genSHDefault(Transition tr):
   ' eq sDef'+region.getId()+ ' = ' + region.getId() + ' shallowdefault ' + ((State)tr.target).getId()+ ' .\n'  
 ;
 
-String fullyHelp(Region n):
- //'op R'+n.getId()+' : -> Region .\n'+
- '    eq '+n.getId()+' = '+ n.fullyQualifiedName()
-;
-String fullyHelp(State n):
- //'op C'+n.getId()+' : -> ModState .\n'+
- '    eq '+n.getId()+' = '+ n.fullyQualifiedName()
-;
-String fullyHistoryHelp(Pseudostate n):
- //'op C'+n.getId()+' : -> ModState .\n'+
-  if (n.isDH()) then
- '    eq '+n.getId()+' = '+ ((Region)n.eContainer()).fullyQualifiedName() + ' : H*'
- else
- '    eq '+n.getId()+' = '+ ((Region)n.eContainer()).fullyQualifiedName() + ' : H'
-;
-
-Set[Vertex] allVertexs(StateMachine sm):
- ((Set[Vertex])sm.eAllContents.select(e|(e.metaType == Region)||(e.metaType == State)))
-; 
 
 
-String fullyQualifiedName(Region n) : n.getParent().metaType == StateMachine ? 'root(R "'+n.getId()+'")' :
-   fullyQualifiedName(n.getParent())+' : R "'+n.getId()+'"'
-;
-String fullyQualifiedName(State n) : n.getParent() == null ? n.getId() :
-   fullyQualifiedName(n.getParent())+' : C "'+n.getId()+'"'
-;
-
+//-----------------------------------------------------------------------------
 
 
 
