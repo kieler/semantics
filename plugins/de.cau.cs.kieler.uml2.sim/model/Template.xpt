@@ -163,5 +163,10 @@ endfm
 «ENDDEFINE»
 
 
+«REM» needed else branch - should not be taken but should not have any effect «ENDREM»
 «DEFINE sm FOR PackageableElement»
+«ENDDEFINE»
+
+«REM» needed else branch - should not be taken but should not have any effect «ENDREM»
+«DEFINE init FOR PackageableElement»
 «ENDDEFINE»
