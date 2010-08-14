@@ -3,18 +3,18 @@ package de.cau.cs.kieler.uml2.sim.kiem;
 import org.json.JSONObject;
 
 import de.cau.cs.kieler.sim.kiem.IJSONObjectDataComponent;
-import de.cau.cs.kieler.sim.kiem.JSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.KiemExecutionException;
 import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
+import de.cau.cs.kieler.sim.kiem.ui.datacomponent.JSONObjectSimulationDataComponent;
 
-public class DataComponent extends JSONObjectDataComponent implements
+public class DataComponent extends JSONObjectSimulationDataComponent implements
 		IJSONObjectDataComponent {
 
 	public DataComponent() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public JSONObject step(JSONObject arg0) throws KiemExecutionException {
+	public JSONObject doStep(JSONObject arg0) throws KiemExecutionException {
 		// TODO Auto-generated method stub
 		return null;
 	}
