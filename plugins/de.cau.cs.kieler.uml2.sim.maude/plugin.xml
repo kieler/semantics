@@ -17,6 +17,12 @@
             name="UML2 Maude Simulator">
       </content>
    </extension>
+   <extension
+         point="de.cau.cs.kieler.sim.kiem.config.DefaultScheduleContributor">
+      <executionFile
+            file="execution/uml_maude.execution">
+      </executionFile>
+   </extension>
 
 
 
