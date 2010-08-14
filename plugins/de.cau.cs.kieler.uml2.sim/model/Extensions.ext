@@ -6,18 +6,19 @@ extension org::eclipse::xtend::util::stdlib::cloning;     // copy model elements
 extension org::eclipse::xtend::util::stdlib::tracing;     // create map between transformed objects
 extension org::eclipse::xtend::util::stdlib::issues;      // pass messages back to java (e.g. to UI)
 
-//extension Extensions reexport;
+//-----------------------------------------------------------------------------
 
+// This method will immitate a transition trigger and return its String representation
 String trigger2(Transition transition):
   let transitionLabel = transition.name:
   let returnTrigger = getTrigger(transitionLabel.toString()):
   if (returnTrigger != null && returnTrigger.length > 0) then
     returnTrigger
   else
-    'nil'
+    '(ev: "noevent")'
 ;
 
-
+// This method will immitate a transition action and return its String representation
 String action2(Transition transition):
   let transitionLabel = transition.name:
   let returnAction = getAction(transitionLabel.toString()):
@@ -27,14 +28,29 @@ String action2(Transition transition):
     'skip'
 ;
 
+// INTERNAL: Helpermethod for action extraction
+String getAction(String transitionLabel):
+  JAVA de.cau.cs.kieler.uml2.sim.JavaEscape.getAction(java.lang.String)
+;
 
-//Effect effect2(Transition transition):
-//  let effect = new Trigger:
-//  let transitionName = transition.name:
-//  let event = new Event:
-//  event.setName(getTrigger(transitionName)) ->
-//  effect.
-//;
+// INTERNAL: Helpermethod for trigger extraction
+String getTrigger(String transitionLabel):
+  JAVA de.cau.cs.kieler.uml2.sim.JavaEscape.getTrigger(java.lang.String)
+;
+
+// Get all trigger events that are used in the statemachine.
+Set[String] getTriggerEvents(StateMachine sm):
+ let transitions = sm.getTransitions() :
+ transitions.select(e|e.name.toString().contains("/")).trigger2()
+;
+
+// INTERNAL: Helpermethod for action extraction
+Set[String] getAction(StateMachine sm):
+ let transitions = sm.getTransitions() :
+ transitions.select(e|e.name.toString().contains("/")).action2()
+;
+
+//-----------------------------------------------------------------------------
 
 Set[Transition] getTransitions(StateMachine sm):
  ((Set[Transition])sm.eAllContents.select(e|e.metaType == Transition))
@@ -130,12 +146,6 @@ Set[Transition] getSHDTransitions(StateMachine sm):
   transitions.select(e|(e.source).isSH())
 ;
 
-// Set[Vertex] extendForks(Set[Vertex] vertices, StateMachine sm):
-//    let transitions = sm.getTransitions() :
-//    let otherstates = vertices.select(e| e.metatype != Pseudostate) : 
-//    let forkstates = vertices.select(e| e.metatype == Forkstate) :
-//    forkstates
-// ;
 
 String genDefault(Transition tr):
   let region = ((Pseudostate) tr.source).getParent() :
@@ -179,26 +189,7 @@ String fullyQualifiedName(State n) : n.getParent() == null ? n.getId() :
    fullyQualifiedName(n.getParent())+' : C "'+n.getId()+'"'
 ;
 
-Set[String] getTriggerEvents(StateMachine sm):
- let transitions = sm.getTransitions() :
- (transitions.select(e|e.name.contains(('/')))).trigger2()
-;
 
-Set[String] getAction(StateMachine sm):
- let transitions = sm.getTransitions() :
- (transitions.select(e|((String)e.name).contains('/'))).action2()
-;
-
-Boolean contains(String str):
-  JAVA de.cau.cs.kieler.uml2.sim.JavaEscape.contains(java.lang.String)
-;
-
-String getAction(String transitionLabel):
-  JAVA de.cau.cs.kieler.uml2.sim.JavaEscape.getAction(java.lang.String)
-;
-String getTrigger(String transitionLabel):
-  JAVA de.cau.cs.kieler.uml2.sim.JavaEscape.getTrigger(java.lang.String)
-;
 
 
 //-----------------------------------------------------------------------------
@@ -234,7 +225,6 @@ Void clearDoneVertices():
   JAVA de.cau.cs.kieler.uml2.sim.JavaEscape.clearDoneVertices()  
 ;
 
-
 // Returns true iff the vertex (pseudostate fork or join) has already been
 // checked and not needs to be visited again.
 // It means that already exists a transition containing it.
@@ -246,8 +236,6 @@ boolean isDone(Vertex vertex, String id):
 boolean markDone(Vertex vertex, String id):
   JAVA de.cau.cs.kieler.uml2.sim.JavaEscape.markDone(org.eclipse.uml2.uml.Vertex, java.lang.String)  
 ;
-
-
 
 //-----------------------------------------------------------------------------
 
@@ -266,11 +254,12 @@ Region getLastRootRegion() :
   JAVA de.cau.cs.kieler.uml2.sim.JavaEscape.getLastRootRegion()  
 ;
 
-
 //-----------------------------------------------------------------------------
 
 // This returns all nodes for a join or fork pseudostate
 // It will return null otherwise
+// The method will also set the root region of that complex transition and will
+// determine the trigger, guard and actio of the complex transition.
 Set[Vertex] getPseudoTargetVertices(Pseudostate pseudostate) :
     let reset = resetLastRootRegion():
     let reset2 = resetComplexTransitionInformation():
@@ -290,6 +279,8 @@ Set[Vertex] getPseudoTargetVertices(Pseudostate pseudostate) :
 
 // This returns all nodes for a join or fork pseudostate
 // It will return null otherwise
+// The method will also set the root region of that complex transition and will
+// determine the trigger, guard and actio of the complex transition.
 Set[Vertex] getPseudoSourceVertices(Pseudostate pseudostate) :
     let reset = resetLastRootRegion():
     let reset2 = resetComplexTransitionInformation():
@@ -307,6 +298,9 @@ Set[Vertex] getPseudoSourceVertices(Pseudostate pseudostate) :
 
 //-----------------------------------------------------------------------------
 
+// INTERNAL: This will calculate all transitions for a complex transition that
+// are either INCOMING or OUTGOING. These will be marked to be visited for
+// one of both ids. The search (including backtracking) is exactly the same.
 Set[Transition] getAllPseudostateTransitions(Pseudostate pseudostate, String id) :
    let incomingList = (List[Transition])pseudostate.getIncomingTransitions():
    let outgoingList = (List[Transition])pseudostate.getOutgoingTransitions():
@@ -322,7 +316,9 @@ Set[Transition] getAllPseudostateTransitions(Pseudostate pseudostate, String id)
      {}
 ;
 
-
+// INTERNAL: This helper method will add the firstTransition to a list and return this in the
+// case that the transition target is neither a fork or join node,
+// otherwise it will recursively call and add transitions for that fork/join node.
 Set[Transition] helperTarget(Vertex firstTransitionTarget, Transition firstTransition, String id) :
   let outList = {}:
   // add outgoing transitions to 'normal vertices'
@@ -334,6 +330,9 @@ Set[Transition] helperTarget(Vertex firstTransitionTarget, Transition firstTrans
   outList
 ;
 
+// INTERNAL: This helper method will add the firstTransition to a list and return this in the
+// case that the transition source is neither a fork or join node,
+// otherwise it will recursively call and add transitions for that fork/join node.
 Set[Transition] helperSource(Vertex firstTransitionSource, Transition firstTransition, String id) :
   let outList = {}:
   // add incoming transitions from 'normal vertices'
@@ -345,6 +344,8 @@ Set[Transition] helperSource(Vertex firstTransitionSource, Transition firstTrans
   outList
 ;
 
+// INTERNAL: This helper method will add all transitions eigther incoming or outgoing ones
+// that belong to the complex transition. This may result in subsequent recursive calls.
 Set[Transition] getAllPseudostateTransitions2(List[Transition] transitionList, String id) :
   let firstTransition = transitionList.first():
   let firstTransitionSource = firstTransition.source:
@@ -360,30 +361,6 @@ Set[Transition] getAllPseudostateTransitions2(List[Transition] transitionList, S
   ->
   outList
 ;
-
-
-
-// This returns all nodes for a join or fork pseudostate
-// It will return null otherwise
-//Set[Vertex] getSourceNodes(Pseudostate pseudostate) :
-//  JAVA de.cau.cs.kieler.uml2.sim.JavaEscape.getTargetNodes(Pseudostate)  
-//;
-
-//-----------------------------------------------------------------------------
-// if (pseudostate.isFork() || pseudostate.isJoin()) then (
-// 	if (pseudostate.isFork()) then
-// /   	pseudostate.eAllContents.select(e|(e.metaType == Vertex))
-// 	else 
-//    	pseudostate.eAllContents.select(e|(e.metaType == Vertex))
-// ) 
-// else 
-//    null//
-//;
-
-//-----------------------------------------------------------------------------
-
-//Set[Vertex] getSourceNodesFork(Pseudostate)
-//;
 
 //-----------------------------------------------------------------------------
 
@@ -446,7 +423,8 @@ String hash(String string):
 
 //-----------------------------------------------------------------------------
 
-// Do not print out a string
+// Do not print out a string, this can help for an Xpand template when whe 
+// want to call a method but don't want to write out the resulting return values.
 Void ignore(String string) :
   null  
 ;
@@ -484,13 +462,3 @@ List[String] getComplexTransitionInformation(String id) :
 Void resetComplexTransitionInformation() :
  JAVA de.cau.cs.kieler.uml2.sim.JavaEscape.resetComplexTransitionInformation()
 ;
-
-//-----------------------------------------------------------------------------
-
-//Void test():
-//  let transition = new Transition :
-//  let transitionList = new List[Transition] : 
-//  transition.trigger2() ->
-//  transitionList.trigger2() ->
-//  trigger2(transition)
-//;
