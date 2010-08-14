@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: UML2 Maude Sim
-Bundle-SymbolicName: de.cau.cs.kieler.uml2.sim;singleton:=true
+Bundle-SymbolicName: de.cau.cs.kieler.uml2.sim.maude;singleton:=true
 Bundle-Version: 0.1.0
 Bundle-ClassPath: .
 Bundle-Vendor: Christian-Albrechts-Universität zu Kiel
