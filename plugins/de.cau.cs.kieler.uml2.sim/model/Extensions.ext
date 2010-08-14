@@ -266,19 +266,24 @@ Region getLastRootRegion() :
   JAVA de.cau.cs.kieler.uml2.sim.JavaEscape.getLastRootRegion()  
 ;
 
+
 //-----------------------------------------------------------------------------
 
 // This returns all nodes for a join or fork pseudostate
 // It will return null otherwise
 Set[Vertex] getPseudoTargetVertices(Pseudostate pseudostate) :
     let reset = resetLastRootRegion():
+    let reset2 = resetComplexTransitionInformation():
     // get all transitions that have a fork or join as a target
-    let transitionList = getAllPseudostateTransitions(pseudostate,"OUTGOING").select(e|e.source.metaType == Pseudostate
+    let allTransitionList = getAllPseudostateTransitions(pseudostate,"OUTGOING"):
+    let selectedTransitionList = allTransitionList.select(e|e.source.metaType == Pseudostate
          && ( e.source.isJoin() || e.source.isFork() )) :
-    //Mark all source vertices
-    //transitionList.source.markDoneIncoming() ->
+    // Add information about complex transition for all sub-transitions
+    allTransitionList.trigger2().addComplexTransitionInformation("TRIGGER") ->
+    allTransitionList.action2().addComplexTransitionInformation("ACTION") ->
+//    allTransitionList.trigger2().addComplexTransitionInformation("GUARD") ->
     // Return all target vertices
-    transitionList.target
+    selectedTransitionList.target
 ;
 
 //-----------------------------------------------------------------------------
@@ -287,13 +292,17 @@ Set[Vertex] getPseudoTargetVertices(Pseudostate pseudostate) :
 // It will return null otherwise
 Set[Vertex] getPseudoSourceVertices(Pseudostate pseudostate) :
     let reset = resetLastRootRegion():
+    let reset2 = resetComplexTransitionInformation():
     // get all transitions that have a fork or join as a target
-    let transitionList = getAllPseudostateTransitions(pseudostate,"INCOMING").select(e|e.target.metaType == Pseudostate
+    let allTransitionList = getAllPseudostateTransitions(pseudostate,"INCOMING") :
+    let selectedTransitionList = allTransitionList.select(e|e.target.metaType == Pseudostate
          && ( e.target.isJoin() || e.target.isFork() )) :
-    //Mark all source vertices
-    //transitionList.source.markDoneOutgoing() ->
+    // Add information about complex transition for all sub-transitions
+    allTransitionList.trigger2().addComplexTransitionInformation("TRIGGER") ->
+    allTransitionList.action2().addComplexTransitionInformation("ACTION") ->
+//    allTransitionList.trigger2().addComplexTransitionInformation("GUARD") ->
     // Return all source vertices
-    transitionList.source
+    selectedTransitionList.source
 ;
 
 //-----------------------------------------------------------------------------
@@ -305,6 +314,8 @@ Set[Transition] getAllPseudostateTransitions(Pseudostate pseudostate, String id)
    incomingOutgoingList.addAll(incomingList) ->
    incomingOutgoingList.addAll(outgoingList) ->
   if (markDone(pseudostate, id)) then (
+  	 // Set the last root region of this pseudostate, if it is hierarchically higher
+  	 // than it will be saved, otherwise it will be ignored
      setLastRootRegion(((Region)pseudostate.eContainer())) ->
      getAllPseudostateTransitions2(incomingOutgoingList, id)
   ) else
@@ -456,6 +467,23 @@ List[Pseudostate] getPseudostates() :
 Void resetPseudostates() :
  JAVA de.cau.cs.kieler.uml2.sim.JavaEscape.resetPseudostates()
 ;	
+
+//-----------------------------------------------------------------------------
+
+// Add information about a complex transition (id == TRIGGER, GUARD or ACTION)
+Void addComplexTransitionInformation(String item, String id) :
+ JAVA de.cau.cs.kieler.uml2.sim.JavaEscape.addComplexTransitionInformation(java.lang.String, java.lang.String)
+;
+
+// Get information about a complex transition (id == TRIGGER, GUARD or ACTION)
+List[String] getComplexTransitionInformation(String id) :
+ JAVA de.cau.cs.kieler.uml2.sim.JavaEscape.getComplexTransitionInformation(java.lang.String)
+;
+
+// Reset information about a complex tranistion
+Void resetComplexTransitionInformation() :
+ JAVA de.cau.cs.kieler.uml2.sim.JavaEscape.resetComplexTransitionInformation()
+;
 
 //-----------------------------------------------------------------------------
 

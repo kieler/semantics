@@ -12,58 +12,148 @@ import org.eclipse.uml2.uml.Region;
 import org.eclipse.uml2.uml.Vertex;
 import org.eclipse.uml2.uml.Transition;
 
+import org.eclipse.xtend.util.stdlib.ExtIssueReporter;
+
 public class JavaEscape {
 
+	// Saves the Vertices that had been visited when searching for incoming
+	// transitions so that they are no searched again (when backtracking).
 	private static LinkedList<Vertex> doneVerticesIncoming = new LinkedList<Vertex>();
+
+	// Saves the Vertices that had been visited when searching for outgoing
+	// transitions so that they are no searched again (when backtracking).
 	private static LinkedList<Vertex> doneVerticesOutgoing = new LinkedList<Vertex>();
-	private static EList<Pseudostate> savedPseudostates = new BasicEList<Pseudostate>();
+
+	// Saves the last hierarchically upper most region that will be the region
+	// containing the complex transition afterwards.
 	private static Region lastRootRegion = null;
 
+	// Saves the list of pseudostates that will be used to identify the
+	// connected components forming a complex transition. This means that this
+	// pseudostate (i.e., a fork or join vertex) will identify such a
+	// transition.
+	private static EList<Pseudostate> savedPseudostates = new BasicEList<Pseudostate>();
+
+	// Saves the trigger for a complex transition, there should only be one
+	private static EList<String> savedTrigger = new BasicEList<String>();
+
+	// Saves the action for a complex transition, there should only be one
+	private static EList<String> savedAction = new BasicEList<String>();
+
+	// Saves the guard for a complex transition, there should only be one
+	private static EList<String> savedGuard = new BasicEList<String>();
+
 	// ------------------------------------------------------------------------
-	
+
+	// Saves information about the trigger, action or guard of a complex
+	// transition.
+	public static void addComplexTransitionInformation(String item, String id) {
+		if (item == null || item.length() < 1) {
+			// Ignore iff there is nothing to add
+			return;
+		}
+		if (id.equals("TRIGGER")) {
+			// Do not save the nil-trigger
+			if (!(item.equals("nil") || item.contains("noevent"))) {
+				savedTrigger.add(item);
+			}
+		} else if (id.equals("ACTION")) {
+			// Do not save the skip-action
+			if (!item.equals("skip")) {
+				savedAction.add(item);
+			}
+		} else if (id.equals("GUARD")) {
+			// Do not save the Gd-guard
+			if (!item.equals("Gd")) {
+				savedGuard.add(item);
+			}
+		} else {
+			ExtIssueReporter.reportError("saveComplexTransitionInformation: "
+					+ "id must be of type TRIGGER, ACTION or GUARD");
+		}
+	}
+
+	// Gets the information about the trigger action or guard of a complex
+	// transition - for simplicity, the first item[0] can always be used
+	// (if the list would be empty, the default value is added automatically)
+	public static EList<String> getComplexTransitionInformation(String id) {
+		if (id.equals("TRIGGER")) {
+			if (savedTrigger.size() == 0) {
+				// Add the default trigger, if there is no trigger
+				savedTrigger.add("(ev: \"noevent\")");
+			}
+			return savedTrigger;
+		} else if (id.equals("ACTION")) {
+			if (savedAction.size() == 0) {
+				// Add the default action, if there is no action
+				savedAction.add("skip");
+			}
+			return savedAction;
+		} else if (id.equals("GUARD")) {
+			if (savedGuard.size() == 0) {
+				// Add the default guard, if there is no action
+				savedGuard.add("Gd");
+			}
+			return savedGuard;
+		} else {
+			ExtIssueReporter.reportError("getComplexTransitionInformation: "
+					+ "id must be of type TRIGGER, ACTION or GUARD");
+			return null;
+		}
+	}
+		
+	// Resets the information about a complex transition
+	public static void resetComplexTransitionInformation() {
+		savedTrigger.clear();
+		savedAction.clear();
+		savedGuard.clear();
+	}
+
+	// ------------------------------------------------------------------------
+
 	// Add a Pseudostate to a temporary list
 	public static void addPseudostate(Pseudostate pseudostate) {
 		savedPseudostates.add(pseudostate);
 	}
-	
+
 	// Get the saved Pseudostates
 	public static EList<Pseudostate> getPseudostates() {
 		return savedPseudostates;
 	}
-	
+
 	// Reset the Pseudostates
 	public static void resetPseudostates() {
 		savedPseudostates.clear();
 	}
-	
+
 	// ------------------------------------------------------------------------
 
-	// Save a new root region iff it has a smaller hierarchy level 
+	// Save a new root region iff it has a smaller hierarchy level
 	// otherwise keep the old one
 	public static void setLastRootRegion(Region region) {
 		if (lastRootRegion == null) {
 			lastRootRegion = region;
-		}
-		else if (getHierarchyLevel(lastRootRegion) > getHierarchyLevel(region)) {
+		} else if (getHierarchyLevel(lastRootRegion) > getHierarchyLevel(region)) {
 			lastRootRegion = region;
 		}
 	}
-	
+
 	// ------------------------------------------------------------------------
 
-	// Get the last RootRegion, that is the one with the smallest hierarchy level
+	// Get the last RootRegion, that is the one with the smallest hierarchy
+	// level
 	public static Region getLastRootRegion() {
 		return lastRootRegion;
 	}
-	
+
 	// ------------------------------------------------------------------------
 
 	public static void resetLastRootRegion() {
 		lastRootRegion = null;
 	}
-	
+
 	// ------------------------------------------------------------------------
-	
+
 	// For any EObject return the hierarchy level
 	public static int getHierarchyLevel(EObject eObject) {
 		int c = 0;
@@ -73,7 +163,7 @@ public class JavaEscape {
 		}
 		return c;
 	}
-	
+
 	// ------------------------------------------------------------------------
 
 	// Clear list of checked vertices
@@ -131,7 +221,7 @@ public class JavaEscape {
 
 	// Get the Fragment URI ID of a Region
 	public static String getId(Region region) {
-		return "R"+hash(region.eResource().getURIFragment(region).toString());
+		return "R" + hash(region.eResource().getURIFragment(region).toString());
 	}
 
 	// ------------------------------------------------------------------------

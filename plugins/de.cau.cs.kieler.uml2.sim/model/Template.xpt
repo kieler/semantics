@@ -140,7 +140,7 @@ fmod eclipseInterface is
   «clearDoneVertices()-»
   «FOREACH this.getForkJoin() AS pseudostate SEPARATOR '\n'-»
    «IF !pseudostate.isDone("OUTGOING")-»
-   eq tr«pseudostate.getId()-» = («FOREACH pseudostate.getPseudoSourceVertices() AS source SEPARATOR ','-»«source.getId()-»«ENDFOREACH-») (ev: "noevent") Gd skip skip skip («FOREACH pseudostate.getPseudoTargetVertices() AS target SEPARATOR ','-»«target.getId()-»«ENDFOREACH-») «getLastRootRegion().getId()-» . «resetLastRootRegion()-»
+   eq tr«pseudostate.getId()-» = («FOREACH pseudostate.getPseudoSourceVertices() AS source SEPARATOR ','-»«source.getId()-»«ENDFOREACH-») «getComplexTransitionInformation("TRIGGER").get(0)» «getComplexTransitionInformation("GUARD").get(0)» «getComplexTransitionInformation("ACTION").get(0)» skip skip («FOREACH pseudostate.getPseudoTargetVertices() AS target SEPARATOR ','-»«target.getId()-»«ENDFOREACH-») «getLastRootRegion().getId()-» . «resetLastRootRegion()-»
    «addPseudostate(pseudostate)-»
    «ENDIF-»
   «ENDFOREACH-»

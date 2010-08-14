@@ -76,8 +76,8 @@ fmod eclipseInterface is
    eq trE2G-525037410 = (E690055665) ee1 Gd a1 skip skip (G1874547736) R1540734801 .
    eq trouter2susp1444566273 = (outer1526898296) susp Gd skip skip skip (susp441237549) R-990928836 .  
   
-   eq trJ-242782697 = (N-1229428651,G1874547736) (ev: "noevent") Gd skip skip skip (T924601121) R-1819018424 .         
-   eq trF148389467 = (B-910885872) (ev: "noevent") Gd skip skip skip (N-1229428651,E690055665) R-1819018424 .           
+   eq trJ-242782697 = (N-1229428651,G1874547736) ee0 Gd a4 skip skip (T924601121) R-1819018424 .         
+   eq trF148389467 = (B-910885872) ee0 Gd a4 skip skip (N-1229428651,E690055665) R-1819018424 .           
   op allTrans : -> Transitions .
   eq allTrans = trG2T-2040602862,  trsusp2DH1714787712,  trE2G-525037410,  trouter2susp1444566273  				,                trJ-242782697,  trF148389467 .
 
