@@ -144,7 +144,7 @@ public abstract class JSONObjectSimulationDataComponent extends JSONObjectDataCo
 
     // -----------------------------------------------------------------------------
     // -----------------------------------------------------------------------------
-    class M2MProgressMonitor implements ProgressMonitor {
+    protected class M2MProgressMonitor implements ProgressMonitor {
 
         private KielerProgressMonitor kielerProgressMonitor;
         private int numberOfComponents = 1;
