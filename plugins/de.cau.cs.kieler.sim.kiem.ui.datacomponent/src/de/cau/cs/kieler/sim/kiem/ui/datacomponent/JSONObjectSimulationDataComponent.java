@@ -424,16 +424,16 @@ public abstract class JSONObjectSimulationDataComponent extends JSONObjectDataCo
 
     protected String getInputModel() {
         IEditorPart diagramEditor = this.getInputEditor();
-        if (diagramEditor instanceof DiagramEditor) {
-            // now extract the file
-            View notationElement = getNotationElement(diagramEditor);
-//            View notationElement = ((View) ((DiagramEditor) diagramEditor).getDiagramEditPart()
-//                    .getModel());
-            EObject myModel = (EObject) notationElement.getElement();
-            URI uri = myModel.eResource().getURI();
-            return uri.toPlatformString(false);
+        // now extract the file
+        View notationElement = getNotationElement(diagramEditor);
+        if (notationElement == null) {
+            return null;
         }
-        return null;
+        // View notationElement = ((View) ((DiagramEditor) diagramEditor).getDiagramEditPart()
+        // .getModel());
+        EObject myModel = (EObject) notationElement.getElement();
+        URI uri = myModel.eResource().getURI();
+        return uri.toPlatformString(false);
     }
 
     // -------------------------------------------------------------------------
@@ -442,36 +442,39 @@ public abstract class JSONObjectSimulationDataComponent extends JSONObjectDataCo
         // now extract the file
         EObject myModel = null;
         View notationElement = getNotationElement(diagramEditor);
+        if (notationElement == null) {
+            return null;
+        }
         myModel = (EObject) notationElement.getElement();
         return myModel;
     }
 
     // -------------------------------------------------------------------------
-    
-    protected View getNotationElement(IEditorPart diagramEditor) {
-       if (diagramEditor instanceof DiagramEditor) {
-           View notationElement = ((View) ((DiagramEditor) diagramEditor).getDiagramEditPart()
-                   .getModel());
-          return notationElement;
-       }
-       return null;
-    }
-    
-    // -------------------------------------------------------------------------
-    
-    protected ResourceSet getInputResourceSet() {
-        IEditorPart diagramEditor = this.getInputEditor();
-        if (diagramEditor instanceof DiagramEditor) {
-            // now extract the file
-            View notationElement = getNotationElement(diagramEditor);
-//            View notationElement = ((View) ((DiagramEditor) diagramEditor).getDiagramEditPart()
-//                    .getModel());
-            EObject myModel = (EObject) notationElement.getElement();
-            URI uri = myModel.eResource().getURI();
 
-            return myModel.eResource().getResourceSet();
+    protected View getNotationElement(IEditorPart diagramEditor) {
+        if (diagramEditor instanceof DiagramEditor) {
+            View notationElement = ((View) ((DiagramEditor) diagramEditor).getDiagramEditPart()
+                    .getModel());
+            return notationElement;
         }
         return null;
+    }
+
+    // -------------------------------------------------------------------------
+
+    protected ResourceSet getInputResourceSet() {
+        IEditorPart diagramEditor = this.getInputEditor();
+        // now extract the file
+        View notationElement = getNotationElement(diagramEditor);
+        if (notationElement == null) {
+            return null;
+        }
+        // View notationElement = ((View) ((DiagramEditor) diagramEditor).getDiagramEditPart()
+        // .getModel());
+        EObject myModel = (EObject) notationElement.getElement();
+        URI uri = myModel.eResource().getURI();
+
+        return myModel.eResource().getResourceSet();
     }
 
     // -------------------------------------------------------------------------
