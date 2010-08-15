@@ -21,10 +21,6 @@ import org.osgi.framework.BundleContext;
 
 import de.cau.cs.kieler.maude.internal.MaudeSession;
 
-import org.eclipse.ui.console.ConsolePlugin;
-import org.eclipse.ui.console.IConsole;
-import org.eclipse.ui.console.IConsoleManager;
-import org.eclipse.ui.console.MessageConsole;
 
 /**
  * This activator class controls the life cycle of the MaudeInterfacePlugin. It also provides the
