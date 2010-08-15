@@ -76,6 +76,7 @@ public class DataComponent extends JSONObjectSimulationDataComponent implements
     private static final String MAUDECONSOLENAME = "Maude Console";
 
     private static final String MAUDEPARSESTATESTARTER = "--> maState \"UML\" $doneC (C";
+    private static final String MAUDEERROR = "*HERE*";
 
     /** The maude session id. */
     int maudeSessionId;
@@ -135,6 +136,12 @@ public class DataComponent extends JSONObjectSimulationDataComponent implements
      * @return the string[]
      */
     public String[] extractActiveStates(String maudeResult) {
+        boolean error = maudeResult.contains(MAUDEERROR);
+        // if maude result contains error, use the old current states
+        if (error) {
+            return currentStates;
+        }
+        
         String maudePartResult = maudeResult.substring(maudeResult.lastIndexOf(MAUDEPARSESTATESTARTER)
                 + MAUDEPARSESTATESTARTER.length());
 
