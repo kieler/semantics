@@ -30,6 +30,11 @@ import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.console.ConsolePlugin;
+import org.eclipse.ui.console.IConsole;
+import org.eclipse.ui.console.IConsoleManager;
+import org.eclipse.ui.console.MessageConsole;
+import org.eclipse.ui.console.MessageConsoleStream;
 import org.eclipse.ui.part.FileEditorInput;
 import org.eclipse.xpand2.Generator;
 import org.eclipse.xpand2.output.Outlet;
@@ -43,6 +48,7 @@ import org.json.JSONObject;
 import org.osgi.framework.Bundle;
 
 import de.cau.cs.kieler.core.ui.KielerProgressMonitor;
+import de.cau.cs.kieler.maude.MaudeInterfacePlugin;
 import de.cau.cs.kieler.sim.kiem.IJSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.JSONSignalValues;
 import de.cau.cs.kieler.sim.kiem.KiemExecutionException;
@@ -53,12 +59,26 @@ import org.eclipse.uml2.uml.Model;
 import org.eclipse.uml2.uml.Transition;
 import org.eclipse.uml2.uml.UMLPackage;
 
+import org.eclipse.ui.console.ConsolePlugin;
+import org.eclipse.ui.console.IConsole;
+import org.eclipse.ui.console.IConsoleManager;
+import org.eclipse.ui.console.MessageConsole;
+
+
+
+
 // TODO: Auto-generated Javadoc
 /**
  * The Class DataComponent.
  */
 public class DataComponent extends JSONObjectSimulationDataComponent implements
         IJSONObjectDataComponent {
+
+    /** The constant name of the maude console. */
+    private static final String MAUDECONSOLENAME = "Maude Console";
+    
+    /** The maude session id. */
+    int maudeSessionId;
 
     /** The out path. */
     String outPath;
@@ -72,29 +92,113 @@ public class DataComponent extends JSONObjectSimulationDataComponent implements
 
     // -------------------------------------------------------------------------
 
-    /* (non-Javadoc)
-     * @see de.cau.cs.kieler.sim.kiem.ui.datacomponent.JSONObjectSimulationDataComponent#doStep(org.json.JSONObject)
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * de.cau.cs.kieler.sim.kiem.ui.datacomponent.JSONObjectSimulationDataComponent#doStep(org.json
+     * .JSONObject)
      */
-    public JSONObject doStep(JSONObject arg0) throws KiemExecutionException {
-        // TODO Auto-generated method stub
+    public JSONObject doStep(JSONObject signals) throws KiemExecutionException {
+        // build query string ---
+        // first collect events
+        String triggerEventsQuery = "";
+        String[] signalNames = JSONObject.getNames(signals);
+        for (String signalName : signalNames) {
+            try {
+                Object object;
+                object = signals.get(signalName);
+                if (JSONSignalValues.isPresent(object)) {
+                    if (!triggerEventsQuery.isEmpty()) {
+                        triggerEventsQuery += ",";
+                    }
+                    triggerEventsQuery += signalName;
+                }
+            } catch (JSONException e) {
+                // ignore errors - should not happen at all
+            }
+        }
+
+        // second build the current states
+        String currentStatesQuery = "";
+        String[] currentStates = { "R-768353767", "s1-1911224653" };
+        for (String currentState : currentStates) {
+            if (!currentStatesQuery.isEmpty()) {
+                currentStatesQuery += ",";
+            }
+            currentStatesQuery += currentState;
+        }
+
+        // search (maState "UML" ($stableC (prettyVerts (R-990928836 , susp441237549)) empty) (res,
+        // ee1)) =>* mastate such that isDone mastate .
+        String queryRequest = "search (maState \"UML\" ($stableC (prettyVerts ("
+                + currentStatesQuery + ")) empty) (" + triggerEventsQuery
+                + ")) =>* mastate such that isDone mastate .\n";
+
+        // Debug output query request
+        printConsole(queryRequest);
+        
+        String result = "";
+        try {
+            result = MaudeInterfacePlugin.getDefault().queryMaude(queryRequest, maudeSessionId);
+        } catch (Exception e) {
+            throw new KiemExecutionException("A Maude simulation error occurred.", false, e);
+        }
+
+        // Debug output query rresult
+        printConsole(result);
+
         return null;
     }
 
     // -------------------------------------------------------------------------
-    
-    /* (non-Javadoc)
-     * @see de.cau.cs.kieler.sim.kiem.ui.datacomponent.JSONObjectSimulationDataComponent#initialize()
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * de.cau.cs.kieler.sim.kiem.ui.datacomponent.JSONObjectSimulationDataComponent#initialize()
      */
     public void initialize() throws KiemInitializationException {
-        // TODO Auto-generated method stub
+        String pathToMaude = "maude";
+
+        String pathToMaudeCode = getMaudeGenCodeLocation();
+        if (isWindows()) {
+            pathToMaudeCode = transformToCygwinPath(pathToMaudeCode);
+        }
+        
+        // clear the maude console
+        clearConsole();
+
+        maudeSessionId = MaudeInterfacePlugin.getDefault().createMaudeSession(pathToMaude,
+                pathToMaudeCode);
+        try {
+            MaudeInterfacePlugin.getDefault().startMaudeSession(maudeSessionId);
+        } catch (Exception e) {
+            throw new KiemInitializationException(
+                    "Cannot start Maude. Plase make sure that the paths are "
+                            + "set correctly in the KIEM parameters of the simulator"
+                            + " component.", true, e);
+        }
+    }
+
+    // -------------------------------------------------------------------------
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see de.cau.cs.kieler.sim.kiem.IDataComponent#wrapup()
+     */
+    public void wrapup() throws KiemInitializationException {
+        MaudeInterfacePlugin.getDefault().closeMaudeSession(maudeSessionId);
 
     }
 
     // -------------------------------------------------------------------------
 
     /**
-     * Refresh workspace so that, e.g. the Project Explorer is updated to display
-     * the generated maude file.
+     * Refresh workspace so that, e.g. the Project Explorer is updated to display the generated
+     * maude file.
      */
     public void refreshWorkspace() {
         try {
@@ -108,11 +212,10 @@ public class DataComponent extends JSONObjectSimulationDataComponent implements
     }
 
     // -------------------------------------------------------------------------
-    
+
     /**
-     * Gets the maude gen code location. It is the same path where the original
-     * source file lives just ending with the maude file extension instead of
-     * uml.
+     * Gets the maude gen code location. It is the same path where the original source file lives
+     * just ending with the maude file extension instead of uml.
      * 
      * @return the maude gen code location
      */
@@ -127,8 +230,8 @@ public class DataComponent extends JSONObjectSimulationDataComponent implements
     // -------------------------------------------------------------------------
 
     /**
-     * Gets the maude base code location that must be included into the generated
-     * maude file that has to access these maude base files.
+     * Gets the maude base code location that must be included into the generated maude file that
+     * has to access these maude base files.
      * 
      * @return the maude base code location
      */
@@ -164,12 +267,12 @@ public class DataComponent extends JSONObjectSimulationDataComponent implements
         String os = System.getProperty("os.name").toLowerCase();
         return (os.indexOf("win") >= 0);
     }
-    
+
     // -------------------------------------------------------------------------
 
     /**
-     * Transforms a normal Windows path into a cygwin path because Maude for
-     * Windows is compiled w/ cygwin.
+     * Transforms a normal Windows path into a cygwin path because Maude for Windows is compiled w/
+     * cygwin.
      * 
      * @param WindowsPath
      *            the windows path
@@ -177,16 +280,19 @@ public class DataComponent extends JSONObjectSimulationDataComponent implements
      */
     public String transformToCygwinPath(String WindowsPath) {
         int i = WindowsPath.indexOf(":");
-        String drive = WindowsPath.substring(i-1,i);
-        String location = WindowsPath.substring(i+2);
+        String drive = WindowsPath.substring(i - 1, i);
+        String location = WindowsPath.substring(i + 2);
         location = location.replaceAll("[/\\\\]+", "\\" + "/");
-        return "/cygdrive/"+drive.toLowerCase()+"/"+location;
+        return "/cygdrive/" + drive.toLowerCase() + "/" + location;
     }
 
     // -------------------------------------------------------------------------
 
-    /* (non-Javadoc)
-     * @see de.cau.cs.kieler.sim.kiem.ui.datacomponent.JSONObjectSimulationDataComponent#doModel2ModelTransform(de.cau.cs.kieler.core.ui.KielerProgressMonitor)
+    /*
+     * (non-Javadoc)
+     * 
+     * @see de.cau.cs.kieler.sim.kiem.ui.datacomponent.JSONObjectSimulationDataComponent#
+     * doModel2ModelTransform(de.cau.cs.kieler.core.ui.KielerProgressMonitor)
      */
     public void doModel2ModelTransform(KielerProgressMonitor monitor) throws Exception {
         // Workflow
@@ -215,7 +321,7 @@ public class DataComponent extends JSONObjectSimulationDataComponent implements
         maudebasecode.setName("maudebasecode");
         String baseLocation = getMaudeBaseCodeLocation();
         if (isWindows()) {
-            baseLocation = transformToCygwinPath(baseLocation); 
+            baseLocation = transformToCygwinPath(baseLocation);
         }
         maudebasecode.setValue(baseLocation);
 
@@ -225,7 +331,7 @@ public class DataComponent extends JSONObjectSimulationDataComponent implements
 
         // Meta models
         EmfMetaModel metaModel0 = new EmfMetaModel(UMLPackage.eINSTANCE);
-        EmfMetaModel metaModel1 =  new EmfMetaModel(org.eclipse.emf.ecore.EcorePackage.eINSTANCE);
+        EmfMetaModel metaModel1 = new EmfMetaModel(org.eclipse.emf.ecore.EcorePackage.eINSTANCE);
 
         // Xpand Generator
         Generator generator = new Generator();
@@ -251,7 +357,7 @@ public class DataComponent extends JSONObjectSimulationDataComponent implements
     }
 
     // -------------------------------------------------------------------------
-    
+
     /**
      * Get the editor input as fill directory.
      * 
@@ -268,56 +374,65 @@ public class DataComponent extends JSONObjectSimulationDataComponent implements
     }
 
     // -------------------------------------------------------------------------
-    
     // -------------------------------------------------------------------------
 
-    /* (non-Javadoc)
-     * @see de.cau.cs.kieler.sim.kiem.ui.datacomponent.JSONObjectSimulationDataComponent#checkModelValidation(org.eclipse.emf.ecore.EObject)
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * de.cau.cs.kieler.sim.kiem.ui.datacomponent.JSONObjectSimulationDataComponent#checkModelValidation
+     * (org.eclipse.emf.ecore.EObject)
      */
     public boolean checkModelValidation(EObject rootEObject) {
         return true;
     }
 
-    /* (non-Javadoc)
-     * @see de.cau.cs.kieler.sim.kiem.ui.datacomponent.JSONObjectSimulationDataComponent#doProvideInitialVariables()
+    // -------------------------------------------------------------------------
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see de.cau.cs.kieler.sim.kiem.ui.datacomponent.JSONObjectSimulationDataComponent#
+     * doProvideInitialVariables()
      */
     public JSONObject doProvideInitialVariables() throws KiemInitializationException {
         JSONObject returnObj = new JSONObject();
-        
+
         // we here read in the uml model and extract the necessary information
         Object rootObject = this.getInputModelEObject(this.getInputEditor());
         if (rootObject instanceof EObject) {
-            EObject eObject = (EObject)rootObject;
-            EmfMetaModel metaModel0 =  new EmfMetaModel(org.eclipse.uml2.uml.UMLPackage.eINSTANCE);
-            EmfMetaModel metaModel1 =  new EmfMetaModel(org.eclipse.emf.ecore.EcorePackage.eINSTANCE);
-            
+            EObject eObject = (EObject) rootObject;
+            EmfMetaModel metaModel0 = new EmfMetaModel(org.eclipse.uml2.uml.UMLPackage.eINSTANCE);
+            EmfMetaModel metaModel1 = new EmfMetaModel(org.eclipse.emf.ecore.EcorePackage.eINSTANCE);
+
             XtendFacade facade = XtendFacade.create("model::Extensions");
             facade.registerMetaModel(metaModel0);
             facade.registerMetaModel(metaModel1);
-            
+
             // first collect events
             Object objectList = facade.call("getTriggerEvents", eObject);
             if (objectList instanceof ArrayList) {
-                for (Object key: ((ArrayList)objectList)) {
+                for (Object key : ((ArrayList) objectList)) {
                     if (key instanceof String) {
                         try {
-                            returnObj.accumulate((String)key, JSONSignalValues.newValue(false));
+                            returnObj.accumulate((String) key, JSONSignalValues.newValue(false));
                         } catch (JSONException e) {
                             // ignore errors
                         }
                     }
                 }
             }
-            
+
             // second collect actions
             objectList = facade.call("getActions", eObject);
             if (objectList instanceof ArrayList) {
-                for (Object key: ((ArrayList)objectList)) {
+                for (Object key : ((ArrayList) objectList)) {
                     if (key instanceof String) {
                         // not include skip action
-                        if (!((String)key).equals("skip")) {
+                        if (!((String) key).equals("skip")) {
                             try {
-                                returnObj.accumulate((String)key, JSONSignalValues.newValue(false));
+                                returnObj
+                                        .accumulate((String) key, JSONSignalValues.newValue(false));
                             } catch (JSONException e) {
                                 // ignore errors
                             }
@@ -325,41 +440,20 @@ public class DataComponent extends JSONObjectSimulationDataComponent implements
                     }
                 }
             }
-            
+
         }
-        
         return returnObj;
-    }
-
-    /* (non-Javadoc)
-     * @see de.cau.cs.kieler.sim.kiem.ui.datacomponent.JSONObjectSimulationDataComponent#isObserver()
-     */
-    public boolean isObserver() {
-        // TODO Auto-generated method stub
-        return true;
-    }
-
-    /* (non-Javadoc)
-     * @see de.cau.cs.kieler.sim.kiem.ui.datacomponent.JSONObjectSimulationDataComponent#isProducer()
-     */
-    public boolean isProducer() {
-        // TODO Auto-generated method stub
-        return true;
-    }
-
-    /* (non-Javadoc)
-     * @see de.cau.cs.kieler.sim.kiem.IDataComponent#wrapup()
-     */
-    public void wrapup() throws KiemInitializationException {
-        // TODO Auto-generated method stub
-
     }
 
     // -------------------------------------------------------------------------
 
     // Adapted method because papyrus editors are not instance of DiagramEditor
-    /* (non-Javadoc)
-     * @see de.cau.cs.kieler.sim.kiem.ui.datacomponent.JSONObjectSimulationDataComponent#getNotationElement(org.eclipse.ui.IEditorPart)
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * de.cau.cs.kieler.sim.kiem.ui.datacomponent.JSONObjectSimulationDataComponent#getNotationElement
+     * (org.eclipse.ui.IEditorPart)
      */
     @Override
     protected View getNotationElement(IEditorPart diagramEditor) {
@@ -370,12 +464,15 @@ public class DataComponent extends JSONObjectSimulationDataComponent implements
         }
         return null;
     }
-    
+
     // -------------------------------------------------------------------------
 
     // Only return the papyrus uml editor
-    /* (non-Javadoc)
-     * @see de.cau.cs.kieler.sim.kiem.ui.datacomponent.JSONObjectSimulationDataComponent#getInputEditor()
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * de.cau.cs.kieler.sim.kiem.ui.datacomponent.JSONObjectSimulationDataComponent#getInputEditor()
      */
     @Override
     protected IEditorPart getInputEditor() {
@@ -385,6 +482,51 @@ public class DataComponent extends JSONObjectSimulationDataComponent implements
         }
         return ep;
     }
-
+    
+    // -------------------------------------------------------------------------
+    
+    /**
+     * Clears the maude console.
+     */
+    private void clearConsole() {
+        printConsole(null);
+    }
+    
+    /**
+     * Prints to the maude console.
+     * 
+     * @param text
+     *            the text
+     */
+    private void printConsole(String text) {
+        MessageConsole maudeConsole = null;
+        
+        boolean found = false;
+        ConsolePlugin plugin = ConsolePlugin.getDefault();
+        IConsoleManager conMan = plugin.getConsoleManager();
+        IConsole[] existing = conMan.getConsoles();
+        for (int i = 0; i < existing.length; i++)
+           if (DataComponent.MAUDECONSOLENAME.equals(existing[i].getName())) {
+               maudeConsole = (MessageConsole) existing[i];
+               found = true;
+               break;
+           }
+        if (!found) {
+            // if no console found, so create a new one
+            maudeConsole = new MessageConsole(DataComponent.MAUDECONSOLENAME, null);
+            conMan.addConsoles(new IConsole[]{maudeConsole});
+        }
+        
+        // now print to the maude console or clear it
+        if (text != null) {
+            MessageConsoleStream out = maudeConsole.newMessageStream();
+            out.println(text);
+        }
+        else  {
+            maudeConsole.clearConsole();
+        }
+     }
+    
+    
 
 }

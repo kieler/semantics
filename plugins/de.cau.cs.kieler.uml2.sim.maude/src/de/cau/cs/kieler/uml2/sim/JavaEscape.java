@@ -281,7 +281,7 @@ public class JavaEscape {
 	// FIXME: only works for simple transition labels
 	public static String getTrigger(String TransitionLabel) {
 		if (TransitionLabel.contains("/"))
-			return TransitionLabel.substring(0, TransitionLabel.indexOf("/"));
+			return TransitionLabel.substring(0, TransitionLabel.indexOf("/")).trim();
 		else
 			return null;
 
@@ -294,7 +294,7 @@ public class JavaEscape {
 		if (TransitionLabel.contains("/"))
 			if (TransitionLabel.substring(TransitionLabel.indexOf("/") + 1) != "")
 				return TransitionLabel
-						.substring(TransitionLabel.indexOf("/") + 1);
+						.substring(TransitionLabel.indexOf("/") + 1).trim();
 			else
 				return "skip";
 		else
