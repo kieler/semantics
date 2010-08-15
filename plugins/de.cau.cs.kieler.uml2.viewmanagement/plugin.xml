@@ -7,11 +7,6 @@
             class="de.cau.cs.kieler.uml2.viewmanagement.StateActivityTrigger"
             name="State Activity Trigger">
       </trigger>
-      <trigger
-            class="de.cau.cs.kieler.uml2.viewmanagement.LabelSizeChangedTrigger$ViewManagementTrigger"
-            description="Trigger on change of diagram labels"
-            name="de.cau.cs.kieler.uml2.viewmanagement.label">
-      </trigger>
    </extension>
    <extension
          point="de.cau.cs.kieler.viewmanagement.combination">
@@ -23,11 +18,6 @@
             class="de.cau.cs.kieler.uml2.viewmanagement.ActiveStateFocusCombination"
             description="Collapses non-active states and shows only active in the focus."
             name="Active State Focus/Context">
-      </combination>
-      <combination
-            class="de.cau.cs.kieler.uml2.viewmanagement.SizeChangedLayoutCombination"
-            description="Will do auto layout when a label changed its size."
-            name="Label Changed Layout">
       </combination>
    </extension>
    <extension
