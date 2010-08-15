@@ -298,7 +298,7 @@ public class DataComponent extends JSONObjectSimulationDataComponent implements
             if (objectList instanceof ArrayList) {
                 if (((ArrayList)objectList).size() > 0) {
                     String eMFId = (String)((ArrayList)objectList).get(0);
-//                    maude2EMFId.put(maudeStateId, eMFId);
+                    maude2EMFId.put(maudeStateId, eMFId);
                     return eMFId;
                 }
             }
