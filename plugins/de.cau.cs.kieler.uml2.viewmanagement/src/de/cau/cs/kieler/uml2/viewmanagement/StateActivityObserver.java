@@ -368,9 +368,9 @@ public class StateActivityObserver extends JSONObjectDataComponent implements
     @Override
     public KiemProperty[] provideProperties() {
         KiemProperty[] properties = new KiemProperty[2];
-        properties[0] = new KiemProperty("SyncChart Editor",
+        properties[0] = new KiemProperty("Model Editor",
                 new KiemPropertyTypeEditor(), "");
-        properties[1] = new KiemProperty("state variable", "state");
+        properties[1] = new KiemProperty("State Variable", "state");
         return properties;
     }
 
