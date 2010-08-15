@@ -314,9 +314,7 @@ public class JavaEscape {
 		if (!(vertex instanceof Pseudostate))
 			return false;
 		Object e = ((Pseudostate) vertex).getKind().getValue();
-		System.out.println("================>"+e.toString());
 		boolean isInitial2 = ((((Pseudostate) vertex).getKind()).getValue() == PseudostateKind.INITIAL);
-		System.out.println(isInitial2);
 		return isInitial2;
 	}
 
