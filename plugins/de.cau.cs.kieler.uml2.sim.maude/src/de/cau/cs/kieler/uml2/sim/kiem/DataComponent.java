@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedList;
 
 import org.eclipse.core.resources.IResource;
@@ -77,9 +78,15 @@ public class DataComponent extends JSONObjectSimulationDataComponent implements
     /** The constant name of the maude console. */
     private static final String MAUDECONSOLENAME = "Maude Console";
 
+    /** The constant MAUDEPARSESTATESTARTER indicates the start token to search for. */
     private static final String MAUDEPARSESTATESTARTER = "--> maState \"UML\" $doneC (C";
+    
+    /** The constant MAUDEERROR indicates the error token to search for. */
     private static final String MAUDEERROR = "*HERE*";
 
+    /** The maude2 emf id hashmap to cache the mapping. */
+    private HashMap<String,String> maude2EMFId;
+    
     /** The maude session id. */
     int maudeSessionId;
 
@@ -88,6 +95,8 @@ public class DataComponent extends JSONObjectSimulationDataComponent implements
 
     /** The currently active states. */
     String[] currentStates;
+
+    // -------------------------------------------------------------------------
 
     /**
      * Instantiates a new data component.
@@ -98,6 +107,9 @@ public class DataComponent extends JSONObjectSimulationDataComponent implements
 
     // -------------------------------------------------------------------------
 
+    /* (non-Javadoc)
+     * @see de.cau.cs.kieler.sim.kiem.ui.datacomponent.JSONObjectSimulationDataComponent#doProvideProperties()
+     */
     public KiemProperty[] doProvideProperties() {
         KiemProperty[] properties = new KiemProperty[1];
         properties[0] = new KiemProperty("State Variable", "state");
@@ -106,6 +118,11 @@ public class DataComponent extends JSONObjectSimulationDataComponent implements
     
     // -------------------------------------------------------------------------
 
+    /**
+     * Gets the initial states.
+     * 
+     * @return the initial states
+     */
     public String[] getInitialStates() {
         LinkedList<String> stringList = new LinkedList<String>();
 
@@ -197,11 +214,98 @@ public class DataComponent extends JSONObjectSimulationDataComponent implements
 
     // -------------------------------------------------------------------------
 
+    /**
+     * Extract actions.
+     * 
+     * @param maudeResult
+     *            the maude result
+     * @return the string[]
+     */
     public String[] extractActions(String maudeResult) {
+        //TODO: this seems not yes possible.
         String[] returnArray = new String[1];
         return returnArray;
     }
 
+    // -------------------------------------------------------------------------
+    
+    /**
+     * Constructs the currently active states using the original emf ids
+     * 
+     * @return the current state ids
+     */
+    public String getCurrentStateIds() {
+        String stateIds = "";
+        for (String maudeStateId : currentStates) {
+            System.out.println("Search for "+maudeStateId);
+            String eMFId = getEMFId(maudeStateId);
+            System.out.println("Found "+eMFId);
+            if (eMFId != null) {
+                if (!stateIds.isEmpty()) {
+                    stateIds += ",";
+                }
+                stateIds += eMFId;
+            }
+        }
+        return stateIds;
+    }
+    
+    // -------------------------------------------------------------------------
+    
+    /**
+     * Reset the hashmap.
+     */
+    public void resetMappingHashmap() {
+       // create new hash map
+       maude2EMFId = new HashMap<String,String>();
+    }
+
+    // -------------------------------------------------------------------------
+    
+    /**
+     * Gets the (cashed) eMF id.
+     * 
+     * @param maudeStateId
+     *            the maude state id
+     * @return the eMF id
+     */
+    public String getEMFId(String maudeStateId) {
+        // if no hashmap exists create one
+        if (maude2EMFId == null) {
+            maude2EMFId = new HashMap<String,String>();
+        }
+        
+        // if id was found in hashmap return it
+        if (maude2EMFId.containsKey(maudeStateId)) {
+            return (String)maude2EMFId.get(maudeStateId);
+        }
+        
+        // if id was not found, then we search the model for it
+        
+        Object rootObject = this.getInputModelEObject(this.getInputEditor());
+        if (rootObject instanceof EObject) {
+            EObject eObject = (EObject) rootObject;
+            EmfMetaModel metaModel0 = new EmfMetaModel(org.eclipse.uml2.uml.UMLPackage.eINSTANCE);
+            EmfMetaModel metaModel1 = new EmfMetaModel(org.eclipse.emf.ecore.EcorePackage.eINSTANCE);
+
+            XtendFacade facade = XtendFacade.create("model::Extensions");
+            facade.registerMetaModel(metaModel0);
+            facade.registerMetaModel(metaModel1);
+
+            // collect all initial states
+            Object objectList = facade.call("getEmfId", eObject, maudeStateId);
+            System.out.println(objectList.toString());
+            if (objectList instanceof ArrayList) {
+                if (((ArrayList)objectList).size() > 0) {
+                    String eMFId = (String)((ArrayList)objectList).get(0);
+//                    maude2EMFId.put(maudeStateId, eMFId);
+                    return eMFId;
+                }
+            }
+        }
+        return null;
+    }
+    
     // -------------------------------------------------------------------------
 
     /*
@@ -212,6 +316,9 @@ public class DataComponent extends JSONObjectSimulationDataComponent implements
      * .JSONObject)
      */
     public JSONObject doStep(JSONObject signals) throws KiemExecutionException {
+        // the return object to construct
+        JSONObject returnObj = new JSONObject();
+        
         // build query string ---
         // first collect events
         String triggerEventsQuery = "";
@@ -265,9 +372,17 @@ public class DataComponent extends JSONObjectSimulationDataComponent implements
 
         // interpret resulting states
         currentStates = extractActiveStates(result);
+        
+        // the stateName is the second KIEM property
+        String stateName = this.getProperties()[1].getValue();
+        try {
+            returnObj.accumulate(stateName, getCurrentStateIds());
+        } catch (Exception e) {
+            // ignore any errors
+        }        
 
         // no actions can be extracted so far
-        return null;
+        return returnObj;
     }
 
     // -------------------------------------------------------------------------
@@ -286,6 +401,9 @@ public class DataComponent extends JSONObjectSimulationDataComponent implements
             pathToMaudeCode = transformToCygwinPath(pathToMaudeCode);
         }
 
+        // reset the mapping
+        resetMappingHashmap();
+        
         // clear the maude console
         clearConsole();
 

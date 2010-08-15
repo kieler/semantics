@@ -219,15 +219,22 @@ public class JavaEscape {
 
 	// ------------------------------------------------------------------------
 
-	// Get the Fragment URI ID of a Vertex
+	// Get the ID of a Vertex
 	public static String getId(Vertex vertex) {
 		return getAlias(vertex)  + "-" 
 				+ hash(vertex.eResource().getURIFragment(vertex).toString());
 	}
 
+        // ------------------------------------------------------------------------
+	
+	// Get the EMF Fragment URI ID of a Vertex
+        public static String getEMFId(Vertex vertex) {
+                return vertex.eResource().getURIFragment(vertex).toString();
+        }
+
 	// ------------------------------------------------------------------------
 
-	// Get the Fragment URI ID of a Region
+	// Get the ID of a Region
 	public static String getId(Region region) {
 		return "R" + hash(region.eResource().getURIFragment(region).toString());
 	}
@@ -263,7 +270,7 @@ public class JavaEscape {
 
 	// ------------------------------------------------------------------------
 
-	// Get the Fragment URI ID of a Tranistion
+	// Get the ID of a Tranistion
 	public static String getId(Transition transition) {
 		return getAlias(transition) + "-" 
 				+ hash(transition.eResource().getURIFragment(transition));

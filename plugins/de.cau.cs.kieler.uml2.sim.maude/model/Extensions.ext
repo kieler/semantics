@@ -66,6 +66,18 @@ Set[String] getActions(StateMachine sm):
 
 //-----------------------------------------------------------------------------
 
+// Returns the EMF id for a vertex maude state id.
+// Ideally this should return just one vertex, but cause must be paied because
+// the maude ide is constructed using just the hash value. In theory this may
+// lead to duplicate maude state ids.
+Set[String] getEmfId(Package package, String maudeStateId) :
+ let vertexList = (Set[Vertex])package.getStates():
+ let vertexSelectedList = vertexList.select(e|e.getId().toString().matches(maudeStateId.toString())):
+ vertexSelectedList.getEMFId()
+;
+
+//-----------------------------------------------------------------------------
+
 // Get ids of all initial state targets and their regions
 Set[String] getInitialStates(Package package):
 	let initialPseudoStates = (Set[Vertex])package.eAllContents.select(e|e.metaType == Pseudostate && ((Vertex)e).isInitial()):
@@ -90,6 +102,12 @@ Set[Transition] getTransitions(Package package):
 // Get all Fork or Join vertices of the state machine (these are Pseudostates)
 Set[Pseudostate] getForkJoin(StateMachine sm):
  ((Set[Transition])sm.eAllContents.select(e|e.metaType == Pseudostate && ( ((Vertex)e).isJoin() || ((Vertex)e).isFork() ) ))
+;
+
+// Get all States of the state machine
+Set[Vertex] getStates(Package package):
+ //ToDo: FinalState is State ?!?
+ ((Set[Vertex])package.eRootContainer.eAllContents.select(e|e.metaType == State || e.metaType == FinalState))
 ;
 
 // Get all States of the state machine
@@ -479,6 +497,11 @@ String getId(Region region):
 // Get the ID of a vertex
 String getId(Vertex vertex):
   JAVA de.cau.cs.kieler.uml2.sim.JavaEscape.getId(org.eclipse.uml2.uml.Vertex)
+;
+
+// Get the EMF ID of a vertex
+String getEMFId(Vertex vertex):
+  JAVA de.cau.cs.kieler.uml2.sim.JavaEscape.getEMFId(org.eclipse.uml2.uml.Vertex)
 ;
 
 // Get the ID of a transition
