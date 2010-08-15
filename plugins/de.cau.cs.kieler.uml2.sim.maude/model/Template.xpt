@@ -31,8 +31,9 @@ fmod eclipseInterface is
   op allEvents : -> Events .
 
 *** // allActions //
-«REM»ToDo: no double entries, no nils? nil == falsche transitionen, fehlende beschriftung«ENDREM»	
-  ops «FOREACH this.getActions() AS action SEPARATOR " "-»«action-»«ENDFOREACH-» : -> Action .
+«REM» ToDo: no double entries, no nils? nil == falsche transitionen, fehlende beschriftung«ENDREM»	
+«REM» skip needs to be added automatically «ENDREM»	
+  ops skip «FOREACH this.getActions() AS action SEPARATOR " "-»«action-»«ENDFOREACH-» : -> Action .
 
 ***// States //
   «IF  this.getStates().size > 0-»

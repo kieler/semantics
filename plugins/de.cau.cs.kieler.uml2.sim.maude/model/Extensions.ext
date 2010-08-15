@@ -66,7 +66,7 @@ Set[String] getActions(StateMachine sm):
 
 //-----------------------------------------------------------------------------
 
-// Get all initial states and their regions
+// Get ids of all initial state targets and their regions
 Set[String] getInitialStates(Package package):
 	let initialPseudoStates = (Set[Vertex])package.eAllContents.select(e|e.metaType == Pseudostate && ((Vertex)e).isInitial()):
 	let initialStates = initialPseudoStates.outgoing.target:
