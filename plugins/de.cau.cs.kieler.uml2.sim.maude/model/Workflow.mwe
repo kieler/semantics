@@ -2,6 +2,7 @@
 <workflow>
 	<property name="model" value="de.cau.cs.kieler.uml2.sim.maude/default.uml" />
 	<property name="src-gen" value="src-gen" />
+	<globalvar name="modelname" value="model" />
 	
 	<!-- set up EMF for standalone execution -->
 	<bean class="org.eclipse.emf.mwe.utils.StandaloneSetup" >
