@@ -9,7 +9,7 @@ import org.osgi.framework.BundleContext;
 public class UmlViewmanagementPlugin extends AbstractUIPlugin {
 
     /** The plug-in ID. */
-    public static final String PLUGIN_ID = "de.cau.cs.kieler.sim.viewmanagement";
+    public static final String PLUGIN_ID = "de.cau.cs.kieler.uml2.viewmanagement";
 
     /** The shared instance. */
     private static UmlViewmanagementPlugin plugin;

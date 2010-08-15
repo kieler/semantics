@@ -24,7 +24,7 @@
          point="de.cau.cs.kieler.sim.kiem.json.datacomponent">
       <content
             class="de.cau.cs.kieler.uml2.viewmanagement.StateActivityObserver"
-            id="de.cau.cs.kieler.sim.viewmanagement.stateactivity"
+            id="de.cau.cs.kieler.uml2.viewmanagement.stateactivity"
             name="Viewmanagement UML2 Visualizer">
       </content>
    </extension>
