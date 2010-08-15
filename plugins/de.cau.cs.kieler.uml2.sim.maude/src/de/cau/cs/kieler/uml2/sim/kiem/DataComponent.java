@@ -54,6 +54,8 @@ import de.cau.cs.kieler.sim.kiem.IJSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.JSONSignalValues;
 import de.cau.cs.kieler.sim.kiem.KiemExecutionException;
 import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
+import de.cau.cs.kieler.sim.kiem.properties.KiemProperty;
+import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyTypeEditor;
 import de.cau.cs.kieler.sim.kiem.ui.datacomponent.JSONObjectSimulationDataComponent;
 
 import org.eclipse.uml2.uml.Model;
@@ -94,6 +96,14 @@ public class DataComponent extends JSONObjectSimulationDataComponent implements
         // TODO Auto-generated constructor stub
     }
 
+    // -------------------------------------------------------------------------
+
+    public KiemProperty[] doProvideProperties() {
+        KiemProperty[] properties = new KiemProperty[1];
+        properties[0] = new KiemProperty("State Variable", "state");
+        return properties;    
+    }
+    
     // -------------------------------------------------------------------------
 
     public String[] getInitialStates() {
