@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="de.cau.cs.kieler.viewmanagement.triggers">
+      <trigger
+            class="de.cau.cs.kieler.uml2.viewmanagement.StateActivityTrigger"
+            name="State Activity Trigger">
+      </trigger>
+      <trigger
+            class="de.cau.cs.kieler.uml2.viewmanagement.LabelSizeChangedTrigger$ViewManagementTrigger"
+            description="Trigger on change of diagram labels"
+            name="de.cau.cs.kieler.uml2.viewmanagement.label">
+      </trigger>
+   </extension>
+   <extension
+         point="de.cau.cs.kieler.viewmanagement.combination">
+      <combination
+            class="de.cau.cs.kieler.uml2.viewmanagement.ActiveStateHighlightCombination"
+            name="Active State Highlight">
+      </combination>
+      <combination
+            class="de.cau.cs.kieler.uml2.viewmanagement.ActiveStateFocusCombination"
+            description="Collapses non-active states and shows only active in the focus."
+            name="Active State Focus/Context">
+      </combination>
+      <combination
+            class="de.cau.cs.kieler.uml2.viewmanagement.SizeChangedLayoutCombination"
+            description="Will do auto layout when a label changed its size."
+            name="Label Changed Layout">
+      </combination>
+   </extension>
+   <extension
+         point="de.cau.cs.kieler.sim.kiem.json.datacomponent">
+      <content
+            class="de.cau.cs.kieler.uml2.viewmanagement.StateActivityObserver"
+            id="de.cau.cs.kieler.sim.viewmanagement.stateactivity"
+            name="Viewmanagement UML2 Visualizer">
+      </content>
+   </extension>
+
+</plugin>
