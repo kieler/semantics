@@ -3,6 +3,7 @@ package de.cau.cs.kieler.uml2.sim.kiem;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.ResourcesPlugin;
@@ -10,6 +11,7 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.ResourceSet;
@@ -32,17 +34,23 @@ import org.eclipse.ui.part.FileEditorInput;
 import org.eclipse.xpand2.Generator;
 import org.eclipse.xpand2.output.Outlet;
 import org.eclipse.xtend.XtendComponent;
+import org.eclipse.xtend.XtendFacade;
 import org.eclipse.xtend.expression.AbstractExpressionsUsingWorkflowComponent.GlobalVar;
+import org.eclipse.xtend.typesystem.MetaModel;
 import org.eclipse.xtend.typesystem.emf.EmfMetaModel;
+import org.json.JSONException;
 import org.json.JSONObject;
 import org.osgi.framework.Bundle;
 
 import de.cau.cs.kieler.core.ui.KielerProgressMonitor;
 import de.cau.cs.kieler.sim.kiem.IJSONObjectDataComponent;
+import de.cau.cs.kieler.sim.kiem.JSONSignalValues;
 import de.cau.cs.kieler.sim.kiem.KiemExecutionException;
 import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
 import de.cau.cs.kieler.sim.kiem.ui.datacomponent.JSONObjectSimulationDataComponent;
 
+import org.eclipse.uml2.uml.Model;
+import org.eclipse.uml2.uml.Transition;
 import org.eclipse.uml2.uml.UMLPackage;
 
 // TODO: Auto-generated Javadoc
@@ -217,10 +225,12 @@ public class DataComponent extends JSONObjectSimulationDataComponent implements
 
         // Meta models
         EmfMetaModel metaModel0 = new EmfMetaModel(UMLPackage.eINSTANCE);
+        EmfMetaModel metaModel1 =  new EmfMetaModel(org.eclipse.emf.ecore.EcorePackage.eINSTANCE);
 
         // Xpand Generator
         Generator generator = new Generator();
         generator.addMetaModel(metaModel0);
+        generator.addMetaModel(metaModel1);
         generator.addOutlet(outlet);
         generator.addGlobalVar(modelname);
         generator.addGlobalVar(maudebasecode);
@@ -258,6 +268,8 @@ public class DataComponent extends JSONObjectSimulationDataComponent implements
     }
 
     // -------------------------------------------------------------------------
+    
+    // -------------------------------------------------------------------------
 
     /* (non-Javadoc)
      * @see de.cau.cs.kieler.sim.kiem.ui.datacomponent.JSONObjectSimulationDataComponent#checkModelValidation(org.eclipse.emf.ecore.EObject)
@@ -270,7 +282,53 @@ public class DataComponent extends JSONObjectSimulationDataComponent implements
      * @see de.cau.cs.kieler.sim.kiem.ui.datacomponent.JSONObjectSimulationDataComponent#doProvideInitialVariables()
      */
     public JSONObject doProvideInitialVariables() throws KiemInitializationException {
-        return null;
+        JSONObject returnObj = new JSONObject();
+        
+        // we here read in the uml model and extract the necessary information
+        Object rootObject = this.getInputModelEObject(this.getInputEditor());
+        if (rootObject instanceof EObject) {
+            EObject eObject = (EObject)rootObject;
+            EmfMetaModel metaModel0 =  new EmfMetaModel(org.eclipse.uml2.uml.UMLPackage.eINSTANCE);
+            EmfMetaModel metaModel1 =  new EmfMetaModel(org.eclipse.emf.ecore.EcorePackage.eINSTANCE);
+            
+            XtendFacade facade = XtendFacade.create("model::Extensions");
+            facade.registerMetaModel(metaModel0);
+            facade.registerMetaModel(metaModel1);
+            
+            // first collect events
+            Object objectList = facade.call("getTriggerEvents", eObject);
+            if (objectList instanceof ArrayList) {
+                for (Object key: ((ArrayList)objectList)) {
+                    if (key instanceof String) {
+                        try {
+                            returnObj.accumulate((String)key, JSONSignalValues.newValue(false));
+                        } catch (JSONException e) {
+                            // ignore errors
+                        }
+                    }
+                }
+            }
+            
+            // second collect actions
+            objectList = facade.call("getActions", eObject);
+            if (objectList instanceof ArrayList) {
+                for (Object key: ((ArrayList)objectList)) {
+                    if (key instanceof String) {
+                        // not include skip action
+                        if (!((String)key).equals("skip")) {
+                            try {
+                                returnObj.accumulate((String)key, JSONSignalValues.newValue(false));
+                            } catch (JSONException e) {
+                                // ignore errors
+                            }
+                        }
+                    }
+                }
+            }
+            
+        }
+        
+        return returnObj;
     }
 
     /* (non-Javadoc)

@@ -41,13 +41,25 @@ String getTrigger(String transitionLabel):
 ;
 
 // Get all trigger events that are used in the statemachine.
+Set[String] getTriggerEvents(Package package):
+ let transitions = package.getTransitions() :
+ transitions.select(e|e.name.toString().contains("/")).trigger2()
+;
+
+// Get all trigger events that are used in the statemachine.
 Set[String] getTriggerEvents(StateMachine sm):
  let transitions = sm.getTransitions() :
  transitions.select(e|e.name.toString().contains("/")).trigger2()
 ;
 
 // INTERNAL: Helpermethod for action extraction
-Set[String] getAction(StateMachine sm):
+Set[String] getActions(Package package):
+ let transitions = package.getTransitions() :
+ transitions.select(e|e.name.toString().contains("/")).action2()
+;
+
+// INTERNAL: Helpermethod for action extraction
+Set[String] getActions(StateMachine sm):
  let transitions = sm.getTransitions() :
  transitions.select(e|e.name.toString().contains("/")).action2()
 ;
@@ -58,6 +70,12 @@ Set[String] getAction(StateMachine sm):
 Set[Transition] getTransitions(StateMachine sm):
  ((Set[Transition])sm.eAllContents.select(e|e.metaType == Transition))
 ;
+
+// Get all transition of an general Package
+Set[Transition] getTransitions(Package package):
+ ((Set[Transition])package.eAllContents.select(e|e.metaType == Transition))
+;
+
 
 // Get all Fork or Join vertices of the state machine (these are Pseudostates)
 Set[Pseudostate] getForkJoin(StateMachine sm):

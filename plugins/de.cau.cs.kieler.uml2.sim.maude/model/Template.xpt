@@ -32,7 +32,7 @@ fmod eclipseInterface is
 
 *** // allActions //
 «REM»ToDo: no double entries, no nils? nil == falsche transitionen, fehlende beschriftung«ENDREM»	
-  ops «FOREACH this.getAction() AS action SEPARATOR " "-»«action-»«ENDFOREACH-» : -> Action .
+  ops «FOREACH this.getActions() AS action SEPARATOR " "-»«action-»«ENDFOREACH-» : -> Action .
 
 ***// States //
   «IF  this.getStates().size > 0-»
