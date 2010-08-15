@@ -24,6 +24,7 @@ import org.eclipse.gef.EditPart;
 import org.eclipse.gmf.runtime.diagram.ui.editparts.ShapeEditPart;
 import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramEditor;
 import org.eclipse.gmf.runtime.notation.View;
+import org.eclipse.papyrus.editor.PapyrusMultiDiagramEditor;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IEditorReference;
@@ -138,7 +139,7 @@ public class StateActivityObserver extends JSONObjectDataComponent implements
 
     // -------------------------------------------------------------------------
 
-    DiagramEditor getEditor(String kiemEditorProperty) {
+    PapyrusMultiDiagramEditor getEditor(String kiemEditorProperty) {
         if ((kiemEditorProperty == null) || (kiemEditorProperty.length() == 0)) {
             return null;
         }
@@ -155,11 +156,11 @@ public class StateActivityObserver extends JSONObjectDataComponent implements
             for (int i = 0; i < editorRefs.length; i++) {
                 if (editorRefs[i].getId().equals(editorString)) {
                     IEditorPart editor = editorRefs[i].getEditor(true);
-                    if (editor instanceof DiagramEditor) {
+                    if (editor instanceof PapyrusMultiDiagramEditor) {
                         // test if correct file
                         if (fileString.equals(editor.getTitle())) {
-                            return (DiagramEditor) editor;
-                            // rootEditPart = ((DiagramEditor) editor)
+                            return (PapyrusMultiDiagramEditor) editor;
+                            // rootEditPart = ((PapyrusMultiDiagramEditor) editor)
                             // .getDiagramEditPart();
                             // break;
                         }
@@ -249,10 +250,10 @@ public class StateActivityObserver extends JSONObjectDataComponent implements
 
     // -------------------------------------------------------------------------
 
-    DiagramEditor diagramEditor = null;
+    PapyrusMultiDiagramEditor diagramEditor = null;
     boolean diagramEditorFlag = false;
 
-    DiagramEditor getInputEditor() {
+    PapyrusMultiDiagramEditor getInputEditor() {
         String kiemEditorProperty = this.getProperties()[0].getValue();
         diagramEditorFlag = false;
 
@@ -262,8 +263,8 @@ public class StateActivityObserver extends JSONObjectDataComponent implements
                 IWorkbenchWindow window = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
                 IWorkbenchPage activePage = window.getActivePage();
                 IEditorPart editor = activePage.getActiveEditor();
-                if (editor instanceof DiagramEditor) {
-                    diagramEditor = (DiagramEditor) editor;
+                if (editor instanceof PapyrusMultiDiagramEditor) {
+                    diagramEditor = (PapyrusMultiDiagramEditor) editor;
                 }
                 diagramEditorFlag = true;
             }
