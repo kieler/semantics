@@ -521,7 +521,11 @@ public class DataComponent extends JSONObjectSimulationDataComponent implements
                 for (Object key : ((ArrayList) objectList)) {
                     if (key instanceof String) {
                         try {
-                            returnObj.accumulate((String) key, JSONSignalValues.newValue(false));
+                            String keyString = (String) key;
+                            if (!returnObj.has(keyString)) {
+                                returnObj.accumulate(keyString, JSONSignalValues.newValue(false));
+                                
+                            }
                         } catch (JSONException e) {
                             // ignore errors
                         }
@@ -537,8 +541,11 @@ public class DataComponent extends JSONObjectSimulationDataComponent implements
                         // not include skip action
                         if (!((String) key).equals("skip")) {
                             try {
-                                returnObj
-                                        .accumulate((String) key, JSONSignalValues.newValue(false));
+                                String keyString = (String) key;
+                                if (!returnObj.has(keyString)) {
+                                    returnObj
+                                    .accumulate(keyString, JSONSignalValues.newValue(false));
+                                }
                             } catch (JSONException e) {
                                 // ignore errors
                             }
