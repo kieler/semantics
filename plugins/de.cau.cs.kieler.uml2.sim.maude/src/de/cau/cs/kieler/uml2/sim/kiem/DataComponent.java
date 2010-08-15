@@ -135,7 +135,7 @@ public class DataComponent extends JSONObjectSimulationDataComponent implements
      * @return the string[]
      */
     public String[] extractActiveStates(String maudeResult) {
-        String maudePartResult = maudeResult.substring(maudeResult.indexOf(MAUDEPARSESTATESTARTER)
+        String maudePartResult = maudeResult.substring(maudeResult.lastIndexOf(MAUDEPARSESTATESTARTER)
                 + MAUDEPARSESTATESTARTER.length());
 
         /*
