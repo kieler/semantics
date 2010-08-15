@@ -172,6 +172,32 @@ public class MaudeInterfacePlugin extends AbstractUIPlugin {
      * 
      * @param queryRequest
      *            the query request
+     * @param wait
+     *            the wait in milliseconds
+     * @param maudeSessionId
+     *            the maude session id
+     * @return the string
+     * @throws Exception
+     *             the exception
+     */
+    public String queryMaude(String queryRequest, int wait, int maudeSessionId) throws Exception {
+        MaudeSession session =  getMaudeSession(maudeSessionId);
+        if (session == null) {
+            throw (new Exception("Maude session with id "+maudeSessionId+" not found."));
+        }
+        if (!session.isStarted()) {
+            throw (new Exception("Maude session with id "+maudeSessionId+" not started yet."));
+        }
+        return session.queryMaude(queryRequest, wait);
+    }
+    
+    // -------------------------------------------------------------------------
+
+    /**
+     * Query maude with a string returning a string for a given maude session id.
+     * 
+     * @param queryRequest
+     *            the query request
      * @param maudeSessionId
      *            the maude session id
      * @return the string
@@ -188,7 +214,6 @@ public class MaudeInterfacePlugin extends AbstractUIPlugin {
         }
         return session.queryMaude(queryRequest);
     }
-
     // -------------------------------------------------------------------------
 
     /**

@@ -64,9 +64,6 @@ import org.eclipse.ui.console.IConsole;
 import org.eclipse.ui.console.IConsoleManager;
 import org.eclipse.ui.console.MessageConsole;
 
-
-
-
 // TODO: Auto-generated Javadoc
 /**
  * The Class DataComponent.
@@ -76,7 +73,7 @@ public class DataComponent extends JSONObjectSimulationDataComponent implements
 
     /** The constant name of the maude console. */
     private static final String MAUDECONSOLENAME = "Maude Console";
-    
+
     /** The maude session id. */
     int maudeSessionId;
 
@@ -118,6 +115,10 @@ public class DataComponent extends JSONObjectSimulationDataComponent implements
                 // ignore errors - should not happen at all
             }
         }
+        // if no events selected, produce this dummy event for maude
+        if (triggerEventsQuery.equals("")) {
+            triggerEventsQuery = "ev: \"noevent\"";
+        }
 
         // second build the current states
         String currentStatesQuery = "";
@@ -137,7 +138,7 @@ public class DataComponent extends JSONObjectSimulationDataComponent implements
 
         // Debug output query request
         printConsole(queryRequest);
-        
+
         String result = "";
         try {
             result = MaudeInterfacePlugin.getDefault().queryMaude(queryRequest, maudeSessionId);
@@ -166,7 +167,7 @@ public class DataComponent extends JSONObjectSimulationDataComponent implements
         if (isWindows()) {
             pathToMaudeCode = transformToCygwinPath(pathToMaudeCode);
         }
-        
+
         // clear the maude console
         clearConsole();
 
@@ -174,6 +175,7 @@ public class DataComponent extends JSONObjectSimulationDataComponent implements
                 pathToMaudeCode);
         try {
             MaudeInterfacePlugin.getDefault().startMaudeSession(maudeSessionId);
+            printConsole(MaudeInterfacePlugin.getDefault().queryMaude(".\n", 1000, maudeSessionId));
         } catch (Exception e) {
             throw new KiemInitializationException(
                     "Cannot start Maude. Plase make sure that the paths are "
@@ -482,16 +484,16 @@ public class DataComponent extends JSONObjectSimulationDataComponent implements
         }
         return ep;
     }
-    
+
     // -------------------------------------------------------------------------
-    
+
     /**
      * Clears the maude console.
      */
     private void clearConsole() {
         printConsole(null);
     }
-    
+
     /**
      * Prints to the maude console.
      * 
@@ -500,33 +502,30 @@ public class DataComponent extends JSONObjectSimulationDataComponent implements
      */
     private void printConsole(String text) {
         MessageConsole maudeConsole = null;
-        
+
         boolean found = false;
         ConsolePlugin plugin = ConsolePlugin.getDefault();
         IConsoleManager conMan = plugin.getConsoleManager();
         IConsole[] existing = conMan.getConsoles();
         for (int i = 0; i < existing.length; i++)
-           if (DataComponent.MAUDECONSOLENAME.equals(existing[i].getName())) {
-               maudeConsole = (MessageConsole) existing[i];
-               found = true;
-               break;
-           }
+            if (DataComponent.MAUDECONSOLENAME.equals(existing[i].getName())) {
+                maudeConsole = (MessageConsole) existing[i];
+                found = true;
+                break;
+            }
         if (!found) {
             // if no console found, so create a new one
             maudeConsole = new MessageConsole(DataComponent.MAUDECONSOLENAME, null);
-            conMan.addConsoles(new IConsole[]{maudeConsole});
+            conMan.addConsoles(new IConsole[] { maudeConsole });
         }
-        
+
         // now print to the maude console or clear it
         if (text != null) {
             MessageConsoleStream out = maudeConsole.newMessageStream();
             out.println(text);
-        }
-        else  {
+        } else {
             maudeConsole.clearConsole();
         }
-     }
-    
-    
+    }
 
 }
