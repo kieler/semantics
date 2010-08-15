@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.ResourcesPlugin;
@@ -74,17 +75,93 @@ public class DataComponent extends JSONObjectSimulationDataComponent implements
     /** The constant name of the maude console. */
     private static final String MAUDECONSOLENAME = "Maude Console";
 
+    private static final String MAUDEPARSESTATESTARTER = "--> maState \"UML\" $doneC (C";
+
     /** The maude session id. */
     int maudeSessionId;
 
     /** The out path. */
     String outPath;
 
+    /** The currently active states. */
+    String[] currentStates;
+
     /**
      * Instantiates a new data component.
      */
     public DataComponent() {
         // TODO Auto-generated constructor stub
+    }
+
+    // -------------------------------------------------------------------------
+
+    public String[] getInitialStates() {
+        // LinkedList<String> stringList = new LinkedList<String>();
+        // return stringList.toArray(new String[0]);
+        String[] initialStates = { "R-768353767", "s1-1911224653" };
+        return initialStates;
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Extract the active states.
+     * 
+     * @param maudeResult
+     *            the maude result
+     * @return the string[]
+     */
+    public String[] extractActiveStates(String maudeResult) {
+        String maudePartResult = maudeResult.substring(maudeResult.indexOf(MAUDEPARSESTATESTARTER)
+                + MAUDEPARSESTATESTARTER.length());
+        
+        /*
+         * Maude output looks like this:
+         * 
+         * search in INIT : maState "UML" $stableC prettyVerts (T461729046, R-768353767)
+         *    empty ee3
+         *     =>* mastate such that isDone mastate = true .
+         *     
+         *     Solution 1 (state 3)
+         *     states: 4  rewrites: 65 in 6597516000ms cpu (0ms real) (0 rewrites/second)
+         *     mastate --> maState "UML" $doneC (C "T461729046", root R "R-768353767") empty
+         *         empty
+         *
+         *         No more solutions.
+         *         states: 4  rewrites: 65 in 6597516000ms cpu (0ms real) (0 rewrites/second)
+         */
+
+        LinkedList<String> stringList = new LinkedList<String>();
+
+        boolean consuming = false;
+        String consumedPart = "";
+        for (int c = 0; c < maudePartResult.length(); c++) {
+            String character = maudePartResult.substring(c, c + 1);
+            if (character.equals("\"")) {
+                consuming = !consuming;
+                if (!consuming) {
+                    stringList.add(consumedPart);
+                    consumedPart = "";
+                }
+                // do not consume "-character
+                continue;
+            }
+            if (character.equals(")")) {
+                break;
+            }
+            if (consuming) {
+                consumedPart += character;
+            }
+        }
+
+        return stringList.toArray(new String[0]);
+    }
+
+    // -------------------------------------------------------------------------
+
+    public String[] extractActions(String maudeResult) {
+        String[] returnArray = new String[1];
+        return returnArray;
     }
 
     // -------------------------------------------------------------------------
@@ -122,7 +199,6 @@ public class DataComponent extends JSONObjectSimulationDataComponent implements
 
         // second build the current states
         String currentStatesQuery = "";
-        String[] currentStates = { "R-768353767", "s1-1911224653" };
         for (String currentState : currentStates) {
             if (!currentStatesQuery.isEmpty()) {
                 currentStatesQuery += ",";
@@ -149,6 +225,10 @@ public class DataComponent extends JSONObjectSimulationDataComponent implements
         // Debug output query rresult
         printConsole(result);
 
+        // interpret resulting states
+        currentStates = extractActiveStates(result);
+
+        // no actions can be extracted so far
         return null;
     }
 
@@ -170,6 +250,9 @@ public class DataComponent extends JSONObjectSimulationDataComponent implements
 
         // clear the maude console
         clearConsole();
+
+        // initialize with initial states (and regions)
+        currentStates = getInitialStates();
 
         maudeSessionId = MaudeInterfacePlugin.getDefault().createMaudeSession(pathToMaude,
                 pathToMaudeCode);
