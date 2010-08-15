@@ -66,6 +66,17 @@ Set[String] getActions(StateMachine sm):
 
 //-----------------------------------------------------------------------------
 
+// Get all initial states and their regions
+Set[String] getInitialStates(Package package):
+	let initialPseudoStates = (Set[Vertex])package.eAllContents.select(e|e.metaType == Pseudostate && ((Vertex)e).isInitial()):
+	let initialStates = initialPseudoStates.outgoing.target:
+	let initialRegions = initialStates.getParent():
+	let all = initialStates.addAll(initialRegions):
+	all.getId()
+;
+
+//-----------------------------------------------------------------------------
+
 // Get all transition of the state machine
 Set[Transition] getTransitions(StateMachine sm):
  ((Set[Transition])sm.eAllContents.select(e|e.metaType == Transition))
@@ -75,7 +86,6 @@ Set[Transition] getTransitions(StateMachine sm):
 Set[Transition] getTransitions(Package package):
  ((Set[Transition])package.eAllContents.select(e|e.metaType == Transition))
 ;
-
 
 // Get all Fork or Join vertices of the state machine (these are Pseudostates)
 Set[Pseudostate] getForkJoin(StateMachine sm):
@@ -173,6 +183,11 @@ String fullyQualifiedName(State n) : n.getParent() == null ? n.getId() :
 // INTERNAL: Helper method toe get the parent state of a region
 State getParent(Region region):
  (State)getElementParent((Element)region)
+;
+
+// INTERNAL: Helper method toe get the parent state of a region
+State getParent(Vertex vertex):
+ (Region)getElementParent((Element)vertex)
 ;
 
 // INTERNAL: Helper method toe get the parent region of a state

@@ -221,7 +221,7 @@ public class JavaEscape {
 
 	// Get the Fragment URI ID of a Vertex
 	public static String getId(Vertex vertex) {
-		return getAlias(vertex)
+		return getAlias(vertex)  + "-" 
 				+ hash(vertex.eResource().getURIFragment(vertex).toString());
 	}
 
@@ -257,7 +257,7 @@ public class JavaEscape {
 
 	// Get Alias of a Transition for better traceability
 	public static String getAlias(Transition transition) {
-		return getAlias(transition.getSource()) + "2"
+		return getAlias(transition.getSource()) + "2"  + "-" 
 				+ getAlias(transition.getTarget());
 	}
 
@@ -265,7 +265,7 @@ public class JavaEscape {
 
 	// Get the Fragment URI ID of a Tranistion
 	public static String getId(Transition transition) {
-		return getAlias(transition)
+		return getAlias(transition) + "-" 
 				+ hash(transition.eResource().getURIFragment(transition));
 	}
 
@@ -313,7 +313,11 @@ public class JavaEscape {
 		// only a Pseudostate can be an initial state
 		if (!(vertex instanceof Pseudostate))
 			return false;
-		return ((((Pseudostate) vertex).getKind()).getValue() == PseudostateKind.INITIAL);
+		Object e = ((Pseudostate) vertex).getKind().getValue();
+		System.out.println("================>"+e.toString());
+		boolean isInitial2 = ((((Pseudostate) vertex).getKind()).getValue() == PseudostateKind.INITIAL);
+		System.out.println(isInitial2);
+		return isInitial2;
 	}
 
 	public static Boolean isFinal(Vertex vertex) {

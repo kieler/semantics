@@ -96,10 +96,33 @@ public class DataComponent extends JSONObjectSimulationDataComponent implements
     // -------------------------------------------------------------------------
 
     public String[] getInitialStates() {
-        // LinkedList<String> stringList = new LinkedList<String>();
-        // return stringList.toArray(new String[0]);
-        String[] initialStates = { "R-768353767", "s1-1911224653" };
-        return initialStates;
+        LinkedList<String> stringList = new LinkedList<String>();
+
+        // we here read in the uml model and extract the necessary information
+        Object rootObject = this.getInputModelEObject(this.getInputEditor());
+        if (rootObject instanceof EObject) {
+            EObject eObject = (EObject) rootObject;
+            EmfMetaModel metaModel0 = new EmfMetaModel(org.eclipse.uml2.uml.UMLPackage.eINSTANCE);
+            EmfMetaModel metaModel1 = new EmfMetaModel(org.eclipse.emf.ecore.EcorePackage.eINSTANCE);
+
+            XtendFacade facade = XtendFacade.create("model::Extensions");
+            facade.registerMetaModel(metaModel0);
+            facade.registerMetaModel(metaModel1);
+
+            // collect all initial states
+            Object objectList = facade.call("getInitialStates", eObject);
+            if (objectList instanceof ArrayList) {
+                for (Object stateOrRegion : ((ArrayList) objectList)) {
+                    if (stateOrRegion instanceof String) {
+                        stringList.add((String)stateOrRegion);
+                        printConsole("Initial state: " + (String)stateOrRegion);
+                    }
+                }
+            }
+
+        }
+
+        return stringList.toArray(new String[0]);
     }
 
     // -------------------------------------------------------------------------
@@ -114,21 +137,19 @@ public class DataComponent extends JSONObjectSimulationDataComponent implements
     public String[] extractActiveStates(String maudeResult) {
         String maudePartResult = maudeResult.substring(maudeResult.indexOf(MAUDEPARSESTATESTARTER)
                 + MAUDEPARSESTATESTARTER.length());
-        
+
         /*
          * Maude output looks like this:
          * 
-         * search in INIT : maState "UML" $stableC prettyVerts (T461729046, R-768353767)
-         *    empty ee3
-         *     =>* mastate such that isDone mastate = true .
-         *     
-         *     Solution 1 (state 3)
-         *     states: 4  rewrites: 65 in 6597516000ms cpu (0ms real) (0 rewrites/second)
-         *     mastate --> maState "UML" $doneC (C "T461729046", root R "R-768353767") empty
-         *         empty
-         *
-         *         No more solutions.
-         *         states: 4  rewrites: 65 in 6597516000ms cpu (0ms real) (0 rewrites/second)
+         * search in INIT : maState "UML" $stableC prettyVerts (T461729046, R-768353767) empty ee3
+         * =>* mastate such that isDone mastate = true .
+         * 
+         * Solution 1 (state 3) states: 4 rewrites: 65 in 6597516000ms cpu (0ms real) (0
+         * rewrites/second) mastate --> maState "UML" $doneC (C "T461729046", root R "R-768353767")
+         * empty empty
+         * 
+         * No more solutions. states: 4 rewrites: 65 in 6597516000ms cpu (0ms real) (0
+         * rewrites/second)
          */
 
         LinkedList<String> stringList = new LinkedList<String>();
@@ -253,7 +274,7 @@ public class DataComponent extends JSONObjectSimulationDataComponent implements
 
         // initialize with initial states (and regions)
         currentStates = getInitialStates();
-
+        
         maudeSessionId = MaudeInterfacePlugin.getDefault().createMaudeSession(pathToMaude,
                 pathToMaudeCode);
         try {
