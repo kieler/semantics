@@ -117,16 +117,19 @@ public class MaudeSession {
      *             Signals that an I/O exception has occurred.
      */
     public String queryMaude(String queryRequest) throws IOException {
-        String returnValue = null;
+        String returnValue = "";
         
         toMaude.write(queryRequest);
         toMaude.flush();
         
         while (error.ready()) {
-            System.out.print(error.read());
+            returnValue += (((char)error.read() + ""));
         }
         
-        returnValue = fromMaude.readLine();
+        while (fromMaude.ready()) {
+            returnValue += ((char)fromMaude.read() + "");
+        }
+        
         
         while (error.ready()) {
             System.err.print(error.readLine());
