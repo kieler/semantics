@@ -28,9 +28,11 @@ import org.eclipse.ui.PlatformUI;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import de.cau.cs.kieler.core.alg.IKielerProgressMonitor;
 import de.cau.cs.kieler.core.kgraph.KEdge;
 import de.cau.cs.kieler.core.kgraph.KNode;
 import de.cau.cs.kieler.core.kgraph.KPort;
+import de.cau.cs.kieler.kiml.ILayoutListener;
 import de.cau.cs.kieler.kiml.klayoutdata.KInsets;
 import de.cau.cs.kieler.kiml.klayoutdata.KPoint;
 import de.cau.cs.kieler.kiml.options.LayoutOptions;
@@ -49,7 +51,7 @@ import de.cau.cs.kieler.kvid.visual.complex.ScopeEditPart;
  * @author jjc
  *
  */
-public class DataDistributor implements IProviderListener {
+public class DataDistributor implements IProviderListener, ILayoutListener {
     
     private static final DataDistributor INSTANCE = new DataDistributor();
     
@@ -60,6 +62,8 @@ public class DataDistributor implements IProviderListener {
     private List<IDataListener> listeners = new LinkedList<IDataListener>();
     
     private KNode currentDiagramLayout = null;
+    
+    private DiagramEditor currentEditor = null;
     
     private IDataProvider currentProvider;
     
@@ -83,11 +87,12 @@ public class DataDistributor implements IProviderListener {
         registerDataListener(GmfDrawer.getInstance());
         final IEditorPart activeEditor = getActiveEditor();
         if (activeEditor instanceof DiagramEditor) {
+            currentEditor = (DiagramEditor) activeEditor;
             PlatformUI.getWorkbench().getDisplay().syncExec(new Runnable() {
                 public void run() {
                     currentDiagramLayout = EclipseLayoutServices.getInstance()
-                            .getManager(activeEditor, null)
-                            .buildLayoutGraph(activeEditor, null, false);
+                            .getManager(currentEditor, null)
+                            .buildLayoutGraph(currentEditor, null, false);
                 }
             });
         }
@@ -225,6 +230,7 @@ public class DataDistributor implements IProviderListener {
         editPartsByURI = new HashMap<String, EditPart>();
         dataByURI = new HashMap<String, DataObject>();
         currentDiagramLayout = null;
+        currentEditor = null;
     }
     
     public void registerDataListener(IDataListener thelistener) {
@@ -233,6 +239,28 @@ public class DataDistributor implements IProviderListener {
     
     public void removeDataListener(IDataListener thelistener) {
         listeners.remove(thelistener);
+    }
+
+    /* (non-Javadoc)
+     * @see de.cau.cs.kieler.kiml.ILayoutListener#layoutRequested(de.cau.cs.kieler.core.kgraph.KNode)
+     */
+    public void layoutRequested(KNode layoutGraph) {
+        //not relevant for kvid, thus ignored
+    }
+
+    /* (non-Javadoc)
+     * @see de.cau.cs.kieler.kiml.ILayoutListener#layoutPerformed(de.cau.cs.kieler.core.kgraph.KNode, de.cau.cs.kieler.core.alg.IKielerProgressMonitor)
+     */
+    public void layoutPerformed(KNode layoutGraph,
+            IKielerProgressMonitor monitor) {
+        System.out.println("muh");
+        PlatformUI.getWorkbench().getDisplay().asyncExec(new Runnable() {
+            public void run() {
+                currentDiagramLayout = EclipseLayoutServices.getInstance()
+                        .getManager(currentEditor, null)
+                        .buildLayoutGraph(currentEditor, null, false);
+            }
+        });
     }
 
 }

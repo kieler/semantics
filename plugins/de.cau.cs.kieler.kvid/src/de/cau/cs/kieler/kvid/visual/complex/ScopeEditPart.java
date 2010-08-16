@@ -140,6 +140,7 @@ public class ScopeEditPart extends ShapeNodeEditPart implements IDataListener {
      */
     @SuppressWarnings({ "rawtypes", "unchecked" })
     public void triggerDataChanged() {
+        
         //Check if information is relevant for this edit part
         IEditorPart activeEditor = DataDistributor.getInstance().getActiveEditor();
         if (activeEditor instanceof DiagramEditor) {
@@ -151,7 +152,6 @@ public class ScopeEditPart extends ShapeNodeEditPart implements IDataListener {
             return;
         }
         
-        System.out.println(referredObjectURI + ":" + isActive());
         if (referredObjectURI == null || DataDistributor.getInstance().getDataObjectByURI(referredObjectURI) == null) {
             View view = this.getNotationView();
             EList list = view.getSourceEdges();
