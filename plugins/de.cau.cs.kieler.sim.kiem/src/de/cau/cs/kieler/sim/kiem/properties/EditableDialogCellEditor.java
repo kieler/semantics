@@ -63,10 +63,6 @@ public abstract class EditableDialogCellEditor extends TextCellEditor {
      */
     private Control contents;
 
-    /**
-     * The label that gets reused by <code>updateLabel</code>.
-     */
-    private Label defaultLabel;
 
     /** The is editable. */
     protected boolean isEditable = true;
@@ -180,27 +176,6 @@ public abstract class EditableDialogCellEditor extends TextCellEditor {
         return result;
     }
 
-    /**
-     * Creates the controls used to show the value of this cell editor.
-     * <p>
-     * The default implementation of this framework method creates a label widget, using the same
-     * font and background color as the parent control.
-     * </p>
-     * <p>
-     * Subclasses may reimplement. If you reimplement this method, you should also reimplement
-     * <code>updateContents</code>.
-     * </p>
-     * 
-     * @param cell
-     *            the control for this cell editor
-     * @return the underlying control
-     */
-    protected Control createContents(Composite cell) {
-        defaultLabel = new Label(cell, SWT.LEFT);
-        defaultLabel.setFont(cell.getFont());
-        defaultLabel.setBackground(cell.getBackground());
-        return defaultLabel;
-    }
 
     /*
      * (non-Javadoc) Method declared on CellEditor.
@@ -304,11 +279,7 @@ public abstract class EditableDialogCellEditor extends TextCellEditor {
      * (non-Javadoc) Method declared on CellEditor.
      */
     protected Object doGetValue() {
-        if (text != null) {
-            return text.getText();
-        } else {
-            return defaultLabel.getText();
-        }
+        return text.getText();
     }
 
     /*
@@ -423,9 +394,6 @@ public abstract class EditableDialogCellEditor extends TextCellEditor {
         String text = "";//$NON-NLS-1$
         if (value != null) {
             text = value.toString();
-        }
-        if (defaultLabel != null) {
-            defaultLabel.setText(text);
         }
         if (this.text != null) {
             this.text.setText(text);
