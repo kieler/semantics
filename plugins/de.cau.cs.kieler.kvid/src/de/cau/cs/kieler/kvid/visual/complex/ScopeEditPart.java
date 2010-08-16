@@ -175,6 +175,14 @@ public class ScopeEditPart extends ShapeNodeEditPart implements IDataListener {
         });
     }
     
+    /* (non-Javadoc)
+     * @see org.eclipse.gmf.runtime.diagram.ui.editparts.GraphicalEditPart#removeNotify()
+     */
+    @Override
+    public void removeNotify() {
+        super.removeNotify();
+        DataDistributor.getInstance().removeDataListener(this);
+    }
     
     
 }
