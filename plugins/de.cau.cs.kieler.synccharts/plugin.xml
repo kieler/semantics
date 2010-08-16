@@ -12,15 +12,6 @@
    <extension-point id="triggerListener" name="Trigger Listener" schema="schema/triggerListener.exsd"/>
 
 
-   <extension
-         point="org.eclipse.xtend.typesystem.emf.checks">
-      <metaModel
-            nsURI="http://kieler.cs.cau.de/synccharts/0.2.3">
-         <checkFile
-               path="model/SyncchartsChecks.chk">
-         </checkFile>
-      </metaModel>
-   </extension>
    <extension point="org.eclipse.emf.ecore.generated_package">
       <package
             uri="http://kieler.cs.cau.de/synccharts/0.2.3"
