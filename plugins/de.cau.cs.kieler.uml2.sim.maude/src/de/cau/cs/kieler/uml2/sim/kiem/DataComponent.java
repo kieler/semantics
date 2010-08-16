@@ -74,748 +74,721 @@ import org.eclipse.ui.console.MessageConsole;
  * The Class DataComponent.
  */
 public class DataComponent extends JSONObjectSimulationDataComponent implements
-		IJSONObjectDataComponent {
-
-	/** The constant name of the maude console. */
-	private static final String MAUDECONSOLENAME = "Maude Console";
-
-	/** The constant for the Maude timeout. */
-	private static final int MAUDETIMEOUT = 5000;
-	
-	/**
-	 * The constant MAUDEPARSESTATESTARTER indicates the start token to search
-	 * for.
-	 */
-	private static final String MAUDEPARSESTATESTARTER = "--> maState \"UML\" $doneC (C";
-
-	/** The constant MAUDEERROR indicates the error token to search for. */
-	private static final String MAUDEERROR = "*HERE*";
-
-	/** The maude2 emf id hashmap to cache the mapping. */
-	private HashMap<String, String> maude2EMFId;
-
-	/** The maude session id. */
-	int maudeSessionId;
-
-	/** The out path. */
-	String outPath;
-
-	/** The currently active states. */
-	String[] currentStates;
-
-	// -------------------------------------------------------------------------
-
-	/**
-	 * Instantiates a new data component.
-	 */
-	public DataComponent() {
-		// TODO Auto-generated constructor stub
-	}
-
-	// -------------------------------------------------------------------------
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * de.cau.cs.kieler.sim.kiem.ui.datacomponent.JSONObjectSimulationDataComponent
-	 * #doProvideProperties()
-	 */
-	public KiemProperty[] doProvideProperties() {
-		KiemProperty[] properties = new KiemProperty[2];
-		KiemPropertyTypeFile maudeFile = new KiemPropertyTypeFile(true);
-		properties[0] = new KiemProperty("Maude Executable", maudeFile, "maude");
-		properties[1] = new KiemProperty("State Variable", "state");
-		return properties;
-	}
-
-	// -------------------------------------------------------------------------
-
-	/**
-	 * Gets the initial states.
-	 * 
-	 * @return the initial states
-	 */
-	public String[] getInitialStates() {
-		LinkedList<String> stringList = new LinkedList<String>();
-
-		// we here read in the uml model and extract the necessary information
-		Object rootObject = this.getInputModelEObject(this.getInputEditor());
-		if (rootObject instanceof EObject) {
-			EObject eObject = (EObject) rootObject;
-			EmfMetaModel metaModel0 = new EmfMetaModel(
-					org.eclipse.uml2.uml.UMLPackage.eINSTANCE);
-			EmfMetaModel metaModel1 = new EmfMetaModel(
-					org.eclipse.emf.ecore.EcorePackage.eINSTANCE);
-
-			XtendFacade facade = XtendFacade.create("model::Extensions");
-			facade.registerMetaModel(metaModel0);
-			facade.registerMetaModel(metaModel1);
-
-			// collect all initial states
-			Object objectList = facade.call("getInitialStates", eObject);
-			if (objectList instanceof ArrayList) {
-				for (Object stateOrRegion : ((ArrayList) objectList)) {
-					if (stateOrRegion instanceof String) {
-						stringList.add((String) stateOrRegion);
-						printConsole("Initial state: " + (String) stateOrRegion);
-					}
-				}
-			}
-
-		}
-
-		return stringList.toArray(new String[0]);
-	}
-
-	// -------------------------------------------------------------------------
-
-	/**
-	 * Extract the active states.
-	 * 
-	 * @param maudeResult
-	 *            the maude result
-	 * @return the string[]
-	 */
-	public String[] extractActiveStates(String maudeResult) {
-		boolean error = maudeResult.contains(MAUDEERROR);
-		// if maude result contains error, use the old current states
-		if (error) {
-			return currentStates;
-		}
-
-		try {
-
-			String maudePartResult = maudeResult.substring(maudeResult
-					.lastIndexOf(MAUDEPARSESTATESTARTER)
-					+ MAUDEPARSESTATESTARTER.length());
-
-			/*
-			 * Maude output looks like this:
-			 * 
-			 * search in INIT : maState "UML" $stableC prettyVerts (T461729046,
-			 * R-768353767) empty ee3 =>* mastate such that isDone mastate =
-			 * true .
-			 * 
-			 * Solution 1 (state 3) states: 4 rewrites: 65 in 6597516000ms cpu
-			 * (0ms real) (0 rewrites/second) mastate --> maState "UML" $doneC
-			 * (C "T461729046", root R "R-768353767") empty empty
-			 * 
-			 * No more solutions. states: 4 rewrites: 65 in 6597516000ms cpu
-			 * (0ms real) (0 rewrites/second)
-			 */
-
-			LinkedList<String> stringList = new LinkedList<String>();
-
-			boolean consuming = false;
-			String consumedPart = "";
-			for (int c = 0; c < maudePartResult.length(); c++) {
-				String character = maudePartResult.substring(c, c + 1);
-				if (character.equals("\"")) {
-					consuming = !consuming;
-					if (!consuming) {
-						stringList.add(consumedPart);
-						consumedPart = "";
-					}
-					// do not consume "-character
-					continue;
-				}
-				if (character.equals(")")) {
-					break;
-				}
-				if (consuming) {
-					consumedPart += character;
-				}
-			}
-
-			return stringList.toArray(new String[0]);
-		} catch (Exception e) {
-			return currentStates;
-		}
-
-	}
-
-	// -------------------------------------------------------------------------
-
-	/**
-	 * Extract actions.
-	 * 
-	 * @param maudeResult
-	 *            the maude result
-	 * @return the string[]
-	 */
-	public String[] extractActions(String maudeResult) {
-		// TODO: this seems not yes possible.
-		String[] returnArray = new String[1];
-		return returnArray;
-	}
-
-	// -------------------------------------------------------------------------
-
-	/**
-	 * Constructs the currently active states using the original emf ids
-	 * 
-	 * @return the current state ids
-	 */
-	public String getCurrentStateIds() {
-		String stateIds = "";
-		for (String maudeStateId : currentStates) {
-			System.out.println("Search for " + maudeStateId);
-			String eMFId = getEMFId(maudeStateId);
-			System.out.println("Found " + eMFId);
-			if (eMFId != null) {
-				if (!stateIds.isEmpty()) {
-					stateIds += ",";
-				}
-				stateIds += eMFId;
-			}
-		}
-		return stateIds;
-	}
-
-	// -------------------------------------------------------------------------
-
-	/**
-	 * Reset the hashmap.
-	 */
-	public void resetMappingHashmap() {
-		// create new hash map
-		maude2EMFId = new HashMap<String, String>();
-	}
-
-	// -------------------------------------------------------------------------
-
-	/**
-	 * Gets the (cashed) eMF id.
-	 * 
-	 * @param maudeStateId
-	 *            the maude state id
-	 * @return the eMF id
-	 */
-	public String getEMFId(String maudeStateId) {
-		// if no hashmap exists create one
-		if (maude2EMFId == null) {
-			maude2EMFId = new HashMap<String, String>();
-		}
-
-		// if id was found in hashmap return it
-		if (maude2EMFId.containsKey(maudeStateId)) {
-			return (String) maude2EMFId.get(maudeStateId);
-		}
-
-		// if id was not found, then we search the model for it
-
-		Object rootObject = this.getInputModelEObject(this.getInputEditor());
-		if (rootObject instanceof EObject) {
-			EObject eObject = (EObject) rootObject;
-			EmfMetaModel metaModel0 = new EmfMetaModel(
-					org.eclipse.uml2.uml.UMLPackage.eINSTANCE);
-			EmfMetaModel metaModel1 = new EmfMetaModel(
-					org.eclipse.emf.ecore.EcorePackage.eINSTANCE);
-
-			XtendFacade facade = XtendFacade.create("model::Extensions");
-			facade.registerMetaModel(metaModel0);
-			facade.registerMetaModel(metaModel1);
-
-			// collect all initial states
-			Object objectList = facade.call("getEmfId", eObject, maudeStateId);
-			System.out.println(objectList.toString());
-			if (objectList instanceof ArrayList) {
-				if (((ArrayList) objectList).size() > 0) {
-					String eMFId = (String) ((ArrayList) objectList).get(0);
-					maude2EMFId.put(maudeStateId, eMFId);
-					return eMFId;
-				}
-			}
-		}
-		return null;
-	}
-
-	// -------------------------------------------------------------------------
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * de.cau.cs.kieler.sim.kiem.ui.datacomponent.JSONObjectSimulationDataComponent
-	 * #doStep(org.json .JSONObject)
-	 */
-	public JSONObject doStep(JSONObject signals) throws KiemExecutionException {
-		// the return object to construct
-		JSONObject returnObj = new JSONObject();
-
-		// build query string ---
-		// first collect events
-		String triggerEventsQuery = "";
-		String[] signalNames = JSONObject.getNames(signals);
-		for (String signalName : signalNames) {
-			try {
-				Object object;
-				object = signals.get(signalName);
-				if (JSONSignalValues.isPresent(object)) {
-					if (!triggerEventsQuery.isEmpty()) {
-						triggerEventsQuery += ",";
-					}
-					triggerEventsQuery += signalName;
-				}
-			} catch (JSONException e) {
-				// ignore errors - should not happen at all
-			}
-		}
-		// if no events selected, produce this dummy event for maude
-		if (triggerEventsQuery.equals("")) {
-			triggerEventsQuery = "ev: \"noevent\"";
-		}
-
-		// second build the current states
-		String currentStatesQuery = "";
-		for (String currentState : currentStates) {
-			if (!currentStatesQuery.isEmpty()) {
-				currentStatesQuery += ",";
-			}
-			currentStatesQuery += currentState;
-		}
-
-		// search (maState "UML" ($stableC (prettyVerts (R-990928836 ,
-		// susp441237549)) empty) (res,
-		// ee1)) =>* mastate such that isDone mastate .
-		String queryRequest = "search (maState \"UML\" ($stableC (prettyVerts ("
-				+ currentStatesQuery
-				+ ")) empty) ("
-				+ triggerEventsQuery
-				+ ")) =>* mastate such that isDone mastate .\n";
-
-		// Debug output query request
-		printConsole(queryRequest);
-
-		String result = "";
-		try {
-			result = MaudeInterfacePlugin.getDefault().queryMaude(queryRequest,
-					maudeSessionId, MAUDETIMEOUT);
-		} catch (Exception e) {
-			throw new KiemExecutionException(
-					"A Maude simulation error occurred.", false, e);
-		}
-
-		// Debug output query rresult
-		printConsole(result);
-
-		// interpret resulting states
-		currentStates = extractActiveStates(result);
-
-		// the stateName is the second KIEM property
-		String stateName = this.getProperties()[2].getValue();
-		try {
-			returnObj.accumulate(stateName, getCurrentStateIds());
-		} catch (Exception e) {
-			// ignore any errors
-		}
-
-		// no actions can be extracted so far
-		return returnObj;
-	}
-
-	// -------------------------------------------------------------------------
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * de.cau.cs.kieler.sim.kiem.ui.datacomponent.JSONObjectSimulationDataComponent
-	 * #initialize()
-	 */
-	public void initialize() throws KiemInitializationException {
-		String pathToMaude = this.getProperties()[1].getValue();
-
-		String pathToMaudeCode = getMaudeGenCodeLocation();
-		if (isWindows()) {
-			pathToMaudeCode = transformToCygwinPath(pathToMaudeCode);
-		}
-
-		// reset the mapping
-		resetMappingHashmap();
-
-		// clear the maude console
-		clearConsole();
-
-		// initialize with initial states (and regions)
-		currentStates = getInitialStates();
-
-		maudeSessionId = MaudeInterfacePlugin.getDefault().createMaudeSession(
-				pathToMaude, pathToMaudeCode);
-		try {
-			MaudeInterfacePlugin.getDefault().startMaudeSession(maudeSessionId);
-			printConsole(MaudeInterfacePlugin.getDefault().queryMaude(".\n",
-					1000, maudeSessionId, MAUDETIMEOUT));
-		} catch (Exception e) {
-			throw new KiemInitializationException(
-					"Cannot start Maude. Plase make sure that the paths are "
-							+ "set correctly in the KIEM parameters of the simulator"
-							+ " component.", true, e);
-		}
-	}
-
-	// -------------------------------------------------------------------------
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see de.cau.cs.kieler.sim.kiem.IDataComponent#wrapup()
-	 */
-	public void wrapup() throws KiemInitializationException {
-		MaudeInterfacePlugin.getDefault().closeMaudeSession(maudeSessionId);
-
-	}
-
-	// -------------------------------------------------------------------------
-
-	/**
-	 * Refresh workspace so that, e.g. the Project Explorer is updated to
-	 * display the generated maude file.
-	 */
-	public void refreshWorkspace() {
-		try {
-			// get resource
-			IResource myresource = ResourcesPlugin.getWorkspace().getRoot();
-			// then just refresh it
-			myresource.refreshLocal(IResource.DEPTH_INFINITE, null);
-		} catch (CoreException e) {
-			e.printStackTrace();
-		}
-	}
-
-	// -------------------------------------------------------------------------
-
-	/**
-	 * Gets the maude gen code location. It is the same path where the original
-	 * source file lives just ending with the maude file extension instead of
-	 * uml.
-	 * 
-	 * @return the maude gen code location
-	 */
-	public String getMaudeGenCodeLocation() {
-		String outPath = part2Location(this.getInputEditor());
-		String stringUri = this.getInputModel();
-		String stringUri2 = stringUri.replace(".uml", "");
-		stringUri2 = stringUri2.substring(stringUri2.indexOf("/", 1) + 1);
-		return (outPath + stringUri2);
-	}
-
-	// -------------------------------------------------------------------------
-
-	/**
-	 * Gets the maude base code location that must be included into the
-	 * generated maude file that has to access these maude base files.
-	 * 
-	 * @return the maude base code location
-	 */
-	public String getMaudeBaseCodeLocation() {
-		// building path to bundle
-		Bundle bundle = Platform.getBundle("de.cau.cs.kieler.uml2.sim.maude");
-
-		URL url = null;
-		try {
-			url = FileLocator.toFileURL(FileLocator.find(bundle, new Path(
-					"maude"), null));
-		} catch (IOException e2) {
-			e2.printStackTrace();
-		}
-
-		String bundleLocation = url.getFile();
-		// because of windows vs. linux
-		bundleLocation = bundleLocation.replaceAll("[/\\\\]+", "\\" + "/");
-		if (bundleLocation.startsWith("\\")) {
-			bundleLocation = bundleLocation.substring(1);
-		}
-
-		return bundleLocation;
-	}
-
-	// -------------------------------------------------------------------------
-
-	/**
-	 * Checks whether the system is based on windows.
-	 * 
-	 * @return true, if is windows
-	 */
-	public static boolean isWindows() {
-		String os = System.getProperty("os.name").toLowerCase();
-		return (os.indexOf("win") >= 0);
-	}
-
-	// -------------------------------------------------------------------------
-
-	/**
-	 * Transforms a normal Windows path into a cygwin path because Maude for
-	 * Windows is compiled w/ cygwin.
-	 * 
-	 * @param WindowsPath
-	 *            the windows path
-	 * @return the string
-	 */
-	public String transformToCygwinPath(String WindowsPath) {
-		int i = WindowsPath.indexOf(":");
-		String drive = WindowsPath.substring(i - 1, i);
-		String location = WindowsPath.substring(i + 2);
-		location = location.replaceAll("[/\\\\]+", "\\" + "/");
-		return "/cygdrive/" + drive.toLowerCase() + "/" + location;
-	}
-
-	// -------------------------------------------------------------------------
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * de.cau.cs.kieler.sim.kiem.ui.datacomponent.JSONObjectSimulationDataComponent
-	 * # doModel2ModelTransform(de.cau.cs.kieler.core.ui.KielerProgressMonitor)
-	 */
-	public void doModel2ModelTransform(KielerProgressMonitor monitor)
-			throws Exception {
-		// Workflow
-		Workflow workflow = new Workflow();
-
-		// EMF reader
-		Reader emfReader = new Reader();
-		String stringUri = this.getInputModel();
-		emfReader.setUri(stringUri);
-		emfReader.setModelSlot("model");
-		// DO NOT USE THE SAME INPUT RESOUCRCE SET
-		// OTHERWISE WE MAY CHANGE THE INPUT MODEL!
-		// emfReader.setResourceSet(this.getInputResourceSet());
-		// emfReader.setResourceSet(ptolemyModel.getResourceSet());
-
-		outPath = part2Location(this.getInputEditor());
-
-		// Set model name (gets model.maude)
-		GlobalVar modelname = new GlobalVar();
-		modelname.setName("modelname");
-		String stringUri2 = stringUri.replace(".uml", "");
-		stringUri2 = stringUri2.substring(stringUri2.indexOf("/", 1));
-		modelname.setValue(stringUri2);
-
-		GlobalVar maudebasecode = new GlobalVar();
-		maudebasecode.setName("maudebasecode");
-		String baseLocation = getMaudeBaseCodeLocation();
-		if (isWindows()) {
-			baseLocation = transformToCygwinPath(baseLocation);
-		}
-		maudebasecode.setValue(baseLocation);
-
-		// Outlet
-		Outlet outlet = new Outlet();
-		outlet.setPath(outPath);
-
-		// Meta models
-		EmfMetaModel metaModel0 = new EmfMetaModel(UMLPackage.eINSTANCE);
-		EmfMetaModel metaModel1 = new EmfMetaModel(
-				org.eclipse.emf.ecore.EcorePackage.eINSTANCE);
-
-		// Xpand Generator
-		Generator generator = new Generator();
-		generator.addMetaModel(metaModel0);
-		generator.addMetaModel(metaModel1);
-		generator.addOutlet(outlet);
-		generator.addGlobalVar(modelname);
-		generator.addGlobalVar(maudebasecode);
-		generator.setExpand("model::Template::main FOR model");
-
-		// workflow
-		WorkflowContext wfx = new WorkflowContextDefaultImpl();
-		Issues issues = new org.eclipse.emf.mwe.core.issues.IssuesImpl();
-		M2MProgressMonitor m2mMonitor = new M2MProgressMonitor(monitor, 3);
-
-		workflow.addComponent(emfReader);
-		workflow.addComponent(generator);
-		// workflow.invoke(wfx, (ProgressMonitor)monitor.subTask(80), issues);
-		workflow.invoke(wfx, m2mMonitor, issues);
-
-		// refresh the workspace because we created a new file
-		refreshWorkspace();
-	}
-
-	// -------------------------------------------------------------------------
-
-	/**
-	 * Get the editor input as fill directory.
-	 * 
-	 * @param editor
-	 *            the editor
-	 * @return the string
-	 */
-	private static String part2Location(final IEditorPart editor) {
-		String out = null;
-		FileEditorInput uri = (FileEditorInput) editor.getEditorInput();
-		String outName = uri.getName();
-		out = uri.getURI().getRawPath().replace(outName, "");
-		return out;
-	}
-
-	// -------------------------------------------------------------------------
-	// -------------------------------------------------------------------------
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * de.cau.cs.kieler.sim.kiem.ui.datacomponent.JSONObjectSimulationDataComponent
-	 * #checkModelValidation (org.eclipse.emf.ecore.EObject)
-	 */
-	public boolean checkModelValidation(EObject rootEObject) {
-		return true;
-	}
-
-	// -------------------------------------------------------------------------
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * de.cau.cs.kieler.sim.kiem.ui.datacomponent.JSONObjectSimulationDataComponent
-	 * # doProvideInitialVariables()
-	 */
-	public JSONObject doProvideInitialVariables()
-			throws KiemInitializationException {
-		JSONObject returnObj = new JSONObject();
-
-		// we here read in the uml model and extract the necessary information
-		Object rootObject = this.getInputModelEObject(this.getInputEditor());
-		if (rootObject instanceof EObject) {
-			EObject eObject = (EObject) rootObject;
-			EmfMetaModel metaModel0 = new EmfMetaModel(
-					org.eclipse.uml2.uml.UMLPackage.eINSTANCE);
-			EmfMetaModel metaModel1 = new EmfMetaModel(
-					org.eclipse.emf.ecore.EcorePackage.eINSTANCE);
-
-			XtendFacade facade = XtendFacade.create("model::Extensions");
-			facade.registerMetaModel(metaModel0);
-			facade.registerMetaModel(metaModel1);
-
-			// first collect events
-			Object objectList = facade.call("getTriggerEvents", eObject);
-			if (objectList instanceof ArrayList) {
-				for (Object key : ((ArrayList) objectList)) {
-					if (key instanceof String) {
-						try {
-							String keyString = (String) key;
-							if (!returnObj.has(keyString)) {
-								returnObj.accumulate(keyString,
-										JSONSignalValues.newValue(false));
-
-							}
-						} catch (JSONException e) {
-							// ignore errors
-						}
-					}
-				}
-			}
-
-			// second collect actions
-			objectList = facade.call("getActions", eObject);
-			if (objectList instanceof ArrayList) {
-				for (Object key : ((ArrayList) objectList)) {
-					if (key instanceof String) {
-						// not include skip action
-						if (!((String) key).equals("skip")) {
-							try {
-								String keyString = (String) key;
-								if (!returnObj.has(keyString)) {
-									returnObj.accumulate(keyString,
-											JSONSignalValues.newValue(false));
-								}
-							} catch (JSONException e) {
-								// ignore errors
-							}
-						}
-					}
-				}
-			}
-
-		}
-		return returnObj;
-	}
-
-	// -------------------------------------------------------------------------
-
-	// Adapted method because papyrus editors are not instance of DiagramEditor
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * de.cau.cs.kieler.sim.kiem.ui.datacomponent.JSONObjectSimulationDataComponent
-	 * #getNotationElement (org.eclipse.ui.IEditorPart)
-	 */
-	@Override
-	protected View getNotationElement(IEditorPart diagramEditor) {
-		if (diagramEditor instanceof PapyrusMultiDiagramEditor) {
-			View notationElement = ((View) ((PapyrusMultiDiagramEditor) diagramEditor)
-					.getDiagramEditPart().getModel());
-			return notationElement;
-		}
-		return null;
-	}
-
-	// -------------------------------------------------------------------------
-
-	// Only return the papyrus uml editor
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * de.cau.cs.kieler.sim.kiem.ui.datacomponent.JSONObjectSimulationDataComponent
-	 * #getInputEditor()
-	 */
-	@Override
-	protected IEditorPart getInputEditor() {
-		IEditorPart ep = super.getInputEditor();
-		if (!(ep instanceof PapyrusMultiDiagramEditor)) {
-			return null;
-		}
-		return ep;
-	}
-
-	// -------------------------------------------------------------------------
-
-	/**
-	 * Clears the maude console.
-	 */
-	private void clearConsole() {
-		printConsole(null);
-	}
-
-	/**
-	 * Prints to the maude console.
-	 * 
-	 * @param text
-	 *            the text
-	 */
-	private void printConsole(String text) {
-		MessageConsole maudeConsole = null;
-
-		boolean found = false;
-		ConsolePlugin plugin = ConsolePlugin.getDefault();
-		IConsoleManager conMan = plugin.getConsoleManager();
-		IConsole[] existing = conMan.getConsoles();
-		for (int i = 0; i < existing.length; i++)
-			if (DataComponent.MAUDECONSOLENAME.equals(existing[i].getName())) {
-				maudeConsole = (MessageConsole) existing[i];
-				found = true;
-				break;
-			}
-		if (!found) {
-			// if no console found, so create a new one
-			maudeConsole = new MessageConsole(DataComponent.MAUDECONSOLENAME,
-					null);
-			conMan.addConsoles(new IConsole[] { maudeConsole });
-		}
-
-		// now print to the maude console or clear it
-		if (text != null) {
-			MessageConsoleStream out = maudeConsole.newMessageStream();
-			out.println(text);
-		} else {
-			maudeConsole.clearConsole();
-		}
-	}
+        IJSONObjectDataComponent {
+
+    /** The constant name of the maude console. */
+    private static final String MAUDECONSOLENAME = "Maude Console";
+
+    /** The constant for the Maude timeout. */
+    private static final int MAUDETIMEOUT = 5000;
+
+    /**
+     * The constant MAUDEPARSESTATESTARTER indicates the start token to search for.
+     */
+    private static final String MAUDEPARSESTATESTARTER = "--> maState \"UML\" $doneC (C";
+
+    /** The constant MAUDEERROR indicates the error token to search for. */
+    private static final String MAUDEERROR = "*HERE*";
+
+    /** The maude2 emf id hashmap to cache the mapping. */
+    private HashMap<String, String> maude2EMFId;
+
+    /** The maude session id. */
+    int maudeSessionId;
+
+    /** The out path. */
+    String outPath;
+
+    /** The currently active states. */
+    String[] currentStates;
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Instantiates a new data component.
+     */
+    public DataComponent() {
+        // TODO Auto-generated constructor stub
+    }
+
+    // -------------------------------------------------------------------------
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see de.cau.cs.kieler.sim.kiem.ui.datacomponent.JSONObjectSimulationDataComponent
+     * #doProvideProperties()
+     */
+    public KiemProperty[] doProvideProperties() {
+        KiemProperty[] properties = new KiemProperty[2];
+        KiemPropertyTypeFile maudeFile = new KiemPropertyTypeFile(true);
+        properties[0] = new KiemProperty("Maude Executable", maudeFile, "maude");
+        properties[1] = new KiemProperty("State Variable", "state");
+        return properties;
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Gets the initial states.
+     * 
+     * @return the initial states
+     */
+    public String[] getInitialStates() {
+        LinkedList<String> stringList = new LinkedList<String>();
+
+        // we here read in the uml model and extract the necessary information
+        Object rootObject = this.getInputModelEObject(this.getInputEditor());
+        if (rootObject instanceof EObject) {
+            EObject eObject = (EObject) rootObject;
+            EmfMetaModel metaModel0 = new EmfMetaModel(org.eclipse.uml2.uml.UMLPackage.eINSTANCE);
+            EmfMetaModel metaModel1 = new EmfMetaModel(org.eclipse.emf.ecore.EcorePackage.eINSTANCE);
+
+            XtendFacade facade = XtendFacade.create("model::Extensions");
+            facade.registerMetaModel(metaModel0);
+            facade.registerMetaModel(metaModel1);
+
+            // collect all initial states
+            Object objectList = facade.call("getInitialStates", eObject);
+            if (objectList instanceof ArrayList) {
+                for (Object stateOrRegion : ((ArrayList) objectList)) {
+                    if (stateOrRegion instanceof String) {
+                        stringList.add((String) stateOrRegion);
+                        printConsole("Initial state: " + (String) stateOrRegion);
+                    }
+                }
+            }
+
+        }
+
+        return stringList.toArray(new String[0]);
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Extract the active states.
+     * 
+     * @param maudeResult
+     *            the maude result
+     * @return the string[]
+     */
+    public String[] extractActiveStates(String maudeResult) {
+        boolean error = maudeResult.contains(MAUDEERROR);
+        // if maude result contains error, use the old current states
+        if (error) {
+            return currentStates;
+        }
+
+        try {
+
+            String maudePartResult = maudeResult.substring(maudeResult
+                    .lastIndexOf(MAUDEPARSESTATESTARTER) + MAUDEPARSESTATESTARTER.length());
+
+            /*
+             * Maude output looks like this:
+             * 
+             * search in INIT : maState "UML" $stableC prettyVerts (T461729046, R-768353767) empty
+             * ee3 =>* mastate such that isDone mastate = true .
+             * 
+             * Solution 1 (state 3) states: 4 rewrites: 65 in 6597516000ms cpu (0ms real) (0
+             * rewrites/second) mastate --> maState "UML" $doneC (C "T461729046", root R
+             * "R-768353767") empty empty
+             * 
+             * No more solutions. states: 4 rewrites: 65 in 6597516000ms cpu (0ms real) (0
+             * rewrites/second)
+             */
+
+            LinkedList<String> stringList = new LinkedList<String>();
+
+            boolean consuming = false;
+            String consumedPart = "";
+            for (int c = 0; c < maudePartResult.length(); c++) {
+                String character = maudePartResult.substring(c, c + 1);
+                if (character.equals("\"")) {
+                    consuming = !consuming;
+                    if (!consuming) {
+                        stringList.add(consumedPart);
+                        consumedPart = "";
+                    }
+                    // do not consume "-character
+                    continue;
+                }
+                if (character.equals(")")) {
+                    break;
+                }
+                if (consuming) {
+                    consumedPart += character;
+                }
+            }
+
+            return stringList.toArray(new String[0]);
+        } catch (Exception e) {
+            return currentStates;
+        }
+
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Extract actions.
+     * 
+     * @param maudeResult
+     *            the maude result
+     * @return the string[]
+     */
+    public String[] extractActions(String maudeResult) {
+        // TODO: this seems not yes possible.
+        String[] returnArray = new String[1];
+        return returnArray;
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Constructs the currently active states using the original emf ids
+     * 
+     * @return the current state ids
+     */
+    public String getCurrentStateIds() {
+        String stateIds = "";
+        for (String maudeStateId : currentStates) {
+            System.out.println("Search for " + maudeStateId);
+            String eMFId = getEMFId(maudeStateId);
+            System.out.println("Found " + eMFId);
+            if (eMFId != null) {
+                if (!stateIds.isEmpty()) {
+                    stateIds += ",";
+                }
+                stateIds += eMFId;
+            }
+        }
+        return stateIds;
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Reset the hashmap.
+     */
+    public void resetMappingHashmap() {
+        // create new hash map
+        maude2EMFId = new HashMap<String, String>();
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Gets the (cashed) eMF id.
+     * 
+     * @param maudeStateId
+     *            the maude state id
+     * @return the eMF id
+     */
+    public String getEMFId(String maudeStateId) {
+        // if no hashmap exists create one
+        if (maude2EMFId == null) {
+            maude2EMFId = new HashMap<String, String>();
+        }
+
+        // if id was found in hashmap return it
+        if (maude2EMFId.containsKey(maudeStateId)) {
+            return (String) maude2EMFId.get(maudeStateId);
+        }
+
+        // if id was not found, then we search the model for it
+
+        Object rootObject = this.getInputModelEObject(this.getInputEditor());
+        if (rootObject instanceof EObject) {
+            EObject eObject = (EObject) rootObject;
+            EmfMetaModel metaModel0 = new EmfMetaModel(org.eclipse.uml2.uml.UMLPackage.eINSTANCE);
+            EmfMetaModel metaModel1 = new EmfMetaModel(org.eclipse.emf.ecore.EcorePackage.eINSTANCE);
+
+            XtendFacade facade = XtendFacade.create("model::Extensions");
+            facade.registerMetaModel(metaModel0);
+            facade.registerMetaModel(metaModel1);
+
+            // collect all initial states
+            Object objectList = facade.call("getEmfId", eObject, maudeStateId);
+            System.out.println(objectList.toString());
+            if (objectList instanceof ArrayList) {
+                if (((ArrayList) objectList).size() > 0) {
+                    String eMFId = (String) ((ArrayList) objectList).get(0);
+                    maude2EMFId.put(maudeStateId, eMFId);
+                    return eMFId;
+                }
+            }
+        }
+        return null;
+    }
+
+    // -------------------------------------------------------------------------
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see de.cau.cs.kieler.sim.kiem.ui.datacomponent.JSONObjectSimulationDataComponent
+     * #doStep(org.json .JSONObject)
+     */
+    public JSONObject doStep(JSONObject signals) throws KiemExecutionException {
+        // the return object to construct
+        JSONObject returnObj = new JSONObject();
+
+        // build query string ---
+        // first collect events
+        String triggerEventsQuery = "";
+        String[] signalNames = JSONObject.getNames(signals);
+        for (String signalName : signalNames) {
+            try {
+                Object object;
+                object = signals.get(signalName);
+                if (JSONSignalValues.isPresent(object)) {
+                    if (!triggerEventsQuery.isEmpty()) {
+                        triggerEventsQuery += ",";
+                    }
+                    triggerEventsQuery += signalName;
+                }
+            } catch (JSONException e) {
+                // ignore errors - should not happen at all
+            }
+        }
+        // if no events selected, produce this dummy event for maude
+        if (triggerEventsQuery.equals("")) {
+            triggerEventsQuery = "ev: \"noevent\"";
+        }
+
+        // second build the current states
+        String currentStatesQuery = "";
+        for (String currentState : currentStates) {
+            if (!currentStatesQuery.isEmpty()) {
+                currentStatesQuery += ",";
+            }
+            currentStatesQuery += currentState;
+        }
+
+        // search (maState "UML" ($stableC (prettyVerts (R-990928836 ,
+        // susp441237549)) empty) (res,
+        // ee1)) =>* mastate such that isDone mastate .
+        String queryRequest = "search (maState \"UML\" ($stableC (prettyVerts ("
+                + currentStatesQuery + ")) empty) (" + triggerEventsQuery
+                + ")) =>* mastate such that isDone mastate . \n";
+
+        // Debug output query request
+        printConsole(queryRequest);
+
+        String result = "";
+        try {
+            result = MaudeInterfacePlugin.getDefault().queryMaude(queryRequest, maudeSessionId 
+                    );
+        } catch (Exception e) {
+            throw new KiemExecutionException("A Maude simulation error occurred.", false, e);
+        }
+
+        // Debug output query rresult
+        printConsole(result);
+
+        // interpret resulting states
+        currentStates = extractActiveStates(result);
+
+        // the stateName is the second KIEM property
+        String stateName = this.getProperties()[2].getValue();
+        try {
+            returnObj.accumulate(stateName, getCurrentStateIds());
+        } catch (Exception e) {
+            // ignore any errors
+        }
+
+        // no actions can be extracted so far
+        return returnObj;
+    }
+
+    // -------------------------------------------------------------------------
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see de.cau.cs.kieler.sim.kiem.ui.datacomponent.JSONObjectSimulationDataComponent
+     * #initialize()
+     */
+    public void initialize() throws KiemInitializationException {
+        String pathToMaude = this.getProperties()[1].getValue();
+
+        String pathToMaudeCode = getMaudeGenCodeLocation();
+        if (isWindows()) {
+            pathToMaudeCode = transformToCygwinPath(pathToMaudeCode);
+        }
+
+        // reset the mapping
+        resetMappingHashmap();
+
+        // clear the maude console
+        clearConsole();
+
+        // initialize with initial states (and regions)
+        currentStates = getInitialStates();
+
+        maudeSessionId = MaudeInterfacePlugin.getDefault().createMaudeSession(pathToMaude,
+                pathToMaudeCode);
+        try {
+            MaudeInterfacePlugin.getDefault().startMaudeSession(maudeSessionId);
+            printConsole(MaudeInterfacePlugin.getDefault().queryMaude("  . \n", 1000, maudeSessionId
+                    ));
+        } catch (Exception e) {
+            throw new KiemInitializationException(
+                    "Cannot start Maude. Plase make sure that the paths are "
+                            + "set correctly in the KIEM parameters of the simulator"
+                            + " component.", true, e);
+        }
+    }
+
+    // -------------------------------------------------------------------------
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see de.cau.cs.kieler.sim.kiem.IDataComponent#wrapup()
+     */
+    public void wrapup() throws KiemInitializationException {
+        MaudeInterfacePlugin.getDefault().closeMaudeSession(maudeSessionId);
+
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Refresh workspace so that, e.g. the Project Explorer is updated to display the generated
+     * maude file.
+     */
+    public void refreshWorkspace() {
+        try {
+            // get resource
+            IResource myresource = ResourcesPlugin.getWorkspace().getRoot();
+            // then just refresh it
+            myresource.refreshLocal(IResource.DEPTH_INFINITE, null);
+        } catch (CoreException e) {
+            e.printStackTrace();
+        }
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Gets the maude gen code location. It is the same path where the original source file lives
+     * just ending with the maude file extension instead of uml.
+     * 
+     * @return the maude gen code location
+     */
+    public String getMaudeGenCodeLocation() {
+        String outPath = part2Location(this.getInputEditor());
+        String stringUri = this.getInputModel();
+        String stringUri2 = stringUri.replace(".uml", "");
+        stringUri2 = stringUri2.substring(stringUri2.indexOf("/", 1) + 1);
+        return (outPath + stringUri2);
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Gets the maude base code location that must be included into the generated maude file that
+     * has to access these maude base files.
+     * 
+     * @return the maude base code location
+     */
+    public String getMaudeBaseCodeLocation() {
+        // building path to bundle
+        Bundle bundle = Platform.getBundle("de.cau.cs.kieler.uml2.sim.maude");
+
+        URL url = null;
+        try {
+            url = FileLocator.toFileURL(FileLocator.find(bundle, new Path("maude"), null));
+        } catch (IOException e2) {
+            e2.printStackTrace();
+        }
+
+        String bundleLocation = url.getFile();
+        // because of windows vs. linux
+        bundleLocation = bundleLocation.replaceAll("[/\\\\]+", "\\" + "/");
+        if (bundleLocation.startsWith("\\")) {
+            bundleLocation = bundleLocation.substring(1);
+        }
+
+        return bundleLocation;
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Checks whether the system is based on windows.
+     * 
+     * @return true, if is windows
+     */
+    public static boolean isWindows() {
+        String os = System.getProperty("os.name").toLowerCase();
+        return (os.indexOf("win") >= 0);
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Transforms a normal Windows path into a cygwin path because Maude for Windows is compiled w/
+     * cygwin.
+     * 
+     * @param WindowsPath
+     *            the windows path
+     * @return the string
+     */
+    public String transformToCygwinPath(String WindowsPath) {
+        int i = WindowsPath.indexOf(":");
+        String drive = WindowsPath.substring(i - 1, i);
+        String location = WindowsPath.substring(i + 2);
+        location = location.replaceAll("[/\\\\]+", "\\" + "/");
+        return "/cygdrive/" + drive.toLowerCase() + "/" + location;
+    }
+
+    // -------------------------------------------------------------------------
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see de.cau.cs.kieler.sim.kiem.ui.datacomponent.JSONObjectSimulationDataComponent #
+     * doModel2ModelTransform(de.cau.cs.kieler.core.ui.KielerProgressMonitor)
+     */
+    public void doModel2ModelTransform(KielerProgressMonitor monitor) throws Exception {
+        // Workflow
+        Workflow workflow = new Workflow();
+
+        // EMF reader
+        Reader emfReader = new Reader();
+        String stringUri = this.getInputModel();
+        emfReader.setUri(stringUri);
+        emfReader.setModelSlot("model");
+        // DO NOT USE THE SAME INPUT RESOUCRCE SET
+        // OTHERWISE WE MAY CHANGE THE INPUT MODEL!
+        // emfReader.setResourceSet(this.getInputResourceSet());
+        // emfReader.setResourceSet(ptolemyModel.getResourceSet());
+
+        outPath = part2Location(this.getInputEditor());
+
+        // Set model name (gets model.maude)
+        GlobalVar modelname = new GlobalVar();
+        modelname.setName("modelname");
+        String stringUri2 = stringUri.replace(".uml", "");
+        stringUri2 = stringUri2.substring(stringUri2.indexOf("/", 1));
+        modelname.setValue(stringUri2);
+
+        GlobalVar maudebasecode = new GlobalVar();
+        maudebasecode.setName("maudebasecode");
+        String baseLocation = getMaudeBaseCodeLocation();
+        if (isWindows()) {
+            baseLocation = transformToCygwinPath(baseLocation);
+        }
+        maudebasecode.setValue(baseLocation);
+
+        // Outlet
+        Outlet outlet = new Outlet();
+        outlet.setPath(outPath);
+
+        // Meta models
+        EmfMetaModel metaModel0 = new EmfMetaModel(UMLPackage.eINSTANCE);
+        EmfMetaModel metaModel1 = new EmfMetaModel(org.eclipse.emf.ecore.EcorePackage.eINSTANCE);
+
+        // Xpand Generator
+        Generator generator = new Generator();
+        generator.addMetaModel(metaModel0);
+        generator.addMetaModel(metaModel1);
+        generator.addOutlet(outlet);
+        generator.addGlobalVar(modelname);
+        generator.addGlobalVar(maudebasecode);
+        generator.setExpand("model::Template::main FOR model");
+
+        // workflow
+        WorkflowContext wfx = new WorkflowContextDefaultImpl();
+        Issues issues = new org.eclipse.emf.mwe.core.issues.IssuesImpl();
+        M2MProgressMonitor m2mMonitor = new M2MProgressMonitor(monitor, 3);
+
+        workflow.addComponent(emfReader);
+        workflow.addComponent(generator);
+        // workflow.invoke(wfx, (ProgressMonitor)monitor.subTask(80), issues);
+        workflow.invoke(wfx, m2mMonitor, issues);
+
+        // refresh the workspace because we created a new file
+        refreshWorkspace();
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Get the editor input as fill directory.
+     * 
+     * @param editor
+     *            the editor
+     * @return the string
+     */
+    private static String part2Location(final IEditorPart editor) {
+        String out = null;
+        FileEditorInput uri = (FileEditorInput) editor.getEditorInput();
+        String outName = uri.getName();
+        out = uri.getURI().getRawPath().replace(outName, "");
+        return out;
+    }
+
+    // -------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see de.cau.cs.kieler.sim.kiem.ui.datacomponent.JSONObjectSimulationDataComponent
+     * #checkModelValidation (org.eclipse.emf.ecore.EObject)
+     */
+    public boolean checkModelValidation(EObject rootEObject) {
+        return true;
+    }
+
+    // -------------------------------------------------------------------------
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see de.cau.cs.kieler.sim.kiem.ui.datacomponent.JSONObjectSimulationDataComponent #
+     * doProvideInitialVariables()
+     */
+    public JSONObject doProvideInitialVariables() throws KiemInitializationException {
+        JSONObject returnObj = new JSONObject();
+
+        // we here read in the uml model and extract the necessary information
+        Object rootObject = this.getInputModelEObject(this.getInputEditor());
+        if (rootObject instanceof EObject) {
+            EObject eObject = (EObject) rootObject;
+            EmfMetaModel metaModel0 = new EmfMetaModel(org.eclipse.uml2.uml.UMLPackage.eINSTANCE);
+            EmfMetaModel metaModel1 = new EmfMetaModel(org.eclipse.emf.ecore.EcorePackage.eINSTANCE);
+
+            XtendFacade facade = XtendFacade.create("model::Extensions");
+            facade.registerMetaModel(metaModel0);
+            facade.registerMetaModel(metaModel1);
+
+            // first collect events
+            Object objectList = facade.call("getTriggerEvents", eObject);
+            if (objectList instanceof ArrayList) {
+                for (Object key : ((ArrayList) objectList)) {
+                    if (key instanceof String) {
+                        try {
+                            String keyString = (String) key;
+                            if (!returnObj.has(keyString)) {
+                                returnObj.accumulate(keyString, JSONSignalValues.newValue(false));
+
+                            }
+                        } catch (JSONException e) {
+                            // ignore errors
+                        }
+                    }
+                }
+            }
+
+            // second collect actions
+            objectList = facade.call("getActions", eObject);
+            if (objectList instanceof ArrayList) {
+                for (Object key : ((ArrayList) objectList)) {
+                    if (key instanceof String) {
+                        // not include skip action
+                        if (!((String) key).equals("skip")) {
+                            try {
+                                String keyString = (String) key;
+                                if (!returnObj.has(keyString)) {
+                                    returnObj.accumulate(keyString,
+                                            JSONSignalValues.newValue(false));
+                                }
+                            } catch (JSONException e) {
+                                // ignore errors
+                            }
+                        }
+                    }
+                }
+            }
+
+        }
+        return returnObj;
+    }
+
+    // -------------------------------------------------------------------------
+
+    // Adapted method because papyrus editors are not instance of DiagramEditor
+    /*
+     * (non-Javadoc)
+     * 
+     * @see de.cau.cs.kieler.sim.kiem.ui.datacomponent.JSONObjectSimulationDataComponent
+     * #getNotationElement (org.eclipse.ui.IEditorPart)
+     */
+    @Override
+    protected View getNotationElement(IEditorPart diagramEditor) {
+        if (diagramEditor instanceof PapyrusMultiDiagramEditor) {
+            View notationElement = ((View) ((PapyrusMultiDiagramEditor) diagramEditor)
+                    .getDiagramEditPart().getModel());
+            return notationElement;
+        }
+        return null;
+    }
+
+    // -------------------------------------------------------------------------
+
+    // Only return the papyrus uml editor
+    /*
+     * (non-Javadoc)
+     * 
+     * @see de.cau.cs.kieler.sim.kiem.ui.datacomponent.JSONObjectSimulationDataComponent
+     * #getInputEditor()
+     */
+    @Override
+    protected IEditorPart getInputEditor() {
+        IEditorPart ep = super.getInputEditor();
+        if (!(ep instanceof PapyrusMultiDiagramEditor)) {
+            return null;
+        }
+        return ep;
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Clears the maude console.
+     */
+    private void clearConsole() {
+        printConsole(null);
+    }
+
+    /**
+     * Prints to the maude console.
+     * 
+     * @param text
+     *            the text
+     */
+    private void printConsole(String text) {
+        MessageConsole maudeConsole = null;
+
+        boolean found = false;
+        ConsolePlugin plugin = ConsolePlugin.getDefault();
+        IConsoleManager conMan = plugin.getConsoleManager();
+        IConsole[] existing = conMan.getConsoles();
+        for (int i = 0; i < existing.length; i++)
+            if (DataComponent.MAUDECONSOLENAME.equals(existing[i].getName())) {
+                maudeConsole = (MessageConsole) existing[i];
+                found = true;
+                break;
+            }
+        if (!found) {
+            // if no console found, so create a new one
+            maudeConsole = new MessageConsole(DataComponent.MAUDECONSOLENAME, null);
+            conMan.addConsoles(new IConsole[] { maudeConsole });
+        }
+
+        // now print to the maude console or clear it
+        if (text != null) {
+            MessageConsoleStream out = maudeConsole.newMessageStream();
+            out.println(text);
+        } else {
+            maudeConsole.clearConsole();
+        }
+    }
 
 }
