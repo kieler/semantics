@@ -377,7 +377,7 @@ public class DataComponent extends JSONObjectSimulationDataComponent implements
         currentStates = extractActiveStates(result);
         
         // the stateName is the second KIEM property
-        String stateName = this.getProperties()[1].getValue();
+        String stateName = this.getProperties()[2].getValue();
         try {
             returnObj.accumulate(stateName, getCurrentStateIds());
         } catch (Exception e) {
@@ -397,7 +397,7 @@ public class DataComponent extends JSONObjectSimulationDataComponent implements
      * de.cau.cs.kieler.sim.kiem.ui.datacomponent.JSONObjectSimulationDataComponent#initialize()
      */
     public void initialize() throws KiemInitializationException {
-        String pathToMaude = "maude";
+        String pathToMaude = this.getProperties()[1].getValue();
 
         String pathToMaudeCode = getMaudeGenCodeLocation();
         if (isWindows()) {
