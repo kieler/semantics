@@ -73,7 +73,8 @@ public class KitsTransientValueService extends DefaultTransientValueService {
                 || feature == SyncchartsPackage.eINSTANCE.getScope_InterfaceDeclaration()
                 || feature == SyncchartsPackage.eINSTANCE.getState_IncomingTransitions()
                 || feature == SyncchartsPackage.eINSTANCE.getRegion_ParentState()
-                || feature == SyncchartsPackage.eINSTANCE.getTransition_SourceState()) {
+                || feature == SyncchartsPackage.eINSTANCE.getTransition_SourceState()
+                || feature == SyncchartsPackage.eINSTANCE.getSubstitution_ParentScope()) {
             return true;
         }
 

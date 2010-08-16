@@ -44,7 +44,9 @@ State returns synccharts::State:
     (type=StateType)? ('state') (id=ID) (label=STRING)?
   
     (
-      ('@' bodyReference = [synccharts::State|ID])
+      ('@' bodyReference = [synccharts::State|ID]
+        ('[' renamings+= Substitution (',' renamings+= Substitution)* ']')?
+       )
      | 
       ('{'
           (
@@ -98,14 +100,13 @@ Variable returns expressions::Variable:
 
 // ---------------------------------------------------------------------------------------------------
 
+Substitution returns synccharts::Substitution:
+	actual = ID '/' formal = ID;
+
+// ---------------------------------------------------------------------------------------------------
+
 enum StateType returns synccharts::StateType:
 	NORMAL = 'normal' | CONDITIONAL = 'conditional' | REFERENCE = 'reference' | TEXTUAL = 'textual';
 
 enum TransitionType returns synccharts::TransitionType:
 	WEAKABORT = '-->' | STRONGABORT = 'o->' | NORMALTERMINATION = '>->';
-
-
-// custom terminal rule allowing to save transition label string as they are
-//terminal TRANSITION_LABEL returns ecore::EString: 
-//    "%" -> "%";
-    
