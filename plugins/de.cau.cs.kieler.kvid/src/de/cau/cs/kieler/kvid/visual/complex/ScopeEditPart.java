@@ -79,7 +79,7 @@ public class ScopeEditPart extends ShapeNodeEditPart implements IDataListener {
                 connected = (Node) con.getTarget();
             }
             EObject model = connected.getElement();
-            referredObjectURI = ".rampAdd.";
+            referredObjectURI = ".model.";
             referredObjectURI += model.toString().substring(model.toString().indexOf(":") + 2, model.toString().lastIndexOf(")"));
             System.out.println(referredObjectURI);
         }
@@ -174,7 +174,7 @@ public class ScopeEditPart extends ShapeNodeEditPart implements IDataListener {
                     connected = (Node) con.getTarget();
                 }
                 EObject model = connected.getElement();
-                referredObjectURI = ".rampAdd.";
+                referredObjectURI = ".model.";
                 referredObjectURI += model.toString().substring(model.toString().indexOf(":") + 2, model.toString().lastIndexOf(")"));
             }
             DataDistributor.getInstance().getDataObjectByURI(referredObjectURI).setSaveHistory(true);

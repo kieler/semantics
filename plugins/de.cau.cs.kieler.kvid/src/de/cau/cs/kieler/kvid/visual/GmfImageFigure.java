@@ -16,11 +16,15 @@ package de.cau.cs.kieler.kvid.visual;
 import org.eclipse.draw2d.ImageFigure;
 import org.eclipse.swt.graphics.Image;
 
+import de.cau.cs.kieler.kvid.data.DataObject;
+
 /**
  * @author jjc
  *
  */
-public class GmfImageFigure extends ImageFigure {
+public class GmfImageFigure extends ImageFigure implements IKvidFigure {
+    
+    private DataObject data;
     
     /**
      * 
@@ -28,5 +32,14 @@ public class GmfImageFigure extends ImageFigure {
     public GmfImageFigure(Image theimage) {
         super(theimage);
     }
+
+    /* (non-Javadoc)
+     * @see de.cau.cs.kieler.kvid.visual.IKvidFigure#updateData(de.cau.cs.kieler.kvid.data.DataObject)
+     */
+    public void updateData(DataObject thedata) {
+        this.data = thedata;        
+    }
+    
+    
 
 }
