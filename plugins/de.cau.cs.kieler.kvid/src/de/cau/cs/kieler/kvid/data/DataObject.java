@@ -120,6 +120,10 @@ public class DataObject {
         return paths;
     }
     
+    public void updatePaths(final List<List<Point>> thepaths) {
+        this.paths = thepaths;
+    }
+    
     private DataType parseDataType(String data) {
         if (data.matches("[+-]?[0-9]+")) {
             return DataType.INT;

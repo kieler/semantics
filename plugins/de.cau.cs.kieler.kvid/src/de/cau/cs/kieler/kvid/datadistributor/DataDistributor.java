@@ -108,6 +108,7 @@ public class DataDistributor implements IProviderListener, ILayoutListener {
                 String key = o.toString();
                 if (dataByURI.containsKey(key)) {
                     dataByURI.get(key).updateData(data.getString(key));
+                    dataByURI.get(key).updatePaths(paths);
                 } else {
                     dataByURI.put(o.toString(), new DataObject(key, data.getString(key), paths));
                     RuntimeConfiguration
@@ -253,9 +254,9 @@ public class DataDistributor implements IProviderListener, ILayoutListener {
      */
     public void layoutPerformed(KNode layoutGraph,
             IKielerProgressMonitor monitor) {
-        System.out.println("muh");
         PlatformUI.getWorkbench().getDisplay().asyncExec(new Runnable() {
             public void run() {
+                //FIXME whats wrong here?
                 currentDiagramLayout = EclipseLayoutServices.getInstance()
                         .getManager(currentEditor, null)
                         .buildLayoutGraph(currentEditor, null, false);
