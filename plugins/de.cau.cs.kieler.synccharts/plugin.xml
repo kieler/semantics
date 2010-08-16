@@ -13,18 +13,6 @@
 
 
    <extension
-         id="product"
-         point="org.eclipse.core.runtime.products">
-      <product
-            application="org.eclipse.ui.ide.workbench"
-            name="Synccharts">
-         <property
-               name="appName"
-               value="Synccharts">
-         </property>
-      </product>
-   </extension>
-   <extension
          point="org.eclipse.xtend.typesystem.emf.checks">
       <metaModel
             nsURI="http://kieler.cs.cau.de/synccharts/0.2.3">
