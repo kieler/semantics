@@ -20,6 +20,8 @@ import java.awt.image.DirectColorModel;
 import java.awt.image.IndexColorModel;
 import java.awt.image.WritableRaster;
 
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.swt.graphics.ImageData;
 import org.eclipse.swt.graphics.PaletteData;
 import org.eclipse.swt.graphics.RGB;
@@ -98,6 +100,31 @@ public class KvidUtil {
             return data;
         }
         return null;
+    }
+    
+    public static String fragmentURI2PtolemyURI(final String fragmentURI, final Resource resource) {
+        String result = "";
+        if (fragmentURI.startsWith("//")) {
+            int lastOcccurance = 2;
+            int currentOccurance;
+            while (fragmentURI.indexOf("/", lastOcccurance) != -1) {
+                currentOccurance = fragmentURI.indexOf("/", lastOcccurance);
+                result += ".";
+                String currentURI;
+                if (currentOccurance != lastOcccurance) {
+                    currentURI = fragmentURI.substring(0, currentOccurance);
+                    lastOcccurance = currentOccurance;
+                } else {
+                    currentURI = fragmentURI;
+                    lastOcccurance = fragmentURI.length();
+                }
+                EObject model = resource.getEObject(currentURI);
+                result += model.toString().substring(model.toString().indexOf(":") + 2, model.toString().lastIndexOf(")"));
+            }
+        } else {
+            throw new RuntimeException("Malformatted fragment URI");
+        }
+        return result;
     }
     
 }

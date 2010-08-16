@@ -21,7 +21,10 @@ import java.util.List;
 import org.eclipse.draw2d.ColorConstants;
 import org.eclipse.draw2d.LineBorder;
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.ecore.ENamedElement;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.gmf.runtime.diagram.ui.editparts.ShapeNodeEditPart;
 import org.eclipse.gmf.runtime.gef.ui.figures.NodeFigure;
 import org.eclipse.gmf.runtime.gef.ui.figures.WrapperNodeFigure;
@@ -79,9 +82,8 @@ public class ScopeEditPart extends ShapeNodeEditPart implements IDataListener {
                 connected = (Node) con.getTarget();
             }
             EObject model = connected.getElement();
-            referredObjectURI = ".model.";
-            referredObjectURI += model.toString().substring(model.toString().indexOf(":") + 2, model.toString().lastIndexOf(")"));
-            System.out.println(referredObjectURI);
+            referredObjectURI = KvidUtil.fragmentURI2PtolemyURI(model.eResource().getURIFragment(model), model.eResource());
+            System.out.println("###" + referredObjectURI);
         }
     }
 
@@ -135,33 +137,9 @@ public class ScopeEditPart extends ShapeNodeEditPart implements IDataListener {
     /* (non-Javadoc)
      * @see de.cau.cs.kieler.kvid.data.IDataListener#triggerDataChanged()
      */
+    @SuppressWarnings({ "rawtypes", "unchecked" })
     public void triggerDataChanged() {
-        if (referredObjectURI != null) {
-            DataObject data = DataDistributor.getInstance().getDataObjectByURI(referredObjectURI);
-            plot.addPoint(0, steps, Double.valueOf(data.getData().toString()), false);
-            steps++;
-            plot.fillPlot();
-            /*double[] values = new double[data.getHistoryLength()];
-            double maxValue = Double.NEGATIVE_INFINITY;
-            double minValue = Double.POSITIVE_INFINITY;
-            for (int i = 0; i < data.getHistoryLength(); i++) {
-                double currentValue = Double.valueOf(data.getHistoryValue(i).toString()); 
-                values[i] = currentValue;
-                if (currentValue < minValue) {
-                    minValue = currentValue;
-                }
-                if (maxValue < currentValue) {
-                    maxValue = currentValue;
-                }
-            }
-            if (0 < minValue) {
-                minValue = 0;
-            }
-            plot.setYRange(minValue, maxValue);
-            for (int i = 0; i < values.length; i++) {
-                plot.addPoint(0, i, values[i], false);
-            }*/
-        } else {
+        if (referredObjectURI == null || DataDistributor.getInstance().getDataObjectByURI(referredObjectURI) == null) {
             View view = this.getNotationView();
             EList list = view.getSourceEdges();
             list.addAll(view.getTargetEdges());
@@ -174,11 +152,15 @@ public class ScopeEditPart extends ShapeNodeEditPart implements IDataListener {
                     connected = (Node) con.getTarget();
                 }
                 EObject model = connected.getElement();
-                referredObjectURI = ".model.";
-                referredObjectURI += model.toString().substring(model.toString().indexOf(":") + 2, model.toString().lastIndexOf(")"));
+                referredObjectURI = KvidUtil.fragmentURI2PtolemyURI(model.eResource()
+                        .getURIFragment(model), model.eResource());
             }
             DataDistributor.getInstance().getDataObjectByURI(referredObjectURI).setSaveHistory(true);
         }
+        DataObject dataObject = DataDistributor.getInstance().getDataObjectByURI(referredObjectURI);
+        plot.addPoint(0, steps, Double.valueOf(dataObject.getData().toString()), false);
+        steps++;
+        plot.fillPlot();
         plot.repaint();
         BufferedImage image = plot.exportImage();
         ImageData data = KvidUtil.convertAWTImageToSWT(image);
