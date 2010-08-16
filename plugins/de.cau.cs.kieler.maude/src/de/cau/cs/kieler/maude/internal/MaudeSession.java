@@ -22,12 +22,29 @@ import java.io.PrintWriter;
 
 public class MaudeSession {
 
+    /** The constant for the Maude timeout. */
+    private static final int MAUDETIMEOUT = 5000;
+
+
+    /** The path to maude.exe. */
     private String pathToMaude;
+    
+    /** The path to the maude code. */
     private String pathToMaudeCode;
+    
+    /** The process. */
     private Process process = null;
+    
+    /** The stream to maude. */
     private PrintWriter toMaude;
+    
+    /** The stream from maude. */
     private BufferedReader fromMaude;
+    
+    /** The error stream from maude. */
     private BufferedReader error;
+    
+    /** The started flag. */
     private boolean started;
 
     // -------------------------------------------------------------------------
@@ -114,10 +131,11 @@ public class MaudeSession {
      * @param queryRequest
      *            the query request
      * @return the string
-     * @throws Exception 
+     * @throws IOException
+     *             Signals that an I/O exception has occurred.
      */
-    public String queryMaude(String queryRequest, long timeout) throws Exception {
-        return queryMaude(queryRequest, 0, timeout);
+    public String queryMaude(String queryRequest) throws IOException {
+        return queryMaude(queryRequest, 0);
     }
 
     // -------------------------------------------------------------------------
@@ -130,9 +148,10 @@ public class MaudeSession {
      * @param queryRequest
      *            the query request
      * @return the string
-     * @throws Exception 
+     * @throws IOException
+     *             Signals that an I/O exception has occurred.
      */
-    public String queryMaude(String queryRequest, int wait, long timeout) throws Exception {
+    public String queryMaude(String queryRequest, int wait) throws IOException {
         String returnValue = "";
 
         toMaude.write(queryRequest);
@@ -148,6 +167,7 @@ public class MaudeSession {
         boolean done = false;
 
         long startTime = System.currentTimeMillis();
+        
         while (!done) {
             while (error.ready()) {
                 returnValue += (((char) error.read() + ""));
@@ -158,8 +178,8 @@ public class MaudeSession {
             if (returnValue.contains("Maude>")) {
                 done = true;
             }
-            if (System.currentTimeMillis()-timeout > startTime) {
-            	throw new Exception("A time out occurred while calling Maude.");
+            if (System.currentTimeMillis() - startTime > 5000) {
+                throw new IOException("A timeout occurred while calling Maude.");
             }
         }
 
