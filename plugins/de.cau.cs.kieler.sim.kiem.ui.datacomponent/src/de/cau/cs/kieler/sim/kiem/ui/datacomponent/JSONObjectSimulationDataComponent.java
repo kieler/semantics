@@ -383,25 +383,41 @@ public abstract class JSONObjectSimulationDataComponent extends JSONObjectDataCo
 
     // -------------------------------------------------------------------------
 
-    protected IEditorPart diagramEditor = null;
-    protected boolean diagramEditorFlag = false;
+    protected IWorkbenchPage activePage = null;
+    protected boolean activePageFlag = false;
 
-    protected IEditorPart getInputEditor() {
-        String kiemEditorProperty = this.getProperties()[0].getValue();
-        diagramEditorFlag = false;
+    /**
+     * Gets the active page (blocking) from the UI thread.
+     * 
+     * @return the active page
+     */
+    protected IWorkbenchPage getActivePage() {
+        activePageFlag = false;
 
         Display.getDefault().syncExec(new Runnable() {
             public void run() {
                 // get the active editor as a default case (if property is empty)
                 IWorkbenchWindow window = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
-                IWorkbenchPage activePage = window.getActivePage();
-                IEditorPart editor = activePage.getActiveEditor();
-                // if (editor instanceof DiagramEditor) {
-                diagramEditor = (IEditorPart) editor;
-                // }
-                diagramEditorFlag = true;
+                activePage = window.getActivePage();
+                activePageFlag = true;
             }
         });
+
+        while (!activePageFlag) {
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+        return activePage;
+    }
+
+    // -------------------------------------------------------------------------
+
+    protected IEditorPart getInputEditor() {
+        String kiemEditorProperty = this.getProperties()[0].getValue();
+        IEditorPart diagramEditor = null;
 
         // only check non-empty and valid property (this is optional)
         if (!kiemEditorProperty.equals("")) {
@@ -409,13 +425,10 @@ public abstract class JSONObjectSimulationDataComponent extends JSONObjectDataCo
                 diagramEditor = getEditor(kiemEditorProperty);
             }
         } else {
-            while (!diagramEditorFlag) {
-                try {
-                    Thread.sleep(100);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
+            IWorkbenchPage activePage = getActivePage();
+            IEditorPart editor = activePage.getActiveEditor();
+            // if (editor instanceof DiagramEditor) {
+            diagramEditor = (IEditorPart) editor;
         }
         return diagramEditor;
     }
@@ -675,7 +688,7 @@ public abstract class JSONObjectSimulationDataComponent extends JSONObjectDataCo
 
     // -------------------------------------------------------------------------
 
-    protected DiagramEditor getEditor(String kiemEditorProperty) {
+    protected IEditorPart getEditor(String kiemEditorProperty) {
         if ((kiemEditorProperty == null) || (kiemEditorProperty.length() == 0))
             return null;
 
@@ -684,19 +697,16 @@ public abstract class JSONObjectSimulationDataComponent extends JSONObjectDataCo
             String fileString = tokenizer.nextToken();
             String editorString = tokenizer.nextToken();
 
-            IEditorReference[] editorRefs = PlatformUI.getWorkbench().getActiveWorkbenchWindow()
-                    .getActivePage().getEditorReferences();
+            IEditorReference[] editorRefs = getActivePage().getEditorReferences();
             for (int i = 0; i < editorRefs.length; i++) {
                 if (editorRefs[i].getId().equals(editorString)) {
                     IEditorPart editor = editorRefs[i].getEditor(true);
-                    if (editor instanceof DiagramEditor) {
-                        // test if correct file
-                        if (fileString.equals(editor.getTitle())) {
-                            return (DiagramEditor) editor;
-                            // rootEditPart = ((DiagramEditor) editor)
-                            // .getDiagramEditPart();
-                            // break;
-                        }
+                    // test if correct file
+                    if (fileString.equals(editor.getTitle())) {
+                        return (IEditorPart) editor;
+                        // rootEditPart = ((DiagramEditor) editor)
+                        // .getDiagramEditPart();
+                        // break;
                     }
                 }
             }

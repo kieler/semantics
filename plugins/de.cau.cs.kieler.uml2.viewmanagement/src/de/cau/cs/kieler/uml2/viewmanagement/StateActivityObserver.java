@@ -139,37 +139,66 @@ public class StateActivityObserver extends JSONObjectDataComponent implements
 
     // -------------------------------------------------------------------------
 
-    PapyrusMultiDiagramEditor getEditor(String kiemEditorProperty) {
-        if ((kiemEditorProperty == null) || (kiemEditorProperty.length() == 0)) {
+    protected IEditorPart getEditor(String kiemEditorProperty) {
+        if ((kiemEditorProperty == null) || (kiemEditorProperty.length() == 0))
             return null;
-        }
 
-        StringTokenizer tokenizer = new StringTokenizer(kiemEditorProperty,
-                " ()");
+        StringTokenizer tokenizer = new StringTokenizer(kiemEditorProperty, " ()");
         if (tokenizer.hasMoreTokens()) {
             String fileString = tokenizer.nextToken();
             String editorString = tokenizer.nextToken();
 
-            IEditorReference[] editorRefs = PlatformUI.getWorkbench()
-                    .getActiveWorkbenchWindow().getActivePage()
-                    .getEditorReferences();
+            IEditorReference[] editorRefs = getActivePage().getEditorReferences();
             for (int i = 0; i < editorRefs.length; i++) {
                 if (editorRefs[i].getId().equals(editorString)) {
                     IEditorPart editor = editorRefs[i].getEditor(true);
-                    if (editor instanceof PapyrusMultiDiagramEditor) {
-                        // test if correct file
-                        if (fileString.equals(editor.getTitle())) {
-                            return (PapyrusMultiDiagramEditor) editor;
-                            // rootEditPart = ((PapyrusMultiDiagramEditor) editor)
-                            // .getDiagramEditPart();
-                            // break;
-                        }
+                    // test if correct file
+                    if (fileString.equals(editor.getTitle())) {
+                        return (IEditorPart) editor;
+                        // rootEditPart = ((DiagramEditor) editor)
+                        // .getDiagramEditPart();
+                        // break;
                     }
                 }
             }
         }
         return null;
     }
+
+
+    // -------------------------------------------------------------------------
+
+    protected IWorkbenchPage activePage = null;
+    protected boolean activePageFlag = false;
+
+    /**
+     * Gets the active page (blocking) from the UI thread.
+     * 
+     * @return the active page
+     */
+    protected IWorkbenchPage getActivePage() {
+        activePageFlag = false;
+
+        Display.getDefault().syncExec(new Runnable() {
+            public void run() {
+                // get the active editor as a default case (if property is empty)
+                IWorkbenchWindow window = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
+                activePage = window.getActivePage();
+                activePageFlag = true;
+            }
+        });
+
+        while (!activePageFlag) {
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+        return activePage;
+    }
+    
+    // -------------------------------------------------------------------------
 
     @SuppressWarnings("unchecked")
     public EditPart getEditPart(String elementURIFragment, EditPart parent) {
@@ -250,38 +279,23 @@ public class StateActivityObserver extends JSONObjectDataComponent implements
 
     // -------------------------------------------------------------------------
 
-    PapyrusMultiDiagramEditor diagramEditor = null;
-    boolean diagramEditorFlag = false;
-
-    PapyrusMultiDiagramEditor getInputEditor() {
+    protected PapyrusMultiDiagramEditor getInputEditor() {
         String kiemEditorProperty = this.getProperties()[0].getValue();
-        diagramEditorFlag = false;
-
-        Display.getDefault().syncExec(new Runnable() {
-            public void run() {
-                // get the active editor as a default case (if property is empty)
-                IWorkbenchWindow window = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
-                IWorkbenchPage activePage = window.getActivePage();
-                IEditorPart editor = activePage.getActiveEditor();
-                if (editor instanceof PapyrusMultiDiagramEditor) {
-                    diagramEditor = (PapyrusMultiDiagramEditor) editor;
-                }
-                diagramEditorFlag = true;
-            }
-        });
+        PapyrusMultiDiagramEditor diagramEditor = null;
 
         // only check non-empty and valid property (this is optional)
         if (!kiemEditorProperty.equals("")) {
             if (getEditor(kiemEditorProperty) != null) {
-                diagramEditor = getEditor(kiemEditorProperty);
+                IEditorPart editor = getEditor(kiemEditorProperty);
+                if (editor instanceof PapyrusMultiDiagramEditor) {
+                    diagramEditor = (PapyrusMultiDiagramEditor) editor;
+                }
             }
         } else {
-            while (!diagramEditorFlag) {
-                try {
-                    Thread.sleep(100);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+            IWorkbenchPage activePage = getActivePage();
+            IEditorPart editor = activePage.getActiveEditor();
+            if (editor instanceof PapyrusMultiDiagramEditor) {
+                diagramEditor = (PapyrusMultiDiagramEditor) editor;
             }
         }
         return diagramEditor;
@@ -295,6 +309,8 @@ public class StateActivityObserver extends JSONObjectDataComponent implements
     public EditPart getRootEditPart() {
         return rootEditPart;
     }
+
+    // -------------------------------------------------------------------------
 
     /*
      * (non-Javadoc)
