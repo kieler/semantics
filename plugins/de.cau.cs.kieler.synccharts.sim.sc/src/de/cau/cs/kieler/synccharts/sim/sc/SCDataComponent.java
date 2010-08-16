@@ -253,7 +253,7 @@ public class SCDataComponent extends AbstractAutomatedProducer {
     public KiemProperty[] provideProperties() {
         final int numberOfProperties = 3;
         KiemProperty[] properties = new KiemProperty[numberOfProperties];
-        KiemPropertyTypeFile compilerFile = new KiemPropertyTypeFile();
+        KiemPropertyTypeFile compilerFile = new KiemPropertyTypeFile(true);
         properties[0] = new KiemProperty("compiler", compilerFile, "gcc");
         properties[1] = new KiemProperty("file location", "");
         // String[] items = { "complete hierarchie", "shortest hierarchie",
