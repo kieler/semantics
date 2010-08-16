@@ -135,7 +135,7 @@ public class MaudeSession {
     public String queryMaude(String queryRequest, int wait, long timeout) throws Exception {
         String returnValue = "";
 
-        toMaude.write(queryRequest+"\n");
+        toMaude.write(queryRequest);
         toMaude.flush();
 
         if (wait > 0) {
