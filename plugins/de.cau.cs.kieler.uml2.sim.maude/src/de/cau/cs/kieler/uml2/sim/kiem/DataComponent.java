@@ -79,9 +79,6 @@ public class DataComponent extends JSONObjectSimulationDataComponent implements
     /** The constant name of the maude console. */
     private static final String MAUDECONSOLENAME = "Maude Console";
 
-    /** The constant for the Maude timeout. */
-    private static final int MAUDETIMEOUT = 5000;
-
     /**
      * The constant MAUDEPARSESTATESTARTER indicates the start token to search for.
      */
