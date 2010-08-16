@@ -114,11 +114,10 @@ public class MaudeSession {
      * @param queryRequest
      *            the query request
      * @return the string
-     * @throws IOException
-     *             Signals that an I/O exception has occurred.
+     * @throws Exception 
      */
-    public String queryMaude(String queryRequest) throws IOException {
-        return queryMaude(queryRequest, 0);
+    public String queryMaude(String queryRequest, long timeout) throws Exception {
+        return queryMaude(queryRequest, 0, timeout);
     }
 
     // -------------------------------------------------------------------------
@@ -131,13 +130,12 @@ public class MaudeSession {
      * @param queryRequest
      *            the query request
      * @return the string
-     * @throws IOException
-     *             Signals that an I/O exception has occurred.
+     * @throws Exception 
      */
-    public String queryMaude(String queryRequest, int wait) throws IOException {
+    public String queryMaude(String queryRequest, int wait, long timeout) throws Exception {
         String returnValue = "";
 
-        toMaude.write(queryRequest);
+        toMaude.write(queryRequest+"\n");
         toMaude.flush();
 
         if (wait > 0) {
@@ -149,6 +147,7 @@ public class MaudeSession {
 
         boolean done = false;
 
+        long startTime = System.currentTimeMillis();
         while (!done) {
             while (error.ready()) {
                 returnValue += (((char) error.read() + ""));
@@ -158,6 +157,9 @@ public class MaudeSession {
             }
             if (returnValue.contains("Maude>")) {
                 done = true;
+            }
+            if (System.currentTimeMillis()-timeout > startTime) {
+            	throw new Exception("A time out occurred while calling Maude.");
             }
         }
 

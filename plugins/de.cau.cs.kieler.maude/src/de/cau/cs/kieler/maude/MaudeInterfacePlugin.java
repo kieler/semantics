@@ -180,7 +180,7 @@ public class MaudeInterfacePlugin extends AbstractUIPlugin {
      * @throws Exception
      *             the exception
      */
-    public String queryMaude(String queryRequest, int wait, int maudeSessionId) throws Exception {
+    public String queryMaude(String queryRequest, int wait, int maudeSessionId, long timeout) throws Exception {
         MaudeSession session =  getMaudeSession(maudeSessionId);
         if (session == null) {
             throw (new Exception("Maude session with id "+maudeSessionId+" not found."));
@@ -204,7 +204,7 @@ public class MaudeInterfacePlugin extends AbstractUIPlugin {
      * @throws Exception
      *             the exception
      */
-    public String queryMaude(String queryRequest, int maudeSessionId) throws Exception {
+    public String queryMaude(String queryRequest, int maudeSessionId, long timeout) throws Exception {
         MaudeSession session =  getMaudeSession(maudeSessionId);
         if (session == null) {
             throw (new Exception("Maude session with id "+maudeSessionId+" not found."));
@@ -212,7 +212,7 @@ public class MaudeInterfacePlugin extends AbstractUIPlugin {
         if (!session.isStarted()) {
             throw (new Exception("Maude session with id "+maudeSessionId+" not started yet."));
         }
-        return session.queryMaude(queryRequest);
+        return session.queryMaude(queryRequest, timeout);
     }
     // -------------------------------------------------------------------------
 
