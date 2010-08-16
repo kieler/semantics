@@ -56,6 +56,9 @@ public class KiemPropertyTypeFile extends KiemPropertyType implements IKiemPrope
     /** The filter extensions. */
     private String[] filterExts;
 
+    /** A flag whether the user can modify the text field manually. */
+    private boolean isEditable;
+
     // -------------------------------------------------------------------------
 
     /**
@@ -65,7 +68,25 @@ public class KiemPropertyTypeFile extends KiemPropertyType implements IKiemPrope
         super();
         this.filterNames = DEFAULT_FILTER_NAMES;
         this.filterExts = DEFAULT_FILTER_EXTS;
+        this.isEditable = false;
     }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Instantiates a new KiemPropertyType file.
+     * 
+     * @param textFieldIsEditableManually
+     *             a flag whether the user can modify the text field manually
+     */
+    public KiemPropertyTypeFile(boolean textFieldIsEditableManually) {
+        super();
+        this.filterNames = DEFAULT_FILTER_NAMES;
+        this.filterExts = DEFAULT_FILTER_EXTS;
+        this.isEditable = textFieldIsEditableManually;
+    }
+
+    // -------------------------------------------------------------------------
 
     // -------------------------------------------------------------------------
 
@@ -132,7 +153,7 @@ public class KiemPropertyTypeFile extends KiemPropertyType implements IKiemPrope
      */
     @Override
     public CellEditor provideCellEditor(final Composite parent) {
-        return new CustomDialogCellEditor(parent);
+        return new CustomDialogCellEditor(parent, isEditable);
     }
 
     // -------------------------------------------------------------------------
@@ -186,7 +207,7 @@ public class KiemPropertyTypeFile extends KiemPropertyType implements IKiemPrope
     /**
      * The Class CustomDialogCellEditor.
      */
-    public class CustomDialogCellEditor extends DialogCellEditor {
+    public class CustomDialogCellEditor extends EditableDialogCellEditor {
 
         // ---------------------------------------------------------------------
 
@@ -196,8 +217,8 @@ public class KiemPropertyTypeFile extends KiemPropertyType implements IKiemPrope
          * @param parent
          *            the parent
          */
-        public CustomDialogCellEditor(final Composite parent) {
-            super(parent);
+        public CustomDialogCellEditor(final Composite parent, boolean isEditable) {
+            super(parent, isEditable);
         }
 
         // ---------------------------------------------------------------------
