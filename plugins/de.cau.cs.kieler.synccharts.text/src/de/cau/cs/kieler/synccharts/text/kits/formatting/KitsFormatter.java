@@ -93,6 +93,8 @@ public class KitsFormatter extends ActionsFormatter {
         c.setLinewrap().before(f.getStateAccess().getIsFinalFinalKeyword_1_1_0_0());
         c.setNoLinewrap().between(f.getStateAccess().getIsInitialInitKeyword_1_1_1_0(),
                 f.getStateAccess().getIsFinalFinalKeyword_1_1_0_0());
+        
+        c.setLinewrap().before(f.getStateAccess().getTypeStateTypeEnumRuleCall_2_0());
 
         c.setLinewrap().before(f.getStateAccess().getStateKeyword_3());
         
@@ -105,7 +107,10 @@ public class KitsFormatter extends ActionsFormatter {
         c.setNoLinewrap().between(f.getStateAccess().getIsFinalFinalKeyword_1_1_0_0(),
                 f.getStateAccess().getStateKeyword_3());
         
+        c.setNoLinewrap().between(f.getStateAccess().getTypeStateTypeEnumRuleCall_2_0(),
+                f.getStateAccess().getStateKeyword_3());
 
+        
         // does not work!
         c.setLinewrap(2, 2, 2).between(f.getRegionAccess().getStatesAssignment_6(),
                 f.getRegionAccess().getStatesAssignment_6());
