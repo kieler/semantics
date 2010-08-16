@@ -18,12 +18,12 @@ public class InternalExpressionsLexer extends Lexer {
     public static final int RULE_ID=4;
     public static final int T33=33;
     public static final int T22=22;
+    public static final int RULE_STRING=10;
     public static final int RULE_COMMENT_ANNOTATION=9;
-    public static final int RULE_STRING=5;
     public static final int T28=28;
     public static final int T23=23;
     public static final int RULE_FLOAT=7;
-    public static final int RULE_HOSTCODE=10;
+    public static final int RULE_HOSTCODE=5;
     public static final int T20=20;
     public static final int T25=25;
     public static final int T18=18;

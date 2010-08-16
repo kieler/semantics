@@ -115,9 +115,9 @@ ValuedObjectReference returns ValuedObjectReference:
 	valuedObject=[ValuedObject|ID];
 
 
-// Taken from haf's kits grammar
+// Example: 'printf(...)'(C)
 TextExpression returns TextExpression:
-	code=STRING ("(" type=ID ")")?;
+	code=HOSTCODE ("(" type=ID ")")?;
 
 
 IntValue returns IntValue:

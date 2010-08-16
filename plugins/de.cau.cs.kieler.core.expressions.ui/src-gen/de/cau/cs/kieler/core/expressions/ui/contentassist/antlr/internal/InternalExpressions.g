@@ -3684,8 +3684,8 @@ rule__TextExpression__CodeAssignment_0
     }
 :
 (
-{ before(grammarAccess.getTextExpressionAccess().getCodeSTRINGTerminalRuleCall_0_0()); }
-	RULE_STRING{ after(grammarAccess.getTextExpressionAccess().getCodeSTRINGTerminalRuleCall_0_0()); }
+{ before(grammarAccess.getTextExpressionAccess().getCodeHOSTCODETerminalRuleCall_0_0()); }
+	RULE_HOSTCODE{ after(grammarAccess.getTextExpressionAccess().getCodeHOSTCODETerminalRuleCall_0_0()); }
 )
 
 ;

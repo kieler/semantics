@@ -29,8 +29,8 @@ import de.cau.cs.kieler.core.annotations.formatting.AnnotationsValueConverter;
 public class ExpressionsValueConverter extends AnnotationsValueConverter {
 
     /**
-     * Standard boolean data type converter to convert standard Java style boolean strings "true"
-     * and "false" into Boolean objects and vice versa.
+     * Standard boolean data type converter to convert standard Java style
+     * boolean strings "true" and "false" into Boolean objects and vice versa.
      * 
      * @return value converter for standard Java style booleans
      */
@@ -59,7 +59,7 @@ public class ExpressionsValueConverter extends AnnotationsValueConverter {
     /**
      * Primitive integer data type converter provider allowing negative numbers.
      * 
-     * @return value converter for standard Java style booleans
+     * @return value converter for standard Java style ints
      */
     @ValueConverter(rule = "INT")
     public IValueConverter<Integer> INT() {
@@ -74,9 +74,9 @@ public class ExpressionsValueConverter extends AnnotationsValueConverter {
     }
 
     /**
-     * Standard boolean data type converter to convert standard Java style
+     * Standard float data type converter to convert standard Java style floats.
      * 
-     * @return value converter for standard Java style booleans
+     * @return value converter for standard Java style floats
      */
     @ValueConverter(rule = "Float")
     public IValueConverter<Float> Float() {
@@ -99,5 +99,25 @@ public class ExpressionsValueConverter extends AnnotationsValueConverter {
             }
         };
     }
+    
+    /**
+     * Primitive HOSTCODE data type converter providing proper serialization.
+     * 
+     * @return value converter for HOSTCODE specializing
+     * {@link org.eclipse.xtext.conversion.impl.STRINGValueConverter}
+     */
+    @ValueConverter(rule = "HOSTCODE")
+    public IValueConverter<String> HOSTCODE() {
+        return new org.eclipse.xtext.conversion.impl.STRINGValueConverter() {
+            public String toString(String value) {
+                if (value == null)
+                    throw new ValueConverterException(
+                            "HOSTCODE may not be 'null'.", null, null);
+                return "'" + value.toString() + "'";
+            }
+        };
+    }
+
+
 
 }

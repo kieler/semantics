@@ -26,20 +26,20 @@ import java.util.HashMap;
 @SuppressWarnings("all")
 public class InternalExpressionsParser extends AbstractInternalAntlrParser {
     public static final String[] tokenNames = new String[] {
-        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "RULE_ID", "RULE_STRING", "RULE_INT", "RULE_FLOAT", "RULE_BOOLEAN", "RULE_COMMENT_ANNOTATION", "RULE_HOSTCODE", "RULE_ML_COMMENT", "RULE_SL_COMMENT", "RULE_WS", "RULE_ANY_OTHER", "'('", "')'", "'@'", "'='", "'<'", "'<='", "'>'", "'>='", "'<>'", "'pre'", "'or'", "'and'", "'not'", "'+'", "'-'", "'*'", "'mod'", "'/'", "'?'"
+        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "RULE_ID", "RULE_HOSTCODE", "RULE_INT", "RULE_FLOAT", "RULE_BOOLEAN", "RULE_COMMENT_ANNOTATION", "RULE_STRING", "RULE_ML_COMMENT", "RULE_SL_COMMENT", "RULE_WS", "RULE_ANY_OTHER", "'('", "')'", "'@'", "'='", "'<'", "'<='", "'>'", "'>='", "'<>'", "'pre'", "'or'", "'and'", "'not'", "'+'", "'-'", "'*'", "'mod'", "'/'", "'?'"
     };
     public static final int RULE_ML_COMMENT=11;
     public static final int RULE_ID=4;
     public static final int RULE_WS=13;
     public static final int EOF=-1;
     public static final int RULE_INT=6;
+    public static final int RULE_STRING=10;
     public static final int RULE_COMMENT_ANNOTATION=9;
     public static final int RULE_BOOLEAN=8;
-    public static final int RULE_STRING=5;
     public static final int RULE_ANY_OTHER=14;
     public static final int RULE_FLOAT=7;
     public static final int RULE_SL_COMMENT=12;
-    public static final int RULE_HOSTCODE=10;
+    public static final int RULE_HOSTCODE=5;
 
         public InternalExpressionsParser(TokenStream input) {
             super(input);
@@ -1065,7 +1065,7 @@ public class InternalExpressionsParser extends AbstractInternalAntlrParser {
                 }
                 }
                 break;
-            case RULE_STRING:
+            case RULE_HOSTCODE:
                 {
                 switch ( input.LA(2) ) {
                 case 15:
@@ -1375,7 +1375,7 @@ public class InternalExpressionsParser extends AbstractInternalAntlrParser {
                     }
                     }
                     break;
-                case RULE_STRING:
+                case RULE_HOSTCODE:
                     {
                     switch ( input.LA(3) ) {
                     case 15:
@@ -1938,7 +1938,7 @@ public class InternalExpressionsParser extends AbstractInternalAntlrParser {
                 }
                 }
                 break;
-            case RULE_STRING:
+            case RULE_HOSTCODE:
                 {
                 int LA5_7 = input.LA(2);
 
@@ -3142,7 +3142,7 @@ public class InternalExpressionsParser extends AbstractInternalAntlrParser {
             if ( (LA10_0==27) ) {
                 alt10=1;
             }
-            else if ( ((LA10_0>=RULE_ID && LA10_0<=RULE_STRING)||LA10_0==RULE_BOOLEAN||LA10_0==15||LA10_0==24||LA10_0==33) ) {
+            else if ( ((LA10_0>=RULE_ID && LA10_0<=RULE_HOSTCODE)||LA10_0==RULE_BOOLEAN||LA10_0==15||LA10_0==24||LA10_0==33) ) {
                 alt10=2;
             }
             else {
@@ -3397,7 +3397,7 @@ public class InternalExpressionsParser extends AbstractInternalAntlrParser {
                 alt11=3;
                 }
                 break;
-            case RULE_STRING:
+            case RULE_HOSTCODE:
                 {
                 alt11=4;
                 }
@@ -3654,7 +3654,7 @@ public class InternalExpressionsParser extends AbstractInternalAntlrParser {
                 }
                 break;
             case RULE_ID:
-            case RULE_STRING:
+            case RULE_HOSTCODE:
             case RULE_BOOLEAN:
             case 24:
             case 33:
@@ -4595,7 +4595,7 @@ public class InternalExpressionsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start ruleTextExpression
-    // ../de.cau.cs.kieler.core.expressions/src-gen/de/cau/cs/kieler/core/expressions/parser/antlr/internal/InternalExpressions.g:1580:1: ruleTextExpression returns [EObject current=null] : ( ( (lv_code_0_0= RULE_STRING ) ) ( '(' ( (lv_type_2_0= RULE_ID ) ) ')' )? ) ;
+    // ../de.cau.cs.kieler.core.expressions/src-gen/de/cau/cs/kieler/core/expressions/parser/antlr/internal/InternalExpressions.g:1580:1: ruleTextExpression returns [EObject current=null] : ( ( (lv_code_0_0= RULE_HOSTCODE ) ) ( '(' ( (lv_type_2_0= RULE_ID ) ) ')' )? ) ;
     public final EObject ruleTextExpression() throws RecognitionException {
         EObject current = null;
 
@@ -4605,23 +4605,23 @@ public class InternalExpressionsParser extends AbstractInternalAntlrParser {
          EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
-            // ../de.cau.cs.kieler.core.expressions/src-gen/de/cau/cs/kieler/core/expressions/parser/antlr/internal/InternalExpressions.g:1585:6: ( ( ( (lv_code_0_0= RULE_STRING ) ) ( '(' ( (lv_type_2_0= RULE_ID ) ) ')' )? ) )
-            // ../de.cau.cs.kieler.core.expressions/src-gen/de/cau/cs/kieler/core/expressions/parser/antlr/internal/InternalExpressions.g:1586:1: ( ( (lv_code_0_0= RULE_STRING ) ) ( '(' ( (lv_type_2_0= RULE_ID ) ) ')' )? )
+            // ../de.cau.cs.kieler.core.expressions/src-gen/de/cau/cs/kieler/core/expressions/parser/antlr/internal/InternalExpressions.g:1585:6: ( ( ( (lv_code_0_0= RULE_HOSTCODE ) ) ( '(' ( (lv_type_2_0= RULE_ID ) ) ')' )? ) )
+            // ../de.cau.cs.kieler.core.expressions/src-gen/de/cau/cs/kieler/core/expressions/parser/antlr/internal/InternalExpressions.g:1586:1: ( ( (lv_code_0_0= RULE_HOSTCODE ) ) ( '(' ( (lv_type_2_0= RULE_ID ) ) ')' )? )
             {
-            // ../de.cau.cs.kieler.core.expressions/src-gen/de/cau/cs/kieler/core/expressions/parser/antlr/internal/InternalExpressions.g:1586:1: ( ( (lv_code_0_0= RULE_STRING ) ) ( '(' ( (lv_type_2_0= RULE_ID ) ) ')' )? )
-            // ../de.cau.cs.kieler.core.expressions/src-gen/de/cau/cs/kieler/core/expressions/parser/antlr/internal/InternalExpressions.g:1586:2: ( (lv_code_0_0= RULE_STRING ) ) ( '(' ( (lv_type_2_0= RULE_ID ) ) ')' )?
+            // ../de.cau.cs.kieler.core.expressions/src-gen/de/cau/cs/kieler/core/expressions/parser/antlr/internal/InternalExpressions.g:1586:1: ( ( (lv_code_0_0= RULE_HOSTCODE ) ) ( '(' ( (lv_type_2_0= RULE_ID ) ) ')' )? )
+            // ../de.cau.cs.kieler.core.expressions/src-gen/de/cau/cs/kieler/core/expressions/parser/antlr/internal/InternalExpressions.g:1586:2: ( (lv_code_0_0= RULE_HOSTCODE ) ) ( '(' ( (lv_type_2_0= RULE_ID ) ) ')' )?
             {
-            // ../de.cau.cs.kieler.core.expressions/src-gen/de/cau/cs/kieler/core/expressions/parser/antlr/internal/InternalExpressions.g:1586:2: ( (lv_code_0_0= RULE_STRING ) )
-            // ../de.cau.cs.kieler.core.expressions/src-gen/de/cau/cs/kieler/core/expressions/parser/antlr/internal/InternalExpressions.g:1587:1: (lv_code_0_0= RULE_STRING )
+            // ../de.cau.cs.kieler.core.expressions/src-gen/de/cau/cs/kieler/core/expressions/parser/antlr/internal/InternalExpressions.g:1586:2: ( (lv_code_0_0= RULE_HOSTCODE ) )
+            // ../de.cau.cs.kieler.core.expressions/src-gen/de/cau/cs/kieler/core/expressions/parser/antlr/internal/InternalExpressions.g:1587:1: (lv_code_0_0= RULE_HOSTCODE )
             {
-            // ../de.cau.cs.kieler.core.expressions/src-gen/de/cau/cs/kieler/core/expressions/parser/antlr/internal/InternalExpressions.g:1587:1: (lv_code_0_0= RULE_STRING )
-            // ../de.cau.cs.kieler.core.expressions/src-gen/de/cau/cs/kieler/core/expressions/parser/antlr/internal/InternalExpressions.g:1588:3: lv_code_0_0= RULE_STRING
+            // ../de.cau.cs.kieler.core.expressions/src-gen/de/cau/cs/kieler/core/expressions/parser/antlr/internal/InternalExpressions.g:1587:1: (lv_code_0_0= RULE_HOSTCODE )
+            // ../de.cau.cs.kieler.core.expressions/src-gen/de/cau/cs/kieler/core/expressions/parser/antlr/internal/InternalExpressions.g:1588:3: lv_code_0_0= RULE_HOSTCODE
             {
             lv_code_0_0=(Token)input.LT(1);
-            match(input,RULE_STRING,FollowSets000.FOLLOW_RULE_STRING_in_ruleTextExpression2766); if (failed) return current;
+            match(input,RULE_HOSTCODE,FollowSets000.FOLLOW_RULE_HOSTCODE_in_ruleTextExpression2766); if (failed) return current;
             if ( backtracking==0 ) {
 
-              			createLeafNode(grammarAccess.getTextExpressionAccess().getCodeSTRINGTerminalRuleCall_0_0(), "code"); 
+              			createLeafNode(grammarAccess.getTextExpressionAccess().getCodeHOSTCODETerminalRuleCall_0_0(), "code"); 
               		
             }
             if ( backtracking==0 ) {
@@ -4635,7 +4635,7 @@ public class InternalExpressionsParser extends AbstractInternalAntlrParser {
               	       			current, 
               	       			"code",
               	        		lv_code_0_0, 
-              	        		"STRING", 
+              	        		"HOSTCODE", 
               	        		lastConsumedNode);
               	        } catch (ValueConverterException vce) {
               				handleValueConverterException(vce);
@@ -7440,7 +7440,7 @@ public class InternalExpressionsParser extends AbstractInternalAntlrParser {
         public static final BitSet FOLLOW_RULE_ID_in_ruleValuedObjectReference2679 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_ruleTextExpression_in_entryRuleTextExpression2714 = new BitSet(new long[]{0x0000000000000000L});
         public static final BitSet FOLLOW_EOF_in_entryRuleTextExpression2724 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_RULE_STRING_in_ruleTextExpression2766 = new BitSet(new long[]{0x0000000000008002L});
+        public static final BitSet FOLLOW_RULE_HOSTCODE_in_ruleTextExpression2766 = new BitSet(new long[]{0x0000000000008002L});
         public static final BitSet FOLLOW_15_in_ruleTextExpression2782 = new BitSet(new long[]{0x0000000000000010L});
         public static final BitSet FOLLOW_RULE_ID_in_ruleTextExpression2799 = new BitSet(new long[]{0x0000000000010000L});
         public static final BitSet FOLLOW_16_in_ruleTextExpression2814 = new BitSet(new long[]{0x0000000000000002L});
@@ -7459,7 +7459,7 @@ public class InternalExpressionsParser extends AbstractInternalAntlrParser {
         public static final BitSet FOLLOW_ruleKeyValueAnnotation_in_entryRuleKeyValueAnnotation3220 = new BitSet(new long[]{0x0000000000000000L});
         public static final BitSet FOLLOW_EOF_in_entryRuleKeyValueAnnotation3230 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_17_in_ruleKeyValueAnnotation3265 = new BitSet(new long[]{0x0000000000000010L});
-        public static final BitSet FOLLOW_RULE_ID_in_ruleKeyValueAnnotation3282 = new BitSet(new long[]{0x0000000000000030L});
+        public static final BitSet FOLLOW_RULE_ID_in_ruleKeyValueAnnotation3282 = new BitSet(new long[]{0x0000000000000410L});
         public static final BitSet FOLLOW_ruleEString_in_ruleKeyValueAnnotation3308 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_ruleEString_in_entryRuleEString3347 = new BitSet(new long[]{0x0000000000000000L});
         public static final BitSet FOLLOW_EOF_in_entryRuleEString3358 = new BitSet(new long[]{0x0000000000000002L});

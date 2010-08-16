@@ -668,26 +668,26 @@ public class ExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "TextExpression");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Assignment cCodeAssignment_0 = (Assignment)cGroup.eContents().get(0);
-		private final RuleCall cCodeSTRINGTerminalRuleCall_0_0 = (RuleCall)cCodeAssignment_0.eContents().get(0);
+		private final RuleCall cCodeHOSTCODETerminalRuleCall_0_0 = (RuleCall)cCodeAssignment_0.eContents().get(0);
 		private final Group cGroup_1 = (Group)cGroup.eContents().get(1);
 		private final Keyword cLeftParenthesisKeyword_1_0 = (Keyword)cGroup_1.eContents().get(0);
 		private final Assignment cTypeAssignment_1_1 = (Assignment)cGroup_1.eContents().get(1);
 		private final RuleCall cTypeIDTerminalRuleCall_1_1_0 = (RuleCall)cTypeAssignment_1_1.eContents().get(0);
 		private final Keyword cRightParenthesisKeyword_1_2 = (Keyword)cGroup_1.eContents().get(2);
 		
-		//// Taken from haf's kits grammar
+		//// Example: 'printf(...)'(C)
 		//TextExpression:
-		//	code=STRING ("(" type=ID ")")?;
+		//	code=HOSTCODE ("(" type=ID ")")?;
 		public ParserRule getRule() { return rule; }
 
-		//code=STRING ("(" type=ID ")")?
+		//code=HOSTCODE ("(" type=ID ")")?
 		public Group getGroup() { return cGroup; }
 
-		//code=STRING
+		//code=HOSTCODE
 		public Assignment getCodeAssignment_0() { return cCodeAssignment_0; }
 
-		//STRING
-		public RuleCall getCodeSTRINGTerminalRuleCall_0_0() { return cCodeSTRINGTerminalRuleCall_0_0; }
+		//HOSTCODE
+		public RuleCall getCodeHOSTCODETerminalRuleCall_0_0() { return cCodeHOSTCODETerminalRuleCall_0_0; }
 
 		//("(" type=ID ")")?
 		public Group getGroup_1() { return cGroup_1; }
@@ -1405,9 +1405,9 @@ public class ExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		return getValuedObjectReferenceAccess().getRule();
 	}
 
-	//// Taken from haf's kits grammar
+	//// Example: 'printf(...)'(C)
 	//TextExpression:
-	//	code=STRING ("(" type=ID ")")?;
+	//	code=HOSTCODE ("(" type=ID ")")?;
 	public TextExpressionElements getTextExpressionAccess() {
 		return (pTextExpression != null) ? pTextExpression : (pTextExpression = new TextExpressionElements());
 	}

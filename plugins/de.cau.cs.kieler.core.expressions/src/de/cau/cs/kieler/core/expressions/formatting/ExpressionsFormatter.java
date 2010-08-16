@@ -37,7 +37,7 @@ public class ExpressionsFormatter extends AnnotationsFormatter {
 	
 	/**
 	 * Method contains actual formatting instructions while GrammarAccess class
-	 * maybe parameterized allowing the reuse within AnnotationsFormatter. 
+	 * maybe parameterized allowing the reuse within ActionsFormatter. 
 	 * @param c FormattingConfig provided by caller
 	 * @param f GrammarAccess provided by caller
 	 */
@@ -63,7 +63,7 @@ public class ExpressionsFormatter extends AnnotationsFormatter {
 		//Don't insert space after value test operator ('?')
 		c.setNoSpace().after(f.getPreOperatorRule());
 		
-		c.setNoSpace().before(f.getTextExpressionRule());
+//		c.setNoSpace().before(f.getTextExpressionRule());
 	}
 	
 }
