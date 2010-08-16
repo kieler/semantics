@@ -1424,9 +1424,9 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 		return getValuedObjectReferenceAccess().getRule();
 	}
 
-	//// Taken from haf's kits grammar
+	//// Example: 'printf(...)'(C)
 	//TextExpression:
-	//	code=STRING ("(" type=ID ")")?;
+	//	code=HOSTCODE ("(" type=ID ")")?;
 	public ExpressionsGrammarAccess.TextExpressionElements getTextExpressionAccess() {
 		return gaExpressions.getTextExpressionAccess();
 	}
@@ -1469,7 +1469,7 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 	//// e.g. as initialValues of valuedObjects
 	//// used in Kits.xtext 
 	//AnyType returns ecore::EString:
-	//	Boolean | INT | Float | EString;
+	//	Boolean | INT | Float | ID | STRING;
 	public ExpressionsGrammarAccess.AnyTypeElements getAnyTypeAccess() {
 		return gaExpressions.getAnyTypeAccess();
 	}
@@ -1631,13 +1631,26 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 		return gaExpressions.getBooleanRule();
 	} 
 
+	//// custom terminal rule allowing to save transition label string as they are
+	//terminal STRING:
+	//	"\"" ("\\" ("b" | "t" | "n" | "f" | "r" | "\"" | "\'" | "\\") | !("\\" | "\""))* "\"";
+	public TerminalRule getSTRINGRule() {
+		return gaExpressions.getSTRINGRule();
+	} 
+
+	//// custom terminal rule allowing to save transition label string as they are
+	//terminal HOSTCODE:
+	//	"\'" ("\\" ("b" | "t" | "n" | "f" | "r" | "\"" | "\'" | "\\") | !("\\" | "\'"))* "\'";
+	public TerminalRule getHOSTCODERule() {
+		return gaExpressions.getHOSTCODERule();
+	} 
+
 	//// --------------------------
 	////
 	////   EXPRESSIONS
 	////
 	//// --------------------------
 	//// introduction of parsing rules for annotations
-	//// are to be moved into Annotations.xtext in the future!!
 	//StringAnnotation returns Annotation:
 	//	CommentAnnotation | KeyValueAnnotation;
 	public AnnotationsGrammarAccess.StringAnnotationElements getStringAnnotationAccess() {
@@ -1670,6 +1683,17 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 		return getKeyValueAnnotationAccess().getRule();
 	}
 
+	//// needed for importing other resources
+	//ImportAnnotation:
+	//	"import" importURI=STRING;
+	public AnnotationsGrammarAccess.ImportAnnotationElements getImportAnnotationAccess() {
+		return gaExpressions.getImportAnnotationAccess();
+	}
+	
+	public ParserRule getImportAnnotationRule() {
+		return getImportAnnotationAccess().getRule();
+	}
+
 	//// allow strings without quotes as they don'c contain spaces
 	//EString returns ecore::EString:
 	//	STRING | ID;
@@ -1700,13 +1724,6 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 	//	"^"? ("a".."z" | "A".."Z" | "_") ("a".."z" | "A".."Z" | "_" | "0".."9")*;
 	public TerminalRule getIDRule() {
 		return gaExpressions.getIDRule();
-	} 
-
-	//terminal STRING:
-	//	"\"" ("\\" ("b" | "t" | "n" | "f" | "r" | "\"" | "\'" | "\\") | !("\\" | "\""))* "\"" | "\'" ("\\" ("b" | "t" | "n" |
-	//	"f" | "r" | "\"" | "\'" | "\\") | !("\\" | "\'"))* "\'";
-	public TerminalRule getSTRINGRule() {
-		return gaExpressions.getSTRINGRule();
 	} 
 
 	//terminal SL_COMMENT:
