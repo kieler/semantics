@@ -40,41 +40,78 @@ public class KitsFormatter extends ActionsFormatter {
             c.setLinewrap(1).after(pair.getSecond());
         }
 
-        // let the parallel operator be the single element on its line
-        for (Keyword keyword : f.findKeywords("||")) {
-            c.setLinewrap().before(keyword);
-            c.setLinewrap().after(keyword);
-        }
-
-        // let the parallel operator be the single element on its line
-        for (Keyword keyword : f.findKeywords(";")) {
-            c.setNoSpace().before(keyword);
-        }
-
-        // c.setLinewrap().after(f.getStringAnnotationRule());
-        // c.setLinewrap().after(f.getCOMMENT_ANNOTATIONRule());
-
-        c.setNoLinewrap().before(f.getRootRegionRule());
-        
-        // why does this not work as intended :-(
-        c.setLinewrap(2).before(f.getRegionRule());
-        c.setLinewrap(2).before(f.getSingleRegionRule());
+        /*
+         * REGIONS
+         */
 
         c.setNoSpace().before(f.getRegionAccess().getColonKeyword_4());
         c.setLinewrap().after(f.getRegionAccess().getColonKeyword_4());
-
+        
         c.setNoSpace().before(f.getRootRegionAccess().getColonKeyword_2_3());
         c.setLinewrap().after(f.getRootRegionAccess().getColonKeyword_2_3());
         
         c.setNoSpace().before(f.getSingleRegionAccess().getColonKeyword_1_3());
         c.setLinewrap().after(f.getSingleRegionAccess().getColonKeyword_1_3());
+        
+        c.setNoLinewrap().before(f.getRootRegionAccess().getStatesStateParserRuleCall_4_0());
+        c.setNoLinewrap().before(f.getRootRegionAccess().getStatesAssignment_4());
+        
+        
+        // does not work!
+        c.setLinewrap(2).before(f.getRegionRule());
+        c.setLinewrap(2, 2, 2).before(f.getRegionRule());
+        
+        // works but is wrong in many cases
+        c.setLinewrap(2).before(f.getRegionAccess().getRegionKeyword_1());
+                
+        // does not work! :-(
+        c.setLinewrap(1, 1, 1).between(f.getRegionAccess().getRegionKeyword_1(),
+                f.getRegionAccess().getAnnotationsAssignment_0());
 
-        // have a blank between states
-        // unfortunately, the first declaration doesn't work as intended
-        c.setLinewrap(2).after(f.getStateRule());
-        c.setLinewrap(1).before(f.getStateRule());
-        c.setLinewrap(1).before(f.getStateAccess().getRightCurlyBracketKeyword_6_1_2());
+        // does not work!
+        c.setLinewrap(2, 2, 2).between(f.getStateAccess().getRegionsAssignment_6_1_1_1_0(),
+                f.getStateAccess().getRegionsAssignment_6_1_1_1_1());
 
+        c.setLinewrap(2, 2, 2).between(f.getStateAccess().getRegionsSingleRegionParserRuleCall_6_1_1_1_0_0(),
+                f.getStateAccess().getRegionsRegionParserRuleCall_6_1_1_1_1_0());
+        
+        c.setLinewrap(2, 2, 2).between(f.getStateAccess().getRegionsRegionParserRuleCall_6_1_1_1_1_0(),
+                f.getStateAccess().getRegionsRegionParserRuleCall_6_1_1_1_1_0());
+        
+
+
+        /*
+         *  STATE
+         */
+        
+        c.setLinewrap().before(f.getStateAccess().getIsInitialInitKeyword_1_0_0_0());
+        c.setLinewrap().before(f.getStateAccess().getIsFinalFinalKeyword_1_0_1_0());
+        c.setNoLinewrap().between(f.getStateAccess().getIsInitialInitKeyword_1_0_0_0(),
+                f.getStateAccess().getIsFinalFinalKeyword_1_0_1_0());
+
+        c.setLinewrap().before(f.getStateAccess().getIsInitialInitKeyword_1_1_1_0());
+        c.setLinewrap().before(f.getStateAccess().getIsFinalFinalKeyword_1_1_0_0());
+        c.setNoLinewrap().between(f.getStateAccess().getIsInitialInitKeyword_1_1_1_0(),
+                f.getStateAccess().getIsFinalFinalKeyword_1_1_0_0());
+
+        c.setLinewrap().before(f.getStateAccess().getStateKeyword_3());
+        
+        c.setNoLinewrap().between(f.getStateAccess().getIsInitialInitKeyword_1_0_0_0(),
+                f.getStateAccess().getStateKeyword_3());
+        c.setNoLinewrap().between(f.getStateAccess().getIsInitialInitKeyword_1_1_1_0(),
+                f.getStateAccess().getStateKeyword_3());
+        c.setNoLinewrap().between(f.getStateAccess().getIsFinalFinalKeyword_1_0_1_0(),
+                f.getStateAccess().getStateKeyword_3());
+        c.setNoLinewrap().between(f.getStateAccess().getIsFinalFinalKeyword_1_1_0_0(),
+                f.getStateAccess().getStateKeyword_3());
+        
+
+        // does not work!
+        c.setLinewrap(2, 2, 2).between(f.getRegionAccess().getStatesAssignment_6(),
+                f.getRegionAccess().getStatesAssignment_6());
+        
+        
+        
         c.setLinewrap().after(f.getSignalRule());
         // c.setLinewrap().after(f.getSignalAccess().getSemicolonKeyword_7());
 
@@ -86,12 +123,9 @@ public class KitsFormatter extends ActionsFormatter {
         // c.setLinewrap().before(f.getTransitionRule());
         c.setLinewrap().before(f.getTransitionAccess().getTypeTransitionTypeEnumRuleCall_1_0());
         c.setLinewrap().before(f.getTransitionRule());
-        c.setLinewrap(2).after(f.getTransitionRule());
 
         // let the priority statement be compressed, i.e. <1> not < 1 >
         c.setNoSpace().after(f.getTransitionAccess().getLessThanSignKeyword_3_0());
         c.setNoSpace().before(f.getTransitionAccess().getGreaterThanSignKeyword_3_2());
-        
-        c.setLinewrap().after(f.getActionRule());
     }
 }

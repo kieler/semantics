@@ -1295,7 +1295,7 @@ public class InterfacesGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//TextEffect returns synccharts::TextEffect:
-	//	code=STRING ("(" type=ID ")")?;
+	//	code=HOSTCODE ("(" type=ID ")")?;
 	public ActionsGrammarAccess.TextEffectElements getTextEffectAccess() {
 		return gaActions.getTextEffectAccess();
 	}
@@ -1500,9 +1500,9 @@ public class InterfacesGrammarAccess extends AbstractGrammarElementFinder {
 		return getValuedObjectReferenceAccess().getRule();
 	}
 
-	//// Taken from haf's kits grammar
+	//// Example: 'printf(...)'(C)
 	//TextExpression:
-	//	code=STRING ("(" type=ID ")")?;
+	//	code=HOSTCODE ("(" type=ID ")")?;
 	public ExpressionsGrammarAccess.TextExpressionElements getTextExpressionAccess() {
 		return gaActions.getTextExpressionAccess();
 	}

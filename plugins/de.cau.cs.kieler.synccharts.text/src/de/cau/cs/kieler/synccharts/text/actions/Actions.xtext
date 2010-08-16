@@ -37,6 +37,6 @@ Assignment returns synccharts::Assignment:
 
 
 TextEffect returns synccharts::TextEffect:
- 	code=STRING ("(" type=ID ")")?;
+ 	code=HOSTCODE ("(" type=ID ")")?;
 
 	

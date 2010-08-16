@@ -4384,8 +4384,8 @@ rule__TextEffect__CodeAssignment_0
     }
 :
 (
-{ before(grammarAccess.getTextEffectAccess().getCodeSTRINGTerminalRuleCall_0_0()); }
-	RULE_STRING{ after(grammarAccess.getTextEffectAccess().getCodeSTRINGTerminalRuleCall_0_0()); }
+{ before(grammarAccess.getTextEffectAccess().getCodeHOSTCODETerminalRuleCall_0_0()); }
+	RULE_HOSTCODE{ after(grammarAccess.getTextEffectAccess().getCodeHOSTCODETerminalRuleCall_0_0()); }
 )
 
 ;
@@ -4763,8 +4763,8 @@ rule__TextExpression__CodeAssignment_0
     }
 :
 (
-{ before(grammarAccess.getTextExpressionAccess().getCodeSTRINGTerminalRuleCall_0_0()); }
-	RULE_STRING{ after(grammarAccess.getTextExpressionAccess().getCodeSTRINGTerminalRuleCall_0_0()); }
+{ before(grammarAccess.getTextExpressionAccess().getCodeHOSTCODETerminalRuleCall_0_0()); }
+	RULE_HOSTCODE{ after(grammarAccess.getTextExpressionAccess().getCodeHOSTCODETerminalRuleCall_0_0()); }
 )
 
 ;

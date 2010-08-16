@@ -129,7 +129,7 @@ public class KitsResource extends LazyLinkingResource {
 //                setupScopeID((Scope) o, m);
             }
             if (SyncchartsPackage.eINSTANCE.getState().isInstance(o)) {
-                setupPriorities((State) o);
+//                setupPriorities((State) o);
             }
             if (ExpressionsPackage.eINSTANCE.getValuedObject().isInstance(o)) {
                 setupTypes((ValuedObject) o);
@@ -216,19 +216,19 @@ public class KitsResource extends LazyLinkingResource {
 //        }
 //    }
 
-    /**
-     * Sets up transitions priorities if needed. Setup priorities of parsed transitions if the
-     * priority of the first transition is not set. (it's likely this is the only transition).
-     */
-    private void setupPriorities(State s) {
-        if (s.getOutgoingTransitions().size() != 0
-                && !s.getOutgoingTransitions().get(0)
-                        .eIsSet(SyncchartsPackage.eINSTANCE.getTransition_Priority())) {
-            for (int i = 0; i < s.getOutgoingTransitions().size(); i++) {
-                s.getOutgoingTransitions().get(i).setPriority(i + 1);
-            }
-        }
-    }
+//    /**
+//     * Sets up transitions priorities if needed. Setup priorities of parsed transitions if the
+//     * priority of the first transition is not set. (it's likely this is the only transition).
+//     */
+//    private void setupPriorities(State s) {
+//        if (s.getOutgoingTransitions().size() != 0
+//                && !s.getOutgoingTransitions().get(0)
+//                        .eIsSet(SyncchartsPackage.eINSTANCE.getTransition_Priority())) {
+//            for (int i = 0; i < s.getOutgoingTransitions().size(); i++) {
+//                s.getOutgoingTransitions().get(i).setPriority(i + 1);
+//            }
+//        }
+//    }
 
     private void setupTypes(ValuedObject v) {
         if (!Strings.isEmpty(v.getHostType())) {

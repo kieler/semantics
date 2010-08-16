@@ -19,13 +19,13 @@ public class InternalActionsLexer extends Lexer {
     public static final int T33=33;
     public static final int T22=22;
     public static final int T36=36;
-    public static final int RULE_COMMENT_ANNOTATION=9;
+    public static final int RULE_COMMENT_ANNOTATION=10;
     public static final int RULE_STRING=4;
     public static final int T28=28;
     public static final int T23=23;
     public static final int T35=35;
-    public static final int RULE_FLOAT=7;
-    public static final int RULE_HOSTCODE=10;
+    public static final int RULE_FLOAT=8;
+    public static final int RULE_HOSTCODE=7;
     public static final int T34=34;
     public static final int T20=20;
     public static final int T25=25;
@@ -36,7 +36,7 @@ public class InternalActionsLexer extends Lexer {
     public static final int RULE_INT=6;
     public static final int EOF=-1;
     public static final int T32=32;
-    public static final int RULE_BOOLEAN=8;
+    public static final int RULE_BOOLEAN=9;
     public static final int T17=17;
     public static final int Tokens=37;
     public static final int T31=31;

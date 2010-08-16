@@ -19,16 +19,20 @@ import org.osgi.framework.Bundle;
 
 import com.google.inject.Injector;
 
-public class CustomizedActionsExecutableExtensionFactory extends AbstractGuiceAwareExecutableExtensionFactory {
+import de.cau.cs.kieler.synccharts.text.ui.Activator;
 
-	@Override
-	protected Bundle getBundle() {
-		return de.cau.cs.kieler.synccharts.text.ui.Activator.getInstance().getBundle();
-	}
-	
-	@Override
-	protected Injector getInjector() {
-		return de.cau.cs.kieler.synccharts.text.ui.Activator.getInstance().getInjector("de.cau.cs.kieler.synccharts.text.actions.Actions");
-	}
-	
+public class CustomizedActionsExecutableExtensionFactory extends
+        AbstractGuiceAwareExecutableExtensionFactory {
+
+    @Override
+    protected Bundle getBundle() {
+        return de.cau.cs.kieler.synccharts.text.ui.Activator.getInstance().getBundle();
+    }
+
+    @Override
+    protected Injector getInjector() {
+        return de.cau.cs.kieler.synccharts.text.ui.Activator.getInstance().getInjector(
+                Activator.ACTIONS_LANGUAGE);
+    }
+
 }

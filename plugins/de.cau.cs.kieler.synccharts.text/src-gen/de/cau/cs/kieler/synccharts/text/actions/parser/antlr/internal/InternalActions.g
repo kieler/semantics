@@ -463,9 +463,9 @@ ruleTextEffect returns [EObject current=null]
     }:
 ((
 (
-		lv_code_0_0=RULE_STRING
+		lv_code_0_0=RULE_HOSTCODE
 		{
-			createLeafNode(grammarAccess.getTextEffectAccess().getCodeSTRINGTerminalRuleCall_0_0(), "code"); 
+			createLeafNode(grammarAccess.getTextEffectAccess().getCodeHOSTCODETerminalRuleCall_0_0(), "code"); 
 		}
 		{
 	        if ($current==null) {
@@ -477,7 +477,7 @@ ruleTextEffect returns [EObject current=null]
 	       			$current, 
 	       			"code",
 	        		lv_code_0_0, 
-	        		"STRING", 
+	        		"HOSTCODE", 
 	        		lastConsumedNode);
 	        } catch (ValueConverterException vce) {
 				handleValueConverterException(vce);
@@ -2029,9 +2029,9 @@ ruleTextExpression returns [EObject current=null]
     }:
 ((
 (
-		lv_code_0_0=RULE_STRING
+		lv_code_0_0=RULE_HOSTCODE
 		{
-			createLeafNode(grammarAccess.getTextExpressionAccess().getCodeSTRINGTerminalRuleCall_0_0(), "code"); 
+			createLeafNode(grammarAccess.getTextExpressionAccess().getCodeHOSTCODETerminalRuleCall_0_0(), "code"); 
 		}
 		{
 	        if ($current==null) {
@@ -2043,7 +2043,7 @@ ruleTextExpression returns [EObject current=null]
 	       			$current, 
 	       			"code",
 	        		lv_code_0_0, 
-	        		"STRING", 
+	        		"HOSTCODE", 
 	        		lastConsumedNode);
 	        } catch (ValueConverterException vce) {
 				handleValueConverterException(vce);

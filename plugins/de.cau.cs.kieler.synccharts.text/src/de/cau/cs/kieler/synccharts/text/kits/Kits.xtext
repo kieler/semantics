@@ -18,8 +18,8 @@ RootRegion returns synccharts::Region:
 
 SingleRegion returns synccharts::Region:
       (annotations += StringAnnotation)*
-      ('region' (id=ID)? (label=STRING)? ':')?
-      (variables+=Variable|signals+=Signal)*
+      ('region' (id=ID)? (label=STRING)? ':'
+       (variables+=Variable|signals+=Signal)*)?
       (states+=State)*;
 
 // ---------------------------------------------------------------------------------------------------
@@ -56,7 +56,7 @@ State returns synccharts::State:
              'suspension' suspensionTrigger=Action)*
 
             (
-             ((regions+=Region)(regions+=Region)+) | (regions+=SingleRegion)
+             (regions+=SingleRegion)(regions+=Region)*
              )?
             )
           '}') 
@@ -67,14 +67,15 @@ State returns synccharts::State:
 
 Transition returns synccharts::Transition:
     (annotations += StringAnnotation)*
-	type=TransitionType 
-	targetState=[synccharts::State|ID]
-	('<'priority=INT'>')? 
-	('with' (isImmediate?='#')? (delay=INT)? 
-	  (trigger=BooleanExpression)?
-      ('/' effects+=Effect (','effects+=Effect)*)?
-	)? 
-	(isHistory?='history')? (label=STRING)?;
+	type=TransitionType	targetState=[synccharts::State|ID] ('<'priority=INT'>')? 
+	( 'with'
+	 (
+	   ( (isImmediate?='#')? (delay=INT)? (trigger=BooleanExpression)? ('/' effects+=Effect (','effects+=Effect)*)? )
+	  |
+	   ( label=STRING )
+	  )
+	 )? 	
+	(isHistory?='history')?;
 
 // ---------------------------------------------------------------------------------------------------
 

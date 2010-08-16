@@ -32,9 +32,9 @@ public class KitsRuntimeModule extends
         return KitsTransientValueService.class;
     }
 
-    public Class<? extends org.eclipse.xtext.parsetree.reconstr.IParseTreeConstructor> bindIParseTreeConstructor() {
-        return de.cau.cs.kieler.synccharts.text.kits.formatting.KitsSpecializedParsetreeConstructor.class;
-    }
+//    public Class<? extends org.eclipse.xtext.parsetree.reconstr.IParseTreeConstructor> bindIParseTreeConstructor() {
+//        return de.cau.cs.kieler.synccharts.text.kits.formatting.KitsSpecializedParsetreeConstructor.class;
+//    }
 
     public Class<? extends org.eclipse.xtext.conversion.IValueConverterService> bindIValueConverterService() {
         return de.cau.cs.kieler.synccharts.text.kits.formatting.KitsValueConverter.class;

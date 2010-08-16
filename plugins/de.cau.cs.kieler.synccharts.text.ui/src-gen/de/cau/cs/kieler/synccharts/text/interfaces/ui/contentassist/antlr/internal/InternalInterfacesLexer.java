@@ -16,8 +16,8 @@ public class InternalInterfacesLexer extends Lexer {
     public static final int RULE_STRING_S=7;
     public static final int T36=36;
     public static final int RULE_STRING=4;
-    public static final int RULE_COMMENT_ANNOTATION=11;
-    public static final int RULE_FLOAT=9;
+    public static final int RULE_COMMENT_ANNOTATION=12;
+    public static final int RULE_FLOAT=10;
     public static final int T35=35;
     public static final int T45=45;
     public static final int T20=20;
@@ -26,8 +26,8 @@ public class InternalInterfacesLexer extends Lexer {
     public static final int T18=18;
     public static final int T37=37;
     public static final int T26=26;
-    public static final int RULE_INT=8;
-    public static final int RULE_BOOLEAN=10;
+    public static final int RULE_INT=9;
+    public static final int RULE_BOOLEAN=11;
     public static final int T32=32;
     public static final int T17=17;
     public static final int T51=51;
@@ -51,7 +51,7 @@ public class InternalInterfacesLexer extends Lexer {
     public static final int T42=42;
     public static final int T40=40;
     public static final int RULE_STRING_D=6;
-    public static final int RULE_HOSTCODE=12;
+    public static final int RULE_HOSTCODE=8;
     public static final int RULE_WS=15;
     public static final int T48=48;
     public static final int T54=54;

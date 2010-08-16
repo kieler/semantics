@@ -106,7 +106,7 @@ public final class ActionLabelSerializer {
 
     private static String toString(final TextualCode hostCode) {
         StringBuffer sb = new StringBuffer();
-        sb.append("\"" + hostCode.getCode() + "\"");
+        sb.append("'" + hostCode.getCode() + "'");
         if (hostCode.getType() != null && hostCode.getType() != "") {
             sb.append("(" + hostCode.getType() + ")");
         }

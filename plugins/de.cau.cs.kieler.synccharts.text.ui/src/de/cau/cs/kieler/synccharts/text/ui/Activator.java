@@ -26,76 +26,86 @@ import com.google.inject.Injector;
 import com.google.inject.Module;
 import com.google.inject.util.Modules;
 
-
-/** Customized bundle activator initializing all of the Xtext stuff.
+/**
+ * Customized bundle activator initializing all of the Xtext stuff.
+ * 
  * @author chsch
- *
+ * 
  */
 public class Activator extends AbstractUIPlugin {
 
+    public static final String ACTIONS_LANGUAGE = "de.cau.cs.kieler.synccharts.text.actions.Actions";
 
-	private Map<String,Injector> injectors = new HashMap<String,Injector>();
-	private static Activator INSTANCE;
+    public static final String INTERFACES_LANGUAGE = "de.cau.cs.kieler.synccharts.text.interfaces.Interfaces";
 
-	public Injector getInjector(String languageName) {
-		return injectors.get(languageName);
-	}
-	
-	@Override
-	public void start(BundleContext context) throws Exception {
-		super.start(context);
-		INSTANCE = this;
-		try {
-			
-			injectors.put("de.cau.cs.kieler.synccharts.text.actions.Actions", Guice.createInjector(
-					Modules.override(Modules.override(getRuntimeModule("de.cau.cs.kieler.synccharts.text.actions.Actions")).with(getUiModule("de.cau.cs.kieler.synccharts.text.actions.Actions"))).with(getSharedStateModule())
-				));
-			injectors.put("de.cau.cs.kieler.synccharts.text.interfaces.Interfaces", Guice.createInjector(
-					Modules.override(Modules.override(getRuntimeModule("de.cau.cs.kieler.synccharts.text.interfaces.Interfaces")).with(getUiModule("de.cau.cs.kieler.synccharts.text.interfaces.Interfaces"))).with(getSharedStateModule())
-				));
-			injectors.put("de.cau.cs.kieler.synccharts.text.kits.Kits", Guice.createInjector(
-					Modules.override(Modules.override(getRuntimeModule("de.cau.cs.kieler.synccharts.text.kits.Kits")).with(getUiModule("de.cau.cs.kieler.synccharts.text.kits.Kits"))).with(getSharedStateModule())
-				));
-			
-		} catch (Exception e) {
-			Logger.getLogger(getClass()).error(e.getMessage(), e);
-			throw e;
-		}
-	}
-	
-	public static Activator getInstance() {
-		return INSTANCE;
-	}
-	
-	protected Module getRuntimeModule(String grammar) {
-		
-		if ("de.cau.cs.kieler.synccharts.text.actions.Actions".equals(grammar)) {
-			  return new de.cau.cs.kieler.synccharts.text.actions.ActionsRuntimeModule();
-			}
-		if ("de.cau.cs.kieler.synccharts.text.interfaces.Interfaces".equals(grammar)) {
-			  return new de.cau.cs.kieler.synccharts.text.interfaces.InterfacesRuntimeModule();
-			}
-		if ("de.cau.cs.kieler.synccharts.text.kits.Kits".equals(grammar)) {
-			  return new de.cau.cs.kieler.synccharts.text.kits.KitsRuntimeModule();
-			}
-		
-		throw new IllegalArgumentException(grammar);
-	}
-	protected Module getUiModule(String grammar) {
-		
-		if ("de.cau.cs.kieler.synccharts.text.actions.Actions".equals(grammar)) {
-			  return new de.cau.cs.kieler.synccharts.text.actions.ui.ActionsUiModule(this);
-			}
-		if ("de.cau.cs.kieler.synccharts.text.interfaces.Interfaces".equals(grammar)) {
-			  return new de.cau.cs.kieler.synccharts.text.interfaces.ui.InterfacesUiModule(this);
-			}
-		if ("de.cau.cs.kieler.synccharts.text.kits.Kits".equals(grammar)) {
-			  return new de.cau.cs.kieler.synccharts.text.kits.ui.KitsUiModule(this);
-			}		
-		throw new IllegalArgumentException(grammar);
-	}
-	
-	protected Module getSharedStateModule() {
-		return new org.eclipse.xtext.ui.shared.SharedStateModule();
-	}
+    public static final String KITS_LANGUAGE = "de.cau.cs.kieler.synccharts.text.kits.Kits";
+
+    private Map<String, Injector> injectors = new HashMap<String, Injector>();
+    private static Activator INSTANCE;
+
+    public Injector getInjector(String languageName) {
+        return injectors.get(languageName);
+    }
+
+    @Override
+    public void start(BundleContext context) throws Exception {
+        super.start(context);
+        INSTANCE = this;
+        try {
+
+            injectors.put(ACTIONS_LANGUAGE,
+                    Guice.createInjector(Modules.override(
+                            Modules.override(getRuntimeModule(ACTIONS_LANGUAGE)).with(
+                                    getUiModule(ACTIONS_LANGUAGE))).with(getSharedStateModule())));
+            injectors.put(INTERFACES_LANGUAGE,
+                    Guice.createInjector(Modules.override(
+                            Modules.override(getRuntimeModule(INTERFACES_LANGUAGE)).with(
+                                    getUiModule(INTERFACES_LANGUAGE))).with(getSharedStateModule())));
+            injectors.put(KITS_LANGUAGE,
+                    Guice.createInjector(Modules.override(
+                            Modules.override(getRuntimeModule(KITS_LANGUAGE)).with(
+                                    getUiModule(KITS_LANGUAGE))).with(getSharedStateModule())));
+
+        } catch (Exception e) {
+            Logger.getLogger(getClass()).error(e.getMessage(), e);
+            throw e;
+        }
+    }
+
+    public static Activator getInstance() {
+        return INSTANCE;
+    }
+
+    protected Module getRuntimeModule(String grammar) {
+
+        if (ACTIONS_LANGUAGE.equals(grammar)) {
+            return new de.cau.cs.kieler.synccharts.text.actions.ActionsRuntimeModule();
+        }
+        if (INTERFACES_LANGUAGE.equals(grammar)) {
+            return new de.cau.cs.kieler.synccharts.text.interfaces.InterfacesRuntimeModule();
+        }
+        if (KITS_LANGUAGE.equals(grammar)) {
+            return new de.cau.cs.kieler.synccharts.text.kits.KitsRuntimeModule();
+        }
+
+        throw new IllegalArgumentException(grammar);
+    }
+
+    protected Module getUiModule(String grammar) {
+
+        if (ACTIONS_LANGUAGE.equals(grammar)) {
+            return new de.cau.cs.kieler.synccharts.text.actions.ui.ActionsUiModule(this);
+        }
+        if (INTERFACES_LANGUAGE.equals(grammar)) {
+            return new de.cau.cs.kieler.synccharts.text.interfaces.ui.InterfacesUiModule(this);
+        }
+        if (KITS_LANGUAGE.equals(grammar)) {
+            return new de.cau.cs.kieler.synccharts.text.kits.ui.KitsUiModule(this);
+        }
+        throw new IllegalArgumentException(grammar);
+    }
+
+    protected Module getSharedStateModule() {
+        return new org.eclipse.xtext.ui.shared.SharedStateModule();
+    }
 }

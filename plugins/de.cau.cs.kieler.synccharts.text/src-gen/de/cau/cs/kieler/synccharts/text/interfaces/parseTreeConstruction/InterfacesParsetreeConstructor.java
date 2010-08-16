@@ -6467,11 +6467,11 @@ protected class Assignment_ExpressionAssignment_2 extends AssignmentToken  {
 /************ begin Rule TextEffect ****************
  *
  * TextEffect returns synccharts::TextEffect:
- * 	code=STRING ("(" type=ID ")")?;
+ * 	code=HOSTCODE ("(" type=ID ")")?;
  *
  **/
 
-// code=STRING ("(" type=ID ")")?
+// code=HOSTCODE ("(" type=ID ")")?
 protected class TextEffect_Group extends GroupToken {
 	
 	public TextEffect_Group(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -6501,7 +6501,7 @@ protected class TextEffect_Group extends GroupToken {
 
 }
 
-// code=STRING
+// code=HOSTCODE
 protected class TextEffect_CodeAssignment_0 extends AssignmentToken  {
 	
 	public TextEffect_CodeAssignment_0(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -6524,9 +6524,9 @@ protected class TextEffect_CodeAssignment_0 extends AssignmentToken  {
 	public IEObjectConsumer tryConsume() {
 		if((value = eObjectConsumer.getConsumable("code",true)) == null) return null;
 		IEObjectConsumer obj = eObjectConsumer.cloneAndConsume("code");
-		if(valueSerializer.isValid(obj.getEObject(), grammarAccess.getTextEffectAccess().getCodeSTRINGTerminalRuleCall_0_0(), value, null)) {
+		if(valueSerializer.isValid(obj.getEObject(), grammarAccess.getTextEffectAccess().getCodeHOSTCODETerminalRuleCall_0_0(), value, null)) {
 			type = AssignmentType.TERMINAL_RULE_CALL;
-			element = grammarAccess.getTextEffectAccess().getCodeSTRINGTerminalRuleCall_0_0();
+			element = grammarAccess.getTextEffectAccess().getCodeHOSTCODETerminalRuleCall_0_0();
 			return obj;
 		}
 		return null;
@@ -10064,13 +10064,13 @@ protected class ValuedObjectReference_ValuedObjectAssignment extends AssignmentT
 
 /************ begin Rule TextExpression ****************
  *
- * // Taken from haf's kits grammar
+ * // Example: 'printf(...)'(C)
  * TextExpression:
- * 	code=STRING ("(" type=ID ")")?;
+ * 	code=HOSTCODE ("(" type=ID ")")?;
  *
  **/
 
-// code=STRING ("(" type=ID ")")?
+// code=HOSTCODE ("(" type=ID ")")?
 protected class TextExpression_Group extends GroupToken {
 	
 	public TextExpression_Group(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -10100,7 +10100,7 @@ protected class TextExpression_Group extends GroupToken {
 
 }
 
-// code=STRING
+// code=HOSTCODE
 protected class TextExpression_CodeAssignment_0 extends AssignmentToken  {
 	
 	public TextExpression_CodeAssignment_0(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -10123,9 +10123,9 @@ protected class TextExpression_CodeAssignment_0 extends AssignmentToken  {
 	public IEObjectConsumer tryConsume() {
 		if((value = eObjectConsumer.getConsumable("code",true)) == null) return null;
 		IEObjectConsumer obj = eObjectConsumer.cloneAndConsume("code");
-		if(valueSerializer.isValid(obj.getEObject(), grammarAccess.getTextExpressionAccess().getCodeSTRINGTerminalRuleCall_0_0(), value, null)) {
+		if(valueSerializer.isValid(obj.getEObject(), grammarAccess.getTextExpressionAccess().getCodeHOSTCODETerminalRuleCall_0_0(), value, null)) {
 			type = AssignmentType.TERMINAL_RULE_CALL;
-			element = grammarAccess.getTextExpressionAccess().getCodeSTRINGTerminalRuleCall_0_0();
+			element = grammarAccess.getTextExpressionAccess().getCodeHOSTCODETerminalRuleCall_0_0();
 			return obj;
 		}
 		return null;
