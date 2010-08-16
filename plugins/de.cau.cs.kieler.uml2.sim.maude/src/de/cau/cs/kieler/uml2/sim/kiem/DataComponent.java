@@ -57,6 +57,7 @@ import de.cau.cs.kieler.sim.kiem.KiemExecutionException;
 import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
 import de.cau.cs.kieler.sim.kiem.properties.KiemProperty;
 import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyTypeEditor;
+import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyTypeFile;
 import de.cau.cs.kieler.sim.kiem.ui.datacomponent.JSONObjectSimulationDataComponent;
 
 import org.eclipse.uml2.uml.Model;
@@ -111,8 +112,10 @@ public class DataComponent extends JSONObjectSimulationDataComponent implements
      * @see de.cau.cs.kieler.sim.kiem.ui.datacomponent.JSONObjectSimulationDataComponent#doProvideProperties()
      */
     public KiemProperty[] doProvideProperties() {
-        KiemProperty[] properties = new KiemProperty[1];
-        properties[0] = new KiemProperty("State Variable", "state");
+        KiemProperty[] properties = new KiemProperty[2];
+        KiemPropertyTypeFile maudeFile = new KiemPropertyTypeFile(true);
+        properties[0] = new KiemProperty("Maude Executable", maudeFile, "maude");
+        properties[1] = new KiemProperty("State Variable", "state");
         return properties;    
     }
     
