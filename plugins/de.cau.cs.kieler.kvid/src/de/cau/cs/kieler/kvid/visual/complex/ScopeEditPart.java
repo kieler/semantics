@@ -26,6 +26,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.gmf.runtime.diagram.ui.editparts.ShapeNodeEditPart;
+import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramEditor;
 import org.eclipse.gmf.runtime.gef.ui.figures.NodeFigure;
 import org.eclipse.gmf.runtime.gef.ui.figures.WrapperNodeFigure;
 import org.eclipse.gmf.runtime.notation.Connector;
@@ -35,6 +36,7 @@ import org.eclipse.gmf.runtime.notation.View;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.ImageData;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.PlatformUI;
 
 import ptolemy.plot.Plot;
@@ -83,7 +85,6 @@ public class ScopeEditPart extends ShapeNodeEditPart implements IDataListener {
             }
             EObject model = connected.getElement();
             referredObjectURI = KvidUtil.fragmentURI2PtolemyURI(model.eResource().getURIFragment(model), model.eResource());
-            System.out.println("###" + referredObjectURI);
         }
     }
 
@@ -139,6 +140,18 @@ public class ScopeEditPart extends ShapeNodeEditPart implements IDataListener {
      */
     @SuppressWarnings({ "rawtypes", "unchecked" })
     public void triggerDataChanged() {
+        //Check if information is relevant for this edit part
+        IEditorPart activeEditor = DataDistributor.getInstance().getActiveEditor();
+        if (activeEditor instanceof DiagramEditor) {
+            if (!((DiagramEditor) activeEditor).getDiagramEditDomain()
+                    .equals(this.getDiagramEditDomain())) {
+                return;
+            }
+        } else {
+            return;
+        }
+        
+        System.out.println(referredObjectURI + ":" + isActive());
         if (referredObjectURI == null || DataDistributor.getInstance().getDataObjectByURI(referredObjectURI) == null) {
             View view = this.getNotationView();
             EList list = view.getSourceEdges();
@@ -183,6 +196,5 @@ public class ScopeEditPart extends ShapeNodeEditPart implements IDataListener {
         super.removeNotify();
         DataDistributor.getInstance().removeDataListener(this);
     }
-    
     
 }
