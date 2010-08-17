@@ -26,13 +26,17 @@ import org.eclipse.swt.graphics.ImageData;
 import org.eclipse.swt.graphics.PaletteData;
 import org.eclipse.swt.graphics.RGB;
 
+import de.cau.cs.kieler.core.annotations.NamedObject;
+
 /**
  * @author jjc
  *
  */
-public class KvidUtil {
+public final class KvidUtil {
+    
+    private KvidUtil() { }
 
-    public static ImageData convertAWTImageToSWT(Image image) {
+    public static ImageData convertAWTImageToSWT(final Image image) {
         if (image == null) {
             throw new IllegalArgumentException("Null 'image' argument.");
         }
@@ -48,7 +52,7 @@ public class KvidUtil {
         return convertToSWT(bi);
     }
     
-    public static ImageData convertToSWT(BufferedImage bufferedImage) {
+    public static ImageData convertToSWT(final BufferedImage bufferedImage) {
         if (bufferedImage.getColorModel() instanceof DirectColorModel) {
             DirectColorModel colorModel
                     = (DirectColorModel) bufferedImage.getColorModel();
@@ -68,8 +72,7 @@ public class KvidUtil {
                 }
             }
             return data;
-        }
-        else if (bufferedImage.getColorModel() instanceof IndexColorModel) {
+        } else if (bufferedImage.getColorModel() instanceof IndexColorModel) {
             IndexColorModel colorModel = (IndexColorModel)
                     bufferedImage.getColorModel();
             int size = colorModel.getMapSize();
@@ -102,27 +105,31 @@ public class KvidUtil {
         return null;
     }
     
-    public static String fragmentURI2PtolemyURI(final String fragmentURI, final Resource resource) {
+    public static String fragmentUri2PtolemyUri(final String fragmentUri, final Resource resource) {
         String result = "";
-        if (fragmentURI.startsWith("//")) {
-            int lastOcccurance = 2;
+        if (fragmentUri.startsWith("//")) {
+            int lastOccurance = 2;
             int currentOccurance;
-            while (fragmentURI.indexOf("/", lastOcccurance) != -1) {
-                currentOccurance = fragmentURI.indexOf("/", lastOcccurance);
+            while (fragmentUri.indexOf("/", lastOccurance) != -1) {
+                currentOccurance = fragmentUri.indexOf("/", lastOccurance);
                 result += ".";
-                String currentURI;
-                if (currentOccurance != lastOcccurance) {
-                    currentURI = fragmentURI.substring(0, currentOccurance);
-                    lastOcccurance = currentOccurance;
+                String currentUri;
+                if (currentOccurance != lastOccurance) {
+                    currentUri = fragmentUri.substring(0, currentOccurance);
+                    lastOccurance = currentOccurance;
                 } else {
-                    currentURI = fragmentURI;
-                    lastOcccurance = fragmentURI.length();
+                    currentUri = fragmentUri;
+                    lastOccurance = fragmentUri.length();
                 }
-                EObject model = resource.getEObject(currentURI);
-                result += model.toString().substring(model.toString().indexOf(":") + 2, model.toString().lastIndexOf(")"));
+                EObject model = resource.getEObject(currentUri);
+                if (model instanceof NamedObject) {
+                    result += ((NamedObject) model).getName();
+                } else {
+                    throw new RuntimeException("Ptolemy URIs will only work with NamedObjects");
+                }
             }
         } else {
-            throw new RuntimeException("Malformatted fragment URI");
+            throw new RuntimeException("Malformatted Fragment URI");
         }
         return result;
     }

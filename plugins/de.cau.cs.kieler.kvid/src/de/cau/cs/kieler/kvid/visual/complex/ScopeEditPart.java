@@ -19,6 +19,7 @@ import java.awt.image.BufferedImage;
 import org.eclipse.draw2d.LineBorder;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.gmf.runtime.diagram.ui.editparts.ShapeNodeEditPart;
 import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramEditor;
 import org.eclipse.gmf.runtime.gef.ui.figures.NodeFigure;
@@ -32,6 +33,7 @@ import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.PlatformUI;
 
 import ptolemy.plot.Plot;
+import de.cau.cs.kieler.core.model.util.ModelingUtil;
 import de.cau.cs.kieler.kvid.KvidUtil;
 import de.cau.cs.kieler.kvid.data.DataObject;
 import de.cau.cs.kieler.kvid.datadistributor.DataDistributor;
@@ -52,6 +54,10 @@ public class ScopeEditPart extends ShapeNodeEditPart implements IDataListener {
     
     private int steps = 0;
     
+    private static final int PLOT_HEIGHT = 200;
+    
+    private static final int PLOT_WIDTH = 200;
+    
     /**
      * 
      * @param view The view connected to this edit part
@@ -64,7 +70,7 @@ public class ScopeEditPart extends ShapeNodeEditPart implements IDataListener {
         plot.setBars(true);
         plot.setXLabel("Step");
         plot.setYLabel("Value");
-        plot.setSize(200, 200);
+        plot.setSize(PLOT_WIDTH, PLOT_HEIGHT);
         EList list = view.getSourceEdges();
         list.addAll(view.getTargetEdges());
         if (list.size() == 1) {
@@ -76,7 +82,8 @@ public class ScopeEditPart extends ShapeNodeEditPart implements IDataListener {
                 connected = (Node) con.getTarget();
             }
             EObject model = connected.getElement();
-            referredObjectURI = KvidUtil.fragmentURI2PtolemyURI(model.eResource().getURIFragment(model), model.eResource());
+            referredObjectURI = KvidUtil.fragmentUri2PtolemyUri(
+                    ModelingUtil.getFragmentUri(model), model.eResource());
         }
     }
 
@@ -88,18 +95,19 @@ public class ScopeEditPart extends ShapeNodeEditPart implements IDataListener {
                
         BufferedImage image = plot.exportImage();
         ImageData data = KvidUtil.convertAWTImageToSWT(image);
-        currentScope = new GmfImageFigure(new org.eclipse.swt.graphics.Image(Display.getCurrent(), data));
+        currentScope = new GmfImageFigure(new org.eclipse.swt.graphics.Image(
+                Display.getCurrent(), data));
         WrapperNodeFigure container = new WrapperNodeFigure(currentScope);
         container.setBorder(new LineBorder());
         return container;
     }
 
     /**
-     * @param referredObjectURI the referredObjectURI to set
+     * @param uri the referredObjectURI to set
      */
-    public void setReferredObjectURI(String URI) {
-        this.referredObjectURI = URI;
-        DataDistributor.getInstance().getDataObjectByURI(URI).setSaveHistory(true);
+    public void setReferredObjectURI(final String uri) {
+        this.referredObjectURI = uri;
+        DataDistributor.getInstance().getDataObjectByURI(uri).setSaveHistory(true);
         if (referredObjectURI != null) {
             DataObject data = DataDistributor.getInstance().getDataObjectByURI(referredObjectURI);
             plot.setXRange(0, data.getHistoryLength());
@@ -127,8 +135,9 @@ public class ScopeEditPart extends ShapeNodeEditPart implements IDataListener {
         }
     }
     
-    /* (non-Javadoc)
-     * @see de.cau.cs.kieler.kvid.data.IDataListener#triggerDataChanged()
+
+    /**
+     * {@inheritDoc}
      */
     @SuppressWarnings({ "rawtypes", "unchecked" })
     public void triggerDataChanged() {
@@ -144,7 +153,9 @@ public class ScopeEditPart extends ShapeNodeEditPart implements IDataListener {
             return;
         }
         
-        if (referredObjectURI == null || DataDistributor.getInstance().getDataObjectByURI(referredObjectURI) == null) {
+        if (referredObjectURI == null
+                || DataDistributor.getInstance().getDataObjectByURI(
+                        referredObjectURI) == null) {
             View view = this.getNotationView();
             EList list = view.getSourceEdges();
             list.addAll(view.getTargetEdges());
@@ -157,8 +168,9 @@ public class ScopeEditPart extends ShapeNodeEditPart implements IDataListener {
                     connected = (Node) con.getTarget();
                 }
                 EObject model = connected.getElement();
-                referredObjectURI = KvidUtil.fragmentURI2PtolemyURI(model.eResource()
-                        .getURIFragment(model), model.eResource());
+                System.out.println(((InternalEObject) model).eContainingFeature().toString());
+                referredObjectURI = KvidUtil.fragmentUri2PtolemyUri(
+                        ModelingUtil.getFragmentUri(model), model.eResource());
             }
             DataDistributor.getInstance().getDataObjectByURI(referredObjectURI).setSaveHistory(true);
         }
@@ -170,7 +182,8 @@ public class ScopeEditPart extends ShapeNodeEditPart implements IDataListener {
         BufferedImage image = plot.exportImage();
         ImageData data = KvidUtil.convertAWTImageToSWT(image);
         getFigure().remove(currentScope);
-        currentScope = new GmfImageFigure(new org.eclipse.swt.graphics.Image(Display.getCurrent(), data));
+        currentScope = new GmfImageFigure(new org.eclipse.swt.graphics.Image(
+                Display.getCurrent(), data));
         getFigure().add(currentScope);
         currentScope.setBorder(new LineBorder());
         PlatformUI.getWorkbench().getDisplay().syncExec(new Runnable() {
@@ -187,6 +200,15 @@ public class ScopeEditPart extends ShapeNodeEditPart implements IDataListener {
     public void removeNotify() {
         super.removeNotify();
         DataDistributor.getInstance().removeDataListener(this);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public void triggerWrapup() {
+        plot.clear(0);
+        steps = 0;
+        plot.repaint();
     }
     
 }

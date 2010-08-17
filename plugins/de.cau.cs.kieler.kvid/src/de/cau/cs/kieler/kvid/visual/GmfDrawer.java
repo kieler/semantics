@@ -185,4 +185,11 @@ public class GmfDrawer implements IDrawer, IDataListener {
         draw(DataDistributor.getInstance().getData());
     }
 
+    /* (non-Javadoc)
+     * @see de.cau.cs.kieler.kvid.datadistributor.IDataListener#triggerWrapup()
+     */
+    public void triggerWrapup() {
+        clearDrawing();
+    }
+
 }

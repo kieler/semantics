@@ -20,5 +20,7 @@ package de.cau.cs.kieler.kvid.datadistributor;
 public interface IDataListener {
     
     void triggerDataChanged();
+    
+    void triggerWrapup();
 
 }

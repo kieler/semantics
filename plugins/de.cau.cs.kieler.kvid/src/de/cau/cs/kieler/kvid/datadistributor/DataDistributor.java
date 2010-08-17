@@ -231,6 +231,9 @@ public final class DataDistributor implements IProviderListener {
         dataByURI = new HashMap<String, DataObject>();
         currentDiagramLayout = null;
         currentEditor = null;
+        for(IDataListener listener : listeners) {
+            listener.triggerWrapup();
+        }
     }
     
     public void registerDataListener(IDataListener thelistener) {
