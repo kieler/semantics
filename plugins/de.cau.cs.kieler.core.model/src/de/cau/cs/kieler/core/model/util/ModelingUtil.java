@@ -23,6 +23,8 @@ import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.InternalEObject;
+import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gmf.runtime.diagram.core.util.ViewUtil;
@@ -42,6 +44,8 @@ import org.eclipse.xtext.ui.editor.XtextEditor;
 import org.eclipse.xtext.ui.editor.model.IXtextDocument;
 import org.eclipse.xtext.ui.editor.model.XtextDocument;
 import org.eclipse.xtext.util.concurrent.IUnitOfWork.Void;
+
+import de.cau.cs.kieler.core.annotations.NamedObject;
 
 /**
  * Utility class with static methods to handle EMF models and GEF EditParts.
@@ -466,4 +470,138 @@ public final class ModelingUtil {
         }
         return null;
     }
+    
+    
+    /**
+     * Method to translate a KIELER URI in an EMF Fragment URI.
+     * 
+     * @param kielerUri
+     *            The KIELER URI referring an EObject.
+     * @param resource
+     *            The Resource holding the EObject.
+     * @return The Fragment URI for the EObject referred by the given KIELER
+     *         URI. Null, if EObject doesn't exists.
+     */
+    public static String kielerUriToFragmentUri(final String kielerUri, final Resource resource) {
+        String result = "";
+        
+        try {
+        if (resource.getEObject(kielerUri) != null) {
+            //when EObjects aren't named, the KIELER URI equals the Fragment URI 
+            return kielerUri;
+        }
+        } catch (IllegalArgumentException ex) {
+            //can be ignored, we then know that we dont have a Fragment URI as KIELER URI
+        }
+        
+        if (kielerUri.startsWith("//")) {
+            //only one root node present, no translation necessary
+            EObject root = resource.getContents().get(0);
+            result = "/";
+            int lastOccurance = 2;
+            int currentOccurance;
+            
+            while (kielerUri.indexOf("/", lastOccurance) != -1) {
+                //parse KIELER URI and find corresponding EObject on the current level 
+                result += "/";
+                currentOccurance = kielerUri.indexOf("/", lastOccurance);
+                String currentUri;
+                
+                if (currentOccurance != lastOccurance) {
+                    currentUri = kielerUri.substring(lastOccurance, currentOccurance);
+                    lastOccurance = currentOccurance;
+                } else {
+                    //when this is the last referrer, just take the rest
+                    currentUri = kielerUri.substring(lastOccurance);
+                    lastOccurance = kielerUri.length();
+                }
+                String currentResult = new String(result);
+                for (EObject eo : root.eContents()) {
+                    //iterate through the current level and find the NamedObject with the same name
+                    if (eo instanceof NamedObject) {
+                        if (((NamedObject) eo).getName().equals(currentUri.split("\\.")[1])) {
+                            result += ((InternalEObject) eo.eContainer())
+                                    .eURIFragmentSegment(
+                                            eo.eContainingFeature(), eo);
+                            root = eo;
+                            break;
+                        }
+                    }
+                }
+                if (currentResult.equals(result)) {
+                    //Element wasn't found, although this was the right level
+                    //Return null then
+                    return null;
+                }
+            }
+        } else {
+            //more than one root node
+            throw new UnsupportedOperationException("Can't handle more than one root node yet!");
+        }
+        return result;
+    }
+    
+    /**
+     * Method to get a (more readable) KIELER URI from a EMF Fragment URI and
+     * its resource. Will return the Fragment URI, if EObjects are not
+     * NamedObjects.
+     * If using NamedObjects, it is required that names on the same level are unique.
+     * 
+     * @see de.cau.cs.kieler.core.annotations.NamedObject
+     * 
+     * @param fragmentUri
+     *            The Fragment URI from which the KIELER URI is generated (must
+     *            not be null).
+     * @param resource
+     *            The resource in which the referred EObject is held.
+     * @return A KIELER URI corresponding to the Fragment URI.
+     */
+    public static String fragmentUriToKielerUri(final String fragmentUri, final Resource resource) {
+        String result = "";
+        InternalEObject ieo = (InternalEObject) resource.getEObject(fragmentUri);
+        InternalEObject container = (InternalEObject) ieo.eContainer();
+        
+        if (container != null) {
+            if (ieo instanceof NamedObject) {
+            result = fragmentUriToKielerUri(getFragmentUri(container), resource)
+                    + "/"
+                    + "@" + ieo.eContainingFeature().getName() + "."
+                    + ((NamedObject) ieo).getName();
+            } else {
+                result = fragmentUriToKielerUri(getFragmentUri(container), resource)
+                + "/"
+                + container.eURIFragmentSegment(ieo.eContainingFeature(),
+                        ieo);
+            }
+        } else {
+            result = "/";
+        }
+        
+        return result;
+    }
+    
+    /**
+     * Method to get the EMF Fragment URI for a given EObject.
+     * 
+     * @param eo
+     *            The EObject for which the URI is requested (must not be null).
+     * @return The full Fragment URI.
+     */
+    public static String getFragmentUri(final EObject eo) {
+        String fragment = "";
+        InternalEObject ieo = (InternalEObject) eo;
+        InternalEObject container = (InternalEObject) eo.eContainer();
+        
+        if (container != null) {
+            fragment = getFragmentUri(container)
+                    + "/"
+                    + container.eURIFragmentSegment(ieo.eContainingFeature(),
+                            ieo);
+        } else {
+            fragment = "/";
+        }
+        
+        return fragment;
+    }
+    
 }
