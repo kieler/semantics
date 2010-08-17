@@ -107,13 +107,12 @@ public class DataDistributor implements IProviderListener {
         Iterator allKeys = data.keys();
         while (allKeys.hasNext()) {
             Object o = allKeys.next();
-            List<List<Point>> paths = getPathsByNode(o.toString());
             try {
                 String key = o.toString();
                 if (dataByURI.containsKey(key)) {
                     dataByURI.get(key).updateData(data.getString(key));
-                    dataByURI.get(key).updatePaths(paths);
                 } else {
+                    List<List<Point>> paths = getPathsByNode(key);
                     dataByURI.put(o.toString(), new DataObject(key, data.getString(key), paths));
                     RuntimeConfiguration
                     .getInstance()
@@ -247,8 +246,11 @@ public class DataDistributor implements IProviderListener {
     }
 
     public void layoutChanged(final KNode layoutGraph) {
-        //TODO outsource path building to here
         currentDiagramLayout = layoutGraph;
+        for (String key : dataByURI.keySet()) {
+            List<List<Point>> paths = getPathsByNode(key);
+            dataByURI.get(key).updatePaths(paths);
+        }
     }
 
 }
