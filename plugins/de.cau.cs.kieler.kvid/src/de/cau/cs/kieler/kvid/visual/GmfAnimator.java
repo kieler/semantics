@@ -36,6 +36,8 @@ import de.cau.cs.kieler.kvid.datadistributor.RuntimeConfiguration;
  */
 public final class GmfAnimator {
     
+    private static volatile boolean replay = false;
+    
     private GmfAnimator() { }
     
     /**
@@ -103,7 +105,23 @@ public final class GmfAnimator {
                 });
                 canvas.repaint();
             }
+        } else if (RuntimeConfiguration.getInstance()
+                .currentValueOfProperty("Behavior after Animation")
+                .equals("Replay")) {
+            replay = true;
+            while (replay) {
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                diagram.getDiagramEditDomain().getDiagramCommandStack().execute(cc);
+            }
         }
+    }
+    
+    public static synchronized void stopReplay() {
+        replay = false;
     }
     
 }

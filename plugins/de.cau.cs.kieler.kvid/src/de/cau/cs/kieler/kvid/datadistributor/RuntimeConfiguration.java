@@ -39,7 +39,8 @@ public final class RuntimeConfiguration {
         knownProperties.add(new Property("Data Source", new String[]{"KIEM", "CSV"}));
         knownProperties.add(new Property("Animation enabled", new String[]{"true", "false"}));
         knownProperties.add(new Property("Behavior after Animation", new String[]{"Disappear",
-                                                                   "Stay at last location"}));
+                                                                   "Stay at last location",
+                                                                   "Replay"}));
         knownProperties.add(new Property("Debug drawing activated", new String[]{"false", "true"}));
     }
     

@@ -141,10 +141,11 @@ public class GmfDrawer implements IDrawer, IDataListener {
                         }
                     }
                 }
-                PlatformUI.getWorkbench().getDisplay().syncExec(new Runnable() {
+                PlatformUI.getWorkbench().getDisplay().asyncExec(new Runnable() {
                     public void run() {
                         // TODO still not satisfying, maybe check if data is by
                         // KIEM and use it then
+                        
                         GmfAnimator.animate(animatables,
                                 ((DiagramEditor) editor).getDiagramEditPart(),
                                 KiemPlugin.getDefault().getAimedStepDuration());
@@ -190,6 +191,7 @@ public class GmfDrawer implements IDrawer, IDataListener {
      */
     public void triggerWrapup() {
         clearDrawing();
+        GmfAnimator.stopReplay();
     }
 
 }
