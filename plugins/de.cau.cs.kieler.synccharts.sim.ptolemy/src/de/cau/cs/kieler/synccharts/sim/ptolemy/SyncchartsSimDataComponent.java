@@ -47,8 +47,11 @@ import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.internal.util.BundleUtility;
+import org.eclipse.xpand2.Generator;
+import org.eclipse.xpand2.output.Outlet;
 import org.eclipse.xtend.XtendComponent;
 import org.eclipse.xtend.expression.ExecutionContextImpl;
+import org.eclipse.xtend.expression.AbstractExpressionsUsingWorkflowComponent.GlobalVar;
 import org.eclipse.xtend.typesystem.emf.EmfMetaModel;
 import org.eclipse.emf.mwe.utils.AbstractEMFWorkflowComponent;
 import org.eclipse.gmf.runtime.diagram.ui.editparts.ShapeEditPart;
@@ -75,6 +78,7 @@ import de.cau.cs.kieler.sim.kiem.properties.KiemProperty;
 import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyException;
 import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyTypeEditor;
 import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyTypeWorkspaceFile;
+import de.cau.cs.kieler.sim.kiem.ui.datacomponent.JSONObjectSimulationDataComponent;
 
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.util.Diagnostician;
@@ -106,7 +110,7 @@ import de.cau.cs.kieler.core.util.Maybe;
  * @author Christian Motika - cmot AT informatik.uni-kiel.de
  */
 @SuppressWarnings("restriction")
-public class SyncchartsSimDataComponent extends JSONObjectDataComponent {
+public class SyncchartsSimDataComponent extends JSONObjectSimulationDataComponent {
 
     /** The Ptolemy Executor */
     private ExecutePtolemyModel PTOEXE;
@@ -204,87 +208,6 @@ public class SyncchartsSimDataComponent extends JSONObjectDataComponent {
     // -----------------------------------------------------------------------------
     // -----------------------------------------------------------------------------
 
-    /**
-     * Transform KIELER SimpleRailCtrl model into a semantically equivalent Ptolemy model. <BR>
-     * This transformation uses the Xtend transformation language.
-     * 
-     * @param progressBar
-     *            if true a progress bar is displayed
-     * 
-     * @return true, if m2m transformation was successful
-     * 
-     * @throws KiemInitializationException
-     *             the kiem initialization exception
-     */
-    public IStatus model2ModelTransform(KielerProgressMonitor monitor)
-            throws KiemInitializationException {
-        monitor.begin("Model2Model transformation", 4);
-        try {
-            // Workflow
-            Workflow workflow = new Workflow();
-
-            // EMF reader
-            Reader emfReader = new Reader();
-            emfReader.setUri(this.getInputModel());
-            emfReader.setModelSlot("emfmodel");
-            // DO NOT USE THE SAME INPUT RESOUCRCE SET
-            // OTHERWISE WE MAY CHANGE THE INPUT MODEL!
-            // emfReader.setResourceSet(this.getInputResourceSet());
-            // emfReader.setResourceSet(ptolemyModel.getResourceSet());
-
-            // MOML writer
-            MomlWriter momlWriter = new MomlWriter();
-            momlWriter.setUri(ptolemyModel.getURI().toString());
-            momlWriter.setResourceSet(ptolemyModel.getResourceSet());
-            momlWriter.setModelSlot("momlmodel");
-
-            // Meta models
-            EmfMetaModel metaModel0 = new EmfMetaModel(
-                    de.cau.cs.kieler.core.expressions.ExpressionsPackage.eINSTANCE);
-            EmfMetaModel metaModel1 = new EmfMetaModel(
-                    de.cau.cs.kieler.synccharts.SyncchartsPackage.eINSTANCE);
-            EmfMetaModel metaModel2 = new EmfMetaModel(org.ptolemy.moml.MomlPackage.eINSTANCE);
-
-            // XtendComponent
-            XtendComponent xtendComponent = new XtendComponent();
-            xtendComponent.addMetaModel(metaModel0);
-            xtendComponent.addMetaModel(metaModel1);
-            xtendComponent.addMetaModel(metaModel2);
-            xtendComponent.setInvoke("synccharts2moml::transform(emfmodel)");
-            xtendComponent.setOutputSlot("momlmodel");
-
-            // workflow
-            WorkflowContext wfx = new WorkflowContextDefaultImpl();
-            Issues issues = new org.eclipse.emf.mwe.core.issues.IssuesImpl();
-            M2MProgressMonitor m2mMonitor = new M2MProgressMonitor(monitor, 3);
-
-            workflow.addComponent(emfReader);
-            workflow.addComponent(xtendComponent);
-            workflow.addComponent(momlWriter);
-            // workflow.invoke(wfx, (ProgressMonitor)monitor.subTask(80), issues);
-            workflow.invoke(wfx, m2mMonitor, issues);
-
-            SyncchartsSimPtolemyPlugin.DEBUG(xtendComponent.getLogMessage());
-            SyncchartsSimPtolemyPlugin.DEBUG(issues.getInfos().toString());
-            SyncchartsSimPtolemyPlugin.DEBUG(issues.getIssues().toString());
-            SyncchartsSimPtolemyPlugin.DEBUG(issues.getWarnings().toString());
-            SyncchartsSimPtolemyPlugin.DEBUG(issues.getErrors().toString());
-        } catch (Exception e) {
-            monitor.done();
-            e.printStackTrace();
-            transformationCompleted = true;
-            transformationError = true;
-            return new Status(IStatus.ERROR, SyncchartsSimPtolemyPlugin.PLUGIN_ID,
-                    "Ptolemy Model could not be created.", e);
-        }
-        monitor.done();
-        transformationCompleted = true;
-        transformationError = false;
-        return new Status(IStatus.OK, SyncchartsSimPtolemyPlugin.PLUGIN_ID, IStatus.OK, null, null);
-    }
-
-    // -------------------------------------------------------------------------
-
     /*
      * (non-Javadoc)
      * 
@@ -292,26 +215,7 @@ public class SyncchartsSimDataComponent extends JSONObjectDataComponent {
      * de.cau.cs.kieler.sim.kiem.extension.IJSONObjectDataComponent#step(de.cau.cs.kieler.sim.kiem
      * .json.JSONObject)
      */
-    public JSONObject step(JSONObject jSONObject) throws KiemExecutionException {
-        try {
-            long newModelTimeStamp = this.getInputModelEObject(this.modelEditor).eResource()
-                    .getTimeStamp();
-            // SyncchartsSimPtolemyPlugin.DEBUG("TIMESTAMP NEW " + newModelTimeStamp);
-
-            // check the dirty state of the editor containing the simulated model
-            if (((newModelTimeStamp != modelTimeStamp) || modelEditor.isDirty())
-                    && !simulatingOldModelVersion) {
-                // remember that we warned the user (do this only once)
-                simulatingOldModelVersion = true;
-                // warn the user
-                throw new KiemExecutionException(
-                        "The simulated model changed since the simulation "
-                                + "was started.\n\nYou should restart the simulation in order to "
-                                + "simulate the changed version of your model.", false, null);
-            }
-        } catch (Exception e) {
-            // editor might have been closed -> no problem
-        }
+    public JSONObject doStep(JSONObject jSONObject) throws KiemExecutionException {
 
         SyncchartsSimPtolemyPlugin.DEBUG("Step in Ptolemy Model...");
 
@@ -384,55 +288,118 @@ public class SyncchartsSimDataComponent extends JSONObjectDataComponent {
 
     // -------------------------------------------------------------------------
 
-    public JSONObject provideInitialVariables() throws KiemInitializationException {
-        JSONObject returnObj = new JSONObject();
+    /*
+     * (non-Javadoc)
+     * 
+     * @see de.cau.cs.kieler.sim.kiem.ui.datacomponent.JSONObjectSimulationDataComponent #
+     * doModel2ModelTransform(de.cau.cs.kieler.core.ui.KielerProgressMonitor)
+     */
+    public void doModel2ModelTransform(KielerProgressMonitor monitor) throws Exception {
+        // "generated.moml";
+        int randomNumber = 0;
+        try {
+            randomNumber = super.getInputEditor().getEditorInput().hashCode();
+        } catch (Exception e) {
+            // if no editor input, an exception will be raised anyways
+        }
 
-        // do the initialization prior to providing the interface keys
-        // this may rise an exception
-        PTOEXE = null;
-        System.gc();
-        String[] keys = null;
+        ResourceSet resourceSet = new ResourceSetImpl();
+        URI fileUri = URI.createFileURI(new File("generated" + randomNumber + ".moml")
+                .getAbsolutePath());
+        ptolemyModel = resourceSet.createResource(fileUri);
 
+        
+        // Workflow
+        Workflow workflow = new Workflow();
+
+        // EMF reader
+        Reader emfReader = new Reader();
+        emfReader.setUri(this.getInputModel());
+        emfReader.setModelSlot("emfmodel");
+        // DO NOT USE THE SAME INPUT RESOUCRCE SET
+        // OTHERWISE WE MAY CHANGE THE INPUT MODEL!
+        // emfReader.setResourceSet(this.getInputResourceSet());
+        // emfReader.setResourceSet(ptolemyModel.getResourceSet());
+
+        // MOML writer
+        MomlWriter momlWriter = new MomlWriter();
+        momlWriter.setUri(ptolemyModel.getURI().toString());
+        momlWriter.setResourceSet(ptolemyModel.getResourceSet());
+        momlWriter.setModelSlot("momlmodel");
+
+        // Meta models
+        EmfMetaModel metaModel0 = new EmfMetaModel(
+                de.cau.cs.kieler.core.expressions.ExpressionsPackage.eINSTANCE);
+        EmfMetaModel metaModel1 = new EmfMetaModel(
+                de.cau.cs.kieler.synccharts.SyncchartsPackage.eINSTANCE);
+        EmfMetaModel metaModel2 = new EmfMetaModel(org.ptolemy.moml.MomlPackage.eINSTANCE);
+
+        // XtendComponent
+        XtendComponent xtendComponent = new XtendComponent();
+        xtendComponent.addMetaModel(metaModel0);
+        xtendComponent.addMetaModel(metaModel1);
+        xtendComponent.addMetaModel(metaModel2);
+        xtendComponent.setInvoke("synccharts2moml::transform(emfmodel)");
+        xtendComponent.setOutputSlot("momlmodel");
+
+        // workflow
+        WorkflowContext wfx = new WorkflowContextDefaultImpl();
+        Issues issues = new org.eclipse.emf.mwe.core.issues.IssuesImpl();
+        M2MProgressMonitor m2mMonitor = new M2MProgressMonitor(monitor, 3);
+
+        workflow.addComponent(emfReader);
+        workflow.addComponent(xtendComponent);
+        workflow.addComponent(momlWriter);
+        // workflow.invoke(wfx, (ProgressMonitor)monitor.subTask(80), issues);
+        workflow.invoke(wfx, m2mMonitor, issues);
+
+        SyncchartsSimPtolemyPlugin.DEBUG(xtendComponent.getLogMessage());
+        SyncchartsSimPtolemyPlugin.DEBUG(issues.getInfos().toString());
+        SyncchartsSimPtolemyPlugin.DEBUG(issues.getIssues().toString());
+        SyncchartsSimPtolemyPlugin.DEBUG(issues.getWarnings().toString());
+        SyncchartsSimPtolemyPlugin.DEBUG(issues.getErrors().toString());
+    }
+
+    // -------------------------------------------------------------------------
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see de.cau.cs.kieler.sim.kiem.ui.datacomponent.JSONObjectSimulationDataComponent
+     * #checkModelValidation (org.eclipse.emf.ecore.EObject)
+     */
+    public boolean checkModelValidation(EObject rootEObject) {
         // Enable KlePto checks in possibly open GMF SyncCharts editor
         ValidationManager.enableCheck("de.cau.cs.kieler.synccharts.KleptoChecks");
         ValidationManager.validateActiveEditor();
 
         // We don't want a dependency to synccharts diagram (custom) for validation
         // because we might want to simulate head less!!!
-
         // Check if the model conforms to all check files and no warnings left!
         Diagnostician diagnostician = Diagnostician.INSTANCE;
-        EObject rootEObject = this.getInputModelEObject(this.getInputEditor());
         Region syncChart = (de.cau.cs.kieler.synccharts.Region) rootEObject;
         Diagnostic diagnostic = diagnostician.validate(syncChart);
         int serenity = diagnostic.getSeverity();
         boolean ok = (serenity == Diagnostic.OK);
 
-        if (!ok) {
-            // bring Problems View to the front otherwise
-            bringProblemsViewToFront();
-            // prompt the user
-            try {
-                final Shell shell = Display.getCurrent().getShells()[0];
-                MessageDialog
-                        .openWarning(
-                                shell,
-                                "Errors or Warnings exist",
-                                "'"
-                                        + modelEditor.getEditorInput().getName()
-                                        + "'"
-                                        + " contains unsolved problems. Please check the Eclipse Problems View to fix these"
-                                        + ".\n\nNote that while errors or simulation warnings exist, the"
-                                        + " execution of the model is rather unpredictable.\n\n"
-                                        + diagnostic.toString());
-            } catch (Exception e) {
-                // in case of an error here, do not start simulation
-                throw new KiemInitializationException(
-                        "Please fix all errors and KlePto simulation warnings listed "
-                                + "in the Eclipse Problems View before simulating.\n\n", false,
-                        null);
-            }
-        }
+        return ok;
+    }
+
+    // -------------------------------------------------------------------------
+
+    public JSONObject doProvideInitialVariables() throws KiemInitializationException {
+        // do the initialization prior to providing the interface keys
+        // this may rise an exception
+        PTOEXE = null;
+        System.gc();
+
+        loadAndExecuteModel();
+
+        JSONObject returnObj = new JSONObject();
+
+        String[] keys = null;
+        keys = PTOEXE.getInterfaceSignals();
+
         try {
             loadAndExecuteModel();
             keys = PTOEXE.getInterfaceSignals();
@@ -445,80 +412,6 @@ public class SyncchartsSimDataComponent extends JSONObjectDataComponent {
                     + "respective Eclipse Problems View have been cleared.\n\n", true, e);
         }
         return returnObj;
-
-    } 
-    
-    // -------------------------------------------------------------------------
-
-    DiagramEditor diagramEditor = null;
-    boolean diagramEditorFlag = false;
-
-    DiagramEditor getInputEditor() {
-        String kiemEditorProperty = this.getProperties()[0].getValue();
-        diagramEditorFlag = false;
-
-        Display.getDefault().syncExec(new Runnable() {
-            public void run() {
-                // get the active editor as a default case (if property is empty)
-                IWorkbenchWindow window = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
-                IWorkbenchPage activePage = window.getActivePage();
-                IEditorPart editor = activePage.getActiveEditor();
-                if (editor instanceof DiagramEditor) {
-                    diagramEditor = (DiagramEditor) editor;
-                }
-                diagramEditorFlag = true;
-            }
-        });
-
-        // only check non-empty and valid property (this is optional)
-        if (!kiemEditorProperty.equals("")) {
-            if (getEditor(kiemEditorProperty) != null) {
-                diagramEditor = getEditor(kiemEditorProperty);
-            }
-        } else {
-            while (!diagramEditorFlag) {
-                try {
-                    Thread.sleep(100);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-        return diagramEditor;
-    }
-
-    // -------------------------------------------------------------------------
-
-    String getInputModel() {
-        DiagramEditor diagramEditor = this.getInputEditor();
-        // now extract the file
-        View notationElement = ((View) diagramEditor.getDiagramEditPart().getModel());
-        EObject myModel = (EObject) notationElement.getElement();
-        URI uri = myModel.eResource().getURI();
-
-        return uri.toPlatformString(false);
-    }
-
-    // -------------------------------------------------------------------------
-
-    EObject getInputModelEObject(DiagramEditor diagramEditor) {
-        // now extract the file
-        View notationElement = ((View) diagramEditor.getDiagramEditPart().getModel());
-        EObject myModel = (EObject) notationElement.getElement();
-
-        return myModel;
-    }
-
-    // -------------------------------------------------------------------------
-
-    ResourceSet getInputResourceSet() {
-        DiagramEditor diagramEditor = this.getInputEditor();
-        // now extract the file
-        View notationElement = ((View) diagramEditor.getDiagramEditPart().getModel());
-        EObject myModel = (EObject) notationElement.getElement();
-        URI uri = myModel.eResource().getURI();
-
-        return myModel.eResource().getResourceSet();
     }
 
     // -------------------------------------------------------------------------
@@ -535,76 +428,16 @@ public class SyncchartsSimDataComponent extends JSONObjectDataComponent {
     // -------------------------------------------------------------------------
 
     public void loadAndExecuteModel() throws KiemInitializationException {
-        // workspaceFolder = Platform.getLocation().toString();
-
-        // ptolemyModel = this.getInputModel() + ".moml"; //this.getProperties()[0].getDirectory() +
-        // "generated.moml";
-        int randomNumber = 0;
-        try {
-            randomNumber = this.getInputEditor().getEditorInput().hashCode();
-        } catch (Exception e) {
-            // if no editor input, an exception will be raised anyways
-        }
-
-        ResourceSet resourceSet = new ResourceSetImpl();
-        URI fileUri = URI.createFileURI(new File("generated" + randomNumber + ".moml")
-                .getAbsolutePath());
-        ptolemyModel = resourceSet.createResource(fileUri);
-
         String ptolemyModelFile = ptolemyModel.getURI().toFileString();
 
         SyncchartsSimPtolemyPlugin.DEBUG("Now creating Ptolemy Model ..." + ptolemyModel);
 
-        transformationCompleted = false;
-        transformationError = false;
-
-        Display.getDefault().syncExec(new Runnable() {
-            public void run() {
-
-                final Maybe<IStatus> status = new Maybe<IStatus>();
-                try {
-                    PlatformUI.getWorkbench().getProgressService()
-                            .run(false, false, new IRunnableWithProgress() {
-                                public void run(final IProgressMonitor monitor) {
-                                    try {
-                                        status.set(model2ModelTransform(new KielerProgressMonitor(
-                                                monitor)));
-                                    } catch (KiemInitializationException e) {
-                                        transformationError = true;
-                                        e.printStackTrace();
-                                    }
-                                }
-                            });
-                } catch (InvocationTargetException e) {
-                    transformationError = true;
-                    e.printStackTrace();
-                } catch (InterruptedException e) {
-                    transformationError = true;
-                    e.printStackTrace();
-                }
-            }
-        });
-
-        // wait until error or transformation completed
-        while (!transformationCompleted && !transformationError) {
-            try {
-                Thread.sleep(50);
-            } catch (InterruptedException e) { /* hide sleep error */
-            }
-        }// end while
-
-        if (!transformationError) {
-            SyncchartsSimPtolemyPlugin.DEBUG("Now loading Ptolemy Model..." + ptolemyModelFile);
-            // load the Ptolemy Model
-            PTOEXE = new ExecutePtolemyModel(ptolemyModelFile);
-            SyncchartsSimPtolemyPlugin.DEBUG("Now initializing Ptolemy Model...");
-            PTOEXE.executionInitialize();
-            SyncchartsSimPtolemyPlugin.DEBUG("Now executing Ptolemy Model...");
-        }// end if
-        else {
-            throw new KiemInitializationException("Ptolemy Model could not be generated", true,
-                    null);
-        }
+        SyncchartsSimPtolemyPlugin.DEBUG("Now loading Ptolemy Model..." + ptolemyModelFile);
+        // load the Ptolemy Model
+        PTOEXE = new ExecutePtolemyModel(ptolemyModelFile);
+        SyncchartsSimPtolemyPlugin.DEBUG("Now initializing Ptolemy Model...");
+        PTOEXE.executionInitialize();
+        SyncchartsSimPtolemyPlugin.DEBUG("Now executing Ptolemy Model...");
     }
 
     // -------------------------------------------------------------------------
@@ -630,27 +463,6 @@ public class SyncchartsSimDataComponent extends JSONObjectDataComponent {
     }
 
     // -------------------------------------------------------------------------
-    /*
-     * (non-Javadoc)
-     * 
-     * @see de.cau.cs.kieler.sim.kiem.extension.IDataComponent#isObserver()
-     */
-    public boolean isObserver() {
-        return true;
-    }
-
-    // -------------------------------------------------------------------------
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see de.cau.cs.kieler.sim.kiem.extension.IDataComponent#isProducer()
-     */
-    public boolean isProducer() {
-        return true;
-    }
-
-    // -------------------------------------------------------------------------
 
     /*
      * (non-Javadoc)
@@ -670,149 +482,16 @@ public class SyncchartsSimDataComponent extends JSONObjectDataComponent {
 
     // -------------------------------------------------------------------------
 
-    /*
-     * (non-Javadoc)
+    /**
+     * Do provide an additional property to set the state name.
      * 
-     * @see de.cau.cs.kieler.sim.kiem.extension.DataComponent#initializeProperties()
+     * @return the kiem property[]
      */
-    @Override
-    public KiemProperty[] provideProperties() {
-        KiemProperty[] properties = new KiemProperty[2];
-        properties[0] = new KiemProperty("SyncChart Editor", new KiemPropertyTypeEditor(), "");
-        properties[1] = new KiemProperty("State Name", "state");
+    public KiemProperty[] doProvideProperties() {
+        KiemProperty[] properties = new KiemProperty[1];
+        properties[0] = new KiemProperty("State Name", "state");
         return properties;
     }
 
     // -------------------------------------------------------------------------
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see
-     * de.cau.cs.kieler.sim.kiem.extension.DataComponent#testProperties(de.cau.cs.kieler.sim.kiem
-     * .data.KiemProperty[])
-     */
-    @Override
-    public void checkProperties(KiemProperty[] properties) throws KiemPropertyException {
-        String kiemEditorProperty = this.getProperties()[0].getValue();
-
-        // only check non-empty property (this is optional)
-        if (!kiemEditorProperty.equals("")) {
-            if (getEditor(kiemEditorProperty) == null) {
-                // this is an error, probably the selected editor isnt open any more
-                // or the file(name) opened has changed
-                throw new KiemPropertyException("The selected editor '" + kiemEditorProperty + "'"
-                        + " does not exist.\nPlease ensure that an opened editor is selected and"
-                        + "the file name matches.\n\nIf you want the currently active editor to be"
-                        + "simulated make sure the (optional) editor property is empty!");
-            }
-        }
-
-        modelEditor = this.getInputEditor();
-
-        if (modelEditor == null) {
-            throw new KiemPropertyException("There exists no active editor.\n"
-                    + "Please ensure that an opened editor is selected and"
-                    + "the file name matches.\n\nIf you want the currently active editor to be"
-                    + "simulated make sure the (optional) editor property is empty!");
-        }
-
-        if (modelEditor.isDirty()) {
-            try {
-                final Shell shell = Display.getCurrent().getShells()[0];
-                boolean b = MessageDialog.openQuestion(shell, "Save Resource", "'"
-                        + modelEditor.getEditorInput().getName() + "'"
-                        + " has been modified. Save changes before simulating?");
-                if (b) {
-                    IEditorSite part = modelEditor.getEditorSite();
-                    part.getPage().saveEditor((IEditorPart) part.getPart(), false);
-                    // modelEditor.doSaveAs(); // doSave(new IProgressMonitor());
-                    modelTimeStamp = this.getInputModelEObject(this.modelEditor).eResource()
-                            .getTimeStamp();
-                    simulatingOldModelVersion = false;
-                } else {
-                    simulatingOldModelVersion = true;
-                    modelTimeStamp = this.getInputModelEObject(this.modelEditor).eResource()
-                            .getTimeStamp();
-                }
-            } catch (Exception e) {
-                // if dialog cannot be opened, throw error
-                throw new KiemPropertyException("There are unsaved changes of the model opened "
-                        + "in the editor to simulate.\n\nPlease save these changes before "
-                        + "starting the simulation!");
-            }
-        } else {
-            // not dirty
-            modelTimeStamp = this.getInputModelEObject(this.modelEditor).eResource().getTimeStamp();
-            simulatingOldModelVersion = false;
-        }
-
-        SyncchartsSimPtolemyPlugin.DEBUG("TIMESTAMP" + modelTimeStamp);
-
-    }
-
-    // -------------------------------------------------------------------------
-
-    DiagramEditor getEditor(String kiemEditorProperty) {
-        if ((kiemEditorProperty == null) || (kiemEditorProperty.length() == 0))
-            return null;
-
-        StringTokenizer tokenizer = new StringTokenizer(kiemEditorProperty, " ()");
-        if (tokenizer.hasMoreTokens()) {
-            String fileString = tokenizer.nextToken();
-            String editorString = tokenizer.nextToken();
-
-            IEditorReference[] editorRefs = getActivePage().getEditorReferences();
-            for (int i = 0; i < editorRefs.length; i++) {
-                if (editorRefs[i].getId().equals(editorString)) {
-                    IEditorPart editor = editorRefs[i].getEditor(true);
-                    if (editor instanceof DiagramEditor) {
-                        // test if correct file
-                        if (fileString.equals(editor.getTitle())) {
-                            return (DiagramEditor) editor;
-                            // rootEditPart = ((DiagramEditor) editor)
-                            // .getDiagramEditPart();
-                            // break;
-                        }
-                    }
-                }
-            }
-        }
-        return null;
-    }
-
-    // -------------------------------------------------------------------------
-
-    protected IWorkbenchPage activePage = null;
-    protected boolean activePageFlag = false;
-
-    /**
-     * Gets the active page (blocking) from the UI thread.
-     * 
-     * @return the active page
-     */
-    protected IWorkbenchPage getActivePage() {
-        activePageFlag = false;
-
-        Display.getDefault().syncExec(new Runnable() {
-            public void run() {
-                // get the active editor as a default case (if property is empty)
-                IWorkbenchWindow window = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
-                activePage = window.getActivePage();
-                activePageFlag = true;
-            }
-        });
-
-        while (!activePageFlag) {
-            try {
-                Thread.sleep(100);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-        return activePage;
-    }
-
-    // -------------------------------------------------------------------------
-    
 }
