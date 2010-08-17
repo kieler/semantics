@@ -51,7 +51,7 @@ import de.cau.cs.kieler.kvid.visual.complex.ScopeEditPart;
  * @author jjc
  *
  */
-public class DataDistributor implements IProviderListener, ILayoutListener {
+public class DataDistributor implements IProviderListener {
     
     private static final DataDistributor INSTANCE = new DataDistributor();
     
@@ -66,6 +66,10 @@ public class DataDistributor implements IProviderListener, ILayoutListener {
     private DiagramEditor currentEditor = null;
     
     private IDataProvider currentProvider;
+    
+    private DataDistributor() {
+        
+    }
     
     public static DataDistributor getInstance() {
         return INSTANCE;
@@ -138,7 +142,7 @@ public class DataDistributor implements IProviderListener, ILayoutListener {
         String currentFoundUri = ".";
         KNode currentNode = currentDiagramLayout;
         while (!currentFoundUri.equals(URI) && !currentNode.getChildren().isEmpty()) {
-            for(KNode node : currentNode.getChildren()) {
+            for (KNode node : currentNode.getChildren()) {
                 if (node.getLabel().getText().equals(uriParts[currentUriPart])) {
                     currentNode = node;
                     currentFoundUri += node.getLabel().getText();
@@ -242,26 +246,9 @@ public class DataDistributor implements IProviderListener, ILayoutListener {
         listeners.remove(thelistener);
     }
 
-    /* (non-Javadoc)
-     * @see de.cau.cs.kieler.kiml.ILayoutListener#layoutRequested(de.cau.cs.kieler.core.kgraph.KNode)
-     */
-    public void layoutRequested(KNode layoutGraph) {
-        //not relevant for kvid, thus ignored
-    }
-
-    /* (non-Javadoc)
-     * @see de.cau.cs.kieler.kiml.ILayoutListener#layoutPerformed(de.cau.cs.kieler.core.kgraph.KNode, de.cau.cs.kieler.core.alg.IKielerProgressMonitor)
-     */
-    public void layoutPerformed(KNode layoutGraph,
-            IKielerProgressMonitor monitor) {
-        PlatformUI.getWorkbench().getDisplay().asyncExec(new Runnable() {
-            public void run() {
-                //FIXME whats wrong here?
-                currentDiagramLayout = EclipseLayoutServices.getInstance()
-                        .getManager(currentEditor, null)
-                        .buildLayoutGraph(currentEditor, null, false);
-            }
-        });
+    public void layoutChanged(final KNode layoutGraph) {
+        //TODO outsource path building to here
+        currentDiagramLayout = layoutGraph;
     }
 
 }

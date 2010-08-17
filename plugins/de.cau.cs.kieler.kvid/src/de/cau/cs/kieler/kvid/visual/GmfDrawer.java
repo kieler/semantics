@@ -81,19 +81,6 @@ public class GmfDrawer implements IDrawer, IDataListener {
         if (editor instanceof DiagramEditor) {
             // drawing phase
             
-            boolean testDrawing = false;
-            if (testDrawing) {
-                IElementType DATA_NODE = ElementTypeRegistry.getInstance().getType(
-                "de.cau.cs.kieler.kvid.visual.complex.datanode");
-                CreateViewRequest createNoteRequest = CreateViewRequestFactory
-                .getCreateShapeRequest(DATA_NODE,
-                        PreferencesHint.USE_DEFAULTS);
-                Command createNodeCommand = ((DiagramEditor) editor).getDiagramEditPart().getCommand(createNoteRequest);
-                CompoundCommand cc = new CompoundCommand();
-                cc.add(createNodeCommand);
-                ((DiagramEditor) editor).getDiagramEditDomain().getDiagramCommandStack().execute(cc);
-            }
-            
             final IFigure canvas = ((DiagramEditor) editor)
                     .getDiagramEditPart().getLayer(
                             DiagramRootEditPart.CONNECTION_LAYER);

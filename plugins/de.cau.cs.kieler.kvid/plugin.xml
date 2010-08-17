@@ -112,7 +112,7 @@
    <extension
          point="de.cau.cs.kieler.kiml.layoutListeners">
       <layoutListener
-            class="de.cau.cs.kieler.kvid.datadistributor.DataDistributor">
+            class="de.cau.cs.kieler.kvid.datadistributor.LayoutListenerImpl">
       </layoutListener>
    </extension>
 
