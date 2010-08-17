@@ -42,7 +42,6 @@ public class KitsQuickfixProvider extends DefaultQuickfixProvider {
                 "Determine missing transition priority", null,
                 new ISemanticModification() {
                     
-                    @Override
                     public void apply(EObject element, IModificationContext context) throws Exception {
                         Transition theTransition = null;
                         if (SyncchartsPackage.eINSTANCE.getTransition().isInstance(element)) {
@@ -73,7 +72,6 @@ public class KitsQuickfixProvider extends DefaultQuickfixProvider {
                 "Determine all missing transition priorities", null,
                 new ISemanticModification() {
                     
-                    @Override
                     public void apply(EObject element, IModificationContext context) throws Exception {
                         if (SyncchartsPackage.eINSTANCE.getTransition().isInstance(element)) {
                             element = element.eContainer();
@@ -107,7 +105,6 @@ public class KitsQuickfixProvider extends DefaultQuickfixProvider {
         acceptor.accept(issue, "Increase transition priority", "Increase transition priority", null,
                 new ISemanticModification() {
                     
-                    @Override
                     public void apply(EObject element, IModificationContext context) throws Exception {
                         if (SyncchartsPackage.eINSTANCE.getTransition().isInstance(element)) {
                             Transition t = (Transition) element;
@@ -132,7 +129,6 @@ public class KitsQuickfixProvider extends DefaultQuickfixProvider {
         acceptor.accept(issue, "Set transition priority to 1", "Set transition priority to 1",
                 null, new ISemanticModification() {
 
-                    @Override
                     public void apply(EObject element, IModificationContext context)
                             throws Exception {
                         if (SyncchartsPackage.eINSTANCE.getTransition().isInstance(element)) {
@@ -148,7 +144,6 @@ public class KitsQuickfixProvider extends DefaultQuickfixProvider {
         acceptor.accept(issue, "Make transistion priorities succeeding", "Make transistion priorities succeeding",
                 null, new ISemanticModification() {
  
-                    @Override
                     public void apply(EObject element, IModificationContext context)
                             throws Exception {
                         if (SyncchartsPackage.eINSTANCE.getTransition().isInstance(element)) {
@@ -179,7 +174,6 @@ public class KitsQuickfixProvider extends DefaultQuickfixProvider {
         acceptor.accept(issue, "Sort transitions according to priorities", "Sort transitions according to priorities",
                 null, new ISemanticModification() {
 
-                    @Override
                     public void apply(EObject element, IModificationContext context)
                             throws Exception {
                         if (SyncchartsPackage.eINSTANCE.getTransition().isInstance(element)) {
