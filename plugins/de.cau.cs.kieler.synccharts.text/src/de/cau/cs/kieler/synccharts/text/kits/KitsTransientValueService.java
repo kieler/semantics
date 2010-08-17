@@ -50,6 +50,7 @@ public class KitsTransientValueService extends DefaultTransientValueService {
      * Serialization of entryActions,... especially for regions is NOT considered yet!!
      * 
      */
+    @Override
     public boolean isCheckElementsIndividually(EObject owner, EStructuralFeature feature) {
 
         if (feature == AnnotationsPackage.eINSTANCE.getAnnotatable_Annotations()) {
@@ -66,6 +67,7 @@ public class KitsTransientValueService extends DefaultTransientValueService {
     /**
      * Decides whether an owner's feature (or one of its elements are not to be serialized).
      */
+    @Override
     public boolean isTransient(EObject owner, EStructuralFeature feature, int index) {
 
         /* suppress the implicit (mostly EOpposites) features */
@@ -96,37 +98,12 @@ public class KitsTransientValueService extends DefaultTransientValueService {
         }
 
         
-//        /*
-//         * scope labels are suppressed in case of: a) region contains states and the root region b)
-//         * region contains states and has no label -> whole region declaration will be skipped
-//         * 
-//         * scope labels are enforced in case of: a) scope is a state b) scope is an empty region
-//         */
-//        if (feature == SyncchartsPackage.eINSTANCE.getScope_Id()) {
-//
-//            /* is obsolete as fixed by the default value config of Scope.label, Scope.id */
-//            // if (!owner.eIsSet(feature)) {
-//            //
-//            // // states MUST have defined labels -> define empty ones if necessary!
-//            // // For sure, THIS IS EVIL!!!
-//            // EditingDomain d = getEditingDomain(owner);
-//            // if (d != null) {
-//            // d.getCommandStack().execute(new SetCommand(d, owner, feature, new String()));
-//            // } else {
-//            // owner.eSet(feature, "");
-//            // }
-//            // }
-//
-//            if (SyncchartsPackage.eINSTANCE.getRegion().isInstance(owner)) {
-//
-//                if (owner.eContainer() == null || ((State) owner.eContainer()).getRegions().size() == 1) {
-//                    return true;
-//                }
-//            }
-//            return false;
-//        }
-
+        /* suppress id serialization if id is equals to "" */
+        if (feature == SyncchartsPackage.eINSTANCE.getScope_Id()) {
+            return Strings.isEmpty((String) owner.eGet(feature));
+        }
         
+       
         /* suppress the 'normal' attribute of a state */
         if (feature == SyncchartsPackage.eINSTANCE.getState_Type()) {
             return owner.eGet(feature).equals(StateType.NORMAL);
@@ -224,21 +201,4 @@ public class KitsTransientValueService extends DefaultTransientValueService {
           && a.getTrigger() == null && a.getEffects().isEmpty();
     }
 
-/* is obsolete as fixed by the default value config of Scope.label, Scope.id */	
-//	/**
-//	 * This is part of a rather heavy hack!
-//	 * 
-//	 * @param o an EObject to check the presence of an {@link EditingDomain}
-//	 * @return the {@link EditingDomain} controlling the EObject o if present, null otherwise;
-//	 */
-//	private EditingDomain getEditingDomain(EObject o) {
-//		for (Adapter a : o.eAdapters()) {
-//			if (a instanceof TransactionChangeRecorder) {
-//				return ((TransactionChangeRecorder) a).getEditingDomain();
-//			}
-//		}			
-//		return null;
-//	}
-	
-	
 }

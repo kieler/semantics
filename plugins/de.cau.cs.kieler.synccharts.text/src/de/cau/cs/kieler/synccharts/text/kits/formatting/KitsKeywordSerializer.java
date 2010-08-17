@@ -16,45 +16,52 @@ package de.cau.cs.kieler.synccharts.text.kits.formatting;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtext.Keyword;
 import org.eclipse.xtext.parsetree.AbstractNode;
+import org.eclipse.xtext.parsetree.reconstr.ITokenSerializer;
 import org.eclipse.xtext.parsetree.reconstr.impl.KeywordSerializer;
+import org.eclipse.xtext.util.Strings;
 
 import com.google.inject.Inject;
 
 import de.cau.cs.kieler.synccharts.Region;
+import de.cau.cs.kieler.synccharts.State;
 import de.cau.cs.kieler.synccharts.text.kits.services.KitsGrammarAccess;
 
 /**
+ * Customized {@link ITokenSerializer.IKeywordSerializer}. Realizes the suppression of the keyword
+ * 'region' and the related ':' if it is not needed.
+ * 
+ * Behavior is realized by overriding the
+ * {@link KeywordSerializer#serializeUnassignedKeyword(EObject, Keyword, AbstractNode)} method,
+ * overriding the
+ * {@link KeywordSerializer#isValid(EObject, Keyword,
+ * Object, org.eclipse.xtext.parsetree.reconstr.ITokenSerializer.IErrorAcceptor)}
+ * does not lead to the inteded behavior.
+ * 
  * @author chsch
- *
  */
 public class KitsKeywordSerializer extends KeywordSerializer {
     
     @Inject
     KitsGrammarAccess grammarAccess;
 
-    public boolean isValid(EObject context, Keyword keyword, Object value, IErrorAcceptor errorAcceptor) {
-        
-        if (keyword == grammarAccess.getRootRegionAccess().getRegionKeyword_2_0()
-                || keyword == grammarAccess.getRootRegionAccess().getColonKeyword_2_3()
-                || keyword == grammarAccess.getSingleRegionAccess().getRegionKeyword_1_0()
-                || keyword == grammarAccess.getSingleRegionAccess().getColonKeyword_1_3()) {
-            Region region = (Region) context;
-            return !(region.getId() == null
-                    && region.getLabel() == null
-                    && (region.getSignals() == null || region.getSignals().isEmpty())
-                    && (region.getVariables() == null || region.getVariables().isEmpty()));
-        }
-        return super.isValid(context, keyword, value, errorAcceptor);
-    }
-    
     public String serializeUnassignedKeyword(EObject context, Keyword keyword, AbstractNode node) {
         if (keyword == grammarAccess.getRootRegionAccess().getRegionKeyword_2_0()
-                || keyword == grammarAccess.getRootRegionAccess().getColonKeyword_2_3()
-                || keyword == grammarAccess.getSingleRegionAccess().getRegionKeyword_1_0()
+                || keyword == grammarAccess.getRootRegionAccess().getColonKeyword_2_3()) {
+            Region region = (Region) context;
+            if (Strings.isEmpty(region.getId())
+                    && Strings.isEmpty(region.getLabel())
+                    && (region.getSignals() == null || region.getSignals().isEmpty())
+                    && (region.getVariables() == null || region.getVariables().isEmpty())) {
+                return null;
+            }
+        }
+        if (keyword == grammarAccess.getSingleRegionAccess().getRegionKeyword_1_0()
                 || keyword == grammarAccess.getSingleRegionAccess().getColonKeyword_1_3()) {
             Region region = (Region) context;
-            if (region.getId() == null
-                    && region.getLabel() == null
+            if (region.eContainer() != null
+                    && ((State) region.eContainer()).getRegions().size() == 1
+                    && Strings.isEmpty(region.getId())
+                    && Strings.isEmpty(region.getLabel())
                     && (region.getSignals() == null || region.getSignals().isEmpty())
                     && (region.getVariables() == null || region.getVariables().isEmpty())) {
                 return null;

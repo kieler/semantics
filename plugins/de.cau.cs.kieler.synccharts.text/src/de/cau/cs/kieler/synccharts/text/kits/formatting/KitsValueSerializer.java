@@ -31,7 +31,7 @@ import de.cau.cs.kieler.synccharts.SyncchartsPackage;
 import de.cau.cs.kieler.synccharts.text.kits.KitsTransientValueService;
 
 /**
- * customized {@link ITokenSerializer.IValueSerializer}. Realizes the output of the optional keyword
+ * Customized {@link ITokenSerializer.IValueSerializer}. Realizes the output of the optional keyword
  * state and empty state labels. Works hand-in-hand with {@link KitsTransientValueService}.
  * 
  * @author chsch
@@ -59,18 +59,29 @@ public class KitsValueSerializer extends ValueSerializer {
 
             Assignment a = (Assignment) ruleCall.eContainer();
 
-            // if the assignment is made to a scope's label feature
-            if (SyncchartsPackage.eINSTANCE.getScope().isInstance(context)
-                    && a.getFeature().equals(SyncchartsPackage.eINSTANCE.getScope_Label().getName())) {
+            if (SyncchartsPackage.eINSTANCE.getScope().isInstance(context)) {
+                // if the assignment is made to a scope's label feature
+                if (a.getFeature().equals(SyncchartsPackage.eINSTANCE.getScope_Label().getName())) {
 
-                // ask the transientValueService;
-                // note that the return inverse value semantics!
-                return !transientValueService.isTransient(context,
-                        SyncchartsPackage.eINSTANCE.getScope_Label(), -1);
+                    // ask the transientValueService;
+                    // note that the return inverse value semantics!
+                    return !transientValueService.isTransient(context,
+                            SyncchartsPackage.eINSTANCE.getScope_Label(), -1);
+                } else { 
+                    // if the assignment is made to a scope's id feature
+                    if (a.getFeature().equals(SyncchartsPackage.eINSTANCE.getScope_Id().getName())) {
+
+                        // ask the transientValueService;
+                        // note that the return inverse value semantics!
+                        return !transientValueService.isTransient(context,
+                                SyncchartsPackage.eINSTANCE.getScope_Id(), -1);
+                    }
+                }
             } else {
                 // if the assignment is made to an action's label feature
                 if (SyncchartsPackage.eINSTANCE.getAction().isInstance(context)
-                        && a.getFeature().equals(SyncchartsPackage.eINSTANCE.getAction_Label().getName())) {
+                        && a.getFeature().equals(
+                                SyncchartsPackage.eINSTANCE.getAction_Label().getName())) {
 
                     // ask the transientValueService;
                     // note that the return inverse value semantics!
@@ -121,8 +132,7 @@ public class KitsValueSerializer extends ValueSerializer {
         }
         return super.isValid(context, ruleCall, value, errorAcceptor);
     }
-    
-    
+
     public String serializeAssignedValue(EObject context, RuleCall ruleCall, Object value,
             AbstractNode node) {
 
