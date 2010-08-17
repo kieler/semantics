@@ -99,7 +99,8 @@ public class KitsTransientValueService extends DefaultTransientValueService {
 
         
         /* suppress id serialization if id is equals to "" */
-        if (feature == SyncchartsPackage.eINSTANCE.getScope_Id()) {
+        if (SyncchartsPackage.eINSTANCE.getRegion().isInstance(owner)
+                && feature == SyncchartsPackage.eINSTANCE.getScope_Id()) {
             return Strings.isEmpty((String) owner.eGet(feature));
         }
         
