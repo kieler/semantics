@@ -60,7 +60,7 @@
                ePackageId="de.cau.cs.kieler.synccharts"
                id="de.cau.cs.kieler.synccharts.SyncchartsChecks"
                isEnabledByDefault="true"
-               isWrapExistingValidator="false"
+               isWrapExistingValidator="true"
                name="Synccharts Checks"
                path="model/SyncchartsChecks.chk"
                tooltip="Checks whether the syncchart is valid.">
