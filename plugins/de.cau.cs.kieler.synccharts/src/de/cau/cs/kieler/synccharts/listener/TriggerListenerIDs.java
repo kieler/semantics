@@ -81,7 +81,8 @@ public class TriggerListenerIDs extends FireOnceTriggerListener {
         PossiblyEmptyCompoundCommand cc = new PossiblyEmptyCompoundCommand();
         if (scope != null) {
             // we decided to allow empty Region IDs, so don't force them here
-            if(scope instanceof Region && scope.getLabel() == null || scope.getLabel().equals("")){
+            if(scope instanceof Region && 
+                    (scope.getLabel() == null || scope.getLabel().equals(""))) {
                 cc.append(new SetCommand(getTarget(), scope,
                     SyncchartsPackage.eINSTANCE.getScope_Id(), "")); // empty ID
                 return cc;
