@@ -429,7 +429,7 @@ public class DataComponent extends JSONObjectSimulationDataComponent implements
                 pathToMaudeCode);
         try {
             MaudeInterfacePlugin.getDefault().startMaudeSession(maudeSessionId);
-            printConsole(MaudeInterfacePlugin.getDefault().queryMaude("  . \n", 1000, maudeSessionId
+            printConsole(MaudeInterfacePlugin.getDefault().queryMaude(null, 1000, maudeSessionId
                     ));
         } catch (Exception e) {
             throw new KiemInitializationException(

@@ -139,7 +139,7 @@ public class MaudeSession {
     }
 
     // -------------------------------------------------------------------------
-    
+
     /**
      * Query maude with a string returning a string for a given maude session id.
      * The optional wait parameter can be used the first time after initialization
@@ -154,7 +154,9 @@ public class MaudeSession {
     public String queryMaude(String queryRequest, int wait) throws IOException {
         String returnValue = "";
 
-        toMaude.write(queryRequest);
+        if (queryRequest != null) {
+            toMaude.write(queryRequest);
+        }
         toMaude.flush();
 
         if (wait > 0) {
