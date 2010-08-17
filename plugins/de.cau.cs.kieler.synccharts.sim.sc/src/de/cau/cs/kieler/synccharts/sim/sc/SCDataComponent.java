@@ -254,14 +254,14 @@ public class SCDataComponent extends AbstractAutomatedProducer {
         final int numberOfProperties = 3;
         KiemProperty[] properties = new KiemProperty[numberOfProperties];
         KiemPropertyTypeFile compilerFile = new KiemPropertyTypeFile(true);
-        properties[0] = new KiemProperty("compiler", compilerFile, "gcc");
-        properties[1] = new KiemProperty("file location", "");
+        properties[0] = new KiemProperty("Compiler", compilerFile, "gcc");
+        properties[1] = new KiemProperty("File Location", "");
         // String[] items = { "complete hierarchie", "shortest hierarchie",
         // "unique incremental name" };
         // TODO: only complete hierarchie is supported yet
-        String[] items = { "complete hierarchie" };
+        String[] items = { "Complete Hierarchie" };
         KiemPropertyTypeChoice choice = new KiemPropertyTypeChoice(items);
-        properties[2] = new KiemProperty("label names for SC code", choice, items[0]);
+        properties[2] = new KiemProperty("Label Names for SC Code", choice, items[0]);
 
         return properties;
     }
