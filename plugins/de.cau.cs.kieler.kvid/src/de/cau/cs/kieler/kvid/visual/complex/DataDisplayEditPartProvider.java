@@ -26,6 +26,7 @@ import org.eclipse.gmf.runtime.notation.View;
  * @author jjc
  *
  */
+@SuppressWarnings("restriction")
 public class DataDisplayEditPartProvider implements IEditPartProvider {
 
     /* (non-Javadoc)

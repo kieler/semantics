@@ -27,7 +27,7 @@ import de.cau.cs.kieler.kvid.dataprovider.CsvDataProvider;
  * @author jjc
  *
  */
-public class RuntimeConfiguration {
+public final class RuntimeConfiguration {
     
     private static RuntimeConfiguration instance = new RuntimeConfiguration();
     

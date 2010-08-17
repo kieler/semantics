@@ -17,6 +17,11 @@ import org.eclipse.draw2d.IFigure;
 
 import de.cau.cs.kieler.kvid.data.DataObject;
 
+/**
+ * 
+ * @author jjc
+ *
+ */
 public interface IKvidFigure extends IFigure {
     
     void updateData(DataObject thedata);

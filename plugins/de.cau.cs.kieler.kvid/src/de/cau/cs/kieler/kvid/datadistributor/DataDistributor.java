@@ -28,11 +28,9 @@ import org.eclipse.ui.PlatformUI;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import de.cau.cs.kieler.core.alg.IKielerProgressMonitor;
 import de.cau.cs.kieler.core.kgraph.KEdge;
 import de.cau.cs.kieler.core.kgraph.KNode;
 import de.cau.cs.kieler.core.kgraph.KPort;
-import de.cau.cs.kieler.kiml.ILayoutListener;
 import de.cau.cs.kieler.kiml.klayoutdata.KInsets;
 import de.cau.cs.kieler.kiml.klayoutdata.KPoint;
 import de.cau.cs.kieler.kiml.options.LayoutOptions;
@@ -41,8 +39,6 @@ import de.cau.cs.kieler.kiml.util.KimlLayoutUtil;
 import de.cau.cs.kieler.kvid.data.DataObject;
 import de.cau.cs.kieler.kvid.dataprovider.IDataProvider;
 import de.cau.cs.kieler.kvid.visual.GmfDrawer;
-import de.cau.cs.kieler.kvid.visual.IDrawer;
-import de.cau.cs.kieler.kvid.visual.complex.ScopeEditPart;
 
 /**
  * This class organizes the distribution of the collected data to the object that
@@ -51,7 +47,7 @@ import de.cau.cs.kieler.kvid.visual.complex.ScopeEditPart;
  * @author jjc
  *
  */
-public class DataDistributor implements IProviderListener {
+public final class DataDistributor implements IProviderListener {
     
     private static final DataDistributor INSTANCE = new DataDistributor();
     

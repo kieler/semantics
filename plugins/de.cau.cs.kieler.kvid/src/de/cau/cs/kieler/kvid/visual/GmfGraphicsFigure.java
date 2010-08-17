@@ -19,8 +19,12 @@ import org.eclipse.gmf.runtime.draw2d.ui.render.figures.ScalableImageFigure;
 
 import de.cau.cs.kieler.kvid.data.DataObject;
 
+/**
+ * 
+ * @author jjc
+ *
+ */
 public class GmfGraphicsFigure extends ScalableImageFigure implements IKvidFigure {
-    
     
     DataObject data;
 
@@ -30,7 +34,6 @@ public class GmfGraphicsFigure extends ScalableImageFigure implements IKvidFigur
         this.setBounds(new Rectangle(500, 500, 100, 100));
     }
    
-
     public void updateData(DataObject thedata) {
         this.data = thedata;       
     }

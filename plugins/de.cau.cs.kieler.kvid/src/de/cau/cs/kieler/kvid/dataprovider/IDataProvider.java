@@ -15,6 +15,11 @@ package de.cau.cs.kieler.kvid.dataprovider;
 
 import de.cau.cs.kieler.kvid.datadistributor.IProviderListener;
 
+/**
+ * 
+ * @author jjc
+ *
+ */
 public interface IDataProvider {
     
     void registerProviderListener(IProviderListener listener);
