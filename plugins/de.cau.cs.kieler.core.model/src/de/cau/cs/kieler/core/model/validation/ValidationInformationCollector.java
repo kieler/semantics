@@ -267,8 +267,15 @@ public class ValidationInformationCollector implements IStartup, IPartListener {
                     eObj = ModelingUtil.getModelFromXtextEditor(xtextEd);
                 } else {
                     // now we have to ask the extension point for a suitable class
-                    eObj = getModelDiagramInterface(editorPart.getClass().getName()).getModel(
-                            editorPart);
+                    IModelDiagramInterface modelDiagramInterface = getModelDiagramInterface(editorPart
+                            .getClass().getName());
+                    if (modelDiagramInterface != null) {
+                        eObj = modelDiagramInterface.getModel(editorPart);
+                    } else {
+                        String message = "Cannot find extension point definition for editor "
+                                + editorPart.getClass().getName();
+                        throw new RuntimeException(message);
+                    }
                 }
 
                 if (eObj != null) {
