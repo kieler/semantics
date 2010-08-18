@@ -1,5 +1,4 @@
 import uml;
-import ecore;
 
 // ================================================================================================
 // Additional restrictions for Maude simulation of UML state machine diagrams
@@ -8,8 +7,14 @@ import ecore;
 //  (name != empty && (!name.matches("")) && name.contains("/") && (name.split("/").get(1)).length > 0);
 
 
-context Transition if (this.source.metaType.toString().matches("Pseudostate") && ((Pseudostate)this.source).kind.toString().matches("INITIAL")) WARNING "MAUDE: Initial Transitions must not have a trigger or action!" :
-  (name == null || name.matches(""));
+//context Transition if (this.source.metaType.toString().matches("Pseudostate") && ((Pseudostate)this.source).kind.toString().matches("INITIAL")) WARNING "MAUDE: Initial Transitions must not have a trigger or action!" :
+//  (name == null || name.matches(""));
+
+context Transition WARNING "MAUDE: Initial Transitions must not have a trigger or action!" :
+  (name != null && !name.matches(""));
+
+context State WARNING "MAUDE: blaaa" :
+  (name.matches("S1"));
 
 ///context Action if (delay != 1) WARNING "KLEPTO: Delays <> 1 cannot be simulated yet!" :
 //  false;

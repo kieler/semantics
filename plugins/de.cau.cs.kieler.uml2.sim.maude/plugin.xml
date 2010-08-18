@@ -29,7 +29,8 @@
             ePackageClass="org.eclipse.uml2.uml.UMLPackage"
             ePackageId="org.eclipse.uml2.uml"
             ePackageNsURI="http://www.eclipse.org/gmf/runtime/1.0.2/notation"
-            nsURI="http://kieler.cs.cau.de/synccharts/0.2">
+            ePackageNsURIDiagram="http://www.eclipse.org/gmf/runtime/1.0.2/notation"
+            ePackageNsURIModel="http://www.eclipse.org/uml2/3.0.0/UML">
       </ePackageDefinition>
       <Checkfile
             class="de.cau.cs.kieler.uml2.sim.maude.validation.ModelDiagramInterface"
