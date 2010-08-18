@@ -47,8 +47,7 @@ import de.cau.cs.kieler.core.ui.util.EditorUtils;
 public final class ValidationManager {
 
     /**
-     * Contains all registered packages with a factory for creating validate
-     * actions.
+     * Contains all registered packages with a factory for creating validate actions.
      */
     private static Map<EPackage, Object> packages = new HashMap<EPackage, Object>();
 
@@ -117,18 +116,29 @@ public final class ValidationManager {
     public static EPackage getEPackageOfActiveEditor() {
         EPackage ePackage = null;
 
-        IEditorPart ed = EditorUtils.getLastActiveEditor();
-        if (ed != null) {
+        IEditorPart editorPart = EditorUtils.getLastActiveEditor();
+        if (editorPart != null) {
             EObject eObj = null;
-            if (ed instanceof DiagramEditor) {
-                DiagramEditor diagEd = (DiagramEditor) ed;
+            if (editorPart instanceof DiagramEditor) {
+                DiagramEditor diagEd = (DiagramEditor) editorPart;
                 Object obj = diagEd.getDiagramEditPart().getModel();
                 if (obj != null && obj instanceof View) {
                     eObj = ((View) obj).getElement();
                 }
-            } else if (ed instanceof XtextEditor) {
-                XtextEditor xEd = (XtextEditor) ed;
+            } else if (editorPart instanceof XtextEditor) {
+                XtextEditor xEd = (XtextEditor) editorPart;
                 eObj = ModelingUtil.getModelFromXtextEditor(xEd);
+            } else {
+                // now we have to ask the extension point for a suitable class
+                IModelDiagramInterface modelDiagramInterface = ValidationInformationCollector
+                        .getModelDiagramInterface(editorPart.getClass().getName());
+                if (modelDiagramInterface != null) {
+                    eObj = modelDiagramInterface.getModel(editorPart);
+                } else {
+                    String message = "Cannot find validation extension point definition for editor "
+                            + editorPart.getClass().getName();
+                    throw new RuntimeException(message);
+                }
             }
             if (eObj != null) {
                 ePackage = eObj.eClass().getEPackage();
@@ -189,8 +199,8 @@ public final class ValidationManager {
      * @param file
      *            the file
      * @param isWrapExistingValidator
-     *            True if the checkfile wraps around another checkfile and thus
-     *            has to be added after it.
+     *            True if the checkfile wraps around another checkfile and thus has to be added
+     *            after it.
      * @param referencedEPackageNsURIs
      *            ???
      * @param name
@@ -198,22 +208,20 @@ public final class ValidationManager {
      * @param tooltip
      *            the tooltip to display
      */
-    public static void registerCheckFile(final String id,
-            final EPackage ePackage, final String file,
-            final boolean isWrapExistingValidator,
-            final List<String> referencedEPackageNsURIs, final String name,
-            final String tooltip, final boolean isEnabledByDefault) {
+    public static void registerCheckFile(final String id, final EPackage ePackage,
+            final String file, final boolean isWrapExistingValidator,
+            final List<String> referencedEPackageNsURIs, final String name, final String tooltip,
+            final boolean isEnabledByDefault) {
         if (!packages.containsKey(ePackage)) {
             packages.put(ePackage, null);
         }
 
-        // if nothing can be found user the extension point setting to 
+        // if nothing can be found user the extension point setting to
         // determine whether the validation is enabled or not
         // --> isEnabledByDefault
-        
+
         // determine whether or the file should be allowed to show its markers
-        IPreferenceStore store = CoreModelPlugin.getDefault()
-                .getPreferenceStore();
+        IPreferenceStore store = CoreModelPlugin.getDefault().getPreferenceStore();
         boolean value = true;
         String key = PREFERENCE_PREFIX + id;
         if (store.contains(key)) {
@@ -221,8 +229,7 @@ public final class ValidationManager {
             value = store.getBoolean(key);
         } else {
             // if value not found try accessing the persistent memory on disc
-            IEclipsePreferences prefs = new InstanceScope()
-                    .getNode(CoreModelPlugin.PLUGIN_ID);
+            IEclipsePreferences prefs = new InstanceScope().getNode(CoreModelPlugin.PLUGIN_ID);
             value = prefs.getBoolean(key, isEnabledByDefault);
             store.setValue(key, value);
         }
@@ -293,9 +300,8 @@ public final class ValidationManager {
      */
     private static void register(final CheckFile checkFile) {
         if (checkFile.isEnabled()) {
-            CheckRegistry.getInstance().registerCheckFile(checkFile.ePackage,
-                    checkFile.file, checkFile.isWrapExistingValidator,
-                    checkFile.referencedEPackageNsURIs);
+            CheckRegistry.getInstance().registerCheckFile(checkFile.ePackage, checkFile.file,
+                    checkFile.isWrapExistingValidator, checkFile.referencedEPackageNsURIs);
         }
     }
 
@@ -333,14 +339,12 @@ public final class ValidationManager {
         // existing check file are added first. Otherwise
         // the wrapping checks can't be added
         for (CheckFile file : checkFiles.values()) {
-            if ((ePackage == null || file.ePackage == ePackage)
-                    && !file.isWrapExistingValidator) {
+            if ((ePackage == null || file.ePackage == ePackage) && !file.isWrapExistingValidator) {
                 register(file);
             }
         }
         for (CheckFile file : checkFiles.values()) {
-            if ((ePackage == null || file.ePackage == ePackage)
-                    && file.isWrapExistingValidator) {
+            if ((ePackage == null || file.ePackage == ePackage) && file.isWrapExistingValidator) {
                 register(file);
             }
         }
@@ -354,8 +358,7 @@ public final class ValidationManager {
     }
 
     /**
-     * Refreshes all checks by deregistering all of them and registering them
-     * again.
+     * Refreshes all checks by deregistering all of them and registering them again.
      */
     public static void refreshChecks() {
         deregisterChecks();
@@ -408,11 +411,10 @@ public final class ValidationManager {
      * @param newValue
      *            the new value
      */
-    private static void firePropertyChangedEvent(final String id,
-            final boolean oldValue, final boolean newValue) {
-        PropertyChangeEvent event = new PropertyChangeEvent(
-                CoreModelPlugin.PLUGIN_ID, PREFERENCE_PREFIX + id, oldValue,
-                newValue);
+    private static void firePropertyChangedEvent(final String id, final boolean oldValue,
+            final boolean newValue) {
+        PropertyChangeEvent event = new PropertyChangeEvent(CoreModelPlugin.PLUGIN_ID,
+                PREFERENCE_PREFIX + id, oldValue, newValue);
 
         for (IPropertyChangeListener listener : listeners) {
             listener.propertyChange(event);
@@ -440,8 +442,7 @@ public final class ValidationManager {
     }
 
     /**
-     * Determine whether there is a validate action present for the given
-     * editor.
+     * Determine whether there is a validate action present for the given editor.
      * 
      * @return true if there is a validate action
      */
@@ -478,10 +479,8 @@ public final class ValidationManager {
             String pref = PREFERENCE_PREFIX + id;
             boolean oldValue = enabled;
             enabled = enabledParam;
-            new InstanceScope().getNode(CoreModelPlugin.PLUGIN_ID).putBoolean(
-                    pref, enabled);
-            IPreferenceStore store = CoreModelPlugin.getDefault()
-                    .getPreferenceStore();
+            new InstanceScope().getNode(CoreModelPlugin.PLUGIN_ID).putBoolean(pref, enabled);
+            IPreferenceStore store = CoreModelPlugin.getDefault().getPreferenceStore();
             store.setValue(pref, enabled);
             firePropertyChangedEvent(file, oldValue, enabled);
         }
@@ -497,8 +496,7 @@ public final class ValidationManager {
         private String file;
 
         /**
-         * True if the checkfile wraps around another checkfile and thus has to
-         * be added after it.
+         * True if the checkfile wraps around another checkfile and thus has to be added after it.
          */
         private boolean isWrapExistingValidator;
 
