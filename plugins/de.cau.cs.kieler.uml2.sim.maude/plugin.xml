@@ -23,6 +23,24 @@
             file="execution/uml_maude.execution">
       </executionFile>
    </extension>
+   <extension
+         point="de.cau.cs.kieler.core.model.Validation">
+      <ePackageDefinition
+            ePackageClass="org.eclipse.uml2.uml.UMLPackage"
+            ePackageId="org.eclipse.uml2.uml"
+            ePackageNsURI="http://www.eclipse.org/uml2/3.0.0/UML"
+            nsURI="http://kieler.cs.cau.de/synccharts/0.2">
+      </ePackageDefinition>
+      <Checkfile
+            ePackageId="org.eclipse.uml2.uml"
+            id="de.cau.cs.kieler.uml2.UMLMaudeChecks"
+            isEnabledByDefault="true"
+            isWrapExistingValidator="true"
+            name="Maude Checks"
+            path="model/UMLMaudeChecks.chk"
+            tooltip="Check whether the UML model can be simulated with Maude.">
+      </Checkfile>
+   </extension>
 
 
 
