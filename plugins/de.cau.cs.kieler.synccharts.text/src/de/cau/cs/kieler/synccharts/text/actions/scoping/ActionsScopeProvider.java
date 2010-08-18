@@ -18,6 +18,7 @@ import org.eclipse.xtext.scoping.impl.SimpleScope;
 import de.cau.cs.kieler.core.expressions.Signal;
 import de.cau.cs.kieler.core.expressions.Variable;
 import de.cau.cs.kieler.synccharts.Region;
+import de.cau.cs.kieler.synccharts.Scope;
 import de.cau.cs.kieler.synccharts.State;
 
 /**
@@ -42,19 +43,14 @@ public class ActionsScopeProvider extends AbstractDeclarativeScopeProvider {
 
     private Iterable<IEObjectDescription> getElements(EObject parent){
         ArrayList<IEObjectDescription> elements = new ArrayList<IEObjectDescription>();
-                if (parent != null && parent instanceof Region) {
-                        List<Signal> signals = ((Region) parent).getSignals();
+                if (parent != null && parent instanceof Scope) {
+                        List<Signal> signals = ((Scope) parent).getSignals();
                         for (Signal signal : signals) {
                                 elements.add(new EObjectDescription(signal.getName(), signal, Collections.EMPTY_MAP));
                         }
-                        List<Variable> variables = ((Region) parent).getVariables();
+                        List<Variable> variables = ((Scope) parent).getVariables();
                         for (Variable variable : variables) {
                                 elements.add(new EObjectDescription(variable.getName(), variable, Collections.EMPTY_MAP));
-                        }
-                } else if (parent != null && parent instanceof State) {
-                        List<Signal> signals = ((State) parent).getSignals();
-                        for (Signal signal : signals) {
-                                elements.add(new EObjectDescription(signal.getName(), signal, Collections.EMPTY_MAP));
                         }
                 }
                 return elements;
