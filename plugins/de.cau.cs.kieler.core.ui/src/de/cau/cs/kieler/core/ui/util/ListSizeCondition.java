@@ -31,16 +31,23 @@ public class ListSizeCondition implements ICondition<EObject> {
 
     private EStructuralFeature feature;
     private int size;
+    private String operator;
 
     /**
      * Creates a size condition.
      * 
-     * @param thefeature a structural feature
-     * @param thesize the expected size of the corresponding list
+     * @param thefeature
+     *            a structural feature
+     * @param thesize
+     *            the expected size of the corresponding list
+     * @param theoperator
+     *            string representation of an operator such as ==, !=, <, >
      */
-    public ListSizeCondition(final EStructuralFeature thefeature, final int thesize) {
+    public ListSizeCondition(final EStructuralFeature thefeature, final int thesize,
+            final String theoperator) {
         feature = thefeature;
         size = thesize;
+        operator = theoperator;
     }
 
     /**
@@ -49,9 +56,20 @@ public class ListSizeCondition implements ICondition<EObject> {
     public boolean evaluate(final EObject object) {
         Object modelFeature = object.eGet(feature);
         if (modelFeature instanceof EList<?>) {
-            return (size == ((EList<?>) modelFeature).size());
+            if (operator.equals("") || operator.equals("==")) {
+                return (size == ((EList<?>) modelFeature).size());
+            } else if (operator.equals("!=")) {
+                return (size != ((EList<?>) modelFeature).size());
+            } else if (operator.equals(">")) {
+                return (size > ((EList<?>) modelFeature).size());
+            } else if (operator.equals(">=")) {
+                return (size >= ((EList<?>) modelFeature).size());
+            } else if (operator.equals("<")) {
+                return (size < ((EList<?>) modelFeature).size());
+            } else if (operator.equals("<=")) {
+                return (size <= ((EList<?>) modelFeature).size());
+            }
         }
         return false;
     }
-
 }

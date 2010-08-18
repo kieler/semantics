@@ -10,7 +10,7 @@
       <actualFigure
           xsi:type="gmfgraph:CustomFigure"
           name="StateFigure"
-          qualifiedClassName="de.cau.cs.kieler.synccharts.custom.AttributeAwareStateFigure">
+          qualifiedClassName="de.cau.cs.kieler.karma.SwitchableFigure">
         <layout
             xsi:type="gmfgraph:CustomLayout"
             qualifiedClassName="de.cau.cs.kieler.synccharts.custom.StateLayout"/>
@@ -69,7 +69,7 @@
       <actualFigure
           xsi:type="gmfgraph:CustomFigure"
           name="TransitionFigure"
-          qualifiedClassName="de.cau.cs.kieler.synccharts.custom.AttributeAwareTransitionFigure">
+          qualifiedClassName="de.cau.cs.kieler.core.ui.figures.SplineConnection">
         <children
             xsi:type="gmfgraph:Label"
             name="TransitionTriggersAndEffectsFigure"

@@ -2,7 +2,6 @@ package de.cau.cs.kieler.synccharts.diagram.edit.parts;
 
 import org.eclipse.draw2d.Connection;
 import org.eclipse.gef.EditPart;
-import org.eclipse.gmf.runtime.diagram.ui.editparts.ConnectionNodeEditPart;
 import org.eclipse.gmf.runtime.diagram.ui.editparts.ITreeBranchEditPart;
 import org.eclipse.gmf.runtime.diagram.ui.editpolicies.EditPolicyRoles;
 import org.eclipse.gmf.runtime.draw2d.ui.figures.WrappingLabel;
@@ -11,16 +10,15 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.widgets.Display;
 
-import de.cau.cs.kieler.core.ui.figures.IAttributeAwareFigure;
 import de.cau.cs.kieler.core.ui.figures.SplineConnection;
-import de.cau.cs.kieler.synccharts.custom.AttributeAwareTransitionFigure;
+import de.cau.cs.kieler.karma.AdvancedRenderingConnectionEditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.policies.TransitionItemSemanticEditPolicy;
 import de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorPlugin;
 
 /**
  * @generated
  */
-public class TransitionEditPart extends ConnectionNodeEditPart implements
+public class TransitionEditPart extends AdvancedRenderingConnectionEditPart implements
         ITreeBranchEditPart {
 
     /**
@@ -40,8 +38,7 @@ public class TransitionEditPart extends ConnectionNodeEditPart implements
      */
     protected void createDefaultEditPolicies() {
         super.createDefaultEditPolicies();
-        installEditPolicy(EditPolicyRoles.SEMANTIC_ROLE,
-                new TransitionItemSemanticEditPolicy());
+        installEditPolicy(EditPolicyRoles.SEMANTIC_ROLE, new TransitionItemSemanticEditPolicy());
     }
 
     /**
@@ -49,15 +46,13 @@ public class TransitionEditPart extends ConnectionNodeEditPart implements
      */
     protected boolean addFixedChild(EditPart childEditPart) {
         if (childEditPart instanceof TransitionLabelEditPart) {
-            ((TransitionLabelEditPart) childEditPart)
-                    .setLabel(getPrimaryShape()
-                            .getFigureTransitionTriggersAndEffectsFigure());
+            ((TransitionLabelEditPart) childEditPart).setLabel(getPrimaryShape()
+                    .getFigureTransitionTriggersAndEffectsFigure());
             return true;
         }
         if (childEditPart instanceof TransitionPriorityEditPart) {
-            ((TransitionPriorityEditPart) childEditPart)
-                    .setLabel(getPrimaryShape()
-                            .getFigureTransitionPriorityFigure());
+            ((TransitionPriorityEditPart) childEditPart).setLabel(getPrimaryShape()
+                    .getFigureTransitionPriorityFigure());
             return true;
         }
         return false;
@@ -108,16 +103,11 @@ public class TransitionEditPart extends ConnectionNodeEditPart implements
     protected Connection createConnectionFigure() {
         Connection figure = new TransitionFigure();
 
-        if (figure instanceof IAttributeAwareFigure) {
-            ((IAttributeAwareFigure) figure).listenTo(this.getNotationView()
-                    .getElement());
-        }
+        TransitionEditPart.this.updateFigure(figure);
 
         if (figure instanceof SplineConnection) {
-            ((SplineConnection) figure)
-                    .setSplineMode(SyncchartsDiagramEditorPlugin.getInstance()
-                            .getPreferenceStore()
-                            .getInt(SplineConnection.PREF_SPLINE_MODE));
+            ((SplineConnection) figure).setSplineMode(SyncchartsDiagramEditorPlugin.getInstance()
+                    .getPreferenceStore().getInt(SplineConnection.PREF_SPLINE_MODE));
         }
         return figure;
     }
@@ -132,7 +122,7 @@ public class TransitionEditPart extends ConnectionNodeEditPart implements
     /**
      * @generated
      */
-    public class TransitionFigure extends AttributeAwareTransitionFigure {
+    public class TransitionFigure extends SplineConnection {
 
         /**
          * @generated
@@ -165,8 +155,7 @@ public class TransitionEditPart extends ConnectionNodeEditPart implements
             fFigureTransitionPriorityFigure = new WrappingLabel();
             fFigureTransitionPriorityFigure.setText("");
 
-            fFigureTransitionPriorityFigure
-                    .setFont(FFIGURETRANSITIONPRIORITYFIGURE_FONT);
+            fFigureTransitionPriorityFigure.setFont(FFIGURETRANSITIONPRIORITYFIGURE_FONT);
 
             this.add(fFigureTransitionPriorityFigure);
 
@@ -191,7 +180,7 @@ public class TransitionEditPart extends ConnectionNodeEditPart implements
     /**
      * @generated
      */
-    static final Font FFIGURETRANSITIONPRIORITYFIGURE_FONT = new Font(
-            Display.getCurrent(), "Sans", 7, SWT.NORMAL);
+    static final Font FFIGURETRANSITIONPRIORITYFIGURE_FONT = new Font(Display.getCurrent(), "Sans",
+            7, SWT.NORMAL);
 
 }

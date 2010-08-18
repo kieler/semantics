@@ -16,12 +16,14 @@ package de.cau.cs.kieler.synccharts.custom;
 
 import org.eclipse.draw2d.IFigure;
 import org.eclipse.emf.common.notify.Notifier;
+import org.eclipse.emf.ecore.EObject;
 
 import de.cau.cs.kieler.core.ui.figures.DoubleRoundedRectangle;
 import de.cau.cs.kieler.core.ui.figures.IAttributeAwareFigure;
 import de.cau.cs.kieler.core.ui.figures.layout.AbstractTableLayout;
 import de.cau.cs.kieler.core.ui.figures.layout.container.Cell;
 import de.cau.cs.kieler.core.ui.figures.layout.container.ExtendedTable;
+import de.cau.cs.kieler.karma.IModelElementSensitiveLayout;
 import de.cau.cs.kieler.synccharts.State;
 import de.cau.cs.kieler.synccharts.StateType;
 import de.cau.cs.kieler.synccharts.custom.layout.SyncChartsConfiguration;
@@ -32,7 +34,7 @@ import de.cau.cs.kieler.synccharts.custom.layout.SyncChartsConfiguration;
  * 
  * @author abl
  */
-public class StateLayout extends AbstractTableLayout {
+public class StateLayout extends AbstractTableLayout implements IModelElementSensitiveLayout{
 
     /** minimal height for normal states. */
     public static final int MIN_HEIGHT = 30;
@@ -58,14 +60,28 @@ public class StateLayout extends AbstractTableLayout {
     /** The container for the used layout-style. */
     private AbstractSyncChartsConfiguration layouts;
 
+    private Notifier modelElement;
+    
     /**
      * Creates a state layout.
+     * 
+     * @param modelElementInput the model element that will be layouted
      */
     public StateLayout() {
-        super();
-
-        // Set the Layouter to desired configuration
-        layouts = new SyncChartsConfiguration();
+            super();
+            
+            //modelElement = theModelElement;
+            
+            // Set the Layouter to desired configuration
+            layouts = new SyncChartsConfiguration();
+    }
+    
+    /**
+     * Getter for the model element.
+     * @return the model element
+     */
+    public Notifier getNotifier() {
+            return modelElement;
     }
 
     /**
@@ -77,9 +93,9 @@ public class StateLayout extends AbstractTableLayout {
          * check whether the figure is an attribute aware state and whether it
          * is a simple or a complex state
          */
-        if (stateFigure instanceof IAttributeAwareFigure) {
-            AttributeAwareStateFigure attrStateFigure = (AttributeAwareStateFigure) stateFigure;
-            Notifier modelElement = attrStateFigure.getTarget();
+        //if (stateFigure instanceof IAttributeAwareFigure) {
+            //AttributeAwareStateFigure attrStateFigure = (AttributeAwareStateFigure) stateFigure;
+            //Notifier modelElement = attrStateFigure.getTarget();
             if (modelElement instanceof State) {
                 State state = (State) modelElement;
                 StateType type = state.getType();
@@ -121,7 +137,7 @@ public class StateLayout extends AbstractTableLayout {
                 }
                 return layout;
             }
-        }
+        //}
         return null;
     }
 
@@ -215,5 +231,10 @@ public class StateLayout extends AbstractTableLayout {
         public ExtendedTable complexStateLayout;
         public ExtendedTable conditionalStateLayout;
         public ExtendedTable textualStateLayout;
+    }
+
+    public void setModelElement(Notifier theModelElement) {
+        modelElement = theModelElement;
+        
     }
 }

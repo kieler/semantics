@@ -1,0 +1,30 @@
+﻿/*
+ * Copyright (c) 2006, 2009 Borland Software Corporation
+ * 
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *    Dmitry Stadnik (Borland) - initial API and implementation
+ *    Alexander Shatalin (Borland) - initial API and implementation
+ */
+
+«IMPORT 'http://www.eclipse.org/gmf/2009/GenModel'»
+
+«EXTENSION xpt::diagram::editparts::Utils»
+
+«DEFINE attributes FOR gmfgen::GenNode-»
+	«EXPAND xpt::diagram::editparts::Common::visualIDConstant FOR self-»
+
+	«EXPAND xpt::Common::generatedMemberComment»
+	protected org.eclipse.draw2d.IFigure contentPane;
+
+	«REM» State and State2 Editparts dont need primary shape to be generated, the will inherit it «ENDREM»
+	«IF editPartClassName <> 'StateEditPart' and editPartClassName <> 'State2EditPart'-»
+	«EXPAND xpt::Common::generatedMemberComment»
+	protected org.eclipse.draw2d.IFigure primaryShape;
+	«ENDIF-»
+«ENDDEFINE»
+

@@ -112,9 +112,21 @@ public abstract class AbstractTableLayout extends AbstractHintLayout {
         }
 
         // check whether the figure is an attribute aware figure
+        /*
         if (stateFigure instanceof IAttributeAwareFigure) {
             // printChildOverview(stateFigure);
             IAttributeAwareFigure attrStateFigure = (IAttributeAwareFigure) stateFigure;
+
+            invalidateLabels(stateFigure);
+
+            // trigger the actual layout-process
+            doTableLayout(attrStateFigure,
+                    getCorrespondingLayout(attrStateFigure));
+        }
+        */
+        if (stateFigure instanceof IFigure) {
+            // printChildOverview(stateFigure);
+            IFigure attrStateFigure = (IFigure) stateFigure;
 
             invalidateLabels(stateFigure);
 
@@ -133,7 +145,7 @@ public abstract class AbstractTableLayout extends AbstractHintLayout {
      * @param state
      *            The associated model element
      */
-    private void doTableLayout(final IAttributeAwareFigure stateFigure,
+    private void doTableLayout(final /*IAttributeAware*/IFigure stateFigure,
             final ExtendedTable tableLayout) {
         /* first set all children to zero size */
         setChildrenToZeroSize(stateFigure);
@@ -504,10 +516,20 @@ public abstract class AbstractTableLayout extends AbstractHintLayout {
     @Override
     public Dimension calculateMinimumSize(final IFigure stateFigure,
             final int whint, final int hhint) {
+        /*
         if (!(stateFigure instanceof IAttributeAwareFigure)) {
             return super.calculateMinimumSize(stateFigure, whint, hhint);
         }
         ExtendedTable layout = getCorrespondingLayout(stateFigure);
+        LayoutSizes layoutSizes = calculateLayoutSizes(layout, stateFigure);
+        return new Dimension(Math.max(layoutSizes.getMinimumWidth(),
+                layout.getMinWidth()), Math.max(layoutSizes.getMinimumHeight(),
+                layout.getMinHeight()));
+                */
+        ExtendedTable layout = getCorrespondingLayout(stateFigure);
+        if (layout == null) {
+            return super.calculateMinimumSize(stateFigure, whint, hhint);
+        }
         LayoutSizes layoutSizes = calculateLayoutSizes(layout, stateFigure);
         return new Dimension(Math.max(layoutSizes.getMinimumWidth(),
                 layout.getMinWidth()), Math.max(layoutSizes.getMinimumHeight(),
@@ -528,13 +550,25 @@ public abstract class AbstractTableLayout extends AbstractHintLayout {
     @Override
     protected Dimension calculatePreferredSize(final IFigure stateFigure,
             final int whint, final int hhint) {
+        /*
         if (!(stateFigure instanceof IAttributeAwareFigure)) {
             return super.calculateMinimumSize(stateFigure, whint, hhint);
-        }
+        }    
         LayoutSizes layoutSizes = calculateLayoutSizes(
                 getCorrespondingLayout(stateFigure), stateFigure);
         return new Dimension(layoutSizes.getPreferredWidth(),
                 layoutSizes.getPreferredHeight());
+        */        
+        
+        ExtendedTable correspondingLayout = getCorrespondingLayout(stateFigure);
+        if (correspondingLayout == null) {
+            return super.calculateMinimumSize(stateFigure, whint, hhint);
+        }
+            LayoutSizes layoutSizes = calculateLayoutSizes(correspondingLayout,stateFigure);
+            return new Dimension(layoutSizes.getPreferredWidth(),
+                    layoutSizes.getPreferredHeight());
+        
+        
     }
 
     /**
@@ -594,7 +628,7 @@ public abstract class AbstractTableLayout extends AbstractHintLayout {
      * stateFigure if need (ie. for non userResizeable states like CONDITIONAL
      * in SyncCharts, or for too small states)
      */
-    private void correctSize(final IAttributeAwareFigure stateFigure,
+    private void correctSize(final /*IAttributeAware*/IFigure stateFigure,
             final Dimension minimumSize) {
         ExtendedTable layout = getCorrespondingLayout(stateFigure);
         Rectangle bounds = stateFigure.getBounds();

@@ -22,6 +22,7 @@ main() {
 	model.plugin.requiredPlugins += "de.cau.cs.kieler.core.annotations.edit";
 	model.plugin.requiredPlugins += "de.cau.cs.kieler.core.expressions";
 	model.plugin.requiredPlugins += "de.cau.cs.kieler.core.expressions.edit";
+	model.plugin.requiredPlugins += "de.cau.cs.kieler.karma";
 	model.plugin.version := "0.3.0.qualifier";
 	model.plugin.provider := "Christian-Albrechts-Universität zu Kiel";
 	model.plugin.name := "SyncCharts Diagram Editor";
