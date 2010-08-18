@@ -28,11 +28,13 @@
       <ePackageDefinition
             ePackageClass="org.eclipse.uml2.uml.UMLPackage"
             ePackageId="org.eclipse.uml2.uml"
-            ePackageNsURI="http://www.eclipse.org/uml2/3.0.0/UML"
+            ePackageNsURI="http://www.eclipse.org/gmf/runtime/1.0.2/notation"
             nsURI="http://kieler.cs.cau.de/synccharts/0.2">
       </ePackageDefinition>
       <Checkfile
+            class="de.cau.cs.kieler.uml2.sim.maude.validation.ModelDiagramInterface"
             ePackageId="org.eclipse.uml2.uml"
+            editorClassName="org.eclipse.papyrus.editor.PapyrusMultiDiagramEditor"
             id="de.cau.cs.kieler.uml2.UMLMaudeChecks"
             isEnabledByDefault="true"
             isWrapExistingValidator="true"
@@ -40,6 +42,10 @@
             path="model/UMLMaudeChecks.chk"
             tooltip="Check whether the UML model can be simulated with Maude.">
       </Checkfile>
+      <ValidateAction
+            actionFactory="de.cau.cs.kieler.uml2.sim.maude.validation.ValidationActionFactory"
+            ePackageId="org.eclipse.uml2.uml">
+      </ValidateAction>
    </extension>
 
 
