@@ -138,7 +138,7 @@
                   
                </documentation>
                <appinfo>
-                  <meta.attribute kind="java" basedOn=":de.cau.cs.kieler.core.model.util.IValidationActionFactory"/>
+                  <meta.attribute kind="java" basedOn=":de.cau.cs.kieler.core.model.validation.IValidationActionFactory"/>
                </appinfo>
             </annotation>
          </attribute>
