@@ -218,10 +218,6 @@ litigation.
    </url>
 
    <requires>
-      <import plugin="org.eclipse.ui"/>
-      <import plugin="org.eclipse.ui.views.properties.tabbed" version="3.5.0" match="greaterOrEqual"/>
-      <import plugin="org.eclipse.ui.editors" version="3.5.0" match="greaterOrEqual"/>
-      <import plugin="org.eclipse.ui.ide" version="3.5.0" match="greaterOrEqual"/>
       <import feature="de.cau.cs.kieler.core" version="0.2.0" match="greaterOrEqual"/>
       <import feature="org.eclipse.emf" version="2.5.0" match="greaterOrEqual"/>
       <import feature="org.eclipse.emf.ecore" version="2.5.0" match="greaterOrEqual"/>
@@ -231,9 +227,6 @@ litigation.
       <import feature="org.eclipse.emf.mwe2.runtime.sdk" version="1.0.0"/>
       <import feature="org.eclipse.gef" version="3.5.0" match="greaterOrEqual"/>
       <import feature="org.eclipse.gmf.runtime.notation" version="1.4.0.v20100512-1416-377-8s73533D5715B5F"/>
-      <import plugin="org.eclipse.core.runtime"/>
-      <import plugin="org.eclipse.core.expressions" version="3.4.0" match="greaterOrEqual"/>
-      <import plugin="org.eclipse.core.resources" version="3.5.0" match="greaterOrEqual"/>
       <import feature="org.eclipse.xpand" version="1.0.0" match="greaterOrEqual"/>
       <import feature="org.eclipse.xtend" version="1.0.0" match="greaterOrEqual"/>
       <import feature="org.eclipse.xtext.runtime" version="1.0.0"/>
@@ -286,6 +279,13 @@ litigation.
 
    <plugin
          id="de.cau.cs.kieler.core.expressions.ui"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="de.cau.cs.kieler.karma"
          download-size="0"
          install-size="0"
          version="0.0.0"
