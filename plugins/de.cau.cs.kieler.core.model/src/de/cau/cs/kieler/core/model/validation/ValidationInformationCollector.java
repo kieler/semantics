@@ -332,8 +332,10 @@ public class ValidationInformationCollector implements IStartup, IPartListener {
     // --------------------------------------------------------------------------
 
     /**
-     * Get the correct getModelDiagramInterface implementation
+     * Get the correct getModelDiagramInterface implementation.
      * 
+     * @param editorClassName
+     *            the editor class name
      * @return the list of listeners
      */
     public static IModelDiagramInterface getModelDiagramInterface(String editorClassName) {
