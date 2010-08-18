@@ -66,15 +66,15 @@ public class AttributeAwareStateFigure extends AttributeAwareSwitchFigure {
             SyncchartsPackage.eINSTANCE.getState_IsFinal(), false);
 
     private static final ICondition<EObject> COND_NOREGIONS = new ListSizeCondition(
-            SyncchartsPackage.eINSTANCE.getState_Regions(), 0);
+            SyncchartsPackage.eINSTANCE.getState_Regions(), 0, null);
     private static final ICondition<EObject> COND_NOSIGNALS = new ListSizeCondition(
-            SyncchartsPackage.eINSTANCE.getScope_Signals(), 0);
+            SyncchartsPackage.eINSTANCE.getScope_Signals(), 0, null);
     private static final ICondition<EObject> COND_NOENTRYACT = new ListSizeCondition(
-            SyncchartsPackage.eINSTANCE.getScope_EntryActions(), 0);
+            SyncchartsPackage.eINSTANCE.getScope_EntryActions(), 0, null);
     private static final ICondition<EObject> COND_NOINSIDEACT = new ListSizeCondition(
-            SyncchartsPackage.eINSTANCE.getScope_InnerActions(), 0);
+            SyncchartsPackage.eINSTANCE.getScope_InnerActions(), 0, null);
     private static final ICondition<EObject> COND_NOEXITACT = new ListSizeCondition(
-            SyncchartsPackage.eINSTANCE.getScope_ExitActions(), 0);
+            SyncchartsPackage.eINSTANCE.getScope_ExitActions(), 0, null);
 
     private static final ICondition<EObject> COND_SIMPLE = new CompoundCondition<EObject>(
             new ICondition[] { COND_NORMAL, COND_NOREGIONS, COND_NOSIGNALS,
