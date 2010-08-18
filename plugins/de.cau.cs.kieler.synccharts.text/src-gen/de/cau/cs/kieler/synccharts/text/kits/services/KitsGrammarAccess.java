@@ -559,14 +559,11 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cAnnotationsStringAnnotationParserRuleCall_0_0 = (RuleCall)cAnnotationsAssignment_0.eContents().get(0);
 		private final Assignment cTypeAssignment_1 = (Assignment)cGroup.eContents().get(1);
 		private final RuleCall cTypeTransitionTypeEnumRuleCall_1_0 = (RuleCall)cTypeAssignment_1.eContents().get(0);
-		private final Assignment cTargetStateAssignment_2 = (Assignment)cGroup.eContents().get(2);
-		private final CrossReference cTargetStateStateCrossReference_2_0 = (CrossReference)cTargetStateAssignment_2.eContents().get(0);
-		private final RuleCall cTargetStateStateIDTerminalRuleCall_2_0_1 = (RuleCall)cTargetStateStateCrossReference_2_0.eContents().get(1);
-		private final Group cGroup_3 = (Group)cGroup.eContents().get(3);
-		private final Keyword cLessThanSignKeyword_3_0 = (Keyword)cGroup_3.eContents().get(0);
-		private final Assignment cPriorityAssignment_3_1 = (Assignment)cGroup_3.eContents().get(1);
-		private final RuleCall cPriorityINTTerminalRuleCall_3_1_0 = (RuleCall)cPriorityAssignment_3_1.eContents().get(0);
-		private final Keyword cGreaterThanSignKeyword_3_2 = (Keyword)cGroup_3.eContents().get(2);
+		private final Assignment cPriorityAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final RuleCall cPriorityINTTerminalRuleCall_2_0 = (RuleCall)cPriorityAssignment_2.eContents().get(0);
+		private final Assignment cTargetStateAssignment_3 = (Assignment)cGroup.eContents().get(3);
+		private final CrossReference cTargetStateStateCrossReference_3_0 = (CrossReference)cTargetStateAssignment_3.eContents().get(0);
+		private final RuleCall cTargetStateStateIDTerminalRuleCall_3_0_1 = (RuleCall)cTargetStateStateCrossReference_3_0.eContents().get(1);
 		private final Group cGroup_4 = (Group)cGroup.eContents().get(4);
 		private final Keyword cWithKeyword_4_0 = (Keyword)cGroup_4.eContents().get(0);
 		private final Alternatives cAlternatives_4_1 = (Alternatives)cGroup_4.eContents().get(1);
@@ -592,12 +589,12 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//// ---------------------------------------------------------------------------------------------------
 		//Transition returns synccharts::Transition:
-		//	annotations+=StringAnnotation* type=TransitionType targetState=[synccharts::State] ("<" priority=INT ">")? ("with"
+		//	annotations+=StringAnnotation* type=TransitionType priority=INT? targetState=[synccharts::State] ("with"
 		//	(isImmediate?="#"? delay=INT? trigger=BooleanExpression? ("/" effects+=Effect ("," effects+=Effect)*)? |
 		//	label=STRING))? isHistory?="history"?;
 		public ParserRule getRule() { return rule; }
 
-		//annotations+=StringAnnotation* type=TransitionType targetState=[synccharts::State] ("<" priority=INT ">")? ("with"
+		//annotations+=StringAnnotation* type=TransitionType priority=INT? targetState=[synccharts::State] ("with"
 		//(isImmediate?="#"? delay=INT? trigger=BooleanExpression? ("/" effects+=Effect ("," effects+=Effect)*)? |
 		//label=STRING))? isHistory?="history"?
 		public Group getGroup() { return cGroup; }
@@ -614,29 +611,20 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 		//TransitionType
 		public RuleCall getTypeTransitionTypeEnumRuleCall_1_0() { return cTypeTransitionTypeEnumRuleCall_1_0; }
 
-		//targetState=[synccharts::State]
-		public Assignment getTargetStateAssignment_2() { return cTargetStateAssignment_2; }
-
-		//[synccharts::State]
-		public CrossReference getTargetStateStateCrossReference_2_0() { return cTargetStateStateCrossReference_2_0; }
-
-		//ID
-		public RuleCall getTargetStateStateIDTerminalRuleCall_2_0_1() { return cTargetStateStateIDTerminalRuleCall_2_0_1; }
-
-		//("<" priority=INT ">")?
-		public Group getGroup_3() { return cGroup_3; }
-
-		//"<"
-		public Keyword getLessThanSignKeyword_3_0() { return cLessThanSignKeyword_3_0; }
-
-		//priority=INT
-		public Assignment getPriorityAssignment_3_1() { return cPriorityAssignment_3_1; }
+		//priority=INT?
+		public Assignment getPriorityAssignment_2() { return cPriorityAssignment_2; }
 
 		//INT
-		public RuleCall getPriorityINTTerminalRuleCall_3_1_0() { return cPriorityINTTerminalRuleCall_3_1_0; }
+		public RuleCall getPriorityINTTerminalRuleCall_2_0() { return cPriorityINTTerminalRuleCall_2_0; }
 
-		//">"
-		public Keyword getGreaterThanSignKeyword_3_2() { return cGreaterThanSignKeyword_3_2; }
+		//targetState=[synccharts::State]
+		public Assignment getTargetStateAssignment_3() { return cTargetStateAssignment_3; }
+
+		//[synccharts::State]
+		public CrossReference getTargetStateStateCrossReference_3_0() { return cTargetStateStateCrossReference_3_0; }
+
+		//ID
+		public RuleCall getTargetStateStateIDTerminalRuleCall_3_0_1() { return cTargetStateStateIDTerminalRuleCall_3_0_1; }
 
 		//("with" (isImmediate?="#"? delay=INT? trigger=BooleanExpression? ("/" effects+=Effect ("," effects+=Effect)*)? |
 		//label=STRING))?
@@ -1026,16 +1014,10 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 		private final EnumLiteralDeclaration cNORMALTERMINATIONEnumLiteralDeclaration_2 = (EnumLiteralDeclaration)cAlternatives.eContents().get(2);
 		private final Keyword cNORMALTERMINATIONGreaterThanSignHyphenMinusGreaterThanSignKeyword_2_0 = (Keyword)cNORMALTERMINATIONEnumLiteralDeclaration_2.eContents().get(0);
 		
-		//// custom terminal rule allowing to save transition label string as they are
-		////terminal TRANSITION_LABEL returns ecore::EString: 
-		////    "%" -> "%";
 		//enum TransitionType returns synccharts::TransitionType:
 		//	WEAKABORT="-->" | STRONGABORT="o->" | NORMALTERMINATION=">->";
 		public EnumRule getRule() { return rule; }
 
-		//// custom terminal rule allowing to save transition label string as they are
-		////terminal TRANSITION_LABEL returns ecore::EString: 
-		////    "%" -> "%";
 		//WEAKABORT="-->" | STRONGABORT="o->" | NORMALTERMINATION=">->"
 		public Alternatives getAlternatives() { return cAlternatives; }
 
@@ -1051,10 +1033,7 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 		//"o->"
 		public Keyword getSTRONGABORTOKeyword_1_0() { return cSTRONGABORTOKeyword_1_0; }
 
-		//NORMALTERMINATION= // custom terminal rule allowing to save transition label string as they are
-		////terminal TRANSITION_LABEL returns ecore::EString: 
-		////    "%" -> "%";
-		//">->"
+		//NORMALTERMINATION=">->"
 		public EnumLiteralDeclaration getNORMALTERMINATIONEnumLiteralDeclaration_2() { return cNORMALTERMINATIONEnumLiteralDeclaration_2; }
 
 		//">->"
@@ -1145,7 +1124,7 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 
 	//// ---------------------------------------------------------------------------------------------------
 	//Transition returns synccharts::Transition:
-	//	annotations+=StringAnnotation* type=TransitionType targetState=[synccharts::State] ("<" priority=INT ">")? ("with"
+	//	annotations+=StringAnnotation* type=TransitionType priority=INT? targetState=[synccharts::State] ("with"
 	//	(isImmediate?="#"? delay=INT? trigger=BooleanExpression? ("/" effects+=Effect ("," effects+=Effect)*)? |
 	//	label=STRING))? isHistory?="history"?;
 	public TransitionElements getTransitionAccess() {
@@ -1202,9 +1181,6 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 		return getStateTypeAccess().getRule();
 	}
 
-	//// custom terminal rule allowing to save transition label string as they are
-	////terminal TRANSITION_LABEL returns ecore::EString: 
-	////    "%" -> "%";
 	//enum TransitionType returns synccharts::TransitionType:
 	//	WEAKABORT="-->" | STRONGABORT="o->" | NORMALTERMINATION=">->";
 	public TransitionTypeElements getTransitionTypeAccess() {

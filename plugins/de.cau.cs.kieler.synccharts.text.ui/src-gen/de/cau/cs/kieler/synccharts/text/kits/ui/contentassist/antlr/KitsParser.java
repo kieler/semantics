@@ -84,7 +84,6 @@ public class KitsParser extends AbstractContentAssistParser {
 					put(grammarAccess.getStateAccess().getGroup_6_1_1_0_5(), "rule__State__Group_6_1_1_0_5__0");
 					put(grammarAccess.getStateAccess().getGroup_6_1_1_1(), "rule__State__Group_6_1_1_1__0");
 					put(grammarAccess.getTransitionAccess().getGroup(), "rule__Transition__Group__0");
-					put(grammarAccess.getTransitionAccess().getGroup_3(), "rule__Transition__Group_3__0");
 					put(grammarAccess.getTransitionAccess().getGroup_4(), "rule__Transition__Group_4__0");
 					put(grammarAccess.getTransitionAccess().getGroup_4_1_0(), "rule__Transition__Group_4_1_0__0");
 					put(grammarAccess.getTransitionAccess().getGroup_4_1_0_3(), "rule__Transition__Group_4_1_0_3__0");
@@ -170,8 +169,8 @@ public class KitsParser extends AbstractContentAssistParser {
 					put(grammarAccess.getStateAccess().getOutgoingTransitionsAssignment_7(), "rule__State__OutgoingTransitionsAssignment_7");
 					put(grammarAccess.getTransitionAccess().getAnnotationsAssignment_0(), "rule__Transition__AnnotationsAssignment_0");
 					put(grammarAccess.getTransitionAccess().getTypeAssignment_1(), "rule__Transition__TypeAssignment_1");
-					put(grammarAccess.getTransitionAccess().getTargetStateAssignment_2(), "rule__Transition__TargetStateAssignment_2");
-					put(grammarAccess.getTransitionAccess().getPriorityAssignment_3_1(), "rule__Transition__PriorityAssignment_3_1");
+					put(grammarAccess.getTransitionAccess().getPriorityAssignment_2(), "rule__Transition__PriorityAssignment_2");
+					put(grammarAccess.getTransitionAccess().getTargetStateAssignment_3(), "rule__Transition__TargetStateAssignment_3");
 					put(grammarAccess.getTransitionAccess().getIsImmediateAssignment_4_1_0_0(), "rule__Transition__IsImmediateAssignment_4_1_0_0");
 					put(grammarAccess.getTransitionAccess().getDelayAssignment_4_1_0_1(), "rule__Transition__DelayAssignment_4_1_0_1");
 					put(grammarAccess.getTransitionAccess().getTriggerAssignment_4_1_0_2(), "rule__Transition__TriggerAssignment_4_1_0_2");

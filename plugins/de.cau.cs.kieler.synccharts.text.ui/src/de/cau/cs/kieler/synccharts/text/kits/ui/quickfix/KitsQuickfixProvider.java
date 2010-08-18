@@ -141,7 +141,7 @@ public class KitsQuickfixProvider extends DefaultQuickfixProvider {
     
     @Fix(KitsJavaValidator.NON_SUCCEEDING_PRIOS)
     public void makeTransitionPriosSucceeding(final Issue issue, IssueResolutionAcceptor acceptor) {
-        acceptor.accept(issue, "Make transistion priorities succeeding", "Make transistion priorities succeeding",
+        acceptor.accept(issue, "Minimize transistion priorities", "Minimize transistion priorities",
                 null, new ISemanticModification() {
  
                     public void apply(EObject element, IModificationContext context)

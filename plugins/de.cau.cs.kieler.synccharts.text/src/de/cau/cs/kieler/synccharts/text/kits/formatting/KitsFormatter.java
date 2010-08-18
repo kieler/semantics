@@ -128,9 +128,5 @@ public class KitsFormatter extends ActionsFormatter {
         // c.setLinewrap().before(f.getTransitionRule());
         c.setLinewrap().before(f.getTransitionAccess().getTypeTransitionTypeEnumRuleCall_1_0());
         c.setLinewrap().before(f.getTransitionRule());
-
-        // let the priority statement be compressed, i.e. <1> not < 1 >
-        c.setNoSpace().after(f.getTransitionAccess().getLessThanSignKeyword_3_0());
-        c.setNoSpace().before(f.getTransitionAccess().getGreaterThanSignKeyword_3_2());
     }
 }

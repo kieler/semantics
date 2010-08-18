@@ -69,7 +69,7 @@ State returns synccharts::State:
 
 Transition returns synccharts::Transition:
     (annotations += StringAnnotation)*
-	type=TransitionType	targetState=[synccharts::State|ID] ('<'priority=INT'>')? 
+	type=TransitionType (priority=INT)? targetState=[synccharts::State|ID] 
 	( 'with'
 	 (
 	   ( (isImmediate?='#')? (delay=INT)? (trigger=BooleanExpression)? ('/' effects+=Effect (','effects+=Effect)*)? )
