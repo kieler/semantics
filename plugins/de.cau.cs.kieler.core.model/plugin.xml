@@ -35,6 +35,9 @@
                      <instanceof
                            value="org.eclipse.xtext.ui.editor.XtextEditor">
                      </instanceof>
+                     <instanceof
+                           value="org.eclipse.ui.part.EditorPart">
+                     </instanceof>
                   </or>
                </with>
             </visibleWhen>
@@ -53,6 +56,11 @@
             id="de.cau.cs.kieler.core.model.validationManager"
             name="Validation Manager">
       </page>
+   </extension>
+   <extension
+         point="org.eclipse.ui.startup">
+      <startup
+            class="de.cau.cs.kieler.core.model.validation.ValidationInformationCollector"></startup>
    </extension>
 
 </plugin>
