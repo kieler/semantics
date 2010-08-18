@@ -99,7 +99,7 @@ public class CsvDataProvider implements IDataProvider {
         try {
             JSONObject stepData = new JSONObject();
             for (int i = 0; i < uris.length; i++) {
-                stepData.append(uris[i], currentValues[i]);
+                stepData.accumulate(uris[i], currentValues[i]);
             }
             for (IProviderListener listener : listeners) {
                 listener.update(stepData);
