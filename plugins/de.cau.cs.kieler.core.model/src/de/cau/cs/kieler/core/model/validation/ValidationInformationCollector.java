@@ -40,8 +40,7 @@ import de.cau.cs.kieler.core.model.util.ModelingUtil;
 import de.cau.cs.kieler.core.ui.util.CombinedWorkbenchListener;
 
 /**
- * This class is responsible for gathering the data contributed through the
- * extension point.
+ * This class is responsible for gathering the data contributed through the extension point.
  * 
  * @author soh
  * @kieler.rating 2010-07-01 proposed yellow soh
@@ -52,16 +51,14 @@ public class ValidationInformationCollector implements IStartup, IPartListener {
     private static Map<String, String> ePackages = new HashMap<String, String>();
 
     /**
-     * The map for mapping ePackage IDs to the elements containing the validate
-     * action.
+     * The map for mapping ePackage IDs to the elements containing the validate action.
      */
     // SUPPRESS CHECKSTYLE NEXT LineLength
     private static Map<String, List<IConfigurationElement>> validateActions = new HashMap<String, List<IConfigurationElement>>();
 
     /**
-     * The map for mapping the ePackage IDs to the checkfiles registered under
-     * the given ePackage. The checkfiles are mapped from their ID to the
-     * definition.
+     * The map for mapping the ePackage IDs to the checkfiles registered under the given ePackage.
+     * The checkfiles are mapped from their ID to the definition.
      */
     // SUPPRESS CHECKSTYLE NEXT LineLength
     private static Map<String, Map<String, CheckfileDefinition>> checkfiles = new HashMap<String, Map<String, CheckfileDefinition>>();
@@ -71,8 +68,7 @@ public class ValidationInformationCollector implements IStartup, IPartListener {
      */
     public void earlyStartup() {
         IConfigurationElement[] elements = Platform.getExtensionRegistry()
-                .getConfigurationElementsFor(
-                        "de.cau.cs.kieler.core.model.Validation");
+                .getConfigurationElementsFor("de.cau.cs.kieler.core.model.Validation");
 
         for (IConfigurationElement element : elements) {
             if (element.isValid()) {
@@ -121,7 +117,7 @@ public class ValidationInformationCollector implements IStartup, IPartListener {
 
         String isEnabledByDefaultExisting = element.getAttribute("isEnabledByDefault");
         boolean isEnabledByDefault = isEnabledByDefaultExisting.equals("true");
-        
+
         CheckfileDefinition definition = new CheckfileDefinition();
         definition.id = id;
         definition.ePackageId = ePackageId;
@@ -138,8 +134,7 @@ public class ValidationInformationCollector implements IStartup, IPartListener {
         }
 
         if (!checkfiles.containsKey(ePackageId)) {
-            checkfiles.put(ePackageId,
-                    new HashMap<String, CheckfileDefinition>());
+            checkfiles.put(ePackageId, new HashMap<String, CheckfileDefinition>());
         }
         Map<String, CheckfileDefinition> map = checkfiles.get(ePackageId);
         map.put(id, definition);
@@ -168,8 +163,8 @@ public class ValidationInformationCollector implements IStartup, IPartListener {
     }
 
     /**
-     * Helper class for holding all the information about a checkfile parsed
-     * from the extension point.
+     * Helper class for holding all the information about a checkfile parsed from the extension
+     * point.
      * 
      * @author soh
      */
@@ -205,8 +200,8 @@ public class ValidationInformationCollector implements IStartup, IPartListener {
         EPackage ePackage = EPackageRegistryImpl.INSTANCE.getEPackage(nsURI);
 
         ValidationManager.registerCheckFile(check.id, ePackage, check.path,
-                check.isWrapExistingValidator, check.referencedURIs,
-                check.name, check.tooltip, check.isEnabledByDefault);
+                check.isWrapExistingValidator, check.referencedURIs, check.name, check.tooltip,
+                check.isEnabledByDefault);
     }
 
     /**
@@ -250,33 +245,37 @@ public class ValidationInformationCollector implements IStartup, IPartListener {
     /**
      * {@inheritDoc}
      */
-    public void partOpened(final IWorkbenchPart part) {
+    public void partOpened(final IWorkbenchPart workbenchPart) {
         try {
-            if (part instanceof IEditorPart) {
+            if (workbenchPart instanceof IEditorPart) {
+                IEditorPart editorPart = (IEditorPart) workbenchPart;
                 EObject eObj = null;
-                //FIXME: @SOH HERE we definitively need an extension point so that it is possible
-                //to source out code to get the model to a plugin that has dependencies to
-                //the specific diagram editor
-                if (part instanceof DiagramEditor) {
-                    DiagramEditor diagEd = (DiagramEditor) part;
+                // FIXME: @SOH HERE we definitively need an extension point so that it is possible
+                // to source out code to get the model to a plugin that has dependencies to
+                // the specific diagram editor
+                if (editorPart instanceof DiagramEditor) {
+                    DiagramEditor diagEd = (DiagramEditor) editorPart;
                     Object obj = diagEd.getDiagramEditPart().getModel();
                     if (obj != null && obj instanceof View) {
                         eObj = ((View) obj).getElement();
                     }
-//                } else if (part instanceof PapyrusMultiDiagramEditor) {
-//                    //PapyrusMultiDiagramEditor pmd = (PapyrusMultiDiagramEditor) part;
-//                    //eObj = pmd.getModel();
-                } else if (part instanceof XtextEditor) {
-                    XtextEditor xtextEd = (XtextEditor) part;
+                    // } else if (part instanceof PapyrusMultiDiagramEditor) {
+                    // //PapyrusMultiDiagramEditor pmd = (PapyrusMultiDiagramEditor) part;
+                    // //eObj = pmd.getModel();
+                } else if (editorPart instanceof XtextEditor) {
+                    XtextEditor xtextEd = (XtextEditor) editorPart;
                     eObj = ModelingUtil.getModelFromXtextEditor(xtextEd);
+                } else {
+                    // now we have to ask the extension point for a suitable class
+                    eObj = getModelDiagramInterface(editorPart.getClass().getName()).getModel(
+                            editorPart);
                 }
 
                 if (eObj != null) {
                     String uri = eObj.eClass().getEPackage().getNsURI();
                     String id = getId(uri);
                     if (id != null) {
-                        Map<String, CheckfileDefinition> checks = checkfiles
-                                .get(id);
+                        Map<String, CheckfileDefinition> checks = checkfiles.get(id);
                         if (checks != null) {
                             for (CheckfileDefinition check : checks.values()) {
                                 registerCheckfile(check);
@@ -304,19 +303,16 @@ public class ValidationInformationCollector implements IStartup, IPartListener {
         if (ePackage != null) {
             String id = getId(ePackage.getNsURI());
             if (id != null) {
-                IWorkbenchPage page = PlatformUI.getWorkbench()
-                        .getActiveWorkbenchWindow().getActivePage();
+                IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow()
+                        .getActivePage();
                 if (validateActions.containsKey(id)) {
-                    List<IConfigurationElement> elements = validateActions
-                            .get(id);
+                    List<IConfigurationElement> elements = validateActions.get(id);
                     for (IConfigurationElement elem : elements) {
                         try {
-                            Object obj = elem
-                                    .createExecutableExtension("actionFactory");
+                            Object obj = elem.createExecutableExtension("actionFactory");
                             if (obj instanceof IValidationActionFactory) {
                                 IValidationActionFactory factory = (IValidationActionFactory) obj;
-                                Action action = factory
-                                        .getValidationAction(page);
+                                Action action = factory.getValidationAction(page);
                                 if (action != null) {
                                     action.run();
                                 }
@@ -331,5 +327,33 @@ public class ValidationInformationCollector implements IStartup, IPartListener {
                 }
             }
         }
+    }
+
+    // --------------------------------------------------------------------------
+
+    /**
+     * Get the correct getModelDiagramInterface implementation
+     * 
+     * @return the list of listeners
+     */
+    public static IModelDiagramInterface getModelDiagramInterface(String editorClassName) {
+        IConfigurationElement[] contributors = Platform.getExtensionRegistry()
+                .getConfigurationElementsFor("de.cau.cs.kieler.core.model.Validation");
+
+        for (IConfigurationElement element : contributors) {
+            if (element.isValid()) {
+                try {
+                    Object obj = element.createExecutableExtension("editorClassName");
+                    if ((obj instanceof String) && (obj != null)
+                            && (((String) obj).equals(editorClassName))) {
+                        obj = element.createExecutableExtension("class");
+                        return (IModelDiagramInterface) obj;
+                    }
+                } catch (CoreException e0) {
+                    e0.printStackTrace();
+                }
+            }
+        }
+        return null;
     }
 }
