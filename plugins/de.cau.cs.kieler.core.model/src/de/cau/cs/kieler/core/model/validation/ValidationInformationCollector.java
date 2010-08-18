@@ -352,7 +352,7 @@ public class ValidationInformationCollector implements IStartup, IPartListener {
         for (IConfigurationElement element : contributors) {
             if (element.isValid()) {
                 try {
-                    Object obj = element.createExecutableExtension("editorClassName");
+                    Object obj = element.getAttribute("editorClassName");
                     if ((obj instanceof String) && (obj != null)
                             && (((String) obj).equals(editorClassName))) {
                         obj = element.createExecutableExtension("class");
