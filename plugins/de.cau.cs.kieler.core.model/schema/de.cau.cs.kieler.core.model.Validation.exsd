@@ -110,6 +110,16 @@
                </documentation>
             </annotation>
          </attribute>
+         <attribute name="class" type="string" use="required">
+            <annotation>
+               <documentation>
+                  The implementing class for this validation extension point should return the EObject (model) of the current diagram editor (IEditorPart).
+               </documentation>
+               <appinfo>
+                  <meta.attribute kind="java" basedOn=":de.cau.cs.kieler.core.model.validation.IModelDiagramInterface"/>
+               </appinfo>
+            </annotation>
+         </attribute>
       </complexType>
    </element>
 

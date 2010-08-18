@@ -254,12 +254,18 @@ public class ValidationInformationCollector implements IStartup, IPartListener {
         try {
             if (part instanceof IEditorPart) {
                 EObject eObj = null;
+                //FIXME: @SOH HERE we definitively need an extension point so that it is possible
+                //to source out code to get the model to a plugin that has dependencies to
+                //the specific diagram editor
                 if (part instanceof DiagramEditor) {
                     DiagramEditor diagEd = (DiagramEditor) part;
                     Object obj = diagEd.getDiagramEditPart().getModel();
                     if (obj != null && obj instanceof View) {
                         eObj = ((View) obj).getElement();
                     }
+//                } else if (part instanceof PapyrusMultiDiagramEditor) {
+//                    //PapyrusMultiDiagramEditor pmd = (PapyrusMultiDiagramEditor) part;
+//                    //eObj = pmd.getModel();
                 } else if (part instanceof XtextEditor) {
                     XtextEditor xtextEd = (XtextEditor) part;
                     eObj = ModelingUtil.getModelFromXtextEditor(xtextEd);
