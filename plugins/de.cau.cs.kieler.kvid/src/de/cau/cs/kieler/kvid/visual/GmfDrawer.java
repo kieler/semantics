@@ -23,6 +23,7 @@ import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramEditor;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.PlatformUI;
 
+import de.cau.cs.kieler.kvid.KvidUtil;
 import de.cau.cs.kieler.kvid.data.DataObject;
 import de.cau.cs.kieler.kvid.datadistributor.DataDistributor;
 import de.cau.cs.kieler.kvid.datadistributor.IDataListener;
@@ -75,8 +76,7 @@ public class GmfDrawer implements IDrawer, IDataListener {
             }
         }
 
-        final IEditorPart editor = DataDistributor.getInstance()
-                .getActiveEditor();
+        final IEditorPart editor = KvidUtil.getActiveEditor();
         if (editor instanceof DiagramEditor) {
             // drawing phase
             
@@ -161,7 +161,7 @@ public class GmfDrawer implements IDrawer, IDataListener {
 
     public void clearDrawing() {
         //FIXME doesnt do what it is supposed to!
-        IEditorPart editor = DataDistributor.getInstance().getActiveEditor();
+        IEditorPart editor = KvidUtil.getActiveEditor();
         if (editor instanceof DiagramEditor) {
             final IFigure canvas = ((DiagramEditor) editor)
                     .getDiagramEditPart().getLayer(

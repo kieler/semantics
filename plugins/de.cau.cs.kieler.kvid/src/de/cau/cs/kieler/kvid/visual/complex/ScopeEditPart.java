@@ -143,7 +143,7 @@ public class ScopeEditPart extends ShapeNodeEditPart implements IDataListener {
     public void triggerDataChanged() {
         
         //Check if information is relevant for this edit part
-        IEditorPart activeEditor = DataDistributor.getInstance().getActiveEditor();
+        IEditorPart activeEditor = KvidUtil.getActiveEditor();
         if (activeEditor instanceof DiagramEditor) {
             if (!((DiagramEditor) activeEditor).getDiagramEditDomain()
                     .equals(this.getDiagramEditDomain())) {

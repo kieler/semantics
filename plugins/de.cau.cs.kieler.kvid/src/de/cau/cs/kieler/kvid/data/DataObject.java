@@ -79,7 +79,7 @@ public class DataObject {
      * 
      * @param theURI The URI to identify the referred model element
      * @param thedata The data to associate with the referred model element
-     * @param thepaths List of paths (represented by a list of draw2d Points) which
+     * @param thepaths List of paths (represented by a list of draw2d {@link Point}s) which
      *          the data animation should follow or use for positioning
      */
     public DataObject(final String theURI, final String thedata, final List<List<Point>> thepaths) {
@@ -93,7 +93,7 @@ public class DataObject {
      * 
      * @param theURI The URI to identify the referred model element
      * @param thedata The data to associate with the referred model element
-     * @param thetype The DataType of which the given data is
+     * @param thetype The {@link DataType} of which the given data is
      */
     public DataObject(final String theURI, final String thedata,
             final DataType thetype) {
@@ -109,9 +109,9 @@ public class DataObject {
      * 
      * @param theURI The URI to identify the referred model element
      * @param thedata The data to associate with the referred model element
-     * @param thepaths List of paths (represented by a list of draw2d Points) which
+     * @param thepaths List of paths (represented by a list of draw2d {@link Point}s) which
      *          the data animation should follow or use for positioning
-     * @param thetype The DataType of which the given data is
+     * @param thetype The {@link DataType} of which the given data is
      */
     public DataObject(final String theURI, final String thedata, final List<List<Point>> thepaths,
             final DataType thetype) {
@@ -124,7 +124,7 @@ public class DataObject {
      * Returns as object, but is already converted in the right data type.
      * Use instanceof to find out the type.
      * 
-     * @return An object converted in the right data type, representing the
+     * @return An {@link Object} converted in the right data type, representing the
      *          data of this DataObject
      */
     public Object getData() {
@@ -170,7 +170,7 @@ public class DataObject {
      * Method to get the paths which this DataObject's visual representation will
      * follow during animation.
      * 
-     * @return A list of paths (which are lists of Points)
+     * @return A list of paths (which are lists of {@link Point}s)
      */
     public List<List<Point>> getPaths() {
         return paths;
@@ -180,7 +180,7 @@ public class DataObject {
      * Method to update the paths which this DataObject's visual representation will
      * follow during animation. Use when paths were recalculated, e.g. after layout.
      * 
-     * @param thepaths A list of paths (which are lists of Points)
+     * @param thepaths A list of paths (which are lists of {@link Point}s)
      */
     public void updatePaths(final List<List<Point>> thepaths) {
         this.paths = thepaths;

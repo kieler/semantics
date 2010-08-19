@@ -20,11 +20,8 @@ import java.util.List;
 
 import org.eclipse.core.runtime.Status;
 import org.eclipse.draw2d.geometry.Point;
-import org.eclipse.gef.EditPart;
 import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramEditor;
 import org.eclipse.ui.IEditorPart;
-import org.eclipse.ui.IWorkbenchPage;
-import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.statushandlers.StatusManager;
 import org.json.JSONException;
@@ -53,29 +50,44 @@ import de.cau.cs.kieler.kvid.visual.GmfDrawer;
  */
 public final class DataDistributor implements IProviderListener {
     
+    /** The instance of the distributor. See Singleton Design Pattern. */
     private static final DataDistributor INSTANCE = new DataDistributor();
     
-    private HashMap<String, EditPart> editPartsByURI = new HashMap<String, EditPart>();
+    /** The current data, organized in a hash map with the model element's URI as key. */
+    private HashMap<String, DataObject> dataByUri = new HashMap<String, DataObject>();
     
-    private HashMap<String, DataObject> dataByURI = new HashMap<String, DataObject>();
-    
+    /** List of registered {@link IDataListener}s. */
     private List<IDataListener> listeners = new LinkedList<IDataListener>();
     
+    /** The cached current layout of the regarded diagram. */
     private KNode currentDiagramLayout = null;
     
+    /** The editor in which the current visualization takes place. */
     private DiagramEditor currentEditor = null;
     
+    /** The {@link IDataProvider} which is the current data source. */ 
     private IDataProvider currentProvider;
     
-    private DataDistributor() {
-        
-    }
+    /**
+     * Private constructor to prevent external instatiation.
+     */
+    private DataDistributor() { }
     
+    /**
+     * Gives the single instance of the {@link DataDistributor}.
+     * 
+     * @return The single instance of the {@link DataDistributor}
+     */
     public static DataDistributor getInstance() {
         return INSTANCE;
     }
     
-    public void changeDataProvider(IDataProvider newprovider) {
+    /**
+     * Changes the current data source to a new one.
+     * 
+     * @param newprovider The new data source
+     */
+    public void changeDataProvider(final IDataProvider newprovider) {
         if (currentProvider != null) {
             currentProvider.removeProviderListener(this);
         }
@@ -83,19 +95,30 @@ public final class DataDistributor implements IProviderListener {
         currentProvider.registerProviderListener(this);
     }
     
+    /**
+     * Getter for the current data source.
+     * 
+     * @return The currently used data source
+     */
     public IDataProvider getCurrentProvider() {
         return this.currentProvider;
     }
     
+    /**
+     * Method which prepares a new visualization.
+     * Make sure this is called before any data is provided. 
+     */
     public void initialize() {
         if (!listeners.contains(GmfDrawer.getInstance())) {
             registerDataListener(GmfDrawer.getInstance());
         }
-        final IEditorPart activeEditor = getActiveEditor();
+        final IEditorPart activeEditor = KvidUtil.getActiveEditor();
         if (activeEditor instanceof DiagramEditor) {
+            //Cache the current editor
             currentEditor = (DiagramEditor) activeEditor;
             PlatformUI.getWorkbench().getDisplay().syncExec(new Runnable() {
                 public void run() {
+                    //Receive the current diagram layout for path finding
                     currentDiagramLayout = EclipseLayoutServices.getInstance()
                             .getManager(currentEditor, null)
                             .buildLayoutGraph(currentEditor, null, false);
@@ -104,6 +127,14 @@ public final class DataDistributor implements IProviderListener {
         }
     }
     
+    /**
+     * Call this every time the data to visualize has changed to trigger
+     * the visualization of the new data.
+     * 
+     * @param data The new data for the next visualization step in JSON
+     * @return Always null, could return a {@link JSONObject} if it is 
+     *          to produce data for the {@link IDataProvider}
+     */
     public JSONObject update(final JSONObject data) {
         @SuppressWarnings("rawtypes")
         Iterator allKeys = data.keys();
@@ -111,11 +142,14 @@ public final class DataDistributor implements IProviderListener {
             Object o = allKeys.next();
             try {
                 String key = o.toString();
-                if (dataByURI.containsKey(key)) {
-                    dataByURI.get(key).updateData(data.getString(key));
+                if (dataByUri.containsKey(key)) {
+                    //Model data source is alredy known, just update it
+                    dataByUri.get(key).updateData(data.getString(key));
                 } else {
+                    //New model data source, create paths and new entry in the data table
                     List<List<Point>> paths = getPathsByNode(key);
-                    dataByURI.put(o.toString(), new DataObject(key, data.getString(key), paths));
+                    dataByUri.put(o.toString(), new DataObject(key, data.getString(key), paths));
+                    //Also add Property object for the new entry
                     RuntimeConfiguration
                     .getInstance()
                     .addProperty(new Property("Display status " + key,
@@ -129,17 +163,27 @@ public final class DataDistributor implements IProviderListener {
             }
         }
         for (IDataListener listener : listeners) {
+            //Notify all listeners that data was updated
             listener.triggerDataChanged();
         }
         return null;
     }
     
-    public List<List<Point>> getPathsByNode(String uri) {
+    /**
+     * Compute animation paths and location for a given model element (referred by URI).
+     * 
+     * @param uri Referring URI, either in Ptolemy Notation or a Fragment URI
+     * @return A list of paths, represented by a list of {@link Point}s
+     */
+    public List<List<Point>> getPathsByNode(final String uri) {
         List<List<Point>> result = new LinkedList<List<Point>>();
+        //Is URI in Ptolemy Notation?
         if (!uri.startsWith(".")) {
             try {
+                //If not, it might be a Fragment URI, try to translate
                 KvidUtil.fragmentUri2PtolemyUri(uri, currentEditor.getDiagram().eResource());
-            } catch (RuntimeException ex){
+            } catch (RuntimeException ex) {
+                //Notify user about malformatted URI and ignore value during visualization
                 Status status = new Status(Status.WARNING, KvidPlugin.PLUGIN_ID, 
                         "Needs Fragment URI or URI in Ptolemy Notation. Got: " + uri
                         + " The concrete problem was: " + ex.getMessage());
@@ -148,7 +192,7 @@ public final class DataDistributor implements IProviderListener {
             }
         } 
         
-        //find node that matches URI
+        //Find node that matches URI
         String[] uriParts = uri.split("\\.");
         int currentUriPart = 1;
         String currentFoundUri = ".";
@@ -168,12 +212,12 @@ public final class DataDistributor implements IProviderListener {
         }
         
         
-        //if no node was found, return null
+        //If no node was found, return null
         if (!currentFoundUri.equals(uri)) {
             return null;
         }
         
-        //get position of found node's parent
+        //Get position of found node's parent
         Point parentPosition = new Point();
         KNode parent = currentNode;
         while (parent.getParent().getParent() != null) {
@@ -185,7 +229,7 @@ public final class DataDistributor implements IProviderListener {
         parentPosition.x += insets.getLeft();
         parentPosition.y += insets.getTop();
         
-        //create paths from outgoing edges
+        //Create paths from outgoing edges
         for (KPort port : currentNode.getPorts()) {
             if (port.getLabel().getText().equals("output")) {
                 for (KEdge edge : port.getEdges()) {
@@ -215,57 +259,72 @@ public final class DataDistributor implements IProviderListener {
         return result;
     }
     
-    public DataObject getDataObjectByURI(String URI) {
-        return dataByURI.get(URI);
+    /**
+     * Getter for a {@link DataObject} by it's model element's URI.
+     *  
+     * @param uri The URI of the model element
+     * @return The {@link DataObject} associated with the model element
+     */
+    public DataObject getDataObjectByURI(final String uri) {
+        return dataByUri.get(uri);
     }
     
+    /**
+     * Getter for the data table.
+     * 
+     * @return The data table, holding the data referred by the model element's URI
+     */
     public HashMap<String, DataObject> getData() {
-        return dataByURI;
+        return dataByUri;
     }
     
-    public EditPart getEditPartByURI(String fragmentURI) {
-        return editPartsByURI.get(fragmentURI);
-    }
-    
-    public IEditorPart getActiveEditor() {
-        IEditorPart editor = null;
-        IWorkbenchWindow[] activeWindows = PlatformUI.getWorkbench().getWorkbenchWindows();
-        for (int i = 0; i < activeWindows.length; i++) {
-            IWorkbenchPage page = activeWindows[i].getActivePage();
-            if (page.getActiveEditor() != null) {
-                editor = page.getActiveEditor();
-            }
-        }
-        return editor;        
-    }
-
+    /**
+     * Will be triggered when the current {@link IDataProvider} starts giving data.
+     */
     public void triggerInitialization() {
         initialize();
     }
 
+    /**
+     * Will be triggered when the current {@link IDataProvider} stops giving data.
+     */
     public void triggerWrapup() {
-        editPartsByURI = new HashMap<String, EditPart>();
-        dataByURI = new HashMap<String, DataObject>();
+        dataByUri = new HashMap<String, DataObject>();
         currentDiagramLayout = null;
         currentEditor = null;
-        for(IDataListener listener : listeners) {
+        for (IDataListener listener : listeners) {
             listener.triggerWrapup();
         }
     }
     
-    public void registerDataListener(IDataListener thelistener) {
+    /**
+     * Registers a new listener which will be notified when the data changes.
+     * 
+     * @param thelistener The {@link IDataListener} to add
+     */
+    public void registerDataListener(final IDataListener thelistener) {
         listeners.add(thelistener);
     }
     
-    public void removeDataListener(IDataListener thelistener) {
+    /**
+     * Removes a listener from the listeners list.
+     * 
+     * @param thelistener The {@link IDataListener} to remove
+     */
+    public void removeDataListener(final IDataListener thelistener) {
         listeners.remove(thelistener);
     }
 
+    /**
+     * This will be called when the current layout changes.
+     * 
+     * @param layoutGraph The new diagram layout
+     */
     public void layoutChanged(final KNode layoutGraph) {
         currentDiagramLayout = layoutGraph;
-        for (String key : dataByURI.keySet()) {
+        for (String key : dataByUri.keySet()) {
             List<List<Point>> paths = getPathsByNode(key);
-            dataByURI.get(key).updatePaths(paths);
+            dataByUri.get(key).updatePaths(paths);
         }
     }
 

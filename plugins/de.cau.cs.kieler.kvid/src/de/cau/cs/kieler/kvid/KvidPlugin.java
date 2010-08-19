@@ -28,7 +28,7 @@ public class KvidPlugin extends AbstractUIPlugin implements BundleActivator {
     /** The ID of this plugin. */
     public static final String PLUGIN_ID = "de.cau.cs.kieler.kvid"; //$NON-NLS-1$
 
-    /** The BundleContext of this plugin. */
+    /** The {@link BundleContext} of this plugin. */
     private static BundleContext context;
 
     /** The shared instance. */

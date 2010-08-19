@@ -25,6 +25,10 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.swt.graphics.ImageData;
 import org.eclipse.swt.graphics.PaletteData;
 import org.eclipse.swt.graphics.RGB;
+import org.eclipse.ui.IEditorPart;
+import org.eclipse.ui.IWorkbenchPage;
+import org.eclipse.ui.IWorkbenchWindow;
+import org.eclipse.ui.PlatformUI;
 
 import de.cau.cs.kieler.core.annotations.NamedObject;
 
@@ -42,10 +46,10 @@ public final class KvidUtil {
     private KvidUtil() { }
 
     /**
-     * Converts a given AWT image in it's SWT representation.
+     * Converts a given AWT {@link Image} in it's SWT representation.
      * 
      * @param image The image in AWT format
-     * @return The SWT ImageData for the given image
+     * @return The SWT {@link ImageData} for the given image
      */
     public static ImageData convertAWTImageToSWT(final Image image) {
         if (image == null) {
@@ -64,10 +68,10 @@ public final class KvidUtil {
     }
     
     /**
-     * Helper method for converting AMT images into SWT ones.
+     * Helper method for converting AWT images into SWT ones.
      * 
-     * @param bufferedImage The buffered image resulting from the first step of conversion
-     * @return The SWT ImageData for the given image
+     * @param bufferedImage The {@link BufferedImage} resulting from the first step of conversion
+     * @return The SWT {@link ImageData} for the given image
      */
     private static ImageData convertToSWT(final BufferedImage bufferedImage) {
         if (bufferedImage.getColorModel() instanceof DirectColorModel) {
@@ -165,4 +169,20 @@ public final class KvidUtil {
         return result;
     }
     
+    /**
+     * Helper method for getting the currently active editor.
+     * 
+     * @return The currently active editor in the UI
+     */
+    public static IEditorPart getActiveEditor() {
+        IEditorPart editor = null;
+        IWorkbenchWindow[] activeWindows = PlatformUI.getWorkbench().getWorkbenchWindows();
+        for (int i = 0; i < activeWindows.length; i++) {
+            IWorkbenchPage page = activeWindows[i].getActivePage();
+            if (page.getActiveEditor() != null) {
+                editor = page.getActiveEditor();
+            }
+        }
+        return editor;        
+    }
 }

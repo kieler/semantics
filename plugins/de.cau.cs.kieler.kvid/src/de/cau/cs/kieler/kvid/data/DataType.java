@@ -24,6 +24,18 @@ package de.cau.cs.kieler.kvid.data;
  */
 public enum DataType {
     
-    INT, FLOAT, STRING, BOOLEAN
+    /** Value for integer data. */
+    INT, 
+    
+    /** Value for floating point data. */
+    FLOAT, 
+    
+    /** Value for data represented by a string.
+     *  Can be used if data type is unknown to proceed data unprocessed.
+     */
+    STRING, 
+    
+    /** Value for data represented as boolean. */
+    BOOLEAN
 
 }
