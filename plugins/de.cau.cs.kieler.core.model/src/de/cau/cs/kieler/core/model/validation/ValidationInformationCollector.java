@@ -272,9 +272,13 @@ public class ValidationInformationCollector implements IStartup, IPartListener {
                     if (modelDiagramInterface != null) {
                         eObj = modelDiagramInterface.getModel(editorPart);
                     } else {
-                        String message = "Cannot find validation extension point definition for editor "
-                                + editorPart.getClass().getName();
-                        throw new RuntimeException(message);
+                        // FIXME: Ignored for now ... fix this! E.g., when changing the editor to a
+                        // supported one, partOpened is fired BUT the active editor is still the old
+                        // one!
+                        // String message =
+                        // "Cannot find validation extension point definition for editor "
+                        // + editorPart.getClass().getName();
+                        // throw new RuntimeException(message);
                     }
                 }
 
