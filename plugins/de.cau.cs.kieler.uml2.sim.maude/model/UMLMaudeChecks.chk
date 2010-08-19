@@ -28,7 +28,7 @@ context Transition if ((!this.source.metaType.toString().endsWith("Pseudostate")
                            && !((Pseudostate)this.source).kind.toString().matches("fork") 
                            && !((Pseudostate)this.source).kind.toString().matches("join")) )) 
 ERROR "Transition must have a trigger. (Transition from '"+this.source.name+ "' to '" + this.target.name + "')" :
-  (name != null &&  name.contains("/") && (name.split("/").get(0)).length > 0)
+  (name != null &&  (name.contains("/") && (name.split("/").get(0)).length > 0) || (!name.contains("/") && name.length > 0))
 ;
 
 
