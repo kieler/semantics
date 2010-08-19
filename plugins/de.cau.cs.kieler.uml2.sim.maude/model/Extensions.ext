@@ -43,13 +43,13 @@ String getTrigger(String transitionLabel):
 // Get all trigger events that are used in the statemachine.
 Set[String] getTriggerEvents(Package package):
  let transitions = package.getTransitions() :
- transitions.select(e|e.name.toString().contains("/")).trigger2()
+ transitions.select(e|e.name != null).trigger2()
 ;
 
 // Get all trigger events that are used in the statemachine.
 Set[String] getTriggerEvents(StateMachine sm):
  let transitions = sm.getTransitions() :
- transitions.select(e|e.name.toString().contains("/")).trigger2()
+ transitions.select(e|e.name != null).trigger2()
 ;
 
 // INTERNAL: Helpermethod for action extraction
