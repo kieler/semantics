@@ -1,7 +1,12 @@
 import uml;
 
 // ================================================================================================
-// Additional restrictions for Maude simulation of UML state machine diagrams
+// ==              Restrictions for Maude simulation of UML state machine diagrams               ==
+// ================================================================================================
+
+
+// ------------------------------------------------------------------------------------------------
+// General Transitions
 
 // All transitions that originate from initial nodes must not have a trigger
 context Transition if (this.source.metaType.toString().endsWith("Pseudostate") && ((Pseudostate)this.source).kind.toString().matches("initial")) 
@@ -26,17 +31,24 @@ ERROR "MAUDE: Transition must have a trigger. (Transition from '"+this.source.na
   (name != null &&  name.contains("/") && (name.split("/").get(0)).length > 0)
 ;
 
+
+// ------------------------------------------------------------------------------------------------
+// General States
+ 
 // States should have a name
 context State 
 WARNING "MAUDE: State should have a name! (In region '"+this.container.name+"')" :
   (name != null && !name.matches(""))
 ;
 
-// A Join/Fork state should have incoming and outgoing transitions
-context Pseudostate if (this.kind.toString().matches("fork") || this.kind.toString().matches("join"))
-ERROR "MAUDE: Join or fork node '"+this.name+"' must have outgoing and incoming transitions." :
-  (this.incoming.size > 0 && this.outgoing.size > 0)
+context Vertex if (this.container != null)   
+  WARNING "State '"+this.name+"' is not reachable! Every state needs at least one incoming transition!" :
+  (this.incoming.size > 0)
 ;
+
+
+// ------------------------------------------------------------------------------------------------
+// Initial and Final States
 
 // All initial nodes must have a outgoing transition 
 context Pseudostate if (this.kind.toString().matches("initial"))
@@ -53,7 +65,7 @@ ERROR "MAUDE: Initial node '"+this.name+"' must not have incoming transitions." 
 // All final nodes must have a incoming transitions
 context FinalState 
 ERROR "MAUDE: Final state '"+this.name+"' must have incoming transitions." :
-  (this.incoming.size == 0)
+  (this.incoming.size > 0)
 ;
   
 // All final nodes must not have a outgoing transitions
@@ -70,6 +82,16 @@ ERROR "MAUDE: Region '"+this.name+"' must have an initial node." :
 context Region
 ERROR "MAUDE: Region '"+this.name+"' must not have more than one initial node." :
    this.eContents.select(e|e.metaType.toString().endsWith("Pseudostate") && ((Pseudostate)e).kind.toString().matches("initial")).size < 2
+;
+
+
+// ------------------------------------------------------------------------------------------------
+// Other Pseudostates
+
+// A Join/Fork state should have incoming and outgoing transitions
+context Pseudostate if (this.kind.toString().matches("fork") || this.kind.toString().matches("join"))
+ERROR "MAUDE: Join or fork node '"+this.name+"' must have outgoing and incoming transitions." :
+  (this.incoming.size > 0 && this.outgoing.size > 0)
 ;
 
 	
