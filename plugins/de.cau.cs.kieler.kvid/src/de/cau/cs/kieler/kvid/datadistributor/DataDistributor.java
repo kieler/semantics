@@ -84,7 +84,9 @@ public final class DataDistributor implements IProviderListener {
     }
     
     public void initialize() {
-        registerDataListener(GmfDrawer.getInstance());
+        if (!listeners.contains(GmfDrawer.getInstance())) {
+            registerDataListener(GmfDrawer.getInstance());
+        }
         final IEditorPart activeEditor = getActiveEditor();
         if (activeEditor instanceof DiagramEditor) {
             currentEditor = (DiagramEditor) activeEditor;
