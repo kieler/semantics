@@ -43,13 +43,24 @@ context Pseudostate if (this.kind.toString().matches("initial"))
 ERROR "MAUDE: Initial node '"+this.name+"' must have outgoing transitions." :
   (this.outgoing.size > 0)
 ;
-	
-// All target nodes must have a incoming transitions
+
+// All initial nodes must not have a incoming transitions 
+context Pseudostate if (this.kind.toString().matches("initial"))
+ERROR "MAUDE: Initial node '"+this.name+"' must not have incoming transitions." :
+  (this.incoming.size == 0)
+;
+
+// All final nodes must have a incoming transitions
 context FinalState 
 ERROR "MAUDE: Final state '"+this.name+"' must have incoming transitions." :
-  (this.incoming.size > 0)
+  (this.incoming.size == 0)
 ;
   
+// All final nodes must not have a outgoing transitions
+context FinalState 
+ERROR "MAUDE: Final state '"+this.name+"' must not have outgoing transitions." :
+  (this.outgoing.size == 0)
+;
 
 // All regions should have exactly one initial node
 context Region
