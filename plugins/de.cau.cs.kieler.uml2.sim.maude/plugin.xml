@@ -28,7 +28,7 @@
       <ePackageDefinition
             ePackageClass="org.eclipse.uml2.uml.UMLPackage"
             ePackageId="org.eclipse.uml2.uml"
-            ePackageNsURI="http://www.eclipse.org/gmf/runtime/1.0.2/notation"
+            ePackageNsURI="http://www.eclipse.org/uml2/3.0.0/UML"
             ePackageNsURIDiagram="http://www.eclipse.org/gmf/runtime/1.0.2/notation"
             ePackageNsURIModel="http://www.eclipse.org/uml2/3.0.0/UML">
       </ePackageDefinition>
@@ -42,6 +42,12 @@
             name="Maude Checks"
             path="model/UMLMaudeChecks.chk"
             tooltip="Check whether the UML model can be simulated with Maude.">
+         <referenceEPackageNsURI
+               nsURI="http://www.eclipse.org/uml2/3.0.0/UML">
+         </referenceEPackageNsURI>
+         <referenceEPackageNsURI
+               nsURI="http://www.eclipse.org/gmf/runtime/1.0.2/notation">
+         </referenceEPackageNsURI>
       </Checkfile>
       <ValidateAction
             actionFactory="de.cau.cs.kieler.uml2.sim.maude.validation.ValidationActionFactory"
