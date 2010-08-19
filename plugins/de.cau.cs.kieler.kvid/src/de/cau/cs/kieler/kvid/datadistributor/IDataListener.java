@@ -14,13 +14,24 @@
 package de.cau.cs.kieler.kvid.datadistributor;
 
 /**
+ * 
+ * Interface for IDataListener.
+ * Usually is registered at the {@link DataDistributor} which will deliver
+ * new data to the listeners.
+ * 
  * @author jjc
  *
  */
 public interface IDataListener {
     
+    /**
+     * Method to be called when the data relvant ot the listener is changed.
+     */
     void triggerDataChanged();
     
+    /**
+     * Method to be called when the visualization is finished.
+     */
     void triggerWrapup();
 
 }

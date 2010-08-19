@@ -18,23 +18,26 @@ import de.cau.cs.kieler.core.kgraph.KNode;
 import de.cau.cs.kieler.kiml.ILayoutListener;
 
 /**
+ * Implementation of the {@link ILayoutListener} interface to check on
+ * changes in the layout.
+ * 
  * @author jjc
  *
  */
 public class LayoutListenerImpl implements ILayoutListener {
 
-    /* (non-Javadoc)
-     * @see de.cau.cs.kieler.kiml.ILayoutListener#layoutRequested(de.cau.cs.kieler.core.kgraph.KNode)
+    /**
+     * {@inheritDoc}
      */
-    public void layoutRequested(KNode layoutGraph) {
+    public void layoutRequested(final KNode layoutGraph) {
         //not used by kvid, ignored
     }
 
-    /* (non-Javadoc)
-     * @see de.cau.cs.kieler.kiml.ILayoutListener#layoutPerformed(de.cau.cs.kieler.core.kgraph.KNode, de.cau.cs.kieler.core.alg.IKielerProgressMonitor)
+    /**
+     * {@inheritDoc}
      */
-    public void layoutPerformed(KNode layoutGraph,
-            IKielerProgressMonitor monitor) {
+    public void layoutPerformed(final KNode layoutGraph,
+            final IKielerProgressMonitor monitor) {
         DataDistributor.getInstance().layoutChanged(layoutGraph);
     }
 
