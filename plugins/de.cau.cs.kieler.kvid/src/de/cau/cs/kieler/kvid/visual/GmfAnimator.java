@@ -36,8 +36,15 @@ import de.cau.cs.kieler.kvid.datadistributor.RuntimeConfiguration;
  */
 public final class GmfAnimator {
     
+    /** Determines whether replay is enabled. */
     private static volatile boolean replay = false;
     
+    /** Delay until next replay in msec. */
+    private static final int REPLAY_DELAY = 1000;
+    
+    /**
+     * There shouldn't be an instance of this.
+     */
     private GmfAnimator() { }
     
     /**
@@ -64,28 +71,39 @@ public final class GmfAnimator {
         boolean allPathsExeeded = false;
         int pathCounter = 0;
         
+        //Iterate over all paths until the longest path was handled
         while (!allPathsExeeded) {
             allPathsExeeded = true;
             for (IKvidFigure figure : figuresAndPath.keySet()) {
                 if (pathCounter == 0) {
+                    //On first iteration, muvitor requires animated elements to be initialized
                     anima.initializeAnimatedElement(figure, diagram.getViewer());
                 }
-                if (pathCounter < figuresAndPath.get(figure).size()) {      
+                if (pathCounter < figuresAndPath.get(figure).size()) {  
+                    //If the current figure has another path step: add it to command
                     anima.specifyStep(figure, figuresAndPath.get(figure).get(pathCounter));
                     if ((pathCounter + 1) < figuresAndPath.get(figure).size()) {
+                        //If there won't follow another path step, tell that this path is exceeded
                         allPathsExeeded = false;
                     }
                 } else {
+                    //If another path was longer than this, insert dummy steps
+                    //Node will stay on final location until animation is done
+                    //Muvitor will throw annoying exceptions if this isn't done
                     anima.specifyStep(figure,
                             figuresAndPath.get(figure).get(figuresAndPath.get(figure).size() - 1));
                 }
             }
             if (!allPathsExeeded) {
+                //Switch to next step when there are paths which aren't finished
+                //To be animated parallely, the path points of the same level have to be
+                //added to the same step
                 anima.nextStep();
             }
             pathCounter++;
         }
         
+        //Make sure animation won't be slower than the desired animation time
         anima.setCompleteDuration(animationTime / 2);
         cc.add(anima);
         diagram.getDiagramEditDomain().getDiagramCommandStack().execute(cc);
@@ -94,6 +112,7 @@ public final class GmfAnimator {
                 .currentValueOfProperty("Behavior after Animation")
                 .equals("Stay at last location")) {
             for (final IKvidFigure figure : figuresAndPath.keySet()) {
+                //Put every figure on the final step of the path
                 Point lastLocation = anima.getFinalLocation(figure);
                 lastLocation.x -= figure.getBounds().width / 2;
                 lastLocation.y -= figure.getBounds().height / 2;
@@ -110,8 +129,9 @@ public final class GmfAnimator {
                 .equals("Replay")) {
             replay = true;
             while (replay) {
+                //Replay the animation
                 try {
-                    Thread.sleep(1000);
+                    Thread.sleep(REPLAY_DELAY);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -120,6 +140,9 @@ public final class GmfAnimator {
         }
     }
     
+    /**
+     * Call this when the next step starts or the visualization is finished.
+     */
     public static synchronized void stopReplay() {
         replay = false;
     }
