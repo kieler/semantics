@@ -36,12 +36,13 @@ public final class RuntimeConfiguration {
     private List<IPropertyListener> listeners = new LinkedList<IPropertyListener>();
     
     private RuntimeConfiguration() {
-        knownProperties.add(new Property("Data Source", new String[]{"KIEM", "CSV"}));
-        knownProperties.add(new Property("Animation enabled", new String[]{"true", "false"}));
-        knownProperties.add(new Property("Behavior after Animation", new String[]{"Disappear",
-                                                                   "Stay at last location",
-                                                                   "Replay"}));
-        knownProperties.add(new Property("Debug drawing activated", new String[]{"false", "true"}));
+        addProperty(new Property("Data Source", new String[] { "KIEM", "CSV" }));
+        addProperty(new Property("Animation enabled", new String[] { "true",
+                "false" }));
+        addProperty(new Property("Behavior after Animation", new String[] {
+                "Disappear", "Stay at last location", "Replay" }));
+        addProperty(new Property("Debug drawing activated", new String[] {
+                "false", "true" }));
     }
     
     public static RuntimeConfiguration getInstance() {
@@ -62,7 +63,26 @@ public final class RuntimeConfiguration {
     }
     
     public void addProperty(final Property theproperty) {
+        for (Property property : knownProperties) {
+            if (property.getName().equals(theproperty.getName())) {
+                //TODO throw exception here?
+                return;
+            }
+        }
         knownProperties.add(theproperty);
+        for (IPropertyListener listener : listeners) {
+            listener.triggerPropertyListChanged();       
+        }
+    }
+    
+    public void addProperty(int where, final Property theproperty) {
+        for (Property property : knownProperties) {
+            if (property.getName().equals(theproperty.getName())) {
+                //TODO throw exception here?
+                return;
+            }
+        }
+        knownProperties.add(where, theproperty);
         for (IPropertyListener listener : listeners) {
             listener.triggerPropertyListChanged();       
         }
@@ -100,12 +120,12 @@ public final class RuntimeConfiguration {
     
     private void dataSourcePropertyChanged(final Property theproperty) {
         if (theproperty.getCurrentValue().equals("CSV")) {
-            knownProperties.add(knownProperties.indexOf(theproperty) + 1, 
+            addProperty(knownProperties.indexOf(theproperty) + 1, 
                     new Property("Path to CSV File", "<project>/<file.csv>"));
         } else {
             for (Property property : knownProperties) {
                 if (property.getName().equals("Path to CSV File")) {
-                    knownProperties.remove(property);
+                    removeProperty(property);
                     break;
                 }
             }
