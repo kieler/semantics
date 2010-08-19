@@ -3,76 +3,30 @@ import uml;
 // ================================================================================================
 // Additional restrictions for Maude simulation of UML state machine diagrams
 
-//context Transition if (this.source.metaType.toString().matches("Pseudostate") && ((Pseudostate)this.source).kind.toString().matches("INITIAL")) WARNING "MAUDE: Transitions should always have a trigger!"
-//  (name != empty && (!name.matches("")) && name.contains("/") && (name.split("/").get(1)).length > 0);
+// All transitions that originate from initial nodes must not have a trigger
+context Transition if (this.source.metaType.toString().endsWith("Pseudostate") && ((Pseudostate)this.source).kind.toString().matches("initial")) 
+ERROR "MAUDE: Initial transitions must not have a trigger or action! (transition from "+this.source.name+ " to " + this.target.name + ")" :
+  (name == null || name.matches(""));
 
+// For all transitions that
+// 1. do not originate from initial nodes AND
+// 2. do not originate/target from/to forks nodes AND
+// 3. do not originate/target from/to join nodes
+// Check if the transition trigger is empty!
+context Transition if ((!this.source.metaType.toString().endsWith("Pseudostate") && !this.target.metaType.toString().endsWith("Pseudostate")) 
+                       || ((this.source.metaType.toString().endsWith("Pseudostate") 
+                           && !((Pseudostate)this.source).kind.toString().matches("initial") 
+                           && !((Pseudostate)this.source).kind.toString().matches("fork") 
+                           && !((Pseudostate)this.source).kind.toString().matches("join"))
+                       	 && (this.target.metaType.toString().endsWith("Pseudostate") 
+                           && !((Pseudostate)this.source).kind.toString().matches("fork") 
+                           && !((Pseudostate)this.source).kind.toString().matches("join")) )) 
+ERROR "MAUDE: Transitions should always have a trigger! (transition from "+this.source.name+ " to " + this.target.name + ")" :
+  (name != null &&  name.contains("/") && (name.split("/").get(0)).length > 0);
 
-//context Transition if (this.source.metaType.toString().matches("Pseudostate") && ((Pseudostate)this.source).kind.toString().matches("INITIAL")) WARNING "MAUDE: Initial Transitions must not have a trigger or action!" :
-//  (name == null || name.matches(""));
-
-context Transition WARNING "MAUDE: Initial Transitions must not have a trigger or action!" :
+// States should have a name
+context State 
+WARNING "MAUDE: States should have a name!" :
   (name != null && !name.matches(""));
 
-context State WARNING "MAUDE: blaaa" :
-  (name.matches("S1"));
-
-///context Action if (delay != 1) WARNING "KLEPTO: Delays <> 1 cannot be simulated yet!" :
-//  false;
-  
-//context Action WARNING "KLEPTO: Immediate transitions cannot be simulated yet!" :
-//  isImmediate == false;
-  
-//context Signal if (type != ValueType::PURE) WARNING "KLEPTO: Only pure signals are supported in the simulation!" :
-//  false;  
-  
-//context State if (type != StateType::NORMAL) WARNING "KLEPTO: Only normal states are supported in the simulation!" :
-//  false;  
-
-//context State WARNING "KLEPTO: Exit actions cannot be simulated yet!" :
-//  exitActions.size == 0;
-
-//context State WARNING "KLEPTO: Entry actions cannot be simulated yet!" :
-//  entryActions.size == 0;
-
-//context State WARNING "KLEPTO: Inner actions cannot be simulated yet!" :
-//  innerActions.size == 0;
-
-//context State WARNING "KLEPTO: Suspend cannot be simulated yet!" :
-//  suspensionTrigger == null;
-  
-//context Region WARNING "KLEPTO: Variables are not supported in the simulation!" :
-//  variables.size == 0;  
-
-//TODO: Experimental check in order to display the warning in the correct context
-//context Transition WARNING "KLEPTO: Output signals that also occur within a trigger are not supported in the simulation!" : 
-//  (((SignalReference)trigger).signal == null) || ((SignalReference)trigger).signal.isOutput == false;
-
-//since 09.08.10 not a warning any more
-//FIXME: This context has no direct representation in the model => warnings are only visible in problems view  
-//context Emission WARNING "KLEPTO: Input signals ("+signal.name+") that are also emitted are not supported in the simulation!" :
-//  signal.isInput == false;
-
-//since 09.08.10 not a warning any more
-//FIXME: This context has no direct representation in the model => warnings are only visible in problems view  
-//context ValuedObjectReference WARNING "KLEPTO: Output signals ("+valuedObject.name+") that also occur within a trigger are not supported in the simulation!" :
-//  isOutputSignal(valuedObject) == false;
-
-//isOutputSignal(Signal signal):
-// signal.isOutput
-//;
-
-//isOutputSignal(ValuedObject var):
-// false
-//;
-  
-//since 28.11.09 not a warning any more
-//FIXME: This context has no direct representation in the model => warnings are only visible in problems view  
-//context Emission if ((Transition)parentEAction).type == TransitionType::NORMALTERMINATION WARNING "KLEPTO: Local signals ("+signal.name+") that occur within a trigger of a normal termination transition are not supported in the simulation! Please consider using a weak abort instead." :
-//context SignalReference if (((Transition)parentAction).type == TransitionType::NORMALTERMINATION) WARNING "KLEPTO: Local signals ("+signal.name+") that occur within a trigger of a normal termination transition are not supported in the simulation! Please consider using a weak abort instead." :
-//  (signal.isOutput == true || signal.isInput == true);
-	
-//FIXME: This context has no direct representation in the model => warnings are only visible in problems view  
-//context OperatorExpression if ((operator == OperatorType::VAL) ||
-//							   (operator == OperatorType::PRE)) WARNING "KLEPTO: VAL and PRE operators are currently not supported in the simulation!" :
-//	false;
 	
