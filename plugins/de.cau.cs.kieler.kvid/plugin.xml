@@ -10,18 +10,6 @@
       </content>
    </extension>
    <extension
-         point="org.eclipse.ui.views">
-      <view
-            allowMultiple="false"
-            category="de.cau.cs.kieler"
-            class="de.cau.cs.kieler.kvid.views.KvidView"
-            icon="icons/kieler.png"
-            id="de.cau.cs.kieler.kvid.KViDView"
-            name="Visualization"
-            restorable="true">
-      </view>
-   </extension>
-   <extension
          id="de.cau.cs.kieler.kvid.elementTypes"
          name="KViDElementTypes"
          point="org.eclipse.gmf.runtime.emf.type.core.elementTypes">
@@ -32,12 +20,12 @@
       </elementTypeFactory>
       <specializationType
             icon="icons/datanode.gif"
-            id="de.cau.cs.kieler.kvid.visual.complex.datanode"
+            id="de.cau.cs.kieler.kvid.visual.complex.scopenode"
             kind="org.eclipse.gmf.runtime.diagram.ui.util.INotationType"
-            name="%DataNode.Label">
+            name="%ScopeNode.Label">
          <param
                name="semanticHint"
-               value="DataNode">
+               value="ScopeNode">
          </param>
          <specializes
                id="org.eclipse.gmf.runtime.emf.type.core.null">
@@ -52,7 +40,7 @@
                name="Lowest">
          </Priority>
          <context
-               semanticHints="DataNode"
+               semanticHints="ScopeNode"
                viewClass="org.eclipse.gmf.runtime.notation.Node">
          </context>
       </viewProvider>

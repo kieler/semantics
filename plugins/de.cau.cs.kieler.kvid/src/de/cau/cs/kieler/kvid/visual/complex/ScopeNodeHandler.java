@@ -69,10 +69,10 @@ public class ScopeNodeHandler extends AbstractHandler {
         if (editor instanceof DiagramEditor) {
             DiagramEditor diagEditor = (DiagramEditor) editor;
             
-            IElementType DATA_NODE = ElementTypeRegistry.getInstance().getType(
-                "de.cau.cs.kieler.kvid.visual.complex.datanode");
+            IElementType scopeNode = ElementTypeRegistry.getInstance().getType(
+                "de.cau.cs.kieler.kvid.visual.complex.scopenode");
                 CreateViewRequest createScopeRequest = CreateViewRequestFactory
-                                                        .getCreateShapeRequest(DATA_NODE,
+                                                        .getCreateShapeRequest(scopeNode,
                                                                 PreferencesHint.USE_DEFAULTS);
             createScopeRequest.setLocation(targetEditPart.getLocation());
             
@@ -94,6 +94,7 @@ public class ScopeNodeHandler extends AbstractHandler {
             CompoundCommand cc = new CompoundCommand();
             cc.add(createDisplayCommand);
             cc.add(new ICommandProxy(noteAttachmentCC));
+            cc.setLabel("Add Scope Node");
             diagEditor.getDiagramEditDomain().getDiagramCommandStack().execute(cc);
         }
         return null;

@@ -43,7 +43,7 @@ public class DataDisplayEditPartProvider implements IEditPartProvider {
     public boolean provides(IOperation operation) {
         if (operation instanceof CreateGraphicEditPartOperation) {
             View view = ((IEditPartOperation) operation).getView();
-            return view.getType().equals("DataNode");
+            return view.getType().equals("ScopeNode");
         }
         return false;
     }

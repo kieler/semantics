@@ -46,7 +46,7 @@ public class DataDisplayViewProvider implements IViewProvider {
      */
     public boolean provides(IOperation operation) {
         if (operation instanceof CreateNodeViewOperation) {
-            if (((CreateNodeViewOperation) operation).getSemanticHint().equals("DataNode")) {
+            if (((CreateNodeViewOperation) operation).getSemanticHint().equals("ScopeNode")) {
                 return true;
             }
         }
@@ -88,7 +88,7 @@ public class DataDisplayViewProvider implements IViewProvider {
             PreferencesHint preferencesHint) {
         Shape node = NotationFactory.eINSTANCE.createShape();
         node.setLayoutConstraint(NotationFactory.eINSTANCE.createBounds());
-        node.setType("DataNode");
+        node.setType("ScopeNode");
         ViewUtil.insertChildView(containerView, node, index, persisted);
         return node;
     }
