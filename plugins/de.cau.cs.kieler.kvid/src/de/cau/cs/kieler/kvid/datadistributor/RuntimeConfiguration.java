@@ -93,7 +93,7 @@ public final class RuntimeConfiguration {
      * @param theproperty The new {@link Property} to add
      */
     public void addProperty(final Property theproperty) {
-        addProperty(knownProperties.size() + 1, theproperty);
+        addProperty(knownProperties.size(), theproperty);
     }
     
     /**
