@@ -29,13 +29,24 @@ import org.eclipse.swt.graphics.RGB;
 import de.cau.cs.kieler.core.annotations.NamedObject;
 
 /**
+ * Utility class for the KViD-Plugin. Holds commonly used methods statically.
+ * 
  * @author jjc
  *
  */
 public final class KvidUtil {
     
+    /**
+     * There shouldn't be an instance of this class.
+     */
     private KvidUtil() { }
 
+    /**
+     * Converts a given AWT image in it's SWT representation.
+     * 
+     * @param image The image in AWT format
+     * @return The SWT ImageData for the given image
+     */
     public static ImageData convertAWTImageToSWT(final Image image) {
         if (image == null) {
             throw new IllegalArgumentException("Null 'image' argument.");
@@ -52,7 +63,13 @@ public final class KvidUtil {
         return convertToSWT(bi);
     }
     
-    public static ImageData convertToSWT(final BufferedImage bufferedImage) {
+    /**
+     * Helper method for converting AMT images into SWT ones.
+     * 
+     * @param bufferedImage The buffered image resulting from the first step of conversion
+     * @return The SWT ImageData for the given image
+     */
+    private static ImageData convertToSWT(final BufferedImage bufferedImage) {
         if (bufferedImage.getColorModel() instanceof DirectColorModel) {
             DirectColorModel colorModel
                     = (DirectColorModel) bufferedImage.getColorModel();
@@ -62,7 +79,8 @@ public final class KvidUtil {
                     bufferedImage.getHeight(), colorModel.getPixelSize(),
                     palette);
             WritableRaster raster = bufferedImage.getRaster();
-            int[] pixelArray = new int[3];
+            final int rasterSize = 3;
+            int[] pixelArray = new int[rasterSize];
             for (int y = 0; y < data.height; y++) {
                 for (int x = 0; x < data.width; x++) {
                     raster.getPixel(x, y, pixelArray);
@@ -83,9 +101,10 @@ public final class KvidUtil {
             colorModel.getGreens(greens);
             colorModel.getBlues(blues);
             RGB[] rgbs = new RGB[size];
+            final int mask = 0xFF;
             for (int i = 0; i < rgbs.length; i++) {
-                rgbs[i] = new RGB(reds[i] & 0xFF, greens[i] & 0xFF,
-                        blues[i] & 0xFF);
+                rgbs[i] = new RGB(reds[i] & mask, greens[i] & mask,
+                        blues[i] & mask);
             }
             PaletteData palette = new PaletteData(rgbs);
             ImageData data = new ImageData(bufferedImage.getWidth(),
@@ -105,6 +124,18 @@ public final class KvidUtil {
         return null;
     }
     
+    /**
+     * Converts a EMF/GMF Fragment URI into a Ptolemy URI.
+     * A Fragment URI looks like: //(type).(number of child of this type)/ etc.
+     * A Ptolemy URI looks like: .(element name).(second element name)
+     * 
+     * This requires unique names on the same hierarchy level.
+     * 
+     * @param fragmentUri The Fragment URI to convert
+     * @param resource The resource which holds the model element referred by
+     *          the Fragment URI
+     * @return A Ptolemy URI referring the model element
+     */
     public static String fragmentUri2PtolemyUri(final String fragmentUri, final Resource resource) {
         String result = "";
         if (fragmentUri.startsWith("//")) {
