@@ -5,7 +5,7 @@ import uml;
 
 // All transitions that originate from initial nodes must not have a trigger
 context Transition if (this.source.metaType.toString().endsWith("Pseudostate") && ((Pseudostate)this.source).kind.toString().matches("initial")) 
-ERROR "MAUDE: Initial transitions must not have a trigger or action! (transition from "+this.source.name+ " to " + this.target.name + ")" :
+WARNING "MAUDE: Initial transitions should not have a trigger or action (these are ignored)! (transition from "+this.source.name+ " to " + this.target.name + ")" :
   (name == null || name.matches(""));
 
 // For all transitions that
