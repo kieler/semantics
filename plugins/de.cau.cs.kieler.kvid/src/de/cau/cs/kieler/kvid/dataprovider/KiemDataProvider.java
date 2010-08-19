@@ -27,6 +27,8 @@ import de.cau.cs.kieler.sim.kiem.KiemExecutionException;
 import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
 
 /**
+ * Data Source which is a {@link IDataProvider} and uses KIEM to collect
+ * simulation data.
  * 
  * @author jjc
  * 
@@ -34,6 +36,7 @@ import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
 public class KiemDataProvider extends JSONObjectDataComponent implements
         IJSONObjectDataComponent, IDataProvider {
 
+    /** List of registered {@link IProviderListener}s. */
     private List<IProviderListener> listeners = new LinkedList<IProviderListener>();
     
     /**
@@ -91,11 +94,14 @@ public class KiemDataProvider extends JSONObjectDataComponent implements
     /**
      * {@inheritDoc}
      */
-    public void registerProviderListener(IProviderListener listener) {
+    public void registerProviderListener(final IProviderListener listener) {
         listeners.add(listener);
     }
 
-    public void removeProviderListener(IProviderListener listener) {
+    /**
+     * {@inheritDoc}
+     */
+    public void removeProviderListener(final IProviderListener listener) {
         listeners.remove(listener);
     }
 
