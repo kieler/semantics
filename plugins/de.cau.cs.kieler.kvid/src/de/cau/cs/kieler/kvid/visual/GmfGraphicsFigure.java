@@ -13,28 +13,40 @@
  */
 package de.cau.cs.kieler.kvid.visual;
 
-import org.eclipse.draw2d.geometry.Rectangle;
 import org.eclipse.gmf.runtime.draw2d.ui.render.RenderedImage;
 import org.eclipse.gmf.runtime.draw2d.ui.render.figures.ScalableImageFigure;
 
 import de.cau.cs.kieler.kvid.data.DataObject;
 
 /**
+ * Figure who use a scalable image for visualization.
  * 
  * @author jjc
+ * @deprecated Use {@link GmfImageFigure} instead
  *
  */
 public class GmfGraphicsFigure extends ScalableImageFigure implements IKvidFigure {
     
-    DataObject data;
+    /** Reference to the currently displayed data. */
+    @SuppressWarnings("unused")
+    private DataObject data;
 
-    public GmfGraphicsFigure(DataObject thedata, RenderedImage image) {
+    /**
+     * Constructor which expects a {@link RenderedImage}.
+     * Use the {@link RenderedImageFactory} to receive one from an image file. 
+     * 
+     * @param thedata The {@link DataObject} to display with this figure
+     * @param image The image which will be used for display
+     */
+    public GmfGraphicsFigure(final DataObject thedata, final RenderedImage image) {
         super(image, true, true, true);
         this.data = thedata;
-        this.setBounds(new Rectangle(500, 500, 100, 100));
     }
    
-    public void updateData(DataObject thedata) {
+    /**
+     * {@inheritDoc}
+     */
+    public void updateData(final DataObject thedata) {
         this.data = thedata;       
     }
 

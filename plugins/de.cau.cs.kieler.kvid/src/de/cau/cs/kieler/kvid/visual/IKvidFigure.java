@@ -18,12 +18,18 @@ import org.eclipse.draw2d.IFigure;
 import de.cau.cs.kieler.kvid.data.DataObject;
 
 /**
+ * Interface for figures, which will process and draw the data themselves.
  * 
  * @author jjc
  *
  */
 public interface IKvidFigure extends IFigure {
     
+    /**
+     * Update the displayed data and create new visuals.
+     * 
+     * @param thedata The updated data
+     */
     void updateData(DataObject thedata);
 
 }
