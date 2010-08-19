@@ -128,9 +128,11 @@ public class PropertiesView extends ViewPart implements IPropertyListener {
         
         IToolBarManager toolBarManager = getViewSite().getActionBars().getToolBarManager();
         step = new Step();
-        step.setImageDescriptor(KViDUIPlugin.imageDescriptorFromPlugin(KViDUIPlugin.PLUGIN_ID, "icons/stepIcon.png"));
-        step.setDisabledImageDescriptor(KViDUIPlugin.imageDescriptorFromPlugin(KViDUIPlugin.PLUGIN_ID, "icons/stepIconDisabled.png"));
-        step.setEnabled(false);
+        step.setImageDescriptor(KViDUIPlugin.imageDescriptorFromPlugin(
+                KViDUIPlugin.PLUGIN_ID, "icons/stepIcon.png"));
+        step.setDisabledImageDescriptor(KViDUIPlugin.imageDescriptorFromPlugin(
+                KViDUIPlugin.PLUGIN_ID, "icons/stepIconDisabled.png"));
+       step.setEnabled(false);
         toolBarManager.add(step);
         
         tableViewer.setInput(RuntimeConfiguration.getInstance().getKnownProperties());
@@ -144,10 +146,10 @@ public class PropertiesView extends ViewPart implements IPropertyListener {
         tableViewer.getControl().setFocus();
     }
 
-    /* (non-Javadoc)
-     * @see de.cau.cs.kieler.kvid.datadistributor.IPropertyListener#triggerPropertyChanged(de.cau.cs.kieler.kvid.datadistributor.Property)
+    /**
+     * {@inheritDoc}
      */
-    public void triggerPropertyChanged(Property changedProperty) {
+    public void triggerPropertyChanged(final Property changedProperty) {
         if (changedProperty.getName().equals("Path to CSV File")) {
             step.setEnabled(true);
         }
@@ -163,8 +165,8 @@ public class PropertiesView extends ViewPart implements IPropertyListener {
         });
     }
 
-    /* (non-Javadoc)
-     * @see de.cau.cs.kieler.kvid.datadistributor.IPropertyListener#triggerPropertyListChanged()
+    /**
+     * {@inheritDoc}
      */
     public void triggerPropertyListChanged() {
         PlatformUI.getWorkbench().getDisplay().syncExec(new Runnable() {
