@@ -246,6 +246,8 @@ public class Execution extends Job {
             }
             timeout.abortTimeout();
         }
+        // update the depending views
+        eventManager.notify(new KiemEvent(KiemEvent.VIEW_REFRESH));
     }
 
     // -------------------------------------------------------------------------
@@ -442,7 +444,7 @@ public class Execution extends Job {
             this.stepToPause = step;
             this.runExecutionSync();
             // update the GUI
-            KiemPlugin.getDefault().updateViewAsync();
+            eventManager.notify(new KiemEvent(KiemEvent.VIEW_REFRESH));
             return true;
         } else if (step == this.stepCounterMax) {
             // this is the most current step
@@ -489,7 +491,7 @@ public class Execution extends Job {
             this.stepToPause = step;
             this.runExecutionSync();
             // update the GUI
-            KiemPlugin.getDefault().updateViewAsync();
+            eventManager.notify(new KiemEvent(KiemEvent.VIEW_REFRESH));
             return true;
         } else {
             // JUMP backwards here because we cant run backwards
@@ -542,6 +544,8 @@ public class Execution extends Job {
                 }
                 // make one step backward
                 this.steps = BACKWARD_STEP;
+                // update the GUI
+                eventManager.notify(new KiemEvent(KiemEvent.VIEW_REFRESH));
             } else {
                 return false; // skip in this case make NO step
             }
@@ -583,6 +587,8 @@ public class Execution extends Job {
                 }
                 // make one step forward
                 this.steps = FORWARD_STEP;
+                // update the GUI
+                eventManager.notify(new KiemEvent(KiemEvent.VIEW_REFRESH));
             } else {
                 return false; // skip in this case make NO step
             }
@@ -627,6 +633,8 @@ public class Execution extends Job {
                 timeout.abortTimeout();
             }
             this.steps = NO_STEPS;
+            // update the GUI
+            eventManager.notify(new KiemEvent(KiemEvent.VIEW_REFRESH));
         }
     }
 
@@ -657,6 +665,8 @@ public class Execution extends Job {
             }
         }
         this.steps = INFINITY_STEPS; // indicates run mode
+        // update the GUI
+        eventManager.notify(new KiemEvent(KiemEvent.VIEW_REFRESH));
     }
 
     // -------------------------------------------------------------------------
@@ -717,7 +727,8 @@ public class Execution extends Job {
         // remotely by other
         // plug-in)
         KiemPlugin.getDefault().setExecution(null);
-        KiemPlugin.getDefault().updateViewAsync();
+        // update the GUI
+        eventManager.notify(new KiemEvent(KiemEvent.VIEW_REFRESH));
     }
 
     // -------------------------------------------------------------------------
@@ -739,7 +750,8 @@ public class Execution extends Job {
         // remotely by other
         // plug-in)
         KiemPlugin.getDefault().setExecution(null);
-        KiemPlugin.getDefault().updateViewAsync();
+        // update the GUI
+        eventManager.notify(new KiemEvent(KiemEvent.VIEW_REFRESH));
     }
 
     // -------------------------------------------------------------------------
@@ -828,7 +840,7 @@ public class Execution extends Job {
         // release the object
         KiemPlugin.getDefault().setExecution(null);
         // update the view
-        KiemPlugin.getDefault().updateViewAsync();
+        eventManager.notify(new KiemEvent(KiemEvent.VIEW_REFRESH));
         // wrapup components
         wrapupComponents(true);
         // try to stop all components, no blocking stopExecution() call
@@ -1060,7 +1072,7 @@ public class Execution extends Job {
                         this.stepToPause = -1;
                         this.pauseExecutionSync();
                         // update the GUI
-                        KiemPlugin.getDefault().updateViewAsync();
+                        eventManager.notify(new KiemEvent(KiemEvent.VIEW_REFRESH));
                     }
 
                     // test if we have to make a step (1) or if we are
