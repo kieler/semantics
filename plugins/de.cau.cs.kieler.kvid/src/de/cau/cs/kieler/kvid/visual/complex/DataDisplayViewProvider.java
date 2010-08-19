@@ -33,18 +33,19 @@ import org.eclipse.gmf.runtime.notation.View;
  */
 public class DataDisplayViewProvider implements IViewProvider {
 
-    /* (non-Javadoc)
-     * @see org.eclipse.gmf.runtime.common.core.service.IProvider#addProviderChangeListener(org.eclipse.gmf.runtime.common.core.service.IProviderChangeListener)
+    /**
+     * Not used and therefore not implemented.
+     * 
+     * @param listener An also ignored listener
      */
-    public void addProviderChangeListener(IProviderChangeListener listener) {
-        // TODO Auto-generated method stub
-
+    public void addProviderChangeListener(final IProviderChangeListener listener) {
+        //Not used, ignored
     }
 
-    /* (non-Javadoc)
-     * @see org.eclipse.gmf.runtime.common.core.service.IProvider#provides(org.eclipse.gmf.runtime.common.core.service.IOperation)
+    /**
+     * {@inheritDoc}
      */
-    public boolean provides(IOperation operation) {
+    public boolean provides(final IOperation operation) {
         if (operation instanceof CreateNodeViewOperation) {
             if (((CreateNodeViewOperation) operation).getSemanticHint().equals("ScopeNode")) {
                 return true;
@@ -53,39 +54,40 @@ public class DataDisplayViewProvider implements IViewProvider {
         return false;
     }
 
-    /* (non-Javadoc)
-     * @see org.eclipse.gmf.runtime.common.core.service.IProvider#removeProviderChangeListener(org.eclipse.gmf.runtime.common.core.service.IProviderChangeListener)
+    /**
+     * Not used and therefore not implemented.
+     * 
+     * @param listener An also ignored listener
      */
-    public void removeProviderChangeListener(IProviderChangeListener listener) {
-        // TODO Auto-generated method stub
-
+    public void removeProviderChangeListener(final IProviderChangeListener listener) {
+        //Not used, ignored
     }
 
-    /* (non-Javadoc)
-     * @see org.eclipse.gmf.runtime.diagram.core.providers.IViewProvider#createDiagram(org.eclipse.core.runtime.IAdaptable, java.lang.String, org.eclipse.gmf.runtime.diagram.core.preferences.PreferencesHint)
+    /**
+     * {@inheritDoc}
      */
-    public Diagram createDiagram(IAdaptable semanticAdapter,
-            String diagramKind, PreferencesHint preferencesHint) {
-        // TODO Auto-generated method stub
+    public Diagram createDiagram(final IAdaptable semanticAdapter,
+            final String diagramKind, final PreferencesHint preferencesHint) {
+        //KViD won't provide Diagrams, thus ignored 
         return null;
     }
 
-    /* (non-Javadoc)
-     * @see org.eclipse.gmf.runtime.diagram.core.providers.IViewProvider#createEdge(org.eclipse.core.runtime.IAdaptable, org.eclipse.gmf.runtime.notation.View, java.lang.String, int, boolean, org.eclipse.gmf.runtime.diagram.core.preferences.PreferencesHint)
+    /**
+     * {@inheritDoc} 
      */
-    public Edge createEdge(IAdaptable semanticAdapter, View containerView,
-            String semanticHint, int index, boolean persisted,
-            PreferencesHint preferencesHint) {
-        // TODO Auto-generated method stub
+    public Edge createEdge(final IAdaptable semanticAdapter, final View containerView,
+            final String semanticHint, final int index, final boolean persisted,
+            final PreferencesHint preferencesHint) {
+        //Right now, KViD doesn't provide any Edges, thus ignored
         return null;
     }
 
-    /* (non-Javadoc)
-     * @see org.eclipse.gmf.runtime.diagram.core.providers.IViewProvider#createNode(org.eclipse.core.runtime.IAdaptable, org.eclipse.gmf.runtime.notation.View, java.lang.String, int, boolean, org.eclipse.gmf.runtime.diagram.core.preferences.PreferencesHint)
+    /**
+     * {@inheritDoc}
      */
-    public Node createNode(IAdaptable semanticAdapter, View containerView,
-            String semanticHint, int index, boolean persisted,
-            PreferencesHint preferencesHint) {
+    public Node createNode(final IAdaptable semanticAdapter, final View containerView,
+            final String semanticHint, final int index, final boolean persisted,
+            final PreferencesHint preferencesHint) {
         Shape node = NotationFactory.eINSTANCE.createShape();
         node.setLayoutConstraint(NotationFactory.eINSTANCE.createBounds());
         node.setType("ScopeNode");

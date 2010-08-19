@@ -13,7 +13,6 @@
  */
 package de.cau.cs.kieler.kvid.visual.complex;
 
-
 import java.awt.image.BufferedImage;
 
 import org.eclipse.draw2d.LineBorder;
@@ -41,36 +40,52 @@ import de.cau.cs.kieler.kvid.datadistributor.IDataListener;
 import de.cau.cs.kieler.kvid.visual.GmfImageFigure;
 
 /**
+ * EditPart which handles ScopeNodes.
+ * These are Nodes, which displays scopes drawn by the Ptolemy scope drawing tools
+ * as images.
+ * 
  * @author jjc
  *
  */
 public class ScopeEditPart extends ShapeNodeEditPart implements IDataListener {
     
+    /** The URI of the referred model element. */
     private String referredObjectURI;
     
+    /** The {@link Plot} instance which actually draws the scopes. */
     private Plot plot;
     
+    /** The {@link GmfImageFigure} which holds the current scope as an image. */
     private GmfImageFigure currentScope;
     
+    /** Variable whch stores how many steps have been displayed by now. */
     private int steps = 0;
     
+    /** Default height of a ScopeNode. */
     private static final int PLOT_HEIGHT = 200;
     
+    /** Default width of a ScopeNode. */
     private static final int PLOT_WIDTH = 200;
     
     /**
+     * Constructor which initializes all necessary functions for scope drawing.
      * 
      * @param view The view connected to this edit part
      */
     @SuppressWarnings({ "rawtypes", "unchecked" })
     public ScopeEditPart(final View view) {
         super(view);
+        
         DataDistributor.getInstance().registerDataListener(this);
+        
+        //Setup of the scope drawing tool
         plot = new Plot();
         plot.setBars(true);
         plot.setXLabel("Step");
         plot.setYLabel("Value");
         plot.setSize(PLOT_WIDTH, PLOT_HEIGHT);
+        
+        //Check the connected object and try to use it as a data source
         EList list = view.getSourceEdges();
         list.addAll(view.getTargetEdges());
         if (list.size() == 1) {
@@ -92,7 +107,7 @@ public class ScopeEditPart extends ShapeNodeEditPart implements IDataListener {
      */
     @Override
     protected NodeFigure createNodeFigure() {
-               
+        //Export plot as an image and display it
         BufferedImage image = plot.exportImage();
         ImageData data = KvidUtil.convertAWTImageToSWT(image);
         currentScope = new GmfImageFigure(new org.eclipse.swt.graphics.Image(
@@ -103,35 +118,25 @@ public class ScopeEditPart extends ShapeNodeEditPart implements IDataListener {
     }
 
     /**
-     * @param uri the referredObjectURI to set
+     * Associate this node with a new model element by it's URI.
+     * 
+     * @param uri The referredObjectURI to set
      */
     public void setReferredObjectURI(final String uri) {
+        
         this.referredObjectURI = uri;
         DataDistributor.getInstance().getDataObjectByURI(uri).setSaveHistory(true);
+        
         if (referredObjectURI != null) {
             DataObject data = DataDistributor.getInstance().getDataObjectByURI(referredObjectURI);
-            plot.setXRange(0, data.getHistoryLength());
+            
+            //Setup plot and load possible already existing history values
             double[] values = new double[data.getHistoryLength()];
-            double maxValue = Double.NEGATIVE_INFINITY;
-            double minValue = Double.POSITIVE_INFINITY;
-            for (int i = 0; i < data.getHistoryLength(); i++) {
-                double currentValue = Double.valueOf(data.getHistoryValue(i).toString()); 
-                values[i] = currentValue;
-                if (currentValue < minValue) {
-                    minValue = currentValue;
-                }
-                if (maxValue < currentValue) {
-                    maxValue = currentValue;
-                }
-            }
-            if (0 < minValue) {
-                minValue = 0;
-            }
-            plot.setYRange(minValue, maxValue);
             for (int i = 0; i < values.length; i++) {
                 plot.addPoint(0, i, values[i], false);
                 steps++;
             }
+            plot.fillPlot();
         }
     }
     
@@ -156,6 +161,7 @@ public class ScopeEditPart extends ShapeNodeEditPart implements IDataListener {
         if (referredObjectURI == null
                 || DataDistributor.getInstance().getDataObjectByURI(
                         referredObjectURI) == null) {
+            //Check the connected object and try to use it as a data source
             View view = this.getNotationView();
             EList list = view.getSourceEdges();
             list.addAll(view.getTargetEdges());
@@ -174,9 +180,13 @@ public class ScopeEditPart extends ShapeNodeEditPart implements IDataListener {
             }
             DataDistributor.getInstance().getDataObjectByURI(referredObjectURI).setSaveHistory(true);
         }
+        
+        //Process the new data
         DataObject dataObject = DataDistributor.getInstance().getDataObjectByURI(referredObjectURI);
         plot.addPoint(0, steps, Double.valueOf(dataObject.getData().toString()), false);
         steps++;
+        
+        //Update drawing
         plot.fillPlot();
         plot.repaint();
         BufferedImage image = plot.exportImage();
@@ -199,6 +209,7 @@ public class ScopeEditPart extends ShapeNodeEditPart implements IDataListener {
     @Override
     public void removeNotify() {
         super.removeNotify();
+        //When the visual part is deleted, we don't want to receive data anymore
         DataDistributor.getInstance().removeDataListener(this);
     }
 

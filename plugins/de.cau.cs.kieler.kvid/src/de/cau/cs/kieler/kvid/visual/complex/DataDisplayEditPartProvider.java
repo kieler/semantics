@@ -22,25 +22,29 @@ import org.eclipse.gmf.runtime.diagram.ui.services.editpart.CreateGraphicEditPar
 import org.eclipse.gmf.runtime.diagram.ui.services.editpart.IEditPartOperation;
 import org.eclipse.gmf.runtime.notation.Diagram;
 import org.eclipse.gmf.runtime.notation.View;
+
 /**
+ * {@link IEditPartProvider} for node classes provided by KViD.
+ * 
  * @author jjc
  *
  */
 @SuppressWarnings("restriction")
 public class DataDisplayEditPartProvider implements IEditPartProvider {
 
-    /* (non-Javadoc)
-     * @see org.eclipse.gmf.runtime.common.core.service.IProvider#addProviderChangeListener(org.eclipse.gmf.runtime.common.core.service.IProviderChangeListener)
+    /**
+     * Not used and therefore not implemented.
+     * 
+     * @param listener An also ignored listener
      */
-    public void addProviderChangeListener(IProviderChangeListener listener) {
-        // TODO Auto-generated method stub
-
+    public void addProviderChangeListener(final IProviderChangeListener listener) {
+        //Not used, ignored
     }
 
-    /* (non-Javadoc)
-     * @see org.eclipse.gmf.runtime.common.core.service.IProvider#provides(org.eclipse.gmf.runtime.common.core.service.IOperation)
+    /**
+     * {@inheritDoc}
      */
-    public boolean provides(IOperation operation) {
+    public boolean provides(final IOperation operation) {
         if (operation instanceof CreateGraphicEditPartOperation) {
             View view = ((IEditPartOperation) operation).getView();
             return view.getType().equals("ScopeNode");
@@ -48,27 +52,28 @@ public class DataDisplayEditPartProvider implements IEditPartProvider {
         return false;
     }
 
-    /* (non-Javadoc)
-     * @see org.eclipse.gmf.runtime.common.core.service.IProvider#removeProviderChangeListener(org.eclipse.gmf.runtime.common.core.service.IProviderChangeListener)
+    /**
+     * Not used and therefore not implemented.
+     * 
+     * @param listener An also ignored listener
      */
-    public void removeProviderChangeListener(IProviderChangeListener listener) {
-        // TODO Auto-generated method stub
-
+    public void removeProviderChangeListener(final IProviderChangeListener listener) {
+        //Not used, ignored
     }
 
-    /* (non-Javadoc)
-     * @see org.eclipse.gmf.runtime.diagram.ui.internal.services.editpart.IEditPartProvider#createGraphicEditPart(org.eclipse.gmf.runtime.notation.View)
+    /**
+     * {@inheritDoc} 
      */
-    public IGraphicalEditPart createGraphicEditPart(View view) {
+    public IGraphicalEditPart createGraphicEditPart(final View view) {
         IGraphicalEditPart part = new ScopeEditPart(view);
         return part;
     }
 
-    /* (non-Javadoc)
-     * @see org.eclipse.gmf.runtime.diagram.ui.internal.services.editpart.IEditPartProvider#createRootEditPart(org.eclipse.gmf.runtime.notation.Diagram)
+    /**
+     * {@inheritDoc} 
      */
-    public RootEditPart createRootEditPart(Diagram diagram) {
-        // TODO Auto-generated method stub
+    public RootEditPart createRootEditPart(final Diagram diagram) {
+        //KViD won't provide RootEditParts, thus ignored 
         return null;
     }
 

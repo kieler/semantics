@@ -41,16 +41,20 @@ import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.handlers.HandlerUtil;
 
 /**
+ * Handler class for the "Add Scope Node" command.
+ * 
  * @author jjc
  *
  */
 public class ScopeNodeHandler extends AbstractHandler {
 
-    /* (non-Javadoc)
-     * @see org.eclipse.core.commands.IHandler#execute(org.eclipse.core.commands.ExecutionEvent)
+    /**
+     * {@inheritDoc}
      */
-    public Object execute(ExecutionEvent event) throws ExecutionException {
+    public Object execute(final ExecutionEvent event) throws ExecutionException {
         
+        //Check current selection to find the selected EditPart
+        //The extension point will make sure only one Part can be selected
         ISelection selection;
         ShapeEditPart targetEditPart = null;
         selection = HandlerUtil.getActiveMenuSelection(event);
@@ -69,20 +73,23 @@ public class ScopeNodeHandler extends AbstractHandler {
         if (editor instanceof DiagramEditor) {
             DiagramEditor diagEditor = (DiagramEditor) editor;
             
+            //Receive the element type for a Scope Node
             IElementType scopeNode = ElementTypeRegistry.getInstance().getType(
-                "de.cau.cs.kieler.kvid.visual.complex.scopenode");
-                CreateViewRequest createScopeRequest = CreateViewRequestFactory
-                                                        .getCreateShapeRequest(scopeNode,
-                                                                PreferencesHint.USE_DEFAULTS);
+                    "de.cau.cs.kieler.kvid.visual.complex.scopenode");
+            //Build a request for creating the new Node
+            CreateViewRequest createScopeRequest = CreateViewRequestFactory
+                    .getCreateShapeRequest(scopeNode,
+                            PreferencesHint.USE_DEFAULTS);
             createScopeRequest.setLocation(targetEditPart.getLocation());
             
+            //Create the respective command
             Command createDisplayCommand = targetEditPart.getParent().getCommand(createScopeRequest);
             CompositeCommand noteAttachmentCC = new CompositeCommand("Create a note attachment");
 
             @SuppressWarnings("rawtypes")
             IAdaptable noteViewAdapter =
                 (IAdaptable) ((List) createScopeRequest.getNewObject()).get(0);
-            
+            //Create a command for connecting the new node to the selected one
             noteAttachmentCC.compose(
                     new DeferredCreateConnectionViewCommand(targetEditPart.getEditingDomain(),
                             ViewType.NOTEATTACHMENT,
@@ -91,6 +98,7 @@ public class ScopeNodeHandler extends AbstractHandler {
                             diagEditor.getDiagramGraphicalViewer(),
                             PreferencesHint.USE_DEFAULTS));
             
+            //Add both commands to a compound command
             CompoundCommand cc = new CompoundCommand();
             cc.add(createDisplayCommand);
             cc.add(new ICommandProxy(noteAttachmentCC));
