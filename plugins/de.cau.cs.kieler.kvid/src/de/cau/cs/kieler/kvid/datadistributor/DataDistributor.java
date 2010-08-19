@@ -74,9 +74,9 @@ public final class DataDistributor implements IProviderListener {
     private DataDistributor() { }
     
     /**
-     * Gives the single instance of the {@link DataDistributor}.
+     * Gives the single instance of the DataDistributor.
      * 
-     * @return The single instance of the {@link DataDistributor}
+     * @return The single instance of the DataDistributor
      */
     public static DataDistributor getInstance() {
         return INSTANCE;

@@ -29,12 +29,19 @@ import de.cau.cs.kieler.kvid.dataprovider.CsvDataProvider;
  */
 public final class RuntimeConfiguration {
     
-    private static RuntimeConfiguration instance = new RuntimeConfiguration();
+    /** The instance of the configuration handler. See Singleton Design Pattern. */
+    private static final RuntimeConfiguration INSTANCE = new RuntimeConfiguration();
     
+    /** The list of all {@link Property}s which KViD offers. */
     private List<Property> knownProperties = new ArrayList<Property>();
     
+    /** List of {@link IPropertyListener}s who want to be notified about changes. */ 
     private List<IPropertyListener> listeners = new LinkedList<IPropertyListener>();
     
+    /**
+     * Constrcutor which must not be called by anyone. 
+     * Creates a few {@link Property}s which control basic functionality of KViD.
+     */
     private RuntimeConfiguration() {
         addProperty(new Property("Data Source", new String[] { "KIEM", "CSV" }));
         addProperty(new Property("Animation enabled", new String[] { "true",
@@ -45,10 +52,21 @@ public final class RuntimeConfiguration {
                 "false", "true" }));
     }
     
+    /**
+     * Gives the single instance of the RuntimeConfiguration.
+     * 
+     * @return The single instance of the RuntimeConfiguration
+     */
     public static RuntimeConfiguration getInstance() {
-        return instance;
+        return INSTANCE;
     }
     
+    /**
+     * Gives the current value of a {@link Property} by it's name.
+     * 
+     * @param propertyName The name of the {@link Property} to look up
+     * @return The current value of the requested {@link Property} 
+     */
     public String currentValueOfProperty(final String propertyName) {
         for (Property property : knownProperties) {
             if (property.getName().equals(propertyName)) {
@@ -58,27 +76,38 @@ public final class RuntimeConfiguration {
         throw new RuntimeException("Unknown property name!");
     }
     
+    /**
+     * Getter for the list of currently known {@link Property}s.
+     * Only for display purposes, do NOT use for manipulation!
+     * 
+     * @return The list of currently known {@link Property}s
+     */
     public List<Property> getKnownProperties() {
         return knownProperties;
     }
     
+    /**
+     * ONLY use this to add a new {@link Property} to the configuration.
+     * Will make sure {@link Property} names are unique.
+     * 
+     * @param theproperty The new {@link Property} to add
+     */
     public void addProperty(final Property theproperty) {
-        for (Property property : knownProperties) {
-            if (property.getName().equals(theproperty.getName())) {
-                //TODO throw exception here?
-                return;
-            }
-        }
-        knownProperties.add(theproperty);
-        for (IPropertyListener listener : listeners) {
-            listener.triggerPropertyListChanged();       
-        }
+        addProperty(knownProperties.size() + 1, theproperty);
     }
     
-    public void addProperty(int where, final Property theproperty) {
+    /**
+     * ONLY use this to add a new {@link Property} to the configuration when a
+     * certain position is desired (e.g. for style reasons).
+     * Will make sure {@link Property} names are unique.
+     * 
+     * @param where Position in the Properties list where it should be added
+     * @param theproperty The new {@link Property} to add
+     */
+    public void addProperty(final int where, final Property theproperty) {
         for (Property property : knownProperties) {
             if (property.getName().equals(theproperty.getName())) {
-                //TODO throw exception here?
+                //Check if the name already exists, ignore the new property then
                 return;
             }
         }
@@ -88,6 +117,11 @@ public final class RuntimeConfiguration {
         }
     }
     
+    /**
+     * Removes a {@link Property} from the list of currenty known Properties.
+     * 
+     * @param theproperty The {@link Property} to remove from the list
+     */
     public void removeProperty(final Property theproperty) {
         knownProperties.remove(theproperty);
         for (IPropertyListener listener : listeners) {
@@ -95,14 +129,30 @@ public final class RuntimeConfiguration {
         }
     }
     
+    /**
+     * Registers a new listener which will be notified when the Properties change.
+     * 
+     * @param thelistener The {@link IPropertyListener} to add
+     */
     public void addPropertyListener(final IPropertyListener thelistener) {
         listeners.add(thelistener);
     }
     
+    /**
+     * Removes a listener from the listeners list.
+     * 
+     * @param thelistener The {@link IPropertyListener} to remove
+     */
     public void removePropertyListener(final IPropertyListener thelistener) {
         listeners.remove(thelistener);
     }
     
+    /**
+     * Method which notifies listeners when Properties have changed.
+     * Also takes care, when some {@link Property} needs special handling.
+     *  
+     * @param theproperty The Property which was changed
+     */
     public void triggerPropertyChanged(final Property theproperty) {
         if (theproperty.getName().equals("Data Source")) {
             dataSourcePropertyChanged(theproperty);
@@ -118,6 +168,12 @@ public final class RuntimeConfiguration {
         }
     }
     
+    /**
+     * Special handling method which performs necessary changes when
+     * a data source {@link Property} was changed.
+     * 
+     * @param theproperty The data source {@link Property} which was changed
+     */
     private void dataSourcePropertyChanged(final Property theproperty) {
         if (theproperty.getCurrentValue().equals("CSV")) {
             addProperty(knownProperties.indexOf(theproperty) + 1, 
@@ -132,6 +188,10 @@ public final class RuntimeConfiguration {
         }
     }
     
+    /**
+     * Resets all known Properties to its' default values.
+     * Will ignore free text Properties. 
+     */
     public void resetToDefault() {
         for (Property property : knownProperties) {
             property.setCurrentValue(0);

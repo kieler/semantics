@@ -14,21 +14,33 @@
 package de.cau.cs.kieler.kvid.datadistributor;
 
 /**
+ * Class for storing KViD Properties, it's corresponding values and the 
+ * currently selected value.
  * 
  * @author jjc
  *
  */
 public class Property {
     
+    /** The Property's name. */
     private String name;
     
+    /** The possible values of this Property. */
     private String[] values;
     
+    /** The currently selected value. */
     private String currentValue;
     
+    /** Is this Property a free text Property? */
     private boolean isFreeText;
     
-    public Property(String thename, String[] thevalues) {
+    /**
+     * Constructor for a Property with a fix set of options.
+     * 
+     * @param thename The Property's desired name (must be unique)
+     * @param thevalues String array containing all possible options
+     */
+    public Property(final String thename, final String[] thevalues) {
         this.name = thename;
         this.values = thevalues;
         if (0 < thevalues.length) {
@@ -37,25 +49,52 @@ public class Property {
         this.isFreeText = false;
     }
     
-    public Property(String thename, String thedefaultvalue) {
+    /**
+     * Constructor for a Property with free text input.
+     * 
+     * @param thename The Property's desired name (must be unique)
+     * @param thedefaultvalue The initial value of the Property
+     */
+    public Property(final String thename, final String thedefaultvalue) {
         this.name = thename;
         this.currentValue = thedefaultvalue;
+        //Having a free text option, it is set as value on position 0 in the values array 
         values = new String[]{ thedefaultvalue };
         this.isFreeText = true;
     }
     
+    /**
+     * Getter for the Property's name.
+     * 
+     * @return The Property's name
+     */
     public String getName() {
         return name;
     }
     
+    /**
+     * Getter for the Property's current value.
+     * 
+     * @return The Property's current value
+     */
     public String getCurrentValue() {
         return currentValue;
     }
     
+    /**
+     * Method to check whether this is a free text Property.
+     * 
+     * @return Is this a free text Property?
+     */
     public boolean isFreeText() {
         return isFreeText;
     }
     
+    /**
+     * Gets the value of the currently selected option.
+     * 
+     * @return The number of the currently selected option, 0 if this is a free text Property
+     */
     public int getCurrentValueNumber() {
         for (int i = 0; i < values.length; i++) {
             if (values[i].equals(currentValue)) {
@@ -65,11 +104,22 @@ public class Property {
         return 0;
     }
     
+    /**
+     * Getter for all possible options.
+     * 
+     * @return All possible options represented by a string array.
+     */
     public String[] getValueNames() {
         return values;
     }
     
-    public void setCurrentValue(int optionNumber) {
+    /**
+     * Sets the current option by it's number.
+     * Doesn't work for free text Properties.
+     * 
+     * @param optionNumber The number of the option to set to
+     */
+    public void setCurrentValue(final int optionNumber) {
         if (0 <= optionNumber && optionNumber < values.length) {
             currentValue = values[optionNumber];
             RuntimeConfiguration.getInstance().triggerPropertyChanged(this);
@@ -78,7 +128,13 @@ public class Property {
         }
     }
     
-    public void setCurrentValue(String optionName) {
+    /**
+     * Sets the current option by it's name.
+     * Use this also for free text options.
+     * 
+     * @param optionName The name of the option that should become the new current option
+     */
+    public void setCurrentValue(final String optionName) {
         if (isFreeText) {
             currentValue = optionName;
             values[0] = optionName;
