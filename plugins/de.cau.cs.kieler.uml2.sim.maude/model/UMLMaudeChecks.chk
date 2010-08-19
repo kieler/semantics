@@ -5,8 +5,9 @@ import uml;
 
 // All transitions that originate from initial nodes must not have a trigger
 context Transition if (this.source.metaType.toString().endsWith("Pseudostate") && ((Pseudostate)this.source).kind.toString().matches("initial")) 
-WARNING "MAUDE: Initial transitions should not have a trigger or action (these are ignored)! (transition from "+this.source.name+ " to " + this.target.name + ")" :
-  (name == null || name.matches(""));
+WARNING "MAUDE: Initial transition should not have a trigger or action (these are ignored). (Transition from '"+this.source.name+ "' to '" + this.target.name + "')" :
+  (name == null || name.matches(""))
+;
 
 // For all transitions that
 // 1. do not originate from initial nodes AND
@@ -21,12 +22,43 @@ context Transition if ((!this.source.metaType.toString().endsWith("Pseudostate")
                        	 && (this.target.metaType.toString().endsWith("Pseudostate") 
                            && !((Pseudostate)this.source).kind.toString().matches("fork") 
                            && !((Pseudostate)this.source).kind.toString().matches("join")) )) 
-ERROR "MAUDE: Transitions should always have a trigger! (transition from "+this.source.name+ " to " + this.target.name + ")" :
-  (name != null &&  name.contains("/") && (name.split("/").get(0)).length > 0);
+ERROR "MAUDE: Transition must have a trigger. (Transition from '"+this.source.name+ "' to '" + this.target.name + "')" :
+  (name != null &&  name.contains("/") && (name.split("/").get(0)).length > 0)
+;
 
 // States should have a name
 context State 
-WARNING "MAUDE: States should have a name!" :
-  (name != null && !name.matches(""));
+WARNING "MAUDE: State should have a name! (In region '"+this.container.name+"')" :
+  (name != null && !name.matches(""))
+;
+
+// A Join/Fork state should have incoming and outgoing transitions
+context Pseudostate if (this.kind.toString().matches("fork") || this.kind.toString().matches("join"))
+ERROR "MAUDE: Join or fork node '"+this.name+"' must have outgoing and incoming transitions." :
+  (this.incoming.size > 0 && this.outgoing.size > 0)
+;
+
+// All initial nodes must have a outgoing transition 
+context Pseudostate if (this.kind.toString().matches("initial"))
+ERROR "MAUDE: Initial node '"+this.name+"' must have outgoing transitions." :
+  (this.outgoing.size > 0)
+;
+	
+// All target nodes must have a incoming transitions
+context FinalState 
+ERROR "MAUDE: Final state '"+this.name+"' must have incoming transitions." :
+  (this.incoming.size > 0)
+;
+  
+
+// All regions should have exactly one initial node
+context Region
+ERROR "MAUDE: Region '"+this.name+"' must have an initial node." :
+   this.eContents.select(e|e.metaType.toString().endsWith("Pseudostate") && ((Pseudostate)e).kind.toString().matches("initial")).size > 0
+;
+context Region
+ERROR "MAUDE: Region '"+this.name+"' must not have more than one initial node." :
+   this.eContents.select(e|e.metaType.toString().endsWith("Pseudostate") && ((Pseudostate)e).kind.toString().matches("initial")).size < 2
+;
 
 	
