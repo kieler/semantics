@@ -41,7 +41,8 @@ WARNING "State should have a name! (In region '"+this.container.name+"')" :
   (name != null && !name.matches(""))
 ;
 
-context Vertex if (this.container != null)   
+// Reachable states (w/o initial ones)
+context Vertex if (!(this.metaType.toString().endsWith("Pseudostate") && ((Pseudostate)this).kind.toString().matches("initial"))) 
   WARNING "State '"+this.name+"' is not reachable! Every state needs at least one incoming transition!" :
   (this.incoming.size > 0)
 ;
