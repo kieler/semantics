@@ -17,39 +17,53 @@ import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
 
+/**
+ * Activator class for the KViD-Plugin. Controls the plugin's lifecycle.
+ * 
+ * @author jjc
+ * 
+ */
 public class KvidPlugin extends AbstractUIPlugin implements BundleActivator {
 
-        //The plug-in ID
-        public static final String PLUGIN_ID = "de.cau.cs.kieler.kvid"; //$NON-NLS-1$
-    
-	private static BundleContext context;
-	
-	private static KvidPlugin plugin;
+    /** The ID of this plugin. */
+    public static final String PLUGIN_ID = "de.cau.cs.kieler.kvid"; //$NON-NLS-1$
 
-	static BundleContext getContext() {
-		return context;
-	}
+    /** The BundleContext of this plugin. */
+    private static BundleContext context;
 
-	/*
-	 * (non-Javadoc)
-	 * @see org.osgi.framework.BundleActivator#start(org.osgi.framework.BundleContext)
-	 */
-	public void start(BundleContext bundleContext) throws Exception {
-		KvidPlugin.context = bundleContext;
-		plugin = this;
-	}
+    /** The shared instance. */
+    private static KvidPlugin plugin;
 
-	/*
-	 * (non-Javadoc)
-	 * @see org.osgi.framework.BundleActivator#stop(org.osgi.framework.BundleContext)
-	 */
-	public void stop(BundleContext bundleContext) throws Exception {
-		KvidPlugin.context = null;
-	}
-	
-	public static KvidPlugin getDefault() {
-	    return plugin;
-	}
-	
+    static BundleContext getContext() {
+        return context;
+    }
+
+    /*
+     * (non-Javadoc)
+     * @see org.osgi.framework.BundleActivator#start(org.osgi.framework.BundleContext)
+     */
+    @Override
+    public void start(final BundleContext bundleContext) throws Exception {
+        KvidPlugin.context = bundleContext;
+        plugin = this;
+    }
+
+    /*
+     * (non-Javadoc)
+     * @see org.osgi.framework.BundleActivator#stop(org.osgi.framework.BundleContext)
+     */
+    @Override
+    public void stop(final BundleContext bundleContext) throws Exception {
+        KvidPlugin.context = null;
+    }
+
+    /**
+     * Returns the shared instance of the KViD-Plugin.
+     * 
+     * @return The only instance of this plugin activator
+     */
+    public static KvidPlugin getDefault() {
+        return plugin;
+    }
 
 }
