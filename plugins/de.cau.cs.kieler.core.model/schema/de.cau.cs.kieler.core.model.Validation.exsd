@@ -110,7 +110,7 @@
                </documentation>
             </annotation>
          </attribute>
-         <attribute name="class" type="string" use="required">
+         <attribute name="class" type="string" use="optional">
             <annotation>
                <documentation>
                   The implementing class for this validation extension point should return the EObject (model) of the current diagram editor (IEditorPart).
