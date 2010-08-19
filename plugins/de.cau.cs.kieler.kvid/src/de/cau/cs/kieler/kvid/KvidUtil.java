@@ -129,7 +129,7 @@ public final class KvidUtil {
                 }
             }
         } else {
-            throw new RuntimeException("Malformatted Fragment URI");
+            throw new RuntimeException("Malformatted URI");
         }
         return result;
     }

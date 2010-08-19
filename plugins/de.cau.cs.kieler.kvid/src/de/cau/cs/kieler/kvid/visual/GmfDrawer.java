@@ -63,8 +63,12 @@ public class GmfDrawer implements IDrawer, IDataListener {
             }
             if (RuntimeConfiguration.getInstance()
                     .currentValueOfProperty("Animation enabled").equals("true")) {
-                for (List<Point> path : dataSet.get(key).getPaths()) {
-                    figuresByURI.get(key).setLocation(centerFigureOnPoint(path.get(0), figuresByURI.get(key)));
+                if (dataSet.get(key).getPaths() != null) {
+                    for (List<Point> path : dataSet.get(key).getPaths()) {
+                        figuresByURI.get(key).setLocation(centerFigureOnPoint(path.get(0), figuresByURI.get(key)));
+                    }
+                } else {
+                    //TODO handle this case somehow or ignore?
                 }
             } else {
                 // TODO
@@ -95,7 +99,7 @@ public class GmfDrawer implements IDrawer, IDataListener {
                 final HashMap<IKvidFigure, List<Point>> animatables = new HashMap<IKvidFigure, List<Point>>();
                 for (final String key : dataSet.keySet()) {
                     IKvidFigure currentFigure = figuresByURI.get(key);
-                    if (dataSet.get(key).getPaths().size() > 0) {
+                    if (dataSet.get(key).getPaths() != null && dataSet.get(key).getPaths().size() > 0) {
                         for (Property property : RuntimeConfiguration
                                 .getInstance().getKnownProperties()) {
                             if (property.getName()

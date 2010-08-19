@@ -19,6 +19,9 @@ import org.osgi.framework.BundleContext;
 
 public class KvidPlugin extends AbstractUIPlugin implements BundleActivator {
 
+        //The plug-in ID
+        public static final String PLUGIN_ID = "de.cau.cs.kieler.kvid"; //$NON-NLS-1$
+    
 	private static BundleContext context;
 	
 	private static KvidPlugin plugin;

@@ -18,6 +18,7 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.eclipse.core.runtime.Status;
 import org.eclipse.draw2d.geometry.Point;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramEditor;
@@ -25,6 +26,7 @@ import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.statushandlers.StatusManager;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -36,6 +38,8 @@ import de.cau.cs.kieler.kiml.klayoutdata.KPoint;
 import de.cau.cs.kieler.kiml.options.LayoutOptions;
 import de.cau.cs.kieler.kiml.ui.layout.EclipseLayoutServices;
 import de.cau.cs.kieler.kiml.util.KimlLayoutUtil;
+import de.cau.cs.kieler.kvid.KvidPlugin;
+import de.cau.cs.kieler.kvid.KvidUtil;
 import de.cau.cs.kieler.kvid.data.DataObject;
 import de.cau.cs.kieler.kvid.dataprovider.IDataProvider;
 import de.cau.cs.kieler.kvid.visual.GmfDrawer;
@@ -130,15 +134,26 @@ public final class DataDistributor implements IProviderListener {
         return null;
     }
     
-    public List<List<Point>> getPathsByNode(String URI) {
+    public List<List<Point>> getPathsByNode(String uri) {
         List<List<Point>> result = new LinkedList<List<Point>>();
+        if (!uri.startsWith(".")) {
+            try {
+                KvidUtil.fragmentUri2PtolemyUri(uri, currentEditor.getDiagram().eResource());
+            } catch (RuntimeException ex){
+                Status status = new Status(Status.WARNING, KvidPlugin.PLUGIN_ID, 
+                        "Needs Fragment URI or URI in Ptolemy Notation. Got: " + uri
+                        + " The concrete problem was: " + ex.getMessage());
+                StatusManager.getManager().handle(status, StatusManager.SHOW);
+                return null;
+            }
+        } 
         
         //find node that matches URI
-        String[] uriParts = URI.split("\\.");
+        String[] uriParts = uri.split("\\.");
         int currentUriPart = 1;
         String currentFoundUri = ".";
         KNode currentNode = currentDiagramLayout;
-        while (!currentFoundUri.equals(URI) && !currentNode.getChildren().isEmpty()) {
+        while (!currentFoundUri.equals(uri) && !currentNode.getChildren().isEmpty()) {
             for (KNode node : currentNode.getChildren()) {
                 if (node.getLabel().getText().equals(uriParts[currentUriPart])) {
                     currentNode = node;
@@ -154,7 +169,7 @@ public final class DataDistributor implements IProviderListener {
         
         
         //if no node was found, return null
-        if (!currentFoundUri.equals(URI)) {
+        if (!currentFoundUri.equals(uri)) {
             return null;
         }
         
