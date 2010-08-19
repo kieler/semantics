@@ -38,18 +38,31 @@ import de.cau.cs.kieler.sim.kiem.KiemPlugin;
  * @author jjc
  * 
  */
-public class GmfDrawer implements IDrawer, IDataListener {
+public final class GmfDrawer implements IDrawer, IDataListener {
 
+    /** A map associating drawn figures with their data producing model elements. */
     private HashMap<String, IKvidFigure> figuresByURI = new HashMap<String, IKvidFigure>();
     
-    private static GmfDrawer instance = new GmfDrawer();
+    /** The instance of the distributor. See Singleton Design Pattern. */
+    private static final GmfDrawer INSTANCE = new GmfDrawer();
     
+    /**
+     * Private constructor to prevent external instatiation.
+     */
     private GmfDrawer() { }
     
+    /**
+     * Gives the single instance of the GmfDrawer.
+     * 
+     * @return The single instance of the GmfDrawer
+     */
     public static GmfDrawer getInstance() {
-        return instance;
+        return INSTANCE;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public void draw(final HashMap<String, DataObject> dataSet) {
         // clearing phase
         // clearDrawing();
@@ -66,7 +79,9 @@ public class GmfDrawer implements IDrawer, IDataListener {
                     .currentValueOfProperty("Animation enabled").equals("true")) {
                 if (dataSet.get(key).getPaths() != null) {
                     for (List<Point> path : dataSet.get(key).getPaths()) {
-                        figuresByURI.get(key).setLocation(centerFigureOnPoint(path.get(0), figuresByURI.get(key)));
+                        figuresByURI.get(key).setLocation(
+                                centerFigureOnPoint(path.get(0),
+                                        figuresByURI.get(key)));
                     }
                 } else {
                     //TODO handle this case somehow or ignore?
@@ -96,7 +111,8 @@ public class GmfDrawer implements IDrawer, IDataListener {
             // animating phase
             if (RuntimeConfiguration.getInstance()
                     .currentValueOfProperty("Animation enabled").equals("true")) {
-                final HashMap<IKvidFigure, List<Point>> animatables = new HashMap<IKvidFigure, List<Point>>();
+                final HashMap<IKvidFigure, List<Point>> animatables = 
+                                new HashMap<IKvidFigure, List<Point>>();
                 for (final String key : dataSet.keySet()) {
                     IKvidFigure currentFigure = figuresByURI.get(key);
                     if (dataSet.get(key).getPaths() != null && dataSet.get(key).getPaths().size() > 0) {
@@ -149,7 +165,6 @@ public class GmfDrawer implements IDrawer, IDataListener {
                     public void run() {
                         // TODO still not satisfying, maybe check if data is by
                         // KIEM and use it then
-                        
                         GmfAnimator.animate(animatables,
                                 ((DiagramEditor) editor).getDiagramEditPart(),
                                 KiemPlugin.getDefault().getAimedStepDuration());
@@ -159,6 +174,9 @@ public class GmfDrawer implements IDrawer, IDataListener {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public void clearDrawing() {
         //FIXME doesnt do what it is supposed to!
         IEditorPart editor = KvidUtil.getActiveEditor();
@@ -176,6 +194,15 @@ public class GmfDrawer implements IDrawer, IDataListener {
         figuresByURI = new HashMap<String, IKvidFigure>();
     }
     
+    /**
+     * Use this to center a figure on a certain {@link Point}.
+     * Otherwise, the figure will be placed with it's upper left corner on the Point.
+     * 
+     * @param thepoint The {@link Point} to center on
+     * @param thefigure The {@link IFigure} to center
+     * @return A {@link Point} where to put the {@link IFigure} so that 
+     *          the figure is centered on the given point
+     */
     public Point centerFigureOnPoint(final Point thepoint, final IFigure thefigure) {
         Point result = new Point(thepoint);
         result.x -= thefigure.getBounds().width / 2;
@@ -183,15 +210,15 @@ public class GmfDrawer implements IDrawer, IDataListener {
         return result;
     }
 
-    /* (non-Javadoc)
-     * @see de.cau.cs.kieler.kvid.datadistributor.IDataListener#triggerDataChanged()
+    /**
+     * {@inheritDoc}
      */
     public void triggerDataChanged() {
         draw(DataDistributor.getInstance().getData());
     }
 
-    /* (non-Javadoc)
-     * @see de.cau.cs.kieler.kvid.datadistributor.IDataListener#triggerWrapup()
+    /**
+     * {@inheritDoc}
      */
     public void triggerWrapup() {
         clearDrawing();

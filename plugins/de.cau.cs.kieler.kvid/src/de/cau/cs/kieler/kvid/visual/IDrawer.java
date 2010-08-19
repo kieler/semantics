@@ -18,14 +18,24 @@ import java.util.HashMap;
 import de.cau.cs.kieler.kvid.data.DataObject;
 
 /**
+ * A drawer which will draw the data on the UI somehow.
+ * Implement this to support a different UI than eclipse with GMF.
  * 
  * @author jjc
  *
  */
 public interface IDrawer {
     
+    /**
+     * Draws the given data to the UI.
+     * 
+     * @param dataSet The data to visualize on the UI
+     */
     void draw(HashMap<String, DataObject> dataSet);
     
+    /**
+     * Removes KViD drawings from the UI.
+     */
     void clearDrawing();
 
 }
