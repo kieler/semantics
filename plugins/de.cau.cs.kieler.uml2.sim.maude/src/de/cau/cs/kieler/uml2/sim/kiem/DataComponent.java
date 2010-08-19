@@ -13,10 +13,12 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.util.Diagnostician;
 import org.eclipse.emf.mwe.core.WorkflowContext;
 import org.eclipse.emf.mwe.core.WorkflowContextDefaultImpl;
 import org.eclipse.emf.mwe.core.issues.Issues;
@@ -49,6 +51,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.osgi.framework.Bundle;
 
+import de.cau.cs.kieler.core.model.validation.ValidationManager;
 import de.cau.cs.kieler.core.ui.KielerProgressMonitor;
 import de.cau.cs.kieler.maude.MaudeInterfacePlugin;
 import de.cau.cs.kieler.sim.kiem.IJSONObjectDataComponent;
@@ -633,6 +636,7 @@ public class DataComponent extends JSONObjectSimulationDataComponent implements
     // -------------------------------------------------------------------------
     // -------------------------------------------------------------------------
 
+
     /*
      * (non-Javadoc)
      * 
@@ -640,7 +644,19 @@ public class DataComponent extends JSONObjectSimulationDataComponent implements
      * #checkModelValidation (org.eclipse.emf.ecore.EObject)
      */
     public boolean checkModelValidation(EObject rootEObject) {
-        return true;
+        // Enable KlePto checks in possibly open GMF SyncCharts editor
+        ValidationManager.enableCheck("de.cau.cs.kieler.uml2.UMLMaudeChecks");
+        ValidationManager.validateActiveEditor();
+
+        // We don't want a dependency to synccharts diagram (custom) for validation
+        // because we might want to simulate head less!!!
+        // Check if the model conforms to all check files and no warnings left!
+        Diagnostician diagnostician = Diagnostician.INSTANCE;
+        Diagnostic diagnostic = diagnostician.validate(rootEObject);
+        int serenity = diagnostic.getSeverity();
+        boolean ok = (serenity == Diagnostic.OK);
+
+        return ok;
     }
 
     // -------------------------------------------------------------------------
