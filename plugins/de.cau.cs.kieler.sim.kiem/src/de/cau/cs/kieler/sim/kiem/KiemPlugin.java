@@ -1117,6 +1117,8 @@ public class KiemPlugin extends AbstractUIPlugin {
         if (this.initializeExecution == null || !this.initializeExecution.wasSuccessful()) {
             return false;
         }
+        // update the depending views
+        eventManager.notify(new KiemEvent(KiemEvent.VIEW_REFRESH));
         return true;
     }
 
