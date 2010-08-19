@@ -32,23 +32,34 @@ import de.cau.cs.kieler.kvid.datadistributor.DataDistributor;
 import de.cau.cs.kieler.kvid.datadistributor.IProviderListener;
 
 /**
+ * Data source which is a {@link IDataProvider} and uses CSV files 
+ * to provide the data. 
+ * 
  * @author jjc
  *
  */
 public class CsvDataProvider implements IDataProvider {
     
+    /** List of registered {@link IProviderListener}s. */
     private List<IProviderListener> listeners = new LinkedList<IProviderListener>();
     
+    /** The CSV file to read from. */
     private IFile inputCsvFile;
     
+    /** All lines of the CSV file. */
     private String[] csvLines;
     
+    /** The URIs of the referred model elements. */
     private String[] uris;
     
+    /** Point on the next line to read. */
     private int linePointer;
     
     /**
+     * Constructor for a CsvDataProvider.
+     * Use a new CsvDataProvider for each new CSV file.
      * 
+     * @param pathToCsv Path to the CSV file relative to the current workspace
      */
     public CsvDataProvider(final String pathToCsv) {
         IWorkspace workspace = ResourcesPlugin.getWorkspace();
@@ -81,11 +92,15 @@ public class CsvDataProvider implements IDataProvider {
                 ex.printStackTrace();
             }
         } else {
-            throw new RuntimeException("Tried to open a non-existing file: " + inputCsvFile.getFullPath());
+            throw new RuntimeException("Tried to open a non-existing file: "
+                    + inputCsvFile.getFullPath());
         }
         return cache.split("\n");
     }
     
+    /**
+     * {@inheritDoc}
+     */
     public void start() {
         linePointer = 1;
         DataDistributor.getInstance().initialize();
@@ -94,6 +109,9 @@ public class CsvDataProvider implements IDataProvider {
         }
     }
     
+    /**
+     * {@inheritDoc}
+     */
     public void step() {
         String[] currentValues = csvLines[linePointer].split(";");
         try {
@@ -110,23 +128,27 @@ public class CsvDataProvider implements IDataProvider {
         }
     }
     
+    
+   /**
+    * {@inheritDoc}
+    */
    public void stop() {
        for (IProviderListener listener : listeners) {
            listener.triggerWrapup();
        }
    }
     
-    /* (non-Javadoc)
-     * @see de.cau.cs.kieler.kvid.dataprovider.IDataProvider#registerProviderListener(de.cau.cs.kieler.kvid.datadistributor.IProviderListener)
-     */
-    public void registerProviderListener(IProviderListener listener) {
+   /**
+    * {@inheritDoc}
+    */
+    public void registerProviderListener(final IProviderListener listener) {
         listeners.add(DataDistributor.getInstance());
     }
 
-    /* (non-Javadoc)
-     * @see de.cau.cs.kieler.kvid.dataprovider.IDataProvider#removeProviderListener(de.cau.cs.kieler.kvid.datadistributor.IProviderListener)
+    /**
+     * {@inheritDoc}
      */
-    public void removeProviderListener(IProviderListener listener) {
+    public void removeProviderListener(final IProviderListener listener) {
         listeners.remove(listener);
     }
 
