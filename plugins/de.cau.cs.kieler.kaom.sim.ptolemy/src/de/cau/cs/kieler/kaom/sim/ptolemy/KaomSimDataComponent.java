@@ -311,11 +311,14 @@ public class KaomSimDataComponent extends JSONObjectDataComponent {
         System.gc();
         String[] keys = null;
 
-        // Check if the model conforms to all check files and no warnings left!
-        Diagnostician diagnostician = new Diagnostician();
-        Diagnostic diagnostic = diagnostician.validate(this.getInputModelEObject(this
-                .getInputEditor()));
-        boolean ok = diagnostic.getSeverity() == Diagnostic.OK;
+//        // Check if the model conforms to all check files and no warnings left!
+//        Diagnostician diagnostician = new Diagnostician();
+//        Diagnostic diagnostic = diagnostician.validate(this.getInputModelEObject(this
+//                .getInputEditor()));
+//        boolean ok = diagnostic.getSeverity() == Diagnostic.OK;
+        //TODO: No checks yet for KAOM models
+        boolean ok = true;
+        
 
         if (!ok) {
             // bring Problems View to the front otherwise
