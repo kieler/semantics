@@ -42,8 +42,10 @@ import de.cau.cs.kieler.kvid.dataprovider.IDataProvider;
 import de.cau.cs.kieler.kvid.visual.GmfDrawer;
 
 /**
- * This class organizes the distribution of the collected data to the object that
+ * This class organizes the distribution of the collected data to the objects that
  * visualize it.
+ * TODO more information about usage
+ * TODO class is singleton, say it here
  * 
  * @author jjc
  *
@@ -69,7 +71,7 @@ public final class DataDistributor implements IProviderListener {
     private IDataProvider currentProvider;
     
     /**
-     * Private constructor to prevent external instatiation.
+     * Private constructor to prevent external instantiation.
      */
     private DataDistributor() { }
     
@@ -85,13 +87,13 @@ public final class DataDistributor implements IProviderListener {
     /**
      * Changes the current data source to a new one.
      * 
-     * @param newprovider The new data source
+     * @param newProvider The new data source
      */
-    public void changeDataProvider(final IDataProvider newprovider) {
+    public void changeDataProvider(final IDataProvider newProvider) {
         if (currentProvider != null) {
             currentProvider.removeProviderListener(this);
         }
-        currentProvider = newprovider;
+        currentProvider = newProvider;
         currentProvider.registerProviderListener(this);
     }
     
@@ -110,13 +112,16 @@ public final class DataDistributor implements IProviderListener {
      */
     public void initialize() {
         if (!listeners.contains(GmfDrawer.getInstance())) {
+            //FIXME put check mechanism into register...
             registerDataListener(GmfDrawer.getInstance());
         }
         final IEditorPart activeEditor = KvidUtil.getActiveEditor();
         if (activeEditor instanceof DiagramEditor) {
+            //TODO DiagramEditor is restriction, is there a more generic way?
             //Cache the current editor
             currentEditor = (DiagramEditor) activeEditor;
             PlatformUI.getWorkbench().getDisplay().syncExec(new Runnable() {
+                //FIXME Evaluate using asyncExec!
                 public void run() {
                     //Receive the current diagram layout for path finding
                     currentDiagramLayout = EclipseLayoutServices.getInstance()
@@ -128,27 +133,25 @@ public final class DataDistributor implements IProviderListener {
     }
     
     /**
-     * Call this every time the data to visualize has changed to trigger
-     * the visualization of the new data.
      * 
-     * @param data The new data for the next visualization step in JSON
-     * @return Always null, could return a {@link JSONObject} if it is 
-     *          to produce data for the {@link IDataProvider}
+     * {@inheritDoc}
+     * 
      */
-    public JSONObject update(final JSONObject data) {
-        @SuppressWarnings("rawtypes")
-        Iterator allKeys = data.keys();
+    public void update(final JSONObject data) {
+        @SuppressWarnings("unchecked")
+        //JSON implementation doesn't type the iterator
+        Iterator<Object> allKeys = (Iterator<Object>) data.keys();
         while (allKeys.hasNext()) {
             Object o = allKeys.next();
             try {
                 String key = o.toString();
                 if (dataByUri.containsKey(key)) {
-                    //Model data source is alredy known, just update it
+                    //Model data source is already known, just update it
                     dataByUri.get(key).updateData(data.getString(key));
                 } else {
                     //New model data source, create paths and new entry in the data table
                     List<List<Point>> paths = getPathsByNode(key);
-                    dataByUri.put(o.toString(), new DataObject(key, data.getString(key), paths));
+                    dataByUri.put(key, new DataObject(key, data.getString(key), paths));
                     //Also add Property object for the new entry
                     RuntimeConfiguration
                     .getInstance()
@@ -159,6 +162,8 @@ public final class DataDistributor implements IProviderListener {
                                     "Static on Target Node", "Invisible" }));
                 }
             } catch (JSONException e) {
+                //We iterate over the keys, so we can't use a non-existing key.
+                //Therefore, this exception can't be thrown.
                 e.printStackTrace();
             }
         }
@@ -166,7 +171,6 @@ public final class DataDistributor implements IProviderListener {
             //Notify all listeners that data was updated
             listener.triggerDataChanged();
         }
-        return null;
     }
     
     /**
@@ -176,6 +180,8 @@ public final class DataDistributor implements IProviderListener {
      * @return A list of paths, represented by a list of {@link Point}s
      */
     public List<List<Point>> getPathsByNode(final String uri) {
+        //FIXME Move to Util Class
+        //FIXME When new KIML getModelStuff is finished, rewrite this
         List<List<Point>> result = new LinkedList<List<Point>>();
         //Is URI in Ptolemy Notation?
         if (!uri.startsWith(".")) {
@@ -211,13 +217,13 @@ public final class DataDistributor implements IProviderListener {
             }
         }
         
-        
         //If no node was found, return null
         if (!currentFoundUri.equals(uri)) {
             return null;
         }
         
         //Get position of found node's parent
+        //FIXME Think about some refactoring, extract into more methods! Watch for NullPointers.
         Point parentPosition = new Point();
         KNode parent = currentNode;
         while (parent.getParent().getParent() != null) {
@@ -303,6 +309,7 @@ public final class DataDistributor implements IProviderListener {
      * @param thelistener The {@link IDataListener} to add
      */
     public void registerDataListener(final IDataListener thelistener) {
+        //FIXME Make sure there are no duplicates
         listeners.add(thelistener);
     }
     

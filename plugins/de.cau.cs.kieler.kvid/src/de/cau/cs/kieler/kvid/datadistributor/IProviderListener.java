@@ -39,9 +39,8 @@ public interface IProviderListener {
      * the visualization of the new data.
      * 
      * @param data The new data for the next visualization step in JSON
-     * @return Always null, could return a {@link JSONObject} if it is 
-     *          to produce data for the {@link IDataProvider}
+     * 
      */
-    JSONObject update(JSONObject data);
+    void update(JSONObject data);
 
 }
