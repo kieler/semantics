@@ -112,7 +112,7 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
     /** The action run user. */
     private Action actionRunUser;
 
-    /** The action to make an execution step to the most current one. */
+    /** The action to make an execution step to the most recent one. */
     private Action actionStepFMC;
 
     /** The action to run the execution. */
@@ -1356,8 +1356,8 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
     // -------------------------------------------------------------------------
 
     /**
-     * Gets the action step forward to the most current step. Triggers the execution to make a step
-     * forward to the most current one. This action is only available if no master is present.
+     * Gets the action step forward to the most recent step. Triggers the execution to make a step
+     * forward to the most recent one. This action is only available if no master is present.
      * 
      * @return the action step FMC
      */

@@ -167,10 +167,10 @@ public class Messages extends NLS {
     /** The Action step user dialog text. */
     public static String mActionStepUserDialogText;
 
-    /** The Action step forward most current. */
+    /** The Action step forward most current/recent. */
     public static String mActionStepFMC;
 
-    /** The Action hint step forward most current. */
+    /** The Action hint step forward most current/recent. */
     public static String mActionHintStepFMC;
 
     /** The Action step back. */
