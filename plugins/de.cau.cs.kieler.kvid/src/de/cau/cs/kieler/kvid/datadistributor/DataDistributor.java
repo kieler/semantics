@@ -34,7 +34,7 @@ import de.cau.cs.kieler.kiml.klayoutdata.KInsets;
 import de.cau.cs.kieler.kiml.klayoutdata.KPoint;
 import de.cau.cs.kieler.kiml.options.LayoutOptions;
 import de.cau.cs.kieler.kiml.ui.layout.EclipseLayoutServices;
-import de.cau.cs.kieler.kiml.util.KimlLayoutUtil;
+import de.cau.cs.kieler.kiml.util.KimlUtil;
 import de.cau.cs.kieler.kvid.KvidPlugin;
 import de.cau.cs.kieler.kvid.KvidUtil;
 import de.cau.cs.kieler.kvid.data.DataObject;
@@ -222,10 +222,10 @@ public final class DataDistributor implements IProviderListener {
         KNode parent = currentNode;
         while (parent.getParent().getParent() != null) {
             parent = parent.getParent();
-            parentPosition.x = (int) KimlLayoutUtil.getShapeLayout(parent).getXpos();
-            parentPosition.y = (int) KimlLayoutUtil.getShapeLayout(parent).getYpos();
+            parentPosition.x = (int) KimlUtil.getShapeLayout(parent).getXpos();
+            parentPosition.y = (int) KimlUtil.getShapeLayout(parent).getYpos();
         }
-        KInsets insets = LayoutOptions.getObject(KimlLayoutUtil.getShapeLayout(parent), KInsets.class);
+        KInsets insets = KimlUtil.getShapeLayout(parent).getProperty(LayoutOptions.INSETS);
         parentPosition.x += insets.getLeft();
         parentPosition.y += insets.getTop();
         
@@ -235,22 +235,22 @@ public final class DataDistributor implements IProviderListener {
                 for (KEdge edge : port.getEdges()) {
                     List<Point> path = new LinkedList<Point>();
                     Point start = new Point(parentPosition);
-                    start.x += KimlLayoutUtil.getShapeLayout(edge.getSource()).getXpos();
-                    start.y += KimlLayoutUtil.getShapeLayout(edge.getSource()).getYpos();
-                    start.x += KimlLayoutUtil.getShapeLayout(port).getXpos();
-                    start.y += KimlLayoutUtil.getShapeLayout(port).getYpos();
+                    start.x += KimlUtil.getShapeLayout(edge.getSource()).getXpos();
+                    start.y += KimlUtil.getShapeLayout(edge.getSource()).getYpos();
+                    start.x += KimlUtil.getShapeLayout(port).getXpos();
+                    start.y += KimlUtil.getShapeLayout(port).getYpos();
                     path.add(start);
-                    for (KPoint bendPoint : KimlLayoutUtil.getEdgeLayout(edge).getBendPoints()) {
+                    for (KPoint bendPoint : KimlUtil.getEdgeLayout(edge).getBendPoints()) {
                         Point pathStep = new Point(parentPosition);
                         pathStep.x += bendPoint.getX();
                         pathStep.y += bendPoint.getY();
                         path.add(pathStep);
                     }
                     Point finish = new Point(parentPosition);
-                    finish.x += KimlLayoutUtil.getShapeLayout(edge.getTarget()).getXpos();
-                    finish.y += KimlLayoutUtil.getShapeLayout(edge.getTarget()).getYpos();
-                    finish.x += KimlLayoutUtil.getShapeLayout(edge.getTargetPort()).getXpos();
-                    finish.y += KimlLayoutUtil.getShapeLayout(edge.getTargetPort()).getYpos();
+                    finish.x += KimlUtil.getShapeLayout(edge.getTarget()).getXpos();
+                    finish.y += KimlUtil.getShapeLayout(edge.getTarget()).getYpos();
+                    finish.x += KimlUtil.getShapeLayout(edge.getTargetPort()).getXpos();
+                    finish.y += KimlUtil.getShapeLayout(edge.getTargetPort()).getYpos();
                     path.add(finish);
                     result.add(path);
                 } 
