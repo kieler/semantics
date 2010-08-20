@@ -44,15 +44,17 @@ import de.cau.cs.kieler.kvid.visual.GmfDrawer;
 /**
  * This class organizes the distribution of the collected data to the objects that
  * visualize it.
- * TODO more information about usage
- * TODO class is singleton, say it here
+ * 
+ * This is the core class of the KViD Plugin. It collects the data provided by a
+ * data source and distributes it to all registered classes that might visualize
+ * it. This class is implemented as a singleton.
  * 
  * @author jjc
  *
  */
 public final class DataDistributor implements IProviderListener {
     
-    /** The instance of the distributor. See Singleton Design Pattern. */
+    /** The instance of the distributor. */
     private static final DataDistributor INSTANCE = new DataDistributor();
     
     /** The current data, organized in a hash map with the model element's URI as key. */
@@ -111,10 +113,7 @@ public final class DataDistributor implements IProviderListener {
      * Make sure this is called before any data is provided. 
      */
     public void initialize() {
-        if (!listeners.contains(GmfDrawer.getInstance())) {
-            //FIXME put check mechanism into register...
-            registerDataListener(GmfDrawer.getInstance());
-        }
+        registerDataListener(GmfDrawer.getInstance());
         final IEditorPart activeEditor = KvidUtil.getActiveEditor();
         if (activeEditor instanceof DiagramEditor) {
             //TODO DiagramEditor is restriction, is there a more generic way?
@@ -309,8 +308,9 @@ public final class DataDistributor implements IProviderListener {
      * @param thelistener The {@link IDataListener} to add
      */
     public void registerDataListener(final IDataListener thelistener) {
-        //FIXME Make sure there are no duplicates
-        listeners.add(thelistener);
+        if (!listeners.contains(thelistener)) {
+           listeners.add(thelistener); 
+        }
     }
     
     /**
