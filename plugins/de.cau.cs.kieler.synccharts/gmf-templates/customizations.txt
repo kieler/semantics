@@ -2,9 +2,11 @@
 
 || Helios || Change || Eclipse Bug || Kieler Bug || File ||
 || X || Compartment layout and title/line style || || || [source:trunk/plugins/de.cau.cs.kieler.synccharts/gmf-templates/aspects/impl/diagram/editparts/CompartmentEditPart.xpt CompartmentEditPart] ||
-|| X || Attribute Awareness, Splines || || || [source:trunk/plugins/de.cau.cs.kieler.synccharts/gmf-templates/aspects/impl/diagram/editparts/LinkEditPart.xpt LinkEditPart ||
+|| X || Advanced Rendering, Splines || || || [source:trunk/plugins/de.cau.cs.kieler.synccharts/gmf-templates/aspects/impl/diagram/editparts/LinkEditPart.xpt LinkEditPart ||
+|| X || Advanced Rendering || || || [source:trunk/plugins/de.cau.cs.kieler.synccharts/gmf-templates/aspects/diagram/editparts/LinkEditPart.xpt LinkEditPart ||
 || ? || WrappingLabels??? || || || [source:trunk/plugins/de.cau.cs.kieler.synccharts/gmf-templates/aspects/impl/diagram/editparts/LinkLabelEditPart.xpt LinkLabelEditPart ||
-|| X || Attribute Awareness, Default Node Size|| || || [source:trunk/plugins/de.cau.cs.kieler.synccharts/gmf-templates/aspects/impl/diagram/editparts/NodeEditPart.xpt NodeEditPart ||
+|| X || Advanced Rendering, Default Node Size|| || || [source:trunk/plugins/de.cau.cs.kieler.synccharts/gmf-templates/aspects/impl/diagram/editparts/NodeEditPart.xpt NodeEditPart ||
+|| X || Advanced Rendering || || || [source:trunk/plugins/de.cau.cs.kieler.synccharts/gmf-templates/aspects/diagram/editparts/NodeEditPart.xpt NodeEditPart ||
 || X || RegionID color, Line Wrapping || #286072 || || [source:trunk/plugins/de.cau.cs.kieler.synccharts/gmf-templates/aspects/impl/diagram/editparts/TextAware.xpt TextAware ||
 || X || Pref to disable Xtext serialize, Splines || || || [source:trunk/plugins/de.cau.cs.kieler.synccharts/gmf-templates/aspects/impl/preferences/StandardPage.xpt StandardPage ||
 || s || added check for font disposed || || || [source:trunk/plugins/de.cau.cs.kieler.synccharts/gmf-templates/aspects/xpt/diagram/editparts/EditPartFactory.xpt EditPartFactory||
