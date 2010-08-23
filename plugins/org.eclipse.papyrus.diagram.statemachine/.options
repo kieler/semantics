@@ -1,0 +1,7 @@
+# Tracing options for the org.eclipse.papyrus.diagram.statemachine plug-in
+
+# Common issues
+org.eclipse.papyrus.diagram.statemachine/debug=false
+
+# Visual IDs
+org.eclipse.papyrus.diagram.statemachine/debug/visualID=false
