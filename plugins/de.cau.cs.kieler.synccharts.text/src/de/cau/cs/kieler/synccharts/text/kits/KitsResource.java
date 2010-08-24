@@ -35,7 +35,6 @@ import de.cau.cs.kieler.core.expressions.ValuedObject;
 import de.cau.cs.kieler.synccharts.Region;
 import de.cau.cs.kieler.synccharts.Scope;
 import de.cau.cs.kieler.synccharts.State;
-import de.cau.cs.kieler.synccharts.SyncchartsFactory;
 import de.cau.cs.kieler.synccharts.SyncchartsPackage;
 
 /**
@@ -82,8 +81,6 @@ public class KitsResource extends LazyLinkingResource {
 
         SaveOptions.newBuilder().format().noValidation().getOptions().addTo(myOptions);
 
-        // myOptions.put(XtextResource.OPTION_SERIALIZATION_OPTIONS, new SerializerOptions(true,
-        // false));
         super.doSave(outputStream, myOptions);
     }
 
@@ -103,6 +100,7 @@ public class KitsResource extends LazyLinkingResource {
                 getContents().remove(0);
             }
         }
+        this.getContents().clear();
         super.updateInternalState(parseResult);
     }
 
@@ -114,9 +112,9 @@ public class KitsResource extends LazyLinkingResource {
      */
     private void consolidateModel() {
 
-        if (this.getContents().isEmpty()) {
-            this.getContents().add(SyncchartsFactory.eINSTANCE.createRegion());
-        }
+//        if (this.getContents().isEmpty()) {
+//            this.getContents().add(SyncchartsFactory.eINSTANCE.createRegion());
+//        }
 
 //        setupTickSignal(((Region) this.getContents().get(0)));
 
@@ -129,7 +127,7 @@ public class KitsResource extends LazyLinkingResource {
 //                setupScopeID((Scope) o, m);
             }
             if (SyncchartsPackage.eINSTANCE.getState().isInstance(o)) {
-//                setupPriorities((State) o);
+                setupPriorities((State) o);
             }
             if (ExpressionsPackage.eINSTANCE.getValuedObject().isInstance(o)) {
                 setupTypes((ValuedObject) o);
@@ -216,11 +214,16 @@ public class KitsResource extends LazyLinkingResource {
 //        }
 //    }
 
-//    /**
+    /**
+     * Initializes the transition priority to 1 one exactly 1 transition is present.
+     */
 //     * Sets up transitions priorities if needed. Setup priorities of parsed transitions if the
 //     * priority of the first transition is not set. (it's likely this is the only transition).
 //     */
-//    private void setupPriorities(State s) {
+    private void setupPriorities(State s) {
+        if (s.getOutgoingTransitions().size()==1) {
+            s.getOutgoingTransitions().get(0).setPriority(1);
+        }
 //        if (s.getOutgoingTransitions().size() != 0
 //                && !s.getOutgoingTransitions().get(0)
 //                        .eIsSet(SyncchartsPackage.eINSTANCE.getTransition_Priority())) {
@@ -228,7 +231,7 @@ public class KitsResource extends LazyLinkingResource {
 //                s.getOutgoingTransitions().get(i).setPriority(i + 1);
 //            }
 //        }
-//    }
+    }
 
     private void setupTypes(ValuedObject v) {
         if (!Strings.isEmpty(v.getHostType())) {

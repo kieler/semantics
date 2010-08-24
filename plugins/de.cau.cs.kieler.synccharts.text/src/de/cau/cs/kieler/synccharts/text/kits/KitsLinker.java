@@ -13,6 +13,7 @@
  */
 package de.cau.cs.kieler.synccharts.text.kits;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -31,7 +32,9 @@ import org.eclipse.xtext.parsetree.NodeUtil;
 import com.google.inject.Inject;
 
 import de.cau.cs.kieler.core.expressions.ExpressionsPackage;
+import de.cau.cs.kieler.synccharts.State;
 import de.cau.cs.kieler.synccharts.SyncchartsPackage;
+import de.cau.cs.kieler.synccharts.Transition;
 
 /**
  * A customized Xtext linker linking textual syncchart models.
@@ -96,6 +99,15 @@ public class KitsLinker extends AbstractCleaningLinker {
                         } else {
                             String s = this.linkingHelper.getCrossRefNodeAsString(childNode, true);
                             System.out.println(s + " unlinked");
+                        }
+                    }
+                }
+                
+                if (SyncchartsPackage.eINSTANCE.getState().isInstance(obj)) {
+                    State state = (State) obj;
+                    for (Transition t : new ArrayList<Transition>(state.getIncomingTransitions())) {
+                        if (t.eContainer() == null) {
+                            state.getIncomingTransitions().remove(t);
                         }
                     }
                 }

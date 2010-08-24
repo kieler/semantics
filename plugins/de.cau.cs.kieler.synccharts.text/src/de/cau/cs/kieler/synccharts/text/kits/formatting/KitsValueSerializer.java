@@ -145,7 +145,10 @@ public class KitsValueSerializer extends ValueSerializer {
             if (a.getFeature().equals(SyncchartsPackage.eINSTANCE.getScope_Id().getName())) {
 
                 if (((Scope) context).getLabel() == null) {
-                    return super.serializeAssignedValue(context, ruleCall, value, node) + " \"\"";
+                    String result = super.serializeAssignedValue(context, ruleCall, value, node);
+                    if (!result.equals(ITokenSerializer.KEEP_VALUE_FROM_NODE_MODEL)) {
+                        return result + " \"\"";
+                    }
                 }
             }
         }
