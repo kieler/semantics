@@ -219,11 +219,15 @@ litigation.
       <discovery label="Papyrus UML Editors" url="http://download.eclipse.org/modeling/mdt/papyrus/updates/releases/"/>
    </url>
 
+   <includes
+         id="org.eclipse.papyrus"
+         version="0.7.0.vv201006230448"
+         search-location="self"/>
+
    <requires>
       <import feature="de.cau.cs.kieler.core" version="0.2.0" match="greaterOrEqual"/>
       <import feature="de.cau.cs.kieler.kiml" version="0.1.0" match="greaterOrEqual"/>
       <import feature="org.eclipse.uml2" version="3.0.0" match="greaterOrEqual"/>
-      <import plugin="org.eclipse.papyrus.core"/>
    </requires>
 
    <plugin
