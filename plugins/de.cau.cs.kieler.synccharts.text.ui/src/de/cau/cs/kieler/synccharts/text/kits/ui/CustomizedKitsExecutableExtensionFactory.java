@@ -19,20 +19,20 @@ import org.osgi.framework.Bundle;
 
 import com.google.inject.Injector;
 
-import de.cau.cs.kieler.synccharts.text.ui.Activator;
+import de.cau.cs.kieler.synccharts.text.ui.KitsUIPlugin;
 
 public class CustomizedKitsExecutableExtensionFactory extends
         AbstractGuiceAwareExecutableExtensionFactory {
 
     @Override
     protected Bundle getBundle() {
-        return de.cau.cs.kieler.synccharts.text.ui.Activator.getInstance().getBundle();
+        return de.cau.cs.kieler.synccharts.text.ui.KitsUIPlugin.getInstance().getBundle();
     }
 
     @Override
     public Injector getInjector() {
-        return de.cau.cs.kieler.synccharts.text.ui.Activator.getInstance().getInjector(
-                Activator.KITS_LANGUAGE);
+        return de.cau.cs.kieler.synccharts.text.ui.KitsUIPlugin.getInstance().getInjector(
+                KitsUIPlugin.KITS_LANGUAGE);
     }
 
 }

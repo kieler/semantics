@@ -24,4 +24,4 @@ Export-Package: de.cau.cs.kieler.synccharts.text.actions.ui.contentassist.antlr,
  de.cau.cs.kieler.synccharts.text.kits.ui,
  de.cau.cs.kieler.synccharts.text.kits.ui.contentassist.antlr,
  de.cau.cs.kieler.synccharts.text.ui
-Bundle-Activator: de.cau.cs.kieler.synccharts.text.ui.Activator
+Bundle-Activator: de.cau.cs.kieler.synccharts.text.ui.KitsUIPlugin

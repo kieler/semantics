@@ -21,7 +21,8 @@ Require-Bundle: org.eclipse.xtext,
  de.cau.cs.kieler.core.expressions;bundle-version="0.1.0";visibility:=reexport,
  de.cau.cs.kieler.core.annotations;bundle-version="0.1.0";visibility:=reexport,
  org.eclipse.emf.edit,
- org.eclipse.emf.transaction
+ org.eclipse.emf.transaction,
+ de.cau.cs.kieler.core.model;bundle-version="0.3.0";visibility:=reexport
 Import-Package: org.apache.log4j
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Export-Package: de.cau.cs.kieler.synccharts.text.actions,

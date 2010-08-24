@@ -32,7 +32,7 @@ import com.google.inject.util.Modules;
  * @author chsch
  * 
  */
-public class Activator extends AbstractUIPlugin {
+public class KitsUIPlugin extends AbstractUIPlugin {
 
     public static final String ACTIONS_LANGUAGE = "de.cau.cs.kieler.synccharts.text.actions.Actions";
 
@@ -41,7 +41,7 @@ public class Activator extends AbstractUIPlugin {
     public static final String KITS_LANGUAGE = "de.cau.cs.kieler.synccharts.text.kits.Kits";
 
     private Map<String, Injector> injectors = new HashMap<String, Injector>();
-    private static Activator INSTANCE;
+    private static KitsUIPlugin INSTANCE;
 
     public Injector getInjector(String languageName) {
         return injectors.get(languageName);
@@ -72,7 +72,7 @@ public class Activator extends AbstractUIPlugin {
         }
     }
 
-    public static Activator getInstance() {
+    public static KitsUIPlugin getInstance() {
         return INSTANCE;
     }
 
