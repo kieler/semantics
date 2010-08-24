@@ -559,15 +559,20 @@ public abstract class JSONObjectSimulationDataComponent extends JSONObjectDataCo
     }
 
     // -------------------------------------------------------------------------
+    
     public void bringProblemsViewToFront() {
-        try {
-            IWorkbenchWindow window = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
-            IViewPart vP = window.getActivePage().showView(
-                    org.eclipse.ui.IPageLayout.ID_PROBLEM_VIEW);
-            vP.setFocus();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        Display.getDefault().syncExec(new Runnable() {
+            public void run() {
+                try {
+                    IWorkbenchWindow window = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
+                    IViewPart vP = window.getActivePage().showView(
+                            org.eclipse.ui.IPageLayout.ID_PROBLEM_VIEW);
+                    vP.setFocus();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 
     // -------------------------------------------------------------------------
