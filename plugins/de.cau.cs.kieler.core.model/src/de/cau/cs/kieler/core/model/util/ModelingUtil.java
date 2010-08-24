@@ -60,7 +60,7 @@ public final class ModelingUtil {
 
     }
 
-    private static EObject xtextModel;
+    private static EObject xtextModel = null;
 
     /**
      * Get the model from a given xtext editor.
@@ -83,7 +83,9 @@ public final class ModelingUtil {
                     if (state != null) {
                         List<EObject> eObj = state.getContents();
 
-                        xtextModel = eObj.get(0);
+                        if (!eObj.isEmpty()) {
+                            xtextModel = eObj.get(0);
+                        }                            
                     }
 
                 }
