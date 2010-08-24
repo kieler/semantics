@@ -16,7 +16,9 @@ package de.cau.cs.kieler.kvid.visual.complex;
 import java.awt.image.BufferedImage;
 
 import org.eclipse.draw2d.LineBorder;
+import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.gmf.runtime.diagram.ui.editparts.ShapeNodeEditPart;
@@ -187,6 +189,14 @@ public class ScopeEditPart extends ShapeNodeEditPart implements IDataListener {
         steps++;
         
         //Update drawing
+        refreshPlot();
+    }
+    
+    
+    /**
+     * Method that handles refreshment of the plot.
+     */
+    private void refreshPlot() {
         plot.fillPlot();
         plot.repaint();
         BufferedImage image = plot.exportImage();
@@ -212,14 +222,35 @@ public class ScopeEditPart extends ShapeNodeEditPart implements IDataListener {
         //When the visual part is deleted, we don't want to receive data anymore
         DataDistributor.getInstance().removeDataListener(this);
     }
+    
 
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void notifyChanged(final Notification notification) {
+        super.notifyChanged(notification);
+        if (notification.getFeature() instanceof EAttribute) {
+            EAttribute changedAttribute = (EAttribute) notification.getFeature();
+            if (changedAttribute.getName().equals("width")) {
+                plot.setSize(notification.getNewIntValue(), plot.getSize().height);
+                refreshPlot();
+            } else if (changedAttribute.getName().equals("height")) {
+                plot.setSize(plot.getSize().width, notification.getNewIntValue());
+                refreshPlot();
+            }
+        }
+    }
+    
+    
     /**
      * {@inheritDoc}
      */
     public void triggerWrapup() {
         plot.clear(0);
         steps = 0;
-        plot.repaint();
+        refreshPlot();
     }
     
 }
