@@ -221,6 +221,9 @@ litigation.
    <requires>
       <import feature="de.cau.cs.kieler.core" version="0.2.0" match="greaterOrEqual"/>
       <import feature="de.cau.cs.kieler.kiml" version="0.1.0" match="greaterOrEqual"/>
+      <import feature="org.eclipse.uml2" version="3.0.0" match="greaterOrEqual"/>
+      <import feature="org.eclipse.papyrus" version="0.7.0.v201007251735"/>
+      <import feature="org.eclipse.papyrus.diagram.statemachine" version="0.7.0.v201007251735"/>
    </requires>
 
    <plugin
