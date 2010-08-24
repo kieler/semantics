@@ -231,4 +231,18 @@ litigation.
          version="0.0.0"
          unpack="false"/>
 
+   <plugin
+         id="de.cau.cs.kieler.maude"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="de.cau.cs.kieler.uml2.sim.maude"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
 </feature>
