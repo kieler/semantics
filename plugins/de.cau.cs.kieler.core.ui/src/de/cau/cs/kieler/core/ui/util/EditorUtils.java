@@ -16,6 +16,8 @@ package de.cau.cs.kieler.core.ui.util;
 
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IEditorReference;
+import org.eclipse.ui.IWorkbenchPage;
+import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
 
 /**
@@ -43,8 +45,15 @@ public final class EditorUtils {
     public static IEditorPart getLastActiveEditor() {
         IEditorPart editor = null;
         try {
-            editor = PlatformUI.getWorkbench().getActiveWorkbenchWindow()
-                    .getActivePage().getActiveEditor();
+            IWorkbenchWindow window = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
+            if (window == null) {
+                return null;
+            }
+            IWorkbenchPage page = window.getActivePage();
+            if (page == null) {
+                return null;
+            }
+            editor = page.getActiveEditor();
             if (editor == null) {
                 IEditorReference[] editors = PlatformUI.getWorkbench()
                         .getActiveWorkbenchWindow().getActivePage()
