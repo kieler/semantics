@@ -221,7 +221,8 @@ litigation.
 
    <includes
          id="org.eclipse.papyrus"
-         version="0.7.0.vv201006230448"
+         version="0.0.0"
+         optional="true"
          search-location="self"/>
 
    <requires>
