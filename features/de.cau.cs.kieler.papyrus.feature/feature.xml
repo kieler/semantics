@@ -224,11 +224,6 @@ litigation.
          version="0.0.0"
          search-location="self"/>
 
-   <includes
-         id="org.eclipse.papyrus.diagram.statemachine"
-         version="0.0.0"
-         search-location="self"/>
-
    <requires>
       <import feature="de.cau.cs.kieler.core" version="0.2.0" match="greaterOrEqual"/>
       <import feature="de.cau.cs.kieler.kiml" version="0.1.0" match="greaterOrEqual"/>
