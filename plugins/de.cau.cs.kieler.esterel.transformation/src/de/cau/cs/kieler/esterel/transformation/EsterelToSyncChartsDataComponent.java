@@ -9,6 +9,7 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.jface.operation.IRunnableWithProgress;
+
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.actions.WorkspaceModifyOperation;
@@ -17,6 +18,8 @@ import org.eclipse.xtext.ui.editor.XtextEditor;
 import org.eclipse.xtext.ui.editor.model.IXtextDocument;
 import org.json.JSONObject;
 
+import de.cau.cs.kieler.core.expressions.ExpressionsFactory;
+import de.cau.cs.kieler.core.expressions.TextualCode;
 import de.cau.cs.kieler.sim.kiem.IJSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.JSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.KiemExecutionException;
@@ -54,76 +57,87 @@ public class EsterelToSyncChartsDataComponent extends JSONObjectDataComponent im
     }
 
     public void initialize() throws KiemInitializationException {
-        System.out.println("Initializing Esterel Transformation.");
+    
+        PlatformUI.getWorkbench().getDisplay().asyncExec(new Runnable(){
 
-        System.out.println("Reading current Esterel Editor");
-        try {
-            IEditorPart editor = PlatformUI.getWorkbench().getActiveWorkbenchWindow()
-                    .getActivePage().getActiveEditor();
-            XtextEditor xeditor = ((XtextEditor) editor);
-            if (!xeditor.getLanguageName().equals(ESTEREL_LANGUAGE)) {
-                throw new IllegalArgumentException(
-                        "The currently open Xtext Editor is no Esterel Editor. Editor language is "
-                                + xeditor.getLanguageName() + " but should be " + ESTEREL_LANGUAGE);
-            }
+            public void run() {
+                System.out.println("Initializing Esterel Transformation.");
 
-            IFile file = ((FileEditorInput) xeditor.getEditorInput()).getFile();
-
-            final URI strlURI = URI.createPlatformResourceURI(file.getFullPath().toString(), true);
-            final URI kidsURI = URI.createPlatformResourceURI(file.getFullPath()
-                    .removeFileExtension().addFileExtension("kids").toString(), false);
-            final URI kixsURI = URI.createPlatformResourceURI(file.getFullPath()
-                    .removeFileExtension().addFileExtension("kixs").toString(), false);
-
-            System.out.println("Creating new SyncCharts Diagram.");
-            IRunnableWithProgress op = new WorkspaceModifyOperation(null) {
-                protected void execute(IProgressMonitor monitor) throws CoreException,
-                        InterruptedException {
-                    Resource diagram = SyncchartsDiagramEditorUtil.createDiagram(kidsURI, kixsURI,
-                            monitor);
-                    try {
-                        diagram.save(null);
-                        SyncchartsDiagramEditorUtil.openDiagram(diagram);
-                    } catch (Exception e) {
-                        System.out.println(e);
-                        e.printStackTrace();
+                System.out.println("Reading current Esterel Editor");
+                try {
+                    // get Editor must be done in UI Thread, otherwise null
+                    IEditorPart editor = PlatformUI.getWorkbench().getActiveWorkbenchWindow()
+                            .getActivePage().getActiveEditor();
+                    XtextEditor xeditor = ((XtextEditor) editor);
+                    if (!xeditor.getLanguageName().equals(ESTEREL_LANGUAGE)) {
+                        throw new IllegalArgumentException(
+                                "The currently open Xtext Editor is no Esterel Editor. Editor language is "
+                                        + xeditor.getLanguageName() + " but should be " + ESTEREL_LANGUAGE);
                     }
 
+                    IFile file = ((FileEditorInput) xeditor.getEditorInput()).getFile();
+
+                    final URI strlURI = URI.createPlatformResourceURI(file.getFullPath().toString(), true);
+                    final URI kidsURI = URI.createPlatformResourceURI(file.getFullPath()
+                            .removeFileExtension().addFileExtension("kids").toString(), false);
+                    final URI kixsURI = URI.createPlatformResourceURI(file.getFullPath()
+                            .removeFileExtension().addFileExtension("kixs").toString(), false);
+
+                    System.out.println("Creating new SyncCharts Diagram.");
+                    IRunnableWithProgress op = new WorkspaceModifyOperation(null) {
+                        protected void execute(IProgressMonitor monitor) throws CoreException,
+                                InterruptedException {
+                            Resource diagram = SyncchartsDiagramEditorUtil.createDiagram(kidsURI, kixsURI,
+                                    monitor);
+                            try {
+                                diagram.save(null);
+                                SyncchartsDiagramEditorUtil.openDiagram(diagram);
+                            } catch (Exception e) {
+                                System.out.println(e);
+                                e.printStackTrace();
+                            }
+
+                        }
+                    };
+                    op.run(null);
+
+                    System.out.println("Creating initial SyncCharts contents.");
+                    ResourceSet resourceSet = new ResourceSetImpl();
+                    Resource resource = resourceSet.getResource(kixsURI, true);
+                    SyncchartsFactory sf = SyncchartsFactory.eINSTANCE;
+                    Region rootRegion = (Region) resource.getContents().get(0);
+                    State rootState = sf.createState();
+                    rootRegion.getStates().add(rootState);
+                    rootState.setLabel("EsterelState");
+                    rootState.setType(StateType.TEXTUAL);
+
+                    System.out.println("Reading Esterel Source Code.");
+                    IXtextDocument document = xeditor.getDocument();
+                    
+                    TextualCode code = ExpressionsFactory.eINSTANCE.createTextualCode();
+                    rootState.setBodyText(code);
+                    code.setCode(document.get());
+
+                    System.out.println("Parsing Esterel Source Code.");
+                    Resource xtextResource = resourceSet.getResource(strlURI, true);
+                    EObject esterelModule = xtextResource.getContents().get(0);
+
+                    System.out.println("Attaching Esterel Model to SyncChart");
+                    rootState.setBodyContents(esterelModule);
+
+                    syncchart = rootRegion;
+                    resource.save(null);
+
+                } catch (Exception e) {
+           //         throw new KiemInitializationException(
+           //                 "Failed to initialize Esterel Transformation. No valid Esterel Editor found.",
+           //                 true, e);
+                    e.printStackTrace();
                 }
-            };
-            op.run(null);
-
-            System.out.println("Creating initial SyncCharts contents.");
-            ResourceSet resourceSet = new ResourceSetImpl();
-            Resource resource = resourceSet.getResource(kixsURI, true);
-            SyncchartsFactory sf = SyncchartsFactory.eINSTANCE;
-            Region rootRegion = (Region) resource.getContents().get(0);
-            State rootState = sf.createState();
-            rootRegion.getInnerStates().add(rootState);
-            rootState.setLabel("EsterelState");
-            rootState.setType(StateType.TEXTUAL);
-
-            System.out.println("Reading Esterel Source Code.");
-            IXtextDocument document = xeditor.getDocument();
-            
-            rootState.setBodyText(document.get());
-
-            System.out.println("Parsing Esterel Source Code.");
-            Resource xtextResource = resourceSet.getResource(strlURI, true);
-            EObject esterelModule = xtextResource.getContents().get(0);
-
-            System.out.println("Attaching Esterel Model to SyncChart");
-            rootState.setBodyContents(esterelModule);
-
-            this.syncchart = rootRegion;
-            resource.save(null);
-
-        } catch (Exception e) {
-            throw new KiemInitializationException(
-                    "Failed to initialize Esterel Transformation. No valid Esterel Editor found.",
-                    true, e);
-        }
-
+                
+            }});
+        
+       
     }
 
     public boolean isObserver() {
