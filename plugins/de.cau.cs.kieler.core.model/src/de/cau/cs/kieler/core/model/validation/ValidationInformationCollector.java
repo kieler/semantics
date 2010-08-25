@@ -316,9 +316,12 @@ public class ValidationInformationCollector implements IStartup, IPartListener {
     }
 
     /**
+     * Validate a given editor.
      * 
+     * @param editor
+     *            the editor
      */
-    public static void validateActiveEditor() {
+    public static void validateEditor(final IEditorPart editor) {
         for (String key : validateActions.keySet()) {
             Object o = validateActions.get(key);
 
@@ -326,7 +329,12 @@ public class ValidationInformationCollector implements IStartup, IPartListener {
                 List<IValidationActionFactory> factories = (List<IValidationActionFactory>) o;
 
                 for (IValidationActionFactory fact : factories) {
-                    Action action = fact.getValidationActionForActiveEditor();
+                    Action action = null;
+                    if (editor == null) {
+                        action = fact.getValidationActionForActiveEditor();
+                    } else {
+                        action = fact.getValidationActionForEditor(editor);
+                    }
 
                     if (action != null) {
                         action.run();
@@ -334,6 +342,13 @@ public class ValidationInformationCollector implements IStartup, IPartListener {
                 }
             }
         }
+    }
+
+    /**
+     * 
+     */
+    public static void validateActiveEditor() {
+        validateEditor(null);
     }
 
     /**
