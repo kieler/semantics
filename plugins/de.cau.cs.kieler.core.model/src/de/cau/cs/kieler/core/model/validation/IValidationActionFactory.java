@@ -14,6 +14,7 @@
 package de.cau.cs.kieler.core.model.validation;
 
 import org.eclipse.jface.action.Action;
+import org.eclipse.ui.IEditorPart;
 
 /**
  * Factory for creating the validate actions used in the validation.
@@ -22,6 +23,16 @@ import org.eclipse.jface.action.Action;
  * @kieler.rating 2010-06-11 proposed yellow soh
  */
 public interface IValidationActionFactory {
+
+    /**
+     * Get the validate action for the active editor. Should return null if the
+     * editor is not supported.
+     * 
+     * @param editor
+     *            the editor
+     * @return the action or null
+     */
+    Action getValidationActionForEditor(IEditorPart editor);
 
     /**
      * Get the validate action for the active editor. Should return null if the

@@ -41,17 +41,34 @@ public abstract class AbstractValidationActionFactory implements
     public abstract Action getValidationAction(final IWorkbenchPage page);
 
     /**
-     * Getter for the ePackage that this validate action applies to.
+     * Check if the active editor is supported.
      * 
-     * @return the package.
+     * @param editor
+     *            the editor to check
+     * @return true if the editor is supported
      */
-    public abstract boolean supportsActiveEditor(IEditorPart editor);
+    public abstract boolean supportsEditor(IEditorPart editor);
+
+    /**
+     * 
+     * {@inheritDoc}
+     */
+    public Action getValidationActionForEditor(final IEditorPart editor) {
+        if (supportsEditor(editor)) {
+            return getValidationAction(editor.getSite().getPage());
+        }
+        return null;
+    }
 
     /**
      * {@inheritDoc}
      */
     public Action getValidationActionForActiveEditor() {
-        if (supportsActiveEditor(EditorUtils.getLastActiveEditor())) {
+        IEditorPart editor = EditorUtils.getLastActiveEditor();
+        if (editor == null) {
+            return null;
+        }
+        if (supportsEditor(editor)) {
             IWorkbenchWindow window = PlatformUI.getWorkbench()
                     .getActiveWorkbenchWindow();
             if (window != null) {

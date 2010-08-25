@@ -30,7 +30,7 @@ public abstract class AbstractDiagramEditorValidationActionFactory extends
         AbstractValidationActionFactory {
 
     @Override
-    public boolean supportsActiveEditor(final IEditorPart editor) {
+    public boolean supportsEditor(final IEditorPart editor) {
         if (editor != null && editor instanceof DiagramEditor) {
             Object obj = ((DiagramEditor) editor).getDiagramEditPart()
                     .getModel();

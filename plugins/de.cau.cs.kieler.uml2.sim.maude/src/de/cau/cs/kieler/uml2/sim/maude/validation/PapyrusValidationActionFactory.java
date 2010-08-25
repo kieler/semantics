@@ -26,7 +26,7 @@ public class PapyrusValidationActionFactory extends
      * {@inheritDoc}
      */
     @Override
-    public boolean supportsActiveEditor(final IEditorPart editor) {
+    public boolean supportsEditor(final IEditorPart editor) {
         if (editor instanceof PapyrusMultiDiagramEditor) {
             EObject eObj = (EObject) ((PapyrusMultiDiagramEditor) editor)
                     .getDiagramEditPart().getModel();

@@ -113,6 +113,7 @@ public class ValidationInformationCollector implements IStartup, IPartListener {
         if (tooltip == null) {
             tooltip = "";
         }
+
         String isWrapExisting = element.getAttribute("isWrapExistingValidator");
         boolean isWrap = isWrapExisting.equals("true");
 
@@ -267,7 +268,6 @@ public class ValidationInformationCollector implements IStartup, IPartListener {
                 // // throw new RuntimeException(message);
                 // }
                 // }
-
                 for (String key : validateActions.keySet()) {
                     Object o = validateActions.get(key);
 
@@ -275,7 +275,7 @@ public class ValidationInformationCollector implements IStartup, IPartListener {
                         List<IValidationActionFactory> list = (List<IValidationActionFactory>) o;
 
                         for (IValidationActionFactory fact : list) {
-                            if (fact.getValidationActionForActiveEditor() != null) {
+                            if (fact.getValidationActionForEditor((IEditorPart) workbenchPart) != null) {
                                 Map<String, CheckfileDefinition> checks = checkfiles
                                         .get(key);
                                 if (checks != null) {
@@ -288,7 +288,7 @@ public class ValidationInformationCollector implements IStartup, IPartListener {
                             }
                         }
 
-                        ValidationManager.validateActiveEditor();
+                        validateActiveEditor();
                     }
                 }
 

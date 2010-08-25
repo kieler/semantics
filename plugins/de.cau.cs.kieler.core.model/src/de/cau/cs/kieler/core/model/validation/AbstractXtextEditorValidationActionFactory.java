@@ -29,7 +29,7 @@ public abstract class AbstractXtextEditorValidationActionFactory extends
         AbstractValidationActionFactory {
 
     @Override
-    public boolean supportsActiveEditor(final IEditorPart editor) {
+    public boolean supportsEditor(final IEditorPart editor) {
         if (editor != null && editor instanceof XtextEditor) {
             XtextEditor xtextEd = (XtextEditor) editor;
             EObject eObj = ModelingUtil.getModelFromXtextEditor(xtextEd);

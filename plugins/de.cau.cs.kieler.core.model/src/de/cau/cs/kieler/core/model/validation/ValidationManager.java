@@ -215,6 +215,7 @@ public final class ValidationManager {
             final boolean isWrapExistingValidator,
             final List<String> referencedEPackageNsURIs, final String name,
             final String tooltip, final boolean isEnabledByDefault) {
+
         if (!packages.containsKey(ePackage)) {
             packages.put(ePackage,
                     EValidator.Registry.INSTANCE.getEValidator(ePackage));
@@ -345,7 +346,9 @@ public final class ValidationManager {
         EValidator.Registry registry = EValidator.Registry.INSTANCE;
 
         registry.remove(ePackage);
-        registry.put(ePackage, packages.get(ePackage));
+        if (packages.get(ePackage) != null) {
+            registry.put(ePackage, packages.get(ePackage));
+        }
     }
 
     /**
