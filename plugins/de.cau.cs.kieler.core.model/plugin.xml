@@ -28,17 +28,9 @@
                   checkEnabled="false">
                <with
                      variable="activeEditor">
-                  <or>
-                     <instanceof
-                           value="org.eclipse.gmf.runtime.diagram.ui.parts.DiagramEditor">
-                     </instanceof>
-                     <instanceof
-                           value="org.eclipse.xtext.ui.editor.XtextEditor">
-                     </instanceof>
-                     <instanceof
-                           value="org.eclipse.ui.part.EditorPart">
-                     </instanceof>
-                  </or>
+                  <instanceof
+                        value="org.eclipse.ui.part.EditorPart">
+                  </instanceof>
                </with>
             </visibleWhen>
          </command>

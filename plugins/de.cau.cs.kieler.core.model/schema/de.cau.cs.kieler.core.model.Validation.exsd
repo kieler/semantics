@@ -6,7 +6,7 @@
          <meta.schema plugin="de.cau.cs.kieler.core.model" id="de.cau.cs.kieler.core.model.Validation" name="Validation"/>
       </appinfo>
       <documentation>
-         [Enter description of this extension point.]
+         This extension point is used to register new Checkfiles and ValidationActions.
       </documentation>
    </annotation>
 
@@ -110,7 +110,7 @@
                </documentation>
             </annotation>
          </attribute>
-         <attribute name="class" type="string" use="optional">
+         <attribute name="class" type="string">
             <annotation>
                <documentation>
                   The implementing class for this validation extension point should return the EObject (model) of the current diagram editor (IEditorPart).
@@ -207,7 +207,7 @@
          <meta.section type="since"/>
       </appinfo>
       <documentation>
-         [Enter the first release in which this extension point appears.]
+         0.3.0
       </documentation>
    </annotation>
 
@@ -225,18 +225,18 @@
          <meta.section type="apiinfo"/>
       </appinfo>
       <documentation>
-         [Enter API information here.]
+         See Description.
       </documentation>
    </annotation>
+
 
    <annotation>
       <appinfo>
-         <meta.section type="implementation"/>
+         <meta.section type="copyright"/>
       </appinfo>
       <documentation>
-         [Enter information about supplied implementation of this extension point.]
+         Christian-Albrechts-Universität zu Kiel
       </documentation>
    </annotation>
-
 
 </schema>

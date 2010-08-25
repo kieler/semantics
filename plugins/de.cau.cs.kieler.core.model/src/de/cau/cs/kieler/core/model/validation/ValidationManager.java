@@ -40,10 +40,9 @@ import de.cau.cs.kieler.core.model.CoreModelPlugin;
 public final class ValidationManager {
 
     /**
-     * Contains all registered packages with a factory for creating validate
-     * actions.
+     * Contains all registered packages. Also contains the default validators.
      */
-    private static Map<EPackage, Object> packages = new HashMap<EPackage, Object>();
+    private static Map<EPackage, EValidator> packages = new HashMap<EPackage, EValidator>();
 
     /** Maps the id of a check file to the internal checkfile objects. */
     private static Map<String, CheckFile> checkFiles = new HashMap<String, CheckFile>();
@@ -58,6 +57,7 @@ public final class ValidationManager {
      * Hide the default constructor.
      */
     private ValidationManager() {
+        // does nothing
     }
 
     /**
@@ -216,7 +216,8 @@ public final class ValidationManager {
             final List<String> referencedEPackageNsURIs, final String name,
             final String tooltip, final boolean isEnabledByDefault) {
         if (!packages.containsKey(ePackage)) {
-            packages.put(ePackage, null);
+            packages.put(ePackage,
+                    EValidator.Registry.INSTANCE.getEValidator(ePackage));
         }
 
         // if nothing can be found user the extension point setting to
@@ -316,7 +317,7 @@ public final class ValidationManager {
      */
     public static void deregisterChecks() {
         for (EPackage ePackage : packages.keySet()) {
-            EValidator.Registry.INSTANCE.remove(ePackage);
+            removeChecksOfPackage(ePackage);
         }
     }
 
@@ -329,9 +330,22 @@ public final class ValidationManager {
     public static void removeCheck(final String id) {
         CheckFile checkFile = checkFiles.remove(id);
         if (checkFile != null) {
-            EValidator.Registry.INSTANCE.remove(checkFile.ePackage);
+            removeChecksOfPackage(checkFile.ePackage);
             restoreChecks(checkFile.ePackage);
         }
+    }
+
+    /**
+     * Remove the checks for a given package retaining the default checks.
+     * 
+     * @param ePackage
+     *            the package
+     */
+    private static void removeChecksOfPackage(final EPackage ePackage) {
+        EValidator.Registry registry = EValidator.Registry.INSTANCE;
+
+        registry.remove(ePackage);
+        registry.put(ePackage, packages.get(ePackage));
     }
 
     /**
@@ -476,7 +490,7 @@ public final class ValidationManager {
          * 
          */
         private CheckFile() {
-
+            // does nothing
         }
 
         /**
@@ -497,6 +511,11 @@ public final class ValidationManager {
             firePropertyChangedEvent(file, oldValue, enabled);
         }
 
+        /**
+         * Getter.
+         * 
+         * @return true if the file is enabled
+         */
         public boolean isEnabled() {
             return enabled;
         }
@@ -522,14 +541,19 @@ public final class ValidationManager {
         /** True if the file should be visible. */
         private boolean enabled = true;
 
+        /** The displayed name of the file. */
         private String name;
 
+        /** The identifier for the file. */
         private String id;
     }
 
     /**
+     * Determine whether a file should be visible.
+     * 
      * @param id
-     * @return
+     *            the id of the file
+     * @return true if it should be visible
      */
     public static boolean isVisible(final String id) {
         return ValidationInformationCollector.isVisible(id);
