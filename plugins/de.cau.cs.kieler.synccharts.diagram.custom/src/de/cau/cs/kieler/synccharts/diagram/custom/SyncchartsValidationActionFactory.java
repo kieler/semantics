@@ -13,23 +13,30 @@
  */
 package de.cau.cs.kieler.synccharts.diagram.custom;
 
+import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.jface.action.Action;
 import org.eclipse.ui.IWorkbenchPage;
 
-import de.cau.cs.kieler.core.model.validation.IValidationActionFactory;
+import de.cau.cs.kieler.core.model.validation.AbstractDiagramEditorValidationActionFactory;
+import de.cau.cs.kieler.synccharts.SyncchartsPackage;
 import de.cau.cs.kieler.synccharts.diagram.part.ValidateAction;
 
 /**
  * @author soh
  */
-public class SyncchartsValidationActionFactory implements
-        IValidationActionFactory {
+public class SyncchartsValidationActionFactory extends
+        AbstractDiagramEditorValidationActionFactory {
 
     /**
      * {@inheritDoc}
      */
+    @Override
     public Action getValidationAction(final IWorkbenchPage page) {
         return new ValidateAction(page);
     }
 
+    @Override
+    public EPackage getEPackage() {
+        return SyncchartsPackage.eINSTANCE;
+    }
 }

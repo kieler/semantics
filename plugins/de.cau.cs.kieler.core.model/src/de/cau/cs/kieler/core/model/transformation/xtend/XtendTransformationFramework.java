@@ -30,12 +30,14 @@ import org.eclipse.internal.xtend.xtend.XtendFile;
 import org.eclipse.internal.xtend.xtend.ast.Extension;
 import org.eclipse.xtend.XtendFacade;
 import org.eclipse.xtend.XtendResourceParser;
+import org.eclipse.xtend.expression.EvaluationException;
 import org.eclipse.xtend.typesystem.emf.EcoreUtil2;
 import org.eclipse.xtend.typesystem.emf.EmfMetaModel;
 
 import de.cau.cs.kieler.core.model.CoreModelPlugin;
 import de.cau.cs.kieler.core.model.transformation.AbstractTransformation;
 import de.cau.cs.kieler.core.model.transformation.ITransformationFramework;
+import de.cau.cs.kieler.core.model.transformation.TransformationException;
 import de.cau.cs.kieler.core.model.util.ModelingUtil;
 
 /**
@@ -92,8 +94,8 @@ public class XtendTransformationFramework implements ITransformationFramework {
      *            The list of formal parameters
      * @return The parameters or null if the mapping could not achieved
      */
-    public List<Object> createParameterMapping(final List<EObject> parametersToMap,
-            final String... parameter) {
+    public List<Object> createParameterMapping(
+            final List<EObject> parametersToMap, final String... parameter) {
         List<EObject> slist = null;
         if (parametersToMap == null) {
             slist = ModelingUtil.getModelElementsFromSelection();
@@ -113,12 +115,14 @@ public class XtendTransformationFramework implements ITransformationFramework {
             }
             if (param.contains("List")) {
                 // A List-Type is : List[T] so we need the list param type.
-                String listType = param.substring(XTEND_LIST_TYPE_PLENGTH, param.length() - 1);
+                String listType = param.substring(XTEND_LIST_TYPE_PLENGTH,
+                        param.length() - 1);
                 List<EObject> listParameterEntries = new LinkedList<EObject>();
                 // Search first occurrence of listType
                 boolean started = false; // did we find the type?
                 for (EObject next : slist) {
-                    if (next.eClass().getName().equals(listType) || listType.equals("Object")) {
+                    if (next.eClass().getName().equals(listType)
+                            || listType.equals("Object")) {
                         listParameterEntries.add(next);
                         started = true;
                     } else {
@@ -169,7 +173,7 @@ public class XtendTransformationFramework implements ITransformationFramework {
      * Sets the transformation parameters by matching the current selection with
      * the given list of types.
      * 
-     *@param parametersToMap
+     * @param parametersToMap
      *            The list of parameters that should be mapped. If this is null,
      *            the parameters are retrieved from the current selection
      * @param parameter
@@ -177,8 +181,10 @@ public class XtendTransformationFramework implements ITransformationFramework {
      * 
      * @return True if all parameters could be matched
      */
-    public boolean setParameters(final List<EObject> parametersToMap, final String... parameter) {
-        List<Object> mapping = createParameterMapping(parametersToMap, parameter);
+    public boolean setParameters(final List<EObject> parametersToMap,
+            final String... parameter) {
+        List<Object> mapping = createParameterMapping(parametersToMap,
+                parameter);
         if (mapping != null) {
             this.parameters = mapping.toArray(new Object[mapping.size()]);
             return true;
@@ -206,8 +212,8 @@ public class XtendTransformationFramework implements ITransformationFramework {
      *            The class name of the editors EPackage
      * @return False if an error occurred.
      */
-    public boolean initializeTransformation(final String fileName, final String operation,
-            final String... basePackages) {
+    public boolean initializeTransformation(final String fileName,
+            final String operation, final String... basePackages) {
         if (initalized) {
             return false;
         }
@@ -219,8 +225,8 @@ public class XtendTransformationFramework implements ITransformationFramework {
         String withFileExt = fileName;
 
         if (withFileExt.contains("." + XtendFile.FILE_EXTENSION)) {
-            withFileExt = withFileExt.substring(0, withFileExt.indexOf("."
-                    + XtendFile.FILE_EXTENSION));
+            withFileExt = withFileExt.substring(0,
+                    withFileExt.indexOf("." + XtendFile.FILE_EXTENSION));
         }
         xtendFacade = XtendFacade.create(withFileExt);
         // Register all meta models
@@ -258,13 +264,21 @@ public class XtendTransformationFramework implements ITransformationFramework {
      * 
      * @return The return value from XtendFacade.call()
      */
-    public Object executeTransformation() {
+    public Object executeTransformation() throws TransformationException {
         Object result = null;
         if (initalized) {
-            result = xtendFacade.call(extension, parameters);
+            try {
+                result = xtendFacade.call(extension, parameters);
+            } catch (EvaluationException e0) {
+                throw new TransformationException(e0);
+            } catch (IllegalArgumentException e0) {
+                throw new TransformationException(e0);
+            }
         } else {
-            CoreModelPlugin.getDefault().logError(
-                    "Could not execute transformation: Transformation not initalized properly");
+            CoreModelPlugin
+                    .getDefault()
+                    .logError(
+                            "Could not execute transformation: Transformation not initalized properly");
         }
         initalized = false;
         return result;
@@ -281,8 +295,8 @@ public class XtendTransformationFramework implements ITransformationFramework {
      *            be ignored!
      * @return a list of abstract transformations.
      */
-    public List<AbstractTransformation> parseTransformations(final URL fileName,
-            final boolean inplaceOnly) {
+    public List<AbstractTransformation> parseTransformations(
+            final URL fileName, final boolean inplaceOnly) {
         if (fileName != null) {
             try {
                 // Using the XtendResourceParser to read transformations
@@ -290,20 +304,23 @@ public class XtendTransformationFramework implements ITransformationFramework {
                 Reader reader = new InputStreamReader(fileName.openStream());
                 Object o = parser.parse(reader, "features.ext"); //$NON-NLS-1$
                 if (o != null) {
-                    LinkedList<AbstractTransformation> transformations
-                            = new LinkedList<AbstractTransformation>();
+                    LinkedList<AbstractTransformation> transformations = new LinkedList<AbstractTransformation>();
                     XtendFile xtFile = (XtendFile) o;
                     for (Extension ext : xtFile.getExtensions()) {
                         // Only read in-place methods
-                        if (inplaceOnly && !ext.getReturnTypeIdentifier().getValue().equals("Void")) {
+                        if (inplaceOnly
+                                && !ext.getReturnTypeIdentifier().getValue()
+                                        .equals("Void")) {
                             continue;
                         } else if (!inplaceOnly
-                                && ext.getReturnTypeIdentifier().getValue().equals("Void")) {
+                                && ext.getReturnTypeIdentifier().getValue()
+                                        .equals("Void")) {
                             continue;
                         }
                         // Read parameters:
                         LinkedList<String> params = new LinkedList<String>();
-                        for (DeclaredParameter param : ext.getFormalParameters()) {
+                        for (DeclaredParameter param : ext
+                                .getFormalParameters()) {
                             params.add(param.getType().getValue());
                         }
                         XtendTransformation xt = new XtendTransformation();
@@ -314,11 +331,15 @@ public class XtendTransformationFramework implements ITransformationFramework {
                     return transformations;
                 }
             } catch (SecurityException sec) {
-                CoreModelPlugin.getDefault().logError(
-                        "Unable to parse Xtend file: Not allowed to open file."); //$NON-NLS-1$
+                CoreModelPlugin
+                        .getDefault()
+                        .logError(
+                                "Unable to parse Xtend file: Not allowed to open file."); //$NON-NLS-1$
             } catch (IOException e) {
-                CoreModelPlugin.getDefault().logError(
-                        "Unable to parse Xtend file: Error while reading file."); //$NON-NLS-1$
+                CoreModelPlugin
+                        .getDefault()
+                        .logError(
+                                "Unable to parse Xtend file: Error while reading file."); //$NON-NLS-1$
             }
         }
         return null;

@@ -951,6 +951,10 @@ public class PopupBarPolicy extends DiagramAssistantEditPolicy {
                 return; // nothing to show
             }
         }
+        if (getBalloon() == null) {
+            // nothing to show
+            return;
+        }
         getBalloon().addMouseMotionListener(this);
         getBalloon().addMouseListener(myMouseKeyListener);
 

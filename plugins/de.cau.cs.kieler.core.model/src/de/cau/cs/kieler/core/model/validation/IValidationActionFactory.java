@@ -14,7 +14,6 @@
 package de.cau.cs.kieler.core.model.validation;
 
 import org.eclipse.jface.action.Action;
-import org.eclipse.ui.IWorkbenchPage;
 
 /**
  * Factory for creating the validate actions used in the validation.
@@ -25,11 +24,11 @@ import org.eclipse.ui.IWorkbenchPage;
 public interface IValidationActionFactory {
 
     /**
-     * Get the validate action for the given ePackage.
+     * Get the validate action for the active editor. Should return null if the
+     * active editor is not supported.
      * 
-     * @param page the workbench page
-     * @return the action
+     * @return the action or null
      */
-    Action getValidationAction(IWorkbenchPage page);
+    Action getValidationActionForActiveEditor();
 
 }

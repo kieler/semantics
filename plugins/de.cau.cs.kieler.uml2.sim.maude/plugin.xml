@@ -50,7 +50,7 @@
          </referenceEPackageNsURI>
       </Checkfile>
       <ValidateAction
-            actionFactory="de.cau.cs.kieler.uml2.sim.maude.validation.ValidationActionFactory"
+            actionFactory="de.cau.cs.kieler.uml2.sim.maude.validation.PapyrusValidationActionFactory"
             ePackageId="org.eclipse.uml2.uml">
       </ValidateAction>
    </extension>

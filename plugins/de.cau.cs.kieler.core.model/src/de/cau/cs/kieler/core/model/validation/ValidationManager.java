@@ -22,21 +22,14 @@ import java.util.Set;
 
 import org.eclipse.core.runtime.preferences.IEclipsePreferences;
 import org.eclipse.core.runtime.preferences.InstanceScope;
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EValidator;
-import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramEditor;
-import org.eclipse.gmf.runtime.notation.View;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.util.IPropertyChangeListener;
 import org.eclipse.jface.util.PropertyChangeEvent;
-import org.eclipse.ui.IEditorPart;
 import org.eclipse.xtend.typesystem.emf.check.CheckRegistry;
-import org.eclipse.xtext.ui.editor.XtextEditor;
 
 import de.cau.cs.kieler.core.model.CoreModelPlugin;
-import de.cau.cs.kieler.core.model.util.ModelingUtil;
-import de.cau.cs.kieler.core.ui.util.EditorUtils;
 
 /**
  * Handler for managing check files and validate actions.
@@ -47,7 +40,8 @@ import de.cau.cs.kieler.core.ui.util.EditorUtils;
 public final class ValidationManager {
 
     /**
-     * Contains all registered packages with a factory for creating validate actions.
+     * Contains all registered packages with a factory for creating validate
+     * actions.
      */
     private static Map<EPackage, Object> packages = new HashMap<EPackage, Object>();
 
@@ -108,48 +102,52 @@ public final class ValidationManager {
         return result;
     }
 
-    /**
-     * Get the ePackage for the currently active editor.
-     * 
-     * @return the package
-     */
-    public static EPackage getEPackageOfActiveEditor() {
-        EPackage ePackage = null;
-
-        IEditorPart editorPart = EditorUtils.getLastActiveEditor();
-        if (editorPart != null) {
-            EObject eObj = null;
-            if (editorPart instanceof DiagramEditor) {
-                DiagramEditor diagEd = (DiagramEditor) editorPart;
-                Object obj = diagEd.getDiagramEditPart().getModel();
-                if (obj != null && obj instanceof View) {
-                    eObj = ((View) obj).getElement();
-                }
-            } else if (editorPart instanceof XtextEditor) {
-                XtextEditor xEd = (XtextEditor) editorPart;
-                eObj = ModelingUtil.getModelFromXtextEditor(xEd);
-            } else {
-                // now we have to ask the extension point for a suitable class
-                IModelDiagramInterface modelDiagramInterface = ValidationInformationCollector
-                        .getModelDiagramInterface(editorPart.getClass().getName());
-                if (modelDiagramInterface != null) {
-                    eObj = modelDiagramInterface.getModel(editorPart);
-                } else {
-                    // FIXME: Ignored for now ... fix this! E.g., when changing the editor to a
-                    // supported one, partOpened is fired BUT the active editor is still the old
-                    // one!
-                    // String message =
-                    // "Cannot find validation extension point definition for editor "
-                    // + editorPart.getClass().getName();
-                    // throw new RuntimeException(message);
-                }
-            }
-            if (eObj != null) {
-                ePackage = eObj.eClass().getEPackage();
-            }
-        }
-        return ePackage;
-    }
+    // /**
+    // * Get the ePackage for the currently active editor.
+    // *
+    // * @return the package
+    // */
+    // public static EPackage getEPackageOfActiveEditor() {
+    // EPackage ePackage = null;
+    //
+    // IEditorPart editorPart = EditorUtils.getLastActiveEditor();
+    // if (editorPart != null) {
+    // EObject eObj = null;
+    // if (editorPart instanceof DiagramEditor) {
+    // DiagramEditor diagEd = (DiagramEditor) editorPart;
+    // Object obj = diagEd.getDiagramEditPart().getModel();
+    // if (obj != null && obj instanceof View) {
+    // eObj = ((View) obj).getElement();
+    // }
+    // } else if (editorPart instanceof XtextEditor) {
+    // XtextEditor xEd = (XtextEditor) editorPart;
+    // eObj = ModelingUtil.getModelFromXtextEditor(xEd);
+    // } else {
+    // // now we have to ask the extension point for a suitable class
+    // IModelDiagramInterface modelDiagramInterface =
+    // ValidationInformationCollector
+    // .getModelDiagramInterface(editorPart.getClass()
+    // .getName());
+    // if (modelDiagramInterface != null) {
+    // eObj = modelDiagramInterface.getModel(editorPart);
+    // } else {
+    // // FIXME: Ignored for now ... fix this! E.g., when changing
+    // // the editor to a
+    // // supported one, partOpened is fired BUT the active editor
+    // // is still the old
+    // // one!
+    // // String message =
+    // // "Cannot find validation extension point definition for editor "
+    // // + editorPart.getClass().getName();
+    // // throw new RuntimeException(message);
+    // }
+    // }
+    // if (eObj != null) {
+    // ePackage = eObj.eClass().getEPackage();
+    // }
+    // }
+    // return ePackage;
+    // }
 
     /**
      * Determine whether or not a file is enabled.
@@ -203,8 +201,8 @@ public final class ValidationManager {
      * @param file
      *            the file
      * @param isWrapExistingValidator
-     *            True if the checkfile wraps around another checkfile and thus has to be added
-     *            after it.
+     *            True if the checkfile wraps around another checkfile and thus
+     *            has to be added after it.
      * @param referencedEPackageNsURIs
      *            ???
      * @param name
@@ -212,10 +210,11 @@ public final class ValidationManager {
      * @param tooltip
      *            the tooltip to display
      */
-    public static void registerCheckFile(final String id, final EPackage ePackage,
-            final String file, final boolean isWrapExistingValidator,
-            final List<String> referencedEPackageNsURIs, final String name, final String tooltip,
-            final boolean isEnabledByDefault) {
+    public static void registerCheckFile(final String id,
+            final EPackage ePackage, final String file,
+            final boolean isWrapExistingValidator,
+            final List<String> referencedEPackageNsURIs, final String name,
+            final String tooltip, final boolean isEnabledByDefault) {
         if (!packages.containsKey(ePackage)) {
             packages.put(ePackage, null);
         }
@@ -225,7 +224,8 @@ public final class ValidationManager {
         // --> isEnabledByDefault
 
         // determine whether or the file should be allowed to show its markers
-        IPreferenceStore store = CoreModelPlugin.getDefault().getPreferenceStore();
+        IPreferenceStore store = CoreModelPlugin.getDefault()
+                .getPreferenceStore();
         boolean value = true;
         String key = PREFERENCE_PREFIX + id;
         if (store.contains(key)) {
@@ -233,7 +233,8 @@ public final class ValidationManager {
             value = store.getBoolean(key);
         } else {
             // if value not found try accessing the persistent memory on disc
-            IEclipsePreferences prefs = new InstanceScope().getNode(CoreModelPlugin.PLUGIN_ID);
+            IEclipsePreferences prefs = new InstanceScope()
+                    .getNode(CoreModelPlugin.PLUGIN_ID);
             value = prefs.getBoolean(key, isEnabledByDefault);
             store.setValue(key, value);
         }
@@ -292,8 +293,8 @@ public final class ValidationManager {
      * Run the validate action of the currently active editor.
      */
     public static void validateActiveEditor() {
-        EPackage ePackage = getEPackageOfActiveEditor();
-        ValidationInformationCollector.validateEPackage(ePackage);
+        // EPackage ePackage = getEPackageOfActiveEditor();
+        ValidationInformationCollector.validateActiveEditor();
     }
 
     /**
@@ -304,8 +305,9 @@ public final class ValidationManager {
      */
     private static void register(final CheckFile checkFile) {
         if (checkFile.isEnabled()) {
-            CheckRegistry.getInstance().registerCheckFile(checkFile.ePackage, checkFile.file,
-                    checkFile.isWrapExistingValidator, checkFile.referencedEPackageNsURIs);
+            CheckRegistry.getInstance().registerCheckFile(checkFile.ePackage,
+                    checkFile.file, checkFile.isWrapExistingValidator,
+                    checkFile.referencedEPackageNsURIs);
         }
     }
 
@@ -343,12 +345,14 @@ public final class ValidationManager {
         // existing check file are added first. Otherwise
         // the wrapping checks can't be added
         for (CheckFile file : checkFiles.values()) {
-            if ((ePackage == null || file.ePackage == ePackage) && !file.isWrapExistingValidator) {
+            if ((ePackage == null || file.ePackage == ePackage)
+                    && !file.isWrapExistingValidator) {
                 register(file);
             }
         }
         for (CheckFile file : checkFiles.values()) {
-            if ((ePackage == null || file.ePackage == ePackage) && file.isWrapExistingValidator) {
+            if ((ePackage == null || file.ePackage == ePackage)
+                    && file.isWrapExistingValidator) {
                 register(file);
             }
         }
@@ -362,7 +366,8 @@ public final class ValidationManager {
     }
 
     /**
-     * Refreshes all checks by deregistering all of them and registering them again.
+     * Refreshes all checks by deregistering all of them and registering them
+     * again.
      */
     public static void refreshChecks() {
         deregisterChecks();
@@ -415,10 +420,11 @@ public final class ValidationManager {
      * @param newValue
      *            the new value
      */
-    private static void firePropertyChangedEvent(final String id, final boolean oldValue,
-            final boolean newValue) {
-        PropertyChangeEvent event = new PropertyChangeEvent(CoreModelPlugin.PLUGIN_ID,
-                PREFERENCE_PREFIX + id, oldValue, newValue);
+    private static void firePropertyChangedEvent(final String id,
+            final boolean oldValue, final boolean newValue) {
+        PropertyChangeEvent event = new PropertyChangeEvent(
+                CoreModelPlugin.PLUGIN_ID, PREFERENCE_PREFIX + id, oldValue,
+                newValue);
 
         for (IPropertyChangeListener listener : listeners) {
             listener.propertyChange(event);
@@ -446,14 +452,14 @@ public final class ValidationManager {
     }
 
     /**
-     * Determine whether there is a validate action present for the given editor.
+     * Determine whether there is a validate action present for the given
+     * editor.
      * 
      * @return true if there is a validate action
      */
     public static boolean hasValidateActionsForActiveEditor() {
-        EPackage ePackage = ValidationManager.getEPackageOfActiveEditor();
-        String nsUri = ePackage.getNsURI();
-        return ValidationInformationCollector.hasValidateAction(nsUri);
+        return ValidationInformationCollector
+                .hasValidateActionForActiveEditor();
     }
 
     /**
@@ -483,8 +489,10 @@ public final class ValidationManager {
             String pref = PREFERENCE_PREFIX + id;
             boolean oldValue = enabled;
             enabled = enabledParam;
-            new InstanceScope().getNode(CoreModelPlugin.PLUGIN_ID).putBoolean(pref, enabled);
-            IPreferenceStore store = CoreModelPlugin.getDefault().getPreferenceStore();
+            new InstanceScope().getNode(CoreModelPlugin.PLUGIN_ID).putBoolean(
+                    pref, enabled);
+            IPreferenceStore store = CoreModelPlugin.getDefault()
+                    .getPreferenceStore();
             store.setValue(pref, enabled);
             firePropertyChangedEvent(file, oldValue, enabled);
         }
@@ -500,7 +508,8 @@ public final class ValidationManager {
         private String file;
 
         /**
-         * True if the checkfile wraps around another checkfile and thus has to be added after it.
+         * True if the checkfile wraps around another checkfile and thus has to
+         * be added after it.
          */
         private boolean isWrapExistingValidator;
 
@@ -516,5 +525,13 @@ public final class ValidationManager {
         private String name;
 
         private String id;
+    }
+
+    /**
+     * @param id
+     * @return
+     */
+    public static boolean isVisible(final String id) {
+        return ValidationInformationCollector.isVisible(id);
     }
 }

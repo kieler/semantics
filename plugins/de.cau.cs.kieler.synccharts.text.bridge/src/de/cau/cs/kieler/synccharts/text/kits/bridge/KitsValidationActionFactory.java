@@ -13,6 +13,7 @@
  */
 package de.cau.cs.kieler.synccharts.text.kits.bridge;
 
+import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.jface.action.Action;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IWorkbenchPage;
@@ -25,27 +26,30 @@ import org.eclipse.xtext.validation.CheckMode;
 
 import com.google.inject.Injector;
 
-import de.cau.cs.kieler.core.model.validation.IValidationActionFactory;
+import de.cau.cs.kieler.core.model.validation.AbstractXtextEditorValidationActionFactory;
 import de.cau.cs.kieler.core.ui.util.EditorUtils;
-import de.cau.cs.kieler.synccharts.text.ui.Activator;
+import de.cau.cs.kieler.synccharts.SyncchartsPackage;
+import de.cau.cs.kieler.synccharts.text.ui.KitsUIPlugin;
 
 /**
  * Factory for constructing the validate actions for the actions grammar.
  * 
  * @author soh
  */
-public class KitsValidationActionFactory implements IValidationActionFactory {
+public class KitsValidationActionFactory extends
+        AbstractXtextEditorValidationActionFactory {
 
     /**
      * {@inheritDoc}
      */
+    @Override
     public Action getValidationAction(final IWorkbenchPage page) {
 
         return new Action() {
 
             @Override
             public void run() {
-                Injector injector = Activator.getInstance().getInjector(
+                Injector injector = KitsUIPlugin.getInstance().getInjector(
                         "de.cau.cs.kieler.synccharts.text.kits.Kits");
                 IEditorPart part = EditorUtils.getLastActiveEditor();
                 if (part instanceof XtextEditor) {
@@ -67,5 +71,13 @@ public class KitsValidationActionFactory implements IValidationActionFactory {
                 }
             }
         };
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public EPackage getEPackage() {
+        return SyncchartsPackage.eINSTANCE;
     }
 }

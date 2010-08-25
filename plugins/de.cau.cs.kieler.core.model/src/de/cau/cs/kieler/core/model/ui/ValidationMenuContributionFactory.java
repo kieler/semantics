@@ -15,7 +15,6 @@ package de.cau.cs.kieler.core.model.ui;
 
 import java.util.Set;
 
-import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.jface.action.Separator;
 import org.eclipse.jface.preference.PreferenceDialog;
 import org.eclipse.jface.util.IPropertyChangeListener;
@@ -63,7 +62,6 @@ public class ValidationMenuContributionFactory extends
      */
     private void fillMenu(final IContributionRoot menu) {
         Set<String> files = ValidationManager.getRegisteredFiles();
-
         for (String id : files) {
             CheckFileMenuItem item = new CheckFileMenuItem(id,
                     ValidationManager.isEnabled(id));
@@ -178,11 +176,7 @@ public class ValidationMenuContributionFactory extends
          */
         @Override
         public boolean isVisible() {
-            EPackage ePackage = ValidationManager.getEPackageOfActiveEditor();
-            if (ePackage == null) {
-                return false;
-            }
-            return ValidationManager.getEPackage(id).equals(ePackage);
+            return ValidationManager.isVisible(id);
         }
     }
 
