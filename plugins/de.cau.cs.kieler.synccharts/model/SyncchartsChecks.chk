@@ -157,9 +157,10 @@ context Region
 	ERROR "An empty Region does not make sense! Remove the Region or add States to it!" : 
 	(states.size > 0);
 
-context Region if(parentState != null && parentState.regions.size > 1)
-	ERROR "Regions in a state need to have unique IDs within that state." :
-	(id!= null && !id.matches("\\s*") && parentState.regions.forAll(r| (r.id != id) || (r == this)));
+// haf: removed this rule because we decided to also allow Regions without an ID
+//context Region if(parentState != null && parentState.regions.size > 1)
+//	ERROR "Regions in a state need to have unique IDs within that state." :
+//	(id!= null && !id.matches("\\s*") && parentState.regions.forAll(r| (r.id != id) || (r == this)));
 
 // ================================================================================================
 // Signals
