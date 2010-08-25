@@ -102,53 +102,6 @@ public final class ValidationManager {
         return result;
     }
 
-    // /**
-    // * Get the ePackage for the currently active editor.
-    // *
-    // * @return the package
-    // */
-    // public static EPackage getEPackageOfActiveEditor() {
-    // EPackage ePackage = null;
-    //
-    // IEditorPart editorPart = EditorUtils.getLastActiveEditor();
-    // if (editorPart != null) {
-    // EObject eObj = null;
-    // if (editorPart instanceof DiagramEditor) {
-    // DiagramEditor diagEd = (DiagramEditor) editorPart;
-    // Object obj = diagEd.getDiagramEditPart().getModel();
-    // if (obj != null && obj instanceof View) {
-    // eObj = ((View) obj).getElement();
-    // }
-    // } else if (editorPart instanceof XtextEditor) {
-    // XtextEditor xEd = (XtextEditor) editorPart;
-    // eObj = ModelingUtil.getModelFromXtextEditor(xEd);
-    // } else {
-    // // now we have to ask the extension point for a suitable class
-    // IModelDiagramInterface modelDiagramInterface =
-    // ValidationInformationCollector
-    // .getModelDiagramInterface(editorPart.getClass()
-    // .getName());
-    // if (modelDiagramInterface != null) {
-    // eObj = modelDiagramInterface.getModel(editorPart);
-    // } else {
-    // // FIXME: Ignored for now ... fix this! E.g., when changing
-    // // the editor to a
-    // // supported one, partOpened is fired BUT the active editor
-    // // is still the old
-    // // one!
-    // // String message =
-    // // "Cannot find validation extension point definition for editor "
-    // // + editorPart.getClass().getName();
-    // // throw new RuntimeException(message);
-    // }
-    // }
-    // if (eObj != null) {
-    // ePackage = eObj.eClass().getEPackage();
-    // }
-    // }
-    // return ePackage;
-    // }
-
     /**
      * Determine whether or not a file is enabled.
      * 
@@ -295,7 +248,6 @@ public final class ValidationManager {
      * Run the validate action of the currently active editor.
      */
     public static void validateActiveEditor() {
-        // EPackage ePackage = getEPackageOfActiveEditor();
         ValidationInformationCollector.validateActiveEditor();
     }
 

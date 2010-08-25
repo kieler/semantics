@@ -226,48 +226,7 @@ public class ValidationInformationCollector implements IStartup, IPartListener {
     public void partOpened(final IWorkbenchPart workbenchPart) {
         try {
             if (workbenchPart instanceof IEditorPart) {
-                // IEditorPart editorPart = (IEditorPart) workbenchPart;
-                // EObject eObj = null;
-                // // FIXME: @SOH HERE we definitively need an extension point
-                // so
-                // // that it is possible
-                // // to source out code to get the model to a plugin that has
-                // // dependencies to
-                // // the specific diagram editor
-                // if (editorPart instanceof DiagramEditor) {
-                // DiagramEditor diagEd = (DiagramEditor) editorPart;
-                // Object obj = diagEd.getDiagramEditPart().getModel();
-                // if (obj != null && obj instanceof View) {
-                // eObj = ((View) obj).getElement();
-                // }
-                // // } else if (part instanceof PapyrusMultiDiagramEditor) {
-                // // //PapyrusMultiDiagramEditor pmd =
-                // // (PapyrusMultiDiagramEditor) part;
-                // // //eObj = pmd.getModel();
-                // } else if (editorPart instanceof XtextEditor) {
-                // XtextEditor xtextEd = (XtextEditor) editorPart;
-                // eObj = ModelingUtil.getModelFromXtextEditor(xtextEd);
-                // } else {
-                // // now we have to ask the extension point for a suitable
-                // // class
-                // IModelDiagramInterface modelDiagramInterface =
-                // getModelDiagramInterface(editorPart
-                // .getClass().getName());
-                // if (modelDiagramInterface != null) {
-                // eObj = modelDiagramInterface.getModel(editorPart);
-                // } else {
-                // // FIXME: Ignored for now ... fix this! E.g., when
-                // // changing the editor to a
-                // // supported one, partOpened is fired BUT the active
-                // // editor is still the old
-                // // one!
-                // // String message =
-                // //
-                // "Cannot find validation extension point definition for editor "
-                // // + editorPart.getClass().getName();
-                // // throw new RuntimeException(message);
-                // }
-                // }
+
                 for (String key : validateActions.keySet()) {
                     Object o = validateActions.get(key);
 
@@ -288,25 +247,9 @@ public class ValidationInformationCollector implements IStartup, IPartListener {
                             }
                         }
 
-                        validateActiveEditor();
+                        validateEditor((IEditorPart) workbenchPart);
                     }
                 }
-
-                // if (eObj != null) {
-                // String uri = eObj.eClass().getEPackage().getNsURI();
-                // String id = getId(uri);
-                // if (id != null) {
-                // Map<String, CheckfileDefinition> checks = checkfiles
-                // .get(id);
-                // if (checks != null) {
-                // for (CheckfileDefinition check : checks.values()) {
-                // registerCheckfile(check);
-                // }
-                // }
-                // }
-                //
-                // ValidationManager.validateActiveEditor();
-                // }
             }
         } catch (RuntimeException e0) {
             e0.printStackTrace();
@@ -413,74 +356,4 @@ public class ValidationInformationCollector implements IStartup, IPartListener {
         return false;
     }
 
-    // /**
-    // * Validate all editors belonging to a given ePackage.
-    // *
-    // * @param ePackage
-    // * the epackage to for which the editors should be validated
-    // */
-    // public static void validateEPackage(final EPackage ePackage) {
-    // if (ePackage != null) {
-    // String id = getId(ePackage.getNsURI());
-    // if (id != null) {
-    // IWorkbenchPage page = PlatformUI.getWorkbench()
-    // .getActiveWorkbenchWindow().getActivePage();
-    // if (validateActions.containsKey(id)) {
-    // List<IConfigurationElement> elements = validateActions
-    // .get(id);
-    // for (IConfigurationElement elem : elements) {
-    // try {
-    // Object obj = elem
-    // .createExecutableExtension("actionFactory");
-    // if (obj instanceof IValidationActionFactory) {
-    // IValidationActionFactory factory = (IValidationActionFactory) obj;
-    // Action action = factory
-    // .getValidationAction(page);
-    // if (action != null) {
-    // action.run();
-    // }
-    // }
-    // } catch (CoreException e0) {
-    // e0.printStackTrace();
-    // } catch (RuntimeException e0) {
-    // e0.printStackTrace();
-    // throw e0;
-    // }
-    // }
-    // }
-    // }
-    // }
-    // }
-
-    // --------------------------------------------------------------------------
-
-    // /**
-    // * Get the correct getModelDiagramInterface implementation.
-    // *
-    // * @param editorClassName
-    // * the editor class name
-    // * @return the list of listeners
-    // */
-    // public static IModelDiagramInterface getModelDiagramInterface(
-    // final String editorClassName) {
-    // IConfigurationElement[] contributors = Platform.getExtensionRegistry()
-    // .getConfigurationElementsFor(
-    // "de.cau.cs.kieler.core.model.Validation");
-    //
-    // for (IConfigurationElement element : contributors) {
-    // if (element.isValid()) {
-    // try {
-    // Object obj = element.getAttribute("editorClassName");
-    // if ((obj instanceof String) && (obj != null)
-    // && (((String) obj).equals(editorClassName))) {
-    // obj = element.createExecutableExtension("class");
-    // return (IModelDiagramInterface) obj;
-    // }
-    // } catch (CoreException e0) {
-    // e0.printStackTrace();
-    // }
-    // }
-    // }
-    // return null;
-    // }
 }
