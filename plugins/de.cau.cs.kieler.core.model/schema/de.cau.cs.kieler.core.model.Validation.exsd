@@ -20,7 +20,7 @@
          <sequence minOccurs="0" maxOccurs="unbounded">
             <element ref="ePackageDefinition"/>
             <sequence minOccurs="0" maxOccurs="unbounded">
-               <element ref="Checkfile"/>
+               <element ref="Validation"/>
             </sequence>
             <sequence minOccurs="0" maxOccurs="unbounded">
                <element ref="ValidateAction"/>
@@ -53,7 +53,7 @@
       </complexType>
    </element>
 
-   <element name="Checkfile">
+   <element name="Validation">
       <complexType>
          <sequence minOccurs="0" maxOccurs="unbounded">
             <element ref="referenceEPackageNsURI"/>
@@ -61,7 +61,7 @@
          <attribute name="id" type="string" use="required">
             <annotation>
                <documentation>
-                  The id used to reference the checkfile. e.g. for programatic enable/disable.
+                  The id used to reference the checkfile/validator. e.g. for programatic enable/disable.
                </documentation>
             </annotation>
          </attribute>
@@ -72,17 +72,18 @@
                </documentation>
             </annotation>
          </attribute>
-         <attribute name="path" type="string" use="required">
+         <attribute name="checkfilePath" type="string">
             <annotation>
                <documentation>
-                  The path to the checkfile within the root plugin of the ePackage. e.g.: model/Checkfile.chk
+                  The path to a checkfile within the root plugin of the ePackage. e.g.: model/Checkfile.chk.
+The Validation has to have either a checkfilePath or a validator.
                </documentation>
             </annotation>
          </attribute>
          <attribute name="ePackageId" type="string" use="required">
             <annotation>
                <documentation>
-                  
+                  The identifier of the EPackage that the checkfile or validator belongs to.
                </documentation>
                <appinfo>
                   <meta.attribute kind="identifier" basedOn="de.cau.cs.kieler.core.model.Validation/ePackageDefinition/@ePackageId"/>
@@ -92,7 +93,7 @@
          <attribute name="tooltip" type="string">
             <annotation>
                <documentation>
-                  A tooltip describing context or usage of the checkfile.
+                  A tooltip describing context or usage of the checkfile or validator.
                </documentation>
             </annotation>
          </attribute>
@@ -110,21 +111,15 @@
                </documentation>
             </annotation>
          </attribute>
-         <attribute name="class" type="string">
+         <attribute name="validator" type="string">
             <annotation>
                <documentation>
-                  The implementing class for this validation extension point should return the EObject (model) of the current diagram editor (IEditorPart).
+                  Instead of a path to a checkfile this EValidator can be used.
+The Validation has to have either a checkfilePath or a validator.
                </documentation>
                <appinfo>
-                  <meta.attribute kind="java" basedOn=":de.cau.cs.kieler.core.model.validation.IModelDiagramInterface"/>
+                  <meta.attribute kind="java" basedOn=":org.eclipse.emf.ecore.EValidator"/>
                </appinfo>
-            </annotation>
-         </attribute>
-         <attribute name="editorClassName" type="string">
-            <annotation>
-               <documentation>
-                  
-               </documentation>
             </annotation>
          </attribute>
       </complexType>

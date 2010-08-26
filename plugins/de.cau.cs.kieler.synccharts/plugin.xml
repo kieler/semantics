@@ -56,42 +56,42 @@
                ePackageNsURI="http://kieler.cs.cau.de/synccharts/0.2.3"
                nsURI="http://kieler.cs.cau.de/synccharts/0.2">
          </ePackageDefinition>
-         <Checkfile
+         <Validation
                ePackageId="de.cau.cs.kieler.synccharts"
                id="de.cau.cs.kieler.synccharts.SyncchartsChecks"
                isEnabledByDefault="true"
                isWrapExistingValidator="true"
                name="Synccharts Checks"
-               path="model/SyncchartsChecks.chk"
+               checkfilePath="model/SyncchartsChecks.chk"
                tooltip="Checks whether the syncchart is valid.">
             <referenceEPackageNsURI
                   nsURI="http://kieler.cs.cau.de/expressions">
             </referenceEPackageNsURI>
-         </Checkfile>
-         <Checkfile
+         </Validation>
+         <Validation
                ePackageId="de.cau.cs.kieler.synccharts"
                id="de.cau.cs.kieler.synccharts.KleptoChecks"
                isEnabledByDefault="true"
                isWrapExistingValidator="true"
                name="Klepto Checks"
-               path="model/SyncchartsKleptoChecks.chk"
+               checkfilePath="model/SyncchartsKleptoChecks.chk"
                tooltip="Check whether the syncchart can be simulated with Klepto.">
             <referenceEPackageNsURI
                   nsURI="http://kieler.cs.cau.de/expressions">
             </referenceEPackageNsURI>
-         </Checkfile>
-         <Checkfile
+         </Validation>
+         <Validation
                ePackageId="de.cau.cs.kieler.synccharts"
                id="de.cau.cs.kieler.synccharts.ScChecks"
                isEnabledByDefault="false"
                isWrapExistingValidator="true"
                name="SC Checks"
-               path="model/SyncchartsScChecks.chk"
+               checkfilePath="model/SyncchartsScChecks.chk"
                tooltip="Checks whether SC code can be generated from the syncchart.">
             <referenceEPackageNsURI
                   nsURI="http://kieler.cs.cau.de/expressions">
             </referenceEPackageNsURI>
-         </Checkfile>
+         </Validation>
       </extension>
 
 </plugin>

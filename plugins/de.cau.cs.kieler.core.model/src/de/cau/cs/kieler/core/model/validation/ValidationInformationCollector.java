@@ -71,8 +71,8 @@ public class ValidationInformationCollector implements IStartup, IPartListener {
                 String elemName = element.getName();
                 if (elemName.equals("ePackageDefinition")) {
                     addEPackageDefinition(element);
-                } else if (elemName.equals("Checkfile")) {
-                    addCheckfile(element);
+                } else if (elemName.equals("Validation")) {
+                    addValidation(element);
                 } else if (elemName.equals("ValidateAction")) {
                     addValidateAction(element);
                 }
@@ -104,11 +104,11 @@ public class ValidationInformationCollector implements IStartup, IPartListener {
     /**
      * @param element
      */
-    private void addCheckfile(final IConfigurationElement element) {
+    private void addValidation(final IConfigurationElement element) {
         String ePackageId = element.getAttribute("ePackageId");
         String id = element.getAttribute("id");
         String name = element.getAttribute("name");
-        String path = element.getAttribute("path");
+        String path = element.getAttribute("checkfilePath");
         String tooltip = element.getAttribute("tooltip");
         if (tooltip == null) {
             tooltip = "";

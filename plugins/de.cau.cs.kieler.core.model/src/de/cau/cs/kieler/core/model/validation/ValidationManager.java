@@ -170,8 +170,13 @@ public final class ValidationManager {
             final String tooltip, final boolean isEnabledByDefault) {
 
         if (!packages.containsKey(ePackage)) {
-            packages.put(ePackage,
-                    EValidator.Registry.INSTANCE.getEValidator(ePackage));
+            EValidator existingValidator = EValidator.Registry.INSTANCE
+                    .getEValidator(ePackage);
+            if (existingValidator instanceof CustomEValidator) {
+                packages.put(ePackage, existingValidator);
+            } else {
+                packages.put(ePackage, null);
+            }
         }
 
         // if nothing can be found user the extension point setting to
