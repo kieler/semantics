@@ -21,10 +21,11 @@ import java.util.Set;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.xtext.validation.Check;
 
+import de.cau.cs.kieler.core.model.validation.CustomEValidator;
 import de.cau.cs.kieler.synccharts.SyncchartsPackage;
 import de.cau.cs.kieler.synccharts.Transition;
 
-public class KitsJavaValidator extends AbstractKitsJavaValidator {
+public class KitsJavaValidator extends AbstractKitsJavaValidator implements CustomEValidator {
 
     public static final String BAD_ID = "bad_id";
 
