@@ -179,6 +179,9 @@ public final class Utils {
         resetClipboard();
         if (object instanceof EObject) {
             EObject o = EcoreUtil.copy((EObject) object);
+            if (object instanceof State) {
+                cloneTransitions((State) object, (State) o);
+            }
             clipBoard = o;
         } else if (object instanceof List<?>) {
             List<?> list = (List<?>) object;
@@ -255,11 +258,13 @@ public final class Utils {
         List<Transition> transSource = source.getOutgoingTransitions();
         List<Transition> transTarget = target.getOutgoingTransitions();
         transTarget.removeAll(transTarget);
+        target.getIncomingTransitions().removeAll(
+                target.getIncomingTransitions());
 
         for (Transition t : transSource) {
-            if (t.getTargetState() == source) {
+            if (t.getTargetState() == t.getSourceState()) {
                 Transition clone = EcoreUtil.copy(t);
-                transTarget.add(clone);
+                clone.setSourceState(target);
                 clone.setTargetState(target);
             }
         }

@@ -99,8 +99,9 @@ Void copy(Object obj):
 
 // special case for states, clone only self loop transitions
 Void copyInternal(State state):
- let copy = (State) copyObjectToClipboard(state):
- cloneTransitions(state, copy)
+ //let copy = (State) 
+ copyObjectToClipboard(state) //:
+ //cloneTransitions(state, copy)
 ;
 
 // copy a region to clipboard
