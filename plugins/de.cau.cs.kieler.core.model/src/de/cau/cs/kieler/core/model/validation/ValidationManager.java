@@ -18,6 +18,7 @@ import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Queue;
 import java.util.Set;
 
 import org.eclipse.core.runtime.preferences.IEclipsePreferences;
@@ -28,6 +29,8 @@ import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.util.IPropertyChangeListener;
 import org.eclipse.jface.util.PropertyChangeEvent;
 import org.eclipse.xtend.typesystem.emf.check.CheckRegistry;
+import org.eclipse.xtext.validation.CompositeEValidator;
+import org.eclipse.xtext.validation.CompositeEValidator.EValidatorEqualitySupport;
 
 import de.cau.cs.kieler.core.model.CoreModelPlugin;
 
@@ -145,6 +148,41 @@ public final class ValidationManager {
     }
 
     /**
+     * Iteratively determine whether or not a custom EValidator is encapsulated
+     * in the given validator.
+     * 
+     * @param validator
+     * @return
+     */
+    private static boolean containsCustomValidator(final EValidator validator) {
+        Queue<EValidator> validators = new LinkedList<EValidator>();
+        List<EValidator> seen = new LinkedList<EValidator>();
+        validators.add(validator);
+
+        while (!validators.isEmpty()) {
+            EValidator val = validators.remove();
+            seen.add(val);
+
+            if (val instanceof CustomEValidator) {
+                return true;
+            }
+            if (val instanceof CompositeEValidator) {
+                CompositeEValidator comp = (CompositeEValidator) val;
+                List<EValidatorEqualitySupport> contents = comp.getContents();
+
+                for (EValidatorEqualitySupport eval : contents) {
+                    EValidator delegate = eval.getDelegate();
+                    if (!seen.contains(delegate)
+                            && !validators.contains(delegate)) {
+                        validators.add(delegate);
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
+    /**
      * Register a new check file.
      * 
      * @param id
@@ -172,7 +210,7 @@ public final class ValidationManager {
         if (!packages.containsKey(ePackage)) {
             EValidator existingValidator = EValidator.Registry.INSTANCE
                     .getEValidator(ePackage);
-            if (existingValidator instanceof CustomEValidator) {
+            if (containsCustomValidator(existingValidator)) {
                 packages.put(ePackage, existingValidator);
             } else {
                 packages.put(ePackage, null);
