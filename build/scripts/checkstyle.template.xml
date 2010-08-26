@@ -1,4 +1,4 @@
-	<target name="checkstyle" unless="no.findbugs"
+	<target name="checkstyle" unless="no.checkstyle"
 	    description="running checkstyle (configured by ${scriptdir}/build.xml)">
 
 		<path id="checkstyle.classpath">
