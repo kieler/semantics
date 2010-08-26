@@ -25,7 +25,8 @@ import de.cau.cs.kieler.core.model.validation.CustomEValidator;
 import de.cau.cs.kieler.synccharts.SyncchartsPackage;
 import de.cau.cs.kieler.synccharts.Transition;
 
-public class KitsJavaValidator extends AbstractKitsJavaValidator implements CustomEValidator {
+public class KitsJavaValidator extends AbstractKitsJavaValidator implements
+        CustomEValidator {
 
     public static final String BAD_ID = "bad_id";
 
@@ -39,19 +40,22 @@ public class KitsJavaValidator extends AbstractKitsJavaValidator implements Cust
     @Override
     protected List<EPackage> getEPackages() {
         List<EPackage> result = new ArrayList<EPackage>();
-        result.add(de.cau.cs.kieler.synccharts.SyncchartsPackage.eINSTANCE);
+        // result.add(de.cau.cs.kieler.synccharts.SyncchartsPackage.eINSTANCE);
         return result;
     }
 
     // @Check
-    public void checkTypeNameStartsWithCapital(de.cau.cs.kieler.synccharts.State s) {
+    public void checkTypeNameStartsWithCapital(
+            final de.cau.cs.kieler.synccharts.State s) {
         if (!Character.isUpperCase(s.getId().charAt(0))) {
-            warning("Name should start with a capital", s, SyncchartsPackage.SCOPE__ID, BAD_ID);
+            warning("Name should start with a capital", s,
+                    SyncchartsPackage.SCOPE__ID, BAD_ID);
         }
     }
 
     @Check
-    public void checkTransitionPriorities(de.cau.cs.kieler.synccharts.State s) {
+    public void checkTransitionPriorities(
+            final de.cau.cs.kieler.synccharts.State s) {
 
         if (s.getOutgoingTransitions().isEmpty()
                 || s.getOutgoingTransitions().size() == 1) {
@@ -63,7 +67,7 @@ public class KitsJavaValidator extends AbstractKitsJavaValidator implements Cust
         boolean subsequent = true;
         boolean startsWithOne = false;
         boolean sorted = true;
-        
+
         Transition highestPrioTransition = s.getOutgoingTransitions().get(0);
 
         for (Transition t : s.getOutgoingTransitions()) {
@@ -71,20 +75,22 @@ public class KitsJavaValidator extends AbstractKitsJavaValidator implements Cust
                 startsWithOne = true;
             }
             if (t.getPriority() == 0) {
-                error("Priority must be assigned.", t, SyncchartsPackage.TRANSITION__PRIORITY,
-                        MISSING_PRIO);
+                error("Priority must be assigned.", t,
+                        SyncchartsPackage.TRANSITION__PRIORITY, MISSING_PRIO);
             } else {
                 if (t.getPriority() < highestPrioTransition.getPriority()) {
                     highestPrioTransition = t;
                 }
                 if (prios.contains(Integer.valueOf(t.getPriority()))) {
-                    error("Priority is not unique.", t, SyncchartsPackage.TRANSITION__PRIORITY,
+                    error("Priority is not unique.", t,
+                            SyncchartsPackage.TRANSITION__PRIORITY,
                             NON_UNIQUE_PRIO);
                 } else {
                     if (t.getPriority() > count) {
                         subsequent = false;
                     }
-                    if (s.getOutgoingTransitions().indexOf(t)+1 != t.getPriority()) {
+                    if (s.getOutgoingTransitions().indexOf(t) + 1 != t
+                            .getPriority()) {
                         sorted = false;
                     }
                 }
@@ -93,17 +99,22 @@ public class KitsJavaValidator extends AbstractKitsJavaValidator implements Cust
         }
 
         if (!startsWithOne) {
-            warning("Transition priorities should start with value 1", highestPrioTransition,
-                    SyncchartsPackage.STATE__OUTGOING_TRANSITIONS, NO_PRIO_1_TRANSITION);
+            warning("Transition priorities should start with value 1",
+                    highestPrioTransition,
+                    SyncchartsPackage.STATE__OUTGOING_TRANSITIONS,
+                    NO_PRIO_1_TRANSITION);
         } else {
             if (!subsequent) {
-                warning("Priorities are not subsequent.", s.getOutgoingTransitions().get(0),
-                        SyncchartsPackage.STATE__OUTGOING_TRANSITIONS, NON_SUCCEEDING_PRIOS);
+                warning("Priorities are not subsequent.", s
+                        .getOutgoingTransitions().get(0),
+                        SyncchartsPackage.STATE__OUTGOING_TRANSITIONS,
+                        NON_SUCCEEDING_PRIOS);
             } else {
                 if (!sorted) {
                     warning("Transition are not sorted according to their priorities.",
                             s.getOutgoingTransitions().get(0),
-                            SyncchartsPackage.STATE__OUTGOING_TRANSITIONS, UNSORTED_PRIOS);
+                            SyncchartsPackage.STATE__OUTGOING_TRANSITIONS,
+                            UNSORTED_PRIOS);
                 }
             }
         }

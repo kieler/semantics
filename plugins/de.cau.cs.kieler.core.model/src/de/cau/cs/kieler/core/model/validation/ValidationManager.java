@@ -207,10 +207,11 @@ public final class ValidationManager {
             final List<String> referencedEPackageNsURIs, final String name,
             final String tooltip, final boolean isEnabledByDefault) {
 
-        if (!packages.containsKey(ePackage)) {
+        if (packages.get(ePackage) == null) {
             EValidator existingValidator = EValidator.Registry.INSTANCE
                     .getEValidator(ePackage);
-            if (containsCustomValidator(existingValidator)) {
+            if (existingValidator != null
+                    && containsCustomValidator(existingValidator)) {
                 packages.put(ePackage, existingValidator);
             } else {
                 packages.put(ePackage, null);
