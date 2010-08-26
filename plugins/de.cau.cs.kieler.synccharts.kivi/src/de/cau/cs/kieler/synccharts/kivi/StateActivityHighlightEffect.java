@@ -49,14 +49,18 @@ public class StateActivityHighlightEffect extends AbstractEffect {
 
     @Override
     public void execute() {
-        highlightFigure = new RectangleFigure();
-        highlightFigure.setLineWidth(2);
-        highlightFigure.setForegroundColor(ColorConstants.red);
-        highlightFigure.setBounds(editPart.getFigure().getBounds());
-        highlightFigure.setOpaque(true);
-        highlightFigure.setFill(false);
+        if (highlightFigure == null) {
+            highlightFigure = new RectangleFigure();
+            highlightFigure.setLineWidth(2);
+            highlightFigure.setForegroundColor(ColorConstants.red);
+            highlightFigure.setBounds(editPart.getFigure().getBounds());
+            highlightFigure.setOpaque(true);
+            highlightFigure.setFill(false);
 
-        editPart.getFigure().add(highlightFigure);
+            editPart.getFigure().add(highlightFigure);
+        } else {
+            highlightFigure.setForegroundColor(ColorConstants.blue);
+        }
     }
 
     @Override

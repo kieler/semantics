@@ -14,37 +14,28 @@
 package de.cau.cs.kieler.synccharts.kivi;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.StringTokenizer;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.gef.EditPart;
-import org.eclipse.gmf.runtime.diagram.ui.editparts.DiagramEditPart;
 import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramEditor;
 import org.eclipse.gmf.runtime.notation.View;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IEditorPart;
-import org.eclipse.ui.IEditorReference;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import de.cau.cs.kieler.kivi.core.Viewmanagement;
 import de.cau.cs.kieler.sim.kiem.IJSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.JSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.KiemExecutionException;
 import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
-import de.cau.cs.kieler.sim.kiem.properties.KiemProperty;
-import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyTypeEditor;
 
 /**
- * A data component that observes the activity of syncchart states during
- * simulation.
+ * A data component that observes the activity of syncchart states during simulation.
  * 
  * @author mmu
  * 
@@ -69,7 +60,7 @@ public class StateActivityDataComponent extends JSONObjectDataComponent implemen
      */
     public void wrapup() throws KiemInitializationException {
         if (StateActivityTrigger.getInstance() != null) {
-            StateActivityTrigger.getInstance().step(new ArrayList<EditPart>());
+            StateActivityTrigger.getInstance().step(null);
         }
     }
 
@@ -84,6 +75,11 @@ public class StateActivityDataComponent extends JSONObjectDataComponent implemen
      * {@inheritDoc}
      */
     public boolean isObserver() {
+        return true;
+    }
+
+    @Override
+    public boolean isHistoryObserver() {
         return true;
     }
 
@@ -110,7 +106,7 @@ public class StateActivityDataComponent extends JSONObjectDataComponent implemen
                 StateActivityTrigger.getInstance().step(activeStates);
             }
         } catch (JSONException e) {
-            // TODO Auto-generated catch block
+            // when no state value exists
             e.printStackTrace();
         }
         return null;

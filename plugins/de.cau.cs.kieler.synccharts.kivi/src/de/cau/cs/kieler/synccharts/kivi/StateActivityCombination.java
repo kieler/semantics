@@ -35,30 +35,58 @@ public class StateActivityCombination extends AbstractCombination {
 
     private List<EditPart> activeStates;
 
-    private Map<EditPart, IEffect> previousEffects = new HashMap<EditPart, IEffect>();
+    private Map<EditPart, IEffect> activatedEffects = new HashMap<EditPart, IEffect>();
+
+    private Map<EditPart, IEffect> deactivatedEffects = new HashMap<EditPart, IEffect>();
 
     @Override
     public void execute() {
+        if (activeStates == null) { // simulation finished
+            undo();
+            return;
+        }
+        // remove blue highlights for old states
+        for (IEffect e : deactivatedEffects.values()) {
+            Viewmanagement.getInstance().undoEffect(e);
+        }
+        deactivatedEffects.clear();
         // compute diff
         List<EditPart> activatedStates = new ArrayList<EditPart>(activeStates);
+        // TODO copy can be optimized away if full list of active states isn't needed
         List<EditPart> deactivatedStates = new ArrayList<EditPart>();
-        for (EditPart e : previousEffects.keySet()) {
+        for (EditPart e : activatedEffects.keySet()) {
             if (!activatedStates.remove(e)) {
                 deactivatedStates.add(e);
             }
         }
         // undo effects for newly deactivated states
         for (EditPart e : deactivatedStates) {
-            Viewmanagement.getInstance().undoEffect(previousEffects.remove(e));
+            IEffect effect = activatedEffects.remove(e);
+            Viewmanagement.getInstance().executeEffect(effect);
+            deactivatedEffects.put(e, effect);
         }
         // do effects for newly activated states
         for (EditPart e : activatedStates) {
             if (e instanceof GraphicalEditPart) {
                 IEffect effect = new StateActivityHighlightEffect((GraphicalEditPart) e);
-                previousEffects.put(e, effect);
+                activatedEffects.put(e, effect);
                 Viewmanagement.getInstance().executeEffect(effect);
             }
         }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public void undo() {
+        for (IEffect e : deactivatedEffects.values()) {
+            Viewmanagement.getInstance().undoEffect(e);
+        }
+        for (IEffect e : activatedEffects.values()) {
+            Viewmanagement.getInstance().undoEffect(e);
+        }
+        deactivatedEffects.clear();
+        activatedEffects.clear();
     }
 
     /**
