@@ -222,13 +222,19 @@ litigation.
    <includes
          id="org.eclipse.papyrus"
          version="0.0.0"
-         optional="true"
+         search-location="self"/>
+
+   <includes
+         id="org.eclipse.papyrus.diagram.statemachine"
+         version="0.0.0"
          search-location="self"/>
 
    <requires>
       <import feature="de.cau.cs.kieler.core" version="0.2.0" match="greaterOrEqual"/>
       <import feature="de.cau.cs.kieler.kiml" version="0.1.0" match="greaterOrEqual"/>
       <import feature="org.eclipse.uml2" version="3.0.0" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.papyrus.core"/>
+      <import plugin="org.eclipse.papyrus.diagram.statemachine"/>
    </requires>
 
    <plugin
@@ -237,5 +243,24 @@ litigation.
          install-size="0"
          version="0.0.0"
          unpack="false"/>
+
+   <plugin
+         id="de.cau.cs.kieler.uml2.viewmanagement"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="de.cau.cs.kieler.maude"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"/>
+
+   <plugin
+         id="de.cau.cs.kieler.uml2.sim.maude"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"/>
 
 </feature>
