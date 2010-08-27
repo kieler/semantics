@@ -62,10 +62,10 @@ public class StateLayout extends AbstractTableLayout implements IModelElementSen
 
     private Notifier modelElement;
     
+    private StateType type;
+    
     /**
      * Creates a state layout.
-     * 
-     * @param modelElementInput the model element that will be layouted
      */
     public StateLayout() {
             super();
@@ -98,7 +98,7 @@ public class StateLayout extends AbstractTableLayout implements IModelElementSen
             //Notifier modelElement = attrStateFigure.getTarget();
             if (modelElement instanceof State) {
                 State state = (State) modelElement;
-                StateType type = state.getType();
+                /*StateType*/ type = state.getType();
                 ExtendedTable layout;
                 switch (type) {
                 case NORMAL:
@@ -136,8 +136,8 @@ public class StateLayout extends AbstractTableLayout implements IModelElementSen
                     layout.padding(0);
                 }
                 return layout;
-            }
-        //}
+            //}
+        }
         return null;
     }
 
@@ -215,7 +215,6 @@ public class StateLayout extends AbstractTableLayout implements IModelElementSen
         boolean containsBodyText = state.getBodyText() != null
                 && state.getBodyText().getCode() != null
                 && state.getBodyText().getCode().length() > 0;
-
         return (containsRegions || containsSignals || containsVariables
                 || containsEntryActions || containsInsideActions
                 || containsExitActions || containsSuspensionTrigger || containsBodyText);
@@ -234,7 +233,10 @@ public class StateLayout extends AbstractTableLayout implements IModelElementSen
     }
 
     public void setModelElement(Notifier theModelElement) {
-        modelElement = theModelElement;
-        
+        modelElement = theModelElement;     
+    }
+    
+    public void setStateType(String stateType){
+        type = StateType.getByName(stateType);
     }
 }

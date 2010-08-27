@@ -17,6 +17,7 @@ package de.cau.cs.kieler.synccharts.custom;
 import org.eclipse.draw2d.ColorConstants;
 import org.eclipse.draw2d.Graphics;
 import org.eclipse.draw2d.IFigure;
+import org.eclipse.draw2d.LayoutManager;
 import org.eclipse.draw2d.RoundedRectangle;
 import org.eclipse.draw2d.geometry.Dimension;
 import org.eclipse.draw2d.geometry.Rectangle;
@@ -26,7 +27,7 @@ import org.eclipse.gmf.runtime.draw2d.ui.render.factory.RenderedImageFactory;
 import org.eclipse.gmf.runtime.draw2d.ui.render.figures.ScalableImageFigure;
 
 import de.cau.cs.kieler.core.ui.figures.DoubleRoundedRectangle;
-import de.cau.cs.kieler.karma.IFigureProvider;
+import de.cau.cs.kieler.karma.IRenderingProvider;
 
 /**
  * This class provides figures for the graphical synccharts representation.
@@ -34,7 +35,7 @@ import de.cau.cs.kieler.karma.IFigureProvider;
  * @author ckru
  * 
  */
-public class SyncchartsFigureProvider implements IFigureProvider {
+public class SyncchartsFigureProvider implements IRenderingProvider {
 
     /** line width for initial states. */
     private static final int INIT_LINE_WIDTH = 4;
@@ -347,5 +348,22 @@ public class SyncchartsFigureProvider implements IFigureProvider {
      */
     private IFigure createConditionalFigure() {
         return new ConditionalStateFigure();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public LayoutManager getLayoutManagerByString(final String input,
+            final LayoutManager oldLayoutManager, final EObject object) {
+        // TODO Auto-generated method stub
+        return oldLayoutManager;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public LayoutManager getDefaultLayoutManager() {
+        // TODO Auto-generated method stub
+        return null;
     }
 }

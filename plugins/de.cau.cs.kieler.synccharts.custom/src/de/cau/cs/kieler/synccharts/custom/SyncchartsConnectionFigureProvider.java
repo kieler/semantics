@@ -18,6 +18,7 @@ package de.cau.cs.kieler.synccharts.custom;
 import org.eclipse.draw2d.ColorConstants;
 import org.eclipse.draw2d.Graphics;
 import org.eclipse.draw2d.IFigure;
+import org.eclipse.draw2d.LayoutManager;
 import org.eclipse.draw2d.PolygonDecoration;
 import org.eclipse.draw2d.RotatableDecoration;
 import org.eclipse.draw2d.geometry.PointList;
@@ -26,14 +27,14 @@ import org.eclipse.emf.ecore.EObject;
 
 import de.cau.cs.kieler.core.ui.figures.CircleDecoration;
 import de.cau.cs.kieler.core.ui.figures.SplineConnection;
-import de.cau.cs.kieler.karma.IFigureProvider;
+import de.cau.cs.kieler.karma.IRenderingProvider;
 
 /**
  * 
  * @author ckru
  * 
  */
-public class SyncchartsConnectionFigureProvider implements IFigureProvider {
+public class SyncchartsConnectionFigureProvider implements IRenderingProvider {
 
     /**
      * {@inheritDoc}
@@ -176,6 +177,17 @@ public class SyncchartsConnectionFigureProvider implements IFigureProvider {
         historyDecoration.setTemplate(historyDecorationPoints);
         historyDecoration.setScale(HISTORY_SCALE, HISTORY_SCALE);
         return historyDecoration;
+    }
+
+    public LayoutManager getLayoutManagerByString(String input, LayoutManager oldLayoutManager,
+            EObject object) {
+        // TODO Auto-generated method stub
+        return oldLayoutManager;
+    }
+
+    public LayoutManager getDefaultLayoutManager() {
+        // TODO Auto-generated method stub
+        return null;
     }
 
 }

@@ -13,68 +13,82 @@
       <configuration
             FeatureProvider="de.cau.cs.kieler.synccharts.custom.SyncchartsFeatureProvider"
             FigureProvider="de.cau.cs.kieler.synccharts.custom.SyncchartsFigureProvider"
+            RenderingProvider="de.cau.cs.kieler.synccharts.custom.SyncchartsFigureProvider"
             editorId="de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorID">
          <conditions>
             <featureValueCondition
                   feature="type"
                   figureParam="conditional"
+                  layoutParam="conditional"
                   type="State"
                   value="CONDITIONAL">
             </featureValueCondition>
             <compoundCondition
-                  figureParam="simpleInitialFinalRefState">
+                  figureParam="simpleInitialFinalRefState"
+                  layoutParam="simpleInitialFinalRefState">
                <compoundCondition
-                     figureParam="simpleRefState">
+                     figureParam="simpleRefState"
+                     layoutParam="simpleRefState">
                   <featureValueCondition
                         feature="type"
                         figureParam="normalState"
+                        layoutParam="normalState"
                         type="State"
                         value="REFERENCE">
                   </featureValueCondition>
                   <listSizeCondition
                         feature="regions"
                         figureParam="null"
+                        layoutParam="null"
                         size="0"
                         type="State">
                   </listSizeCondition>
                   <listSizeCondition
                         feature="signals"
                         figureParam="null"
+                        layoutParam="null"
                         size="0"
                         type="Scope">
                   </listSizeCondition>
                   <listSizeCondition
                         feature="entryActions"
                         figureParam="null"
+                        layoutParam="null"
                         size="0"
                         type="Scope">
                   </listSizeCondition>
                   <listSizeCondition
                         feature="innerActions"
                         figureParam="null"
+                        layoutParam="null"
                         size="0"
                         type="Scope">
                   </listSizeCondition>
                   <listSizeCondition
                         feature="exitActions"
                         figureParam="null"
+                        layoutParam="null"
                         size="0"
                         type="Scope">
                   </listSizeCondition>
                </compoundCondition>
                <compoundCondition
-                     figureParam="initialFinalState">
+                     figureParam="initialFinalState"
+                     layoutParam="initialFinalState">
                   <compoundCondition
-                        figureParam="initialFinalState">
+                        figureParam="initialFinalState"
+                        layoutParam="initialFinalState">
                      <featureValueCondition
                            feature="isInitial"
                            figureParam="initialState"
+                           layoutParam="initialState"
                            type="State"
                            value="true">
                      </featureValueCondition>
                      <featureValueCondition
                            feature="isFinal"
                            figureParam="finalState"
+                           layoutParam="finalState"
                            type="State"
                            value="true">
                      </featureValueCondition>
@@ -82,167 +96,200 @@
                </compoundCondition>
             </compoundCondition>
             <compoundCondition
-                  figureParam="simpleInitialRefState">
+                  figureParam="simpleInitialRefState"
+                  layoutParam="simpleInitialRefState">
                <compoundCondition
-                     figureParam="simpleRefState">
+                     figureParam="simpleRefState"
+                     layoutParam="simpleRefState">
                   <featureValueCondition
                         feature="type"
                         figureParam="normalState"
+                        layoutParam="normalState"
                         type="State"
                         value="REFERENCE">
                   </featureValueCondition>
                   <listSizeCondition
                         feature="regions"
                         figureParam="null"
+                        layoutParam="null"
                         size="0"
                         type="State">
                   </listSizeCondition>
                   <listSizeCondition
                         feature="signals"
                         figureParam="null"
+                        layoutParam="null"
                         size="0"
                         type="Scope">
                   </listSizeCondition>
                   <listSizeCondition
                         feature="entryActions"
                         figureParam="null"
+                        layoutParam="null"
                         size="0"
                         type="Scope">
                   </listSizeCondition>
                   <listSizeCondition
                         feature="innerActions"
                         figureParam="null"
+                        layoutParam="null"
                         size="0"
                         type="Scope">
                   </listSizeCondition>
                   <listSizeCondition
                         feature="exitActions"
                         figureParam="null"
+                        layoutParam="null"
                         size="0"
                         type="Scope">
                   </listSizeCondition>
                </compoundCondition>
                <compoundCondition
-                     figureParam="initialState">
+                     figureParam="initialState"
+                     layoutParam="initialState">
                   <featureValueCondition
                         feature="isInitial"
                         figureParam="initialState"
+                        layoutParam="initialState"
                         type="State"
                         value="true">
                   </featureValueCondition>
                </compoundCondition>
             </compoundCondition>
             <compoundCondition
-                  figureParam="simpleFinalRefState">
+                  figureParam="simpleFinalRefState"
+                  layoutParam="simpleFinalRefState">
                <compoundCondition
-                     figureParam="simpleRefState">
+                     figureParam="simpleRefState"
+                     layoutParam="simpleRefState">
                   <featureValueCondition
                         feature="type"
                         figureParam="normalState"
+                        layoutParam="normalState"
                         type="State"
                         value="REFERENCE">
                   </featureValueCondition>
                   <listSizeCondition
                         feature="regions"
                         figureParam="null"
+                        layoutParam="null"
                         size="0"
                         type="State">
                   </listSizeCondition>
                   <listSizeCondition
                         feature="signals"
                         figureParam="null"
+                        layoutParam="null"
                         size="0"
                         type="Scope">
                   </listSizeCondition>
                   <listSizeCondition
                         feature="entryActions"
                         figureParam="null"
+                        layoutParam="null"
                         size="0"
                         type="Scope">
                   </listSizeCondition>
                   <listSizeCondition
                         feature="innerActions"
                         figureParam="null"
+                        layoutParam="null"
                         size="0"
                         type="Scope">
                   </listSizeCondition>
                   <listSizeCondition
                         feature="exitActions"
                         figureParam="null"
+                        layoutParam="null"
                         size="0"
                         type="Scope">
                   </listSizeCondition>
                </compoundCondition>
                <compoundCondition
-                     figureParam="finalState">
+                     figureParam="finalState"
+                     layoutParam="finalState">
                   <featureValueCondition
                         feature="isFinal"
                         figureParam="finalState"
+                        layoutParam="finalState"
                         type="State"
                         value="true">
                   </featureValueCondition>
                </compoundCondition>
             </compoundCondition>
             <compoundCondition
-                  figureParam="simpleRefState">
+                  figureParam="simpleRefState"
+                  layoutParam="simpleRefState">
                <featureValueCondition
                      feature="type"
                      figureParam="normalState"
+                     layoutParam="normalState"
                      type="State"
                      value="REFERENCE">
                </featureValueCondition>
                <listSizeCondition
                      feature="regions"
                      figureParam="null"
+                     layoutParam="null"
                      size="0"
                      type="State">
                </listSizeCondition>
                <listSizeCondition
                      feature="signals"
                      figureParam="null"
+                     layoutParam="null"
                      size="0"
                      type="Scope">
                </listSizeCondition>
                <listSizeCondition
                      feature="entryActions"
                      figureParam="null"
+                     layoutParam="null"
                      size="0"
                      type="Scope">
                </listSizeCondition>
                <listSizeCondition
                      feature="innerActions"
                      figureParam="null"
+                     layoutParam="null"
                      size="0"
                      type="Scope">
                </listSizeCondition>
                <listSizeCondition
                      feature="exitActions"
                      figureParam="null"
+                     layoutParam="null"
                      size="0"
                      type="Scope">
                </listSizeCondition>
             </compoundCondition>
             <compoundCondition
-                  figureParam="initialFinalRefState">
+                  figureParam="initialFinalRefState"
+                  layoutParam="initialFinalRefState">
                <featureValueCondition
                      feature="type"
                      figureParam="normalState"
+                     layoutParam="normalState"
                      type="State"
                      value="REFERENCE">
                </featureValueCondition>
                <compoundCondition
-                     figureParam="initialFinalState">
+                     figureParam="initialFinalState"
+                     layoutParam="initialFinalState">
                   <compoundCondition
-                        figureParam="initialFinalState">
+                        figureParam="initialFinalState"
+                        layoutParam="initialFinalState">
                      <featureValueCondition
                            feature="isInitial"
                            figureParam="initialState"
+                           layoutParam="initialState"
                            type="State"
                            value="true">
                      </featureValueCondition>
                      <featureValueCondition
                            feature="isFinal"
                            figureParam="finalState"
+                           layoutParam="finalState"
                            type="State"
                            value="true">
                      </featureValueCondition>
@@ -250,36 +297,44 @@
                </compoundCondition>
             </compoundCondition>
             <compoundCondition
-                  figureParam="initialRefState">
+                  figureParam="initialRefState"
+                  layoutParam="initialRefState">
                <featureValueCondition
                      feature="type"
                      figureParam="normalState"
+                     layoutParam="normalState"
                      type="State"
                      value="REFERENCE">
                </featureValueCondition>
                <compoundCondition
-                     figureParam="initialState">
+                     figureParam="initialState"
+                     layoutParam="initialState">
                   <featureValueCondition
                         feature="isInitial"
                         figureParam="initialState"
+                        layoutParam="initialState"
                         type="State"
                         value="true">
                   </featureValueCondition>
                </compoundCondition>
             </compoundCondition>
             <compoundCondition
-                  figureParam="finalRefState">
+                  figureParam="finalRefState"
+                  layoutParam="finalRefState">
                <featureValueCondition
                      feature="type"
                      figureParam="normalState"
+                     layoutParam="normalState"
                      type="State"
                      value="REFERENCE">
                </featureValueCondition>
                <compoundCondition
-                     figureParam="finalState">
+                     figureParam="finalState"
+                     layoutParam="finalState">
                   <featureValueCondition
                         feature="isFinal"
                         figureParam="finalState"
+                        layoutParam="finalState"
                         type="State"
                         value="true">
                   </featureValueCondition>
@@ -288,191 +343,228 @@
             <featureValueCondition
                   feature="type"
                   figureParam="refState"
+                  layoutParam="refState"
                   type="State"
                   value="REFERENCE">
             </featureValueCondition>
             <compoundCondition
-                  figureParam="initialFinalState">
+                  figureParam="initialFinalState"
+                  layoutParam="initialFinalState">
                <featureValueCondition
                      feature="isInitial"
                      figureParam="initialState"
+                     layoutParam="initialState"
                      type="State"
                      value="true">
                </featureValueCondition>
                <featureValueCondition
                      feature="isFinal"
                      figureParam="finalState"
+                     layoutParam="finalState"
                      type="State"
                      value="true">
                </featureValueCondition>
                <compoundCondition
-                     figureParam="normalState">
+                     figureParam="normalState"
+                     layoutParam="normalState">
                   <featureValueCondition
                         feature="type"
                         figureParam="normalState"
+                        layoutParam="normalState"
                         type="State"
                         value="NORMAL">
                   </featureValueCondition>
                   <listSizeCondition
                         feature="regions"
                         figureParam="null"
+                        layoutParam="null"
                         size="0"
                         type="State">
                   </listSizeCondition>
                   <listSizeCondition
                         feature="signals"
                         figureParam="null"
+                        layoutParam="null"
                         size="0"
                         type="Scope">
                   </listSizeCondition>
                   <listSizeCondition
                         feature="entryActions"
                         figureParam="null"
+                        layoutParam="null"
                         size="0"
                         type="Scope">
                   </listSizeCondition>
                   <listSizeCondition
                         feature="innerActions"
                         figureParam="null"
+                        layoutParam="null"
                         size="0"
                         type="Scope">
                   </listSizeCondition>
                   <listSizeCondition
                         feature="exitActions"
                         figureParam="null"
+                        layoutParam="null"
                         size="0"
                         type="Scope">
                   </listSizeCondition>
                </compoundCondition>
             </compoundCondition>
             <compoundCondition
-                  figureParam="initialFinalState">
+                  figureParam="initialFinalState"
+                  layoutParam="initialFinalState">
                <compoundCondition
-                     figureParam="initialFinalState">
+                     figureParam="initialFinalState"
+                     layoutParam="initialFinalState">
                   <featureValueCondition
                         feature="isInitial"
                         figureParam="initialState"
+                        layoutParam="initialState"
                         type="State"
                         value="true">
                   </featureValueCondition>
                   <featureValueCondition
                         feature="isFinal"
                         figureParam="finalState"
+                        layoutParam="finalState"
                         type="State"
                         value="true">
                   </featureValueCondition>
                </compoundCondition>
             </compoundCondition>
             <compoundCondition
-                  figureParam="initialState">
+                  figureParam="initialState"
+                  layoutParam="initialState">
                <featureValueCondition
                      feature="isInitial"
                      figureParam="initialState"
+                     layoutParam="initialState"
                      type="State"
                      value="true">
                </featureValueCondition>
                <compoundCondition
-                     figureParam="normalState">
+                     figureParam="normalState"
+                     layoutParam="normalState">
                   <featureValueCondition
                         feature="type"
                         figureParam="normalState"
+                        layoutParam="normalState"
                         type="State"
                         value="NORMAL">
                   </featureValueCondition>
                   <listSizeCondition
                         feature="regions"
                         figureParam="null"
+                        layoutParam="null"
                         size="0"
                         type="State">
                   </listSizeCondition>
                   <listSizeCondition
                         feature="signals"
                         figureParam="null"
+                        layoutParam="null"
                         size="0"
                         type="Scope">
                   </listSizeCondition>
                   <listSizeCondition
                         feature="entryActions"
                         figureParam="null"
+                        layoutParam="null"
                         size="0"
                         type="Scope">
                   </listSizeCondition>
                   <listSizeCondition
                         feature="innerActions"
                         figureParam="null"
+                        layoutParam="null"
                         size="0"
                         type="Scope">
                   </listSizeCondition>
                   <listSizeCondition
                         feature="exitActions"
                         figureParam="null"
+                        layoutParam="null"
                         size="0"
                         type="Scope">
                   </listSizeCondition>
                </compoundCondition>
             </compoundCondition>
             <compoundCondition
-                  figureParam="initialState">
+                  figureParam="initialState"
+                  layoutParam="initialState">
                <featureValueCondition
                      feature="isInitial"
                      figureParam="initialState"
+                     layoutParam="initialState"
                      type="State"
                      value="true">
                </featureValueCondition>
             </compoundCondition>
             <compoundCondition
-                  figureParam="finalState">
+                  figureParam="finalState"
+                  layoutParam="finalState">
                <featureValueCondition
                      feature="isFinal"
                      figureParam="finalState"
+                     layoutParam="finalState"
                      type="State"
                      value="true">
                </featureValueCondition>
                <compoundCondition
-                     figureParam="normalState">
+                     figureParam="normalState"
+                     layoutParam="normalState">
                   <featureValueCondition
                         feature="type"
                         figureParam="normalState"
+                        layoutParam="normalState"
                         type="State"
                         value="NORMAL">
                   </featureValueCondition>
                   <listSizeCondition
                         feature="regions"
                         figureParam="null"
+                        layoutParam="null"
                         size="0"
                         type="State">
                   </listSizeCondition>
                   <listSizeCondition
                         feature="signals"
                         figureParam="null"
+                        layoutParam="null"
                         size="0"
                         type="Scope">
                   </listSizeCondition>
                   <listSizeCondition
                         feature="entryActions"
                         figureParam="null"
+                        layoutParam="null"
                         size="0"
                         type="Scope">
                   </listSizeCondition>
                   <listSizeCondition
                         feature="innerActions"
                         figureParam="null"
+                        layoutParam="null"
                         size="0"
                         type="Scope">
                   </listSizeCondition>
                   <listSizeCondition
                         feature="exitActions"
                         figureParam="null"
+                        layoutParam="null"
                         size="0"
                         type="Scope">
                   </listSizeCondition>
                </compoundCondition>
             </compoundCondition>
             <compoundCondition
-                  figureParam="finalState">
+                  figureParam="finalState"
+                  layoutParam="finalState">
                <featureValueCondition
                      feature="isFinal"
                      figureParam="finalState"
+                     layoutParam="finalState"
                      type="State"
                      value="true">
                </featureValueCondition>
@@ -480,44 +572,52 @@
             <featureValueCondition
                   feature="type"
                   figureParam="normalState"
+                  layoutParam="normalState"
                   type="State"
                   value="TEXTUAL">
             </featureValueCondition>
             <compoundCondition
-                  figureParam="normalState">
+                  figureParam="normalState"
+                  layoutParam="normalState">
                <featureValueCondition
                      feature="type"
                      figureParam="normalState"
+                     layoutParam="normalState"
                      type="State"
                      value="NORMAL">
                </featureValueCondition>
                <listSizeCondition
                      feature="regions"
                      figureParam="null"
+                     layoutParam="null"
                      size="0"
                      type="State">
                </listSizeCondition>
                <listSizeCondition
                      feature="signals"
                      figureParam="null"
+                     layoutParam="null"
                      size="0"
                      type="Scope">
                </listSizeCondition>
                <listSizeCondition
                      feature="entryActions"
                      figureParam="null"
+                     layoutParam="null"
                      size="0"
                      type="Scope">
                </listSizeCondition>
                <listSizeCondition
                      feature="innerActions"
                      figureParam="null"
+                     layoutParam="null"
                      size="0"
                      type="Scope">
                </listSizeCondition>
                <listSizeCondition
                      feature="exitActions"
                      figureParam="null"
+                     layoutParam="null"
                      size="0"
                      type="Scope">
                </listSizeCondition>
@@ -525,6 +625,7 @@
             <featureValueCondition
                   feature="type"
                   figureParam="normalState"
+                  layoutParam="normalState"
                   type="State"
                   value="NORMAL">
             </featureValueCondition>
@@ -548,49 +649,59 @@
       <configuration
             FeatureProvider="de.cau.cs.kieler.synccharts.custom.FeatureProvider1"
             FigureProvider="de.cau.cs.kieler.synccharts.custom.SyncchartsConnectionFigureProvider"
+            RenderingProvider="de.cau.cs.kieler.synccharts.custom.SyncchartsConnectionFigureProvider"
             editorId="de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorID">
          <conditions>
             <compoundCondition
-                  figureParam="weakAbortHistory">
+                  figureParam="weakAbortHistory"
+                  layoutParam="weakAbortHistory">
                <featureValueCondition
                      feature="type"
                      figureParam="weakAbortHistory"
+                     layoutParam="weakAbortHistory"
                      type="Transition"
                      value="WEAKABORT">
                </featureValueCondition>
                <featureValueCondition
                      feature="isHistory"
                      figureParam="weakAbortHistory"
+                     layoutParam="weakAbortHistory"
                      type="Transition"
                      value="true">
                </featureValueCondition>
             </compoundCondition>
             <compoundCondition
-                  figureParam="strongAbortHistory">
+                  figureParam="strongAbortHistory"
+                  layoutParam="strongAbortHistory">
                <featureValueCondition
                      feature="type"
                      figureParam="strongAbortHistory"
+                     layoutParam="strongAbortHistory"
                      type="Transition"
                      value="STRONGABORT">
                </featureValueCondition>
                <featureValueCondition
                      feature="isHistory"
                      figureParam="strongAbortHistory"
+                     layoutParam="strongAbortHistory"
                      type="Transition"
                      value="true">
                </featureValueCondition>
             </compoundCondition>
             <compoundCondition
-                  figureParam="terminationHistory">
+                  figureParam="terminationHistory"
+                  layoutParam="terminationHistory">
                <featureValueCondition
                      feature="type"
                      figureParam="terminationHistory"
+                     layoutParam="terminationHistory"
                      type="Transition"
                      value="NORMALTERMINATION">
                </featureValueCondition>
                <featureValueCondition
                      feature="isHistory"
                      figureParam="terminationHistory"
+                     layoutParam="terminationHistory"
                      type="Transition"
                      value="true">
                </featureValueCondition>
@@ -598,18 +709,21 @@
             <featureValueCondition
                   feature="type"
                   figureParam="weakAbort"
+                  layoutParam="weakAbort"
                   type="Transition"
                   value="WEAKABORT">
             </featureValueCondition>
             <featureValueCondition
                   feature="type"
                   figureParam="strongAbort"
+                  layoutParam="strongAbort"
                   type="Transition"
                   value="STRONGABORT">
             </featureValueCondition>
             <featureValueCondition
                   feature="type"
                   figureParam="termination"
+                  layoutParam="termination"
                   type="Transition"
                   value="NORMALTERMINATION">
             </featureValueCondition>
