@@ -18,7 +18,9 @@ import java.util.List;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.gef.ConnectionEditPart;
 import org.eclipse.gef.EditPart;
+import org.eclipse.gmf.runtime.diagram.ui.editparts.DiagramEditPart;
 import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramEditor;
 import org.eclipse.gmf.runtime.notation.View;
 import org.eclipse.swt.widgets.Display;
@@ -35,7 +37,8 @@ import de.cau.cs.kieler.sim.kiem.KiemExecutionException;
 import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
 
 /**
- * A data component that observes the activity of syncchart states during simulation.
+ * A data component that observes the activity of syncchart states during
+ * simulation.
  * 
  * @author mmu
  * 
@@ -96,8 +99,8 @@ public class StateActivityDataComponent extends JSONObjectDataComponent implemen
                 if (state.startsWith("/")) {
                     EObject activeState = resource.getEObject(state);
                     if (activeState != null) {
-                        EditPart editPart = diagramEditor.getDiagramEditPart().findEditPart(
-                                diagramEditor.getDiagramEditPart(), activeState);
+                        EditPart editPart = diagramEditor.getDiagramEditPart().findEditPart(null,
+                                activeState);
                         activeStates.add(editPart);
                     }
                 }
@@ -124,5 +127,21 @@ public class StateActivityDataComponent extends JSONObjectDataComponent implemen
                 }
             }
         });
+    }
+
+    // TODO benchmark against modelingutil
+    private EditPart myFindEditPart(final DiagramEditPart diagram, final EObject eObject) {
+        EditPart found = diagram.findEditPart(null, eObject);
+        if (found != null) {
+            return found;
+        } else {
+            List<ConnectionEditPart> connections = diagram.getConnections();
+            for (ConnectionEditPart connection : connections) {
+                if (eObject.equals(((View) connection.getModel()).getElement())) {
+                    return connection;
+                }
+            }
+        }
+        return null;
     }
 }

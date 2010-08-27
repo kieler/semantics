@@ -16,6 +16,7 @@ package de.cau.cs.kieler.synccharts.kivi;
 import org.eclipse.draw2d.ColorConstants;
 import org.eclipse.draw2d.RectangleFigure;
 import org.eclipse.gef.GraphicalEditPart;
+import org.eclipse.gmf.runtime.diagram.ui.editparts.ShapeEditPart;
 
 import de.cau.cs.kieler.kivi.core.impl.AbstractEffect;
 
@@ -27,8 +28,12 @@ import de.cau.cs.kieler.kivi.core.impl.AbstractEffect;
  */
 public class StateActivityHighlightEffect extends AbstractEffect {
 
-    private GraphicalEditPart editPart;
+    private GraphicalEditPart graphicalEditPart;
+    private ShapeEditPart shapeEditPart;
+
     private RectangleFigure highlightFigure;
+
+    private int counter = 0;
 
     /**
      * Default constructor.
@@ -44,20 +49,36 @@ public class StateActivityHighlightEffect extends AbstractEffect {
      *            the edit part to highlight
      */
     public StateActivityHighlightEffect(final GraphicalEditPart e) {
-        editPart = e;
+        graphicalEditPart = e;
+        if (e instanceof ShapeEditPart) {
+            shapeEditPart = (ShapeEditPart) e;
+        }
     }
 
     @Override
     public void execute() {
+        if (shapeEditPart != null) {
+            execute(shapeEditPart);
+        } else {
+            execute(graphicalEditPart);
+        }
+        counter++;
+    }
+
+    private void execute(final ShapeEditPart editPart) {
+        // TODO
+    }
+
+    private void execute(final GraphicalEditPart editPart) {
         if (highlightFigure == null) {
             highlightFigure = new RectangleFigure();
             highlightFigure.setLineWidth(2);
             highlightFigure.setForegroundColor(ColorConstants.red);
-            highlightFigure.setBounds(editPart.getFigure().getBounds());
+            highlightFigure.setBounds(graphicalEditPart.getFigure().getBounds());
             highlightFigure.setOpaque(true);
             highlightFigure.setFill(false);
 
-            editPart.getFigure().add(highlightFigure);
+            graphicalEditPart.getFigure().add(highlightFigure);
         } else {
             highlightFigure.setForegroundColor(ColorConstants.blue);
         }
@@ -65,8 +86,20 @@ public class StateActivityHighlightEffect extends AbstractEffect {
 
     @Override
     public void undo() {
+        if (shapeEditPart != null) {
+            undo(shapeEditPart);
+        } else {
+            undo(graphicalEditPart);
+        }
+    }
+
+    private void undo(final ShapeEditPart editPart) {
+        // TODO
+    }
+
+    private void undo(final GraphicalEditPart editPart) {
         if (highlightFigure != null) {
-            editPart.getFigure().remove(highlightFigure);
+            graphicalEditPart.getFigure().remove(highlightFigure);
             highlightFigure = null;
         }
     }

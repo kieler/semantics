@@ -45,11 +45,13 @@ public class StateActivityCombination extends AbstractCombination {
             undo();
             return;
         }
+        
         // remove blue highlights for old states
         for (IEffect e : deactivatedEffects.values()) {
             Viewmanagement.getInstance().undoEffect(e);
         }
         deactivatedEffects.clear();
+        
         // compute diff
         List<EditPart> activatedStates = new ArrayList<EditPart>(activeStates);
         // TODO copy can be optimized away if full list of active states isn't needed
@@ -59,12 +61,14 @@ public class StateActivityCombination extends AbstractCombination {
                 deactivatedStates.add(e);
             }
         }
+        
         // undo effects for newly deactivated states
         for (EditPart e : deactivatedStates) {
             IEffect effect = activatedEffects.remove(e);
             Viewmanagement.getInstance().executeEffect(effect);
             deactivatedEffects.put(e, effect);
         }
+        
         // do effects for newly activated states
         for (EditPart e : activatedStates) {
             if (e instanceof GraphicalEditPart) {
