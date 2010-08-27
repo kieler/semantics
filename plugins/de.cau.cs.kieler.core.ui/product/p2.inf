@@ -1,3 +1,6 @@
 instructions.configure=\
   addRepository(type:0,name:KIELER nightly,location:http${#58}//rtsys.informatik.uni-kiel.de/~kieler/updatesite/nightly);\
-  addRepository(type:1,name:KIELER nightly,location:http${#58}//rtsys.informatik.uni-kiel.de/~kieler/updatesite/nightly);
+  addRepository(type:1,name:KIELER nightly,location:http${#58}//rtsys.informatik.uni-kiel.de/~kieler/updatesite/nightly);\
+  addRepository(type:0,name PDE, location:http${#58}//download.eclipse.org/eclipse/updates/3.6);\
+  addRepository(type:1,name PDE, location:http${#58}//download.eclipse.org/eclipse/updates/3.6);
+  
