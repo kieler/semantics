@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
       id="de.cau.cs.kieler.papyrus"
-      label="KIELER Bridge to Papyrus"
+      label="KIELER Bridge to Papyrus and UML Simulation"
       version="0.2.0.qualifier"
       provider-name="Christian-Albrechts-Universität zu Kiel">
 
