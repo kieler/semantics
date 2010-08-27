@@ -8,6 +8,7 @@
    <description url="http://rtsys.informatik.uni-kiel.de/trac/kieler/wiki/Projects/KIML">
       A bridge feature to connect other KIELER features such as automatic
 layout to the Papyrus UML diagram editors.
+Maude UML2 state machine simulation
    </description>
 
    <copyright>
@@ -218,16 +219,6 @@ litigation.
       <update label="KIELER Nightly Builds" url="http://rtsys.informatik.uni-kiel.de/~kieler/updatesite/nightly/"/>
       <discovery label="Papyrus UML Editors" url="http://download.eclipse.org/modeling/mdt/papyrus/updates/releases/"/>
    </url>
-
-   <includes
-         id="org.eclipse.papyrus"
-         version="0.0.0"
-         search-location="self"/>
-
-   <includes
-         id="org.eclipse.papyrus.diagram.statemachine"
-         version="0.0.0"
-         search-location="self"/>
 
    <requires>
       <import feature="de.cau.cs.kieler.core" version="0.2.0" match="greaterOrEqual"/>
