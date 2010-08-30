@@ -25,12 +25,9 @@ import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
-import org.eclipse.core.runtime.Status;
-import org.eclipse.ui.statushandlers.StatusManager;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import de.cau.cs.kieler.kvid.KvidPlugin;
 import de.cau.cs.kieler.kvid.datadistributor.DataDistributor;
 import de.cau.cs.kieler.kvid.datadistributor.IProviderListener;
 import de.cau.cs.kieler.sim.kiem.IJSONObjectDataComponent;

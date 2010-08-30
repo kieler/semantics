@@ -20,7 +20,7 @@ import de.cau.cs.kieler.kvid.dataprovider.IDataProvider;
 
 /**
  * @author jjc
- *
+ * @deprecated Not used anymore, all sources now use KIEM
  */
 public class Step extends Action {
     
