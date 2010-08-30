@@ -17,8 +17,6 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-import de.cau.cs.kieler.kvid.dataprovider.CsvDataProvider;
-
 /**
  * 
  * Class for handling configuration that happens during runtime.
@@ -43,7 +41,6 @@ public final class RuntimeConfiguration {
      * Creates a few {@link Property}s which control basic functionality of KViD.
      */
     private RuntimeConfiguration() {
-        addProperty(new Property("Data Source", new String[] { "KIEM", "CSV" }));
         addProperty(new Property("Animation enabled", new String[] { "true",
                 "false" }));
         addProperty(new Property("Behavior after Animation", new String[] {
@@ -154,37 +151,8 @@ public final class RuntimeConfiguration {
      * @param theproperty The Property which was changed
      */
     public void triggerPropertyChanged(final Property theproperty) {
-        if (theproperty.getName().equals("Data Source")) {
-            dataSourcePropertyChanged(theproperty);
-        }
-        if (theproperty.getName().equals("Path to CSV File")) {
-            String path = theproperty.getCurrentValue();
-            CsvDataProvider newProvider = new CsvDataProvider(path);
-            newProvider.start();
-            DataDistributor.getInstance().changeDataProvider(newProvider);
-        }
         for (IPropertyListener listener : listeners) {
             listener.triggerPropertyChanged(theproperty);                
-        }
-    }
-    
-    /**
-     * Special handling method which performs necessary changes when
-     * a data source {@link Property} was changed.
-     * 
-     * @param theproperty The data source {@link Property} which was changed
-     */
-    private void dataSourcePropertyChanged(final Property theproperty) {
-        if (theproperty.getCurrentValue().equals("CSV")) {
-            addProperty(knownProperties.indexOf(theproperty) + 1, 
-                    new Property("Path to CSV File", "<project>/<file.csv>"));
-        } else {
-            for (Property property : knownProperties) {
-                if (property.getName().equals("Path to CSV File")) {
-                    removeProperty(property);
-                    break;
-                }
-            }
         }
     }
     

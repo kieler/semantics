@@ -30,6 +30,12 @@ import org.json.JSONObject;
 
 import de.cau.cs.kieler.kvid.datadistributor.DataDistributor;
 import de.cau.cs.kieler.kvid.datadistributor.IProviderListener;
+import de.cau.cs.kieler.sim.kiem.IJSONObjectDataComponent;
+import de.cau.cs.kieler.sim.kiem.JSONObjectDataComponent;
+import de.cau.cs.kieler.sim.kiem.KiemExecutionException;
+import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
+import de.cau.cs.kieler.sim.kiem.properties.KiemProperty;
+import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyTypeFile;
 
 /**
  * Data source which is a {@link IDataProvider} and uses CSV files 
@@ -38,7 +44,8 @@ import de.cau.cs.kieler.kvid.datadistributor.IProviderListener;
  * @author jjc
  *
  */
-public class CsvDataProvider implements IDataProvider {
+public class KiemCsvDataProvider extends JSONObjectDataComponent implements
+        IJSONObjectDataComponent {
     
     /** List of registered {@link IProviderListener}s. */
     private List<IProviderListener> listeners = new LinkedList<IProviderListener>();
@@ -55,26 +62,6 @@ public class CsvDataProvider implements IDataProvider {
     /** Point on the next line to read. */
     private int linePointer;
     
-    /**
-     * Constructor for a CsvDataProvider.
-     * Use a new CsvDataProvider for each new CSV file.
-     * 
-     * @param pathToCsv Path to the CSV file relative to the current workspace
-     */
-    public CsvDataProvider(final String pathToCsv) {
-        IWorkspace workspace = ResourcesPlugin.getWorkspace();
-        IWorkspaceRoot workspaceRoot = workspace.getRoot();
-        
-        IPath path = new Path(pathToCsv);
-        this.inputCsvFile = workspaceRoot.getFile(path);
-        csvLines = getCsvLines();
-        if (csvLines.length > 0) {
-            uris = csvLines[0].split(";");
-            linePointer = 1;
-        } else {
-            throw new RuntimeException("Loaded empty CSV file");
-        }
-    }
     
     private String[] getCsvLines() {
         String cache = "";
@@ -101,55 +88,77 @@ public class CsvDataProvider implements IDataProvider {
     /**
      * {@inheritDoc}
      */
-    public void start() {
-        linePointer = 1;
-        DataDistributor.getInstance().initialize();
-        for (IProviderListener listener : listeners) {
-            listener.triggerInitialization();
-        }
-    }
-    
-    /**
-     * {@inheritDoc}
-     */
-    public void step() {
-        String[] currentValues = csvLines[linePointer].split(";");
-        try {
-            JSONObject stepData = new JSONObject();
-            for (int i = 0; i < uris.length; i++) {
-                stepData.accumulate(uris[i], currentValues[i]);
-            }
-            for (IProviderListener listener : listeners) {
-                listener.update(stepData);
-            }
-            linePointer++;
-        } catch (JSONException ex) {
-            ex.printStackTrace();
-        }
-    }
-    
-    
-   /**
-    * {@inheritDoc}
-    */
-   public void stop() {
-       for (IProviderListener listener : listeners) {
-           listener.triggerWrapup();
-       }
-   }
-    
-   /**
-    * {@inheritDoc}
-    */
-    public void registerProviderListener(final IProviderListener listener) {
-        listeners.add(DataDistributor.getInstance());
+    @Override
+    public KiemProperty[] provideProperties() {
+        KiemProperty[] properties = new KiemProperty[1];
+        properties[0] = new KiemProperty(
+                        "Path to CSV file",
+                        new KiemPropertyTypeFile(),
+                        "test/test.csv");
+        return properties;
     }
 
     /**
      * {@inheritDoc}
      */
-    public void removeProviderListener(final IProviderListener listener) {
-        listeners.remove(listener);
+    public void initialize() throws KiemInitializationException {
+        IWorkspace workspace = ResourcesPlugin.getWorkspace();
+        IWorkspaceRoot workspaceRoot = workspace.getRoot();
+        
+        IPath path = new Path(this.getProperties()[0].getFilePath());
+        this.inputCsvFile = workspaceRoot.getFile(path);
+        csvLines = getCsvLines();
+        if (csvLines.length > 0) {
+            uris = csvLines[0].split(";");
+            linePointer = 1;
+        } else {
+            throw new RuntimeException("Loaded empty CSV file");
+        }
+        
+        DataDistributor.getInstance().initialize();
+        for (IProviderListener listener : listeners) {
+            listener.triggerInitialization();
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public void wrapup() throws KiemInitializationException {
+        // TODO Auto-generated method stub
+        
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public boolean isProducer() {
+        return true;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public boolean isObserver() {
+        return false;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public JSONObject step(final JSONObject jSONObject)
+            throws KiemExecutionException {
+        String[] currentValues = csvLines[linePointer].split(";");
+        JSONObject stepData = new JSONObject();
+        try {
+            for (int i = 0; i < uris.length; i++) {
+                stepData.accumulate(uris[i], currentValues[i]);
+            }
+            linePointer++;
+        } catch (JSONException ex) {
+            ex.printStackTrace();
+        }
+        return stepData;
     }
 
 }

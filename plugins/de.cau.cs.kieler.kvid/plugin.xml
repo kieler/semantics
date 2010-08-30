@@ -103,5 +103,13 @@
             class="de.cau.cs.kieler.kvid.datadistributor.LayoutListenerImpl">
       </layoutListener>
    </extension>
+   <extension
+         point="de.cau.cs.kieler.sim.kiem.json.datacomponent">
+      <content
+            class="de.cau.cs.kieler.kvid.dataprovider.KiemCsvDataProvider"
+            id="de.cau.cs.kieler.kvid.KiemCsvDataProvider"
+            name="KViDCSVDataProvider">
+      </content>
+   </extension>
 
 </plugin>

@@ -44,9 +44,6 @@ public class KiemDataProvider extends JSONObjectDataComponent implements
      */
     public JSONObject step(final JSONObject jSONObject)
             throws KiemExecutionException {
-        if (RuntimeConfiguration.getInstance().currentValueOfProperty("Data Source").equals("KIEM")) {
-            DataDistributor.getInstance().changeDataProvider(this);
-        }
         for (IProviderListener listener : listeners) {
             listener.update(jSONObject);
         }
@@ -57,9 +54,6 @@ public class KiemDataProvider extends JSONObjectDataComponent implements
      * {@inheritDoc}
      */
     public void initialize() throws KiemInitializationException {
-        if (RuntimeConfiguration.getInstance().currentValueOfProperty("Data Source").equals("KIEM")) {
-            DataDistributor.getInstance().changeDataProvider(this);
-        }
         for (IProviderListener listener : listeners) {
             listener.triggerInitialization();
         }
