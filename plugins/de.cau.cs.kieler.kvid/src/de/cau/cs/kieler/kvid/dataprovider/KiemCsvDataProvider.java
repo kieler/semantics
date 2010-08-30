@@ -25,15 +25,19 @@ import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
+import org.eclipse.core.runtime.Status;
+import org.eclipse.ui.statushandlers.StatusManager;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import de.cau.cs.kieler.kvid.KvidPlugin;
 import de.cau.cs.kieler.kvid.datadistributor.DataDistributor;
 import de.cau.cs.kieler.kvid.datadistributor.IProviderListener;
 import de.cau.cs.kieler.sim.kiem.IJSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.JSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.KiemExecutionException;
 import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
+import de.cau.cs.kieler.sim.kiem.KiemPlugin;
 import de.cau.cs.kieler.sim.kiem.properties.KiemProperty;
 import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyTypeFile;
 
@@ -58,9 +62,6 @@ public class KiemCsvDataProvider extends JSONObjectDataComponent implements
     
     /** The URIs of the referred model elements. */
     private String[] uris;
-    
-    /** Point on the next line to read. */
-    private int linePointer;
     
     
     private String[] getCsvLines() {
@@ -109,7 +110,6 @@ public class KiemCsvDataProvider extends JSONObjectDataComponent implements
         csvLines = getCsvLines();
         if (csvLines.length > 0) {
             uris = csvLines[0].split(";");
-            linePointer = 1;
         } else {
             throw new RuntimeException("Loaded empty CSV file");
         }
@@ -124,8 +124,9 @@ public class KiemCsvDataProvider extends JSONObjectDataComponent implements
      * {@inheritDoc}
      */
     public void wrapup() throws KiemInitializationException {
-        // TODO Auto-generated method stub
-        
+        csvLines = null;
+        inputCsvFile = null;
+        uris = null;
     }
 
     /**
@@ -147,13 +148,21 @@ public class KiemCsvDataProvider extends JSONObjectDataComponent implements
      */
     public JSONObject step(final JSONObject jSONObject)
             throws KiemExecutionException {
-        String[] currentValues = csvLines[linePointer].split(";");
+        String[] currentValues;
+        if (KiemPlugin.getDefault().getExecution().getSteps() < csvLines.length) {
+            currentValues = csvLines[(int) KiemPlugin.getDefault()
+                                              .getExecution().getSteps()].split(";");
+        } else {
+            KiemPlugin.handleComponentError(this, new KiemExecutionException(
+                    "No more lines in CSV file.", true, false, false, new RuntimeException(
+                            "No more lines in CSV file.")));
+            return null;
+        }
         JSONObject stepData = new JSONObject();
         try {
             for (int i = 0; i < uris.length; i++) {
                 stepData.accumulate(uris[i], currentValues[i]);
             }
-            linePointer++;
         } catch (JSONException ex) {
             ex.printStackTrace();
         }

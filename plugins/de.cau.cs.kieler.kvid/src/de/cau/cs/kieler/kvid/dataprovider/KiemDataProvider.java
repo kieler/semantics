@@ -86,7 +86,9 @@ public class KiemDataProvider extends JSONObjectDataComponent implements
      * {@inheritDoc}
      */
     public void registerProviderListener(final IProviderListener listener) {
-        listeners.add(listener);
+        if (!listeners.contains(listener)) {
+            listeners.add(listener);
+        }
     }
 
     /**
