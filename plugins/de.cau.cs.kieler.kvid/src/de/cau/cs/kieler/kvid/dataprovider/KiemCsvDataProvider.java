@@ -65,7 +65,7 @@ public class KiemCsvDataProvider extends JSONObjectDataComponent implements
     
     private String[] getCsvLines() {
         String cache = "";
-        if (inputCsvFile.exists()) {
+        if (inputCsvFile != null) {
             try {
                 String line = null;
                 InputStream input = inputCsvFile.getContents();
@@ -79,8 +79,7 @@ public class KiemCsvDataProvider extends JSONObjectDataComponent implements
                 ex.printStackTrace();
             }
         } else {
-            throw new RuntimeException("Tried to open a non-existing file: "
-                    + inputCsvFile.getFullPath());
+            throw new RuntimeException("Please chose an existing CSV file as source.");
         }
         return cache.split("\n");
     }
@@ -94,7 +93,7 @@ public class KiemCsvDataProvider extends JSONObjectDataComponent implements
         properties[0] = new KiemProperty(
                         "Path to CSV file",
                         new KiemPropertyTypeFile(),
-                        "test/test.csv");
+                        "/path/to/csv/file");
         return properties;
     }
 
@@ -106,7 +105,7 @@ public class KiemCsvDataProvider extends JSONObjectDataComponent implements
         IWorkspaceRoot workspaceRoot = workspace.getRoot();
         
         IPath path = new Path(this.getProperties()[0].getFilePath());
-        this.inputCsvFile = workspaceRoot.getFile(path);
+        this.inputCsvFile = workspaceRoot.getFileForLocation(path);
         csvLines = getCsvLines();
         if (csvLines.length > 0) {
             uris = csvLines[0].split(";");
