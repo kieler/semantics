@@ -20,7 +20,6 @@ import org.json.JSONObject;
 
 import de.cau.cs.kieler.kvid.datadistributor.IProviderListener;
 import de.cau.cs.kieler.kvid.datadistributor.DataDistributor;
-import de.cau.cs.kieler.kvid.datadistributor.RuntimeConfiguration;
 import de.cau.cs.kieler.sim.kiem.IJSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.JSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.KiemExecutionException;
@@ -34,7 +33,7 @@ import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
  * 
  */
 public class KiemDataProvider extends JSONObjectDataComponent implements
-        IJSONObjectDataComponent, IDataProvider {
+        IJSONObjectDataComponent {
 
     /** List of registered {@link IProviderListener}s. */
     private List<IProviderListener> listeners = new LinkedList<IProviderListener>();
@@ -95,27 +94,6 @@ public class KiemDataProvider extends JSONObjectDataComponent implements
      */
     public void removeProviderListener(final IProviderListener listener) {
         listeners.remove(listener);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public void start() {
-        //not needed here, handled by kiem
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public void step() {
-        //not needed here, handled by kiem      
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public void stop() {
-        //not needed here, handled by kiem        
     }
 
 }
