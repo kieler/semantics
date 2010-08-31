@@ -42,6 +42,9 @@ public final class GmfAnimator {
     /** Delay until next replay in msec. */
     private static final int REPLAY_DELAY = 1000;
     
+    /** Delay factor to ensure that there is no animation overlap. */
+    private static final int DELAY_SCALE = 5;
+    
     /**
      * There shouldn't be an instance of this.
      */
@@ -104,7 +107,7 @@ public final class GmfAnimator {
         }
         
         //Make sure animation won't be slower than the desired animation time
-        anima.setCompleteDuration(animationTime / 2);
+        anima.setCompleteDuration(animationTime - (animationTime / DELAY_SCALE));
         cc.add(anima);
         diagram.getDiagramEditDomain().getDiagramCommandStack().execute(cc);
         
