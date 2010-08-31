@@ -15,7 +15,7 @@
 «DEFINE sm FOR StateMachine»
 	«FILE ((String)(GLOBALVAR modelname)) +".maude"»
 	
-*** load ../maude/model-checker.maude
+load model-checker.maude
 load «((String)(GLOBALVAR maudebasecode))»STATES
 load «((String)(GLOBALVAR maudebasecode))»EVENTS
 load «((String)(GLOBALVAR maudebasecode))»ACTIONS
@@ -121,6 +121,11 @@ load «((String)(GLOBALVAR maudebasecode))»STEPSEM
 
 mod INIT is
 	including STEPSEM .
+	including SATISFACTION .
+	including LTL .
+	including MODEL-CHECKER .
+	including LTL-SIMPLIFIER .
+	
 	
 	vars msst mastate : MState .
 	vars V V2 : Verts .
@@ -129,6 +134,14 @@ mod INIT is
 	var ES : EventSS .
 	var mode : String .
 	vars HC : HistoryConfs .
+	
+	subsort MState < State .
+	
+	op aCf : Actions -> Prop .
+	op inC : Verts -> Prop .
+	eq maState mode ($stableC V HC) ES |= inC(V2) = (prettyVerts V2) subset V  .
+	eq maState mode ($unstableC V HC T ac) ES |= aCf(ac2) = actionConflict par (ac ac2) .
+	eq maState mode ($unstableC V HC T ac) ES |= aCf(nil) = actionConflict ac .
 	
 	op isDone_ : MState -> Bool .
 	eq isDone (maState mode ($doneC V HC) empty) = true .
@@ -157,6 +170,9 @@ multistep
 search (maState "UML" ($stableC (prettyVerts (R-990928836 , susp441237549)) empty) (res, ee1)) =>* mastate such that isDone mastate .
 
 search (maState "UML" ($stableC (prettyVerts (Rroot, Csusp)) empty) res) =>* mastate such that isDone mastate .
+
+red modelCheck ((maState "UML" ($stableC (prettyVerts (R-108097269 , R1010334332, a-1833692673, c--1034807852)) empty) (ee1, ee2)), <> inC(b--181774032)) .
+red modelCheck ((maState "UML" ($stableC (prettyVerts (R-108097269 , R1010334332, a-1833692673, c--1034807852)) empty) (ee1,ee2)), <> inC(d--961763712)) .
 )***
 
 	«ENDFILE»
