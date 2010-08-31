@@ -6,6 +6,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.List;
 
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.ResourcesPlugin;
@@ -28,8 +29,10 @@ import org.eclipse.emf.mwe.internal.core.Workflow;
 import org.eclipse.emf.mwe.utils.Reader;
 import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramEditor;
 import org.eclipse.gmf.runtime.notation.View;
+import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.papyrus.editor.PapyrusMultiDiagramEditor;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchWindow;
@@ -58,10 +61,13 @@ import de.cau.cs.kieler.sim.kiem.IJSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.JSONSignalValues;
 import de.cau.cs.kieler.sim.kiem.KiemExecutionException;
 import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
+import de.cau.cs.kieler.sim.kiem.KiemPlugin;
+import de.cau.cs.kieler.sim.kiem.execution.TimeoutThread;
 import de.cau.cs.kieler.sim.kiem.properties.KiemProperty;
 import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyTypeEditor;
 import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyTypeFile;
 import de.cau.cs.kieler.sim.kiem.ui.datacomponent.JSONObjectSimulationDataComponent;
+import de.cau.cs.kieler.uml2.sim.Uml2SimPlugin;
 
 import org.eclipse.uml2.uml.Model;
 import org.eclipse.uml2.uml.Transition;
@@ -170,63 +176,86 @@ public class DataComponent extends JSONObjectSimulationDataComponent implements
      * Extract the active states.
      * 
      * @param maudeResult
-     *            the maude result
+     *            the maude result if any, empty list if no solution found
      * @return the string[]
      */
-    public String[] extractActiveStates(String maudeResult) {
+    public List<String[]> extractActiveStates(String maudeResult) {
         boolean error = maudeResult.contains(MAUDEERROR);
+        LinkedList activeStatesChoices = new LinkedList();
         // if maude result contains error, use the old current states
         if (error) {
-            return currentStates;
+            activeStatesChoices.add(activeStatesChoices);
+            return activeStatesChoices;
         }
 
-        try {
+        boolean foundAnotherSolution = true;
 
-            String maudePartResult = maudeResult.substring(maudeResult
-                    .lastIndexOf(MAUDEPARSESTATESTARTER) + MAUDEPARSESTATESTARTER.length());
+        while (foundAnotherSolution) {
+            try {
+                int firstSolutionStartIndex = maudeResult.indexOf(MAUDEPARSESTATESTARTER);
 
-            /*
-             * Maude output looks like this:
-             * 
-             * search in INIT : maState "UML" $stableC prettyVerts (T461729046, R-768353767) empty
-             * ee3 =>* mastate such that isDone mastate = true .
-             * 
-             * Solution 1 (state 3) states: 4 rewrites: 65 in 6597516000ms cpu (0ms real) (0
-             * rewrites/second) mastate --> maState "UML" $doneC (C "T461729046", root R
-             * "R-768353767") empty empty
-             * 
-             * No more solutions. states: 4 rewrites: 65 in 6597516000ms cpu (0ms real) (0
-             * rewrites/second)
-             */
-
-            LinkedList<String> stringList = new LinkedList<String>();
-
-            boolean consuming = false;
-            String consumedPart = "";
-            for (int c = 0; c < maudePartResult.length(); c++) {
-                String character = maudePartResult.substring(c, c + 1);
-                if (character.equals("\"")) {
-                    consuming = !consuming;
-                    if (!consuming) {
-                        stringList.add(consumedPart);
-                        consumedPart = "";
-                    }
-                    // do not consume "-character
-                    continue;
-                }
-                if (character.equals(")")) {
+                // check if solution is found
+                if (firstSolutionStartIndex < 0) {
+                    foundAnotherSolution = false;
                     break;
                 }
-                if (consuming) {
-                    consumedPart += character;
+
+                // part result
+                String maudePartResult = maudeResult.substring(firstSolutionStartIndex
+                        + MAUDEPARSESTATESTARTER.length());
+
+                // remainder (may contain previous solutions)
+                maudeResult = maudeResult.substring(firstSolutionStartIndex
+                        + MAUDEPARSESTATESTARTER.length());
+
+                /*
+                 * Maude output looks like this:
+                 * 
+                 * search in INIT : maState "UML" $stableC prettyVerts (T461729046, R-768353767)
+                 * empty ee3 =>* mastate such that isDone mastate = true .
+                 * 
+                 * Solution 1 (state 3) states: 4 rewrites: 65 in 6597516000ms cpu (0ms real) (0
+                 * rewrites/second) mastate --> maState "UML" $doneC (C "T461729046", root R
+                 * "R-768353767") empty empty
+                 * 
+                 * Solution 2 (state 3) states: 4 rewrites: 65 in 6597516000ms cpu (0ms real) (0
+                 * rewrites/second) mastate --> maState "UML" $doneC (C "T461729046", root R
+                 * "R-768353767") empty empty
+                 * 
+                 * No more solutions. states: 4 rewrites: 65 in 6597516000ms cpu (0ms real) (0
+                 * rewrites/second)
+                 */
+
+                LinkedList<String> stringList = new LinkedList<String>();
+
+                boolean consuming = false;
+                String consumedPart = "";
+                for (int c = 0; c < maudePartResult.length(); c++) {
+                    String character = maudePartResult.substring(c, c + 1);
+                    if (character.equals("\"")) {
+                        consuming = !consuming;
+                        if (!consuming) {
+                            stringList.add(consumedPart);
+                            consumedPart = "";
+                        }
+                        // do not consume "-character
+                        continue;
+                    }
+                    if (character.equals(")")) {
+                        break;
+                    }
+                    if (consuming) {
+                        consumedPart += character;
+                    }
                 }
+
+                activeStatesChoices.add(stringList.toArray(new String[0]));
+            } catch (Exception e) {
+                // do nothing
             }
+        } // end while
 
-            return stringList.toArray(new String[0]);
-        } catch (Exception e) {
-            return currentStates;
-        }
-
+        return activeStatesChoices;
     }
 
     // -------------------------------------------------------------------------
@@ -379,8 +408,7 @@ public class DataComponent extends JSONObjectSimulationDataComponent implements
 
         String result = "";
         try {
-            result = MaudeInterfacePlugin.getDefault().queryMaude(queryRequest, maudeSessionId 
-                    );
+            result = MaudeInterfacePlugin.getDefault().queryMaude(queryRequest, maudeSessionId);
         } catch (Exception e) {
             throw new KiemExecutionException("A Maude simulation error occurred.", false, e);
         }
@@ -389,7 +417,16 @@ public class DataComponent extends JSONObjectSimulationDataComponent implements
         printConsole(result);
 
         // interpret resulting states
-        currentStates = extractActiveStates(result);
+        List<String[]> currentStatesChoices = extractActiveStates(result);
+
+        if (currentStatesChoices.size() == 1) {
+            currentStates = currentStatesChoices.get(0);
+        }
+        if (currentStatesChoices.size() > 1) {
+            currentStates = selectCurrentState(currentStatesChoices);
+        }
+        // else
+        // currentStates don't change
 
         // the stateName is the second KIEM property
         String stateName = this.getProperties()[2].getValue();
@@ -401,6 +438,70 @@ public class DataComponent extends JSONObjectSimulationDataComponent implements
 
         // no actions can be extracted so far
         return returnObj;
+    }
+
+    // -------------------------------------------------------------------------
+
+    private boolean flagDialogDone = false;
+    private List<String[]> currentStatesChoices;
+    private String[] currentStatesSelected;
+
+    public String[] selectCurrentState(List<String[]> currentStatesChoicesParam) {
+        flagDialogDone = false;
+        currentStatesChoices = currentStatesChoicesParam;
+        // this is also the default case if nothing is selected of canceled
+        currentStatesSelected = currentStatesChoices.get(0);
+
+        Display.getDefault().asyncExec(new Runnable() {
+            public void run() {
+                // Disable timeout
+                TimeoutThread.setAwaitUserRepsonse(true);
+                
+                Shell currentShell = PlatformUI.getWorkbench().getActiveWorkbenchWindow()
+                        .getShell();
+                SelectTraceDialog dialog = new SelectTraceDialog(currentShell,
+                        "Select an execution trace");
+
+                // build list to display
+                LinkedList<String> displayList = new LinkedList<String>();
+                for (String[] choice : currentStatesChoices) {
+                    String currentLine = "";
+                    for (String state : choice) {
+                        if (currentLine.length() != 0) {
+                            currentLine += ", ";
+                        }
+                        currentLine += state;
+                    }
+                    displayList.add(currentLine);
+                }
+
+                dialog.setComponentList(displayList);
+                dialog.setBlockOnOpen(true);
+                dialog.setForbiddenComponentList(new LinkedList<String>());
+
+                if (dialog.open() == WizardDialog.OK) {
+                    try {
+                        currentStatesSelected = currentStatesChoices.get(dialog.getSelectedIndex());
+                    } catch (Exception e) {
+                        // go with the default
+                    }
+                }
+                // MUST eisable timeout again
+                TimeoutThread.setAwaitUserRepsonse(false);
+                
+                flagDialogDone = true;
+            }
+        });
+
+        while (!flagDialogDone) {
+            try {
+                Thread.sleep(10);
+            } catch (InterruptedException e) {
+            }
+        }
+
+        // we now have the user choose
+        return currentStatesSelected;
     }
 
     // -------------------------------------------------------------------------
@@ -432,8 +533,7 @@ public class DataComponent extends JSONObjectSimulationDataComponent implements
                 pathToMaudeCode);
         try {
             MaudeInterfacePlugin.getDefault().startMaudeSession(maudeSessionId);
-            printConsole(MaudeInterfacePlugin.getDefault().queryMaude(null, 1000, maudeSessionId
-                    ));
+            printConsole(MaudeInterfacePlugin.getDefault().queryMaude(null, 1000, maudeSessionId));
         } catch (Exception e) {
             throw new KiemInitializationException(
                     "Cannot start Maude. Plase make sure that the paths are "
@@ -635,7 +735,6 @@ public class DataComponent extends JSONObjectSimulationDataComponent implements
 
     // -------------------------------------------------------------------------
     // -------------------------------------------------------------------------
-
 
     /*
      * (non-Javadoc)
