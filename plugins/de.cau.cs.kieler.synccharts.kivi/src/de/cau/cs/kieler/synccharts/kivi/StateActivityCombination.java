@@ -14,12 +14,12 @@
 package de.cau.cs.kieler.synccharts.kivi;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.eclipse.gef.EditPart;
 import org.eclipse.gef.GraphicalEditPart;
+import org.eclipse.swt.graphics.Color;
+import org.eclipse.swt.graphics.RGB;
 
 import de.cau.cs.kieler.kivi.core.IEffect;
 import de.cau.cs.kieler.kivi.core.Viewmanagement;
@@ -33,11 +33,9 @@ import de.cau.cs.kieler.kivi.core.impl.AbstractCombination;
  */
 public class StateActivityCombination extends AbstractCombination {
 
-    private List<EditPart> activeStates;
+    private List<List<EditPart>> activeStates;
 
-    private Map<EditPart, IEffect> activatedEffects = new HashMap<EditPart, IEffect>();
-
-    private Map<EditPart, IEffect> deactivatedEffects = new HashMap<EditPart, IEffect>();
+    private List<IEffect> effects = new ArrayList<IEffect>();
 
     @Override
     public void execute() {
@@ -45,52 +43,36 @@ public class StateActivityCombination extends AbstractCombination {
             undo();
             return;
         }
-        
-        // remove blue highlights for old states
-        for (IEffect e : deactivatedEffects.values()) {
-            Viewmanagement.getInstance().undoEffect(e);
+
+        // TODO avoid undo/redo for effects that do not change anything
+        for (IEffect effect : effects) {
+            Viewmanagement.getInstance().undoEffect(effect);
         }
-        deactivatedEffects.clear();
-        
-        // compute diff
-        List<EditPart> activatedStates = new ArrayList<EditPart>(activeStates);
-        // TODO copy can be optimized away if full list of active states isn't needed
-        List<EditPart> deactivatedStates = new ArrayList<EditPart>();
-        for (EditPart e : activatedEffects.keySet()) {
-            if (!activatedStates.remove(e)) {
-                deactivatedStates.add(e);
+        effects.clear();
+
+        for (int i = 0; i < activeStates.size(); i++) {
+            List<EditPart> currentStep = activeStates.get(i);
+            for (EditPart e : currentStep) {
+                if (e instanceof GraphicalEditPart) {
+                    IEffect effect = new StateActivityHighlightEffect((GraphicalEditPart) e,
+                            new Color(null, new RGB(0.0f, 1.0f, 1.0f - 1.0f / activeStates.size()
+                                    * i)));
+                    effects.add(effect);
+                    Viewmanagement.getInstance().executeEffect(effect);
+                }
             }
         }
-        
-        // undo effects for newly deactivated states
-        for (EditPart e : deactivatedStates) {
-            IEffect effect = activatedEffects.remove(e);
-            Viewmanagement.getInstance().executeEffect(effect);
-            deactivatedEffects.put(e, effect);
-        }
-        
-        // do effects for newly activated states
-        for (EditPart e : activatedStates) {
-            if (e instanceof GraphicalEditPart) {
-                IEffect effect = new StateActivityHighlightEffect((GraphicalEditPart) e);
-                activatedEffects.put(e, effect);
-                Viewmanagement.getInstance().executeEffect(effect);
-            }
-        }
+
     }
 
     /**
      * {@inheritDoc}
      */
     public void undo() {
-        for (IEffect e : deactivatedEffects.values()) {
-            Viewmanagement.getInstance().undoEffect(e);
+        for (IEffect effect : effects) {
+            Viewmanagement.getInstance().undoEffect(effect);
         }
-        for (IEffect e : activatedEffects.values()) {
-            Viewmanagement.getInstance().undoEffect(e);
-        }
-        deactivatedEffects.clear();
-        activatedEffects.clear();
+        effects.clear();
     }
 
     /**

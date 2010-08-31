@@ -35,10 +35,13 @@ import de.cau.cs.kieler.sim.kiem.IJSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.JSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.KiemExecutionException;
 import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
+import de.cau.cs.kieler.sim.kiem.KiemPlugin;
+import de.cau.cs.kieler.sim.kiem.execution.JSONDataPool;
+import de.cau.cs.kieler.sim.kiem.internal.DataComponentWrapper;
+import de.cau.cs.kieler.sim.kiem.properties.KiemProperty;
 
 /**
- * A data component that observes the activity of syncchart states during
- * simulation.
+ * A data component that observes the activity of syncchart states during simulation.
  * 
  * @author mmu
  * 
@@ -50,12 +53,36 @@ public class StateActivityDataComponent extends JSONObjectDataComponent implemen
 
     private Resource resource;
 
+    private int steps;
+
+    private DataComponentWrapper wrapper;
+
+    /**
+     * FIXME remove after devel.
+     * 
+     * @return fake id
+     */
+    public String getDataComponentId() {
+        return "fakeid";
+    }
+
     /**
      * {@inheritDoc}
      */
     public void initialize() throws KiemInitializationException {
         getActiveEditor();
         resource = ((View) diagramEditor.getDiagramEditPart().getModel()).getElement().eResource();
+        steps = getProperties()[0].getValueAsInt();
+        for (DataComponentWrapper w : KiemPlugin.getDefault().getDataComponentWrapperList()) {
+            if (w.getDataComponent() == this) {
+                wrapper = w;
+                break;
+            }
+        }
+        if (wrapper == null) {
+            throw new KiemInitializationException(
+                    "Can't find wrapper for State Activity Data Component", true, null);
+        }
     }
 
     /**
@@ -89,30 +116,66 @@ public class StateActivityDataComponent extends JSONObjectDataComponent implemen
     /**
      * {@inheritDoc}
      */
+    public KiemProperty[] provideProperties() {
+        KiemProperty[] properties = new KiemProperty[1];
+        properties[0] = new KiemProperty("steps", 5);
+        return properties;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     public JSONObject step(final JSONObject jSONObject) throws KiemExecutionException {
-        List<EditPart> activeStates = new ArrayList<EditPart>();
+        JSONDataPool pool = KiemPlugin.getDefault().getExecution().getDataPool();
+        long step = KiemPlugin.getDefault().getExecution().getSteps();
+
+        List<List<EditPart>> statesByStep = new ArrayList<List<EditPart>>();
+        List<EditPart> currentStep = new ArrayList<EditPart>();
+        JSONObject currentJSONObject = jSONObject;
         try {
-            String stateString = jSONObject.get("state").toString();
-            // TODO parameterize state key
-            String[] states = stateString.split(", ");
-            for (String state : states) {
-                if (state.startsWith("/")) {
-                    EObject activeState = resource.getEObject(state);
-                    if (activeState != null) {
-                        EditPart editPart = diagramEditor.getDiagramEditPart().findEditPart(null,
-                                activeState);
-                        activeStates.add(editPart);
+            for (int i = 0; i <= steps; i++) {
+                if (currentJSONObject.has("state")) {
+                    String stateString = currentJSONObject.get("state").toString();
+                    // TODO parameterize state key
+                    String[] states = stateString.split(", ");
+                    for (String state : states) {
+                        if (state.startsWith("/")) {
+                            EObject active = resource.getEObject(state);
+                            if (active != null) {
+                                if (!contains(statesByStep, active)) { // filter out newer
+                                                                       // activities
+                                    EditPart editPart = myFindEditPart(
+                                            diagramEditor.getDiagramEditPart(), active);
+                                    currentStep.add(editPart);
+                                }
+                            }
+                        }
                     }
+                    statesByStep.add(currentStep);
+                    currentStep = new ArrayList<EditPart>();
                 }
+
+                currentJSONObject = pool.getData(null, wrapper.getPoolIndex(step - i - 1 + 0));
             }
             if (StateActivityTrigger.getInstance() != null) {
-                StateActivityTrigger.getInstance().step(activeStates);
+                StateActivityTrigger.getInstance().step(statesByStep);
             }
         } catch (JSONException e) {
             // when no state value exists
             e.printStackTrace();
         }
         return null;
+    }
+
+    private boolean contains(final List<List<EditPart>> statesByStep, final EObject active) {
+        for (List<EditPart> list : statesByStep) {
+            for (EditPart e : list) {
+                if (((View) e.getModel()).getElement().equals(active)) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     private void getActiveEditor() {
@@ -129,12 +192,22 @@ public class StateActivityDataComponent extends JSONObjectDataComponent implemen
         });
     }
 
-    // TODO benchmark against modelingutil
+    /**
+     * Finds an EditPart for a given EObject in a DiagramEditPart.
+     * 
+     * @param diagram
+     *            the diagram to look in
+     * @param eObject
+     *            the object to look for
+     * @return the EditPart corresponding to the EObject
+     */
     private EditPart myFindEditPart(final DiagramEditPart diagram, final EObject eObject) {
         EditPart found = diagram.findEditPart(null, eObject);
         if (found != null) {
             return found;
         } else {
+            @SuppressWarnings("unchecked")
+            // the list always contains ConnectionEditParts
             List<ConnectionEditPart> connections = diagram.getConnections();
             for (ConnectionEditPart connection : connections) {
                 if (eObject.equals(((View) connection.getModel()).getElement())) {

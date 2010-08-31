@@ -14,9 +14,10 @@
 package de.cau.cs.kieler.synccharts.kivi;
 
 import org.eclipse.draw2d.ColorConstants;
-import org.eclipse.draw2d.RectangleFigure;
+import org.eclipse.draw2d.IFigure;
 import org.eclipse.gef.GraphicalEditPart;
-import org.eclipse.gmf.runtime.diagram.ui.editparts.ShapeEditPart;
+import org.eclipse.gmf.runtime.draw2d.ui.figures.WrappingLabel;
+import org.eclipse.swt.graphics.Color;
 
 import de.cau.cs.kieler.kivi.core.impl.AbstractEffect;
 
@@ -28,12 +29,11 @@ import de.cau.cs.kieler.kivi.core.impl.AbstractEffect;
  */
 public class StateActivityHighlightEffect extends AbstractEffect {
 
-    private GraphicalEditPart graphicalEditPart;
-    private ShapeEditPart shapeEditPart;
+    private IFigure targetFigure;
 
-    private RectangleFigure highlightFigure;
+    private Color originalColor;
 
-    private int counter = 0;
+    private Color color = ColorConstants.red;
 
     /**
      * Default constructor.
@@ -43,65 +43,36 @@ public class StateActivityHighlightEffect extends AbstractEffect {
     }
 
     /**
-     * Create a new instance for the given edit part.
+     * Create a new instance for the given edit part using the given color.
      * 
      * @param e
      *            the edit part to highlight
+     * @param c
+     *            the color to use for highlighting
      */
-    public StateActivityHighlightEffect(final GraphicalEditPart e) {
-        graphicalEditPart = e;
-        if (e instanceof ShapeEditPart) {
-            shapeEditPart = (ShapeEditPart) e;
+    public StateActivityHighlightEffect(final GraphicalEditPart e, final Color c) {
+        color = c;
+        targetFigure = e.getFigure();
+        if (targetFigure.getChildren().size() > 0) {
+            targetFigure = (IFigure) targetFigure.getChildren().get(0);
         }
     }
 
     @Override
     public void execute() {
-        if (shapeEditPart != null) {
-            execute(shapeEditPart);
-        } else {
-            execute(graphicalEditPart);
-        }
-        counter++;
-    }
-
-    private void execute(final ShapeEditPart editPart) {
-        // TODO
-    }
-
-    private void execute(final GraphicalEditPart editPart) {
-        if (highlightFigure == null) {
-            highlightFigure = new RectangleFigure();
-            highlightFigure.setLineWidth(2);
-            highlightFigure.setForegroundColor(ColorConstants.red);
-            highlightFigure.setBounds(graphicalEditPart.getFigure().getBounds());
-            highlightFigure.setOpaque(true);
-            highlightFigure.setFill(false);
-
-            graphicalEditPart.getFigure().add(highlightFigure);
-        } else {
-            highlightFigure.setForegroundColor(ColorConstants.blue);
+        originalColor = targetFigure.getForegroundColor();
+        targetFigure.setForegroundColor(color);
+        for (Object child : targetFigure.getChildren()) {
+            if (child instanceof WrappingLabel) {
+                ((WrappingLabel) child).setForegroundColor(originalColor);
+            }
         }
     }
 
     @Override
     public void undo() {
-        if (shapeEditPart != null) {
-            undo(shapeEditPart);
-        } else {
-            undo(graphicalEditPart);
+        if (targetFigure != null && originalColor != null) {
+            targetFigure.setForegroundColor(originalColor);
         }
     }
-
-    private void undo(final ShapeEditPart editPart) {
-        // TODO
-    }
-
-    private void undo(final GraphicalEditPart editPart) {
-        if (highlightFigure != null) {
-            graphicalEditPart.getFigure().remove(highlightFigure);
-            highlightFigure = null;
-        }
-    }
-
 }

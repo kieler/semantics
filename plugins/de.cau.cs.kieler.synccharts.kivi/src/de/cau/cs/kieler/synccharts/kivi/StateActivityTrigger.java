@@ -29,7 +29,7 @@ import de.cau.cs.kieler.kivi.core.impl.AbstractTrigger;
  */
 public class StateActivityTrigger extends AbstractTrigger {
 
-    private List<EditPart> activeStates;
+    private List<List<EditPart>> activeStates;
 
     private static StateActivityTrigger instance;
 
@@ -40,7 +40,7 @@ public class StateActivityTrigger extends AbstractTrigger {
         instance = this;
     }
 
-    private StateActivityTrigger(final List<EditPart> aS) {
+    private StateActivityTrigger(final List<List<EditPart>> aS) {
         activeStates = aS;
     }
 
@@ -59,7 +59,7 @@ public class StateActivityTrigger extends AbstractTrigger {
      * @param aS
      *            map of active states
      */
-    public void step(final List<EditPart> aS) {
+    public void step(final List<List<EditPart>> aS) {
         Viewmanagement.getInstance().trigger(new StateActivityTrigger(aS));
     }
 
@@ -76,7 +76,7 @@ public class StateActivityTrigger extends AbstractTrigger {
      * 
      * @return active states
      */
-    public List<EditPart> getActiveStates() {
+    public List<List<EditPart>> getActiveStates() {
         return activeStates;
     }
 
