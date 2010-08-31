@@ -15,8 +15,6 @@ package de.cau.cs.kieler.kvid.datadistributor;
 
 import java.util.List;
 
-import org.eclipse.gef.EditPart;
-
 /**
  * Class for storing KViD Properties, it's corresponding values and the 
  * currently selected value.
@@ -38,8 +36,8 @@ public class Property {
     /** Is this Property a free text Property? */
     private boolean isFreeText;
     
-    /** A list of objects this property refers to. Null if refers to none. */
-    private List<EditPart> associatedParts = null;
+    /** A list of URIs of objects this property refers to. Null if refers to none. */
+    private List<String> associatedParts = null;
     
     /**
      * Constructor for a Property with a fix set of options.
@@ -79,7 +77,7 @@ public class Property {
      * @param theAssociatedParts EditParts to which this option refers
      */
     public Property(final String theName, final String[] theValues,
-            final List<EditPart> theAssociatedParts) {
+            final List<String> theAssociatedParts) {
         this(theName, theValues);
         associatedParts = theAssociatedParts;
     }
@@ -93,7 +91,7 @@ public class Property {
      * @param theAssociatedParts EditParts to which this option refers
      */
     public Property(final String theName, final String theDefaultValue,
-            final List<EditPart> theAssociatedParts) {
+            final List<String> theAssociatedParts) {
         this(theName, theDefaultValue);
         associatedParts = theAssociatedParts;
     }
@@ -190,17 +188,17 @@ public class Property {
      * Method to check whether this option is associated with a certain EditPart.
      * Enter null to find general options.
      * 
-     * @param thePart The EditPart to which the option might refer
+     * @param thePart The URI of the object to which the option might refer
      * @return true if it refers, false else
      */
-    public boolean refersTo(final EditPart thePart) {
+    public boolean refersTo(final String thePart) {
         if (thePart == null) {
             return associatedParts == null;
         }
         if (associatedParts == null) {
             return false;
         }
-        for (EditPart part : associatedParts) {
+        for (String part : associatedParts) {
             if (thePart.equals(part)) {
                 return true;
             }

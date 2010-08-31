@@ -13,15 +13,23 @@
  */
 package de.cau.cs.kieler.kvid.ui.views;
 
+import java.util.LinkedList;
 import java.util.List;
 
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.gef.EditPart;
+import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramEditor;
+import org.eclipse.gmf.runtime.notation.Connector;
+import org.eclipse.gmf.runtime.notation.Node;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.CellEditor;
 import org.eclipse.jface.viewers.CellLabelProvider;
 import org.eclipse.jface.viewers.ComboBoxCellEditor;
 import org.eclipse.jface.viewers.EditingSupport;
 import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.jface.viewers.ISelectionChangedListener;
+import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TableViewerColumn;
 import org.eclipse.jface.viewers.TextCellEditor;
@@ -29,11 +37,13 @@ import org.eclipse.jface.viewers.ViewerCell;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Table;
-import org.eclipse.ui.ISelectionListener;
+import org.eclipse.ui.IEditorPart;
+import org.eclipse.ui.IPartListener;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
 
+import de.cau.cs.kieler.core.model.util.ModelingUtil;
 import de.cau.cs.kieler.kvid.datadistributor.IPropertyListener;
 import de.cau.cs.kieler.kvid.datadistributor.Property;
 import de.cau.cs.kieler.kvid.datadistributor.RuntimeConfiguration;
@@ -45,11 +55,13 @@ import de.cau.cs.kieler.kvid.datadistributor.RuntimeConfiguration;
  * @author jjc
  *
  */
-public class PropertiesView extends ViewPart implements IPropertyListener, ISelectionListener {
+public class PropertiesView extends ViewPart implements IPropertyListener, ISelectionChangedListener {
     
     private TableViewer tableViewer;
     
-    private List<EditPart> currentlySelectedParts = null;
+    private List<String> currentlySelectedParts = null;
+    
+    private IEditorPart currentPart = null;
     
     private static final int COLUMN_WIDTH = 250;
 
@@ -59,6 +71,32 @@ public class PropertiesView extends ViewPart implements IPropertyListener, ISele
      */
     public void createPartControl(final Composite parent) {       
         RuntimeConfiguration.getInstance().addPropertyListener(this);
+        IPartListener partListener = new IPartListener() {
+            public void partActivated(final IWorkbenchPart part) {
+                if (part instanceof IEditorPart) {
+                    currentPart = (IEditorPart) part;
+                    currentPart.getSite().getSelectionProvider()
+                        .addSelectionChangedListener(PropertiesView.this);
+                }
+            }
+            public void partDeactivated(final IWorkbenchPart part) {
+            }
+            public void partBroughtToTop(final IWorkbenchPart part) {
+            }
+            public void partClosed(final IWorkbenchPart part) {
+                if (part == currentPart) {
+                    currentPart
+                            .getSite()
+                            .getSelectionProvider()
+                            .removeSelectionChangedListener(PropertiesView.this);
+                    currentPart = null;
+                }
+            }
+            public void partOpened(final IWorkbenchPart part) {
+            }
+        };
+        PlatformUI.getWorkbench().getActiveWorkbenchWindow().getPartService()
+                .addPartListener(partListener);
         
         tableViewer = new TableViewer(parent, SWT.NONE);
         Table propertyTable = tableViewer.getTable();
@@ -161,16 +199,42 @@ public class PropertiesView extends ViewPart implements IPropertyListener, ISele
         PlatformUI.getWorkbench().getDisplay().syncExec(new Runnable() {
             public void run() {
                 tableViewer.setInput(RuntimeConfiguration.getInstance()
-                        .getReferedProperties(currentlySelectedParts));            }
+                        .getReferedProperties(currentlySelectedParts));
+                }
         });
     }
 
     /**
      * {@inheritDoc}
      */
-    public void selectionChanged(final IWorkbenchPart part,
-            final ISelection selection) {
-        
+    public void selectionChanged(final SelectionChangedEvent event) {
+        currentlySelectedParts = new LinkedList<String>();
+        ISelection selection = event.getSelection();
+        if (selection instanceof IStructuredSelection) {
+            for (Object item : ((IStructuredSelection) selection).toList()) {
+                if (item instanceof EditPart) {
+                    Object model = ((EditPart) item).getModel();
+                    if (currentPart instanceof DiagramEditor) {
+                        String fragmentUri = null;
+                        if (model instanceof Node) {
+                            fragmentUri = ModelingUtil.getFragmentUri(((Node) model).getElement());
+                        } else if (model instanceof Connector) {
+                            fragmentUri = ModelingUtil.getFragmentUri(((Connector) model).getElement());
+                        }
+                        currentlySelectedParts.add(fragmentUri);
+                    }
+                }
+            }
+        }
+        if (currentlySelectedParts.isEmpty()) {
+            currentlySelectedParts = null;
+        }
+        PlatformUI.getWorkbench().getDisplay().syncExec(new Runnable() {
+            public void run() {
+                tableViewer.setInput(RuntimeConfiguration.getInstance()
+                        .getReferedProperties(currentlySelectedParts));            }
+        });
     }
+
 
 }

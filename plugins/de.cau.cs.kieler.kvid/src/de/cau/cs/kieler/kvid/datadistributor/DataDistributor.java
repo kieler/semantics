@@ -152,13 +152,17 @@ public final class DataDistributor implements IProviderListener {
                     List<List<Point>> paths = getPathsByNode(key);
                     dataByUri.put(key, new DataObject(key, data.getString(key), paths));
                     //Also add Property object for the new entry
+                    List<String> associatedObjects = new LinkedList<String>();
+                    associatedObjects.add(KvidUtil.ptolemyUri2FragmentUri(key, 
+                            currentEditor.getDiagram().getElement().eResource()));
                     RuntimeConfiguration
                     .getInstance()
                     .addProperty(new Property("Display status " + key,
                             new String[] { "Animating",
                                     "Static on Source Node",
                                     "Static on middlemost Bend Point", 
-                                    "Static on Target Node", "Invisible" }));
+                                    "Static on Target Node", "Invisible" },
+                                    associatedObjects));
                 }
             } catch (JSONException e) {
                 //We iterate over the keys, so we can't use a non-existing key.
