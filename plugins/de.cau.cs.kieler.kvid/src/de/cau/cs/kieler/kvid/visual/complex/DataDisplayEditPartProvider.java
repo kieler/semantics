@@ -13,6 +13,9 @@
  */
 package de.cau.cs.kieler.kvid.visual.complex;
 
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IConfigurationElement;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.gef.RootEditPart;
 import org.eclipse.gmf.runtime.common.core.service.IOperation;
 import org.eclipse.gmf.runtime.common.core.service.IProviderChangeListener;
@@ -31,6 +34,10 @@ import org.eclipse.gmf.runtime.notation.View;
  */
 @SuppressWarnings("restriction")
 public class DataDisplayEditPartProvider implements IEditPartProvider {
+    
+    private static final String DATA_DISPLAY_ELEMENTS_ID = "de.cau.cs.kieler.kvid.dataDisplay";
+    
+    private IConfigurationElement[] extensions = null;
 
     /**
      * Not used and therefore not implemented.
@@ -45,9 +52,20 @@ public class DataDisplayEditPartProvider implements IEditPartProvider {
      * {@inheritDoc}
      */
     public boolean provides(final IOperation operation) {
-        if (operation instanceof CreateGraphicEditPartOperation) {
-            View view = ((IEditPartOperation) operation).getView();
-            return view.getType().equals("ScopeNode");
+        if (extensions == null) {
+            extensions = Platform.getExtensionRegistry()
+                    .getConfigurationElementsFor(DATA_DISPLAY_ELEMENTS_ID);
+        }
+        for (IConfigurationElement element : extensions) {
+            for (IConfigurationElement child : element.getChildren()) {
+                String hint = child.getAttribute("semanticHint");
+                if (operation instanceof CreateGraphicEditPartOperation) {
+                    View view = ((IEditPartOperation) operation).getView();
+                    if (view.getType().equals(hint)) {
+                        return true;
+                    }
+                }
+            }
         }
         return false;
     }
@@ -65,7 +83,25 @@ public class DataDisplayEditPartProvider implements IEditPartProvider {
      * {@inheritDoc} 
      */
     public IGraphicalEditPart createGraphicEditPart(final View view) {
-        IGraphicalEditPart part = new ScopeEditPart(view);
+        IGraphicalEditPart part = null;
+        outer:
+        for (IConfigurationElement element : extensions) {
+            for (IConfigurationElement child : element.getChildren()) {
+                String hint = child.getAttribute("semanticHint");
+                if (view.getType().equals(hint)) {
+                    AbstractDisplayFactory factory;
+                    try {
+                        factory = (AbstractDisplayFactory) element
+                                .createExecutableExtension("factoryClass");
+                        part = factory.create(view, hint);
+                        break outer;
+                    } catch (CoreException e) {
+                        // TODO Better handling
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }
         return part;
     }
 

@@ -15,5 +15,14 @@
             restorable="true">
       </view>
    </extension>
+   <extension
+         point="de.cau.cs.kieler.kvid.dataDisplay">
+      <displayFactory
+            factoryClass="de.cau.cs.kieler.kvid.ui.displays.DisplayFactory">
+         <knownSemanticHints
+               semanticHint="ScopeNode">
+         </knownSemanticHints>
+      </displayFactory>
+   </extension>
 
 </plugin>

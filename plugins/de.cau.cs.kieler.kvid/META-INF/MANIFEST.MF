@@ -20,6 +20,9 @@ Require-Bundle: org.eclipse.core.runtime,
  de.cau.cs.kieler.core.annotations;bundle-version="0.1.0"
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-ActivationPolicy: lazy
-Export-Package: de.cau.cs.kieler.kvid.data,
+Export-Package: de.cau.cs.kieler.kvid,
+ de.cau.cs.kieler.kvid.data,
  de.cau.cs.kieler.kvid.datadistributor,
- de.cau.cs.kieler.kvid.dataprovider
+ de.cau.cs.kieler.kvid.dataprovider,
+ de.cau.cs.kieler.kvid.visual,
+ de.cau.cs.kieler.kvid.visual.complex
