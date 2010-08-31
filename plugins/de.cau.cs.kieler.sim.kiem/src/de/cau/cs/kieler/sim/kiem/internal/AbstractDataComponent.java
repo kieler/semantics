@@ -17,6 +17,9 @@ package de.cau.cs.kieler.sim.kiem.internal;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExecutableExtension;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Shell;
+import org.eclipse.ui.PlatformUI;
 
 import de.cau.cs.kieler.sim.kiem.IDataComponent;
 import de.cau.cs.kieler.sim.kiem.KiemEvent;
@@ -71,6 +74,35 @@ public abstract class AbstractDataComponent implements IDataComponent, IExecutab
 
     /** The Constant to imitate a user step command. */
     public static final int MASTER_CMD_STEPBACK = 6;
+    
+    /** The current shell. */
+    private static Shell currentShell = null;
+
+    // -------------------------------------------------------------------------
+    
+    /**
+     * Getter for the main shell of the active workbench.
+     * 
+     * @return the active shell
+     */
+    public Shell getShell() {
+        if (currentShell == null) {
+            Display.getDefault().asyncExec(new Runnable() {
+                public void run() {
+                    currentShell = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell();
+                }
+            });
+        }
+        while (currentShell == null) {
+            try {
+                Thread.sleep(10);
+            } catch (InterruptedException e) {
+                // do not sleep
+            }
+        }
+        return currentShell;
+    }
+    
 
     // -------------------------------------------------------------------------
 

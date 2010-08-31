@@ -25,8 +25,8 @@ import de.cau.cs.kieler.sim.kiem.internal.DataComponentWrapper;
  * <BR>
  * There are two possibilities to stop or deactivate the timeout when the component finished in
  * time:<BR>
- * 1. set another new timeout by calling {@link #timeout(int, String, DataComponentWrapper, Execution)}
- * again.<BR>
+ * 1. set another new timeout by calling
+ * {@link #timeout(int, String, DataComponentWrapper, Execution)} again.<BR>
  * 2. reset the timeout by calling {@link #abortTimeout()}.<BR>
  * <BR>
  * <BR>
@@ -47,7 +47,7 @@ public class TimeoutThread extends Thread {
 
     /** The timeout lower bound. Ensures a reasonable timeout of >100ms. */
     private static final int TIMEOUT_LOWER_BOUND = 100;
-    
+
     /** The timeout to count down (ms). */
     private int timeout;
 
@@ -77,6 +77,10 @@ public class TimeoutThread extends Thread {
     /** The terminate. Indicates that this thread should terminate. */
     private boolean terminate;
 
+    /** Flag is true if currently awaiting user response. */
+    private static boolean awaitUserResponse;
+
+
     // -------------------------------------------------------------------------
 
     /**
@@ -85,6 +89,30 @@ public class TimeoutThread extends Thread {
     public TimeoutThread() {
         this.active = false;
         this.timeout = 0;
+    }
+    
+    // -------------------------------------------------------------------------
+
+    /**
+     * Sets the await user repsonse flag. USE WITH CAUTION - this deactivates
+     * any timeouts! 
+     * 
+     * @param awaitUserResponseParam
+     *            the new await user repsonse
+     */
+    public static void setAwaitUserRepsonse(boolean awaitUserResponseParam) {
+        TimeoutThread.awaitUserResponse = awaitUserResponseParam;
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Checks whether await user response is true.
+     * 
+     * @return true, if is await user response
+     */
+    public static boolean isAwaitUserResponse() {
+        return TimeoutThread.awaitUserResponse;
     }
 
     // -------------------------------------------------------------------------
@@ -102,10 +130,8 @@ public class TimeoutThread extends Thread {
      * @param executionParam
      *            a link to the execution
      */
-    public synchronized void timeout(final int timeoutParam, 
-                                     final String jobDescriptionParam,
-                                     final DataComponentWrapper dataComponentWrapperParam, 
-                                     final Execution executionParam) {
+    public synchronized void timeout(final int timeoutParam, final String jobDescriptionParam,
+            final DataComponentWrapper dataComponentWrapperParam, final Execution executionParam) {
         this.timeout = timeoutParam;
         // ensure timeout is reasonable! (not too small)
         if (this.timeout < TIMEOUT_LOWER_BOUND) {
@@ -124,8 +150,8 @@ public class TimeoutThread extends Thread {
 
     /**
      * Abort a timeout. This aborts the current timeout. Another way to abort a timeout is to simply
-     * set a new one by calling the method {@link #timeout(int, String, DataComponentWrapper, Execution)}
-     * .
+     * set a new one by calling the method
+     * {@link #timeout(int, String, DataComponentWrapper, Execution)} .
      */
     public void abortTimeout() {
         this.abort = true;
@@ -163,8 +189,8 @@ public class TimeoutThread extends Thread {
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
-                // at this point timeout() was called and this.timeout has
-                // a value > 100
+                    // at this point timeout() was called and this.timeout has
+                    // a value > 100
                 }
             }
 
@@ -175,6 +201,7 @@ public class TimeoutThread extends Thread {
                 } catch (Exception e) {
                     // will otherwise try to sleep again
                 }
+                
                 if (this.abort) {
                     // timeout aborted
                     this.active = false;
@@ -185,11 +212,24 @@ public class TimeoutThread extends Thread {
                     this.execution.abortExecutionAsync();
                     // this also stops this thread
                     return;
+                } else if (TimeoutThread.awaitUserResponse) {
+                    // check if currently deactivated then reset time
+                    while (TimeoutThread.awaitUserResponse) {
+                        try {
+                            Thread.sleep(10);
+                        } catch (InterruptedException e) {
+                        }
+                        // set new stop time
+                        stopTime = System.currentTimeMillis() + this.timeout;
+                        continue;
+                    }
+                    
                 } else if (System.currentTimeMillis() > stopTime) {
                     // timeout is triggered
-                    this.execution.showError(Messages.mErrorTimeoutExecution.replace(
-                            "%JOBDESCRIPTION", this.jobDescription).replace("%COMPONENTNAME",
-                            dataComponentWrapper.getName()), KiemPlugin.PLUGIN_ID, null);
+                    this.execution.showError(
+                            Messages.mErrorTimeoutExecution.replace("%JOBDESCRIPTION",
+                                    this.jobDescription).replace("%COMPONENTNAME",
+                                    dataComponentWrapper.getName()), KiemPlugin.PLUGIN_ID, null);
                     this.execution.errorTerminate();
                     // this also stops this thread
                     return;
