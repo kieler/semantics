@@ -210,10 +210,15 @@ mod STEPSEM is
 		maState mode ($stableC V HC) (e, ES) if
 		(fire mode (getVerts SMINT) e (enabled (prettyVToV (getVerts SMINT) V) e (getTrans SMINT)) empty) == empty .
 	)***	
-*** ToDo: generation of actions missing, compare revision 7199
 	rl [execTransESINT] : maState mode ($unstableC V HC (t, T) (par A)) ES => 
 		maState mode ($unstableC prettyVerts(((prettyVToV (getVerts SMINT) V) \ (leave (prettyVToV (getVerts SMINT) V) (prettyTToT (getTrans SMINT) t))) , (enterH SMINT (prettyHCToHC (getVerts SMINT) HC) (prettyTToT (getTrans SMINT) t))) HC T 
-		(par A)) 
+		(par (A 
+			seq(
+				(getExitAc SMINT (prettyVToV (getVerts SMINT) V) (region (prettyTToT (getTrans SMINT) t))) 
+				(getAcExp (prettyTToT (getTrans SMINT) t))
+				(getEntryAc SMINT (prettyHCToHC (getVerts SMINT) HC) (target (prettyTToT (getTrans SMINT) t)) (region (prettyTToT (getTrans SMINT) t)))
+				)
+		))) 
 		ES .
 	rl [finishedRTCESINT] : maState mode ($unstableC V HC empty (par A)) ES => 
 		maState mode ($stableC V prettyHc(succHC (prettyVToV (getVerts SMINT) V) (prettyHCToHC (getVerts SMINT) HC))) ES .
