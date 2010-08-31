@@ -13,6 +13,10 @@
  */
 package de.cau.cs.kieler.kvid.datadistributor;
 
+import java.util.List;
+
+import org.eclipse.gef.EditPart;
+
 /**
  * Class for storing KViD Properties, it's corresponding values and the 
  * currently selected value.
@@ -33,6 +37,9 @@ public class Property {
     
     /** Is this Property a free text Property? */
     private boolean isFreeText;
+    
+    /** A list of objects this property refers to. Null if refers to none. */
+    private List<EditPart> associatedParts = null;
     
     /**
      * Constructor for a Property with a fix set of options.
@@ -61,6 +68,34 @@ public class Property {
         //Having a free text option, it is set as value on position 0 in the values array 
         values = new String[]{ thedefaultvalue };
         this.isFreeText = true;
+    }
+    
+    /**
+     * Constructor for a Property with a fixed set of options and
+     * EditParts to which it refer. 
+     * 
+     * @param theName The Property's desired name (must be unique)
+     * @param theValues String array containing all possible options
+     * @param theAssociatedParts EditParts to which this option refers
+     */
+    public Property(final String theName, final String[] theValues,
+            final List<EditPart> theAssociatedParts) {
+        this(theName, theValues);
+        associatedParts = theAssociatedParts;
+    }
+    
+    /**
+     * Constructor for a Property with free text input and
+     * EditParts to which it refer .
+     * 
+     * @param theName The Property's desired name (must be unique)
+     * @param theDefaultValue The initial value of the Property
+     * @param theAssociatedParts EditParts to which this option refers
+     */
+    public Property(final String theName, final String theDefaultValue,
+            final List<EditPart> theAssociatedParts) {
+        this(theName, theDefaultValue);
+        associatedParts = theAssociatedParts;
     }
     
     /**
@@ -149,6 +184,21 @@ public class Property {
             }
         }
         throw new RuntimeException("Tried to set a non-existing option.");
+    }
+    
+    /**
+     * Method to check whether this option is associated with a certain EditPart.
+     * 
+     * @param thePart The EditPart to which the option might refer
+     * @return true if it refers, false else
+     */
+    public boolean refersTo(final EditPart thePart) {
+        for (EditPart part : associatedParts) {
+            if (thePart.equals(part)) {
+                return true;
+            }
+        }
+        return false;
     }
     
     @Override
