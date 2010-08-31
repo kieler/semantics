@@ -18,6 +18,8 @@ fmod MODTRANSITION is
 
   op ________ : Verts Event Guard Actions Actions Actions Verts Region -> 
 	  ModTransition [ctor format (n d d d d d d d n)] .
+  op _________ : String Verts Event Guard Actions Actions Actions Verts Region -> 
+	  ModTransition [ctor format (n d d d d d d d d n)] .
 
   op _____ : Verts Event Actions Verts Region -> 
 	  ModTransition [ctor format (n d d d d n)] .
@@ -31,23 +33,65 @@ fmod MODTRANSITION is
   vars a af aj : Action .
   vars A AF AJ : Actions .
   vars lreg : Vert .
-
+  vars id : String .
+  
   op source _ : ModTransition -> Verts .
+  eq source (id src e g A AF AJ tgt lreg) = src .
   eq source (src e g A AF AJ tgt lreg) = src .
   eq source (src e A tgt lreg) = src .
 
   op target _ : ModTransition -> Verts .
+  eq target (id src e g A AF AJ tgt lreg) = tgt .
   eq target (src e g A AF AJ tgt lreg) = tgt .
   eq target (src e A tgt lreg) = tgt .
 	
   op region _ : ModTransition -> Region .
-  eq region (src e A a AF AJ tgt lreg) = lreg .
+  eq region (id src e g A AF AJ tgt lreg) = lreg .
+  eq region (src e g A AF AJ tgt lreg) = lreg .
   eq region (src e A tgt lreg) = lreg .
   
   op event_ : ModTransition -> Event .
+  eq event(id src e g A AF AJ tgt lreg) = e .
   eq event(src e g A AF AJ tgt lreg) = e .
   eq event (src e A tgt lreg) = e .
   
+  op actions_ : ModTransition -> Actions .
+  eq actions(id src e g A AF AJ tgt lreg) = A AF AJ .
+  eq actions(src e g A AF AJ tgt lreg) = A AF AJ .
+
+
+  *** wo verwendet ?
+  op actionsAll_ : ModTransition -> Actions .
+  eq actionsAll(id src e g A AF AJ tgt lreg) = A AF AJ .
+  eq actionsAll(src e g A AF AJ tgt lreg) = A AF AJ .
+
+  *** wo verwendet ?  
+  op actionsJoin_ : ModTransition -> Actions .
+  eq actionsJoin(id src e g A AF AJ tgt lreg) = AJ .
+  eq actionsJoin(src e g A AF AJ tgt lreg) = AJ .
+  *** wo verwendet ?  
+  op actionsFork_ : ModTransition -> Actions .
+  eq actionsFork(id src e g A AF AJ tgt lreg) = AF .
+  eq actionsFork(src e g A AF AJ tgt lreg) = AF .
+  *** wo verwendet ?
+  op actionsMain_ : ModTransition -> Actions .
+  eq actionsMain(id src e g A AF AJ tgt lreg) = A .
+  eq actionsMain(src e g A AF AJ tgt lreg) = A .
+
+  *** explain
+  op getAcExp_ : ModTransition -> Action .
+  eq getAcExp(id src e g A AF AJ tgt lreg) = seq(A AF AJ) .
+  eq getAcExp(src e g A AF AJ tgt lreg) = seq(A AF AJ) .
+  
+  
+  
+  op prettyTrans_ :  ModTransition -> ModTransition .
+  eq prettyTrans (id src e g A AF AJ tgt lreg) = 
+    id (prettyVerts src) e g A AF AJ (prettyVerts tgt) (prettyVerts lreg) .
+  eq prettyTrans (src e g A AF AJ tgt lreg) = 
+    (prettyVerts src) e g A AF AJ (prettyVerts tgt) (prettyVerts lreg) .
+  eq prettyTrans (src e A tgt lreg) = 
+    (prettyVerts src) e A (prettyVerts tgt) (prettyVerts lreg) .
   
 endfm
 
@@ -98,27 +142,7 @@ fmod TRANSITIONS is
   eq events(t, T) = (event t) (events T) .
   eq events empty = nil .
   
-  op actions_ : ModTransition -> Actions .
-  eq actions(src e g A AF AJ tgt lreg) = A AF AJ .
-
-
-  *** wo verwendet ?
-  op actionsAll_ : ModTransition -> Actions .
-  eq actionsAll(src e g A AF AJ tgt lreg) = A AF AJ .
-
-  *** wo verwendet ?  
-  op actionsJoin_ : ModTransition -> Actions .
-  eq actionsJoin(src e g A AF AJ tgt lreg) = AJ .
-  *** wo verwendet ?  
-  op actionsFork_ : ModTransition -> Actions .
-  eq actionsFork(src e g A AF AJ tgt lreg) = AF .
-  *** wo verwendet ?
-   op actionsMain_ : ModTransition -> Actions .
-  eq actionsMain(src e g A AF AJ tgt lreg) = A .
   
-  *** explain
-  op getAcExp_ : ModTransition -> Action .
-  eq getAcExp(src e g A AF AJ tgt lreg) = seq(A AF AJ) .
 
   op remLowPrio_ : Transitions -> Transitions .
   eq remLowPrio T = $remLowPrio empty T .
@@ -171,7 +195,7 @@ fmod TRANSITIONS is
 
   op leave __ : Verts Transitions -> Verts .
   eq leave C empty = empty .
-  eq leave C (src e g A AF AJ tgt lreg) =  intersection((upset lreg C) \ lreg, C) .
+  eq leave C t = intersection((upset (region t) C) \ (region t), C) .
   eq leave C (T ,  t) = (leave C T) ,  (leave C t) .
 
   *** fire ist so deterministisch
@@ -195,13 +219,7 @@ fmod TRANSITIONS is
   *** here we require a set transitons which is not free of conflicting transitions but these 
   *** are not related by the priority relation.
   
-   
-  op prettyTrans_ :  ModTransition -> ModTransition .
-  eq prettyTrans (src e g A AF AJ tgt lreg) = 
-    (prettyVerts src) e g A AF AJ (prettyVerts tgt) (prettyVerts lreg) .
-  eq prettyTrans (src e A tgt lreg) = 
-    (prettyVerts src) e A (prettyVerts tgt) (prettyVerts lreg) .
-  
+     
 
   op prettyTrans_ : Transitions -> Transitions .
   eq prettyTrans (empty).ModTransition = (empty).ModTransition .
