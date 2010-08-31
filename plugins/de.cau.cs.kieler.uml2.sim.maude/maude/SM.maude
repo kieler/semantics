@@ -353,8 +353,8 @@ fmod STATEMACHINE is
   eq enterH sm HC empty = empty .
   op enterH______ : Verts Defaults ShallowDefaults DeepDefaults HistoryConfs 
      Transitions -> Verts .
-  eq enterH V2 D SH DH HC ((src e g A af aj tgt lreg) , T) = 
-     (($activate V2 D SH DH HC lreg tgt) \ lreg) , (enterH V2 D SH DH HC T) .
+  eq enterH V2 D SH DH HC (t , T) = 
+     (($activate V2 D SH DH HC (region t) (target t)) \ (region t)) , (enterH V2 D SH DH HC T) .
   eq enterH V2 D SH DH HC empty = empty .   
 
 
