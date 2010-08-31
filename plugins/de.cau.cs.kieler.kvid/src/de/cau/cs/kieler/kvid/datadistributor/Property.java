@@ -197,6 +197,9 @@ public class Property {
         if (thePart == null) {
             return associatedParts == null;
         }
+        if (associatedParts == null) {
+            return false;
+        }
         for (EditPart part : associatedParts) {
             if (thePart.equals(part)) {
                 return true;

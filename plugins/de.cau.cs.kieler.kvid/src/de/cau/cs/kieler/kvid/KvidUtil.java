@@ -21,6 +21,7 @@ import java.awt.image.IndexColorModel;
 import java.awt.image.WritableRaster;
 
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.swt.graphics.ImageData;
 import org.eclipse.swt.graphics.PaletteData;
@@ -161,6 +162,66 @@ public final class KvidUtil {
                     result += ((NamedObject) model).getName();
                 } else {
                     throw new RuntimeException("Ptolemy URIs will only work with NamedObjects");
+                }
+            }
+        } else {
+            throw new RuntimeException("Malformatted URI");
+        }
+        return result;
+    }
+    
+    /**
+     * Converts a Ptolemy URI into a EMF/GMF Fragment URI.
+     * A Fragment URI looks like: //(type).(number of child of this type)/ etc.
+     * A Ptolemy URI looks like: .(element name).(second element name)
+     * 
+     * This requires unique names on the same hierarchy level.
+     * 
+     * @param ptolemyUri A Ptolemy URI referring the model element
+     * @param resource The resource which holds the model element referred by
+     *          the Fragment URI
+     * @return The Fragment URI
+     */
+    public static String ptolemyUri2FragmentUri(final String ptolemyUri, final Resource resource) {
+        String result = "";
+        if (ptolemyUri.startsWith(".")) {
+            EObject root = resource.getContents().get(0);
+            result = "/";
+            int lastOccurance = 1;
+            int currentOccurance;
+            
+            while (ptolemyUri.indexOf(".", lastOccurance) != -1) {
+                //parse Ptolemy URI and find corresponding EObject on the current level 
+                result += "/";
+                currentOccurance = ptolemyUri.indexOf(".", lastOccurance);
+                String currentUri;
+                
+                if (currentOccurance != lastOccurance) {
+                    currentUri = ptolemyUri.substring(lastOccurance, currentOccurance);
+                    lastOccurance = currentOccurance;
+                } else {
+                    //when this is the last referrer, just take the rest
+                    currentUri = ptolemyUri.substring(lastOccurance);
+                    currentUri = currentUri.replaceAll("\\.", "");
+                    lastOccurance = ptolemyUri.length();
+                }
+                String currentResult = new String(result);
+                for (EObject eo : root.eContents()) {
+                    //iterate through the current level and find the NamedObject with the same name
+                    if (eo instanceof NamedObject) {
+                        if (((NamedObject) eo).getName().equals(currentUri)) {
+                            result += ((InternalEObject) eo.eContainer())
+                                    .eURIFragmentSegment(
+                                            eo.eContainingFeature(), eo);
+                            root = eo;
+                            break;
+                        }
+                    }
+                }
+                if (currentResult.equals(result)) {
+                    //Element wasn't found, although this was the right level
+                    //Return null then
+                    return null;
                 }
             }
         } else {
