@@ -17,6 +17,8 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.eclipse.gef.EditPart;
+
 /**
  * 
  * Class for handling configuration that happens during runtime.
@@ -81,6 +83,32 @@ public final class RuntimeConfiguration {
      */
     public List<Property> getKnownProperties() {
         return knownProperties;
+    }
+    /**
+     * Getter for the list of {@link Property}s referring to the current selection.
+     * Enter null if there is no selection to get general options.
+     * 
+     * @param selectedParts The currently selected EditParts
+     * @return The Properties referring to the selected EditParts
+     */
+    public List<Property> getReferedProperties(final List<EditPart> selectedParts) {
+        List<Property> result = new LinkedList<Property>();
+        if (selectedParts == null) {
+            for (Property property : knownProperties) {
+                if (property.refersTo(null)) {
+                    result.add(property);
+                }
+            }
+        } else {
+            for (EditPart part : selectedParts) {
+                for (Property property : knownProperties) {
+                    if (property.refersTo(part)) {
+                        result.add(property);
+                    }
+                }
+            }
+        }
+        return result;
     }
     
     /**

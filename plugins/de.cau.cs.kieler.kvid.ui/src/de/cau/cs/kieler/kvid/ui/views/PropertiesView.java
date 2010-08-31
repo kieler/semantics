@@ -13,11 +13,15 @@
  */
 package de.cau.cs.kieler.kvid.ui.views;
 
+import java.util.List;
+
+import org.eclipse.gef.EditPart;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.CellEditor;
 import org.eclipse.jface.viewers.CellLabelProvider;
 import org.eclipse.jface.viewers.ComboBoxCellEditor;
 import org.eclipse.jface.viewers.EditingSupport;
+import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TableViewerColumn;
 import org.eclipse.jface.viewers.TextCellEditor;
@@ -25,6 +29,8 @@ import org.eclipse.jface.viewers.ViewerCell;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Table;
+import org.eclipse.ui.ISelectionListener;
+import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
 
@@ -39,9 +45,11 @@ import de.cau.cs.kieler.kvid.datadistributor.RuntimeConfiguration;
  * @author jjc
  *
  */
-public class PropertiesView extends ViewPart implements IPropertyListener {
+public class PropertiesView extends ViewPart implements IPropertyListener, ISelectionListener {
     
     private TableViewer tableViewer;
+    
+    private List<EditPart> currentlySelectedParts = null;
     
     private static final int COLUMN_WIDTH = 250;
 
@@ -123,7 +131,8 @@ public class PropertiesView extends ViewPart implements IPropertyListener {
         });
         
         
-        tableViewer.setInput(RuntimeConfiguration.getInstance().getKnownProperties());
+        tableViewer.setInput(RuntimeConfiguration.getInstance()
+                .getReferedProperties(currentlySelectedParts));
     }
 
     @Override
@@ -140,8 +149,8 @@ public class PropertiesView extends ViewPart implements IPropertyListener {
     public void triggerPropertyChanged(final Property changedProperty) {
         PlatformUI.getWorkbench().getDisplay().syncExec(new Runnable() {
             public void run() {
-                tableViewer.setInput(RuntimeConfiguration.getInstance().getKnownProperties());
-            }
+                tableViewer.setInput(RuntimeConfiguration.getInstance()
+                        .getReferedProperties(currentlySelectedParts));            }
         });
     }
 
@@ -151,9 +160,17 @@ public class PropertiesView extends ViewPart implements IPropertyListener {
     public void triggerPropertyListChanged() {
         PlatformUI.getWorkbench().getDisplay().syncExec(new Runnable() {
             public void run() {
-                tableViewer.setInput(RuntimeConfiguration.getInstance().getKnownProperties());
-            }
+                tableViewer.setInput(RuntimeConfiguration.getInstance()
+                        .getReferedProperties(currentlySelectedParts));            }
         });
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public void selectionChanged(final IWorkbenchPart part,
+            final ISelection selection) {
+        
     }
 
 }

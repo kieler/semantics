@@ -188,11 +188,15 @@ public class Property {
     
     /**
      * Method to check whether this option is associated with a certain EditPart.
+     * Enter null to find general options.
      * 
      * @param thePart The EditPart to which the option might refer
      * @return true if it refers, false else
      */
     public boolean refersTo(final EditPart thePart) {
+        if (thePart == null) {
+            return associatedParts == null;
+        }
         for (EditPart part : associatedParts) {
             if (thePart.equals(part)) {
                 return true;
