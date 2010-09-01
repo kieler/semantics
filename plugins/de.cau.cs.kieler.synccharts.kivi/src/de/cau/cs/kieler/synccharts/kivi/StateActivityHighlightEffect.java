@@ -15,6 +15,7 @@ package de.cau.cs.kieler.synccharts.kivi;
 
 import org.eclipse.draw2d.ColorConstants;
 import org.eclipse.draw2d.IFigure;
+import org.eclipse.gef.EditPart;
 import org.eclipse.gef.GraphicalEditPart;
 import org.eclipse.gmf.runtime.draw2d.ui.figures.WrappingLabel;
 import org.eclipse.swt.graphics.Color;
@@ -28,13 +29,15 @@ import de.cau.cs.kieler.kivi.core.impl.AbstractEffect;
  * 
  */
 public class StateActivityHighlightEffect extends AbstractEffect {
+    
+    private EditPart editPart;
 
     private IFigure targetFigure;
 
     private Color originalColor;
 
     private Color color = ColorConstants.red;
-
+    
     /**
      * Default constructor.
      */
@@ -47,11 +50,9 @@ public class StateActivityHighlightEffect extends AbstractEffect {
      * 
      * @param e
      *            the edit part to highlight
-     * @param c
-     *            the color to use for highlighting
      */
-    public StateActivityHighlightEffect(final GraphicalEditPart e, final Color c) {
-        color = c;
+    public StateActivityHighlightEffect(final GraphicalEditPart e) {
+        editPart = e;
         targetFigure = e.getFigure();
         if (targetFigure.getChildren().size() > 0) {
             targetFigure = (IFigure) targetFigure.getChildren().get(0);
@@ -60,7 +61,9 @@ public class StateActivityHighlightEffect extends AbstractEffect {
 
     @Override
     public void execute() {
-        originalColor = targetFigure.getForegroundColor();
+        if (originalColor == null) {
+            originalColor = targetFigure.getForegroundColor();
+        }
         targetFigure.setForegroundColor(color);
         for (Object child : targetFigure.getChildren()) {
             if (child instanceof WrappingLabel) {
@@ -73,6 +76,25 @@ public class StateActivityHighlightEffect extends AbstractEffect {
     public void undo() {
         if (targetFigure != null && originalColor != null) {
             targetFigure.setForegroundColor(originalColor);
+            originalColor = null;
         }
+    }
+    
+    /**
+     * Set the color to use for highlighting.
+     * 
+     * @param c the color
+     */
+    public void setColor(final Color c) {
+        color = c;
+    }
+    
+    /**
+     * Get the edit part used for highlighting by this effect.
+     * 
+     * @return the edit part
+     */
+    public EditPart getEditPart() {
+        return editPart;
     }
 }

@@ -48,6 +48,8 @@ import de.cau.cs.kieler.sim.kiem.properties.KiemProperty;
  */
 public class StateActivityDataComponent extends JSONObjectDataComponent implements
         IJSONObjectDataComponent {
+    
+    private static final int DEFAULT_STEPS = 5;
 
     private DiagramEditor diagramEditor;
 
@@ -118,7 +120,7 @@ public class StateActivityDataComponent extends JSONObjectDataComponent implemen
      */
     public KiemProperty[] provideProperties() {
         KiemProperty[] properties = new KiemProperty[1];
-        properties[0] = new KiemProperty("steps", 5);
+        properties[0] = new KiemProperty("steps", DEFAULT_STEPS);
         return properties;
     }
 
@@ -154,8 +156,8 @@ public class StateActivityDataComponent extends JSONObjectDataComponent implemen
                     statesByStep.add(currentStep);
                     currentStep = new ArrayList<EditPart>();
                 }
-
-                currentJSONObject = pool.getData(null, wrapper.getPoolIndex(step - i - 1 + 0));
+                long index = wrapper.getPoolIndex(step - i - 1 + 0);
+                currentJSONObject = pool.getData(null, index);
             }
             if (StateActivityTrigger.getInstance() != null) {
                 StateActivityTrigger.getInstance().step(statesByStep);

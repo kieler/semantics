@@ -14,8 +14,11 @@
 package de.cau.cs.kieler.synccharts.kivi;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import org.eclipse.draw2d.ColorConstants;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gef.GraphicalEditPart;
 import org.eclipse.swt.graphics.Color;
@@ -33,9 +36,11 @@ import de.cau.cs.kieler.kivi.core.impl.AbstractCombination;
  */
 public class StateActivityCombination extends AbstractCombination {
 
+    private static final Color HIGHLIGHT_COLOR = ColorConstants.red;
+
     private List<List<EditPart>> activeStates;
 
-    private List<IEffect> effects = new ArrayList<IEffect>();
+    private Map<EditPart, StateActivityHighlightEffect> effects = new HashMap<EditPart, StateActivityHighlightEffect>();
 
     @Override
     public void execute() {
@@ -43,33 +48,52 @@ public class StateActivityCombination extends AbstractCombination {
             undo();
             return;
         }
+System.out.println(effects.size());
+        Map<EditPart, IEffect> toUndo = new HashMap<EditPart, IEffect>(effects);
 
-        // TODO avoid undo/redo for effects that do not change anything
-        for (IEffect effect : effects) {
-            Viewmanagement.getInstance().undoEffect(effect);
+        for (EditPart e : activeStates.get(0)) {
+            if (e instanceof GraphicalEditPart) {
+                StateActivityHighlightEffect effect = effects.get(e);
+                if (effect == null) {
+                    effect = new StateActivityHighlightEffect((GraphicalEditPart) e);
+                    effects.put(e, effect);
+                } else {
+                    toUndo.remove(e);
+                }
+                effect.setColor(HIGHLIGHT_COLOR);
+                Viewmanagement.getInstance().executeEffect(effect);
+            }
         }
-        effects.clear();
 
-        for (int i = 0; i < activeStates.size(); i++) {
+        for (int i = 1; i < activeStates.size(); i++) {
             List<EditPart> currentStep = activeStates.get(i);
             for (EditPart e : currentStep) {
                 if (e instanceof GraphicalEditPart) {
-                    IEffect effect = new StateActivityHighlightEffect((GraphicalEditPart) e,
-                            new Color(null, new RGB(0.0f, 1.0f, 1.0f - 1.0f / activeStates.size()
-                                    * i)));
-                    effects.add(effect);
+                    StateActivityHighlightEffect effect = effects.get(e);
+                    if (effect == null) {
+                        effect = new StateActivityHighlightEffect((GraphicalEditPart) e);
+                        effects.put(e, effect);
+                    } else {
+                        toUndo.remove(e);
+                    }
+                    effect.setColor(historyColor(i, activeStates.size()));
                     Viewmanagement.getInstance().executeEffect(effect);
                 }
             }
         }
-
+        
+        for (Map.Entry<EditPart, IEffect> entry : toUndo.entrySet()) {
+            Viewmanagement.getInstance().undoEffect(entry.getValue());
+            effects.remove(entry.getKey());
+        }
+System.out.println(effects.size());
     }
 
     /**
      * {@inheritDoc}
      */
     public void undo() {
-        for (IEffect effect : effects) {
+        for (IEffect effect : effects.values()) {
             Viewmanagement.getInstance().undoEffect(effect);
         }
         effects.clear();
@@ -85,6 +109,10 @@ public class StateActivityCombination extends AbstractCombination {
     public boolean evaluate(final StateActivityTrigger trigger) {
         activeStates = trigger.getActiveStates();
         return true;
+    }
+
+    private static Color historyColor(int step, int steps) {
+        return new Color(null, new RGB(240.0f, 1.0f, 1.0f - 1.0f / steps * (step - 1)));
     }
 
 }
