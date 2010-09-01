@@ -20,10 +20,13 @@ import org.eclipse.draw2d.Graphics;
 import org.eclipse.draw2d.IFigure;
 import org.eclipse.draw2d.LayoutManager;
 import org.eclipse.draw2d.PolygonDecoration;
+import org.eclipse.draw2d.PolylineConnection;
 import org.eclipse.draw2d.RotatableDecoration;
 import org.eclipse.draw2d.geometry.PointList;
 import org.eclipse.draw2d.geometry.Rectangle;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.LineAttributes;
 
 import de.cau.cs.kieler.core.ui.figures.CircleDecoration;
 import de.cau.cs.kieler.core.ui.figures.SplineConnection;
@@ -41,8 +44,8 @@ public class SyncchartsConnectionFigureProvider implements IRenderingProvider {
      */
     public IFigure getFigureByString(final String input, final IFigure oldFigure,
             final EObject object) {
-        if (oldFigure instanceof SplineConnection) {
-            SplineConnection splineFigure = (SplineConnection) oldFigure;
+        if (oldFigure instanceof PolylineConnection) {
+            PolylineConnection splineFigure = (PolylineConnection) oldFigure;
             splineFigure.setForegroundColor(ColorConstants.black);
             splineFigure.setBackgroundColor(ColorConstants.black);
             splineFigure.setLineWidth(2);
@@ -63,7 +66,7 @@ public class SyncchartsConnectionFigureProvider implements IRenderingProvider {
                 splineFigure.setTargetDecoration(createHistoryDecoration());
             } else if (input.equals("weakAbortHistory")) {
                 splineFigure.setSourceDecoration(null);
-                splineFigure.setTargetDecoration(createHistoryDecoration());
+                splineFigure.setTargetDecoration(createHistoryDecoration());     
             }
             return splineFigure;
         }

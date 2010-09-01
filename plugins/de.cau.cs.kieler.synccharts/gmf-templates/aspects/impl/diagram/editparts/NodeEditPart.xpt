@@ -33,9 +33,6 @@
 			«REM» State and State2 Editparts call update figure to get their shape and also feed the modelelement to the StateLayout «ENDREM»
 			
 			«IF node.editPartClassName = 'StateEditPart' or node.editPartClassName = 'State2EditPart'-»
-				if (primaryShape.getLayoutManager() instanceof StateLayout) {
-					((StateLayout)primaryShape.getLayoutManager()).setModelElement(this.getModelElement());
-				}	
 				«node.editPartClassName».this.updateFigure(primaryShape);
 			«ENDIF-»
 			«REM» END custom code «ENDREM»
@@ -59,9 +56,6 @@
 		primaryShape = new «className»()«IF node.childNodes->notEmpty() and node.getLayoutType() = gmfgen::ViewmapLayoutType::XY_LAYOUT»«EXPAND forceUseLocalCoordinates»«ENDIF»;
 		«REM» State and State2 Editparts call update figure to get their shape and also feed the modelelement to the StateLayout «ENDREM»
 		«IF node.editPartClassName = 'StateEditPart' or node.editPartClassName = 'State2EditPart'-»
-			if (primaryShape.getLayoutManager() instanceof StateLayout) {	
-				((StateLayout)primaryShape.getLayoutManager()).setModelElement(this.getModelElement());
-			}
 			«node.editPartClassName».this.updateFigure(primaryShape);
 		«ENDIF-»
 		«REM» END custom code «ENDREM»
