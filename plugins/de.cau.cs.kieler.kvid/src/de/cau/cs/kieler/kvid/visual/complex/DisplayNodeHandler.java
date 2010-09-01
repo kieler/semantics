@@ -46,7 +46,7 @@ import org.eclipse.ui.handlers.HandlerUtil;
  * @author jjc
  *
  */
-public class ScopeNodeHandler extends AbstractHandler {
+public class DisplayNodeHandler extends AbstractHandler {
 
     /**
      * {@inheritDoc}
@@ -74,11 +74,11 @@ public class ScopeNodeHandler extends AbstractHandler {
             DiagramEditor diagEditor = (DiagramEditor) editor;
             
             //Receive the element type for a Scope Node
-            IElementType scopeNode = ElementTypeRegistry.getInstance().getType(
-                    "de.cau.cs.kieler.kvid.visual.complex.scopenode");
+            String elementTypeID = event.getParameter("de.cau.cs.kieler.kvid.visual.complex.displayID");
+            IElementType displayNodeType = ElementTypeRegistry.getInstance().getType(elementTypeID);
             //Build a request for creating the new Node
             CreateViewRequest createScopeRequest = CreateViewRequestFactory
-                    .getCreateShapeRequest(scopeNode,
+                    .getCreateShapeRequest(displayNodeType,
                             PreferencesHint.USE_DEFAULTS);
             createScopeRequest.setLocation(targetEditPart.getLocation());
             
@@ -102,7 +102,7 @@ public class ScopeNodeHandler extends AbstractHandler {
             CompoundCommand cc = new CompoundCommand();
             cc.add(createDisplayCommand);
             cc.add(new ICommandProxy(noteAttachmentCC));
-            cc.setLabel("Add Scope Node");
+            cc.setLabel(displayNodeType.getDisplayName());
             diagEditor.getDiagramEditDomain().getDiagramCommandStack().execute(cc);
         }
         return null;

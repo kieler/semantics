@@ -11,29 +11,6 @@
       </content>
    </extension>
    <extension
-         id="de.cau.cs.kieler.kvid.elementTypes"
-         name="KViDElementTypes"
-         point="org.eclipse.gmf.runtime.emf.type.core.elementTypes">
-      <elementTypeFactory
-            factory="org.eclipse.gmf.runtime.diagram.ui.internal.type.NotationTypeFactory"
-            kind="org.eclipse.gmf.runtime.diagram.ui.util.INotationType"
-            params="semanticHint">
-      </elementTypeFactory>
-      <specializationType
-            icon="icons/datanode.gif"
-            id="de.cau.cs.kieler.kvid.visual.complex.scopenode"
-            kind="org.eclipse.gmf.runtime.diagram.ui.util.INotationType"
-            name="%ScopeNode.Label">
-         <param
-               name="semanticHint"
-               value="ScopeNode">
-         </param>
-         <specializes
-               id="org.eclipse.gmf.runtime.emf.type.core.null">
-         </specializes>
-      </specializationType>
-   </extension>
-   <extension
          point="org.eclipse.gmf.runtime.diagram.core.viewProviders">
       <viewProvider
             class="de.cau.cs.kieler.kvid.visual.complex.DataDisplayViewProvider">
@@ -59,44 +36,15 @@
          point="org.eclipse.ui.commands">
       <command
             categoryId="de.cau.cs.kieler"
-            defaultHandler="de.cau.cs.kieler.kvid.visual.complex.ScopeNodeHandler"
-            id="de.cau.cs.kieler.kvid.addScopeCommand"
-            name="Add Scope Node">
+            defaultHandler="de.cau.cs.kieler.kvid.visual.complex.DisplayNodeHandler"
+            id="de.cau.cs.kieler.kvid.addDisplayNodeCommand"
+            name="Add Display Node">
+         <commandParameter
+               id="de.cau.cs.kieler.kvid.visual.complex.displayID"
+               name="DisplayID"
+               optional="false">
+         </commandParameter>
       </command>
-   </extension>
-   <extension
-         point="org.eclipse.ui.menus">
-      <menuContribution
-            locationURI="popup:de.cau.cs.kieler">
-         <command
-               commandId="de.cau.cs.kieler.kvid.addScopeCommand"
-               disabledIcon="icons/datanode_disabled.gif"
-               icon="icons/datanode.gif"
-               label="Add Scope Node"
-               mnemonic="S"
-               style="push">
-            <visibleWhen
-                  checkEnabled="false">
-               <and>
-                  <reference
-                        definitionId="de.cau.cs.kieler.expression.editorActive">
-                  </reference>
-                  <count
-                        value="1">
-                  </count>
-                  <not>
-                     <reference
-                           definitionId="de.cau.cs.kieler.expression.diagramSelected">
-                     </reference></not>
-                  <not>
-                     <reference
-                           definitionId="de.cau.cs.kieler.expression.onlyConnectionsSelected">
-                     </reference>
-                  </not>
-               </and>
-            </visibleWhen>
-         </command>
-      </menuContribution>
    </extension>
    <extension
          point="de.cau.cs.kieler.kiml.layoutListeners">

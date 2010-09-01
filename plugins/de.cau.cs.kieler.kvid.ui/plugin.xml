@@ -24,5 +24,66 @@
          </knownSemanticHints>
       </displayFactory>
    </extension>
+      <extension
+         id="de.cau.cs.kieler.kvid.elementTypes"
+         name="KViDElementTypes"
+         point="org.eclipse.gmf.runtime.emf.type.core.elementTypes">
+      <elementTypeFactory
+            factory="org.eclipse.gmf.runtime.diagram.ui.internal.type.NotationTypeFactory"
+            kind="org.eclipse.gmf.runtime.diagram.ui.util.INotationType"
+            params="semanticHint">
+      </elementTypeFactory>
+      <specializationType
+            icon="icons/datanode.gif"
+            id="de.cau.cs.kieler.kvid.ui.displays.scopenode"
+            kind="org.eclipse.gmf.runtime.diagram.ui.util.INotationType"
+            name="%ScopeNode.Label">
+         <param
+               name="semanticHint"
+               value="ScopeNode">
+         </param>
+         <specializes
+               id="org.eclipse.gmf.runtime.emf.type.core.null">
+         </specializes>
+      </specializationType>
+   </extension>
+      <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            locationURI="popup:de.cau.cs.kieler">
+         <command
+               commandId="de.cau.cs.kieler.kvid.addDisplayNodeCommand"
+               disabledIcon="icons/datanode_disabled.gif"
+               icon="icons/datanode.gif"
+               label="Add Scope Node"
+               mnemonic="S"
+               style="push">
+            <visibleWhen
+                  checkEnabled="false">
+               <and>
+                  <reference
+                        definitionId="de.cau.cs.kieler.expression.editorActive">
+                  </reference>
+                  <count
+                        value="1">
+                  </count>
+                  <not>
+                     <reference
+                           definitionId="de.cau.cs.kieler.expression.diagramSelected">
+                     </reference></not>
+                  <not>
+                     <reference
+                           definitionId="de.cau.cs.kieler.expression.onlyConnectionsSelected">
+                     </reference>
+                  </not>
+               </and>
+            </visibleWhen>
+            <parameter
+                  name="de.cau.cs.kieler.kvid.visual.complex.displayID"
+                  value="de.cau.cs.kieler.kvid.ui.displays.scopenode">
+            </parameter>
+         </command>
+      </menuContribution>
+   </extension>
 
 </plugin>
