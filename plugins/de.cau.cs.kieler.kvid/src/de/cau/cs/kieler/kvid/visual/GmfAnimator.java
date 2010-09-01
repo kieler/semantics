@@ -133,7 +133,9 @@ public final class GmfAnimator {
         //Make sure animation won't be slower than the desired animation time
         anima.setCompleteDuration(animationTime - (animationTime / DELAY_SCALE));
         cc.add(anima);
-        diagram.getDiagramEditDomain().getDiagramCommandStack().execute(cc);
+        if (cc.canExecute()) {
+            diagram.getDiagramEditDomain().getDiagramCommandStack().execute(cc);
+        }
         
         if (RuntimeConfiguration.getInstance()
                 .currentValueOfProperty("Behavior after Animation")

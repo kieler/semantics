@@ -16,6 +16,7 @@ package de.cau.cs.kieler.kvid.visual;
 import java.util.HashMap;
 import java.util.List;
 
+import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.draw2d.IFigure;
 import org.eclipse.draw2d.geometry.Point;
 import org.eclipse.gmf.runtime.diagram.ui.editparts.DiagramRootEditPart;
@@ -101,8 +102,13 @@ public final class GmfDrawer implements IDrawer, IDataListener {
             for (final String key : figuresByURI.keySet()) {
                 PlatformUI.getWorkbench().getDisplay().syncExec(new Runnable() {
                     public void run() {
-                        figuresByURI.get(key).setVisible(false);
-                        canvas.add(figuresByURI.get(key));
+                        try {
+                            figuresByURI.get(key).setVisible(false);
+                            canvas.add(figuresByURI.get(key));
+                        } catch (NullPointerException nex) {
+                            //do nothing, only happens when visualization is too fast
+                            //figures are gone then before this could work with them
+                        }
                     }
                 });
                 canvas.repaint();
@@ -165,9 +171,14 @@ public final class GmfDrawer implements IDrawer, IDataListener {
                     public void run() {
                         // TODO still not satisfying, maybe check if data is by
                         // KIEM and use it then
-                        GmfAnimator.animate(animatables,
-                                ((DiagramEditor) editor).getDiagramEditPart(),
-                                KiemPlugin.getDefault().getAimedStepDuration());
+                        try {
+                            GmfAnimator.animate(animatables,
+                                    ((DiagramEditor) editor).getDiagramEditPart(),
+                                    KiemPlugin.getDefault().getAimedStepDuration());
+                        } catch (NullPointerException nex) {
+                            //do nothing, only happens when visualization is too fast
+                            //figures are gone then before this could work with them
+                        }
                     }
                 });
             }
@@ -211,7 +222,12 @@ public final class GmfDrawer implements IDrawer, IDataListener {
      * {@inheritDoc}
      */
     public void triggerDataChanged() {
-        draw(DataDistributor.getInstance().getData());
+        try {
+            draw(DataDistributor.getInstance().getData());
+        } catch (NullPointerException nex) {
+            //do nothing, only happens when visualization is too fast
+            //figures are gone then before this could work with them
+        }
     }
 
     /**
