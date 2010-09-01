@@ -20,6 +20,11 @@ import java.util.List;
 
 import org.eclipse.core.runtime.Status;
 import org.eclipse.draw2d.geometry.Point;
+import org.eclipse.emf.common.command.Command;
+import org.eclipse.emf.transaction.NotificationFilter;
+import org.eclipse.emf.transaction.ResourceSetChangeEvent;
+import org.eclipse.emf.transaction.ResourceSetListener;
+import org.eclipse.emf.transaction.RollbackException;
 import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramEditor;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.PlatformUI;
@@ -52,7 +57,7 @@ import de.cau.cs.kieler.kvid.visual.GmfDrawer;
  * @author jjc
  *
  */
-public final class DataDistributor implements IProviderListener {
+public final class DataDistributor implements IProviderListener, ResourceSetListener {
     
     /** The instance of the distributor. */
     private static final DataDistributor INSTANCE = new DataDistributor();
@@ -119,6 +124,7 @@ public final class DataDistributor implements IProviderListener {
             //TODO DiagramEditor is restriction, is there a more generic way?
             //Cache the current editor
             currentEditor = (DiagramEditor) activeEditor;
+            currentEditor.getEditingDomain().addResourceSetListener(this);
             PlatformUI.getWorkbench().getDisplay().syncExec(new Runnable() {
                 //FIXME Evaluate using asyncExec!
                 public void run() {
@@ -300,6 +306,7 @@ public final class DataDistributor implements IProviderListener {
     public void triggerWrapup() {
         dataByUri = new HashMap<String, DataObject>();
         currentDiagramLayout = null;
+        currentEditor.getEditingDomain().removeResourceSetListener(this);
         currentEditor = null;
         for (IDataListener listener : listeners) {
             listener.triggerWrapup();
@@ -327,16 +334,62 @@ public final class DataDistributor implements IProviderListener {
     }
 
     /**
-     * This will be called when the current layout changes.
-     * 
-     * @param layoutGraph The new diagram layout
+     * {@inheritDoc}
      */
-    public void layoutChanged(final KNode layoutGraph) {
-        currentDiagramLayout = layoutGraph;
+    public NotificationFilter getFilter() {
+        //does not use a filter, thus ignored
+        return null;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public Command transactionAboutToCommit(final ResourceSetChangeEvent event)
+            throws RollbackException {
+        //not needed, ignored
+        return null;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public void resourceSetChanged(final ResourceSetChangeEvent event) {
+        System.out.println("MUH!!");
+        PlatformUI.getWorkbench().getDisplay().syncExec(new Runnable() {
+            //FIXME Evaluate using asyncExec!
+            public void run() {
+                //Receive the current diagram layout for path finding
+                currentDiagramLayout = EclipseLayoutServices.getInstance()
+                        .getManager(currentEditor, null)
+                        .buildLayoutGraph(currentEditor, null, false);
+                System.out.println("Done!");
+            }
+        });
         for (String key : dataByUri.keySet()) {
             List<List<Point>> paths = getPathsByNode(key);
             dataByUri.get(key).updatePaths(paths);
         }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public boolean isAggregatePrecommitListener() {
+        return false;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public boolean isPrecommitOnly() {
+        return false;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public boolean isPostcommitOnly() {
+        return false;
     }
 
 }
