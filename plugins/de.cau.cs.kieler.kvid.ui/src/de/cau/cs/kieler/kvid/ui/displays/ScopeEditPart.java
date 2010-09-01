@@ -176,7 +176,6 @@ public class ScopeEditPart extends AbstractDataDisplayEditPart {
                     connected = (Node) con.getTarget();
                 }
                 EObject model = connected.getElement();
-                System.out.println(((InternalEObject) model).eContainingFeature().toString());
                 referredObjectURI = KvidUtil.fragmentUri2PtolemyUri(
                         ModelingUtil.getFragmentUri(model), model.eResource());
             }

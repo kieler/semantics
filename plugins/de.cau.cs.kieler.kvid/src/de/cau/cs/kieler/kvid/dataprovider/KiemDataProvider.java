@@ -24,6 +24,7 @@ import de.cau.cs.kieler.sim.kiem.IJSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.JSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.KiemExecutionException;
 import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
+import de.cau.cs.kieler.sim.kiem.KiemPlugin;
 
 /**
  * Data Source which is a {@link IDataProvider} and uses KIEM to collect

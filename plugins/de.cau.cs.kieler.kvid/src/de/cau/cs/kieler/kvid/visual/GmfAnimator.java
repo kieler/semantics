@@ -26,6 +26,7 @@ import org.eclipse.gmf.runtime.diagram.ui.editparts.DiagramRootEditPart;
 import org.eclipse.ui.PlatformUI;
 
 import de.cau.cs.kieler.kvid.datadistributor.RuntimeConfiguration;
+import de.cau.cs.kieler.sim.kiem.KiemPlugin;
 
 /**
  * 
@@ -45,6 +46,10 @@ public final class GmfAnimator {
     /** Delay factor to ensure that there is no animation overlap. */
     private static final int DELAY_SCALE = 5;
     
+    private static long lastKiemStep = 0;
+    
+    private static long intervalOfSilence = 0;
+    
     /**
      * There shouldn't be an instance of this.
      */
@@ -62,6 +67,21 @@ public final class GmfAnimator {
     public static void animate(final HashMap<IKvidFigure, List<Point>> figuresAndPath,
                                final DiagramEditPart diagram,
                                final int animationTime) {
+        long currentKiemStep = KiemPlugin.getDefault().getExecution().getSteps();
+        if (intervalOfSilence > 0) {
+            intervalOfSilence--;
+            lastKiemStep = currentKiemStep;
+            return;
+        }
+        if (lastKiemStep + 1 != currentKiemStep) {
+            System.out
+                    .println("Missed "
+                            + (currentKiemStep - lastKiemStep) + " steps!");
+            intervalOfSilence = currentKiemStep - lastKiemStep - 1;
+            lastKiemStep = currentKiemStep;
+            return;
+        }
+        lastKiemStep = currentKiemStep;
         
         final IFigure canvas = diagram.getLayer(DiagramRootEditPart.DECORATION_PRINTABLE_LAYER);
 
