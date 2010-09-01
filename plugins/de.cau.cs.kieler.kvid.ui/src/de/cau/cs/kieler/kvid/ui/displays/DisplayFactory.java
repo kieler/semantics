@@ -15,6 +15,8 @@ package de.cau.cs.kieler.kvid.ui.displays;
 
 import org.eclipse.gmf.runtime.notation.View;
 
+import de.cau.cs.kieler.kvid.datadistributor.Property;
+import de.cau.cs.kieler.kvid.datadistributor.RuntimeConfiguration;
 import de.cau.cs.kieler.kvid.visual.complex.AbstractDataDisplayEditPart;
 import de.cau.cs.kieler.kvid.visual.complex.AbstractDisplayFactory;
 
@@ -23,6 +25,17 @@ import de.cau.cs.kieler.kvid.visual.complex.AbstractDisplayFactory;
  *
  */
 public class DisplayFactory extends AbstractDisplayFactory {
+    
+    /**
+     * Constructor which will be called automatically.
+     * Adds properties for the scope elements to the configuration.
+     */
+    public DisplayFactory() {
+        RuntimeConfiguration.getInstance().addProperty(
+                new Property("Clear scopes moment", new String[] {
+                        "Start of new visualization",
+                        "Directly after visualization" }));
+    }
 
     /**
      * {@inheritDoc}

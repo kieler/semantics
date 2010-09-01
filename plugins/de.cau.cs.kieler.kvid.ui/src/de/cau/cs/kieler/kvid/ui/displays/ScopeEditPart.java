@@ -37,6 +37,7 @@ import de.cau.cs.kieler.core.model.util.ModelingUtil;
 import de.cau.cs.kieler.kvid.KvidUtil;
 import de.cau.cs.kieler.kvid.data.DataObject;
 import de.cau.cs.kieler.kvid.datadistributor.DataDistributor;
+import de.cau.cs.kieler.kvid.datadistributor.RuntimeConfiguration;
 import de.cau.cs.kieler.kvid.visual.GmfImageFigure;
 import de.cau.cs.kieler.kvid.visual.complex.AbstractDataDisplayEditPart;
 
@@ -249,7 +250,18 @@ public class ScopeEditPart extends AbstractDataDisplayEditPart {
     public void triggerWrapup() {
         plot.clear(0);
         steps = 0;
-        refreshPlot();
+        try {
+            final int waitForScopeDrawingTime = 100;
+            Thread.sleep(waitForScopeDrawingTime);
+        } catch (InterruptedException e) {
+            //Won't be interrupted, so there's no need of handling
+            e.printStackTrace();
+        }
+        if (RuntimeConfiguration.getInstance()
+                .currentValueOfProperty("Clear scopes moment")
+                .equals("Directly after visualization")) {
+            refreshPlot();
+        }
     }
     
 }
