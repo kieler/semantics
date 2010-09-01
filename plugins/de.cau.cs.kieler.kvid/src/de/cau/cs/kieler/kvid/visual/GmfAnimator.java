@@ -67,6 +67,10 @@ public final class GmfAnimator {
     public static void animate(final HashMap<IKvidFigure, List<Point>> figuresAndPath,
                                final DiagramEditPart diagram,
                                final int animationTime) {
+        if (figuresAndPath == null) {
+            //nothing to animate, stop
+            return;
+        }
         long currentKiemStep = KiemPlugin.getDefault().getExecution().getSteps();
         if (intervalOfSilence > 0) {
             intervalOfSilence--;
@@ -168,6 +172,13 @@ public final class GmfAnimator {
      */
     public static synchronized void stopReplay() {
         replay = false;
+    }
+    
+    /**
+     * Call this after visualization is finished to reset the kiem step counter.
+     */
+    public static void resetSteps() {
+        lastKiemStep = 0;
     }
     
 }

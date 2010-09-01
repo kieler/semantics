@@ -44,6 +44,7 @@ import de.cau.cs.kieler.kvid.KvidPlugin;
 import de.cau.cs.kieler.kvid.KvidUtil;
 import de.cau.cs.kieler.kvid.data.DataObject;
 import de.cau.cs.kieler.kvid.dataprovider.IDataProvider;
+import de.cau.cs.kieler.kvid.visual.GmfAnimator;
 import de.cau.cs.kieler.kvid.visual.GmfDrawer;
 
 /**
@@ -98,6 +99,7 @@ public final class DataDistributor implements IProviderListener, ResourceSetList
      * Changes the current data source to a new one.
      * 
      * @param newProvider The new data source
+     * @deprecated Kiem is the only used data source
      */
     public void changeDataProvider(final IDataProvider newProvider) {
         if (currentProvider != null) {
@@ -326,7 +328,10 @@ public final class DataDistributor implements IProviderListener, ResourceSetList
     public void triggerWrapup() {
         dataByUri = new HashMap<String, DataObject>();
         currentDiagramLayout = null;
-        currentEditor.getEditingDomain().removeResourceSetListener(this);
+        GmfAnimator.resetSteps();
+        if (currentEditor != null) {
+            currentEditor.getEditingDomain().removeResourceSetListener(this);
+        }
         currentEditor = null;
         for (IDataListener listener : listeners) {
             listener.triggerWrapup();

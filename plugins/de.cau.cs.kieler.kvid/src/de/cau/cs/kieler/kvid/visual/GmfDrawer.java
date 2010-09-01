@@ -181,15 +181,12 @@ public final class GmfDrawer implements IDrawer, IDataListener {
         //FIXME doesnt do what it is supposed to!
         IEditorPart editor = KvidUtil.getActiveEditor();
         if (editor instanceof DiagramEditor) {
-            final IFigure canvas = ((DiagramEditor) editor)
-                    .getDiagramEditPart().getLayer(
-                            DiagramRootEditPart.DECORATION_PRINTABLE_LAYER);
             for (String key : figuresByURI.keySet()) {
                 IKvidFigure figure = figuresByURI.get(key);
-                figure.invalidate();
+                IFigure parent = figure.getParent();
+                parent.remove(figure);
+                parent.repaint();
             }
-            canvas.revalidate();
-            canvas.repaint();
         }
         figuresByURI = new HashMap<String, IKvidFigure>();
     }

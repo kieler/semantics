@@ -16,8 +16,6 @@ package de.cau.cs.kieler.kvid.dataprovider;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.LinkedList;
-import java.util.List;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IWorkspace;
@@ -28,8 +26,6 @@ import org.eclipse.core.runtime.Path;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import de.cau.cs.kieler.kvid.datadistributor.DataDistributor;
-import de.cau.cs.kieler.kvid.datadistributor.IProviderListener;
 import de.cau.cs.kieler.sim.kiem.IJSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.JSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.KiemExecutionException;
@@ -47,9 +43,6 @@ import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyTypeFile;
  */
 public class KiemCsvDataProvider extends JSONObjectDataComponent implements
         IJSONObjectDataComponent {
-    
-    /** List of registered {@link IProviderListener}s. */
-    private List<IProviderListener> listeners = new LinkedList<IProviderListener>();
     
     /** The CSV file to read from. */
     private IFile inputCsvFile;
@@ -109,11 +102,6 @@ public class KiemCsvDataProvider extends JSONObjectDataComponent implements
             uris = csvLines[0].split(";");
         } else {
             throw new RuntimeException("Loaded empty CSV file");
-        }
-        
-        DataDistributor.getInstance().initialize();
-        for (IProviderListener listener : listeners) {
-            listener.triggerInitialization();
         }
     }
 
