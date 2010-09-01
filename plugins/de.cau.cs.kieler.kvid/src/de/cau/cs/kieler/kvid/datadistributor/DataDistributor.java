@@ -77,6 +77,9 @@ public final class DataDistributor implements IProviderListener, ResourceSetList
     /** The {@link IDataProvider} which is the current data source. */ 
     private IDataProvider currentProvider;
     
+    /** Flag for checking whether the layout has to be re-cached. */
+    private boolean layoutChanged = false;
+    
     /**
      * Private constructor to prevent external instantiation.
      */
@@ -143,8 +146,25 @@ public final class DataDistributor implements IProviderListener, ResourceSetList
      * 
      */
     public void update(final JSONObject data) {
-        @SuppressWarnings("unchecked")
+        //blabla
+        if (layoutChanged) {
+            PlatformUI.getWorkbench().getDisplay().syncExec(new Runnable() {
+                //FIXME Evaluate using asyncExec!
+                public void run() {
+                    //Receive the current diagram layout for path finding
+                    currentDiagramLayout = EclipseLayoutServices.getInstance()
+                            .getManager(currentEditor, null)
+                            .buildLayoutGraph(currentEditor, null, false);
+                    System.out.println("Done!");
+                }
+            });
+            for (String key : dataByUri.keySet()) {
+                List<List<Point>> paths = getPathsByNode(key);
+                dataByUri.get(key).updatePaths(paths);
+            }
+        }
         //JSON implementation doesn't type the iterator
+        @SuppressWarnings("unchecked")
         Iterator<Object> allKeys = (Iterator<Object>) data.keys();
         while (allKeys.hasNext()) {
             Object o = allKeys.next();
@@ -354,21 +374,7 @@ public final class DataDistributor implements IProviderListener, ResourceSetList
      * {@inheritDoc}
      */
     public void resourceSetChanged(final ResourceSetChangeEvent event) {
-        System.out.println("MUH!!");
-        PlatformUI.getWorkbench().getDisplay().syncExec(new Runnable() {
-            //FIXME Evaluate using asyncExec!
-            public void run() {
-                //Receive the current diagram layout for path finding
-                currentDiagramLayout = EclipseLayoutServices.getInstance()
-                        .getManager(currentEditor, null)
-                        .buildLayoutGraph(currentEditor, null, false);
-                System.out.println("Done!");
-            }
-        });
-        for (String key : dataByUri.keySet()) {
-            List<List<Point>> paths = getPathsByNode(key);
-            dataByUri.get(key).updatePaths(paths);
-        }
+        layoutChanged = true;
     }
 
     /**
@@ -389,7 +395,7 @@ public final class DataDistributor implements IProviderListener, ResourceSetList
      * {@inheritDoc}
      */
     public boolean isPostcommitOnly() {
-        return false;
+        return true;
     }
 
 }
