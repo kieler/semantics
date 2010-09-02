@@ -300,13 +300,29 @@ public class JavaEscape {
     // FIXME: only works for simple transition labels
     public static String getAction(String TransitionLabel) {
         if (TransitionLabel.contains("/")) {
-            if (TransitionLabel.substring(TransitionLabel.indexOf("/") + 1) != "") {
+            if (TransitionLabel.contains("[") && TransitionLabel.contains("]")) {
+                return TransitionLabel.substring(TransitionLabel.indexOf("]") + 1).trim();
+            }
+            if (TransitionLabel.substring(TransitionLabel.indexOf("/") + 1) != "[") {
                 return TransitionLabel.substring(TransitionLabel.indexOf("/") + 1).trim();
             }
         }
         return "skip";
     }
 
+    // ------------------------------------------------------------------------
+
+    // FIXME: only works for simple transition labels
+    public static String getGuard(String TransitionLabel) {
+        if (TransitionLabel.contains("/[")) {
+            if (TransitionLabel.substring(TransitionLabel.indexOf("/[") + 1) != "]") {
+                return TransitionLabel.substring(TransitionLabel.indexOf("[") + 1, TransitionLabel.indexOf("]")).trim();
+            }
+        }
+        return "true";
+    }
+
+    
     // ------------------------------------------------------------------------
 
     public Boolean contains(String str) {

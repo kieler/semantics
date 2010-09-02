@@ -20,6 +20,17 @@ String trigger2(Transition transition):
     '(ev: "noevent")'
 ;
 
+
+// This method will immitate a transition gurad and return its String representation
+String guard2(Transition transition):
+  let transitionLabel = transition.name:
+  let returnGuard = getGuard(transitionLabel.toString()):
+  if (returnGuard != null && returnGuard.length > 0) then
+    returnGuard
+  else
+    'true'
+;
+
 // This method will immitate a transition action and return its String representation
 String action2(Transition transition):
   let transitionLabel = transition.name:
@@ -39,6 +50,12 @@ String getAction(String transitionLabel):
 String getTrigger(String transitionLabel):
   JAVA de.cau.cs.kieler.uml2.sim.JavaEscape.getTrigger(java.lang.String)
 ;
+
+// INTERNAL: Helpermethod for guard extraction
+String getGuard(String transitionLabel):
+  JAVA de.cau.cs.kieler.uml2.sim.JavaEscape.getGuard(java.lang.String)
+;
+
 
 // Get all trigger events that are used in the statemachine.
 Set[String] getTriggerEvents(Package package):
@@ -245,9 +262,9 @@ String genMaude(Transition n):
  '('+(n.source.getId()) + ') ' +
 // 'empty '+ 
 // Triggerevent
- n.trigger2() + 
+ n.trigger2() + ' ' +
 // guard 
- ' Gd ' + 
+ n.guard2() + ' ' +
 // Action
  n.action2() + 
 // ListofForkActions ListofJoinActions

@@ -23,13 +23,22 @@ fmod MODTRANSITION is
 
   op _____ : Verts Event Actions Verts Region -> 
 	  ModTransition [ctor format (n d d d d n)] .
+  subsort Bool < Guard .
 
   *** guards are abstract	  
   op Gd : -> Guard [ctor] .
- 
-  vars src tgt : Verts . 
+  op inState_ : Vert -> Guard .
+  op notGd_ : Guard -> Guard . 
+  op _andGd_ : Guard Guard -> Guard .
+  op evalGuard__ : Guard Verts -> Bool .
+  eq evalGuard(notGd g) conf = not (evalGuard g conf) .
+  eq evalGuard(g andGd g1) conf = (evalGuard g conf) and (evalGuard g1 conf) .
+  eq evalGuard(inState states) conf = states subset conf . 
+  eq evalGuard g conf = g [owise] .
+     
+  vars src tgt conf states : Verts . 
   vars e : Event .
-  vars g : Guard .
+  vars g g1 : Guard .
   vars a af aj : Action .
   vars A AF AJ : Actions .
   vars lreg : Vert .
@@ -55,6 +64,11 @@ fmod MODTRANSITION is
   eq event(src e g A AF AJ tgt lreg) = e .
   eq event (src e A tgt lreg) = e .
   
+  op guard_ : ModTransition -> Guard .
+  eq guard(id src e g A AF AJ tgt lreg) = g .
+  eq guard(src e g A AF AJ tgt lreg) = g .
+
+
   op actions_ : ModTransition -> Actions .
   eq actions(id src e g A AF AJ tgt lreg) = A AF AJ .
   eq actions(src e g A AF AJ tgt lreg) = A AF AJ .
@@ -190,7 +204,7 @@ fmod TRANSITIONS is
   eq enabled C e (T ,  t) = ($enabled C e t) ,  (enabled C e T) .
   eq enabled C e empty = empty .
   op $enabled___ : Verts Event ModTransition -> ModTransition [memo] .
-  ceq $enabled C e t = t if ((source t) subset C) and (event t)== e [label transenab] . 
+  ceq $enabled C e t = t if ((source t) subset C) and (event t)== e and (evalGuard(guard t) C)[label transenab] . 
   eq $enabled C e t = empty [owise] .
 
   op leave __ : Verts Transitions -> Verts .
