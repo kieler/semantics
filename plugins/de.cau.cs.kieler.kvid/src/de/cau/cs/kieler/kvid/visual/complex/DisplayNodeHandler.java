@@ -20,6 +20,8 @@ import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.gef.EditPart;
+import org.eclipse.gef.RootEditPart;
 import org.eclipse.gef.commands.Command;
 import org.eclipse.gef.commands.CompoundCommand;
 import org.eclipse.gmf.runtime.common.core.command.CompositeCommand;
@@ -27,6 +29,7 @@ import org.eclipse.gmf.runtime.diagram.core.preferences.PreferencesHint;
 import org.eclipse.gmf.runtime.diagram.core.util.ViewType;
 import org.eclipse.gmf.runtime.diagram.ui.commands.DeferredCreateConnectionViewCommand;
 import org.eclipse.gmf.runtime.diagram.ui.commands.ICommandProxy;
+import org.eclipse.gmf.runtime.diagram.ui.editparts.ConnectionEditPart;
 import org.eclipse.gmf.runtime.diagram.ui.editparts.IGraphicalEditPart;
 import org.eclipse.gmf.runtime.diagram.ui.editparts.ShapeEditPart;
 import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramEditor;
@@ -82,8 +85,17 @@ public class DisplayNodeHandler extends AbstractHandler {
                             PreferencesHint.USE_DEFAULTS);
             createScopeRequest.setLocation(targetEditPart.getLocation());
             
+            //Get container (the next non-port and non-connection edit part)
+            EditPart container = targetEditPart;
+            while (container != null
+                    && (container instanceof ShapeEditPart || container instanceof ConnectionEditPart)) {
+                container = container.getParent();
+            }
+            if (container instanceof RootEditPart) {
+                return ((RootEditPart) container).getContents();
+            }
             //Create the respective command
-            Command createDisplayCommand = targetEditPart.getParent().getCommand(createScopeRequest);
+            Command createDisplayCommand = container.getCommand(createScopeRequest);
             CompositeCommand noteAttachmentCC = new CompositeCommand("Create a note attachment");
 
             @SuppressWarnings("rawtypes")

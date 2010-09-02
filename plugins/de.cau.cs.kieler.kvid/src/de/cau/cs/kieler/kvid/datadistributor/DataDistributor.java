@@ -270,7 +270,11 @@ public final class DataDistributor implements IProviderListener, ResourceSetList
         
         //Create paths from outgoing edges
         for (KPort port : currentNode.getPorts()) {
-            if (port.getLabel().getText().equals("output")) {
+            String portName = "";
+            if (uri.hasPort()) {
+                portName = uri.getPort();
+            }
+            if (port.getLabel().getText().equals(portName) || portName.isEmpty()) {
                 for (KEdge edge : port.getEdges()) {
                     List<Point> path = new LinkedList<Point>();
                     Point start = new Point(parentPosition);

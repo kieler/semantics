@@ -147,10 +147,10 @@ public final class KvidUtil {
             int lastOccurance = 2;
             int currentOccurance;
             while (fragmentUri.indexOf("/", lastOccurance) != -1) {
-                currentOccurance = fragmentUri.indexOf("/", lastOccurance);
+                currentOccurance = fragmentUri.indexOf("/", lastOccurance + 1);
                 result += ".";
                 String currentUri;
-                if (currentOccurance != lastOccurance) {
+                if (currentOccurance != -1) {
                     currentUri = fragmentUri.substring(0, currentOccurance);
                     lastOccurance = currentOccurance;
                 } else {
