@@ -20,7 +20,6 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramEditor;
 import org.eclipse.gmf.runtime.gef.ui.figures.NodeFigure;
 import org.eclipse.gmf.runtime.gef.ui.figures.WrapperNodeFigure;
@@ -36,6 +35,7 @@ import ptolemy.plot.Plot;
 import de.cau.cs.kieler.core.model.util.ModelingUtil;
 import de.cau.cs.kieler.kvid.KvidUtil;
 import de.cau.cs.kieler.kvid.data.DataObject;
+import de.cau.cs.kieler.kvid.data.KvidUri;
 import de.cau.cs.kieler.kvid.datadistributor.DataDistributor;
 import de.cau.cs.kieler.kvid.datadistributor.RuntimeConfiguration;
 import de.cau.cs.kieler.kvid.visual.GmfImageFigure;
@@ -52,7 +52,7 @@ import de.cau.cs.kieler.kvid.visual.complex.AbstractDataDisplayEditPart;
 public class ScopeEditPart extends AbstractDataDisplayEditPart {
     
     /** The URI of the referred model element. */
-    private String referredObjectURI;
+    private KvidUri referredObjectURI;
     
     /** The {@link Plot} instance which actually draws the scopes. */
     private Plot plot;
@@ -99,8 +99,8 @@ public class ScopeEditPart extends AbstractDataDisplayEditPart {
                 connected = (Node) con.getTarget();
             }
             EObject model = connected.getElement();
-            referredObjectURI = KvidUtil.fragmentUri2PtolemyUri(
-                    ModelingUtil.getFragmentUri(model), model.eResource());
+            referredObjectURI = new KvidUri(KvidUtil.fragmentUri2PtolemyUri(
+                    ModelingUtil.getFragmentUri(model), model.eResource()));
         }
     }
 
@@ -124,7 +124,7 @@ public class ScopeEditPart extends AbstractDataDisplayEditPart {
      * 
      * @param uri The referredObjectURI to set
      */
-    public void setReferredObjectURI(final String uri) {
+    public void setReferredObjectURI(final KvidUri uri) {
         
         this.referredObjectURI = uri;
         DataDistributor.getInstance().getDataObjectByURI(uri).setSaveHistory(true);
@@ -176,8 +176,8 @@ public class ScopeEditPart extends AbstractDataDisplayEditPart {
                     connected = (Node) con.getTarget();
                 }
                 EObject model = connected.getElement();
-                referredObjectURI = KvidUtil.fragmentUri2PtolemyUri(
-                        ModelingUtil.getFragmentUri(model), model.eResource());
+                referredObjectURI = new KvidUri(KvidUtil.fragmentUri2PtolemyUri(
+                        ModelingUtil.getFragmentUri(model), model.eResource()));
             }
             DataDistributor.getInstance().getDataObjectByURI(referredObjectURI).setSaveHistory(true);
         }

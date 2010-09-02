@@ -16,6 +16,7 @@ package de.cau.cs.kieler.kvid.visual;
 import java.util.HashMap;
 
 import de.cau.cs.kieler.kvid.data.DataObject;
+import de.cau.cs.kieler.kvid.data.KvidUri;
 
 /**
  * A drawer which will draw the data on the UI somehow.
@@ -31,7 +32,7 @@ public interface IDrawer {
      * 
      * @param dataSet The data to visualize on the UI
      */
-    void draw(HashMap<String, DataObject> dataSet);
+    void draw(HashMap<KvidUri, DataObject> dataSet);
     
     /**
      * Removes KViD drawings from the UI.

@@ -43,6 +43,7 @@ import de.cau.cs.kieler.kiml.util.KimlUtil;
 import de.cau.cs.kieler.kvid.KvidPlugin;
 import de.cau.cs.kieler.kvid.KvidUtil;
 import de.cau.cs.kieler.kvid.data.DataObject;
+import de.cau.cs.kieler.kvid.data.KvidUri;
 import de.cau.cs.kieler.kvid.dataprovider.IDataProvider;
 import de.cau.cs.kieler.kvid.visual.GmfAnimator;
 import de.cau.cs.kieler.kvid.visual.GmfDrawer;
@@ -64,7 +65,7 @@ public final class DataDistributor implements IProviderListener, ResourceSetList
     private static final DataDistributor INSTANCE = new DataDistributor();
     
     /** The current data, organized in a hash map with the model element's URI as key. */
-    private HashMap<String, DataObject> dataByUri = new HashMap<String, DataObject>();
+    private HashMap<KvidUri, DataObject> dataByUri = new HashMap<KvidUri, DataObject>();
     
     /** List of registered {@link IDataListener}s. */
     private List<IDataListener> listeners = new LinkedList<IDataListener>();
@@ -148,7 +149,7 @@ public final class DataDistributor implements IProviderListener, ResourceSetList
      * 
      */
     public void update(final JSONObject data) {
-        //blabla
+        //Lazy reload of paths if layout was changed
         if (layoutChanged) {
             PlatformUI.getWorkbench().getDisplay().syncExec(new Runnable() {
                 //FIXME Evaluate using asyncExec!
@@ -160,7 +161,7 @@ public final class DataDistributor implements IProviderListener, ResourceSetList
                     System.out.println("Done!");
                 }
             });
-            for (String key : dataByUri.keySet()) {
+            for (KvidUri key : dataByUri.keySet()) {
                 List<List<Point>> paths = getPathsByNode(key);
                 dataByUri.get(key).updatePaths(paths);
             }
@@ -171,21 +172,21 @@ public final class DataDistributor implements IProviderListener, ResourceSetList
         while (allKeys.hasNext()) {
             Object o = allKeys.next();
             try {
-                String key = o.toString();
+                KvidUri key = new KvidUri(o.toString());
                 if (dataByUri.containsKey(key)) {
                     //Model data source is already known, just update it
-                    dataByUri.get(key).updateData(data.getString(key));
+                    dataByUri.get(key).updateData(data.getString(o.toString()));
                 } else {
                     //New model data source, create paths and new entry in the data table
                     List<List<Point>> paths = getPathsByNode(key);
-                    dataByUri.put(key, new DataObject(key, data.getString(key), paths));
+                    dataByUri.put(key, new DataObject(key, data.getString(o.toString()), paths));
                     //Also add Property object for the new entry
                     List<String> associatedObjects = new LinkedList<String>();
-                    associatedObjects.add(KvidUtil.ptolemyUri2FragmentUri(key, 
+                    associatedObjects.add(KvidUtil.ptolemyUri2FragmentUri(key.getElementUri(), 
                             currentEditor.getDiagram().getElement().eResource()));
                     RuntimeConfiguration
                     .getInstance()
-                    .addProperty(new Property("Display status " + key,
+                    .addProperty(new Property("Display status " + key.getElementUri(),
                             new String[] { "Animating",
                                     "Static on Source Node",
                                     "Static on middlemost Bend Point", 
@@ -210,15 +211,16 @@ public final class DataDistributor implements IProviderListener, ResourceSetList
      * @param uri Referring URI, either in Ptolemy Notation or a Fragment URI
      * @return A list of paths, represented by a list of {@link Point}s
      */
-    public List<List<Point>> getPathsByNode(final String uri) {
+    public List<List<Point>> getPathsByNode(final KvidUri uri) {
         //FIXME Move to Util Class
         //FIXME When new KIML getModelStuff is finished, rewrite this
         List<List<Point>> result = new LinkedList<List<Point>>();
         //Is URI in Ptolemy Notation?
-        if (!uri.startsWith(".")) {
+        if (!uri.getElementUri().startsWith(".")) {
             try {
                 //If not, it might be a Fragment URI, try to translate
-                KvidUtil.fragmentUri2PtolemyUri(uri, currentEditor.getDiagram().eResource());
+                KvidUtil.fragmentUri2PtolemyUri(uri.getElementUri(),
+                        currentEditor.getDiagram().eResource());
             } catch (RuntimeException ex) {
                 //Notify user about malformatted URI and ignore value during visualization
                 Status status = new Status(Status.WARNING, KvidPlugin.PLUGIN_ID, 
@@ -230,11 +232,11 @@ public final class DataDistributor implements IProviderListener, ResourceSetList
         } 
         
         //Find node that matches URI
-        String[] uriParts = uri.split("\\.");
+        String[] uriParts = uri.getElementUri().split("\\.");
         int currentUriPart = 1;
         String currentFoundUri = ".";
         KNode currentNode = currentDiagramLayout;
-        while (!currentFoundUri.equals(uri) && !currentNode.getChildren().isEmpty()) {
+        while (!currentFoundUri.equals(uri.getElementUri()) && !currentNode.getChildren().isEmpty()) {
             for (KNode node : currentNode.getChildren()) {
                 if (node.getLabel().getText().equals(uriParts[currentUriPart])) {
                     currentNode = node;
@@ -249,7 +251,7 @@ public final class DataDistributor implements IProviderListener, ResourceSetList
         }
         
         //If no node was found, return null
-        if (!currentFoundUri.equals(uri)) {
+        if (!currentFoundUri.equals(uri.getElementUri())) {
             return null;
         }
         
@@ -302,7 +304,7 @@ public final class DataDistributor implements IProviderListener, ResourceSetList
      * @param uri The URI of the model element
      * @return The {@link DataObject} associated with the model element
      */
-    public DataObject getDataObjectByURI(final String uri) {
+    public DataObject getDataObjectByURI(final KvidUri uri) {
         return dataByUri.get(uri);
     }
     
@@ -311,7 +313,7 @@ public final class DataDistributor implements IProviderListener, ResourceSetList
      * 
      * @return The data table, holding the data referred by the model element's URI
      */
-    public HashMap<String, DataObject> getData() {
+    public HashMap<KvidUri, DataObject> getData() {
         return dataByUri;
     }
     
@@ -326,7 +328,7 @@ public final class DataDistributor implements IProviderListener, ResourceSetList
      * Will be triggered when the current {@link IDataProvider} stops giving data.
      */
     public void triggerWrapup() {
-        dataByUri = new HashMap<String, DataObject>();
+        dataByUri = new HashMap<KvidUri, DataObject>();
         currentDiagramLayout = null;
         GmfAnimator.resetSteps();
         if (currentEditor != null) {

@@ -108,5 +108,50 @@ public class KvidUri {
     public boolean hasPriority() {
         return priority >= 0;
     }
+    
+    /* (non-Javadoc)
+     * @see java.lang.Object#hashCode()
+     */
+    @Override
+    public int hashCode() {
+        if (port == null) {
+            return elementUri.hashCode() + priority;
+        } else {
+            return elementUri.hashCode() + port.hashCode() + priority;
+        }
+    }
+    
+    /* (non-Javadoc)
+     * @see java.lang.Object#equals(java.lang.Object)
+     */
+    @Override
+    public boolean equals(final Object obj) {
+        if (!(obj instanceof KvidUri)) {
+            return false;
+        }
+        KvidUri other = (KvidUri) obj;
+        if (!(other.getElementUri().equals(elementUri))) {
+            return false;
+        }
+        if (other.hasPort() == hasPort()) {
+            if (other.hasPort()) {
+                if (!(other.getPort().equals(getPort()))) {
+                    return false;
+                }
+            }
+        } else {
+            return false;
+        }
+        if (other.hasPriority() == hasPriority()) {
+            if (other.hasPriority()) {
+                if (other.getPriority() != getPriority()) {
+                    return false;
+                }
+            }
+        } else {
+            return false;
+        }
+        return true;
+    }
 
 }

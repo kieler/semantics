@@ -26,6 +26,7 @@ import org.eclipse.ui.PlatformUI;
 
 import de.cau.cs.kieler.kvid.KvidUtil;
 import de.cau.cs.kieler.kvid.data.DataObject;
+import de.cau.cs.kieler.kvid.data.KvidUri;
 import de.cau.cs.kieler.kvid.datadistributor.DataDistributor;
 import de.cau.cs.kieler.kvid.datadistributor.IDataListener;
 import de.cau.cs.kieler.kvid.datadistributor.Property;
@@ -42,7 +43,7 @@ import de.cau.cs.kieler.sim.kiem.KiemPlugin;
 public final class GmfDrawer implements IDrawer, IDataListener {
 
     /** A map associating drawn figures with their data producing model elements. */
-    private HashMap<String, IKvidFigure> figuresByURI = new HashMap<String, IKvidFigure>();
+    private HashMap<KvidUri, IKvidFigure> figuresByURI = new HashMap<KvidUri, IKvidFigure>();
     
     /** The instance of the distributor. See Singleton Design Pattern. */
     private static final GmfDrawer INSTANCE = new GmfDrawer();
@@ -64,12 +65,12 @@ public final class GmfDrawer implements IDrawer, IDataListener {
     /**
      * {@inheritDoc}
      */
-    public void draw(final HashMap<String, DataObject> dataSet) {
+    public void draw(final HashMap<KvidUri, DataObject> dataSet) {
         // clearing phase
         // clearDrawing();
 
         // update data phase
-        for (String key : dataSet.keySet()) {
+        for (KvidUri key : dataSet.keySet()) {
 
             if (figuresByURI.containsKey(key)) {
                 figuresByURI.get(key).updateData(dataSet.get(key));
@@ -99,7 +100,7 @@ public final class GmfDrawer implements IDrawer, IDataListener {
             final IFigure canvas = ((DiagramEditor) editor)
                     .getDiagramEditPart().getLayer(
                             DiagramRootEditPart.CONNECTION_LAYER);
-            for (final String key : figuresByURI.keySet()) {
+            for (final KvidUri key : figuresByURI.keySet()) {
                 PlatformUI.getWorkbench().getDisplay().syncExec(new Runnable() {
                     public void run() {
                         try {
@@ -119,7 +120,7 @@ public final class GmfDrawer implements IDrawer, IDataListener {
                     .currentValueOfProperty("Animation enabled").equals("true")) {
                 final HashMap<IKvidFigure, List<Point>> animatables = 
                                 new HashMap<IKvidFigure, List<Point>>();
-                for (final String key : dataSet.keySet()) {
+                for (final KvidUri key : dataSet.keySet()) {
                     IKvidFigure currentFigure = figuresByURI.get(key);
                     if (dataSet.get(key).getPaths() != null && dataSet.get(key).getPaths().size() > 0) {
                         for (Property property : RuntimeConfiguration
@@ -128,7 +129,7 @@ public final class GmfDrawer implements IDrawer, IDataListener {
                                     .startsWith("Display status ")) {
                                 String uriPart = property.getName().replace(
                                         "Display status ", "");
-                                if (uriPart.equals(key)) {
+                                if (uriPart.equals(key.getElementUri())) {
                                     if (property.getCurrentValue().equals(
                                             "Animating")) {
                                         animatables.put(currentFigure,
@@ -192,14 +193,14 @@ public final class GmfDrawer implements IDrawer, IDataListener {
         //FIXME doesnt do what it is supposed to!
         IEditorPart editor = KvidUtil.getActiveEditor();
         if (editor instanceof DiagramEditor) {
-            for (String key : figuresByURI.keySet()) {
+            for (KvidUri key : figuresByURI.keySet()) {
                 IKvidFigure figure = figuresByURI.get(key);
                 IFigure parent = figure.getParent();
                 parent.remove(figure);
                 parent.repaint();
             }
         }
-        figuresByURI = new HashMap<String, IKvidFigure>();
+        figuresByURI = new HashMap<KvidUri, IKvidFigure>();
     }
     
     /**

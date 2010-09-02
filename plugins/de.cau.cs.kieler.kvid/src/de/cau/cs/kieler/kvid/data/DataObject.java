@@ -28,7 +28,7 @@ import org.eclipse.draw2d.geometry.Point;
 public class DataObject {
     
     /** URI of the model element providing the data. */
-    private String uri;
+    private KvidUri uri;
     
     /** The data itself in a string representation. */
     private String data;
@@ -51,7 +51,7 @@ public class DataObject {
      * @param theURI The URI to identify the referred model element
      * @param thedata The data to associate with the referred model element
      */
-    public DataObject(final String theURI, final String thedata) {
+    public DataObject(final KvidUri theURI, final String thedata) {
         this.uri = theURI;
         this.data = thedata;
         this.type = parseDataType(thedata);
@@ -65,7 +65,7 @@ public class DataObject {
      * @param thedata The data to associate with the referred model element
      * @param doSaveHistory Whether history should be saved (true) or not (false)
      */
-    public DataObject(final String theURI, final String thedata, final boolean doSaveHistory) {
+    public DataObject(final KvidUri theURI, final String thedata, final boolean doSaveHistory) {
         this(theURI, thedata);
         this.savesHistory = doSaveHistory;
         if (this.savesHistory) {
@@ -82,7 +82,7 @@ public class DataObject {
      * @param thepaths List of paths (represented by a list of draw2d {@link Point}s) which
      *          the data animation should follow or use for positioning
      */
-    public DataObject(final String theURI, final String thedata, final List<List<Point>> thepaths) {
+    public DataObject(final KvidUri theURI, final String thedata, final List<List<Point>> thepaths) {
         this(theURI, thedata);
         this.paths = thepaths;
     }
@@ -95,7 +95,7 @@ public class DataObject {
      * @param thedata The data to associate with the referred model element
      * @param thetype The {@link DataType} of which the given data is
      */
-    public DataObject(final String theURI, final String thedata,
+    public DataObject(final KvidUri theURI, final String thedata,
             final DataType thetype) {
         this.uri = theURI;
         this.data = thedata;
@@ -113,7 +113,7 @@ public class DataObject {
      *          the data animation should follow or use for positioning
      * @param thetype The {@link DataType} of which the given data is
      */
-    public DataObject(final String theURI, final String thedata, final List<List<Point>> thepaths,
+    public DataObject(final KvidUri theURI, final String thedata, final List<List<Point>> thepaths,
             final DataType thetype) {
         this(theURI, thedata);
         this.paths = thepaths;
@@ -162,7 +162,7 @@ public class DataObject {
      * 
      * @return The referred model element's URI
      */
-    public String getUri() {
+    public KvidUri getUri() {
         return uri;
     }
     
