@@ -82,8 +82,7 @@ import org.eclipse.ui.console.MessageConsole;
 /**
  * The Class DataComponent.
  */
-public class DataComponentModelCheck extends DataComponent implements
-        IJSONObjectDataComponent {
+public class DataComponentModelCheck extends DataComponent implements IJSONObjectDataComponent {
 
     /**
      * The constant MAUDEPARSESTATESTARTER indicates the start token to search for.
@@ -96,6 +95,12 @@ public class DataComponentModelCheck extends DataComponent implements
     /** The currently active states. */
     String[] currentStates;
 
+    /**
+     * The model check done flag is reset by the initialization and set after model checking has
+     * been done once.
+     */
+    private boolean modelCheckDone;
+
     // -------------------------------------------------------------------------
 
     /**
@@ -106,10 +111,10 @@ public class DataComponentModelCheck extends DataComponent implements
     }
 
     // -------------------------------------------------------------------------
-    
+
     /**
-     * Tries to resolve ids in "<id>", e.g., "d" and construct a string with
-     * the ids used in maude, e.g., d--983727134.
+     * Tries to resolve ids in "<id>", e.g., "d" and construct a string with the ids used in maude,
+     * e.g., d--983727134.
      * 
      * @param inputRule
      *            the input rule
@@ -117,11 +122,11 @@ public class DataComponentModelCheck extends DataComponent implements
      */
     private String expandCheckingRule(String inputRule) {
         String outputRule = "";
-        
+
         boolean extractingStateName = false;
-        String  extractedStateName = "";
+        String extractedStateName = "";
         for (int i = 0; i < inputRule.length(); i++) {
-            String character = inputRule.substring(i,i+1);
+            String character = inputRule.substring(i, i + 1);
             if ((character.equals("\"")) && (!extractingStateName)) {
                 extractingStateName = true;
                 continue;
@@ -139,19 +144,18 @@ public class DataComponentModelCheck extends DataComponent implements
             if (extractingStateName) {
                 // extracting mode
                 extractedStateName += character;
-            }
-            else {
+            } else {
                 // normal mode
                 outputRule += character;
             }
-            
+
         }
-        
+
         return outputRule;
     }
 
     // -------------------------------------------------------------------------
-    
+
     /*
      * (non-Javadoc)
      * 
@@ -168,7 +172,6 @@ public class DataComponentModelCheck extends DataComponent implements
     }
 
     // -------------------------------------------------------------------------
-
 
     /**
      * Extract the active states.
@@ -281,91 +284,84 @@ public class DataComponentModelCheck extends DataComponent implements
      */
     public JSONObject doStep(JSONObject signals) throws KiemExecutionException {
         
-        
-        // Get the checking rule
-        String checkingRule = this.getProperties()[3].getValue();
-        // Try to search for vertex
-        checkingRule = expandCheckingRule(checkingRule);
-        System.out.println("----------------->" + checkingRule);
-        
-        
-        // the return object to construct
-        JSONObject returnObj = new JSONObject();
+        // If this component is in the zero tick, then we do the check, otherwise we are in replay mode and do NOTHING!
+        if (!modelCheckDone) {
+            // do not modelcheck another time
+            modelCheckDone = true;
 
-        // build query string ---
-        // first collect events
-        String triggerEventsQuery = "";
-        String[] signalNames = JSONObject.getNames(signals);
-        for (String signalName : signalNames) {
-            try {
-                Object object;
-                object = signals.get(signalName);
-                if (JSONSignalValues.isPresent(object)) {
-                    if (!triggerEventsQuery.isEmpty()) {
-                        triggerEventsQuery += ",";
+            // Get the checking rule
+            String checkingRule = this.getProperties()[3].getValue();
+            // Try to search for vertex
+            checkingRule = expandCheckingRule(checkingRule);
+            
+            
+            // build query string ---
+            // first collect events
+            String triggerEventsQuery = "";
+            String[] signalNames = JSONObject.getNames(signals);
+            for (String signalName : signalNames) {
+                try {
+                    Object object;
+                    object = signals.get(signalName);
+                    if (JSONSignalValues.isPresent(object)) {
+                        if (!triggerEventsQuery.isEmpty()) {
+                            triggerEventsQuery += ",";
+                        }
+                        triggerEventsQuery += signalName;
                     }
-                    triggerEventsQuery += signalName;
+                } catch (JSONException e) {
+                    // ignore errors - should not happen at all
                 }
-            } catch (JSONException e) {
-                // ignore errors - should not happen at all
             }
-        }
-        // if no events selected, produce this dummy event for maude
-        if (triggerEventsQuery.equals("")) {
-            triggerEventsQuery = "ev: \"noevent\"";
-        }
-
-        // second build the current states
-        String currentStatesQuery = "";
-        for (String currentState : currentStates) {
-            if (!currentStatesQuery.isEmpty()) {
-                currentStatesQuery += ",";
+            // if no events selected, produce this dummy event for maude
+            if (triggerEventsQuery.equals("")) {
+                triggerEventsQuery = "ev: \"noevent\"";
             }
-            currentStatesQuery += currentState;
-        }
 
-        // search (maState "UML" ($stableC (prettyVerts (R-990928836 ,
-        // susp441237549)) empty) (res,
-        // ee1)) =>* mastate such that isDone mastate .
-        String queryRequest = "search (maState \"UML\" ($stableC (prettyVerts ("
-                + currentStatesQuery + ")) empty) (" + triggerEventsQuery
-                + ")) =>* mastate such that isDone mastate . \n";
+            // second build the current states
+            String currentStatesQuery = "";
+            for (String currentState : currentStates) {
+                if (!currentStatesQuery.isEmpty()) {
+                    currentStatesQuery += ",";
+                }
+                currentStatesQuery += currentState;
+            }
 
-        // Debug output query request
-        printConsole(queryRequest);
+            // search (maState "UML" ($stableC (prettyVerts (R-990928836 ,
+            // susp441237549)) empty) (res,
+            // ee1)) =>* mastate such that isDone mastate .
+            String queryRequest = "red modelCheck ((maState \"UML\" ($stableC (prettyVerts ("
+                    + currentStatesQuery + ")) empty) (" + triggerEventsQuery
+                    + ")), "+checkingRule+") . \n";
 
-        String result = "";
-        try {
-            result = MaudeInterfacePlugin.getDefault().queryMaude(queryRequest, maudeSessionId);
-        } catch (Exception e) {
-            throw new KiemExecutionException("A Maude simulation error occurred.", false, e);
-        }
+            // Debug output query request
+            printConsole(queryRequest);
 
-        // Debug output query rresult
-        printConsole(result);
+            String result = "";
+            try {
+                result = MaudeInterfacePlugin.getDefault().queryMaude(queryRequest, maudeSessionId);
+            } catch (Exception e) {
+                throw new KiemExecutionException("A Maude model checking error occurred.", false, e);
+            }
 
-        // interpret resulting states
-        List<String[]> currentStatesChoices = extractActiveStates(result);
+            // Debug output query result
+            printConsole(result);
+            
+            //TODO: Now parse the result and build up the fake-datapool
 
-        if (currentStatesChoices.size() == 1) {
-            currentStates = currentStatesChoices.get(0);
-        }
-        if (currentStatesChoices.size() > 1) {
-            currentStates = selectCurrentState(currentStatesChoices);
-        }
-        // else
-        // currentStates don't change
-
-        // the stateName is the second KIEM property
-        String stateName = this.getProperties()[2].getValue();
-        try {
-            returnObj.accumulate(stateName, getCurrentStateIds());
-        } catch (Exception e) {
-            // ignore any errors
+            //TODO: Now replace the normal data-pool by the fake one
+            
+            
+            
+            // Pause the execution
+            
+            
+            // Alert the user
+            
         }
 
         // no actions can be extracted so far
-        return returnObj;
+        return null;
     }
 
     // -------------------------------------------------------------------------
@@ -384,7 +380,7 @@ public class DataComponentModelCheck extends DataComponent implements
             public void run() {
                 // Disable timeout
                 TimeoutThread.setAwaitUserRepsonse(true);
-                
+
                 Shell currentShell = PlatformUI.getWorkbench().getActiveWorkbenchWindow()
                         .getShell();
                 SelectTraceDialog dialog = new SelectTraceDialog(currentShell,
@@ -416,7 +412,7 @@ public class DataComponentModelCheck extends DataComponent implements
                 }
                 // MUST eisable timeout again
                 TimeoutThread.setAwaitUserRepsonse(false);
-                
+
                 flagDialogDone = true;
             }
         });
@@ -468,6 +464,9 @@ public class DataComponentModelCheck extends DataComponent implements
                             + "set correctly in the KIEM parameters of the simulator"
                             + " component.", true, e);
         }
+        
+        // Reset the modelcheck flag
+        modelCheckDone = false;
     }
 
     // -------------------------------------------------------------------------
