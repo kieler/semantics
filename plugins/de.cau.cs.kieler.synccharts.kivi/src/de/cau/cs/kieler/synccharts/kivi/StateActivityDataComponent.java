@@ -31,6 +31,7 @@ import org.eclipse.ui.PlatformUI;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import de.cau.cs.kieler.kivi.core.Viewmanagement;
 import de.cau.cs.kieler.sim.kiem.IJSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.JSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.KiemExecutionException;
@@ -146,7 +147,7 @@ public class StateActivityDataComponent extends JSONObjectDataComponent implemen
                             if (active != null) {
                                 if (!contains(statesByStep, active)) { // filter out newer
                                                                        // activities
-                                    EditPart editPart = myFindEditPart(
+                                    EditPart editPart = Viewmanagement.myFindEditPart(
                                             diagramEditor.getDiagramEditPart(), active);
                                     currentStep.add(editPart);
                                 }
@@ -192,31 +193,5 @@ public class StateActivityDataComponent extends JSONObjectDataComponent implemen
                 }
             }
         });
-    }
-
-    /**
-     * Finds an EditPart for a given EObject in a DiagramEditPart.
-     * 
-     * @param diagram
-     *            the diagram to look in
-     * @param eObject
-     *            the object to look for
-     * @return the EditPart corresponding to the EObject
-     */
-    private EditPart myFindEditPart(final DiagramEditPart diagram, final EObject eObject) {
-        EditPart found = diagram.findEditPart(null, eObject);
-        if (found != null) {
-            return found;
-        } else {
-            @SuppressWarnings("unchecked")
-            // the list always contains ConnectionEditParts
-            List<ConnectionEditPart> connections = diagram.getConnections();
-            for (ConnectionEditPart connection : connections) {
-                if (eObject.equals(((View) connection.getModel()).getElement())) {
-                    return connection;
-                }
-            }
-        }
-        return null;
     }
 }
