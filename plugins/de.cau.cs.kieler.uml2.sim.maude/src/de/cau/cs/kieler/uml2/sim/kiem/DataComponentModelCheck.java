@@ -29,6 +29,7 @@ import org.eclipse.emf.mwe.internal.core.Workflow;
 import org.eclipse.emf.mwe.utils.Reader;
 import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramEditor;
 import org.eclipse.gmf.runtime.notation.View;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.papyrus.editor.PapyrusMultiDiagramEditor;
 import org.eclipse.swt.widgets.Display;
@@ -91,6 +92,9 @@ public class DataComponentModelCheck extends DataComponent implements IJSONObjec
 
     /** The constant MAUDEERROR indicates the error token to search for. */
     private static final String MAUDEERROR = "*HERE*";
+
+    /** The Constant MAUDEMODELCHECKOK indicates no counter example can be found. */
+    private static final String MAUDEMODELCHECKOK = "result Bool: true";
 
     /** The currently active states. */
     String[] currentStates;
@@ -276,6 +280,8 @@ public class DataComponentModelCheck extends DataComponent implements IJSONObjec
 
     // -------------------------------------------------------------------------
 
+    String MessageText;
+    
     /*
      * (non-Javadoc)
      * 
@@ -283,8 +289,9 @@ public class DataComponentModelCheck extends DataComponent implements IJSONObjec
      * #doStep(org.json .JSONObject)
      */
     public JSONObject doStep(JSONObject signals) throws KiemExecutionException {
-        
-        // If this component is in the zero tick, then we do the check, otherwise we are in replay mode and do NOTHING!
+
+        // If this component is in the zero tick, then we do the check, otherwise we are in replay
+        // mode and do NOTHING!
         if (!modelCheckDone) {
             // do not modelcheck another time
             modelCheckDone = true;
@@ -293,8 +300,7 @@ public class DataComponentModelCheck extends DataComponent implements IJSONObjec
             String checkingRule = this.getProperties()[3].getValue();
             // Try to search for vertex
             checkingRule = expandCheckingRule(checkingRule);
-            
-            
+
             // build query string ---
             // first collect events
             String triggerEventsQuery = "";
@@ -331,8 +337,8 @@ public class DataComponentModelCheck extends DataComponent implements IJSONObjec
             // susp441237549)) empty) (res,
             // ee1)) =>* mastate such that isDone mastate .
             String queryRequest = "red modelCheck ((maState \"UML\" ($stableC (prettyVerts ("
-                    + currentStatesQuery + ")) empty) (" + triggerEventsQuery
-                    + ")), "+checkingRule+") . \n";
+                    + currentStatesQuery + ")) empty) (" + triggerEventsQuery + ")), "
+                    + checkingRule + ") . \n";
 
             // Debug output query request
             printConsole(queryRequest);
@@ -346,18 +352,44 @@ public class DataComponentModelCheck extends DataComponent implements IJSONObjec
 
             // Debug output query result
             printConsole(result);
-            
-            //TODO: Now parse the result and build up the fake-datapool
 
-            //TODO: Now replace the normal data-pool by the fake one
-            
-            
+            // Search for the MAUDEMODELCHECKOK-sequence in order to know if we have a counter
+            // example
+            // or not
+            boolean counterExampleFound = true;
+            if (result.contains(MAUDEMODELCHECKOK)) {
+                counterExampleFound = false;
+            }
+
+            // If we found a counter example we want the user to be able to step through it
+            if (counterExampleFound) {
+                // TODO: Now parse the result and build up the fake-datapool
+                // TODO: Now replace the normal data-pool by the fake one
+            }
+
+            // Alert the user
+            MessageText = "Model Checking passed without finding any counter example for rule:\n\n"+checkingRule;
+            if (counterExampleFound) {
+                MessageText = "Model Checking found at least one counter example for rule:\n\n"+checkingRule+"\n\nYou may now use the KIEM View to inspect the counter example.";
+            }
+
+            Display.getDefault().asyncExec(new Runnable() {
+                public void run() {
+                    final Shell shell = Display.getCurrent().getShells()[0];
+                    MessageDialog
+                    .openInformation(
+                            shell,
+                            "Model Checking finished",
+                            MessageText);
+                }
+            });
+
             
             // Pause the execution
-            
-            
-            // Alert the user
-            
+            throw (new KiemExecutionException(
+                    "Maude Model Checking finished. Counter example found: " 
+                    + counterExampleFound + ".", 
+                    false, true, true, null));
         }
 
         // no actions can be extracted so far
@@ -464,7 +496,7 @@ public class DataComponentModelCheck extends DataComponent implements IJSONObjec
                             + "set correctly in the KIEM parameters of the simulator"
                             + " component.", true, e);
         }
-        
+
         // Reset the modelcheck flag
         modelCheckDone = false;
     }
