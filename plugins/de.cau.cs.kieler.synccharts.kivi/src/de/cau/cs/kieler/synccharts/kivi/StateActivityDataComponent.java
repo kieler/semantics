@@ -147,7 +147,7 @@ public class StateActivityDataComponent extends JSONObjectDataComponent implemen
                             if (active != null) {
                                 if (!contains(statesByStep, active)) { // filter out newer
                                                                        // activities
-                                    EditPart editPart = Viewmanagement.myFindEditPart(
+                                    EditPart editPart = Viewmanagement.findEditPart(
                                             diagramEditor.getDiagramEditPart(), active);
                                     currentStep.add(editPart);
                                 }
