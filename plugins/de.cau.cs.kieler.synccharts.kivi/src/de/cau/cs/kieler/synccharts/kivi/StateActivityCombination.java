@@ -13,7 +13,6 @@
  */
 package de.cau.cs.kieler.synccharts.kivi;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -48,45 +47,37 @@ public class StateActivityCombination extends AbstractCombination {
             undo();
             return;
         }
-System.out.println(effects.size());
+
+        // assume every effect needs to be undone
         Map<EditPart, IEffect> toUndo = new HashMap<EditPart, IEffect>(effects);
 
-        for (EditPart e : activeStates.get(0)) {
-            if (e instanceof GraphicalEditPart) {
-                StateActivityHighlightEffect effect = effects.get(e);
-                if (effect == null) {
-                    effect = new StateActivityHighlightEffect((GraphicalEditPart) e);
-                    effects.put(e, effect);
-                } else {
-                    toUndo.remove(e);
-                }
-                effect.setColor(HIGHLIGHT_COLOR);
-                Viewmanagement.getInstance().executeEffect(effect);
-            }
-        }
-
-        for (int i = 1; i < activeStates.size(); i++) {
+        // these were last active i steps ago
+        for (int i = 0; i < activeStates.size(); i++) {
             List<EditPart> currentStep = activeStates.get(i);
             for (EditPart e : currentStep) {
                 if (e instanceof GraphicalEditPart) {
+                    // check if an effect exists for this edit part
                     StateActivityHighlightEffect effect = effects.get(e);
                     if (effect == null) {
+                        // if not then create new one
                         effect = new StateActivityHighlightEffect((GraphicalEditPart) e);
                         effects.put(e, effect);
                     } else {
+                        // if it does then don't undo it later
                         toUndo.remove(e);
                     }
-                    effect.setColor(historyColor(i, activeStates.size()));
+                    // update its color instead of undo and create a new effect to avoid flashing
+                    effect.setColor(getColor(i, activeStates.size()));
                     Viewmanagement.getInstance().executeEffect(effect);
                 }
             }
         }
-        
+
+        // undo any effect that was not found in the active states
         for (Map.Entry<EditPart, IEffect> entry : toUndo.entrySet()) {
             Viewmanagement.getInstance().undoEffect(entry.getValue());
             effects.remove(entry.getKey());
         }
-System.out.println(effects.size());
     }
 
     /**
@@ -111,8 +102,13 @@ System.out.println(effects.size());
         return true;
     }
 
-    private static Color historyColor(int step, int steps) {
-        return new Color(null, new RGB(240.0f, 1.0f, 1.0f - 1.0f / steps * (step - 1)));
+    private static Color getColor(final int step, final int steps) {
+        if (step == 0) {
+            return HIGHLIGHT_COLOR;
+        } else {
+            // a shade of blue
+            return new Color(null, new RGB(240.0f, 1.0f, 1.0f - 1.0f / steps * (step - 1)));
+        }
     }
 
 }
