@@ -33,6 +33,7 @@ import org.eclipse.ui.PlatformUI;
 
 import ptolemy.plot.Plot;
 import de.cau.cs.kieler.core.model.util.ModelingUtil;
+import de.cau.cs.kieler.kaom.Port;
 import de.cau.cs.kieler.kvid.KvidUtil;
 import de.cau.cs.kieler.kvid.data.DataObject;
 import de.cau.cs.kieler.kvid.data.KvidUri;
@@ -176,8 +177,16 @@ public class ScopeEditPart extends AbstractDataDisplayEditPart {
                     connected = (Node) con.getTarget();
                 }
                 EObject model = connected.getElement();
-                referredObjectURI = new KvidUri(KvidUtil.fragmentUri2PtolemyUri(
-                        ModelingUtil.getFragmentUri(model), model.eResource()));
+                String ptolemyUri = KvidUtil.fragmentUri2PtolemyUri(
+                        ModelingUtil.getFragmentUri(model), model.eResource());
+                if (model instanceof Port) {
+                    int dot = ptolemyUri.lastIndexOf(".");
+                    ptolemyUri = ptolemyUri.substring(0, dot)
+                            + ":"
+                            + ptolemyUri
+                                    .substring(dot + 1, ptolemyUri.length());
+                }
+                referredObjectURI = new KvidUri(ptolemyUri);
             }
             DataDistributor.getInstance().getDataObjectByURI(referredObjectURI).setSaveHistory(true);
         }
