@@ -12,7 +12,7 @@
    <extension
          point="de.cau.cs.kieler.sim.kiem.json.datacomponent">
       <content
-            class="de.cau.cs.kieler.uml2.sim.kiem.DataComponent"
+            class="de.cau.cs.kieler.uml2.sim.kiem.DataComponentSim"
             id="de.cau.cs.kieler.uml2.sim"
             name="UML2 Maude Simulator">
       </content>
@@ -51,6 +51,14 @@
             actionFactory="de.cau.cs.kieler.uml2.sim.maude.validation.PapyrusValidationActionFactory"
             ePackageId="org.eclipse.uml2.uml">
       </ValidateAction>
+   </extension>
+   <extension
+         point="de.cau.cs.kieler.sim.kiem.json.datacomponent">
+      <content
+            class="de.cau.cs.kieler.uml2.sim.kiem.DataComponentModelCheck"
+            id="de.cau.cs.kieler.uml2.modelcheck"
+            name="UML2 Maude Model Checker">
+      </content>
    </extension>
 
 

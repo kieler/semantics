@@ -82,7 +82,7 @@ import org.eclipse.ui.console.MessageConsole;
 /**
  * The Class DataComponent.
  */
-public class DataComponent extends JSONObjectSimulationDataComponent implements
+public class DataComponentSim extends JSONObjectSimulationDataComponent implements
         IJSONObjectDataComponent {
 
     /** The constant name of the maude console. */
@@ -113,7 +113,7 @@ public class DataComponent extends JSONObjectSimulationDataComponent implements
     /**
      * Instantiates a new data component.
      */
-    public DataComponent() {
+    public DataComponentSim() {
         // TODO Auto-generated constructor stub
     }
 
@@ -883,14 +883,14 @@ public class DataComponent extends JSONObjectSimulationDataComponent implements
         IConsoleManager conMan = plugin.getConsoleManager();
         IConsole[] existing = conMan.getConsoles();
         for (int i = 0; i < existing.length; i++)
-            if (DataComponent.MAUDECONSOLENAME.equals(existing[i].getName())) {
+            if (DataComponentSim.MAUDECONSOLENAME.equals(existing[i].getName())) {
                 maudeConsole = (MessageConsole) existing[i];
                 found = true;
                 break;
             }
         if (!found) {
             // if no console found, so create a new one
-            maudeConsole = new MessageConsole(DataComponent.MAUDECONSOLENAME, null);
+            maudeConsole = new MessageConsole(DataComponentSim.MAUDECONSOLENAME, null);
             conMan.addConsoles(new IConsole[] { maudeConsole });
         }
 
