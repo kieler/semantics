@@ -85,7 +85,7 @@ public final class ModelingUtil {
 
                         if (!eObj.isEmpty()) {
                             xtextModel = eObj.get(0);
-                        }                            
+                        }
                     }
 
                 }
@@ -97,14 +97,9 @@ public final class ModelingUtil {
     private static void checkForDirtyEditor(final XtextEditor diagramEditor) {
         if (diagramEditor.isDirty()) {
             final Shell shell = Display.getCurrent().getShells()[0];
-            boolean b = MessageDialog
-                    .openQuestion(
-                            shell,
-                            "Save Resource",
-                            "'"
-                                    + diagramEditor.getEditorInput().getName()
-                                    + "'"
-                                    + " has been modified. Save changes before simulating? (recommended)");
+            boolean b = MessageDialog.openQuestion(shell, "Save Resource", "'"
+                    + diagramEditor.getEditorInput().getName() + "'"
+                    + " has been modified. Save changes before simulating? (recommended)");
             if (b) {
                 IEditorSite part = diagramEditor.getEditorSite();
                 part.getPage().saveEditor((IEditorPart) part.getPart(), false);
@@ -113,23 +108,21 @@ public final class ModelingUtil {
     }
 
     /**
-     * Find an GEF EditPart that corresponds to an semantic model EObject.
-     * EObjects are used to address objects that are exchanged between the
-     * plugins of the View Management as well as other plugins. EObjects provide
-     * the ability for semantical addressing of other objects such as children
-     * of an object or similar cases.
+     * Find an GEF EditPart that corresponds to an semantic model EObject. EObjects are used to
+     * address objects that are exchanged between the plugins of the View Management as well as
+     * other plugins. EObjects provide the ability for semantical addressing of other objects such
+     * as children of an object or similar cases.
      * 
      * @author haf
      * @param eObject
      *            the semantic object
      * @param rootEditPart
-     *            the root EditPart so start the search. May be null, then the
-     *            current active editor is used
+     *            the root EditPart so start the search. May be null, then the current active editor
+     *            is used
      * @return the corresponding EditPart
      * 
      */
-    public static EditPart getEditPart(final EObject eObject,
-            final EditPart rootEditPart) {
+    public static EditPart getEditPart(final EObject eObject, final EditPart rootEditPart) {
         // if (cachedEditParts2 == null) {
         // // if hashmap is not initialized, create it
         // cachedEditParts2 = new HashMap<EObject, EditPart>();
@@ -143,9 +136,8 @@ public final class ModelingUtil {
         try {
             EditPart rootEP = rootEditPart;
             if (rootEP == null) {
-                DiagramEditor editor = (DiagramEditor) PlatformUI
-                        .getWorkbench().getActiveWorkbenchWindow()
-                        .getActivePage().getActiveEditor();
+                DiagramEditor editor = (DiagramEditor) PlatformUI.getWorkbench()
+                        .getActiveWorkbenchWindow().getActivePage().getActiveEditor();
                 DiagramEditPart dep = editor.getDiagramEditPart();
                 rootEP = dep;
             }
@@ -156,12 +148,10 @@ public final class ModelingUtil {
             // have to search registry manually
             if (editPart == null) {
                 @SuppressWarnings("unchecked")
-                Collection<Object> editParts = rootEP.getViewer()
-                        .getEditPartRegistry().values();
+                Collection<Object> editParts = rootEP.getViewer().getEditPartRegistry().values();
                 for (Object object : editParts) {
                     editPart = (EditPart) object;
-                    EObject model = ((View) ((EditPart) object).getModel())
-                            .getElement();
+                    EObject model = ((View) ((EditPart) object).getModel()).getElement();
                     if (model == eObject) {
                         // search the most valid parent
                         // this is necessary because inner EditParts may also
@@ -179,8 +169,7 @@ public final class ModelingUtil {
                             EditPart parentPart = editPart.getParent();
                             Object view = parentPart.getModel();
                             if (view instanceof View) {
-                                EObject parentModel = ((View) view)
-                                        .getElement();
+                                EObject parentModel = ((View) view).getElement();
                                 if (parentModel == eObject) {
                                     editPart = parentPart;
                                 }
@@ -204,8 +193,7 @@ public final class ModelingUtil {
     }
 
     /**
-     * Finds an editpart given a starting editpart and an EObject. Won't find
-     * connections.
+     * Finds an editpart given a starting editpart and an EObject. Won't find connections.
      * 
      * @param epBegin
      *            where to begin looking
@@ -214,8 +202,7 @@ public final class ModelingUtil {
      * @author haf
      * @return the editPart that was found or null
      **/
-    private static EditPart findEditPart(final EditPart epBegin,
-            final EObject theElement) {
+    private static EditPart findEditPart(final EditPart epBegin, final EObject theElement) {
         if (theElement == null || epBegin == null) {
             return null;
         }
@@ -251,11 +238,9 @@ public final class ModelingUtil {
      * @return the list of results, may be empty
      */
     @SuppressWarnings("unchecked")
-    public static List<EditPart> getEditParts(final DiagramEditPart dep,
-            final EObject theElement) {
+    public static List<EditPart> getEditParts(final DiagramEditPart dep, final EObject theElement) {
         List<EditPart> result = new LinkedList<EditPart>();
-        Collection<Object> editParts = dep.getViewer().getEditPartRegistry()
-                .values();
+        Collection<Object> editParts = dep.getViewer().getEditPartRegistry().values();
         for (Object object : editParts) {
             if (object instanceof EditPart) {
                 EditPart editPart = (EditPart) object;
@@ -272,8 +257,8 @@ public final class ModelingUtil {
     }
 
     /**
-     * Get all objects that are direct or indirect children of the given root
-     * EObject if they are of the specified type.
+     * Get all objects that are direct or indirect children of the given root EObject if they are of
+     * the specified type.
      * 
      * @author haf
      * @param eObjectClass
@@ -282,18 +267,17 @@ public final class ModelingUtil {
      *            The root object
      * @return Collection of found EObject matching the type
      */
-    public static Collection<EObject> getAllByType(
-            final EClassifier eObjectClass, final EObject rootObject) {
-        TreeIterator<Object> iterator = EcoreUtil.getAllContents(rootObject,
-                true);
-        Collection<EObject> elements = EcoreUtil.getObjectsByType(
-                iterator2Collection(iterator), eObjectClass);
+    public static Collection<EObject> getAllByType(final EClassifier eObjectClass,
+            final EObject rootObject) {
+        TreeIterator<Object> iterator = EcoreUtil.getAllContents(rootObject, true);
+        Collection<EObject> elements = EcoreUtil.getObjectsByType(iterator2Collection(iterator),
+                eObjectClass);
         return elements;
     }
 
     /**
-     * Get all objects that are direct or indirect parents of the given root
-     * EObject if they are of the given type.
+     * Get all objects that are direct or indirect parents of the given root EObject if they are of
+     * the given type.
      * 
      * @author haf
      * @param eObjectClass
@@ -302,23 +286,21 @@ public final class ModelingUtil {
      *            The root object to start the search
      * @return Collection of found EObject matching the type
      */
-    public static Collection<EObject> getAllAncestorsByType(
-            final EClassifier eObjectClass, final EObject rootObject) {
+    public static Collection<EObject> getAllAncestorsByType(final EClassifier eObjectClass,
+            final EObject rootObject) {
         Collection<EObject> ancestors = new ArrayList<EObject>();
         EObject parent = rootObject.eContainer();
         while (parent != null) {
             ancestors.add(parent);
             parent = rootObject.eContainer();
         }
-        Collection<EObject> elements = EcoreUtil.getObjectsByType(ancestors,
-                eObjectClass);
+        Collection<EObject> elements = EcoreUtil.getObjectsByType(ancestors, eObjectClass);
         return elements;
     }
 
     /**
-     * Get all objects that are direct or indirect children of the given root
-     * EObject corresponding to the given EditPart if they are of the specified
-     * type.
+     * Get all objects that are direct or indirect children of the given root EObject corresponding
+     * to the given EditPart if they are of the specified type.
      * 
      * @author haf
      * 
@@ -328,21 +310,19 @@ public final class ModelingUtil {
      *            The root object
      * @return Collection of found EObject matching the type
      */
-    public static Collection<EObject> getAllByType(
-            final EClassifier eObjectClass, final EditPart rootEditPart) {
+    public static Collection<EObject> getAllByType(final EClassifier eObjectClass,
+            final EditPart rootEditPart) {
         EObject rootObject = ((View) rootEditPart.getModel()).getElement();
-        TreeIterator<Object> iterator = EcoreUtil.getAllContents(rootObject,
-                true);
-        Collection<EObject> elements = EcoreUtil.getObjectsByType(
-                iterator2Collection(iterator), eObjectClass);
+        TreeIterator<Object> iterator = EcoreUtil.getAllContents(rootObject, true);
+        Collection<EObject> elements = EcoreUtil.getObjectsByType(iterator2Collection(iterator),
+                eObjectClass);
         return elements;
     }
 
     /**
-     * Convert an Iterator to a Collection. Useful if some method returns only
-     * an iterator but some other method takes a Collection as input to iterate
-     * over that collection. However, it has linear runtime and many such
-     * transformations should be avoided.
+     * Convert an Iterator to a Collection. Useful if some method returns only an iterator but some
+     * other method takes a Collection as input to iterate over that collection. However, it has
+     * linear runtime and many such transformations should be avoided.
      * 
      * @author haf
      * @param <T>
@@ -368,11 +348,9 @@ public final class ModelingUtil {
     public static List<EObject> getModelElementsFromSelection() {
         if (PlatformUI.getWorkbench() != null
                 && PlatformUI.getWorkbench().getActiveWorkbenchWindow() != null
-                && PlatformUI.getWorkbench().getActiveWorkbenchWindow()
-                        .getSelectionService() != null) {
-            ISelection sel = PlatformUI.getWorkbench()
-                    .getActiveWorkbenchWindow().getSelectionService()
-                    .getSelection();
+                && PlatformUI.getWorkbench().getActiveWorkbenchWindow().getSelectionService() != null) {
+            ISelection sel = PlatformUI.getWorkbench().getActiveWorkbenchWindow()
+                    .getSelectionService().getSelection();
             LinkedList<EObject> eo = new LinkedList<EObject>();
             if (sel instanceof StructuredSelection) {
                 Iterator<?> it = ((StructuredSelection) sel).iterator();
@@ -381,7 +359,8 @@ public final class ModelingUtil {
                     if (next instanceof EditPart) {
                         Object model = ((EditPart) next).getModel();
                         if (model instanceof View && ((View) model).getElement() != null) {
-                            // null check because Notes in a Diagram do not have semantic counterpart
+                            // null check because Notes in a Diagram do not have semantic
+                            // counterpart
                             eo.add(((View) model).getElement());
                         }
                     }
@@ -393,22 +372,21 @@ public final class ModelingUtil {
     }
 
     /**
-     * Find an GEF EditPart that corresponds to an semantic model EObject.
+     * Find an GEF EditPart that corresponds to an semantic model EObject. Needs to be called from
+     * the UI thread.
      * 
      * @param eObject
      *            the semantic object
      * @return the corresponding EditPart
      * 
-     *         TODO: search of transition edit parts iterates all edit parts and
-     *         will take linear time. You should improve this, by maybe build a
-     *         local cache hash map
+     *         TODO: search of transition edit parts iterates all edit parts and will take linear
+     *         time. You should improve this, by maybe build a local cache hash map
      */
 
     public static EditPart getEditPart(final EObject eObject) {
         try {
             DiagramEditor editor = (DiagramEditor) PlatformUI.getWorkbench()
-                    .getActiveWorkbenchWindow().getActivePage()
-                    .getActiveEditor();
+                    .getActiveWorkbenchWindow().getActivePage().getActiveEditor();
             DiagramEditPart dep = editor.getDiagramEditPart();
             EditPart editPart = dep.findEditPart(dep, eObject);
             if (editPart == null) {
@@ -420,13 +398,11 @@ public final class ModelingUtil {
             // have to search registry manually
             if (editPart == null) {
                 @SuppressWarnings("unchecked")
-                Collection<Object> editParts = dep.getViewer()
-                        .getEditPartRegistry().values();
+                Collection<Object> editParts = dep.getViewer().getEditPartRegistry().values();
                 for (Object object : editParts) {
                     try {
                         EditPart theEditPart = (EditPart) object;
-                        EObject model = ((View) theEditPart.getModel())
-                                .getElement();
+                        EObject model = ((View) theEditPart.getModel()).getElement();
                         if (model == eObject) {
                             // search the most valid parent
                             // this is necessary because inner EditParts may
@@ -446,8 +422,7 @@ public final class ModelingUtil {
                                 EditPart parentPart = theEditPart.getParent();
                                 Object view = parentPart.getModel();
                                 if (view instanceof View) {
-                                    EObject parentModel = ((View) view)
-                                            .getElement();
+                                    EObject parentModel = ((View) view).getElement();
                                     if (parentModel == eObject) {
                                         theEditPart = parentPart;
                                     }
@@ -472,8 +447,7 @@ public final class ModelingUtil {
         }
         return null;
     }
-    
-    
+
     /**
      * Method to translate a KIELER URI in an EMF Fragment URI.
      * 
@@ -481,79 +455,76 @@ public final class ModelingUtil {
      *            The KIELER URI referring an EObject.
      * @param resource
      *            The Resource holding the EObject.
-     * @return The Fragment URI for the EObject referred by the given KIELER
-     *         URI. Null, if EObject doesn't exists.
+     * @return The Fragment URI for the EObject referred by the given KIELER URI. Null, if EObject
+     *         doesn't exists.
      */
     public static String kielerUriToFragmentUri(final String kielerUri, final Resource resource) {
         String result = "";
-        
+
         try {
-        if (resource.getEObject(kielerUri) != null) {
-            //when EObjects aren't named, the KIELER URI equals the Fragment URI 
-            return kielerUri;
-        }
+            if (resource.getEObject(kielerUri) != null) {
+                // when EObjects aren't named, the KIELER URI equals the Fragment URI
+                return kielerUri;
+            }
         } catch (IllegalArgumentException ex) {
-            //can be ignored, we then know that we dont have a Fragment URI as KIELER URI
+            // can be ignored, we then know that we dont have a Fragment URI as KIELER URI
         }
-        
+
         if (kielerUri.startsWith("//")) {
-            //only one root node present, no translation necessary
+            // only one root node present, no translation necessary
             EObject root = resource.getContents().get(0);
             result = "/";
             int lastOccurance = 2;
             int currentOccurance;
-            
+
             while (kielerUri.indexOf("/", lastOccurance) != -1) {
-                //parse KIELER URI and find corresponding EObject on the current level 
+                // parse KIELER URI and find corresponding EObject on the current level
                 result += "/";
                 currentOccurance = kielerUri.indexOf("/", lastOccurance);
                 String currentUri;
-                
+
                 if (currentOccurance != lastOccurance) {
                     currentUri = kielerUri.substring(lastOccurance, currentOccurance);
                     lastOccurance = currentOccurance;
                 } else {
-                    //when this is the last referrer, just take the rest
+                    // when this is the last referrer, just take the rest
                     currentUri = kielerUri.substring(lastOccurance);
                     lastOccurance = kielerUri.length();
                 }
                 String currentResult = new String(result);
                 for (EObject eo : root.eContents()) {
-                    //iterate through the current level and find the NamedObject with the same name
+                    // iterate through the current level and find the NamedObject with the same name
                     if (eo instanceof NamedObject) {
                         if (((NamedObject) eo).getName().equals(currentUri.split("\\.")[1])) {
-                            result += ((InternalEObject) eo.eContainer())
-                                    .eURIFragmentSegment(
-                                            eo.eContainingFeature(), eo);
+                            result += ((InternalEObject) eo.eContainer()).eURIFragmentSegment(
+                                    eo.eContainingFeature(), eo);
                             root = eo;
                             break;
                         }
                     }
                 }
                 if (currentResult.equals(result)) {
-                    //Element wasn't found, although this was the right level
-                    //Return null then
+                    // Element wasn't found, although this was the right level
+                    // Return null then
                     return null;
                 }
             }
         } else {
-            //more than one root node
+            // more than one root node
             throw new UnsupportedOperationException("Can't handle more than one root node yet!");
         }
         return result;
     }
-    
+
     /**
-     * Method to get a (more readable) KIELER URI from a EMF Fragment URI and
-     * its resource. Will return the Fragment URI, if EObjects are not
-     * NamedObjects.
-     * If using NamedObjects, it is required that names on the same level are unique.
+     * Method to get a (more readable) KIELER URI from a EMF Fragment URI and its resource. Will
+     * return the Fragment URI, if EObjects are not NamedObjects. If using NamedObjects, it is
+     * required that names on the same level are unique.
      * 
      * @see de.cau.cs.kieler.core.annotations.NamedObject
      * 
      * @param fragmentUri
-     *            The Fragment URI from which the KIELER URI is generated (must
-     *            not be null).
+     *            The Fragment URI from which the KIELER URI is generated (must not be null).
      * @param resource
      *            The resource in which the referred EObject is held.
      * @return A KIELER URI corresponding to the Fragment URI.
@@ -562,26 +533,22 @@ public final class ModelingUtil {
         String result = "";
         InternalEObject ieo = (InternalEObject) resource.getEObject(fragmentUri);
         InternalEObject container = (InternalEObject) ieo.eContainer();
-        
+
         if (container != null) {
             if (ieo instanceof NamedObject) {
-            result = fragmentUriToKielerUri(getFragmentUri(container), resource)
-                    + "/"
-                    + "@" + ieo.eContainingFeature().getName() + "."
-                    + ((NamedObject) ieo).getName();
+                result = fragmentUriToKielerUri(getFragmentUri(container), resource) + "/" + "@"
+                        + ieo.eContainingFeature().getName() + "." + ((NamedObject) ieo).getName();
             } else {
-                result = fragmentUriToKielerUri(getFragmentUri(container), resource)
-                + "/"
-                + container.eURIFragmentSegment(ieo.eContainingFeature(),
-                        ieo);
+                result = fragmentUriToKielerUri(getFragmentUri(container), resource) + "/"
+                        + container.eURIFragmentSegment(ieo.eContainingFeature(), ieo);
             }
         } else {
             result = "/";
         }
-        
+
         return result;
     }
-    
+
     /**
      * Method to get the EMF Fragment URI for a given EObject.
      * 
@@ -593,17 +560,15 @@ public final class ModelingUtil {
         String fragment = "";
         InternalEObject ieo = (InternalEObject) eo;
         InternalEObject container = (InternalEObject) eo.eContainer();
-        
+
         if (container != null) {
-            fragment = getFragmentUri(container)
-                    + "/"
-                    + container.eURIFragmentSegment(ieo.eContainingFeature(),
-                            ieo);
+            fragment = getFragmentUri(container) + "/"
+                    + container.eURIFragmentSegment(ieo.eContainingFeature(), ieo);
         } else {
             fragment = "/";
         }
-        
+
         return fragment;
     }
-    
+
 }
