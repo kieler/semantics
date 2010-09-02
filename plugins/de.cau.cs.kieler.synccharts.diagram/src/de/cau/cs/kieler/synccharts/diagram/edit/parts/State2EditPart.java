@@ -104,6 +104,8 @@ public class State2EditPart extends AdvancedRenderingShapeNodeEditPart {
      */
     protected IFigure createNodeShape() {
         primaryShape = new StateFigure();
+        StateLayout layout = (StateLayout) primaryShape.getLayoutManager();
+        layout.setModelElement(this.getModelElement());
         State2EditPart.this.updateFigure(primaryShape);
 
         return primaryShape;

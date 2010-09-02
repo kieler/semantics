@@ -359,13 +359,14 @@ public class SyncchartsFigureProvider implements IRenderingProvider {
      */
     public LayoutManager getLayoutManagerByString(final String input,
             final LayoutManager oldLayoutManager, final EObject object) {
+        /*
         if (oldLayoutManager instanceof StateLayout) {
             StateLayout stateLayout = (StateLayout) oldLayoutManager;
             if (object instanceof State) {
                 State state = (State) object;
                 if (input.equals("simpleNormal")) {
                     stateLayout.setCorrespondingLayout(layouts.simpleStateLayout);
-                } else if (input.equals("complexNormal")) {
+                } else if (input.equals("complexNormal") && !(state.getSuspensionTrigger() != null) && !(! (state.getBodyText() == null) || state.getBodyText().length() == 0) )) {
                     stateLayout.setIsEmptyValues(layouts.complexStateLayout, state);
                     stateLayout.setCorrespondingLayout(layouts.complexStateLayout);
                 } else if (input.equals("conditional")) {
@@ -388,6 +389,7 @@ public class SyncchartsFigureProvider implements IRenderingProvider {
                 }
             }
         }
+        */
         // TODO Auto-generated method stub
         return oldLayoutManager;
     }
