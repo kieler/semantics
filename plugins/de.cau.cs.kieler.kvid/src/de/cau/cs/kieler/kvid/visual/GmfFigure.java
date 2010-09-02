@@ -76,4 +76,11 @@ public class GmfFigure extends RoundedRectangle implements IKvidFigure {
         add(label, BorderLayout.CENTER);
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    public DataObject getData() {
+        return currentData;
+    }
+
 }

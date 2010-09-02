@@ -25,6 +25,7 @@ import org.eclipse.gmf.runtime.diagram.ui.editparts.DiagramEditPart;
 import org.eclipse.gmf.runtime.diagram.ui.editparts.DiagramRootEditPart;
 import org.eclipse.ui.PlatformUI;
 
+import de.cau.cs.kieler.kvid.data.KvidUri;
 import de.cau.cs.kieler.kvid.datadistributor.RuntimeConfiguration;
 import de.cau.cs.kieler.sim.kiem.KiemPlugin;
 
@@ -89,6 +90,23 @@ public final class GmfAnimator {
         
         final IFigure canvas = diagram.getLayer(DiagramRootEditPart.DECORATION_PRINTABLE_LAYER);
 
+        int minPrio = Integer.MAX_VALUE;
+        int maxPrio = Integer.MIN_VALUE;
+        for (IKvidFigure figure : figuresAndPath.keySet()) {
+            KvidUri figureUri = figure.getData().getUri();
+            if (figureUri.hasPriority()) {
+                if (figureUri.getPriority() < minPrio) {
+                    minPrio = figureUri.getPriority();
+                }
+                if (figureUri.getPriority() > maxPrio) {
+                    maxPrio = figureUri.getPriority();
+                }
+            }
+        }
+        if (minPrio == Integer.MAX_VALUE && maxPrio == Integer.MIN_VALUE) {
+            minPrio = 0;
+            maxPrio = 0;
+        }
         AnimatingCommand anima = new AnimatingCommand();
         if (RuntimeConfiguration.getInstance()
                 .currentValueOfProperty("Debug drawing activated").equals("true")) {
@@ -97,37 +115,67 @@ public final class GmfAnimator {
         CompoundCommand cc = new CompoundCommand();
         boolean allPathsExeeded = false;
         int pathCounter = 0;
+        int currentPrioLevel = minPrio;
         
-        //Iterate over all paths until the longest path was handled
-        while (!allPathsExeeded) {
-            allPathsExeeded = true;
-            for (IKvidFigure figure : figuresAndPath.keySet()) {
-                if (pathCounter == 0) {
-                    //On first iteration, muvitor requires animated elements to be initialized
-                    anima.initializeAnimatedElement(figure, diagram.getViewer());
-                }
-                if (pathCounter < figuresAndPath.get(figure).size()) {  
-                    //If the current figure has another path step: add it to command
-                    anima.specifyStep(figure, figuresAndPath.get(figure).get(pathCounter));
-                    if ((pathCounter + 1) < figuresAndPath.get(figure).size()) {
-                        //If there won't follow another path step, tell that this path is exceeded
-                        allPathsExeeded = false;
+        while (currentPrioLevel <= maxPrio) {
+            //Iterate over all paths until the longest path was handled
+            while (!allPathsExeeded) {
+                allPathsExeeded = true;
+                for (IKvidFigure figure : figuresAndPath.keySet()) {
+                    KvidUri figureUri = figure.getData().getUri();
+                    if (currentPrioLevel == minPrio && pathCounter == 0) {
+                        //On first iteration, muvitor requires animated elements to be initialized
+                        anima.initializeAnimatedElement(figure, diagram.getViewer());
                     }
-                } else {
-                    //If another path was longer than this, insert dummy steps
-                    //Node will stay on final location until animation is done
-                    //Muvitor will throw annoying exceptions if this isn't done
-                    anima.specifyStep(figure,
-                            figuresAndPath.get(figure).get(figuresAndPath.get(figure).size() - 1));
+                    if ((figureUri.hasPriority() && figureUri.getPriority() == currentPrioLevel)
+                            || (!figureUri.hasPriority() && currentPrioLevel == minPrio)) {
+                        if (pathCounter < figuresAndPath.get(figure).size()) {  
+                            //If the current figure has another path step: add it to command
+                            anima.specifyStep(figure, figuresAndPath.get(figure).get(pathCounter));
+                            if ((pathCounter + 1) < figuresAndPath.get(figure).size()) {
+                                // If there won't follow another path step, tell
+                                // that this path is exceeded
+                                allPathsExeeded = false;
+                            }
+                        } else {
+                            //If another path was longer than this, insert dummy steps
+                            //Node will stay on final location until animation is done
+                            //Muvitor will throw annoying exceptions if this isn't done
+                            anima.specifyStep(
+                                    figure,
+                                    figuresAndPath.get(figure)
+                                            .get(figuresAndPath.get(figure)
+                                                    .size() - 1));
+                        }
+                    } else {
+                        //Dummy steps also inserted on priority levels which will be executed later
+                        if (figureUri.getPriority() > currentPrioLevel) {
+                            anima.specifyStep(
+                                    figure,
+                                    figuresAndPath.get(figure).get(0));
+                        } else {
+                            anima.specifyStep(
+                                    figure,
+                                    figuresAndPath.get(figure)
+                                            .get(figuresAndPath.get(figure)
+                                                    .size() - 1));
+                        }
+                    }
                 }
+                if (!allPathsExeeded) {
+                    //Switch to next step when there are paths which aren't finished
+                    //To be animated parallely, the path points of the same level have to be
+                    //added to the same step
+                    anima.nextStep();
+                }
+                pathCounter++;
             }
-            if (!allPathsExeeded) {
-                //Switch to next step when there are paths which aren't finished
-                //To be animated parallely, the path points of the same level have to be
-                //added to the same step
+            pathCounter = 0;
+            allPathsExeeded = false;
+            currentPrioLevel++;
+            if (currentPrioLevel <= maxPrio) {
                 anima.nextStep();
             }
-            pathCounter++;
         }
         
         //Make sure animation won't be slower than the desired animation time

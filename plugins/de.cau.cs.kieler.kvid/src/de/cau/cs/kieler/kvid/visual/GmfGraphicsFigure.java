@@ -28,7 +28,6 @@ import de.cau.cs.kieler.kvid.data.DataObject;
 public class GmfGraphicsFigure extends ScalableImageFigure implements IKvidFigure {
     
     /** Reference to the currently displayed data. */
-    @SuppressWarnings("unused")
     private DataObject data;
 
     /**
@@ -48,6 +47,13 @@ public class GmfGraphicsFigure extends ScalableImageFigure implements IKvidFigur
      */
     public void updateData(final DataObject thedata) {
         this.data = thedata;       
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    public DataObject getData() {
+        return data;
     }
 
 }

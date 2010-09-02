@@ -31,5 +31,12 @@ public interface IKvidFigure extends IFigure {
      * @param thedata The updated data
      */
     void updateData(DataObject thedata);
+    
+    /**
+     * Getter for the visualized {@link DataObject}.
+     * 
+     * @return The visualized DataObject
+     */
+    DataObject getData();
 
 }

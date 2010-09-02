@@ -115,9 +115,9 @@ public class KvidUri {
     @Override
     public int hashCode() {
         if (port == null) {
-            return elementUri.hashCode() + priority;
+            return elementUri.hashCode(); // + priority;
         } else {
-            return elementUri.hashCode() + port.hashCode() + priority;
+            return elementUri.hashCode() + port.hashCode(); // + priority;
         }
     }
     
@@ -142,7 +142,7 @@ public class KvidUri {
         } else {
             return false;
         }
-        if (other.hasPriority() == hasPriority()) {
+        /*if (other.hasPriority() == hasPriority()) {
             if (other.hasPriority()) {
                 if (other.getPriority() != getPriority()) {
                     return false;
@@ -150,7 +150,7 @@ public class KvidUri {
             }
         } else {
             return false;
-        }
+        }*/
         return true;
     }
 
