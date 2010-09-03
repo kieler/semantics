@@ -65,12 +65,13 @@ public class ExecutePtolemyModel {
         public String actorName;
         public Token token;
         public Actor actor;
+        public String portName;
 
-        public ModelOutput(String actorName, Actor actor) {
+        public ModelOutput(String actorName, Actor actor, String portName) {
             this.actorName = actorName;
             this.actor = actor;
             this.token = null;
-
+            this.portName = portName;
         }
     }
 
@@ -163,7 +164,7 @@ public class ExecutePtolemyModel {
         }
 
         for (int c = 0; c < modelOutputList.size(); c++) {
-            keyArray[kielerIOList.size() + c] = modelOutputList.get(c).actorName;
+            keyArray[kielerIOList.size() + c] = modelOutputList.get(c).actorName + ":" + modelOutputList.get(c).portName;
         }
 
         return keyArray;
@@ -309,16 +310,23 @@ public class ExecutePtolemyModel {
                 Actor as = (Actor) child;
                     // this is only true for output not for local signals
                     String actorName = as.getFullName();
-                    ModelOutput modelOutput = new ModelOutput(actorName, as);
                     List<Object> ports = ((Actor) as).outputPortList();
                     for (Object port : ports) {
                         if (port instanceof IOPort) {
+                            ModelOutput modelOutput = new ModelOutput(actorName, as, ((IOPort) port).getName());
                             ((IOPort) port).addIOPortEventListener(new TokenListener(
                                     modelOutput));
+                            modelOutputList.add(modelOutput);
                         }
                     }
-                    if (ports.size() > 0) {
-                        modelOutputList.add(modelOutput);
+                    ports = ((Actor) as).inputPortList();
+                    for (Object port : ports) {
+                        if (port instanceof IOPort) {
+                            ModelOutput modelOutput = new ModelOutput(actorName, as, ((IOPort) port).getName());
+                            ((IOPort) port).addIOPortEventListener(new TokenListener(
+                                    modelOutput));
+                            modelOutputList.add(modelOutput);
+                        }
                     }
             }
         }// end while
