@@ -336,7 +336,7 @@ public class DataComponentModelCheck extends DataComponent implements IJSONObjec
             // search (maState "UML" ($stableC (prettyVerts (R-990928836 ,
             // susp441237549)) empty) (res,
             // ee1)) =>* mastate such that isDone mastate .
-            String queryRequest = "red modelCheck ((maState \"UML\" ($stableC (prettyVerts ("
+            String queryRequest = "red modelCheck ((maState \"UML noConsume\" ($stableC (prettyVerts ("
                     + currentStatesQuery + ")) empty) (" + triggerEventsQuery + ")), "
                     + checkingRule + ") . \n";
 
