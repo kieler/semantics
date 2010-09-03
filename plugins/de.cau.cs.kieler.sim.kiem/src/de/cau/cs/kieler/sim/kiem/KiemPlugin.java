@@ -513,6 +513,7 @@ public class KiemPlugin extends AbstractUIPlugin {
                 fileName = KiemPlugin.getDefault().getCurrentFile().toFile().getName();
             }
 
+            //FIXME: Is there a default dialog for this?
             String[] buttons = { "Yes", "No", "Cancel" };
 
             MessageDialog dlg = new MessageDialog(parentShell, "Save Execution", null, "'"
