@@ -97,7 +97,7 @@ mod STEPSEM is
     *** a state machine, a configuration, a historyconf and an Eventqueue
     
     op $fire _____ : String Verts Event Transitions Transitions -> Firesets [memo] .
-    eq $fire "UML" C fe T F = $$fireUML C fe T F .
+    ceq $fire str C fe T F = $$fireUML C fe T F if not (find(str, "UML", 0) == notFound).
     eq $fire str C fe T F = FS (fireSC C fe T F) [owise] .
  
     *** remove transitions where prirority is defined to be lower
@@ -187,7 +187,9 @@ mod STEPSEM is
     maState mode ($doneC V HC) empty . 
     *** ToDo: Currently events are consumed
 	crl [selectEventFSetESINT] : maState mode ($stableC V HC) (e, ES) => 
-	maState mode ($eventSelC V HC e) (ES) if e =/= empty .
+	maState mode ($eventSelC V HC e) (ES) if e =/= empty and (find(mode, "noConsume", 0) == notFound) .
+	crl [selectEventFSetESINT] : maState mode ($stableC V HC) (e, ES) => 
+	maState mode ($eventSelC V HC e) (ES, e) if e =/= empty and not (find(mode, "noConsume", 0) == notFound) .
 	crl [discardFSetESINT] : maState mode ($eventSelC V HC e) (ES) => 
 		maState mode ($stableC V HC) (ES) if 
 		(enabled (prettyVToV (getVerts SMINT) V) e (getTrans SMINT)) == empty .

@@ -214,7 +214,7 @@ fmod TRANSITIONS is
 
   *** fire ist so deterministisch
   op fire _____ : String Verts Event Transitions Transitions -> Transitions [memo] .
-  eq fire "UML" C fe T F = fireUML C fe T F .
+  ceq fire str C fe T F = fireUML C fe T F if not (find(str, "UML", 0) == notFound) .
   eq fire str C fe T F = fireSC C fe T F [owise] .
  
   op fireSC ____ :  Verts Event Transitions Transitions -> Transitions .
