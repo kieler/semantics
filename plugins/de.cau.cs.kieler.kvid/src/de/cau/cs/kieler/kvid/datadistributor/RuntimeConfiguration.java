@@ -47,6 +47,8 @@ public final class RuntimeConfiguration {
                 "Disappear", "Stay at last location", "Replay" }));
         addProperty(new Property("Debug drawing activated", new String[] {
                 "false", "true" }));
+        addProperty(new Property(
+                "Legacy support: always use port with this name", "output"));
     }
     
     /**

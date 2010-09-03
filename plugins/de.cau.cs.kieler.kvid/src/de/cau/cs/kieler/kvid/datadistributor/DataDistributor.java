@@ -273,6 +273,13 @@ public final class DataDistributor implements IProviderListener, ResourceSetList
             String portName = "";
             if (uri.hasPort()) {
                 portName = uri.getPort();
+            } else if (RuntimeConfiguration.getInstance()
+                    .currentValueOfProperty(
+                            "Legacy support: always use port with this name") != "") {
+                portName = RuntimeConfiguration
+                        .getInstance()
+                        .currentValueOfProperty(
+                                "Legacy support: always use port with this name");
             }
             if (port.getLabel().getText().equals(portName) || portName.isEmpty()) {
                 for (KEdge edge : port.getEdges()) {
