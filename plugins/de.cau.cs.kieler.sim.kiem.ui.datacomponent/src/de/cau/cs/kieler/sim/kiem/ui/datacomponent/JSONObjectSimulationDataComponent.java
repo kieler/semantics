@@ -333,13 +333,25 @@ public abstract class JSONObjectSimulationDataComponent extends JSONObjectDataCo
     }
 
     // -------------------------------------------------------------------------
+    
+    /**
+     * Gets the models root element, an EObject.
+     * 
+     * @return the model root element
+     */
+    public final EObject getModelRootElement() {
+        EObject rootEObject = this.getInputModelEObject(this.getInputEditor());
+        return rootEObject;
+    }
+    
+    // -------------------------------------------------------------------------
 
     public final JSONObject provideInitialVariables() throws KiemInitializationException {
         JSONObject returnObj = new JSONObject();
 
         // Check if the model conforms to all check files and no warnings left!
         Diagnostician diagnostician = Diagnostician.INSTANCE;
-        EObject rootEObject = this.getInputModelEObject(this.getInputEditor());
+        EObject rootEObject = getModelRootElement();
         boolean ok = checkModelValidation(rootEObject);
 
         if (!ok) {
