@@ -32,9 +32,9 @@ public class DisplayFactory extends AbstractDisplayFactory {
      */
     public DisplayFactory() {
         RuntimeConfiguration.getInstance().addProperty(
-                new Property("Clear scopes moment", new String[] {
-                        "Start of new visualization",
-                        "Directly after visualization" }));
+                new Property("Clear scopes when", new String[] {
+                        "visualization starts",
+                        "visualization finishes" }));
     }
 
     /**
