@@ -32,7 +32,7 @@ import de.cau.cs.kieler.sim.kiem.KiemExecutionException;
 import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
 import de.cau.cs.kieler.sim.kiem.KiemPlugin;
 import de.cau.cs.kieler.sim.kiem.properties.KiemProperty;
-import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyTypeFile;
+import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyTypeWorkspaceFile;
 
 /**
  * Data source which is a {@link IDataProvider} and uses CSV files 
@@ -83,7 +83,7 @@ public class KiemCsvDataProvider extends JSONObjectDataComponent implements
         KiemProperty[] properties = new KiemProperty[1];
         properties[0] = new KiemProperty(
                         "Path to CSV file",
-                        new KiemPropertyTypeFile(),
+                        new KiemPropertyTypeWorkspaceFile(),
                         "/path/to/csv/file");
         return properties;
     }
@@ -96,7 +96,7 @@ public class KiemCsvDataProvider extends JSONObjectDataComponent implements
         IWorkspaceRoot workspaceRoot = workspace.getRoot();
         
         IPath path = new Path(this.getProperties()[0].getFilePath());
-        this.inputCsvFile = workspaceRoot.getFileForLocation(path);
+        this.inputCsvFile = workspaceRoot.getFile(path);
         csvLines = getCsvLines();
         if (csvLines.length > 0) {
             uris = csvLines[0].split(";");
