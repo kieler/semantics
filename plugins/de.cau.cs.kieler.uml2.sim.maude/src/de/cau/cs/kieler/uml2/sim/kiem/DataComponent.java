@@ -284,7 +284,7 @@ public class DataComponent extends JSONObjectSimulationDataComponent implements
      * 
      * @return the current state ids
      */
-    public String getCurrentStateIds() {
+    public String getCurrentStateIds(String[] currentStates) {
         String stateIds = "";
         for (String maudeStateId : currentStates) {
             System.out.println("Search for " + maudeStateId);
@@ -460,7 +460,7 @@ public class DataComponent extends JSONObjectSimulationDataComponent implements
         // the stateName is the second KIEM property
         String stateName = this.getProperties()[2].getValue();
         try {
-            returnObj.accumulate(stateName, getCurrentStateIds());
+            returnObj.accumulate(stateName, getCurrentStateIds(currentStates));
         } catch (Exception e) {
             // ignore any errors
         }

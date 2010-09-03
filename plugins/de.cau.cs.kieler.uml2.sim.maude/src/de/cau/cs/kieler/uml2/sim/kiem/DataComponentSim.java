@@ -304,7 +304,7 @@ public class DataComponentSim extends DataComponent implements
         // the stateName is the second KIEM property
         String stateName = this.getProperties()[2].getValue();
         try {
-            returnObj.accumulate(stateName, getCurrentStateIds());
+            returnObj.accumulate(stateName, getCurrentStateIds(currentStates));
         } catch (Exception e) {
             // ignore any errors
         }
