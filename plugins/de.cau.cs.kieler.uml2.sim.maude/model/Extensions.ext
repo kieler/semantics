@@ -24,7 +24,7 @@ String trigger2(Transition transition):
 // This method will immitate a transition gurad and return its String representation
 String guard2(Transition transition):
   let transitionLabel = transition.name:
-  let returnGuard = getGuard(transitionLabel.toString()):
+  let returnGuard = getGuard(transitionLabel.toString(), transition):
   if (returnGuard != null && returnGuard.length > 0) then
     returnGuard
   else
@@ -52,8 +52,8 @@ String getTrigger(String transitionLabel):
 ;
 
 // INTERNAL: Helpermethod for guard extraction
-String getGuard(String transitionLabel):
-  JAVA de.cau.cs.kieler.uml2.sim.JavaEscape.getGuard(java.lang.String)
+String getGuard(String transitionLabel, Transition transition):
+  JAVA de.cau.cs.kieler.uml2.sim.JavaEscape.getGuard(java.lang.String, org.eclipse.uml2.uml.Transition)
 ;
 
 

@@ -311,31 +311,6 @@ public class DataComponent extends JSONObjectSimulationDataComponent implements
     }
 
     // -------------------------------------------------------------------------
-    
-    /**
-     * Tries to resolve a simple state name and returns the Maude id 
-     * 
-     * @param stateName
-     *            the state name
-     * @return the string
-     */
-    public String resolveStateName(String stateName) {
-        EObject rootElement = this.getModelRootElement();
-        TreeIterator treeIterator = rootElement.eAllContents();
-        while (treeIterator.hasNext()) {
-            Object object = treeIterator.next();
-            if (object instanceof Vertex) {
-                Vertex vertex = (Vertex)object;
-                if (vertex.getName().equals(stateName)) {
-                    return JavaEscape.getId(vertex);
-                }
-            }
-        }
-        return null;
-    }
-    
-
-    // -------------------------------------------------------------------------
 
     /**
      * Gets the (cashed) eMF id.

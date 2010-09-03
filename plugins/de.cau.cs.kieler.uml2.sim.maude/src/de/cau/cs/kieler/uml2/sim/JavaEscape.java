@@ -4,6 +4,7 @@ import java.util.LinkedList;
 
 import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.uml2.uml.Element;
 import org.eclipse.uml2.uml.FinalState;
@@ -313,16 +314,74 @@ public class JavaEscape {
     // ------------------------------------------------------------------------
 
     // FIXME: only works for simple transition labels
-    public static String getGuard(String TransitionLabel) {
+    public static String getGuard(String TransitionLabel, Transition transition) {
+        TreeIterator allContents = transition.eResource().getAllContents();
+        
         if (TransitionLabel.contains("/[")) {
             if (TransitionLabel.substring(TransitionLabel.indexOf("/[") + 1) != "]") {
-                return TransitionLabel.substring(TransitionLabel.indexOf("[") + 1, TransitionLabel.indexOf("]")).trim();
+                return resolveStateNames(TransitionLabel.substring(TransitionLabel.indexOf("[") + 1, TransitionLabel.indexOf("]")).trim(), allContents);
             }
         }
         return "true";
     }
 
+    // ------------------------------------------------------------------------
+
+    public static String resolveStateNames(String inText, TreeIterator allContents) {
+        String outputText = "";
+
+        boolean extractingStateName = false;
+        String extractedStateName = "";
+        
+        for (int i = 0; i < inText.length(); i++) {
+            String character = inText.substring(i, i + 1);
+            if ((character.equals("\"")) && (!extractingStateName)) {
+                extractingStateName = true;
+                continue;
+            }
+            if ((character.equals("\"")) && (extractingStateName)) {
+                extractingStateName = false;
+                // now try to resolve it
+                String stateMaudeId = resolveStateName(extractedStateName, allContents);
+                // add resolved id
+                outputText += stateMaudeId;
+                // reset name
+                extractedStateName = "";
+                continue;
+            }
+            if (extractingStateName) {
+                // extracting mode
+                extractedStateName += character;
+            } else {
+                // normal mode
+                outputText += character;
+            }
+        }
+        return outputText;
+    }
     
+    // ------------------------------------------------------------------------
+    
+    /**
+     * Tries to resolve a simple state name and returns the Maude id 
+     * 
+     * @param stateName
+     *            the state name
+     * @return the string
+     */
+    public static String resolveStateName(String stateName, TreeIterator allContents) {
+        while (allContents.hasNext()) {
+            Object object = allContents.next();
+            if (object instanceof Vertex) {
+                Vertex vertex = (Vertex)object;
+                if (vertex.getName().equals(stateName)) {
+                    return JavaEscape.getId(vertex);
+                }
+            }
+        }
+        return null;
+    }
+        
     // ------------------------------------------------------------------------
 
     public Boolean contains(String str) {
@@ -382,4 +441,6 @@ public class JavaEscape {
         // pseudostate.eAllContents().
         return returnList;
     }
+    
+    
 }

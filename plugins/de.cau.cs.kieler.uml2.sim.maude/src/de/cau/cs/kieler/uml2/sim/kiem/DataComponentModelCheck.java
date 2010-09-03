@@ -16,6 +16,7 @@ import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.ResourceSet;
@@ -68,6 +69,7 @@ import de.cau.cs.kieler.sim.kiem.properties.KiemProperty;
 import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyTypeEditor;
 import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyTypeFile;
 import de.cau.cs.kieler.sim.kiem.ui.datacomponent.JSONObjectSimulationDataComponent;
+import de.cau.cs.kieler.uml2.sim.JavaEscape;
 import de.cau.cs.kieler.uml2.sim.Uml2SimPlugin;
 
 import org.eclipse.uml2.uml.Model;
@@ -125,35 +127,10 @@ public class DataComponentModelCheck extends DataComponent implements IJSONObjec
      * @return the string
      */
     private String expandCheckingRule(String inputRule) {
-        String outputRule = "";
+        EObject rootElement = this.getModelRootElement();
+        TreeIterator allContents = rootElement.eAllContents();
 
-        boolean extractingStateName = false;
-        String extractedStateName = "";
-        for (int i = 0; i < inputRule.length(); i++) {
-            String character = inputRule.substring(i, i + 1);
-            if ((character.equals("\"")) && (!extractingStateName)) {
-                extractingStateName = true;
-                continue;
-            }
-            if ((character.equals("\"")) && (extractingStateName)) {
-                extractingStateName = false;
-                // now try to resolve it
-                String stateMaudeId = resolveStateName(extractedStateName);
-                // add resolved id
-                outputRule += stateMaudeId;
-                // reset name
-                extractedStateName = "";
-                continue;
-            }
-            if (extractingStateName) {
-                // extracting mode
-                extractedStateName += character;
-            } else {
-                // normal mode
-                outputRule += character;
-            }
-
-        }
+        String outputRule = JavaEscape.resolveStateNames(inputRule, allContents);
 
         return outputRule;
     }
