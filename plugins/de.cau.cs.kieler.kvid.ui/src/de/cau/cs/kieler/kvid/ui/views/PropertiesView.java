@@ -97,7 +97,7 @@ public class PropertiesView extends ViewPart implements IPropertyListener, ISele
         PlatformUI.getWorkbench().getActiveWorkbenchWindow().getPartService()
                 .addPartListener(partListener);
         
-        tableViewer = new TableViewer(parent, SWT.NONE);
+        tableViewer = new TableViewer(parent, SWT.FULL_SELECTION);
         Table propertyTable = tableViewer.getTable();
         propertyTable.setHeaderVisible(true);
         propertyTable.setLinesVisible(true);
