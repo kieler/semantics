@@ -9,7 +9,7 @@
             allowMultiple="false"
             category="de.cau.cs.kieler"
             class="de.cau.cs.kieler.kvid.ui.views.PropertiesView"
-            icon="icons/kieler.png"
+            icon="icons/kvid.png"
             id="de.cau.cs.kieler.kvid.ui.views.PropertiesView"
             name="Visualization"
             restorable="true">
@@ -53,8 +53,8 @@
             locationURI="popup:de.cau.cs.kieler">
          <command
                commandId="de.cau.cs.kieler.kvid.addDisplayNodeCommand"
-               disabledIcon="icons/datanode_disabled.gif"
-               icon="icons/datanode.gif"
+               disabledIcon="icons/kvid_disabled.png"
+               icon="icons/kvid.png"
                label="Add Scope Node"
                mnemonic="S"
                style="push">
