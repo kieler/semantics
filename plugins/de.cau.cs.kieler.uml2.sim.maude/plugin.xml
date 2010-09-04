@@ -60,6 +60,12 @@
             name="UML2 Maude Model Checker">
       </content>
    </extension>
+   <extension
+         point="de.cau.cs.kieler.sim.kiem.eventListener">
+      <content
+            class="de.cau.cs.kieler.uml2.sim.kiem.DataComponentModelCheck">
+      </content>
+   </extension>
 
 
 

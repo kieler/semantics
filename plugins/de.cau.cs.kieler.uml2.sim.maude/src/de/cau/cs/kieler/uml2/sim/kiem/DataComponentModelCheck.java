@@ -60,7 +60,9 @@ import de.cau.cs.kieler.core.model.validation.ValidationManager;
 import de.cau.cs.kieler.core.ui.KielerProgressMonitor;
 import de.cau.cs.kieler.maude.MaudeInterfacePlugin;
 import de.cau.cs.kieler.sim.kiem.IJSONObjectDataComponent;
+import de.cau.cs.kieler.sim.kiem.IKiemEventListener;
 import de.cau.cs.kieler.sim.kiem.JSONSignalValues;
+import de.cau.cs.kieler.sim.kiem.KiemEvent;
 import de.cau.cs.kieler.sim.kiem.KiemExecutionException;
 import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
 import de.cau.cs.kieler.sim.kiem.KiemPlugin;
@@ -81,16 +83,30 @@ import org.eclipse.ui.console.IConsole;
 import org.eclipse.ui.console.IConsoleManager;
 import org.eclipse.ui.console.MessageConsole;
 
-// TODO: Auto-generated Javadoc
+import de.cau.cs.kieler.core.util.Pair;
+
 /**
  * The Class DataComponent.
  */
-public class DataComponentModelCheck extends DataComponent implements IJSONObjectDataComponent {
+public class DataComponentModelCheck extends DataComponent implements IJSONObjectDataComponent,
+        IKiemEventListener {
 
     /**
      * The constant MAUDEPARSESTATESTARTER indicates the start token to search for.
      */
-    private static final String MAUDEPARSESTATESTARTER = "--> maState \"UML\" $doneC (C";
+    private static final String MAUDEPARSECOUNTEREXAMPLESTARTER = "result ModelCheckResult: counterexample";
+
+    /** The Constant MAUDESTEPSEPARATOR rule token for a finished run to completion step. */
+    private static final String MAUDE_RULE_FINISHEDRTC = "'finishedRTCESINT";
+
+    /** The Constant MAUDE_RULE_COMPUTEES rule token for a finished event set computation. */
+    private static final String MAUDE_RULE_COMPUTEES = "'computeFSetESINT";
+
+    /** The Constant MAUDENOEVENT no event (will not be displayed). */
+    private static final String MAUDENOEVENT = "(ev: \"noevent\")";
+
+    /** The Constant MAUDENOACTION no aktion (will not be displayed). */
+    private static final String MAUDENOACTION = "skip";
 
     /** The constant MAUDEERROR indicates the error token to search for. */
     private static final String MAUDEERROR = "*HERE*";
@@ -101,6 +117,10 @@ public class DataComponentModelCheck extends DataComponent implements IJSONObjec
     /** The currently active states. */
     String[] currentStates;
 
+    private int stepNumber = -1;
+
+    List<Step> steps;
+
     /**
      * The model check done flag is reset by the initialization and set after model checking has
      * been done once.
@@ -109,11 +129,50 @@ public class DataComponentModelCheck extends DataComponent implements IJSONObjec
 
     // -------------------------------------------------------------------------
 
+    public void notifyEvent(final KiemEvent event) {
+        if (event.isEvent(KiemEvent.STEP_INFO)) {
+            try {
+                Pair pair = (Pair) event.getInfo();
+                stepNumber = (int) ((Long) pair.getFirst()).longValue();
+            } catch (Exception e) {
+                stepNumber = -1;
+                // no valid step number
+            }
+        }
+    }
+
+    // -------------------------------------------------------------------------
+
+    public KiemEvent provideEventOfInterest() {
+        int[] events = { KiemEvent.STEP_INFO };
+        return new KiemEvent(events);
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * The internal class Step represents steps.
+     */
+    class Step {
+        List<String> states;
+        List<String> events;
+        List<String> transitions;
+        List<String> actions;
+
+        public Step() {
+            states = new LinkedList<String>();
+            events = new LinkedList<String>();
+            transitions = new LinkedList<String>();
+            actions = new LinkedList<String>();
+        }
+    }
+
+    // -------------------------------------------------------------------------
+
     /**
      * Instantiates a new data component.
      */
     public DataComponentModelCheck() {
-        // TODO Auto-generated constructor stub
     }
 
     // -------------------------------------------------------------------------
@@ -155,110 +214,175 @@ public class DataComponentModelCheck extends DataComponent implements IJSONObjec
     // -------------------------------------------------------------------------
 
     /**
-     * Extract the active states.
+     * Gets the rule's raw value of numbes's occurrence.
      * 
-     * @param maudeResult
-     *            the maude result if any, empty list if no solution found
-     * @return the string[]
+     * @param input
+     *            the input
+     * @param ruleName
+     *            the rule name
+     * @param number
+     *            the number
+     * @return the rule raw value
      */
-    public List<String[]> extractActiveStates(String maudeResult) {
-        boolean error = maudeResult.contains(MAUDEERROR);
-        LinkedList activeStatesChoices = new LinkedList();
-        // if maude result contains error, use the old current states
-        if (error) {
-            activeStatesChoices.add(activeStatesChoices);
-            return activeStatesChoices;
+    private String getRuleRawValue(String input, String ruleName, int number) {
+        String[] parts = input.split(ruleName);
+
+        if (parts != null && parts.length > number) {
+            String part = parts[number];
+
+            int start = part.lastIndexOf("{") + 1;
+            int end = part.lastIndexOf(",");
+            String value = part.substring(start, end);
+            return value;
         }
 
-        boolean foundAnotherSolution = true;
-
-        while (foundAnotherSolution) {
-            try {
-                int firstSolutionStartIndex = maudeResult.indexOf(MAUDEPARSESTATESTARTER);
-
-                // check if solution is found
-                if (firstSolutionStartIndex < 0) {
-                    foundAnotherSolution = false;
-                    break;
-                }
-
-                // part result
-                String maudePartResult = maudeResult.substring(firstSolutionStartIndex
-                        + MAUDEPARSESTATESTARTER.length());
-
-                // remainder (may contain previous solutions)
-                maudeResult = maudeResult.substring(firstSolutionStartIndex
-                        + MAUDEPARSESTATESTARTER.length());
-
-                /*
-                 * Maude output looks like this:
-                 * 
-                 * search in INIT : maState "UML" $stableC prettyVerts (T461729046, R-768353767)
-                 * empty ee3 =>* mastate such that isDone mastate = true .
-                 * 
-                 * Solution 1 (state 3) states: 4 rewrites: 65 in 6597516000ms cpu (0ms real) (0
-                 * rewrites/second) mastate --> maState "UML" $doneC (C "T461729046", root R
-                 * "R-768353767") empty empty
-                 * 
-                 * Solution 2 (state 3) states: 4 rewrites: 65 in 6597516000ms cpu (0ms real) (0
-                 * rewrites/second) mastate --> maState "UML" $doneC (C "T461729046", root R
-                 * "R-768353767") empty empty
-                 * 
-                 * No more solutions. states: 4 rewrites: 65 in 6597516000ms cpu (0ms real) (0
-                 * rewrites/second)
-                 */
-
-                LinkedList<String> stringList = new LinkedList<String>();
-
-                boolean consuming = false;
-                String consumedPart = "";
-                for (int c = 0; c < maudePartResult.length(); c++) {
-                    String character = maudePartResult.substring(c, c + 1);
-                    if (character.equals("\"")) {
-                        consuming = !consuming;
-                        if (!consuming) {
-                            stringList.add(consumedPart);
-                            consumedPart = "";
-                        }
-                        // do not consume "-character
-                        continue;
-                    }
-                    if (character.equals(")")) {
-                        break;
-                    }
-                    if (consuming) {
-                        consumedPart += character;
-                    }
-                }
-
-                activeStatesChoices.add(stringList.toArray(new String[0]));
-            } catch (Exception e) {
-                // do nothing
-            }
-        } // end while
-
-        return activeStatesChoices;
+        return null;
     }
 
     // -------------------------------------------------------------------------
 
     /**
-     * Extract actions.
+     * Extracting states of a rawValue.
+     * 
+     * @param rawValue
+     *            the raw value
+     * @return the string[]
+     */
+    private String[] extractStates(String rawValue) {
+        // consume "maState "UML" $stableC (" or similar
+        rawValue = rawValue.substring(rawValue.indexOf("("));
+
+        LinkedList<String> stringList = new LinkedList<String>();
+
+        boolean consuming = false;
+        String consumedPart = "";
+        for (int c = 0; c < rawValue.length(); c++) {
+            String character = rawValue.substring(c, c + 1);
+            if (character.equals("\"")) {
+                consuming = !consuming;
+                if (!consuming) {
+                    stringList.add(consumedPart);
+                    consumedPart = "";
+                }
+                // do not consume "-character
+                continue;
+            }
+            if (character.equals(")")) {
+                break;
+            }
+            if (consuming) {
+                consumedPart += character;
+            }
+        }
+
+        return (stringList.toArray(new String[0]));
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Extracting events or actions of a rawValue.
+     * 
+     * @param rawValue
+     *            the raw value
+     * @return the string[]
+     */
+    private String[] extractEventsAndActions(String rawValue) {
+        // parsing "... seq seq (a1 skip skip) ee2"       --> a1 skip skip
+        // parsing "... seq seq a1 ee2"                   --> a1
+        // parsing "... seq seq a1 (ee2 ee2)"             --> a1
+        // parsing "... seq seq (a1 skip skip) (ee2 ee2)" --> a1 skip skip
+        rawValue = rawValue.substring(rawValue.indexOf("("));
+        rawValue = rawValue.trim();
+
+        boolean inBracket = false;
+        boolean skipped = false;
+        String extracted = "";
+        for (int c = rawValue.length() - 1; c >= 0; c--) {
+            String character = rawValue.substring(c, c + 1);
+            if (character.equals(" ") && !inBracket) {
+                if (skipped) {
+                    // end now
+                    break;
+                }
+                skipped = true;
+                continue;
+            }
+            if (character.equals(")")) {
+                inBracket = true;
+                continue;
+            }
+            if (character.equals("(")) {
+                inBracket = false;
+                if (skipped) {
+                    // end now
+                    break;
+                }
+                continue;
+            }
+            if (skipped) {
+                extracted = character + extracted;
+            }
+        }
+        return extracted.split(" ");
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Parses all steps of a maude counter example and fill the steps variable.
      * 
      * @param maudeResult
      *            the maude result
-     * @return the string[]
      */
-    public String[] extractActions(String maudeResult) {
-        // TODO: this seems not yes possible.
-        String[] returnArray = new String[1];
-        return returnArray;
+    private void parseSteps(String maudeResult) {
+        // filter all text before start of counter example
+        maudeResult = maudeResult.substring(maudeResult.indexOf(MAUDEPARSECOUNTEREXAMPLESTARTER)
+                + MAUDEPARSECOUNTEREXAMPLESTARTER.length());
+
+        String[] resultParts = maudeResult.split(MAUDE_RULE_FINISHEDRTC);
+
+        for (int i = 0; i < resultParts.length - 1; i++) {
+            Step currentStep = new Step();
+
+            String resultPart = resultParts[i];
+            // If not the last, add separator again for rulerawvalue-method
+            if (i < resultParts.length - 1) {
+                resultPart += MAUDE_RULE_FINISHEDRTC;
+            }
+
+            // Events
+            int numEventParts = resultPart.split(MAUDE_RULE_COMPUTEES).length - 1;
+            for (int ii = 0; ii < numEventParts; ii++) {
+                String rawValue = getRuleRawValue(resultPart, MAUDE_RULE_COMPUTEES, ii);
+                String[] events = extractEventsAndActions(rawValue);
+                for (String event : events) {
+                    currentStep.events.add(event);
+                }
+            }
+
+            // Actions
+            String rawValue = getRuleRawValue(resultPart, MAUDE_RULE_FINISHEDRTC, 0);
+            String[] actions = extractEventsAndActions(rawValue);
+            for (String action : actions) {
+                currentStep.actions.add(action);
+            }
+
+            // States
+            String[] states = extractStates(rawValue);
+            for (String state : states) {
+                currentStep.states.add(state);
+            }
+
+            steps.add(currentStep);
+        }
+
     }
 
     // -------------------------------------------------------------------------
 
     String MessageText;
-    
+
     /*
      * (non-Javadoc)
      * 
@@ -266,6 +390,8 @@ public class DataComponentModelCheck extends DataComponent implements IJSONObjec
      * #doStep(org.json .JSONObject)
      */
     public JSONObject doStep(JSONObject signals) throws KiemExecutionException {
+        // the return object to construct
+        JSONObject returnObj = null;
 
         // If this component is in the zero tick, then we do the check, otherwise we are in replay
         // mode and do NOTHING!
@@ -298,7 +424,7 @@ public class DataComponentModelCheck extends DataComponent implements IJSONObjec
             }
             // if no events selected, produce this dummy event for maude
             if (triggerEventsQuery.equals("")) {
-                triggerEventsQuery = "ev: \"noevent\"";
+                triggerEventsQuery = MAUDENOEVENT;
             }
 
             // second build the current states
@@ -314,7 +440,10 @@ public class DataComponentModelCheck extends DataComponent implements IJSONObjec
             // susp441237549)) empty) (res,
             // ee1)) =>* mastate such that isDone mastate .
             String queryRequest = "red modelCheck ((maState \"UML noConsume\" ($stableC (prettyVerts ("
-                    + currentStatesQuery + ")) empty) (" + triggerEventsQuery + ")), "
+                    + currentStatesQuery
+                    + ")) empty) ("
+                    + triggerEventsQuery
+                    + ")), "
                     + checkingRule + ") . \n";
 
             // Debug output query request
@@ -341,36 +470,91 @@ public class DataComponentModelCheck extends DataComponent implements IJSONObjec
             // If we found a counter example we want the user to be able to step through it
             if (counterExampleFound) {
                 // TODO: Now parse the result and build up the fake-datapool
+                this.steps = new LinkedList<Step>();
+                parseSteps(result);
                 // TODO: Now replace the normal data-pool by the fake one
             }
 
             // Alert the user
-            MessageText = "Model Checking passed without finding any counter example for rule:\n\n"+checkingRule;
+            MessageText = "Model Checking passed without finding any counter example for rule:\n\n"
+                    + checkingRule;
             if (counterExampleFound) {
-                MessageText = "Model Checking found at least one counter example for rule:\n\n"+checkingRule+"\n\nYou may now use the KIEM View to inspect the counter example.";
+                MessageText = "Model Checking found at least one counter example for rule:\n\n"
+                        + checkingRule
+                        + "\n\nYou may now use the KIEM View to inspect the counter example.";
             }
 
             Display.getDefault().asyncExec(new Runnable() {
                 public void run() {
                     final Shell shell = Display.getCurrent().getShells()[0];
-                    MessageDialog
-                    .openInformation(
-                            shell,
-                            "Model Checking finished",
-                            MessageText);
+                    MessageDialog.openInformation(shell, "Model Checking finished", MessageText);
                 }
             });
 
-            
             // Pause the execution
             throw (new KiemExecutionException(
-                    "Maude Model Checking finished. Counter example found: " 
-                    + counterExampleFound + ".", 
-                    false, true, true, null));
+                    "Maude Model Checking finished. Counter example found: " + counterExampleFound
+                            + ".", false, true, true, null));
+        } else {
+            // In this case we have computed a counter example an can now re-play it
+            if (stepNumber > -1) {
+                // the return object to construct
+                returnObj = new JSONObject();
+                // the stateName is the second KIEM property
+                String stateName = this.getProperties()[2].getValue();
+
+                // If more than maximum steps, then hold the last one!
+                if (stepNumber > steps.size() + 2) {
+                    stepNumber = steps.size() + 2;
+                }
+
+                // If this is the second step then display the initial states and return!
+                if (stepNumber == 2) {
+                    String[] initialStates = getInitialStates();
+                    try {
+                        returnObj.accumulate(stateName, getCurrentStateIds(initialStates));
+                    } catch (Exception e) {
+                        // ignore any errors
+                    }
+                    return returnObj;
+                }
+
+                // We must deduct three steps: 0. setup, 1. model check, 2. initial states
+                Step currentStep = steps.get(stepNumber - 3);
+
+                // states
+                try {
+                    returnObj.accumulate(stateName,
+                            getCurrentStateIds(currentStep.states.toArray(new String[0])));
+                } catch (Exception e) {
+                    // ignore any errors
+                }
+
+                // events and actions as signals
+                for (String event : currentStep.events) {
+                    if (!event.equals(MAUDENOEVENT)) {
+                        try {
+                            returnObj.accumulate(event, JSONSignalValues.newValue(true));
+                        } catch (Exception e) {
+                            // ignore any errors
+                        }
+                    }
+                }
+                for (String action : currentStep.actions) {
+                    if (!action.equals(MAUDENOACTION)) {
+                        try {
+                            returnObj.append(action, JSONSignalValues.newValue(true));
+                        } catch (Exception e) {
+                            // ignore any errors
+                        }
+                    }
+                }
+
+            }
         }
 
         // no actions can be extracted so far
-        return null;
+        return returnObj;
     }
 
     // -------------------------------------------------------------------------
