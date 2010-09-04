@@ -567,7 +567,9 @@ public class DataComponent extends JSONObjectSimulationDataComponent implements
      */
     public void wrapup() throws KiemInitializationException {
         MaudeInterfacePlugin.getDefault().closeMaudeSession(maudeSessionId);
-
+        // clear caches
+        allEvents = null;
+        allActions = null;
     }
 
     // -------------------------------------------------------------------------

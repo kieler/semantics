@@ -118,6 +118,9 @@ public class DataComponentModelCheck extends DataComponent implements IJSONObjec
      */
     private boolean modelCheckDone;
 
+    /** The model check counter example true if a counter example was found. */
+    private boolean modelCheckCounterExample;
+
     // -------------------------------------------------------------------------
 
     public void notifyEvent(final KiemEvent event) {
@@ -458,13 +461,13 @@ public class DataComponentModelCheck extends DataComponent implements IJSONObjec
             // Search for the MAUDEMODELCHECKOK-sequence in order to know if we have a counter
             // example
             // or not
-            boolean counterExampleFound = true;
+            modelCheckCounterExample = true;
             if (result.contains(MAUDEMODELCHECKOK)) {
-                counterExampleFound = false;
+                modelCheckCounterExample = false;
             }
 
             // If we found a counter example we want the user to be able to step through it
-            if (counterExampleFound) {
+            if (modelCheckCounterExample) {
                 // TODO: Now parse the result and build up the fake-datapool
                 this.steps = new LinkedList<Step>();
                 parseSteps(result);
@@ -474,7 +477,7 @@ public class DataComponentModelCheck extends DataComponent implements IJSONObjec
             // Alert the user
             MessageText = "Model Checking passed without finding any counter example for rule:\n\n"
                     + checkingRule;
-            if (counterExampleFound) {
+            if (modelCheckCounterExample) {
                 MessageText = "Model Checking found at least one counter example for rule:\n\n"
                         + checkingRule
                         + "\n\nYou may now use the KIEM View to inspect the counter example.";
@@ -489,11 +492,12 @@ public class DataComponentModelCheck extends DataComponent implements IJSONObjec
 
             // Pause the execution
             throw (new KiemExecutionException(
-                    "Maude Model Checking finished. Counter example found: " + counterExampleFound
+                    "Maude Model Checking finished. Counter example found: " + modelCheckCounterExample
                             + ".", false, true, true, null));
         } else {
-            // In this case we have computed a counter example an can now re-play it
-            if (stepNumber > -1) {
+            // In this case we may have computed a counter example an can now re-play it
+            // We do this only iff we have a valid stepNumber and if there is an example
+            if ((stepNumber > -1) && (modelCheckCounterExample)) {
                 // the return object to construct
                 returnObj = new JSONObject();
                 // the stateName is the second KIEM property
