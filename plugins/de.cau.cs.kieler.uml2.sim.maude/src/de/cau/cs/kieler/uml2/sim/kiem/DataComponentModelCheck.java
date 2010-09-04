@@ -512,6 +512,7 @@ public class DataComponentModelCheck extends DataComponent implements IJSONObjec
                     } catch (Exception e) {
                         // ignore any errors
                     }
+                    returnObj = resetOtherEventsAndActions(returnObj);
                     return returnObj;
                 }
 
@@ -539,7 +540,7 @@ public class DataComponentModelCheck extends DataComponent implements IJSONObjec
                 for (String action : currentStep.actions) {
                     if (!action.equals(MAUDENOACTION)) {
                         try {
-                            returnObj.append(action, JSONSignalValues.newValue(true));
+                            returnObj.accumulate(action, JSONSignalValues.newValue(true));
                         } catch (Exception e) {
                             // ignore any errors
                         }
@@ -549,11 +550,27 @@ public class DataComponentModelCheck extends DataComponent implements IJSONObjec
             }
         }
 
+        returnObj = resetOtherEventsAndActions(returnObj);
+
+        // no actions can be extracted so far
+        return returnObj;
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Reset all events and actions that are not already set.
+     * 
+     * @param returnObj
+     *            the return obj
+     * @return the jSON object
+     */
+    private JSONObject resetOtherEventsAndActions(JSONObject returnObj) {
         // now reset all other events/actions that are not present at this step
         for (String event : getAllEvents()) {
             try {
-                if (!returnObj.has(event)) {
-                    returnObj.append(event, JSONSignalValues.newValue(false));
+                if (!returnObj.has(event) ) {
+                    returnObj.accumulate(event, JSONSignalValues.newValue(false));
                 }
             } catch (Exception e) {
                 // ignore any errors
@@ -563,18 +580,15 @@ public class DataComponentModelCheck extends DataComponent implements IJSONObjec
         for (String action : getAllActions()) {
             try {
                 if (!returnObj.has(action)) {
-                    returnObj.append(action, JSONSignalValues.newValue(false));
+                    returnObj.accumulate(action, JSONSignalValues.newValue(false));
                 }
             } catch (Exception e) {
                 // ignore any errors
             }
-
         }
-
-        // no actions can be extracted so far
         return returnObj;
     }
-
+    
     // -------------------------------------------------------------------------
 
     private boolean flagDialogDone = false;
