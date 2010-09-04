@@ -95,13 +95,25 @@ public class DataComponent extends JSONObjectSimulationDataComponent implements
     /**
      * The constant MAUDEPARSESTATESTARTER indicates the start token to search for.
      */
-    private static final String MAUDEPARSESTATESTARTER = "--> maState \"UML\" $doneC (C";
+    protected static final String MAUDEPARSESTATESTARTER = "--> maState \"UML\" $doneC (C";
+
+    /** The Constant MAUDENOEVENT no event (will not be displayed). */
+    protected static final String MAUDENOEVENT = "(ev: \"noevent\")";
+
+    /** The Constant MAUDENOACTION no aktion (will not be displayed). */
+    protected static final String MAUDENOACTION = "skip";
 
     /** The constant MAUDEERROR indicates the error token to search for. */
-    private static final String MAUDEERROR = "*HERE*";
+    protected static final String MAUDEERROR = "*HERE*";
 
     /** The maude2 emf id hashmap to cache the mapping. */
     private HashMap<String, String> maude2EMFId;
+    
+    /** The all events cache. */
+    private String[] allEvents = null;
+    
+    /** The all actions cache. */
+    private String[] allActions = null;
 
     /** The maude session id. */
     int maudeSessionId;
@@ -460,7 +472,7 @@ public class DataComponent extends JSONObjectSimulationDataComponent implements
             public void run() {
                 // Disable timeout
                 TimeoutThread.setAwaitUserRepsonse(true);
-                
+
                 Shell currentShell = PlatformUI.getWorkbench().getActiveWorkbenchWindow()
                         .getShell();
                 SelectTraceDialog dialog = new SelectTraceDialog(currentShell,
@@ -492,7 +504,7 @@ public class DataComponent extends JSONObjectSimulationDataComponent implements
                 }
                 // MUST eisable timeout again
                 TimeoutThread.setAwaitUserRepsonse(false);
-                
+
                 flagDialogDone = true;
             }
         });
@@ -764,15 +776,74 @@ public class DataComponent extends JSONObjectSimulationDataComponent implements
 
     // -------------------------------------------------------------------------
 
-    /*
-     * (non-Javadoc)
+    /**
+     * Gets all events of the model (cached).
      * 
-     * @see de.cau.cs.kieler.sim.kiem.ui.datacomponent.JSONObjectSimulationDataComponent #
-     * doProvideInitialVariables()
+     * @return the events
      */
-    public JSONObject doProvideInitialVariables() throws KiemInitializationException {
-        JSONObject returnObj = new JSONObject();
+    protected String[] getAllEvents() {
+        if (allEvents == null) {
+        LinkedList<String> returnList = new LinkedList<String>();
+        Object rootEObject = this.getInputModelEObject(this.getInputEditor());
+        XtendFacade facade = getXtendFacade();
 
+        // first collect events
+        Object objectList = facade.call("getTriggerEvents", rootEObject);
+        if (objectList instanceof ArrayList) {
+            for (Object key : ((ArrayList) objectList)) {
+                if (key instanceof String) {
+                    String keyString = (String) key;
+                    // not include noevent
+                    if (!keyString.equals(MAUDENOEVENT)) {
+                        returnList.add(keyString);
+                    }
+                }
+            }
+        }
+        allEvents = returnList.toArray(new String[0]);
+        }
+        return allEvents;
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Gets all actions of the model (cached).
+     * 
+     * @return the actions
+     */
+    protected String[] getAllActions() {
+        if (allActions == null) {
+            LinkedList<String> returnList = new LinkedList<String>();
+            Object rootEObject = this.getInputModelEObject(this.getInputEditor());
+            XtendFacade facade = getXtendFacade();
+            
+            // first collect events
+            Object objectList = facade.call("getActions", rootEObject);
+            if (objectList instanceof ArrayList) {
+                for (Object key : ((ArrayList) objectList)) {
+                    if (key instanceof String) {
+                        String keyString = (String) key;
+                        // not include skip action
+                        if (!keyString.equals(MAUDENOACTION)) {
+                            returnList.add(keyString);
+                        }
+                    }
+                }
+            }
+            allActions = returnList.toArray(new String[0]);
+        }
+        return allActions;
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Tries to gets the xtend facade, returns null otherwise.
+     * 
+     * @return the xtend facade
+     */
+    protected XtendFacade getXtendFacade() {
         // we here read in the uml model and extract the necessary information
         Object rootObject = this.getInputModelEObject(this.getInputEditor());
         if (rootObject instanceof EObject) {
@@ -783,47 +854,43 @@ public class DataComponent extends JSONObjectSimulationDataComponent implements
             XtendFacade facade = XtendFacade.create("model::Extensions");
             facade.registerMetaModel(metaModel0);
             facade.registerMetaModel(metaModel1);
+            return facade;
+        }
+        return null;
+    }
 
-            // first collect events
-            Object objectList = facade.call("getTriggerEvents", eObject);
-            if (objectList instanceof ArrayList) {
-                for (Object key : ((ArrayList) objectList)) {
-                    if (key instanceof String) {
-                        try {
-                            String keyString = (String) key;
-                            if (!returnObj.has(keyString)) {
-                                returnObj.accumulate(keyString, JSONSignalValues.newValue(false));
+    // -------------------------------------------------------------------------
 
-                            }
-                        } catch (JSONException e) {
-                            // ignore errors
-                        }
-                    }
+    /*
+     * (non-Javadoc)
+     * 
+     * @see de.cau.cs.kieler.sim.kiem.ui.datacomponent.JSONObjectSimulationDataComponent #
+     * doProvideInitialVariables()
+     */
+    public JSONObject doProvideInitialVariables() throws KiemInitializationException {
+        JSONObject returnObj = new JSONObject();
+
+           // first collect events
+           for (String event: getAllEvents()) {
+               if (!returnObj.has(event)) {
+                   try {
+                    returnObj.accumulate(event, JSONSignalValues.newValue(false));
+                } catch (JSONException e) {
+                    // ignore
                 }
-            }
+               }
+           }    
 
             // second collect actions
-            objectList = facade.call("getActions", eObject);
-            if (objectList instanceof ArrayList) {
-                for (Object key : ((ArrayList) objectList)) {
-                    if (key instanceof String) {
-                        // not include skip action
-                        if (!((String) key).equals("skip")) {
-                            try {
-                                String keyString = (String) key;
-                                if (!returnObj.has(keyString)) {
-                                    returnObj.accumulate(keyString,
-                                            JSONSignalValues.newValue(false));
-                                }
-                            } catch (JSONException e) {
-                                // ignore errors
-                            }
-                        }
-                    }
+           for (String action: getAllActions()) {
+               if (!returnObj.has(action)) {
+                   try {
+                    returnObj.accumulate(action, JSONSignalValues.newValue(false));
+                } catch (JSONException e) {
+                    // ignore
                 }
-            }
-
-        }
+               }
+           }    
         return returnObj;
     }
 

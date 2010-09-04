@@ -102,22 +102,13 @@ public class DataComponentModelCheck extends DataComponent implements IJSONObjec
     /** The Constant MAUDE_RULE_COMPUTEES rule token for a finished event set computation. */
     private static final String MAUDE_RULE_COMPUTEES = "'computeFSetESINT";
 
-    /** The Constant MAUDENOEVENT no event (will not be displayed). */
-    private static final String MAUDENOEVENT = "(ev: \"noevent\")";
-
-    /** The Constant MAUDENOACTION no aktion (will not be displayed). */
-    private static final String MAUDENOACTION = "skip";
-
-    /** The constant MAUDEERROR indicates the error token to search for. */
-    private static final String MAUDEERROR = "*HERE*";
-
     /** The Constant MAUDEMODELCHECKOK indicates no counter example can be found. */
     private static final String MAUDEMODELCHECKOK = "result Bool: true";
 
     /** The currently active states. */
     String[] currentStates;
 
-    private int stepNumber = -1;
+    private static int stepNumber = -1;
 
     List<Step> steps;
 
@@ -203,11 +194,12 @@ public class DataComponentModelCheck extends DataComponent implements IJSONObjec
      * #doProvideProperties()
      */
     public KiemProperty[] doProvideProperties() {
-        KiemProperty[] properties = new KiemProperty[3];
+        KiemProperty[] properties = new KiemProperty[4];
         KiemPropertyTypeFile maudeFile = new KiemPropertyTypeFile(true);
         properties[0] = new KiemProperty("Maude Executable", maudeFile, "maude");
         properties[1] = new KiemProperty("State Variable", "state");
-        properties[2] = new KiemProperty("Checking Rule", "<> inC(\"d\")");
+        properties[2] = new KiemProperty("No Consume Events", true);
+        properties[3] = new KiemProperty("Checking Rule", "<> inC(\"d\")");
         return properties;
     }
 
@@ -288,9 +280,9 @@ public class DataComponentModelCheck extends DataComponent implements IJSONObjec
      * @return the string[]
      */
     private String[] extractEventsAndActions(String rawValue) {
-        // parsing "... seq seq (a1 skip skip) ee2"       --> a1 skip skip
-        // parsing "... seq seq a1 ee2"                   --> a1
-        // parsing "... seq seq a1 (ee2 ee2)"             --> a1
+        // parsing "... seq seq (a1 skip skip) ee2" --> a1 skip skip
+        // parsing "... seq seq a1 ee2" --> a1
+        // parsing "... seq seq a1 (ee2 ee2)" --> a1
         // parsing "... seq seq (a1 skip skip) (ee2 ee2)" --> a1 skip skip
         rawValue = rawValue.substring(rawValue.indexOf("("));
         rawValue = rawValue.trim();
@@ -400,7 +392,7 @@ public class DataComponentModelCheck extends DataComponent implements IJSONObjec
             modelCheckDone = true;
 
             // Get the checking rule
-            String checkingRule = this.getProperties()[3].getValue();
+            String checkingRule = this.getProperties()[4].getValue();
             // Try to search for vertex
             checkingRule = expandCheckingRule(checkingRule);
 
@@ -436,15 +428,19 @@ public class DataComponentModelCheck extends DataComponent implements IJSONObjec
                 currentStatesQuery += currentState;
             }
 
+            // Consider no-consume option
+            boolean noConsume = this.getProperties()[3].getValueAsBoolean();
+            String noConsumeString = "";
+            if (noConsume) {
+                noConsumeString = " noConsume";
+            }
+
             // search (maState "UML" ($stableC (prettyVerts (R-990928836 ,
             // susp441237549)) empty) (res,
             // ee1)) =>* mastate such that isDone mastate .
-            String queryRequest = "red modelCheck ((maState \"UML noConsume\" ($stableC (prettyVerts ("
-                    + currentStatesQuery
-                    + ")) empty) ("
-                    + triggerEventsQuery
-                    + ")), "
-                    + checkingRule + ") . \n";
+            String queryRequest = "red modelCheck ((maState \"UML" + noConsumeString
+                    + "\" ($stableC (prettyVerts (" + currentStatesQuery + ")) empty) ("
+                    + triggerEventsQuery + ")), " + checkingRule + ") . \n";
 
             // Debug output query request
             printConsole(queryRequest);
@@ -551,6 +547,28 @@ public class DataComponentModelCheck extends DataComponent implements IJSONObjec
                 }
 
             }
+        }
+
+        // now reset all other events/actions that are not present at this step
+        for (String event : getAllEvents()) {
+            try {
+                if (!returnObj.has(event)) {
+                    returnObj.append(event, JSONSignalValues.newValue(false));
+                }
+            } catch (Exception e) {
+                // ignore any errors
+            }
+
+        }
+        for (String action : getAllActions()) {
+            try {
+                if (!returnObj.has(action)) {
+                    returnObj.append(action, JSONSignalValues.newValue(false));
+                }
+            } catch (Exception e) {
+                // ignore any errors
+            }
+
         }
 
         // no actions can be extracted so far
