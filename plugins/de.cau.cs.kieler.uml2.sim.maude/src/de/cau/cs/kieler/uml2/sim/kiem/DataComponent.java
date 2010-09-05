@@ -30,6 +30,7 @@ import org.eclipse.emf.mwe.internal.core.Workflow;
 import org.eclipse.emf.mwe.utils.Reader;
 import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramEditor;
 import org.eclipse.gmf.runtime.notation.View;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.papyrus.editor.PapyrusMultiDiagramEditor;
 import org.eclipse.swt.widgets.Display;
@@ -706,6 +707,15 @@ public class DataComponent extends JSONObjectSimulationDataComponent implements
         // Outlet
         Outlet outlet = new Outlet();
         outlet.setPath(outPath);
+        
+        Display.getDefault().asyncExec(new Runnable() {
+            public void run() {
+                final Shell shell = Display.getCurrent().getShells()[0];
+                MessageDialog.openInformation(shell, "Info", outPath);
+            }
+        });
+        
+        
         System.out.println("PATH:" + outPath);
 
         // Meta models
