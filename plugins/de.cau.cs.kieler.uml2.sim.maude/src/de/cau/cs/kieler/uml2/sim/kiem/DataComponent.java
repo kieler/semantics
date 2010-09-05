@@ -708,7 +708,14 @@ public class DataComponent extends JSONObjectSimulationDataComponent implements
                 MessageDialog.openInformation(shell, "Info", errorMsg);
             }
         });
-        
+     
+        Display.getDefault().syncExec(new Runnable() {
+            public void run() {
+                final Shell shell = Display.getCurrent().getShells()[0];
+                MessageDialog.openInformation(shell, "Info", "debug test");
+            }
+        });
+                
 
         GlobalVar maudebasecode = new GlobalVar();
         maudebasecode.setName("maudebasecode");
