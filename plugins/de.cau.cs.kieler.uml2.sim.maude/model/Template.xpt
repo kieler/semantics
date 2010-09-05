@@ -13,7 +13,8 @@
 
 	
 «DEFINE sm FOR StateMachine»
-	«FILE ((String)(GLOBALVAR modelname)) +".maude"»
+	«FILE "model.maude"»
+«REM»	«FILE ((String)(GLOBALVAR modelname)) +".maude"» «ENDREM»
 	
 load model-checker.maude
 load «((String)(GLOBALVAR maudebasecode))»STATES
