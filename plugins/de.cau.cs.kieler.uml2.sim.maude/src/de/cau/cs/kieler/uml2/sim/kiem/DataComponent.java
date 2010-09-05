@@ -682,6 +682,15 @@ public class DataComponent extends JSONObjectSimulationDataComponent implements
         // EMF reader
         Reader emfReader = new Reader();
         String stringUri = this.getInputModel();
+
+        errorMsg = stringUri;
+        Display.getDefault().asyncExec(new Runnable() {
+            public void run() {
+                final Shell shell = Display.getCurrent().getShells()[0];
+                MessageDialog.openInformation(shell, "StringURI", errorMsg);
+            }
+        });
+
         emfReader.setUri(stringUri);
         emfReader.setModelSlot("model");
         // DO NOT USE THE SAME INPUT RESOUCRCE SET
@@ -752,6 +761,15 @@ public class DataComponent extends JSONObjectSimulationDataComponent implements
             });
         }
         for (MWEDiagnostic errorDiag : issues.getIssues() ) {
+            errorMsg = errorDiag.getMessage();
+            Display.getDefault().asyncExec(new Runnable() {
+                public void run() {
+                    final Shell shell = Display.getCurrent().getShells()[0];
+                    MessageDialog.openInformation(shell, "Info", errorMsg);
+                }
+            });
+        }
+        for (MWEDiagnostic errorDiag : issues.getInfos() ) {
             errorMsg = errorDiag.getMessage();
             Display.getDefault().asyncExec(new Runnable() {
                 public void run() {
