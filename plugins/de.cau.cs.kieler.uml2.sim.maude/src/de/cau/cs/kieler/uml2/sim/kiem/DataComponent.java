@@ -682,7 +682,7 @@ public class DataComponent extends JSONObjectSimulationDataComponent implements
         // EMF reader
         Reader emfReader = new Reader();
         String stringUri = this.getInputModel();
-
+        
         errorMsg = stringUri;
         Display.getDefault().asyncExec(new Runnable() {
             public void run() {
@@ -691,7 +691,7 @@ public class DataComponent extends JSONObjectSimulationDataComponent implements
             }
         });
 
-        emfReader.setUri(stringUri);
+        emfReader.setUri("platform:/resource" + stringUri);
         emfReader.setModelSlot("model");
         // DO NOT USE THE SAME INPUT RESOUCRCE SET
         // OTHERWISE WE MAY CHANGE THE INPUT MODEL!
