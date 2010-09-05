@@ -25,6 +25,7 @@ import org.eclipse.emf.mwe.core.WorkflowContext;
 import org.eclipse.emf.mwe.core.WorkflowContextDefaultImpl;
 import org.eclipse.emf.mwe.core.issues.Issues;
 import org.eclipse.emf.mwe.core.issues.IssuesImpl;
+import org.eclipse.emf.mwe.core.issues.MWEDiagnostic;
 import org.eclipse.emf.mwe.core.monitor.NullProgressMonitor;
 import org.eclipse.emf.mwe.internal.core.Workflow;
 import org.eclipse.emf.mwe.utils.Reader;
@@ -666,7 +667,8 @@ public class DataComponent extends JSONObjectSimulationDataComponent implements
     }
 
     // -------------------------------------------------------------------------
-
+    public String errorMsg = "";
+    
     /*
      * (non-Javadoc)
      * 
@@ -708,16 +710,6 @@ public class DataComponent extends JSONObjectSimulationDataComponent implements
         Outlet outlet = new Outlet();
         outlet.setPath(outPath);
         
-        Display.getDefault().asyncExec(new Runnable() {
-            public void run() {
-                final Shell shell = Display.getCurrent().getShells()[0];
-                MessageDialog.openInformation(shell, "Info", outPath);
-            }
-        });
-        
-        
-        System.out.println("PATH:" + outPath);
-
         // Meta models
         EmfMetaModel metaModel0 = new EmfMetaModel(UMLPackage.eINSTANCE);
         EmfMetaModel metaModel1 = new EmfMetaModel(org.eclipse.emf.ecore.EcorePackage.eINSTANCE);
@@ -741,6 +733,35 @@ public class DataComponent extends JSONObjectSimulationDataComponent implements
         // workflow.invoke(wfx, (ProgressMonitor)monitor.subTask(80), issues);
         workflow.invoke(wfx, m2mMonitor, issues);
 
+        for (MWEDiagnostic errorDiag : issues.getErrors()) {
+            errorMsg = errorDiag.getMessage();
+            Display.getDefault().asyncExec(new Runnable() {
+                public void run() {
+                    final Shell shell = Display.getCurrent().getShells()[0];
+                    MessageDialog.openInformation(shell, "Info", errorMsg);
+                }
+            });
+        }
+        for (MWEDiagnostic errorDiag : issues.getWarnings() ) {
+            errorMsg = errorDiag.getMessage();
+            Display.getDefault().asyncExec(new Runnable() {
+                public void run() {
+                    final Shell shell = Display.getCurrent().getShells()[0];
+                    MessageDialog.openInformation(shell, "Info", errorMsg);
+                }
+            });
+        }
+        for (MWEDiagnostic errorDiag : issues.getIssues() ) {
+            errorMsg = errorDiag.getMessage();
+            Display.getDefault().asyncExec(new Runnable() {
+                public void run() {
+                    final Shell shell = Display.getCurrent().getShells()[0];
+                    MessageDialog.openInformation(shell, "Info", errorMsg);
+                }
+            });
+        }
+        
+        
         // refresh the workspace because we created a new file
         refreshWorkspace();
     }
