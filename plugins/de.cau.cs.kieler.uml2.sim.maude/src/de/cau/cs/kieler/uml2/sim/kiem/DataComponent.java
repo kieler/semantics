@@ -668,6 +668,7 @@ public class DataComponent extends JSONObjectSimulationDataComponent implements
 
     // -------------------------------------------------------------------------
     public String errorMsg = "";
+    public String blaaa;
     
     /*
      * (non-Javadoc)
@@ -700,6 +701,11 @@ public class DataComponent extends JSONObjectSimulationDataComponent implements
         String stringUri2 = stringUri.replace(".uml", "");
         stringUri2 = stringUri2.substring(stringUri2.indexOf("/", 1));
         modelname.setValue(stringUri2);
+        
+        blaaa = "1";
+        if (blaaa.equals("1")) {
+            System.out.println("sdfsdfsdf");
+        }
         
         errorMsg = stringUri2;
         Display.getDefault().syncExec(new Runnable() {
