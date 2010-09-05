@@ -706,6 +706,7 @@ public class DataComponent extends JSONObjectSimulationDataComponent implements
         // Outlet
         Outlet outlet = new Outlet();
         outlet.setPath(outPath);
+        System.out.println("PATH:" + outPath);
 
         // Meta models
         EmfMetaModel metaModel0 = new EmfMetaModel(UMLPackage.eINSTANCE);
