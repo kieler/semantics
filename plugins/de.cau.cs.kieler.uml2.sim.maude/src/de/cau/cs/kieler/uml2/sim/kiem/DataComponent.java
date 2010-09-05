@@ -683,15 +683,9 @@ public class DataComponent extends JSONObjectSimulationDataComponent implements
         Reader emfReader = new Reader();
         String stringUri = this.getInputModel();
         
-        errorMsg = stringUri;
-        Display.getDefault().asyncExec(new Runnable() {
-            public void run() {
-                final Shell shell = Display.getCurrent().getShells()[0];
-                MessageDialog.openInformation(shell, "StringURI", errorMsg);
-            }
-        });
-
-        emfReader.setUri("platform:/resource" + stringUri);
+        //FIXME: Is this correct?! Seems not to work in RCA :(
+        //emfReader.setUri("platform:/resource" + stringUri);
+        emfReader.setUri(stringUri);
         emfReader.setModelSlot("model");
         // DO NOT USE THE SAME INPUT RESOUCRCE SET
         // OTHERWISE WE MAY CHANGE THE INPUT MODEL!
@@ -706,6 +700,15 @@ public class DataComponent extends JSONObjectSimulationDataComponent implements
         String stringUri2 = stringUri.replace(".uml", "");
         stringUri2 = stringUri2.substring(stringUri2.indexOf("/", 1));
         modelname.setValue(stringUri2);
+        
+        errorMsg = stringUri2;
+        Display.getDefault().asyncExec(new Runnable() {
+            public void run() {
+                final Shell shell = Display.getCurrent().getShells()[0];
+                MessageDialog.openInformation(shell, "Info", errorMsg);
+            }
+        });
+        
 
         GlobalVar maudebasecode = new GlobalVar();
         maudebasecode.setName("maudebasecode");
@@ -715,6 +718,14 @@ public class DataComponent extends JSONObjectSimulationDataComponent implements
         }
         maudebasecode.setValue(baseLocation);
 
+        errorMsg = baseLocation;
+        Display.getDefault().asyncExec(new Runnable() {
+            public void run() {
+                final Shell shell = Display.getCurrent().getShells()[0];
+                MessageDialog.openInformation(shell, "Info", errorMsg);
+            }
+        });
+        
         // Outlet
         Outlet outlet = new Outlet();
         outlet.setPath(outPath);
