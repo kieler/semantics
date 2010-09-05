@@ -702,7 +702,7 @@ public class DataComponent extends JSONObjectSimulationDataComponent implements
         modelname.setValue(stringUri2);
         
         errorMsg = stringUri2;
-        Display.getDefault().asyncExec(new Runnable() {
+        Display.getDefault().syncExec(new Runnable() {
             public void run() {
                 final Shell shell = Display.getCurrent().getShells()[0];
                 MessageDialog.openInformation(shell, "Info", errorMsg);
@@ -719,7 +719,7 @@ public class DataComponent extends JSONObjectSimulationDataComponent implements
         maudebasecode.setValue(baseLocation);
 
         errorMsg = baseLocation;
-        Display.getDefault().asyncExec(new Runnable() {
+        Display.getDefault().syncExec(new Runnable() {
             public void run() {
                 final Shell shell = Display.getCurrent().getShells()[0];
                 MessageDialog.openInformation(shell, "Info", errorMsg);
@@ -755,7 +755,7 @@ public class DataComponent extends JSONObjectSimulationDataComponent implements
 
         for (MWEDiagnostic errorDiag : issues.getErrors()) {
             errorMsg = errorDiag.getMessage();
-            Display.getDefault().asyncExec(new Runnable() {
+            Display.getDefault().syncExec(new Runnable() {
                 public void run() {
                     final Shell shell = Display.getCurrent().getShells()[0];
                     MessageDialog.openInformation(shell, "Info", errorMsg);
@@ -764,7 +764,7 @@ public class DataComponent extends JSONObjectSimulationDataComponent implements
         }
         for (MWEDiagnostic errorDiag : issues.getWarnings() ) {
             errorMsg = errorDiag.getMessage();
-            Display.getDefault().asyncExec(new Runnable() {
+            Display.getDefault().syncExec(new Runnable() {
                 public void run() {
                     final Shell shell = Display.getCurrent().getShells()[0];
                     MessageDialog.openInformation(shell, "Info", errorMsg);
@@ -773,7 +773,7 @@ public class DataComponent extends JSONObjectSimulationDataComponent implements
         }
         for (MWEDiagnostic errorDiag : issues.getIssues() ) {
             errorMsg = errorDiag.getMessage();
-            Display.getDefault().asyncExec(new Runnable() {
+            Display.getDefault().syncExec(new Runnable() {
                 public void run() {
                     final Shell shell = Display.getCurrent().getShells()[0];
                     MessageDialog.openInformation(shell, "Info", errorMsg);
@@ -782,7 +782,7 @@ public class DataComponent extends JSONObjectSimulationDataComponent implements
         }
         for (MWEDiagnostic errorDiag : issues.getInfos() ) {
             errorMsg = errorDiag.getMessage();
-            Display.getDefault().asyncExec(new Runnable() {
+            Display.getDefault().syncExec(new Runnable() {
                 public void run() {
                     final Shell shell = Display.getCurrent().getShells()[0];
                     MessageDialog.openInformation(shell, "Info", errorMsg);
