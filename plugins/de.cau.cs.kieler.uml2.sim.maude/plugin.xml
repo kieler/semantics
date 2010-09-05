@@ -21,6 +21,10 @@
          point="de.cau.cs.kieler.sim.kiem.config.DefaultScheduleContributor">
       <executionFile
             file="execution/uml_maude.execution">
+         <editor
+               id="org.eclipse.papyrus.core.papyrusEditor"
+               priority="de.cau.cs.kieler.uml2.sim.maude.editor1">
+         </editor>
       </executionFile>
    </extension>
    <extension
