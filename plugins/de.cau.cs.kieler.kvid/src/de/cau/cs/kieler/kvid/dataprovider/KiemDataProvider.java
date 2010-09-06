@@ -20,10 +20,15 @@ import org.json.JSONObject;
 
 import de.cau.cs.kieler.kvid.datadistributor.IProviderListener;
 import de.cau.cs.kieler.kvid.datadistributor.DataDistributor;
+import de.cau.cs.kieler.kvid.datadistributor.RuntimeConfiguration;
+import de.cau.cs.kieler.kvid.visual.GmfDrawer;
+import de.cau.cs.kieler.kvid.visual.IDrawer;
 import de.cau.cs.kieler.sim.kiem.IJSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.JSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.KiemExecutionException;
 import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
+import de.cau.cs.kieler.sim.kiem.properties.KiemProperty;
+import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyTypeEditor;
 
 /**
  * Data Source which is a {@link IDataProvider} and uses KIEM to collect
@@ -34,9 +39,23 @@ import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
  */
 public class KiemDataProvider extends JSONObjectDataComponent implements
         IJSONObjectDataComponent {
+    
+    private DataDistributor distributor;
+    
+    private RuntimeConfiguration configuration;
+    
+    private IDrawer drawer;
 
     /** List of registered {@link IProviderListener}s. */
     private List<IProviderListener> listeners = new LinkedList<IProviderListener>();
+    
+    /**
+     * 
+     */
+    public KiemDataProvider() {
+        distributor = new DataDistributor(this);
+        drawer = new GmfDrawer(this);
+    }
     
     /**
      * {@inheritDoc}
@@ -53,7 +72,7 @@ public class KiemDataProvider extends JSONObjectDataComponent implements
      * {@inheritDoc}
      */
     public void initialize() throws KiemInitializationException {
-        registerProviderListener(DataDistributor.getInstance());
+        registerProviderListener(distributor);
         for (IProviderListener listener : listeners) {
             listener.triggerInitialization();
         }
@@ -67,7 +86,19 @@ public class KiemDataProvider extends JSONObjectDataComponent implements
             listener.triggerWrapup();
         }
     }
-
+    
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public KiemProperty[] provideProperties() {
+        KiemProperty[] properties = new KiemProperty[1];
+        properties[0] = new KiemProperty(
+                        "Model Editor",
+                        new KiemPropertyTypeEditor());
+        return properties;
+    }
+    
     /**
      * {@inheritDoc}
      */
@@ -96,6 +127,20 @@ public class KiemDataProvider extends JSONObjectDataComponent implements
      */
     public void removeProviderListener(final IProviderListener listener) {
         listeners.remove(listener);
+    }
+    
+    /**
+     * @return The DataDistributor of this provider
+     */
+    public DataDistributor getDistributor() {
+        return distributor;
+    }
+    
+    /**
+     * @return The drawer of this provider
+     */
+    public IDrawer getDrawer() {
+        return drawer;
     }
 
 }

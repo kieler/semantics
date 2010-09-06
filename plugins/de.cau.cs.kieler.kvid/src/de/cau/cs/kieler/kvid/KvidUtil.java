@@ -23,6 +23,7 @@ import java.awt.image.WritableRaster;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.gmf.runtime.notation.Diagram;
 import org.eclipse.swt.graphics.ImageData;
 import org.eclipse.swt.graphics.PaletteData;
 import org.eclipse.swt.graphics.RGB;
@@ -32,6 +33,10 @@ import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
 
 import de.cau.cs.kieler.core.annotations.NamedObject;
+import de.cau.cs.kieler.kvid.dataprovider.KiemDataProvider;
+import de.cau.cs.kieler.sim.kiem.KiemPlugin;
+import de.cau.cs.kieler.sim.kiem.internal.DataComponentWrapper;
+import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyTypeEditor;
 
 /**
  * Utility class for the KViD-Plugin. Holds commonly used methods statically.
@@ -245,5 +250,25 @@ public final class KvidUtil {
             }
         }
         return editor;        
+    }
+    
+    /**
+     * Method to get a KViD provider when only knowing the editor.
+     * 
+     * @param diagram The diagram to which the provider is searched
+     * @return The respective {@link KiemDataProvider} or null if none exists
+     */
+    public static KiemDataProvider getProviderByDiagram(final Diagram diagram) {
+        for (DataComponentWrapper component : KiemPlugin.getDefault()
+                .getDataComponentWrapperList()) {
+            if (component.getDataComponent() instanceof KiemDataProvider) {
+                if (((KiemPropertyTypeEditor) component.getProperties()[0]
+                        .getType()).getValueAsDiagramEditor(
+                        component.getProperties()[0]).getDiagram().equals(diagram)) {
+                    return (KiemDataProvider) component.getDataComponent();
+                }
+            }
+        }
+        return null;
     }
 }

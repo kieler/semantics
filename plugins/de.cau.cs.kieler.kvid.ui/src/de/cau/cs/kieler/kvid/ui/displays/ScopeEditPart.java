@@ -37,8 +37,8 @@ import de.cau.cs.kieler.kaom.Port;
 import de.cau.cs.kieler.kvid.KvidUtil;
 import de.cau.cs.kieler.kvid.data.DataObject;
 import de.cau.cs.kieler.kvid.data.KvidUri;
-import de.cau.cs.kieler.kvid.datadistributor.DataDistributor;
 import de.cau.cs.kieler.kvid.datadistributor.RuntimeConfiguration;
+import de.cau.cs.kieler.kvid.dataprovider.KiemDataProvider;
 import de.cau.cs.kieler.kvid.visual.GmfImageFigure;
 import de.cau.cs.kieler.kvid.visual.complex.AbstractDataDisplayEditPart;
 
@@ -64,6 +64,8 @@ public class ScopeEditPart extends AbstractDataDisplayEditPart {
     /** Variable whch stores how many steps have been displayed by now. */
     private int steps = 0;
     
+    private KiemDataProvider currentProvider;
+    
     /** Default height of a ScopeNode. */
     private static final int PLOT_HEIGHT = 200;
     
@@ -79,7 +81,11 @@ public class ScopeEditPart extends AbstractDataDisplayEditPart {
     public ScopeEditPart(final View view) {
         super(view);
         
-        DataDistributor.getInstance().registerDataListener(this);
+        currentProvider = KvidUtil
+                .getProviderByDiagram(view.getDiagram());
+        if (currentProvider != null) {
+            currentProvider.getDistributor().registerDataListener(this);
+        }
         
         //Setup of the scope drawing tool
         plot = new Plot();
@@ -128,10 +134,14 @@ public class ScopeEditPart extends AbstractDataDisplayEditPart {
     public void setReferredObjectURI(final KvidUri uri) {
         
         this.referredObjectURI = uri;
-        DataDistributor.getInstance().getDataObjectByURI(uri).setSaveHistory(true);
+        currentProvider.getDistributor().getDataObjectByURI(uri).setSaveHistory(true);
         
         if (referredObjectURI != null) {
-            DataObject data = DataDistributor.getInstance().getDataObjectByURI(referredObjectURI);
+            if (currentProvider == null) {
+                currentProvider = KvidUtil
+                .getProviderByDiagram(getDiagramView());
+            }
+            DataObject data = currentProvider.getDistributor().getDataObjectByURI(referredObjectURI);
             
             //Setup plot and load possible already existing history values
             double[] values = new double[data.getHistoryLength()];
@@ -162,7 +172,7 @@ public class ScopeEditPart extends AbstractDataDisplayEditPart {
         }
         
         if (referredObjectURI == null
-                || DataDistributor.getInstance().getDataObjectByURI(
+                || currentProvider.getDistributor().getDataObjectByURI(
                         referredObjectURI) == null) {
             //Check the connected object and try to use it as a data source
             View view = this.getNotationView();
@@ -188,11 +198,19 @@ public class ScopeEditPart extends AbstractDataDisplayEditPart {
                 }
                 referredObjectURI = new KvidUri(ptolemyUri);
             }
-            DataDistributor.getInstance().getDataObjectByURI(referredObjectURI).setSaveHistory(true);
+            if (currentProvider == null) {
+                currentProvider = KvidUtil
+                .getProviderByDiagram(getDiagramView());
+            }
+            currentProvider.getDistributor().getDataObjectByURI(referredObjectURI).setSaveHistory(true);
         }
         
         //Process the new data
-        DataObject dataObject = DataDistributor.getInstance().getDataObjectByURI(referredObjectURI);
+        if (currentProvider == null) {
+            currentProvider = KvidUtil
+            .getProviderByDiagram(getDiagramView());
+        }
+        DataObject dataObject = currentProvider.getDistributor().getDataObjectByURI(referredObjectURI);
         plot.addPoint(0, steps, Double.valueOf(dataObject.getData().toString()), false);
         steps++;
         
@@ -228,7 +246,7 @@ public class ScopeEditPart extends AbstractDataDisplayEditPart {
     public void removeNotify() {
         super.removeNotify();
         //When the visual part is deleted, we don't want to receive data anymore
-        DataDistributor.getInstance().removeDataListener(this);
+        currentProvider.getDistributor().removeDataListener(this);
     }
     
 

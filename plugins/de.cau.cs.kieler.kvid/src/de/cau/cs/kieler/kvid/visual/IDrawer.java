@@ -17,6 +17,7 @@ import java.util.HashMap;
 
 import de.cau.cs.kieler.kvid.data.DataObject;
 import de.cau.cs.kieler.kvid.data.KvidUri;
+import de.cau.cs.kieler.kvid.datadistributor.IDataListener;
 
 /**
  * A drawer which will draw the data on the UI somehow.
@@ -25,7 +26,7 @@ import de.cau.cs.kieler.kvid.data.KvidUri;
  * @author jjc
  *
  */
-public interface IDrawer {
+public interface IDrawer extends IDataListener {
     
     /**
      * Draws the given data to the UI.
