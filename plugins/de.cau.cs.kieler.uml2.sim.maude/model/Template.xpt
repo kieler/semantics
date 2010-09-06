@@ -4,8 +4,9 @@
 MUST BE:
 «EXTENSION model::Extensions»
 FOR KIELER RCA !!! Otherwise the Extensions cannot be found!
+updatesite fix! extensions not found in models folder because it seems not to be extracted, this is now fixed when building the update site
 «ENDREM»
-«EXTENSION model::Extensions»
+«EXTENSION Extensions»
 
 «DEFINE main FOR Model»
    «EXPAND sm FOREACH packagedElement»
