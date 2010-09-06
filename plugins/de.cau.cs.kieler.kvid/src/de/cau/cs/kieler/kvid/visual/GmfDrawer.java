@@ -16,7 +16,6 @@ package de.cau.cs.kieler.kvid.visual;
 import java.util.HashMap;
 import java.util.List;
 
-import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.draw2d.IFigure;
 import org.eclipse.draw2d.geometry.Point;
 import org.eclipse.gmf.runtime.diagram.ui.editparts.DiagramRootEditPart;

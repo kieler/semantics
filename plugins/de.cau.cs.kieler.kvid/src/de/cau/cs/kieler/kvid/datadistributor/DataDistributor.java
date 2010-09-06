@@ -45,7 +45,6 @@ import de.cau.cs.kieler.kvid.KvidUtil;
 import de.cau.cs.kieler.kvid.data.DataObject;
 import de.cau.cs.kieler.kvid.data.KvidUri;
 import de.cau.cs.kieler.kvid.dataprovider.IDataProvider;
-import de.cau.cs.kieler.kvid.visual.GmfAnimator;
 import de.cau.cs.kieler.kvid.visual.GmfDrawer;
 
 /**
@@ -343,7 +342,6 @@ public final class DataDistributor implements IProviderListener, ResourceSetList
     public void triggerWrapup() {
         dataByUri = new HashMap<KvidUri, DataObject>();
         currentDiagramLayout = null;
-        GmfAnimator.resetSteps();
         if (currentEditor != null) {
             currentEditor.getEditingDomain().removeResourceSetListener(this);
         }

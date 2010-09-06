@@ -27,7 +27,6 @@ import org.eclipse.ui.PlatformUI;
 
 import de.cau.cs.kieler.kvid.data.KvidUri;
 import de.cau.cs.kieler.kvid.datadistributor.RuntimeConfiguration;
-import de.cau.cs.kieler.sim.kiem.KiemPlugin;
 
 /**
  * 
@@ -46,10 +45,6 @@ public final class GmfAnimator {
     
     /** Delay factor to ensure that there is no animation overlap. */
     private static final int DELAY_SCALE = 4;
-    
-    private static long lastKiemStep = 0;
-    
-    private static boolean beSilent = false;
     
     private static AnimatingCommand lastCommand;
     
@@ -75,7 +70,6 @@ public final class GmfAnimator {
             return;
         }
         if (lastCommand != null && lastCommand.isAnimating()) {
-            System.out.println("works!!!!");
             return;
         }
         /*long currentKiemStep = KiemPlugin.getDefault().getExecution().getSteps();
@@ -126,6 +120,11 @@ public final class GmfAnimator {
                     if (currentPrioLevel == minPrio && pathCounter == 0) {
                         //On first iteration, muvitor requires animated elements to be initialized
                         anima.initializeAnimatedElement(figure, diagram.getViewer());
+                        figure.setLocation(GmfDrawer.getInstance()
+                                .centerFigureOnPoint(
+                                        figuresAndPath.get(figure).get(0),
+                                        figure));
+                        figure.setVisible(true);
                     }
                     if ((figureUri.hasPriority() && figureUri.getPriority() == currentPrioLevel)
                             || (!figureUri.hasPriority() && currentPrioLevel == minPrio)) {
@@ -223,13 +222,6 @@ public final class GmfAnimator {
      */
     public static synchronized void stopReplay() {
         replay = false;
-    }
-    
-    /**
-     * Call this after visualization is finished to reset the kiem step counter.
-     */
-    public static void resetSteps() {
-        lastKiemStep = 0;
     }
     
 }

@@ -55,6 +55,7 @@ public class GmfFigure extends RoundedRectangle implements IKvidFigure {
                 .length()
                 * STRETCH_FACTOR, STRETCH_FACTOR));
         add(label, BorderLayout.CENTER);
+        setVisible(false);
     }
     
     /**
