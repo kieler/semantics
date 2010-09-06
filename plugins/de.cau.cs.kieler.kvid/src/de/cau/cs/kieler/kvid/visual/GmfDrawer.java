@@ -16,6 +16,7 @@ package de.cau.cs.kieler.kvid.visual;
 import java.util.HashMap;
 import java.util.List;
 
+import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.draw2d.IFigure;
 import org.eclipse.draw2d.geometry.Point;
 import org.eclipse.gmf.runtime.diagram.ui.editparts.DiagramRootEditPart;
@@ -26,10 +27,10 @@ import org.eclipse.ui.PlatformUI;
 import de.cau.cs.kieler.kvid.KvidUtil;
 import de.cau.cs.kieler.kvid.data.DataObject;
 import de.cau.cs.kieler.kvid.data.KvidUri;
+import de.cau.cs.kieler.kvid.datadistributor.DataDistributor;
 import de.cau.cs.kieler.kvid.datadistributor.IDataListener;
 import de.cau.cs.kieler.kvid.datadistributor.Property;
 import de.cau.cs.kieler.kvid.datadistributor.RuntimeConfiguration;
-import de.cau.cs.kieler.kvid.dataprovider.KiemDataProvider;
 import de.cau.cs.kieler.sim.kiem.KiemPlugin;
 
 /**
@@ -39,24 +40,27 @@ import de.cau.cs.kieler.sim.kiem.KiemPlugin;
  * @author jjc
  * 
  */
-public final class GmfDrawer implements IDrawer {
+public final class GmfDrawer implements IDrawer, IDataListener {
 
     /** A map associating drawn figures with their data producing model elements. */
     private HashMap<KvidUri, IKvidFigure> figuresByURI = new HashMap<KvidUri, IKvidFigure>();
     
-    private KiemDataProvider currentProvider;
-    
+    /** The instance of the distributor. See Singleton Design Pattern. */
+    private static final GmfDrawer INSTANCE = new GmfDrawer();
     
     /**
-     * 
-     * 
-     * @param provider The provider to which this drawer belongs.
-     * 
+     * Private constructor to prevent external instatiation.
      */
-    public GmfDrawer(final KiemDataProvider provider) {
-        this.currentProvider = provider;
-    }
+    private GmfDrawer() { }
     
+    /**
+     * Gives the single instance of the GmfDrawer.
+     * 
+     * @return The single instance of the GmfDrawer
+     */
+    public static GmfDrawer getInstance() {
+        return INSTANCE;
+    }
 
     /**
      * {@inheritDoc}
@@ -220,7 +224,7 @@ public final class GmfDrawer implements IDrawer {
      */
     public void triggerDataChanged() {
         try {
-            draw(currentProvider.getDistributor().getData());
+            draw(DataDistributor.getInstance().getData());
         } catch (NullPointerException nex) {
             //do nothing, only happens when visualization is too fast
             //figures are gone then before this could work with them

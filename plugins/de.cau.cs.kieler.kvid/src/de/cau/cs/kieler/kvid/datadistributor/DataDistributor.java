@@ -44,8 +44,9 @@ import de.cau.cs.kieler.kvid.KvidPlugin;
 import de.cau.cs.kieler.kvid.KvidUtil;
 import de.cau.cs.kieler.kvid.data.DataObject;
 import de.cau.cs.kieler.kvid.data.KvidUri;
-import de.cau.cs.kieler.kvid.dataprovider.KiemDataProvider;
+import de.cau.cs.kieler.kvid.dataprovider.IDataProvider;
 import de.cau.cs.kieler.kvid.visual.GmfAnimator;
+import de.cau.cs.kieler.kvid.visual.GmfDrawer;
 
 /**
  * This class organizes the distribution of the collected data to the objects that
@@ -60,6 +61,9 @@ import de.cau.cs.kieler.kvid.visual.GmfAnimator;
  */
 public final class DataDistributor implements IProviderListener, ResourceSetListener {
     
+    /** The instance of the distributor. */
+    private static final DataDistributor INSTANCE = new DataDistributor();
+    
     /** The current data, organized in a hash map with the model element's URI as key. */
     private HashMap<KvidUri, DataObject> dataByUri = new HashMap<KvidUri, DataObject>();
     
@@ -72,18 +76,38 @@ public final class DataDistributor implements IProviderListener, ResourceSetList
     /** The editor in which the current visualization takes place. */
     private DiagramEditor currentEditor = null;
     
-    /** The {@link KiemDataProvider} which is the current data source. */ 
-    private KiemDataProvider currentProvider = null;
+    /** The {@link IDataProvider} which is the current data source. */ 
+    private IDataProvider currentProvider;
     
     /** Flag for checking whether the layout has to be re-cached. */
     private boolean layoutChanged = false;
     
     /**
-     * 
-     * @param provider The provider to which this distributor belongs.
+     * Private constructor to prevent external instantiation.
      */
-    public DataDistributor(final KiemDataProvider provider) {
-        this.currentProvider = provider;
+    private DataDistributor() { }
+    
+    /**
+     * Gives the single instance of the DataDistributor.
+     * 
+     * @return The single instance of the DataDistributor
+     */
+    public static DataDistributor getInstance() {
+        return INSTANCE;
+    }
+    
+    /**
+     * Changes the current data source to a new one.
+     * 
+     * @param newProvider The new data source
+     * @deprecated Kiem is the only used data source
+     */
+    public void changeDataProvider(final IDataProvider newProvider) {
+        if (currentProvider != null) {
+            currentProvider.removeProviderListener(this);
+        }
+        currentProvider = newProvider;
+        currentProvider.registerProviderListener(this);
     }
     
     /**
@@ -91,7 +115,7 @@ public final class DataDistributor implements IProviderListener, ResourceSetList
      * 
      * @return The currently used data source
      */
-    public KiemDataProvider getCurrentProvider() {
+    public IDataProvider getCurrentProvider() {
         return this.currentProvider;
     }
     
@@ -100,7 +124,7 @@ public final class DataDistributor implements IProviderListener, ResourceSetList
      * Make sure this is called before any data is provided. 
      */
     public void initialize() {
-        registerDataListener(currentProvider.getDrawer());
+        registerDataListener(GmfDrawer.getInstance());
         final IEditorPart activeEditor = KvidUtil.getActiveEditor();
         if (activeEditor instanceof DiagramEditor) {
             //TODO DiagramEditor is restriction, is there a more generic way?
@@ -160,7 +184,8 @@ public final class DataDistributor implements IProviderListener, ResourceSetList
                     List<String> associatedObjects = new LinkedList<String>();
                     associatedObjects.add(KvidUtil.ptolemyUri2FragmentUri(key.getElementUri(), 
                             currentEditor.getDiagram().getElement().eResource()));
-                    RuntimeConfiguration.getInstance()
+                    RuntimeConfiguration
+                    .getInstance()
                     .addProperty(new Property("Display status " + key.getElementUri(),
                             new String[] { "Animating",
                                     "Static on Source Node",
@@ -251,7 +276,8 @@ public final class DataDistributor implements IProviderListener, ResourceSetList
             } else if (RuntimeConfiguration.getInstance()
                     .currentValueOfProperty(
                             "Default output port") != "") {
-                portName = RuntimeConfiguration.getInstance()
+                portName = RuntimeConfiguration
+                        .getInstance()
                         .currentValueOfProperty(
                                 "Default output port");
             }
@@ -331,7 +357,7 @@ public final class DataDistributor implements IProviderListener, ResourceSetList
      * @param thelistener The {@link IDataListener} to add
      */
     public void registerDataListener(final IDataListener thelistener) {
-        if (!listeners.contains(thelistener) && thelistener != null) {
+        if (!listeners.contains(thelistener)) {
            listeners.add(thelistener); 
         }
     }

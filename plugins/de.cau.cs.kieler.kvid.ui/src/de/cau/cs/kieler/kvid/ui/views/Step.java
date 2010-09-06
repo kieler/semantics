@@ -15,6 +15,9 @@ package de.cau.cs.kieler.kvid.ui.views;
 
 import org.eclipse.jface.action.Action;
 
+import de.cau.cs.kieler.kvid.datadistributor.DataDistributor;
+import de.cau.cs.kieler.kvid.dataprovider.IDataProvider;
+
 /**
  * @author jjc
  * @deprecated Not used anymore, all sources now use KIEM
@@ -34,6 +37,8 @@ public class Step extends Action {
      */
     @Override
     public void run() {
+        IDataProvider currentProvider = DataDistributor.getInstance().getCurrentProvider();
+        currentProvider.step();
     }
 
 }
