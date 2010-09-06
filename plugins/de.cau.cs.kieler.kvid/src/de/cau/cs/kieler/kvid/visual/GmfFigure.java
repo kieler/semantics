@@ -83,4 +83,14 @@ public class GmfFigure extends RoundedRectangle implements IKvidFigure {
         return currentData;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    public IKvidFigure copy() {
+        DataObject dataCopy = new DataObject(currentData.getUri(), currentData.getData().toString());
+        return new GmfFigure(dataCopy);
+    }
+    
+    
+
 }

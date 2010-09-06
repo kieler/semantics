@@ -288,7 +288,7 @@ public class AnimatingCommand extends Command {
 	 * This flag may be used to generally disable animations.
 	 */
 	private static boolean performAnimation = true;
-
+	
 	/**
 	 * This flag may be used to display an animation in more detail for
 	 * debugging. The paths of the animated figures will be shown as well.
@@ -751,6 +751,10 @@ public class AnimatingCommand extends Command {
 			return animatedElement.finalLocation.getCopy();
 		}
 		return null;
+	}
+	
+	public boolean isAnimating() {
+	    return MultipleAnimation.isAnimating();
 	}
 
 	/**

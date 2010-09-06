@@ -45,11 +45,13 @@ public final class GmfAnimator {
     private static final int REPLAY_DELAY = 1000;
     
     /** Delay factor to ensure that there is no animation overlap. */
-    private static final int DELAY_SCALE = 5;
+    private static final int DELAY_SCALE = 4;
     
     private static long lastKiemStep = 0;
     
-    private static long intervalOfSilence = 0;
+    private static boolean beSilent = false;
+    
+    private static AnimatingCommand lastCommand;
     
     /**
      * There shouldn't be an instance of this.
@@ -72,21 +74,19 @@ public final class GmfAnimator {
             //nothing to animate, stop
             return;
         }
-        long currentKiemStep = KiemPlugin.getDefault().getExecution().getSteps();
-        if (intervalOfSilence > 0) {
-            intervalOfSilence--;
-            lastKiemStep = currentKiemStep;
+        if (lastCommand != null && lastCommand.isAnimating()) {
+            System.out.println("works!!!!");
             return;
         }
+        /*long currentKiemStep = KiemPlugin.getDefault().getExecution().getSteps();
         if (lastKiemStep + 1 != currentKiemStep) {
             System.out
                     .println("Missed "
                             + (currentKiemStep - lastKiemStep) + " steps!");
-            intervalOfSilence = currentKiemStep - lastKiemStep - 1;
             lastKiemStep = currentKiemStep;
             return;
         }
-        lastKiemStep = currentKiemStep;
+        lastKiemStep = currentKiemStep;*/
         
         final IFigure canvas = diagram.getLayer(DiagramRootEditPart.DECORATION_PRINTABLE_LAYER);
 
@@ -183,6 +183,7 @@ public final class GmfAnimator {
         cc.add(anima);
         if (cc.canExecute()) {
             diagram.getDiagramEditDomain().getDiagramCommandStack().execute(cc);
+            lastCommand = anima;
         }
         
         if (RuntimeConfiguration.getInstance()

@@ -38,5 +38,13 @@ public interface IKvidFigure extends IFigure {
      * @return The visualized DataObject
      */
     DataObject getData();
+    
+    /**
+     * Returns a copy of this figure.
+     * The copy is independant in all means.
+     * 
+     * @return A identical copy of this figure
+     */
+    IKvidFigure copy();
 
 }

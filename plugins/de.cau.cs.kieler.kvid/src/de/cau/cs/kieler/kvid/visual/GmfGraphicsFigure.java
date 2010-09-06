@@ -55,5 +55,13 @@ public class GmfGraphicsFigure extends ScalableImageFigure implements IKvidFigur
     public DataObject getData() {
         return data;
     }
+    
+    /**
+     * {@inheritDoc}
+     */
+    public IKvidFigure copy() {
+        DataObject dataCopy = new DataObject(data.getUri(), data.getData().toString());
+        return new GmfFigure(dataCopy);
+    }
 
 }

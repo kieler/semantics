@@ -132,10 +132,11 @@ public final class GmfDrawer implements IDrawer, IDataListener {
                                 if (uriPart.equals(key.getElementUri())) {
                                     if (property.getCurrentValue().equals(
                                             "Animating")) {
-                                        animatables.put(currentFigure,
+                                        IKvidFigure animaFigure = currentFigure.copy();
+                                        animatables.put(animaFigure,
                                                 dataSet.get(key).getPaths()
                                                         .get(0));
-                                        currentFigure.setVisible(true);
+                                        currentFigure.setVisible(false);
                                     } else if (property.getCurrentValue()
                                             .equals("Static on Source Node")) {
                                         Point newPoint = centerFigureOnPoint(dataSet.get(key).getPaths()

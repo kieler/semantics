@@ -283,26 +283,28 @@ public final class DataDistributor implements IProviderListener, ResourceSetList
             }
             if (port.getLabel().getText().equals(portName) || portName.isEmpty()) {
                 for (KEdge edge : port.getEdges()) {
-                    List<Point> path = new LinkedList<Point>();
-                    Point start = new Point(parentPosition);
-                    start.x += KimlUtil.getShapeLayout(edge.getSource()).getXpos();
-                    start.y += KimlUtil.getShapeLayout(edge.getSource()).getYpos();
-                    start.x += KimlUtil.getShapeLayout(port).getXpos();
-                    start.y += KimlUtil.getShapeLayout(port).getYpos();
-                    path.add(start);
-                    for (KPoint bendPoint : KimlUtil.getEdgeLayout(edge).getBendPoints()) {
-                        Point pathStep = new Point(parentPosition);
-                        pathStep.x += bendPoint.getX();
-                        pathStep.y += bendPoint.getY();
-                        path.add(pathStep);
+                    if (edge.getSourcePort() != null && edge.getSourcePort().equals(port)) {
+                        List<Point> path = new LinkedList<Point>();
+                        Point start = new Point(parentPosition);
+                        start.x += KimlUtil.getShapeLayout(edge.getSource()).getXpos();
+                        start.y += KimlUtil.getShapeLayout(edge.getSource()).getYpos();
+                        start.x += KimlUtil.getShapeLayout(port).getXpos();
+                        start.y += KimlUtil.getShapeLayout(port).getYpos();
+                        path.add(start);
+                        for (KPoint bendPoint : KimlUtil.getEdgeLayout(edge).getBendPoints()) {
+                            Point pathStep = new Point(parentPosition);
+                            pathStep.x += bendPoint.getX();
+                            pathStep.y += bendPoint.getY();
+                            path.add(pathStep);
+                        }
+                        Point finish = new Point(parentPosition);
+                        finish.x += KimlUtil.getShapeLayout(edge.getTarget()).getXpos();
+                        finish.y += KimlUtil.getShapeLayout(edge.getTarget()).getYpos();
+                        finish.x += KimlUtil.getShapeLayout(edge.getTargetPort()).getXpos();
+                        finish.y += KimlUtil.getShapeLayout(edge.getTargetPort()).getYpos();
+                        path.add(finish);
+                        result.add(path);
                     }
-                    Point finish = new Point(parentPosition);
-                    finish.x += KimlUtil.getShapeLayout(edge.getTarget()).getXpos();
-                    finish.y += KimlUtil.getShapeLayout(edge.getTarget()).getYpos();
-                    finish.x += KimlUtil.getShapeLayout(edge.getTargetPort()).getXpos();
-                    finish.y += KimlUtil.getShapeLayout(edge.getTargetPort()).getYpos();
-                    path.add(finish);
-                    result.add(path);
                 } 
             }
         }
