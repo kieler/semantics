@@ -72,15 +72,6 @@ public final class GmfAnimator {
         if (lastCommand != null && lastCommand.isAnimating()) {
             return;
         }
-        /*long currentKiemStep = KiemPlugin.getDefault().getExecution().getSteps();
-        if (lastKiemStep + 1 != currentKiemStep) {
-            System.out
-                    .println("Missed "
-                            + (currentKiemStep - lastKiemStep) + " steps!");
-            lastKiemStep = currentKiemStep;
-            return;
-        }
-        lastKiemStep = currentKiemStep;*/
         
         final IFigure canvas = diagram.getLayer(DiagramRootEditPart.DECORATION_PRINTABLE_LAYER);
 
@@ -181,8 +172,8 @@ public final class GmfAnimator {
         anima.setCompleteDuration(animationTime - (animationTime / DELAY_SCALE));
         cc.add(anima);
         if (cc.canExecute()) {
-            diagram.getDiagramEditDomain().getDiagramCommandStack().execute(cc);
             lastCommand = anima;
+            diagram.getDiagramEditDomain().getDiagramCommandStack().execute(cc);
         }
         
         if (RuntimeConfiguration.getInstance()
