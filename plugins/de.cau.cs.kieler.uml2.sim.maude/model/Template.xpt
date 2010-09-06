@@ -1,6 +1,11 @@
 «IMPORT uml»
 
-«EXTENSION Extensions»
+«REM»
+MUST BE:
+«EXTENSION model::Extensions»
+FOR KIELER RCA !!! Otherwise the Extensions cannot be found!
+«ENDREM»
+«EXTENSION model::Extensions»
 
 «DEFINE main FOR Model»
    «EXPAND sm FOREACH packagedElement»
