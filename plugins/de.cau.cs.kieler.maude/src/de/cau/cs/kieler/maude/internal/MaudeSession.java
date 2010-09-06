@@ -23,7 +23,7 @@ import java.io.PrintWriter;
 public class MaudeSession {
 
     /** The constant for the Maude timeout. */
-    private static final int MAUDETIMEOUT = 5000;
+    private static final int MAUDETIMEOUT = 10000;
 
 
     /** The path to maude.exe. */
