@@ -11,7 +11,7 @@
             class="de.cau.cs.kieler.kvid.ui.views.PropertiesView"
             icon="icons/kvid.png"
             id="de.cau.cs.kieler.kvid.ui.views.PropertiesView"
-            name="Visualization"
+            name="Data Visualization"
             restorable="true">
       </view>
    </extension>

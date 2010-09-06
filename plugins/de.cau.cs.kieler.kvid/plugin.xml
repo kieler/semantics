@@ -7,7 +7,7 @@
       <content
             class="de.cau.cs.kieler.kvid.dataprovider.KiemDataProvider"
             id="de.cau.cs.kieler.kvid.KIEMDataProvider"
-            name="KViDDataProvider">
+            name="Data Visualization">
       </content>
    </extension>
    <extension
@@ -51,7 +51,7 @@
       <content
             class="de.cau.cs.kieler.kvid.dataprovider.KiemCsvDataProvider"
             id="de.cau.cs.kieler.kvid.KiemCsvDataProvider"
-            name="KViDCSVDataProvider">
+            name="CSV Data Provider">
       </content>
    </extension>
 
