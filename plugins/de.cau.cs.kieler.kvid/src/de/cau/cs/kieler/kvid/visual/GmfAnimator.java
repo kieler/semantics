@@ -52,8 +52,6 @@ public final class GmfAnimator {
     
     private static long lastCommandExecutedAt;
     
-    private static Thread lastCommandsThread;
-    
     /**
      * There shouldn't be an instance of this.
      */
@@ -183,15 +181,8 @@ public final class GmfAnimator {
         cc.add(anima);
         if (cc.canExecute()) {
             lastCommand = anima;
-            Runnable animaRun = new Runnable() {
-                
-                public void run() {
-                    diagram.getDiagramEditDomain().getDiagramCommandStack().execute(cc);
-                }
-            };
-            lastCommandsThread = new Thread(animaRun);
+            diagram.getDiagramEditDomain().getDiagramCommandStack().execute(cc);
             lastCommandExecutedAt = System.currentTimeMillis();
-            PlatformUI.getWorkbench().getDisplay().asyncExec(lastCommandsThread);
         }
         
         if (RuntimeConfiguration.getInstance()
@@ -248,7 +239,6 @@ public final class GmfAnimator {
         lastCommand.animationDone();
         lastCommand = null;
         lastCommandExecutedAt = 0;
-        lastCommandsThread = null;
     }
     
 }
