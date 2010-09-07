@@ -46,7 +46,13 @@ public final class GmfAnimator {
     /** Delay factor to ensure that there is no animation overlap. */
     private static final int DELAY_SCALE = 4;
     
+    private static final int STOPPING_THRESHOLD = 2000;
+    
     private static AnimatingCommand lastCommand;
+    
+    private static long lastCommandExecutedAt;
+    
+    private static Thread lastCommandsThread;
     
     /**
      * There shouldn't be an instance of this.
@@ -70,7 +76,11 @@ public final class GmfAnimator {
             return;
         }
         if (lastCommand != null && lastCommand.isAnimating()) {
-            return;
+            if (System.currentTimeMillis() - lastCommandExecutedAt > STOPPING_THRESHOLD) {
+                lastCommand.animationDone();
+            } else {
+                return;
+            }
         }
         
         final IFigure canvas = diagram.getLayer(DiagramRootEditPart.DECORATION_PRINTABLE_LAYER);
@@ -97,7 +107,7 @@ public final class GmfAnimator {
                 .currentValueOfProperty("Debug drawing activated").equals("true")) {
             anima.setDebug(true);
         } 
-        CompoundCommand cc = new CompoundCommand();
+        final CompoundCommand cc = new CompoundCommand();
         boolean allPathsExeeded = false;
         int pathCounter = 0;
         int currentPrioLevel = minPrio;
@@ -173,7 +183,15 @@ public final class GmfAnimator {
         cc.add(anima);
         if (cc.canExecute()) {
             lastCommand = anima;
-            diagram.getDiagramEditDomain().getDiagramCommandStack().execute(cc);
+            Runnable animaRun = new Runnable() {
+                
+                public void run() {
+                    diagram.getDiagramEditDomain().getDiagramCommandStack().execute(cc);
+                }
+            };
+            lastCommandsThread = new Thread(animaRun);
+            lastCommandExecutedAt = System.currentTimeMillis();
+            PlatformUI.getWorkbench().getDisplay().asyncExec(lastCommandsThread);
         }
         
         if (RuntimeConfiguration.getInstance()
@@ -196,15 +214,22 @@ public final class GmfAnimator {
                 .currentValueOfProperty("Behavior after Animation")
                 .equals("Replay")) {
             replay = true;
-            while (replay) {
-                //Replay the animation
-                try {
-                    Thread.sleep(REPLAY_DELAY);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
+            Runnable replayRun = new Runnable() {
+                
+                public void run() {
+                    while (replay) {
+                        //Replay the animation
+                        try {
+                            Thread.sleep(REPLAY_DELAY);
+                        } catch (InterruptedException e) {
+                            //No handling is needed if this is interrupted
+                        }
+                        diagram.getDiagramEditDomain().getDiagramCommandStack().execute(cc);
+                    }
                 }
-                diagram.getDiagramEditDomain().getDiagramCommandStack().execute(cc);
-            }
+            };
+            PlatformUI.getWorkbench().getDisplay().asyncExec(replayRun);
+            
         }
     }
     
@@ -213,6 +238,17 @@ public final class GmfAnimator {
      */
     public static synchronized void stopReplay() {
         replay = false;
+    }
+    
+    /**
+     * Cleans up the local cache for further use.
+     */
+    public static void wrapup() {
+        stopReplay();
+        lastCommand.animationDone();
+        lastCommand = null;
+        lastCommandExecutedAt = 0;
+        lastCommandsThread = null;
     }
     
 }

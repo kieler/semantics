@@ -236,7 +236,7 @@ public final class GmfDrawer implements IDrawer, IDataListener {
      */
     public void triggerWrapup() {
         clearDrawing();
-        GmfAnimator.stopReplay();
+        GmfAnimator.wrapup();
     }
 
 }
