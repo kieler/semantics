@@ -15,6 +15,7 @@ package de.cau.cs.kieler.synccharts.kivi;
 
 import org.eclipse.draw2d.ColorConstants;
 import org.eclipse.draw2d.IFigure;
+import org.eclipse.draw2d.Shape;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gef.GraphicalEditPart;
 import org.eclipse.gmf.runtime.draw2d.ui.figures.WrappingLabel;
@@ -33,6 +34,12 @@ public class StateActivityHighlightEffect extends AbstractEffect {
     private EditPart editPart;
 
     private IFigure targetFigure;
+    
+    private int originalWidth = -1;
+    
+    private int widthIncrease = 1; // TODO parameterize
+    
+    private int widthMax = 5; // TODO parameterize
 
     private Color originalColor;
 
@@ -54,7 +61,7 @@ public class StateActivityHighlightEffect extends AbstractEffect {
     public StateActivityHighlightEffect(final GraphicalEditPart e) {
         editPart = e;
         targetFigure = e.getFigure();
-        if (targetFigure.getChildren().size() > 0) {
+        if (targetFigure.getChildren().size() == 1) {
             targetFigure = (IFigure) targetFigure.getChildren().get(0);
         }
     }
@@ -63,6 +70,10 @@ public class StateActivityHighlightEffect extends AbstractEffect {
     public void execute() {
         if (originalColor == null) {
             originalColor = targetFigure.getForegroundColor();
+        }
+        if (targetFigure instanceof Shape && originalWidth == -1) {
+            originalWidth = ((Shape) targetFigure).getLineWidth();
+            ((Shape) targetFigure).setLineWidth(Math.min(originalWidth + widthIncrease, widthMax));
         }
         targetFigure.setForegroundColor(color);
         for (Object child : targetFigure.getChildren()) {
@@ -77,6 +88,10 @@ public class StateActivityHighlightEffect extends AbstractEffect {
         if (targetFigure != null && originalColor != null) {
             targetFigure.setForegroundColor(originalColor);
             originalColor = null;
+        }
+        if (targetFigure instanceof Shape && originalWidth != -1) {
+            ((Shape) targetFigure).setLineWidth(originalWidth);
+            originalWidth = -1;
         }
     }
     
