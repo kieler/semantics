@@ -17,12 +17,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.eclipse.draw2d.ColorConstants;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gef.GraphicalEditPart;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.RGB;
 
+import de.cau.cs.kieler.kivi.KiViPlugin;
+import de.cau.cs.kieler.kivi.core.CombinationParameter;
 import de.cau.cs.kieler.kivi.core.IEffect;
 import de.cau.cs.kieler.kivi.core.Viewmanagement;
 import de.cau.cs.kieler.kivi.core.impl.AbstractCombination;
@@ -35,7 +36,9 @@ import de.cau.cs.kieler.kivi.core.impl.AbstractCombination;
  */
 public class StateActivityCombination extends AbstractCombination {
 
-    private static final Color HIGHLIGHT_COLOR = ColorConstants.red;
+    private static final CombinationParameter[] PARAMETERS = new CombinationParameter[] {
+            new CombinationParameter("highlightColor", "float", "0.0"),
+            new CombinationParameter("historyColor", "float", "240.0") };
 
     private List<List<EditPart>> activeStates;
 
@@ -102,13 +105,26 @@ public class StateActivityCombination extends AbstractCombination {
         return true;
     }
 
-    private static Color getColor(final int step, final int steps) {
-        if (step == 0) {
-            return HIGHLIGHT_COLOR;
-        } else {
-            // a shade of blue
-            return new Color(null, new RGB(240.0f, 1.0f, 1.0f - 1.0f / steps * (step - 1)));
-        }
+    /**
+     * Get the parameters of this combination.
+     * 
+     * @return the parameters
+     */
+    public static CombinationParameter[] getParameters() {
+        return PARAMETERS;
     }
 
+    private Color getColor(final int step, final int steps) {
+        if (step == 0) {
+            return new Color(null, new RGB(Float.parseFloat(KiViPlugin.getDefault()
+                    .getPreferenceStore()
+                    .getString(getClass().getCanonicalName() + ".highlightColor")), 1.0f, 1.0f));
+        } else {
+            // a shade of blue
+            return new Color(null, new RGB(Float.parseFloat(KiViPlugin.getDefault()
+                    .getPreferenceStore()
+                    .getString(getClass().getCanonicalName() + ".historyColor")), 1.0f, 1.0f - 1.0f
+                    / steps * (step - 1)));
+        }
+    }
 }

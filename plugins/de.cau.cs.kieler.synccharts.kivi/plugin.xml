@@ -9,12 +9,20 @@
             name="State Activity Data Component">
       </content>
    </extension>
-      <extension
+   <extension
          point="de.cau.cs.kieler.kivi.combinations">
       <combination
             class="de.cau.cs.kieler.synccharts.kivi.StateActivityCombination"
             description="Highlights active states during simulation."
             name="State Activity Combination">
+      </combination>
+   </extension>
+   <extension
+         point="de.cau.cs.kieler.kivi.combinations">
+      <combination
+            class="de.cau.cs.kieler.synccharts.kivi.SignalFlowCombination"
+            description="Visualizes the flow of signals in a SyncChart diagram."
+            name="SyncCharts Signal Flow Combination">
       </combination>
    </extension>
    <extension
@@ -24,6 +32,47 @@
             description="Highlights a state with a red border."
             name="Highlight Effect">
       </effect>
+   </extension>
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            locationURI="toolbar:de.cau.cs.kieler">
+         <command
+               commandId="de.cau.cs.kieler.synccharts.kivi.command.signalflow"
+               label="Signal Flow"
+               style="toggle"
+               tooltip="Show the flow of signals">
+            <visibleWhen
+                  checkEnabled="false">
+               <with
+                     variable="activeEditor">
+                  <test
+                        forcePluginActivation="false"
+                        property="de.cau.cs.kieler.synccharts.kivi.isSyncChartsEditor">
+                  </test>
+               </with>
+            </visibleWhen>
+         </command>
+      </menuContribution>
+   </extension>
+   <extension
+         point="org.eclipse.ui.commands">
+      <command
+            categoryId="de.cau.cs.kieler"
+            defaultHandler="de.cau.cs.kieler.synccharts.kivi.SignalFlowHandler"
+            id="de.cau.cs.kieler.synccharts.kivi.command.signalflow"
+            name="Signal Flow">
+      </command>
+   </extension>
+   <extension
+         point="org.eclipse.core.expressions.propertyTesters">
+      <propertyTester
+            class="de.cau.cs.kieler.synccharts.kivi.SyncChartsEditorTester"
+            id="de.cau.cs.kieler.synccharts.kivi.isSyncChartsEditor"
+            namespace="de.cau.cs.kieler.synccharts.kivi"
+            properties="isSyncChartsEditor"
+            type="org.eclipse.ui.IEditorPart">
+      </propertyTester>
    </extension>
 
 </plugin>
