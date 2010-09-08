@@ -33,6 +33,7 @@ import org.eclipse.ui.PlatformUI;
 
 import ptolemy.plot.Plot;
 import de.cau.cs.kieler.core.model.util.ModelingUtil;
+import de.cau.cs.kieler.core.ui.figures.layout.AbstractTableLayout;
 import de.cau.cs.kieler.kaom.Port;
 import de.cau.cs.kieler.kvid.KvidUtil;
 import de.cau.cs.kieler.kvid.data.DataObject;
@@ -192,7 +193,8 @@ public class ScopeEditPart extends AbstractDataDisplayEditPart {
                 DataDistributor.getInstance().getDataObjectByURI(referredObjectURI).setSaveHistory(true);
             } catch (NullPointerException nex) {
                 return;
-                //Ignore this, only appears when there is no data for the element to which this is connected.
+                // Ignore this, only appears when there is no data for the
+                // element to which this is connected.
                 //Nothing should hapen then, only the scope stays empty
             }
         }
@@ -248,11 +250,15 @@ public class ScopeEditPart extends AbstractDataDisplayEditPart {
         if (notification.getFeature() instanceof EAttribute) {
             EAttribute changedAttribute = (EAttribute) notification.getFeature();
             if (changedAttribute.getName().equals("width")) {
-                plot.setSize(notification.getNewIntValue(), plot.getSize().height);
-                refreshPlot();
+                if (notification.getNewIntValue() >= 0) {
+                    plot.setSize(notification.getNewIntValue(), plot.getSize().height);
+                    refreshPlot();
+                }
             } else if (changedAttribute.getName().equals("height")) {
-                plot.setSize(plot.getSize().width, notification.getNewIntValue());
-                refreshPlot();
+                if (notification.getNewIntValue() >= 0) {
+                    plot.setSize(plot.getSize().width, notification.getNewIntValue());
+                    refreshPlot();
+                }
             }
         }
     }

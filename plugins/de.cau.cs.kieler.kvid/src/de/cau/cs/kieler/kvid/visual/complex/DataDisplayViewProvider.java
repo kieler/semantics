@@ -85,12 +85,15 @@ public class DataDisplayViewProvider implements IViewProvider {
     /**
      * {@inheritDoc}
      */
+    @SuppressWarnings("unchecked")
     public Node createNode(final IAdaptable semanticAdapter, final View containerView,
             final String semanticHint, final int index, final boolean persisted,
             final PreferencesHint preferencesHint) {
         Shape node = NotationFactory.eINSTANCE.createShape();
+        node.getStyles().add(NotationFactory.eINSTANCE.createDescriptionStyle());
+        node.getStyles().add(NotationFactory.eINSTANCE.createFontStyle());
         node.setLayoutConstraint(NotationFactory.eINSTANCE.createBounds());
-        node.setType("ScopeNode");
+        node.setType(semanticHint);
         ViewUtil.insertChildView(containerView, node, index, persisted);
         return node;
     }
