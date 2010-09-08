@@ -949,7 +949,7 @@ public class AnimatingCommand extends Command {
 	 * {@link AnimatedElement}s and clears the
 	 * {@link AnimatedElement#resetViewers}.
 	 */
-	final private void animationDone() {
+	final public void animationDone() {
 		// call animationDone on the AnimatedElements in reversed order to
 		// restore the order of the figures in their original parents
 		final Object[] list = animatedElementsMap.values().toArray();
