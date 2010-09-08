@@ -27,8 +27,9 @@ import de.cau.cs.kieler.core.math.KielerMath;
 /**
  * Helper methods for handling splines.
  * 
- * @author mmu
+ * FIXME some of these utility methods are also implemented in {@link KielerMath} using {@link KVector}
  * 
+ * @author mmu
  */
 public final class SplineUtilities {
 
