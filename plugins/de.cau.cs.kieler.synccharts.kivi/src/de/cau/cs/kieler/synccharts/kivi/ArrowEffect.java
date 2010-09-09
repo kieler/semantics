@@ -22,8 +22,6 @@ import org.eclipse.draw2d.geometry.Point;
 import org.eclipse.draw2d.geometry.PointList;
 import org.eclipse.draw2d.geometry.Rectangle;
 import org.eclipse.gef.GraphicalEditPart;
-import org.eclipse.gef.LayerConstants;
-import org.eclipse.gmf.runtime.diagram.ui.render.editparts.RenderedDiagramRootEditPart;
 
 import de.cau.cs.kieler.core.ui.util.MonitoredOperation;
 import de.cau.cs.kieler.kivi.core.impl.AbstractEffect;
@@ -49,9 +47,9 @@ public class ArrowEffect extends AbstractEffect {
 
     private GraphicalEditPart target;
 
-    private RenderedDiagramRootEditPart root;
-
     private PolylineConnection connection;
+
+    private IFigure parent;
 
     /**
      * Create a new arrow effect for the given source and target edit part.
@@ -60,14 +58,10 @@ public class ArrowEffect extends AbstractEffect {
      *            the source edit part
      * @param t
      *            the target edit part
-     * @param r
-     *            the diagram edit part to draw on
      */
-    public ArrowEffect(final GraphicalEditPart s, final GraphicalEditPart t,
-            final RenderedDiagramRootEditPart r) {
+    public ArrowEffect(final GraphicalEditPart s, final GraphicalEditPart t) {
         source = s;
         target = t;
-        root = r;
     }
 
     @Override
@@ -79,10 +73,10 @@ public class ArrowEffect extends AbstractEffect {
             PolygonDecoration dec = new PolygonDecoration();
             dec.setTemplate(template);
             connection.setTargetDecoration(dec);
-            
+
             Rectangle start = source.getFigure().getBounds();
             Rectangle end = target.getFigure().getBounds();
-            
+
             Dimension difference = start.getCenter().getDifference(end.getCenter());
             Dimension sum = start.getSize().getExpanded(end.getSize());
             int startX, startY, endX, endY;
@@ -132,15 +126,13 @@ public class ArrowEffect extends AbstractEffect {
                     endY = end.getCenter().y;
                 }
             }
-            
-//            connection.setStart(source.getFigure().getBounds().getCenter());
-//            connection.setEnd(target.getFigure().getBounds().getCenter());
+
             connection.setStart(new Point(startX, startY));
             connection.setEnd(new Point(endX, endY));
-            final IFigure layer = root.getLayer(LayerConstants.CONNECTION_LAYER);
+            parent = ((GraphicalEditPart) source.getParent()).getFigure();
             MonitoredOperation.runInUI(new Runnable() {
                 public void run() {
-                    layer.add(connection);
+                    parent.add(connection);
                 }
             }, false);
         }
@@ -150,15 +142,14 @@ public class ArrowEffect extends AbstractEffect {
      * {@inheritDoc}
      */
     public void undo() {
-        if (connection != null) {
-            if (connection.getParent() != null) {
-                MonitoredOperation.runInUI(new Runnable() {
-                    public void run() {
-                        connection.getParent().remove(connection);
-                        connection = null;
-                    }
-                }, false);
-            }
+        if (connection != null && parent != null) {
+            MonitoredOperation.runInUI(new Runnable() {
+                public void run() {
+                    connection.getParent().remove(connection);
+                    connection = null;
+                    parent = null;
+                }
+            }, false);
         }
     }
 

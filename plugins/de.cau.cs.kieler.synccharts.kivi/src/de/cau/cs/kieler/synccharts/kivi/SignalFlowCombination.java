@@ -19,14 +19,9 @@ import java.util.List;
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.gef.ConnectionEditPart;
-import org.eclipse.gef.EditPart;
 import org.eclipse.gef.GraphicalEditPart;
-import org.eclipse.gmf.runtime.diagram.ui.render.editparts.RenderedDiagramRootEditPart;
 import org.eclipse.gmf.runtime.notation.View;
-import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.ui.IWorkbench;
-import org.eclipse.ui.IWorkbenchPart;
 
 import de.cau.cs.kieler.core.expressions.Expression;
 import de.cau.cs.kieler.core.expressions.Signal;
@@ -63,8 +58,6 @@ public class SignalFlowCombination extends AbstractCombination {
     public void execute() {
         if (pushed) {
             // initializations
-            RenderedDiagramRootEditPart root = (RenderedDiagramRootEditPart) editor
-                    .getDiagramEditPart().getRoot();
             List<SignalPair> triggers = new ArrayList<SignalPair>();
             List<SignalPair> effects = new ArrayList<SignalPair>();
 
@@ -165,7 +158,7 @@ public class SignalFlowCombination extends AbstractCombination {
                         if (relevantLabel == null || effect.getEditPart() == relevantLabel
                                 || trigger.getEditPart() == relevantLabel) {
                             IEffect iEffect = new ArrowEffect(effect.getEditPart(),
-                                    trigger.getEditPart(), root);
+                                    trigger.getEditPart());
                             newEffects.add(iEffect);
                         }
                     }
@@ -224,12 +217,10 @@ public class SignalFlowCombination extends AbstractCombination {
      * {@inheritDoc}
      */
     public void undo() {
-        for (IEffect effect : iEffects) {
-            Viewmanagement.getInstance().undoEffect(effect);
-        }
+        Viewmanagement.getInstance().undoEffect(iEffects);
         iEffects.clear();
     }
-
+    
     /**
      * A simple pair to map signal to edit part.
      * 

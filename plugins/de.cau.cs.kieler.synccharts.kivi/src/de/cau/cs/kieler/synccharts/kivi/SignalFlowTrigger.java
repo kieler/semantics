@@ -26,15 +26,15 @@ import de.cau.cs.kieler.kivi.core.impl.AbstractTrigger;
  * 
  */
 public class SignalFlowTrigger extends AbstractTrigger {
-    
+
     private static SignalFlowTrigger instance;
-    
+
     private boolean pushed;
-    
+
     private ISelection selection;
-    
+
     private IEditorPart editor;
-    
+
     /**
      * Default constructor.
      */
@@ -47,7 +47,7 @@ public class SignalFlowTrigger extends AbstractTrigger {
         selection = s;
         editor = e;
     }
-    
+
     /**
      * Get the faux-singleton instance.
      * 
@@ -56,27 +56,31 @@ public class SignalFlowTrigger extends AbstractTrigger {
     public static SignalFlowTrigger getInstance() {
         return instance;
     }
-    
+
     @Override
     public void register() {
-        // TODO look into dynamic showing/hiding of the signal flow button whenever the combination
-        // is disabled
+        // TODO look into dynamic hiding of the signal flow button if the trigger is disabled
     }
 
     @Override
     public void unregister() {
         // TODO see above
     }
-    
+
     /**
      * Called by the signal flow handler when the button is pressed.
      * 
-     * @param p true if the button is in the pushed state
-     * @param s the current selection in the SyncChart editor
-     * @param e the active SyncChart editor
+     * @param p
+     *            true if the button is in the pushed state
+     * @param s
+     *            the current selection in the SyncChart editor
+     * @param e
+     *            the active SyncChart editor
      */
     public void button(final boolean p, final ISelection s, final IEditorPart e) {
-        Viewmanagement.getInstance().trigger(new SignalFlowTrigger(p, s, e));
+        if (isActive()) {
+            Viewmanagement.getInstance().trigger(new SignalFlowTrigger(p, s, e));
+        }
     }
 
     /**

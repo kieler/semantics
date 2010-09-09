@@ -39,6 +39,7 @@
             locationURI="toolbar:de.cau.cs.kieler">
          <command
                commandId="de.cau.cs.kieler.synccharts.kivi.command.signalflow"
+               icon="icons/signalflow.gif"
                label="Signal Flow"
                style="toggle"
                tooltip="Show the flow of signals">
