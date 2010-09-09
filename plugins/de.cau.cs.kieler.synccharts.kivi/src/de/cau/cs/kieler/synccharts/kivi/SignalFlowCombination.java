@@ -156,9 +156,8 @@ public class SignalFlowCombination extends AbstractCombination {
                 }
             }
 
-            // remove all old arrows if this is an updated execution
-            undo();
             // check all triggers against all effects for same signals
+            List<IEffect> newEffects = new ArrayList<IEffect>();
             for (SignalPair effect : effects) {
                 for (SignalPair trigger : triggers) {
                     if (effect.getSignal() == trigger.getSignal()) {
@@ -167,12 +166,16 @@ public class SignalFlowCombination extends AbstractCombination {
                                 || trigger.getEditPart() == relevantLabel) {
                             IEffect iEffect = new ArrowEffect(effect.getEditPart(),
                                     trigger.getEditPart(), root);
-                            iEffects.add(iEffect);
-                            Viewmanagement.getInstance().executeEffect(iEffect);
+                            newEffects.add(iEffect);
                         }
                     }
                 }
             }
+            
+            // remove all old arrows if this is an updated execution
+            Viewmanagement.getInstance().undoEffect(iEffects);
+            Viewmanagement.getInstance().executeEffect(newEffects);
+            iEffects = newEffects;
         } else {
             // remove all arrows if the button is not pushed
             undo();

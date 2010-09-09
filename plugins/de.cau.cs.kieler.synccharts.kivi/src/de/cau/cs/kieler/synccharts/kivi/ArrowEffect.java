@@ -75,6 +75,7 @@ public class ArrowEffect extends AbstractEffect {
         if (connection == null) {
             connection = new PolylineConnection();
             connection.setForegroundColor(ColorConstants.red);
+            connection.setLineWidth(2);
             PolygonDecoration dec = new PolygonDecoration();
             dec.setTemplate(template);
             connection.setTargetDecoration(dec);
@@ -141,7 +142,7 @@ public class ArrowEffect extends AbstractEffect {
                 public void run() {
                     layer.add(connection);
                 }
-            }, true);
+            }, false);
         }
     }
 
@@ -154,10 +155,10 @@ public class ArrowEffect extends AbstractEffect {
                 MonitoredOperation.runInUI(new Runnable() {
                     public void run() {
                         connection.getParent().remove(connection);
+                        connection = null;
                     }
-                }, true);
+                }, false);
             }
-            connection = null;
         }
     }
 
