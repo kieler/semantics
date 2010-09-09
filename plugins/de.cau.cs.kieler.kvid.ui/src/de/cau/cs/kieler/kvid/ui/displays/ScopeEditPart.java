@@ -33,7 +33,6 @@ import org.eclipse.ui.PlatformUI;
 
 import ptolemy.plot.Plot;
 import de.cau.cs.kieler.core.model.util.ModelingUtil;
-import de.cau.cs.kieler.core.ui.figures.layout.AbstractTableLayout;
 import de.cau.cs.kieler.kaom.Port;
 import de.cau.cs.kieler.kvid.KvidUtil;
 import de.cau.cs.kieler.kvid.data.DataObject;

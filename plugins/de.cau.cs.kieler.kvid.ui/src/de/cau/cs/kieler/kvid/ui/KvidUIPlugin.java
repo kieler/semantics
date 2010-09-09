@@ -21,18 +21,18 @@ import org.osgi.framework.BundleContext;
  * 
  * @author jjc
  */
-public class KViDUIPlugin extends AbstractUIPlugin {
+public class KvidUIPlugin extends AbstractUIPlugin {
 
     /** The plug-in ID. */
     public static final String PLUGIN_ID = "de.cau.cs.kieler.kvid.ui"; //$NON-NLS-1$
 
     // The shared instance
-    private static KViDUIPlugin plugin;
+    private static KvidUIPlugin plugin;
 
     /**
      * The constructor.
      */
-    public KViDUIPlugin() {
+    public KvidUIPlugin() {
     }
 
     /*
@@ -60,7 +60,7 @@ public class KViDUIPlugin extends AbstractUIPlugin {
      * 
      * @return the shared instance
      */
-    public static KViDUIPlugin getDefault() {
+    public static KvidUIPlugin getDefault() {
         return plugin;
     }
 
