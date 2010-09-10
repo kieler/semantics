@@ -343,7 +343,12 @@ public final class DataDistributor implements IProviderListener, ResourceSetList
         dataByUri = new HashMap<KvidUri, DataObject>();
         currentDiagramLayout = null;
         if (currentEditor != null) {
-            currentEditor.getEditingDomain().removeResourceSetListener(this);
+            try {
+                currentEditor.getEditingDomain().removeResourceSetListener(this);
+            } catch (NullPointerException nex) {
+                //Can be ignored, happens when the diagram was deleted.
+                //Then there is also nothing to unregister anymore.
+            }
         }
         currentEditor = null;
         for (IDataListener listener : listeners) {
