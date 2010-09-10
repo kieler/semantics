@@ -35,11 +35,12 @@ import org.json.JSONObject;
 import de.cau.cs.kieler.core.kgraph.KEdge;
 import de.cau.cs.kieler.core.kgraph.KNode;
 import de.cau.cs.kieler.core.kgraph.KPort;
+import de.cau.cs.kieler.kiml.klayoutdata.KEdgeLayout;
 import de.cau.cs.kieler.kiml.klayoutdata.KInsets;
 import de.cau.cs.kieler.kiml.klayoutdata.KPoint;
+import de.cau.cs.kieler.kiml.klayoutdata.KShapeLayout;
 import de.cau.cs.kieler.kiml.options.LayoutOptions;
 import de.cau.cs.kieler.kiml.ui.layout.EclipseLayoutServices;
-import de.cau.cs.kieler.kiml.util.KimlUtil;
 import de.cau.cs.kieler.kvid.KvidPlugin;
 import de.cau.cs.kieler.kvid.KvidUtil;
 import de.cau.cs.kieler.kvid.data.DataObject;
@@ -258,12 +259,13 @@ public final class DataDistributor implements IProviderListener, ResourceSetList
         //FIXME Think about some refactoring, extract into more methods! Watch for NullPointers.
         Point parentPosition = new Point();
         KNode parent = currentNode;
+        KShapeLayout parentLayout = parent.getData(KShapeLayout.class);
         while (parent.getParent().getParent() != null) {
             parent = parent.getParent();
-            parentPosition.x = (int) KimlUtil.getShapeLayout(parent).getXpos();
-            parentPosition.y = (int) KimlUtil.getShapeLayout(parent).getYpos();
+            parentPosition.x = (int) parentLayout.getXpos();
+            parentPosition.y = (int) parentLayout.getYpos();
         }
-        KInsets insets = KimlUtil.getShapeLayout(parent).getProperty(LayoutOptions.INSETS);
+        KInsets insets = parentLayout.getProperty(LayoutOptions.INSETS);
         parentPosition.x += insets.getLeft();
         parentPosition.y += insets.getTop();
         
@@ -285,22 +287,27 @@ public final class DataDistributor implements IProviderListener, ResourceSetList
                     if (edge.getSourcePort() != null && edge.getSourcePort().equals(port)) {
                         List<Point> path = new LinkedList<Point>();
                         Point start = new Point(parentPosition);
-                        start.x += KimlUtil.getShapeLayout(edge.getSource()).getXpos();
-                        start.y += KimlUtil.getShapeLayout(edge.getSource()).getYpos();
-                        start.x += KimlUtil.getShapeLayout(port).getXpos();
-                        start.y += KimlUtil.getShapeLayout(port).getYpos();
+                        KShapeLayout sourceLayout = edge.getSource().getData(KShapeLayout.class);
+                        start.x += sourceLayout.getXpos();
+                        start.y += sourceLayout.getYpos();
+                        KShapeLayout sourcePortLayout = port.getData(KShapeLayout.class);
+                        start.x += sourcePortLayout.getXpos();
+                        start.y += sourcePortLayout.getYpos();
                         path.add(start);
-                        for (KPoint bendPoint : KimlUtil.getEdgeLayout(edge).getBendPoints()) {
+                        for (KPoint bendPoint : edge.getData(KEdgeLayout.class).getBendPoints()) {
                             Point pathStep = new Point(parentPosition);
                             pathStep.x += bendPoint.getX();
                             pathStep.y += bendPoint.getY();
                             path.add(pathStep);
                         }
                         Point finish = new Point(parentPosition);
-                        finish.x += KimlUtil.getShapeLayout(edge.getTarget()).getXpos();
-                        finish.y += KimlUtil.getShapeLayout(edge.getTarget()).getYpos();
-                        finish.x += KimlUtil.getShapeLayout(edge.getTargetPort()).getXpos();
-                        finish.y += KimlUtil.getShapeLayout(edge.getTargetPort()).getYpos();
+                        KShapeLayout targetLayout = edge.getTarget().getData(KShapeLayout.class);
+                        finish.x += targetLayout.getXpos();
+                        finish.y += targetLayout.getYpos();
+                        KShapeLayout targetPortLayout = edge.getTargetPort()
+                                .getData(KShapeLayout.class);
+                        finish.x += targetPortLayout.getXpos();
+                        finish.y += targetPortLayout.getYpos();
                         path.add(finish);
                         result.add(path);
                     }
