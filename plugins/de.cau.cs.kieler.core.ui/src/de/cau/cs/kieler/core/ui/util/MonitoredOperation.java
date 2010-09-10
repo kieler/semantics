@@ -225,7 +225,6 @@ public abstract class MonitoredOperation {
                     status.set(Status.OK_STATUS);
                 }
                 display.wake();
-                status.notify();
             }
         }
     }
@@ -286,13 +285,13 @@ public abstract class MonitoredOperation {
                     }
                 }
             });
-            synchronized (status) {
-                while (status.get() == null) {
-                    try {
-                        status.wait();
-                    } catch (InterruptedException exception) {
-                        // ignore exception
-                    }
+            while (status.get() == null) {
+                boolean hasMoreToDispatch;
+                do {
+                    hasMoreToDispatch = display.readAndDispatch();
+                } while (hasMoreToDispatch && status.get() == null);
+                if (status.get() == null) {
+                    display.sleep();
                 }
             }
             postUIexec(status.get());
