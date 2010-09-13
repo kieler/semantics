@@ -808,7 +808,7 @@
              CAUTION: foreach is a ant-contrib task declared above! -->
         <foreach param="zipfile" target="update.config">
             <path id="products">
-                <fileset dir="${buildLabel}" includes="*.zip" excludes="*macosx*" />
+                <fileset dir="${buildLabel}" includes="*.zip" /> <!-- excludes="*macosx*" / -->
             </path>
         </foreach>
 
@@ -846,15 +846,29 @@
     <!-- =========================================================================================== -->
 
     <target name="update.config"
-        description="private target for modifying the ${basename}.ini for more PermGen memory">
+        description="private target for modifying the ${basename}.ini for more PermGen memory and special macosx fixes">
 
         <basename file="${zipfile}" property="platform" suffix="zip" />
         <unzip dest="${basedir}/${buildLabel}/${platform}" src="${zipfile}">
+            <patternset includes="${basename}/${basename}.app/Contents/MacOS/${basename}.ini" />
             <patternset includes="${basename}/${basename}.ini" />
             <patternset includes="${executables}" />
         </unzip>
+        
+        <if>
+            <contains string="${zipfile}" substring="macosx" casesensitive="false" />
+            <then>
+                <copy file="${config.dir}/${basename}.ini.macosx"
+                      tofile="${basename}/${basename}.app/Contents/MacOS/${basename}.ini" overwrite="true" />
 
-        <concat destfile="${basedir}/${buildLabel}/${platform}/${basename}/${basename}.ini" append="true">-XX:MaxPermSize=256m</concat>
+                <touch>
+                    <fileset dir="${basedir}/${buildLabel}/${platform}" />
+                </touch>
+            </then>
+            <else>
+                <concat destfile="${basedir}/${buildLabel}/${platform}/${basename}/${basename}.ini"
+                        append="true">-XX:MaxPermSize=256m</concat>
+            </else>
 
         <zip destfile="${zipfile}" update="true">
             <zipfileset dir="${basedir}/${buildLabel}/${platform}" />
