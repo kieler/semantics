@@ -796,9 +796,21 @@
         
         <ant antfile="${eclipse.pdebuild.scripts}/productBuild/productBuild.xml" />
 
+        <antcall target="postprocess.rca" />
+
+    </target>
+    
+    <!-- =========================================================================================== -->
+
+    <target name="postprocess.rca" description="target platform specific post processings">
+
+        <!-- to zip the customized config.ini into our product
+             (during update.launcher) its path is determined here -->
+        <dirname property="config.dir" file="${product}" />
+        
         <!-- setting the executable flag on launcher binaries and added a corrected config.ini
              CAUTION: foreach is a ant-contrib task declared above! -->
-        <foreach param="zipfile" target="update.launcher">
+        <foreach param="zipfile" target="update.launcher" inheritall="true">
             <path id="products">
                 <fileset dir="${buildLabel}" includes="*.zip" excludes="*win32*" />
             </path>
@@ -806,10 +818,9 @@
         
         <!-- modifying the kieler.ini
              CAUTION: foreach is a ant-contrib task declared above! -->
-        <foreach param="zipfile" target="update.config">
+        <foreach param="zipfile" target="update.config" inheritall="true">
             <path id="products">
-                <fileset dir="${buildLabel}" includes="*.zip" /> <!-- excludes="*macosx*" / -->
-            </path>
+                <fileset dir="${buildLabel}" includes="*.zip" />            </path>
         </foreach>
 
     </target>
@@ -821,17 +832,13 @@
         <!-- will put the binaries in a unique temporary folder, touch and re-zip with 755
              ${binaries} my contain a comma separated list of further executables -->
         
-        <!-- to zip the customized config.ini into our product
-             (during update.launcher) its path is determined here -->
-        <dirname property="config.dir" file="${product}" />
-        
         <basename file="${zipfile}" property="platform" suffix="zip" />
         <unzip dest="${basedir}/${buildLabel}/${platform}" src="${zipfile}">
             <patternset includes="${basename}/${basename}.app/Contents/MacOS/${basename}" />
             <patternset includes="${basename}/${basename}" />
             <patternset includes="${executables}" />
         </unzip>
-        <copy file="${config.dir}/config.ini" tofile="${basedir}/${buildLabel}/${platform}/kieler/configuration/config.ini" overwrite="true" />
+        <copy file="${config.dir}/config.ini" tofile="${basedir}/${buildLabel}/${platform}/${basename}/configuration/config.ini" overwrite="true" />
 
         <touch>
             <fileset dir="${basedir}/${buildLabel}/${platform}" />
@@ -859,7 +866,7 @@
             <contains string="${zipfile}" substring="macosx" casesensitive="false" />
             <then>
                 <copy file="${config.dir}/${basename}.ini.macosx"
-                      tofile="${basename}/${basename}.app/Contents/MacOS/${basename}.ini" overwrite="true" />
+                      tofile="${basedir}/${buildLabel}/${platform}/${basename}/${basename}.app/Contents/MacOS/${basename}.ini" overwrite="true" />
 
                 <touch>
                     <fileset dir="${basedir}/${buildLabel}/${platform}" />
@@ -869,6 +876,7 @@
                 <concat destfile="${basedir}/${buildLabel}/${platform}/${basename}/${basename}.ini"
                         append="true">-XX:MaxPermSize=256m</concat>
             </else>
+        </if>
 
         <zip destfile="${zipfile}" update="true">
             <zipfileset dir="${basedir}/${buildLabel}/${platform}" />
@@ -943,3 +951,4 @@
     </target>
 
 </project>
+
