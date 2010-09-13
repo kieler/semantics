@@ -223,6 +223,11 @@
          version="0.0.0"
          search-location="self"/>
 
+   <includes
+         id="org.eclipse.amalgam.discovery"
+         version="0.0.0"
+         search-location="self"/>
+
    <plugin
          id="org.eclipse.jdt.core"
          download-size="0"
@@ -329,27 +334,6 @@
 
    <plugin
          id="org.aopalliance"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.amalgam.discovery.core"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.amalgam.discovery.modeling"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.amalgam.discovery.ui"
          download-size="0"
          install-size="0"
          version="0.0.0"
