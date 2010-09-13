@@ -92,8 +92,18 @@
       </option>
       <option
             class="org.eclipse.uml2.uml.StateMachine"
+            option="de.cau.cs.kieler.layout.options.minSpacing"
+            value="1.0">
+      </option>
+      <option
+            class="org.eclipse.uml2.uml.StateMachine"
             option="de.cau.cs.kieler.layout.options.borderSpacing"
             value="1.0">
+      </option>
+      <option
+            class="org.eclipse.uml2.uml.StateMachine"
+            option="de.cau.cs.kieler.layout.options.expandNodes"
+            value="true">
       </option>
       <option
             class="org.eclipse.uml2.uml.Region"
