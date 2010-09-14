@@ -602,10 +602,11 @@
                  (jar-ed version is not sufficient) -->        
         </ant>
         
+        <!-- if a source feature has been generated, call the build target in the respective build file -->
         <if>
             <available file="${basedir}/features/${feature}.source/feature.xml" />
             <then>
-	        <ant antfile="build.xml" dir="${basedir}/features/${feature}.source">
+	            <ant antfile="build.xml" dir="${basedir}/features/${feature}.source">
                     <property name="javacDebugInfo" value="true" />
                     <property name="feature.destination" value="${basedir}/update-site/features" />
                     <property name="plugin.destination" value="${basedir}/update-site/plugins" />
@@ -618,6 +619,7 @@
             </then>
         </if>
 
+        <!-- due to a bug in the generated feature build files backup the manifest.mf files -->
         <for param="bundle" list="${bundles}">
             <sequential>
                 <if>
@@ -634,6 +636,7 @@
         <!-- run feature's assemble.p2.xml: generate update site entry -->
         <antcall target="build.updatesiteEntry" />
         
+        <!-- restore the manifest.mf files -->
         <for param="bundle" list="${bundles}">
             <sequential>
                 <if>
@@ -717,7 +720,9 @@
         <!-- loadfile srcFile="${basedir}/features.info" property="features" / -->
         <echo message="${features}" />
 
-        <!-- setting the executable flag on launcher binaries
+        <!-- call usual build.feature target on each feature to be build
+             suppress clean on beginning to not delete results of the previous run
+             pre-determine the time stamp assuring the same timestamp for each feature 
              CAUTION: foreach is a ant-contrib task declared above! -->
         <foreach list="${features}" param="feature" target="build.feature">
             <param name="no.clean" value="true" />
@@ -742,7 +747,9 @@
 
         <echo message="${features}" />
 
-        <!-- setting the executable flag on launcher binaries
+        <!-- call usual build.updatesiteEntry target on each feature to be build
+             suppress clean on beginning to not delete results of the previous run
+             pre-determine the time stamp assuring the same timestamp for each feature 
              CAUTION: foreach is a ant-contrib task declared above! -->
         <foreach list="${features}" param="feature" target="build.updatesiteEntry">
             <param name="no.clean" value="true" />
@@ -762,7 +769,7 @@
         <!-- property name="customTargets"   location="${eclipse.pdebuild.templates}/customTargets.xml"/ -->
         <!-- customTargets property can't be set as it is defined through an <available> task in called build file;
              defining leads to 'DEPRECATED' echo, property will be overwritten exceptionally!
-             Therefor the builder property is defined, it points to the folder customTargets is expected to be in -->
+             Therefor the builder property is defined pointing to the folder customTargets is expected to be located -->
         <property name="genericTargets"  location="${scriptdir}/genericTargets.xml" />
         <property name="allElementsFile" location="${scriptdir}/allElements.xml" />
                 
@@ -775,7 +782,7 @@
              forceContextQualifier is responsible for plugin / feature qualifiers (here used in krep evalbench) -->
 
         <!-- extract product version from product file,
-             replace v?qualifier by ${p2.product.qualifier}
+             replace 'qualifier' by ${p2.product.qualifier}
              'p2.product.version' will be referenced in allElements.xml while creating the zip archives
              in order to add version and timestamp to zips' file name -->
         <loadfile property="p2.product.version" srcfile="${product}">
@@ -808,7 +815,7 @@
              (during update.launcher) its path is determined here -->
         <dirname property="config.dir" file="${product}" />
         
-        <!-- setting the executable flag on launcher binaries and added a corrected config.ini
+        <!-- setting the executable flag on launcher binaries
              CAUTION: foreach is a ant-contrib task declared above! -->
         <foreach param="zipfile" target="update.launcher" inheritall="true">
             <path id="products">
@@ -816,11 +823,12 @@
             </path>
         </foreach>
         
-        <!-- modifying the kieler.ini
+        <!-- modify the kieler.ini and add a corrected config.ini
              CAUTION: foreach is a ant-contrib task declared above! -->
         <foreach param="zipfile" target="update.config" inheritall="true">
             <path id="products">
-                <fileset dir="${buildLabel}" includes="*.zip" />            </path>
+                <fileset dir="${buildLabel}" includes="*.zip" />
+            </path>
         </foreach>
 
     </target>
@@ -838,7 +846,6 @@
             <patternset includes="${basename}/${basename}" />
             <patternset includes="${executables}" />
         </unzip>
-        <copy file="${config.dir}/config.ini" tofile="${basedir}/${buildLabel}/${platform}/${basename}/configuration/config.ini" overwrite="true" />
 
         <touch>
             <fileset dir="${basedir}/${buildLabel}/${platform}" />
@@ -853,7 +860,7 @@
     <!-- =========================================================================================== -->
 
     <target name="update.config"
-        description="private target for modifying the ${basename}.ini for more PermGen memory and special macosx fixes">
+        description="private target for replacing the config.ini (default workspace), modifying the ${basename}.ini (more PermGen memory) and special macosx fixes">
 
         <basename file="${zipfile}" property="platform" suffix="zip" />
         <unzip dest="${basedir}/${buildLabel}/${platform}" src="${zipfile}">
@@ -862,11 +869,20 @@
             <patternset includes="${executables}" />
         </unzip>
         
+        <copy file="${config.dir}/config.ini" tofile="${basedir}/${buildLabel}/${platform}/${basename}/configuration/config.ini" overwrite="true" />
+
         <if>
             <contains string="${zipfile}" substring="macosx" casesensitive="false" />
             <then>
                 <copy file="${config.dir}/${basename}.ini.macosx"
                       tofile="${basedir}/${buildLabel}/${platform}/${basename}/${basename}.app/Contents/MacOS/${basename}.ini" overwrite="true" />
+
+                <condition property="value" value=".x86_64" else="">
+                    <contains string="${zipfile}" substring="x86_64" casesensitive="false" />
+                </condition>
+                <replace file="${basedir}/${buildLabel}/${platform}/${basename}/${basename}.app/Contents/MacOS/${basename}.ini"
+                         token="macosx"
+                         value="macosx${value}" />
 
                 <touch>
                     <fileset dir="${basedir}/${buildLabel}/${platform}" />
