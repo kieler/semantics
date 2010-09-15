@@ -21,6 +21,7 @@ import java.util.Map;
 import org.eclipse.emf.compare.diff.metamodel.DiffModel;
 import org.eclipse.emf.compare.match.metamodel.Match2Elements;
 import org.eclipse.emf.compare.match.metamodel.MatchModel;
+import org.eclipse.emf.compare.match.metamodel.MatchPackage;
 import org.eclipse.emf.compare.match.service.MatchService;
 import org.eclipse.emf.ecore.EObject;
 
@@ -45,36 +46,72 @@ public class KitsSynchronizeLinker {
     private Map<EObject, EObject> LRmatchTable = null;
     private Map<EObject, EObject> RLmatchTable = null;
 
-    @SuppressWarnings("unchecked")
+    
+    /**
+     * Convenience method to initialize the linker.  
+     * 
+     * @param theDiffModel
+     * @return
+     */
     public KitsSynchronizeLinker setDiffModel(DiffModel theDiffModel) {
         this.diffModel = theDiffModel;
         if (theDiffModel!=null) {
-            
-            MatchModel newMatchModel = null;
-            try {
-                newMatchModel = MatchService.doMatch(this.diffModel.getLeftRoots().get(0),
-                        this.diffModel.getRightRoots().get(0),
-                        ModelSynchronizerJob.getMatchOptions());
-                
-                this.LRmatchTable = new HashMap<EObject, EObject>();
-                this.RLmatchTable = new HashMap<EObject, EObject>();
-                
-                Match2Elements match = null;
-                for (Iterator<EObject> it = newMatchModel.eAllContents(); it
-                        .hasNext();) {
-                    match = (Match2Elements) it.next();
-                    this.LRmatchTable.put(match.getLeftElement(), match.getRightElement());
-                    this.RLmatchTable.put(match.getRightElement(), match.getLeftElement());
-                }
-            } catch (InterruptedException e) {
-                this.LRmatchTable = Collections.EMPTY_MAP;
-                this.RLmatchTable = Collections.EMPTY_MAP;
-            }
+        	return consultSrcAndCopy(this.diffModel.getLeftRoots().get(0),
+                        this.diffModel.getRightRoots().get(0));
         }
         return this;
     }
+        
+    
+    /**
+     * Default method to initialize the linker.
+     * @param src
+     * @param copy
+     * @return
+     */
+	@SuppressWarnings("unchecked")
+	public KitsSynchronizeLinker consultSrcAndCopy(EObject src, EObject copy) {
+		MatchModel newMatchModel = null;
+		try {
+			// System.out.println(src.eResource().getURIFragment(src));
+			// System.out.println(copy.eResource().getURIFragment(copy));
+			
+			newMatchModel = MatchService.doContentMatch(src, copy,
+					ModelSynchronizerJob.getMatchOptions());			
 
-    public void linkElement(EObject root) {
+			// ModelSynchronizer.DEBUGMatch = true;
+			// ModelSynchronizer.dumpMatch(newMatchModel, System.out);
+			// ModelSynchronizer.DEBUGMatch = false;
+			
+			this.LRmatchTable = new HashMap<EObject, EObject>();
+			this.RLmatchTable = new HashMap<EObject, EObject>();
+
+			EObject eObj = null;
+			Match2Elements match = null;
+			for (Iterator<EObject> it = newMatchModel.eAllContents(); it
+					.hasNext();) {
+				eObj = it.next();
+				if (MatchPackage.eINSTANCE.getMatch2Elements().isInstance(eObj)) {
+					match = (Match2Elements) eObj;
+					this.LRmatchTable.put(match.getLeftElement(),
+							match.getRightElement());
+					this.RLmatchTable.put(match.getRightElement(),
+							match.getLeftElement());
+				}
+			}
+		} catch (InterruptedException e) {
+			this.LRmatchTable = Collections.EMPTY_MAP;
+			this.RLmatchTable = Collections.EMPTY_MAP;
+		}
+		return this;
+	}
+
+	
+	/**
+	 * Implements linking.
+	 * @param root
+	 */
+    public KitsSynchronizeLinker linkElement(EObject root) {
 
         EObject element = null;
         for (Iterator<EObject> it = root.eAllContents(); it.hasNext();) {
@@ -121,5 +158,18 @@ public class KitsSynchronizeLinker {
             }.doSwitch(element);
             
         }
+        
+        return this;
     }
+    
+    @SuppressWarnings("unchecked")
+	public <T extends EObject> T getMatched(T eObj) {
+    	T match = (T) this.LRmatchTable.get(eObj);
+    	if (match == null) {
+    		match = (T) this.RLmatchTable.get(eObj);
+    	}
+    	return match;
+    }
+    
+    
 }

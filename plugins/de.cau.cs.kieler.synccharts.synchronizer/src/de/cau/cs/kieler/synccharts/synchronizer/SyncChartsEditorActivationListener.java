@@ -17,6 +17,7 @@ import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.util.EContentAdapter;
 import org.eclipse.gmf.runtime.diagram.ui.resources.editor.parts.DiagramDocumentEditor;
+import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IPartListener;
 import org.eclipse.ui.IWorkbenchPart;
@@ -25,6 +26,7 @@ import org.eclipse.xtext.ui.editor.XtextEditor;
 import org.eclipse.xtext.util.concurrent.IUnitOfWork;
 
 import de.cau.cs.kieler.synccharts.presentation.SyncchartsEditor;
+import de.cau.cs.kieler.synccharts.synchronizer.kitsView.KitsView;
 
 /**
  * Custom {@link IPartListener} installing the known modelChangeListener on the
@@ -36,9 +38,14 @@ public class SyncChartsEditorActivationListener implements IPartListener {
 
     private IEditorPart activeEditor = null;
     private EContentAdapter syncChartModelChangeListener = null;
+    private ISelectionChangedListener selectionChangeListener = null;
 
     public void installModelChangeListener(EContentAdapter theModelChangeListener) {
         this.syncChartModelChangeListener = theModelChangeListener;
+    }
+
+    public void installSelectionChangeListener(ISelectionChangedListener theSelectionChangeListener) {
+        this.selectionChangeListener = theSelectionChangeListener;
     }
 
     public void partActivated(IWorkbenchPart part) {
@@ -68,8 +75,16 @@ public class SyncChartsEditorActivationListener implements IPartListener {
 
                 if (this.activeEditor instanceof DiagramDocumentEditor) {
                     // System.out.println("Notify DE-activation (diagram)");
+                    
+					if (this.selectionChangeListener != null) {
+						((DiagramDocumentEditor) this.activeEditor)
+								.getDiagramGraphicalViewer()
+								.removeSelectionChangedListener(
+										this.selectionChangeListener);
+					}
 
-                    this.activeEditor = null;
+					this.activeEditor = null;
+
                     ModelChangeTriggerListener.setEnabled(false);
                 }
             }
@@ -95,6 +110,14 @@ public class SyncChartsEditorActivationListener implements IPartListener {
                 if (part instanceof DiagramDocumentEditor) {
                     // System.out.println("Notify activation (diagram)");
                     this.activeEditor = (IEditorPart) part;
+                    
+					if (KitsView.getInstance() != null) {
+						this.selectionChangeListener = KitsView.getInstance();
+						((DiagramDocumentEditor) part)
+						.getDiagramGraphicalViewer()
+						.addSelectionChangedListener(
+								this.selectionChangeListener);
+					}
                     
                     ModelChangeTriggerListener.setEnabled(true);
                 }

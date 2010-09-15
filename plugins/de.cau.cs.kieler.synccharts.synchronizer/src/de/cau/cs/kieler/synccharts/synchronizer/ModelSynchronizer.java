@@ -30,6 +30,7 @@ import org.eclipse.xtext.util.Strings;
 import de.cau.cs.kieler.core.expressions.ExpressionsPackage;
 import de.cau.cs.kieler.core.expressions.ValuedObject;
 import de.cau.cs.kieler.synccharts.SyncchartsPackage;
+import de.cau.cs.kieler.synccharts.synchronizer.kitsView.KitsView;
 
 public class ModelSynchronizer implements IStartup {
 
@@ -43,7 +44,7 @@ public class ModelSynchronizer implements IStartup {
 
     public static ModelSynchronizer INSTANCE = null;
 
-    private static Boolean DEBUGMatch = false;
+    public static Boolean DEBUGMatch = false;
     private static Boolean DEBUGDiff = true;
     private static Boolean DEBUGPassive = false;
 
@@ -52,14 +53,14 @@ public class ModelSynchronizer implements IStartup {
 
     private IWorkbenchPage workbenchPage = null;
 
-//    private IEditorPart activeEditor = null;
-
     private SyncChartsEditorActivationListener editorActivationListener = null;
 
     private boolean active = false;
 
-    private ModelSynchronizerJob synchronizer = new ModelSynchronizerJob();
-
+    private ModelSynchronizerJob synchronizer = null;
+    
+    private KitsView kitsView = null;
+    
     public ModelSynchronizer() {
         if (INSTANCE == null)
             INSTANCE = this;
@@ -68,6 +69,8 @@ public class ModelSynchronizer implements IStartup {
 
         this.editorActivationListener = new SyncChartsEditorActivationListener();
         this.editorActivationListener.installModelChangeListener(this.modelChangeListener);
+        
+        this.synchronizer = new ModelSynchronizerJob();
 
         ICommandService service = (ICommandService) PlatformUI.getWorkbench().getService(
                 ICommandService.class);
@@ -180,14 +183,22 @@ public class ModelSynchronizer implements IStartup {
         }
     };
 
+    // ------------------------------------------------------------------------
+
     public IWorkbenchPage getWorkbenchPage() {
         return this.workbenchPage;
     }
 
     // ------------------------------------------------------------------------
 
-    // ------------------------------------------------------------------------
-
+    public static void installRemoveKitsView(KitsView view) {
+    	INSTANCE.kitsView = view;
+    }
+    
+    public static KitsView getKitsView() {
+    	return INSTANCE.kitsView;
+    }
+    
     // ------------------------------------------------------------------------
 
     // ------------------------------------------------------------------------

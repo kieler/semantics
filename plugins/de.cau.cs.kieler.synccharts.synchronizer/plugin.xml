@@ -33,7 +33,7 @@
             locationURI="toolbar:de.cau.cs.kieler?after=de.cau.cs.kieler.kiml.ui.command.layout">
          <command
                commandId="de.cau.cs.kieler.synccharts.synchronizer.Activate"
-               icon="icons/refresh.gif"
+               icon="icons/obj16/refresh.gif"
                label="ActivateSynchronization"
                style="toggle">
          </command>
@@ -81,6 +81,18 @@
             label="de.cau.cs.kieler.synccharts.synchronizer.diff.KitsDiffEngine"
             priority="normal">
       </diffengine>
+   </extension>
+   <extension
+         point="org.eclipse.ui.views">
+      <view
+            allowMultiple="false"
+            category="de.cau.cs.kieler"
+            class="de.cau.cs.kieler.synccharts.synchronizer.kitsView.KitsView"
+            icon="icons/obj16/SyncchartsTextFile.gif"
+            id="de.cau.cs.kieler.synccharts.synchronizer.kitsView"
+            name="KITS textual SyncCharts"
+            restorable="true">
+      </view>
    </extension>
 
 </plugin>
