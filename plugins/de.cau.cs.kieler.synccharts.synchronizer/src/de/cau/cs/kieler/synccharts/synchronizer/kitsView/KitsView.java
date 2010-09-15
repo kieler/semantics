@@ -1,3 +1,16 @@
+/*
+ * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
+ *
+ * http://www.informatik.uni-kiel.de/rtsys/kieler/
+ * 
+ * Copyright 2010 by
+ * + Christian-Albrechts-University of Kiel
+ *   + Department of Computer Science
+ *     + Real-Time and Embedded Systems Group
+ * 
+ * This code is provided under the terms of the Eclipse Public License (EPL).
+ * See the file epl-v10.html for the license text.
+ */
 package de.cau.cs.kieler.synccharts.synchronizer.kitsView;
 
 import org.eclipse.core.runtime.IStatus;
@@ -6,13 +19,15 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gmf.runtime.notation.View;
-import org.eclipse.jface.viewers.ISelectionChangedListener;
-import org.eclipse.jface.viewers.SelectionChangedEvent;
+import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.ui.ISelectionListener;
+import org.eclipse.ui.ISelectionService;
+import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.part.ViewPart;
 import org.eclipse.xtext.parsetree.reconstr.XtextSerializationException;
 import org.eclipse.xtext.resource.XtextResource;
@@ -24,21 +39,27 @@ import com.google.inject.Injector;
 import de.cau.cs.kieler.synccharts.Region;
 import de.cau.cs.kieler.synccharts.State;
 import de.cau.cs.kieler.synccharts.SyncchartsPackage;
+import de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditor;
 import de.cau.cs.kieler.synccharts.synchronizer.Activator;
 import de.cau.cs.kieler.synccharts.synchronizer.KitsSynchronizeLinker;
-import de.cau.cs.kieler.synccharts.text.ui.KitsUIPlugin;
 import de.cau.cs.kieler.synccharts.text.kits.KitsResource;
 import de.cau.cs.kieler.synccharts.text.kits.scoping.KitsEmbeddedScopeProvider;
+import de.cau.cs.kieler.synccharts.text.ui.KitsUIPlugin;
 
-public class KitsView extends ViewPart implements ISelectionChangedListener {
+/**
+ * View providing textual view on parts of SyncCharts models.
+ * The view serves as a SelectionListener to retrieve the
+ * graphical editors' models.
+ * 
+ * @author chsch
+ */
+public class KitsView extends ViewPart implements ISelectionListener {
 
 	private EmbeddedXtextEditor editor;
 	
-	private static KitsView INSTANCE = null;
-
+	
 	@Override
 	public void createPartControl(Composite parent) {
-		INSTANCE = this;
 		parent.setLayout(new GridLayout());
 		parent.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 		
@@ -52,26 +73,26 @@ public class KitsView extends ViewPart implements ISelectionChangedListener {
 			}
 		});
 
+		((ISelectionService) getSite().getService(ISelectionService.class))
+				.addSelectionListener(this);
 	}
 	
-	private void reconcileChangedModel() {
-		
-	}
+	
+	public void selectionChanged(IWorkbenchPart part, ISelection selection) {
 
-	public void selectionChanged(SelectionChangedEvent event) {
-		
 		EObject model = null;
 		
-		StructuredSelection selection = null;
-		if (event.getSelection() instanceof StructuredSelection) {
-			selection = (StructuredSelection) event.getSelection();
+		StructuredSelection sSelection = null;
+		if (part instanceof SyncchartsDiagramEditor
+				&& selection instanceof StructuredSelection) {
+			sSelection = (StructuredSelection) selection;
 			
-			if (selection.size() != 0
-					&& selection.getFirstElement() instanceof EditPart) {
-				EditPart part = (EditPart) selection.getFirstElement();
+			if (sSelection.size() != 0
+					&& sSelection.getFirstElement() instanceof EditPart) {
+				EditPart ePart = (EditPart) sSelection.getFirstElement();
 				
-				if (part.getModel() instanceof View) {
-					model = ((View) part.getModel()).getElement();
+				if (ePart.getModel() instanceof View) {
+					model = ((View) ePart.getModel()).getElement();
 				}
 			}
 		}
@@ -122,18 +143,22 @@ public class KitsView extends ViewPart implements ISelectionChangedListener {
 					.getDefault()
 					.getLog()
 					.log(new Status(IStatus.ERROR, Activator.PLUGIN_ID,
-							IStatus.OK, "Problem", e));
+							1, "Serialization of textual view failed", e));
 		}
 	}
 	
-	public void dispose() {
-		INSTANCE = null;
+		
+	private void reconcileChangedModel() {
+		
+	}
+
+
+	public void dispose() {		
+		((ISelectionService) getSite().getService(ISelectionService.class))
+				.removeSelectionListener(this);
 		super.dispose();
 	}
-	
-	public static KitsView getInstance() {
-		return INSTANCE;
-	}
+
 	
 	@Override
 	public void setFocus() {

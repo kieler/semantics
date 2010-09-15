@@ -11,6 +11,14 @@
  *    itemis AG - source viewer configuration
  *    Sebastian Zarnekow (itemis AG) - synthetic resource creation and source viewer configuration 
  */
+/*
+ * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
+ *
+ * http://www.informatik.uni-kiel.de/rtsys/kieler/
+ * 
+ * further developed by
+ *     Christian Schneider
+ */
 package de.cau.cs.kieler.synccharts.synchronizer.kitsView;
 
 import java.io.IOException;
@@ -75,7 +83,8 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.editors.text.EditorsUI;
 import org.eclipse.ui.handlers.IHandlerActivation;
 import org.eclipse.ui.handlers.IHandlerService;
-import org.eclipse.ui.internal.editors.text.EditorsPlugin;
+//import org.eclipse.ui.internal.editors.text.EditorsPlugin;
+import org.eclipse.ui.texteditor.AbstractDecoratedTextEditor;
 import org.eclipse.ui.texteditor.AbstractDecoratedTextEditorPreferenceConstants;
 import org.eclipse.ui.texteditor.AnnotationPreference;
 import org.eclipse.ui.texteditor.DefaultMarkerAnnotationAccess;
@@ -191,15 +200,18 @@ public class EmbeddedXtextEditor {
 	public EmbeddedXtextEditor(Composite control, Injector injector, int style) {
 		fControl = control;
 		fStyle = style;
-		fAnnotationPreferences= EditorsPlugin.getDefault().getMarkerAnnotationPreferences();
+		
+		fAnnotationPreferences = (MarkerAnnotationPreferences) new AbstractDecoratedTextEditor() {
+		}.getAdapter(MarkerAnnotationPreferences.class);
+		// EditorsPlugin.getDefault().getMarkerAnnotationPreferences();
+		
 		fFoldingStructureProvider = new EmbeddedFoldingStructureProvider();
 		
 		injector.injectMembers(this);
 		
 		// CHSCH
 		fPreferenceStore = fPreferenceStoreAccess.getPreferenceStore();
-		
-		
+
 		createEditor(fControl);
 	}
 	
@@ -453,6 +465,7 @@ public class EmbeddedXtextEditor {
 		}
 	}
 
+	@SuppressWarnings("unused")
 	private ProjectionSupport fProjectionSupport;
 	
 	private static final String ERROR_ANNOTATION_TYPE = "org.eclipse.xtext.ui.editor.error";
@@ -699,7 +712,7 @@ public class EmbeddedXtextEditor {
 	 *
 	 */
 	private final class SourceViewerFocusListener implements FocusListener {
-		private static final String EMBEDEDXTEXT_EDITOR_CONTEXT = "org.eclipselabs.xtfo.embededxtextEditor.context"; //$NON-NLS-1$
+//		private static final String EMBEDEDXTEXT_EDITOR_CONTEXT = "org.eclipselabs.xtfo.embededxtextEditor.context"; //$NON-NLS-1$
 		
 		private final Expression fExpression;
 		private final List<IHandlerActivation> fHandlerActivations;
