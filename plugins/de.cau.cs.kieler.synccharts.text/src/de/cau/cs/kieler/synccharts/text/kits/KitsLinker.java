@@ -54,7 +54,6 @@ public class KitsLinker extends AbstractCleaningLinker {
     protected void doLinkModel(EObject model, IDiagnosticConsumer diagnosticsConsumer) {
 
         Iterator<EObject> it = model.eAllContents();
-//        String uriFragment = null;
         List<EObject> linkedObjects = null;
 
         /* iterate on all semantic elements of the synccharts model */
@@ -81,14 +80,8 @@ public class KitsLinker extends AbstractCleaningLinker {
                         EReference eRef = GrammarUtil.getReference(
                                 (CrossReference) childNode.getGrammarElement(), obj.eClass());
 
-//                        /* compute the relative path from node to childnode */
-//                        uriFragment = getRelativePath("", node, childNode);
-//                        
-//                        AbstractNode node2 =  getNode(node, uriFragment);
-//                        
-
                         /*
-                         * ask the linking service (with hooked scope provider for the addressed
+                         * ask the linking service (with hooked scope provider) for the addressed
                          * semantic element; list is empty or singleton
                          */
                         linkedObjects = this.linkingService.getLinkedObjects(obj, eRef, childNode);
@@ -114,67 +107,4 @@ public class KitsLinker extends AbstractCleaningLinker {
             }
         }
     }
-
-    // ------------------------------------------------------------------------------- //
-
-//    /**
-//     * computes relative address from currentNode to otherNode. copied from
-//     * {@link org.eclipse.xtext.linking.lazy.LazyURIEncoder} (renamed parameters making them more
-//     * comprehensible)
-//     * 
-//     * @param result
-//     *            initial fragmentURI
-//     * @param currentNode
-//     *            current semantic element parse node
-//     * @param otherNode
-//     *            other node to compute the address from current node to
-//     * @return
-//     */
-//    private String getRelativePath(String result, AbstractNode currentNode, AbstractNode otherNode) {
-//        if (currentNode == otherNode)
-//            return result;
-//        if (EcoreUtil.isAncestor(currentNode, otherNode)) {
-//            result = getRelativePath(result, currentNode, otherNode.getParent());
-//            result = result.concat("/").concat(
-//                    Integer.toString(otherNode.getParent().getChildren().indexOf(otherNode)));
-//        } else {
-//            result = result.concat("/..");
-//            result = getRelativePath(result, currentNode.getParent(), otherNode);
-//        }
-//        return result;
-//    }
-//
-//    // ------------------------------------------------------------------------------- //
-//
-//    /**
-//     * reveals a parse tree node relative from 'node'. copied from
-//     * {@link org.eclipse.xtext.linking.lazy.LazyURIEncoder} (renamed parameters making them more
-//     * comprehensible)
-//     * 
-//     * @param node
-//     *            current semantic element parse node
-//     * @param path
-//     *            relative path to addressed node
-//     * @return the addressed parse tree node
-//     */
-//    private AbstractNode getNode(final AbstractNode node, String path) {
-//        final String[] split = path.split("/");
-//        AbstractNode result = node;
-//        for (String string : split) {
-//            String trimmed = string.trim();
-//            if (trimmed.length() > 0) {
-//                if ("..".equals(trimmed)) {
-//                    if (result.getParent() == null)
-//                        throw new IllegalStateException("node has no parent");
-//                    result = result.getParent();
-//                } else {
-//                    int index = Integer.parseInt(string);
-//                    if (index >= 0) {
-//                        result = ((CompositeNode) result).getChildren().get(index);
-//                    }
-//                }
-//            }
-//        }
-//        return result;
-//    }
 }

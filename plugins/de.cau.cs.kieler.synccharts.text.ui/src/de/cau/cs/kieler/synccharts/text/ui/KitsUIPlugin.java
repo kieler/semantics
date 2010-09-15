@@ -40,6 +40,8 @@ public class KitsUIPlugin extends AbstractUIPlugin {
 
     public static final String KITS_LANGUAGE = "de.cau.cs.kieler.synccharts.text.kits.Kits";
 
+    public static final String KITS_LANGUAGE_EMBEDDED = "de.cau.cs.kieler.synccharts.text.kits.KitsEmbedded";
+
     private Map<String, Injector> injectors = new HashMap<String, Injector>();
     private static KitsUIPlugin INSTANCE;
 
@@ -65,6 +67,11 @@ public class KitsUIPlugin extends AbstractUIPlugin {
                     Guice.createInjector(Modules.override(
                             Modules.override(getRuntimeModule(KITS_LANGUAGE)).with(
                                     getUiModule(KITS_LANGUAGE))).with(getSharedStateModule())));
+            injectors.put(KITS_LANGUAGE_EMBEDDED,
+                    Guice.createInjector(Modules.override(
+                            Modules.override(getRuntimeModule(KITS_LANGUAGE_EMBEDDED)).with(
+                            		getUiModule(KITS_LANGUAGE)))
+                            		.with(getSharedStateModule())));
 
         } catch (Exception e) {
             Logger.getLogger(getClass()).error(e.getMessage(), e);
@@ -87,7 +94,9 @@ public class KitsUIPlugin extends AbstractUIPlugin {
         if (KITS_LANGUAGE.equals(grammar)) {
             return new de.cau.cs.kieler.synccharts.text.kits.KitsRuntimeModule();
         }
-
+        if (KITS_LANGUAGE_EMBEDDED.equals(grammar)) {
+        	return new de.cau.cs.kieler.synccharts.text.kits.KitsEmbeddedRuntimeModule();
+        }
         throw new IllegalArgumentException(grammar);
     }
 
@@ -104,7 +113,7 @@ public class KitsUIPlugin extends AbstractUIPlugin {
         }
         throw new IllegalArgumentException(grammar);
     }
-
+    
     protected Module getSharedStateModule() {
         return new org.eclipse.xtext.ui.shared.SharedStateModule();
     }
