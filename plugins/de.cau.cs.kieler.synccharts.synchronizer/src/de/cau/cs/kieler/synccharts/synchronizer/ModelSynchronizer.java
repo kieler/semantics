@@ -39,6 +39,7 @@ public class ModelSynchronizer implements IStartup {
     public static String MSG_NO_ACTIVE_EDITOR = "A valid active editor cannot be determined.";
     public static String MSG_XTEXT_REFRESH_FAILED = "The Xtext editor could not be refreshed successfully.";
     public static String MSG_LABEL_SERIALIZATION_FAILED = "Transition labels could not be serialized properly.";
+    public static String MSG_MERGING_FAILED = "Problem while merging contents. Re-select a region in diagram.";
     
     public static int RESOLVE_TRANSITION_TARGETS = 0xABCD;
 

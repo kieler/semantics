@@ -16,6 +16,8 @@ package de.cau.cs.kieler.synccharts.synchronizer;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.compare.diff.merge.service.MergeService;
 import org.eclipse.emf.compare.diff.metamodel.DiffModel;
 import org.eclipse.emf.ecore.EObject;
@@ -25,7 +27,8 @@ import org.eclipse.gmf.runtime.diagram.ui.resources.editor.parts.DiagramDocument
 import org.eclipse.gmf.runtime.emf.commands.core.command.AbstractTransactionalCommand;
 import org.eclipse.gmf.runtime.notation.Diagram;
 
-import de.cau.cs.kieler.core.KielerRuntimeException;
+import de.cau.cs.kieler.core.ui.util.EditorUtils;
+import de.cau.cs.kieler.synccharts.custom.SyncchartsUtil;
 import de.cau.cs.kieler.synccharts.text.actions.bridge.ActionLabelProcessorWrapper;
 
 /**
@@ -49,19 +52,25 @@ public class SynchronizeGMFEditorCommand extends AbstractTransactionalCommand {
     protected CommandResult doExecuteWithResult(IProgressMonitor monitor, IAdaptable info)
             throws ExecutionException {
 
-        MergeService.merge(diffModel.getOwnedElements(), true);
+        try {
+            MergeService.merge(diffModel.getOwnedElements(), true);
+        } catch (NullPointerException e) {
+            EditorUtils.log(new Status(IStatus.WARNING, SyncchartsSynchronizerPlugin.PLUGIN_ID, 1,
+                    ModelSynchronizer.MSG_MERGING_FAILED, e));
+        }
 
         EObject model = ((Diagram) ((DiagramDocumentEditor) passiveEditor).getDiagramEditPart()
                 .getModel()).getElement();
 
         new KitsSynchronizeLinker().setDiffModel(diffModel).linkElement(model);
-        
+
         try {
             ActionLabelProcessorWrapper.processActionLabels(((Diagram) this.passiveEditor
                     .getDiagramEditPart().getModel()).getElement(),
                     ActionLabelProcessorWrapper.SERIALIZE);
         } catch (Exception e) {
-            throw new KielerRuntimeException(ModelSynchronizer.MSG_LABEL_SERIALIZATION_FAILED);
+            EditorUtils.log(new Status(IStatus.WARNING, SyncchartsSynchronizerPlugin.PLUGIN_ID, 1,
+                    SyncchartsUtil.MSG_LABEL_SERIAL_FAILED, e));
         }
 
         for (CanonicalEditPolicy p : CanonicalEditPolicy.getRegisteredEditPolicies(model)) {
@@ -69,8 +78,6 @@ public class SynchronizeGMFEditorCommand extends AbstractTransactionalCommand {
         }
 
         ((DiagramDocumentEditor) passiveEditor).getDiagramGraphicalViewer().flush();
-
-		// System.out.println("GMF Command done");
 
         return CommandResult.newOKCommandResult();
     }

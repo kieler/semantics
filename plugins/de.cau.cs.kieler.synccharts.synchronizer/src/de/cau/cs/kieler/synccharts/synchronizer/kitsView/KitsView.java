@@ -37,67 +37,63 @@ import de.cau.cs.kieler.synccharts.text.ui.KitsUIPlugin;
  */
 public class KitsView extends ViewPart {
 
-	private EmbeddedXtextEditor editor;
-	
-	private SyncChartSynchronizerJob synchronizer;
-	
-	@Override
-	public void createPartControl(Composite parent) {
-		parent.setLayout(new GridLayout());
-		parent.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-		
-		Injector injector = KitsUIPlugin.getInstance().getInjector(KitsUIPlugin.KITS_LANGUAGE_EMBEDDED);
+    private EmbeddedXtextEditor editor;
 
-		editor = new EmbeddedXtextEditor(parent, injector);
+    private SyncChartSynchronizerJob synchronizer;
 
-		editor.getDocument().addModelListener(new IXtextModelListener() {
-			public void modelChanged(XtextResource resource) {
-				if (!documentHasErrors(editor.getDocument())) {
-					synchronizer.cancel();
-					synchronizer.schedule(1000L);
-				}
-			}
-		});
+    @Override
+    public void createPartControl(Composite parent) {
+        parent.setLayout(new GridLayout());
+        parent.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 
-		synchronizer = new SyncChartSynchronizerJob("SyncChartsSynchronizer", editor);
-		
-		((ISelectionService) getSite().getService(ISelectionService.class))
-				.addSelectionListener(synchronizer);
-		
-	}
-	
-	
-	
-	/**
-	 * Copied from @{link org.eclipselabs.xtfo.demo.rcp.editor.detailspage.Domain DomainModelDetailsPage}.
-	 * (and simplified)
-	 * 
-	 * @param xtextDocument
-	 * @return true if the document could not be parsed and linked correctly, false otherwise
-	 */
-	private boolean documentHasErrors(final IXtextDocument xtextDocument) {
-		return (xtextDocument.readOnly(new IUnitOfWork<Boolean, XtextResource>() {
-			public Boolean exec(XtextResource state) throws Exception {
-				IParseResult parseResult = state.getParseResult();
-						return !state.getErrors().isEmpty()
-								|| parseResult == null
-								|| !parseResult.getParseErrors().isEmpty();
-			}
-		}));
-	}
+        Injector injector = KitsUIPlugin.getInstance().getInjector(
+                KitsUIPlugin.KITS_LANGUAGE_EMBEDDED);
 
+        editor = new EmbeddedXtextEditor(parent, injector);
 
-	public void dispose() {		
-		((ISelectionService) getSite().getService(ISelectionService.class))
-				.removeSelectionListener(synchronizer);
-		editor.dispose();
-		super.dispose();
-	}
+        editor.getDocument().addModelListener(new IXtextModelListener() {
+            public void modelChanged(XtextResource resource) {
+                synchronizer.cancel();
+                if (!documentHasErrors(editor.getDocument())) {
+                    synchronizer.schedule(2000L);
+                }
+            }
+        });
 
-	
-	@Override
-	public void setFocus() {
-		
-	}
+        synchronizer = new SyncChartSynchronizerJob("SyncChartsSynchronizer", editor);
+
+        ((ISelectionService) getSite().getService(ISelectionService.class))
+                .addSelectionListener(synchronizer);
+
+    }
+
+    /**
+     * Copied from @{link org.eclipselabs.xtfo.demo.rcp.editor.detailspage.Domain
+     * DomainModelDetailsPage}. (and simplified)
+     * 
+     * @param xtextDocument
+     * @return true if the document could not be parsed and linked correctly, false otherwise
+     */
+    private boolean documentHasErrors(final IXtextDocument xtextDocument) {
+        return (xtextDocument.readOnly(new IUnitOfWork<Boolean, XtextResource>() {
+            public Boolean exec(XtextResource state) throws Exception {
+                IParseResult parseResult = state.getParseResult();
+                return !state.getErrors().isEmpty() || parseResult == null
+                        || !parseResult.getParseErrors().isEmpty();
+            }
+        }));
+    }
+
+    public void dispose() {
+        ((ISelectionService) getSite().getService(ISelectionService.class))
+                .removeSelectionListener(synchronizer);
+        editor.dispose();
+        super.dispose();
+    }
+
+    @Override
+    public void setFocus() {
+
+    }
 
 }
