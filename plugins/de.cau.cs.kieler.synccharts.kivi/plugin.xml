@@ -10,15 +10,12 @@
       </content>
    </extension>
    <extension
-         point="de.cau.cs.kieler.kivi.combinations">
+         point="de.cau.cs.kieler.core.kivi.combinations">
       <combination
             class="de.cau.cs.kieler.synccharts.kivi.StateActivityCombination"
             description="Highlights active states during simulation."
             name="State Activity Combination">
       </combination>
-   </extension>
-   <extension
-         point="de.cau.cs.kieler.kivi.combinations">
       <combination
             class="de.cau.cs.kieler.synccharts.kivi.SignalFlowCombination"
             description="Visualizes the flow of signals in a SyncChart diagram."
@@ -26,11 +23,16 @@
       </combination>
    </extension>
    <extension
-         point="de.cau.cs.kieler.kivi.effects">
+         point="de.cau.cs.kieler.core.kivi.effects">
       <effect
             class="de.cau.cs.kieler.synccharts.kivi.StateActivityHighlightEffect"
             description="Highlights a state with a red border."
             name="Highlight Effect">
+      </effect>
+      <effect
+            class="de.cau.cs.kieler.synccharts.kivi.ArrowEffect"
+            description="Draw an arrow between two objects."
+            name="Arrow Effect">
       </effect>
    </extension>
    <extension

@@ -13,16 +13,18 @@
  */
 package de.cau.cs.kieler.synccharts.kivi;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.gef.EditPart;
+import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramEditor;
 
-import de.cau.cs.kieler.kivi.core.Viewmanagement;
-import de.cau.cs.kieler.kivi.core.impl.AbstractTrigger;
+import de.cau.cs.kieler.core.kivi.AbstractTrigger;
+import de.cau.cs.kieler.core.kivi.AbstractTriggerState;
 
 /**
- * A trigger notifying the view management about the active states during
- * simulation.
+ * A trigger notifying the view management about the active states during simulation.
  * 
  * @author mmu
  * 
@@ -59,8 +61,8 @@ public class StateActivityTrigger extends AbstractTrigger {
      * @param aS
      *            map of active states
      */
-    public void step(final List<List<EditPart>> aS) {
-        Viewmanagement.getInstance().trigger(new StateActivityTrigger(aS));
+    public void step(final List<List<EObject>> aS, final DiagramEditor editor) {
+        trigger(new ActiveStates(aS, editor));
     }
 
     @Override
@@ -72,12 +74,57 @@ public class StateActivityTrigger extends AbstractTrigger {
     }
 
     /**
-     * Get the map of active states.
+     * Contains the currently active states.
      * 
-     * @return active states
+     * @author mmu
+     * 
      */
-    public List<List<EditPart>> getActiveStates() {
-        return activeStates;
+    public static final class ActiveStates extends AbstractTriggerState {
+
+        private List<List<EObject>> activeStates;
+
+        private DiagramEditor diagramEditor;
+        
+        /**
+         * Default Constructor.
+         */
+        public ActiveStates() {
+            
+        }
+
+        private ActiveStates(final List<List<EObject>> states, final DiagramEditor editor) {
+            activeStates = states;
+            diagramEditor = editor;
+        }
+
+        @Override
+        public Class<?> getTriggerClass() {
+            return StateActivityTrigger.class;
+        }
+
+        /**
+         * Get the list of active states.
+         * 
+         * @return the list of active states
+         */
+        public List<List<EObject>> getActiveStates() {
+            if (activeStates != null) {
+                return activeStates;
+            } else {
+                return new ArrayList<List<EObject>>();
+            }
+        }
+
+        /**
+         * Get the diagram editor where the simulation is running.
+         * 
+         * @return the diagram editor
+         */
+        public DiagramEditor getDiagramEditor() {
+            // no useful default value
+            return diagramEditor;
+        }
+
     }
 
 }

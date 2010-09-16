@@ -18,9 +18,6 @@ import java.util.List;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
-import org.eclipse.gef.ConnectionEditPart;
-import org.eclipse.gef.EditPart;
-import org.eclipse.gmf.runtime.diagram.ui.editparts.DiagramEditPart;
 import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramEditor;
 import org.eclipse.gmf.runtime.notation.View;
 import org.eclipse.swt.widgets.Display;
@@ -31,7 +28,6 @@ import org.eclipse.ui.PlatformUI;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import de.cau.cs.kieler.kivi.core.Viewmanagement;
 import de.cau.cs.kieler.sim.kiem.IJSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.JSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.KiemExecutionException;
@@ -93,7 +89,7 @@ public class StateActivityDataComponent extends JSONObjectDataComponent implemen
      */
     public void wrapup() throws KiemInitializationException {
         if (StateActivityTrigger.getInstance() != null) {
-            StateActivityTrigger.getInstance().step(null);
+            StateActivityTrigger.getInstance().step(null, diagramEditor);
         }
     }
 
@@ -132,8 +128,8 @@ public class StateActivityDataComponent extends JSONObjectDataComponent implemen
         JSONDataPool pool = KiemPlugin.getDefault().getExecution().getDataPool();
         long step = KiemPlugin.getDefault().getExecution().getSteps();
 
-        List<List<EditPart>> statesByStep = new ArrayList<List<EditPart>>();
-        List<EditPart> currentStep = new ArrayList<EditPart>();
+        List<List<EObject>> statesByStep = new ArrayList<List<EObject>>();
+        List<EObject> currentStep = new ArrayList<EObject>();
         JSONObject currentJSONObject = jSONObject;
         try {
             for (int i = 0; i <= steps; i++) {
@@ -142,26 +138,23 @@ public class StateActivityDataComponent extends JSONObjectDataComponent implemen
                     // TODO parameterize state key
                     String[] states = stateString.split(", ");
                     for (String state : states) {
-                        if (state.startsWith("/")) {
+                        if (state.length() > 1) {
                             EObject active = resource.getEObject(state);
                             if (active != null) {
                                 if (!contains(statesByStep, active)) { // filter out newer
-                                                                       // activities
-                                    EditPart editPart = Viewmanagement.findEditPart(
-                                            diagramEditor.getDiagramEditPart(), active);
-                                    currentStep.add(editPart);
+                                    currentStep.add(active);
                                 }
                             }
                         }
                     }
                     statesByStep.add(currentStep);
-                    currentStep = new ArrayList<EditPart>();
+                    currentStep = new ArrayList<EObject>();
                 }
                 long index = wrapper.getPoolIndex(step - i - 1 + 0);
                 currentJSONObject = pool.getData(null, index);
             }
             if (StateActivityTrigger.getInstance() != null) {
-                StateActivityTrigger.getInstance().step(statesByStep);
+                StateActivityTrigger.getInstance().step(statesByStep, diagramEditor);
             }
         } catch (JSONException e) {
             // when no state value exists
@@ -170,10 +163,10 @@ public class StateActivityDataComponent extends JSONObjectDataComponent implemen
         return null;
     }
 
-    private boolean contains(final List<List<EditPart>> statesByStep, final EObject active) {
-        for (List<EditPart> list : statesByStep) {
-            for (EditPart e : list) {
-                if (((View) e.getModel()).getElement().equals(active)) {
+    private boolean contains(final List<List<EObject>> statesByStep, final EObject active) {
+        for (List<EObject> list : statesByStep) {
+            for (EObject e : list) {
+                if (e.equals(active)) {
                     return true;
                 }
             }

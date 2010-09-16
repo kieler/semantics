@@ -17,16 +17,18 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gef.GraphicalEditPart;
+import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramEditor;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.RGB;
 
-import de.cau.cs.kieler.kivi.KiViPlugin;
-import de.cau.cs.kieler.kivi.core.CombinationParameter;
-import de.cau.cs.kieler.kivi.core.IEffect;
-import de.cau.cs.kieler.kivi.core.Viewmanagement;
-import de.cau.cs.kieler.kivi.core.impl.AbstractCombination;
+import de.cau.cs.kieler.core.kivi.KiViPlugin;
+import de.cau.cs.kieler.core.kivi.IEffect;
+import de.cau.cs.kieler.core.kivi.KiVi;
+import de.cau.cs.kieler.core.kivi.AbstractCombination;
+import de.cau.cs.kieler.synccharts.kivi.StateActivityTrigger.ActiveStates;
 
 /**
  * A combination that visualizes the simulation of a SyncChart.
@@ -36,49 +38,49 @@ import de.cau.cs.kieler.kivi.core.impl.AbstractCombination;
  */
 public class StateActivityCombination extends AbstractCombination {
 
-    private static final CombinationParameter[] PARAMETERS = new CombinationParameter[] {
-            new CombinationParameter("highlightColor", "float", "0.0"),
-            new CombinationParameter("historyColor", "float", "240.0") };
+    // private static final CombinationParameter[] PARAMETERS = new CombinationParameter[] {
+    // new CombinationParameter("highlightColor", "float", "0.0"),
+    // new CombinationParameter("historyColor", "float", "240.0") };
 
-    private List<List<EditPart>> activeStates;
+    private Map<EObject, StateActivityHighlightEffect> effects = new HashMap<EObject, StateActivityHighlightEffect>();
 
-    private Map<EditPart, StateActivityHighlightEffect> effects = new HashMap<EditPart, StateActivityHighlightEffect>();
-
-    @Override
-    public void execute() {
-        if (activeStates == null) { // simulation finished
+    /**
+     * Execute this combination using the active states state.
+     * 
+     * @param activeStates the active states
+     */
+    public void execute(final ActiveStates activeStates) {
+        if (activeStates.getActiveStates() == null) { // simulation finished
             undo();
             return;
         }
 
         // assume every effect needs to be undone
-        Map<EditPart, IEffect> toUndo = new HashMap<EditPart, IEffect>(effects);
+        Map<EObject, IEffect> toUndo = new HashMap<EObject, IEffect>(effects);
 
         // these were last active i steps ago
-        for (int i = 0; i < activeStates.size(); i++) {
-            List<EditPart> currentStep = activeStates.get(i);
-            for (EditPart e : currentStep) {
-                if (e instanceof GraphicalEditPart) {
-                    // check if an effect exists for this edit part
-                    StateActivityHighlightEffect effect = effects.get(e);
-                    if (effect == null) {
-                        // if not then create new one
-                        effect = new StateActivityHighlightEffect((GraphicalEditPart) e);
-                        effects.put(e, effect);
-                    } else {
-                        // if it does then don't undo it later
-                        toUndo.remove(e);
-                    }
-                    // update its color instead of undo and create a new effect to avoid flashing
-                    effect.setColor(getColor(i, activeStates.size()));
-                    Viewmanagement.getInstance().executeEffect(effect);
+        for (int i = 0; i < activeStates.getActiveStates().size(); i++) {
+            List<EObject> currentStep = activeStates.getActiveStates().get(i);
+            for (EObject e : currentStep) {
+                // check if an effect exists for this edit part
+                StateActivityHighlightEffect effect = effects.get(e);
+                if (effect == null) {
+                    // if not then create new one
+                    effect = new StateActivityHighlightEffect(e, activeStates.getDiagramEditor());
+                    effects.put(e, effect);
+                } else {
+                    // if it does then don't undo it later
+                    toUndo.remove(e);
                 }
+                // update its color instead of undo and create a new effect to avoid flashing
+                effect.setColor(getColor(i, activeStates.getActiveStates().size()));
+                KiVi.getInstance().executeEffect(effect);
             }
         }
 
         // undo any effect that was not found in the active states
-        for (Map.Entry<EditPart, IEffect> entry : toUndo.entrySet()) {
-            Viewmanagement.getInstance().undoEffect(entry.getValue());
+        for (Map.Entry<EObject, IEffect> entry : toUndo.entrySet()) {
+            KiVi.getInstance().undoEffect(entry.getValue());
             effects.remove(entry.getKey());
         }
     }
@@ -88,21 +90,9 @@ public class StateActivityCombination extends AbstractCombination {
      */
     public void undo() {
         for (IEffect effect : effects.values()) {
-            Viewmanagement.getInstance().undoEffect(effect);
+            KiVi.getInstance().undoEffect(effect);
         }
         effects.clear();
-    }
-
-    /**
-     * Receive events from StateActivityTriggers.
-     * 
-     * @param trigger
-     *            the trigger
-     * @return true
-     */
-    public boolean evaluate(final StateActivityTrigger trigger) {
-        activeStates = trigger.getActiveStates();
-        return true;
     }
 
     /**
@@ -110,20 +100,16 @@ public class StateActivityCombination extends AbstractCombination {
      * 
      * @return the parameters
      */
-    public static CombinationParameter[] getParameters() {
-        return PARAMETERS;
-    }
+    // public static CombinationParameter[] getParameters() {
+    // return PARAMETERS;
+    // }
 
     private Color getColor(final int step, final int steps) {
         if (step == 0) {
-            return new Color(null, new RGB(Float.parseFloat(KiViPlugin.getDefault()
-                    .getPreferenceStore()
-                    .getString(getClass().getCanonicalName() + ".highlightColor")), 1.0f, 1.0f));
+            return new Color(null, new RGB(0.0f, 1.0f, 1.0f));
         } else {
             // a shade of blue
-            return new Color(null, new RGB(Float.parseFloat(KiViPlugin.getDefault()
-                    .getPreferenceStore()
-                    .getString(getClass().getCanonicalName() + ".historyColor")), 1.0f, 1.0f - 1.0f
+            return new Color(null, new RGB(240.0f, 1.0f, 1.0f - 1.0f
                     / steps * (step - 1)));
         }
     }

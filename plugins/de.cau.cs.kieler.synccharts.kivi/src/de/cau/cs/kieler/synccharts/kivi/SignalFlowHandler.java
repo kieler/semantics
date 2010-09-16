@@ -16,11 +16,8 @@ package de.cau.cs.kieler.synccharts.kivi;
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
-import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.ToolItem;
-import org.eclipse.ui.IEditorPart;
-import org.eclipse.ui.handlers.HandlerUtil;
 
 /**
  * Handles the button for showing the signal flow.
@@ -39,11 +36,9 @@ public class SignalFlowHandler extends AbstractHandler {
             if (e.widget instanceof ToolItem) {
                 ToolItem tool = (ToolItem) e.widget;
                 boolean pushed = tool.getSelection();
-                ISelection selection = HandlerUtil.getCurrentSelection(event);
-                IEditorPart editorPart = HandlerUtil.getActiveEditor(event);
                 SignalFlowTrigger trigger = SignalFlowTrigger.getInstance();
                 if (trigger != null) {
-                    trigger.button(pushed, selection, editorPart);
+                    trigger.button(pushed);
                 }
             }
         }

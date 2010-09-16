@@ -21,22 +21,23 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.gef.ConnectionEditPart;
 import org.eclipse.gef.GraphicalEditPart;
 import org.eclipse.gmf.runtime.notation.View;
-import org.eclipse.jface.viewers.IStructuredSelection;
 
 import de.cau.cs.kieler.core.expressions.Expression;
 import de.cau.cs.kieler.core.expressions.Signal;
 import de.cau.cs.kieler.core.expressions.ValuedObjectReference;
-import de.cau.cs.kieler.kivi.core.IEffect;
-import de.cau.cs.kieler.kivi.core.Viewmanagement;
-import de.cau.cs.kieler.kivi.core.impl.AbstractCombination;
-import de.cau.cs.kieler.kivi.examples.SelectionTrigger;
+import de.cau.cs.kieler.core.util.Pair;
+import de.cau.cs.kieler.core.kivi.IEffect;
+import de.cau.cs.kieler.core.kivi.KiVi;
+import de.cau.cs.kieler.core.kivi.AbstractCombination;
+import de.cau.cs.kieler.core.model.util.ModelingUtil;
+import de.cau.cs.kieler.core.ui.listeners.SelectionTrigger.SelectionState;
 import de.cau.cs.kieler.synccharts.Effect;
 import de.cau.cs.kieler.synccharts.Emission;
 import de.cau.cs.kieler.synccharts.Transition;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.SignalEditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.TransitionEditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.TransitionLabelEditPart;
-import de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditor;
+import de.cau.cs.kieler.synccharts.kivi.SignalFlowTrigger.SignalFlowActiveState;
 
 /**
  * Started by the signal flow button, visualizes the flow of signals in a SyncChart diagram.
@@ -46,23 +47,33 @@ import de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditor;
  */
 public class SignalFlowCombination extends AbstractCombination {
 
-    private boolean pushed;
-
-    private IStructuredSelection selection;
-
-    private SyncchartsDiagramEditor editor;
-
     private List<IEffect> iEffects = new ArrayList<IEffect>();
 
-    @Override
-    public void execute() {
-        if (pushed) {
+    /**
+     * Execute the combination using the signal flow active state and the selection state.
+     * 
+     * @param active
+     *            the signal flow active state
+     * @param selection
+     *            the selection state
+     */
+    public void execute(final SignalFlowActiveState active, final SelectionState selection) {
+        if (active.isActive()) {
             // initializations
-            List<SignalPair> triggers = new ArrayList<SignalPair>();
-            List<SignalPair> effects = new ArrayList<SignalPair>();
+            List<Pair<Signal, GraphicalEditPart>> triggers;
+            triggers = new ArrayList<Pair<Signal, GraphicalEditPart>>();
+            List<Pair<Signal, GraphicalEditPart>> effects;
+            effects = new ArrayList<Pair<Signal, GraphicalEditPart>>();
 
             // inspect the current selection
-            Object selected = selection.getFirstElement();
+            Object selected = null;
+            if (selection.getSelectedEObjects().size() > 0) {
+                selected = selection.getSelectedEObjects().get(0);
+                // FIXME move to EObjects later
+                selected = ModelingUtil.getEditPart(selection.getDiagramEditor()
+                        .getDiagramEditPart(), (EObject) selected);
+            }
+
             Signal relevantSignal = null;
             TransitionLabelEditPart relevantLabel = null;
 
@@ -87,7 +98,8 @@ public class SignalFlowCombination extends AbstractCombination {
 
             // traverse all connection edit parts to get all triggers and effects used in the
             // diagram along with their edit part
-            List<?> connections = editor.getDiagramEditPart().getConnections();
+            List<?> connections = selection.getDiagramEditor().getDiagramEditPart()
+                    .getConnections();
             for (Object o : connections) {
                 ConnectionEditPart connection = (ConnectionEditPart) o;
                 GraphicalEditPart editPart = null;
@@ -102,7 +114,6 @@ public class SignalFlowCombination extends AbstractCombination {
                 if (editPart == null) {
                     continue; // transition has no label
                 }
-
                 // inspect all triggers
                 Transition transition = (Transition) ((View) connection.getModel()).getElement();
                 Expression expression = transition.getTrigger();
@@ -112,8 +123,8 @@ public class SignalFlowCombination extends AbstractCombination {
                     if (reference.getValuedObject() instanceof Signal) {
                         // sort out irrelevant signals if a signal was selected
                         if (relevantSignal == null || relevantSignal == reference.getValuedObject()) {
-                            triggers.add(new SignalPair((Signal) reference.getValuedObject(),
-                                    editPart));
+                            triggers.add(new Pair<Signal, GraphicalEditPart>((Signal) reference
+                                    .getValuedObject(), editPart));
                         }
                     }
                 } else {
@@ -128,8 +139,8 @@ public class SignalFlowCombination extends AbstractCombination {
                                     // sort out irrelevant signals if a signal was selected
                                     if (relevantSignal == null
                                             || relevantSignal == reference.getValuedObject()) {
-                                        triggers.add(new SignalPair((Signal) reference
-                                                .getValuedObject(), editPart));
+                                        triggers.add(new Pair<Signal, GraphicalEditPart>(
+                                                (Signal) reference.getValuedObject(), editPart));
                                     }
                                 }
                             }
@@ -143,7 +154,8 @@ public class SignalFlowCombination extends AbstractCombination {
                         Emission emission = (Emission) effect;
                         // sort out irrelevant signals if a signal was selected
                         if (relevantSignal == null || relevantSignal == emission.getSignal()) {
-                            effects.add(new SignalPair(emission.getSignal(), editPart));
+                            effects.add(new Pair<Signal, GraphicalEditPart>(emission.getSignal(),
+                                    editPart));
                         }
                     }
                 }
@@ -151,23 +163,25 @@ public class SignalFlowCombination extends AbstractCombination {
 
             // check all triggers against all effects for same signals
             List<IEffect> newEffects = new ArrayList<IEffect>();
-            for (SignalPair effect : effects) {
-                for (SignalPair trigger : triggers) {
-                    if (effect.getSignal() == trigger.getSignal()) {
+            for (Pair<Signal, GraphicalEditPart> effect : effects) {
+                for (Pair<Signal, GraphicalEditPart> trigger : triggers) {
+                    if (effect.getFirst() == trigger.getFirst()) {
                         // sort out irrelevant transitions if a transition was selected
-                        if (relevantLabel == null || effect.getEditPart() == relevantLabel
-                                || trigger.getEditPart() == relevantLabel) {
-                            IEffect iEffect = new ArrowEffect(effect.getEditPart(),
-                                    trigger.getEditPart());
+                        if (relevantLabel == null || effect.getSecond() == relevantLabel
+                                || trigger.getSecond() == relevantLabel) {
+                            IEffect iEffect = new ArrowEffect(
+                                    // effect.getSecond(), trigger.getSecond(), false);
+                                    ((View) effect.getSecond().getModel()).getElement(),
+                                    ((View) trigger.getSecond().getModel()).getElement(), false);
                             newEffects.add(iEffect);
                         }
                     }
                 }
             }
-            
+
             // remove all old arrows if this is an updated execution
-            Viewmanagement.getInstance().undoEffect(iEffects);
-            Viewmanagement.getInstance().executeEffect(newEffects);
+            KiVi.getInstance().undoEffect(iEffects);
+            KiVi.getInstance().executeEffect(newEffects);
             iEffects = newEffects;
         } else {
             // remove all arrows if the button is not pushed
@@ -176,99 +190,10 @@ public class SignalFlowCombination extends AbstractCombination {
     }
 
     /**
-     * Listen to SignalFlowTriggers.
-     * 
-     * @param trigger
-     *            the signal flow trigger
-     * @return true
-     */
-    public boolean evaluate(final SignalFlowTrigger trigger) {
-        pushed = trigger.isPushed();
-        if (trigger.getSelection() instanceof IStructuredSelection) {
-            selection = (IStructuredSelection) trigger.getSelection();
-        }
-        if (trigger.getEditor() instanceof SyncchartsDiagramEditor) {
-            editor = (SyncchartsDiagramEditor) trigger.getEditor();
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    /**
-     * Listen to selection changes to update the arrow forest.
-     * 
-     * @param trigger
-     *            the selection trigger
-     * @return true if something needs to be done
-     */
-    public boolean evaluate(final SelectionTrigger trigger) {
-        if (pushed && trigger.getSelection() instanceof IStructuredSelection
-                && trigger.getWorkbenchPart() instanceof SyncchartsDiagramEditor) {
-            selection = (IStructuredSelection) trigger.getSelection();
-            editor = (SyncchartsDiagramEditor) trigger.getWorkbenchPart();
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    /**
      * {@inheritDoc}
      */
     public void undo() {
-        Viewmanagement.getInstance().undoEffect(iEffects);
+        KiVi.getInstance().undoEffect(iEffects);
         iEffects.clear();
     }
-    
-    /**
-     * A simple pair to map signal to edit part.
-     * 
-     * @author mmu
-     * 
-     */
-    public class SignalPair {
-
-        /**
-         * The signal.
-         */
-        private Signal signal;
-
-        /**
-         * The edit part.
-         */
-        private GraphicalEditPart editPart;
-
-        /**
-         * Create a new SignalPair.
-         * 
-         * @param s
-         *            the signal
-         * @param e
-         *            the edit part
-         */
-        public SignalPair(final Signal s, final GraphicalEditPart e) {
-            signal = s;
-            editPart = e;
-        }
-
-        /**
-         * Get the signal.
-         * 
-         * @return the signal
-         */
-        public Signal getSignal() {
-            return signal;
-        }
-
-        /**
-         * Get the edit part.
-         * 
-         * @return the edit part
-         */
-        public GraphicalEditPart getEditPart() {
-            return editPart;
-        }
-    }
-
 }

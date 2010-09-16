@@ -16,12 +16,15 @@ package de.cau.cs.kieler.synccharts.kivi;
 import org.eclipse.draw2d.ColorConstants;
 import org.eclipse.draw2d.IFigure;
 import org.eclipse.draw2d.Shape;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gef.GraphicalEditPart;
+import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramEditor;
 import org.eclipse.gmf.runtime.draw2d.ui.figures.WrappingLabel;
 import org.eclipse.swt.graphics.Color;
 
-import de.cau.cs.kieler.kivi.core.impl.AbstractEffect;
+import de.cau.cs.kieler.core.kivi.AbstractEffect;
+import de.cau.cs.kieler.core.model.util.ModelingUtil;
 
 /**
  * A simple transient highlighting effect.
@@ -30,21 +33,19 @@ import de.cau.cs.kieler.kivi.core.impl.AbstractEffect;
  * 
  */
 public class StateActivityHighlightEffect extends AbstractEffect {
-    
-    private EditPart editPart;
 
     private IFigure targetFigure;
-    
+
     private int originalWidth = -1;
-    
+
     private int widthIncrease = 1; // TODO parameterize
-    
+
     private int widthMax = 5; // TODO parameterize
 
     private Color originalColor;
 
     private Color color = ColorConstants.red;
-    
+
     /**
      * Default constructor.
      */
@@ -55,30 +56,37 @@ public class StateActivityHighlightEffect extends AbstractEffect {
     /**
      * Create a new instance for the given edit part using the given color.
      * 
-     * @param e
-     *            the edit part to highlight
+     * @param eObject
+     *            the EObject to highlight
+     * @param editor
+     *            the editor to highlight in
      */
-    public StateActivityHighlightEffect(final GraphicalEditPart e) {
-        editPart = e;
-        targetFigure = e.getFigure();
-        if (targetFigure.getChildren().size() == 1) {
-            targetFigure = (IFigure) targetFigure.getChildren().get(0);
+    public StateActivityHighlightEffect(final EObject eObject, final DiagramEditor editor) {
+        EditPart editPart = ModelingUtil.getEditPart(editor.getDiagramEditPart(), eObject);
+        if (editPart instanceof GraphicalEditPart) {
+            targetFigure = ((GraphicalEditPart) editPart).getFigure();
+            if (targetFigure.getChildren().size() == 1) {
+                targetFigure = (IFigure) targetFigure.getChildren().get(0);
+            }
         }
     }
 
     @Override
     public void execute() {
-        if (originalColor == null) {
-            originalColor = targetFigure.getForegroundColor();
-        }
-        if (targetFigure instanceof Shape && originalWidth == -1) {
-            originalWidth = ((Shape) targetFigure).getLineWidth();
-            ((Shape) targetFigure).setLineWidth(Math.min(originalWidth + widthIncrease, widthMax));
-        }
-        targetFigure.setForegroundColor(color);
-        for (Object child : targetFigure.getChildren()) {
-            if (child instanceof WrappingLabel) {
-                ((WrappingLabel) child).setForegroundColor(originalColor);
+        if (targetFigure != null) {
+            if (originalColor == null) {
+                originalColor = targetFigure.getForegroundColor();
+            }
+            if (targetFigure instanceof Shape && originalWidth == -1) {
+                originalWidth = ((Shape) targetFigure).getLineWidth();
+                ((Shape) targetFigure).setLineWidth(Math.min(originalWidth + widthIncrease,
+                        widthMax));
+            }
+            targetFigure.setForegroundColor(color);
+            for (Object child : targetFigure.getChildren()) {
+                if (child instanceof WrappingLabel) {
+                    ((WrappingLabel) child).setForegroundColor(originalColor);
+                }
             }
         }
     }
@@ -94,22 +102,15 @@ public class StateActivityHighlightEffect extends AbstractEffect {
             originalWidth = -1;
         }
     }
-    
+
     /**
      * Set the color to use for highlighting.
      * 
-     * @param c the color
+     * @param c
+     *            the color
      */
     public void setColor(final Color c) {
         color = c;
     }
-    
-    /**
-     * Get the edit part used for highlighting by this effect.
-     * 
-     * @return the edit part
-     */
-    public EditPart getEditPart() {
-        return editPart;
-    }
+
 }

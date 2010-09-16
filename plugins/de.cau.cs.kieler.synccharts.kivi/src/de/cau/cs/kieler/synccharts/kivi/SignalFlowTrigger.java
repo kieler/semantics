@@ -13,11 +13,8 @@
  */
 package de.cau.cs.kieler.synccharts.kivi;
 
-import org.eclipse.jface.viewers.ISelection;
-import org.eclipse.ui.IEditorPart;
-
-import de.cau.cs.kieler.kivi.core.Viewmanagement;
-import de.cau.cs.kieler.kivi.core.impl.AbstractTrigger;
+import de.cau.cs.kieler.core.kivi.AbstractTriggerState;
+import de.cau.cs.kieler.core.kivi.AbstractTrigger;
 
 /**
  * This trigger is informed whenever the button for the signal flow visualization is pushed.
@@ -29,23 +26,11 @@ public class SignalFlowTrigger extends AbstractTrigger {
 
     private static SignalFlowTrigger instance;
 
-    private boolean pushed;
-
-    private ISelection selection;
-
-    private IEditorPart editor;
-
     /**
      * Default constructor.
      */
     public SignalFlowTrigger() {
         instance = this;
-    }
-
-    private SignalFlowTrigger(final boolean p, final ISelection s, final IEditorPart e) {
-        pushed = p;
-        selection = s;
-        editor = e;
     }
 
     /**
@@ -59,12 +44,12 @@ public class SignalFlowTrigger extends AbstractTrigger {
 
     @Override
     public void register() {
-        // TODO look into dynamic hiding of the signal flow button if the trigger is disabled
+        // showing/hiding of the button is done by the SyncChartsEditorTester
     }
 
     @Override
     public void unregister() {
-        // TODO see above
+        // see above
     }
 
     /**
@@ -72,42 +57,51 @@ public class SignalFlowTrigger extends AbstractTrigger {
      * 
      * @param p
      *            true if the button is in the pushed state
-     * @param s
-     *            the current selection in the SyncChart editor
-     * @param e
-     *            the active SyncChart editor
      */
-    public void button(final boolean p, final ISelection s, final IEditorPart e) {
-        if (isActive()) {
-            Viewmanagement.getInstance().trigger(new SignalFlowTrigger(p, s, e));
+    public void button(final boolean p) {
+        trigger(new SignalFlowActiveState(p));
+    }
+
+    /**
+     * Contains the state for the signal flow mechanism.
+     * 
+     * @author mmu
+     * 
+     */
+    public static final class SignalFlowActiveState extends AbstractTriggerState {
+
+        private boolean active = false;
+        
+        /**
+         * Default constructor.
+         */
+        public SignalFlowActiveState() {
+            
         }
-    }
+        
+        /**
+         * Create a new signal flow state.
+         * 
+         * @param pushed
+         *            true if the button is pushed
+         */
+        private SignalFlowActiveState(final boolean pushed) {
+            active = pushed;
+        }
 
-    /**
-     * Check whether the button is in the pushed state.
-     * 
-     * @return true if pushed
-     */
-    public boolean isPushed() {
-        return pushed;
-    }
+        @Override
+        public Class<?> getTriggerClass() {
+            return SignalFlowTrigger.class;
+        }
 
-    /**
-     * Get the current selection in the active editor.
-     * 
-     * @return the current selection
-     */
-    public ISelection getSelection() {
-        return selection;
-    }
+        /**
+         * Check whether the signal flow mode is active.
+         * 
+         * @return true if active
+         */
+        public boolean isActive() {
+            return active;
+        }
 
-    /**
-     * Get the active editor.
-     * 
-     * @return the active editor
-     */
-    public IEditorPart getEditor() {
-        return editor;
     }
-
 }
