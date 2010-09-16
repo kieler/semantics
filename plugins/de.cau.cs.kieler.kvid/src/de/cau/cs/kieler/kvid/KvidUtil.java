@@ -19,7 +19,11 @@ import java.awt.image.BufferedImage;
 import java.awt.image.DirectColorModel;
 import java.awt.image.IndexColorModel;
 import java.awt.image.WritableRaster;
+import java.util.LinkedList;
+import java.util.List;
 
+import org.eclipse.core.runtime.Status;
+import org.eclipse.draw2d.geometry.Point;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -30,8 +34,16 @@ import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.statushandlers.StatusManager;
 
 import de.cau.cs.kieler.core.annotations.NamedObject;
+import de.cau.cs.kieler.core.kgraph.KNode;
+import de.cau.cs.kieler.core.kgraph.KPort;
+import de.cau.cs.kieler.kiml.klayoutdata.KInsets;
+import de.cau.cs.kieler.kiml.klayoutdata.KShapeLayout;
+import de.cau.cs.kieler.kiml.options.LayoutOptions;
+import de.cau.cs.kieler.kvid.data.KvidUri;
+import de.cau.cs.kieler.kvid.datadistributor.RuntimeConfiguration;
 
 /**
  * Utility class for the KViD-Plugin. Holds commonly used methods statically.
@@ -229,6 +241,42 @@ public final class KvidUtil {
         }
         return result;
     }
+    
+    /**
+     * Will return the absolute position on the canvas of an KNode from a KGraph.
+     * 
+     * @param node The node to find the absolute position for
+     * @param parent The parent node of the node to analyse
+     * @return The absolute position on the canvas of the KNode
+     * 
+     */
+    public static Point getAbsolutePosition(final KNode node, final KNode parent) {
+        KShapeLayout parentLayout = parent.getData(KShapeLayout.class);
+        Point parentPosition = new Point(parentLayout.getXpos(), parentLayout.getYpos());
+        KInsets insets = parentLayout.getProperty(LayoutOptions.INSETS);
+        parentPosition.translate((int) insets.getLeft(), (int) insets.getTop());
+        KShapeLayout nodeLayout = node.getData(KShapeLayout.class);
+        Point position = new Point(parentPosition);
+        position.translate((int) nodeLayout.getXpos(), (int) nodeLayout.getYpos());
+        return position;
+    }
+    
+    /**
+     * Will return the absolute position on the canvas of an KPort from a KGraph.
+     * 
+     * @param port The port to find the absolute position for
+     * @param parent The parent node of the port's node to analyse
+     * @return The absolute position on the canvas of the KPort
+     * 
+     */
+    public static Point getAbsolutePosition(final KPort port, final KNode parent) {
+        Point nodePosition = getAbsolutePosition(port.getNode(), parent);
+        KShapeLayout portLayout = port.getData(KShapeLayout.class);
+        Point position = new Point(nodePosition);
+        position.translate((int) portLayout.getXpos(), (int) portLayout.getYpos());
+        return position;
+    }
+    
     
     /**
      * Helper method for getting the currently active editor.

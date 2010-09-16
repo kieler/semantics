@@ -44,7 +44,7 @@ import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.handlers.HandlerUtil;
 
 /**
- * Handler class for the "Add Scope Node" command.
+ * Handler class for a display node adding command.
  * 
  * @author jjc
  *
