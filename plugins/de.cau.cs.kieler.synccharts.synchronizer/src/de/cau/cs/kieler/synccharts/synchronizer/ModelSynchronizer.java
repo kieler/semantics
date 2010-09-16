@@ -45,8 +45,8 @@ public class ModelSynchronizer implements IStartup {
     public static ModelSynchronizer INSTANCE = null;
 
     public static Boolean DEBUGMatch = false;
-    private static Boolean DEBUGDiff = true;
-    private static Boolean DEBUGPassive = false;
+    public static Boolean DEBUGDiff = true;
+    public static Boolean DEBUGPassive = false;
 
 
     private Map<String, Object> matchOptions = null;

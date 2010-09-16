@@ -2,12 +2,6 @@
 <?eclipse version="3.4"?>
 <plugin>
    <extension
-         point="org.eclipse.ui.startup">
-      <startup
-            class="de.cau.cs.kieler.synccharts.synchronizer.ModelSynchronizer">
-      </startup>
-   </extension>
-   <extension
          point="de.cau.cs.kieler.synccharts.triggerListener">
       <triggerListener
             class="de.cau.cs.kieler.synccharts.synchronizer.ModelChangeTriggerListener">
@@ -26,18 +20,6 @@
                id="org.eclipse.ui.commands.toggleState">
          </state>
       </command>
-   </extension>
-   <extension
-         point="org.eclipse.ui.menus">
-      <menuContribution
-            locationURI="toolbar:de.cau.cs.kieler?after=de.cau.cs.kieler.kiml.ui.command.layout">
-         <command
-               commandId="de.cau.cs.kieler.synccharts.synchronizer.Activate"
-               icon="icons/obj16/refresh.gif"
-               label="ActivateSynchronization"
-               style="toggle">
-         </command>
-      </menuContribution>
    </extension>
    <extension
          point="org.eclipse.emf.compare.diff.mergerprovider">
@@ -90,7 +72,7 @@
             class="de.cau.cs.kieler.synccharts.synchronizer.kitsView.KitsView"
             icon="icons/obj16/SyncchartsTextFile.gif"
             id="de.cau.cs.kieler.synccharts.synchronizer.kitsView"
-            name="KITS textual SyncCharts"
+            name="KITS SyncCharts textual view"
             restorable="true">
       </view>
    </extension>

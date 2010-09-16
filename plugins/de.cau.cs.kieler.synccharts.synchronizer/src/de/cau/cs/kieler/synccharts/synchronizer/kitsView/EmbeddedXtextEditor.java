@@ -780,4 +780,10 @@ public class EmbeddedXtextEditor {
 	        throw new AssertionError(e);
 	    }
 	}
+	
+	public void dispose() {
+		fSourceViewer.getTextWidget().dispose();
+		fProjectionSupport.dispose();
+		fHighlightingHelper.uninstall();
+	}
 }

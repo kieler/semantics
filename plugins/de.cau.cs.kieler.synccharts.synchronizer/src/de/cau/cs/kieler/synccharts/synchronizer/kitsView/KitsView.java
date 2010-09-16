@@ -15,6 +15,8 @@ package de.cau.cs.kieler.synccharts.synchronizer.kitsView;
 
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.core.runtime.jobs.IJobChangeEvent;
+import org.eclipse.core.runtime.jobs.JobChangeAdapter;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.gef.EditPart;
@@ -29,8 +31,10 @@ import org.eclipse.ui.ISelectionListener;
 import org.eclipse.ui.ISelectionService;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.part.ViewPart;
+import org.eclipse.xtext.parser.IParseResult;
 import org.eclipse.xtext.parsetree.reconstr.XtextSerializationException;
 import org.eclipse.xtext.resource.XtextResource;
+import org.eclipse.xtext.ui.editor.model.IXtextDocument;
 import org.eclipse.xtext.ui.editor.model.IXtextModelListener;
 import org.eclipse.xtext.util.concurrent.IUnitOfWork;
 
@@ -57,6 +61,17 @@ public class KitsView extends ViewPart implements ISelectionListener {
 
 	private EmbeddedXtextEditor editor;
 	
+	private SyncchartsDiagramEditor passiveEditor;
+	
+	private Region rootRegionCopy;
+	
+	private State container;
+	
+	private int index;
+	
+	private JobChangeAdapter doneListener;
+	
+	private SyncChartSynchronizerJob synchronizer;
 	
 	@Override
 	public void createPartControl(Composite parent) {
@@ -66,15 +81,31 @@ public class KitsView extends ViewPart implements ISelectionListener {
 		Injector injector = KitsUIPlugin.getInstance().getInjector(KitsUIPlugin.KITS_LANGUAGE_EMBEDDED);
 
 		editor = new EmbeddedXtextEditor(parent, injector);
-		
+
 		editor.getDocument().addModelListener(new IXtextModelListener() {
 			public void modelChanged(XtextResource resource) {
-				reconcileChangedModel();
+				if (!documentHasErrors(editor.getDocument())) {
+					reconcileChangedModel();
+				} else {
+					System.out.println("Errors");
+				}
 			}
 		});
 
 		((ISelectionService) getSite().getService(ISelectionService.class))
 				.addSelectionListener(this);
+				
+		doneListener = new JobChangeAdapter() {
+			
+			@Override
+			public void done(IJobChangeEvent event) {
+				container.getRegions().remove(index);
+			}			
+		};
+		
+		synchronizer = new SyncChartSynchronizerJob("SyncChartsSynchronizer");
+		synchronizer.addJobChangeListener(doneListener);
+		
 	}
 	
 	
@@ -85,6 +116,7 @@ public class KitsView extends ViewPart implements ISelectionListener {
 		StructuredSelection sSelection = null;
 		if (part instanceof SyncchartsDiagramEditor
 				&& selection instanceof StructuredSelection) {
+			passiveEditor = (SyncchartsDiagramEditor) part;
 			sSelection = (StructuredSelection) selection;
 			
 			if (sSelection.size() != 0
@@ -106,8 +138,8 @@ public class KitsView extends ViewPart implements ISelectionListener {
 		}
 		
 		final Region region = (Region) model;
-		final Region rootRegion = (Region) EcoreUtil.getRootContainer(region);		
-				
+		final Region rootRegion = (Region) EcoreUtil.getRootContainer(region);
+		
 		try {
 			editor.getDocumentEditor().process(
 					new IUnitOfWork.Void<XtextResource>() {
@@ -115,29 +147,39 @@ public class KitsView extends ViewPart implements ISelectionListener {
 						@Override
 						public void process(XtextResource state)
 								throws Exception {
-							Region rootCopy = EcoreUtil.copy(rootRegion);
+							rootRegionCopy = EcoreUtil.copy(rootRegion);
 							Region copy = null;
 
 							KitsResource resource = (KitsResource) editor.createResource();
 							resource.getContents().clear();
-							resource.getContents().add(rootCopy);
+							resource.getContents().add(rootRegionCopy);
 
 							try {
 								copy = new KitsSynchronizeLinker()
-										.consultSrcAndCopy(rootRegion, rootCopy)
-										.linkElement(rootCopy)
+										.consultSrcAndCopy(rootRegion, rootRegionCopy)
+										.linkElement(rootRegionCopy)
 										.getMatched(region);
-								KitsEmbeddedScopeProvider.logicalContainer = (State) copy.eContainer();
 							} catch (ClassCastException e) {
 								System.out.println("Problem");
 								return;
-							}							
+							}
+							
+							container = (State) copy.eContainer();
+							KitsEmbeddedScopeProvider.logicalContainer = container;
+							index = 0;
+							if (container != null) {
+								index = container.getRegions().indexOf(copy);
+							}
 							
 							state.getContents().clear();
 							state.getContents().add(copy);
 						}
 
 					}, editor.getDocument());
+			
+			synchronizer.cancel();
+			
+			
 		} catch (XtextSerializationException e) {
 			Activator
 					.getDefault()
@@ -148,14 +190,46 @@ public class KitsView extends ViewPart implements ISelectionListener {
 	}
 	
 		
-	private void reconcileChangedModel() {
-		
+	private void reconcileChangedModel() {		
+		editor.getDocument().readOnly(new IUnitOfWork.Void<XtextResource>() {
+			@Override
+			public void process(XtextResource state) throws Exception {
+				synchronizer.cancel();
+				
+				Region copy = EcoreUtil.copy((Region) state.getContents().get(0));
+				container.getRegions().add(index, copy);
+				synchronizer.setLeftRegion(rootRegionCopy);
+				synchronizer.setPassiveEditor(passiveEditor);
+				synchronizer.schedule(1000L);
+				
+			}
+		});
+	}
+	
+	
+	/**
+	 * Copied from @{link org.eclipselabs.xtfo.demo.rcp.editor.detailspage.Domain DomainModelDetailsPage}.
+	 * (and simplified)
+	 * 
+	 * @param xtextDocument
+	 * @return true if the document could not be parsed and linked correctly, false otherwise
+	 */
+	private boolean documentHasErrors(final IXtextDocument xtextDocument) {
+		return (xtextDocument.readOnly(new IUnitOfWork<Boolean, XtextResource>() {
+			public Boolean exec(XtextResource state) throws Exception {
+				IParseResult parseResult = state.getParseResult();
+						return !state.getErrors().isEmpty()
+								|| parseResult == null
+								|| !parseResult.getParseErrors().isEmpty();
+			}
+		}));
 	}
 
 
 	public void dispose() {		
 		((ISelectionService) getSite().getService(ISelectionService.class))
 				.removeSelectionListener(this);
+		editor.dispose();
 		super.dispose();
 	}
 
