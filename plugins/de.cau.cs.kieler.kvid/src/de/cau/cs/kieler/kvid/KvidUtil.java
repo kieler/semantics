@@ -340,14 +340,18 @@ public final class KvidUtil {
             List<Point> path = new LinkedList<Point>();
             path.add(getAbsolutePosition(node, parentNode));
             path.addAll(getBendPointsAbsolutePositions(edge, parentNode));
-            KShapeLayout targetLayout = edge.getTarget().getData(
-                    KShapeLayout.class);
-            if (targetLayout.getProperty(LayoutOptions.HYPERNODE)
-                    .booleanValue()) {
-                path.add(getAbsolutePosition(edge.getTarget(), parentNode));
-                subresult.addAll(getPathsByNode(edge.getTarget(), parentNode));
+            if (edge.getTargetPort() != null) {
+                path.add(getAbsolutePosition(edge.getTargetPort(), parentNode));
             } else {
-                path.add(getAbsolutePosition(edge.getTarget(), parentNode));
+                KShapeLayout targetLayout = edge.getTarget().getData(
+                        KShapeLayout.class);
+                if (targetLayout.getProperty(LayoutOptions.HYPERNODE)
+                        .booleanValue()) {
+                    path.add(getAbsolutePosition(edge.getTarget(), parentNode));
+                    subresult.addAll(getPathsByNode(edge.getTarget(), parentNode));
+                } else {
+                    path.add(getAbsolutePosition(edge.getTarget(), parentNode));
+                }
             }
             result.add(path);
             result.addAll(subresult);
@@ -430,13 +434,14 @@ public final class KvidUtil {
                                     "Default output port");
                 }
                 if (port.getLabel().getText().equals(portName) || portName.isEmpty()) {
+                    System.out.println(elementUri.getElementUri());
                     result.addAll(getPathsByPort(port, parentNode));
+                    System.out.println(result);
                 }
             }
         } else {
             result.addAll(getPathsByNode(currentNode, parentNode));
         }
-        System.out.println(result);
         return result;
     }
     

@@ -20,6 +20,7 @@ import org.eclipse.draw2d.RoundedRectangle;
 import org.eclipse.draw2d.geometry.Rectangle;
 
 import de.cau.cs.kieler.kvid.data.DataObject;
+import de.cau.cs.kieler.kvid.data.KvidUri;
 
 /**
  * The figure which is used to display plain data.
@@ -88,7 +89,16 @@ public class GmfFigure extends RoundedRectangle implements IKvidFigure {
      * {@inheritDoc}
      */
     public IKvidFigure copy() {
-        DataObject dataCopy = new DataObject(currentData.getUri(), currentData.getData().toString());
+        KvidUri currentUri = currentData.getUri();
+        KvidUri uriCopy;
+        if (currentUri.hasPort()) {
+            uriCopy = new KvidUri(currentUri.getElementUri() + ":"
+                    + currentUri.getPort() + "<" + currentUri.getPriority()
+                    + ">");
+        } else {
+            uriCopy = new KvidUri(currentUri.getElementUri() + "<" + currentUri.getPriority() + ">");
+        }
+        DataObject dataCopy = new DataObject(uriCopy, currentData.getData().toString());
         return new GmfFigure(dataCopy);
     }
     

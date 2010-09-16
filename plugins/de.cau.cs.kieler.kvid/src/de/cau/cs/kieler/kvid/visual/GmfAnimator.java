@@ -87,13 +87,11 @@ public final class GmfAnimator {
         int maxPrio = Integer.MIN_VALUE;
         for (IKvidFigure figure : figuresAndPath.keySet()) {
             KvidUri figureUri = figure.getData().getUri();
-            if (figureUri.hasPriority()) {
-                if (figureUri.getPriority() < minPrio) {
-                    minPrio = figureUri.getPriority();
-                }
-                if (figureUri.getPriority() > maxPrio) {
-                    maxPrio = figureUri.getPriority();
-                }
+            if (figureUri.getPriority() < minPrio) {
+                minPrio = figureUri.getPriority();
+            }
+            if (figureUri.getPriority() > maxPrio) {
+                maxPrio = figureUri.getPriority();
             }
         }
         if (minPrio == Integer.MAX_VALUE && maxPrio == Integer.MIN_VALUE) {
