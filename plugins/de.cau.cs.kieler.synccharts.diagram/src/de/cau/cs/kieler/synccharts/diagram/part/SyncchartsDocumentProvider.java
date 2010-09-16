@@ -73,6 +73,8 @@ public class SyncchartsDocumentProvider extends AbstractDocumentProvider
 
     /**
      * @generated
+     * 
+     * @author chsch: added the penultimate line to this method
      */
     protected ElementInfo createElementInfo(Object element)
             throws CoreException {
