@@ -388,7 +388,12 @@ public final class KvidUtil {
                             if (edge.getTargetPort() != null) {
                                 path.add(getAbsolutePosition(edge.getTargetPort(), parentNode));
                             } else {
-                                path.add(getAbsolutePosition(edge.getTarget(), parentNode));
+                                KShapeLayout targetLayout = edge.getTarget().getData(KShapeLayout.class);
+                                if (targetLayout.getProperty(LayoutOptions.HYPERNODE).booleanValue()) {
+                                    
+                                } else {
+                                    path.add(getAbsolutePosition(edge.getTarget(), parentNode));
+                                }
                             }
                             result.add(path);
                         }
@@ -396,11 +401,23 @@ public final class KvidUtil {
                 }
             }
         } else {
-            
+            for (KEdge edge : currentNode.getOutgoingEdges()) {
+                List<Point> path = new LinkedList<Point>();
+                path.add(getAbsolutePosition(currentNode, parentNode));
+                path.addAll(getBendPointsAbsolutePositions(edge, parentNode));
+                KShapeLayout targetLayout = edge.getTarget().getData(
+                        KShapeLayout.class);
+                if (targetLayout.getProperty(LayoutOptions.HYPERNODE)
+                        .booleanValue()) {
+                    
+                } else {
+                    path.add(getAbsolutePosition(edge.getTarget(), parentNode));
+                }
+                result.add(path);
+            }
         }
-        
         return result;
-    }    
+    }
     
     /**
      * Helper method for getting the currently active editor.
