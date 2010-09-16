@@ -14,17 +14,20 @@
  *****************************************************************************/
 package de.cau.cs.kieler.core.ui.util;
 
+import org.eclipse.core.runtime.IStatus;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IEditorReference;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
 
+import de.cau.cs.kieler.core.ui.CoreUIPlugin;
+
 /**
  * Static utility class for working with editors.
- * 
- * @author haf
- * 
+ *
+ * @author haf, chsch
+ *
  */
 public final class EditorUtils {
 
@@ -36,9 +39,9 @@ public final class EditorUtils {
      * page if it is not null. This might happen when you maximize a view and
      * minimize it again. Returns the first editor of any open editors if the
      * active editor is null.
-     * 
+     *
      * @author haf
-     * 
+     *
      * @return the last open active editor, maybe null if there is no open
      *         editor or called from non-UI thread
      */
@@ -66,6 +69,20 @@ public final class EditorUtils {
             /* nothing */
         }
         return editor;
+    }
+
+
+    /**
+     * Convenience method for dropping log infos.
+     *
+     * @author chsch
+     *
+     * @param status a status to be logged
+     */
+    public static void log(final IStatus status) {
+        if (CoreUIPlugin.getDefault() != null) {
+            CoreUIPlugin.getDefault().getLog().log(status);
+        }
     }
 
 }
