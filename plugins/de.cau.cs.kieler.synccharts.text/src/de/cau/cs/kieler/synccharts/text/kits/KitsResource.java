@@ -112,9 +112,12 @@ public class KitsResource extends LazyLinkingResource {
      */
     private void consolidateModel() {
 
-//        if (this.getContents().isEmpty()) {
-//            this.getContents().add(SyncchartsFactory.eINSTANCE.createRegion());
-//        }
+    	// The following is NOT a reasonable solution as editing the resource with a
+    	//  Xtext IDocumentEditor will fail due to absence of a related parsetree element
+		/*
+		if (this.getContents().isEmpty()) {
+		     this.getContents().add(SyncchartsFactory.eINSTANCE.createRegion());
+		} */
 
 //        setupTickSignal(((Region) this.getContents().get(0)));
 
