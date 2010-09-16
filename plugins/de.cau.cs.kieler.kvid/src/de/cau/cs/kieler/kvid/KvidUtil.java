@@ -297,6 +297,8 @@ public final class KvidUtil {
         List<Point> result = new LinkedList<Point>();
         KShapeLayout parentLayout = parent.getData(KShapeLayout.class);
         Point parentPosition = new Point(parentLayout.getXpos(), parentLayout.getYpos());
+        KInsets insets = parentLayout.getProperty(LayoutOptions.INSETS);
+        parentPosition.translate((int) insets.getLeft(), (int) insets.getTop());
         for (KPoint bendPoint : edge.getData(KEdgeLayout.class).getBendPoints()) {
             Point pathStep = new Point(parentPosition);
             pathStep.translate((int) bendPoint.getX(), (int) bendPoint.getY());
@@ -341,7 +343,7 @@ public final class KvidUtil {
                 currentEditor.getDiagramEditPart(), modelElement);
         KNode currentNode = null;
         for (EditPart part : parts) {
-            currentNode = (KNode) manager.getElement(part);
+            currentNode = (KNode) manager.getLayoutNode(part);
             if (currentNode != null) {
                 break;
             }
@@ -356,7 +358,7 @@ public final class KvidUtil {
         parts = ModelingUtil.getEditParts(currentEditor.getDiagramEditPart(), parentModelElement);
         KNode parentNode = null;
         for (EditPart part : parts) {
-            parentNode = (KNode) manager.getElement(part);
+            parentNode = manager.getLayoutNode(part);
             if (parentNode != null) {
                 break;
             }
