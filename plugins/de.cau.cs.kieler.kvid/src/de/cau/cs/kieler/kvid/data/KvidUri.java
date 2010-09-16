@@ -84,11 +84,16 @@ public class KvidUri {
      * @return The priority of the referred data
      */
     public int getPriority() {
-        if (priority >= 0) {
-            return priority;
-        } else {
-            throw new RuntimeException("No priority part specified");
-        }
+        return priority;
+    }
+    
+    /**
+     * Setter for the priority.
+     * 
+     * @param newPriority The new priority value
+     */
+    public void setPriority(int newPriority) {
+        priority = newPriority;
     }
     
     /**

@@ -132,9 +132,24 @@ public final class GmfDrawer implements IDrawer, IDataListener {
                                     if (property.getCurrentValue().equals(
                                             "Animating")) {
                                         IKvidFigure animaFigure = currentFigure.copy();
-                                        animatables.put(animaFigure,
-                                                dataSet.get(key).getPaths()
-                                                        .get(0));
+                                        boolean first = true;
+                                        for (List<Point> path : dataSet.get(key).getPaths()) {
+                                            if (first) {
+                                                first = false;
+                                                animatables.put(animaFigure, path);
+                                            } else {
+                                                IKvidFigure subAnimaFigure = animaFigure.copy();
+                                                subAnimaFigure
+                                                        .getData()
+                                                        .getUri()
+                                                        .setPriority(
+                                                                animaFigure
+                                                                        .getData()
+                                                                        .getUri()
+                                                                        .getPriority() + 1);
+                                                animatables.put(subAnimaFigure, path);
+                                            }
+                                        }
                                         currentFigure.setVisible(false);
                                     } else if (property.getCurrentValue()
                                             .equals("Static on Source Node")) {

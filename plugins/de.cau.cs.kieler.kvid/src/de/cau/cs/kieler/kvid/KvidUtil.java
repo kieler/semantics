@@ -309,6 +309,7 @@ public final class KvidUtil {
     
     private static List<List<Point>> getPathsByPort(final KPort port, final KNode parentNode) {
         List<List<Point>> result = new LinkedList<List<Point>>();
+        List<List<Point>> subresult = new LinkedList<List<Point>>();
         for (KEdge edge : port.getEdges()) {
             if (edge.getSourcePort() != null && edge.getSourcePort().equals(port)) {
                 List<Point> path = new LinkedList<Point>();
@@ -319,12 +320,14 @@ public final class KvidUtil {
                 } else {
                     KShapeLayout targetLayout = edge.getTarget().getData(KShapeLayout.class);
                     if (targetLayout.getProperty(LayoutOptions.HYPERNODE).booleanValue()) {
-                        
+                        path.add(getAbsolutePosition(edge.getTarget(), parentNode));
+                        subresult.addAll(getPathsByNode(edge.getTarget(), parentNode));
                     } else {
                         path.add(getAbsolutePosition(edge.getTarget(), parentNode));
                     }
                 }
                 result.add(path);
+                result.addAll(subresult);
             }
         }
         return result;
@@ -332,6 +335,7 @@ public final class KvidUtil {
     
     private static List<List<Point>> getPathsByNode(final KNode node, final KNode parentNode) {
         List<List<Point>> result = new LinkedList<List<Point>>();
+        List<List<Point>> subresult = new LinkedList<List<Point>>();
         for (KEdge edge : node.getOutgoingEdges()) {
             List<Point> path = new LinkedList<Point>();
             path.add(getAbsolutePosition(node, parentNode));
@@ -340,11 +344,13 @@ public final class KvidUtil {
                     KShapeLayout.class);
             if (targetLayout.getProperty(LayoutOptions.HYPERNODE)
                     .booleanValue()) {
-                
+                path.add(getAbsolutePosition(edge.getTarget(), parentNode));
+                subresult.addAll(getPathsByNode(edge.getTarget(), parentNode));
             } else {
                 path.add(getAbsolutePosition(edge.getTarget(), parentNode));
             }
             result.add(path);
+            result.addAll(subresult);
         }
         return result;
     }
@@ -430,6 +436,7 @@ public final class KvidUtil {
         } else {
             result.addAll(getPathsByNode(currentNode, parentNode));
         }
+        System.out.println(result);
         return result;
     }
     

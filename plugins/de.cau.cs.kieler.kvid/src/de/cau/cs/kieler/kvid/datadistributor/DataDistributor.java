@@ -161,7 +161,8 @@ public final class DataDistributor implements IProviderListener, ResourceSetList
                 }
             });
             for (KvidUri key : dataByUri.keySet()) {
-                List<List<Point>> paths = KvidUtil.getPathsByElement(key, currentEditor, currentDiagramLayout);
+                List<List<Point>> paths = KvidUtil.getPathsByElement(key,
+                        currentEditor, currentDiagramLayout);
                 dataByUri.get(key).updatePaths(paths);
             }
         }
@@ -177,7 +178,8 @@ public final class DataDistributor implements IProviderListener, ResourceSetList
                     dataByUri.get(key).updateData(data.getString(o.toString()));
                 } else {
                     //New model data source, create paths and new entry in the data table
-                    List<List<Point>> paths = KvidUtil.getPathsByElement(key, currentEditor, currentDiagramLayout);
+                    List<List<Point>> paths = KvidUtil.getPathsByElement(key,
+                            currentEditor, currentDiagramLayout);
                     dataByUri.put(key, new DataObject(key, data.getString(o.toString()), paths));
                     //Also add Property object for the new entry
                     List<String> associatedObjects = new LinkedList<String>();
