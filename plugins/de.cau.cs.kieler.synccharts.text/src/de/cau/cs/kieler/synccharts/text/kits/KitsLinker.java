@@ -89,9 +89,10 @@ public class KitsLinker extends AbstractCleaningLinker {
                         /* if list is not empty setup cross reference */
                         if (linkedObjects.size() != 0) {
                             obj.eSet(eRef, linkedObjects.get(0));
-                        } else {
-                            String s = this.linkingHelper.getCrossRefNodeAsString(childNode, true);
-                            System.out.println(s + " unlinked");
+							// } else {
+							// String s = this.linkingHelper
+                            //         .getCrossRefNodeAsString(childNode, true);
+							// System.out.println(s + " unlinked");
                         }
                     }
                 }

@@ -20,7 +20,6 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.xtext.util.Strings;
 
 import de.cau.cs.kieler.core.expressions.ExpressionsPackage;
-import de.cau.cs.kieler.core.expressions.OperatorExpression;
 import de.cau.cs.kieler.core.expressions.ValuedObject;
 import de.cau.cs.kieler.synccharts.Transition;
 
@@ -59,7 +58,7 @@ public class MyModelElementChangeLeftTargetMerger extends DefaultMerger {
         final EObject element = theDiff.getLeftElement();
         
         if (origin instanceof Transition) {
-            System.out.println("Hier " + origin.eResource());
+//            System.out.println("Hier " + origin.eResource());
         }
         
         if (ExpressionsPackage.eINSTANCE.getValuedObject().isInstance(element)

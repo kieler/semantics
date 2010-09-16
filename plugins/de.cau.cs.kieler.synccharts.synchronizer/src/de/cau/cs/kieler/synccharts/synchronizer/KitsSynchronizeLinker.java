@@ -125,7 +125,8 @@ public class KitsSynchronizeLinker {
                             .get(transition)).getTargetState());
                     transition.setTargetState(target);
                     } catch (NullPointerException e) {
-                        System.out.println("hier");
+                    	/* nothing */
+                        // System.out.println("hier");
                     }
                     return null;
                 }

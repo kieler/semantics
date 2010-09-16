@@ -29,6 +29,7 @@ import de.cau.cs.kieler.core.KielerRuntimeException;
 import de.cau.cs.kieler.synccharts.text.actions.bridge.ActionLabelProcessorWrapper;
 
 /**
+ * Special {@link AbstractTransactionalCommand} merging changes into a GMF document.
  * 
  * @author chsch
  */
@@ -69,7 +70,7 @@ public class SynchronizeGMFEditorCommand extends AbstractTransactionalCommand {
 
         ((DiagramDocumentEditor) passiveEditor).getDiagramGraphicalViewer().flush();
 
-        System.out.println("GMF Command done");
+		// System.out.println("GMF Command done");
 
         return CommandResult.newOKCommandResult();
     }
