@@ -307,6 +307,48 @@ public final class KvidUtil {
         return result;
     }
     
+    private static List<List<Point>> getPathsByPort(final KPort port, final KNode parentNode) {
+        List<List<Point>> result = new LinkedList<List<Point>>();
+        for (KEdge edge : port.getEdges()) {
+            if (edge.getSourcePort() != null && edge.getSourcePort().equals(port)) {
+                List<Point> path = new LinkedList<Point>();
+                path.add(getAbsolutePosition(port, parentNode));
+                path.addAll(getBendPointsAbsolutePositions(edge, parentNode));
+                if (edge.getTargetPort() != null) {
+                    path.add(getAbsolutePosition(edge.getTargetPort(), parentNode));
+                } else {
+                    KShapeLayout targetLayout = edge.getTarget().getData(KShapeLayout.class);
+                    if (targetLayout.getProperty(LayoutOptions.HYPERNODE).booleanValue()) {
+                        
+                    } else {
+                        path.add(getAbsolutePosition(edge.getTarget(), parentNode));
+                    }
+                }
+                result.add(path);
+            }
+        }
+        return result;
+    }
+    
+    private static List<List<Point>> getPathsByNode(final KNode node, final KNode parentNode) {
+        List<List<Point>> result = new LinkedList<List<Point>>();
+        for (KEdge edge : node.getOutgoingEdges()) {
+            List<Point> path = new LinkedList<Point>();
+            path.add(getAbsolutePosition(node, parentNode));
+            path.addAll(getBendPointsAbsolutePositions(edge, parentNode));
+            KShapeLayout targetLayout = edge.getTarget().getData(
+                    KShapeLayout.class);
+            if (targetLayout.getProperty(LayoutOptions.HYPERNODE)
+                    .booleanValue()) {
+                
+            } else {
+                path.add(getAbsolutePosition(edge.getTarget(), parentNode));
+            }
+            result.add(path);
+        }
+        return result;
+    }
+    
     /**
      * Compute animation paths and location for a given model element (referred by an URI).
      * 
@@ -382,41 +424,11 @@ public final class KvidUtil {
                                     "Default output port");
                 }
                 if (port.getLabel().getText().equals(portName) || portName.isEmpty()) {
-                    for (KEdge edge : port.getEdges()) {
-                        if (edge.getSourcePort() != null && edge.getSourcePort().equals(port)) {
-                            List<Point> path = new LinkedList<Point>();
-                            path.add(getAbsolutePosition(port, parentNode));
-                            path.addAll(getBendPointsAbsolutePositions(edge, parentNode));
-                            if (edge.getTargetPort() != null) {
-                                path.add(getAbsolutePosition(edge.getTargetPort(), parentNode));
-                            } else {
-                                KShapeLayout targetLayout = edge.getTarget().getData(KShapeLayout.class);
-                                if (targetLayout.getProperty(LayoutOptions.HYPERNODE).booleanValue()) {
-                                    
-                                } else {
-                                    path.add(getAbsolutePosition(edge.getTarget(), parentNode));
-                                }
-                            }
-                            result.add(path);
-                        }
-                    }
+                    result.addAll(getPathsByPort(port, parentNode));
                 }
             }
         } else {
-            for (KEdge edge : currentNode.getOutgoingEdges()) {
-                List<Point> path = new LinkedList<Point>();
-                path.add(getAbsolutePosition(currentNode, parentNode));
-                path.addAll(getBendPointsAbsolutePositions(edge, parentNode));
-                KShapeLayout targetLayout = edge.getTarget().getData(
-                        KShapeLayout.class);
-                if (targetLayout.getProperty(LayoutOptions.HYPERNODE)
-                        .booleanValue()) {
-                    
-                } else {
-                    path.add(getAbsolutePosition(edge.getTarget(), parentNode));
-                }
-                result.add(path);
-            }
+            result.addAll(getPathsByNode(currentNode, parentNode));
         }
         return result;
     }
