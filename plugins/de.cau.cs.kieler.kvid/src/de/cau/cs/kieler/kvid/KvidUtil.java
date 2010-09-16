@@ -28,9 +28,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.gef.EditPart;
-import org.eclipse.gmf.runtime.diagram.core.util.ViewUtil;
 import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramEditor;
-import org.eclipse.gmf.runtime.notation.View;
 import org.eclipse.swt.graphics.ImageData;
 import org.eclipse.swt.graphics.PaletteData;
 import org.eclipse.swt.graphics.RGB;
@@ -287,6 +285,14 @@ public final class KvidUtil {
         return position;
     }
     
+    /**
+     * Gives the absolute positions of all bend points on the given edge.
+     * 
+     * @param edge The edge to get the bend points from
+     * @param parent The containing node of the edge
+     * @return A list of points, being the absolute positions of the bend points
+     * 
+     */
     public static List<Point> getBendPointsAbsolutePositions(final KEdge edge, final KNode parent) {
         List<Point> result = new LinkedList<Point>();
         KShapeLayout parentLayout = parent.getData(KShapeLayout.class);
@@ -299,6 +305,15 @@ public final class KvidUtil {
         return result;
     }
     
+    /**
+     * Compute animation paths and location for a given model element (referred by an URI).
+     * 
+     * @param elementUri The URI object referring the model element
+     * @param currentEditor The editor which holds the model element
+     * @param diagramLayout The layout of the diagram which contains the model element
+     * @return A list of paths, represented by a list of {@link Point}s
+     * 
+     */
     public static List<List<Point>> getPathsByElement(final KvidUri elementUri,
             final DiagramEditor currentEditor, final KNode diagramLayout) {
         List<List<Point>> result = new LinkedList<List<Point>>();
