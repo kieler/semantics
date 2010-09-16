@@ -160,6 +160,7 @@ public final class DataDistributor implements IProviderListener, ResourceSetList
                             .buildLayoutGraph(currentEditor, null, false);
                 }
             });
+            layoutChanged = false;
             for (KvidUri key : dataByUri.keySet()) {
                 List<List<Point>> paths = KvidUtil.getPathsByElement(key,
                         currentEditor, currentDiagramLayout);
