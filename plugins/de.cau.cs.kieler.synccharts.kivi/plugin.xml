@@ -68,7 +68,7 @@
    <extension
          point="org.eclipse.core.expressions.propertyTesters">
       <propertyTester
-            class="de.cau.cs.kieler.synccharts.kivi.SyncChartsEditorTester"
+            class="de.cau.cs.kieler.synccharts.kivi.SignalFlowTester"
             id="de.cau.cs.kieler.synccharts.kivi.isSyncChartsEditor"
             namespace="de.cau.cs.kieler.synccharts.kivi"
             properties="isSyncChartsEditor"

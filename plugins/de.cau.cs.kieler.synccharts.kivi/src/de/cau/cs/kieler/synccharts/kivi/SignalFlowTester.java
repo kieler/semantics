@@ -13,22 +13,29 @@
  */
 package de.cau.cs.kieler.synccharts.kivi;
 
+import de.cau.cs.kieler.kivi.core.ICombination;
+import de.cau.cs.kieler.kivi.core.Viewmanagement;
 import de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditor;
 
 /**
- * Tests whether the active editor is a SyncChart editor.
+ * Tests whether the active editor is a SyncChart editor, whether view management is active, and
+ * whether the signal flow combination is active.
  * 
  * @author mmu
  * 
  */
-public class SyncChartsEditorTester extends org.eclipse.core.expressions.PropertyTester {
+public class SignalFlowTester extends org.eclipse.core.expressions.PropertyTester {
 
     /**
      * {@inheritDoc}
      */
     public boolean test(final Object receiver, final String property, final Object[] args,
             final Object expectedValue) {
-        return receiver instanceof SyncchartsDiagramEditor;
+        ICombination combination = Viewmanagement.getInstance().getCombinationInstance(
+                SignalFlowCombination.class);
+        return receiver instanceof SyncchartsDiagramEditor
+                && Viewmanagement.getInstance().isActive() && combination != null
+                && combination.isActive();
     }
 
 }
