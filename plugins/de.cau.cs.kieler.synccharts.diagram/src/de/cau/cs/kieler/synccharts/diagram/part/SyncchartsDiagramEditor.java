@@ -1,5 +1,7 @@
 package de.cau.cs.kieler.synccharts.diagram.part;
 
+import java.util.Iterator;
+
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.resources.IWorkspaceRoot;
@@ -9,7 +11,10 @@ import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.NullProgressMonitor;
+import org.eclipse.emf.common.command.CompoundCommand;
 import org.eclipse.emf.common.ui.URIEditorInput;
+import org.eclipse.emf.ecore.InternalEObject;
+import org.eclipse.emf.edit.command.RemoveCommand;
 import org.eclipse.emf.transaction.TransactionalEditingDomain;
 import org.eclipse.emf.workspace.util.WorkspaceSynchronizer;
 import org.eclipse.gef.palette.PaletteRoot;
@@ -21,7 +26,10 @@ import org.eclipse.gmf.runtime.diagram.ui.resources.editor.document.IDiagramDocu
 import org.eclipse.gmf.runtime.diagram.ui.resources.editor.document.IDocument;
 import org.eclipse.gmf.runtime.diagram.ui.resources.editor.document.IDocumentProvider;
 import org.eclipse.gmf.runtime.diagram.ui.resources.editor.parts.DiagramDocumentEditor;
+import org.eclipse.gmf.runtime.notation.Connector;
 import org.eclipse.gmf.runtime.notation.Diagram;
+import org.eclipse.gmf.runtime.notation.NotationPackage;
+import org.eclipse.gmf.runtime.notation.View;
 import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.dialogs.IMessageProvider;
 import org.eclipse.jface.dialogs.MessageDialog;
@@ -52,29 +60,38 @@ import de.cau.cs.kieler.synccharts.text.actions.bridge.ActionLabelProcessorWrapp
  */
 public class SyncchartsDiagramEditor extends DiagramDocumentEditor implements IGotoMarker {
 
+	/**
+ 	 * Manually added method.
+ 	 * Deletes orphaned notation elements to avoid broken transition connects etc.
+ 	 * Serializes labels as they are not stored in textual kits files.
+ 	 * Triggers the canonical edit policies to encompass newly introduced model elements.
+ 	 * Finally, cleans up the command stack (removes history) and resets the dirty state. 
+	 * 
+	 * @author chsch
+	 */
     protected void initializeGraphicalViewerContents() {
         Diagram d = getDiagram();
-//        CompoundCommand CC = new CompoundCommand();
-//        Object o = null;
-//        for (Iterator<?> it = d.eAllContents(); it.hasNext();) {
-//            o = it.next();
-//            if (NotationPackage.eINSTANCE.getView().isInstance(o)
-//                    && ((InternalEObject) ((View) o).getElement()).eIsProxy()) {
-//                if (NotationPackage.eINSTANCE.getConnector().isInstance(o)) {
-//                    CC.append(new RemoveCommand(getEditingDomain(), ((Connector) o).getSource()
-//                            .getSourceEdges(), o));
-//                    CC.append(new RemoveCommand(getEditingDomain(), ((Connector) o).getTarget()
-//                            .getTargetEdges(), o));
-//                    CC.append(new RemoveCommand(getEditingDomain(), getDiagram()
-//                            .getPersistedEdges(), o));
-//                } else {
-//                    CC.append(new RemoveCommand(getEditingDomain(),
-//                            ((View) ((View) o).eContainer()).getPersistedChildren(), o));
-//                }
-//            }
-//        }
-//        getEditingDomain().getCommandStack().execute(CC);
-//
+        CompoundCommand CC = new CompoundCommand();
+        Object o = null;
+        for (Iterator<?> it = d.eAllContents(); it.hasNext();) {
+            o = it.next();
+            if (NotationPackage.eINSTANCE.getView().isInstance(o)
+                    && ((InternalEObject) ((View) o).getElement()).eIsProxy()) {
+                if (NotationPackage.eINSTANCE.getConnector().isInstance(o)) {
+                    CC.append(new RemoveCommand(getEditingDomain(), ((Connector) o).getSource()
+                            .getSourceEdges(), o));
+                    CC.append(new RemoveCommand(getEditingDomain(), ((Connector) o).getTarget()
+                            .getTargetEdges(), o));
+                    CC.append(new RemoveCommand(getEditingDomain(), getDiagram()
+                            .getPersistedEdges(), o));
+                } else {
+                    CC.append(new RemoveCommand(getEditingDomain(),
+                            ((View) ((View) o).eContainer()).getPersistedChildren(), o));
+                }
+            }
+        }
+        getEditingDomain().getCommandStack().execute(CC);
+
         // new de.cau.cs.kieler.synccharts.text.actions.bridge.ActionLabelSerializeCommand
         if (d.getElement() instanceof Region) {
             try {
