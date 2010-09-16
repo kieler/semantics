@@ -84,7 +84,7 @@ public class SyncchartsDiagramEditor extends DiagramDocumentEditor implements IG
                 throw new KielerRuntimeException("Transition labels could not be serialized properly.");
             }
         }
-
+        
         super.initializeGraphicalViewerContents();
 
         for (CanonicalEditPolicy c : CanonicalEditPolicy.getRegisteredEditPolicies(d.getElement())) {
@@ -93,6 +93,9 @@ public class SyncchartsDiagramEditor extends DiagramDocumentEditor implements IG
 
         getGraphicalViewer().flush();
 
+        // remove the dirty state of the editor
+        this.getCommandStack().dispose();
+        ((SyncchartsDocumentProvider) this.getDocumentProvider()).setCanBeSaved(false);        
     }
 
     /**

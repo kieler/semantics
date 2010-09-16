@@ -63,6 +63,13 @@ import de.cau.cs.kieler.synccharts.listener.SyncchartsContentUtil;
  */
 public class SyncchartsDocumentProvider extends AbstractDocumentProvider
         implements IDiagramDocumentProvider {
+	
+	
+	private ElementInfo elementInfo;
+	
+	public void setCanBeSaved(boolean b) {
+		this.elementInfo.fCanBeSaved = b;
+	}
 
     /**
      * @generated
@@ -90,6 +97,7 @@ public class SyncchartsDocumentProvider extends AbstractDocumentProvider
         ResourceSetInfo info = new ResourceSetInfo(document, editorInput);
         info.setModificationStamp(computeModificationStamp(info));
         info.fStatus = null;
+        this.elementInfo = info;
         return info;
     }
 
