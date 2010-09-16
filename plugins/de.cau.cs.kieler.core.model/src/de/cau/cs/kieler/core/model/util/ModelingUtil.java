@@ -255,6 +255,32 @@ public final class ModelingUtil {
         }
         return result;
     }
+    
+    /**
+     * Find an EditPart corresponding to the given EObject in the DiagramEditPart.
+     * 
+     * @param dep the DiagramEditPart to search in
+     * @param theElement the EObject to find
+     * @return the EditPart, or null if none was found
+     */
+    public static EditPart getEditPart(final DiagramEditPart dep, final EObject theElement) {
+        EditPart found = dep.findEditPart(null, theElement);
+        if (found != null) {
+            return found;
+        } else {
+            // the list always contains ConnectionEditParts
+            List<?> connections = dep.getConnections();
+            for (Object connection : connections) {
+                if (connection instanceof EditPart) {
+                    EditPart ep = (EditPart) connection;
+                    if (theElement.equals(((View) ep.getModel()).getElement())) {
+                        return ep;
+                    }
+                }
+            }
+        }
+        return null;
+    }
 
     /**
      * Get all objects that are direct or indirect children of the given root EObject if they are of
