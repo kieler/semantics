@@ -158,11 +158,10 @@ public final class DataDistributor implements IProviderListener, ResourceSetList
                     currentDiagramLayout = EclipseLayoutServices.getInstance()
                             .getManager(currentEditor, null)
                             .buildLayoutGraph(currentEditor, null, false);
-                    System.out.println("Done!");
                 }
             });
             for (KvidUri key : dataByUri.keySet()) {
-                List<List<Point>> paths = getPathsByNode(key);
+                List<List<Point>> paths = KvidUtil.getPathsByElement(key, currentEditor, currentDiagramLayout);
                 dataByUri.get(key).updatePaths(paths);
             }
         }
@@ -178,7 +177,7 @@ public final class DataDistributor implements IProviderListener, ResourceSetList
                     dataByUri.get(key).updateData(data.getString(o.toString()));
                 } else {
                     //New model data source, create paths and new entry in the data table
-                    List<List<Point>> paths = getPathsByNode(key);
+                    List<List<Point>> paths = KvidUtil.getPathsByElement(key, currentEditor, currentDiagramLayout);
                     dataByUri.put(key, new DataObject(key, data.getString(o.toString()), paths));
                     //Also add Property object for the new entry
                     List<String> associatedObjects = new LinkedList<String>();
@@ -208,12 +207,12 @@ public final class DataDistributor implements IProviderListener, ResourceSetList
     /**
      * Compute animation paths and location for a given model element (referred by URI).
      * 
+     * @deprecated Use {@link KvidUtil#getPathsByElement(KvidUri, DiagramEditor, KNode)} instead
+     * 
      * @param uri Referring URI, either in Ptolemy Notation or a Fragment URI
      * @return A list of paths, represented by a list of {@link Point}s
      */
     public List<List<Point>> getPathsByNode(final KvidUri uri) {
-        //FIXME Move to Util Class
-        //FIXME When new KIML getModelStuff is finished, rewrite this
         List<List<Point>> result = new LinkedList<List<Point>>();
         //Is URI in Ptolemy Notation?
         if (!uri.getElementUri().startsWith(".")) {
@@ -256,7 +255,6 @@ public final class DataDistributor implements IProviderListener, ResourceSetList
         }
         
         //Get position of found node's parent
-        //FIXME Think about some refactoring, extract into more methods! Watch for NullPointers.
         Point parentPosition = new Point();
         KNode parent = currentNode;
         KShapeLayout parentLayout = parent.getData(KShapeLayout.class);

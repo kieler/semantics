@@ -27,6 +27,10 @@ import org.eclipse.draw2d.geometry.Point;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.gef.EditPart;
+import org.eclipse.gmf.runtime.diagram.core.util.ViewUtil;
+import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramEditor;
+import org.eclipse.gmf.runtime.notation.View;
 import org.eclipse.swt.graphics.ImageData;
 import org.eclipse.swt.graphics.PaletteData;
 import org.eclipse.swt.graphics.RGB;
@@ -37,11 +41,17 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.statushandlers.StatusManager;
 
 import de.cau.cs.kieler.core.annotations.NamedObject;
+import de.cau.cs.kieler.core.kgraph.KEdge;
 import de.cau.cs.kieler.core.kgraph.KNode;
 import de.cau.cs.kieler.core.kgraph.KPort;
+import de.cau.cs.kieler.core.model.util.ModelingUtil;
+import de.cau.cs.kieler.kiml.klayoutdata.KEdgeLayout;
 import de.cau.cs.kieler.kiml.klayoutdata.KInsets;
+import de.cau.cs.kieler.kiml.klayoutdata.KPoint;
 import de.cau.cs.kieler.kiml.klayoutdata.KShapeLayout;
 import de.cau.cs.kieler.kiml.options.LayoutOptions;
+import de.cau.cs.kieler.kiml.ui.layout.DiagramLayoutManager;
+import de.cau.cs.kieler.kiml.ui.layout.EclipseLayoutServices;
 import de.cau.cs.kieler.kvid.data.KvidUri;
 import de.cau.cs.kieler.kvid.datadistributor.RuntimeConfiguration;
 
@@ -277,6 +287,105 @@ public final class KvidUtil {
         return position;
     }
     
+    public static List<Point> getBendPointsAbsolutePositions(final KEdge edge, final KNode parent) {
+        List<Point> result = new LinkedList<Point>();
+        KShapeLayout parentLayout = parent.getData(KShapeLayout.class);
+        Point parentPosition = new Point(parentLayout.getXpos(), parentLayout.getYpos());
+        for (KPoint bendPoint : edge.getData(KEdgeLayout.class).getBendPoints()) {
+            Point pathStep = new Point(parentPosition);
+            pathStep.translate((int) bendPoint.getX(), (int) bendPoint.getY());
+            result.add(pathStep);
+        }
+        return result;
+    }
+    
+    public static List<List<Point>> getPathsByElement(final KvidUri elementUri,
+            final DiagramEditor currentEditor, final KNode diagramLayout) {
+        List<List<Point>> result = new LinkedList<List<Point>>();
+        String elementUriPart = elementUri.getElementUri();
+        Resource resource = currentEditor.getDiagram().getElement().eResource();
+        DiagramLayoutManager manager = EclipseLayoutServices.getInstance()
+                                            .getManager(currentEditor, null);
+        
+        if (!elementUriPart.startsWith("/")) {
+            try {
+                //If not, it might be a Fragment URI, try to translate
+                elementUriPart = ptolemyUri2FragmentUri(elementUriPart, resource);
+            } catch (RuntimeException ex) {
+                //Notify user about malformatted URI and ignore value during visualization
+                Status status = new Status(Status.WARNING, KvidPlugin.PLUGIN_ID, 
+                        "Needs Fragment URI or URI in Ptolemy Notation. Got: " + elementUri
+                        + " The concrete problem was: " + ex.getMessage());
+                StatusManager.getManager().handle(status, StatusManager.SHOW);
+                return null;
+            }
+        }
+        
+        EObject modelElement = resource.getEObject(elementUriPart);
+        List<EditPart> parts = ModelingUtil.getEditParts(
+                currentEditor.getDiagramEditPart(), modelElement);
+        KNode currentNode = null;
+        for (EditPart part : parts) {
+            currentNode = (KNode) manager.getElement(part);
+            if (currentNode != null) {
+                break;
+            }
+        }
+        if (currentNode == null) {
+            //Couldn't find the referred element, so no paths are created
+            return null;
+        }
+        
+        String parentUri = elementUriPart.substring(0, elementUriPart.lastIndexOf("/"));
+        EObject parentModelElement = resource.getEObject(parentUri);
+        parts = ModelingUtil.getEditParts(currentEditor.getDiagramEditPart(), parentModelElement);
+        KNode parentNode = null;
+        for (EditPart part : parts) {
+            parentNode = (KNode) manager.getElement(part);
+            if (parentNode != null) {
+                break;
+            }
+        }
+        if (parentNode == null) {
+            //Couldn't find the referred element's parent, so no paths are created
+            return null;
+        }
+        
+        if (currentNode.getPorts().size() > 0) {
+            for (KPort port : currentNode.getPorts()) {
+                String portName = "";
+                if (elementUri.hasPort()) {
+                    portName = elementUri.getPort();
+                } else if (RuntimeConfiguration.getInstance()
+                        .currentValueOfProperty(
+                                "Default output port") != "") {
+                    portName = RuntimeConfiguration
+                            .getInstance()
+                            .currentValueOfProperty(
+                                    "Default output port");
+                }
+                if (port.getLabel().getText().equals(portName) || portName.isEmpty()) {
+                    for (KEdge edge : port.getEdges()) {
+                        if (edge.getSourcePort() != null && edge.getSourcePort().equals(port)) {
+                            List<Point> path = new LinkedList<Point>();
+                            path.add(getAbsolutePosition(port, parentNode));
+                            path.addAll(getBendPointsAbsolutePositions(edge, parentNode));
+                            if (edge.getTargetPort() != null) {
+                                path.add(getAbsolutePosition(edge.getTargetPort(), parentNode));
+                            } else {
+                                path.add(getAbsolutePosition(edge.getTarget(), parentNode));
+                            }
+                            result.add(path);
+                        }
+                    }
+                }
+            }
+        } else {
+            
+        }
+        
+        return result;
+    }    
     
     /**
      * Helper method for getting the currently active editor.
