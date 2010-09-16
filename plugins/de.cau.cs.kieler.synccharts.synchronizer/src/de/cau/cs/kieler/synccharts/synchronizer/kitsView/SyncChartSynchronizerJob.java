@@ -33,7 +33,7 @@ import org.eclipse.ui.PlatformUI;
 import de.cau.cs.kieler.core.KielerRuntimeException;
 import de.cau.cs.kieler.synccharts.Region;
 import de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditor;
-import de.cau.cs.kieler.synccharts.synchronizer.Activator;
+import de.cau.cs.kieler.synccharts.synchronizer.SyncchartsSynchronizerPlugin;
 import de.cau.cs.kieler.synccharts.synchronizer.InvokeGMFEditorSynchronizationRunnable;
 import de.cau.cs.kieler.synccharts.synchronizer.ModelSynchronizer;
 
@@ -72,7 +72,7 @@ public class SyncChartSynchronizerJob extends Job {
 			matchModel = MatchService.doMatch(leftRegion, rightRegion,
 					matchOptions);
 		} catch (InterruptedException e) {
-			return new Status(Status.ERROR, Activator.PLUGIN_ID,
+			return new Status(Status.ERROR, SyncchartsSynchronizerPlugin.PLUGIN_ID,
 					ModelSynchronizer.MSG_MATCH_FAILED,
 					new KielerRuntimeException(
 							ModelSynchronizer.MSG_MATCH_FAILED));
@@ -80,13 +80,15 @@ public class SyncChartSynchronizerJob extends Job {
 
 		diffModel = DiffService.doDiff(matchModel);
 
-		PlatformUI
-				.getWorkbench()
-				.getDisplay()
-				.syncExec(
-						new InvokeGMFEditorSynchronizationRunnable(
-								(DiagramDocumentEditor) passiveEditor,
-								diffModel));
+		if (!diffModel.getDifferences().isEmpty()) {
+			PlatformUI
+					.getWorkbench()
+					.getDisplay()
+					.syncExec(
+							new InvokeGMFEditorSynchronizationRunnable(
+									(DiagramDocumentEditor) passiveEditor,
+									diffModel));
+		}
 		
         return Status.OK_STATUS;
 	}

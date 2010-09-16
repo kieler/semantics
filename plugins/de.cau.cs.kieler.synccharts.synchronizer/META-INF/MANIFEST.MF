@@ -3,7 +3,7 @@ Bundle-ManifestVersion: 2
 Bundle-Name: SyncCharts Model View Synchronizer
 Bundle-SymbolicName: de.cau.cs.kieler.synccharts.synchronizer;singleton:=true
 Bundle-Version: 0.1.0.qualifier
-Bundle-Activator: de.cau.cs.kieler.synccharts.synchronizer.Activator
+Bundle-Activator: de.cau.cs.kieler.synccharts.synchronizer.SyncchartsSynchronizerPlugin
 Require-Bundle: org.eclipse.core.runtime,
  de.cau.cs.kieler.synccharts;bundle-version="0.1.0",
  de.cau.cs.kieler.synccharts.edit;bundle-version="0.1.0",

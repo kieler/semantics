@@ -465,7 +465,6 @@ public class EmbeddedXtextEditor {
 		}
 	}
 
-	@SuppressWarnings("unused")
 	private ProjectionSupport fProjectionSupport;
 	
 	private static final String ERROR_ANNOTATION_TYPE = "org.eclipse.xtext.ui.editor.error";
@@ -782,7 +781,9 @@ public class EmbeddedXtextEditor {
 	}
 	
 	public void dispose() {
-		fSourceViewer.getTextWidget().dispose();
+		if (fSourceViewer.getTextWidget() != null) {
+			fSourceViewer.getTextWidget().dispose();
+		}
 		fProjectionSupport.dispose();
 		fHighlightingHelper.uninstall();
 	}

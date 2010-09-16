@@ -40,12 +40,13 @@ import org.eclipse.xtext.util.concurrent.IUnitOfWork;
 
 import com.google.inject.Injector;
 
+import de.cau.cs.kieler.core.ui.util.EditorUtils;
 import de.cau.cs.kieler.synccharts.Region;
 import de.cau.cs.kieler.synccharts.State;
 import de.cau.cs.kieler.synccharts.SyncchartsPackage;
 import de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditor;
-import de.cau.cs.kieler.synccharts.synchronizer.Activator;
 import de.cau.cs.kieler.synccharts.synchronizer.KitsSynchronizeLinker;
+import de.cau.cs.kieler.synccharts.synchronizer.SyncchartsSynchronizerPlugin;
 import de.cau.cs.kieler.synccharts.text.kits.KitsResource;
 import de.cau.cs.kieler.synccharts.text.kits.scoping.KitsEmbeddedScopeProvider;
 import de.cau.cs.kieler.synccharts.text.ui.KitsUIPlugin;
@@ -68,9 +69,7 @@ public class KitsView extends ViewPart implements ISelectionListener {
 	private State container;
 	
 	private int index;
-	
-	private JobChangeAdapter doneListener;
-	
+		
 	private SyncChartSynchronizerJob synchronizer;
 	
 	@Override
@@ -86,8 +85,6 @@ public class KitsView extends ViewPart implements ISelectionListener {
 			public void modelChanged(XtextResource resource) {
 				if (!documentHasErrors(editor.getDocument())) {
 					reconcileChangedModel();
-				} else {
-					System.out.println("Errors");
 				}
 			}
 		});
@@ -95,27 +92,28 @@ public class KitsView extends ViewPart implements ISelectionListener {
 		((ISelectionService) getSite().getService(ISelectionService.class))
 				.addSelectionListener(this);
 				
-		doneListener = new JobChangeAdapter() {
+		synchronizer = new SyncChartSynchronizerJob("SyncChartsSynchronizer");
+		synchronizer.addJobChangeListener(new JobChangeAdapter() {
 			
 			@Override
 			public void done(IJobChangeEvent event) {
-				container.getRegions().remove(index);
+				if (container != null) {
+					container.getRegions().remove(index);
+				}
 			}			
-		};
-		
-		synchronizer = new SyncChartSynchronizerJob("SyncChartsSynchronizer");
-		synchronizer.addJobChangeListener(doneListener);
+		});
 		
 	}
 	
 	
 	public void selectionChanged(IWorkbenchPart part, ISelection selection) {
-
-		EObject model = null;
 		
-		StructuredSelection sSelection = null;
+		EObject model = null;		
+		StructuredSelection sSelection = null;		
+
 		if (part instanceof SyncchartsDiagramEditor
 				&& selection instanceof StructuredSelection) {
+			
 			passiveEditor = (SyncchartsDiagramEditor) part;
 			sSelection = (StructuredSelection) selection;
 			
@@ -147,61 +145,79 @@ public class KitsView extends ViewPart implements ISelectionListener {
 						@Override
 						public void process(XtextResource state)
 								throws Exception {
+							// create a copy of the complete model of the diagram editor
 							rootRegionCopy = EcoreUtil.copy(rootRegion);
 							Region copy = null;
 
+							// to link the models properly they have to be in a resource
 							KitsResource resource = (KitsResource) editor.createResource();
 							resource.getContents().clear();
 							resource.getContents().add(rootRegionCopy);
 
 							try {
+								// link the rootRegionCopy and reveal the part of interest
 								copy = new KitsSynchronizeLinker()
 										.consultSrcAndCopy(rootRegion, rootRegionCopy)
 										.linkElement(rootRegionCopy)
 										.getMatched(region);
 							} catch (ClassCastException e) {
-								System.out.println("Problem");
+								EditorUtils.log(new Status(Status.ERROR,
+										SyncchartsSynchronizerPlugin.PLUGIN_ID,
+										1, "Model linking failed", e));
 								return;
 							}
 							
+							// keep the container of the model part of interest in mind
+							//  we need it later on for proper reconstruction of the whole
+							//  copy to compare it with the original one (in diagram editor)							
 							container = (State) copy.eContainer();
+							
+							// the scope provide need to know about the "outer" model
+							//  to propose and link all signals and variables properly
 							KitsEmbeddedScopeProvider.logicalContainer = container;
+							
 							index = 0;
 							if (container != null) {
 								index = container.getRegions().indexOf(copy);
 							}
 							
+							// finally remove the xtext editor's model and give it the new one
+							//  (this will remove 'copy' from 'container')   
 							state.getContents().clear();
 							state.getContents().add(copy);
 						}
 
 					}, editor.getDocument());
 			
+			// the above transformation will cause a model change notification
+			// but I don't want to synchronize the freshly copied, serialized & re-parsed model
 			synchronizer.cancel();
 			
 			
 		} catch (XtextSerializationException e) {
-			Activator
-					.getDefault()
-					.getLog()
-					.log(new Status(IStatus.ERROR, Activator.PLUGIN_ID,
-							1, "Serialization of textual view failed", e));
+			EditorUtils.log(new Status(IStatus.ERROR,
+					SyncchartsSynchronizerPlugin.PLUGIN_ID, 1,
+					"Serialization of textual view failed", e));
 		}
 	}
 	
 		
 	private void reconcileChangedModel() {		
 		editor.getDocument().readOnly(new IUnitOfWork.Void<XtextResource>() {
+			
 			@Override
-			public void process(XtextResource state) throws Exception {
+			public synchronized void process(XtextResource state) throws Exception {
 				synchronizer.cancel();
 				
 				Region copy = EcoreUtil.copy((Region) state.getContents().get(0));
-				container.getRegions().add(index, copy);
-				synchronizer.setLeftRegion(rootRegionCopy);
+				if (container == null) {
+					synchronizer.setLeftRegion(copy);
+				} else {
+					container.getRegions().add(index, copy);
+					synchronizer.setLeftRegion(rootRegionCopy);
+				}
 				synchronizer.setPassiveEditor(passiveEditor);
 				synchronizer.schedule(1000L);
-				
 			}
 		});
 	}

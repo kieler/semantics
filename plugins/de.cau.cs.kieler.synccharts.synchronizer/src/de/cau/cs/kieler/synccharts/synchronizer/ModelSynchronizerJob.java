@@ -94,7 +94,7 @@ public class ModelSynchronizerJob extends Job {
                 activeEditor = workbenchPage.getActiveEditor();
 
             } catch (Exception e) {
-                return new Status(Status.ERROR, Activator.PLUGIN_ID,
+                return new Status(Status.ERROR, SyncchartsSynchronizerPlugin.PLUGIN_ID,
                         ModelSynchronizer.MSG_NO_ACTIVE_EDITOR,
                         new KielerRuntimeException(ModelSynchronizer.MSG_NO_ACTIVE_EDITOR));
             }
@@ -204,7 +204,7 @@ public class ModelSynchronizerJob extends Job {
                         matchModel = MatchService
                                 .doMatch(model_active, model_passive, matchOptions);
                     } catch (InterruptedException e) {
-                        return new Status(Status.ERROR, Activator.PLUGIN_ID,
+                        return new Status(Status.ERROR, SyncchartsSynchronizerPlugin.PLUGIN_ID,
                                 ModelSynchronizer.MSG_MATCH_FAILED,
                                 new KielerRuntimeException(ModelSynchronizer.MSG_MATCH_FAILED));
                     }

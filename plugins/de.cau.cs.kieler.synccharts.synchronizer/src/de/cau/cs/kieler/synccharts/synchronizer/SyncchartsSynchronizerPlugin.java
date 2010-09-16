@@ -6,18 +6,18 @@ import org.osgi.framework.BundleContext;
 /**
  * The activator class controls the plug-in life cycle
  */
-public class Activator extends Plugin {
+public class SyncchartsSynchronizerPlugin extends Plugin {
 
 	// The plug-in ID
 	public static final String PLUGIN_ID = "de.cau.cs.kieler.synccharts.synchronizer";
 
 	// The shared instance
-	private static Activator plugin;
+	private static SyncchartsSynchronizerPlugin plugin;
 		
 	/**
 	 * The constructor
 	 */
-	public Activator() {
+	public SyncchartsSynchronizerPlugin() {
 	}
 
 	/*
@@ -44,7 +44,7 @@ public class Activator extends Plugin {
 	 *
 	 * @return the shared instance
 	 */
-	public static Activator getDefault() {
+	public static SyncchartsSynchronizerPlugin getDefault() {
 		return plugin;
 	}
 
