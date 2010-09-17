@@ -36,6 +36,7 @@ import de.cau.cs.kieler.core.ui.util.MonitoredOperation;
 import de.cau.cs.kieler.core.util.Maybe;
 import de.cau.cs.kieler.core.util.Pair;
 import de.cau.cs.kieler.core.kivi.AbstractEffect;
+import de.cau.cs.kieler.core.kivi.IEffect;
 import de.cau.cs.kieler.core.model.util.ModelingUtil;
 
 /**
@@ -64,12 +65,12 @@ public class ArrowEffect extends AbstractEffect {
     private PolylineConnection connection;
 
     private IFigure parent;
-    
+
     /**
      * Default constructor.
      */
     public ArrowEffect() {
-        
+
     }
 
     /**
@@ -145,6 +146,9 @@ public class ArrowEffect extends AbstractEffect {
         useConnectionLayer = connectionLayer;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public void execute() {
         if (source == null || target == null) {
             return;
@@ -189,6 +193,26 @@ public class ArrowEffect extends AbstractEffect {
                     parent = null;
                 }
             }, false);
+        }
+    }
+
+    @Override
+    public boolean isMergeable() {
+        return true;
+    }
+
+    @Override
+    public IEffect merge(final IEffect other) {
+        if (other instanceof ArrowEffect) {
+            ArrowEffect otherArrow = (ArrowEffect) other;
+            if (otherArrow.source == source && otherArrow.target == target
+                    && otherArrow.useConnectionLayer == useConnectionLayer) {
+                return this;
+            } else {
+                return null;
+            }
+        } else {
+            return null;
         }
     }
 

@@ -42,14 +42,10 @@ public class StateActivityCombination extends AbstractCombination {
     /**
      * Execute this combination using the active states state.
      * 
-     * @param activeStates the active states
+     * @param activeStates
+     *            the active states
      */
     public void execute(final ActiveStates activeStates) {
-        if (activeStates.getActiveStates() == null) { // simulation finished
-            undo();
-            return;
-        }
-
         // assume every effect needs to be undone
         Map<EObject, IEffect> toUndo = new HashMap<EObject, IEffect>(effects);
 
@@ -104,8 +100,7 @@ public class StateActivityCombination extends AbstractCombination {
             return new Color(null, new RGB(0.0f, 1.0f, 1.0f));
         } else {
             // a shade of blue
-            return new Color(null, new RGB(240.0f, 1.0f, 1.0f - 1.0f
-                    / steps * (step - 1)));
+            return new Color(null, new RGB(240.0f, 1.0f, 1.0f - 1.0f / steps * (step - 1)));
         }
     }
 }

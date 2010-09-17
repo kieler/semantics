@@ -24,6 +24,7 @@ import org.eclipse.gmf.runtime.draw2d.ui.figures.WrappingLabel;
 import org.eclipse.swt.graphics.Color;
 
 import de.cau.cs.kieler.core.kivi.AbstractEffect;
+import de.cau.cs.kieler.core.kivi.IEffect;
 import de.cau.cs.kieler.core.model.util.ModelingUtil;
 
 /**
@@ -71,6 +72,9 @@ public class StateActivityHighlightEffect extends AbstractEffect {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public void execute() {
         if (targetFigure != null) {
             if (originalColor == null) {
@@ -110,6 +114,25 @@ public class StateActivityHighlightEffect extends AbstractEffect {
      */
     public void setColor(final Color c) {
         color = c;
+    }
+
+    @Override
+    public boolean isMergeable() {
+        return true;
+    }
+
+    @Override
+    public IEffect merge(final IEffect other) {
+        if (other instanceof StateActivityHighlightEffect) {
+            StateActivityHighlightEffect otherEffect = (StateActivityHighlightEffect) other;
+            if (otherEffect.targetFigure == targetFigure) {
+                return this;
+            } else {
+                return null;
+            }
+        } else {
+            return null;
+        }
     }
 
 }
