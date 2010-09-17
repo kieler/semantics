@@ -145,7 +145,6 @@ public class ArrowEffect extends AbstractEffect {
         useConnectionLayer = connectionLayer;
     }
 
-    @Override
     public void execute() {
         if (source == null || target == null) {
             return;

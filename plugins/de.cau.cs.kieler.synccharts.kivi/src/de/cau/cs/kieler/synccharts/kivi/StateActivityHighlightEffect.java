@@ -71,7 +71,6 @@ public class StateActivityHighlightEffect extends AbstractEffect {
         }
     }
 
-    @Override
     public void execute() {
         if (targetFigure != null) {
             if (originalColor == null) {
