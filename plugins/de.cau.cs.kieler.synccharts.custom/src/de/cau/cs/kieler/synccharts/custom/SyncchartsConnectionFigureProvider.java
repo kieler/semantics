@@ -25,6 +25,7 @@ import org.eclipse.draw2d.RotatableDecoration;
 import org.eclipse.draw2d.geometry.PointList;
 import org.eclipse.draw2d.geometry.Rectangle;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.gmf.runtime.diagram.ui.figures.BorderItemLocator;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.LineAttributes;
 
@@ -189,6 +190,11 @@ public class SyncchartsConnectionFigureProvider implements IRenderingProvider {
     }
 
     public LayoutManager getDefaultLayoutManager() {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    public BorderItemLocator getBorderItemLocatorByString(String input) {
         // TODO Auto-generated method stub
         return null;
     }

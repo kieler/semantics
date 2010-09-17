@@ -22,6 +22,7 @@ import org.eclipse.draw2d.RoundedRectangle;
 import org.eclipse.draw2d.geometry.Dimension;
 import org.eclipse.draw2d.geometry.Rectangle;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.gmf.runtime.diagram.ui.figures.BorderItemLocator;
 import org.eclipse.gmf.runtime.draw2d.ui.render.RenderedImage;
 import org.eclipse.gmf.runtime.draw2d.ui.render.factory.RenderedImageFactory;
 import org.eclipse.gmf.runtime.draw2d.ui.render.figures.ScalableImageFigure;
@@ -363,10 +364,10 @@ public class SyncchartsFigureProvider implements IRenderingProvider {
         if (oldLayoutManager instanceof StateLayout) {
             StateLayout stateLayout = (StateLayout) oldLayoutManager;
             if (object instanceof State) {
-                State state = (State) object;
+                State state = (State) stateLayout.getModelElement();//object;
                 if (input.equals("simpleNormal")) {
                     stateLayout.setCorrespondingLayout(layouts.simpleStateLayout);
-                } else if (input.equals("complexNormal") && !(state.getSuspensionTrigger() != null) && !(! (state.getBodyText() == null) || state.getBodyText().length() == 0) )) {
+                } else if (input.equals("complexNormal")) { 
                     stateLayout.setIsEmptyValues(layouts.complexStateLayout, state);
                     stateLayout.setCorrespondingLayout(layouts.complexStateLayout);
                 } else if (input.equals("conditional")) {
@@ -381,13 +382,16 @@ public class SyncchartsFigureProvider implements IRenderingProvider {
                 } else {
                     stateLayout.setCorrespondingLayout(layouts.simpleStateLayout);
                 }
+                /*
                 if (state.isIsFinal()) {
                     stateLayout.getCorrespondingLayout(null).padding(
                             DoubleRoundedRectangle.BORDER_WIDTH);
                 } else {
                     stateLayout.getCorrespondingLayout(null).padding(0);
                 }
+                /
             }
+        
         }
         */
         // TODO Auto-generated method stub
@@ -398,6 +402,11 @@ public class SyncchartsFigureProvider implements IRenderingProvider {
      * {@inheritDoc}
      */
     public LayoutManager getDefaultLayoutManager() {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    public BorderItemLocator getBorderItemLocatorByString(String input) {
         // TODO Auto-generated method stub
         return null;
     }
