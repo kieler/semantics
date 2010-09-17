@@ -10,6 +10,12 @@ import de.cau.cs.kieler.synccharts.text.actions.formatting.ActionsValueConverter
  * Use this class to register components to be used at runtime / without the Equinox extension registry.
  */
 public class ActionsRuntimeModule extends de.cau.cs.kieler.synccharts.text.actions.AbstractActionsRuntimeModule {
+ 
+
+    public Class<? extends org.eclipse.xtext.resource.XtextResource> bindXtextResource() {
+        return ActionsResource.class;
+    }
+    
     /* (non-Javadoc)
      * @see org.eclipse.xtext.service.DefaultRuntimeModule#bindITransientValueService()
      */
@@ -26,7 +32,4 @@ public class ActionsRuntimeModule extends de.cau.cs.kieler.synccharts.text.actio
         return ActionsValueConverter.class;
     }
     
-//    public Class<? extends IValueSerializer> bindIValueSerializer() {
-//    	return ActionsValueSerializer.class;
-//    }
 }
