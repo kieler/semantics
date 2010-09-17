@@ -33,6 +33,16 @@
             mergerProviderClass="de.cau.cs.kieler.synccharts.synchronizer.merge.KitsMergerProvider"
             priority="normal">
       </mergerprovider>
+      <mergerprovider
+            fileExtension="kitsem"
+            mergerProviderClass="de.cau.cs.kieler.synccharts.synchronizer.merge.KitsMergerProvider"
+            priority="normal">
+      </mergerprovider>
+      <mergerprovider
+            fileExtension="action"
+            mergerProviderClass="de.cau.cs.kieler.synccharts.synchronizer.merge.KitsMergerProvider"
+            priority="normal">
+      </mergerprovider>
    </extension>
    <extension
          point="org.eclipse.emf.compare.match.engine">

@@ -20,6 +20,7 @@ import org.eclipse.emf.compare.diff.merge.IMergerProvider;
 import org.eclipse.emf.compare.diff.metamodel.DiffElement;
 import org.eclipse.emf.compare.diff.metamodel.ModelElementChangeLeftTarget;
 import org.eclipse.emf.compare.diff.metamodel.ModelElementChangeRightTarget;
+import org.eclipse.emf.compare.diff.metamodel.MoveModelElement;
 import org.eclipse.emf.compare.diff.metamodel.ReferenceChangeLeftTarget;
 import org.eclipse.emf.compare.diff.metamodel.ReferenceOrderChange;
 import org.eclipse.emf.compare.diff.metamodel.UpdateReference;
@@ -40,7 +41,7 @@ public class KitsMergerProvider implements IMergerProvider {
 //                  mergerTypes.put(DiffGroup.class, DiffGroupMerger.class);
                     mergerTypes.put(ModelElementChangeRightTarget.class, MyModelElementChangeRightTargetMerger.class);
                     mergerTypes.put(ModelElementChangeLeftTarget.class, MyModelElementChangeLeftTargetMerger.class);
-//                  mergerTypes.put(MoveModelElement.class, MoveModelElementMerger.class);
+                    mergerTypes.put(MoveModelElement.class, KitsMoveModelElementMerger.class);
 //                  mergerTypes.put(ReferenceChangeRightTarget.class, ReferenceChangeRightTargetMerger.class);
                     mergerTypes.put(ReferenceChangeLeftTarget.class, MyReferenceChangeLeftTargetMerger.class);
                     mergerTypes.put(UpdateReference.class, MyUpdateReferenceMerger.class);

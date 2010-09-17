@@ -15,6 +15,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.util.EContentAdapter;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
 import org.eclipse.emf.transaction.ResourceSetChangeEvent;
 import org.eclipse.ui.IEditorPart;
@@ -221,7 +222,7 @@ public class ModelSynchronizer implements IStartup {
                         + "/test/match.xmi";
                 // System.out.println("File: "+path);
                 Resource test = set.createResource(URI.createFileURI(path));
-                test.getContents().add(model);
+                test.getContents().add(EcoreUtil.copy(model));
                 test.save(System.out, Collections.EMPTY_MAP);
             } catch (IOException e) {
                 e.printStackTrace();
@@ -242,7 +243,7 @@ public class ModelSynchronizer implements IStartup {
                         + "/test/diff.xmi";
                 // System.out.println("File: "+path);
                 Resource test = set.createResource(URI.createFileURI(path));
-                test.getContents().add(model);
+                test.getContents().add(EcoreUtil.copy(model));
                 test.save(System.out, Collections.EMPTY_MAP);
                 test.getContents().remove(model);
             } catch (IOException e) {
@@ -264,7 +265,7 @@ public class ModelSynchronizer implements IStartup {
                         + "/test/diff.xmi";
                 // System.out.println("File: "+path);
                 Resource test = set.createResource(URI.createFileURI(path));
-                test.getContents().add(model);
+                test.getContents().add(EcoreUtil.copy(model));
                 test.save(System.out, Collections.EMPTY_MAP);
             } catch (IOException e) {
                 e.printStackTrace();

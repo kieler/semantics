@@ -45,7 +45,6 @@ import org.eclipse.xtext.parsetree.reconstr.XtextSerializationException;
 import org.eclipse.xtext.resource.XtextResource;
 import org.eclipse.xtext.util.concurrent.IUnitOfWork;
 
-import de.cau.cs.kieler.core.KielerRuntimeException;
 import de.cau.cs.kieler.core.ui.util.EditorUtils;
 import de.cau.cs.kieler.synccharts.Region;
 import de.cau.cs.kieler.synccharts.State;
@@ -145,8 +144,6 @@ public class SyncChartSynchronizerJob extends Job implements ISelectionListener 
             }
         });
 
-        final DiffModel diffModel;
-
         MatchModel matchModel = null;
 
         Region rightRegion = (Region) ((Diagram) ((IDiagramWorkbenchPart) passiveEditor)
@@ -155,11 +152,10 @@ public class SyncChartSynchronizerJob extends Job implements ISelectionListener 
             matchModel = MatchService.doMatch(leftElement, rightRegion, matchOptions);
         } catch (InterruptedException e) {
             return new Status(Status.ERROR, SyncchartsSynchronizerPlugin.PLUGIN_ID,
-                    ModelSynchronizer.MSG_MATCH_FAILED, new KielerRuntimeException(
-                            ModelSynchronizer.MSG_MATCH_FAILED));
+                    ModelSynchronizer.MSG_MATCH_FAILED, e);
         }
 
-        diffModel = DiffService.doDiff(matchModel);
+        final DiffModel diffModel = DiffService.doDiff(matchModel);
 
         if (!diffModel.getDifferences().isEmpty()) {
             PlatformUI

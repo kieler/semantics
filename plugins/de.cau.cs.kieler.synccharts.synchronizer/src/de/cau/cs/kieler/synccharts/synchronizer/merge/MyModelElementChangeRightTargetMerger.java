@@ -94,10 +94,10 @@ public class MyModelElementChangeRightTargetMerger extends DefaultMerger {
     public void undoInTarget() {
         final ModelElementChangeRightTarget theDiff = (ModelElementChangeRightTarget) this.diff;
         final EObject element = theDiff.getRightElement();
-        final EObject parent = theDiff.getRightElement().eContainer();
-        EcoreUtil.remove(element);
         // now removes all the dangling references
         try {
+            final EObject parent = theDiff.getRightElement().eContainer();
+            EcoreUtil.remove(element);
             // chsch: results in transaction rollback
             removeDanglingReferences(parent);
         } catch (Exception e) {
