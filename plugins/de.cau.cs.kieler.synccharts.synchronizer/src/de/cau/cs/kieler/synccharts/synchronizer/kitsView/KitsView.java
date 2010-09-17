@@ -13,9 +13,7 @@
  */
 package de.cau.cs.kieler.synccharts.synchronizer.kitsView;
 
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.layout.GridData;
-import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.custom.StackLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.ISelectionService;
 import org.eclipse.ui.part.ViewPart;
@@ -27,6 +25,7 @@ import org.eclipse.xtext.util.concurrent.IUnitOfWork;
 
 import com.google.inject.Injector;
 
+import de.cau.cs.kieler.synccharts.SyncchartsPackage;
 import de.cau.cs.kieler.synccharts.text.ui.KitsUIPlugin;
 
 /**
@@ -37,30 +36,53 @@ import de.cau.cs.kieler.synccharts.text.ui.KitsUIPlugin;
  */
 public class KitsView extends ViewPart {
 
-    private EmbeddedXtextEditor editor;
+    private EmbeddedXtextEditor kitsEditor;
+
+    private EmbeddedXtextEditor actionsEditor;
 
     private SyncChartSynchronizerJob synchronizer;
 
     @Override
     public void createPartControl(Composite parent) {
-        parent.setLayout(new GridLayout());
-        parent.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+        StackLayout layout = new StackLayout();        
+        parent.setLayout(layout);
+//        parent.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 
-        Injector injector = KitsUIPlugin.getInstance().getInjector(
+        Injector kitsInjector = KitsUIPlugin.getInstance().getInjector(
                 KitsUIPlugin.KITS_LANGUAGE_EMBEDDED);
 
-        editor = new EmbeddedXtextEditor(parent, injector);
+        Injector actionsInjector = KitsUIPlugin.getInstance().getInjector(
+                KitsUIPlugin.ACTIONS_LANGUAGE);
 
-        editor.getDocument().addModelListener(new IXtextModelListener() {
+        actionsEditor = new EmbeddedXtextEditor(parent, actionsInjector);
+        
+        actionsEditor.getDocument().addModelListener(new IXtextModelListener() {
             public void modelChanged(XtextResource resource) {
                 synchronizer.cancel();
-                if (!documentHasErrors(editor.getDocument())) {
+                if (!documentHasErrors(actionsEditor.getDocument())) {
+                    synchronizer.setLastActiveEditor(actionsEditor);
+                    synchronizer.setFeature(SyncchartsPackage.eINSTANCE.getState_OutgoingTransitions());
                     synchronizer.schedule(2000L);
                 }
             }
         });
 
-        synchronizer = new SyncChartSynchronizerJob("SyncChartsSynchronizer", editor);
+        kitsEditor = new EmbeddedXtextEditor(parent, kitsInjector);
+        
+        kitsEditor.getDocument().addModelListener(new IXtextModelListener() {
+            public void modelChanged(XtextResource resource) {
+                synchronizer.cancel();
+                if (!documentHasErrors(kitsEditor.getDocument())) {
+                    synchronizer.setLastActiveEditor(kitsEditor);
+                    synchronizer.setFeature(SyncchartsPackage.eINSTANCE.getState_Regions());
+                    synchronizer.schedule(2000L);
+                }
+            }
+        });
+
+        layout.topControl = kitsEditor.getViewer().getControl();
+        
+        synchronizer = new SyncChartSynchronizerJob("SyncChartsSynchronizer", kitsEditor, actionsEditor);
 
         ((ISelectionService) getSite().getService(ISelectionService.class))
                 .addSelectionListener(synchronizer);
@@ -87,7 +109,7 @@ public class KitsView extends ViewPart {
     public void dispose() {
         ((ISelectionService) getSite().getService(ISelectionService.class))
                 .removeSelectionListener(synchronizer);
-        editor.dispose();
+        kitsEditor.dispose();
         super.dispose();
     }
 
