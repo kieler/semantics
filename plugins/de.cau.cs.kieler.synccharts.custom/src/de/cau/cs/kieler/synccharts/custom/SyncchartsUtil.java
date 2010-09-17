@@ -92,26 +92,27 @@ public final class SyncchartsUtil {
      */
     public static void cleanUpNotationModel(final TransactionalEditingDomain domain,
             final Diagram diagram) {
-//        CompoundCommand cc = new CompoundCommand();
-//        Object o = null;
-//        for (Iterator<?> it = diagram.eAllContents(); it.hasNext();) {
-//            o = it.next();
-//            if (NotationPackage.eINSTANCE.getView().isInstance(o)
-//                    && ((InternalEObject) ((View) o).getElement()).eIsProxy()) {
-//                if (NotationPackage.eINSTANCE.getConnector().isInstance(o)) {
-//                    cc.append(new RemoveCommand(domain, ((Connector) o).getSource()
-//                            .getSourceEdges(), o));
-//                    cc.append(new RemoveCommand(domain, ((Connector) o).getTarget()
-//                            .getTargetEdges(), o));
-//                    cc.append(new RemoveCommand(domain, diagram.getPersistedEdges(), o));
-//                    
-//                } else {
-//                    cc.append(new RemoveCommand(domain, ((View) ((View) o).eContainer())
-//                            .getPersistedChildren(), o));
-//                }
-//            }
-//        }
-//        domain.getCommandStack().execute(cc);
+        CompoundCommand cc = new CompoundCommand();
+        Object o = null;
+        for (Iterator<?> it = diagram.eAllContents(); it.hasNext();) {
+            o = it.next();
+            if (NotationPackage.eINSTANCE.getView().isInstance(o)
+                    && ((View) o).getElement() != null
+                    && ((InternalEObject) ((View) o).getElement()).eIsProxy()) {
+                if (NotationPackage.eINSTANCE.getConnector().isInstance(o)) {
+                    cc.append(new RemoveCommand(domain, ((Connector) o).getSource()
+                            .getSourceEdges(), o));
+                    cc.append(new RemoveCommand(domain, ((Connector) o).getTarget()
+                            .getTargetEdges(), o));
+                    cc.append(new RemoveCommand(domain, diagram.getPersistedEdges(), o));
+                    
+                } else {
+                    cc.append(new RemoveCommand(domain, ((View) ((View) o).eContainer())
+                            .getPersistedChildren(), o));
+                }
+            }
+        }
+        domain.getCommandStack().execute(cc);
 
         if (diagram.getElement() instanceof Region
                 && !((InternalEObject) diagram.getElement()).eIsProxy()) {
