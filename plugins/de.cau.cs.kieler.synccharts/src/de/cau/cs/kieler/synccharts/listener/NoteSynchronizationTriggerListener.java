@@ -91,21 +91,23 @@ public class NoteSynchronizationTriggerListener extends FireOnceTriggerListener 
     }
 
     /**
-     * Handle removing of notes in the diagram. Remove the corresponding edge deferred, i.e.
-     * in a separate thread sometime later when it can be done outside this read-only transaction.
+     * Handle removing of notes in the diagram. Remove the corresponding edge deferred, i.e. in a
+     * separate thread sometime later when it can be done outside this read-only transaction.
      */
     private void removedNote(View notifier, Shape note) {
         if (note.getType() != null && note.getType().equals("Note")) {
             EObject semanticPartner = annotations.get(note);
-            EObject semanticParent = semanticPartner.eContainer();
-            String description = note.getDescription();
-            if (semanticParent instanceof Annotatable) {
-                EList<Annotation> myAnnotations = ((Annotatable) semanticParent)
-                    .getAllAnnotations(null);
-                for (Annotation annotation : myAnnotations) {
-                    if (annotation instanceof StringAnnotation
-                        && ((StringAnnotation) annotation).getValue().equals(description)) {
-                        deferredRemoveAnnotation((Annotatable)semanticParent, annotation);
+            if (semanticPartner != null) {
+                EObject semanticParent = semanticPartner.eContainer();
+                String description = note.getDescription();
+                if (semanticParent instanceof Annotatable) {
+                    EList<Annotation> myAnnotations = ((Annotatable) semanticParent)
+                        .getAllAnnotations(null);
+                    for (Annotation annotation : myAnnotations) {
+                        if (annotation instanceof StringAnnotation
+                            && ((StringAnnotation) annotation).getValue().equals(description)) {
+                            deferredRemoveAnnotation((Annotatable) semanticParent, annotation);
+                        }
                     }
                 }
             }
@@ -154,26 +156,27 @@ public class NoteSynchronizationTriggerListener extends FireOnceTriggerListener 
         if (target instanceof Annotatable) {
             // remove a possible old annotation with no key. We currently support exactly 1 comment
             // annotation
-            //Annotation oldAnnotation = ((Annotatable) target).getAnnotation("");
-            //if (oldAnnotation != null) {
-            //    ((Annotatable) target).getAnnotations().remove(oldAnnotation);
-            //}
+            // Annotation oldAnnotation = ((Annotatable) target).getAnnotation("");
+            // if (oldAnnotation != null) {
+            // ((Annotatable) target).getAnnotations().remove(oldAnnotation);
+            // }
             if (comment != null) {
                 StringAnnotation annotation = AnnotationsFactory.eINSTANCE.createStringAnnotation();
                 annotation.setValue(comment);
-                //annotation.setName("");
+                // annotation.setName("");
                 annotations.put(note, annotation);
-                //((Annotatable) target).getAnnotations().add(annotation);
+                // ((Annotatable) target).getAnnotations().add(annotation);
                 EditingDomain domain = TransactionUtil.getEditingDomain(target);
-                Command cmd = AddCommand.create(domain, target, AnnotationsPackage.eINSTANCE.getAnnotatable_Annotations(), annotation);
-                deferredExecuteCommand(cmd,domain);
+                Command cmd = AddCommand.create(domain, target,
+                    AnnotationsPackage.eINSTANCE.getAnnotatable_Annotations(), annotation);
+                deferredExecuteCommand(cmd, domain);
             }
         }
     }
 
     /**
-     * For a given View get the first View that it is connected by an Edge. Useful to 
-     * find the object that a Note is connected to. This is exactly one.
+     * For a given View get the first View that it is connected by an Edge. Useful to find the
+     * object that a Note is connected to. This is exactly one.
      */
     private View getConnectedView(View origin) {
         View connectedNode = null;
@@ -194,25 +197,24 @@ public class NoteSynchronizationTriggerListener extends FireOnceTriggerListener 
         }
         return connectedNode;
     }
-    
+
     /**
-     * Execute an EMF Command in a deferred way, i.e. do it in a separate Thread that 
-     * tries on to execute until it was succesful. This way it can execute in another
-     * transaction when this read-only transaction is over.
+     * Execute an EMF Command in a deferred way, i.e. do it in a separate Thread that tries on to
+     * execute until it was succesful. This way it can execute in another transaction when this
+     * read-only transaction is over.
      */
-    void deferredExecuteCommand(final Command cmd, final EditingDomain domain){
-        new Thread(){
+    void deferredExecuteCommand(final Command cmd, final EditingDomain domain) {
+        new Thread() {
             @Override
             public void run() {
                 super.run();
                 boolean success = false;
                 long sleepTime = 100;
-                while (! success){
-                    try{
+                while (!success) {
+                    try {
                         cmd.execute();
                         success = true;
-                    }
-                    catch(Exception e){
+                    } catch (Exception e) {
                         try {
                             this.sleep(sleepTime);
                         } catch (InterruptedException e1) {
@@ -220,32 +222,31 @@ public class NoteSynchronizationTriggerListener extends FireOnceTriggerListener 
                         }
                         sleepTime *= 2;
                     }
-                    
+
                 }
-                
+
             }
         }.start();
     }
-    
+
     /**
-    * Remove an Annotation from an Annotatable in a deferred way, i.e. do it in a separate Thread that 
-    * tries on to execute until it was succesful. This way it can execute in another
-    * transaction when this read-only transaction is over. Strangely, the RemoveCommand of EMF
-    * won't work here.
-    */
-    void deferredRemoveAnnotation(final Annotatable annotatable, final Annotation annotation){
-        new Thread(){
+     * Remove an Annotation from an Annotatable in a deferred way, i.e. do it in a separate Thread
+     * that tries on to execute until it was succesful. This way it can execute in another
+     * transaction when this read-only transaction is over. Strangely, the RemoveCommand of EMF
+     * won't work here.
+     */
+    void deferredRemoveAnnotation(final Annotatable annotatable, final Annotation annotation) {
+        new Thread() {
             @Override
             public void run() {
                 super.run();
                 boolean success = false;
                 long sleepTime = 100;
-                while (! success){
-                    try{
+                while (!success) {
+                    try {
                         annotatable.getAnnotations().remove(annotation);
                         success = true;
-                    }
-                    catch(Exception e){
+                    } catch (Exception e) {
                         e.printStackTrace();
                         try {
                             sleep(sleepTime);
@@ -254,9 +255,9 @@ public class NoteSynchronizationTriggerListener extends FireOnceTriggerListener 
                         }
                         sleepTime *= 2;
                     }
-                    
+
                 }
-                
+
             }
         }.start();
     }
