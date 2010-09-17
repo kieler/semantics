@@ -180,9 +180,13 @@ public class SignalFlowCombination extends AbstractCombination {
             }
 
             // remove all old arrows if this is an updated execution
-            KiVi.getInstance().undoEffect(iEffects);
-            KiVi.getInstance().executeEffect(newEffects);
+            for (IEffect effect : iEffects) {
+                effect.scheduleUndo();
+            }
             iEffects = newEffects;
+            for (IEffect effect : iEffects) {
+                effect.schedule();
+            }
         } else {
             // remove all arrows if the button is not pushed
             undo();
@@ -193,7 +197,9 @@ public class SignalFlowCombination extends AbstractCombination {
      * {@inheritDoc}
      */
     public void undo() {
-        KiVi.getInstance().undoEffect(iEffects);
+        for (IEffect effect : iEffects) {
+            effect.scheduleUndo();
+        }
         iEffects.clear();
     }
 }

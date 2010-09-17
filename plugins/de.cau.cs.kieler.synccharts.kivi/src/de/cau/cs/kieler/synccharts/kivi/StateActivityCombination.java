@@ -18,15 +18,10 @@ import java.util.List;
 import java.util.Map;
 
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.gef.EditPart;
-import org.eclipse.gef.GraphicalEditPart;
-import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramEditor;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.RGB;
 
-import de.cau.cs.kieler.core.kivi.KiViPlugin;
 import de.cau.cs.kieler.core.kivi.IEffect;
-import de.cau.cs.kieler.core.kivi.KiVi;
 import de.cau.cs.kieler.core.kivi.AbstractCombination;
 import de.cau.cs.kieler.synccharts.kivi.StateActivityTrigger.ActiveStates;
 
@@ -74,13 +69,13 @@ public class StateActivityCombination extends AbstractCombination {
                 }
                 // update its color instead of undo and create a new effect to avoid flashing
                 effect.setColor(getColor(i, activeStates.getActiveStates().size()));
-                KiVi.getInstance().executeEffect(effect);
+                effect.schedule();
             }
         }
 
         // undo any effect that was not found in the active states
         for (Map.Entry<EObject, IEffect> entry : toUndo.entrySet()) {
-            KiVi.getInstance().undoEffect(entry.getValue());
+            entry.getValue().scheduleUndo();
             effects.remove(entry.getKey());
         }
     }
@@ -90,7 +85,7 @@ public class StateActivityCombination extends AbstractCombination {
      */
     public void undo() {
         for (IEffect effect : effects.values()) {
-            KiVi.getInstance().undoEffect(effect);
+            effect.scheduleUndo();
         }
         effects.clear();
     }
