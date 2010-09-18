@@ -76,9 +76,10 @@ public class WorkflowGenerator {
     private URI uri = null;
 
     /**
-     * The constructor sets the location in the KIELER workspace to save the sc
-     * files if you just generate sc code without simulation. It also sets the
-     * variables for the EMF reader.
+     * The constructor sets the location in the KIELER workspace to save the sc files if you just
+     * generate sc code without simulation. It also sets the variables for the EMF reader.
+     * 
+     * @return the out path from ui
      */
 //    public WorkflowGenerator() {
         // location for the sc file in the KIELER workspace
@@ -103,6 +104,14 @@ public class WorkflowGenerator {
 //        }
 //    }
 
+    
+    public String getOutPathFromUI() {
+        IWorkbenchPage activePage = PlatformUI.getWorkbench().getActiveWorkbenchWindow()
+                .getActivePage();
+        editor = activePage.getActiveEditor();
+        return part2Location(editor);
+    }
+    
     /**
      * The constructor to use a given diagram (as *.kixs file) for generating
      * code.
@@ -142,8 +151,12 @@ public class WorkflowGenerator {
         EmfMetaModel metaModel1 = new EmfMetaModel(ExpressionsPackage.eINSTANCE);
         EmfMetaModel metaModel2 = new EmfMetaModel(SyncchartsPackage.eINSTANCE);
 
+        //FIXME: This is a really hacky way to set the path ... consider this for 
+        // reimplementation. Better use two different workflows at all!
         if (sim) {
             outPath = path;
+        } else {
+            outPath = getOutPathFromUI();
         }
 
         // Outlet
