@@ -53,10 +53,8 @@ public class SignalFlowCombination extends AbstractCombination {
     /**
      * Execute the combination using the signal flow active state and the selection state.
      * 
-     * @param active
-     *            the signal flow active state
-     * @param selection
-     *            the selection state
+     * @param active the signal flow active state
+     * @param selection the selection state
      */
     public void execute(final SignalFlowActiveState active, final SelectionState selection) {
         if (active.isActive()) {
@@ -72,20 +70,20 @@ public class SignalFlowCombination extends AbstractCombination {
                 selected = selection.getSelectedEObjects().get(0);
                 // FIXME move to EObjects later
                 selected = ModelingUtil.getEditPart(selection.getDiagramEditor()
-                        .getDiagramEditPart(), (EObject) selected);
+                    .getDiagramEditPart(), (EObject) selected);
             }
 
             /*
              * haf: workaround for the export image problem. So far when a transition is selected,
-             * the image cannot be save to an image file (action in context menu is disabled).
-             * The following will not repaint the arrows when the root region is selected. Hence, 
+             * the image cannot be save to an image file (action in context menu is disabled). The
+             * following will not repaint the arrows when the root region is selected. Hence,
              * selecting the root region will keep the arrows that have been there before. By this
              * also a customized arrow-subset of a selection can be exported.
              */
-            if(selected instanceof RegionEditPart){
+            if (selected instanceof RegionEditPart) {
                 return;
             }
-            
+
             Signal relevantSignal = null;
             TransitionLabelEditPart relevantLabel = null;
 
@@ -93,7 +91,7 @@ public class SignalFlowCombination extends AbstractCombination {
             // --> show all paths of this signal
             if (selected instanceof SignalEditPart) {
                 relevantSignal = (Signal) ((View) ((SignalEditPart) selected).getModel())
-                        .getElement();
+                    .getElement();
                 // check if a transition is selected
                 // --> show all incoming and outgoing signals
             } else if (selected instanceof TransitionEditPart) {
@@ -111,7 +109,7 @@ public class SignalFlowCombination extends AbstractCombination {
             // traverse all connection edit parts to get all triggers and effects used in the
             // diagram along with their edit part
             List<?> connections = selection.getDiagramEditor().getDiagramEditPart()
-                    .getConnections();
+                .getConnections();
             for (Object o : connections) {
                 ConnectionEditPart connection = (ConnectionEditPart) o;
                 GraphicalEditPart editPart = null;
@@ -136,7 +134,7 @@ public class SignalFlowCombination extends AbstractCombination {
                         // sort out irrelevant signals if a signal was selected
                         if (relevantSignal == null || relevantSignal == reference.getValuedObject()) {
                             triggers.add(new Pair<Signal, GraphicalEditPart>((Signal) reference
-                                    .getValuedObject(), editPart));
+                                .getValuedObject(), editPart));
                         }
                     }
                 } else {
@@ -150,9 +148,9 @@ public class SignalFlowCombination extends AbstractCombination {
                                 if (reference.getValuedObject() instanceof Signal) {
                                     // sort out irrelevant signals if a signal was selected
                                     if (relevantSignal == null
-                                            || relevantSignal == reference.getValuedObject()) {
+                                        || relevantSignal == reference.getValuedObject()) {
                                         triggers.add(new Pair<Signal, GraphicalEditPart>(
-                                                (Signal) reference.getValuedObject(), editPart));
+                                            (Signal) reference.getValuedObject(), editPart));
                                     }
                                 }
                             }
@@ -167,7 +165,7 @@ public class SignalFlowCombination extends AbstractCombination {
                         // sort out irrelevant signals if a signal was selected
                         if (relevantSignal == null || relevantSignal == emission.getSignal()) {
                             effects.add(new Pair<Signal, GraphicalEditPart>(emission.getSignal(),
-                                    editPart));
+                                editPart));
                         }
                     }
                 }
@@ -180,11 +178,11 @@ public class SignalFlowCombination extends AbstractCombination {
                     if (effect.getFirst() == trigger.getFirst()) {
                         // sort out irrelevant transitions if a transition was selected
                         if (relevantLabel == null || effect.getSecond() == relevantLabel
-                                || trigger.getSecond() == relevantLabel) {
+                            || trigger.getSecond() == relevantLabel) {
                             IEffect iEffect = new ArrowEffect(
-                                    // effect.getSecond(), trigger.getSecond(), false);
-                                    ((View) effect.getSecond().getModel()).getElement(),
-                                    ((View) trigger.getSecond().getModel()).getElement(), false);
+                                // effect.getSecond(), trigger.getSecond(), false);
+                                ((View) effect.getSecond().getModel()).getElement(),
+                                ((View) trigger.getSecond().getModel()).getElement(), false);
                             newEffects.add(iEffect);
                         }
                     }
