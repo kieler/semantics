@@ -362,8 +362,17 @@ public final class KvidUtil {
                     path.add(getAbsolutePosition(edge.getTarget(), parentNode));
                 }
             }
-            result.add(path);
-            result.addAll(subresult);
+            if (subresult.size() > 0) {
+                for (List<Point> subpath : subresult) {
+                    List<Point> completePath = new LinkedList<Point>();
+                    completePath.addAll(path);
+                    completePath.addAll(subpath);
+                    result.add(completePath);
+                }
+            } else {
+                result.add(path);
+            }
+            subresult.clear();
         }
         return result;
     }
