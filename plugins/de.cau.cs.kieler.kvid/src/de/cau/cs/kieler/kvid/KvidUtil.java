@@ -261,7 +261,6 @@ public final class KvidUtil {
         Point parentPosition = new Point(0, 0);
         KNode iterNode = node;
         while (iterNode.getParent() != null) {
-            System.out.println(iterNode.getLabel().toString() + parentPosition);
             iterNode = iterNode.getParent();
             KShapeLayout iterLayout = iterNode.getData(KShapeLayout.class);
             parentPosition.translate((int) iterLayout.getXpos(), (int) iterLayout.getYpos());
@@ -302,7 +301,6 @@ public final class KvidUtil {
         Point parentPosition = new Point(0, 0);
         KNode iterNode = node;
         while (iterNode.getParent() != null) {
-            System.out.println(iterNode.getLabel().toString() + parentPosition);
             iterNode = iterNode.getParent();
             KShapeLayout iterLayout = iterNode.getData(KShapeLayout.class);
             parentPosition.translate((int) iterLayout.getXpos(), (int) iterLayout.getYpos());
@@ -447,9 +445,7 @@ public final class KvidUtil {
                                     "Default output port");
                 }
                 if (port.getLabel().getText().equals(portName) || portName.isEmpty()) {
-                    System.out.println(elementUri.getElementUri());
                     result.addAll(getPathsByPort(port));
-                    System.out.println(result);
                 }
             }
         } else {
