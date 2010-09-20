@@ -149,7 +149,7 @@ public class DataObject {
      */
     public void updateData(final String thedata) {
         if (!parseDataType(thedata).equals(this.type)) {
-            throw new RuntimeException("Tried to update with a different data type!");
+            this.type = parseDataType(thedata);
         }
         this.data = thedata;
         if (savesHistory) {
