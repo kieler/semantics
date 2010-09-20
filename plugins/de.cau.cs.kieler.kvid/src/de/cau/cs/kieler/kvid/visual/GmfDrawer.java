@@ -131,24 +131,9 @@ public final class GmfDrawer implements IDrawer, IDataListener {
                                 if (uriPart.equals(key.getElementUri())) {
                                     if (property.getCurrentValue().equals(
                                             "Animating")) {
-                                        IKvidFigure animaFigure = currentFigure.copy();
-                                        boolean first = true;
                                         for (List<Point> path : dataSet.get(key).getPaths()) {
-                                            if (first) {
-                                                first = false;
-                                                animatables.put(animaFigure, path);
-                                            } else {
-                                                IKvidFigure subAnimaFigure = animaFigure.copy();
-                                                subAnimaFigure
-                                                        .getData()
-                                                        .getUri()
-                                                        .setPriority(
-                                                                animaFigure
-                                                                        .getData()
-                                                                        .getUri()
-                                                                        .getPriority() + 1);
-                                                animatables.put(subAnimaFigure, path);
-                                            }
+                                            IKvidFigure animaFigure = currentFigure.copy();
+                                            animatables.put(animaFigure, path);
                                         }
                                         currentFigure.setVisible(false);
                                     } else if (property.getCurrentValue()

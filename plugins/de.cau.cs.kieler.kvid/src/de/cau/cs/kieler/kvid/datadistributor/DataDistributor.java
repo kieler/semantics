@@ -317,12 +317,14 @@ public final class DataDistributor implements IProviderListener, ResourceSetList
         }
         return result;
     }
-    
+
     /**
      * Getter for a {@link DataObject} by it's model element's URI.
-     *  
-     * @param uri The URI of the model element
-     * @return The {@link DataObject} associated with the model element
+     * 
+     * @param uri
+     *            The URI of the model element
+     * @return The {@link DataObject} associated with the model element. Might
+     *         be null if URI has no DataObject
      */
     public DataObject getDataObjectByURI(final KvidUri uri) {
         return dataByUri.get(uri);
