@@ -95,11 +95,11 @@ public class LabelLocator extends BorderItemLocator {
             switch (calcPortSide(nodeBorder, parentBorder)) {
             case PositionConstants.EAST:
                 location.x = parentBorder.x - offset.width;
-                location.y = parentBorder.y + parentBorder.height - offset.height;
+                location.y = parentBorder.y + parentBorder.height - offset.height / 2;
                 break;
             case PositionConstants.WEST:
                 location.x = parentBorder.x + parentBorder.width - location.width + offset.width;
-                location.y = parentBorder.y + parentBorder.height - offset.height;
+                location.y = parentBorder.y + parentBorder.height - offset.height / 2;
                 break;
             case PositionConstants.NORTH:
                 location.x = parentBorder.x + (parentBorder.width - location.width) / 2;
