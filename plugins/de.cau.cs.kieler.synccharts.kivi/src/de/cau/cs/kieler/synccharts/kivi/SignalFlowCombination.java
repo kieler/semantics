@@ -34,6 +34,7 @@ import de.cau.cs.kieler.core.ui.listeners.SelectionTrigger.SelectionState;
 import de.cau.cs.kieler.synccharts.Effect;
 import de.cau.cs.kieler.synccharts.Emission;
 import de.cau.cs.kieler.synccharts.Transition;
+import de.cau.cs.kieler.synccharts.diagram.edit.parts.RegionEditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.SignalEditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.TransitionEditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.TransitionLabelEditPart;
@@ -74,6 +75,17 @@ public class SignalFlowCombination extends AbstractCombination {
                         .getDiagramEditPart(), (EObject) selected);
             }
 
+            /*
+             * haf: workaround for the export image problem. So far when a transition is selected,
+             * the image cannot be save to an image file (action in context menu is disabled).
+             * The following will not repaint the arrows when the root region is selected. Hence, 
+             * selecting the root region will keep the arrows that have been there before. By this
+             * also a customized arrow-subset of a selection can be exported.
+             */
+            if(selected instanceof RegionEditPart){
+                return;
+            }
+            
             Signal relevantSignal = null;
             TransitionLabelEditPart relevantLabel = null;
 
