@@ -22,7 +22,6 @@ import org.eclipse.emf.compare.diff.merge.service.MergeService;
 import org.eclipse.emf.compare.diff.metamodel.DiffModel;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.gmf.runtime.common.core.command.CommandResult;
-import org.eclipse.gmf.runtime.diagram.ui.editpolicies.CanonicalEditPolicy;
 import org.eclipse.gmf.runtime.diagram.ui.resources.editor.parts.DiagramDocumentEditor;
 import org.eclipse.gmf.runtime.emf.commands.core.command.AbstractTransactionalCommand;
 import org.eclipse.gmf.runtime.notation.Diagram;
@@ -61,9 +60,9 @@ public class SynchronizeGMFEditorCommand extends AbstractTransactionalCommand {
 
         EObject model = ((Diagram) ((DiagramDocumentEditor) passiveEditor).getDiagramEditPart()
                 .getModel()).getElement();
-
+        
         new KitsSynchronizeLinker().setDiffModel(diffModel).linkElement(model);
-
+        
         try {
             ActionLabelProcessorWrapper.processActionLabels(((Diagram) this.passiveEditor
                     .getDiagramEditPart().getModel()).getElement(),
@@ -73,11 +72,11 @@ public class SynchronizeGMFEditorCommand extends AbstractTransactionalCommand {
                     SyncchartsUtil.MSG_LABEL_SERIAL_FAILED, e));
         }
 
-        for (CanonicalEditPolicy p : CanonicalEditPolicy.getRegisteredEditPolicies(model)) {
-            p.refresh();
-        }
-
-        ((DiagramDocumentEditor) passiveEditor).getDiagramGraphicalViewer().flush();
+//        for (CanonicalEditPolicy p : CanonicalEditPolicy.getRegisteredEditPolicies(model)) {
+//            p.refresh();
+//        }
+//
+//        ((DiagramDocumentEditor) passiveEditor).getDiagramGraphicalViewer().flush();
 
         return CommandResult.newOKCommandResult();
     }

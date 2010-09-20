@@ -15,6 +15,7 @@ package de.cau.cs.kieler.synccharts.synchronizer;
 
 import org.eclipse.emf.compare.diff.metamodel.DiffModel;
 import org.eclipse.gmf.runtime.diagram.ui.commands.ICommandProxy;
+import org.eclipse.gmf.runtime.diagram.ui.editpolicies.CanonicalEditPolicy;
 import org.eclipse.gmf.runtime.diagram.ui.resources.editor.parts.DiagramDocumentEditor;
 
 import de.cau.cs.kieler.kiml.ui.layout.EclipseLayoutServices;
@@ -41,6 +42,14 @@ public class InvokeGMFEditorSynchronizationRunnable implements Runnable {
                 .getDiagramCommandStack()
                 .execute(
                         new ICommandProxy(new SynchronizeGMFEditorCommand(passiveEditor, diffModel)));
+        
+        for (CanonicalEditPolicy p : CanonicalEditPolicy.getRegisteredEditPolicies(passiveEditor
+                .getDiagram().getElement())) {
+            p.refresh();
+        }
+
+        ((DiagramDocumentEditor) passiveEditor).getDiagramGraphicalViewer().flush();
+
 
         EclipseLayoutServices.getInstance().layout(passiveEditor, null, true, false);
     }

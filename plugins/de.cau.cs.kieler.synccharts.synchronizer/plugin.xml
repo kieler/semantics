@@ -48,6 +48,12 @@
          point="org.eclipse.emf.compare.match.engine">
       <matchengine
             engineClass="de.cau.cs.kieler.synccharts.synchronizer.match.KitsMatchEngine"
+            fileExtension="action"
+            label="de.cau.cs.kieler.synccharts.synchronizer.match.KitsMatchEngine"
+            priority="normal">
+      </matchengine>
+      <matchengine
+            engineClass="de.cau.cs.kieler.synccharts.synchronizer.match.KitsMatchEngine"
             fileExtension="kits"
             label="de.cau.cs.kieler.synccharts.synchronizer.match.KitsMatchEngine"
             priority="normal">
@@ -58,9 +64,21 @@
             label="de.cau.cs.kieler.synccharts.synchronizer.match.KitsMatchEngine"
             priority="normal">
       </matchengine>
+      <matchengine
+            engineClass="de.cau.cs.kieler.synccharts.synchronizer.match.KitsMatchEngine"
+            fileExtension="kitsem"
+            label="de.cau.cs.kieler.synccharts.synchronizer.match.KitsMatchEngine"
+            priority="normal">
+      </matchengine>
    </extension>
    <extension
          point="org.eclipse.emf.compare.diff.engine">
+      <diffengine
+            engineClass="de.cau.cs.kieler.synccharts.synchronizer.diff.KitsDiffEngine"
+            fileExtension="action"
+            label="de.cau.cs.kieler.synccharts.synchronizer.diff.KitsDiffEngine"
+            priority="normal">
+      </diffengine>
       <diffengine
             engineClass="de.cau.cs.kieler.synccharts.synchronizer.diff.KitsDiffEngine"
             fileExtension="kits"
@@ -70,6 +88,12 @@
       <diffengine
             engineClass="de.cau.cs.kieler.synccharts.synchronizer.diff.KitsDiffEngine"
             fileExtension="kixs"
+            label="de.cau.cs.kieler.synccharts.synchronizer.diff.KitsDiffEngine"
+            priority="normal">
+      </diffengine>
+      <diffengine
+            engineClass="de.cau.cs.kieler.synccharts.synchronizer.diff.KitsDiffEngine"
+            fileExtension="kitsem"
             label="de.cau.cs.kieler.synccharts.synchronizer.diff.KitsDiffEngine"
             priority="normal">
       </diffengine>

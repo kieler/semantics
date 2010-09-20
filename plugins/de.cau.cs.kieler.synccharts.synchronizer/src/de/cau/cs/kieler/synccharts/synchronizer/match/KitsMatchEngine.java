@@ -13,27 +13,23 @@
  */
 package de.cau.cs.kieler.synccharts.synchronizer.match;
 
-import java.util.Map;
-
-import org.eclipse.emf.compare.match.engine.AbstractSimilarityChecker;
 import org.eclipse.emf.compare.match.engine.GenericMatchEngine;
 import org.eclipse.emf.compare.match.engine.IMatchEngine;
-import org.eclipse.emf.compare.match.metamodel.MatchModel;
-import org.eclipse.emf.ecore.EObject;
 
 /**
  * Customized {@link IMatchEngine} registering customized filter and checker.
+ * 
  * @author chsch
  */
 public class KitsMatchEngine extends GenericMatchEngine {
-    
-	private KitsSimilarityChecker checker = null;
-	
+
+//    private KitsSimilarityChecker checker = null;
+
     public KitsMatchEngine() {
         super();
         this.filter = new KitsFilter();
     }
-    
+
     /**
      * {@inheritDoc}
      */
@@ -41,20 +37,21 @@ public class KitsMatchEngine extends GenericMatchEngine {
         super.reset();
         this.filter = new KitsFilter();
     }
-    
-//    /**
-//     * {@inheritDoc}
-//     */
-//	protected AbstractSimilarityChecker prepareChecker() {
-//		return checker;
-//	}
-//	
-//	/**
-//	 * {@inheritDoc}
-//	 */
-//	public MatchModel contentMatch(EObject leftObject, EObject rightObject, Map<String, Object> optionMap) {
-//		checker = new KitsSimilarityChecker(filter, super.prepareChecker(), leftObject, rightObject);
-//		return super.contentMatch(leftObject, rightObject, optionMap);
-//	}
+
+    // /**
+    // * {@inheritDoc}
+    // */
+    // protected AbstractSimilarityChecker prepareChecker() {
+    // return checker;
+    // }
+    //
+    // /**
+    // * {@inheritDoc}
+    // */
+    // public MatchModel contentMatch(EObject leftObject, EObject rightObject, Map<String, Object>
+    // optionMap) {
+    // checker = new KitsSimilarityChecker(filter, super.prepareChecker(), leftObject, rightObject);
+    // return super.contentMatch(leftObject, rightObject, optionMap);
+    // }
 
 }
