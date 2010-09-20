@@ -229,7 +229,9 @@ public final class KvidUtil {
                 for (EObject eo : root.eContents()) {
                     //iterate through the current level and find the NamedObject with the same name
                     if (eo instanceof NamedObject) {
-                        if (((NamedObject) eo).getName().equals(currentUri)) {
+                        if (((NamedObject) eo).getName() != null
+                                && ((NamedObject) eo).getName().equals(
+                                        currentUri)) {
                             result += ((InternalEObject) eo.eContainer())
                                     .eURIFragmentSegment(
                                             eo.eContainingFeature(), eo);
@@ -409,13 +411,17 @@ public final class KvidUtil {
             } catch (RuntimeException ex) {
                 //Notify user about malformatted URI and ignore value during visualization
                 Status status = new Status(Status.WARNING, KvidPlugin.PLUGIN_ID, 
-                        "Needs Fragment URI or URI in Ptolemy Notation. Got: " + elementUri
+                        "Needs Fragment URI or URI in Ptolemy Notation. Got: " + elementUriPart
                         + " The concrete problem was: " + ex.getMessage());
                 StatusManager.getManager().handle(status, StatusManager.SHOW);
                 return null;
             }
         }
         
+        if (elementUriPart == null) {
+            //Element couldn't be resolved, can't decide on paths then
+            return null;
+        }
         EObject modelElement = resource.getEObject(elementUriPart);
         List<EditPart> parts = ModelingUtil.getEditParts(
                 currentEditor.getDiagramEditPart(), modelElement);

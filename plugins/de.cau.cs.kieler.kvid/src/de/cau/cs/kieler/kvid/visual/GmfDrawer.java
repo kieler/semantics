@@ -85,7 +85,7 @@ public final class GmfDrawer implements IDrawer, IDataListener {
                                         figuresByURI.get(key)));
                     }
                 } else {
-                    throw new RuntimeException("Could not find any path information");
+                    System.out.println("There were no paths present for: " + key);
                 }
             } else {
                 // TODO

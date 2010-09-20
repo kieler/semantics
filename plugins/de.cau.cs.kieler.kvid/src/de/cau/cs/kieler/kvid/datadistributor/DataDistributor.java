@@ -184,6 +184,7 @@ public final class DataDistributor implements IProviderListener, ResourceSetList
                     dataByUri.put(key, new DataObject(key, data.getString(o.toString()), paths));
                     //Also add Property object for the new entry
                     List<String> associatedObjects = new LinkedList<String>();
+                    System.out.println(key.getElementUri());
                     associatedObjects.add(KvidUtil.ptolemyUri2FragmentUri(key.getElementUri(), 
                             currentEditor.getDiagram().getElement().eResource()));
                     RuntimeConfiguration

@@ -92,7 +92,7 @@ public class KvidUri {
      * 
      * @param newPriority The new priority value
      */
-    public void setPriority(int newPriority) {
+    public void setPriority(final int newPriority) {
         priority = newPriority;
     }
     
@@ -157,6 +157,14 @@ public class KvidUri {
             return false;
         }*/
         return true;
+    }
+    
+    /* (non-Javadoc)
+     * @see java.lang.Object#toString()
+     */
+    @Override
+    public String toString() {
+        return elementUri + ":" + port + "<" + priority + ">";
     }
 
 }
