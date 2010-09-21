@@ -185,6 +185,7 @@ public final class DataDistributor implements IProviderListener, ResourceSetList
                     //Also add Property object for the new entry
                     List<String> associatedObjects = new LinkedList<String>();
                     System.out.println(key.getElementUri());
+                    try {
                     associatedObjects.add(KvidUtil.ptolemyUri2FragmentUri(key.getElementUri(), 
                             currentEditor.getDiagram().getElement().eResource()));
                     RuntimeConfiguration
@@ -195,6 +196,10 @@ public final class DataDistributor implements IProviderListener, ResourceSetList
                                     "Static on middlemost Bend Point", 
                                     "Static on Target Node", "Invisible" },
                                     associatedObjects));
+                    } catch (NullPointerException nex) {
+                        //Problems with the resource, so no referred properties can be created
+                        //Not so nice but no reason for a crash here
+                    }
                 }
             } catch (JSONException e) {
                 //We iterate over the keys, so we can't use a non-existing key.

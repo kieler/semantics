@@ -400,9 +400,21 @@ public final class KvidUtil {
             final DiagramEditor currentEditor, final KNode diagramLayout) {
         List<List<Point>> result = new LinkedList<List<Point>>();
         String elementUriPart = elementUri.getElementUri();
-        Resource resource = currentEditor.getDiagram().getElement().eResource();
-        DiagramLayoutManager manager = EclipseLayoutServices.getInstance()
-                                            .getManager(currentEditor, null);
+        Resource resource;
+        DiagramLayoutManager manager;
+        try {
+            resource = currentEditor.getDiagram().getElement().eResource();
+            manager = EclipseLayoutServices.getInstance()
+                                                .getManager(currentEditor, null);
+        } catch (Exception ex) {
+            //Problems in external plug-ins, print stack trace and stop pathfinding
+            System.err.println("KViD:");
+            System.err
+                    .println("There was a problem in an external Plug-In. "
+                    + "It won't cause Visualization to crash, "
+                    + "but might reduce the number of offered features.");
+            return null;
+        }
         
         if (!elementUriPart.startsWith("/")) {
             try {

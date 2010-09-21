@@ -55,7 +55,7 @@
                commandId="de.cau.cs.kieler.kvid.addDisplayNodeCommand"
                disabledIcon="icons/kvid_disabled.png"
                icon="icons/kvid.png"
-               label="Add Scope Node"
+               label="Add Plotter"
                mnemonic="S"
                style="push">
             <visibleWhen
