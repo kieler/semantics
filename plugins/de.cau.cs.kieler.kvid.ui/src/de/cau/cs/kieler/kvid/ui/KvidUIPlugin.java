@@ -26,7 +26,7 @@ public class KvidUIPlugin extends AbstractUIPlugin {
     /** The plug-in ID. */
     public static final String PLUGIN_ID = "de.cau.cs.kieler.kvid.ui"; //$NON-NLS-1$
 
-    // The shared instance
+    /** The shared instance. */
     private static KvidUIPlugin plugin;
 
     /**
