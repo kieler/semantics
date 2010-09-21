@@ -12,4 +12,8 @@ public class ActionsUiModule extends de.cau.cs.kieler.synccharts.text.actions.ui
 	public ActionsUiModule(AbstractUIPlugin plugin) {
 		super(plugin);
 	}
+
+	public Class<? extends org.eclipse.xtext.validation.IDiagnosticConverter> bindIDiagnosticConverter() {
+	    return ActionsDiagnosticConverterImpl.class;
+	}
 }

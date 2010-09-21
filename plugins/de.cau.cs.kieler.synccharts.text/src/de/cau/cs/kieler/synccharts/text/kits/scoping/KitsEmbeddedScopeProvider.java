@@ -13,14 +13,23 @@
  */
 package de.cau.cs.kieler.synccharts.text.kits.scoping;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
+import org.eclipse.xtext.resource.EObjectDescription;
+import org.eclipse.xtext.resource.IEObjectDescription;
 import org.eclipse.xtext.scoping.IScope;
 import org.eclipse.xtext.scoping.impl.SimpleScope;
 
 import de.cau.cs.kieler.synccharts.Assignment;
 import de.cau.cs.kieler.synccharts.Emission;
+import de.cau.cs.kieler.synccharts.Region;
+import de.cau.cs.kieler.synccharts.Scope;
 import de.cau.cs.kieler.synccharts.State;
+import de.cau.cs.kieler.synccharts.SyncchartsPackage;
+import de.cau.cs.kieler.synccharts.Transition;
 
 /**
  * Specialized version of {@link KitsScopeProvider} for embedded Kits.
@@ -29,8 +38,24 @@ import de.cau.cs.kieler.synccharts.State;
  */
 public class KitsEmbeddedScopeProvider extends KitsScopeProvider {
 
-	public static State logicalContainer = null;
-	
+    public static Scope logicalContainer = null;
+
+    public IScope scope_Transition_targetState(Transition trans, EReference reference) {
+        List<IEObjectDescription> l;
+        if (trans.eContainer().eContainer() == null) {
+            l = new ArrayList<IEObjectDescription>();
+            l.add(new EObjectDescription(((State) trans.eContainer()).getId(), trans.eContainer(), null)); 
+            if (SyncchartsPackage.eINSTANCE.getRegion().isInstance(logicalContainer)) {
+                for (State s : ((Region) logicalContainer).getStates()) {
+                    l.add(new EObjectDescription(s.getId(), s, null));
+                }
+            }
+            return new SimpleScope(l);
+        } else {
+            return super.scope_Transition_targetState(trans, reference);
+        }        
+    }
+	    
     /**
      * A implementation of scoping for signals and variables.
      * Won't be called directly but via reflection by the Xtext runtime.

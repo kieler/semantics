@@ -131,7 +131,7 @@ public class KitsScopeProvider extends AbstractDeclarativeScopeProvider {
 	 */
 	protected List<IEObjectDescription> scope_ValuedObject(
 			final EObject obj, final EReference reference,
-			final State logicalContainer) {
+			final Scope logicalContainer) {
 		
 		// include all available signals
         List<IEObjectDescription> l = this.scope_Signal(obj, reference, logicalContainer);
@@ -183,7 +183,7 @@ public class KitsScopeProvider extends AbstractDeclarativeScopeProvider {
 	 */
     @SuppressWarnings("unchecked")
 	protected List<IEObjectDescription> scope_Signal(final EObject obj,
-			final EReference reference, final State logicalContainer) {
+			final EReference reference, final Scope logicalContainer) {
     	
         List<IEObjectDescription> l = new LinkedList<IEObjectDescription>();
         EObject container = obj;
@@ -236,7 +236,7 @@ public class KitsScopeProvider extends AbstractDeclarativeScopeProvider {
 	 */
     @SuppressWarnings("unchecked")
 	protected List<IEObjectDescription> scope_Variable(final EObject obj,
-			final EReference reference, final State logicalContainer) {
+			final EReference reference, final Scope logicalContainer) {
     	
         List<IEObjectDescription> l = new LinkedList<IEObjectDescription>();
         EObject container = obj;

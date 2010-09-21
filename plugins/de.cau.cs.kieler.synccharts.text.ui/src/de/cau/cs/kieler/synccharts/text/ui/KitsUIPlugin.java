@@ -40,6 +40,8 @@ public class KitsUIPlugin extends AbstractUIPlugin {
 
     public static final String KITS_LANGUAGE = "de.cau.cs.kieler.synccharts.text.kits.Kits";
 
+    public static final String KITS_STATE_LANGUAGE = "de.cau.cs.kieler.synccharts.text.kitsState.KitsState";
+
     public static final String KITS_LANGUAGE_EMBEDDED = "de.cau.cs.kieler.synccharts.text.kits.KitsEmbedded";
 
     private Map<String, Injector> injectors = new HashMap<String, Injector>();
@@ -67,6 +69,10 @@ public class KitsUIPlugin extends AbstractUIPlugin {
                     Guice.createInjector(Modules.override(
                             Modules.override(getRuntimeModule(KITS_LANGUAGE)).with(
                                     getUiModule(KITS_LANGUAGE))).with(getSharedStateModule())));
+            injectors.put(KITS_STATE_LANGUAGE,
+                    Guice.createInjector(Modules.override(
+                            Modules.override(getRuntimeModule(KITS_STATE_LANGUAGE)).with(
+                                    getUiModule(KITS_STATE_LANGUAGE))).with(getSharedStateModule())));
             injectors.put(KITS_LANGUAGE_EMBEDDED,
                     Guice.createInjector(Modules.override(
                             Modules.override(getRuntimeModule(KITS_LANGUAGE_EMBEDDED)).with(
@@ -94,6 +100,9 @@ public class KitsUIPlugin extends AbstractUIPlugin {
         if (KITS_LANGUAGE.equals(grammar)) {
             return new de.cau.cs.kieler.synccharts.text.kits.KitsRuntimeModule();
         }
+        if (KITS_STATE_LANGUAGE.equals(grammar)) {
+            return new de.cau.cs.kieler.synccharts.text.kitsState.KitsStateRuntimeModule();
+        }
         if (KITS_LANGUAGE_EMBEDDED.equals(grammar)) {
         	return new de.cau.cs.kieler.synccharts.text.kits.KitsEmbeddedRuntimeModule();
         }
@@ -110,6 +119,9 @@ public class KitsUIPlugin extends AbstractUIPlugin {
         }
         if (KITS_LANGUAGE.equals(grammar)) {
             return new de.cau.cs.kieler.synccharts.text.kits.ui.KitsUiModule(this);
+        }
+        if (KITS_STATE_LANGUAGE.equals(grammar)) {
+            return new de.cau.cs.kieler.synccharts.text.kitsState.ui.KitsStateUiModule(this);
         }
         throw new IllegalArgumentException(grammar);
     }

@@ -191,6 +191,10 @@
         class="de.cau.cs.kieler.synccharts.text.kits.ui.CustomizedKitsEmbeddedExecutableExtensionFactory:org.eclipse.xtext.resource.IResourceFactory"
         type="kitsem">
   </parser>
+  <parser
+        class="de.cau.cs.kieler.synccharts.text.kitsState.ui.CustomizedKitsStateExecutableExtensionFactory:org.eclipse.xtext.resource.IResourceFactory"
+        type="kitsState">
+  </parser>
 	</extension>
 	
 	<extension point="org.eclipse.xtext.extension_resourceServiceProvider">
