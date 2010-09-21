@@ -148,6 +148,8 @@ public class ArrowEffect extends AbstractEffect {
 
     /**
      * {@inheritDoc}
+     * 
+     * FIXME handle collapsed target states/superstates. 
      */
     public void execute() {
         if (source == null || target == null) {

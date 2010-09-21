@@ -2,214 +2,189 @@
  * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
  *
  * http://www.informatik.uni-kiel.de/rtsys/kieler/
- * 
+ *
  * Copyright 2010 by
  * + Christian-Albrechts-University of Kiel
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
- * 
+ *
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
 package de.cau.cs.kieler.synccharts.kivi;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
-import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.gef.ConnectionEditPart;
-import org.eclipse.gef.GraphicalEditPart;
-import org.eclipse.gmf.runtime.notation.View;
 
-import de.cau.cs.kieler.core.expressions.Expression;
 import de.cau.cs.kieler.core.expressions.Signal;
 import de.cau.cs.kieler.core.expressions.ValuedObjectReference;
 import de.cau.cs.kieler.core.util.Pair;
 import de.cau.cs.kieler.core.kivi.IEffect;
-import de.cau.cs.kieler.core.kivi.KiVi;
 import de.cau.cs.kieler.core.kivi.AbstractCombination;
-import de.cau.cs.kieler.core.model.util.ModelingUtil;
 import de.cau.cs.kieler.core.ui.listeners.SelectionTrigger.SelectionState;
-import de.cau.cs.kieler.synccharts.Effect;
 import de.cau.cs.kieler.synccharts.Emission;
 import de.cau.cs.kieler.synccharts.Transition;
-import de.cau.cs.kieler.synccharts.diagram.edit.parts.RegionEditPart;
-import de.cau.cs.kieler.synccharts.diagram.edit.parts.SignalEditPart;
-import de.cau.cs.kieler.synccharts.diagram.edit.parts.TransitionEditPart;
-import de.cau.cs.kieler.synccharts.diagram.edit.parts.TransitionLabelEditPart;
 import de.cau.cs.kieler.synccharts.kivi.SignalFlowTrigger.SignalFlowActiveState;
 
 /**
  * Started by the signal flow button, visualizes the flow of signals in a SyncChart diagram.
+ * Depending on the currently selected objects only signals concerning these objects are displayed.
  * 
  * @author mmu
  * 
  */
 public class SignalFlowCombination extends AbstractCombination {
 
-    private List<IEffect> iEffects = new ArrayList<IEffect>();
+    private Map<Pair<Transition, Transition>, IEffect> iEffects = new HashMap<Pair<Transition, Transition>, IEffect>();
+
+    private boolean lastActive = false;
 
     /**
      * Execute the combination using the signal flow active state and the selection state.
      * 
-     * @param active the signal flow active state
-     * @param selection the selection state
+     * @param active
+     *            the signal flow active state
+     * @param selection
+     *            the selection state
      */
     public void execute(final SignalFlowActiveState active, final SelectionState selection) {
         if (active.isActive()) {
-            // initializations
-            List<Pair<Signal, GraphicalEditPart>> triggers;
-            triggers = new ArrayList<Pair<Signal, GraphicalEditPart>>();
-            List<Pair<Signal, GraphicalEditPart>> effects;
-            effects = new ArrayList<Pair<Signal, GraphicalEditPart>>();
-
-            // inspect the current selection
-            Object selected = null;
-            if (selection.getSelectedEObjects().size() > 0) {
-                selected = selection.getSelectedEObjects().get(0);
-                // FIXME move to EObjects later
-                selected = ModelingUtil.getEditPart(selection.getDiagramEditor()
-                    .getDiagramEditPart(), (EObject) selected);
-            }
-
-            /*
-             * haf: workaround for the export image problem. So far when a transition is selected,
-             * the image cannot be save to an image file (action in context menu is disabled). The
-             * following will not repaint the arrows when the root region is selected. Hence,
-             * selecting the root region will keep the arrows that have been there before. By this
-             * also a customized arrow-subset of a selection can be exported.
-             */
-            if (selected instanceof RegionEditPart) {
+            if (!shouldExecute(selection.getSelectedEObjects())) {
                 return;
             }
 
-            Signal relevantSignal = null;
-            TransitionLabelEditPart relevantLabel = null;
+            // remember which signals appear in which transition
+            List<Pair<Signal, Transition>> triggers, effects;
+            triggers = new ArrayList<Pair<Signal, Transition>>();
+            effects = new ArrayList<Pair<Signal, Transition>>();
 
-            // check if a signal is selected at the top of a state
-            // --> show all paths of this signal
-            if (selected instanceof SignalEditPart) {
-                relevantSignal = (Signal) ((View) ((SignalEditPart) selected).getModel())
-                    .getElement();
-                // check if a transition is selected
-                // --> show all incoming and outgoing signals
-            } else if (selected instanceof TransitionEditPart) {
-                for (Object child : ((TransitionEditPart) selected).getChildren()) {
-                    if (child instanceof TransitionLabelEditPart) {
-                        relevantLabel = (TransitionLabelEditPart) child;
-                        break;
-                    }
-                }
-                // check if a transition is selected by its label
-            } else if (selected instanceof TransitionLabelEditPart) {
-                relevantLabel = (TransitionLabelEditPart) selected;
-            }
+            // traverse over all EObjects
+            EObject diagramElement = selection.getDiagramEditor().getDiagram().getElement();
+            for (Iterator<EObject> iterator = diagramElement.eAllContents(); iterator.hasNext();) {
+                EObject current = iterator.next();
 
-            // traverse all connection edit parts to get all triggers and effects used in the
-            // diagram along with their edit part
-            List<?> connections = selection.getDiagramEditor().getDiagramEditPart()
-                .getConnections();
-            for (Object o : connections) {
-                ConnectionEditPart connection = (ConnectionEditPart) o;
-                GraphicalEditPart editPart = null;
-
-                // retrieve the label
-                for (Object child : connection.getChildren()) {
-                    if (child instanceof TransitionLabelEditPart) {
-                        editPart = (GraphicalEditPart) child;
-                        break;
-                    }
-                }
-                if (editPart == null) {
-                    continue; // transition has no label
-                }
-                // inspect all triggers
-                Transition transition = (Transition) ((View) connection.getModel()).getElement();
-                Expression expression = transition.getTrigger();
-                // simple trigger
-                if (expression instanceof ValuedObjectReference) {
-                    ValuedObjectReference reference = (ValuedObjectReference) expression;
+                // triggers
+                if (current instanceof ValuedObjectReference) {
+                    ValuedObjectReference reference = (ValuedObjectReference) current;
                     if (reference.getValuedObject() instanceof Signal) {
-                        // sort out irrelevant signals if a signal was selected
-                        if (relevantSignal == null || relevantSignal == reference.getValuedObject()) {
-                            triggers.add(new Pair<Signal, GraphicalEditPart>((Signal) reference
-                                .getValuedObject(), editPart));
+                        Signal signal = (Signal) reference.getValuedObject();
+                        Transition transition = getTransition(current);
+                        if (transition != null
+                                && isRelevant(selection.getSelectedEObjects(), signal)) {
+                            triggers.add(new Pair<Signal, Transition>(signal, transition));
                         }
                     }
-                } else {
-                    // complex trigger or no trigger if null
-                    if (expression != null) {
-                        TreeIterator<EObject> iterator = expression.eAllContents();
-                        while (iterator.hasNext()) {
-                            EObject object = iterator.next();
-                            if (object instanceof ValuedObjectReference) {
-                                ValuedObjectReference reference = (ValuedObjectReference) object;
-                                if (reference.getValuedObject() instanceof Signal) {
-                                    // sort out irrelevant signals if a signal was selected
-                                    if (relevantSignal == null
-                                        || relevantSignal == reference.getValuedObject()) {
-                                        triggers.add(new Pair<Signal, GraphicalEditPart>(
-                                            (Signal) reference.getValuedObject(), editPart));
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-
-                // inspect all effects
-                for (Effect effect : transition.getEffects()) {
-                    if (effect instanceof Emission) {
-                        Emission emission = (Emission) effect;
-                        // sort out irrelevant signals if a signal was selected
-                        if (relevantSignal == null || relevantSignal == emission.getSignal()) {
-                            effects.add(new Pair<Signal, GraphicalEditPart>(emission.getSignal(),
-                                editPart));
-                        }
+                } else if (current instanceof Emission) { // effects
+                    Emission emission = (Emission) current;
+                    Transition transition = getTransition(current);
+                    if (transition != null
+                            && isRelevant(selection.getSelectedEObjects(), emission.getSignal())) {
+                        effects.add(new Pair<Signal, Transition>(emission.getSignal(), transition));
                     }
                 }
             }
 
             // check all triggers against all effects for same signals
-            List<IEffect> newEffects = new ArrayList<IEffect>();
-            for (Pair<Signal, GraphicalEditPart> effect : effects) {
-                for (Pair<Signal, GraphicalEditPart> trigger : triggers) {
+            Map<Pair<Transition, Transition>, IEffect> toUndo;
+            toUndo = new HashMap<Pair<Transition, Transition>, IEffect>(iEffects);
+            iEffects.clear();
+            for (Pair<Signal, Transition> effect : effects) {
+                for (Pair<Signal, Transition> trigger : triggers) {
                     if (effect.getFirst() == trigger.getFirst()) {
                         // sort out irrelevant transitions if a transition was selected
-                        if (relevantLabel == null || effect.getSecond() == relevantLabel
-                            || trigger.getSecond() == relevantLabel) {
-                            IEffect iEffect = new ArrowEffect(
-                                // effect.getSecond(), trigger.getSecond(), false);
-                                ((View) effect.getSecond().getModel()).getElement(),
-                                ((View) trigger.getSecond().getModel()).getElement(), false);
-                            newEffects.add(iEffect);
+                        if (isRelevant(selection.getSelectedEObjects(), effect.getSecond())
+                                || isRelevant(selection.getSelectedEObjects(), trigger.getSecond())) {
+                            Pair<Transition, Transition> pair = new Pair<Transition, Transition>(
+                                    effect.getSecond(), trigger.getSecond());
+                            IEffect oldEffect = toUndo.remove(pair);
+                            if (oldEffect == null) {
+                                ArrowEffect iEffect = new ArrowEffect(effect.getSecond(),
+                                        trigger.getSecond(), false);
+                                iEffects.put(new Pair<Transition, Transition>(effect.getSecond(),
+                                        trigger.getSecond()), iEffect);
+                            } else {
+                                iEffects.put(pair, oldEffect);
+                            }
                         }
                     }
                 }
             }
 
             // remove all old arrows if this is an updated execution
-            for (IEffect effect : iEffects) {
+            for (IEffect effect : toUndo.values()) {
                 effect.scheduleUndo();
             }
-            iEffects = newEffects;
-            for (IEffect effect : iEffects) {
+            for (IEffect effect : iEffects.values()) {
                 effect.schedule();
             }
         } else {
             // remove all arrows if the button is not pushed
             undo();
         }
+        lastActive = active.isActive();
+
     }
 
     /**
      * {@inheritDoc}
      */
     public void undo() {
-        for (IEffect effect : iEffects) {
+        for (IEffect effect : iEffects.values()) {
             effect.scheduleUndo();
         }
         iEffects.clear();
     }
+
+    /**
+     * Get the first ancestor-or-self that is a transition.
+     * 
+     * @param object
+     * @return a transition ancestor or null
+     */
+    private Transition getTransition(final EObject object) {
+        if (object instanceof Transition) {
+            return (Transition) object;
+        } else if (object == null) {
+            return null;
+        } else {
+            return getTransition(object.eContainer());
+        }
+    }
+
+    private boolean isRelevant(final List<EObject> selection, final Signal signal) {
+        for (EObject object : selection) {
+            if (object instanceof Signal) {
+                return selection.contains(signal); // only check for containment if list has signals
+            }
+        }
+        return true;
+    }
+
+    private boolean isRelevant(final List<EObject> selection, final Transition transition) {
+        for (EObject object : selection) {
+            if (object instanceof Transition) {
+                return selection.contains(transition);
+            }
+        }
+        return true;
+    }
+
+    private boolean shouldExecute(final List<EObject> selection) {
+        if (!lastActive) { // execute if button has just been pushed
+            return true;
+        }
+        if (selection.size() == 1) {
+            EObject selected = selection.get(0);
+            if (selected.eContainer() == null) { // don't re-draw if the root region was selected
+                return false;
+            }
+        }
+        return true;
+    }
+
 }
