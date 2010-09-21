@@ -54,13 +54,13 @@ public class SynchronizeGMFEditorCommand extends AbstractTransactionalCommand {
         try {
             MergeService.merge(diffModel.getOwnedElements(), true);
         } catch (NullPointerException e) {
-            EditorUtils.log(new Status(IStatus.WARNING, SyncchartsSynchronizerPlugin.PLUGIN_ID, 1,
+            EditorUtils.log(new Status(IStatus.WARNING, SyncchartsSynchronizerPlugin.PLUGIN_ID,
                     ModelSynchronizer.MSG_MERGING_FAILED, e));
         }
 
         EObject model = ((Diagram) ((DiagramDocumentEditor) passiveEditor).getDiagramEditPart()
                 .getModel()).getElement();
-        
+
         new KitsSynchronizeLinker().setDiffModel(diffModel).linkElement(model);
         
         try {
@@ -68,7 +68,7 @@ public class SynchronizeGMFEditorCommand extends AbstractTransactionalCommand {
                     .getDiagramEditPart().getModel()).getElement(),
                     ActionLabelProcessorWrapper.SERIALIZE);
         } catch (Exception e) {
-            EditorUtils.log(new Status(IStatus.WARNING, SyncchartsSynchronizerPlugin.PLUGIN_ID, 1,
+            EditorUtils.log(new Status(IStatus.WARNING, SyncchartsSynchronizerPlugin.PLUGIN_ID,
                     SyncchartsUtil.MSG_LABEL_SERIAL_FAILED, e));
         }
 

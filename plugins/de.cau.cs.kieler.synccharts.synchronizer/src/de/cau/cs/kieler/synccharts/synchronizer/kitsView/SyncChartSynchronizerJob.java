@@ -13,7 +13,9 @@
  */
 package de.cau.cs.kieler.synccharts.synchronizer.kitsView;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -47,6 +49,7 @@ import org.eclipse.xtext.util.concurrent.IUnitOfWork;
 
 import de.cau.cs.kieler.core.ui.util.EditorUtils;
 import de.cau.cs.kieler.synccharts.Region;
+import de.cau.cs.kieler.synccharts.Scope;
 import de.cau.cs.kieler.synccharts.State;
 import de.cau.cs.kieler.synccharts.SyncchartsFactory;
 import de.cau.cs.kieler.synccharts.SyncchartsPackage;
@@ -65,8 +68,9 @@ public class SyncChartSynchronizerJob extends Job implements ISelectionListener 
     private SyncchartsDiagramEditor passiveEditor = null;
     private static Map<String, Object> matchOptions = new HashMap<String, Object>();
 
-    private EmbeddedXtextEditor kitsEditor;
     private EmbeddedXtextEditor actionsEditor;
+    private EmbeddedXtextEditor kitsEditor;
+    private EmbeddedXtextEditor kitsStateEditor;
     
     private EmbeddedXtextEditor lastActiveEditor;
     
@@ -76,17 +80,20 @@ public class SyncChartSynchronizerJob extends Job implements ISelectionListener 
 
     private Region rootRegionCopy;
 
-    private State container;
+    private Scope container;
+    private State serializedState;
+    private List<Transition> incomingTransitions;
     
     private State target;
 
     private int index;
 
-    public SyncChartSynchronizerJob(String name, EmbeddedXtextEditor theKitsEditor,
-            EmbeddedXtextEditor theActionsEditor) {
+    public SyncChartSynchronizerJob(String name, EmbeddedXtextEditor theActionsEditor,
+            EmbeddedXtextEditor theKitsEditor, EmbeddedXtextEditor theKitsStateEditor) {
         super(name);
-        kitsEditor = theKitsEditor;
         actionsEditor = theActionsEditor;
+        kitsEditor = theKitsEditor;
+        kitsStateEditor = theKitsStateEditor;
 
         matchOptions.put(MatchOptions.OPTION_DISTINCT_METAMODELS, false);
 
@@ -117,29 +124,46 @@ public class SyncChartSynchronizerJob extends Job implements ISelectionListener 
 
             @Override
             @SuppressWarnings("unchecked")
-            public synchronized void process(XtextResource state) throws Exception {
+            public synchronized void process(XtextResource resource) throws Exception {
                     
                 EObject copy = null;
-                if (!state.getContents().isEmpty()) {
-                    copy = EcoreUtil.copy(state.getContents().get(0));
+                if (!resource.getContents().isEmpty()) {
+                    copy = EcoreUtil.copy(resource.getContents().get(0));
+                    new KitsSynchronizeLinker().consultSrcAndCopy(resource.getContents().get(0),
+                            copy).linkTransitionsInElement(copy);
                 } else {
                     if (lastActiveEditor == kitsEditor) {
                         copy = SyncchartsFactory.eINSTANCE.createRegion();
                     } else {
-                        copy = SyncchartsFactory.eINSTANCE.createTransition();
+                        if (lastActiveEditor == kitsStateEditor) {
+                            copy = SyncchartsFactory.eINSTANCE.createState();
+                        } else {
+                            copy = SyncchartsFactory.eINSTANCE.createTransition();
+                        }
                     }
                 }
-                if (container == null) {
+                
+                if (container == null) {              
                     dummyResource.getContents().clear();
                     dummyResource.getContents().add(copy);
                     leftElement = copy;
+                    
                 } else {
                     
                     ((EList<EObject>) container.eGet(feature)).add(index, copy);
+                    
                     if (SyncchartsPackage.eINSTANCE.getState_OutgoingTransitions().equals(feature)) {
                         ((Transition) copy).setTargetState(target);
                     }
                     leftElement = rootRegionCopy;
+                }
+                
+                if (SyncchartsPackage.eINSTANCE.getState().isInstance(copy)) {
+                    for (Transition t : incomingTransitions) {
+                        if (t.eContainer() != serializedState) {
+                            t.setTargetState((State) copy);
+                        }
+                    }
                 }
             }
         });
@@ -199,6 +223,10 @@ public class SyncChartSynchronizerJob extends Job implements ISelectionListener 
                 serializeRegion((Region) model);
                 break;
             }
+            if (SyncchartsPackage.eINSTANCE.getState().isInstance(model)) {
+                serializeState((State) model);
+                break;
+            }
             if (SyncchartsPackage.eINSTANCE.getTransition().isInstance(model)) {
                 serializeTransition((Transition) model);
                 break;
@@ -215,6 +243,7 @@ public class SyncChartSynchronizerJob extends Job implements ISelectionListener 
         try {
             kitsEditor.getDocumentEditor().process(new IUnitOfWork.Void<XtextResource>() {
 
+                @SuppressWarnings("unchecked")
                 @Override
                 public void process(XtextResource state) throws Exception {
                     // create a copy of the complete model of the diagram editor
@@ -232,7 +261,7 @@ public class SyncChartSynchronizerJob extends Job implements ISelectionListener 
                                 .linkElement(rootRegionCopy).getMatched(region);
                     } catch (ClassCastException e) {
                         EditorUtils.log(new Status(Status.ERROR,
-                                SyncchartsSynchronizerPlugin.PLUGIN_ID, 1, "Model linking failed",
+                                SyncchartsSynchronizerPlugin.PLUGIN_ID, "Model linking failed",
                                 e));
                         return;
                     }
@@ -240,7 +269,8 @@ public class SyncChartSynchronizerJob extends Job implements ISelectionListener 
                     // keep the container of the model part of interest in mind
                     // we need it later on for proper reconstruction of the whole
                     // copy to compare it with the original one (in diagram editor)
-                    container = (State) copy.eContainer();
+                    container = (Scope) copy.eContainer();
+                    feature = SyncchartsPackage.eINSTANCE.getState_Regions();
 
                     // the scope provide need to know about the "outer" model
                     // to propose and link all signals and variables properly
@@ -248,7 +278,7 @@ public class SyncChartSynchronizerJob extends Job implements ISelectionListener 
 
                     index = 0;
                     if (container != null) {
-                        index = container.getRegions().indexOf(copy);
+                        index = ((EList<EObject>) container.eGet(feature)).indexOf(copy);
                     }
 
                     // finally remove the xtext editor's model and give it the new one
@@ -258,29 +288,100 @@ public class SyncChartSynchronizerJob extends Job implements ISelectionListener 
                 }
 
             }, kitsEditor.getDocument());
-
-            actionsEditor.getViewer().getControl().setVisible(false);
-            kitsEditor.getViewer().getControl().setVisible(true);
-//            ((StackLayout) kitsEditor.getControl().getLayout()).topControl = kitsEditor.getViewer().getControl();
+            
+            kitsEditor.bringOnTop();
+            lastActiveEditor = kitsEditor;
 
             // the above transformation will cause a model change notification
             // but I don't want to synchronize the freshly copied, serialized & re-parsed model
             cancel();
 
         } catch (XtextSerializationException e) {
-            EditorUtils.log(new Status(IStatus.ERROR, SyncchartsSynchronizerPlugin.PLUGIN_ID, 1,
+            EditorUtils.log(new Status(IStatus.ERROR, SyncchartsSynchronizerPlugin.PLUGIN_ID,
+                    "Serialization of textual view failed", e));
+        }
+    }
+
+    private void serializeState(final State state) {
+
+        final Region rootRegion = (Region) EcoreUtil.getRootContainer(state);
+
+        try {
+            kitsStateEditor.getDocumentEditor().process(new IUnitOfWork.Void<XtextResource>() {
+
+                @SuppressWarnings("unchecked")
+                @Override
+                public void process(XtextResource resource) throws Exception {
+                    // create a copy of the complete model of the diagram editor
+                    rootRegionCopy = EcoreUtil.copy(rootRegion);
+                    State copy = null;
+
+                    // to link the models properly they have to be in a resource
+                    dummyResource.getContents().clear();
+                    dummyResource.getContents().add(rootRegionCopy);
+
+                    try {
+                        // link the rootRegionCopy and reveal the part of interest
+                        copy = new KitsSynchronizeLinker()
+                                .consultSrcAndCopy(rootRegion, rootRegionCopy)
+                                .linkElement(rootRegionCopy).getMatched(state);
+                    } catch (ClassCastException e) {
+                        EditorUtils.log(new Status(Status.ERROR,
+                                SyncchartsSynchronizerPlugin.PLUGIN_ID, "Model linking failed",
+                                e));
+                        return;
+                    }
+
+                    // keep the container of the model part of interest in mind
+                    // we need it later on for proper reconstruction of the whole
+                    // copy to compare it with the original one (in diagram editor)
+                    container = (Scope) copy.eContainer();
+                    feature = SyncchartsPackage.eINSTANCE.getRegion_States();
+
+                    // the scope provide need to know about the "outer" model
+                    // to propose and link all signals and variables properly
+                    KitsEmbeddedScopeProvider.logicalContainer = container;
+
+                    index = 0;
+                    if (container != null) {
+                        index = ((EList<EObject>) container.eGet(feature)).indexOf(copy);
+                    }
+                    
+                    // keep the state delivered to xtext in mind as we will have to redirect
+                    // the incoming transitions to the new state created by xtext
+                    // (in the above run() method)
+                    serializedState = copy;
+                    incomingTransitions = new ArrayList<Transition>(copy.getIncomingTransitions());
+
+                    // finally remove the xtext editor's model and give it the new one
+                    // (this will remove 'copy' from 'container')
+                    resource.getContents().clear();
+                    resource.getContents().add(copy);
+                }
+
+            }, kitsStateEditor.getDocument());
+            
+            kitsStateEditor.bringOnTop();
+            lastActiveEditor = kitsStateEditor;
+
+            // the above transformation will cause a model change notification
+            // but I don't want to synchronize the freshly copied, serialized & re-parsed model
+            cancel();
+
+        } catch (XtextSerializationException e) {
+            EditorUtils.log(new Status(IStatus.ERROR, SyncchartsSynchronizerPlugin.PLUGIN_ID,
                     "Serialization of textual view failed", e));
         }
     }
 
     private void serializeTransition(final Transition transition) {
-        
 
         final Region rootRegion = (Region) EcoreUtil.getRootContainer(transition);
 
         try {
             actionsEditor.getDocumentEditor().process(new IUnitOfWork.Void<XtextResource>() {
 
+                @SuppressWarnings("unchecked")
                 @Override
                 public void process(XtextResource state) throws Exception {
                     // create a copy of the complete model of the diagram editor
@@ -298,7 +399,7 @@ public class SyncChartSynchronizerJob extends Job implements ISelectionListener 
                                 .linkElement(rootRegionCopy).getMatched(transition);
                     } catch (ClassCastException e) {
                         EditorUtils.log(new Status(Status.ERROR,
-                                SyncchartsSynchronizerPlugin.PLUGIN_ID, 1, "Model linking failed",
+                                SyncchartsSynchronizerPlugin.PLUGIN_ID, "Model linking failed",
                                 e));
                         return;
                     }
@@ -309,6 +410,7 @@ public class SyncChartSynchronizerJob extends Job implements ISelectionListener 
                     // we need it later on for proper reconstruction of the whole
                     // copy to compare it with the original one (in diagram editor)
                     container = (State) copy.eContainer();
+                    feature = SyncchartsPackage.eINSTANCE.getState_OutgoingTransitions();
 
                     // the scope provide need to know about the "outer" model
                     // to propose and link all signals and variables properly
@@ -316,7 +418,7 @@ public class SyncChartSynchronizerJob extends Job implements ISelectionListener 
 
                     index = 0;
                     if (container != null) {
-                        index = container.getOutgoingTransitions().indexOf(copy);
+                        index = ((EList<EObject>) container.eGet(feature)).indexOf(copy);
                     }
 
                     // finally remove the xtext editor's model and give it the new one
@@ -326,24 +428,37 @@ public class SyncChartSynchronizerJob extends Job implements ISelectionListener 
                 }
 
             }, actionsEditor.getDocument());
-
-            kitsEditor.getViewer().getControl().setVisible(false);
-            actionsEditor.getViewer().getControl().setVisible(true);
-//            ((StackLayout) actionsEditor.getControl().getLayout()).topControl = actionsEditor.getViewer().getControl();
+            
+            actionsEditor.bringOnTop();
+            lastActiveEditor = actionsEditor;
 
             // the above transformation will cause a model change notification
             // but I don't want to synchronize the freshly copied, serialized & re-parsed model
             cancel();
 
         } catch (XtextSerializationException e) {
-            EditorUtils.log(new Status(IStatus.ERROR, SyncchartsSynchronizerPlugin.PLUGIN_ID, 1,
+            EditorUtils.log(new Status(IStatus.ERROR, SyncchartsSynchronizerPlugin.PLUGIN_ID,
                     "Serialization of textual view failed", e));
         }
     }
-
-    public void setLastActiveEditor(EmbeddedXtextEditor lastActiveEditor) {
-        this.lastActiveEditor = lastActiveEditor;
+    
+    
+    private <T extends EObject> T createCopy(T element) {
+        try {
+            Region rootRegion = (Region) EcoreUtil.getRootContainer(element);
+            // link the rootRegionCopy and reveal the part of interest
+            return new KitsSynchronizeLinker()
+                    .consultSrcAndCopy(rootRegion, rootRegionCopy)
+                    .linkElement(rootRegionCopy).getMatched(element);
+        } catch (ClassCastException e) {
+            EditorUtils.log(new Status(Status.ERROR,
+                    SyncchartsSynchronizerPlugin.PLUGIN_ID, "Model linking failed",
+                    e));
+            return null;
+        }
+        
     }
+
     
     public void setFeature(EReference theFeature) {
         this.feature = theFeature;

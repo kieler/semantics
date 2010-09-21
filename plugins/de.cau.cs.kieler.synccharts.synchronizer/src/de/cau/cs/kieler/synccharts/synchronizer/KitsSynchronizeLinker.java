@@ -33,6 +33,7 @@ import de.cau.cs.kieler.core.expressions.Variable;
 import de.cau.cs.kieler.synccharts.Assignment;
 import de.cau.cs.kieler.synccharts.Emission;
 import de.cau.cs.kieler.synccharts.State;
+import de.cau.cs.kieler.synccharts.SyncchartsPackage;
 import de.cau.cs.kieler.synccharts.Transition;
 import de.cau.cs.kieler.synccharts.util.SyncchartsSwitch;
 
@@ -72,15 +73,8 @@ public class KitsSynchronizeLinker {
     public KitsSynchronizeLinker consultSrcAndCopy(EObject src, EObject copy) {
         MatchModel newMatchModel = null;
         try {
-            // System.out.println(src.eResource().getURIFragment(src));
-            // System.out.println(copy.eResource().getURIFragment(copy));
-
             newMatchModel = MatchService.doContentMatch(src, copy,
                     ModelSynchronizerJob.getMatchOptions());
-
-            // ModelSynchronizer.DEBUGMatch = true;
-            // ModelSynchronizer.dumpMatch(newMatchModel, System.out);
-            // ModelSynchronizer.DEBUGMatch = false;
 
             this.LRmatchTable = new HashMap<EObject, EObject>();
             this.RLmatchTable = new HashMap<EObject, EObject>();
@@ -157,6 +151,25 @@ public class KitsSynchronizeLinker {
 
         }
 
+        return this;
+    }
+    
+    
+    public KitsSynchronizeLinker linkTransitionsInElement(EObject element) {
+        EObject eObj = null;
+        for (Iterator<EObject> it = element.eAllContents(); it.hasNext();) {
+            eObj = it.next();
+            if (SyncchartsPackage.eINSTANCE.getTransition().isInstance(eObj)) {
+                Transition transition = (Transition) eObj;
+                State target = (State) LRmatchTable.get(((Transition) RLmatchTable
+                        .get(transition)).getTargetState());
+                if (target == null) {
+                    target = ((Transition) RLmatchTable.get(transition)).getTargetState();
+                }
+                transition.setTargetState(target);            
+            }
+        }
+        
         return this;
     }
 

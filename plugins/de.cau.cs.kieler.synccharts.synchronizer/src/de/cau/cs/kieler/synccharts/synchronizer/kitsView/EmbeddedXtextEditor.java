@@ -67,6 +67,7 @@ import org.eclipse.jface.text.source.projection.ProjectionViewer;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionProvider;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.StackLayout;
 import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
@@ -780,11 +781,26 @@ public class EmbeddedXtextEditor {
 	    }
 	}
 	
+	
+	/**
+	 * @author chsch
+	 */
 	public void dispose() {
 		if (fSourceViewer.getTextWidget() != null) {
 			fSourceViewer.getTextWidget().dispose();
 		}
 		fProjectionSupport.dispose();
 		fHighlightingHelper.uninstall();
+	}
+	
+	
+	/**
+	 * @author chsch
+	 */
+	public void bringOnTop() {
+	    if (fControl.getLayout() instanceof StackLayout) {
+	        ((StackLayout) fControl.getLayout()).topControl = getViewer().getControl();
+	        getControl().layout();
+	    }
 	}
 }
