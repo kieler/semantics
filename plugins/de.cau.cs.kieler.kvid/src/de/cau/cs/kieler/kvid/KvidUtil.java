@@ -317,6 +317,12 @@ public final class KvidUtil {
         return result;
     }
     
+    /**
+     * Compute animation paths and location for a port.
+     * 
+     * @param port The port to perform pathfinding for
+     * @return A list of paths for animation purposes
+     */
     private static List<List<Point>> getPathsByPort(final KPort port) {
         List<List<Point>> result = new LinkedList<List<Point>>();
         List<List<Point>> subresult = new LinkedList<List<Point>>();
@@ -352,6 +358,12 @@ public final class KvidUtil {
         return result;
     }
     
+    /**
+     * Compute animation paths and location for a node.
+     * 
+     * @param port The node to perform pathfinding for
+     * @return A list of paths for animation purposes
+     */
     private static List<List<Point>> getPathsByNode(final KNode node) {
         List<List<Point>> result = new LinkedList<List<Point>>();
         List<List<Point>> subresult = new LinkedList<List<Point>>();

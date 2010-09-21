@@ -66,29 +66,23 @@ public final class GmfDrawer implements IDrawer, IDataListener {
      */
     public void draw(final HashMap<KvidUri, DataObject> dataSet) {
         // clearing phase
-        // clearDrawing();
+        clearDrawing();
 
         // update data phase
         for (KvidUri key : dataSet.keySet()) {
-
             if (figuresByURI.containsKey(key)) {
                 figuresByURI.get(key).updateData(dataSet.get(key));
             } else {
                 figuresByURI.put(key, new GmfFigure(dataSet.get(key)));
             }
-            if (RuntimeConfiguration.getInstance()
-                    .currentValueOfProperty("Animation enabled").equals("true")) {
-                if (dataSet.get(key).getPaths() != null) {
-                    for (List<Point> path : dataSet.get(key).getPaths()) {
-                        figuresByURI.get(key).setLocation(
-                                centerFigureOnPoint(path.get(0),
-                                        figuresByURI.get(key)));
-                    }
-                } else {
-                    System.out.println("There were no paths present for: " + key);
+            if (dataSet.get(key).getPaths() != null) {
+                for (List<Point> path : dataSet.get(key).getPaths()) {
+                    figuresByURI.get(key).setLocation(
+                            centerFigureOnPoint(path.get(0),
+                                    figuresByURI.get(key)));
                 }
             } else {
-                // TODO
+                System.out.println("There were no paths present for: " + key);
             }
         }
 
@@ -170,8 +164,6 @@ public final class GmfDrawer implements IDrawer, IDataListener {
                 }
                 PlatformUI.getWorkbench().getDisplay().asyncExec(new Runnable() {
                     public void run() {
-                        // TODO still not satisfying, maybe check if data is by
-                        // KIEM and use it then
                         try {
                             GmfAnimator.animate(animatables,
                                     ((DiagramEditor) editor).getDiagramEditPart(),
@@ -190,7 +182,6 @@ public final class GmfDrawer implements IDrawer, IDataListener {
      * {@inheritDoc}
      */
     public void clearDrawing() {
-        //FIXME doesnt do what it is supposed to!
         IEditorPart editor = KvidUtil.getActiveEditor();
         if (editor instanceof DiagramEditor) {
             for (KvidUri key : figuresByURI.keySet()) {

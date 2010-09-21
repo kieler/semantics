@@ -127,12 +127,12 @@ public final class DataDistributor implements IProviderListener, ResourceSetList
         registerDataListener(GmfDrawer.getInstance());
         final IEditorPart activeEditor = KvidUtil.getActiveEditor();
         if (activeEditor instanceof DiagramEditor) {
-            //TODO DiagramEditor is restriction, is there a more generic way?
             //Cache the current editor
             currentEditor = (DiagramEditor) activeEditor;
             currentEditor.getEditingDomain().addResourceSetListener(this);
             PlatformUI.getWorkbench().getDisplay().syncExec(new Runnable() {
-                //FIXME Evaluate using asyncExec!
+                //Sync exec is necessary, since we need the layout for nearly
+                //everything KViD does
                 public void run() {
                     //Receive the current diagram layout for path finding
                     currentDiagramLayout = EclipseLayoutServices.getInstance()
@@ -152,7 +152,8 @@ public final class DataDistributor implements IProviderListener, ResourceSetList
         //Lazy reload of paths if layout was changed
         if (layoutChanged) {
             PlatformUI.getWorkbench().getDisplay().syncExec(new Runnable() {
-                //FIXME Evaluate using asyncExec!
+                //Sync exec is necessary, since we need the layout for nearly
+                //everything KViD does
                 public void run() {
                     //Receive the current diagram layout for path finding
                     currentDiagramLayout = EclipseLayoutServices.getInstance()

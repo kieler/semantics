@@ -95,9 +95,12 @@ public class DataDisplayEditPartProvider implements IEditPartProvider {
                                 .createExecutableExtension("factoryClass");
                         part = factory.create(view, hint);
                         break outer;
-                    } catch (CoreException e) {
-                        // TODO Better handling
-                        e.printStackTrace();
+                    } catch (CoreException ex) {
+                        System.err
+                                .println("Error in Extension Point defining"
+                                        + " a factory for the semanticHint: "
+                                        + hint);
+                        ex.printStackTrace();
                     }
                 }
             }

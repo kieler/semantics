@@ -82,7 +82,6 @@ public final class GmfAnimator {
         }
         
         final IFigure canvas = diagram.getLayer(DiagramRootEditPart.DECORATION_PRINTABLE_LAYER);
-
         int minPrio = Integer.MAX_VALUE;
         int maxPrio = Integer.MIN_VALUE;
         for (IKvidFigure figure : figuresAndPath.keySet()) {
@@ -173,7 +172,6 @@ public final class GmfAnimator {
                 anima.nextStep();
             }
         }
-        
         //Make sure animation won't be slower than the desired animation time
         anima.setCompleteDuration(animationTime - (animationTime / DELAY_SCALE));
         cc.add(anima);
@@ -182,7 +180,6 @@ public final class GmfAnimator {
             diagram.getDiagramEditDomain().getDiagramCommandStack().execute(cc);
             lastCommandExecutedAt = System.currentTimeMillis();
         }
-        
         if (RuntimeConfiguration.getInstance()
                 .currentValueOfProperty("Behavior after Animation")
                 .equals("Stay at last location")) {

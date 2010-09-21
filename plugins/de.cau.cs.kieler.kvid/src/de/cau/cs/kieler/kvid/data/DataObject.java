@@ -148,9 +148,7 @@ public class DataObject {
      * @param thedata The new data, which is of the same type as the old
      */
     public void updateData(final String thedata) {
-        if (!parseDataType(thedata).equals(this.type)) {
-            this.type = parseDataType(thedata);
-        }
+        this.type = parseDataType(thedata);
         this.data = thedata;
         if (savesHistory) {
             this.history.add(thedata);

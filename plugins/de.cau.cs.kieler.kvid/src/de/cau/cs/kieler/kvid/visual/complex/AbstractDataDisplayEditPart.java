@@ -20,6 +20,9 @@ import org.eclipse.gmf.runtime.notation.View;
 import de.cau.cs.kieler.kvid.datadistributor.IDataListener;
 
 /**
+ * Abstract EditPart to use when implementing KViD elements that should appear in an
+ * GMF Editor.
+ * 
  * @author jjc
  *
  */

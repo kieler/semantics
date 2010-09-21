@@ -147,15 +147,6 @@ public class KvidUri {
         } else {
             return false;
         }
-        /*if (other.hasPriority() == hasPriority()) {
-            if (other.hasPriority()) {
-                if (other.getPriority() != getPriority()) {
-                    return false;
-                }
-            }
-        } else {
-            return false;
-        }*/
         return true;
     }
     

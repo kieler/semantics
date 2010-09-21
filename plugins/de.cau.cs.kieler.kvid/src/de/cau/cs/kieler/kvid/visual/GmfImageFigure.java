@@ -17,6 +17,8 @@ import org.eclipse.draw2d.ImageFigure;
 import org.eclipse.swt.graphics.Image;
 
 /**
+ * Figure who uses an image for visualization.
+ * 
  * @author jjc
  *
  */

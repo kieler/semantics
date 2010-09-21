@@ -16,14 +16,14 @@ package de.cau.cs.kieler.kvid.dataprovider;
 import de.cau.cs.kieler.kvid.datadistributor.IProviderListener;
 
 /**
- * Interface for data sources.
- * Follows a three step structure:
- * 1. start - trigger once before data delivery
- * 2. step - trigger evvery time new data is available
- * 3. stop - trigger once when no more new data will follow
+ * Interface for data sources. Follows a three step structure: 1. start -
+ * trigger once before data delivery 2. step - trigger evvery time new data is
+ * available 3. stop - trigger once when no more new data will follow
  * 
+ * @deprecated Since KIEM is the only Interface to the environment, there is no
+ *             need for more than one provider
  * @author jjc
- *
+ * 
  */
 public interface IDataProvider {
     
