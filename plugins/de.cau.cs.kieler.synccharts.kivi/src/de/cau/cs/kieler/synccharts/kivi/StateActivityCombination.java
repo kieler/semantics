@@ -13,17 +13,30 @@
  */
 package de.cau.cs.kieler.synccharts.kivi;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.gef.EditPart;
+import org.eclipse.gmf.runtime.diagram.ui.editparts.ResizableCompartmentEditPart;
+import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramEditor;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.RGB;
 
+import de.cau.cs.kieler.core.KielerModelException;
 import de.cau.cs.kieler.core.kivi.IEffect;
 import de.cau.cs.kieler.core.kivi.AbstractCombination;
+import de.cau.cs.kieler.synccharts.State;
+import de.cau.cs.kieler.synccharts.SyncchartsPackage;
+import de.cau.cs.kieler.synccharts.diagram.edit.parts.State2EditPart;
+import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateRegionCompartment2EditPart;
 import de.cau.cs.kieler.synccharts.kivi.StateActivityTrigger.ActiveStates;
+import de.cau.cs.kieler.core.model.util.ModelingUtil;
+import de.cau.cs.kieler.core.util.Pair;
+import de.cau.cs.kieler.kiml.gmf.CompartmentCollapseExpandEffect;
+import de.cau.cs.kieler.kiml.gmf.LayoutEffect;
 
 /**
  * A combination that visualizes the simulation of a SyncChart.
@@ -37,42 +50,88 @@ public class StateActivityCombination extends AbstractCombination {
     // new CombinationParameter("highlightColor", "float", "0.0"),
     // new CombinationParameter("historyColor", "float", "240.0") };
 
-    private Map<EObject, StateActivityHighlightEffect> effects = new HashMap<EObject, StateActivityHighlightEffect>();
+    private Map<EObject, StateActivityHighlightEffect> highlightEffects = new HashMap<EObject, StateActivityHighlightEffect>();
+    private Map<EObject, CompartmentCollapseExpandEffect> collapseEffects = new HashMap<EObject, CompartmentCollapseExpandEffect>();
 
     /**
      * Execute this combination using the active states state.
      * 
-     * @param activeStates
-     *            the active states
+     * @param activeStates the active states
      */
     public void execute(final ActiveStates activeStates) {
+        // if there are no active states, the simulation has finished. Undo every harm you have done before
+        if(activeStates.getActiveStates().isEmpty()){
+            undo();
+            return;
+        }
         // assume every effect needs to be undone
-        Map<EObject, IEffect> toUndo = new HashMap<EObject, IEffect>(effects);
-
+        Map<EObject, IEffect> highlightsToUndo = new HashMap<EObject, IEffect>(highlightEffects);
+        Map<EObject, CompartmentCollapseExpandEffect> collapsesToUndo = new HashMap<EObject, CompartmentCollapseExpandEffect>(collapseEffects);
+        
+        if (collapseEffects.size() == 0) {
+                init(activeStates.getDiagramEditor());
+        }
+        
         // these were last active i steps ago
         for (int i = 0; i < activeStates.getActiveStates().size(); i++) {
             List<EObject> currentStep = activeStates.getActiveStates().get(i);
             for (EObject e : currentStep) {
                 // check if an effect exists for this edit part
-                StateActivityHighlightEffect effect = effects.get(e);
-                if (effect == null) {
+                StateActivityHighlightEffect highlightEffect = highlightEffects.get(e);
+                CompartmentCollapseExpandEffect collapseEffect = collapseEffects.get(e);
+                if (highlightEffect == null) {
                     // if not then create new one
-                    effect = new StateActivityHighlightEffect(e, activeStates.getDiagramEditor());
-                    effects.put(e, effect);
+                    highlightEffect = new StateActivityHighlightEffect(e,
+                        activeStates.getDiagramEditor());
+                    highlightEffects.put(e, highlightEffect);
                 } else {
                     // if it does then don't undo it later
-                    toUndo.remove(e);
+                    highlightsToUndo.remove(e);
+                }
+
+                if (collapseEffect != null) {
+                    collapsesToUndo.remove(e);
+                    collapseEffect.setCollapsed(false);
+                    collapseEffect.schedule();
                 }
                 // update its color instead of undo and create a new effect to avoid flashing
-                effect.setColor(getColor(i, activeStates.getActiveStates().size()));
-                effect.schedule();
+                highlightEffect.setColor(getColor(i, activeStates.getActiveStates().size()));
+                highlightEffect.schedule();
             }
         }
 
         // undo any effect that was not found in the active states
-        for (Map.Entry<EObject, IEffect> entry : toUndo.entrySet()) {
+        for (Map.Entry<EObject, IEffect> entry : highlightsToUndo.entrySet()) {
             entry.getValue().scheduleUndo();
-            effects.remove(entry.getKey());
+            highlightEffects.remove(entry.getKey());
+        }
+        for (CompartmentCollapseExpandEffect effect : collapsesToUndo.values()){
+            effect.setCollapsed(true);
+            effect.schedule();
+        }
+    }
+
+    /**
+     * Create collapse effects for all macro states (not for simple ones).
+     * 
+     * @throws KielerModelException
+     */
+    private void init(DiagramEditor editor){
+        Collection<EObject> states = ModelingUtil.getAllByType(
+            SyncchartsPackage.eINSTANCE.getState(), editor.getDiagramEditPart());
+        for (EObject state : states) {
+            // remove the root State, because it represents the whole SM and
+            // will not be active at
+            // all
+            if (((State) state).getParentRegion() == null
+                || ((State) state).getParentRegion().getParentState() == null) {
+                continue;
+            } else if (((State) state).getRegions().size() != 0) { // only collapse macrostates
+                CompartmentCollapseExpandEffect collapseEffect = new CompartmentCollapseExpandEffect(
+                    editor, state, SyncchartsPackage.eINSTANCE.getState_Regions(), 1, true, true);
+                collapseEffect.schedule();
+                collapseEffects.put(state, collapseEffect);
+            }
         }
     }
 
@@ -80,10 +139,14 @@ public class StateActivityCombination extends AbstractCombination {
      * {@inheritDoc}
      */
     public void undo() {
-        for (IEffect effect : effects.values()) {
+        for (IEffect effect : highlightEffects.values()) {
             effect.scheduleUndo();
         }
-        effects.clear();
+        highlightEffects.clear();
+        for (IEffect effect : collapseEffects.values()) {
+            effect.scheduleUndo();
+        }
+        collapseEffects.clear();
     }
 
     /**
