@@ -13,6 +13,7 @@
  */
 package de.cau.cs.kieler.synccharts.kivi;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
@@ -20,6 +21,7 @@ import java.util.Map;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramEditor;
+import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.RGB;
 
@@ -29,6 +31,7 @@ import de.cau.cs.kieler.synccharts.State;
 import de.cau.cs.kieler.synccharts.SyncchartsPackage;
 import de.cau.cs.kieler.synccharts.kivi.StateActivityTrigger.ActiveStates;
 import de.cau.cs.kieler.core.model.util.ModelingUtil;
+import de.cau.cs.kieler.core.util.Pair;
 import de.cau.cs.kieler.kiml.gmf.CompartmentCollapseExpandEffect;
 
 /**
@@ -39,9 +42,8 @@ import de.cau.cs.kieler.kiml.gmf.CompartmentCollapseExpandEffect;
  */
 public class StateActivityCombination extends AbstractCombination {
 
-    // private static final CombinationParameter[] PARAMETERS = new CombinationParameter[] {
-    // new CombinationParameter("highlightColor", "float", "0.0"),
-    // new CombinationParameter("historyColor", "float", "240.0") };
+    public static final String HIGHLIGHT_COLOR = StateActivityCombination.class.getCanonicalName()
+            + ".highlightColor";
 
     private Map<EObject, StateActivityHighlightEffect> highlightEffects = new HashMap<EObject, StateActivityHighlightEffect>();
     private Map<EObject, CompartmentCollapseExpandEffect> collapseEffects = new HashMap<EObject, CompartmentCollapseExpandEffect>();
@@ -150,9 +152,21 @@ public class StateActivityCombination extends AbstractCombination {
      * 
      * @return the parameters
      */
-    // public static CombinationParameter[] getParameters() {
-    // return PARAMETERS;
-    // }
+    public static List<Pair<String, Class<?>>> getParameters() {
+        // TODO refactor with constants etc
+        List<Pair<String, Class<?>>> list = new ArrayList<Pair<String, Class<?>>>();
+        list.add(new Pair<String, Class<?>>(HIGHLIGHT_COLOR, RGB.class));
+        return list;
+    }
+
+    /**
+     * Get the preference store used by this combination.
+     * 
+     * @return the preference store
+     */
+    public static IPreferenceStore getPreferenceStore() {
+        return Activator.getDefault().getPreferenceStore();
+    }
 
     private Color getColor(final int step, final int steps) {
         if (step == 0) {
@@ -162,4 +176,5 @@ public class StateActivityCombination extends AbstractCombination {
             return new Color(null, new RGB(240.0f, 1.0f, 1.0f - 1.0f / steps * (step - 1)));
         }
     }
+
 }

@@ -77,5 +77,11 @@
             type="org.eclipse.ui.IEditorPart">
       </propertyTester>
    </extension>
+   <extension
+         point="org.eclipse.core.runtime.preferences">
+      <initializer
+            class="de.cau.cs.kieler.synccharts.kivi.PreferenceInitializer">
+      </initializer>
+   </extension>
 
 </plugin>
