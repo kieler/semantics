@@ -23,6 +23,11 @@
    <extension
          point="org.eclipse.emf.compare.diff.mergerprovider">
       <mergerprovider
+            fileExtension="action"
+            mergerProviderClass="de.cau.cs.kieler.synccharts.synchronizer.merge.KitsMergerProvider"
+            priority="normal">
+      </mergerprovider>
+      <mergerprovider
             fileExtension="kixs"
             mergerProviderClass="de.cau.cs.kieler.synccharts.synchronizer.merge.KitsMergerProvider"
             priority="normal">
@@ -38,7 +43,7 @@
             priority="normal">
       </mergerprovider>
       <mergerprovider
-            fileExtension="action"
+            fileExtension="kitsState"
             mergerProviderClass="de.cau.cs.kieler.synccharts.synchronizer.merge.KitsMergerProvider"
             priority="normal">
       </mergerprovider>
@@ -69,6 +74,12 @@
             label="de.cau.cs.kieler.synccharts.synchronizer.match.KitsMatchEngine"
             priority="normal">
       </matchengine>
+      <matchengine
+            engineClass="de.cau.cs.kieler.synccharts.synchronizer.match.KitsMatchEngine"
+            fileExtension="kitsState"
+            label="de.cau.cs.kieler.synccharts.synchronizer.match.KitsMatchEngine"
+            priority="normal">
+      </matchengine>
    </extension>
    <extension
          point="org.eclipse.emf.compare.diff.engine">
@@ -80,19 +91,25 @@
       </diffengine>
       <diffengine
             engineClass="de.cau.cs.kieler.synccharts.synchronizer.diff.KitsDiffEngine"
-            fileExtension="kits"
-            label="de.cau.cs.kieler.synccharts.synchronizer.diff.KitsDiffEngine"
-            priority="normal">
-      </diffengine>
-      <diffengine
-            engineClass="de.cau.cs.kieler.synccharts.synchronizer.diff.KitsDiffEngine"
             fileExtension="kixs"
             label="de.cau.cs.kieler.synccharts.synchronizer.diff.KitsDiffEngine"
             priority="normal">
       </diffengine>
       <diffengine
             engineClass="de.cau.cs.kieler.synccharts.synchronizer.diff.KitsDiffEngine"
+            fileExtension="kits"
+            label="de.cau.cs.kieler.synccharts.synchronizer.diff.KitsDiffEngine"
+            priority="normal">
+      </diffengine>
+      <diffengine
+            engineClass="de.cau.cs.kieler.synccharts.synchronizer.diff.KitsDiffEngine"
             fileExtension="kitsem"
+            label="de.cau.cs.kieler.synccharts.synchronizer.diff.KitsDiffEngine"
+            priority="normal">
+      </diffengine>
+      <diffengine
+            engineClass="de.cau.cs.kieler.synccharts.synchronizer.diff.KitsDiffEngine"
+            fileExtension="kitsState"
             label="de.cau.cs.kieler.synccharts.synchronizer.diff.KitsDiffEngine"
             priority="normal">
       </diffengine>

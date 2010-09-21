@@ -115,18 +115,18 @@ public class SyncChartSynchronizerJob extends Job implements ISelectionListener 
 
     }
 
-    private EObject leftElement;
 
     @Override
     protected IStatus run(IProgressMonitor monitor) {
 
-        lastActiveEditor.getDocument().readOnly(new IUnitOfWork.Void<XtextResource>() {
+        Region leftRegion = lastActiveEditor.getDocument().readOnly(new IUnitOfWork<Region, XtextResource>() {
 
-            @Override
             @SuppressWarnings("unchecked")
-            public synchronized void process(XtextResource resource) throws Exception {
+            public synchronized Region exec(XtextResource resource) throws Exception {
                     
                 EObject copy = null;
+                Region leftElement = null;
+                
                 if (!resource.getContents().isEmpty()) {
                     copy = EcoreUtil.copy(resource.getContents().get(0));
                     new KitsSynchronizeLinker().consultSrcAndCopy(resource.getContents().get(0),
@@ -146,7 +146,7 @@ public class SyncChartSynchronizerJob extends Job implements ISelectionListener 
                 if (container == null) {              
                     dummyResource.getContents().clear();
                     dummyResource.getContents().add(copy);
-                    leftElement = copy;
+                    leftElement = (Region) copy;
                     
                 } else {
                     
@@ -165,7 +165,10 @@ public class SyncChartSynchronizerJob extends Job implements ISelectionListener 
                         }
                     }
                 }
+                
+                return leftElement;
             }
+
         });
 
         MatchModel matchModel = null;
@@ -173,7 +176,7 @@ public class SyncChartSynchronizerJob extends Job implements ISelectionListener 
         Region rightRegion = (Region) ((Diagram) ((IDiagramWorkbenchPart) passiveEditor)
                 .getDiagramEditPart().getModel()).getElement();
         try {
-            matchModel = MatchService.doMatch(leftElement, rightRegion, matchOptions);
+            matchModel = MatchService.doMatch(leftRegion, rightRegion, matchOptions);
         } catch (InterruptedException e) {
             return new Status(Status.ERROR, SyncchartsSynchronizerPlugin.PLUGIN_ID,
                     ModelSynchronizer.MSG_MATCH_FAILED, e);
@@ -192,6 +195,7 @@ public class SyncChartSynchronizerJob extends Job implements ISelectionListener 
 
         return Status.OK_STATUS;
     }
+    
 
     public void selectionChanged(IWorkbenchPart part, ISelection selection) {
 
@@ -235,10 +239,9 @@ public class SyncChartSynchronizerJob extends Job implements ISelectionListener 
         }
 
     }
+    
 
     private void serializeRegion(final Region region) {
-
-        final Region rootRegion = (Region) EcoreUtil.getRootContainer(region);
 
         try {
             kitsEditor.getDocumentEditor().process(new IUnitOfWork.Void<XtextResource>() {
@@ -246,25 +249,7 @@ public class SyncChartSynchronizerJob extends Job implements ISelectionListener 
                 @SuppressWarnings("unchecked")
                 @Override
                 public void process(XtextResource state) throws Exception {
-                    // create a copy of the complete model of the diagram editor
-                    rootRegionCopy = EcoreUtil.copy(rootRegion);
-                    Region copy = null;
-
-                    // to link the models properly they have to be in a resource
-                    dummyResource.getContents().clear();
-                    dummyResource.getContents().add(rootRegionCopy);
-
-                    try {
-                        // link the rootRegionCopy and reveal the part of interest
-                        copy = new KitsSynchronizeLinker()
-                                .consultSrcAndCopy(rootRegion, rootRegionCopy)
-                                .linkElement(rootRegionCopy).getMatched(region);
-                    } catch (ClassCastException e) {
-                        EditorUtils.log(new Status(Status.ERROR,
-                                SyncchartsSynchronizerPlugin.PLUGIN_ID, "Model linking failed",
-                                e));
-                        return;
-                    }
+                    Region copy = createCopy(region);
 
                     // keep the container of the model part of interest in mind
                     // we need it later on for proper reconstruction of the whole
@@ -304,33 +289,13 @@ public class SyncChartSynchronizerJob extends Job implements ISelectionListener 
 
     private void serializeState(final State state) {
 
-        final Region rootRegion = (Region) EcoreUtil.getRootContainer(state);
-
         try {
             kitsStateEditor.getDocumentEditor().process(new IUnitOfWork.Void<XtextResource>() {
 
                 @SuppressWarnings("unchecked")
                 @Override
                 public void process(XtextResource resource) throws Exception {
-                    // create a copy of the complete model of the diagram editor
-                    rootRegionCopy = EcoreUtil.copy(rootRegion);
-                    State copy = null;
-
-                    // to link the models properly they have to be in a resource
-                    dummyResource.getContents().clear();
-                    dummyResource.getContents().add(rootRegionCopy);
-
-                    try {
-                        // link the rootRegionCopy and reveal the part of interest
-                        copy = new KitsSynchronizeLinker()
-                                .consultSrcAndCopy(rootRegion, rootRegionCopy)
-                                .linkElement(rootRegionCopy).getMatched(state);
-                    } catch (ClassCastException e) {
-                        EditorUtils.log(new Status(Status.ERROR,
-                                SyncchartsSynchronizerPlugin.PLUGIN_ID, "Model linking failed",
-                                e));
-                        return;
-                    }
+                    State copy = createCopy(state);
 
                     // keep the container of the model part of interest in mind
                     // we need it later on for proper reconstruction of the whole
@@ -376,33 +341,13 @@ public class SyncChartSynchronizerJob extends Job implements ISelectionListener 
 
     private void serializeTransition(final Transition transition) {
 
-        final Region rootRegion = (Region) EcoreUtil.getRootContainer(transition);
-
         try {
             actionsEditor.getDocumentEditor().process(new IUnitOfWork.Void<XtextResource>() {
 
                 @SuppressWarnings("unchecked")
                 @Override
                 public void process(XtextResource state) throws Exception {
-                    // create a copy of the complete model of the diagram editor
-                    rootRegionCopy = EcoreUtil.copy(rootRegion);
-                    Transition copy = null;
-
-                    // to link the models properly they have to be in a resource
-                    dummyResource.getContents().clear();
-                    dummyResource.getContents().add(rootRegionCopy);
-
-                    try {
-                        // link the rootRegionCopy and reveal the part of interest
-                        copy = new KitsSynchronizeLinker()
-                                .consultSrcAndCopy(rootRegion, rootRegionCopy)
-                                .linkElement(rootRegionCopy).getMatched(transition);
-                    } catch (ClassCastException e) {
-                        EditorUtils.log(new Status(Status.ERROR,
-                                SyncchartsSynchronizerPlugin.PLUGIN_ID, "Model linking failed",
-                                e));
-                        return;
-                    }
+                    Transition copy = createCopy(transition);
                     
                     target = copy.getTargetState();
                     
@@ -444,21 +389,26 @@ public class SyncChartSynchronizerJob extends Job implements ISelectionListener 
     
     
     private <T extends EObject> T createCopy(T element) {
+        Region rootRegion = (Region) EcoreUtil.getRootContainer(element);
+        
+        // create a copy of the complete model of the diagram editor
+        rootRegionCopy = EcoreUtil.copy(rootRegion);
+
+        // to link the models properly they have to be in a resource
+        dummyResource.getContents().clear();
+        dummyResource.getContents().add(rootRegionCopy);
+
         try {
-            Region rootRegion = (Region) EcoreUtil.getRootContainer(element);
             // link the rootRegionCopy and reveal the part of interest
-            return new KitsSynchronizeLinker()
-                    .consultSrcAndCopy(rootRegion, rootRegionCopy)
+            return new KitsSynchronizeLinker().consultSrcAndCopy(rootRegion, rootRegionCopy)
                     .linkElement(rootRegionCopy).getMatched(element);
         } catch (ClassCastException e) {
-            EditorUtils.log(new Status(Status.ERROR,
-                    SyncchartsSynchronizerPlugin.PLUGIN_ID, "Model linking failed",
-                    e));
+            EditorUtils.log(new Status(Status.ERROR, SyncchartsSynchronizerPlugin.PLUGIN_ID,
+                    "Model linking failed", e));
             return null;
         }
-        
-    }
 
+    }
     
     public void setFeature(EReference theFeature) {
         this.feature = theFeature;

@@ -161,17 +161,21 @@ public class KitsSynchronizeLinker {
             eObj = it.next();
             if (SyncchartsPackage.eINSTANCE.getTransition().isInstance(eObj)) {
                 Transition transition = (Transition) eObj;
-                State target = (State) LRmatchTable.get(((Transition) RLmatchTable
-                        .get(transition)).getTargetState());
-                if (target == null) {
-                    target = ((Transition) RLmatchTable.get(transition)).getTargetState();
+                try {
+                    State target = (State) LRmatchTable.get(((Transition) RLmatchTable
+                            .get(transition)).getTargetState());
+                    if (target == null) {
+                        target = ((Transition) RLmatchTable.get(transition)).getTargetState();
+                    }
+                    transition.setTargetState(target);
+                } catch (NullPointerException e) {
+                    /* nothing */
                 }
-                transition.setTargetState(target);            
             }
         }
-        
         return this;
     }
+    
 
     @SuppressWarnings("unchecked")
     public <T extends EObject> T getMatched(T eObj) {
