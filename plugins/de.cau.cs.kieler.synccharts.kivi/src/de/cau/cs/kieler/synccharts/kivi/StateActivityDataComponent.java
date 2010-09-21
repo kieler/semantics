@@ -136,7 +136,7 @@ public class StateActivityDataComponent extends JSONObjectDataComponent implemen
                 if (currentJSONObject.has("state")) {
                     String stateString = currentJSONObject.get("state").toString();
                     // TODO parameterize state key
-                    String[] states = stateString.split(", ");
+                    String[] states = stateString.replaceAll("\\s","").split(",");
                     for (String state : states) {
                         if (state.length() > 1) {
                             EObject active = resource.getEObject(state);
