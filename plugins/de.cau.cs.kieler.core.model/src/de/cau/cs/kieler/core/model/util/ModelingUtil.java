@@ -264,6 +264,9 @@ public final class ModelingUtil {
      * @return the EditPart, or null if none was found
      */
     public static EditPart getEditPart(final DiagramEditPart dep, final EObject theElement) {
+        if(theElement == null){
+            return null;
+        }
         EditPart found = dep.findEditPart(null, theElement);
         if (found != null) {
             return found;
