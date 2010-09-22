@@ -32,8 +32,8 @@ import org.eclipse.swt.graphics.Path;
 import de.cau.cs.kieler.core.ui.util.SplineUtilities;
 
 /**
- * Temporary class implementing the spline extension to polylines until the
- * changes are merged into GMF.
+ * Temporary class implementing the spline extension to polylines until the changes are merged into
+ * GMF.
  * 
  * @author mmu
  * 
@@ -61,8 +61,7 @@ public class SplineConnection extends PolylineConnectionEx {
     public static final int SPLINE_CUBIC_APPROX = 2;
 
     /**
-     * A dimension used by the isFeedbackLayer() method to check if we are on a
-     * feedback layer.
+     * A dimension used by the isFeedbackLayer() method to check if we are on a feedback layer.
      */
     private static final Dimension DIMCHECK = new Dimension(100, 100);
 
@@ -84,9 +83,7 @@ public class SplineConnection extends PolylineConnectionEx {
     /*
      * (non-Javadoc)
      * 
-     * @see
-     * org.eclipse.gmf.runtime.draw2d.ui.figures.PolylineConnectionEx#containsPoint
-     * (int, int)
+     * @see org.eclipse.gmf.runtime.draw2d.ui.figures.PolylineConnectionEx#containsPoint (int, int)
      */
     @Override
     public boolean containsPoint(final int x, final int y) {
@@ -148,16 +145,14 @@ public class SplineConnection extends PolylineConnectionEx {
     }
 
     /**
-     * This method checks if we are on a feedback layer by comparing the value
-     * of a Dimension with the value after translating it into relative
-     * coordinates.
+     * This method checks if we are on a feedback layer by comparing the value of a Dimension with
+     * the value after translating it into relative coordinates.
      * 
-     * Copied from PolylineConnectionEx because it is private there but required
-     * for containsPoint().
+     * Copied from PolylineConnectionEx because it is private there but required for
+     * containsPoint().
      * 
-     * @return true if we are on a feedback layer, which means the results after
-     *         translating were the same as not translating, or false if we are
-     *         not on a feedback layer.
+     * @return true if we are on a feedback layer, which means the results after translating were
+     *         the same as not translating, or false if we are not on a feedback layer.
      */
     protected boolean isFeedbackLayer() {
         Dimension copied = DIMCHECK.getCopy();
@@ -166,11 +161,11 @@ public class SplineConnection extends PolylineConnectionEx {
     }
 
     /**
-     * Calculate and store the tolerance value for determining whether the line
-     * contains a point or not.
+     * Calculate and store the tolerance value for determining whether the line contains a point or
+     * not.
      * 
-     * Copied from PolylineConnectionEx because it is private there but required
-     * for containsPoint().
+     * Copied from PolylineConnectionEx because it is private there but required for
+     * containsPoint().
      * 
      * @param isFeedbackLayer
      *            see the isFeedbackLayer() method
@@ -250,8 +245,8 @@ public class SplineConnection extends PolylineConnectionEx {
     }
 
     /**
-     * Gets the spline mode for this connection. Fall back to approximation if
-     * smooth splines are selected but no advanced graphics support is available
+     * Gets the spline mode for this connection. Fall back to approximation if smooth splines are
+     * selected but no advanced graphics support is available
      * 
      * @return spline mode
      */
@@ -267,8 +262,7 @@ public class SplineConnection extends PolylineConnectionEx {
     /*
      * (non-Javadoc)
      * 
-     * @see
-     * org.eclipse.gmf.runtime.draw2d.ui.figures.PolylineConnectionEx#outlineShape
+     * @see org.eclipse.gmf.runtime.draw2d.ui.figures.PolylineConnectionEx#outlineShape
      * (org.eclipse.draw2d.Graphics)
      */
     @Override
@@ -324,8 +318,7 @@ public class SplineConnection extends PolylineConnectionEx {
     /*
      * (non-Javadoc)
      * 
-     * @see
-     * org.eclipse.draw2d.PolylineConnection#setTargetDecoration(org.eclipse
+     * @see org.eclipse.draw2d.PolylineConnection#setTargetDecoration(org.eclipse
      * .draw2d.RotatableDecoration)
      */
     @Override
@@ -336,8 +329,7 @@ public class SplineConnection extends PolylineConnectionEx {
     /*
      * (non-Javadoc)
      * 
-     * @see
-     * org.eclipse.draw2d.PolylineConnection#setSourceDecoration(org.eclipse
+     * @see org.eclipse.draw2d.PolylineConnection#setSourceDecoration(org.eclipse
      * .draw2d.RotatableDecoration)
      */
     @Override
@@ -346,8 +338,7 @@ public class SplineConnection extends PolylineConnectionEx {
     }
 
     /**
-     * An extension of the ArrowLocator that is capable of using spline points
-     * as references.
+     * An extension of the ArrowLocator that is capable of using spline points as references.
      * 
      * @author mmu
      * 
@@ -366,13 +357,11 @@ public class SplineConnection extends PolylineConnectionEx {
         }
 
         /**
-         * Relocates the passed in figure (which must be a
-         * {@link RotatableDecoration}) at either the start or end of the
-         * connection.
+         * Relocates the passed in figure (which must be a {@link RotatableDecoration}) at either
+         * the start or end of the connection.
          * 
-         * If the connection is a SplineConnection with spline mode enabled the
-         * angle is computed from the spline itself, not from the draggable
-         * points.
+         * If the connection is a SplineConnection with spline mode enabled the angle is computed
+         * from the spline itself, not from the draggable points.
          * 
          * @param target
          *            The RotatableDecoration to relocate
@@ -385,7 +374,10 @@ public class SplineConnection extends PolylineConnectionEx {
             if (getConnection() instanceof SplineConnection) {
                 SplineConnection spline = (SplineConnection) getConnection();
                 if (spline.getSplineMode() == SplineConnection.SPLINE_CUBIC) {
-                    int size = (arrow.getBounds().height + arrow.getBounds().width) / 2;
+                    // int size = (arrow.getBounds().height + arrow.getBounds().width) / 2;
+                    // this caused the wobbling arrowheads
+                    // FIXME find a better mechanism of determining the size of an arrowhead
+                    int size = 10;
                     if (getAlignment() == SOURCE) {
                         arrow.setReferencePoint(SplineUtilities.sourceReferencePoint(points, size));
                     } else if (getAlignment() == TARGET) {
