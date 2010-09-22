@@ -45,7 +45,6 @@ import de.cau.cs.kieler.kvid.KvidPlugin;
 import de.cau.cs.kieler.kvid.KvidUtil;
 import de.cau.cs.kieler.kvid.data.DataObject;
 import de.cau.cs.kieler.kvid.data.KvidUri;
-import de.cau.cs.kieler.kvid.dataprovider.IDataProvider;
 import de.cau.cs.kieler.kvid.visual.GmfDrawer;
 
 /**
@@ -76,9 +75,6 @@ public final class DataDistributor implements IProviderListener, ResourceSetList
     /** The editor in which the current visualization takes place. */
     private DiagramEditor currentEditor = null;
     
-    /** The {@link IDataProvider} which is the current data source. */ 
-    private IDataProvider currentProvider;
-    
     /** Flag for checking whether the layout has to be re-cached. */
     private boolean layoutChanged = false;
     
@@ -94,29 +90,6 @@ public final class DataDistributor implements IProviderListener, ResourceSetList
      */
     public static DataDistributor getInstance() {
         return INSTANCE;
-    }
-    
-    /**
-     * Changes the current data source to a new one.
-     * 
-     * @param newProvider The new data source
-     * @deprecated Kiem is the only used data source
-     */
-    public void changeDataProvider(final IDataProvider newProvider) {
-        if (currentProvider != null) {
-            currentProvider.removeProviderListener(this);
-        }
-        currentProvider = newProvider;
-        currentProvider.registerProviderListener(this);
-    }
-    
-    /**
-     * Getter for the current data source.
-     * 
-     * @return The currently used data source
-     */
-    public IDataProvider getCurrentProvider() {
-        return this.currentProvider;
     }
     
     /**
@@ -180,8 +153,22 @@ public final class DataDistributor implements IProviderListener, ResourceSetList
                     dataByUri.get(key).updateData(data.getString(o.toString()));
                 } else {
                     //New model data source, create paths and new entry in the data table
-                    List<List<Point>> paths = KvidUtil.getPathsByElement(key,
-                            currentEditor, currentDiagramLayout);
+                    List<List<Point>> paths = null;
+                    if (currentEditor == null) {
+                        IEditorPart editor = KvidUtil.getActiveEditor();
+                        if (editor instanceof DiagramEditor) {
+                            currentEditor = (DiagramEditor) editor;
+                             paths = KvidUtil.getPathsByElement(key,
+                                    currentEditor, currentDiagramLayout);
+                        } else {
+                            Status status = new Status(Status.WARNING, KvidPlugin.PLUGIN_ID, 
+                                    "Could not find a graphical editor to work in.");
+                            StatusManager.getManager().handle(status, StatusManager.SHOW);
+                        }
+                    } else {
+                        paths = KvidUtil.getPathsByElement(key,
+                                currentEditor, currentDiagramLayout);
+                    }
                     dataByUri.put(key, new DataObject(key, data.getString(o.toString()), paths));
                     //Also add Property object for the new entry
                     List<String> associatedObjects = new LinkedList<String>();

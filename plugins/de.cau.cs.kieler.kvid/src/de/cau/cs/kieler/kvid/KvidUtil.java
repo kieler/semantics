@@ -33,6 +33,7 @@ import org.eclipse.swt.graphics.ImageData;
 import org.eclipse.swt.graphics.PaletteData;
 import org.eclipse.swt.graphics.RGB;
 import org.eclipse.ui.IEditorPart;
+import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.statushandlers.StatusManager;
@@ -418,19 +419,14 @@ public final class KvidUtil {
         List<List<Point>> result = new LinkedList<List<Point>>();
         String elementUriPart = elementUri.getElementUri();
         Resource resource;
-        DiagramLayoutManager manager;
-        try {
+        DiagramLayoutManager manager = EclipseLayoutServices.getInstance()
+                                            .getManager(currentEditor, null);
+        if (currentEditor.getDiagram() != null && currentEditor.getDiagram().getElement() != null) {
             resource = currentEditor.getDiagram().getElement().eResource();
-            manager = EclipseLayoutServices.getInstance()
-                                                .getManager(currentEditor, null);
-        } catch (Exception ex) {
-            //Problems in external plug-ins, print stack trace and stop pathfinding
-            //TODO handle this better!
-            System.err.println("KViD:");
-            System.err
-                    .println("There was a problem in an external Plug-In. "
-                    + "It won't cause Visualization to crash, "
-                    + "but might reduce the number of offered features.");
+        } else {
+            Status status = new Status(Status.WARNING, KvidPlugin.PLUGIN_ID, 
+                    "There was a problem with the diagram's resource.");
+            StatusManager.getManager().handle(status, StatusManager.SHOW);
             return null;
         }
         
@@ -498,10 +494,14 @@ public final class KvidUtil {
      */
     public static IEditorPart getActiveEditor() {
         IEditorPart editor = null;
-        IWorkbenchWindow activeWindow = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
-        if (activeWindow != null && activeWindow.getActivePage() != null) {
-            editor = activeWindow.getActivePage().getActiveEditor();
+        IWorkbenchWindow[] activeWindows = PlatformUI.getWorkbench()
+                .getWorkbenchWindows();
+        for (int i = 0; i < activeWindows.length; i++) {
+            IWorkbenchPage page = activeWindows[i].getActivePage();
+            if (page.getActiveEditor() != null) {
+                editor = page.getActiveEditor();
+            }
         }
-        return editor;        
+        return editor;
     }
 }
