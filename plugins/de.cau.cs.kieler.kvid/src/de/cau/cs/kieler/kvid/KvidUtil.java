@@ -437,16 +437,12 @@ public final class KvidUtil {
         if (currentNode.getPorts().size() > 0) {
             for (KPort port : currentNode.getPorts()) {
                 String portName = "";
+                String portOption = RuntimeConfiguration.getInstance()
+                        .currentValueOfProperty("Default output port");
                 if (elementUri.hasPort()) {
                     portName = elementUri.getPort();
-                } else if (RuntimeConfiguration.getInstance()
-                        .currentValueOfProperty(
-                                "Default output port") != "") {
-                    //TODO cache this!!
-                    portName = RuntimeConfiguration
-                            .getInstance()
-                            .currentValueOfProperty(
-                                    "Default output port");
+                } else if (portOption != "") {
+                    portName = portOption;
                 }
                 if (port.getLabel().getText().equals(portName) || portName.isEmpty()) {
                     result.addAll(getPathsByPort(port));
