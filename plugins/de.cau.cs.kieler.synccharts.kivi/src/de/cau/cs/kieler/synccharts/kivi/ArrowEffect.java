@@ -74,24 +74,6 @@ public class ArrowEffect extends AbstractEffect {
     }
 
     /**
-     * Create a new arrow effect for the given source and target edit part.
-     * 
-     * @param s
-     *            the source edit part
-     * @param t
-     *            the target edit part
-     * @param connectionLayer
-     *            true if the connection layer shall be used for drawing on instead of the figure of
-     *            the source's parent
-     */
-    public ArrowEffect(final GraphicalEditPart s, final GraphicalEditPart t,
-            final boolean connectionLayer) {
-        source = s;
-        target = t;
-        useConnectionLayer = connectionLayer;
-    }
-
-    /**
      * Create a new arrow effect for the given source and target EObject. Attempts to find
      * appropriate edit parts, will not do anything if either can not be found.
      * 
