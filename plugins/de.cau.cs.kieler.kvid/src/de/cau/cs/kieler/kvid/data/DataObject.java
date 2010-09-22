@@ -191,6 +191,7 @@ public class DataObject {
      * @return The type determined. String when no proper data type was found. 
      */
     private DataType parseDataType(final String thedata) {
+        //TODO use "offical" parsers and try/catch the exceptions
         if (data.matches("[+-]?[0-9]+")) {
             return DataType.INT;
         }
@@ -229,7 +230,7 @@ public class DataObject {
      * @return The history value converted in the right data type as Object
      */
     public Object getHistoryValue(final int which) {
-        if (which < 0 || history.size() <= which) {
+        if (which < 0 || which >= history.size()) {
             throw new RuntimeException("Tried to receive a non existing history value");
         }
         switch (type) {

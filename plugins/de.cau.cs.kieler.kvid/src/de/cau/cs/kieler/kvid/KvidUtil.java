@@ -33,7 +33,6 @@ import org.eclipse.swt.graphics.ImageData;
 import org.eclipse.swt.graphics.PaletteData;
 import org.eclipse.swt.graphics.RGB;
 import org.eclipse.ui.IEditorPart;
-import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.statushandlers.StatusManager;
@@ -166,8 +165,10 @@ public final class KvidUtil {
         if (fragmentUri.startsWith("//")) {
             int lastOccurance = 2;
             int currentOccurance;
+            //TODO use StringTokenizer
             while (fragmentUri.indexOf("/", lastOccurance) != -1) {
                 currentOccurance = fragmentUri.indexOf("/", lastOccurance + 1);
+                //TODO use StringBuilder here
                 result += ".";
                 String currentUri;
                 if (currentOccurance != -1) {
@@ -177,15 +178,16 @@ public final class KvidUtil {
                     currentUri = fragmentUri;
                     lastOccurance = fragmentUri.length();
                 }
+                //TODO evaluate optimizing by doing it upside down
                 EObject model = resource.getEObject(currentUri);
                 if (model instanceof NamedObject) {
                     result += ((NamedObject) model).getName();
                 } else {
-                    throw new RuntimeException("Ptolemy URIs will only work with NamedObjects");
+                    throw new IllegalArgumentException("Ptolemy URIs will only work with NamedObjects");
                 }
             }
         } else {
-            throw new RuntimeException("Malformatted URI");
+            throw new IllegalArgumentException("Malformatted Fragment URI");
         }
         return result;
     }
@@ -209,7 +211,7 @@ public final class KvidUtil {
             result = "/";
             int lastOccurance = 1;
             int currentOccurance;
-            
+            //TODO StringTokenizer
             while (ptolemyUri.indexOf(".", lastOccurance) != -1) {
                 //parse Ptolemy URI and find corresponding EObject on the current level 
                 result += "/";
@@ -247,7 +249,7 @@ public final class KvidUtil {
                 }
             }
         } else {
-            throw new RuntimeException("Malformatted URI");
+            throw new IllegalArgumentException("Malformatted Name-based URI");
         }
         return result;
     }
@@ -260,18 +262,17 @@ public final class KvidUtil {
      * 
      */
     public static Point getAbsolutePosition(final KNode node) {
-        Point parentPosition = new Point(0, 0);
+        KShapeLayout nodeLayout = node.getData(KShapeLayout.class);
+        //TODO round only at the end
+        Point position = new Point((int) nodeLayout.getXpos(), (int) nodeLayout.getYpos());
         KNode iterNode = node;
         while (iterNode.getParent() != null) {
             iterNode = iterNode.getParent();
             KShapeLayout iterLayout = iterNode.getData(KShapeLayout.class);
-            parentPosition.translate((int) iterLayout.getXpos(), (int) iterLayout.getYpos());
+            position.translate((int) iterLayout.getXpos(), (int) iterLayout.getYpos());
             KInsets iterInsets = iterLayout.getProperty(LayoutOptions.INSETS);
-            parentPosition.translate((int) iterInsets.getLeft(), (int) iterInsets.getTop());
+            position.translate((int) iterInsets.getLeft(), (int) iterInsets.getTop());
         }
-        KShapeLayout nodeLayout = node.getData(KShapeLayout.class);
-        Point position = new Point(parentPosition);
-        position.translate((int) nodeLayout.getXpos(), (int) nodeLayout.getYpos());
         return position;
     }
     
@@ -283,6 +284,7 @@ public final class KvidUtil {
      * 
      */
     public static Point getAbsolutePosition(final KPort port) {
+        //TODO only one point
         Point nodePosition = getAbsolutePosition(port.getNode());
         KShapeLayout portLayout = port.getData(KShapeLayout.class);
         Point position = new Point(nodePosition);
@@ -294,14 +296,16 @@ public final class KvidUtil {
      * Gives the absolute positions of all bend points on the given edge.
      * 
      * @param edge The edge to get the bend points from
-     * @param node The containing node of the edge
+     * @param node The containment node of the edge
      * @return A list of points, being the absolute positions of the bend points
      * 
      */
     public static List<Point> getBendPointsAbsolutePositions(final KEdge edge, final KNode node) {
+        //TODO remove node from signature, senseless
         List<Point> result = new LinkedList<Point>();
         Point parentPosition = new Point(0, 0);
         KNode iterNode = node;
+        //TODO use rather absolute position of edge.getsource.getparent
         while (iterNode.getParent() != null) {
             iterNode = iterNode.getParent();
             KShapeLayout iterLayout = iterNode.getData(KShapeLayout.class);
@@ -330,12 +334,13 @@ public final class KvidUtil {
             if (edge.getSourcePort() != null && edge.getSourcePort().equals(port)) {
                 List<Point> path = new LinkedList<Point>();
                 path.add(getAbsolutePosition(port));
+                //TODO get source and target from:
                 path.addAll(getBendPointsAbsolutePositions(edge, port.getNode()));
                 if (edge.getTargetPort() != null) {
                     path.add(getAbsolutePosition(edge.getTargetPort()));
                 } else {
                     KShapeLayout targetLayout = edge.getTarget().getData(KShapeLayout.class);
-                    if (targetLayout.getProperty(LayoutOptions.HYPERNODE).booleanValue()) {
+                    if (targetLayout.getProperty(LayoutOptions.HYPERNODE)) {
                         path.add(getAbsolutePosition(edge.getTarget()));
                         subresult.addAll(getPathsByNode(edge.getTarget()));
                     } else {
@@ -420,6 +425,7 @@ public final class KvidUtil {
                                                 .getManager(currentEditor, null);
         } catch (Exception ex) {
             //Problems in external plug-ins, print stack trace and stop pathfinding
+            //TODO handle this better!
             System.err.println("KViD:");
             System.err
                     .println("There was a problem in an external Plug-In. "
@@ -432,11 +438,11 @@ public final class KvidUtil {
             try {
                 //If not, it might be a Fragment URI, try to translate
                 elementUriPart = ptolemyUri2FragmentUri(elementUriPart, resource);
-            } catch (RuntimeException ex) {
+            } catch (IllegalArgumentException iaex) {
                 //Notify user about malformatted URI and ignore value during visualization
                 Status status = new Status(Status.WARNING, KvidPlugin.PLUGIN_ID, 
-                        "Needs Fragment URI or URI in Ptolemy Notation. Got: " + elementUriPart
-                        + " The concrete problem was: " + ex.getMessage());
+                        "Needs Fragment URI or URI in Ptolemy Notation. Got: " + elementUriPart,
+                        iaex);
                 StatusManager.getManager().handle(status, StatusManager.SHOW);
                 return null;
             }
@@ -469,6 +475,7 @@ public final class KvidUtil {
                 } else if (RuntimeConfiguration.getInstance()
                         .currentValueOfProperty(
                                 "Default output port") != "") {
+                    //TODO cache this!!
                     portName = RuntimeConfiguration
                             .getInstance()
                             .currentValueOfProperty(
@@ -487,16 +494,13 @@ public final class KvidUtil {
     /**
      * Helper method for getting the currently active editor.
      * 
-     * @return The currently active editor in the UI
+     * @return The currently active editor in the UI or null
      */
     public static IEditorPart getActiveEditor() {
         IEditorPart editor = null;
-        IWorkbenchWindow[] activeWindows = PlatformUI.getWorkbench().getWorkbenchWindows();
-        for (int i = 0; i < activeWindows.length; i++) {
-            IWorkbenchPage page = activeWindows[i].getActivePage();
-            if (page.getActiveEditor() != null) {
-                editor = page.getActiveEditor();
-            }
+        IWorkbenchWindow activeWindow = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
+        if (activeWindow != null && activeWindow.getActivePage() != null) {
+            editor = activeWindow.getActivePage().getActiveEditor();
         }
         return editor;        
     }
