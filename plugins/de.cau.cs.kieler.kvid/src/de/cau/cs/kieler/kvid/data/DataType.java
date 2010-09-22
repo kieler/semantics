@@ -19,6 +19,7 @@ package de.cau.cs.kieler.kvid.data;
  * 
  * Use STRING as a default if you have data in string representation.
  * 
+ * @deprecated the detection of the data type has to be done by clients now 
  * @author jjc
  *
  */

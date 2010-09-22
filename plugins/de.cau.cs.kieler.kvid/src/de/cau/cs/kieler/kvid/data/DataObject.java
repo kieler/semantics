@@ -13,6 +13,7 @@
  */
 package de.cau.cs.kieler.kvid.data;
 
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -33,9 +34,6 @@ public class DataObject {
     /** The data itself in a string representation. */
     private String data;
     
-    /** The type of the data, given in data types known by KViD. */
-    private DataType type;
-    
     /** Set true to save values in a history list. */
     private boolean savesHistory = false; 
     
@@ -54,7 +52,6 @@ public class DataObject {
     public DataObject(final KvidUri theURI, final String thedata) {
         this.uri = theURI;
         this.data = thedata;
-        this.type = parseDataType(thedata);
     }
     
     /**
@@ -88,67 +85,25 @@ public class DataObject {
     }
     
     /**
-     * Constructor for a DataObject, knowing the URI and the data, additionally
-     * setting the data type manually instead of autodetecting it.
-     * 
-     * @param theURI The URI to identify the referred model element
-     * @param thedata The data to associate with the referred model element
-     * @param thetype The {@link DataType} of which the given data is
-     */
-    public DataObject(final KvidUri theURI, final String thedata,
-            final DataType thetype) {
-        this.uri = theURI;
-        this.data = thedata;
-        this.type = thetype;
-    }
-    
-    /**
-     * Constructor for a DataObject, knowing the URI and the data, additionally
-     * setting the data type manually instead of autodetecting it. Also gives
-     * one or more animation and display paths.
-     * 
-     * @param theURI The URI to identify the referred model element
-     * @param thedata The data to associate with the referred model element
-     * @param thepaths List of paths (represented by a list of draw2d {@link Point}s) which
-     *          the data animation should follow or use for positioning
-     * @param thetype The {@link DataType} of which the given data is
-     */
-    public DataObject(final KvidUri theURI, final String thedata, final List<List<Point>> thepaths,
-            final DataType thetype) {
-        this(theURI, thedata);
-        this.paths = thepaths;
-    }
-    
-    /**
      * Method to receive the data of this DataObject.
-     * Returns as object, but is already converted in the right data type.
-     * Use instanceof to find out the type.
+     * The data will be returned in it's string representation, but could be any 
+     * parseable object.
+     * It is up to the using client to try parsing for their known data types.
+     * One could use try/catch to try parsing and ignoring values that aren't of a known 
+     * data type. 
      * 
-     * @return An {@link Object} converted in the right data type, representing the
-     *          data of this DataObject
+     * @return An {@link String} representing the data of this DataObject
      */
-    public Object getData() {
-        switch (type) {
-        case INT:
-            return Integer.parseInt(data);
-        case FLOAT:
-            return Float.parseFloat(data);
-        case STRING:
-            return data;
-        case BOOLEAN:
-            return Boolean.parseBoolean(data);
-        default:
-            throw new RuntimeException("Data Type not supported: " + type.name());
-        }
+    public String getData() {
+        return data;
     }
     
     /**
      * Method to use when new data available for the referred model element.
      * 
-     * @param thedata The new data, which is of the same type as the old
+     * @param thedata The new data
      */
     public void updateData(final String thedata) {
-        this.type = parseDataType(thedata);
         this.data = thedata;
         if (savesHistory) {
             this.history.add(thedata);
@@ -171,7 +126,7 @@ public class DataObject {
      * @return A list of paths (which are lists of {@link Point}s)
      */
     public List<List<Point>> getPaths() {
-        return paths;
+        return Collections.unmodifiableList(paths);
     }
     
     /**
@@ -182,26 +137,6 @@ public class DataObject {
      */
     public void updatePaths(final List<List<Point>> thepaths) {
         this.paths = thepaths;
-    }
-    
-    /**
-     * Internal method to determine the data type of the given data.
-     * 
-     * @param thedata The data of this DataObject
-     * @return The type determined. String when no proper data type was found. 
-     */
-    private DataType parseDataType(final String thedata) {
-        //TODO use "offical" parsers and try/catch the exceptions
-        if (data.matches("[+-]?[0-9]+")) {
-            return DataType.INT;
-        }
-        if (data.matches("[+-]?[0-9]+.[0-9]+[E[0-9]+]?[f]?")) {
-            return DataType.FLOAT;
-        }
-        if (data.equalsIgnoreCase("true") || data.equalsIgnoreCase("false")) {
-            return DataType.BOOLEAN;
-        }
-        return DataType.STRING;
     }
     
     /**
@@ -233,18 +168,7 @@ public class DataObject {
         if (which < 0 || which >= history.size()) {
             throw new RuntimeException("Tried to receive a non existing history value");
         }
-        switch (type) {
-        case INT:
-            return Integer.parseInt(history.get(which));
-        case FLOAT:
-            return Float.parseFloat(history.get(which));
-        case STRING:
-            return history.get(which);
-        case BOOLEAN:
-            return Boolean.parseBoolean(history.get(which));
-        default:
-            throw new RuntimeException("Data Type not supported: " + type.name());
-        }
+        return history.get(which);
     }
     
     /**

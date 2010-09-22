@@ -135,9 +135,13 @@ public class ScopeEditPart extends AbstractDataDisplayEditPart {
             DataObject data = DataDistributor.getInstance().getDataObjectByURI(referredObjectURI);
             
             //Setup plot and load possible already existing history values
-            double[] values = new double[data.getHistoryLength()];
-            for (int i = 0; i < values.length; i++) {
-                plot.addPoint(0, i, values[i], false);
+            for (int i = 0; i < data.getHistoryLength(); i++) {
+                try  {
+                    double value = Double.parseDouble(data.getData());
+                    plot.addPoint(0, i, value, false);
+                } catch (NumberFormatException nfex) {
+                    //value is not usable by this element, ignore it
+                }
                 steps++;
             }
             plot.fillPlot();
@@ -201,7 +205,11 @@ public class ScopeEditPart extends AbstractDataDisplayEditPart {
         
         //Process the new data
         DataObject dataObject = DataDistributor.getInstance().getDataObjectByURI(referredObjectURI);
-        plot.addPoint(0, steps, Double.valueOf(dataObject.getData().toString()), false);
+        try {
+            plot.addPoint(0, steps, Double.valueOf(dataObject.getData().toString()), false);
+        } catch (NumberFormatException nfex) {
+            //data is not usable by this element, ignore it
+        }
         steps++;
         
         //Update drawing
