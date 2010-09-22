@@ -13,25 +13,26 @@
  */
 package de.cau.cs.kieler.synccharts.kivi;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.eclipse.draw2d.ColorConstants;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramEditor;
 import org.eclipse.jface.preference.IPreferenceStore;
+import org.eclipse.jface.preference.PreferenceConverter;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.RGB;
 
+import de.cau.cs.kieler.core.kivi.CombinationParameter;
 import de.cau.cs.kieler.core.kivi.IEffect;
 import de.cau.cs.kieler.core.kivi.AbstractCombination;
 import de.cau.cs.kieler.synccharts.State;
 import de.cau.cs.kieler.synccharts.SyncchartsPackage;
 import de.cau.cs.kieler.synccharts.kivi.StateActivityTrigger.ActiveStates;
 import de.cau.cs.kieler.core.model.util.ModelingUtil;
-import de.cau.cs.kieler.core.util.Pair;
 import de.cau.cs.kieler.kiml.gmf.CompartmentCollapseExpandEffect;
 
 /**
@@ -42,11 +43,37 @@ import de.cau.cs.kieler.kiml.gmf.CompartmentCollapseExpandEffect;
  */
 public class StateActivityCombination extends AbstractCombination {
 
+    /**
+     * The preference key for the highlight color.
+     */
     public static final String HIGHLIGHT_COLOR = StateActivityCombination.class.getCanonicalName()
             + ".highlightColor";
 
-    private Map<EObject, StateActivityHighlightEffect> highlightEffects = new HashMap<EObject, StateActivityHighlightEffect>();
-    private Map<EObject, CompartmentCollapseExpandEffect> collapseEffects = new HashMap<EObject, CompartmentCollapseExpandEffect>();
+    /**
+     * The preference key for the history color.
+     */
+    public static final String HISTORY_COLOR = StateActivityCombination.class.getCanonicalName()
+            + ".historyColor";
+
+    private static final CombinationParameter[] PARAMETERS = new CombinationParameter[] {
+            new CombinationParameter(HIGHLIGHT_COLOR, getPreferenceStore(), "Highlight Color",
+                    "The color to use for highlighting active states", ColorConstants.red.getRGB(),
+                    CombinationParameter.RGB_INITIALIZER),
+            new CombinationParameter(HISTORY_COLOR, getPreferenceStore(), "History Color",
+                    "The color to use for highlighting previously active states",
+                    ColorConstants.blue.getRGB(), CombinationParameter.RGB_INITIALIZER) };
+
+    private Map<EObject, StateActivityHighlightEffect> highlightEffects;
+    private Map<EObject, CompartmentCollapseExpandEffect> collapseEffects;
+
+    /**
+     * Default constructor.
+     */
+    public StateActivityCombination() {
+        super();
+        highlightEffects = new HashMap<EObject, StateActivityHighlightEffect>();
+        collapseEffects = new HashMap<EObject, CompartmentCollapseExpandEffect>();
+    }
 
     /**
      * Execute this combination using the active states state.
@@ -152,11 +179,8 @@ public class StateActivityCombination extends AbstractCombination {
      * 
      * @return the parameters
      */
-    public static List<Pair<String, Class<?>>> getParameters() {
-        // TODO refactor with constants etc
-        List<Pair<String, Class<?>>> list = new ArrayList<Pair<String, Class<?>>>();
-        list.add(new Pair<String, Class<?>>(HIGHLIGHT_COLOR, RGB.class));
-        return list;
+    public static CombinationParameter[] getParameters() {
+        return PARAMETERS;
     }
 
     /**
@@ -170,10 +194,12 @@ public class StateActivityCombination extends AbstractCombination {
 
     private Color getColor(final int step, final int steps) {
         if (step == 0) {
-            return new Color(null, new RGB(0.0f, 1.0f, 1.0f));
+            return new Color(null, PreferenceConverter.getColor(getPreferenceStore(),
+                    HIGHLIGHT_COLOR));
         } else {
-            // a shade of blue
-            return new Color(null, new RGB(240.0f, 1.0f, 1.0f - 1.0f / steps * (step - 1)));
+            float[] hsb = PreferenceConverter.getColor(getPreferenceStore(), HISTORY_COLOR)
+                    .getHSB();
+            return new Color(null, new RGB(hsb[0], hsb[1], hsb[2] - hsb[2] / steps * (step - 1)));
         }
     }
 
