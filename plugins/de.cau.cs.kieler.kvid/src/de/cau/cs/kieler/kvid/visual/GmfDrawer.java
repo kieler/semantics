@@ -80,9 +80,6 @@ public final class GmfDrawer implements IDrawer, IDataListener {
             }
         }
 
-        // clearing phase
-        clearDrawing();
-
         // update data phase
         for (KvidUri key : dataSet.keySet()) {
             if (figuresByURI.containsKey(key)) {
@@ -250,6 +247,7 @@ public final class GmfDrawer implements IDrawer, IDataListener {
      */
     public void triggerWrapup() {
         clearDrawing();
+        currentEditor = null;
         GmfAnimator.wrapup();
     }
 

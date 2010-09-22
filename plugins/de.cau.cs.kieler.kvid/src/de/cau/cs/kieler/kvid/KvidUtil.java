@@ -21,6 +21,7 @@ import java.awt.image.IndexColorModel;
 import java.awt.image.WritableRaster;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.StringTokenizer;
 
 import org.eclipse.core.runtime.Status;
 import org.eclipse.draw2d.geometry.Point;
@@ -43,6 +44,7 @@ import de.cau.cs.kieler.core.kgraph.KEdge;
 import de.cau.cs.kieler.core.kgraph.KNode;
 import de.cau.cs.kieler.core.kgraph.KPort;
 import de.cau.cs.kieler.core.model.util.ModelingUtil;
+import de.cau.cs.kieler.kaom.Port;
 import de.cau.cs.kieler.kiml.klayoutdata.KEdgeLayout;
 import de.cau.cs.kieler.kiml.klayoutdata.KInsets;
 import de.cau.cs.kieler.kiml.klayoutdata.KPoint;
@@ -162,35 +164,28 @@ public final class KvidUtil {
      * @return A Ptolemy URI referring the model element
      */
     public static String fragmentUri2PtolemyUri(final String fragmentUri, final Resource resource) {
-        String result = "";
+        //Ptolemy URIs do not tend to be larger than fragment URIs
+        StringBuilder result = new StringBuilder(fragmentUri.length());
         if (fragmentUri.startsWith("//")) {
-            int lastOccurance = 2;
-            int currentOccurance;
-            //TODO use StringTokenizer
-            while (fragmentUri.indexOf("/", lastOccurance) != -1) {
-                currentOccurance = fragmentUri.indexOf("/", lastOccurance + 1);
-                //TODO use StringBuilder here
-                result += ".";
-                String currentUri;
-                if (currentOccurance != -1) {
-                    currentUri = fragmentUri.substring(0, currentOccurance);
-                    lastOccurance = currentOccurance;
-                } else {
-                    currentUri = fragmentUri;
-                    lastOccurance = fragmentUri.length();
-                }
-                //TODO evaluate optimizing by doing it upside down
-                EObject model = resource.getEObject(currentUri);
+            EObject model = resource.getEObject(fragmentUri);
+            while (model.eContainer() != null) {
                 if (model instanceof NamedObject) {
-                    result += ((NamedObject) model).getName();
+                    result.insert(0, ((NamedObject) model).getName());
+                    if (model instanceof Port) {
+                        result.insert(0, ":");
+                    } else  {
+                        result.insert(0, ".");
+                    }
                 } else {
                     throw new IllegalArgumentException("Ptolemy URIs will only work with NamedObjects");
                 }
+                model = model.eContainer();
             }
         } else {
             throw new IllegalArgumentException("Malformatted Fragment URI");
         }
-        return result;
+        System.out.println("AA" + result.toString());
+        return result.toString();
     }
     
     /**
@@ -206,38 +201,27 @@ public final class KvidUtil {
      * @return The Fragment URI
      */
     public static String ptolemyUri2FragmentUri(final String ptolemyUri, final Resource resource) {
-        String result = "";
+        //Fragmemt URIs are about twice as long as PtolemyURIs
+        StringBuilder result = new StringBuilder(ptolemyUri.length() * 2);
         if (ptolemyUri.startsWith(".")) {
             EObject root = resource.getContents().get(0);
-            result = "/";
-            int lastOccurance = 1;
-            int currentOccurance;
-            //TODO StringTokenizer
-            while (ptolemyUri.indexOf(".", lastOccurance) != -1) {
+            result.append("/");
+            StringTokenizer tokenizer = new StringTokenizer(ptolemyUri, ".");
+            while (tokenizer.hasMoreTokens()) {
                 //parse Ptolemy URI and find corresponding EObject on the current level 
-                result += "/";
-                currentOccurance = ptolemyUri.indexOf(".", lastOccurance);
-                String currentUri;
+                result.append("/");
+                String currentUri = tokenizer.nextToken();
                 
-                if (currentOccurance != lastOccurance) {
-                    currentUri = ptolemyUri.substring(lastOccurance, currentOccurance);
-                    lastOccurance = currentOccurance;
-                } else {
-                    //when this is the last referrer, just take the rest
-                    currentUri = ptolemyUri.substring(lastOccurance);
-                    currentUri = currentUri.replaceAll("\\.", "");
-                    lastOccurance = ptolemyUri.length();
-                }
-                String currentResult = new String(result);
+                String currentResult = new String(result.toString());
                 for (EObject eo : root.eContents()) {
                     //iterate through the current level and find the NamedObject with the same name
                     if (eo instanceof NamedObject) {
                         if (((NamedObject) eo).getName() != null
                                 && ((NamedObject) eo).getName().equals(
                                         currentUri)) {
-                            result += ((InternalEObject) eo.eContainer())
+                            result.append(((InternalEObject) eo.eContainer())
                                     .eURIFragmentSegment(
-                                            eo.eContainingFeature(), eo);
+                                            eo.eContainingFeature(), eo));
                             root = eo;
                             break;
                         }
@@ -252,7 +236,7 @@ public final class KvidUtil {
         } else {
             throw new IllegalArgumentException("Malformatted Name-based URI");
         }
-        return result;
+        return result.toString();
     }
     
     /**
