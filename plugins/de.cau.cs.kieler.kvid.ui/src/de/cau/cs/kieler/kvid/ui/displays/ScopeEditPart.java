@@ -33,6 +33,7 @@ import org.eclipse.ui.PlatformUI;
 
 import ptolemy.plot.Plot;
 import de.cau.cs.kieler.core.model.util.ModelingUtil;
+import de.cau.cs.kieler.core.ui.util.CoreUiUtil;
 import de.cau.cs.kieler.kaom.Port;
 import de.cau.cs.kieler.kvid.KvidUtil;
 import de.cau.cs.kieler.kvid.data.DataObject;
@@ -112,7 +113,7 @@ public class ScopeEditPart extends AbstractDataDisplayEditPart {
     protected NodeFigure createNodeFigure() {
         //Export plot as an image and display it
         BufferedImage image = plot.exportImage();
-        ImageData data = KvidUtil.convertAWTImageToSWT(image);
+        ImageData data = CoreUiUtil.convertAWTImageToSWT(image);
         currentScope = new GmfImageFigure(new org.eclipse.swt.graphics.Image(
                 Display.getCurrent(), data));
         WrapperNodeFigure container = new WrapperNodeFigure(currentScope);
@@ -215,7 +216,7 @@ public class ScopeEditPart extends AbstractDataDisplayEditPart {
         plot.fillPlot();
         plot.repaint();
         BufferedImage image = plot.exportImage();
-        ImageData data = KvidUtil.convertAWTImageToSWT(image);
+        ImageData data = CoreUiUtil.convertAWTImageToSWT(image);
         getFigure().remove(currentScope);
         currentScope = new GmfImageFigure(new org.eclipse.swt.graphics.Image(
                 Display.getCurrent(), data));
