@@ -184,7 +184,6 @@ public final class KvidUtil {
         } else {
             throw new IllegalArgumentException("Malformatted Fragment URI");
         }
-        System.out.println("AA" + result.toString());
         return result.toString();
     }
     
@@ -248,17 +247,19 @@ public final class KvidUtil {
      */
     public static Point getAbsolutePosition(final KNode node) {
         KShapeLayout nodeLayout = node.getData(KShapeLayout.class);
-        //TODO round only at the end
-        Point position = new Point((int) nodeLayout.getXpos(), (int) nodeLayout.getYpos());
+        float xPos = nodeLayout.getXpos();
+        float yPos = nodeLayout.getYpos();
         KNode iterNode = node;
         while (iterNode.getParent() != null) {
             iterNode = iterNode.getParent();
             KShapeLayout iterLayout = iterNode.getData(KShapeLayout.class);
-            position.translate((int) iterLayout.getXpos(), (int) iterLayout.getYpos());
+            xPos += iterLayout.getXpos();
+            yPos += iterLayout.getYpos();
             KInsets iterInsets = iterLayout.getProperty(LayoutOptions.INSETS);
-            position.translate((int) iterInsets.getLeft(), (int) iterInsets.getTop());
+            xPos += iterInsets.getLeft();
+            yPos += iterInsets.getTop();
         }
-        return position;
+        return new Point(xPos, yPos);
     }
     
     /**
@@ -269,10 +270,8 @@ public final class KvidUtil {
      * 
      */
     public static Point getAbsolutePosition(final KPort port) {
-        //TODO only one point
-        Point nodePosition = getAbsolutePosition(port.getNode());
+        Point position = getAbsolutePosition(port.getNode());
         KShapeLayout portLayout = port.getData(KShapeLayout.class);
-        Point position = new Point(nodePosition);
         position.translate((int) portLayout.getXpos(), (int) portLayout.getYpos());
         return position;
     }
@@ -281,28 +280,29 @@ public final class KvidUtil {
      * Gives the absolute positions of all bend points on the given edge.
      * 
      * @param edge The edge to get the bend points from
-     * @param node The containment node of the edge
      * @return A list of points, being the absolute positions of the bend points
      * 
      */
-    public static List<Point> getBendPointsAbsolutePositions(final KEdge edge, final KNode node) {
-        //TODO remove node from signature, senseless
+    public static List<Point> getBendPointsAbsolutePositions(final KEdge edge) {
         List<Point> result = new LinkedList<Point>();
-        Point parentPosition = new Point(0, 0);
-        KNode iterNode = node;
-        //TODO use rather absolute position of edge.getsource.getparent
-        while (iterNode.getParent() != null) {
-            iterNode = iterNode.getParent();
-            KShapeLayout iterLayout = iterNode.getData(KShapeLayout.class);
-            parentPosition.translate((int) iterLayout.getXpos(), (int) iterLayout.getYpos());
-            KInsets iterInsets = iterLayout.getProperty(LayoutOptions.INSETS);
-            parentPosition.translate((int) iterInsets.getLeft(), (int) iterInsets.getTop());
-        }
+        KShapeLayout parentLayout = edge.getSource().getParent().getData(KShapeLayout.class);
+        Point parentPosition = getAbsolutePosition(edge.getSource().getParent());
+        KInsets insets = parentLayout.getProperty(LayoutOptions.INSETS);
+        parentPosition.translate((int) insets.getLeft(), (int) insets.getTop());
+        Point pathStep = new Point(parentPosition);
+        KEdgeLayout edgeLayout = edge.getData(KEdgeLayout.class);
+        pathStep.translate((int) edgeLayout.getSourcePoint().getX(),
+                (int) edgeLayout.getSourcePoint().getY());
+        result.add(pathStep);
         for (KPoint bendPoint : edge.getData(KEdgeLayout.class).getBendPoints()) {
-            Point pathStep = new Point(parentPosition);
+            pathStep = new Point(parentPosition);
             pathStep.translate((int) bendPoint.getX(), (int) bendPoint.getY());
             result.add(pathStep);
         }
+        pathStep = new Point(parentPosition);
+        pathStep.translate((int) edgeLayout.getTargetPoint().getX(),
+                (int) edgeLayout.getTargetPoint().getY());
+        result.add(pathStep);
         return result;
     }
     
@@ -318,18 +318,11 @@ public final class KvidUtil {
         for (KEdge edge : port.getEdges()) {
             if (edge.getSourcePort() != null && edge.getSourcePort().equals(port)) {
                 List<Point> path = new LinkedList<Point>();
-                path.add(getAbsolutePosition(port));
-                //TODO get source and target from:
-                path.addAll(getBendPointsAbsolutePositions(edge, port.getNode()));
-                if (edge.getTargetPort() != null) {
-                    path.add(getAbsolutePosition(edge.getTargetPort()));
-                } else {
+                path.addAll(getBendPointsAbsolutePositions(edge));
+                if (edge.getTargetPort() == null) {
                     KShapeLayout targetLayout = edge.getTarget().getData(KShapeLayout.class);
                     if (targetLayout.getProperty(LayoutOptions.HYPERNODE)) {
-                        path.add(getAbsolutePosition(edge.getTarget()));
                         subresult.addAll(getPathsByNode(edge.getTarget()));
-                    } else {
-                        path.add(getAbsolutePosition(edge.getTarget()));
                     }
                 }
                 if (subresult.size() > 0) {
@@ -359,19 +352,13 @@ public final class KvidUtil {
         List<List<Point>> subresult = new LinkedList<List<Point>>();
         for (KEdge edge : node.getOutgoingEdges()) {
             List<Point> path = new LinkedList<Point>();
-            path.add(getAbsolutePosition(node));
-            path.addAll(getBendPointsAbsolutePositions(edge, node));
-            if (edge.getTargetPort() != null) {
-                path.add(getAbsolutePosition(edge.getTargetPort()));
-            } else {
+            path.addAll(getBendPointsAbsolutePositions(edge));
+            if (edge.getTargetPort() == null) {
                 KShapeLayout targetLayout = edge.getTarget().getData(
                         KShapeLayout.class);
                 if (targetLayout.getProperty(LayoutOptions.HYPERNODE)
                         .booleanValue()) {
-                    path.add(getAbsolutePosition(edge.getTarget()));
                     subresult.addAll(getPathsByNode(edge.getTarget()));
-                } else {
-                    path.add(getAbsolutePosition(edge.getTarget()));
                 }
             }
             if (subresult.size() > 0) {
