@@ -4,10 +4,18 @@
    <extension
          point="de.cau.cs.kieler.sim.kiem.json.datacomponent">
       <content
-            class="de.cau.cs.kieler.esterel.transformation.EsterelToSyncChartsDataComponent"
+            class="de.cau.cs.kieler.esterel.transformation.Est2SyncDataComponent"
             id="de.cau.cs.kieler.esterel.transformation"
             name="Esterel to SyncCharts Transformation">
       </content>
+   </extension>
+   <extension
+         point="de.cau.cs.kieler.core.kivi.combinations">
+      <combination
+            class="de.cau.cs.kieler.esterel.transformation.kivi.TransformationCombination"
+            description="Run automatic layout after a transformation."
+            name="Transformation Combination">
+      </combination>
    </extension>
 
 </plugin>

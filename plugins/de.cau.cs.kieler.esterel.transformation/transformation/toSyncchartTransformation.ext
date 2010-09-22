@@ -1,0 +1,196 @@
+import synccharts;
+import annotations;
+import expressions;
+import utilities;
+import esterel;
+import ecore;
+
+//extension feature;
+
+/*
+ * initial test transformation
+ */
+Void initial(State s):
+	let r = new Region:
+	let ns = new State:
+	r.states.add(ns) ->
+	s.regions.add(r) ->
+	ns.setLabel("InnerStateXY") ->
+	appendTransformation("initial", ns)
+;
+
+/*
+ * passes information about a new transformation to the data component.
+ */
+Void appendTransformation(String str, emf::EObject e):
+       JAVA  de.cau.cs.kieler.esterel.transformation.Est2SyncDataComponent.appendTransformation(java.lang.String,
+org.eclipse.emf.ecore.EObject)
+;
+
+/*
+ * rule 1 (module)
+ */ 
+Void ruleModule(Region r, Module m):
+	let s = new State:
+	s.setLabel(m.name) ->
+	// TODO set singals
+	// TODO set body content
+	r.setBodyContents(castToEObject(m.modBody.statement.get(0))) ->
+	s
+;
+
+
+/*
+ * rule 3 (halt)
+ */
+Void ruleHalt(Region r):
+	let s = new State:
+	s.setId("s1") ->
+	s.setIsInitial(true) ->
+	r.states.add(s)
+;
+
+/*
+ * rule 5 (abort)
+ */
+ Void ruleAbort(Region r, Abort a):
+ 	let initState = new State:
+ 	let finalState = new State:
+ 	let toFinalTrans = new Transition:
+ 	let caseStates = {}:
+ 	// connect initial and final state in case of a normal termination
+ 	toFinalTrans.setSourceState(initState) ->
+ 	toFinalTrans.setTargetState(finalState) ->
+ 	toFinalTrans.setType(TransitionType::NORMALTERMINATION) ->
+ 	initState.setIsInitial(true) ->
+ 	finalState.setIsFinal(true) ->
+ 	
+ 	// handle cases
+ 	a
+ ;
+
+/*
+ * rule 8 (await)
+ */
+ Void ruleAwait(Region r, Await a):
+ 	let initState = new State:
+ 	let caseStates = {}:
+ 	AwaitCase.isInstance(a.body) ? 
+ 	// handle cases
+ 	((AwaitCase) a.body).cases.handleAwaitCase(caseStates, initState) : "" ->
+ 	//: a ->
+ 	// handle instance
+ 	//->
+ 	r.states.add(initState) ->
+ 	r.states.addAll(caseStates)
+ ;
+ 
+ 
+ /*
+  * rule 12 (emit)
+  */
+Void ruleEmit(Region r, Emit e):
+	let initS = new State:
+	let finalS = new State:
+	let emitTrans = new Transition:
+	initS.setIsInitial(true) ->
+	finalS.setIsFinal(true) ->
+	emitTrans.setSourceState(initS) ->
+	emitTrans.setTargetState(finalS) ->
+	// TODO emit emitTrans.setEffects(e.signal + effect)
+	// add new states to region
+	r.states.add(initS) ->
+	r.states.add(finalS)
+;
+
+/*
+ * rule 17 (loop)
+ */
+ Void ruleLoop(Region r, Loop l):
+ 	let loopState = new State:
+ 	let selfTrans = new Transition:
+ 	selfTrans.setType(TransitionType::NORMALTERMINATION) ->
+ 	selfTrans.setSourceState(loopState) ->
+ 	selfTrans.setTargetState(loopState) ->  
+ 	// TODO loopState.setBodyContents(l.body) ->
+ 	r.states.add(loopState)
+ ;
+ 
+ /* rule 19 (parallel)
+  *
+  */
+Void ruleParallel(State parent, Parallel p):
+ 	p.list.handleParallelStatement(parent)
+;
+
+/*
+ * rule 23 (sequence)
+ */
+Void ruleSequence(Region r, Sequence s):
+	s
+;
+
+//transforms sequence
+State transSequence (State s, Statement statement):
+	//checks wether there is a sequence-operator
+	Sequence.isInstance(statement)?
+		(let i = new State:
+		let r = new Region:
+		i.setId("s1") ->
+		s.setLabel("Sequence") ->
+		i.setIsInitial(true) ->
+		r.states.add(i) ->
+		s.regions.add(r) ->
+		(transSequenceRecursive(r, i,((Sequence)statement).list, 2)).setIsFinal(true))
+		:s
+	;//(transSequence(s, statement));
+	
+//recursive helpfunction for sequence transformation
+State transSequenceRecursive (Region r, State prev, List[Statement] statement, Integer id):
+	let s1 = new State:
+	let t = new Transition:
+	s1.setId("s"+id) ->
+	t.setType(TransitionType::NORMALTERMINATION) ->
+	r.states.add(s1)->
+	Sequence.isInstance(statement.first())?
+		(t.setSourceState(transSequenceRecursive(r,prev, ((Sequence)statement.first()).list, (id+1)))->
+		t.setTargetState(s1) ->
+		s1)
+	:
+		(t.setSourceState(prev)->
+		t.setTargetState(s1)->
+		s1);	
+
+/*
+ * helper method
+ * add a new region with the specified parallel statement
+ */
+Void handleParallelStatement(Statement s, State parent):
+	let r = new Region:
+	let newS = new State:
+	newS.setIsInitial(true) ->
+	newS.setIsFinal(true) ->
+	r.states.add(newS) ->
+	parent.regions.add(r)	
+	// TODO newS.setBodyContents(s. ka
+;
+ 
+ /*
+  * helping method
+  * realises a new await case
+  */
+ Void handleAwaitCase(AbortCaseSingle ac, List[State] fstates, State initState):
+ 	let finalState = new State:
+	let trans = new Transition:
+	trans.setType(TransitionType::STRONGABORT) ->
+	trans.setSourceState(initState) ->
+	trans.setTargetState(finalState) ->
+	//trans.setTrigger(ac.delayExpr) ->
+	//finalState.setBodyContents(ac.statement) ->
+	fstates.add(finalState)
+ ;
+ 
+ecore::EObject castToEObject(emf::EObject o):
+	JAVA  de.cau.cs.kieler.esterel.transformation.TransformationHelper.castToEObjcet(org.eclipse.emf.ecore.EObject)
+;
+ 
