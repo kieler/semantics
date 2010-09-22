@@ -13,7 +13,6 @@
  */
 package de.cau.cs.kieler.synccharts.kivi;
 
-import org.eclipse.draw2d.ColorConstants;
 import org.eclipse.draw2d.IFigure;
 import org.eclipse.draw2d.PolygonDecoration;
 import org.eclipse.draw2d.PolylineConnection;
@@ -29,6 +28,7 @@ import org.eclipse.gmf.runtime.diagram.ui.editparts.DiagramEditPart;
 import org.eclipse.gmf.runtime.diagram.ui.editparts.LabelEditPart;
 import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramEditor;
 import org.eclipse.gmf.runtime.diagram.ui.render.editparts.RenderedDiagramRootEditPart;
+import org.eclipse.swt.graphics.Color;
 import org.eclipse.ui.IEditorPart;
 
 import de.cau.cs.kieler.core.ui.util.EditorUtils;
@@ -66,6 +66,8 @@ public class ArrowEffect extends AbstractEffect {
 
     private IFigure parent;
 
+    private Color color;
+
     /**
      * Default constructor.
      */
@@ -81,11 +83,14 @@ public class ArrowEffect extends AbstractEffect {
      *            the source EObject
      * @param t
      *            the target EObject
+     * @param c
+     *            the color to paint the arrow with
      * @param connectionLayer
      *            true if the connection layer shall be used for drawing on instead of the figure of
      *            the source's parent
      */
-    public ArrowEffect(final EObject s, final EObject t, final boolean connectionLayer) {
+    public ArrowEffect(final EObject s, final EObject t, final Color c,
+            final boolean connectionLayer) {
         final Maybe<IEditorPart> maybe = new Maybe<IEditorPart>();
         MonitoredOperation.runInUI(new Runnable() {
             public void run() {
@@ -126,12 +131,13 @@ public class ArrowEffect extends AbstractEffect {
             }
         }
         useConnectionLayer = connectionLayer;
+        color = c;
     }
 
     /**
      * {@inheritDoc}
      * 
-     * FIXME handle collapsed target states/superstates. 
+     * FIXME handle collapsed target states/superstates.
      */
     public void execute() {
         if (source == null || target == null) {
@@ -147,7 +153,7 @@ public class ArrowEffect extends AbstractEffect {
             }
             connection = new PolylineConnection();
 
-            connection.setForegroundColor(ColorConstants.red);
+            connection.setForegroundColor(color);
             connection.setLineWidth(2);
             PolygonDecoration dec = new PolygonDecoration();
             dec.setTemplate(template);

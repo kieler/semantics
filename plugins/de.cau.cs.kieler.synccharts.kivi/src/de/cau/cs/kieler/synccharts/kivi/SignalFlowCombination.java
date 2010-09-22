@@ -19,11 +19,16 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import org.eclipse.draw2d.ColorConstants;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.jface.preference.IPreferenceStore;
+import org.eclipse.jface.preference.PreferenceConverter;
+import org.eclipse.swt.graphics.Color;
 
 import de.cau.cs.kieler.core.expressions.Signal;
 import de.cau.cs.kieler.core.expressions.ValuedObjectReference;
 import de.cau.cs.kieler.core.util.Pair;
+import de.cau.cs.kieler.core.kivi.CombinationParameter;
 import de.cau.cs.kieler.core.kivi.IEffect;
 import de.cau.cs.kieler.core.kivi.AbstractCombination;
 import de.cau.cs.kieler.core.kivi.SelectionTrigger.SelectionState;
@@ -39,6 +44,17 @@ import de.cau.cs.kieler.synccharts.kivi.SignalFlowTrigger.SignalFlowActiveState;
  * 
  */
 public class SignalFlowCombination extends AbstractCombination {
+
+    /**
+     * The preference key for the arrow color.
+     */
+    public static final String ARROW_COLOR = SignalFlowCombination.class.getCanonicalName()
+            + ".arrowColor";
+
+    private static final CombinationParameter[] PARAMETERS = new CombinationParameter[] { new CombinationParameter(
+            ARROW_COLOR, getPreferenceStore(), "Arrow Color",
+            "The color to paint the signal flow arrows in", ColorConstants.red.getRGB(),
+            CombinationParameter.RGB_TYPE) };
 
     private Map<Pair<Transition, Transition>, IEffect> iEffects = new HashMap<Pair<Transition, Transition>, IEffect>();
 
@@ -104,7 +120,7 @@ public class SignalFlowCombination extends AbstractCombination {
                             IEffect oldEffect = toUndo.remove(pair);
                             if (oldEffect == null) {
                                 ArrowEffect iEffect = new ArrowEffect(effect.getSecond(),
-                                        trigger.getSecond(), false);
+                                        trigger.getSecond(), getColor(), false);
                                 iEffects.put(new Pair<Transition, Transition>(effect.getSecond(),
                                         trigger.getSecond()), iEffect);
                             } else {
@@ -185,6 +201,23 @@ public class SignalFlowCombination extends AbstractCombination {
             }
         }
         return true;
+    }
+
+    private Color getColor() {
+        return new Color(null, PreferenceConverter.getColor(getPreferenceStore(), ARROW_COLOR));
+    }
+
+    private static IPreferenceStore getPreferenceStore() {
+        return Activator.getDefault().getPreferenceStore();
+    }
+
+    /**
+     * Get the combination parameters for the signal flow combination.
+     * 
+     * @return the parameters
+     */
+    public static CombinationParameter[] getParameters() {
+        return PARAMETERS;
     }
 
 }

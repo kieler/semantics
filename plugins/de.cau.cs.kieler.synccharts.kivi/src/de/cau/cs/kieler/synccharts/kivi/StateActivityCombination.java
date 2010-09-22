@@ -58,10 +58,10 @@ public class StateActivityCombination extends AbstractCombination {
     private static final CombinationParameter[] PARAMETERS = new CombinationParameter[] {
             new CombinationParameter(HIGHLIGHT_COLOR, getPreferenceStore(), "Highlight Color",
                     "The color to use for highlighting active states", ColorConstants.red.getRGB(),
-                    CombinationParameter.RGB_INITIALIZER),
+                    CombinationParameter.RGB_TYPE),
             new CombinationParameter(HISTORY_COLOR, getPreferenceStore(), "History Color",
                     "The color to use for highlighting previously active states",
-                    ColorConstants.blue.getRGB(), CombinationParameter.RGB_INITIALIZER) };
+                    ColorConstants.blue.getRGB(), CombinationParameter.RGB_TYPE) };
 
     private Map<EObject, StateActivityHighlightEffect> highlightEffects;
     private Map<EObject, CompartmentCollapseExpandEffect> collapseEffects;
