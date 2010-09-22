@@ -34,7 +34,6 @@ import org.eclipse.ui.PlatformUI;
 import ptolemy.plot.Plot;
 import de.cau.cs.kieler.core.model.util.ModelingUtil;
 import de.cau.cs.kieler.core.ui.util.CoreUiUtil;
-import de.cau.cs.kieler.kaom.Port;
 import de.cau.cs.kieler.kvid.KvidUtil;
 import de.cau.cs.kieler.kvid.data.DataObject;
 import de.cau.cs.kieler.kvid.data.KvidUri;
@@ -184,13 +183,6 @@ public class ScopeEditPart extends AbstractDataDisplayEditPart {
                 EObject model = connected.getElement();
                 String ptolemyUri = KvidUtil.fragmentUri2PtolemyUri(
                         ModelingUtil.getFragmentUri(model), model.eResource());
-                if (model instanceof Port) {
-                    int dot = ptolemyUri.lastIndexOf(".");
-                    ptolemyUri = ptolemyUri.substring(0, dot)
-                            + ":"
-                            + ptolemyUri
-                                    .substring(dot + 1, ptolemyUri.length());
-                }
                 referredObjectURI = new KvidUri(ptolemyUri);
             }
             try {
@@ -230,9 +222,14 @@ public class ScopeEditPart extends AbstractDataDisplayEditPart {
                 Display.getCurrent(), data));
         getFigure().add(currentScope);
         currentScope.setBorder(new LineBorder());
-        PlatformUI.getWorkbench().getDisplay().syncExec(new Runnable() {
+        PlatformUI.getWorkbench().getDisplay().asyncExec(new Runnable() {
             public void run() {
-                refreshVisuals();
+                try {
+                    refreshVisuals();
+                } catch (NullPointerException nex) {
+                    //Happens only when the EditPart is deleted while still in use
+                    //Can be ignored, since the EditPart and it's visuals are discarded anyway
+                }
             }
         });
     }
