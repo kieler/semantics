@@ -63,8 +63,6 @@ public class KitsView extends ViewPart {
             public void modelChanged(XtextResource resource) {
                 synchronizer.cancel();
                 if (!documentHasErrors(actionsEditor.getDocument())) {
-//                    synchronizer.setLastActiveEditor(actionsEditor);
-//                    synchronizer.setFeature(SyncchartsPackage.eINSTANCE.getState_OutgoingTransitions());
                     synchronizer.schedule(2000L);
                 }
             }
@@ -76,8 +74,6 @@ public class KitsView extends ViewPart {
             public void modelChanged(XtextResource resource) {
                 synchronizer.cancel();
                 if (!documentHasErrors(kitsStateEditor.getDocument())) {
-//                    synchronizer.setLastActiveEditor(kitsStateEditor);
-//                    synchronizer.setFeature(SyncchartsPackage.eINSTANCE.getRegion_States());
                     synchronizer.schedule(2000L);
                 }
             }
@@ -90,8 +86,6 @@ public class KitsView extends ViewPart {
             public void modelChanged(XtextResource resource) {
                 synchronizer.cancel();
                 if (!documentHasErrors(kitsEditor.getDocument())) {
-//                    synchronizer.setLastActiveEditor(kitsEditor);
-//                    synchronizer.setFeature(SyncchartsPackage.eINSTANCE.getState_Regions());
                     synchronizer.schedule(2000L);
                 }
             }

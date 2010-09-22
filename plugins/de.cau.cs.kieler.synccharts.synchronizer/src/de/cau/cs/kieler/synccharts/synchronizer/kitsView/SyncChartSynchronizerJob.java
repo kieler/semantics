@@ -63,6 +63,11 @@ import de.cau.cs.kieler.synccharts.text.actions.scoping.ActionsScopeProvider;
 import de.cau.cs.kieler.synccharts.text.kits.KitsResource;
 import de.cau.cs.kieler.synccharts.text.kits.scoping.KitsEmbeddedScopeProvider;
 
+
+/**
+ * 
+ * @author chsch
+ */
 public class SyncChartSynchronizerJob extends Job implements ISelectionListener {
 
     private SyncchartsDiagramEditor passiveEditor = null;
@@ -71,19 +76,18 @@ public class SyncChartSynchronizerJob extends Job implements ISelectionListener 
     private EmbeddedXtextEditor actionsEditor;
     private EmbeddedXtextEditor kitsEditor;
     private EmbeddedXtextEditor kitsStateEditor;
-    
+
     private EmbeddedXtextEditor lastActiveEditor;
-    
+
     private EReference feature;
-    
+
     private KitsResource dummyResource;
 
     private Region rootRegionCopy;
 
     private Scope container;
-    private State serializedState;
     private List<Transition> incomingTransitions;
-    
+
     private State target;
 
     private int index;
@@ -114,62 +118,63 @@ public class SyncChartSynchronizerJob extends Job implements ISelectionListener 
         });
 
     }
-
+    
 
     @Override
     protected IStatus run(IProgressMonitor monitor) {
 
-        Region leftRegion = lastActiveEditor.getDocument().readOnly(new IUnitOfWork<Region, XtextResource>() {
+        Region leftRegion = lastActiveEditor.getDocument().readOnly(
+                new IUnitOfWork<Region, XtextResource>() {
 
-            @SuppressWarnings("unchecked")
-            public synchronized Region exec(XtextResource resource) throws Exception {
-                    
-                EObject copy = null;
-                Region leftElement = null;
-                
-                if (!resource.getContents().isEmpty()) {
-                    copy = EcoreUtil.copy(resource.getContents().get(0));
-                    new KitsSynchronizeLinker().consultSrcAndCopy(resource.getContents().get(0),
-                            copy).linkTransitionsInElement(copy);
-                } else {
-                    if (lastActiveEditor == kitsEditor) {
-                        copy = SyncchartsFactory.eINSTANCE.createRegion();
-                    } else {
-                        if (lastActiveEditor == kitsStateEditor) {
-                            copy = SyncchartsFactory.eINSTANCE.createState();
+                    @SuppressWarnings("unchecked")
+                    public synchronized Region exec(XtextResource resource) throws Exception {
+
+                        EObject copy = null;
+                        Region leftElement = null;
+
+                        if (!resource.getContents().isEmpty()) {
+                            copy = EcoreUtil.copy(resource.getContents().get(0));
+                            new KitsSynchronizeLinker().consultSrcAndCopy(
+                                    resource.getContents().get(0), copy).linkTransitionsInElement(
+                                    copy);
                         } else {
-                            copy = SyncchartsFactory.eINSTANCE.createTransition();
+                            if (lastActiveEditor == kitsEditor) {
+                                copy = SyncchartsFactory.eINSTANCE.createRegion();
+                            } else {
+                                if (lastActiveEditor == kitsStateEditor) {
+                                    copy = SyncchartsFactory.eINSTANCE.createState();
+                                } else {
+                                    copy = SyncchartsFactory.eINSTANCE.createTransition();
+                                }
+                            }
                         }
-                    }
-                }
-                
-                if (container == null) {              
-                    dummyResource.getContents().clear();
-                    dummyResource.getContents().add(copy);
-                    leftElement = (Region) copy;
-                    
-                } else {
-                    
-                    ((EList<EObject>) container.eGet(feature)).add(index, copy);
-                    
-                    if (SyncchartsPackage.eINSTANCE.getState_OutgoingTransitions().equals(feature)) {
-                        ((Transition) copy).setTargetState(target);
-                    }
-                    leftElement = rootRegionCopy;
-                }
-                
-                if (SyncchartsPackage.eINSTANCE.getState().isInstance(copy)) {
-                    for (Transition t : incomingTransitions) {
-                        if (t.eContainer() != serializedState) {
-                            t.setTargetState((State) copy);
-                        }
-                    }
-                }
-                
-                return leftElement;
-            }
 
-        });
+                        if (container == null) {
+                            dummyResource.getContents().clear();
+                            dummyResource.getContents().add(copy);
+                            leftElement = (Region) copy;
+
+                        } else {
+
+                            ((EList<EObject>) container.eGet(feature)).add(index, copy);
+
+                            if (SyncchartsPackage.eINSTANCE.getState_OutgoingTransitions().equals(
+                                    feature)) {
+                                ((Transition) copy).setTargetState(target);
+                            }
+                            leftElement = rootRegionCopy;
+                        }
+
+                        if (SyncchartsPackage.eINSTANCE.getState().isInstance(copy)) {
+                            for (Transition t : incomingTransitions) {
+                                t.setTargetState((State) copy);
+                            }
+                        }
+
+                        return leftElement;
+                    }
+
+                });
 
         MatchModel matchModel = null;
 
@@ -195,7 +200,6 @@ public class SyncChartSynchronizerJob extends Job implements ISelectionListener 
 
         return Status.OK_STATUS;
     }
-    
 
     public void selectionChanged(IWorkbenchPart part, ISelection selection) {
 
@@ -220,8 +224,6 @@ public class SyncChartSynchronizerJob extends Job implements ISelectionListener 
             return;
         }
 
-        // ascend to the innermost region
-        // may be the root region
         while (model != null) {
             if (SyncchartsPackage.eINSTANCE.getRegion().isInstance(model)) {
                 serializeRegion((Region) model);
@@ -239,7 +241,6 @@ public class SyncChartSynchronizerJob extends Job implements ISelectionListener 
         }
 
     }
-    
 
     private void serializeRegion(final Region region) {
 
@@ -273,7 +274,7 @@ public class SyncChartSynchronizerJob extends Job implements ISelectionListener 
                 }
 
             }, kitsEditor.getDocument());
-            
+
             kitsEditor.bringOnTop();
             lastActiveEditor = kitsEditor;
 
@@ -311,12 +312,18 @@ public class SyncChartSynchronizerJob extends Job implements ISelectionListener 
                     if (container != null) {
                         index = ((EList<EObject>) container.eGet(feature)).indexOf(copy);
                     }
-                    
-                    // keep the state delivered to xtext in mind as we will have to redirect
-                    // the incoming transitions to the new state created by xtext
-                    // (in the above run() method)
-                    serializedState = copy;
-                    incomingTransitions = new ArrayList<Transition>(copy.getIncomingTransitions());
+
+                    // keep the incoming transtions of the state delivered to xtext
+                    // in mind as we will have to redirect them to the new state
+                    // created by xtext (in the above run() method)
+                    // self loops have to be excluded
+
+                    incomingTransitions = new ArrayList<Transition>();
+                    for (Transition t : copy.getIncomingTransitions()) {
+                        if (t.getSourceState() != copy) {
+                            incomingTransitions.add(t);
+                        }
+                    }
 
                     // finally remove the xtext editor's model and give it the new one
                     // (this will remove 'copy' from 'container')
@@ -325,7 +332,7 @@ public class SyncChartSynchronizerJob extends Job implements ISelectionListener 
                 }
 
             }, kitsStateEditor.getDocument());
-            
+
             kitsStateEditor.bringOnTop();
             lastActiveEditor = kitsStateEditor;
 
@@ -348,9 +355,8 @@ public class SyncChartSynchronizerJob extends Job implements ISelectionListener 
                 @Override
                 public void process(XtextResource state) throws Exception {
                     Transition copy = createCopy(transition);
-                    
                     target = copy.getTargetState();
-                    
+
                     // keep the container of the model part of interest in mind
                     // we need it later on for proper reconstruction of the whole
                     // copy to compare it with the original one (in diagram editor)
@@ -373,7 +379,7 @@ public class SyncChartSynchronizerJob extends Job implements ISelectionListener 
                 }
 
             }, actionsEditor.getDocument());
-            
+
             actionsEditor.bringOnTop();
             lastActiveEditor = actionsEditor;
 
@@ -386,11 +392,10 @@ public class SyncChartSynchronizerJob extends Job implements ISelectionListener 
                     "Serialization of textual view failed", e));
         }
     }
-    
-    
+
     private <T extends EObject> T createCopy(T element) {
         Region rootRegion = (Region) EcoreUtil.getRootContainer(element);
-        
+
         // create a copy of the complete model of the diagram editor
         rootRegionCopy = EcoreUtil.copy(rootRegion);
 
@@ -409,11 +414,4 @@ public class SyncChartSynchronizerJob extends Job implements ISelectionListener 
         }
 
     }
-    
-    public void setFeature(EReference theFeature) {
-        this.feature = theFeature;
-    }
-    
-    
-
 }
