@@ -17,14 +17,10 @@ import java.awt.image.BufferedImage;
 
 import org.eclipse.draw2d.LineBorder;
 import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EAttribute;
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramEditor;
 import org.eclipse.gmf.runtime.gef.ui.figures.NodeFigure;
 import org.eclipse.gmf.runtime.gef.ui.figures.WrapperNodeFigure;
-import org.eclipse.gmf.runtime.notation.Connector;
-import org.eclipse.gmf.runtime.notation.Node;
 import org.eclipse.gmf.runtime.notation.View;
 import org.eclipse.swt.graphics.ImageData;
 import org.eclipse.swt.widgets.Display;
@@ -32,7 +28,6 @@ import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.PlatformUI;
 
 import ptolemy.plot.Plot;
-import de.cau.cs.kieler.core.model.util.ModelingUtil;
 import de.cau.cs.kieler.core.ui.util.CoreUiUtil;
 import de.cau.cs.kieler.kvid.KvidUtil;
 import de.cau.cs.kieler.kvid.data.DataObject;
@@ -75,7 +70,6 @@ public class ScopeEditPart extends AbstractDataDisplayEditPart {
      * 
      * @param view The view connected to this edit part
      */
-    @SuppressWarnings({ "rawtypes", "unchecked" })
     public ScopeEditPart(final View view) {
         super(view);
         
@@ -88,21 +82,7 @@ public class ScopeEditPart extends AbstractDataDisplayEditPart {
         plot.setYLabel("Value");
         plot.setSize(PLOT_WIDTH, PLOT_HEIGHT);
         
-        //Check the connected object and try to use it as a data source
-        EList list = view.getSourceEdges();
-        list.addAll(view.getTargetEdges());
-        if (list.size() == 1) {
-            Connector con = (Connector) list.get(0);
-            Node connected;
-            if (con.getSource() != view) {
-                connected = (Node) con.getSource();
-            } else {
-                connected = (Node) con.getTarget();
-            }
-            EObject model = connected.getElement();
-            referredObjectURI = new KvidUri(KvidUtil.fragmentUri2PtolemyUri(
-                    ModelingUtil.getFragmentUri(model), model.eResource()));
-        }
+        referredObjectURI = getConnectedElementsUri();
     }
 
     /* (non-Javadoc)
@@ -151,7 +131,6 @@ public class ScopeEditPart extends AbstractDataDisplayEditPart {
     /**
      * {@inheritDoc}
      */
-    @SuppressWarnings({ "rawtypes", "unchecked" })
     public void triggerDataChanged() {
         
         //Check if information is relevant for this edit part
@@ -168,23 +147,7 @@ public class ScopeEditPart extends AbstractDataDisplayEditPart {
         if (referredObjectURI == null
                 || DataDistributor.getInstance().getDataObjectByURI(
                         referredObjectURI) == null) {
-            //Check the connected object and try to use it as a data source
-            View view = this.getNotationView();
-            EList list = view.getSourceEdges();
-            list.addAll(view.getTargetEdges());
-            if (list.size() == 1) {
-                Connector con = (Connector) list.get(0);
-                Node connected;
-                if (con.getSource() != view) {
-                    connected = (Node) con.getSource();
-                } else {
-                    connected = (Node) con.getTarget();
-                }
-                EObject model = connected.getElement();
-                String ptolemyUri = KvidUtil.fragmentUri2PtolemyUri(
-                        ModelingUtil.getFragmentUri(model), model.eResource());
-                referredObjectURI = new KvidUri(ptolemyUri);
-            }
+            referredObjectURI = getConnectedElementsUri();
             try {
                 DataDistributor.getInstance().getDataObjectByURI(referredObjectURI).setSaveHistory(true);
             } catch (NullPointerException nex) {
