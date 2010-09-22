@@ -26,6 +26,9 @@ import de.cau.cs.kieler.kvid.visual.complex.AbstractDisplayFactory;
  */
 public class DisplayFactory extends AbstractDisplayFactory {
     
+    /** Constant for getting scope clearing moment by name. */
+    public static final String CLEAR_SCOPES = "Clear scopes when";
+    
     /**
      * Constructor which will be called automatically.
      * Adds properties for the scope elements to the configuration.

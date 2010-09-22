@@ -121,7 +121,7 @@ public final class GmfDrawer implements IDrawer, IDataListener {
 
         // animating phase
         if (RuntimeConfiguration.getInstance()
-                .currentValueOfProperty("Animation enabled").equals("true")) {
+                .currentValueOfProperty(RuntimeConfiguration.ANIMATION_STATUS).equals("true")) {
             final HashMap<IKvidFigure, List<Point>> animatables = 
                 new HashMap<IKvidFigure, List<Point>>();
             for (final KvidUri key : dataSet.keySet()) {

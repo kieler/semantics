@@ -52,6 +52,7 @@ import de.cau.cs.kieler.kiml.klayoutdata.KShapeLayout;
 import de.cau.cs.kieler.kiml.options.LayoutOptions;
 import de.cau.cs.kieler.kiml.ui.layout.DiagramLayoutManager;
 import de.cau.cs.kieler.kiml.ui.layout.EclipseLayoutServices;
+import de.cau.cs.kieler.kiml.ui.util.KimlUiUtil;
 import de.cau.cs.kieler.kvid.data.KvidUri;
 import de.cau.cs.kieler.kvid.datadistributor.RuntimeConfiguration;
 
@@ -239,74 +240,6 @@ public final class KvidUtil {
     }
     
     /**
-     * Will return the absolute position on the canvas of an KNode from a KGraph.
-     * 
-     * @param node The node to find the absolute position for
-     * @return The absolute position on the canvas of the KNode
-     * 
-     */
-    public static Point getAbsolutePosition(final KNode node) {
-        KShapeLayout nodeLayout = node.getData(KShapeLayout.class);
-        float xPos = nodeLayout.getXpos();
-        float yPos = nodeLayout.getYpos();
-        KNode iterNode = node;
-        while (iterNode.getParent() != null) {
-            iterNode = iterNode.getParent();
-            KShapeLayout iterLayout = iterNode.getData(KShapeLayout.class);
-            xPos += iterLayout.getXpos();
-            yPos += iterLayout.getYpos();
-            KInsets iterInsets = iterLayout.getProperty(LayoutOptions.INSETS);
-            xPos += iterInsets.getLeft();
-            yPos += iterInsets.getTop();
-        }
-        return new Point(xPos, yPos);
-    }
-    
-    /**
-     * Will return the absolute position on the canvas of an KPort from a KGraph.
-     * 
-     * @param port The port to find the absolute position for
-     * @return The absolute position on the canvas of the KPort
-     * 
-     */
-    public static Point getAbsolutePosition(final KPort port) {
-        Point position = getAbsolutePosition(port.getNode());
-        KShapeLayout portLayout = port.getData(KShapeLayout.class);
-        position.translate((int) portLayout.getXpos(), (int) portLayout.getYpos());
-        return position;
-    }
-    
-    /**
-     * Gives the absolute positions of all bend points on the given edge.
-     * 
-     * @param edge The edge to get the bend points from
-     * @return A list of points, being the absolute positions of the bend points
-     * 
-     */
-    public static List<Point> getBendPointsAbsolutePositions(final KEdge edge) {
-        List<Point> result = new LinkedList<Point>();
-        KShapeLayout parentLayout = edge.getSource().getParent().getData(KShapeLayout.class);
-        Point parentPosition = getAbsolutePosition(edge.getSource().getParent());
-        KInsets insets = parentLayout.getProperty(LayoutOptions.INSETS);
-        parentPosition.translate((int) insets.getLeft(), (int) insets.getTop());
-        Point pathStep = new Point(parentPosition);
-        KEdgeLayout edgeLayout = edge.getData(KEdgeLayout.class);
-        pathStep.translate((int) edgeLayout.getSourcePoint().getX(),
-                (int) edgeLayout.getSourcePoint().getY());
-        result.add(pathStep);
-        for (KPoint bendPoint : edge.getData(KEdgeLayout.class).getBendPoints()) {
-            pathStep = new Point(parentPosition);
-            pathStep.translate((int) bendPoint.getX(), (int) bendPoint.getY());
-            result.add(pathStep);
-        }
-        pathStep = new Point(parentPosition);
-        pathStep.translate((int) edgeLayout.getTargetPoint().getX(),
-                (int) edgeLayout.getTargetPoint().getY());
-        result.add(pathStep);
-        return result;
-    }
-    
-    /**
      * Compute animation paths and location for a port.
      * 
      * @param port The port to perform pathfinding for
@@ -318,7 +251,7 @@ public final class KvidUtil {
         for (KEdge edge : port.getEdges()) {
             if (edge.getSourcePort() != null && edge.getSourcePort().equals(port)) {
                 List<Point> path = new LinkedList<Point>();
-                path.addAll(getBendPointsAbsolutePositions(edge));
+                path.addAll(KimlUiUtil.getBendPointsAbsolutePositions(edge));
                 if (edge.getTargetPort() == null) {
                     KShapeLayout targetLayout = edge.getTarget().getData(KShapeLayout.class);
                     if (targetLayout.getProperty(LayoutOptions.HYPERNODE)) {
@@ -352,7 +285,7 @@ public final class KvidUtil {
         List<List<Point>> subresult = new LinkedList<List<Point>>();
         for (KEdge edge : node.getOutgoingEdges()) {
             List<Point> path = new LinkedList<Point>();
-            path.addAll(getBendPointsAbsolutePositions(edge));
+            path.addAll(KimlUiUtil.getBendPointsAbsolutePositions(edge));
             if (edge.getTargetPort() == null) {
                 KShapeLayout targetLayout = edge.getTarget().getData(
                         KShapeLayout.class);
@@ -438,7 +371,7 @@ public final class KvidUtil {
             for (KPort port : currentNode.getPorts()) {
                 String portName = "";
                 String portOption = RuntimeConfiguration.getInstance()
-                        .currentValueOfProperty("Default output port");
+                        .currentValueOfProperty(RuntimeConfiguration.DEFAULT_PORT);
                 if (elementUri.hasPort()) {
                     portName = elementUri.getPort();
                 } else if (portOption != "") {

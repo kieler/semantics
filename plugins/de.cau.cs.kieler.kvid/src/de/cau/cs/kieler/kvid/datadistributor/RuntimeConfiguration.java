@@ -36,6 +36,18 @@ public final class RuntimeConfiguration {
     /** List of {@link IPropertyListener}s who want to be notified about changes. */ 
     private List<IPropertyListener> listeners = new LinkedList<IPropertyListener>();
     
+    /** Constant for getting animation status by name. */
+    public static final String ANIMATION_STATUS = "Animation enabled";
+    
+    /** Constant for getting animation behavior by name. */
+    public static final String ANIMATION_BEHAVIOR = "Behavior after Animation";
+    
+    /** Constant for getting animation status by name. */
+    public static final String DEBUG_MODE = "Debug drawing activated";
+    
+    /** Constant for getting animation status by name. */
+    public static final String DEFAULT_PORT = "Default output port";
+    
     /**
      * Constrcutor which must not be called by anyone. 
      * Creates a few {@link Property}s which control basic functionality of KViD.

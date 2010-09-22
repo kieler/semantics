@@ -99,7 +99,7 @@ public final class GmfAnimator {
         }
         AnimatingCommand anima = new AnimatingCommand();
         if (RuntimeConfiguration.getInstance()
-                .currentValueOfProperty("Debug drawing activated").equals("true")) {
+                .currentValueOfProperty(RuntimeConfiguration.DEBUG_MODE).equals("true")) {
             anima.setDebug(true);
         } 
         final CompoundCommand cc = new CompoundCommand();

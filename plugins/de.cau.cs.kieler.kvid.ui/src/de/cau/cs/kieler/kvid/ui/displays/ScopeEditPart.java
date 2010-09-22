@@ -277,7 +277,7 @@ public class ScopeEditPart extends AbstractDataDisplayEditPart {
             e.printStackTrace();
         }
         if (RuntimeConfiguration.getInstance()
-                .currentValueOfProperty("Clear scopes when")
+                .currentValueOfProperty(DisplayFactory.CLEAR_SCOPES)
                 .equals("visualization finishes")) {
             refreshPlot();
         }
