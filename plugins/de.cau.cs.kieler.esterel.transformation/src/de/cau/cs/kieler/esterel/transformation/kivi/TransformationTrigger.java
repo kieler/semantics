@@ -25,10 +25,10 @@ import de.cau.cs.kieler.core.kivi.AbstractTriggerState;
  */
 public class TransformationTrigger extends AbstractTrigger {
 
-    private static TransformationTrigger instance = new TransformationTrigger();
+    private static TransformationTrigger instance;
 
-    private TransformationTrigger() {
-        setActive(true);
+    public TransformationTrigger() {
+        instance = this;
     }
 
     public static TransformationTrigger getInstance() {
