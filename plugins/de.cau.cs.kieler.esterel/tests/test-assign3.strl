@@ -1,0 +1,33 @@
+module test_assign2:
+output A : boolean;
+output B : boolean;
+output C : boolean;
+function mynot(boolean) : boolean;
+
+  loop
+    pause;
+    emit C(true);
+    pause;
+    emit C(true);
+    pause;
+    emit C(false);
+    pause
+  end loop
+||
+  var c : boolean in
+    loop
+      c := mynot(?C);
+      emit A(c);
+      pause
+    end loop
+  end var  
+||
+  var value := true : boolean in
+    loop
+      await A;
+      value := ?A;
+      emit B(value);
+    end loop
+  end var
+
+end module

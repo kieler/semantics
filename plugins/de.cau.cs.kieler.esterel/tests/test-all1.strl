@@ -1,0 +1,466 @@
+module Test1:
+
+nothing
+
+end module
+
+module Test2:
+
+pause
+
+end module
+
+module Test3:
+type t1;
+type t2;
+type t3;
+type t4;
+constant c1 : t1;
+constant c2 : boolean;
+constant c3 = c1 : t1;
+constant c4 = 1 : integer;
+constant c5 = - 5 : integer;
+constant c6 = true : boolean;
+constant c7 = false : boolean;
+constant c8 = "A string constant with ""double quotes""" : string;
+constant c9 : t2;
+constant cd1 : integer;
+constant cd2 : integer;
+function f1() : t1;
+function f2(t1, boolean, integer) : boolean;
+function f3() : integer;
+function f4(t3, t3) : t4;
+function f5(t1, t1) : t1;
+procedure p1()();
+procedure p2(t1)();
+procedure p3(integer, boolean, t2)();
+procedure p4(t1, t2)(t2, t2);
+procedure p5(integer, boolean)(integer, boolean, t1);
+task ta1()();
+task ta2(integer)();
+task ta3(integer, boolean, t2)();
+task ta4(t1, t2)(t2, t2);
+task ta5(integer, boolean)(boolean, integer, integer);
+input s1;
+input s2 : boolean;
+input s3 : combine integer with +;
+input s4 : combine integer with *;
+input s5 : combine boolean with and;
+input s6 : combine boolean with or;
+input s7 : combine t1 with f5;
+input s8 := 3 : integer;
+input s9 := 5 : combine integer with +;
+output s10;
+output s11;
+output s12 : boolean;
+output s13 : integer;
+output s14 : t1;
+inputoutput s15;
+inputoutput s16 : integer;
+inputoutput s17 : combine integer with *;
+return s18;
+return s19 : combine t1 with f5;
+return s20;
+return s21;
+return s22;
+return s23;
+input sd1 : integer;
+input sd2 : boolean;
+input sd3 : combine t1 with f5;
+input sd4 : combine boolean with and;
+sensor se1 : boolean;
+sensor se2 : integer;
+sensor se3 : t1;
+sensor sed1 : boolean;
+sensor sed2 : t1;
+relation s1 # s2;
+relation s1 # s2 # s3;
+relation s3 => s4;
+relation s2 # s4;
+
+nothing;
+pause;
+emit s10;
+emit s12(true or false);
+sustain s11;
+sustain s13(3 + 4 + 5);
+var v1 : integer in
+  var v2 : integer,
+      v3 : boolean,
+      v4 : string,
+      v5 : t1,
+      v6 : integer,
+      v7 : integer,
+      v8 : t2,
+      v9 : float,
+      v91 : double in
+    v1 := c4;
+    v3 := true;
+    v3 := false;
+    v4 := "string constant";
+    v1 := 5;
+    v1 := - 10;
+    v9 := 1.f;
+    v91 := 1.;
+    v9 := 1235.f;
+    v9 := 1235.123f;
+    v9 := 1235.123e0f;
+    v9 := 1235.123E0f;
+    v9 := 1235.123E-0f;
+    v9 := 1235.123E+10f;
+    v91 := 0.5;
+    v91 := 1235.6432e+12;
+    v3 := ?s2;
+    trap tr1 : integer in
+      exit tr1(5)
+    handle tr1 do
+      v2 := ??tr1
+    end trap;
+    v2 := - v2;
+    v3 := not v1 + - v2 * ?se2 - v6 / v7 mod 5 < 3 and true or false;
+    v3 := 5 = 3 or 5 <> 3 or 5 < 3 or 5 <= 3 or 5 > 3 or 5 >= 3;
+    v1 := f3();
+    v5 := f5(v5, v5);
+    call p1()();
+    call p2(v5)();
+    call p3(v1, v3, v8)();
+    call p5(v1, v3)(5 + 3, true or false, f1());
+    present s1 end present;
+    present s2 end present;
+    present s1 then
+      pause
+    end present;
+    present s2 else
+      pause
+    end present;
+    present s1 then
+      pause
+    end present;
+    present [s1 and s2 or s3 and s4] else
+      pause
+    end present;
+    present [s1 and (s2 or s3)] end present;
+    present [s1 and (s2 or s3)] end present;
+    present 
+      case s1
+      case s2 do
+        nothing
+      case [s3 and s4] do
+        pause
+      case [s1 and (s2 or s3)] do
+        halt
+    end present;
+    if false end if;
+    if true end if;
+    if 3 < 5 then
+      nothing
+    end if;
+    if 3 > 5 else
+      pause
+    end if;
+    if 3 <> 5 elsif false then
+      nothing
+    end if;
+    if 3 <= 5 then
+      pause
+    elsif v3 then
+      nothing
+    elsif v3 and true then
+      pause
+    else
+      pause
+    end if;
+    loop
+      pause;
+      pause
+    end loop;
+    loop
+      pause
+    end loop;
+    loop
+      pause;
+      pause;
+      pause
+    each s1;
+    repeat 5 + 3 times
+      nothing
+    end repeat;
+    repeat 2 times
+      nothing
+    end repeat;
+    positive repeat 3 times
+      pause
+    end repeat;
+    abort
+      pause;
+      pause
+    when s1;
+    weak abort
+      pause
+    when s3;
+    abort
+      nothing
+    when s4 do
+      pause
+    end abort;
+    weak abort
+      nothing
+    when s4 do
+      pause
+    end weak abort;
+    weak abort
+      pause
+    when s5 do
+      nothing
+    end weak abort;
+    abort
+      nothing
+    when
+      case s1
+      case s2 do
+        nothing
+      case s3 do
+        pause
+    end abort;
+    weak abort
+      pause
+    when s2 do
+      pause
+    end weak abort;
+    weak abort
+      pause;
+      pause
+    when s4;
+    await s1;
+    await s2 do
+      nothing
+    end await;
+    await s3 do
+      nothing
+    end await;
+    await s2;
+    await 
+      case s1
+      case s2 do
+        nothing
+    end await;
+    await [s1 and s2 or s3];
+    await immediate s1;
+    await immediate [s1 and s2];
+    await 5 + 3 [s2 and s3];
+    await v1 s2;
+    await v1 + 5 [s2 or s3];
+    every v1 s2 do
+      nothing
+    end every;
+    every [s3 or s4] do
+      nothing
+    end every;
+    suspend
+      pause;
+      pause
+    when 5 s1;
+    trap tr1 in
+      nothing
+    end trap;
+    trap tr2 in
+      exit tr2
+    handle tr2 do
+      nothing
+    end trap;
+    trap tr2,
+         tr3 : integer,
+         tr4 : boolean,
+         tr5 := 3 + 5 : integer,
+         tr6 : integer,
+         tr7 : t1,
+         tr8 := 3 + 2 : integer,
+         tr9,
+         tr10,
+         tr11 in
+      exit tr2;
+      exit tr3(5 + 3)
+    handle tr2 do
+      nothing
+    handle not tr3 do
+      pause
+    handle tr4 and tr5 do
+      nothing
+    handle tr6 or tr7 and tr8 do
+      pause
+    handle not tr9 and tr10 and tr11 do
+      nothing
+    end trap;
+    exec
+      case ta1()() return s18
+    end exec;
+    var v10 : integer,
+        v11 : boolean in
+      exec
+        case ta5(v10, v11)(true or false, 3 + 4, 5 + 6) return s23 do
+          nothing
+      end exec;
+      exec
+        case ta2(v10)() return s20
+        case ta1()() return s21 do
+          pause
+      end exec;
+      exec
+        case ta1()() return s22
+      end exec
+    end var;
+    signal ls1 in
+      signal ls2,
+             ls3 : boolean,
+             ls4 := 3 + v1 : integer,
+             ls5 := v3 or true : combine boolean with or in
+        nothing
+      end signal
+    end signal;
+    signal lsd1 : integer,
+           lsd2 : combine boolean with or,
+           lds3 : t1 in
+      nothing
+    end signal;
+    var lv1 : integer in
+      var lv2 := 3 + lv1 : integer,
+          lv3 := 3 : integer in
+        nothing
+      end var
+    end var
+  end var
+end var;
+var vd1 : integer,
+    vd2 : integer in
+  nothing
+end var;
+halt
+
+end module
+
+module Module1:
+
+nothing
+
+end module
+
+module Module2:
+
+run Module1
+
+end module
+
+module Module2d:
+
+run Module1
+
+end module
+
+module Runnable:
+type t1;
+type t2;
+type t3;
+constant c1 : integer;
+constant c2 : boolean;
+constant c3 : double;
+function f1() : integer;
+function f2(integer, boolean) : boolean;
+function f3() : boolean;
+function pfand(boolean, boolean) : boolean;
+function pfor(boolean, boolean) : boolean;
+function pfnot(boolean) : boolean;
+function pfadd(integer, integer) : integer;
+function pfsub(integer, integer) : integer;
+function pfmult(integer, integer) : integer;
+function pfdiv(integer, integer) : integer;
+function pfmod(integer, integer) : integer;
+function pflt(integer, integer) : boolean;
+function pfgt(integer, integer) : boolean;
+function pfle(integer, integer) : boolean;
+function pfge(integer, integer) : boolean;
+function pfne(integer, integer) : boolean;
+function pfeq(integer, integer) : boolean;
+procedure p1()();
+procedure p2(integer, boolean)(integer);
+procedure p3(integer)(boolean);
+task ta1()();
+task ta2(boolean, integer)(boolean);
+task ta3()();
+input s1;
+input s2;
+output s3;
+output s4;
+inputoutput s5;
+inputoutput s6;
+
+nothing
+
+end module
+
+module Module3:
+type t1a;
+type t2a;
+type t3a;
+constant c1a : integer;
+constant c2a : boolean;
+constant c3a : integer;
+function f1a() : integer;
+function f2a(integer, boolean) : boolean;
+function f3a() : boolean;
+procedure p1a()();
+procedure p2a(integer, boolean)(integer);
+procedure p3a(integer)(boolean);
+task ta1a()();
+task ta2a(boolean, integer)(boolean);
+task ta3a()();
+input s1a;
+input s2a;
+output s3a;
+output s4a;
+inputoutput s5a;
+inputoutput s6a;
+
+run Runme / Runnable [
+  type t1a / t1,
+       t2a / t2,
+       t3a / t3;
+  constant c1a / c1,
+           true / c2,
+           3.14159 / c3;
+  function f1a / f1,
+           f2a / f2,
+           f3a / f3,
+           and / pfand,
+           or / pfor,
+           not / pfnot,
+           + / pfadd,
+           - / pfsub,
+           * / pfmult,
+           / / pfdiv,
+           mod / pfmod,
+           < / pflt,
+           > / pfgt,
+           <= / pfle,
+           >= / pfge,
+           <> / pfne,
+           = / pfeq;
+  procedure p1a / p1,
+            p2a / p2,
+            p3a / p3;
+  task ta1a / ta1,
+       ta2a / ta2,
+       ta3a / ta3;
+  signal s1a / s1,
+         s2a / s2,
+         s3a / s3,
+         s4a / s4,
+         s5a / s5,
+         s6a / s6 ]
+
+end module
+
+module Module4:
+
+nothing
+
+end module

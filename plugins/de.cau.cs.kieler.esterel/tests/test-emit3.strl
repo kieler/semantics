@@ -1,0 +1,6 @@
+module test_emit3:
+output A;
+
+emit A
+
+end module

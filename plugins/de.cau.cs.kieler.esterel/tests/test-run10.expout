@@ -1,0 +1,15 @@
+module Test_Run10:
+constant c1 = 5 : integer;
+constant c5 = 8 : integer;
+
+var v1 : integer in
+  var a : integer in
+    a := c1;
+    a := c1;
+    a := 42;
+    a := 5;
+    a := c5
+  end var
+end var
+
+end module

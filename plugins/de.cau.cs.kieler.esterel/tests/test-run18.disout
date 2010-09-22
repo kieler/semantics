@@ -1,0 +1,12 @@
+module test_run18:
+input A;
+output C;
+
+abort
+  loop
+    pause
+  end loop
+when A;
+emit C
+
+end module

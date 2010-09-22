@@ -1,0 +1,41 @@
+module VLIW:
+
+signal FUName1 := "Fu_1" : string,
+       Offset1 := 0 : integer,
+       FUName2 := "FU_2" : string,
+       Offset2 := 1 : integer in
+    emit FUName1("FU_1");
+    emit Offset1(0);
+    emit FUName2("FU_2");
+    emit Offset2(1)
+  ||
+    abort
+      loop
+        pause
+      end loop
+    when immediate FUName1;
+    abort
+      loop
+        pause
+      end loop
+    when immediate Offset1;
+    loop
+      pause
+    end loop
+  ||
+    abort
+      loop
+        pause
+      end loop
+    when immediate FUName2;
+    abort
+      loop
+        pause
+      end loop
+    when immediate Offset2;
+    loop
+      pause
+    end loop
+end signal
+
+end module

@@ -1,0 +1,42 @@
+module stest:
+input A;
+input B;
+output X;
+output Y;
+output Z;
+output W;
+
+loop
+    trap TT in
+      [
+          emit Z;
+          loop
+            trap T in
+              pause;
+              emit X
+            end trap
+          end loop
+        ||
+          loop
+            pause;
+            emit Y
+          end loop
+      ||
+        loop
+          pause;
+          present A then
+            exit TT
+          end present
+        end loop
+      ]
+    end trap;
+    emit W
+  ||
+    pause;
+    pause;
+    emit A;
+    pause;
+    emit B
+end loop
+
+end module

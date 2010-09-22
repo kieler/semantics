@@ -1,0 +1,38 @@
+% Example from Martin Richard's Esterel Lego website
+
+module lego1 :
+input TOUCH_1, TOUCH_3;
+output MOTOR_A_SPEED(integer), MOTOR_C_SPEED(integer), 
+       MOTOR_A_DIR(integer), MOTOR_C_DIR(integer),
+       CPUTS(string);
+relation TOUCH_1 # TOUCH_3;
+
+constant MOTOR_FWD, MOTOR_REV, MAX_SPEED : integer;
+
+var t : integer in
+   emit MOTOR_A_SPEED(MAX_SPEED/2);
+   emit MOTOR_C_SPEED(MAX_SPEED/2);
+   loop
+      emit MOTOR_A_DIR(MOTOR_FWD);
+      emit MOTOR_C_DIR(MOTOR_FWD);
+      emit CPUTS("fwd");
+      await [TOUCH_1 or TOUCH_3];
+      present TOUCH_1 then
+         t:=1;
+      else
+         t:=3;
+      end present;
+      emit MOTOR_A_DIR(MOTOR_REV);
+      emit MOTOR_C_DIR(MOTOR_REV);
+      emit CPUTS("rev");
+      await 100 tick;        % 1 tick = 1 ms
+      if t=1 then
+         emit MOTOR_A_DIR(MOTOR_FWD);
+         emit CPUTS("right");
+      else
+         emit MOTOR_C_DIR(MOTOR_FWD);
+         emit CPUTS("left");
+      end if;
+      await 100 tick;  % 1 tick = 1 ms
+end loop
+end var.

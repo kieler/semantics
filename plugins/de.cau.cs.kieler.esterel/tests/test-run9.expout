@@ -1,0 +1,8 @@
+module Test_Run9:
+constant cc : integer;
+
+var cc : integer in
+  nothing
+end var
+
+end module

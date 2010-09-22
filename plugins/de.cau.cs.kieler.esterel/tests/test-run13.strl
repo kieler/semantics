@@ -1,0 +1,13 @@
+module Test_Run13:
+
+run Foo
+
+end module
+
+module Foo:
+
+signal A : integer in
+  emit A(10)
+end signal
+
+end module

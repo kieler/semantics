@@ -1,0 +1,12 @@
+module test_emit1:
+type a;
+type b;
+input a;
+input b : integer;
+output c : integer;
+
+emit a;
+emit b(10);
+emit c(30)
+
+end module

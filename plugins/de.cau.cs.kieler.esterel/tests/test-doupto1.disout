@@ -1,0 +1,11 @@
+module test_doupto1:
+input A;
+
+abort
+  ;
+  loop
+    pause
+  end loop
+when A
+
+end module

@@ -1,0 +1,37 @@
+module Oven:
+        input START, STOP, DOOROPEN,  MINUTE;
+        output HEAT, LIGHT, BEEP;
+
+        signal MINUTE2 in
+        loop
+            trap T in
+               [await immediate START; 
+                 [ abort
+                        abort      
+                                   sustain HEAT
+				|| sustain LIGHT
+				
+                       when immediate [(DOOROPEN or STOP)]; 
+                 when  MINUTE2 do
+                          emit BEEP
+		 end abort; exit T      
+                 ]
+	       ||
+		 loop 
+		     await MINUTE; 
+		     await MINUTE;     
+		     emit  MINUTE2   
+		 end loop
+		]
+            end;
+	    await tick
+        end loop
+
+        ||
+        every  immediate DOOROPEN do     
+                abort
+                        sustain LIGHT
+                when [not DOOROPEN]
+        end every
+        end signal
+end module

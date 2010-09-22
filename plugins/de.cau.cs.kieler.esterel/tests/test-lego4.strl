@@ -1,0 +1,40 @@
+% From Martin Richard's Esterel on Lego website
+
+% These programs were written by two students from the École Centrale de
+% Nantes. 
+
+% Follow a border with two light sensors
+
+module example3 : 
+input LIGHT_LOW_1,LIGHT_HIGH_1; 
+input LIGHT_LOW_2,LIGHT_HIGH_2; 
+
+output MOTOR_A_SPEED(integer),MOTOR_C_SPEED(integer),
+        MOTOR_A_DIR(integer),MOTOR_C_DIR(integer); 
+output SET_LIGHT_1_THRESHHOLD : integer;
+output SET_LIGHT_2_THRESHHOLD : integer;
+
+constant MOTOR_FWD, MOTOR_REV : integer; 
+constant TICKS_PER_SECOND = 1000 : integer; 
+
+emit SET_LIGHT_1_THRESHHOLD(80);
+emit SET_LIGHT_2_THRESHHOLD(80);
+[ 
+   loop 
+      emit MOTOR_A_DIR(MOTOR_FWD);
+      emit MOTOR_A_SPEED(100);
+      await LIGHT_LOW_1;
+      emit MOTOR_A_DIR(MOTOR_REV);
+      emit MOTOR_A_SPEED(20);
+      await LIGHT_HIGH_1;
+   end loop
+||
+   loop 
+      emit MOTOR_C_DIR(MOTOR_FWD);
+      emit MOTOR_C_SPEED(100);
+      await LIGHT_HIGH_2;
+      emit MOTOR_C_DIR(MOTOR_REV);
+      emit MOTOR_C_SPEED(20);
+      await LIGHT_LOW_2;
+   end loop
+]. 

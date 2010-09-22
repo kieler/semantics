@@ -1,0 +1,23 @@
+module test_trap10:
+output A;
+output B;
+output C;
+output D;
+
+trap T1,
+     T2 in
+  pause;
+  emit A;
+  exit T2
+  ||
+  pause;
+  exit T1
+handle T1 do
+   emit B
+handle T2 do
+   emit C
+handle T1 and T2 do
+   emit D
+end trap
+
+end module

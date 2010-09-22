@@ -1,0 +1,39 @@
+module test_abort1:
+output A;
+output B;
+output C;
+input D;
+output E;
+output F;
+input G;
+output H;
+output I;
+input J;
+output K;
+output L;
+
+loop
+  abort
+    emit A;
+    pause;
+    emit B;
+    pause;
+    emit C
+  when
+    case immediate D do
+      emit E;
+      pause;
+      emit F
+    case G do
+      emit H;
+      pause;
+      emit I
+    case 5 J do
+      emit K;
+      pause;
+      emit L
+  end abort;
+  pause
+end loop
+
+end module

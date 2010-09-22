@@ -1,0 +1,27 @@
+module test_await2:
+output A;
+output B;
+
+signal C,
+       D,
+       E in
+  await C;
+  emit A;
+  await D;
+  emit B;
+  await E;
+  emit A
+  ||
+  pause;
+  emit C;
+  pause;
+  pause;
+  emit D;
+  pause;
+  pause;
+  pause;
+  emit E;
+  pause
+end signal
+
+end module

@@ -1,0 +1,42 @@
+module test_present1:
+input A;
+input B;
+input C;
+
+if (A) {
+  pause
+};
+if (B) else {
+  
+};
+if (A) {
+  pause
+} else {
+  if (B) else {
+    if (C) {
+      
+    }
+  }
+};
+if (A) {
+  if (B) {
+    pause
+  } else {
+    
+  };
+  if (C) else {
+    loop
+      pause
+    end loop
+  }
+} else {
+  if (A) else {
+    if (B) {
+      
+    } else {
+      if (C)
+    }
+  }
+}
+
+end module

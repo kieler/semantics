@@ -1,0 +1,71 @@
+module stest:
+inputoutput A;
+inputoutput B;
+output C;
+output D;
+output X;
+output Y;
+output Z;
+output W;
+output T;
+output E;
+
+loop
+  [
+    trap T in
+        suspend
+          loop
+            emit X;
+            pause
+          end loop
+        when immediate [not A]
+      ||
+        suspend
+          loop
+            emit Y;
+            pause
+          end loop
+        when immediate [not B]
+      ||
+        suspend
+          loop
+            emit Z;
+            pause
+          end loop
+        when immediate [not C]
+      ||
+        suspend
+          loop
+            emit A;
+            pause;
+            emit B;
+            pause;
+            emit C;
+            pause
+          end loop
+        when immediate D
+      ||
+        every 4 tick do
+          emit D;
+          emit W
+        end every
+      ||
+        loop
+          if (E) {
+            exit T
+          };
+          pause
+        end loop
+    end trap
+  ||
+    abort
+      loop
+        pause
+      end loop
+    when 50 tick;
+    emit E
+  ];
+  pause
+end loop
+
+end module

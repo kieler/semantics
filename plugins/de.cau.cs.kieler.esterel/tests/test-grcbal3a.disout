@@ -1,0 +1,35 @@
+module test_grcbal3:
+input A;
+output B;
+output C;
+output D;
+output E;
+
+loop
+  trap T in
+    [
+      if (A) {
+        emit B;
+        if (C) {
+          emit D
+        };
+        if (E) {
+          exit T
+        }
+      };
+      pause;
+      emit B
+    ||
+      if (B) {
+        emit C
+      }
+    ||
+      if (D) {
+        emit E
+      }
+    ]
+  end trap;
+  pause
+end loop
+
+end module

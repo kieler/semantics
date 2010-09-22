@@ -1,0 +1,90 @@
+module RSFlipFlop:
+function calc_or(boolean, boolean) : boolean;
+function calc_not(boolean) : boolean;
+procedure dump()(boolean, boolean);
+input SET : boolean;
+input RESET : boolean;
+output ITERATE;
+output ITERATE12;
+output Q : boolean;
+output NQ : boolean;
+
+signal O_OR1 := false : boolean,
+       O_OR2 := false : boolean,
+       O_NOT1 := false : boolean,
+       O_NOT2 := false : boolean,
+       O_PORT12 := false : boolean in
+    loop
+      await 
+        case SET
+        case O_NOT2
+      end await;
+      var rv : boolean in
+        rv := calc_or(?SET, ?O_NOT2);
+        emit O_OR1(rv)
+      end var
+    end loop
+  ||
+    loop
+      await 
+        case O_PORT12
+        case RESET
+      end await;
+      var rv : boolean in
+        rv := calc_or(?O_PORT12, ?RESET);
+        emit O_OR2(rv)
+      end var
+    end loop
+  ||
+    loop
+      await O_OR1;
+      var rv : boolean in
+        rv := calc_not(?O_OR1);
+        emit O_NOT1(rv)
+      end var
+    end loop
+  ||
+    loop
+      await O_OR2;
+      var rv : boolean in
+        rv := calc_not(?O_OR2);
+        emit O_NOT2(rv)
+      end var
+    end loop
+  ||
+    var old := false : boolean,
+        value := false : boolean in
+      emit O_PORT12(false);
+      await O_NOT1;
+      old := ?O_NOT1;
+      emit ITERATE12;
+      pause;
+      emit O_PORT12(old);
+      loop
+        await O_NOT1;
+        value := ?O_NOT1;
+        call dump()(old, value);
+        if value <> old then
+          emit ITERATE12;
+          pause;
+          emit O_PORT12(value);
+          old := value
+        end if
+      end loop
+    end var
+  ||
+    every O_NOT1 do
+      emit NQ(?O_NOT1)
+    end every
+  ||
+    every O_NOT2 do
+      emit Q(?O_NOT2)
+    end every
+  ||
+    loop
+      await ITERATE12;
+      emit ITERATE
+    end loop
+end signal
+
+end module

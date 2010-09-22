@@ -1,0 +1,21 @@
+module test_signal8:
+
+output A : boolean;
+output C;
+
+signal B : boolean in
+  pause;
+  emit B(true);
+  pause;
+  present B then emit C end
+end signal
+||
+signal B : boolean in
+  emit B(false)
+||
+  pause;
+  pause;
+  emit A(?B)
+end signal
+
+end module

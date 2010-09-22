@@ -1,0 +1,77 @@
+module test_weakabort2:
+output A;
+output B;
+output C;
+input D;
+output E;
+output F;
+input G;
+output H;
+output I;
+input J;
+output K;
+output L;
+output M;
+
+loop
+  trap weak_trap_3 in
+    trap weak_trap_2 in
+      trap weak_trap_1 in
+        trap weak_trap_0 in
+          [
+            emit A;
+            pause;
+            emit B;
+            pause;
+            emit C;
+            pause;
+            emit A;
+            emit B;
+            pause;
+            emit B;
+            emit C;
+            pause;
+            emit C;
+            emit A;
+            pause;
+            emit A;
+            emit B;
+            emit C;
+            pause;
+            pause;
+            exit weak_trap_0
+          ||
+            abort
+              loop
+                pause
+              end loop
+            when
+              case 3 D do
+                exit weak_trap_3
+              case 3 G do
+                exit weak_trap_2
+              case 3 J do
+                exit weak_trap_1
+            end abort
+          ]
+        end trap
+      handle weak_trap_1 do
+        emit K;
+        pause;
+        emit L
+      end trap
+    handle weak_trap_2 do
+      emit H;
+      pause;
+      emit I
+    end trap
+  handle weak_trap_3 do
+    emit E;
+    pause;
+    emit F
+  end trap;
+  emit M;
+  pause
+end loop
+
+end module

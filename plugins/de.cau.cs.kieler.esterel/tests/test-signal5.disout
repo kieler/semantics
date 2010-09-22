@@ -1,0 +1,37 @@
+module test_signal5:
+input A;
+input B : boolean;
+input C : integer;
+input D : string;
+input E : float;
+input F : double;
+output G;
+output H : boolean;
+output I : integer;
+output J : string;
+output K : float;
+output L : double;
+
+loop
+  if (A) {
+    emit G
+  };
+  if (B) {
+    emit H(?B)
+  };
+  if (C) {
+    emit I(?C)
+  };
+  if (D) {
+    emit J(?D)
+  };
+  if (E) {
+    emit K(?E)
+  };
+  if (F) {
+    emit L(?F)
+  };
+  pause
+end loop
+
+end module

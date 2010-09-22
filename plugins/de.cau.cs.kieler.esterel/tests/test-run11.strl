@@ -1,0 +1,27 @@
+module Test_Run11:
+function f1(integer, integer) : integer;
+
+var a : integer in
+  a := f1(a, a);
+  run Foo [
+    function f1 / f2 ]
+end var
+
+end module
+
+module Foo:
+type t1;
+function f1(integer, integer) : integer;
+function f2(integer, integer) : integer;
+function f3(integer, integer, integer) : t1;
+function f4(integer) : t1;
+
+var b : integer,
+    c : t1 in
+  b := f1(b, b);
+  b := f2(b, b);
+  c := f3(b, b, b);
+  c := f4(b)
+end var
+
+end module

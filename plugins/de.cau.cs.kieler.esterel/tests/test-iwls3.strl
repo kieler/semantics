@@ -1,0 +1,25 @@
+module test_iwls3:
+input A;
+output B;
+output C;
+output D;
+
+loop
+  present A then
+    emit B
+  else
+    emit C
+  end present;
+  present C then
+     present B else
+       emit D
+     end present
+  else
+     present B then
+       emit D
+     end present
+  end present;
+  pause
+end loop
+
+end module

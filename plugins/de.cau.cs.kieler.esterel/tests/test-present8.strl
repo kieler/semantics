@@ -1,0 +1,17 @@
+module test_present8:
+input A;
+input B;
+input C;
+output X;
+
+loop
+   present
+    case A
+    case B do
+      emit X
+    case C
+  end present;
+  pause
+end loop
+
+end module

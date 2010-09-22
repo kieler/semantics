@@ -1,0 +1,47 @@
+module test_dacexample:
+input S;
+input I;
+output O;
+
+signal R,
+       A in
+  every S do
+      abort
+        loop
+          pause
+        end loop
+      when I;
+      trap weak_trap_1 in
+        trap weak_trap_0 in
+          [
+            loop
+              emit R;
+              pause
+            end loop;
+            exit weak_trap_0
+          ||
+            abort
+              loop
+                pause
+              end loop
+            when immediate A do
+              exit weak_trap_1
+            end abort
+          ]
+        end trap
+      handle weak_trap_1 do
+        
+      end trap;
+      emit O
+    ||
+      loop
+        pause;
+        pause;
+        if (R) {
+          emit A
+        }
+      end loop
+  end every
+end signal
+
+end module

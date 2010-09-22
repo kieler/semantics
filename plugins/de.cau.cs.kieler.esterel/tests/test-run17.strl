@@ -1,0 +1,17 @@
+module test_run17:
+
+run foo;
+signal A,
+       B in
+  nothing
+end signal
+
+end module
+
+module foo:
+constant A : integer;
+constant B  = 0 : integer;
+
+nothing
+
+end module

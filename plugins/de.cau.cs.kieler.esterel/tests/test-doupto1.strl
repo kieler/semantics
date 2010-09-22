@@ -1,0 +1,8 @@
+module test_doupto1:
+input A;
+
+do
+ nothing
+upto A
+
+end module

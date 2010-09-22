@@ -1,0 +1,22 @@
+module test_suspend7:
+input A;
+input B;
+output C;
+output D;
+
+  suspend
+    loop
+      emit C;
+      pause
+    end loop
+  when immediate [not A]
+||
+  pause;
+  suspend
+    loop
+      emit D;
+      pause
+    end loop
+  when immediate [not B]
+
+end module

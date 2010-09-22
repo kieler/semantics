@@ -1,0 +1,18 @@
+module test_present5:
+input A;
+input B;
+input C;
+output D;
+output E;
+
+if (A) {
+  emit D
+} else {
+  if (B) else {
+    if (C) {
+      emit E
+    }
+  }
+}
+
+end module

@@ -1,0 +1,23 @@
+module test_await3:
+input A;
+input B;
+input C;
+output D;
+output E;
+output F;
+
+loop
+  await A;
+  emit D;
+  await B;
+  emit E;
+  await C;
+  emit F;
+  await immediate A;
+  emit D;
+  await 3 C;
+  emit E;
+  pause
+end loop
+
+end module

@@ -1,0 +1,41 @@
+module VLIW:
+
+signal FUName1 := "Fu_1" : string,
+       Offset1 := 0 : integer,
+       FUName2 := "FU_2" : string,
+       Offset2 := 1 : integer in
+    emit FUName1("FU_1");
+    emit Offset1(0);
+    emit FUName2("FU_2");
+    emit Offset2(1)
+  ||
+    run FU_SYSTEM [
+      signal FUName1 / FUName,
+             Offset1 / Offset ]
+  ||
+    run FU_SYSTEM [
+      signal FUName2 / FUName,
+             Offset2 / Offset ]
+end signal
+
+end module
+
+module FU_SYSTEM:
+input FUName : string;
+input Offset : integer;
+
+run FU
+
+end module
+
+module FU:
+input FUName : string;
+input Offset : integer;
+
+await immediate FUName;
+await immediate Offset;
+loop
+  pause
+end loop
+
+end module

@@ -1,0 +1,28 @@
+module test_if1:
+
+if (true) {
+  if (false) {
+    pause
+  } else {
+    if (true and false) {
+      loop
+        pause
+      end loop
+    } else {
+      
+    }
+  }
+} else {
+  if (true) {
+    pause
+  } else {
+    
+  }
+};
+if (true or false) {
+  pause
+} else {
+  
+}
+
+end module

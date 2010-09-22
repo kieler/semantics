@@ -1,0 +1,551 @@
+module STATION:
+constant POSITIVE : integer;
+constant NEGATIVE : integer;
+constant NB_TRAMES_STATION : integer;
+constant ADRESSES : integer;
+constant LONG_MIN : integer;
+constant DD : integer;
+constant DF : integer;
+constant IDLE : integer;
+constant RIEN : integer;
+constant ERR : integer;
+constant DIFFUSION : integer;
+constant LONG_MAX : integer;
+constant T1 : integer;
+constant T2 : integer;
+function QUELLE_TRAME(integer, integer, integer) : integer;
+function LONG_TRAME(integer) : integer;
+function DONNEE_TRAME(integer, integer) : integer;
+sensor ID : integer;
+input EE : integer;
+input ER : integer;
+output DEMANDE_EMISSION : integer;
+output CONFIRMATION_pos;
+output CONFIRMATION_neg;
+output INDICATION_RECEPTION;
+output SYNCHRONISATION;
+output SE : integer;
+output SR : integer;
+
+signal MAC_PRET : integer,
+       DEBUT_CYCLE,
+       STOPPE_RECEPTION,
+       TOP,
+       DD,
+       DF,
+       ERR,
+       ADRESSE,
+       CRC_OK,
+       PERTE_DF,
+       ARME_TEMPORISATION,
+       DESARME_TEMPORISATION,
+       TIMEOUT in
+    var X : integer,
+        CONFIRMATION : integer in
+      X := (?ID - 1) * NB_TRAMES_STATION + 1;
+      CONFIRMATION := POSITIVE;
+      loop
+        abort
+          loop
+            pause
+          end loop
+        when TOP do
+          X := QUELLE_TRAME(?ID, X, CONFIRMATION);
+          emit DEMANDE_EMISSION(X)
+        end abort;
+        abort
+          loop
+            pause
+          end loop
+        when
+          case CONFIRMATION_pos do
+            CONFIRMATION := POSITIVE
+          case CONFIRMATION_neg do
+            CONFIRMATION := NEGATIVE
+        end abort;
+        abort
+          loop
+            pause
+          end loop
+        when SYNCHRONISATION
+      end loop
+    end var
+  ||
+    signal AD_SOURCE,
+           AD_DEST,
+           ATTEND_DF,
+           DF_VALIDE,
+           ERR_RECEPTION in
+      loop
+        abort
+          loop
+            pause
+          end loop
+        when DEMANDE_EMISSION do
+          emit MAC_PRET(?DEMANDE_EMISSION)
+        end abort;
+        abort
+          loop
+            pause
+          end loop
+        when DEBUT_CYCLE;
+        trap CYCLE in
+          if (DD) else {
+            pause;
+            emit ARME_TEMPORISATION;
+            abort
+              abort
+                loop
+                  pause
+                end loop
+              when DD do
+                emit DESARME_TEMPORISATION
+              end abort
+            when TIMEOUT do
+              pause;
+              emit CONFIRMATION_neg;
+              abort
+                abort
+                  loop
+                    pause
+                  end loop
+                when DF do
+                  emit DESARME_TEMPORISATION
+                end abort
+              when TIMEOUT;
+              exit CYCLE
+            end abort
+          };
+          [
+            trap weak_trap_1 in
+              trap weak_trap_0 in
+                  abort
+                    loop
+                      pause
+                    end loop
+                  when ADRESSES TOP do
+                    emit AD_SOURCE
+                  end abort;
+                  abort
+                    loop
+                      pause
+                    end loop
+                  when TOP do
+                    emit AD_DEST
+                  end abort;
+                  abort
+                    loop
+                      pause
+                    end loop
+                  when LONG_MIN - ADRESSES - 1 TOP do
+                    emit ATTEND_DF
+                  end abort;
+                  exit weak_trap_0
+                ||
+                  abort
+                    loop
+                      pause
+                    end loop
+                  when ERR_RECEPTION do
+                    exit weak_trap_1
+                  end abort
+              end trap
+            handle weak_trap_1 do
+              
+            end trap
+          ||
+            trap weak_trap_3 in
+              trap weak_trap_2 in
+                  abort
+                    loop
+                      pause
+                    end loop
+                  when AD_SOURCE do
+                    if (ADRESSE) {
+                      emit CONFIRMATION_pos
+                    } else {
+                      pause;
+                      emit CONFIRMATION_neg
+                    }
+                  end abort;
+                  exit weak_trap_2
+                ||
+                  abort
+                    loop
+                      pause
+                    end loop
+                  when ERR_RECEPTION do
+                    exit weak_trap_3
+                  end abort
+              end trap
+            handle weak_trap_3 do
+              pause;
+              emit CONFIRMATION_neg
+            end trap
+          ||
+            trap weak_trap_5 in
+              trap weak_trap_4 in
+                [
+                  abort
+                    loop
+                      pause
+                    end loop
+                  when AD_DEST do
+                    if (ADRESSE) {
+                      abort
+                        loop
+                          pause
+                        end loop
+                      when DF do
+                        if (CRC_OK) {
+                          emit INDICATION_RECEPTION
+                        }
+                      end abort
+                    }
+                  end abort;
+                  exit weak_trap_4
+                ||
+                  abort
+                    loop
+                      pause
+                    end loop
+                  when ERR_RECEPTION do
+                    exit weak_trap_5
+                  end abort
+                ]
+              end trap
+            handle weak_trap_5 do
+              
+            end trap;
+            emit STOPPE_RECEPTION
+          ||
+            abort
+              loop
+                pause
+              end loop
+            when
+              case ATTEND_DF
+              case ERR_RECEPTION
+            end abort;
+            abort
+              abort
+                loop
+                  pause
+                end loop
+              when DF
+            when PERTE_DF do
+              emit ERR_RECEPTION
+            end abort;
+            exit CYCLE
+          ||
+            trap DETEC_ERR in
+                abort
+                  loop
+                    pause
+                  end loop
+                when ERR do
+                  emit ERR_RECEPTION
+                end abort
+              ||
+                abort
+                  loop
+                    pause
+                  end loop
+                when DD do
+                  emit ERR_RECEPTION
+                end abort
+              ||
+                abort
+                  loop
+                    pause
+                  end loop
+                when
+                  case DF do
+                    emit ERR_RECEPTION
+                  case ATTEND_DF
+                end abort
+              ||
+                abort
+                  loop
+                    pause
+                  end loop
+                when ERR_RECEPTION do
+                  exit DETEC_ERR
+                end abort
+            end trap
+          ]
+        end trap;
+        pause;
+        emit SYNCHRONISATION
+      end loop
+    end signal
+  ||
+    var ID_TRAME : integer,
+        LONG : integer,
+        PRIORITE_H : integer,
+        PRIORITE_L : integer,
+        DONNEE : integer,
+        CRC : integer,
+        INDEX : integer in
+      signal ST,
+             EM_ACTIF,
+             EM_INACTIF in
+          loop
+            abort
+              loop
+                pause
+              end loop
+            when MAC_PRET do
+              emit EM_ACTIF;
+              ID_TRAME := ?MAC_PRET;
+              INDEX := 0;
+              LONG := LONG_TRAME(ID_TRAME);
+              PRIORITE_H := DONNEE_TRAME(ID_TRAME, 0);
+              PRIORITE_L := DONNEE_TRAME(ID_TRAME, 1);
+              CRC := 0
+            end abort;
+            trap ATT_DD in
+              every EE do
+                if (?EE = DD) {
+                  exit ATT_DD
+                } else {
+                  if (?EE = RIEN) {
+                    emit ST;
+                    exit ATT_DD
+                  } else {
+                    emit SE(?EE)
+                  }
+                }
+              end every
+            end trap;
+            emit SE(DD);
+            emit DEBUT_CYCLE;
+            trap EMISSION in
+              [
+                if (ST) else {
+                  abort
+                    loop
+                      pause
+                    end loop
+                  when EE do
+                    if (?EE > PRIORITE_H) {
+                      emit SE(?EE);
+                      exit EMISSION
+                    } else {
+                      emit SE(PRIORITE_H);
+                      CRC := CRC + PRIORITE_H;
+                      INDEX := INDEX + 1;
+                      LONG := LONG - 1;
+                      if (?EE = PRIORITE_H) {
+                        abort
+                          loop
+                            pause
+                          end loop
+                        when EE do
+                          if (?EE >= PRIORITE_L) {
+                            emit SE(?EE);
+                            exit EMISSION
+                          } else {
+                            emit SE(PRIORITE_L);
+                            CRC := CRC + PRIORITE_L;
+                            INDEX := INDEX + 1;
+                            LONG := LONG - 1
+                          }
+                        end abort
+                      }
+                    }
+                  end abort
+                };
+                repeat LONG times
+                  DONNEE := DONNEE_TRAME(ID_TRAME, INDEX);
+                  abort
+                    loop
+                      pause
+                    end loop
+                  when EE do
+                    emit SE(DONNEE);
+                    INDEX := INDEX + 1;
+                    CRC := CRC + DONNEE
+                  end abort
+                end repeat;
+                repeat 2 times
+                  abort
+                    loop
+                      pause
+                    end loop
+                  when EE do
+                    emit SE(CRC)
+                  end abort
+                end repeat;
+                abort
+                  loop
+                    pause
+                  end loop
+                when EE do
+                  emit SE(DF)
+                end abort;
+                exit EMISSION
+              ||
+                abort
+                  loop
+                    pause
+                  end loop
+                when CONFIRMATION_neg do
+                  pause;
+                  exit EMISSION
+                end abort
+              ||
+                abort
+                  loop
+                    pause
+                  end loop
+                when SYNCHRONISATION do
+                  exit EMISSION
+                end abort
+              ]
+            end trap;
+            emit EM_INACTIF
+          end loop
+        ||
+          loop
+            abort
+              trap INACTIVITE in
+                [
+                  abort
+                    loop
+                      pause
+                    end loop
+                  when EM_ACTIF do
+                    exit INACTIVITE
+                  end abort
+                ||
+                  every EE do
+                    if (?EE = RIEN) {
+                      emit SE(IDLE)
+                    } else {
+                      emit SE(?EE)
+                    }
+                  end every
+                ]
+              end trap;
+              loop
+                pause
+              end loop
+            when EM_INACTIF
+          end loop
+      end signal
+    end var
+  ||
+    var CRC : integer,
+        DERNIER : integer in
+        every ER do
+          emit TOP;
+          if (?ER = RIEN) {
+            emit SR(?SE)
+          } else {
+            emit SR(?ER)
+          };
+          if (?SR = DF) {
+            emit DF
+          } else {
+            if (?SR = DD) {
+              emit DD
+            } else {
+              if (?SR = ERR) {
+                emit ERR
+              } else {
+                if (?SR = ?ID or ?SR = DIFFUSION) {
+                  emit ADRESSE
+                }
+              }
+            }
+          }
+        end every
+      ||
+        loop
+          abort
+            loop
+              pause
+            end loop
+          when DEBUT_CYCLE;
+          trap CYCLE in
+            [
+              abort
+                loop
+                  pause
+                end loop
+              when immediate DD;
+              [
+                trap REC_TRAME in
+                    CRC := 0;
+                    DERNIER := 1;
+                    every TOP do
+                      if (CRC = 3 * DERNIER) {
+                        emit CRC_OK
+                      };
+                      CRC := CRC + ?SR;
+                      DERNIER := ?SR
+                    end every
+                  ||
+                    abort
+                      loop
+                        pause
+                      end loop
+                    when STOPPE_RECEPTION do
+                      exit REC_TRAME
+                    end abort
+                end trap
+              ||
+                abort
+                  loop
+                    pause
+                  end loop
+                when LONG_MAX + 2 TOP do
+                  emit PERTE_DF
+                end abort
+              ]
+            ||
+              abort
+                loop
+                  pause
+                end loop
+              when SYNCHRONISATION do
+                exit CYCLE
+              end abort
+            ]
+          end trap
+        end loop
+    end var
+  ||
+    every ARME_TEMPORISATION do
+      trap ATTENTE in
+          abort
+            loop
+              pause
+            end loop
+          when DESARME_TEMPORISATION do
+            exit ATTENTE
+          end abort
+        ||
+          abort
+            loop
+              pause
+            end loop
+          when T1 TOP do
+            pause;
+            emit TIMEOUT
+          end abort;
+          abort
+            loop
+              pause
+            end loop
+          when T2 TOP do
+            pause;
+            emit TIMEOUT
+          end abort;
+          exit ATTENTE
+      end trap
+    end every
+end signal
+
+end module

@@ -1,0 +1,44 @@
+module test_run19:
+type T1;
+type T2;
+type T3;
+constant c1 = 3 : integer;
+constant c2 = 4 : integer;
+constant c3 = 5 : integer;
+function f1() : integer;
+function f2(integer) : integer;
+function f3(integer, integer) : integer;
+function f5(integer, integer, boolean) : integer;
+procedure p1()();
+procedure p2(integer)(boolean);
+procedure p3(integer, boolean)(string);
+procedure p5(integer)(string);
+
+signal ST1 : T2,
+       ST3 : T3 in
+  var v1 := c1 : integer,
+      v2 := c1 : integer,
+      v3 := 57 : integer,
+      v4 : boolean in
+    signal ST1a : T2,
+           ST2a : T2,
+           ST3a : T3 in
+      var v1 := c1 : integer,
+          v2 := c2 : integer,
+          v3 := c3 : integer,
+          v4 := c1 : integer,
+          v5 := 57 : integer,
+          v6 : boolean in
+        v1 := f1();
+        v2 := f3(v1, v2);
+        call p1()();
+        call p3(v1, v6)("There");
+        call p5(v1)("World")
+      end var
+    end signal;
+    call p1()();
+    call p3(v1, v4)("Hello")
+  end var
+end signal
+
+end module

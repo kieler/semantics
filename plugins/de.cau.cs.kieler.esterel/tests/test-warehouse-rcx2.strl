@@ -1,0 +1,175 @@
+% Part of a case study for testing an API that allows database access within Esterel
+% by David White
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%  FORKLIFT CONTROL
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Assumes forklift is calibrated so a reading of 0 on rotation sensor 1
+% lines the forklift up with the hole under the lowest item.
+
+module warehouse_rcx2:
+
+	constant MAX_SPEED : integer;
+	constant OFF = 0 : integer;
+	constant FWD = 1 : integer;
+	constant REV = 2 : integer;
+	constant BRAKE = 3 : integer;
+	
+	constant ITEM_HEIGHT = 118 : integer;
+	constant PICKUP_HEIGHT = 59 : integer;
+	constant MAX_ARM_EXTENSION = 230 : integer;
+
+	output MOTOR_A_DIR := OFF : integer;
+	output MOTOR_A_SPEED := 0 : integer;
+
+	output MOTOR_B_DIR := OFF : integer;
+	output MOTOR_B_SPEED := 0 : integer;
+
+	output MOTOR_C_DIR := OFF : integer;
+	output MOTOR_C_SPEED := 0 : integer;
+
+	output LCD_INT : integer;
+	%output CPUTS : string;
+
+	sensor ROTATION_1 : integer;
+	sensor ROTATION_2 : integer;	
+	
+	input pickup_item : integer;
+	input drop_item : integer;
+	output forklift_op_complete;
+	
+	loop
+		await 
+			case immediate pickup_item do 
+				emit MOTOR_A_SPEED(MAX_SPEED);
+				emit MOTOR_B_SPEED(MAX_SPEED);
+
+				%move forklift to item height (to get in under it)					
+				emit MOTOR_A_DIR(FWD);
+				trap reached_height in
+					loop
+						if (-?ROTATION_1 >= ((?pickup_item-1) * ITEM_HEIGHT)) then
+							exit reached_height;
+						end if;
+						pause;
+					end loop
+				end trap;
+				emit MOTOR_A_DIR(BRAKE);
+
+				%extend arm
+				emit MOTOR_B_DIR(REV);
+				trap arm_extended in
+					loop
+						if (-?ROTATION_2 >= MAX_ARM_EXTENSION) then
+							exit arm_extended;
+						end if;
+						pause;
+					end loop
+				end trap;
+				emit MOTOR_B_DIR(BRAKE);
+
+				%raise forklift to lift the item
+				emit MOTOR_A_DIR(FWD);
+				trap picked_up_item in
+					loop
+						if (-?ROTATION_1 >= (((?pickup_item-1) * ITEM_HEIGHT)+PICKUP_HEIGHT)) then
+							exit picked_up_item;
+						end if;
+						pause;
+					end loop
+				end trap;			
+				emit MOTOR_A_DIR(BRAKE);												
+
+				%retract arm
+				emit MOTOR_B_DIR(FWD);
+				trap arm_retracted in
+					loop
+						if (-?ROTATION_2 <= 0) then
+							exit arm_retracted;
+						end if;
+						pause;
+					end loop
+				end trap;	
+				emit MOTOR_B_DIR(BRAKE);
+
+				%lower forklift
+				emit MOTOR_A_DIR(REV);
+				trap reached_bottom in
+					loop
+						if (-?ROTATION_1 <= 0) then
+							exit reached_bottom;
+						end if;
+						pause;
+					end loop
+				end trap;				
+				emit MOTOR_A_DIR(BRAKE);
+
+			case immediate drop_item do
+				emit MOTOR_A_SPEED(MAX_SPEED);
+				emit MOTOR_B_SPEED(MAX_SPEED);
+
+				%move forklift to eventual item height + a bit more (higher than all items)
+				emit MOTOR_A_DIR(FWD);
+				trap reached_height in
+					loop
+						if (-?ROTATION_1 >= ((?drop_item-1) * ITEM_HEIGHT + PICKUP_HEIGHT)) then
+							exit reached_height;
+						end if;
+						pause;
+					end loop
+				end trap;
+				emit MOTOR_A_DIR(BRAKE);
+
+				%extend arm
+				emit MOTOR_B_DIR(REV);
+				trap arm_extended in
+					loop
+						if (-?ROTATION_2 >= MAX_ARM_EXTENSION) then
+							exit arm_extended;
+						end if;
+						pause;
+					end loop
+				end trap;
+				emit MOTOR_B_DIR(BRAKE);
+
+				%lower forklift to set down the item
+				emit MOTOR_A_DIR(REV);
+				trap set_down_item in
+					loop
+						if (-?ROTATION_1 <= ((?drop_item-1) * ITEM_HEIGHT)) then
+							exit set_down_item;
+						end if;
+						pause;
+					end loop
+				end trap;			
+				emit MOTOR_A_DIR(BRAKE);												
+
+				%retract arm
+				emit MOTOR_B_DIR(FWD);
+				trap arm_retracted in
+					loop
+						if (-?ROTATION_2 <= 0) then
+							exit arm_retracted;
+						end if;
+						pause;
+					end loop
+				end trap;	
+				emit MOTOR_B_DIR(BRAKE);
+
+				%lower forklift
+				emit MOTOR_A_DIR(REV);
+				trap reached_bottom in
+					loop
+						if (-?ROTATION_1 <= 0) then
+							exit reached_bottom;
+						end if;
+						pause;
+					end loop
+				end trap;				
+				emit MOTOR_A_DIR(BRAKE);
+
+		end await;
+		pause;
+		emit forklift_op_complete;
+	end loop
+end module
