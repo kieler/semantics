@@ -26,7 +26,7 @@ import de.cau.cs.kieler.core.expressions.ValuedObjectReference;
 import de.cau.cs.kieler.core.util.Pair;
 import de.cau.cs.kieler.core.kivi.IEffect;
 import de.cau.cs.kieler.core.kivi.AbstractCombination;
-import de.cau.cs.kieler.core.ui.listeners.SelectionTrigger.SelectionState;
+import de.cau.cs.kieler.core.kivi.SelectionTrigger.SelectionState;
 import de.cau.cs.kieler.synccharts.Emission;
 import de.cau.cs.kieler.synccharts.Transition;
 import de.cau.cs.kieler.synccharts.kivi.SignalFlowTrigger.SignalFlowActiveState;
