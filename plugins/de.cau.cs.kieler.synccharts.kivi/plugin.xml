@@ -4,36 +4,23 @@
    <extension
          point="de.cau.cs.kieler.sim.kiem.json.datacomponent">
       <content
-            class="de.cau.cs.kieler.synccharts.kivi.StateActivityDataComponent"
+            class="de.cau.cs.kieler.synccharts.kivi.SyncChartsDataComponent"
             id="de.cau.cs.kieler.synccharts.kivi.stateactivitydatacomponent"
-            name="State Activity Data Component">
+            name="SyncCharts Visualization">
       </content>
    </extension>
    <extension
          point="de.cau.cs.kieler.core.kivi.combinations">
       <combination
-            class="de.cau.cs.kieler.synccharts.kivi.StateActivityCombination"
+            class="de.cau.cs.kieler.synccharts.kivi.SyncChartsCombination"
             description="Highlights active states during simulation."
-            name="State Activity Combination">
+            name="SyncCharts Simulation Visualization">
       </combination>
       <combination
             class="de.cau.cs.kieler.synccharts.kivi.SignalFlowCombination"
             description="Visualizes the flow of signals in a SyncChart diagram."
             name="SyncCharts Signal Flow Combination">
       </combination>
-   </extension>
-   <extension
-         point="de.cau.cs.kieler.core.kivi.effects">
-      <effect
-            class="de.cau.cs.kieler.synccharts.kivi.StateActivityHighlightEffect"
-            description="Highlights a state with a red border."
-            name="Highlight Effect">
-      </effect>
-      <effect
-            class="de.cau.cs.kieler.synccharts.kivi.ArrowEffect"
-            description="Draw an arrow between two objects."
-            name="Arrow Effect">
-      </effect>
    </extension>
    <extension
          point="org.eclipse.ui.menus">

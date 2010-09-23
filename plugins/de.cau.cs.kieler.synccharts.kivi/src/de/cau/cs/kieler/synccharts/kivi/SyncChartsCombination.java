@@ -29,10 +29,11 @@ import org.eclipse.swt.graphics.RGB;
 import de.cau.cs.kieler.core.kivi.CombinationParameter;
 import de.cau.cs.kieler.core.kivi.IEffect;
 import de.cau.cs.kieler.core.kivi.AbstractCombination;
-import de.cau.cs.kieler.synccharts.State;
-import de.cau.cs.kieler.synccharts.SyncchartsPackage;
-import de.cau.cs.kieler.synccharts.kivi.StateActivityTrigger.ActiveStates;
 import de.cau.cs.kieler.core.model.util.ModelingUtil;
+import de.cau.cs.kieler.sim.kivi.StateActivityHighlightEffect;
+import de.cau.cs.kieler.sim.kivi.StateActivityTrigger.ActiveStates;
+import de.cau.cs.kieler.synccharts.SyncchartsPackage;
+import de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditor;
 import de.cau.cs.kieler.kiml.gmf.CompartmentCollapseExpandEffect;
 
 /**
@@ -41,18 +42,18 @@ import de.cau.cs.kieler.kiml.gmf.CompartmentCollapseExpandEffect;
  * @author mmu
  * 
  */
-public class StateActivityCombination extends AbstractCombination {
+public class SyncChartsCombination extends AbstractCombination {
 
     /**
      * The preference key for the highlight color.
      */
-    public static final String HIGHLIGHT_COLOR = StateActivityCombination.class.getCanonicalName()
+    public static final String HIGHLIGHT_COLOR = SyncChartsCombination.class.getCanonicalName()
             + ".highlightColor";
 
     /**
      * The preference key for the history color.
      */
-    public static final String HISTORY_COLOR = StateActivityCombination.class.getCanonicalName()
+    public static final String HISTORY_COLOR = SyncChartsCombination.class.getCanonicalName()
             + ".historyColor";
 
     private static final CombinationParameter[] PARAMETERS = new CombinationParameter[] {
@@ -65,11 +66,11 @@ public class StateActivityCombination extends AbstractCombination {
 
     private Map<EObject, StateActivityHighlightEffect> highlightEffects;
     private Map<EObject, CompartmentCollapseExpandEffect> collapseEffects;
-
+    
     /**
      * Default constructor.
      */
-    public StateActivityCombination() {
+    public SyncChartsCombination() {
         super();
         highlightEffects = new HashMap<EObject, StateActivityHighlightEffect>();
         collapseEffects = new HashMap<EObject, CompartmentCollapseExpandEffect>();
@@ -82,6 +83,9 @@ public class StateActivityCombination extends AbstractCombination {
      *            the active states
      */
     public void execute(final ActiveStates activeStates) {
+        if (!(activeStates.getDiagramEditor() instanceof SyncchartsDiagramEditor)) {
+            return;
+        }
         // if there are no active states, the simulation has finished.
         // Undo every harm you have done before
         if (activeStates.getActiveStates().isEmpty()) {
@@ -150,7 +154,7 @@ public class StateActivityCombination extends AbstractCombination {
             // remove the root State because it represents the whole SM and will not be active
             if (state.eContainer() == null || state.eContainer().eContainer() == null) {
                 continue;
-            } else if (((State) state).getRegions().size() != 0) { // only collapse macrostates
+            } else {
                 CompartmentCollapseExpandEffect collapseEffect = new CompartmentCollapseExpandEffect(
                         editor, state, SyncchartsPackage.eINSTANCE.getState_Regions(), 1, true,
                         true);
@@ -202,5 +206,4 @@ public class StateActivityCombination extends AbstractCombination {
             return new Color(null, new RGB(hsb[0], hsb[1], hsb[2] - hsb[2] / steps * (step - 1)));
         }
     }
-
 }

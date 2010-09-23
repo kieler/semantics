@@ -10,11 +10,12 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.emf;bundle-version="2.6.0",
  org.eclipse.gef,
  org.eclipse.core.expressions;bundle-version="3.4.200",
- de.cau.cs.kieler.synccharts.diagram;bundle-version="0.3.0",
- org.eclipse.gmf.runtime.diagram.ui.resources.editor;bundle-version="1.4.0",
  org.eclipse.ui.ide;bundle-version="3.6.0",
  de.cau.cs.kieler.core.kivi;bundle-version="0.1.0",
- de.cau.cs.kieler.kiml.gmf;bundle-version="0.1.0"
+ de.cau.cs.kieler.synccharts.diagram;bundle-version="0.3.0",
+ org.eclipse.gmf.runtime.diagram.ui.resources.editor;bundle-version="1.4.0",
+ de.cau.cs.kieler.kiml.gmf;bundle-version="0.1.0",
+ de.cau.cs.kieler.sim.kivi;bundle-version="0.1.0"
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Export-Package: de.cau.cs.kieler.synccharts.kivi
