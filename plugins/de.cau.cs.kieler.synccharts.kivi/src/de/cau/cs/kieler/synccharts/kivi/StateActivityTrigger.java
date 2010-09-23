@@ -17,7 +17,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.gef.EditPart;
 import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramEditor;
 
 import de.cau.cs.kieler.core.kivi.AbstractTrigger;
@@ -31,8 +30,6 @@ import de.cau.cs.kieler.core.kivi.AbstractTriggerState;
  */
 public class StateActivityTrigger extends AbstractTrigger {
 
-    private List<List<EditPart>> activeStates;
-
     private static StateActivityTrigger instance;
 
     /**
@@ -40,10 +37,6 @@ public class StateActivityTrigger extends AbstractTrigger {
      */
     public StateActivityTrigger() {
         instance = this;
-    }
-
-    private StateActivityTrigger(final List<List<EditPart>> aS) {
-        activeStates = aS;
     }
 
     /**
@@ -60,6 +53,8 @@ public class StateActivityTrigger extends AbstractTrigger {
      * 
      * @param aS
      *            map of active states
+     * @param editor
+     *            the diagram editor
      */
     public void step(final List<List<EObject>> aS, final DiagramEditor editor) {
         trigger(new ActiveStates(aS, editor));
@@ -84,12 +79,12 @@ public class StateActivityTrigger extends AbstractTrigger {
         private List<List<EObject>> activeStates;
 
         private DiagramEditor diagramEditor;
-        
+
         /**
          * Default Constructor.
          */
         public ActiveStates() {
-            
+
         }
 
         private ActiveStates(final List<List<EObject>> states, final DiagramEditor editor) {
@@ -97,7 +92,9 @@ public class StateActivityTrigger extends AbstractTrigger {
             diagramEditor = editor;
         }
 
-        @Override
+        /**
+         * {@inheritDoc}
+         */
         public Class<?> getTriggerClass() {
             return StateActivityTrigger.class;
         }

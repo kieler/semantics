@@ -71,14 +71,14 @@ public class SignalFlowTrigger extends AbstractTrigger {
     public static final class SignalFlowActiveState extends AbstractTriggerState {
 
         private boolean active = false;
-        
+
         /**
          * Default constructor.
          */
         public SignalFlowActiveState() {
-            
+
         }
-        
+
         /**
          * Create a new signal flow state.
          * 
@@ -89,7 +89,9 @@ public class SignalFlowTrigger extends AbstractTrigger {
             active = pushed;
         }
 
-        @Override
+        /**
+         * {@inheritDoc}
+         */
         public Class<?> getTriggerClass() {
             return SignalFlowTrigger.class;
         }
