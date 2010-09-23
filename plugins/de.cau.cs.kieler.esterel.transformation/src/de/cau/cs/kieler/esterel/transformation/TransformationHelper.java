@@ -15,6 +15,8 @@ package de.cau.cs.kieler.esterel.transformation;
 
 import org.eclipse.emf.ecore.EObject;
 
+import de.cau.cs.kieler.synccharts.State;
+
 /**
  * Contains some helping functionality.
  * 
@@ -38,6 +40,10 @@ public final class TransformationHelper {
      */
     public static EObject castToEObjcet(final EObject obj) {
         return obj;
+    }
+
+    public static void setBodyContents(final State s, final EObject obj) {
+        s.setBodyContents(obj);
     }
 
 }

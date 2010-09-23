@@ -40,8 +40,11 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.actions.WorkspaceModifyOperation;
 import org.eclipse.ui.part.FileEditorInput;
 import org.eclipse.xtext.ui.editor.XtextEditor;
+import org.eclipse.xtext.ui.editor.model.IXtextDocument;
 import org.json.JSONObject;
 
+import de.cau.cs.kieler.core.expressions.ExpressionsFactory;
+import de.cau.cs.kieler.core.expressions.TextualCode;
 import de.cau.cs.kieler.esterel.transformation.kivi.TransformationTrigger;
 import de.cau.cs.kieler.kiml.ui.layout.EclipseLayoutServices;
 import de.cau.cs.kieler.sim.kiem.IJSONObjectDataComponent;
@@ -78,6 +81,7 @@ public class Est2SyncDataComponent extends JSONObjectDataComponent implements
     private static final String EXPRESSIONS_PACKAGE = "de.cau.cs.kieler.core.expressions."
             + "ExpressionsPackage";
     private static final String ESTEREL_PACKAGE = "de.cau.cs.kieler.esterel.esterel.EsterelPackage";
+    private static final String ECORE_PACKAGE = "org.eclipse.emf.ecore.EcorePackage";
     private static final String TRANSFORMATION_FILE = "toSyncchartTransformation.ext";
 
     /** first transformation being executed. */
@@ -99,6 +103,7 @@ public class Est2SyncDataComponent extends JSONObjectDataComponent implements
         basePackages.add(SYNCCHARTS_PACKAGE);
         basePackages.add(EXPRESSIONS_PACKAGE);
         basePackages.add(ESTEREL_PACKAGE);
+        basePackages.add(ECORE_PACKAGE);
         runner = new XpandRunner(TRANSFORMATION_FILE, basePackages);
 
         // load the esterel document into a syncchart
@@ -113,6 +118,7 @@ public class Est2SyncDataComponent extends JSONObjectDataComponent implements
         // either we haven't started or no further transformation
         if (statements.isEmpty()) {
             if (!started) {
+                started = true;
 
                 // FIXME this should be done a better way!
                 PlatformUI.getWorkbench().getDisplay().asyncExec(new Runnable() {
@@ -169,15 +175,18 @@ public class Est2SyncDataComponent extends JSONObjectDataComponent implements
                     // update edit policies, so GMF will generate diagram elements
                     // for model elements which have been generated during the
                     // transformation.
-                    List<?> editPolicies = CanonicalEditPolicy.getRegisteredEditPolicies(qs.modul);
-                    for (Iterator<?> it = editPolicies.iterator(); it.hasNext();) {
-                        CanonicalEditPolicy nextEditPolicy = (CanonicalEditPolicy) it.next();
-                        nextEditPolicy.refresh();
+                    if (activeEditor instanceof IDiagramWorkbenchPart) {
+                        EObject obj = ((View) ((IDiagramWorkbenchPart) activeEditor)
+                                .getDiagramEditPart().getModel()).getElement();
+                        List<?> editPolicies = CanonicalEditPolicy.getRegisteredEditPolicies(obj);
+                        for (Iterator<?> it = editPolicies.iterator(); it.hasNext();) {
+                            CanonicalEditPolicy nextEditPolicy = (CanonicalEditPolicy) it.next();
+                            nextEditPolicy.refresh();
+                        }
+                        IDiagramGraphicalViewer graphViewer = ((IDiagramWorkbenchPart) activeEditor)
+                                .getDiagramGraphicalViewer();
+                        graphViewer.flush();
                     }
-                    IDiagramGraphicalViewer graphViewer = ((IDiagramWorkbenchPart) activeEditor)
-                            .getDiagramGraphicalViewer();
-                    graphViewer.flush();
-
                     // EclipseLayoutServices
                     // .getInstance()
                     // .getManager(activeEditor, null)
@@ -190,7 +199,6 @@ public class Est2SyncDataComponent extends JSONObjectDataComponent implements
                         System.out.println("Layout applied");
                     }
 
-                    
                 }
             });
         }
@@ -241,11 +249,12 @@ public class Est2SyncDataComponent extends JSONObjectDataComponent implements
         // clean all references
         runner = null;
         statements = null;
-        
-//        if (TransformationTrigger.getInstance() != null) {
-////            TransformationTrigger.getInstance().step(null,
-////                    (DiagramEditor) activeEditor);
-//        }
+        started = false;
+
+        // if (TransformationTrigger.getInstance() != null) {
+        // // TransformationTrigger.getInstance().step(null,
+        // // (DiagramEditor) activeEditor);
+        // }
     }
 
     /**
