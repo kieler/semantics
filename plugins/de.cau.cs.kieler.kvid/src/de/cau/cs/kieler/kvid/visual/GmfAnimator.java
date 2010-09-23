@@ -13,7 +13,9 @@
  */
 package de.cau.cs.kieler.kvid.visual;
 
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 
 import de.tu_berlin.cs.tfs.muvitorkit.animation.AnimatingCommand;
@@ -39,6 +41,9 @@ public final class GmfAnimator {
     
     /** Determines whether replay is enabled. */
     private static volatile boolean replay = false;
+    
+    private static List<IKvidFigure> drawnFigures = Collections
+            .synchronizedList(new LinkedList<IKvidFigure>());
     
     /** Delay until next replay in msec. */
     private static final int REPLAY_DELAY = 1000;
@@ -80,7 +85,8 @@ public final class GmfAnimator {
                 return;
             }
         }
-        
+        clearDrawnFigures();
+
         final IFigure canvas = diagram.getLayer(DiagramRootEditPart.DECORATION_PRINTABLE_LAYER);
         int minPrio = Integer.MAX_VALUE;
         int maxPrio = Integer.MIN_VALUE;
@@ -181,7 +187,7 @@ public final class GmfAnimator {
             lastCommandExecutedAt = System.currentTimeMillis();
         }
         if (RuntimeConfiguration.getInstance()
-                .currentValueOfProperty("Behavior after Animation")
+                .currentValueOfProperty(RuntimeConfiguration.ANIMATION_BEHAVIOR)
                 .equals("Stay at last location")) {
             for (final IKvidFigure figure : figuresAndPath.keySet()) {
                 //Put every figure on the final step of the path
@@ -189,15 +195,16 @@ public final class GmfAnimator {
                 lastLocation.x -= figure.getBounds().width / 2;
                 lastLocation.y -= figure.getBounds().height / 2;
                 figure.setLocation(lastLocation);
-                PlatformUI.getWorkbench().getDisplay().syncExec(new Runnable() {
+                PlatformUI.getWorkbench().getDisplay().asyncExec(new Runnable() {
                     public void run() {
                         canvas.add(figure);
                     }
                 });
+                drawnFigures.add(figure);
                 canvas.repaint();
             }
         } else if (RuntimeConfiguration.getInstance()
-                .currentValueOfProperty("Behavior after Animation")
+                .currentValueOfProperty(RuntimeConfiguration.ANIMATION_BEHAVIOR)
                 .equals("Replay")) {
             replay = true;
             Runnable replayRun = new Runnable() {
@@ -210,12 +217,19 @@ public final class GmfAnimator {
                         } catch (InterruptedException e) {
                             //No handling is needed if this is interrupted
                         }
-                        diagram.getDiagramEditDomain().getDiagramCommandStack().execute(cc);
+                        if (diagram != null
+                                && diagram.getDiagramEditDomain() != null
+                                && diagram.getDiagramEditDomain()
+                                        .getDiagramCommandStack() != null) {
+                            diagram.getDiagramEditDomain().getDiagramCommandStack().execute(cc);
+                        }
                     }
                 }
             };
             PlatformUI.getWorkbench().getDisplay().asyncExec(replayRun);
-            
+        } else {
+            stopReplay();
+            clearDrawnFigures();
         }
     }
     
@@ -227,10 +241,25 @@ public final class GmfAnimator {
     }
     
     /**
+     * Call this to remove all figures that might be still on the canvas.
+     */
+    private static void clearDrawnFigures() {
+        for (IKvidFigure figure : drawnFigures) {
+            IFigure parent = figure.getParent();
+            if (parent != null) {
+                parent.remove(figure);
+                parent.repaint();
+            }
+        }
+        drawnFigures.clear();
+    }
+    
+    /**
      * Cleans up the local cache for further use.
      */
     public static void wrapup() {
         stopReplay();
+        clearDrawnFigures();
         lastCommand.animationDone();
         lastCommand = null;
         lastCommandExecutedAt = 0;

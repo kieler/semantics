@@ -96,6 +96,22 @@ public final class RuntimeConfiguration {
     public List<Property> getKnownProperties() {
         return knownProperties;
     }
+    
+    /**
+     * Getter for a property with a certain name.
+     * 
+     * @param propertyName Name of the Property to get
+     * @return The Property with the given name or null if it doesn't exists
+     */
+    public Property getProperty(final String propertyName) {
+        for (Property property : knownProperties) {
+            if (property.getName().equals(propertyName)) {
+                return property;
+            }
+        }
+        return null;
+    }
+    
     /**
      * Getter for the list of {@link Property}s referring to the current selection.
      * Enter null if there is no selection to get general options.

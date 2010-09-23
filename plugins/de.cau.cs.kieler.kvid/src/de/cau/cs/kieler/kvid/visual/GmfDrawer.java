@@ -181,6 +181,15 @@ public final class GmfDrawer implements IDrawer, IDataListener {
             PlatformUI.getWorkbench().getDisplay().asyncExec(new Runnable() {
                 public void run() {
                     try {
+                        if (KiemPlugin.getDefault().getExecution() != null) {
+                            if (KiemPlugin.getDefault().getExecution().isRunning()) {
+                                Property aniBehav = RuntimeConfiguration
+                                        .getInstance()
+                                        .getProperty(
+                                                RuntimeConfiguration.ANIMATION_BEHAVIOR);
+                                aniBehav.setCurrentValue("Disappear");
+                            }
+                        }
                         GmfAnimator.animate(animatables, currentEditor
                                 .getDiagramEditPart(), KiemPlugin.getDefault()
                                 .getAimedStepDuration());
