@@ -23,7 +23,7 @@ Void initial(State s):
 
  
  
- Void initial(State s):
+ Void initial(State s, emf::EObject e):
  	let m = ((emf::EObject) s.bodyContents):
  	let mo = (Program) castToEMF(m):
  	let selfTrans = new Transition:
@@ -31,11 +31,12 @@ Void initial(State s):
  	s
 ;
 
-
+/*
 Void sandbox():
 	let l = new Loop:
 	l
 ;
+*/
 
 /*
  * rule 1 (module)
@@ -48,11 +49,11 @@ Void ruleModule(State s, Module m):
 	s.setLabel(m.name) ->
 	r.states.add(newState) ->
 	newState.setIsInitial(true) ->
-	newState.setIsFinal(true) ->
+	newState.setIsFinal(true) -> 
 	// TODO set singals
 	// TODO set body content
 	setJavaBodyContents(newState, statement) ->
-	appendNextTransformation(statement, newState)
+	appendNextTransformation(newState, statement)
 ;
 
 
@@ -68,10 +69,9 @@ Void ruleHalt(Region r):
 
 /*
  * rule 5 (abort)
- */
+
  Void ruleAbort(State s):
  	let a = (Abort) castToEMF(s.bodyContents):
- 	
  	let r = new Region:
  	let initState = new State:
  	let finalState = new State:
@@ -92,9 +92,39 @@ Void ruleHalt(Region r):
  	// handle cases (only for ABRO currently)
  	handleAbort(r, initState, a) ->
  	setJavaBodyContents(initState, a.statement) ->
+ 	appendNextTransformation(a.statement, initState) ->
  	a
  ;
-
+ */
+ 
+ /*
+ * rule 5 (abort)
+ */
+ Void rule(State s, Abort a):
+ 	let r = new Region:
+ 	let initState = new State:
+ 	let finalState = new State:
+ 	let toFinalTrans = new Transition:
+ 	let caseStates = {}:
+ 	s.setLabel("Abort State") ->
+ 	s.regions.add(r) ->
+ 	r.states.add(initState) ->
+ 	r.states.add(finalState) ->
+ 	
+ 	// connect initial and final state in case of a normal termination
+ 	toFinalTrans.setSourceState(initState) ->
+ 	toFinalTrans.setTargetState(finalState) ->
+ 	toFinalTrans.setType(TransitionType::NORMALTERMINATION) ->
+ 	initState.setIsInitial(true) ->
+ 	finalState.setIsFinal(true) ->
+ 	
+ 	// handle cases (only for ABRO currently)
+ 	handleAbort(r, initState, a) ->
+ 	setJavaBodyContents(initState, a.statement) ->
+ 	appendNextTransformation(initState, (emf::EObject) a.statement) ->
+ 	a
+ ;
+ 
 Void handleAbort(Region parent, State s, Abort a):
 	let body = (AbortInstance) a.body:
 	let final = new State:
@@ -144,7 +174,7 @@ Void ruleEmit(Region r, Emit e):
 
 /*
  * rule 17 (loop)
- */
+
  Void ruleLoop(State s):
  	let r = new Region:
  	let loopState = new State:
@@ -165,21 +195,53 @@ Void ruleEmit(Region r, Emit e):
  	appendNextTransformation(l.body.statement, loopState)
 	// 	loopState.setBodyContents(l.body) ->
  ;
- 
+  */
+  
+  Void rule(State s, Loop l):
+ 	let r = new Region:
+ 	let loopState = new State:
+ 	let selfTrans = new Transition:
+ 	s.setLabel("Loop_State") ->
+ 	s.regions.add(r) ->
+ 	r.states.add(loopState) ->
+ 	loopState.setIsInitial(true) ->
+ 	
+ 	selfTrans.setType(TransitionType::NORMALTERMINATION) ->
+ 	selfTrans.setSourceState(loopState) ->
+ 	selfTrans.setTargetState(loopState) ->  
+ 	
+ 	loopState.outgoingTransitions.add(selfTrans) ->
+ 	
+ 	setJavaBodyContents(loopState, l.body.statement) ->
+ 	appendNextTransformation(loopState, (emf::EObject) l.body.statement)
+	// 	loopState.setBodyContents(l.body) ->
+  ;
+  
+  
  /* rule 19 (parallel)
   *
+
+Void ruleParallel(State parent):
+	parent.setLabel("Parallel State") 
+ 	//p.list.handleParallelStatement(parent)
+;
   */
-Void ruleParallel(State parent, Parallel p):
- 	p.list.handleParallelStatement(parent)
+  
+  Void rule(State parent, Parallel p):
+	parent.setLabel("Parallel State") 
+ 	//p.list.handleParallelStatement(parent)
 ;
 
 /*
  * rule 23 (sequence)
- */
+
 Void ruleSequence(Region r, Sequence s):
 	s
 ;
-
+ */
+ Void rule(State s, Sequence seq):
+	s.setLabel("Sequence State")
+;
 //transforms sequence
 State transSequence (State s, Statement statement):
 	//checks wether there is a sequence-operator
@@ -242,26 +304,27 @@ Void handleParallelStatement(Statement s, State parent):
  
  
  
- 
-appendNextTransformation(emf::EObject esterel, State s):
-	switch {
-		case Abort.isInstance(esterel): appendTransformation("ruleAbort", s)
-		case Await.isInstance(esterel): appendTransformation("ruleAwait", s)
-		case Emit.isInstance(esterel): appendTransformation("ruleEmit", s)
-		case Loop.isInstance(esterel): appendTransformation("ruleLoop", s)
-		case Nothing.isInstance(esterel): appendTransformation("ruleNothing",  s)
-		case Pause.isInstance(esterel): appendTransformation("rulePause", s)
-		default: appendTransformation("ruleAbort", s)
-	}
+appendNextTransformation(State s, emf::EObject esterel):
+	appendTransformation("rule", s, esterel)
+	/*switch {
+		case Abort.isInstance(esterel): appendTransformation("ruleAbort", s, esterel)
+		case Await.isInstance(esterel): appendTransformation("ruleAwait", s, esterel)
+		case Emit.isInstance(esterel): appendTransformation("ruleEmit", s, esterel)
+		case Loop.isInstance(esterel): appendTransformation("ruleLoop", s, esterel)
+		case Nothing.isInstance(esterel): appendTransformation("ruleNothing",  s, esterel)
+		case Pause.isInstance(esterel): appendTransformation("rulePause", s, esterel)
+		case Sequence.isInstance(esterel): appendTransformation("ruleSequence", s, esterel)
+		default: appendTransformation("ruleAbort", s, esterel)
+	}*/
 ;
  
  
 /*
  * passes information about a new transformation to the data component.
  */
-Void appendTransformation(String str, emf::EObject e):
+Void appendTransformation(String str, State syncModel, emf::EObject estModel):
        JAVA  de.cau.cs.kieler.esterel.transformation.Est2SyncDataComponent.appendTransformation(java.lang.String,
-org.eclipse.emf.ecore.EObject)
+de.cau.cs.kieler.synccharts.State, org.eclipse.emf.ecore.EObject)
 ;
  
 emf::EObject castToEMF(emf::EObject o):

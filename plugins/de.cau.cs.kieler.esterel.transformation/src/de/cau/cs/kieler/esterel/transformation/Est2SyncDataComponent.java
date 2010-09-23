@@ -143,7 +143,8 @@ public class Est2SyncDataComponent extends JSONObjectDataComponent implements
                                 rootState = root;
 
                                 // initializing first statement
-                                QueueStatement qs = new QueueStatement(INITIAL_TRANSFORMATION, root);
+                                QueueStatement qs = new QueueStatement(INITIAL_TRANSFORMATION,
+                                        root, root.getBodyContents());
                                 statements.add(qs);
                                 System.out.println("yeah");
                             }
@@ -170,7 +171,7 @@ public class Est2SyncDataComponent extends JSONObjectDataComponent implements
                     }
 
                     QueueStatement qs = statements.poll();
-                    runner.executeTransformation(qs.modul, qs.transformation);
+                    runner.executeTransformation(qs.syncModel, qs.estModel, qs.transformation);
 
                     // update edit policies, so GMF will generate diagram elements
                     // for model elements which have been generated during the
@@ -216,12 +217,15 @@ public class Est2SyncDataComponent extends JSONObjectDataComponent implements
      * @param model
      *            model for which to execute this transformation
      */
-    public void appendTransformation(final String transformation, final EObject model) {
+    public void appendTransformation(final String transformation, final State syncModel,
+            final EObject estModel) {
         List<DataComponentWrapper> wrapper = KiemPlugin.getDefault().getDataComponentWrapperList();
         for (DataComponentWrapper w : wrapper) {
             if (w.getDataComponent() instanceof Est2SyncDataComponent) {
                 Est2SyncDataComponent dc = (Est2SyncDataComponent) w.getDataComponent();
-                QueueStatement qs = new QueueStatement(transformation, model);
+                // QueueStatement qs = new QueueStatement(transformation, syncModel, estModel);
+                QueueStatement qs = new QueueStatement(transformation, syncModel,
+                        ((State) syncModel).getBodyContents());
                 boolean sucess = dc.getStatements().add(qs);
                 System.out.println("set new transformation: " + sucess);
             }
@@ -273,13 +277,15 @@ public class Est2SyncDataComponent extends JSONObjectDataComponent implements
 
         // CHECKSTYLEOFF VisibilityModifier
         public String transformation;
-        public EObject modul;
+        public EObject syncModel;
+        public EObject estModel;
 
         // CHECKSTYLEON VisibilityModifier
 
-        public QueueStatement(final String trans, final EObject mod) {
+        public QueueStatement(final String trans, final EObject syncModel, final EObject estModel) {
             this.transformation = trans;
-            this.modul = mod;
+            this.syncModel = syncModel;
+            this.estModel = estModel;
         }
     }
 

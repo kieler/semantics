@@ -61,13 +61,15 @@ public class XpandRunner {
      * @param transformation
      *            the name of the transformation to run
      */
-    public void executeTransformation(final EObject selModel, final String transformation) {
+    public void executeTransformation(final EObject syncModel, final EObject estModel,
+            final String transformation) {
 
         // create command
-        XpandCommand xCommand = new XpandCommand(selModel, transformation);
+        XpandCommand xCommand = new XpandCommand(new EObject[] { syncModel, estModel },
+                transformation);
 
         // get editing domain and execute
-        TransactionalEditingDomain domain = TransactionUtil.getEditingDomain(selModel);
+        TransactionalEditingDomain domain = TransactionUtil.getEditingDomain(syncModel);
         CommandStack stack = domain.getCommandStack();
         stack.execute(xCommand);
     }
@@ -83,8 +85,8 @@ public class XpandRunner {
         private Object[] parameters;
         private String transformation;
 
-        public XpandCommand(final EObject element, final String transforma) {
-            parameters = new Object[] { element };
+        public XpandCommand(final EObject[] elements, final String transforma) {
+            parameters = elements;
             transformation = transforma;
         }
 
