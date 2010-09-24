@@ -52,15 +52,6 @@ public abstract class KiViDataComponent extends JSONObjectDataComponent implemen
     private DataComponentWrapper wrapper;
 
     /**
-     * FIXME remove after devel.
-     * 
-     * @return fake id
-     */
-    public String getDataComponentId() {
-        return "fakeid";
-    }
-
-    /**
      * {@inheritDoc}
      */
     public void initialize() throws KiemInitializationException {

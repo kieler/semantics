@@ -32,6 +32,18 @@ import de.cau.cs.kieler.sim.kivi.KiViDataComponent;
  * 
  */
 public class StateMachineDataComponent extends KiViDataComponent {
+    
+    /**
+     * FIXME remove after devel.
+     * 
+     * @return fake id
+     */
+    @Override
+    public String getDataComponentId() {
+        return "fakeid2";
+    }
+    
+    @Override
     protected DiagramEditor getActiveEditor() {
         final Maybe<DiagramEditor> maybe = new Maybe<DiagramEditor>();
         Display.getDefault().syncExec(new Runnable() {
