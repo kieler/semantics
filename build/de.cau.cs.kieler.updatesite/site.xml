@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<site associateSitesURL="http://rtsys.informatik.uni-kiel.de/~kieler/updatesite/nightly/associateSites.xml">
+<site associateSitesURL="associateSites.xml">
    <description name="KIELER Nightly Builds" url="http://rtsys.informatik.uni-kiel.de/~kieler/updatesite/nightly/">
       Update site for the KIELER project nightly builds
    </description>
