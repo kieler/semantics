@@ -62,17 +62,19 @@
         path="samples/@"
         style="css/intro.css">
         <group
-            label=""
-            id="de.cau.cs.kieler.intro.samples.group"
+            label="KIELER Samples"
+            id="group"
             style-id="content-group">
-            <link
-                label="KIELER Samples"
-                url="http://www.informatik.uni-kiel.de/rtsys/kieler"
-                id="kieler-whatsnew-link"
-                style-id="content-link">
-				<text>... to be completed</text>
-            </link>
-        </group>
+	        <text> The following examples will help you to introduce in KIELER.</text>
+		 	<anchor id="import-wizard"/>
+ 		    <group
+	            label="Quick Starts"
+	            id="quickstarts"
+	            style-id="content-group">
+			 	<text> Quickstart samples creates a project with at least one example</text>
+			<anchor id="quickstarts.anchor"/>
+	        </group>
+    	 </group>
     </extensionContent>
    
     <extensionContent
