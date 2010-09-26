@@ -71,7 +71,7 @@
 	            label="Quick Starts"
 	            id="quickstarts"
 	            style-id="content-group">
-			 	<text> Quickstart samples creates a project with at least one example</text>
+			 	<text> Quickstart samples create a project with at least one example.</text>
 			<anchor id="quickstarts.anchor"/>
 	        </group>
     	 </group>
