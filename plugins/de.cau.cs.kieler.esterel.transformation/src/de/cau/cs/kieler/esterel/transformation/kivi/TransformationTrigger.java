@@ -85,7 +85,9 @@ public class TransformationTrigger extends AbstractTrigger {
             diagramEditor = editor;
         }
 
-        @Override
+        /**
+         * {@inheritDoc}
+         */
         public Class<?> getTriggerClass() {
             return TransformationTrigger.class;
         }

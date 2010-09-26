@@ -20,10 +20,9 @@ Void initial(State s):
 	s
 ;
  */
-
  
  
- Void initial(State s, emf::EObject e):
+Void initial(State s, emf::EObject noneed):
  	let m = ((emf::EObject) s.bodyContents):
  	let mo = (Program) castToEMF(m):
  	let selfTrans = new Transition:
@@ -60,11 +59,13 @@ Void ruleModule(State s, Module m):
 /*
  * rule 3 (halt)
  */
-Void ruleHalt(Region r):
-	let s = new State:
-	s.setId("s1") ->
-	s.setIsInitial(true) ->
-	r.states.add(s)
+Void rule(State s, Halt h):
+	let r = new Region:
+	let ns = new State:
+	s.regions.add(r) ->
+	s.setLabel("Halt State") ->
+	ns.setIsInitial(true) ->
+	r.states.add(ns)
 ;
 
 /*
@@ -141,27 +142,45 @@ Void handleAbort(Region parent, State s, Abort a):
 /*
  * rule 8 (await)
  */
- Void ruleAwait(Region r, Await a):
+Void rule(State s, Await a):
+ 	let r = new Region :
  	let initState = new State:
  	let caseStates = {}:
- 	AwaitCase.isInstance(a.body) ? 
+ 	s.setLabel("Await State") ->
+ 	s.regions.add(r) ->
+ 	initState.setIsInitial(true) ->
+ 	
+ 	//(AwaitInstance.isInstance(a.body) ? 
+ 	ruleAwaitInstance(r, initState, (AwaitInstance) a.body) ->
+ 	//AwaitCase.isInstance(a.body) ? 
  	// handle cases
- 	((AwaitCase) a.body).cases.handleAwaitCase(caseStates, initState) : "" ->
+ 	//((AwaitCase) a.body).cases.handleAwaitCase(caseStates, initState) : "" ->
  	//: a ->
  	// handle instance
  	//->
  	r.states.add(initState) ->
  	r.states.addAll(caseStates)
- ;
+;
  
- 
+ruleAwaitInstance(Region region, State previous, AwaitInstance ai):
+	let s = new State:
+	let t = new Transition:
+	region.states.add(s) ->
+	t.setType(TransitionType::STRONGABORT) ->
+	t.setSourceState(previous) ->
+	t.setTargetState(s) ->
+	s.setIsFinal(true)
+;
  /*
   * rule 12 (emit)
   */
-Void ruleEmit(Region r, Emit e):
+Void rule(State s, Emit e):
 	let initS = new State:
 	let finalS = new State:
+	let r = new Region:
 	let emitTrans = new Transition:
+	s.regions.add(r) ->
+	s.setLabel("Emit State") ->
 	initS.setIsInitial(true) ->
 	finalS.setIsFinal(true) ->
 	emitTrans.setSourceState(initS) ->
@@ -174,34 +193,12 @@ Void ruleEmit(Region r, Emit e):
 
 /*
  * rule 17 (loop)
-
- Void ruleLoop(State s):
- 	let r = new Region:
- 	let loopState = new State:
+ */
+Void rule(State s, Loop l):
+	let r = new Region:
+	let loopState = new State:
  	let selfTrans = new Transition:
- 	let l = (Loop) castToEMF(s.bodyContents):
- 	s.setLabel("Loop_State") ->
- 	s.regions.add(r) ->
- 	r.states.add(loopState) ->
- 	loopState.setIsInitial(true) ->
- 	
- 	selfTrans.setType(TransitionType::NORMALTERMINATION) ->
- 	selfTrans.setSourceState(loopState) ->
- 	selfTrans.setTargetState(loopState) ->  
- 	
- 	loopState.outgoingTransitions.add(selfTrans) ->
- 	
- 	setJavaBodyContents(loopState, l.body.statement) ->
- 	appendNextTransformation(l.body.statement, loopState)
-	// 	loopState.setBodyContents(l.body) ->
- ;
-  */
-  
-  Void rule(State s, Loop l):
- 	let r = new Region:
- 	let loopState = new State:
- 	let selfTrans = new Transition:
- 	s.setLabel("Loop_State") ->
+	s.setLabel("Loop_State") ->
  	s.regions.add(r) ->
  	r.states.add(loopState) ->
  	loopState.setIsInitial(true) ->
@@ -214,78 +211,74 @@ Void ruleEmit(Region r, Emit e):
  	
  	setJavaBodyContents(loopState, l.body.statement) ->
  	appendNextTransformation(loopState, (emf::EObject) l.body.statement)
-	// 	loopState.setBodyContents(l.body) ->
-  ;
+ ;
   
   
  /* rule 19 (parallel)
   *
-
-Void ruleParallel(State parent):
-	parent.setLabel("Parallel State") 
- 	//p.list.handleParallelStatement(parent)
-;
   */
-  
-  Void rule(State parent, Parallel p):
-	parent.setLabel("Parallel State") 
- 	//p.list.handleParallelStatement(parent)
+Void rule(State s, Parallel p):
+	//let r = new Region:
+	s.setLabel("Parallel State") -> 
+ 	//s.regions.add(r) ->
+ 	ruleParallelRecursive(s, p.list)
+;
+
+Void ruleParallelRecursive(State parent, List[Statement] statements):
+	let r = new Region:
+	let s = new State:
+	parent.regions.add(r) ->
+	r.states.add(s) ->
+	
+	((statements.size > 1) ? ruleParallelRecursive(parent, statements.withoutFirst()) : s) ->
+	
+	setJavaBodyContents(s, statements.first()) ->
+	appendNextTransformation(s, statements.first())  
 ;
 
 /*
  * rule 23 (sequence)
-
-Void ruleSequence(Region r, Sequence s):
-	s
-;
  */
  Void rule(State s, Sequence seq):
-	s.setLabel("Sequence State")
-;
-//transforms sequence
-State transSequence (State s, Statement statement):
-	//checks wether there is a sequence-operator
-	Sequence.isInstance(statement)?
-		(let i = new State:
-		let r = new Region:
-		i.setId("s1") ->
-		s.setLabel("Sequence") ->
-		i.setIsInitial(true) ->
-		r.states.add(i) ->
-		s.regions.add(r) ->
-		(transSequenceRecursive(r, i,((Sequence)statement).list, 2)).setIsFinal(true))
-		:s
-	;//(transSequence(s, statement));
+ 	let r = new Region:
+ 	let initial = new State:
+	s.setLabel("Sequence State") ->
+	s.regions.add(r) ->
+	initial.setIsInitial(true) ->
+	r.states.add(initial) ->
 	
-//recursive helpfunction for sequence transformation
-State transSequenceRecursive (Region r, State prev, List[Statement] statement, Integer id):
-	let s1 = new State:
-	let t = new Transition:
-	s1.setId("s"+id) ->
-	t.setType(TransitionType::NORMALTERMINATION) ->
-	r.states.add(s1)->
-	Sequence.isInstance(statement.first())?
-		(t.setSourceState(transSequenceRecursive(r,prev, ((Sequence)statement.first()).list, (id+1)))->
-		t.setTargetState(s1) ->
-		s1)
-	:
-		(t.setSourceState(prev)->
-		t.setTargetState(s1)->
-		s1);	
-
-/*
- * helper method
- * add a new region with the specified parallel statement
- */
-Void handleParallelStatement(Statement s, State parent):
-	let r = new Region:
-	let newS = new State:
-	newS.setIsInitial(true) ->
-	newS.setIsFinal(true) ->
-	r.states.add(newS) ->
-	parent.regions.add(r)	
-	// TODO newS.setBodyContents(s. ka
+	// call recursively
+	(seq.list.size > 1) ? ruleSequenceRecursive(r, initial, seq.list.withoutFirst()) : s
+	->
+		// body of first sequence state
+	setJavaBodyContents(initial, seq.list.first()) ->
+	appendNextTransformation(initial, seq.list.first())  
 ;
+
+Void ruleSequenceRecursive(Region region, State previous, List[Statement] statements):
+	let s = new State:
+	let t = new Transition:
+	region.states.add(s) ->
+	t.setType(TransitionType::NORMALTERMINATION) ->
+	t.setSourceState(previous) ->
+	t.setTargetState(s) ->
+		
+	((statements.size > 1) ? 
+	// if more than 1 element we have to handle another one
+	ruleSequenceRecursive(region, s, statements.withoutFirst())  
+	: 
+	// else finished
+	s.setIsFinal(true)) ->
+	
+	setJavaBodyContents(s, statements.first()) ->
+	appendNextTransformation(s, statements.first())
+;
+
+
+Void rule(State s, Block b):
+	rule(s, (Parallel) b.statement)
+;
+
  
  /*
   * helping method
