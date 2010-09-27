@@ -11,7 +11,7 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.esterel.transformation;
+package de.cau.cs.kieler.esterel.transformation.core;
 
 import java.util.List;
 
@@ -19,9 +19,6 @@ import org.eclipse.emf.common.command.AbstractCommand;
 import org.eclipse.emf.common.command.CommandStack;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.transaction.TransactionalEditingDomain;
-import org.eclipse.emf.transaction.util.TransactionUtil;
-import org.eclipse.ui.IEditorPart;
-import org.eclipse.ui.PlatformUI;
 
 import de.cau.cs.kieler.core.model.transformation.TransformationException;
 import de.cau.cs.kieler.core.model.transformation.xtend.XtendTransformationFramework;
@@ -33,7 +30,7 @@ import de.cau.cs.kieler.core.model.transformation.xtend.XtendTransformationFrame
  * @author uru
  * 
  */
-public class XpandRunner {
+public class XpandModelExecution {
 
     /** the file containing the transformation (.ext). */
     private String transformationFile;
@@ -41,6 +38,7 @@ public class XpandRunner {
     private List<String> basePackages;
 
     private TransactionalEditingDomain editDomain;
+
     /**
      * Default constructor taking the transformation file and the base packages.
      * 
@@ -50,39 +48,38 @@ public class XpandRunner {
      *            base packages (e.g.
      *            <strong>"de.cau.cs.kieler.synccharts.SyncchartsPackage"</strong>).
      */
-    public XpandRunner(final String theTransFile, final List<String> theBasePackages) {
+    public XpandModelExecution(final String theTransFile, final List<String> theBasePackages) {
         transformationFile = theTransFile;
         this.basePackages = theBasePackages;
     }
 
     /**
-     * @param editDomain the editDomain to set
+     * @param theEditDomain
+     *            the editDomain to set
      */
-    public void setEditDomain(TransactionalEditingDomain editDomain) {
-        this.editDomain = editDomain;
+    public void setEditDomain(final TransactionalEditingDomain theEditDomain) {
+        this.editDomain = theEditDomain;
     }
+
     /**
-     * execute the transformation for the given model on the corresponding command stack.
+     * execute the transformation for the given model on the corresponding command stack. prior to
+     * execution an edit domain has to be provided
      * 
-     * @param selModel
-     *            the model for which the transformation should be run. the model has to provide an
-     *            editing domain.
+     * @param parameter
+     *            parameters wit the models for which the transformation should be run.
      * @param transformation
      *            the name of the transformation to run
      */
-    public void executeTransformation(final EObject syncModel, final EObject estModel,
-            final String transformation) {
+    public void executeTransformation(final EObject[] parameter, final String transformation) {
 
         // create command
-        XpandCommand xCommand = new XpandCommand(new EObject[] { syncModel, estModel },
-                transformation);
+        XpandCommand xCommand = new XpandCommand(parameter, transformation);
 
         // get editing domain and execute
-        IEditorPart editor = PlatformUI.getWorkbench().getActiveWorkbenchWindow()
-        .getActivePage().getActiveEditor();
-        
-        TransactionalEditingDomain domain = TransactionUtil.getEditingDomain(editor);
-        //CommandStack stack = domain.getCommandStack();
+        if (editDomain == null) {
+            // TODO
+            System.err.println("NO EDITING DOMAIN SET");
+        }
         CommandStack stack = editDomain.getCommandStack();
         stack.execute(xCommand);
     }

@@ -27,6 +27,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
+import org.eclipse.emf.transaction.util.TransactionUtil;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gef.EditPartViewer;
 import org.eclipse.gmf.runtime.diagram.ui.editpolicies.CanonicalEditPolicy;
@@ -141,7 +142,7 @@ public class Est2SyncDataComponent extends JSONObjectDataComponent implements
                                 EObject selModel = ((View) selView).getElement();
                                 State root = ((Region) selModel).getStates().get(0);
                                 rootState = root;
-
+                                runner.setEditDomain(TransactionUtil.getEditingDomain(root));
                                 // initializing first statement
                                 QueueStatement qs = new QueueStatement(INITIAL_TRANSFORMATION,
                                         root, root.getBodyContents());

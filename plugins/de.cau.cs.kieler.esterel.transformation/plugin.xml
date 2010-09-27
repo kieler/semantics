@@ -4,7 +4,7 @@
    <extension
          point="de.cau.cs.kieler.sim.kiem.json.datacomponent">
       <content
-            class="de.cau.cs.kieler.esterel.transformation.Est2SyncDataComponent"
+            class="de.cau.cs.kieler.esterel.transformation.impl.E2SDataComponent"
             id="de.cau.cs.kieler.esterel.transformation"
             name="Esterel to SyncCharts Transformation">
       </content>
