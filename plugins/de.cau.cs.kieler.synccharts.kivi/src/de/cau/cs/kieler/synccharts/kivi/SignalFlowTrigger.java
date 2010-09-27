@@ -15,6 +15,7 @@ package de.cau.cs.kieler.synccharts.kivi;
 
 import de.cau.cs.kieler.core.kivi.AbstractTriggerState;
 import de.cau.cs.kieler.core.kivi.AbstractTrigger;
+import de.cau.cs.kieler.core.kivi.ITrigger;
 
 /**
  * This trigger is informed whenever the button for the signal flow visualization is pushed.
@@ -92,7 +93,7 @@ public class SignalFlowTrigger extends AbstractTrigger {
         /**
          * {@inheritDoc}
          */
-        public Class<?> getTriggerClass() {
+        public Class<? extends ITrigger> getTriggerClass() {
             return SignalFlowTrigger.class;
         }
 

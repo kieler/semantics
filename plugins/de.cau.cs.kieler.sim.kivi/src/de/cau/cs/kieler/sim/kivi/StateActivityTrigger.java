@@ -21,6 +21,7 @@ import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramEditor;
 
 import de.cau.cs.kieler.core.kivi.AbstractTrigger;
 import de.cau.cs.kieler.core.kivi.AbstractTriggerState;
+import de.cau.cs.kieler.core.kivi.ITrigger;
 
 /**
  * A trigger notifying the view management about the active states during simulation.
@@ -95,7 +96,7 @@ public class StateActivityTrigger extends AbstractTrigger {
         /**
          * {@inheritDoc}
          */
-        public Class<?> getTriggerClass() {
+        public Class<? extends ITrigger> getTriggerClass() {
             return StateActivityTrigger.class;
         }
 

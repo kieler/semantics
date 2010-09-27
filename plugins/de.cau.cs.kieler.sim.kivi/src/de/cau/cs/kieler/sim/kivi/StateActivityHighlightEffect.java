@@ -25,6 +25,7 @@ import org.eclipse.swt.graphics.Color;
 
 import de.cau.cs.kieler.core.kivi.AbstractEffect;
 import de.cau.cs.kieler.core.kivi.IEffect;
+import de.cau.cs.kieler.core.kivi.UndoEffect;
 import de.cau.cs.kieler.core.model.util.ModelingUtil;
 
 /**
@@ -129,12 +130,19 @@ public class StateActivityHighlightEffect extends AbstractEffect {
             StateActivityHighlightEffect otherEffect = (StateActivityHighlightEffect) other;
             if (otherEffect.targetFigure == targetFigure) {
                 return this;
-            } else {
-                return null;
             }
-        } else {
-            return null;
+        } else if (other instanceof UndoEffect) {
+            IEffect undo = ((UndoEffect) other).getEffect();
+            if (undo instanceof StateActivityHighlightEffect) {
+                StateActivityHighlightEffect otherEffect = (StateActivityHighlightEffect) undo;
+                if (otherEffect.targetFigure == targetFigure) {
+                    originalColor = otherEffect.originalColor;
+                    originalWidth = otherEffect.originalWidth;
+                    return this;
+                }
+            }
         }
+        return null;
     }
 
 }
