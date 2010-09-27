@@ -46,7 +46,7 @@ public class StateActivityHighlightEffect extends AbstractEffect {
 
     private Color originalColor;
 
-    private Color color = ColorConstants.red;
+    private Color color;
 
     /**
      * Default constructor.
@@ -64,6 +64,22 @@ public class StateActivityHighlightEffect extends AbstractEffect {
      *            the editor to highlight in
      */
     public StateActivityHighlightEffect(final EObject eObject, final DiagramEditor editor) {
+        this(eObject, editor, ColorConstants.red);
+    }
+
+    /**
+     * Create a new instance for the given edit part using the given color.
+     * 
+     * @param eObject
+     *            the EObject to highlight
+     * @param editor
+     *            the editor to highlight in
+     * @param highlightColor
+     *            the color to highlight the state with
+     */
+    public StateActivityHighlightEffect(final EObject eObject, final DiagramEditor editor,
+            final Color highlightColor) {
+        color = highlightColor;
         EditPart editPart = ModelingUtil.getEditPart(editor.getDiagramEditPart(), eObject);
         if (editPart instanceof GraphicalEditPart) {
             targetFigure = ((GraphicalEditPart) editPart).getFigure();
@@ -85,7 +101,7 @@ public class StateActivityHighlightEffect extends AbstractEffect {
                 originalWidth = ((Shape) targetFigure).getLineWidth();
                 ((Shape) targetFigure).setLineWidth(Math.min(originalWidth + widthIncrease,
                         widthMax));
-            } 
+            }
             // TODO handling of line width for papyrus-ish editors
             targetFigure.setForegroundColor(color);
             for (Object child : targetFigure.getChildren()) {
@@ -105,8 +121,8 @@ public class StateActivityHighlightEffect extends AbstractEffect {
         if (targetFigure instanceof Shape && originalWidth != -1) {
             ((Shape) targetFigure).setLineWidth(originalWidth);
             originalWidth = -1;
-        } 
-// TODO handling of papyrus-ish editors
+        }
+        // TODO handling of papyrus-ish editors
     }
 
     /**
