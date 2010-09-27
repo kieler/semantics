@@ -37,6 +37,7 @@ import de.cau.cs.kieler.core.util.Maybe;
 import de.cau.cs.kieler.core.util.Pair;
 import de.cau.cs.kieler.core.kivi.AbstractEffect;
 import de.cau.cs.kieler.core.kivi.IEffect;
+import de.cau.cs.kieler.core.kivi.UndoEffect;
 import de.cau.cs.kieler.core.model.util.ModelingUtil;
 
 /**
@@ -198,12 +199,20 @@ public class ArrowEffect extends AbstractEffect {
             if (otherArrow.source == source && otherArrow.target == target
                     && otherArrow.useConnectionLayer == useConnectionLayer) {
                 return this;
-            } else {
-                return null;
             }
-        } else {
-            return null;
+        } else if (other instanceof UndoEffect) {
+            IEffect undo = ((UndoEffect) other).getEffect();
+            if (undo instanceof ArrowEffect) {
+                ArrowEffect otherArrow = (ArrowEffect) undo;
+                if (otherArrow.source == source && otherArrow.target == target
+                        && otherArrow.useConnectionLayer == useConnectionLayer) {
+                    connection = otherArrow.connection;
+                    parent = otherArrow.parent;
+                    return this;
+                }
+            }
         }
+        return null;
     }
 
     private static Pair<Point, Point> computeAnchors(final Rectangle start, final Rectangle end) {

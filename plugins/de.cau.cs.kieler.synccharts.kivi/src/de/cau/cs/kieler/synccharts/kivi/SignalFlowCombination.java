@@ -56,8 +56,6 @@ public class SignalFlowCombination extends AbstractCombination {
             "The color to paint the signal flow arrows in", ColorConstants.red.getRGB(),
             CombinationParameter.RGB_TYPE) };
 
-    private Map<Pair<Transition, Transition>, IEffect> iEffects = new HashMap<Pair<Transition, Transition>, IEffect>();
-
     private boolean lastActive = false;
 
     /**
@@ -71,6 +69,7 @@ public class SignalFlowCombination extends AbstractCombination {
     public void execute(final SignalFlowActiveState active, final SelectionState selection) {
         if (active.isActive()) {
             if (!shouldExecute(selection.getSelectedEObjects())) {
+                doNothing();
                 return;
             }
 
@@ -106,54 +105,21 @@ public class SignalFlowCombination extends AbstractCombination {
             }
 
             // check all triggers against all effects for same signals
-            Map<Pair<Transition, Transition>, IEffect> toUndo;
-            toUndo = new HashMap<Pair<Transition, Transition>, IEffect>(iEffects);
-            iEffects.clear();
             for (Pair<Signal, Transition> effect : effects) {
                 for (Pair<Signal, Transition> trigger : triggers) {
                     if (effect.getFirst() == trigger.getFirst()) {
                         // sort out irrelevant transitions if a transition was selected
                         if (isRelevant(selection.getSelectedEObjects(), effect.getSecond())
                                 || isRelevant(selection.getSelectedEObjects(), trigger.getSecond())) {
-                            Pair<Transition, Transition> pair = new Pair<Transition, Transition>(
-                                    effect.getSecond(), trigger.getSecond());
-                            IEffect oldEffect = toUndo.remove(pair);
-                            if (oldEffect == null) {
-                                ArrowEffect iEffect = new ArrowEffect(effect.getSecond(),
-                                        trigger.getSecond(), getColor(), false);
-                                iEffects.put(new Pair<Transition, Transition>(effect.getSecond(),
-                                        trigger.getSecond()), iEffect);
-                            } else {
-                                iEffects.put(pair, oldEffect);
-                            }
+                            schedule(new ArrowEffect(effect.getSecond(), trigger.getSecond(),
+                                    getColor(), false));
                         }
                     }
                 }
             }
-
-            // remove all old arrows if this is an updated execution
-            for (IEffect effect : toUndo.values()) {
-                effect.scheduleUndo();
-            }
-            for (IEffect effect : iEffects.values()) {
-                effect.schedule();
-            }
-        } else {
-            // remove all arrows if the button is not pushed
-            undo();
         }
         lastActive = active.isActive();
 
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public void undo() {
-        for (IEffect effect : iEffects.values()) {
-            effect.scheduleUndo();
-        }
-        iEffects.clear();
     }
 
     /**

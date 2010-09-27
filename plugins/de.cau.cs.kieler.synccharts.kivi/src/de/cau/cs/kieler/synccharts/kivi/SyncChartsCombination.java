@@ -64,15 +64,15 @@ public class SyncChartsCombination extends AbstractCombination {
                     "The color to use for highlighting previously active states",
                     ColorConstants.blue.getRGB(), CombinationParameter.RGB_TYPE) };
 
-//    private Map<EObject, StateActivityHighlightEffect> highlightEffects;
+    // private Map<EObject, StateActivityHighlightEffect> highlightEffects;
     private Map<EObject, CompartmentCollapseExpandEffect> collapseEffects;
-    
+
     /**
      * Default constructor.
      */
     public SyncChartsCombination() {
         super();
-//        highlightEffects = new HashMap<EObject, StateActivityHighlightEffect>();
+        // highlightEffects = new HashMap<EObject, StateActivityHighlightEffect>();
         collapseEffects = new HashMap<EObject, CompartmentCollapseExpandEffect>();
     }
 
@@ -84,12 +84,17 @@ public class SyncChartsCombination extends AbstractCombination {
      */
     public void execute(final ActiveStates activeStates) {
         if (!(activeStates.getDiagramEditor() instanceof SyncchartsDiagramEditor)) {
+            doNothing();
             return;
         }
         // if there are no active states, the simulation has finished.
         // Undo every harm you have done before
         if (activeStates.getActiveStates().isEmpty()) {
-            undo();
+            for (IEffect effect : collapseEffects.values()) {
+                effect.scheduleUndo();
+            }
+            collapseEffects.clear();
+            // TODO adapt collapse effects for new effect handling mechanism
             return;
         }
 
@@ -99,7 +104,6 @@ public class SyncChartsCombination extends AbstractCombination {
         }
 
         // assume every effect needs to be undone
-//        Map<EObject, IEffect> highlightsToUndo = new HashMap<EObject, IEffect>(highlightEffects);
         Map<EObject, CompartmentCollapseExpandEffect> collapsesToUndo;
         collapsesToUndo = new HashMap<EObject, CompartmentCollapseExpandEffect>(collapseEffects);
 
@@ -110,15 +114,8 @@ public class SyncChartsCombination extends AbstractCombination {
                 // check if an effect exists for this edit part
                 StateActivityHighlightEffect highlightEffect; // = highlightEffects.get(e);
                 CompartmentCollapseExpandEffect collapseEffect = collapseEffects.get(e);
-//                if (highlightEffect == null) {
-                    // if not then create new one
-                    highlightEffect = new StateActivityHighlightEffect(e,
-                            activeStates.getDiagramEditor());
-//                    highlightEffects.put(e, highlightEffect);
-//                } else {
-                    // if it does then don't undo it later
-//                    highlightsToUndo.remove(e);
-//                }
+                highlightEffect = new StateActivityHighlightEffect(e,
+                        activeStates.getDiagramEditor());
                 // there is a collapse effect for every state, no need to create on demand
                 if (collapseEffect != null) {
                     collapsesToUndo.remove(e); // don't collapse this later
@@ -132,10 +129,6 @@ public class SyncChartsCombination extends AbstractCombination {
         }
 
         // undo any effect that was not found in the active states
-//        for (Map.Entry<EObject, IEffect> entry : highlightsToUndo.entrySet()) {
-//            entry.getValue().scheduleUndo();
-//            highlightEffects.remove(entry.getKey()); // forget about this effect
-//        }
         for (CompartmentCollapseExpandEffect effect : collapsesToUndo.values()) {
             effect.setCollapsed(true);
             effect.schedule();
@@ -162,21 +155,6 @@ public class SyncChartsCombination extends AbstractCombination {
                 collapseEffects.put(state, collapseEffect);
             }
         }
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public void undo() {
-        super.undo();
-//        for (IEffect effect : highlightEffects.values()) {
-//            effect.scheduleUndo();
-//        }
-//        highlightEffects.clear();
-        for (IEffect effect : collapseEffects.values()) {
-            effect.scheduleUndo();
-        }
-        collapseEffects.clear();
     }
 
     /**
