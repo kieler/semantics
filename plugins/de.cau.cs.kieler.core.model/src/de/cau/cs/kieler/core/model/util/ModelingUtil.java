@@ -261,10 +261,10 @@ public final class ModelingUtil {
      * 
      * @param dep the DiagramEditPart to search in
      * @param theElement the EObject to find
-     * @return the EditPart, or null if none was found
+     * @return the EditPart, or {@code null} if none was found
      */
     public static EditPart getEditPart(final DiagramEditPart dep, final EObject theElement) {
-        if(theElement == null){
+        if (theElement == null) {
             return null;
         }
         EditPart found = dep.findEditPart(null, theElement);
@@ -283,6 +283,22 @@ public final class ModelingUtil {
             }
         }
         return null;
+    }
+    
+    /**
+     * Find an EditPart corresponding to the given EObject in an arbitrary editor.
+     * However, only GMF editors are supported at the moment.
+     * 
+     * @param editorPart an editor part
+     * @param element the EObject to find
+     * @return the EditPart, or {@code null} if none was found
+     */
+    public static EditPart getEditPart(final IEditorPart editorPart, final EObject element) {
+        if (editorPart instanceof DiagramEditPart) {
+            return getEditPart((DiagramEditPart) editorPart, element);
+        } else {
+            return null;
+        }
     }
 
     /**
