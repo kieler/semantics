@@ -14,8 +14,10 @@
 package de.cau.cs.kieler.kvid.datadistributor;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 
@@ -31,7 +33,7 @@ public final class RuntimeConfiguration {
     private static final RuntimeConfiguration INSTANCE = new RuntimeConfiguration();
     
     /** The list of all {@link Property}s which KViD offers. */
-    private List<Property> knownProperties = new ArrayList<Property>();
+    private Map<String, Property> knownProperties = new HashMap<String, Property>();
     
     /** List of {@link IPropertyListener}s who want to be notified about changes. */ 
     private List<IPropertyListener> listeners = new LinkedList<IPropertyListener>();
@@ -79,10 +81,9 @@ public final class RuntimeConfiguration {
      * @return The current value of the requested {@link Property} 
      */
     public String currentValueOfProperty(final String propertyName) {
-        for (Property property : knownProperties) {
-            if (property.getName().equals(propertyName)) {
-                return property.getCurrentValue();
-            }
+        Property property = knownProperties.get(propertyName);
+        if (property != null) {
+            return property.getCurrentValue();
         }
         throw new RuntimeException("Unknown property name!");
     }
@@ -94,7 +95,7 @@ public final class RuntimeConfiguration {
      * @return The list of currently known {@link Property}s
      */
     public List<Property> getKnownProperties() {
-        return knownProperties;
+        return new ArrayList<Property>(knownProperties.values());
     }
     
     /**
@@ -104,12 +105,7 @@ public final class RuntimeConfiguration {
      * @return The Property with the given name or null if it doesn't exists
      */
     public Property getProperty(final String propertyName) {
-        for (Property property : knownProperties) {
-            if (property.getName().equals(propertyName)) {
-                return property;
-            }
-        }
-        return null;
+        return knownProperties.get(propertyName);
     }
     
     /**
@@ -122,14 +118,14 @@ public final class RuntimeConfiguration {
     public List<Property> getReferedProperties(final List<String> selectedParts) {
         List<Property> result = new LinkedList<Property>();
         if (selectedParts == null) {
-            for (Property property : knownProperties) {
+            for (Property property : knownProperties.values()) {
                 if (property.refersTo(null)) {
                     result.add(property);
                 }
             }
         } else {
             for (String part : selectedParts) {
-                for (Property property : knownProperties) {
+                for (Property property : knownProperties.values()) {
                     if (property.refersTo(part)) {
                         result.add(property);
                     }
@@ -158,13 +154,10 @@ public final class RuntimeConfiguration {
      * @param theproperty The new {@link Property} to add
      */
     public void addProperty(final int where, final Property theproperty) {
-        for (Property property : knownProperties) {
-            if (property.getName().equals(theproperty.getName())) {
-                //Check if the name already exists, ignore the new property then
-                return;
-            }
+        if (!knownProperties.containsKey(theproperty.getName())) {
+            //Check if the name already exists, ignore the new property then
+            knownProperties.put(theproperty.getName(), theproperty);
         }
-        knownProperties.add(where, theproperty);
         for (IPropertyListener listener : listeners) {
             listener.triggerPropertyListChanged();       
         }
@@ -176,7 +169,7 @@ public final class RuntimeConfiguration {
      * @param theproperty The {@link Property} to remove from the list
      */
     public void removeProperty(final Property theproperty) {
-        knownProperties.remove(theproperty);
+        knownProperties.remove(theproperty.getName());
         for (IPropertyListener listener : listeners) {
             listener.triggerPropertyListChanged();       
         }
@@ -217,7 +210,7 @@ public final class RuntimeConfiguration {
      * Will ignore free text Properties. 
      */
     public void resetToDefault() {
-        for (Property property : knownProperties) {
+        for (Property property : knownProperties.values()) {
             property.setCurrentValue(0);
             for (IPropertyListener listener : listeners) {
                 listener.triggerPropertyChanged(property);                

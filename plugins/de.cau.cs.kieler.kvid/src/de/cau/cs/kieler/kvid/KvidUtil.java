@@ -258,7 +258,19 @@ public final class KvidUtil {
             //Element couldn't be resolved, can't decide on paths then
             return null;
         }
-        EObject modelElement = resource.getEObject(elementUriPart);
+        EObject modelElement;
+        try {
+            modelElement = resource.getEObject(elementUriPart);
+        } catch (StringIndexOutOfBoundsException siobex) {
+            //Workaround for an error in the getEObject method
+            //Should return null for a non existing model element
+            //When something was deleted, it sometimes throws this exception instead
+            return null;
+        }
+        if (modelElement == null) {
+            //Element couldn't be resolved, can't decide on paths then
+            return null;
+        }
         List<EditPart> parts = ModelingUtil.getEditParts(
                 currentEditor.getDiagramEditPart(), modelElement);
         KNode currentNode = null;
