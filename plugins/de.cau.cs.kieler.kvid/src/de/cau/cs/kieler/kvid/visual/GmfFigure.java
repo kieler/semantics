@@ -21,6 +21,7 @@ import org.eclipse.draw2d.geometry.Rectangle;
 
 import de.cau.cs.kieler.kvid.data.DataObject;
 import de.cau.cs.kieler.kvid.data.KvidUri;
+import de.cau.cs.kieler.kvid.datadistributor.RuntimeConfiguration;
 
 /**
  * The figure which is used to display plain data.
@@ -35,6 +36,9 @@ public class GmfFigure extends RoundedRectangle implements IKvidFigure {
     
     /** The factor by which the figure is enlarged in comparison to the data's length. */
     private static final int STRETCH_FACTOR = 10; 
+    
+    /** The default lable length. */
+    private static final int DEFAULT_LABEL_LENGTH = 6;
     
     /**
      * Constructs a new figure for the given data.
@@ -56,15 +60,28 @@ public class GmfFigure extends RoundedRectangle implements IKvidFigure {
             
             //Construct the visual parts
             setLayoutManager(new BorderLayout());
-            setBounds(new Rectangle(0, 0, currentData.getData().toString().length()
-                    * STRETCH_FACTOR, 2 * STRETCH_FACTOR));
             setForegroundColor(ColorConstants.black);
-            Label label = new Label(currentData.getData().toString());
+            int maxLabelLength;
+            try {
+                String propertyText = RuntimeConfiguration.getInstance()
+                .getProperty(RuntimeConfiguration.MAX_TOKEN_SIZE).getCurrentValue();
+                maxLabelLength = Integer.parseInt(propertyText);
+            } catch (NumberFormatException nfex) {
+                //Invalid number entered, use a default value
+                maxLabelLength = DEFAULT_LABEL_LENGTH;
+            }
+            Label label;
+            if (currentData.getData().length() > maxLabelLength) {
+                label = new Label(currentData.getData().substring(0, maxLabelLength) + "...");
+            } else {
+                label = new Label(currentData.getData());
+            }
             label.setForegroundColor(ColorConstants.black);
-            label.setBounds(new Rectangle(0, 0, currentData.getData().toString()
-                    .length()
+            label.setBounds(new Rectangle(0, 0, label.getText().length()
                     * STRETCH_FACTOR, STRETCH_FACTOR));
             add(label, BorderLayout.CENTER);
+            setBounds(new Rectangle(0, 0, label.getText().length()
+                    * STRETCH_FACTOR, 2 * STRETCH_FACTOR));
         }
         setVisible(false);
     }

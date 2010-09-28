@@ -47,6 +47,9 @@ public final class RuntimeConfiguration {
     /** Constant for getting animation status by name. */
     public static final String DEBUG_MODE = "Debug drawing activated";
     
+    /** Constant for getting maximal token size by name. */
+    public static final String MAX_TOKEN_SIZE = "Maximal token size";
+    
     /** Constant for getting animation status by name. */
     public static final String DEFAULT_PORT = "Default output port";
     
@@ -61,6 +64,7 @@ public final class RuntimeConfiguration {
                 "Disappear", "Stay at last location", "Replay" }));
         addProperty(new Property("Debug drawing activated", new String[] {
                 "false", "true" }));
+        addProperty(new Property(MAX_TOKEN_SIZE, "6"));
         addProperty(new Property(
                 "Default output port", "output"));
     }
