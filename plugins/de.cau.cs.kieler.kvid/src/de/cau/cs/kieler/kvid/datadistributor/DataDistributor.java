@@ -197,7 +197,11 @@ public final class DataDistributor implements IProviderListener, ResourceSetList
         }
         for (IDataListener listener : listeners) {
             //Notify all listeners that data was updated
-            listener.triggerDataChanged();
+            if (listener != null) {
+                listener.triggerDataChanged();
+            } else {
+                removeDataListener(listener);
+            }
         }
     }
     
@@ -356,7 +360,11 @@ public final class DataDistributor implements IProviderListener, ResourceSetList
         }
         currentEditor = null;
         for (IDataListener listener : listeners) {
-            listener.triggerWrapup();
+            if (listener != null) {
+                listener.triggerWrapup();
+            } else {
+                removeDataListener(listener);
+            }
         }
     }
     
