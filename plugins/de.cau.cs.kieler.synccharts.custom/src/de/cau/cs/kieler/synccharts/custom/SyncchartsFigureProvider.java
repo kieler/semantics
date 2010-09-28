@@ -389,8 +389,10 @@ public class SyncchartsFigureProvider implements IRenderingProvider {
                 } else {
                     stateLayout.getCorrespondingLayout(null).padding(0);
                 }
-                /
+                
+                
             }
+            
         
         }
         */
@@ -406,7 +408,7 @@ public class SyncchartsFigureProvider implements IRenderingProvider {
         return null;
     }
 
-    public BorderItemLocator getBorderItemLocatorByString(String input) {
+    public BorderItemLocator getBorderItemLocatorByString(String input,final IFigure parent, final Object locator) {
         // TODO Auto-generated method stub
         return null;
     }

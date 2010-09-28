@@ -55,6 +55,7 @@ public class ListSizeCondition implements ICondition<EObject> {
      */
     public boolean evaluate(final EObject object) {
         Object modelFeature = object.eGet(feature);
+        try {
         if (modelFeature instanceof EList<?>) {
             if (operator.equals("") || operator.equals("==")) {
                 return (size == ((EList<?>) modelFeature).size());
@@ -69,6 +70,9 @@ public class ListSizeCondition implements ICondition<EObject> {
             } else if (operator.equals("<=")) {
                 return (size <= ((EList<?>) modelFeature).size());
             }
+        }
+        } catch (Exception e) {
+            return false;
         }
         return false;
     }

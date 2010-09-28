@@ -194,7 +194,7 @@ public class SyncchartsConnectionFigureProvider implements IRenderingProvider {
         return null;
     }
 
-    public BorderItemLocator getBorderItemLocatorByString(String input) {
+    public BorderItemLocator getBorderItemLocatorByString(String input,final IFigure parent, final Object locator) {
         // TODO Auto-generated method stub
         return null;
     }
