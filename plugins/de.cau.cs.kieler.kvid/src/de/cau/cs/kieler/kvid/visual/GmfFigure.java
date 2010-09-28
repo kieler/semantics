@@ -44,18 +44,28 @@ public class GmfFigure extends RoundedRectangle implements IKvidFigure {
     public GmfFigure(final DataObject thedata) {
         super();
         this.currentData = thedata;
-        
-        //Construct the visual parts
-        setLayoutManager(new BorderLayout());
-        setBounds(new Rectangle(0, 0, currentData.getData().toString().length()
-                * STRETCH_FACTOR, 2 * STRETCH_FACTOR));
-        setForegroundColor(ColorConstants.black);
-        Label label = new Label(currentData.getData().toString());
-        label.setForegroundColor(ColorConstants.black);
-        label.setBounds(new Rectangle(0, 0, currentData.getData().toString()
-                .length()
-                * STRETCH_FACTOR, STRETCH_FACTOR));
-        add(label, BorderLayout.CENTER);
+        if ("true".equalsIgnoreCase(currentData.getData())) {
+            setBounds(new Rectangle(0, 0, STRETCH_FACTOR, STRETCH_FACTOR));
+            setForegroundColor(ColorConstants.green);
+            setBackgroundColor(ColorConstants.green);
+        } else if ("false".equalsIgnoreCase(currentData.getData())) {
+            setBounds(new Rectangle(0, 0, STRETCH_FACTOR, STRETCH_FACTOR));
+            setForegroundColor(ColorConstants.red);
+            setBackgroundColor(ColorConstants.red);
+        } else {
+            
+            //Construct the visual parts
+            setLayoutManager(new BorderLayout());
+            setBounds(new Rectangle(0, 0, currentData.getData().toString().length()
+                    * STRETCH_FACTOR, 2 * STRETCH_FACTOR));
+            setForegroundColor(ColorConstants.black);
+            Label label = new Label(currentData.getData().toString());
+            label.setForegroundColor(ColorConstants.black);
+            label.setBounds(new Rectangle(0, 0, currentData.getData().toString()
+                    .length()
+                    * STRETCH_FACTOR, STRETCH_FACTOR));
+            add(label, BorderLayout.CENTER);
+        }
         setVisible(false);
     }
     
@@ -66,16 +76,26 @@ public class GmfFigure extends RoundedRectangle implements IKvidFigure {
         currentData = thedata;
         //Clean figure
         removeAll();
-        
-        //Create new visuals
-        setBounds(new Rectangle(0, 0, currentData.getData().toString().length()
-                * STRETCH_FACTOR, 2 * STRETCH_FACTOR));
-        Label label = new Label(currentData.getData().toString());
-        label.setForegroundColor(ColorConstants.black);
-        label.setBounds(new Rectangle(0, 0, currentData.getData().toString()
-                .length()
-                * STRETCH_FACTOR, STRETCH_FACTOR));
-        add(label, BorderLayout.CENTER);
+        if ("true".equalsIgnoreCase(currentData.getData())) {
+            setBounds(new Rectangle(0, 0, STRETCH_FACTOR, STRETCH_FACTOR));
+            setForegroundColor(ColorConstants.green);
+            setBackgroundColor(ColorConstants.green);
+        } else if ("false".equalsIgnoreCase(currentData.getData())) {
+            setBounds(new Rectangle(0, 0, STRETCH_FACTOR, STRETCH_FACTOR));
+            setForegroundColor(ColorConstants.red);
+            setBackgroundColor(ColorConstants.red);
+        } else {
+            
+            //Create new visuals
+            setBounds(new Rectangle(0, 0, currentData.getData().toString().length()
+                    * STRETCH_FACTOR, 2 * STRETCH_FACTOR));
+            Label label = new Label(currentData.getData().toString());
+            label.setForegroundColor(ColorConstants.black);
+            label.setBounds(new Rectangle(0, 0, currentData.getData().toString()
+                    .length()
+                    * STRETCH_FACTOR, STRETCH_FACTOR));
+            add(label, BorderLayout.CENTER);
+        }
     }
 
     /**
