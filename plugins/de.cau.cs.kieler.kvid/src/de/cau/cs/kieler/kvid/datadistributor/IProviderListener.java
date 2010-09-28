@@ -39,8 +39,9 @@ public interface IProviderListener {
      * the visualization of the new data.
      * 
      * @param data The new data for the next visualization step in JSON
+     * @param isHistoryStep Does the data need special handling because it is history data?
      * 
      */
-    void update(JSONObject data);
+    void update(JSONObject data, boolean isHistoryStep);
 
 }

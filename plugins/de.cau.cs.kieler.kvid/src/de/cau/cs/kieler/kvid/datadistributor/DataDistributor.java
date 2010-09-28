@@ -121,7 +121,7 @@ public final class DataDistributor implements IProviderListener, ResourceSetList
      * {@inheritDoc}
      * 
      */
-    public void update(final JSONObject data) {
+    public void update(final JSONObject data, final boolean isHistoryStep) {
         //Lazy reload of paths if layout was changed
         if (layoutChanged) {
             PlatformUI.getWorkbench().getDisplay().syncExec(new Runnable() {
@@ -198,7 +198,7 @@ public final class DataDistributor implements IProviderListener, ResourceSetList
         for (IDataListener listener : listeners) {
             //Notify all listeners that data was updated
             if (listener != null) {
-                listener.triggerDataChanged();
+                listener.triggerDataChanged(isHistoryStep);
             } else {
                 removeDataListener(listener);
             }

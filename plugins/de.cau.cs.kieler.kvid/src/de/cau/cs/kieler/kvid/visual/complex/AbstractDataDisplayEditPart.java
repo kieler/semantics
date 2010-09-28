@@ -80,7 +80,7 @@ public abstract class AbstractDataDisplayEditPart extends ShapeNodeEditPart
     /**
      * {@inheritDoc}
      */
-    public abstract void triggerDataChanged();
+    public abstract void triggerDataChanged(boolean isHistoryValue);
 
     /**
      * {@inheritDoc}

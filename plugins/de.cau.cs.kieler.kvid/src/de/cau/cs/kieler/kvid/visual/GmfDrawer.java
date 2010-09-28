@@ -242,7 +242,7 @@ public final class GmfDrawer implements IDrawer, IDataListener {
     /**
      * {@inheritDoc}
      */
-    public void triggerDataChanged() {
+    public void triggerDataChanged(final boolean isHistoryValue) {
         try {
             draw(DataDistributor.getInstance().getData());
         } catch (NullPointerException nex) {

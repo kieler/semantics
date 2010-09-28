@@ -131,7 +131,11 @@ public class ScopeEditPart extends AbstractDataDisplayEditPart {
     /**
      * {@inheritDoc}
      */
-    public void triggerDataChanged() {
+    public void triggerDataChanged(final boolean isHistoryValue) {
+        if (isHistoryValue) {
+            //Do nothing with history values for now
+            return;
+        }
         
         //Check if information is relevant for this edit part
         IEditorPart activeEditor = KvidUtil.getActiveEditor();

@@ -26,8 +26,10 @@ public interface IDataListener {
     
     /**
      * Method to be called when the data relvant ot the listener is changed.
+     * 
+     * @param isHistoryValue Shows whether this is a new value or we a browsing in the past
      */
-    void triggerDataChanged();
+    void triggerDataChanged(boolean isHistoryValue);
     
     /**
      * Method to be called when the visualization is finished.

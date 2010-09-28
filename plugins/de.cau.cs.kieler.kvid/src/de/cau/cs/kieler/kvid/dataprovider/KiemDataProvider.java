@@ -44,7 +44,7 @@ public class KiemDataProvider extends JSONObjectDataComponent implements
     public JSONObject step(final JSONObject jSONObject)
             throws KiemExecutionException {
         for (IProviderListener listener : listeners) {
-            listener.update(jSONObject);
+            listener.update(jSONObject, isHistoryStep());
         }
         return null;
     }
@@ -79,6 +79,14 @@ public class KiemDataProvider extends JSONObjectDataComponent implements
      * {@inheritDoc}
      */
     public boolean isObserver() {
+        return true;
+    }
+    
+    /* (non-Javadoc)
+     * @see de.cau.cs.kieler.sim.kiem.internal.AbstractDataComponent#isHistoryObserver()
+     */
+    @Override
+    public boolean isHistoryObserver() {
         return true;
     }
 
