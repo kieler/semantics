@@ -36,6 +36,7 @@ import de.cau.cs.kieler.kvid.datadistributor.DataDistributor;
 import de.cau.cs.kieler.kvid.datadistributor.RuntimeConfiguration;
 import de.cau.cs.kieler.kvid.visual.GmfImageFigure;
 import de.cau.cs.kieler.kvid.visual.complex.AbstractDataDisplayEditPart;
+import de.cau.cs.kieler.sim.kiem.KiemPlugin;
 
 /**
  * EditPart which handles ScopeNodes.
@@ -55,9 +56,6 @@ public class ScopeEditPart extends AbstractDataDisplayEditPart {
     
     /** The {@link GmfImageFigure} which holds the current scope as an image. */
     private GmfImageFigure currentScope;
-    
-    /** Variable whch stores how many steps have been displayed by now. */
-    private int steps = 0;
     
     /** Default height of a ScopeNode. */
     private static final int PLOT_HEIGHT = 200;
@@ -121,7 +119,6 @@ public class ScopeEditPart extends AbstractDataDisplayEditPart {
                 } catch (NumberFormatException nfex) {
                     //value is not usable by this element, ignore it
                 }
-                steps++;
             }
             plot.fillPlot();
         }
@@ -132,11 +129,6 @@ public class ScopeEditPart extends AbstractDataDisplayEditPart {
      * {@inheritDoc}
      */
     public void triggerDataChanged(final boolean isHistoryValue) {
-        if (isHistoryValue) {
-            //Do nothing with history values for now
-            return;
-        }
-        
         //Check if information is relevant for this edit part
         IEditorPart activeEditor = KvidUtil.getActiveEditor();
         if (activeEditor instanceof DiagramEditor) {
@@ -164,12 +156,20 @@ public class ScopeEditPart extends AbstractDataDisplayEditPart {
         
         //Process the new data
         DataObject dataObject = DataDistributor.getInstance().getDataObjectByURI(referredObjectURI);
+        long currentKiemStep = KiemPlugin.getDefault().getExecution().getSteps();
+        double currentRange = plot.getXRange()[1];
         try {
-            plot.addPoint(0, steps, Double.valueOf(dataObject.getData().toString()), false);
+            if (isHistoryValue) {
+                if (currentRange >  currentKiemStep) {
+                    plot.setXRange(plot.getXRange()[0], currentKiemStep);
+                }
+            } else {
+                plot.addPoint(0, currentKiemStep,
+                        Double.valueOf(dataObject.getData().toString()), false);
+            }
         } catch (NumberFormatException nfex) {
             //data is not usable by this element, ignore it
         }
-        steps++;
         
         //Update drawing
         refreshPlot();
@@ -241,7 +241,6 @@ public class ScopeEditPart extends AbstractDataDisplayEditPart {
      */
     public void triggerWrapup() {
         plot.clear(0);
-        steps = 0;
         try {
             final int waitForScopeDrawingTime = 100;
             Thread.sleep(waitForScopeDrawingTime);
