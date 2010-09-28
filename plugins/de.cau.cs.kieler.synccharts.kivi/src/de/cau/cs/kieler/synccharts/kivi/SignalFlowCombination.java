@@ -14,10 +14,8 @@
 package de.cau.cs.kieler.synccharts.kivi;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 
 import org.eclipse.draw2d.ColorConstants;
 import org.eclipse.emf.ecore.EObject;
@@ -29,7 +27,6 @@ import de.cau.cs.kieler.core.expressions.Signal;
 import de.cau.cs.kieler.core.expressions.ValuedObjectReference;
 import de.cau.cs.kieler.core.util.Pair;
 import de.cau.cs.kieler.core.kivi.CombinationParameter;
-import de.cau.cs.kieler.core.kivi.IEffect;
 import de.cau.cs.kieler.core.kivi.AbstractCombination;
 import de.cau.cs.kieler.core.kivi.SelectionTrigger.SelectionState;
 import de.cau.cs.kieler.synccharts.Emission;
@@ -56,8 +53,6 @@ public class SignalFlowCombination extends AbstractCombination {
             "The color to paint the signal flow arrows in", ColorConstants.red.getRGB(),
             CombinationParameter.RGB_TYPE) };
 
-    private boolean lastActive = false;
-
     /**
      * Execute the combination using the signal flow active state and the selection state.
      * 
@@ -68,8 +63,8 @@ public class SignalFlowCombination extends AbstractCombination {
      */
     public void execute(final SignalFlowActiveState active, final SelectionState selection) {
         if (active.isActive()) {
-            if (!shouldExecute(selection.getSelectedEObjects())) {
-                doNothing();
+            if (!shouldExecute(active, selection)) {
+                doNothing(); // keep arrows as-is, eg for exporting images
                 return;
             }
 
@@ -118,8 +113,6 @@ public class SignalFlowCombination extends AbstractCombination {
                 }
             }
         }
-        lastActive = active.isActive();
-
     }
 
     /**
@@ -156,12 +149,12 @@ public class SignalFlowCombination extends AbstractCombination {
         return true;
     }
 
-    private boolean shouldExecute(final List<EObject> selection) {
-        if (!lastActive) { // execute if button has just been pushed
+    private boolean shouldExecute(final SignalFlowActiveState active, final SelectionState selection) {
+        if (active.getSequenceNumber() > selection.getSequenceNumber()) { // button was just pushed
             return true;
         }
-        if (selection.size() == 1) {
-            EObject selected = selection.get(0);
+        if (selection.getSelectedEObjects().size() == 1) {
+            EObject selected = selection.getSelectedEObjects().get(0);
             if (selected.eContainer() == null) { // don't re-draw if the root region was selected
                 return false;
             }
@@ -169,7 +162,7 @@ public class SignalFlowCombination extends AbstractCombination {
         return true;
     }
 
-    private Color getColor() {
+    private static Color getColor() {
         return new Color(null, PreferenceConverter.getColor(getPreferenceStore(), ARROW_COLOR));
     }
 

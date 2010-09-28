@@ -41,13 +41,17 @@ import de.cau.cs.kieler.sim.kiem.properties.KiemProperty;
 public abstract class KiViDataComponent extends JSONObjectDataComponent implements
         IJSONObjectDataComponent {
 
-    private static final int DEFAULT_STEPS = 5;
+    private static final int DEFAULT_STEPS = 3;
+    
+    private static final String DEFAULT_STATE_KEY = "state";
 
     private DiagramEditor diagramEditor;
 
     private Resource resource;
 
     private int steps;
+    
+    private String stateKey;
 
     private DataComponentWrapper wrapper;
 
@@ -61,6 +65,7 @@ public abstract class KiViDataComponent extends JSONObjectDataComponent implemen
         }
         resource = ((View) diagramEditor.getDiagramEditPart().getModel()).getElement().eResource();
         steps = getProperties()[0].getValueAsInt();
+        stateKey = getProperties()[1].getValue();
         for (DataComponentWrapper w : KiemPlugin.getDefault().getDataComponentWrapperList()) {
             if (w.getDataComponent() == this) {
                 wrapper = w;
@@ -108,8 +113,9 @@ public abstract class KiViDataComponent extends JSONObjectDataComponent implemen
      * {@inheritDoc}
      */
     public KiemProperty[] provideProperties() {
-        KiemProperty[] properties = new KiemProperty[1];
-        properties[0] = new KiemProperty("steps", DEFAULT_STEPS);
+        KiemProperty[] properties = new KiemProperty[2];
+        properties[0] = new KiemProperty("history steps", DEFAULT_STEPS);
+        properties[1] = new KiemProperty("state variable", DEFAULT_STATE_KEY);
         return properties;
     }
 
@@ -128,9 +134,8 @@ public abstract class KiViDataComponent extends JSONObjectDataComponent implemen
         JSONObject currentJSONObject = jSONObject;
         try {
             for (int i = 0; i <= steps; i++) {
-                if (currentJSONObject.has("state")) {
-                    String stateString = currentJSONObject.get("state").toString();
-                    // TODO parameterize state key
+                if (currentJSONObject.has(stateKey)) {
+                    String stateString = currentJSONObject.get(stateKey).toString();
                     String[] states = stateString.replaceAll("\\s", "").split(",");
                     for (String state : states) {
                         if (state.length() > 1) {
@@ -152,8 +157,7 @@ public abstract class KiViDataComponent extends JSONObjectDataComponent implemen
                 StateActivityTrigger.getInstance().step(statesByStep, diagramEditor);
             }
         } catch (JSONException e) {
-            // when no state value exists
-            e.printStackTrace();
+            // never happens because JSON.get() is checked by JSON.has()
         }
         return null;
     }

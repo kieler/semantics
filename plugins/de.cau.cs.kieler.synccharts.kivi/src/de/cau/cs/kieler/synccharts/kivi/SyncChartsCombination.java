@@ -77,7 +77,7 @@ public class SyncChartsCombination extends AbstractCombination {
         if (activeStates.getActiveStates().isEmpty()) {
             return;
         }
-
+        
         // initially collapse all states
         init(activeStates.getDiagramEditor());
 
