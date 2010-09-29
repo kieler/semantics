@@ -20,6 +20,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gef.GraphicalEditPart;
 import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramEditor;
+import org.eclipse.gmf.runtime.draw2d.ui.figures.RoundedRectangleBorder;
 import org.eclipse.gmf.runtime.draw2d.ui.figures.WrappingLabel;
 import org.eclipse.swt.graphics.Color;
 
@@ -102,7 +103,14 @@ public class StateActivityHighlightEffect extends AbstractEffect {
                 ((Shape) targetFigure).setLineWidth(Math.min(originalWidth + widthIncrease,
                         widthMax));
             }
-            // TODO handling of line width for papyrus-ish editors
+            // papyrus
+            if (targetFigure.getBorder() instanceof RoundedRectangleBorder && originalWidth == -1) {
+                originalWidth = ((RoundedRectangleBorder) targetFigure.getBorder()).getWidth();
+                ((RoundedRectangleBorder) targetFigure.getBorder()).setWidth(Math.min(originalWidth
+                        + widthIncrease, widthMax));
+                targetFigure.repaint();
+            }
+
             targetFigure.setForegroundColor(color);
             for (Object child : targetFigure.getChildren()) {
                 if (child instanceof WrappingLabel) {
@@ -116,13 +124,16 @@ public class StateActivityHighlightEffect extends AbstractEffect {
     public void undo() {
         if (targetFigure != null && originalColor != null) {
             targetFigure.setForegroundColor(originalColor);
-            originalColor = null;
         }
         if (targetFigure instanceof Shape && originalWidth != -1) {
             ((Shape) targetFigure).setLineWidth(originalWidth);
-            originalWidth = -1;
         }
-        // TODO handling of papyrus-ish editors
+        if (targetFigure.getBorder() instanceof RoundedRectangleBorder && originalWidth != -1) {
+            ((RoundedRectangleBorder) targetFigure.getBorder()).setWidth(originalWidth);
+            targetFigure.repaint();
+        }
+        originalColor = null;
+        originalWidth = -1;
     }
 
     /**
