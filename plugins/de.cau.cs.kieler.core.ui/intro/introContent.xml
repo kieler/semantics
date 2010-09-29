@@ -65,7 +65,7 @@
             label="KIELER Samples"
             id="group"
             style-id="content-group">
-	        <text> The following examples help you to introduce in KIELER.</text>
+	        <text> The following examples help you to become familiar with in KIELER.</text>
 		 	<anchor id="import-wizard"/>
  		    <group
 	            label="Quick Starts"
