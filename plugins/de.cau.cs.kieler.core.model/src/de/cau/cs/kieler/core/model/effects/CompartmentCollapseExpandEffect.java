@@ -47,6 +47,7 @@ public class CompartmentCollapseExpandEffect extends AbstractEffect {
     private boolean originalCollapseState;
     private boolean doLayout;
     private DiagramEditor targetEditor;
+    private boolean justExecuted;
 
     /**
      * The compartment level gives the hierarchy to which to search for compartments to doCollapse.
@@ -98,12 +99,15 @@ public class CompartmentCollapseExpandEffect extends AbstractEffect {
     public void execute() {
         if (targetEditPart != null && doCollapse != isCollapsed()) {
             setCollapsed(targetEditPart, doCollapse);
+            justExecuted = true;
             // ((DrawerStyle) targetEditPart.getModel()).setCollapsed(doCollapse);
             // TODO incorporate ^ into a write transaction?
             // FIXME why should this effect create a layout effect? shouldn't this be handled by some combination?
 //            if (doLayout) {
 //                new LayoutEffect(targetEditor, targetNode).schedule();
 //            }
+        } else {
+            justExecuted = false;
         }
     }
 
@@ -113,11 +117,18 @@ public class CompartmentCollapseExpandEffect extends AbstractEffect {
     public void undo() {
         if (targetEditPart != null && originalCollapseState != isCollapsed()) {
             setCollapsed(targetEditPart, originalCollapseState);
+            justExecuted = true;
             // FIXME see execute()
 //            if (doLayout) {
 //                new LayoutEffect(targetEditor, targetNode).schedule();
 //            }
+        } else {
+            justExecuted = false;
         }
+    }
+    
+    public boolean hasJustExecuted() {
+        return justExecuted;
     }
 
     /**
@@ -252,5 +263,23 @@ public class CompartmentCollapseExpandEffect extends AbstractEffect {
             executeCurrentCommand();
         }
 
+    }
+
+    /**
+     * Get the editor the effect is performed on.
+     * 
+     * @return the target editor
+     */
+    public DiagramEditor getTargetEditor() {
+        return targetEditor;
+    }
+
+    /**
+     * Get the node the effect is performed on.
+     * 
+     * @return the target node
+     */
+    public EObject getTargetNode() {
+        return targetNode;
     }
 }

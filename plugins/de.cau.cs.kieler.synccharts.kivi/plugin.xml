@@ -21,6 +21,11 @@
             description="Visualizes the flow of signals in a SyncChart diagram."
             name="SyncCharts Signal Flow Combination">
       </combination>
+      <combination
+            class="de.cau.cs.kieler.synccharts.kivi.LayoutAfterCollapseCombination"
+            description="Performs automatic layout after a node has been collapsed or expanded."
+            name="Layout After Collapse Combination">
+      </combination>
    </extension>
    <extension
          point="org.eclipse.ui.menus">
