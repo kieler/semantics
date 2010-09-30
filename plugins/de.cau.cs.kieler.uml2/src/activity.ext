@@ -1,4 +1,5 @@
 import uml;
+import de.cau.cs.kieler.ksbase.ui.utils;
 
 // utility method to set the object that should be selected after the transformation is executed
 Void setSelection(Object object):

@@ -23,7 +23,7 @@ import java.io.PrintWriter;
 public class MaudeSession {
 
     /** The constant for the Maude timeout. */
-    private static final int MAUDETIMEOUT = 100000;
+    private static final int MAUDETIMEOUT = 60000;
 
 
     /** The path to maude.exe. */
@@ -180,7 +180,7 @@ public class MaudeSession {
             if (returnValue.contains("Maude>")) {
                 done = true;
             }
-            if (System.currentTimeMillis() - startTime > 5000) {
+            if (System.currentTimeMillis() - startTime > MAUDETIMEOUT) {
                 throw new IOException("A timeout occurred while calling Maude.");
             }
         }
