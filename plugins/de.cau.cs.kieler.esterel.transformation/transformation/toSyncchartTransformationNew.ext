@@ -23,7 +23,7 @@ Void initial(State s):
  
  
 Void initial(State s, emf::EObject noneed):
- 	let m = ((emf::EObject) s.bodyContents):
+ 	let m = ((emf::EObject) s.bodyReference):
  	let mo = (Program) castToEMF(m):
  	let selfTrans = new Transition:
  	ruleModule(s, mo.module.get(0)) -> 
@@ -210,7 +210,7 @@ Void rule(State s, Loop l):
  	loopState.outgoingTransitions.add(selfTrans) ->
  	
  	setJavaBodyContents(loopState, l.body.statement) ->
- 	appendNextTransformation(loopState, (emf::EObject) l.body.statement)
+ 	appendNextTransformation(loopState, l.body.statement)
  ;
   
   
@@ -323,7 +323,7 @@ de.cau.cs.kieler.synccharts.State, org.eclipse.emf.ecore.EObject)
  * passes information about a new transformation to the data component.
  */
 Void appendTransformation(Object o, String s):
-	JAVA de.cau.cs.kieler.esterel.transformation.core.XpandToJava.appendTransformation(java.lang.Object, java.lang.String)
+	JAVA de.cau.cs.kieler.esterel.transformation.core.XtendToJava.appendTransformation(java.lang.Object, java.lang.String)
 ; 
  
 emf::EObject castToEMF(emf::EObject o):
@@ -335,7 +335,7 @@ ecore::EObject castToEcore(emf::EObject o):
 ;
 
 Void setJavaBodyContents(State s, emf::EObject o):
-	JAVA  de.cau.cs.kieler.esterel.transformation.TransformationHelper.setBodyContents(de.cau.cs.kieler.synccharts.State, org.eclipse.emf.ecore.EObject)
+	JAVA  de.cau.cs.kieler.esterel.transformation.TransformationHelper.setBodyReference(de.cau.cs.kieler.synccharts.State, org.eclipse.emf.ecore.EObject)
 ;
 
  

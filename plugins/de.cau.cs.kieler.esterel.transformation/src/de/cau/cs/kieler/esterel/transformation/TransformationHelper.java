@@ -32,7 +32,7 @@ public final class TransformationHelper {
     }
 
     /**
-     * Do some casting.
+     * Do some casting. Dunno why this is needed. But else Xtend editor marks some casts as error.
      * 
      * @param obj
      *            object to cast
@@ -42,8 +42,17 @@ public final class TransformationHelper {
         return obj;
     }
 
-    public static void setBodyContents(final State s, final EObject obj) {
-        s.setBodyContents(obj);
+    /**
+     * Convenient method for setting the body reference for a state. Maybe in some later state to
+     * any kind of actions here.
+     * 
+     * @param s
+     *            state
+     * @param obj
+     *            any EObject
+     */
+    public static void setBodyReference(final State s, final EObject obj) {
+        s.setBodyReference(obj);
     }
 
 }

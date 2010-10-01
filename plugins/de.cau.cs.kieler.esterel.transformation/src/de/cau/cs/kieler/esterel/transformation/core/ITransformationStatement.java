@@ -16,13 +16,20 @@ package de.cau.cs.kieler.esterel.transformation.core;
 import org.eclipse.emf.ecore.EObject;
 
 /**
- * @author uru
+ * Wrapperkind class containing a name of a Xtend transformation and the parameters to pass.
  * 
+ * @author uru
  */
 public interface ITransformationStatement {
 
-    public EObject[] getParameters();
+    /**
+     * @return the parameters being passed to the transformation.
+     */
+    EObject[] getParameters();
 
-    public String getTransformationName();
+    /**
+     * @return the name of the transformation to be executed.
+     */
+    String getTransformationName();
 
 }

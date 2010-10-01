@@ -37,7 +37,7 @@ import org.eclipse.ui.part.FileEditorInput;
 import org.eclipse.xtext.ui.editor.XtextEditor;
 
 import de.cau.cs.kieler.esterel.transformation.core.ITransformationStatement;
-import de.cau.cs.kieler.esterel.transformation.core.TransformationDataComponent;
+import de.cau.cs.kieler.esterel.transformation.core.AbstractTransformationDataComponent;
 import de.cau.cs.kieler.synccharts.Region;
 import de.cau.cs.kieler.synccharts.State;
 import de.cau.cs.kieler.synccharts.StateType;
@@ -46,10 +46,12 @@ import de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditor;
 import de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorUtil;
 
 /**
+ * DataComponent for transforming an esterel program stepwise into a syncchart.
+ * 
  * @author uru
  * 
  */
-public class E2SDataComponent extends TransformationDataComponent {
+public class E2SDataComponent extends AbstractTransformationDataComponent {
 
     // base packages and xpand transformation file.
     private static final String SYNCCHARTS_PACKAGE = "de.cau.cs.kieler.synccharts.SyncchartsPackage";
@@ -62,11 +64,10 @@ public class E2SDataComponent extends TransformationDataComponent {
     /** first transformation being executed. */
     private static final String INITIAL_TRANSFORMATION = "initial";
 
+    // TODO needed?! can there be more than one data component of one type?
+    /** any kind of identifier. */
     private static final String IDENTIFIER = "de.cau.cs.kieler.esterel.transformation."
             + "impl.E2SDataComponent";
-
-    /** is the actual transformation started yet?. */
-    private boolean started = false;
 
     /**
      * {@inheritDoc}
@@ -99,11 +100,12 @@ public class E2SDataComponent extends TransformationDataComponent {
                         EObject selModel = ((View) selView).getElement();
                         State root = ((Region) selModel).getStates().get(0);
                         // rootState = root;
-                        runner.setEditDomain(TransactionUtil.getEditingDomain(root));
+                        getRunner().setEditDomain(TransactionUtil.getEditingDomain(root));
                         // initializing first statement
+                        // EcoreUtil.resolve(root.getBodyContents(), root);
                         QueueStatement qs = new QueueStatement(INITIAL_TRANSFORMATION, root, root
-                                .getBodyContents());
-                        queue.add(qs);
+                                .getBodyReference());
+                        getQueue().add(qs);
                     }
                 }
                 System.out.println("Added First Statement");
@@ -155,11 +157,20 @@ public class E2SDataComponent extends TransformationDataComponent {
         return true;
     }
 
-    // FIXME WHYYY is xpand returning VOID for the estMod?!?
-    public ITransformationStatement getTransformationStatement(String transName, State synMod,
-            EObject estMod) {
-        QueueStatement qs = new QueueStatement(transName, synMod,
-                ((State) synMod).getBodyContents());
+    /**
+     * returns a QueueStatement for the passed parameters.
+     * 
+     * @param transName
+     *            name of the transformation
+     * @param syncElement
+     *            the state
+     * @param estElement
+     *            the esterel element
+     * @return new QueueStatement
+     */
+    public static ITransformationStatement getTransformationStatement(final String transName,
+            final State syncElement, final EObject estElement) {
+        QueueStatement qs = new QueueStatement(transName, syncElement, estElement);
         return qs;
     }
 
@@ -237,8 +248,11 @@ public class E2SDataComponent extends TransformationDataComponent {
                     Resource xtextResource = resourceSet.getResource(strlURI, true);
                     EObject esterelModule = xtextResource.getContents().get(0);
 
+                    // xeditor.getDocument().readOnly(new IUnitOfWork.Void<XtextResource>() {
+                    // });
+
                     System.out.println("Attaching Esterel Model to SyncChart");
-                    rootState.setBodyContents(esterelModule);
+                    rootState.setBodyReference(esterelModule);
 
                     resource.save(null);
 
@@ -253,39 +267,4 @@ public class E2SDataComponent extends TransformationDataComponent {
         });
     }
 
-    /**
-     * represents a queue statement used to store a transformation and an according module within
-     * the queue.
-     * 
-     */
-    private class QueueStatement implements ITransformationStatement {
-
-        // CHECKSTYLEOFF VisibilityModifier
-        private String transformation;
-        private EObject syncModel;
-        private EObject estModel;
-
-        // CHECKSTYLEON VisibilityModifier
-
-        public QueueStatement(final String trans, final EObject theSyncModel,
-                final EObject theEstModel) {
-            this.transformation = trans;
-            this.syncModel = theSyncModel;
-            this.estModel = theEstModel;
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        public EObject[] getParameters() {
-            return new EObject[] { syncModel, estModel };
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        public String getTransformationName() {
-            return transformation;
-        }
-    }
 }
