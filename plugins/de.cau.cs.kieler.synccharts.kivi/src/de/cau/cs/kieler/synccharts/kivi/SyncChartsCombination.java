@@ -21,6 +21,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramEditor;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.preference.PreferenceConverter;
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.RGB;
 
@@ -54,13 +55,29 @@ public class SyncChartsCombination extends AbstractCombination {
     public static final String HISTORY_COLOR = SyncChartsCombination.class.getCanonicalName()
             + ".historyColor";
 
+    /**
+     * The preference key for the black & white mode.
+     */
+    public static final String BW_MODE = SyncChartsCombination.class.getCanonicalName() + ".bwMode";
+
+    /**
+     * The preference key for the focus & context mode.
+     */
+    public static final String FC_MODE = SyncChartsCombination.class.getCanonicalName() + ".fcMode";
+
     private static final CombinationParameter[] PARAMETERS = new CombinationParameter[] {
             new CombinationParameter(HIGHLIGHT_COLOR, getPreferenceStore(), "Highlight Color",
                     "The color to use for highlighting active states", ColorConstants.red.getRGB(),
                     CombinationParameter.RGB_TYPE),
             new CombinationParameter(HISTORY_COLOR, getPreferenceStore(), "History Color",
                     "The color to use for highlighting previously active states",
-                    ColorConstants.blue.getRGB(), CombinationParameter.RGB_TYPE) };
+                    ColorConstants.blue.getRGB(), CombinationParameter.RGB_TYPE),
+            new CombinationParameter(BW_MODE, getPreferenceStore(), "Black && White",
+                    "Dashed lines for active states, dotted lines for history states.", false,
+                    CombinationParameter.BOOLEAN_TYPE),
+            new CombinationParameter(FC_MODE, getPreferenceStore(), "Focus && Context",
+                    "Collapse inactive states, expand active/history states.", true,
+                    CombinationParameter.BOOLEAN_TYPE) };
 
     /**
      * Execute this combination using the active states state.
@@ -77,18 +94,27 @@ public class SyncChartsCombination extends AbstractCombination {
         if (activeStates.getActiveStates().isEmpty()) {
             return;
         }
-        
-        // initially collapse all states
-        init(activeStates.getDiagramEditor());
+
+        if (isFC()) {
+            // initially collapse all states
+            init(activeStates.getDiagramEditor());
+        }
 
         // these were most recently active i steps ago
         for (int i = 0; i < activeStates.getActiveStates().size(); i++) {
             List<EObject> currentStep = activeStates.getActiveStates().get(i);
             for (EObject e : currentStep) {
-                schedule(new StateActivityHighlightEffect(e, activeStates.getDiagramEditor(),
-                        getColor(i, activeStates.getActiveStates().size())));
-                schedule(new CompartmentCollapseExpandEffect(activeStates.getDiagramEditor(), e,
-                        SyncchartsPackage.eINSTANCE.getState_Regions(), 0, true, false));
+                if (isBW()) {
+                    schedule(new StateActivityHighlightEffect(e, activeStates.getDiagramEditor(),
+                            (i == 0 ? SWT.LINE_DASH : SWT.LINE_DOT)));
+                } else {
+                    schedule(new StateActivityHighlightEffect(e, activeStates.getDiagramEditor(),
+                            getColor(i, activeStates.getActiveStates().size())));
+                }
+                if (isFC()) {
+                    schedule(new CompartmentCollapseExpandEffect(activeStates.getDiagramEditor(),
+                            e, SyncchartsPackage.eINSTANCE.getState_Regions(), 0, true, false));
+                }
             }
         }
     }
@@ -142,5 +168,13 @@ public class SyncChartsCombination extends AbstractCombination {
                     .getHSB();
             return new Color(null, new RGB(hsb[0], hsb[1], hsb[2] - hsb[2] / steps * (step - 1)));
         }
+    }
+
+    private boolean isBW() {
+        return getPreferenceStore().getBoolean(BW_MODE);
+    }
+
+    private boolean isFC() {
+        return getPreferenceStore().getBoolean(FC_MODE);
     }
 }

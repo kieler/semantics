@@ -45,9 +45,13 @@ public class StateActivityHighlightEffect extends AbstractEffect {
 
     private int widthMax = 5; // TODO parameterize
 
+    private int originalStyle = -1;
+
+    private int style = -1;
+
     private Color originalColor;
 
-    private Color color;
+    private Color color = ColorConstants.red;
 
     /**
      * Default constructor.
@@ -65,7 +69,48 @@ public class StateActivityHighlightEffect extends AbstractEffect {
      *            the editor to highlight in
      */
     public StateActivityHighlightEffect(final EObject eObject, final DiagramEditor editor) {
-        this(eObject, editor, ColorConstants.red);
+        EditPart editPart = ModelingUtil.getEditPart(editor.getDiagramEditPart(), eObject);
+        if (editPart instanceof GraphicalEditPart) {
+            targetFigure = ((GraphicalEditPart) editPart).getFigure();
+            if (targetFigure.getChildren().size() == 1) {
+                targetFigure = (IFigure) targetFigure.getChildren().get(0);
+            }
+        }
+    }
+
+    /**
+     * Create a new instance for the given edit part using the given color.
+     * 
+     * @param eObject
+     *            the EObject to highlight
+     * @param editor
+     *            the editor to highlight in
+     * @param lineStyle
+     *            the line style to use for borders (black/white mode)
+     */
+    public StateActivityHighlightEffect(final EObject eObject, final DiagramEditor editor,
+            final int lineStyle) {
+        this(eObject, editor);
+        style = lineStyle;
+        color = null;
+    }
+
+    /**
+     * Create a new instance for the given edit part using the given color.
+     * 
+     * @param eObject
+     *            the EObject to highlight
+     * @param editor
+     *            the editor to highlight in
+     * @param color
+     *            the color to use for highlighting
+     * @param lineStyle
+     *            the line style to use for borders (black/white mode)
+     */
+    public StateActivityHighlightEffect(final EObject eObject, final DiagramEditor editor,
+            final Color highlightColor, final int lineStyle) {
+        this(eObject, editor, highlightColor);
+        style = lineStyle;
     }
 
     /**
@@ -80,14 +125,8 @@ public class StateActivityHighlightEffect extends AbstractEffect {
      */
     public StateActivityHighlightEffect(final EObject eObject, final DiagramEditor editor,
             final Color highlightColor) {
+        this(eObject, editor);
         color = highlightColor;
-        EditPart editPart = ModelingUtil.getEditPart(editor.getDiagramEditPart(), eObject);
-        if (editPart instanceof GraphicalEditPart) {
-            targetFigure = ((GraphicalEditPart) editPart).getFigure();
-            if (targetFigure.getChildren().size() == 1) {
-                targetFigure = (IFigure) targetFigure.getChildren().get(0);
-            }
-        }
     }
 
     /**
@@ -95,28 +134,46 @@ public class StateActivityHighlightEffect extends AbstractEffect {
      */
     public void execute() {
         if (targetFigure != null) {
-            if (originalColor == null) {
-                originalColor = targetFigure.getForegroundColor();
+            if (targetFigure instanceof Shape) {
+                Shape shape = (Shape) targetFigure;
+                // line width
+                if (originalWidth == -1) {
+                    originalWidth = shape.getLineWidth();
+                    shape.setLineWidth(Math.min(originalWidth + widthIncrease, widthMax));
+                }
+                // line style, black & white mode
+                if (originalStyle == -1) {
+                    originalStyle = shape.getLineStyle();
+                }
+                if (style != -1) {
+                    shape.setLineStyle(style);
+                } else {
+                    shape.setLineStyle(originalStyle);
+                }
             }
-            if (targetFigure instanceof Shape && originalWidth == -1) {
-                originalWidth = ((Shape) targetFigure).getLineWidth();
-                ((Shape) targetFigure).setLineWidth(Math.min(originalWidth + widthIncrease,
-                        widthMax));
-            }
-            // papyrus
+
+            // papyrus line width
             if (targetFigure.getBorder() instanceof RoundedRectangleBorder && originalWidth == -1) {
                 originalWidth = ((RoundedRectangleBorder) targetFigure.getBorder()).getWidth();
                 ((RoundedRectangleBorder) targetFigure.getBorder()).setWidth(Math.min(originalWidth
                         + widthIncrease, widthMax));
-                targetFigure.repaint();
             }
 
-            targetFigure.setForegroundColor(color);
-            for (Object child : targetFigure.getChildren()) {
-                if (child instanceof WrappingLabel) {
-                    ((WrappingLabel) child).setForegroundColor(originalColor);
-                }
+            // color
+            if (originalColor == null) {
+                originalColor = targetFigure.getForegroundColor();
             }
+            if (color != null) {
+                targetFigure.setForegroundColor(color);
+                for (Object child : targetFigure.getChildren()) {
+                    if (child instanceof WrappingLabel) {
+                        ((WrappingLabel) child).setForegroundColor(originalColor);
+                    }
+                }
+            } else {
+                targetFigure.setForegroundColor(originalColor);
+            }
+            targetFigure.repaint();
         }
     }
 
@@ -128,12 +185,16 @@ public class StateActivityHighlightEffect extends AbstractEffect {
         if (targetFigure instanceof Shape && originalWidth != -1) {
             ((Shape) targetFigure).setLineWidth(originalWidth);
         }
+        if (targetFigure instanceof Shape && originalStyle != -1) {
+            ((Shape) targetFigure).setLineStyle(originalStyle);
+        }
         if (targetFigure.getBorder() instanceof RoundedRectangleBorder && originalWidth != -1) {
             ((RoundedRectangleBorder) targetFigure.getBorder()).setWidth(originalWidth);
-            targetFigure.repaint();
         }
+        targetFigure.repaint();
         originalColor = null;
         originalWidth = -1;
+        originalStyle = -1;
     }
 
     /**
@@ -165,6 +226,7 @@ public class StateActivityHighlightEffect extends AbstractEffect {
                 if (otherEffect.targetFigure == targetFigure) {
                     originalColor = otherEffect.originalColor;
                     originalWidth = otherEffect.originalWidth;
+                    originalStyle = otherEffect.originalStyle;
                     return this;
                 }
             }

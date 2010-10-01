@@ -14,17 +14,20 @@
       <combination
             class="de.cau.cs.kieler.synccharts.kivi.SyncChartsCombination"
             description="Highlights active states during simulation."
-            name="SyncCharts Simulation Visualization">
+            name="SyncCharts Simulation Visualization"
+            active="true">
       </combination>
       <combination
             class="de.cau.cs.kieler.synccharts.kivi.SignalFlowCombination"
             description="Visualizes the flow of signals in a SyncChart diagram."
-            name="SyncCharts Signal Flow Combination">
+            name="SyncCharts Signal Flow Combination"
+            active="true">
       </combination>
       <combination
             class="de.cau.cs.kieler.synccharts.kivi.LayoutAfterCollapseCombination"
             description="Performs automatic layout after a node has been collapsed or expanded."
-            name="Layout After Collapse Combination">
+            name="Layout After CollapseEffect Combination"
+            active="true">
       </combination>
    </extension>
    <extension

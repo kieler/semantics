@@ -14,7 +14,6 @@
 package de.cau.cs.kieler.synccharts.kivi;
 
 import de.cau.cs.kieler.core.kivi.AbstractCombination;
-import de.cau.cs.kieler.core.kivi.UndoEffect;
 import de.cau.cs.kieler.core.kivi.EffectTrigger.EffectTriggerState;
 import de.cau.cs.kieler.core.model.effects.CompartmentCollapseExpandEffect;
 import de.cau.cs.kieler.kiml.ui.layout.LayoutEffect;
@@ -32,24 +31,12 @@ public class LayoutAfterCollapseCombination extends AbstractCombination {
      * 
      * @param effectState
      *            the effect state containing the most recent collapse/expand effect
-     * @param undoState
-     *            the effect state in case a collapse/expand effect was undone
      */
-    public void execute(final EffectTriggerState<CompartmentCollapseExpandEffect> effectState,
-            final EffectTriggerState<UndoEffect> undoState) {
-        if (undoState == null || effectState != null
-                && effectState.getSequenceNumber() > undoState.getSequenceNumber()) {
-            if (effectState.getEffect().hasJustExecuted()) {
-                schedule(new LayoutEffect(effectState.getEffect().getTargetEditor(), effectState
-                        .getEffect().getTargetNode()));
-            }
-        } else {
-            if (undoState.getEffect().getEffect() instanceof CompartmentCollapseExpandEffect) {
-                schedule(new LayoutEffect(((CompartmentCollapseExpandEffect) undoState.getEffect()
-                        .getEffect()).getTargetEditor(),
-                        ((CompartmentCollapseExpandEffect) undoState.getEffect().getEffect())
-                                .getTargetNode()));
-            }
+    public void execute(final EffectTriggerState<CompartmentCollapseExpandEffect> effectState) {
+        dontUndo();
+        if (effectState.getEffect().hasJustExecuted()) {
+            schedule(new LayoutEffect(effectState.getEffect().getTargetEditor(), effectState
+                    .getEffect().getTargetNode()));
         }
     }
 }
