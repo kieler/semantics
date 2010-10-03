@@ -192,7 +192,8 @@ public final class SyncchartsContentUtil {
         List<String> ids = new ArrayList<String>();
         int counter = 2; // start with 2
         for (EObject sibling : siblings) {
-            if (sibling instanceof Scope) {
+            // avoid checking also the target itself
+            if (sibling instanceof Scope && sibling != target) {
                 String siblingId = ((Scope) sibling).getId();
                 if(siblingId != null){
                     ids.add(siblingId);
