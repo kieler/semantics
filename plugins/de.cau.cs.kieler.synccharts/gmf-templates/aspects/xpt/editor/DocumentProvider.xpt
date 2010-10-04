@@ -220,3 +220,32 @@ throw new org.eclipse.core.runtime.CoreException(new org.eclipse.core.runtime.St
 			new Object[] {element, «IF null = editorGen.application»"«EXPAND fileEditorInputClassFQName»", «ENDIF»"«EXPAND uriEditorInputClassFQName»"}),«EXPAND xpt::Common::nonNLS(1)»«IF null = editorGen.application»«EXPAND xpt::Common::nonNLS(2)»«ENDIF» 
 		null));
 «ENDDEFINE»
+
+«REM»soh: Added the elementInfo stuff, used by chsch.«ENDREM»
+«DEFINE createElementInfo FOR gmfgen::GenDiagram-»
+
+    private ElementInfo elementInfo;
+
+    public void setCanBeSaved(boolean b) {
+        this.elementInfo.fCanBeSaved = b;
+    }
+
+    «EXPAND xpt::Common::generatedMemberComment»
+protected ElementInfo createElementInfo(Object element) throws org.eclipse.core.runtime.CoreException {
+    «EXPAND checkEditorInputInstance-»
+    org.eclipse.ui.IEditorInput editorInput = (org.eclipse.ui.IEditorInput) element;
+    org.eclipse.gmf.runtime.diagram.ui.resources.editor.document.IDiagramDocument document = (org.eclipse.gmf.runtime.diagram.ui.resources.editor.document.IDiagramDocument) createDocument(editorInput);
+
+    ResourceSetInfo info = new ResourceSetInfo(document, editorInput);
+    info.setModificationStamp(computeModificationStamp(info));
+    info.fStatus = null;
+    this.elementInfo = info;
+    return info;
+}
+«ENDDEFINE»
+
+«DEFINE checkEditorInputInstance FOR gmfgen::GenDiagram-»
+if («IF null = editorGen.application»false == element instanceof «EXPAND fileEditorInputClassFQName» && «ENDIF»false == element instanceof «EXPAND uriEditorInputClassFQName») {
+    «EXPAND throwIncorrectInputException-»
+}
+«ENDDEFINE»
