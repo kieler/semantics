@@ -1,5 +1,6 @@
 import uml;
-import de.cau.cs.kieler.ksbase.ui.utils;
+//import de.cau.cs.kieler.ksbase.ui.utils;
+// ^ causes this exception: org.eclipse.internal.xtend.xtend.parser.ParseException: mismatched input '.' expecting ';' on line 2
 
 // utility method to set the object that should be selected after the transformation is executed
 Void setSelection(Object object):
