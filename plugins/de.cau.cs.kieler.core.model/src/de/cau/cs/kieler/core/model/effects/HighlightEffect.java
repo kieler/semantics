@@ -11,7 +11,7 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.sim.kivi;
+package de.cau.cs.kieler.core.model.effects;
 
 import org.eclipse.draw2d.ColorConstants;
 import org.eclipse.draw2d.IFigure;
@@ -35,9 +35,11 @@ import de.cau.cs.kieler.core.model.util.ModelingUtil;
  * @author mmu
  * 
  */
-public class StateActivityHighlightEffect extends AbstractEffect {
+public class HighlightEffect extends AbstractEffect {
 
     private IFigure targetFigure;
+
+    private GraphicalEditPart targetEditPart;
 
     private int originalWidth = -1;
 
@@ -53,10 +55,12 @@ public class StateActivityHighlightEffect extends AbstractEffect {
 
     private Color color = ColorConstants.red;
 
+    private boolean highlightChildren = false;
+
     /**
      * Default constructor.
      */
-    public StateActivityHighlightEffect() {
+    public HighlightEffect() {
 
     }
 
@@ -68,10 +72,11 @@ public class StateActivityHighlightEffect extends AbstractEffect {
      * @param editor
      *            the editor to highlight in
      */
-    public StateActivityHighlightEffect(final EObject eObject, final DiagramEditor editor) {
+    public HighlightEffect(final EObject eObject, final DiagramEditor editor) {
         EditPart editPart = ModelingUtil.getEditPart(editor.getDiagramEditPart(), eObject);
         if (editPart instanceof GraphicalEditPart) {
-            targetFigure = ((GraphicalEditPart) editPart).getFigure();
+            targetEditPart = (GraphicalEditPart) editPart;
+            targetFigure = targetEditPart.getFigure();
             if (targetFigure.getChildren().size() == 1) {
                 targetFigure = (IFigure) targetFigure.getChildren().get(0);
             }
@@ -88,8 +93,7 @@ public class StateActivityHighlightEffect extends AbstractEffect {
      * @param lineStyle
      *            the line style to use for borders (black/white mode)
      */
-    public StateActivityHighlightEffect(final EObject eObject, final DiagramEditor editor,
-            final int lineStyle) {
+    public HighlightEffect(final EObject eObject, final DiagramEditor editor, final int lineStyle) {
         this(eObject, editor);
         style = lineStyle;
         color = null;
@@ -102,12 +106,12 @@ public class StateActivityHighlightEffect extends AbstractEffect {
      *            the EObject to highlight
      * @param editor
      *            the editor to highlight in
-     * @param color
+     * @param highlightColor
      *            the color to use for highlighting
      * @param lineStyle
      *            the line style to use for borders (black/white mode)
      */
-    public StateActivityHighlightEffect(final EObject eObject, final DiagramEditor editor,
+    public HighlightEffect(final EObject eObject, final DiagramEditor editor,
             final Color highlightColor, final int lineStyle) {
         this(eObject, editor, highlightColor);
         style = lineStyle;
@@ -123,10 +127,28 @@ public class StateActivityHighlightEffect extends AbstractEffect {
      * @param highlightColor
      *            the color to highlight the state with
      */
-    public StateActivityHighlightEffect(final EObject eObject, final DiagramEditor editor,
+    public HighlightEffect(final EObject eObject, final DiagramEditor editor,
             final Color highlightColor) {
         this(eObject, editor);
         color = highlightColor;
+    }
+
+    /**
+     * Create a new instance for the given edit part using the given color.
+     * 
+     * @param eObject
+     *            the EObject to highlight
+     * @param editor
+     *            the editor to highlight in
+     * @param highlightColor
+     *            the color to highlight the state with
+     * @param children
+     *            true if labels should be highlighted in the given color as well
+     */
+    public HighlightEffect(final EObject eObject, final DiagramEditor editor,
+            final Color highlightColor, final boolean children) {
+        this(eObject, editor, highlightColor);
+        highlightChildren = children;
     }
 
     /**
@@ -170,6 +192,14 @@ public class StateActivityHighlightEffect extends AbstractEffect {
                         ((WrappingLabel) child).setForegroundColor(originalColor);
                     }
                 }
+                if (highlightChildren) {
+                    for (Object o : targetEditPart.getChildren()) {
+                        if (o instanceof GraphicalEditPart) {
+                            // potential issue: original color of children may be different?
+                            ((GraphicalEditPart) o).getFigure().setForegroundColor(color);
+                        }
+                    }
+                }
             } else {
                 targetFigure.setForegroundColor(originalColor);
             }
@@ -181,6 +211,13 @@ public class StateActivityHighlightEffect extends AbstractEffect {
     public void undo() {
         if (targetFigure != null && originalColor != null) {
             targetFigure.setForegroundColor(originalColor);
+        }
+        if (highlightChildren && originalColor != null) {
+            for (Object o : targetEditPart.getChildren()) {
+                if (o instanceof GraphicalEditPart) {
+                    ((GraphicalEditPart) o).getFigure().setForegroundColor(originalColor);
+                }
+            }
         }
         if (targetFigure instanceof Shape && originalWidth != -1) {
             ((Shape) targetFigure).setLineWidth(originalWidth);
@@ -214,15 +251,15 @@ public class StateActivityHighlightEffect extends AbstractEffect {
 
     @Override
     public IEffect merge(final IEffect other) {
-        if (other instanceof StateActivityHighlightEffect) {
-            StateActivityHighlightEffect otherEffect = (StateActivityHighlightEffect) other;
+        if (other instanceof HighlightEffect) {
+            HighlightEffect otherEffect = (HighlightEffect) other;
             if (otherEffect.targetFigure == targetFigure) {
                 return this;
             }
         } else if (other instanceof UndoEffect) {
             IEffect undo = ((UndoEffect) other).getEffect();
-            if (undo instanceof StateActivityHighlightEffect) {
-                StateActivityHighlightEffect otherEffect = (StateActivityHighlightEffect) undo;
+            if (undo instanceof HighlightEffect) {
+                HighlightEffect otherEffect = (HighlightEffect) undo;
                 if (otherEffect.targetFigure == targetFigure) {
                     originalColor = otherEffect.originalColor;
                     originalWidth = otherEffect.originalWidth;

@@ -28,8 +28,8 @@ import org.eclipse.swt.graphics.RGB;
 import de.cau.cs.kieler.core.kivi.CombinationParameter;
 import de.cau.cs.kieler.core.kivi.AbstractCombination;
 import de.cau.cs.kieler.core.model.effects.CompartmentCollapseExpandEffect;
+import de.cau.cs.kieler.core.model.effects.HighlightEffect;
 import de.cau.cs.kieler.core.model.util.ModelingUtil;
-import de.cau.cs.kieler.sim.kivi.StateActivityHighlightEffect;
 import de.cau.cs.kieler.sim.kivi.StateActivityTrigger.ActiveStates;
 import de.cau.cs.kieler.synccharts.State;
 import de.cau.cs.kieler.synccharts.SyncchartsPackage;
@@ -105,10 +105,10 @@ public class SyncChartsCombination extends AbstractCombination {
             List<EObject> currentStep = activeStates.getActiveStates().get(i);
             for (EObject e : currentStep) {
                 if (isBW()) {
-                    schedule(new StateActivityHighlightEffect(e, activeStates.getDiagramEditor(),
+                    schedule(new HighlightEffect(e, activeStates.getDiagramEditor(),
                             (i == 0 ? SWT.LINE_DASH : SWT.LINE_DOT)));
                 } else {
-                    schedule(new StateActivityHighlightEffect(e, activeStates.getDiagramEditor(),
+                    schedule(new HighlightEffect(e, activeStates.getDiagramEditor(),
                             getColor(i, activeStates.getActiveStates().size())));
                 }
                 if (isFC()) {

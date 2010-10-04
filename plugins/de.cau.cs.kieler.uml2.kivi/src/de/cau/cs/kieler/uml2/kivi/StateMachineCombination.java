@@ -25,8 +25,7 @@ import org.eclipse.swt.graphics.RGB;
 
 import de.cau.cs.kieler.core.kivi.CombinationParameter;
 import de.cau.cs.kieler.core.kivi.AbstractCombination;
-import de.cau.cs.kieler.core.kivi.EffectTrigger.EffectTriggerState;
-import de.cau.cs.kieler.sim.kivi.StateActivityHighlightEffect;
+import de.cau.cs.kieler.core.model.effects.HighlightEffect;
 import de.cau.cs.kieler.sim.kivi.StateActivityTrigger.ActiveStates;
 
 /**
@@ -77,7 +76,7 @@ public class StateMachineCombination extends AbstractCombination {
         for (int i = 0; i < activeStates.getActiveStates().size(); i++) {
             List<EObject> currentStep = activeStates.getActiveStates().get(i);
             for (EObject e : currentStep) {
-                schedule(new StateActivityHighlightEffect(e, activeStates.getDiagramEditor(),
+                schedule(new HighlightEffect(e, activeStates.getDiagramEditor(),
                         getColor(i, activeStates.getActiveStates().size())));
             }
         }

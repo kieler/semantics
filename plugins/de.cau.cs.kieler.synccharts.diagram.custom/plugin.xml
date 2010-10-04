@@ -550,5 +550,14 @@
                ePackageId="de.cau.cs.kieler.synccharts">
          </ValidateAction>
       </extension>
+      <extension
+            point="de.cau.cs.kieler.core.kivi.combinations">
+         <combination
+               active="true"
+               class="de.cau.cs.kieler.synccharts.diagram.custom.HighlightSelectedTransitionsCombination"
+               description="This combination highlights all selected transitions in a SyncCharts diagram."
+               name="SyncCharts Highlight Selected Transitions">
+         </combination>
+      </extension>
 
 </plugin>

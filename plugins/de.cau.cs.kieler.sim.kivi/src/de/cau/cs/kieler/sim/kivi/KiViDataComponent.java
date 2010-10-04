@@ -127,10 +127,10 @@ public abstract class KiViDataComponent extends JSONObjectDataComponent implemen
             return null;
         }
         JSONDataPool pool = KiemPlugin.getDefault().getExecution().getDataPool();
-        long step = KiemPlugin.getDefault().getExecution().getSteps();
+        long currentStep = KiemPlugin.getDefault().getExecution().getSteps();
 
         List<List<EObject>> statesByStep = new ArrayList<List<EObject>>();
-        List<EObject> currentStep = new ArrayList<EObject>();
+        List<EObject> currentStepObjects = new ArrayList<EObject>();
         JSONObject currentJSONObject = jSONObject;
         try {
             for (int i = 0; i <= steps; i++) {
@@ -142,15 +142,15 @@ public abstract class KiViDataComponent extends JSONObjectDataComponent implemen
                             EObject active = resource.getEObject(state);
                             if (active != null) {
                                 if (!contains(statesByStep, active)) { // filter out newer
-                                    currentStep.add(active);
+                                    currentStepObjects.add(active);
                                 }
                             }
                         }
                     }
-                    statesByStep.add(currentStep);
-                    currentStep = new ArrayList<EObject>();
+                    statesByStep.add(currentStepObjects);
+                    currentStepObjects = new ArrayList<EObject>();
                 }
-                long index = wrapper.getPoolIndex(step - i - 1 + 0);
+                long index = wrapper.getPoolIndex(currentStep - i - 1 + 0);
                 currentJSONObject = pool.getData(null, index);
             }
             if (StateActivityTrigger.getInstance() != null) {
