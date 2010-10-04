@@ -262,11 +262,13 @@ Void flattenState(State state):
 let parentRegion = state.parentRegion:
 let parentState = parentRegion.parentState:
 let stateSize = parentRegion.states.size:
+let incoming = state.incomingTransitions:
+let outgoing = state.outgoingTransitions:
+incoming.setSourceState(state) ->
+outgoing.setTargetState(state) ->
 parentState.regions.addAll(state.regions) ->
-state.setParentRegion(null) ->
-(stateSize <= 1) ?
-   parentState.regions.remove(parentRegion) : 
-null
+parentRegion.states.remove(state) ->
+if (stateSize <= 1) then parentState.regions.remove(parentRegion)
 ;
 
 List[State] getStateList():
