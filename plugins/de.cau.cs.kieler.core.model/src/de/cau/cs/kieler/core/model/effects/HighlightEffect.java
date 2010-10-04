@@ -22,6 +22,7 @@ import org.eclipse.gef.GraphicalEditPart;
 import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramEditor;
 import org.eclipse.gmf.runtime.draw2d.ui.figures.RoundedRectangleBorder;
 import org.eclipse.gmf.runtime.draw2d.ui.figures.WrappingLabel;
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
 
 import de.cau.cs.kieler.core.kivi.AbstractEffect;
@@ -169,6 +170,10 @@ public class HighlightEffect extends AbstractEffect {
                 }
                 if (style != -1) {
                     shape.setLineStyle(style);
+                    shape.setLineStyle(SWT.LINE_CUSTOM);
+                    shape.setLineDash(new float[] {
+                        (style == 3 ? 15.0f : 5.0f), 5.0f // FIXME temporary hack
+                    });
                 } else {
                     shape.setLineStyle(originalStyle);
                 }

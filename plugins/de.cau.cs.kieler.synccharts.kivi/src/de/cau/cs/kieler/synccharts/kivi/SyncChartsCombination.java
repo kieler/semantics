@@ -108,12 +108,12 @@ public class SyncChartsCombination extends AbstractCombination {
                     schedule(new HighlightEffect(e, activeStates.getDiagramEditor(),
                             (i == 0 ? SWT.LINE_DASH : SWT.LINE_DOT)));
                 } else {
-                    schedule(new HighlightEffect(e, activeStates.getDiagramEditor(),
-                            getColor(i, activeStates.getActiveStates().size())));
+                    schedule(new HighlightEffect(e, activeStates.getDiagramEditor(), getColor(i,
+                            activeStates.getActiveStates().size())));
                 }
                 if (isFC()) {
                     schedule(new CompartmentCollapseExpandEffect(activeStates.getDiagramEditor(),
-                            e, SyncchartsPackage.eINSTANCE.getState_Regions(), 0, true, false));
+                            e, SyncchartsPackage.eINSTANCE.getState_Regions(), 0, false));
                 }
             }
         }
@@ -136,7 +136,7 @@ public class SyncChartsCombination extends AbstractCombination {
                 continue;
             } else {
                 schedule(new CompartmentCollapseExpandEffect(editor, state,
-                        SyncchartsPackage.eINSTANCE.getState_Regions(), 1, true, true));
+                        SyncchartsPackage.eINSTANCE.getState_Regions(), 1, true));
             }
         }
     }

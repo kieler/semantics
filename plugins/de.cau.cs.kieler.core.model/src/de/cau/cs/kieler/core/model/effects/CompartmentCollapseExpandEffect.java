@@ -45,7 +45,6 @@ public class CompartmentCollapseExpandEffect extends AbstractEffect {
     private EObject targetNode;
     private boolean doCollapse;
     private boolean originalCollapseState;
-    private boolean doLayout;
     private DiagramEditor targetEditor;
     private boolean justExecuted;
 
@@ -67,11 +66,10 @@ public class CompartmentCollapseExpandEffect extends AbstractEffect {
      */
     public CompartmentCollapseExpandEffect(final DiagramEditor editor, final EObject node,
             final EStructuralFeature featureToCollapse, final int theCompartmentLevel,
-            final boolean layout, final boolean collapse) {
+            final boolean collapse) {
         this.compartmentLevel = theCompartmentLevel;
         this.doCollapse = collapse;
         this.targetEditor = editor;
-        this.doLayout = layout;
         this.targetNode = node;
         EditPart parentPart = ModelingUtil.getEditPart(editor.getDiagramEditPart(), node);
         if (parentPart != null) {
@@ -102,10 +100,6 @@ public class CompartmentCollapseExpandEffect extends AbstractEffect {
             justExecuted = true;
             // ((DrawerStyle) targetEditPart.getModel()).setCollapsed(doCollapse);
             // TODO incorporate ^ into a write transaction?
-            // FIXME why should this effect create a layout effect? shouldn't this be handled by some combination?
-//            if (doLayout) {
-//                new LayoutEffect(targetEditor, targetNode).schedule();
-//            }
         } else {
             justExecuted = false;
         }
@@ -119,14 +113,19 @@ public class CompartmentCollapseExpandEffect extends AbstractEffect {
             setCollapsed(targetEditPart, originalCollapseState);
             justExecuted = true;
             // FIXME see execute()
-//            if (doLayout) {
-//                new LayoutEffect(targetEditor, targetNode).schedule();
-//            }
+            // if (doLayout) {
+            // new LayoutEffect(targetEditor, targetNode).schedule();
+            // }
         } else {
             justExecuted = false;
         }
     }
-    
+
+    /**
+     * Determines whether the last call to execute() or undo() actually performed any changes.
+     * 
+     * @return true if changes were performed
+     */
     public boolean hasJustExecuted() {
         return justExecuted;
     }
