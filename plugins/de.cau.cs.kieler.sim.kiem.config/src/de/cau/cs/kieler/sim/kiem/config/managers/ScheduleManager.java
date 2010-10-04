@@ -500,8 +500,8 @@ public final class ScheduleManager extends AbstractManager implements
                     openSchedule(newRecent.get(0));
                 } catch (ScheduleFileMissingException e0) {
                     ExecutionFileMissingDialog dialog = new ExecutionFileMissingDialog(
-                            KiemConfigurationPlugin.getShell(), newRecent
-                                    .get(0));
+                            KiemConfigurationPlugin.getShell(),
+                            newRecent.get(0));
                     dialog.open();
                 }
             }
@@ -569,8 +569,8 @@ public final class ScheduleManager extends AbstractManager implements
                 matchingEditor = editor;
             }
 
-            match = addSchedule(matchingEditor, location, ScheduleData
-                    .getDefaultPriority());
+            match = addSchedule(matchingEditor, location,
+                    ScheduleData.getDefaultPriority());
 
         }
 
@@ -621,7 +621,7 @@ public final class ScheduleManager extends AbstractManager implements
             // file not in workspace
             KiemEventListener.getInstance().resetLoadImminent();
             throw new ScheduleFileMissingException(e0, schedule);
-        } 
+        }
 
         // loading successful
         getRecentScheduleIds().add(schedule.getId());
@@ -755,42 +755,41 @@ public final class ScheduleManager extends AbstractManager implements
 
                             for (IConfigurationElement child : children) {
 
-                                try {
-                                    String editorId = child.getAttribute("id");
-                                    String editorPriority = child
-                                            .getAttribute("priority");
-                                    String editorName = child
-                                            .getAttribute("name");
+                                String editorId = child.getAttribute("id");
+                                String editorPriority = child
+                                        .getAttribute("priority");
+                                String editorName = child.getAttribute("name");
 
-                                    if (editorId != null
-                                            && !editorId.equals("")) {
-                                        int priority = Integer
+                                if (editorId != null && !editorId.equals("")) {
+                                    int priority = ScheduleData.DEFAULT_PRIORITY;
+                                    try {
+                                        priority = Integer
                                                 .parseInt(editorPriority);
-                                        EditorIdWrapper wrapper = new EditorIdWrapper(
-                                                editorId);
+                                    } catch (NumberFormatException e0) {
+                                        // not a number in editorId, use default
+                                        // priority
+                                    }
+                                    EditorIdWrapper wrapper = new EditorIdWrapper(
+                                            editorId);
 
-                                        // add the editor and schedule
-                                        EditorDefinition editor = EditorManager
-                                                .getInstance().addEditor(
-                                                        new EditorDefinition(
-                                                                editorName,
-                                                                wrapper));
+                                    // add the editor and schedule
+                                    EditorDefinition editor = EditorManager
+                                            .getInstance()
+                                            .addEditor(
+                                                    new EditorDefinition(
+                                                            editorName, wrapper));
 
-                                        if (editor != null) {
-                                            editor.setLocked(true);
-                                            ScheduleData data = addSchedule(
-                                                    editor, path, priority);
-                                            if (data != null) {
-                                                data.setPluginId(element
-                                                        .getContributor()
-                                                        .getName());
-                                            }
+                                    if (editor != null) {
+                                        editor.setLocked(true);
+                                        ScheduleData data = addSchedule(editor,
+                                                path, priority);
+                                        if (data != null) {
+                                            data.setPluginId(element
+                                                    .getContributor().getName());
                                         }
                                     }
-                                } catch (NumberFormatException e0) {
-                                    // not a number in editorId, ignore this
-                                    // editor
                                 }
+
                             }
                         } else {
                             // no editors added, use default editor

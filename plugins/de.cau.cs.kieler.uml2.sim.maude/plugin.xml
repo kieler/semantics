@@ -23,7 +23,8 @@
             file="execution/uml_maude.execution">
          <editor
                id="org.eclipse.papyrus.core.papyrusEditor"
-               priority="de.cau.cs.kieler.uml2.sim.maude.editor1">
+               name="Papyrus Editor"
+               priority="8">
          </editor>
       </executionFile>
    </extension>
