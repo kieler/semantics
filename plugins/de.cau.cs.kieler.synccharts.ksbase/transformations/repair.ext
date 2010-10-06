@@ -206,9 +206,11 @@ Void removeVariablesFromScope(Scope scope, List[Variable] variables):
 
 // === begin WhiteSpaces ===
 // action Triggers and effects should not contain whitespaces
+// FIXME: Disabled for now as more complex syntax analysis would be necessary
 
 Void fixWhiteSpacesInAction(Action action):
- if (action != null) then setLabel(action, action.label.replaceAll(" " , ""))
+ //if (action != null) then setLabel(action, action.label.replaceAll(" " , ""))
+ if (action != null) then setLabel(action, action.label)
 ;
 
 // === end WhiteSpaces ===
