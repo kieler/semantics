@@ -50,6 +50,7 @@ main() {
 		showPopupBars := false;
 		rulerUnits := RulerUnits::CENTIMETERS;
 		gridSpacing := 0.5;
+		snapToGrid := false;
 	};
 
 	// set some default colors
