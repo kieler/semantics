@@ -513,6 +513,9 @@ public abstract class AbstractTableLayout extends AbstractHintLayout {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Dimension calculateMinimumSize(final IFigure stateFigure,
             final int whint, final int hhint) {
@@ -528,7 +531,7 @@ public abstract class AbstractTableLayout extends AbstractHintLayout {
                 */
         ExtendedTable layout = getCorrespondingLayout(stateFigure);
         if (layout == null) {
-            return super.calculateMinimumSize(stateFigure, whint, hhint);
+            return new Dimension(whint, hhint);
         }
         LayoutSizes layoutSizes = calculateLayoutSizes(layout, stateFigure);
         return new Dimension(Math.max(layoutSizes.getMinimumWidth(),
@@ -537,15 +540,7 @@ public abstract class AbstractTableLayout extends AbstractHintLayout {
     }
 
     /**
-     * Calculate the preferred size of the figure.
-     * 
-     * @param stateFigure
-     *            the figure
-     * @param whint
-     *            the width hint
-     * @param hhint
-     *            the height hint
-     * @return the preferred size
+     * {@inheritDoc}
      */
     @Override
     protected Dimension calculatePreferredSize(final IFigure stateFigure,
@@ -562,13 +557,11 @@ public abstract class AbstractTableLayout extends AbstractHintLayout {
         
         ExtendedTable correspondingLayout = getCorrespondingLayout(stateFigure);
         if (correspondingLayout == null) {
-            return super.calculateMinimumSize(stateFigure, whint, hhint);
+            return new Dimension(whint, hhint);
         }
-            LayoutSizes layoutSizes = calculateLayoutSizes(correspondingLayout,stateFigure);
-            return new Dimension(layoutSizes.getPreferredWidth(),
-                    layoutSizes.getPreferredHeight());
-        
-        
+        LayoutSizes layoutSizes = calculateLayoutSizes(correspondingLayout, stateFigure);
+        return new Dimension(layoutSizes.getPreferredWidth(),
+                layoutSizes.getPreferredHeight());
     }
 
     /**
