@@ -81,6 +81,10 @@ Void optimize(Region rootRegion):
 
 // remove methods
 Void removeStateFromRegion(State state):
+let inc = state.incomingTransitions:
+let out = state.outgoingTransitions:
+inc.setSourceState(state) ->
+out.setTargetState(state) ->
  state.parentRegion.states.remove(state)
 ;
 Void removeRegionFromState(Region region):
@@ -313,21 +317,24 @@ Void fixDummyState(State state, List[State] list):
 ;
 
 Void removeState(State state):
- let transList = state.incomingTransitions:
- transList.removeTransition()
+ let incoming = state.incomingTransitions:
+ let outgoing = state.outgoingTransitions:
+ incoming.removeTransition() ->
+ outgoing.removeTransition()
 ;
 
 Void removeTransition(Transition trans):
- trans.sourceState.outgoingTransitions.remove(trans)
+ trans.setSourceState(null) ->
+ trans.setTargetState(null)
 ;
 
 Void replaceState(State old, State replacement):
  let incoming = old.incomingTransitions:
+ let outgoing = old.outgoingTransitions:
  replacement.setIsInitial(old.isInitial) ->
+ incoming.setTargetState(replacement) ->
  (if (replacement.isInitial && replacement.type == StateType::CONDITIONAL) then
-   replacement.setType(StateType::NORMAL)) ->
-   
- replacement.incomingTransitions.addAll(incoming)
+   replacement.setType(StateType::NORMAL)) 
 ;
 
 // === end dummy states ===
