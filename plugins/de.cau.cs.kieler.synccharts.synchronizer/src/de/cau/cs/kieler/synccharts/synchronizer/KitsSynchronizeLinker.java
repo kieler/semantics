@@ -24,6 +24,7 @@ import org.eclipse.emf.compare.match.metamodel.MatchModel;
 import org.eclipse.emf.compare.match.metamodel.MatchPackage;
 import org.eclipse.emf.compare.match.service.MatchService;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.xtext.util.Strings;
 
 import de.cau.cs.kieler.core.expressions.ExpressionsPackage;
 import de.cau.cs.kieler.core.expressions.Signal;
@@ -35,6 +36,7 @@ import de.cau.cs.kieler.synccharts.Emission;
 import de.cau.cs.kieler.synccharts.State;
 import de.cau.cs.kieler.synccharts.SyncchartsPackage;
 import de.cau.cs.kieler.synccharts.Transition;
+import de.cau.cs.kieler.synccharts.text.actions.bridge.ActionLabelSerializer;
 import de.cau.cs.kieler.synccharts.util.SyncchartsSwitch;
 
 /**
@@ -46,6 +48,8 @@ public class KitsSynchronizeLinker {
     private DiffModel diffModel = null;
     private Map<EObject, EObject> LRmatchTable = null;
     private Map<EObject, EObject> RLmatchTable = null;
+    
+    private boolean serializeActions = false;
 
     /**
      * Convenience method to initialize the linker.
@@ -95,11 +99,23 @@ public class KitsSynchronizeLinker {
         }
         return this;
     }
+    
+    
+    /**
+     * Configures linker to serialize action labels while linking.
+     * 
+     * @return the linker
+     */
+    public KitsSynchronizeLinker serializeActions() {
+        this.serializeActions = true;
+        return this;
+    }
+    
 
     /**
      * Implements linking.
      * 
-     * @param root
+     * @param root the element whose children should be linked
      */
     public KitsSynchronizeLinker linkElement(EObject root) {
 
@@ -151,10 +167,19 @@ public class KitsSynchronizeLinker {
 
         }
 
+        doSerializeActions(root);
+        
         return this;
     }
     
     
+    /**
+     * Links the only the transitions of 'element' and its children.
+     * This is needed during editor synchronization 
+     * 
+     * @param element
+     * @return
+     */
     public KitsSynchronizeLinker linkTransitionsInElement(EObject element) {
         EObject eObj = null;
         for (Iterator<EObject> it = element.eAllContents(); it.hasNext();) {
@@ -174,6 +199,39 @@ public class KitsSynchronizeLinker {
             }
         }
         return this;
+    }
+    
+    
+    /**
+     * Serializes transition labels if the linker has been configured to do so.
+     * 
+     * @param root the element whose transition labels should be serialized
+     */
+    private void doSerializeActions(EObject root) {
+        EObject eObj = null;
+        Transition transition = null;
+        Transition counterpart = null;
+        if (serializeActions) {
+            for (Iterator<EObject> it = root.eAllContents(); it.hasNext();) {
+                eObj = it.next();
+                if (SyncchartsPackage.eINSTANCE.getTransition().isInstance(eObj)) {
+                    transition = (Transition) eObj;
+                    counterpart = getMatched(transition);
+                    if (Strings.isEmpty(counterpart.getLabel())
+                            || transition.isIsImmediate()
+                            || transition.isIsHistory()
+                            || transition.getDelay() == 0
+                            || transition.getTrigger() != null
+                            || transition.getEffects() != null && !transition.getEffects().isEmpty()) {
+                        String newLabel = "";
+                        newLabel = ActionLabelSerializer.toString(transition);
+                        transition.setLabel(newLabel);
+                    } else {
+                        transition.setLabel(new String(counterpart.getLabel()));
+                    }
+                }
+            }
+        }
     }
     
 

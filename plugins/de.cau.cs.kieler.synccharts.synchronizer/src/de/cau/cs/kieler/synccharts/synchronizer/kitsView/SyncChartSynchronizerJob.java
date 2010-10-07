@@ -123,6 +123,9 @@ public class SyncChartSynchronizerJob extends Job implements ISelectionListener 
     @Override
     protected IStatus run(IProgressMonitor monitor) {
 
+        // prepare the left element for comparing it with 
+        // the current active editors document content
+        // (aka the right element in EMF compare speach) 
         Region leftRegion = lastActiveEditor.getDocument().readOnly(
                 new IUnitOfWork<Region, XtextResource>() {
 
@@ -133,11 +136,26 @@ public class SyncChartSynchronizerJob extends Job implements ISelectionListener 
                         Region leftElement = null;
 
                         if (!resource.getContents().isEmpty()) {
+                            
+                            /* create a copy of the Xtext editor's content as
+                             * pulling Xtext editor's might result in conflicts
+                             */ 
                             copy = EcoreUtil.copy(resource.getContents().get(0));
+                            
+                            /* link the transitions of the copy as transition target
+                             * haven't been set due to the bidirectional association;
+                             * 
+                             * has no effect if the root element is a transition itself
+                             * (i.e. lastActiveEditor=actionsEditor)
+                             */
                             new KitsSynchronizeLinker().consultSrcAndCopy(
                                     resource.getContents().get(0), copy).linkTransitionsInElement(
                                     copy);
-                        } else {
+                            
+                        } else {                            
+                            /* in case the whole content was deleted create a dummy element
+                             * for comparing it with the original one 
+                             */
                             if (lastActiveEditor == kitsEditor) {
                                 copy = SyncchartsFactory.eINSTANCE.createRegion();
                             } else {
@@ -149,13 +167,16 @@ public class SyncChartSynchronizerJob extends Job implements ISelectionListener 
                             }
                         }
 
+                        /* put the copy in a dummy resource:
+                         * EMF Compare needs this for building fragmentURIs for example */
                         if (container == null) {
                             dummyResource.getContents().clear();
                             dummyResource.getContents().add(copy);
                             leftElement = (Region) copy;
 
                         } else {
-
+                            /* in case only a sub model was serialized put the new sub
+                             * into the original context (a copy of the complete original model*/ 
                             ((EList<EObject>) container.eGet(feature)).add(index, copy);
 
                             if (SyncchartsPackage.eINSTANCE.getState_OutgoingTransitions().equals(
@@ -166,6 +187,10 @@ public class SyncChartSynchronizerJob extends Job implements ISelectionListener 
                         }
 
                         if (SyncchartsPackage.eINSTANCE.getState().isInstance(copy)) {
+                            /* if a state is the root of the serialized sub model
+                             * the original counterpart might have incoming transitions
+                             * that have to be re-directed to the copy;
+                             * otherwise they will be removed while merging */
                             for (Transition t : incomingTransitions) {
                                 t.setTargetState((State) copy);
                             }
@@ -176,10 +201,12 @@ public class SyncChartSynchronizerJob extends Job implements ISelectionListener 
 
                 });
 
-        MatchModel matchModel = null;
-
+        // reveal the right element
         Region rightRegion = (Region) ((Diagram) ((IDiagramWorkbenchPart) passiveEditor)
                 .getDiagramEditPart().getModel()).getElement();
+
+        MatchModel matchModel = null;
+        
         try {
             matchModel = MatchService.doMatch(leftRegion, rightRegion, matchOptions);
         } catch (InterruptedException e) {
@@ -188,6 +215,9 @@ public class SyncChartSynchronizerJob extends Job implements ISelectionListener 
         }
 
         final DiffModel diffModel = DiffService.doDiff(matchModel);
+        
+        //ModelSynchronizer.DEBUGDiff = true;
+        //ModelSynchronizer.dumpDiff(diffModel, System.out);
 
         if (!diffModel.getDifferences().isEmpty()) {
             PlatformUI
