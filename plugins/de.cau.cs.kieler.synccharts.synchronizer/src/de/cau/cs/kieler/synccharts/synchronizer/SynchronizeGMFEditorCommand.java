@@ -27,7 +27,6 @@ import org.eclipse.gmf.runtime.emf.commands.core.command.AbstractTransactionalCo
 import org.eclipse.gmf.runtime.notation.Diagram;
 
 import de.cau.cs.kieler.core.ui.util.EditorUtils;
-import de.cau.cs.kieler.synccharts.custom.SyncchartsUtil;
 import de.cau.cs.kieler.synccharts.text.actions.bridge.ActionLabelProcessorWrapper;
 
 /**
@@ -63,14 +62,15 @@ public class SynchronizeGMFEditorCommand extends AbstractTransactionalCommand {
 
         new KitsSynchronizeLinker().setDiffModel(diffModel).setSerializeActions().linkElement(model);
         
-//        try {
-//            ActionLabelProcessorWrapper.processActionLabels(((Diagram) this.passiveEditor
-//                    .getDiagramEditPart().getModel()).getElement(),
+        try {
+            ActionLabelProcessorWrapper.processActionLabels(((Diagram) this.passiveEditor
+                    .getDiagramEditPart().getModel()).getElement(),
+                    ActionLabelProcessorWrapper.PARSE);
 //                    ActionLabelProcessorWrapper.SERIALIZE);
-//        } catch (Exception e) {
+        } catch (Exception e) {
 //            EditorUtils.log(new Status(IStatus.WARNING, SyncchartsSynchronizerPlugin.PLUGIN_ID,
 //                    SyncchartsUtil.MSG_LABEL_SERIAL_FAILED, e));
-//        }
+        }
 
 //        for (CanonicalEditPolicy p : CanonicalEditPolicy.getRegisteredEditPolicies(model)) {
 //            p.refresh();
