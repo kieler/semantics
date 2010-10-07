@@ -18,11 +18,15 @@ import java.util.List;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.gef.EditDomain;
 import org.eclipse.gef.EditPart;
+import org.eclipse.gef.commands.Command;
+import org.eclipse.gmf.runtime.diagram.core.commands.SetPropertyCommand;
+import org.eclipse.gmf.runtime.diagram.ui.commands.ICommandProxy;
 import org.eclipse.gmf.runtime.diagram.ui.editparts.IResizableCompartmentEditPart;
-import org.eclipse.gmf.runtime.diagram.ui.internal.tools.CompartmentCollapseTracker; // FIXME
+import org.eclipse.gmf.runtime.diagram.ui.internal.properties.Properties;
+import org.eclipse.gmf.runtime.diagram.ui.l10n.DiagramUIMessages;
 import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramEditor;
+import org.eclipse.gmf.runtime.emf.core.util.EObjectAdapter;
 import org.eclipse.gmf.runtime.notation.BasicCompartment;
 import org.eclipse.gmf.runtime.notation.DrawerStyle;
 import org.eclipse.gmf.runtime.notation.View;
@@ -58,9 +62,7 @@ public class CompartmentCollapseExpandEffect extends AbstractEffect {
      * @param featureToCollapse
      *            the feature of the EObject to doCollapse/expand
      * @param theCompartmentLevel
-     *            hierarchy level. 0 means only exactly the given EditPart.
-     * @param layout
-     *            whether to perform auto-layout after collapsing/expanding or not
+     *            hierarchy level. 0 means only exactly the given EditPart. Not implemented.
      * @param collapse
      *            true if collapsing, false if expanding
      */
@@ -96,10 +98,8 @@ public class CompartmentCollapseExpandEffect extends AbstractEffect {
      */
     public void execute() {
         if (targetEditPart != null && doCollapse != isCollapsed()) {
-            setCollapsed(targetEditPart, doCollapse);
+            getCollapseCommand(doCollapse).execute();
             justExecuted = true;
-            // ((DrawerStyle) targetEditPart.getModel()).setCollapsed(doCollapse);
-            // TODO incorporate ^ into a write transaction?
         } else {
             justExecuted = false;
         }
@@ -110,15 +110,19 @@ public class CompartmentCollapseExpandEffect extends AbstractEffect {
      */
     public void undo() {
         if (targetEditPart != null && originalCollapseState != isCollapsed()) {
-            setCollapsed(targetEditPart, originalCollapseState);
+            getCollapseCommand(originalCollapseState).execute();
             justExecuted = true;
-            // FIXME see execute()
-            // if (doLayout) {
-            // new LayoutEffect(targetEditor, targetNode).schedule();
-            // }
         } else {
             justExecuted = false;
         }
+    }
+
+    private Command getCollapseCommand(final boolean collapse) {
+        DrawerStyle style = (DrawerStyle) targetEditPart.getModel();
+        SetPropertyCommand spc = new SetPropertyCommand(targetEditPart.getEditingDomain(),
+                new EObjectAdapter(style), Properties.ID_COLLAPSED,
+                DiagramUIMessages.PropertyDescriptorFactory_CollapseCompartment, collapse);
+        return new ICommandProxy(spc);
     }
 
     /**
@@ -175,43 +179,6 @@ public class CompartmentCollapseExpandEffect extends AbstractEffect {
         }
     }
 
-    /*
-     * The following works but performance is quite slow. It correctly collapses but it takes some
-     * serious amount of time until connections get hidden/visible.
-     * 
-     * private void setCollapsed(final GraphicalEditPart editPart, final boolean value) throws
-     * KielerModelException {
-     * 
-     * final View view = (View) editPart.getModel(); try { final TransactionalEditingDomain domain =
-     * TransactionUtil.getEditingDomain(view);
-     * 
-     * AbstractEMFOperation op = new AbstractEMFOperation(domain,
-     * "Viewmanagement set collapsed state") {
-     * 
-     * @Override protected IStatus doExecute(final IProgressMonitor monitor, final IAdaptable info)
-     * throws ExecutionException {
-     * 
-     * List<BasicCompartment> compartments = getNestedCompartments(view, compartmentLevel); for
-     * (BasicCompartment compartment : compartments) {
-     * ViewUtil.setStructuralFeatureValue(compartment, NotationPackage.eINSTANCE
-     * .getDrawerStyle_Collapsed(), value); } return Status.OK_STATUS; } }; op.execute(null, null);
-     * } catch (ExecutionException e0) { throw new
-     * KielerModelException("Could change collapsed state of compartments.", view .getElement(),
-     * e0); } }
-     */
-    /**
-     * Set the collapsed state of the given compartment.
-     * 
-     * @param editPart
-     *            the input editPart
-     * @param value
-     *            true iff should get collapsed, false if expanded
-     */
-    private void setCollapsed(final IResizableCompartmentEditPart editPart, final boolean value) {
-        CompartmentCollapseTrackerEx tracker = new CompartmentCollapseTrackerEx(editPart);
-        tracker.setCollapsed(value);
-    }
-
     /**
      * Give all compartments of a view. The list will also contain the input view itself if it is a
      * compartment. Additionally it traverses the whole child tree and also returns all nested child
@@ -239,29 +206,6 @@ public class CompartmentCollapseExpandEffect extends AbstractEffect {
             }
         }
         return compartments;
-    }
-
-    /**
-     * Inner class that takes care about the concrete doCollapse command. Extends the official
-     * CompartmentCollapseTracker that is also used for the manual collapsing with the mouse.
-     * 
-     * FIXME: This might be some overhead as the tracker is a quite heavy tool.
-     * 
-     * @author haf
-     * 
-     */
-    class CompartmentCollapseTrackerEx extends CompartmentCollapseTracker {
-
-        public CompartmentCollapseTrackerEx(final IResizableCompartmentEditPart compartmentEditPart) {
-            super(compartmentEditPart);
-            this.setEditDomain((EditDomain) compartmentEditPart.getDiagramEditDomain());
-        }
-
-        void setCollapsed(final boolean value) {
-            setCurrentCommand(getCommand(value));
-            executeCurrentCommand();
-        }
-
     }
 
     /**

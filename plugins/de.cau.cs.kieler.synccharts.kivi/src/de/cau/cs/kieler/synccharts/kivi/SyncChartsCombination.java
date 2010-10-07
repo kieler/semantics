@@ -105,8 +105,9 @@ public class SyncChartsCombination extends AbstractCombination {
             List<EObject> currentStep = activeStates.getActiveStates().get(i);
             for (EObject e : currentStep) {
                 if (isBW()) {
-                    schedule(new HighlightEffect(e, activeStates.getDiagramEditor(),
-                            (i == 0 ? SWT.LINE_DASH : SWT.LINE_DOT)));
+                    schedule(new HighlightEffect(e, activeStates.getDiagramEditor(), getColor(i,
+                            activeStates.getActiveStates().size()), (i == 0 ? SWT.LINE_DASH
+                            : SWT.LINE_DOT)));
                 } else {
                     schedule(new HighlightEffect(e, activeStates.getDiagramEditor(), getColor(i,
                             activeStates.getActiveStates().size())));
