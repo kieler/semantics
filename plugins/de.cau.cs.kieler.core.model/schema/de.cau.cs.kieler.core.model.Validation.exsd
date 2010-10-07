@@ -6,7 +6,7 @@
          <meta.schema plugin="de.cau.cs.kieler.core.model" id="de.cau.cs.kieler.core.model.Validation" name="Validation"/>
       </appinfo>
       <documentation>
-         This extension point is used to register new Checkfiles and ValidationActions.
+         This extension point is used to register new Checkfiles/Validators and ValidationActions.
       </documentation>
    </annotation>
 
@@ -54,6 +54,11 @@
    </element>
 
    <element name="Validation">
+      <annotation>
+         <documentation>
+            This contains all the information to identify one Validation element. It can identify either a .chk file or a ValidateAction.
+         </documentation>
+      </annotation>
       <complexType>
          <sequence minOccurs="0" maxOccurs="unbounded">
             <element ref="referenceEPackageNsURI"/>
@@ -100,7 +105,7 @@ The Validation has to have either a checkfilePath or a validator.
          <attribute name="isWrapExistingValidator" type="boolean" use="required">
             <annotation>
                <documentation>
-                  
+                  True if the validator should wrap around existing validators. False if the validation should override already registered validators.
                </documentation>
             </annotation>
          </attribute>
@@ -211,7 +216,45 @@ The Validation has to have either a checkfilePath or a validator.
          <meta.section type="examples"/>
       </appinfo>
       <documentation>
-         [Enter extension point usage example here.]
+         &lt;p&gt;
+This is a simple example for registering a checkfile to a given metamodel.
+&lt;/p&gt;
+&lt;p&gt;
+First the metamodel has to be registered:
+&lt;pre&gt;
+&lt;ePackageDefinition
+  ePackageClass=&quot;org.example.metamodel.YourMetamodelPackage&quot;
+  ePackageId=&quot;some.custom.id&quot;
+  ePackageNsURI=&quot;http://org.example.metamodel/yourMetamodel&quot;&gt;
+&lt;/ePackageDefinition&gt;
+&lt;/pre&gt;
+&lt;/p&gt;
+&lt;p&gt;
+The next step is to register the actual file.
+&lt;pre&gt;
+&lt;Validation
+  ePackageId=&quot;some.custom.id&quot;
+  id=&quot;some.custom.checkfileId&quot;
+  isWrapExistingValidator=&quot;true&quot;
+  name=&quot;Custom Checks&quot;
+  checkfilePath=&quot;model/MyChecks.chk&quot;
+  tooltip=&quot;Use this to check for model validity.&quot;&gt;
+  &lt;referenceEPackageNsURI
+   nsURI=&quot;http://org.example.metamodel/YourOtherMetamodel&quot;&gt;
+  &lt;/referenceEPackageNsURI&gt;
+&lt;/Validation&gt;
+&lt;/pre&gt;
+&lt;/p&gt;
+&lt;p&gt;
+Last we need to register the validate action that should be triggered
+when the validate button is pressed.
+&lt;pre&gt;
+&lt;ValidateAction
+  actionFactory=&quot;org.example.metamodel.custom.YourValidationActionFactory&quot;
+  ePackageId=&quot;some.custom.id&quot;&gt;
+&lt;/ValidateAction&gt;
+&lt;/pre&gt;
+&lt;/p&gt;
       </documentation>
    </annotation>
 
