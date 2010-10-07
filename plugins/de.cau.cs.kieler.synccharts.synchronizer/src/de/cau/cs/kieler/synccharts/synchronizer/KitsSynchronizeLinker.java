@@ -106,7 +106,7 @@ public class KitsSynchronizeLinker {
      * 
      * @return the linker
      */
-    public KitsSynchronizeLinker serializeActions() {
+    public KitsSynchronizeLinker setSerializeActions() {
         this.serializeActions = true;
         return this;
     }

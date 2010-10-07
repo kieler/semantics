@@ -61,7 +61,7 @@ public class SynchronizeGMFEditorCommand extends AbstractTransactionalCommand {
         EObject model = ((Diagram) ((DiagramDocumentEditor) passiveEditor).getDiagramEditPart()
                 .getModel()).getElement();
 
-        new KitsSynchronizeLinker().setDiffModel(diffModel).serializeActions().linkElement(model);
+        new KitsSynchronizeLinker().setDiffModel(diffModel).setSerializeActions().linkElement(model);
         
 //        try {
 //            ActionLabelProcessorWrapper.processActionLabels(((Diagram) this.passiveEditor
