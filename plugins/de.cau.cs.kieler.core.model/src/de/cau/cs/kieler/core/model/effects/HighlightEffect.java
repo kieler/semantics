@@ -185,6 +185,10 @@ public class HighlightEffect extends AbstractEffect {
                 ((RoundedRectangleBorder) targetFigure.getBorder()).setWidth(Math.min(originalWidth
                         + widthIncrease, widthMax));
             }
+            if (targetFigure.getBorder() instanceof RoundedRectangleBorder && style != -1) {
+                originalStyle = ((RoundedRectangleBorder) targetFigure.getBorder()).getStyle();
+                ((RoundedRectangleBorder) targetFigure.getBorder()).setStyle(style);
+            }
 
             // color
             if (originalColor == null) {
@@ -232,6 +236,9 @@ public class HighlightEffect extends AbstractEffect {
         }
         if (targetFigure.getBorder() instanceof RoundedRectangleBorder && originalWidth != -1) {
             ((RoundedRectangleBorder) targetFigure.getBorder()).setWidth(originalWidth);
+        }
+        if (targetFigure.getBorder() instanceof RoundedRectangleBorder && originalStyle != -1) {
+            ((RoundedRectangleBorder) targetFigure.getBorder()).setStyle(originalStyle);
         }
         targetFigure.repaint();
         originalColor = null;
