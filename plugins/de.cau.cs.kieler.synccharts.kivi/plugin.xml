@@ -29,6 +29,12 @@
             name="Layout After CollapseEffect Combination"
             active="true">
       </combination>
+      <combination
+            class="de.cau.cs.kieler.synccharts.kivi.LayoutAfterLabelChangedCombination"
+            description="Performs automatic layout after a node label has been changed."
+            name="Layout After Label Changed Combination"
+            active="true">
+      </combination>
    </extension>
    <extension
          point="org.eclipse.ui.menus">
@@ -71,5 +77,11 @@
             properties="isSyncChartsEditor"
             type="org.eclipse.ui.IEditorPart">
       </propertyTester>
+   </extension>
+   <extension
+         point="de.cau.cs.kieler.synccharts.triggerListener">
+      <triggerListener
+            class="de.cau.cs.kieler.synccharts.kivi.LabelChangedTrigger$LabelChangedTriggerListener">
+      </triggerListener>
    </extension>
 </plugin>
