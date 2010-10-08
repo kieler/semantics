@@ -307,14 +307,6 @@ litigation.
          version="0.0.0"/>
 
    <includes
-         id="de.cau.cs.kieler.viewmanagement"
-         version="0.0.0"/>
-
-   <includes
-         id="de.cau.cs.kieler.viewmanagement.source"
-         version="0.0.0"/>
-
-   <includes
          id="de.cau.cs.kieler.kaom"
          version="0.0.0"/>
 
