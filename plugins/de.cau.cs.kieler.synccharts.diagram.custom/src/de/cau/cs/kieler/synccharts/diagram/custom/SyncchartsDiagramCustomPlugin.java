@@ -13,24 +13,14 @@
  */
 package de.cau.cs.kieler.synccharts.diagram.custom;
 
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.eclipse.draw2d.ColorConstants;
-import org.eclipse.emf.ecore.EObject;
-import org.eclipse.gef.EditPart;
-import org.eclipse.gmf.runtime.diagram.ui.editparts.DiagramEditPart;
-import org.eclipse.gmf.runtime.diagram.ui.parts.IDiagramWorkbenchPart;
-import org.eclipse.gmf.runtime.notation.View;
-import org.eclipse.jface.viewers.ISelection;
-import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IEditorReference;
 import org.eclipse.ui.IPageListener;
 import org.eclipse.ui.IPartListener;
-import org.eclipse.ui.ISelectionListener;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchPart;
@@ -38,10 +28,8 @@ import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
-import de.cau.cs.kieler.core.model.util.ModelingUtil;
 import de.cau.cs.kieler.core.ui.util.CombinedWorkbenchListener;
 import de.cau.cs.kieler.core.ui.util.EditorUtils;
-import de.cau.cs.kieler.synccharts.Transition;
 import de.cau.cs.kieler.synccharts.custom.update.UpdateResourceFactoryImpl;
 import de.cau.cs.kieler.synccharts.diagram.custom.commands.ReInitSyncchartsDiagramCommand;
 import de.cau.cs.kieler.synccharts.diagram.custom.triggerlisteners.RedundantLabelTriggerListener;
@@ -54,7 +42,7 @@ import de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditor;
  * @kieler.rating 2010-06-14 proposed yellow
  */
 public class SyncchartsDiagramCustomPlugin extends AbstractUIPlugin implements
-        ISelectionListener, IPageListener, IPartListener {
+        IPageListener, IPartListener {
 
     /** The current instance of the plugin. */
     private static SyncchartsDiagramCustomPlugin instance = null;
@@ -74,44 +62,10 @@ public class SyncchartsDiagramCustomPlugin extends AbstractUIPlugin implements
         instance = this;
         CombinedWorkbenchListener.addPageListener(this);
         CombinedWorkbenchListener.addPartListener(this);
-        CombinedWorkbenchListener.addSelectionListener(this);
         CombinedWorkbenchListener.receiveAlreadyOpenedPages(this);
         CombinedWorkbenchListener.receiveAlreadyOpenedParts(this);
         UpdateResourceFactoryImpl
                 .setReInitDiagramCommand(new ReInitSyncchartsDiagramCommand());
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public void selectionChanged(final IWorkbenchPart part, final ISelection sel) {
-        if (sel instanceof IStructuredSelection) {
-            IStructuredSelection selection = (IStructuredSelection) sel;
-            Iterator<?> iter = selection.iterator();
-            if (part instanceof IDiagramWorkbenchPart) {
-                HighlightingManager.reset(part);
-                IDiagramWorkbenchPart dwp = (IDiagramWorkbenchPart) part;
-                DiagramEditPart dep = dwp.getDiagramEditPart();
-                while (iter.hasNext()) {
-                    Object o = iter.next();
-                    if (o instanceof EditPart) {
-                        EditPart editPart = (EditPart) o;
-                        EObject obj = ((View) editPart.getModel()).getElement();
-                        if (obj instanceof Transition) {
-                            // highlight all edit parts belonging to the
-                            // selected transition
-                            List<EditPart> parts = ModelingUtil.getEditParts(
-                                    dep, obj);
-                            for (EditPart transEditPart : parts) {
-                                HighlightingManager.highlight(part,
-                                        transEditPart, ColorConstants.blue,
-                                        ColorConstants.white);
-                            }
-                        }
-                    }
-                }
-            }
-        }
     }
 
     /**
