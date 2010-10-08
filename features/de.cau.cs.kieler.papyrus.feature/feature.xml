@@ -227,17 +227,11 @@ litigation.
       <import plugin="org.eclipse.papyrus.core"/>
       <import plugin="org.eclipse.papyrus.diagram.statemachine"/>
       <import feature="de.cau.cs.kieler.uml2" version="0.2.0" match="greaterOrEqual"/>
+      <import plugin="de.cau.cs.kieler.sim.kivi"/>
    </requires>
 
    <plugin
          id="de.cau.cs.kieler.papyrus"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="de.cau.cs.kieler.uml2.viewmanagement"
          download-size="0"
          install-size="0"
          version="0.0.0"
@@ -254,5 +248,12 @@ litigation.
          download-size="0"
          install-size="0"
          version="0.0.0"/>
+
+   <plugin
+         id="de.cau.cs.kieler.uml2.kivi"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
 
 </feature>
