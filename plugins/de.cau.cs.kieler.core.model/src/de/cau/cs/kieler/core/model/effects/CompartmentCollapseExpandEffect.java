@@ -13,21 +13,12 @@
  */
 package de.cau.cs.kieler.core.model.effects;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.gef.EditPart;
-import org.eclipse.gef.commands.Command;
-import org.eclipse.gmf.runtime.diagram.core.commands.SetPropertyCommand;
-import org.eclipse.gmf.runtime.diagram.ui.commands.ICommandProxy;
 import org.eclipse.gmf.runtime.diagram.ui.editparts.IResizableCompartmentEditPart;
-import org.eclipse.gmf.runtime.diagram.ui.internal.properties.Properties;
-import org.eclipse.gmf.runtime.diagram.ui.l10n.DiagramUIMessages;
+import org.eclipse.gmf.runtime.diagram.ui.figures.ResizableCompartmentFigure;
 import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramEditor;
-import org.eclipse.gmf.runtime.emf.core.util.EObjectAdapter;
-import org.eclipse.gmf.runtime.notation.BasicCompartment;
 import org.eclipse.gmf.runtime.notation.DrawerStyle;
 import org.eclipse.gmf.runtime.notation.View;
 
@@ -97,8 +88,13 @@ public class CompartmentCollapseExpandEffect extends AbstractEffect {
      * {@inheritDoc}
      */
     public void execute() {
-        if (targetEditPart != null && doCollapse != isCollapsed()) {
-            getCollapseCommand(doCollapse).execute();
+        if (targetEditPart != null
+                && targetEditPart.getFigure() instanceof ResizableCompartmentFigure) {
+            if (doCollapse) {
+                ((ResizableCompartmentFigure) targetEditPart.getFigure()).setCollapsed();
+            } else {
+                ((ResizableCompartmentFigure) targetEditPart.getFigure()).setExpanded();
+            }
             justExecuted = true;
         } else {
             justExecuted = false;
@@ -109,20 +105,17 @@ public class CompartmentCollapseExpandEffect extends AbstractEffect {
      * Undo the effect, i.e. expand a collapsed compartment.
      */
     public void undo() {
-        if (targetEditPart != null && originalCollapseState != isCollapsed()) {
-            getCollapseCommand(originalCollapseState).execute();
+        if (targetEditPart != null
+                && targetEditPart.getFigure() instanceof ResizableCompartmentFigure) {
+            if (originalCollapseState) {
+                ((ResizableCompartmentFigure) targetEditPart.getFigure()).setCollapsed();
+            } else {
+                ((ResizableCompartmentFigure) targetEditPart.getFigure()).setExpanded();
+            }
             justExecuted = true;
         } else {
             justExecuted = false;
         }
-    }
-
-    private Command getCollapseCommand(final boolean collapse) {
-        DrawerStyle style = (DrawerStyle) targetEditPart.getModel();
-        SetPropertyCommand spc = new SetPropertyCommand(targetEditPart.getEditingDomain(),
-                new EObjectAdapter(style), Properties.ID_COLLAPSED,
-                DiagramUIMessages.PropertyDescriptorFactory_CollapseCompartment, collapse);
-        return new ICommandProxy(spc);
     }
 
     /**
@@ -177,35 +170,6 @@ public class CompartmentCollapseExpandEffect extends AbstractEffect {
         } else {
             return !doCollapse;
         }
-    }
-
-    /**
-     * Give all compartments of a view. The list will also contain the input view itself if it is a
-     * compartment. Additionally it traverses the whole child tree and also returns all nested child
-     * compartments. The list is ordered from root following a dfs.
-     * 
-     * @param view
-     *            input view where search is started
-     * @param level
-     *            how deep to go into hierarchy: 0 will return only the view itself if it is a
-     *            compartment
-     * @return a List of all compartments of the view
-     */
-    private static List<BasicCompartment> getNestedCompartments(final View view, final int level) {
-        List<BasicCompartment> compartments = new ArrayList<BasicCompartment>();
-        if (view instanceof BasicCompartment) {
-            compartments.add((BasicCompartment) view);
-        }
-        // recursively call method for all children
-        if (level > 0) {
-            List<?> childViews = view.getChildren();
-            for (Object child : childViews) {
-                if (child instanceof View) {
-                    compartments.addAll(getNestedCompartments((View) child, (level - 1)));
-                }
-            }
-        }
-        return compartments;
     }
 
     /**

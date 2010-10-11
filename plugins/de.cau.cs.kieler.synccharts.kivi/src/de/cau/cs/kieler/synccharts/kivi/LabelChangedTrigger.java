@@ -25,6 +25,8 @@ import de.cau.cs.kieler.core.kivi.AbstractTrigger;
 import de.cau.cs.kieler.core.kivi.AbstractTriggerState;
 import de.cau.cs.kieler.core.kivi.ITrigger;
 import de.cau.cs.kieler.core.ui.util.EditorUtils;
+import de.cau.cs.kieler.core.ui.util.MonitoredOperation;
+import de.cau.cs.kieler.core.util.Maybe;
 import de.cau.cs.kieler.synccharts.SyncchartsPackage;
 import de.cau.cs.kieler.synccharts.listener.FireOnceTriggerListener;
 
@@ -83,10 +85,17 @@ public class LabelChangedTrigger extends AbstractTrigger {
             if (notifier instanceof EObject) {
                 if (getInstance() != null) {
                     // FIXME is there some way of finding out where the notification came from?
-                    IEditorPart editor = EditorUtils.getLastActiveEditor();
-                    if (editor instanceof DiagramEditor) {
+                    // FIXME this throws PartInitExceptions when loading a SyncCharts diagram
+                    final Maybe<IEditorPart> maybe = new Maybe<IEditorPart>();
+                    MonitoredOperation.runInUI(new Runnable() {
+                        public void run() {
+                            maybe.set(EditorUtils.getLastActiveEditor());
+                        }
+                    }, true);
+                    if (maybe.get() instanceof DiagramEditor) {
                         getInstance().trigger(
-                                new LabelChangedState((DiagramEditor) editor, (EObject) notifier));
+                                new LabelChangedState((DiagramEditor) maybe.get(),
+                                        (EObject) notifier));
                     }
                 }
             }
