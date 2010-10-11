@@ -17,6 +17,8 @@ import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.transaction.NotificationFilter;
+import org.eclipse.emf.transaction.ResourceSetChangeEvent;
+import org.eclipse.emf.transaction.RollbackException;
 import org.eclipse.emf.transaction.TransactionalEditingDomain;
 import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramEditor;
 import org.eclipse.ui.IEditorPart;
@@ -77,10 +79,6 @@ public class ModelChangedTrigger extends AbstractTrigger {
                     .or(NotificationFilter.createFeatureFilter(SyncchartsPackage.eINSTANCE
                             .getAction_Label()))
                     .or(NotificationFilter.createFeatureFilter(SyncchartsPackage.eINSTANCE
-                            .getTransition_SourceState()))
-                    .or(NotificationFilter.createFeatureFilter(SyncchartsPackage.eINSTANCE
-                            .getTransition_TargetState()))
-                    .or(NotificationFilter.createFeatureFilter(SyncchartsPackage.eINSTANCE
                             .getScope_SuspensionTrigger()))
                     .or(NotificationFilter.createFeatureFilter(SyncchartsPackage.eINSTANCE
                             .getScope_BodyText()))
@@ -89,14 +87,31 @@ public class ModelChangedTrigger extends AbstractTrigger {
                     .or(NotificationFilter.createFeatureFilter(SyncchartsPackage.eINSTANCE
                             .getScope_ExitActions()))
                     .or(NotificationFilter.createFeatureFilter(SyncchartsPackage.eINSTANCE
-                            .getScope_EntryActions())));
+                            .getScope_EntryActions()))
+                    .or(NotificationFilter.createFeatureFilter(SyncchartsPackage.eINSTANCE
+                            .getState_Regions()))
+                    .or(NotificationFilter.createFeatureFilter(SyncchartsPackage.eINSTANCE
+                            .getState_OutgoingTransitions()))
+                    .or(NotificationFilter.createFeatureFilter(SyncchartsPackage.eINSTANCE
+                            .getState_IncomingTransitions()))
+                    .or(NotificationFilter.createFeatureFilter(SyncchartsPackage.eINSTANCE
+                            .getRegion_States())));
         }
 
         @Override
-        protected Command trigger(final TransactionalEditingDomain domain,
-                final Notification notification) {
-            Object notifier = notification.getNotifier();
-            if (notifier instanceof EObject) {
+        public Command transactionAboutToCommit(final ResourceSetChangeEvent event)
+                throws RollbackException {
+            EObject eObject = null;
+
+            for (Notification notification : event.getNotifications()) {
+                if (getFilter().matches(notification)
+                        && notification.getNotifier() instanceof EObject) {
+                    eObject = (EObject) notification.getNotifier();
+                    break;
+                }
+            }
+
+            if (eObject != null) {
                 if (getInstance() != null) {
                     // FIXME is there some way of finding out where the notification came from?
                     // FIXME this throws PartInitExceptions when loading a SyncCharts diagram
@@ -108,11 +123,17 @@ public class ModelChangedTrigger extends AbstractTrigger {
                     }, true);
                     if (maybe.get() instanceof DiagramEditor) {
                         getInstance().trigger(
-                                new ModelChangedState((DiagramEditor) maybe.get(),
-                                        (EObject) notifier));
+                                new ModelChangedState((DiagramEditor) maybe.get(), eObject));
                     }
                 }
             }
+
+            return super.transactionAboutToCommit(event);
+        }
+
+        @Override
+        protected Command trigger(final TransactionalEditingDomain domain,
+                final Notification notification) {
             return null;
         }
     }
