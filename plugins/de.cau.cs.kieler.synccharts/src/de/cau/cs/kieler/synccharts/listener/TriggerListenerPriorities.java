@@ -40,7 +40,8 @@ public class TriggerListenerPriorities extends FireOnceTriggerListener {
         super(NotificationFilter.createFeatureFilter(
                 SyncchartsPackage.eINSTANCE.getTransition_Priority()).or(
                 NotificationFilter.createFeatureFilter(SyncchartsPackage.eINSTANCE
-                        .getState_OutgoingTransitions())));
+                        .getState_OutgoingTransitions())).or(NotificationFilter.createFeatureFilter(SyncchartsPackage.eINSTANCE
+                            .getRegion_States())));
     }
 
     @Override
@@ -61,6 +62,12 @@ public class TriggerListenerPriorities extends FireOnceTriggerListener {
             }
             // fix prios of all outgoing transitions
             cc.append(handleStateFixPriorities((State) notification.getNotifier()));
+        }
+        else if (notification.getFeature().equals(
+            SyncchartsPackage.eINSTANCE.getRegion_States()) && notification.getEventType() == Notification.ADD) {
+            // a new state has been added that might already have some outgoing transitions.
+            // fix prios of all outgoing transitions
+            cc.append(handleStateFixPriorities((State) notification.getNewValue()));
         }
         return cc;
     }
