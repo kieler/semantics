@@ -181,7 +181,7 @@ public class HighlightEffect extends AbstractEffect {
                 shape.setLineDash(new float[] { (style == 3 ? 15.0f : 5.0f), 5.0f
                 // FIXME temporary hack
                 });
-            } else {
+            } else if (originalStyle != -1) {
                 shape.setLineStyle(originalStyle);
             }
         }
