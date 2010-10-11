@@ -15,7 +15,7 @@ package de.cau.cs.kieler.synccharts.kivi;
 
 import de.cau.cs.kieler.core.kivi.AbstractCombination;
 import de.cau.cs.kieler.kiml.ui.layout.LayoutEffect;
-import de.cau.cs.kieler.synccharts.kivi.LabelChangedTrigger.LabelChangedState;
+import de.cau.cs.kieler.synccharts.kivi.ModelChangedTrigger.ModelChangedState;
 
 /**
  * Applies automatic layout after a scope or action label has been changed.
@@ -29,7 +29,7 @@ public class LayoutAfterLabelChangedCombination extends AbstractCombination {
      * 
      * @param state label changed state
      */
-    public void execute(final LabelChangedState state) {
+    public void execute(final ModelChangedState state) {
         dontUndo();
         schedule(new LayoutEffect(state.getDiagramEditor(), state.getEObject()));
     }

@@ -159,6 +159,7 @@ public class HighlightEffect extends AbstractEffect {
      */
     public void execute() {
         if (targetFigure != null) {
+            boolean papyrus = false;
             if (targetFigure instanceof Shape) {
                 Shape shape = (Shape) targetFigure;
                 // line width
@@ -184,12 +185,14 @@ public class HighlightEffect extends AbstractEffect {
 
             // papyrus line width
             if (targetFigure.getBorder() instanceof RoundedRectangleBorder && originalWidth == -1) {
+                papyrus = true;
                 originalWidth = ((RoundedRectangleBorder) targetFigure.getBorder()).getWidth();
                 ((RoundedRectangleBorder) targetFigure.getBorder()).setWidth(Math.min(originalWidth
                         + widthIncrease, widthMax));
             }
             if (changeWidth && targetFigure.getBorder() instanceof RoundedRectangleBorder
                     && style != -1) {
+                papyrus = true;
                 originalStyle = ((RoundedRectangleBorder) targetFigure.getBorder()).getStyle();
                 ((RoundedRectangleBorder) targetFigure.getBorder()).setStyle(style);
             }
@@ -216,7 +219,9 @@ public class HighlightEffect extends AbstractEffect {
             } else {
                 targetFigure.setForegroundColor(originalColor);
             }
-            targetFigure.repaint();
+            if (papyrus) {
+                targetFigure.repaint();
+            }
         }
     }
 

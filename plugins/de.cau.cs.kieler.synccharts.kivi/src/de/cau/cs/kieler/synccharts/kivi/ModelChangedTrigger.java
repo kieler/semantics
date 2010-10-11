@@ -31,23 +31,23 @@ import de.cau.cs.kieler.synccharts.SyncchartsPackage;
 import de.cau.cs.kieler.synccharts.listener.FireOnceTriggerListener;
 
 /**
- * Listen to scope and action labels changing.
+ * Listen to various types of model changes that require automatic layout.
  * 
  * @author mmu
  * 
  */
-public class LabelChangedTrigger extends AbstractTrigger {
+public class ModelChangedTrigger extends AbstractTrigger {
 
-    private static LabelChangedTrigger instance;
+    private static ModelChangedTrigger instance;
 
-    private static LabelChangedTrigger getInstance() {
+    private static ModelChangedTrigger getInstance() {
         return instance;
     }
 
     /**
      * Default constructor.
      */
-    public LabelChangedTrigger() {
+    public ModelChangedTrigger() {
         instance = this;
     }
 
@@ -60,22 +60,36 @@ public class LabelChangedTrigger extends AbstractTrigger {
     }
 
     /**
-     * Always listens to label changed events. Could use some mechanism of dynamically
-     * registerung/unregistering trigger listeners.
+     * Always listens to various model changed events. Could use some mechanism of dynamically
+     * registering/unregistering trigger listeners.
      * 
      * @author mmu
      * 
      */
-    public static class LabelChangedTriggerListener extends FireOnceTriggerListener {
+    public static class ModelChangedTriggerListener extends FireOnceTriggerListener {
 
         /**
-         * Only listen to notifications for scope labels and action labels.
+         * Only listen to the following notifications.
          */
-        public LabelChangedTriggerListener() {
-            super(NotificationFilter.createFeatureFilter(
-                    SyncchartsPackage.eINSTANCE.getScope_Label()).or(
-                    NotificationFilter.createFeatureFilter(SyncchartsPackage.eINSTANCE
-                            .getAction_Label())));
+        public ModelChangedTriggerListener() {
+            super(NotificationFilter
+                    .createFeatureFilter(SyncchartsPackage.eINSTANCE.getScope_Label())
+                    .or(NotificationFilter.createFeatureFilter(SyncchartsPackage.eINSTANCE
+                            .getAction_Label()))
+                    .or(NotificationFilter.createFeatureFilter(SyncchartsPackage.eINSTANCE
+                            .getTransition_SourceState()))
+                    .or(NotificationFilter.createFeatureFilter(SyncchartsPackage.eINSTANCE
+                            .getTransition_TargetState()))
+                    .or(NotificationFilter.createFeatureFilter(SyncchartsPackage.eINSTANCE
+                            .getScope_SuspensionTrigger()))
+                    .or(NotificationFilter.createFeatureFilter(SyncchartsPackage.eINSTANCE
+                            .getScope_BodyText()))
+                    .or(NotificationFilter.createFeatureFilter(SyncchartsPackage.eINSTANCE
+                            .getScope_InnerActions()))
+                    .or(NotificationFilter.createFeatureFilter(SyncchartsPackage.eINSTANCE
+                            .getScope_ExitActions()))
+                    .or(NotificationFilter.createFeatureFilter(SyncchartsPackage.eINSTANCE
+                            .getScope_EntryActions())));
         }
 
         @Override
@@ -94,7 +108,7 @@ public class LabelChangedTrigger extends AbstractTrigger {
                     }, true);
                     if (maybe.get() instanceof DiagramEditor) {
                         getInstance().trigger(
-                                new LabelChangedState((DiagramEditor) maybe.get(),
+                                new ModelChangedState((DiagramEditor) maybe.get(),
                                         (EObject) notifier));
                     }
                 }
@@ -104,13 +118,12 @@ public class LabelChangedTrigger extends AbstractTrigger {
     }
 
     /**
-     * Contains the last EObject that had its label changed and the DiagramEditor where the change
-     * happened.
+     * Contains the last EObject that was modified and the DiagramEditor where the change happened.
      * 
      * @author mmu
      * 
      */
-    public static class LabelChangedState extends AbstractTriggerState {
+    public static class ModelChangedState extends AbstractTriggerState {
 
         private EObject eObject;
 
@@ -119,18 +132,18 @@ public class LabelChangedTrigger extends AbstractTrigger {
         /**
          * Default constructor.
          */
-        public LabelChangedState() {
+        public ModelChangedState() {
         }
 
         /**
-         * Create a new label changed state for the given EObject in the given DiagramEditor.
+         * Create a new model changed state for the given EObject in the given DiagramEditor.
          * 
          * @param editor
          *            the DiagramEditor
          * @param object
          *            the EObject
          */
-        public LabelChangedState(final DiagramEditor editor, final EObject object) {
+        public ModelChangedState(final DiagramEditor editor, final EObject object) {
             diagramEditor = editor;
             eObject = object;
         }
@@ -157,7 +170,7 @@ public class LabelChangedTrigger extends AbstractTrigger {
          * {@inheritDoc}
          */
         public Class<? extends ITrigger> getTriggerClass() {
-            return LabelChangedTrigger.class;
+            return ModelChangedTrigger.class;
         }
 
     }
