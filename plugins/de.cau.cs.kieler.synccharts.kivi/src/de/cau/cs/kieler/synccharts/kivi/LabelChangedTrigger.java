@@ -29,7 +29,7 @@ import de.cau.cs.kieler.synccharts.SyncchartsPackage;
 import de.cau.cs.kieler.synccharts.listener.FireOnceTriggerListener;
 
 /**
- * Listen to label sizes changing.
+ * Listen to scope and action labels changing.
  * 
  * @author mmu
  * 
@@ -58,7 +58,8 @@ public class LabelChangedTrigger extends AbstractTrigger {
     }
 
     /**
-     * Always listens to label changed events.
+     * Always listens to label changed events. Could use some mechanism of dynamically
+     * registerung/unregistering trigger listeners.
      * 
      * @author mmu
      * 
@@ -66,7 +67,7 @@ public class LabelChangedTrigger extends AbstractTrigger {
     public static class LabelChangedTriggerListener extends FireOnceTriggerListener {
 
         /**
-         * Default constructor.
+         * Only listen to notifications for scope labels and action labels.
          */
         public LabelChangedTriggerListener() {
             super(NotificationFilter.createFeatureFilter(
@@ -81,6 +82,7 @@ public class LabelChangedTrigger extends AbstractTrigger {
             Object notifier = notification.getNotifier();
             if (notifier instanceof EObject) {
                 if (getInstance() != null) {
+                    // FIXME is there some way of finding out where the notification came from?
                     IEditorPart editor = EditorUtils.getLastActiveEditor();
                     if (editor instanceof DiagramEditor) {
                         getInstance().trigger(
@@ -88,13 +90,13 @@ public class LabelChangedTrigger extends AbstractTrigger {
                     }
                 }
             }
-
             return null;
         }
     }
 
     /**
-     * foo.
+     * Contains the last EObject that had its label changed and the DiagramEditor where the change
+     * happened.
      * 
      * @author mmu
      * 
@@ -109,7 +111,6 @@ public class LabelChangedTrigger extends AbstractTrigger {
          * Default constructor.
          */
         public LabelChangedState() {
-
         }
 
         /**
@@ -133,7 +134,7 @@ public class LabelChangedTrigger extends AbstractTrigger {
         public EObject getEObject() {
             return eObject;
         }
-        
+
         /**
          * Get the DiagramEditor that contains the change.
          * 

@@ -18,16 +18,16 @@ import de.cau.cs.kieler.kiml.ui.layout.LayoutEffect;
 import de.cau.cs.kieler.synccharts.kivi.LabelChangedTrigger.LabelChangedState;
 
 /**
- * foo.
+ * Applies automatic layout after a scope or action label has been changed.
  * @author mmu
  *
  */
 public class LayoutAfterLabelChangedCombination extends AbstractCombination {
 
     /**
-     * foo.
+     * Apply automatic layout every time the label changed state is updated.
      * 
-     * @param state state
+     * @param state label changed state
      */
     public void execute(final LabelChangedState state) {
         dontUndo();
