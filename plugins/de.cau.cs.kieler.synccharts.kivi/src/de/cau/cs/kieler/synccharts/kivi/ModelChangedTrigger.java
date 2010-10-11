@@ -106,8 +106,14 @@ public class ModelChangedTrigger extends AbstractTrigger {
             for (Notification notification : event.getNotifications()) {
                 if (getFilter().matches(notification)
                         && notification.getNotifier() instanceof EObject) {
-                    eObject = (EObject) notification.getNotifier();
-                    break;
+                    // avoid pointless layouts due to non-changing notifications
+                    // ie label cleanups while loading the diagram
+                    if (notification.getNewValue() != notification.getOldValue()
+                            && (notification.getOldValue() == null || !notification.getOldValue()
+                                    .equals(notification.getNewValue()))) {
+                        eObject = (EObject) notification.getNotifier();
+                        break;
+                    }
                 }
             }
 
