@@ -32,16 +32,6 @@ import de.cau.cs.kieler.sim.kivi.KiViDataComponent;
 public class SyncChartsDataComponent extends KiViDataComponent {
     
     /**
-     * FIXME remove after devel.
-     * 
-     * @return fake id
-     */
-    @Override
-    public String getDataComponentId() {
-        return "fakeid1";
-    }
-    
-    /**
      * {@inheritDoc}
      */
     protected DiagramEditor getActiveEditor() {

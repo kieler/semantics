@@ -31,7 +31,9 @@ import de.cau.cs.kieler.core.kivi.UndoEffect;
 import de.cau.cs.kieler.core.model.util.ModelingUtil;
 
 /**
- * A simple transient highlighting effect.
+ * A simple transient highlighting effect. Can change line colors, line styles, and line widths for
+ * Shapes and NodeFigures.
+ * 
  * 
  * @author mmu
  * 
@@ -64,7 +66,6 @@ public class HighlightEffect extends AbstractEffect {
      * Default constructor.
      */
     public HighlightEffect() {
-
     }
 
     /**
@@ -158,102 +159,120 @@ public class HighlightEffect extends AbstractEffect {
      * {@inheritDoc}
      */
     public void execute() {
-        if (targetFigure != null) {
-            boolean papyrus = false;
-            if (targetFigure instanceof Shape) {
-                Shape shape = (Shape) targetFigure;
-                // line width
-                if (originalWidth == -1) {
-                    originalWidth = shape.getLineWidth();
-                    shape.setLineWidth(Math.min(originalWidth + widthIncrease, widthMax));
-                }
-                // line style, black & white mode
+        if (targetFigure == null) {
+            return;
+        }
+        
+        boolean papyrus = false;
+        if (targetFigure instanceof Shape) {
+            Shape shape = (Shape) targetFigure;
+            // line width
+            if (originalWidth == -1) {
+                originalWidth = shape.getLineWidth();
+                shape.setLineWidth(Math.min(originalWidth + widthIncrease, widthMax));
+            }
+            // line style, black & white mode
+            if (style != -1) {
                 if (originalStyle == -1) {
                     originalStyle = shape.getLineStyle();
                 }
-                if (style != -1) {
-                    shape.setLineStyle(style);
-                    shape.setLineStyle(SWT.LINE_CUSTOM);
-                    shape.setLineDash(new float[] { (style == 3 ? 15.0f : 5.0f), 5.0f // FIXME
-                                                                                      // temporary
-                                                                                      // hack
-                    });
-                } else {
-                    shape.setLineStyle(originalStyle);
-                }
+                shape.setLineStyle(style);
+                shape.setLineStyle(SWT.LINE_CUSTOM);
+                shape.setLineDash(new float[] { (style == 3 ? 15.0f : 5.0f), 5.0f
+                // FIXME temporary hack
+                });
+            } else {
+                shape.setLineStyle(originalStyle);
             }
+        }
 
-            // papyrus line width
-            if (targetFigure.getBorder() instanceof RoundedRectangleBorder && originalWidth == -1) {
+        // Papyrus
+        if (targetFigure.getBorder() instanceof RoundedRectangleBorder) {
+            if (changeWidth && originalWidth == -1) {
                 papyrus = true;
                 originalWidth = ((RoundedRectangleBorder) targetFigure.getBorder()).getWidth();
                 ((RoundedRectangleBorder) targetFigure.getBorder()).setWidth(Math.min(originalWidth
                         + widthIncrease, widthMax));
             }
-            if (changeWidth && targetFigure.getBorder() instanceof RoundedRectangleBorder
-                    && style != -1) {
+            if (style != -1) {
                 papyrus = true;
-                originalStyle = ((RoundedRectangleBorder) targetFigure.getBorder()).getStyle();
+                if (originalStyle == -1) {
+                    originalStyle = ((RoundedRectangleBorder) targetFigure.getBorder()).getStyle();
+                }
                 ((RoundedRectangleBorder) targetFigure.getBorder()).setStyle(style);
             }
+        }
 
-            // color
-            if (originalColor == null) {
-                originalColor = targetFigure.getForegroundColor();
+        // color
+        if (originalColor == null) {
+            originalColor = targetFigure.getForegroundColor();
+        }
+        if (color != null) {
+            targetFigure.setForegroundColor(color);
+            for (Object child : targetFigure.getChildren()) {
+                if (child instanceof WrappingLabel) {
+                    ((WrappingLabel) child).setForegroundColor(originalColor);
+                }
             }
-            if (color != null) {
-                targetFigure.setForegroundColor(color);
-                for (Object child : targetFigure.getChildren()) {
-                    if (child instanceof WrappingLabel) {
-                        ((WrappingLabel) child).setForegroundColor(originalColor);
+            if (highlightChildren) {
+                for (Object o : targetEditPart.getChildren()) {
+                    if (o instanceof GraphicalEditPart) {
+                        // potential issue: original color of children may be different?
+                        ((GraphicalEditPart) o).getFigure().setForegroundColor(color);
                     }
                 }
-                if (highlightChildren) {
-                    for (Object o : targetEditPart.getChildren()) {
-                        if (o instanceof GraphicalEditPart) {
-                            // potential issue: original color of children may be different?
-                            ((GraphicalEditPart) o).getFigure().setForegroundColor(color);
-                        }
-                    }
-                }
-            } else {
-                targetFigure.setForegroundColor(originalColor);
             }
-            if (papyrus) {
-                targetFigure.repaint();
-            }
+        } else {
+            targetFigure.setForegroundColor(originalColor);
+        }
+
+        // Papyrus sometimes needs a manual repaint...
+        if (papyrus) {
+            targetFigure.repaint();
         }
     }
 
     @Override
     public void undo() {
-        if (targetFigure != null && originalColor != null) {
-            targetFigure.setForegroundColor(originalColor);
+        if (targetFigure == null) {
+            return;
         }
-        if (highlightChildren && originalColor != null) {
-            for (Object o : targetEditPart.getChildren()) {
-                if (o instanceof GraphicalEditPart) {
-                    ((GraphicalEditPart) o).getFigure().setForegroundColor(originalColor);
+        
+        if (originalColor != null) {
+            targetFigure.setForegroundColor(originalColor);
+            if (highlightChildren) {
+                for (Object o : targetEditPart.getChildren()) {
+                    if (o instanceof GraphicalEditPart) {
+                        ((GraphicalEditPart) o).getFigure().setForegroundColor(originalColor);
+                    }
                 }
             }
         }
-        if (targetFigure instanceof Shape && originalWidth != -1) {
-            ((Shape) targetFigure).setLineWidth(originalWidth);
+        
+        if (targetFigure instanceof Shape) {
+            if (originalWidth != -1) {
+                ((Shape) targetFigure).setLineWidth(originalWidth);
+            }
+            if (originalStyle != -1) {
+                ((Shape) targetFigure).setLineStyle(originalStyle);
+            }
         }
-        if (targetFigure instanceof Shape && originalStyle != -1) {
-            ((Shape) targetFigure).setLineStyle(originalStyle);
+
+        if (targetFigure.getBorder() instanceof RoundedRectangleBorder) {
+            boolean papyrus = false;
+            if (originalWidth != -1) {
+                ((RoundedRectangleBorder) targetFigure.getBorder()).setWidth(originalWidth);
+                papyrus = true;
+            }
+            if (originalStyle != -1) {
+                ((RoundedRectangleBorder) targetFigure.getBorder()).setStyle(originalStyle);
+                papyrus = true;
+            }
+            if (papyrus) {
+                targetFigure.repaint();
+            }
         }
-        if (targetFigure != null && targetFigure.getBorder() instanceof RoundedRectangleBorder
-                && originalWidth != -1) {
-            ((RoundedRectangleBorder) targetFigure.getBorder()).setWidth(originalWidth);
-        }
-        if (targetFigure != null && targetFigure.getBorder() instanceof RoundedRectangleBorder
-                && originalStyle != -1) {
-            ((RoundedRectangleBorder) targetFigure.getBorder()).setStyle(originalStyle);
-        }
-        if (targetFigure != null) {
-            targetFigure.repaint();
-        }
+        
         originalColor = null;
         originalWidth = -1;
         originalStyle = -1;

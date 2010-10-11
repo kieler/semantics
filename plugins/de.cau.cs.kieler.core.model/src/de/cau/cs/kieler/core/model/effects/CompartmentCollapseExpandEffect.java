@@ -88,35 +88,30 @@ public class CompartmentCollapseExpandEffect extends AbstractEffect {
      * {@inheritDoc}
      */
     public void execute() {
-        if (targetEditPart != null
-                && targetEditPart.getFigure() instanceof ResizableCompartmentFigure
-                && ((ResizableCompartmentFigure) targetEditPart.getFigure()).isExpanded() == doCollapse) {
-            if (doCollapse) {
-                ((ResizableCompartmentFigure) targetEditPart.getFigure()).setCollapsed();
-            } else {
-                ((ResizableCompartmentFigure) targetEditPart.getFigure()).setExpanded();
-            }
-            justExecuted = true;
-        } else {
-            justExecuted = false;
-        }
+        justExecuted = apply(doCollapse);
     }
 
     /**
      * Undo the effect, i.e. expand a collapsed compartment.
      */
     public void undo() {
+        justExecuted = apply(originalCollapseState);
+    }
+
+    private boolean apply(final boolean collapse) {
         if (targetEditPart != null
                 && targetEditPart.getFigure() instanceof ResizableCompartmentFigure) {
-            if (originalCollapseState) {
-                ((ResizableCompartmentFigure) targetEditPart.getFigure()).setCollapsed();
-            } else {
-                ((ResizableCompartmentFigure) targetEditPart.getFigure()).setExpanded();
+            ResizableCompartmentFigure f = (ResizableCompartmentFigure) targetEditPart.getFigure();
+            if (f.isExpanded() == collapse) {
+                if (collapse) {
+                    f.setCollapsed();
+                } else {
+                    f.setExpanded();
+                }
+                return true;
             }
-            justExecuted = true;
-        } else {
-            justExecuted = false;
         }
+        return false;
     }
 
     /**
