@@ -89,7 +89,8 @@ public class CompartmentCollapseExpandEffect extends AbstractEffect {
      */
     public void execute() {
         if (targetEditPart != null
-                && targetEditPart.getFigure() instanceof ResizableCompartmentFigure) {
+                && targetEditPart.getFigure() instanceof ResizableCompartmentFigure
+                && ((ResizableCompartmentFigure) targetEditPart.getFigure()).isExpanded() == doCollapse) {
             if (doCollapse) {
                 ((ResizableCompartmentFigure) targetEditPart.getFigure()).setCollapsed();
             } else {

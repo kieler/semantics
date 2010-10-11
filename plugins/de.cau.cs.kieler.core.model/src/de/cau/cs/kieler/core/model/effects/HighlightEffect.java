@@ -58,6 +58,8 @@ public class HighlightEffect extends AbstractEffect {
 
     private boolean highlightChildren = false;
 
+    private boolean changeWidth = true;
+
     /**
      * Default constructor.
      */
@@ -171,8 +173,9 @@ public class HighlightEffect extends AbstractEffect {
                 if (style != -1) {
                     shape.setLineStyle(style);
                     shape.setLineStyle(SWT.LINE_CUSTOM);
-                    shape.setLineDash(new float[] {
-                        (style == 3 ? 15.0f : 5.0f), 5.0f // FIXME temporary hack
+                    shape.setLineDash(new float[] { (style == 3 ? 15.0f : 5.0f), 5.0f // FIXME
+                                                                                      // temporary
+                                                                                      // hack
                     });
                 } else {
                     shape.setLineStyle(originalStyle);
@@ -185,7 +188,8 @@ public class HighlightEffect extends AbstractEffect {
                 ((RoundedRectangleBorder) targetFigure.getBorder()).setWidth(Math.min(originalWidth
                         + widthIncrease, widthMax));
             }
-            if (targetFigure.getBorder() instanceof RoundedRectangleBorder && style != -1) {
+            if (changeWidth && targetFigure.getBorder() instanceof RoundedRectangleBorder
+                    && style != -1) {
                 originalStyle = ((RoundedRectangleBorder) targetFigure.getBorder()).getStyle();
                 ((RoundedRectangleBorder) targetFigure.getBorder()).setStyle(style);
             }
@@ -234,13 +238,17 @@ public class HighlightEffect extends AbstractEffect {
         if (targetFigure instanceof Shape && originalStyle != -1) {
             ((Shape) targetFigure).setLineStyle(originalStyle);
         }
-        if (targetFigure.getBorder() instanceof RoundedRectangleBorder && originalWidth != -1) {
+        if (targetFigure != null && targetFigure.getBorder() instanceof RoundedRectangleBorder
+                && originalWidth != -1) {
             ((RoundedRectangleBorder) targetFigure.getBorder()).setWidth(originalWidth);
         }
-        if (targetFigure.getBorder() instanceof RoundedRectangleBorder && originalStyle != -1) {
+        if (targetFigure != null && targetFigure.getBorder() instanceof RoundedRectangleBorder
+                && originalStyle != -1) {
             ((RoundedRectangleBorder) targetFigure.getBorder()).setStyle(originalStyle);
         }
-        targetFigure.repaint();
+        if (targetFigure != null) {
+            targetFigure.repaint();
+        }
         originalColor = null;
         originalWidth = -1;
         originalStyle = -1;
@@ -254,6 +262,16 @@ public class HighlightEffect extends AbstractEffect {
      */
     public void setColor(final Color c) {
         color = c;
+    }
+
+    /**
+     * Specify whether the outline width is increased during highlight or not.
+     * 
+     * @param change
+     *            true if width shall be increased
+     */
+    public void setChangeWidth(final boolean change) {
+        changeWidth = change;
     }
 
     @Override
