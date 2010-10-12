@@ -34,7 +34,9 @@ import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Path;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.common.util.WrappedException;
 import org.eclipse.emf.ecore.EObject;
@@ -46,6 +48,9 @@ import org.eclipse.gmf.runtime.emf.core.GMFEditingDomainFactory;
 import org.eclipse.gmf.runtime.notation.View;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.statushandlers.StatusManager;
+
+import de.cau.cs.kieler.core.ui.CoreUIPlugin;
 
 /**
  * A command that reinitializes a diagram file from a given model file.
@@ -397,7 +402,8 @@ public abstract class ReInitDiagramCommand extends AbstractHandler {
             return;
         }
         if (diagramRoot == null) {
-            System.out.println("DiagramRoot is null.");
+            IStatus status = new Status(IStatus.ERROR, CoreUIPlugin.PLUGIN_ID, "DiagramRoot is null.");
+            StatusManager.getManager().handle(status, StatusManager.LOG);
             return;
         }
         createNewDiagram(diagramRoot, editingDomain, diagramPath);
