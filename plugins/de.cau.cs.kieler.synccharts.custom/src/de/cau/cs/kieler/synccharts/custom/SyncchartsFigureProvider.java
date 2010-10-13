@@ -360,42 +360,11 @@ public class SyncchartsFigureProvider implements IRenderingProvider {
      */
     public LayoutManager getLayoutManagerByString(final String input,
             final LayoutManager oldLayoutManager, final EObject object) {
-        /*
         if (oldLayoutManager instanceof StateLayout) {
             StateLayout stateLayout = (StateLayout) oldLayoutManager;
-            if (object instanceof State) {
-                State state = (State) stateLayout.getModelElement();//object;
-                if (input.equals("simpleNormal")) {
-                    stateLayout.setCorrespondingLayout(layouts.simpleStateLayout);
-                } else if (input.equals("complexNormal")) { 
-                    stateLayout.setIsEmptyValues(layouts.complexStateLayout, state);
-                    stateLayout.setCorrespondingLayout(layouts.complexStateLayout);
-                } else if (input.equals("conditional")) {
-                    stateLayout.setIsEmptyValues(layouts.conditionalStateLayout, state);
-                    stateLayout.setCorrespondingLayout(layouts.conditionalStateLayout);
-                } else if (input.equals("reference")) {
-                    stateLayout.setIsEmptyValues(layouts.referenceStateLayout, state);
-                    stateLayout.setCorrespondingLayout(layouts.referenceStateLayout);
-                } else if (input.equals("textual")) {
-                    stateLayout.setIsEmptyValues(layouts.complexStateLayout, state);
-                    stateLayout.setCorrespondingLayout(layouts.complexStateLayout);
-                } else {
-                    stateLayout.setCorrespondingLayout(layouts.simpleStateLayout);
-                }
-                /*
-                if (state.isIsFinal()) {
-                    stateLayout.getCorrespondingLayout(null).padding(
-                            DoubleRoundedRectangle.BORDER_WIDTH);
-                } else {
-                    stateLayout.getCorrespondingLayout(null).padding(0);
-                }
-                
-                
-            }
-            
-        
+            stateLayout.setModelElement(object);
         }
-        */
+        
         // TODO Auto-generated method stub
         return oldLayoutManager;
     }
