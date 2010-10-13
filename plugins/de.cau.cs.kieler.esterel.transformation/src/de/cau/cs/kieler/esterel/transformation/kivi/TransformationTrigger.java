@@ -18,6 +18,7 @@ import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramEditor;
 
 import de.cau.cs.kieler.core.kivi.AbstractTrigger;
 import de.cau.cs.kieler.core.kivi.AbstractTriggerState;
+import de.cau.cs.kieler.core.kivi.ITrigger;
 
 /**
  * @author uru
@@ -88,7 +89,7 @@ public class TransformationTrigger extends AbstractTrigger {
         /**
          * {@inheritDoc}
          */
-        public Class<?> getTriggerClass() {
+        public Class<? extends ITrigger> getTriggerClass() {
             return TransformationTrigger.class;
         }
 

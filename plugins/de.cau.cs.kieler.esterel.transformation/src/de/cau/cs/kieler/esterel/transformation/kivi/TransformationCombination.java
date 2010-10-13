@@ -15,7 +15,7 @@ package de.cau.cs.kieler.esterel.transformation.kivi;
 
 import de.cau.cs.kieler.core.kivi.AbstractCombination;
 import de.cau.cs.kieler.esterel.transformation.kivi.TransformationTrigger.TransformingState;
-import de.cau.cs.kieler.kiml.gmf.LayoutEffect;
+import de.cau.cs.kieler.kiml.ui.layout.LayoutEffect;
 
 /**
  * @author uru
