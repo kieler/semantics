@@ -31,8 +31,8 @@
       </combination>
       <combination
             class="de.cau.cs.kieler.synccharts.kivi.LayoutAfterLabelChangedCombination"
-            description="Performs automatic layout after a node label has been changed."
-            name="Layout After Label Changed Combination"
+            description="Performs automatic layout after the model has been changed."
+            name="SyncCharts Layout After Model Changed"
             active="true">
       </combination>
    </extension>

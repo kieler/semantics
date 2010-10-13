@@ -95,7 +95,9 @@ public class ModelChangedTrigger extends AbstractTrigger {
                     .or(NotificationFilter.createFeatureFilter(SyncchartsPackage.eINSTANCE
                             .getState_IncomingTransitions()))
                     .or(NotificationFilter.createFeatureFilter(SyncchartsPackage.eINSTANCE
-                            .getRegion_States())));
+                            .getRegion_States()))
+                    .or(NotificationFilter.createFeatureFilter(SyncchartsPackage.eINSTANCE
+                            .getScope_Signals())));
         }
 
         @Override
