@@ -17,7 +17,7 @@ import org.eclipse.draw2d.ColorConstants;
 import org.eclipse.emf.ecore.EObject;
 
 import de.cau.cs.kieler.core.kivi.AbstractCombination;
-import de.cau.cs.kieler.core.kivi.SelectionTrigger.SelectionState;
+import de.cau.cs.kieler.core.kivi.triggers.SelectionTrigger.SelectionState;
 import de.cau.cs.kieler.core.model.effects.HighlightEffect;
 import de.cau.cs.kieler.synccharts.Transition;
 import de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditor;

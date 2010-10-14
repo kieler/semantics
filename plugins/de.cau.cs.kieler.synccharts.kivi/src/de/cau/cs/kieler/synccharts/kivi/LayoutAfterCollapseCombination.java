@@ -14,7 +14,7 @@
 package de.cau.cs.kieler.synccharts.kivi;
 
 import de.cau.cs.kieler.core.kivi.AbstractCombination;
-import de.cau.cs.kieler.core.kivi.EffectTrigger.EffectTriggerState;
+import de.cau.cs.kieler.core.kivi.triggers.EffectTrigger.EffectTriggerState;
 import de.cau.cs.kieler.core.model.effects.CompartmentCollapseExpandEffect;
 import de.cau.cs.kieler.kiml.ui.layout.LayoutEffect;
 
