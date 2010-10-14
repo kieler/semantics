@@ -294,8 +294,8 @@ public final class ModelingUtil {
      * @return the EditPart, or {@code null} if none was found
      */
     public static EditPart getEditPart(final IEditorPart editorPart, final EObject element) {
-        if (editorPart instanceof DiagramEditPart) {
-            return getEditPart((DiagramEditPart) editorPart, element);
+        if (editorPart instanceof DiagramEditor) {
+            return getEditPart(((DiagramEditor) editorPart).getDiagramEditPart(), element);
         } else {
             return null;
         }
