@@ -46,9 +46,10 @@ public class HighlightEffect extends AbstractEffect {
 
     private int originalWidth = -1;
 
-    private int widthIncrease = 1; // TODO parameterize
+    private int widthIncrease = 1;
 
-    private int widthMax = 5; // TODO parameterize
+    // SUPPRESS CHECKSTYLE NEXT MagicNumber
+    private int widthMax = 5;
 
     private int originalStyle = -1;
 
@@ -296,6 +297,24 @@ public class HighlightEffect extends AbstractEffect {
      */
     public void setChangeWidth(final boolean change) {
         changeWidth = change;
+    }
+    
+    /**
+     * Set the line width increase.
+     * 
+     * @param newIncrease new line width increase in pixel
+     */
+    public void setWidthIncrease(final int newIncrease) {
+        widthIncrease = newIncrease;
+    }
+    
+    /**
+     * Set the maximum line width.
+     * 
+     * @param newMaximum new maximum line width in pixel
+     */
+    public void setWidthMaximum(final int newMaximum) {
+        widthMax = newMaximum;
     }
 
     @Override

@@ -377,6 +377,7 @@ public class SplineConnection extends PolylineConnectionEx {
                     // int size = (arrow.getBounds().height + arrow.getBounds().width) / 2;
                     // this caused the wobbling arrowheads
                     // FIXME find a better mechanism of determining the size of an arrowhead
+                    // SUPPRESS CHECKSTYLE NEXT MagicNumber
                     int size = 10;
                     if (getAlignment() == SOURCE) {
                         arrow.setReferencePoint(SplineUtilities.sourceReferencePoint(points, size));

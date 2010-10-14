@@ -39,7 +39,7 @@ public class ShowHierarchyCombination extends AbstractCombination {
      */
     public void execute(/* FIXME */final SelectionState selection) {
         if (selection != null) {
-            return;
+            return; // comment out to enable disco
         }
         editor = selection.getDiagramEditor();
         EObject root = editor.getDiagram().getElement();
