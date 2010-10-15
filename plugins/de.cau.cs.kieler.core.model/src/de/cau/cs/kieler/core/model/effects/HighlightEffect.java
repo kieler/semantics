@@ -22,7 +22,6 @@ import org.eclipse.gef.GraphicalEditPart;
 import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramEditor;
 import org.eclipse.gmf.runtime.draw2d.ui.figures.RoundedRectangleBorder;
 import org.eclipse.gmf.runtime.draw2d.ui.figures.WrappingLabel;
-import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
 
 import de.cau.cs.kieler.core.kivi.AbstractEffect;
@@ -62,12 +61,6 @@ public class HighlightEffect extends AbstractEffect {
     private boolean highlightChildren = false;
 
     private boolean changeWidth = true;
-
-    /**
-     * Default constructor.
-     */
-    public HighlightEffect() {
-    }
 
     /**
      * Create a new instance for the given edit part using the given color.
@@ -163,14 +156,16 @@ public class HighlightEffect extends AbstractEffect {
         if (targetFigure == null) {
             return;
         }
-        
-        boolean papyrus = false;
+
         if (targetFigure instanceof Shape) {
             Shape shape = (Shape) targetFigure;
             // line width
-            if (originalWidth == -1) {
+            if (changeWidth && originalWidth == -1) {
                 originalWidth = shape.getLineWidth();
                 shape.setLineWidth(Math.min(originalWidth + widthIncrease, widthMax));
+            } else if (!changeWidth && originalWidth != -1) {
+                shape.setLineWidth(originalWidth);
+                originalWidth = -1;
             }
             // line style, black & white mode
             if (style != -1) {
@@ -178,10 +173,6 @@ public class HighlightEffect extends AbstractEffect {
                     originalStyle = shape.getLineStyle();
                 }
                 shape.setLineStyle(style);
-                shape.setLineStyle(SWT.LINE_CUSTOM);
-                shape.setLineDash(new float[] { (style == 3 ? 15.0f : 5.0f), 5.0f
-                // FIXME temporary hack
-                });
             } else if (originalStyle != -1) {
                 shape.setLineStyle(originalStyle);
             }
@@ -190,13 +181,11 @@ public class HighlightEffect extends AbstractEffect {
         // Papyrus
         if (targetFigure.getBorder() instanceof RoundedRectangleBorder) {
             if (changeWidth && originalWidth == -1) {
-                papyrus = true;
                 originalWidth = ((RoundedRectangleBorder) targetFigure.getBorder()).getWidth();
                 ((RoundedRectangleBorder) targetFigure.getBorder()).setWidth(Math.min(originalWidth
                         + widthIncrease, widthMax));
             }
             if (style != -1) {
-                papyrus = true;
                 if (originalStyle == -1) {
                     originalStyle = ((RoundedRectangleBorder) targetFigure.getBorder()).getStyle();
                 }
@@ -210,11 +199,6 @@ public class HighlightEffect extends AbstractEffect {
         }
         if (color != null) {
             targetFigure.setForegroundColor(color);
-            for (Object child : targetFigure.getChildren()) {
-                if (child instanceof WrappingLabel) {
-                    ((WrappingLabel) child).setForegroundColor(originalColor);
-                }
-            }
             if (highlightChildren) {
                 for (Object o : targetEditPart.getChildren()) {
                     if (o instanceof GraphicalEditPart) {
@@ -222,15 +206,18 @@ public class HighlightEffect extends AbstractEffect {
                         ((GraphicalEditPart) o).getFigure().setForegroundColor(color);
                     }
                 }
+            } else {
+                for (Object child : targetFigure.getChildren()) {
+                    if (child instanceof WrappingLabel) {
+                        ((WrappingLabel) child).setForegroundColor(originalColor);
+                    }
+                }
             }
         } else {
             targetFigure.setForegroundColor(originalColor);
         }
 
-        // Papyrus sometimes needs a manual repaint...
-        if (papyrus) {
-            targetFigure.repaint();
-        }
+        targetFigure.repaint();
     }
 
     @Override
@@ -238,7 +225,7 @@ public class HighlightEffect extends AbstractEffect {
         if (targetFigure == null) {
             return;
         }
-        
+
         if (originalColor != null) {
             targetFigure.setForegroundColor(originalColor);
             if (highlightChildren) {
@@ -249,7 +236,7 @@ public class HighlightEffect extends AbstractEffect {
                 }
             }
         }
-        
+
         if (targetFigure instanceof Shape) {
             if (originalWidth != -1) {
                 ((Shape) targetFigure).setLineWidth(originalWidth);
@@ -273,7 +260,7 @@ public class HighlightEffect extends AbstractEffect {
                 targetFigure.repaint();
             }
         }
-        
+
         originalColor = null;
         originalWidth = -1;
         originalStyle = -1;
@@ -298,20 +285,22 @@ public class HighlightEffect extends AbstractEffect {
     public void setChangeWidth(final boolean change) {
         changeWidth = change;
     }
-    
+
     /**
      * Set the line width increase.
      * 
-     * @param newIncrease new line width increase in pixel
+     * @param newIncrease
+     *            new line width increase in pixel
      */
     public void setWidthIncrease(final int newIncrease) {
         widthIncrease = newIncrease;
     }
-    
+
     /**
      * Set the maximum line width.
      * 
-     * @param newMaximum new maximum line width in pixel
+     * @param newMaximum
+     *            new maximum line width in pixel
      */
     public void setWidthMaximum(final int newMaximum) {
         widthMax = newMaximum;
@@ -327,6 +316,9 @@ public class HighlightEffect extends AbstractEffect {
         if (other instanceof HighlightEffect) {
             HighlightEffect otherEffect = (HighlightEffect) other;
             if (otherEffect.targetFigure == targetFigure) {
+                originalColor = otherEffect.originalColor;
+                originalWidth = otherEffect.originalWidth;
+                originalStyle = otherEffect.originalStyle;
                 return this;
             }
         } else if (other instanceof UndoEffect) {

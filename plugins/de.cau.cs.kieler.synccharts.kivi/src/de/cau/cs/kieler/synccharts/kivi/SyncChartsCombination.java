@@ -14,6 +14,7 @@
 package de.cau.cs.kieler.synccharts.kivi;
 
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
 
 import org.eclipse.draw2d.ColorConstants;
@@ -33,6 +34,7 @@ import de.cau.cs.kieler.core.model.util.ModelingUtil;
 import de.cau.cs.kieler.sim.kivi.StateActivityTrigger.ActiveStates;
 import de.cau.cs.kieler.synccharts.State;
 import de.cau.cs.kieler.synccharts.SyncchartsPackage;
+import de.cau.cs.kieler.synccharts.Transition;
 import de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditor;
 
 /**
@@ -56,6 +58,12 @@ public class SyncChartsCombination extends AbstractCombination {
             + ".historyColor";
 
     /**
+     * The preference key for the color of inactive states.
+     */
+    public static final String INACTIVE_COLOR = SyncChartsCombination.class.getCanonicalName()
+            + ".inactiveColor";
+
+    /**
      * The preference key for the black & white mode.
      */
     public static final String BW_MODE = SyncChartsCombination.class.getCanonicalName() + ".bwMode";
@@ -72,6 +80,9 @@ public class SyncChartsCombination extends AbstractCombination {
             new CombinationParameter(HISTORY_COLOR, getPreferenceStore(), "History Color",
                     "The color to use for highlighting previously active states",
                     ColorConstants.blue.getRGB(), CombinationParameter.RGB_TYPE),
+            new CombinationParameter(INACTIVE_COLOR, getPreferenceStore(), "Inactive Color",
+                    "The color to use for highlighting inactive states",
+                    ColorConstants.gray.getRGB(), CombinationParameter.RGB_TYPE),
             new CombinationParameter(BW_MODE, getPreferenceStore(), "Black && White",
                     "Dashed lines for active states, dotted lines for history states.", false,
                     CombinationParameter.BOOLEAN_TYPE),
@@ -86,12 +97,14 @@ public class SyncChartsCombination extends AbstractCombination {
      *            the active states
      */
     public void execute(final ActiveStates activeStates) {
+        // papyrus and synccharts share one trigger state
         if (!(activeStates.getDiagramEditor() instanceof SyncchartsDiagramEditor)) {
             doNothing();
             return;
         }
         // if there are no active states, the simulation has finished.
-        if (activeStates.getActiveStates().isEmpty()) {
+        if (activeStates.getActiveStates().isEmpty()
+                || activeStates.getActiveStates().get(0).isEmpty()) {
             return;
         }
 
@@ -100,14 +113,25 @@ public class SyncChartsCombination extends AbstractCombination {
             init(activeStates.getDiagramEditor());
         }
 
+        EObject root = activeStates.getDiagramEditor().getDiagram().getElement();
+        for (Iterator<EObject> i = root.eAllContents(); i.hasNext();) {
+            EObject current = i.next();
+            if (current.eContainer() != root
+                    && (current instanceof State || current instanceof Transition)) {
+                HighlightEffect effect = new HighlightEffect(current,
+                        activeStates.getDiagramEditor(), getColor(-1, -1), true);
+                effect.setChangeWidth(false);
+                schedule(effect);
+            }
+        }
+
         // these were most recently active i steps ago
         for (int i = 0; i < activeStates.getActiveStates().size(); i++) {
             List<EObject> currentStep = activeStates.getActiveStates().get(i);
             for (EObject e : currentStep) {
-                if (isBW()) {
+                if (isBW() && i != 0) {
                     schedule(new HighlightEffect(e, activeStates.getDiagramEditor(), getColor(i,
-                            activeStates.getActiveStates().size()), (i == 0 ? SWT.LINE_DASH
-                            : SWT.LINE_DOT)));
+                            activeStates.getActiveStates().size()), SWT.LINE_DASH));
                 } else {
                     schedule(new HighlightEffect(e, activeStates.getDiagramEditor(), getColor(i,
                             activeStates.getActiveStates().size())));
@@ -161,20 +185,34 @@ public class SyncChartsCombination extends AbstractCombination {
     }
 
     private Color getColor(final int step, final int steps) {
-        if (step == 0) {
+        if (step == -1) {
+            return new Color(null, PreferenceConverter.getColor(getPreferenceStore(),
+                    INACTIVE_COLOR));
+        } else if (step == 0) {
             return new Color(null, PreferenceConverter.getColor(getPreferenceStore(),
                     HIGHLIGHT_COLOR));
         } else {
+            // FIXME fade to black is bad for black & white mode when the inactive states are grey
             float[] hsb = PreferenceConverter.getColor(getPreferenceStore(), HISTORY_COLOR)
                     .getHSB();
             return new Color(null, new RGB(hsb[0], hsb[1], hsb[2] - hsb[2] / steps * (step - 1)));
         }
     }
 
+    /**
+     * Is this a black & white simulation?
+     * 
+     * @return true if black & white
+     */
     private boolean isBW() {
         return getPreferenceStore().getBoolean(BW_MODE);
     }
 
+    /**
+     * Is Focus & Context activated?
+     * 
+     * @return true if Focus & Context
+     */
     private boolean isFC() {
         return getPreferenceStore().getBoolean(FC_MODE);
     }
