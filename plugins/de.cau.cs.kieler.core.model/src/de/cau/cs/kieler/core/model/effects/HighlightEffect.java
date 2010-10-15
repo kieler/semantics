@@ -217,7 +217,7 @@ public class HighlightEffect extends AbstractEffect {
             targetFigure.setForegroundColor(originalColor);
         }
 
-        targetFigure.repaint();
+//        targetFigure.repaint();
     }
 
     @Override
@@ -255,7 +255,7 @@ public class HighlightEffect extends AbstractEffect {
             }
         }
         
-        targetFigure.repaint();
+//        targetFigure.repaint();
 
         originalColor = null;
         originalWidth = -1;

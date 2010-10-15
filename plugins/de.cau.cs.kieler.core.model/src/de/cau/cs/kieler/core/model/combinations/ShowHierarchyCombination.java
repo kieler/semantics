@@ -19,6 +19,7 @@ import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.RGB;
 
 import de.cau.cs.kieler.core.kivi.AbstractCombination;
+import de.cau.cs.kieler.core.kivi.triggers.ButtonTrigger.ButtonState;
 import de.cau.cs.kieler.core.kivi.triggers.SelectionTrigger.SelectionState;
 import de.cau.cs.kieler.core.model.effects.HighlightEffect;
 
@@ -29,22 +30,30 @@ import de.cau.cs.kieler.core.model.effects.HighlightEffect;
  */
 public class ShowHierarchyCombination extends AbstractCombination {
 
+    private static final String ID = "de.cau.cs.kieler.core.model.showhierarchy";
+
     private DiagramEditor editor;
 
     /**
      * Color the levels of hierarchy.
      * 
-     * @param selection
-     *            temporary testing trigger
+     * @param button
+     *            kivi button trigger
      */
-    public void execute(/* FIXME */final SelectionState selection) {
-        if (selection != null) {
-            return; // comment out to enable disco
+    public void execute(final ButtonState button/*
+                                                 * , final SelectionState selection
+                                                 * enables editing in color, causes some overhead
+                                                 */) {
+        if (ID.equals(button.getButtonId()) && button.getEditor() instanceof DiagramEditor) {
+            if (button.isPushedIn()) {
+                editor = (DiagramEditor) button.getEditor();
+                EObject root = editor.getDiagram().getElement();
+                int maxLevel = getDepth(root, 0);
+                paintRecursively(root, 0, maxLevel);
+            }
+        } else {
+            doNothing();
         }
-        editor = selection.getDiagramEditor();
-        EObject root = editor.getDiagram().getElement();
-        int maxLevel = getDepth(root, 0);
-        paintRecursively(root, 0, maxLevel);
     }
 
     private int getDepth(final EObject element, final int current) {
@@ -64,7 +73,7 @@ public class ShowHierarchyCombination extends AbstractCombination {
         }
         if (level > 0) {
             HighlightEffect effect = new HighlightEffect(element, editor, new Color(null, new RGB(
-                    360.0f / (maxLevel + 1) * level, 1.0f, 1.0f)));
+                    360.0f / (maxLevel + 1) * level, 1.0f, 0.9f)));
             effect.setChangeWidth(false);
             schedule(effect);
         }

@@ -9,6 +9,11 @@
             id="de.cau.cs.kieler.core.model.validate"
             name="validate">
       </command>
+      <command
+            defaultHandler="de.cau.cs.kieler.core.kivi.triggers.ButtonTrigger$ButtonHandler"
+            id="de.cau.cs.kieler.core.model.showhierarchy"
+            name="show hierarchy">
+      </command>
    </extension>
    <extension
          point="org.eclipse.ui.menus">
@@ -30,6 +35,20 @@
                      variable="activeEditor">
                   <instanceof
                         value="org.eclipse.ui.part.EditorPart">
+                  </instanceof>
+               </with>
+            </visibleWhen>
+         </command>
+         <command
+               commandId="de.cau.cs.kieler.core.model.showhierarchy"
+               icon="icons/rainbow.gif"
+               style="toggle">
+            <visibleWhen
+                  checkEnabled="false">
+               <with
+                     variable="activeEditor">
+                  <instanceof
+                        value="org.eclipse.gmf.runtime.diagram.ui.parts.DiagramEditor">
                   </instanceof>
                </with>
             </visibleWhen>
