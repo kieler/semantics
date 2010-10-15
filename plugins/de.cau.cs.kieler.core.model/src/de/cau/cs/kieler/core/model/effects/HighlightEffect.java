@@ -247,19 +247,15 @@ public class HighlightEffect extends AbstractEffect {
         }
 
         if (targetFigure.getBorder() instanceof RoundedRectangleBorder) {
-            boolean papyrus = false;
             if (originalWidth != -1) {
                 ((RoundedRectangleBorder) targetFigure.getBorder()).setWidth(originalWidth);
-                papyrus = true;
             }
             if (originalStyle != -1) {
                 ((RoundedRectangleBorder) targetFigure.getBorder()).setStyle(originalStyle);
-                papyrus = true;
-            }
-            if (papyrus) {
-                targetFigure.repaint();
             }
         }
+        
+        targetFigure.repaint();
 
         originalColor = null;
         originalWidth = -1;
