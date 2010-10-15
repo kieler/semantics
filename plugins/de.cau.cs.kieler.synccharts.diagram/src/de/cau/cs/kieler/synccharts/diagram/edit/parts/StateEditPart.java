@@ -18,8 +18,6 @@ import org.eclipse.gef.editpolicies.LayoutEditPolicy;
 import org.eclipse.gef.editpolicies.NonResizableEditPolicy;
 import org.eclipse.gef.requests.CreateRequest;
 import org.eclipse.gmf.runtime.diagram.ui.editparts.IGraphicalEditPart;
-import org.eclipse.gmf.runtime.diagram.ui.editpolicies.CreationEditPolicy;
-import org.eclipse.gmf.runtime.diagram.ui.editpolicies.DragDropEditPolicy;
 import org.eclipse.gmf.runtime.diagram.ui.editpolicies.EditPolicyRoles;
 import org.eclipse.gmf.runtime.draw2d.ui.figures.ConstrainedToolbarLayout;
 import org.eclipse.gmf.runtime.draw2d.ui.figures.WrappingLabel;
@@ -33,7 +31,6 @@ import de.cau.cs.kieler.core.ui.figures.TranslatablePolyline;
 import de.cau.cs.kieler.karma.AdvancedRenderingShapeNodeEditPart;
 import de.cau.cs.kieler.karma.SwitchableFigure;
 import de.cau.cs.kieler.synccharts.custom.StateLayout;
-import de.cau.cs.kieler.synccharts.diagram.edit.policies.StateCanonicalEditPolicy;
 import de.cau.cs.kieler.synccharts.diagram.edit.policies.StateItemSemanticEditPolicy;
 import de.cau.cs.kieler.synccharts.diagram.part.SyncchartsVisualIDRegistry;
 import de.cau.cs.kieler.synccharts.diagram.providers.SyncchartsElementTypes;
@@ -64,11 +61,8 @@ public class StateEditPart extends AdvancedRenderingShapeNodeEditPart {
      * @generated
      */
     protected void createDefaultEditPolicies() {
-        installEditPolicy(EditPolicyRoles.CREATION_ROLE, new CreationEditPolicy());
         super.createDefaultEditPolicies();
         installEditPolicy(EditPolicyRoles.SEMANTIC_ROLE, new StateItemSemanticEditPolicy());
-        installEditPolicy(EditPolicyRoles.DRAG_DROP_ROLE, new DragDropEditPolicy());
-        installEditPolicy(EditPolicyRoles.CANONICAL_ROLE, new StateCanonicalEditPolicy());
         installEditPolicy(EditPolicy.LAYOUT_ROLE, createLayoutEditPolicy());
         // XXX need an SCR to runtime to have another abstract superclass that would let children add reasonable editpolicies
         // removeEditPolicy(org.eclipse.gmf.runtime.diagram.ui.editpolicies.EditPolicyRoles.CONNECTION_HANDLES_ROLE);
@@ -104,10 +98,9 @@ public class StateEditPart extends AdvancedRenderingShapeNodeEditPart {
      */
     protected IFigure createNodeShape() {
         primaryShape = new StateFigure();
-        StateLayout layout = (StateLayout) primaryShape.getLayoutManager();
-        layout.setModelElement(this.getModelElement());
+
         StateEditPart.this.updateFigure(primaryShape);
-        
+
         return primaryShape;
     }
 
@@ -124,12 +117,12 @@ public class StateEditPart extends AdvancedRenderingShapeNodeEditPart {
     protected boolean addFixedChild(EditPart childEditPart) {
         if (childEditPart instanceof StateLabelEditPart) {
             ((StateLabelEditPart) childEditPart).setLabel(getPrimaryShape()
-                    .getFigureStateNameFigure());
+                .getFigureStateNameFigure());
             return true;
         }
         if (childEditPart instanceof StateInterfaceDeclarationEditPart) {
             ((StateInterfaceDeclarationEditPart) childEditPart).setLabel(getPrimaryShape()
-                    .getFigureInterfaceDeclFigure());
+                .getFigureInterfaceDeclFigure());
             return true;
         }
         return false;
@@ -267,7 +260,7 @@ public class StateEditPart extends AdvancedRenderingShapeNodeEditPart {
      */
     public EditPart getPrimaryChildEditPart() {
         return getChildBySemanticHint(SyncchartsVisualIDRegistry
-                .getType(StateLabelEditPart.VISUAL_ID));
+            .getType(StateLabelEditPart.VISUAL_ID));
     }
 
     /**
@@ -287,7 +280,7 @@ public class StateEditPart extends AdvancedRenderingShapeNodeEditPart {
         if (targetEditPart instanceof de.cau.cs.kieler.synccharts.diagram.edit.parts.StateEditPart) {
             types.add(SyncchartsElementTypes.Transition_4005);
         }
-        if (targetEditPart instanceof State2EditPart) {
+        if (targetEditPart instanceof RegionStateEditPart) {
             types.add(SyncchartsElementTypes.Transition_4005);
         }
         return types;
@@ -338,10 +331,6 @@ public class StateEditPart extends AdvancedRenderingShapeNodeEditPart {
         /**
          * @generated
          */
-        private WrappingLabel fFigureBodyTextFigure;
-        /**
-         * @generated
-         */
         private WrappingLabel fFigureInterfaceDeclFigure;
 
         /**
@@ -366,7 +355,7 @@ public class StateEditPart extends AdvancedRenderingShapeNodeEditPart {
             fFigureStateNameFigure.setText("");
 
             fFigureStateNameFigure.setBorder(new MarginBorder(getMapMode().DPtoLP(5), getMapMode()
-                    .DPtoLP(10), getMapMode().DPtoLP(5), getMapMode().DPtoLP(10)));
+                .DPtoLP(10), getMapMode().DPtoLP(5), getMapMode().DPtoLP(10)));
 
             this.add(fFigureStateNameFigure);
 
@@ -376,21 +365,12 @@ public class StateEditPart extends AdvancedRenderingShapeNodeEditPart {
 
             this.add(polyline0);
 
-            fFigureBodyTextFigure = new WrappingLabel();
-            fFigureBodyTextFigure.setText("");
-            fFigureBodyTextFigure.setTextWrap(true);
-
-            fFigureBodyTextFigure.setBorder(new MarginBorder(getMapMode().DPtoLP(5), getMapMode()
-                    .DPtoLP(10), getMapMode().DPtoLP(5), getMapMode().DPtoLP(10)));
-
-            this.add(fFigureBodyTextFigure);
-
             fFigureInterfaceDeclFigure = new WrappingLabel();
             fFigureInterfaceDeclFigure.setText("");
             fFigureInterfaceDeclFigure.setTextWrap(true);
 
             fFigureInterfaceDeclFigure.setBorder(new MarginBorder(getMapMode().DPtoLP(5),
-                    getMapMode().DPtoLP(10), getMapMode().DPtoLP(5), getMapMode().DPtoLP(10)));
+                getMapMode().DPtoLP(10), getMapMode().DPtoLP(5), getMapMode().DPtoLP(10)));
 
             this.add(fFigureInterfaceDeclFigure);
 
@@ -401,13 +381,6 @@ public class StateEditPart extends AdvancedRenderingShapeNodeEditPart {
          */
         public WrappingLabel getFigureStateNameFigure() {
             return fFigureStateNameFigure;
-        }
-
-        /**
-         * @generated
-         */
-        public WrappingLabel getFigureBodyTextFigure() {
-            return fFigureBodyTextFigure;
         }
 
         /**

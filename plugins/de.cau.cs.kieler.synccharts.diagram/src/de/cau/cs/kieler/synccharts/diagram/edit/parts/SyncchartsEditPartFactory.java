@@ -41,21 +41,6 @@ public class SyncchartsEditPartFactory implements EditPartFactory {
             case StateInterfaceDeclarationEditPart.VISUAL_ID:
                 return new StateInterfaceDeclarationEditPart(view);
 
-            case Region2EditPart.VISUAL_ID:
-                return new Region2EditPart(view);
-
-            case RegionLabelEditPart.VISUAL_ID:
-                return new RegionLabelEditPart(view);
-
-            case State2EditPart.VISUAL_ID:
-                return new State2EditPart(view);
-
-            case StateLabel2EditPart.VISUAL_ID:
-                return new StateLabel2EditPart(view);
-
-            case StateInterfaceDeclaration2EditPart.VISUAL_ID:
-                return new StateInterfaceDeclaration2EditPart(view);
-
             case SignalEditPart.VISUAL_ID:
                 return new SignalEditPart(view);
 
@@ -89,26 +74,23 @@ public class SyncchartsEditPartFactory implements EditPartFactory {
             case TextualCodeEditPart.VISUAL_ID:
                 return new TextualCodeEditPart(view);
 
-            case StateSignalCompartment2EditPart.VISUAL_ID:
-                return new StateSignalCompartment2EditPart(view);
+            case TextualCodeLabelEditPart.VISUAL_ID:
+                return new TextualCodeLabelEditPart(view);
 
-            case StateEntryActionCompartment2EditPart.VISUAL_ID:
-                return new StateEntryActionCompartment2EditPart(view);
+            case StateRegionEditPart.VISUAL_ID:
+                return new StateRegionEditPart(view);
 
-            case StateInnerActionCompartment2EditPart.VISUAL_ID:
-                return new StateInnerActionCompartment2EditPart(view);
+            case StateRegionLabelEditPart.VISUAL_ID:
+                return new StateRegionLabelEditPart(view);
 
-            case StateExitActionCompartment2EditPart.VISUAL_ID:
-                return new StateExitActionCompartment2EditPart(view);
+            case RegionStateEditPart.VISUAL_ID:
+                return new RegionStateEditPart(view);
 
-            case StateSuspensionTriggerCompartment2EditPart.VISUAL_ID:
-                return new StateSuspensionTriggerCompartment2EditPart(view);
+            case RegionStateLabelEditPart.VISUAL_ID:
+                return new RegionStateLabelEditPart(view);
 
-            case StateRegionCompartmentEditPart.VISUAL_ID:
-                return new StateRegionCompartmentEditPart(view);
-
-            case RegionStateCompartmentEditPart.VISUAL_ID:
-                return new RegionStateCompartmentEditPart(view);
+            case RegionState2LabelEditPart.VISUAL_ID:
+                return new RegionState2LabelEditPart(view);
 
             case StateSignalCompartmentEditPart.VISUAL_ID:
                 return new StateSignalCompartmentEditPart(view);
@@ -127,6 +109,27 @@ public class SyncchartsEditPartFactory implements EditPartFactory {
 
             case StateRegionCompartment2EditPart.VISUAL_ID:
                 return new StateRegionCompartment2EditPart(view);
+
+            case RegionStateCompartmentEditPart.VISUAL_ID:
+                return new RegionStateCompartmentEditPart(view);
+
+            case StateSignalCompartment2EditPart.VISUAL_ID:
+                return new StateSignalCompartment2EditPart(view);
+
+            case StateEntryActionCompartment2EditPart.VISUAL_ID:
+                return new StateEntryActionCompartment2EditPart(view);
+
+            case StateInnerActionCompartment2EditPart.VISUAL_ID:
+                return new StateInnerActionCompartment2EditPart(view);
+
+            case StateExitActionCompartment2EditPart.VISUAL_ID:
+                return new StateExitActionCompartment2EditPart(view);
+
+            case StateSuspensionTriggerCompartment2EditPart.VISUAL_ID:
+                return new StateSuspensionTriggerCompartment2EditPart(view);
+
+            case StateRegionCompartmentEditPart.VISUAL_ID:
+                return new StateRegionCompartmentEditPart(view);
 
             case TransitionEditPart.VISUAL_ID:
                 return new TransitionEditPart(view);
@@ -153,8 +156,7 @@ public class SyncchartsEditPartFactory implements EditPartFactory {
     /**
      * @generated
      */
-    public static CellEditorLocator getTextCellEditorLocator(
-            ITextAwareEditPart source) {
+    public static CellEditorLocator getTextCellEditorLocator(ITextAwareEditPart source) {
         if (source.getFigure() instanceof WrappingLabel)
             return new TextCellEditorLocator((WrappingLabel) source.getFigure());
         else {
@@ -194,16 +196,12 @@ public class SyncchartsEditPartFactory implements EditPartFactory {
             Rectangle rect = getWrapLabel().getTextBounds().getCopy();
             getWrapLabel().translateToAbsolute(rect);
             if (!text.getFont().isDisposed()) {
-                if (getWrapLabel().isTextWrapOn()
-                        && getWrapLabel().getText().length() > 0) {
-                    rect.setSize(new Dimension(text.computeSize(rect.width,
-                            SWT.DEFAULT)));
+                if (getWrapLabel().isTextWrapOn() && getWrapLabel().getText().length() > 0) {
+                    rect.setSize(new Dimension(text.computeSize(rect.width, SWT.DEFAULT)));
                 } else {
-                    int avr =
-                            FigureUtilities.getFontMetrics(text.getFont())
-                                    .getAverageCharWidth();
-                    rect.setSize(new Dimension(text.computeSize(SWT.DEFAULT,
-                            SWT.DEFAULT)).expand(avr * 2, 0));
+                    int avr = FigureUtilities.getFontMetrics(text.getFont()).getAverageCharWidth();
+                    rect.setSize(new Dimension(text.computeSize(SWT.DEFAULT, SWT.DEFAULT)).expand(
+                        avr * 2, 0));
                 }
             }
             if (!rect.equals(new Rectangle(text.getBounds()))) {
@@ -244,11 +242,9 @@ public class SyncchartsEditPartFactory implements EditPartFactory {
             Rectangle rect = getLabel().getTextBounds().getCopy();
             getLabel().translateToAbsolute(rect);
             if (!text.getFont().isDisposed()) {
-                int avr =
-                        FigureUtilities.getFontMetrics(text.getFont())
-                                .getAverageCharWidth();
-                rect.setSize(new Dimension(text.computeSize(SWT.DEFAULT,
-                        SWT.DEFAULT)).expand(avr * 2, 0));
+                int avr = FigureUtilities.getFontMetrics(text.getFont()).getAverageCharWidth();
+                rect.setSize(new Dimension(text.computeSize(SWT.DEFAULT, SWT.DEFAULT)).expand(
+                    avr * 2, 0));
             }
             if (!rect.equals(new Rectangle(text.getBounds()))) {
                 text.setBounds(rect.x, rect.y, rect.width, rect.height);

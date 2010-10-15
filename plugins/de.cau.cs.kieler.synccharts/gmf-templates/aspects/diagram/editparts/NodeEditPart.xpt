@@ -22,7 +22,7 @@
 	protected org.eclipse.draw2d.IFigure contentPane;
 
 	«REM» State and State2 Editparts dont need primary shape to be generated, the will inherit it «ENDREM»
-	«IF editPartClassName <> 'StateEditPart' and editPartClassName <> 'State2EditPart'-»
+	«IF editPartClassName <> 'StateEditPart' and editPartClassName <> 'RegionStateEditPart'-»
 	«EXPAND xpt::Common::generatedMemberComment»
 	protected org.eclipse.draw2d.IFigure primaryShape;
 	«ENDIF-»

@@ -10,13 +10,13 @@ import de.cau.cs.kieler.synccharts.diagram.providers.SyncchartsElementTypes;
  * @generated
  */
 public class StateInnerActionCompartment2ItemSemanticEditPolicy extends
-        SyncchartsBaseItemSemanticEditPolicy {
+    SyncchartsBaseItemSemanticEditPolicy {
 
     /**
      * @generated
      */
     public StateInnerActionCompartment2ItemSemanticEditPolicy() {
-        super(SyncchartsElementTypes.State_2005);
+        super(SyncchartsElementTypes.State_3040);
     }
 
     /**

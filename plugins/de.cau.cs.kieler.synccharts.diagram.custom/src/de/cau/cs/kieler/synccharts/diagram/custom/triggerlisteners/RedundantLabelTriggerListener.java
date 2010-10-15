@@ -39,7 +39,7 @@ import de.cau.cs.kieler.synccharts.State;
 import de.cau.cs.kieler.synccharts.SyncchartsPackage;
 import de.cau.cs.kieler.synccharts.Transition;
 import de.cau.cs.kieler.synccharts.diagram.custom.SyncchartsDiagramCustomPlugin;
-import de.cau.cs.kieler.synccharts.diagram.edit.parts.RegionLabelEditPart;
+import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateRegionLabelEditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.TransitionPriorityEditPart;
 import de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditor;
 
@@ -185,7 +185,7 @@ public class RedundantLabelTriggerListener extends TriggerListener {
             Object o = iter.next();
             // test if it is one of the relevant edit parts
             if (o instanceof TransitionPriorityEditPart
-                    || o instanceof RegionLabelEditPart) {
+                    || o instanceof StateRegionLabelEditPart) {
                 // get the semantic element
                 EObject obj = ((View) ((EditPart) o).getModel()).getElement();
                 if (o instanceof TransitionPriorityEditPart) {
@@ -198,8 +198,8 @@ public class RedundantLabelTriggerListener extends TriggerListener {
                         VisibilityManager.hide(part, editPart);
                         continue;
                     }
-                } else if (o instanceof RegionLabelEditPart) {
-                    RegionLabelEditPart editPart = (RegionLabelEditPart) o;
+                } else if (o instanceof StateRegionLabelEditPart) {
+                    StateRegionLabelEditPart editPart = (StateRegionLabelEditPart) o;
                     Region region = (Region) obj;
                     State parent = region.getParentState();
                     if (parent != null) {

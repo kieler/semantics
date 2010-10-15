@@ -1,8 +1,15 @@
 package de.cau.cs.kieler.synccharts.diagram.edit.parts;
 
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+
 import org.eclipse.draw2d.IFigure;
+import org.eclipse.draw2d.MarginBorder;
 import org.eclipse.draw2d.Shape;
 import org.eclipse.draw2d.StackLayout;
+import org.eclipse.draw2d.geometry.Dimension;
+import org.eclipse.draw2d.geometry.Point;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gef.EditPolicy;
 import org.eclipse.gef.Request;
@@ -15,24 +22,30 @@ import org.eclipse.gmf.runtime.diagram.ui.editparts.ShapeNodeEditPart;
 import org.eclipse.gmf.runtime.diagram.ui.editpolicies.EditPolicyRoles;
 import org.eclipse.gmf.runtime.draw2d.ui.figures.ConstrainedToolbarLayout;
 import org.eclipse.gmf.runtime.draw2d.ui.figures.WrappingLabel;
+import org.eclipse.gmf.runtime.emf.type.core.IElementType;
 import org.eclipse.gmf.runtime.gef.ui.figures.DefaultSizeNodeFigure;
 import org.eclipse.gmf.runtime.gef.ui.figures.NodeFigure;
 import org.eclipse.gmf.runtime.notation.View;
 import org.eclipse.swt.graphics.Color;
 
-import de.cau.cs.kieler.synccharts.custom.InvisibleLabelFigure;
-import de.cau.cs.kieler.synccharts.diagram.edit.policies.StateEntryActionItemSemanticEditPolicy;
+import de.cau.cs.kieler.core.ui.figures.RoundedRectangleFigure;
+import de.cau.cs.kieler.core.ui.figures.TranslatablePolyline;
+import de.cau.cs.kieler.karma.AdvancedRenderingShapeNodeEditPart;
+import de.cau.cs.kieler.karma.SwitchableFigure;
+import de.cau.cs.kieler.synccharts.custom.StateLayout;
+import de.cau.cs.kieler.synccharts.diagram.edit.policies.RegionStateItemSemanticEditPolicy;
 import de.cau.cs.kieler.synccharts.diagram.part.SyncchartsVisualIDRegistry;
+import de.cau.cs.kieler.synccharts.diagram.providers.SyncchartsElementTypes;
 
 /**
  * @generated
  */
-public class StateEntryActionEditPart extends ShapeNodeEditPart {
+public class RegionStateEditPart extends AdvancedRenderingShapeNodeEditPart {
 
     /**
      * @generated
      */
-    public static final int VISUAL_ID = 3042;
+    public static final int VISUAL_ID = 3040;
 
     /**
      * @generated
@@ -42,12 +55,7 @@ public class StateEntryActionEditPart extends ShapeNodeEditPart {
     /**
      * @generated
      */
-    protected IFigure primaryShape;
-
-    /**
-     * @generated
-     */
-    public StateEntryActionEditPart(View view) {
+    public RegionStateEditPart(View view) {
         super(view);
     }
 
@@ -56,8 +64,7 @@ public class StateEntryActionEditPart extends ShapeNodeEditPart {
      */
     protected void createDefaultEditPolicies() {
         super.createDefaultEditPolicies();
-        installEditPolicy(EditPolicyRoles.SEMANTIC_ROLE,
-            new StateEntryActionItemSemanticEditPolicy());
+        installEditPolicy(EditPolicyRoles.SEMANTIC_ROLE, new RegionStateItemSemanticEditPolicy());
         installEditPolicy(EditPolicy.LAYOUT_ROLE, createLayoutEditPolicy());
         // XXX need an SCR to runtime to have another abstract superclass that would let children add reasonable editpolicies
         // removeEditPolicy(org.eclipse.gmf.runtime.diagram.ui.editpolicies.EditPolicyRoles.CONNECTION_HANDLES_ROLE);
@@ -92,7 +99,9 @@ public class StateEntryActionEditPart extends ShapeNodeEditPart {
      * @generated
      */
     protected IFigure createNodeShape() {
-        primaryShape = new InvisibleFigure();
+        primaryShape = new StateFigure();
+
+        RegionStateEditPart.this.updateFigure(primaryShape);
 
         return primaryShape;
     }
@@ -100,17 +109,22 @@ public class StateEntryActionEditPart extends ShapeNodeEditPart {
     /**
      * @generated
      */
-    public InvisibleFigure getPrimaryShape() {
-        return (InvisibleFigure) primaryShape;
+    public StateFigure getPrimaryShape() {
+        return (StateFigure) primaryShape;
     }
 
     /**
      * @generated
      */
     protected boolean addFixedChild(EditPart childEditPart) {
-        if (childEditPart instanceof StateEntryActionLabelEditPart) {
-            ((StateEntryActionLabelEditPart) childEditPart).setLabel(getPrimaryShape()
-                .getFigureInvisibleFigureLabelFigure());
+        if (childEditPart instanceof RegionStateLabelEditPart) {
+            ((RegionStateLabelEditPart) childEditPart).setLabel(getPrimaryShape()
+                .getFigureStateNameFigure());
+            return true;
+        }
+        if (childEditPart instanceof RegionState2LabelEditPart) {
+            ((RegionState2LabelEditPart) childEditPart).setLabel(getPrimaryShape()
+                .getFigureInterfaceDeclFigure());
             return true;
         }
         return false;
@@ -120,7 +134,10 @@ public class StateEntryActionEditPart extends ShapeNodeEditPart {
      * @generated
      */
     protected boolean removeFixedChild(EditPart childEditPart) {
-        if (childEditPart instanceof StateEntryActionLabelEditPart) {
+        if (childEditPart instanceof RegionStateLabelEditPart) {
+            return true;
+        }
+        if (childEditPart instanceof RegionState2LabelEditPart) {
             return true;
         }
         return false;
@@ -157,7 +174,8 @@ public class StateEntryActionEditPart extends ShapeNodeEditPart {
      * @generated
      */
     protected NodeFigure createNodePlate() {
-        DefaultSizeNodeFigure result = new DefaultSizeNodeFigure(20, 20);
+        RoundedRectangleFigure result = new RoundedRectangleFigure();
+        result.setCornerDimensions(new Dimension(StateLayout.MIN_WIDTH, StateLayout.MIN_HEIGHT));
         return result;
     }
 
@@ -244,24 +262,89 @@ public class StateEntryActionEditPart extends ShapeNodeEditPart {
      */
     public EditPart getPrimaryChildEditPart() {
         return getChildBySemanticHint(SyncchartsVisualIDRegistry
-            .getType(StateEntryActionLabelEditPart.VISUAL_ID));
+            .getType(RegionStateLabelEditPart.VISUAL_ID));
     }
 
     /**
      * @generated
      */
-    public class InvisibleFigure extends InvisibleLabelFigure {
+    public List<IElementType> getMARelTypesOnSource() {
+        ArrayList<IElementType> types = new ArrayList<IElementType>(1);
+        types.add(SyncchartsElementTypes.Transition_4005);
+        return types;
+    }
+
+    /**
+     * @generated
+     */
+    public List<IElementType> getMARelTypesOnSourceAndTarget(IGraphicalEditPart targetEditPart) {
+        LinkedList<IElementType> types = new LinkedList<IElementType>();
+        if (targetEditPart instanceof StateEditPart) {
+            types.add(SyncchartsElementTypes.Transition_4005);
+        }
+        if (targetEditPart instanceof de.cau.cs.kieler.synccharts.diagram.edit.parts.RegionStateEditPart) {
+            types.add(SyncchartsElementTypes.Transition_4005);
+        }
+        return types;
+    }
+
+    /**
+     * @generated
+     */
+    public List<IElementType> getMATypesForTarget(IElementType relationshipType) {
+        LinkedList<IElementType> types = new LinkedList<IElementType>();
+        if (relationshipType == SyncchartsElementTypes.Transition_4005) {
+            types.add(SyncchartsElementTypes.State_2005);
+            types.add(SyncchartsElementTypes.State_3040);
+        }
+        return types;
+    }
+
+    /**
+     * @generated
+     */
+    public List<IElementType> getMARelTypesOnTarget() {
+        ArrayList<IElementType> types = new ArrayList<IElementType>(1);
+        types.add(SyncchartsElementTypes.Transition_4005);
+        return types;
+    }
+
+    /**
+     * @generated
+     */
+    public List<IElementType> getMATypesForSource(IElementType relationshipType) {
+        LinkedList<IElementType> types = new LinkedList<IElementType>();
+        if (relationshipType == SyncchartsElementTypes.Transition_4005) {
+            types.add(SyncchartsElementTypes.State_2005);
+            types.add(SyncchartsElementTypes.State_3040);
+        }
+        return types;
+    }
+
+    /**
+     * @generated
+     */
+    public class StateFigure extends SwitchableFigure {
 
         /**
          * @generated
          */
-        private WrappingLabel fFigureInvisibleFigureLabelFigure;
+        private WrappingLabel fFigureStateNameFigure;
+        /**
+         * @generated
+         */
+        private WrappingLabel fFigureInterfaceDeclFigure;
 
         /**
          * @generated
          */
-        public InvisibleFigure() {
+        public StateFigure() {
 
+            StateLayout layoutThis = new StateLayout();
+
+            this.setLayoutManager(layoutThis);
+
+            this.setSize(getMapMode().DPtoLP(20), getMapMode().DPtoLP(20));
             createContents();
         }
 
@@ -270,18 +353,43 @@ public class StateEntryActionEditPart extends ShapeNodeEditPart {
          */
         private void createContents() {
 
-            fFigureInvisibleFigureLabelFigure = new WrappingLabel();
-            fFigureInvisibleFigureLabelFigure.setText("<...>");
+            fFigureStateNameFigure = new WrappingLabel();
+            fFigureStateNameFigure.setText("");
 
-            this.add(fFigureInvisibleFigureLabelFigure);
+            fFigureStateNameFigure.setBorder(new MarginBorder(getMapMode().DPtoLP(5), getMapMode()
+                .DPtoLP(10), getMapMode().DPtoLP(5), getMapMode().DPtoLP(10)));
+
+            this.add(fFigureStateNameFigure);
+
+            TranslatablePolyline polyline0 = new TranslatablePolyline();
+            polyline0.addPoint(new Point(getMapMode().DPtoLP(0), getMapMode().DPtoLP(20)));
+            polyline0.addPoint(new Point(getMapMode().DPtoLP(50), getMapMode().DPtoLP(20)));
+
+            this.add(polyline0);
+
+            fFigureInterfaceDeclFigure = new WrappingLabel();
+            fFigureInterfaceDeclFigure.setText("");
+            fFigureInterfaceDeclFigure.setTextWrap(true);
+
+            fFigureInterfaceDeclFigure.setBorder(new MarginBorder(getMapMode().DPtoLP(5),
+                getMapMode().DPtoLP(10), getMapMode().DPtoLP(5), getMapMode().DPtoLP(10)));
+
+            this.add(fFigureInterfaceDeclFigure);
 
         }
 
         /**
          * @generated
          */
-        public WrappingLabel getFigureInvisibleFigureLabelFigure() {
-            return fFigureInvisibleFigureLabelFigure;
+        public WrappingLabel getFigureStateNameFigure() {
+            return fFigureStateNameFigure;
+        }
+
+        /**
+         * @generated
+         */
+        public WrappingLabel getFigureInterfaceDeclFigure() {
+            return fFigureInterfaceDeclFigure;
         }
 
     }

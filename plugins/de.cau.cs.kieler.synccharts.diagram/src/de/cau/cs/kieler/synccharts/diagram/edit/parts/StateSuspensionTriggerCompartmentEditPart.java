@@ -22,13 +22,12 @@ import de.cau.cs.kieler.synccharts.diagram.part.Messages;
 /**
  * @generated
  */
-public class StateSuspensionTriggerCompartmentEditPart extends
-        ShapeCompartmentEditPart {
+public class StateSuspensionTriggerCompartmentEditPart extends ShapeCompartmentEditPart {
 
     /**
      * @generated
      */
-    public static final int VISUAL_ID = 7065;
+    public static final int VISUAL_ID = 7058;
 
     /**
      * @generated
@@ -48,8 +47,7 @@ public class StateSuspensionTriggerCompartmentEditPart extends
      * @generated
      */
     public IFigure createFigure() {
-        ResizableCompartmentFigure result =
-                (ResizableCompartmentFigure) super.createFigure();
+        ResizableCompartmentFigure result = (ResizableCompartmentFigure) super.createFigure();
         result.setTitleVisibility(false);
 
         Object border = result.getBorder();
@@ -75,16 +73,13 @@ public class StateSuspensionTriggerCompartmentEditPart extends
      */
     protected void createDefaultEditPolicies() {
         super.createDefaultEditPolicies();
-        installEditPolicy(EditPolicy.PRIMARY_DRAG_ROLE,
-                new ResizableCompartmentEditPolicy());
+        installEditPolicy(EditPolicy.PRIMARY_DRAG_ROLE, new ResizableCompartmentEditPolicy());
         installEditPolicy(EditPolicyRoles.SEMANTIC_ROLE,
-                new StateSuspensionTriggerCompartmentItemSemanticEditPolicy());
-        installEditPolicy(EditPolicyRoles.CREATION_ROLE,
-                new CreationEditPolicy());
-        installEditPolicy(EditPolicyRoles.DRAG_DROP_ROLE,
-                new DragDropEditPolicy());
+            new StateSuspensionTriggerCompartmentItemSemanticEditPolicy());
+        installEditPolicy(EditPolicyRoles.CREATION_ROLE, new CreationEditPolicy());
+        installEditPolicy(EditPolicyRoles.DRAG_DROP_ROLE, new DragDropEditPolicy());
         installEditPolicy(EditPolicyRoles.CANONICAL_ROLE,
-                new StateSuspensionTriggerCompartmentCanonicalEditPolicy());
+            new StateSuspensionTriggerCompartmentCanonicalEditPolicy());
     }
 
     /**

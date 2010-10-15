@@ -47,14 +47,14 @@ public class StateLayout extends AbstractTableLayout {
     /** the layout elements resp. the indices of the children */
     public static final int STATELABEL = 0;
     public static final int POLYLINE = 1;
-    public static final int BODYTEXT = 2;
-    public static final int INTERFACEDECL = 3;
-    public static final int SIGNALS = 4;
-    public static final int ENTRYACTIONS = 5;
-    public static final int INSIDEACTIONS = 6;
-    public static final int EXITACTIONS = 7;
-    public static final int SUSPENDTRIGGER = 8;
-    public static final int REGION = 9;
+    //public static final int BODYTEXT = 2;
+    public static final int INTERFACEDECL = 2;
+    public static final int SIGNALS = 3;
+    public static final int ENTRYACTIONS = 4;
+    public static final int INSIDEACTIONS = 5;
+    public static final int EXITACTIONS = 6;
+    public static final int SUSPENDTRIGGER = 7;
+    public static final int REGION = 8;
 
     /** The container for the used layout-style. */
     private AbstractSyncChartsConfiguration layouts;
@@ -167,11 +167,10 @@ public class StateLayout extends AbstractTableLayout {
             isEmpty = state.getInterfaceDeclaration() == null
                     || state.getInterfaceDeclaration().length() == 0;
             break;
-        case BODYTEXT:
-            isEmpty = state.getBodyText() == null
-                    || state.getBodyText().getCode() == null
-                    || state.getBodyText().getCode().length() == 0;
-            break;
+//        case BODYTEXT:
+//            isEmpty = state.getBodyText() == null
+//                    || state.getBodyText().isEmpty();
+//            break;
         case SIGNALS:
             isEmpty = state.getSignals().size() == 0;
             break;
@@ -214,8 +213,7 @@ public class StateLayout extends AbstractTableLayout {
         boolean containsExitActions = state.getExitActions().size() > 0;
         boolean containsSuspensionTrigger = state.getSuspensionTrigger() != null;
         boolean containsBodyText = state.getBodyText() != null
-                && state.getBodyText().getCode() != null
-                && state.getBodyText().getCode().length() > 0;
+                && !state.getBodyText().isEmpty();
 
         return (containsRegions || containsSignals || containsVariables
                 || containsEntryActions || containsInsideActions

@@ -68,6 +68,7 @@ public class NoteSynchronizationTriggerListener extends FireOnceTriggerListener 
         Object notifier = notification.getNotifier();
         Object newValue = notification.getNewValue();
         Object oldValue = notification.getOldValue();
+        
         switch (notification.getEventType()) {
         case Notification.ADD:
             if (notifier instanceof View && newValue instanceof Shape) {

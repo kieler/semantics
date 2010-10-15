@@ -30,15 +30,16 @@ import org.eclipse.gmf.runtime.notation.Node;
 import org.eclipse.gmf.runtime.notation.View;
 
 import de.cau.cs.kieler.synccharts.SyncchartsPackage;
-import de.cau.cs.kieler.synccharts.diagram.edit.parts.Region2EditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.RegionEditPart;
+import de.cau.cs.kieler.synccharts.diagram.edit.parts.RegionStateEditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.SignalEditPart;
-import de.cau.cs.kieler.synccharts.diagram.edit.parts.State2EditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateEditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateEntryActionEditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateExitActionEditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateInnerActionEditPart;
+import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateRegionEditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateSuspensionTriggerEditPart;
+import de.cau.cs.kieler.synccharts.diagram.edit.parts.TextualCodeEditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.TransitionEditPart;
 import de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramUpdater;
 import de.cau.cs.kieler.synccharts.diagram.part.SyncchartsLinkDescriptor;
@@ -64,9 +65,8 @@ public class RegionCanonicalEditPolicy extends CanonicalEditPolicy {
     protected List getSemanticChildrenList() {
         View viewObject = (View) getHost().getModel();
         LinkedList<EObject> result = new LinkedList<EObject>();
-        List<SyncchartsNodeDescriptor> childDescriptors =
-                SyncchartsDiagramUpdater
-                        .getRegion_1000SemanticChildren(viewObject);
+        List<SyncchartsNodeDescriptor> childDescriptors = SyncchartsDiagramUpdater
+            .getRegion_1000SemanticChildren(viewObject);
         for (SyncchartsNodeDescriptor d : childDescriptors) {
             result.add(d.getModelElement());
         }
@@ -76,18 +76,15 @@ public class RegionCanonicalEditPolicy extends CanonicalEditPolicy {
     /**
      * @generated
      */
-    protected boolean isOrphaned(Collection<EObject> semanticChildren,
-            final View view) {
-        return isMyDiagramElement(view)
-                && !semanticChildren.contains(view.getElement());
+    protected boolean isOrphaned(Collection<EObject> semanticChildren, final View view) {
+        return isMyDiagramElement(view) && !semanticChildren.contains(view.getElement());
     }
 
     /**
      * @generated
      */
     private boolean isMyDiagramElement(View view) {
-        return StateEditPart.VISUAL_ID == SyncchartsVisualIDRegistry
-                .getVisualID(view);
+        return StateEditPart.VISUAL_ID == SyncchartsVisualIDRegistry.getVisualID(view);
     }
 
     /**
@@ -98,10 +95,8 @@ public class RegionCanonicalEditPolicy extends CanonicalEditPolicy {
             return;
         }
         LinkedList<IAdaptable> createdViews = new LinkedList<IAdaptable>();
-        List<SyncchartsNodeDescriptor> childDescriptors =
-                SyncchartsDiagramUpdater
-                        .getRegion_1000SemanticChildren((View) getHost()
-                                .getModel());
+        List<SyncchartsNodeDescriptor> childDescriptors = SyncchartsDiagramUpdater
+            .getRegion_1000SemanticChildren((View) getHost().getModel());
         LinkedList<View> orphaned = new LinkedList<View>();
         // we care to check only views we recognize as ours
         LinkedList<View> knownViewChildren = new LinkedList<View>();
@@ -115,11 +110,10 @@ public class RegionCanonicalEditPolicy extends CanonicalEditPolicy {
         // iteration happens over list of desired semantic elements, trying to find best matching View, while original CEP
         // iterates views, potentially losing view (size/bounds) information - i.e. if there are few views to reference same EObject, only last one 
         // to answer isOrphaned == true will be used for the domain element representation, see #cleanCanonicalSemanticChildren()
-        for (Iterator<SyncchartsNodeDescriptor> descriptorsIterator =
-                childDescriptors.iterator(); descriptorsIterator.hasNext();) {
+        for (Iterator<SyncchartsNodeDescriptor> descriptorsIterator = childDescriptors.iterator(); descriptorsIterator
+            .hasNext();) {
             SyncchartsNodeDescriptor next = descriptorsIterator.next();
-            String hint =
-                    SyncchartsVisualIDRegistry.getType(next.getVisualID());
+            String hint = SyncchartsVisualIDRegistry.getType(next.getVisualID());
             LinkedList<View> perfectMatch = new LinkedList<View>(); // both semanticElement and hint match that of NodeDescriptor
             for (View childView : getViewChildren()) {
                 EObject semanticElement = childView.getElement();
@@ -142,18 +136,14 @@ public class RegionCanonicalEditPolicy extends CanonicalEditPolicy {
         // or those we have potential matches to, and thus need to be recreated, preserving size/location information.
         orphaned.addAll(knownViewChildren);
         //
-        ArrayList<CreateViewRequest.ViewDescriptor> viewDescriptors =
-                new ArrayList<CreateViewRequest.ViewDescriptor>(
-                        childDescriptors.size());
+        ArrayList<CreateViewRequest.ViewDescriptor> viewDescriptors = new ArrayList<CreateViewRequest.ViewDescriptor>(
+            childDescriptors.size());
         for (SyncchartsNodeDescriptor next : childDescriptors) {
-            String hint =
-                    SyncchartsVisualIDRegistry.getType(next.getVisualID());
-            IAdaptable elementAdapter =
-                    new CanonicalElementAdapter(next.getModelElement(), hint);
-            CreateViewRequest.ViewDescriptor descriptor =
-                    new CreateViewRequest.ViewDescriptor(elementAdapter,
-                            Node.class, hint, ViewUtil.APPEND, false, host()
-                                    .getDiagramPreferencesHint());
+            String hint = SyncchartsVisualIDRegistry.getType(next.getVisualID());
+            IAdaptable elementAdapter = new CanonicalElementAdapter(next.getModelElement(), hint);
+            CreateViewRequest.ViewDescriptor descriptor = new CreateViewRequest.ViewDescriptor(
+                elementAdapter, Node.class, hint, ViewUtil.APPEND, false, host()
+                    .getDiagramPreferencesHint());
             viewDescriptors.add(descriptor);
         }
 
@@ -162,8 +152,8 @@ public class RegionCanonicalEditPolicy extends CanonicalEditPolicy {
         CreateViewRequest request = getCreateViewRequest(viewDescriptors);
         Command cmd = getCreateViewCommand(request);
         if (cmd != null && cmd.canExecute()) {
-            SetViewMutabilityCommand.makeMutable(
-                    new EObjectAdapter(host().getNotationView())).execute();
+            SetViewMutabilityCommand.makeMutable(new EObjectAdapter(host().getNotationView()))
+                .execute();
             executeCommand(cmd);
             @SuppressWarnings("unchecked")
             List<IAdaptable> nl = (List<IAdaptable>) request.getNewObject();
@@ -177,9 +167,8 @@ public class RegionCanonicalEditPolicy extends CanonicalEditPolicy {
 
         if (createdViews.size() > 1) {
             // perform a layout of the container
-            DeferredLayoutCommand layoutCmd =
-                    new DeferredLayoutCommand(host().getEditingDomain(),
-                            createdViews, host());
+            DeferredLayoutCommand layoutCmd = new DeferredLayoutCommand(host().getEditingDomain(),
+                createdViews, host());
             executeCommand(new ICommandProxy(layoutCmd));
         }
 
@@ -195,17 +184,14 @@ public class RegionCanonicalEditPolicy extends CanonicalEditPolicy {
      */
     private Collection<IAdaptable> refreshConnections() {
         Map<EObject, View> domain2NotationMap = new HashMap<EObject, View>();
-        Collection<SyncchartsLinkDescriptor> linkDescriptors =
-                collectAllLinks(getDiagram(), domain2NotationMap);
+        Collection<SyncchartsLinkDescriptor> linkDescriptors = collectAllLinks(getDiagram(),
+            domain2NotationMap);
         Collection existingLinks = new LinkedList(getDiagram().getEdges());
-        for (Iterator linksIterator = existingLinks.iterator(); linksIterator
-                .hasNext();) {
+        for (Iterator linksIterator = existingLinks.iterator(); linksIterator.hasNext();) {
             Edge nextDiagramLink = (Edge) linksIterator.next();
-            int diagramLinkVisualID =
-                    SyncchartsVisualIDRegistry.getVisualID(nextDiagramLink);
+            int diagramLinkVisualID = SyncchartsVisualIDRegistry.getVisualID(nextDiagramLink);
             if (diagramLinkVisualID == -1) {
-                if (nextDiagramLink.getSource() != null
-                        && nextDiagramLink.getTarget() != null) {
+                if (nextDiagramLink.getSource() != null && nextDiagramLink.getTarget() != null) {
                     linksIterator.remove();
                 }
                 continue;
@@ -213,17 +199,13 @@ public class RegionCanonicalEditPolicy extends CanonicalEditPolicy {
             EObject diagramLinkObject = nextDiagramLink.getElement();
             EObject diagramLinkSrc = nextDiagramLink.getSource().getElement();
             EObject diagramLinkDst = nextDiagramLink.getTarget().getElement();
-            for (Iterator<SyncchartsLinkDescriptor> linkDescriptorsIterator =
-                    linkDescriptors.iterator(); linkDescriptorsIterator
-                    .hasNext();) {
-                SyncchartsLinkDescriptor nextLinkDescriptor =
-                        linkDescriptorsIterator.next();
+            for (Iterator<SyncchartsLinkDescriptor> linkDescriptorsIterator = linkDescriptors
+                .iterator(); linkDescriptorsIterator.hasNext();) {
+                SyncchartsLinkDescriptor nextLinkDescriptor = linkDescriptorsIterator.next();
                 if (diagramLinkObject == nextLinkDescriptor.getModelElement()
-                        && diagramLinkSrc == nextLinkDescriptor.getSource()
-                        && diagramLinkDst == nextLinkDescriptor
-                                .getDestination()
-                        && diagramLinkVisualID == nextLinkDescriptor
-                                .getVisualID()) {
+                    && diagramLinkSrc == nextLinkDescriptor.getSource()
+                    && diagramLinkDst == nextLinkDescriptor.getDestination()
+                    && diagramLinkVisualID == nextLinkDescriptor.getVisualID()) {
                     linksIterator.remove();
                     linkDescriptorsIterator.remove();
                     break;
@@ -238,133 +220,128 @@ public class RegionCanonicalEditPolicy extends CanonicalEditPolicy {
      * @generated
      */
     private Collection<SyncchartsLinkDescriptor> collectAllLinks(View view,
-            Map<EObject, View> domain2NotationMap) {
-        if (!RegionEditPart.MODEL_ID.equals(SyncchartsVisualIDRegistry
-                .getModelID(view))) {
+        Map<EObject, View> domain2NotationMap) {
+        if (!RegionEditPart.MODEL_ID.equals(SyncchartsVisualIDRegistry.getModelID(view))) {
             return Collections.emptyList();
         }
-        LinkedList<SyncchartsLinkDescriptor> result =
-                new LinkedList<SyncchartsLinkDescriptor>();
+        LinkedList<SyncchartsLinkDescriptor> result = new LinkedList<SyncchartsLinkDescriptor>();
         switch (SyncchartsVisualIDRegistry.getVisualID(view)) {
         case RegionEditPart.VISUAL_ID: {
             if (!domain2NotationMap.containsKey(view.getElement())) {
-                result.addAll(SyncchartsDiagramUpdater
-                        .getRegion_1000ContainedLinks(view));
+                result.addAll(SyncchartsDiagramUpdater.getRegion_1000ContainedLinks(view));
             }
             if (!domain2NotationMap.containsKey(view.getElement())
-                    || view.getEAnnotation("Shortcut") == null) { //$NON-NLS-1$
+                || view.getEAnnotation("Shortcut") == null) { //$NON-NLS-1$
                 domain2NotationMap.put(view.getElement(), view);
             }
             break;
         }
         case StateEditPart.VISUAL_ID: {
             if (!domain2NotationMap.containsKey(view.getElement())) {
-                result.addAll(SyncchartsDiagramUpdater
-                        .getState_2005ContainedLinks(view));
+                result.addAll(SyncchartsDiagramUpdater.getState_2005ContainedLinks(view));
             }
             if (!domain2NotationMap.containsKey(view.getElement())
-                    || view.getEAnnotation("Shortcut") == null) { //$NON-NLS-1$
-                domain2NotationMap.put(view.getElement(), view);
-            }
-            break;
-        }
-        case Region2EditPart.VISUAL_ID: {
-            if (!domain2NotationMap.containsKey(view.getElement())) {
-                result.addAll(SyncchartsDiagramUpdater
-                        .getRegion_3039ContainedLinks(view));
-            }
-            if (!domain2NotationMap.containsKey(view.getElement())
-                    || view.getEAnnotation("Shortcut") == null) { //$NON-NLS-1$
-                domain2NotationMap.put(view.getElement(), view);
-            }
-            break;
-        }
-        case State2EditPart.VISUAL_ID: {
-            if (!domain2NotationMap.containsKey(view.getElement())) {
-                result.addAll(SyncchartsDiagramUpdater
-                        .getState_3040ContainedLinks(view));
-            }
-            if (!domain2NotationMap.containsKey(view.getElement())
-                    || view.getEAnnotation("Shortcut") == null) { //$NON-NLS-1$
+                || view.getEAnnotation("Shortcut") == null) { //$NON-NLS-1$
                 domain2NotationMap.put(view.getElement(), view);
             }
             break;
         }
         case SignalEditPart.VISUAL_ID: {
             if (!domain2NotationMap.containsKey(view.getElement())) {
-                result.addAll(SyncchartsDiagramUpdater
-                        .getSignal_3041ContainedLinks(view));
+                result.addAll(SyncchartsDiagramUpdater.getSignal_3041ContainedLinks(view));
             }
             if (!domain2NotationMap.containsKey(view.getElement())
-                    || view.getEAnnotation("Shortcut") == null) { //$NON-NLS-1$
+                || view.getEAnnotation("Shortcut") == null) { //$NON-NLS-1$
                 domain2NotationMap.put(view.getElement(), view);
             }
             break;
         }
         case StateEntryActionEditPart.VISUAL_ID: {
             if (!domain2NotationMap.containsKey(view.getElement())) {
-                result.addAll(SyncchartsDiagramUpdater
-                        .getAction_3042ContainedLinks(view));
+                result.addAll(SyncchartsDiagramUpdater.getAction_3042ContainedLinks(view));
             }
             if (!domain2NotationMap.containsKey(view.getElement())
-                    || view.getEAnnotation("Shortcut") == null) { //$NON-NLS-1$
+                || view.getEAnnotation("Shortcut") == null) { //$NON-NLS-1$
                 domain2NotationMap.put(view.getElement(), view);
             }
             break;
         }
         case StateInnerActionEditPart.VISUAL_ID: {
             if (!domain2NotationMap.containsKey(view.getElement())) {
-                result.addAll(SyncchartsDiagramUpdater
-                        .getAction_3043ContainedLinks(view));
+                result.addAll(SyncchartsDiagramUpdater.getAction_3043ContainedLinks(view));
             }
             if (!domain2NotationMap.containsKey(view.getElement())
-                    || view.getEAnnotation("Shortcut") == null) { //$NON-NLS-1$
+                || view.getEAnnotation("Shortcut") == null) { //$NON-NLS-1$
                 domain2NotationMap.put(view.getElement(), view);
             }
             break;
         }
         case StateExitActionEditPart.VISUAL_ID: {
             if (!domain2NotationMap.containsKey(view.getElement())) {
-                result.addAll(SyncchartsDiagramUpdater
-                        .getAction_3044ContainedLinks(view));
+                result.addAll(SyncchartsDiagramUpdater.getAction_3044ContainedLinks(view));
             }
             if (!domain2NotationMap.containsKey(view.getElement())
-                    || view.getEAnnotation("Shortcut") == null) { //$NON-NLS-1$
+                || view.getEAnnotation("Shortcut") == null) { //$NON-NLS-1$
                 domain2NotationMap.put(view.getElement(), view);
             }
             break;
         }
         case StateSuspensionTriggerEditPart.VISUAL_ID: {
             if (!domain2NotationMap.containsKey(view.getElement())) {
-                result.addAll(SyncchartsDiagramUpdater
-                        .getAction_3045ContainedLinks(view));
+                result.addAll(SyncchartsDiagramUpdater.getAction_3045ContainedLinks(view));
             }
             if (!domain2NotationMap.containsKey(view.getElement())
-                    || view.getEAnnotation("Shortcut") == null) { //$NON-NLS-1$
+                || view.getEAnnotation("Shortcut") == null) { //$NON-NLS-1$
+                domain2NotationMap.put(view.getElement(), view);
+            }
+            break;
+        }
+        case TextualCodeEditPart.VISUAL_ID: {
+            if (!domain2NotationMap.containsKey(view.getElement())) {
+                result.addAll(SyncchartsDiagramUpdater.getTextualCode_3046ContainedLinks(view));
+            }
+            if (!domain2NotationMap.containsKey(view.getElement())
+                || view.getEAnnotation("Shortcut") == null) { //$NON-NLS-1$
+                domain2NotationMap.put(view.getElement(), view);
+            }
+            break;
+        }
+        case StateRegionEditPart.VISUAL_ID: {
+            if (!domain2NotationMap.containsKey(view.getElement())) {
+                result.addAll(SyncchartsDiagramUpdater.getRegion_3039ContainedLinks(view));
+            }
+            if (!domain2NotationMap.containsKey(view.getElement())
+                || view.getEAnnotation("Shortcut") == null) { //$NON-NLS-1$
+                domain2NotationMap.put(view.getElement(), view);
+            }
+            break;
+        }
+        case RegionStateEditPart.VISUAL_ID: {
+            if (!domain2NotationMap.containsKey(view.getElement())) {
+                result.addAll(SyncchartsDiagramUpdater.getState_3040ContainedLinks(view));
+            }
+            if (!domain2NotationMap.containsKey(view.getElement())
+                || view.getEAnnotation("Shortcut") == null) { //$NON-NLS-1$
                 domain2NotationMap.put(view.getElement(), view);
             }
             break;
         }
         case TransitionEditPart.VISUAL_ID: {
             if (!domain2NotationMap.containsKey(view.getElement())) {
-                result.addAll(SyncchartsDiagramUpdater
-                        .getTransition_4005ContainedLinks(view));
+                result.addAll(SyncchartsDiagramUpdater.getTransition_4005ContainedLinks(view));
             }
             if (!domain2NotationMap.containsKey(view.getElement())
-                    || view.getEAnnotation("Shortcut") == null) { //$NON-NLS-1$
+                || view.getEAnnotation("Shortcut") == null) { //$NON-NLS-1$
                 domain2NotationMap.put(view.getElement(), view);
             }
             break;
         }
         }
-        for (Iterator children = view.getChildren().iterator(); children
-                .hasNext();) {
-            result.addAll(collectAllLinks((View) children.next(),
-                    domain2NotationMap));
+        for (Iterator children = view.getChildren().iterator(); children.hasNext();) {
+            result.addAll(collectAllLinks((View) children.next(), domain2NotationMap));
         }
         for (Iterator edges = view.getSourceEdges().iterator(); edges.hasNext();) {
-            result.addAll(collectAllLinks((View) edges.next(),
-                    domain2NotationMap));
+            result.addAll(collectAllLinks((View) edges.next(), domain2NotationMap));
         }
         return result;
     }
@@ -373,29 +350,22 @@ public class RegionCanonicalEditPolicy extends CanonicalEditPolicy {
      * @generated
      */
     private Collection<IAdaptable> createConnections(
-            Collection<SyncchartsLinkDescriptor> linkDescriptors,
-            Map<EObject, View> domain2NotationMap) {
+        Collection<SyncchartsLinkDescriptor> linkDescriptors, Map<EObject, View> domain2NotationMap) {
         LinkedList<IAdaptable> adapters = new LinkedList<IAdaptable>();
         for (SyncchartsLinkDescriptor nextLinkDescriptor : linkDescriptors) {
-            EditPart sourceEditPart =
-                    getEditPart(nextLinkDescriptor.getSource(),
-                            domain2NotationMap);
-            EditPart targetEditPart =
-                    getEditPart(nextLinkDescriptor.getDestination(),
-                            domain2NotationMap);
+            EditPart sourceEditPart = getEditPart(nextLinkDescriptor.getSource(),
+                domain2NotationMap);
+            EditPart targetEditPart = getEditPart(nextLinkDescriptor.getDestination(),
+                domain2NotationMap);
             if (sourceEditPart == null || targetEditPart == null) {
                 continue;
             }
-            CreateConnectionViewRequest.ConnectionViewDescriptor descriptor =
-                    new CreateConnectionViewRequest.ConnectionViewDescriptor(
-                            nextLinkDescriptor.getSemanticAdapter(),
-                            SyncchartsVisualIDRegistry
-                                    .getType(nextLinkDescriptor.getVisualID()),
-                            ViewUtil.APPEND, false,
-                            ((IGraphicalEditPart) getHost())
-                                    .getDiagramPreferencesHint());
-            CreateConnectionViewRequest ccr =
-                    new CreateConnectionViewRequest(descriptor);
+            CreateConnectionViewRequest.ConnectionViewDescriptor descriptor = new CreateConnectionViewRequest.ConnectionViewDescriptor(
+                nextLinkDescriptor.getSemanticAdapter(),
+                SyncchartsVisualIDRegistry.getType(nextLinkDescriptor.getVisualID()),
+                ViewUtil.APPEND, false,
+                ((IGraphicalEditPart) getHost()).getDiagramPreferencesHint());
+            CreateConnectionViewRequest ccr = new CreateConnectionViewRequest(descriptor);
             ccr.setType(RequestConstants.REQ_CONNECTION_START);
             ccr.setSourceEditPart(sourceEditPart);
             sourceEditPart.getCommand(ccr);
@@ -416,12 +386,10 @@ public class RegionCanonicalEditPolicy extends CanonicalEditPolicy {
     /**
      * @generated
      */
-    private EditPart getEditPart(EObject domainModelElement,
-            Map<EObject, View> domain2NotationMap) {
+    private EditPart getEditPart(EObject domainModelElement, Map<EObject, View> domain2NotationMap) {
         View view = (View) domain2NotationMap.get(domainModelElement);
         if (view != null) {
-            return (EditPart) getHost().getViewer().getEditPartRegistry()
-                    .get(view);
+            return (EditPart) getHost().getViewer().getEditPartRegistry().get(view);
         }
         return null;
     }

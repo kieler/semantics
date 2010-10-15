@@ -268,37 +268,12 @@ public class Messages extends NLS {
     /**
      * @generated
      */
-    public static String StateSignalCompartment2EditPart_title;
+    public static String TextualCode3CreationTool_title;
 
     /**
      * @generated
      */
-    public static String StateEntryActionCompartment2EditPart_title;
-
-    /**
-     * @generated
-     */
-    public static String StateInnerActionCompartment2EditPart_title;
-
-    /**
-     * @generated
-     */
-    public static String StateExitActionCompartment2EditPart_title;
-
-    /**
-     * @generated
-     */
-    public static String StateSuspensionTriggerCompartment2EditPart_title;
-
-    /**
-     * @generated
-     */
-    public static String StateRegionCompartmentEditPart_title;
-
-    /**
-     * @generated
-     */
-    public static String RegionStateCompartmentEditPart_title;
+    public static String TextualCode3CreationTool_desc;
 
     /**
      * @generated
@@ -333,7 +308,52 @@ public class Messages extends NLS {
     /**
      * @generated
      */
+    public static String RegionStateCompartmentEditPart_title;
+
+    /**
+     * @generated
+     */
+    public static String StateSignalCompartment2EditPart_title;
+
+    /**
+     * @generated
+     */
+    public static String StateEntryActionCompartment2EditPart_title;
+
+    /**
+     * @generated
+     */
+    public static String StateInnerActionCompartment2EditPart_title;
+
+    /**
+     * @generated
+     */
+    public static String StateExitActionCompartment2EditPart_title;
+
+    /**
+     * @generated
+     */
+    public static String StateSuspensionTriggerCompartment2EditPart_title;
+
+    /**
+     * @generated
+     */
+    public static String StateRegionCompartmentEditPart_title;
+
+    /**
+     * @generated
+     */
     public static String CommandName_OpenDiagram;
+
+    /**
+     * @generated
+     */
+    public static String NavigatorGroupName_State_3040_incominglinks;
+
+    /**
+     * @generated
+     */
+    public static String NavigatorGroupName_State_3040_outgoinglinks;
 
     /**
      * @generated
@@ -349,16 +369,6 @@ public class Messages extends NLS {
      * @generated
      */
     public static String NavigatorGroupName_Transition_4005_source;
-
-    /**
-     * @generated
-     */
-    public static String NavigatorGroupName_State_3040_incominglinks;
-
-    /**
-     * @generated
-     */
-    public static String NavigatorGroupName_State_3040_outgoinglinks;
 
     /**
      * @generated

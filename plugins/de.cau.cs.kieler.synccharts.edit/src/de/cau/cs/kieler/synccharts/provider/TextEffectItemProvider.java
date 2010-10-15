@@ -98,7 +98,7 @@ public class TextEffectItemProvider
      */
     @Override
     public String getText(Object object) {
-        String label = ((TextEffect)object).getCode();
+        String label = crop(((TextEffect)object).getCode());
         return label == null || label.length() == 0 ?
             getString("_UI_TextEffect_type") :
             getString("_UI_TextEffect_type") + " " + label;

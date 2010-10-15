@@ -288,30 +288,20 @@ public interface Scope extends Annotatable {
     void setBodyContents(EObject value);
 
     /**
-     * Returns the value of the '<em><b>Body Text</b></em>' containment reference.
+     * Returns the value of the '<em><b>Body Text</b></em>' containment reference list.
+     * The list contents are of type {@link de.cau.cs.kieler.core.expressions.TextualCode}.
      * <!-- begin-user-doc -->
      * <p>
      * If the meaning of the '<em>Body Text</em>' containment reference isn't clear,
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
-     * @return the value of the '<em>Body Text</em>' containment reference.
-     * @see #setBodyText(TextualCode)
+     * @return the value of the '<em>Body Text</em>' containment reference list.
      * @see de.cau.cs.kieler.synccharts.SyncchartsPackage#getScope_BodyText()
      * @model containment="true"
      * @generated
      */
-    TextualCode getBodyText();
-
-    /**
-     * Sets the value of the '{@link de.cau.cs.kieler.synccharts.Scope#getBodyText <em>Body Text</em>}' containment reference.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Body Text</em>' containment reference.
-     * @see #getBodyText()
-     * @generated
-     */
-    void setBodyText(TextualCode value);
+    EList<TextualCode> getBodyText();
 
     /**
      * Returns the value of the '<em><b>Renamings</b></em>' containment reference list.

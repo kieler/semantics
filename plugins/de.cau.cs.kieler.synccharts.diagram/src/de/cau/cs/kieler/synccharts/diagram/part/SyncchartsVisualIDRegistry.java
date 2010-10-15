@@ -9,13 +9,13 @@ import org.eclipse.gmf.runtime.notation.View;
 import de.cau.cs.kieler.core.expressions.ExpressionsPackage;
 import de.cau.cs.kieler.synccharts.Region;
 import de.cau.cs.kieler.synccharts.SyncchartsPackage;
-import de.cau.cs.kieler.synccharts.diagram.edit.parts.Region2EditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.RegionEditPart;
-import de.cau.cs.kieler.synccharts.diagram.edit.parts.RegionLabelEditPart;
+import de.cau.cs.kieler.synccharts.diagram.edit.parts.RegionState2LabelEditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.RegionStateCompartmentEditPart;
+import de.cau.cs.kieler.synccharts.diagram.edit.parts.RegionStateEditPart;
+import de.cau.cs.kieler.synccharts.diagram.edit.parts.RegionStateLabelEditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.SignalEditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.SignalNameEditPart;
-import de.cau.cs.kieler.synccharts.diagram.edit.parts.State2EditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateEditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateEntryActionCompartment2EditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateEntryActionCompartmentEditPart;
@@ -29,12 +29,12 @@ import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateInnerActionCompartmen
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateInnerActionCompartmentEditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateInnerActionEditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateInnerActionLabelEditPart;
-import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateInterfaceDeclaration2EditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateInterfaceDeclarationEditPart;
-import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateLabel2EditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateLabelEditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateRegionCompartment2EditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateRegionCompartmentEditPart;
+import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateRegionEditPart;
+import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateRegionLabelEditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateSignalCompartment2EditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateSignalCompartmentEditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateSuspensionTriggerCompartment2EditPart;
@@ -42,6 +42,7 @@ import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateSuspensionTriggerComp
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateSuspensionTriggerEditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateSuspensionTriggerLabelEditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.TextualCodeEditPart;
+import de.cau.cs.kieler.synccharts.diagram.edit.parts.TextualCodeLabelEditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.TransitionEditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.TransitionLabelEditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.TransitionPriorityEditPart;
@@ -58,8 +59,7 @@ public class SyncchartsVisualIDRegistry {
     /**
      * @generated
      */
-    private static final String DEBUG_KEY =
-            "de.cau.cs.kieler.synccharts.diagram/debug/visualID"; //$NON-NLS-1$
+    private static final String DEBUG_KEY = "de.cau.cs.kieler.synccharts.diagram/debug/visualID"; //$NON-NLS-1$
 
     /**
      * @generated
@@ -72,8 +72,8 @@ public class SyncchartsVisualIDRegistry {
                 return -1;
             }
         }
-        return de.cau.cs.kieler.synccharts.diagram.part.SyncchartsVisualIDRegistry
-                .getVisualID(view.getType());
+        return de.cau.cs.kieler.synccharts.diagram.part.SyncchartsVisualIDRegistry.getVisualID(view
+            .getType());
     }
 
     /**
@@ -98,11 +98,9 @@ public class SyncchartsVisualIDRegistry {
         try {
             return Integer.parseInt(type);
         } catch (NumberFormatException e) {
-            if (Boolean.TRUE.toString().equalsIgnoreCase(
-                    Platform.getDebugOption(DEBUG_KEY))) {
+            if (Boolean.TRUE.toString().equalsIgnoreCase(Platform.getDebugOption(DEBUG_KEY))) {
                 SyncchartsDiagramEditorPlugin.getInstance().logError(
-                        "Unable to parse view type as a visualID number: "
-                                + type);
+                    "Unable to parse view type as a visualID number: " + type);
             }
         }
         return -1;
@@ -122,9 +120,8 @@ public class SyncchartsVisualIDRegistry {
         if (domainElement == null) {
             return -1;
         }
-        if (SyncchartsPackage.eINSTANCE.getRegion().isSuperTypeOf(
-                domainElement.eClass())
-                && isDiagram((Region) domainElement)) {
+        if (SyncchartsPackage.eINSTANCE.getRegion().isSuperTypeOf(domainElement.eClass())
+            && isDiagram((Region) domainElement)) {
             return RegionEditPart.VISUAL_ID;
         }
         return -1;
@@ -137,17 +134,15 @@ public class SyncchartsVisualIDRegistry {
         if (domainElement == null) {
             return -1;
         }
-        String containerModelID =
-                de.cau.cs.kieler.synccharts.diagram.part.SyncchartsVisualIDRegistry
-                        .getModelID(containerView);
+        String containerModelID = de.cau.cs.kieler.synccharts.diagram.part.SyncchartsVisualIDRegistry
+            .getModelID(containerView);
         if (!RegionEditPart.MODEL_ID.equals(containerModelID)) {
             return -1;
         }
         int containerVisualID;
         if (RegionEditPart.MODEL_ID.equals(containerModelID)) {
-            containerVisualID =
-                    de.cau.cs.kieler.synccharts.diagram.part.SyncchartsVisualIDRegistry
-                            .getVisualID(containerView);
+            containerVisualID = de.cau.cs.kieler.synccharts.diagram.part.SyncchartsVisualIDRegistry
+                .getVisualID(containerView);
         } else {
             if (containerView instanceof Diagram) {
                 containerVisualID = RegionEditPart.VISUAL_ID;
@@ -157,99 +152,82 @@ public class SyncchartsVisualIDRegistry {
         }
         switch (containerVisualID) {
         case RegionEditPart.VISUAL_ID:
-            if (SyncchartsPackage.eINSTANCE.getState().isSuperTypeOf(
-                    domainElement.eClass())) {
+            if (SyncchartsPackage.eINSTANCE.getState().isSuperTypeOf(domainElement.eClass())) {
                 return StateEditPart.VISUAL_ID;
             }
             break;
-        case StateEditPart.VISUAL_ID:
-            if (ExpressionsPackage.eINSTANCE.getTextualCode().isSuperTypeOf(
-                    domainElement.eClass())) {
-                return TextualCodeEditPart.VISUAL_ID;
-            }
-            break;
-        case State2EditPart.VISUAL_ID:
-            if (ExpressionsPackage.eINSTANCE.getTextualCode().isSuperTypeOf(
-                    domainElement.eClass())) {
-                return TextualCodeEditPart.VISUAL_ID;
-            }
-            break;
-        case StateSignalCompartment2EditPart.VISUAL_ID:
-            if (ExpressionsPackage.eINSTANCE.getSignal().isSuperTypeOf(
-                    domainElement.eClass())) {
-                return SignalEditPart.VISUAL_ID;
-            }
-            break;
-        case StateEntryActionCompartment2EditPart.VISUAL_ID:
-            if (SyncchartsPackage.eINSTANCE.getAction().isSuperTypeOf(
-                    domainElement.eClass())) {
-                return StateEntryActionEditPart.VISUAL_ID;
-            }
-            break;
-        case StateInnerActionCompartment2EditPart.VISUAL_ID:
-            if (SyncchartsPackage.eINSTANCE.getAction().isSuperTypeOf(
-                    domainElement.eClass())) {
-                return StateInnerActionEditPart.VISUAL_ID;
-            }
-            break;
-        case StateExitActionCompartment2EditPart.VISUAL_ID:
-            if (SyncchartsPackage.eINSTANCE.getAction().isSuperTypeOf(
-                    domainElement.eClass())) {
-                return StateExitActionEditPart.VISUAL_ID;
-            }
-            break;
-        case StateSuspensionTriggerCompartment2EditPart.VISUAL_ID:
-            if (SyncchartsPackage.eINSTANCE.getAction().isSuperTypeOf(
-                    domainElement.eClass())) {
-                return StateSuspensionTriggerEditPart.VISUAL_ID;
-            }
-            break;
-        case StateRegionCompartmentEditPart.VISUAL_ID:
-            if (SyncchartsPackage.eINSTANCE.getRegion().isSuperTypeOf(
-                    domainElement.eClass())) {
-                return Region2EditPart.VISUAL_ID;
-            }
-            break;
-        case RegionStateCompartmentEditPart.VISUAL_ID:
-            if (SyncchartsPackage.eINSTANCE.getState().isSuperTypeOf(
-                    domainElement.eClass())) {
-                return State2EditPart.VISUAL_ID;
-            }
-            break;
         case StateSignalCompartmentEditPart.VISUAL_ID:
-            if (ExpressionsPackage.eINSTANCE.getSignal().isSuperTypeOf(
-                    domainElement.eClass())) {
+            if (ExpressionsPackage.eINSTANCE.getSignal().isSuperTypeOf(domainElement.eClass())) {
                 return SignalEditPart.VISUAL_ID;
             }
             break;
         case StateEntryActionCompartmentEditPart.VISUAL_ID:
-            if (SyncchartsPackage.eINSTANCE.getAction().isSuperTypeOf(
-                    domainElement.eClass())) {
+            if (SyncchartsPackage.eINSTANCE.getAction().isSuperTypeOf(domainElement.eClass())) {
                 return StateEntryActionEditPart.VISUAL_ID;
             }
             break;
         case StateInnerActionCompartmentEditPart.VISUAL_ID:
-            if (SyncchartsPackage.eINSTANCE.getAction().isSuperTypeOf(
-                    domainElement.eClass())) {
+            if (SyncchartsPackage.eINSTANCE.getAction().isSuperTypeOf(domainElement.eClass())) {
                 return StateInnerActionEditPart.VISUAL_ID;
             }
             break;
         case StateExitActionCompartmentEditPart.VISUAL_ID:
-            if (SyncchartsPackage.eINSTANCE.getAction().isSuperTypeOf(
-                    domainElement.eClass())) {
+            if (SyncchartsPackage.eINSTANCE.getAction().isSuperTypeOf(domainElement.eClass())) {
                 return StateExitActionEditPart.VISUAL_ID;
             }
             break;
         case StateSuspensionTriggerCompartmentEditPart.VISUAL_ID:
-            if (SyncchartsPackage.eINSTANCE.getAction().isSuperTypeOf(
-                    domainElement.eClass())) {
+            if (SyncchartsPackage.eINSTANCE.getAction().isSuperTypeOf(domainElement.eClass())) {
                 return StateSuspensionTriggerEditPart.VISUAL_ID;
             }
             break;
         case StateRegionCompartment2EditPart.VISUAL_ID:
-            if (SyncchartsPackage.eINSTANCE.getRegion().isSuperTypeOf(
-                    domainElement.eClass())) {
-                return Region2EditPart.VISUAL_ID;
+            if (ExpressionsPackage.eINSTANCE.getTextualCode().isSuperTypeOf(domainElement.eClass())) {
+                return TextualCodeEditPart.VISUAL_ID;
+            }
+            if (SyncchartsPackage.eINSTANCE.getRegion().isSuperTypeOf(domainElement.eClass())) {
+                return StateRegionEditPart.VISUAL_ID;
+            }
+            break;
+        case RegionStateCompartmentEditPart.VISUAL_ID:
+            if (SyncchartsPackage.eINSTANCE.getState().isSuperTypeOf(domainElement.eClass())) {
+                return RegionStateEditPart.VISUAL_ID;
+            }
+            if (ExpressionsPackage.eINSTANCE.getTextualCode().isSuperTypeOf(domainElement.eClass())) {
+                return TextualCodeEditPart.VISUAL_ID;
+            }
+            break;
+        case StateSignalCompartment2EditPart.VISUAL_ID:
+            if (ExpressionsPackage.eINSTANCE.getSignal().isSuperTypeOf(domainElement.eClass())) {
+                return SignalEditPart.VISUAL_ID;
+            }
+            break;
+        case StateEntryActionCompartment2EditPart.VISUAL_ID:
+            if (SyncchartsPackage.eINSTANCE.getAction().isSuperTypeOf(domainElement.eClass())) {
+                return StateEntryActionEditPart.VISUAL_ID;
+            }
+            break;
+        case StateInnerActionCompartment2EditPart.VISUAL_ID:
+            if (SyncchartsPackage.eINSTANCE.getAction().isSuperTypeOf(domainElement.eClass())) {
+                return StateInnerActionEditPart.VISUAL_ID;
+            }
+            break;
+        case StateExitActionCompartment2EditPart.VISUAL_ID:
+            if (SyncchartsPackage.eINSTANCE.getAction().isSuperTypeOf(domainElement.eClass())) {
+                return StateExitActionEditPart.VISUAL_ID;
+            }
+            break;
+        case StateSuspensionTriggerCompartment2EditPart.VISUAL_ID:
+            if (SyncchartsPackage.eINSTANCE.getAction().isSuperTypeOf(domainElement.eClass())) {
+                return StateSuspensionTriggerEditPart.VISUAL_ID;
+            }
+            break;
+        case StateRegionCompartmentEditPart.VISUAL_ID:
+            if (ExpressionsPackage.eINSTANCE.getTextualCode().isSuperTypeOf(domainElement.eClass())) {
+                return TextualCodeEditPart.VISUAL_ID;
+            }
+            if (SyncchartsPackage.eINSTANCE.getRegion().isSuperTypeOf(domainElement.eClass())) {
+                return StateRegionEditPart.VISUAL_ID;
             }
             break;
         }
@@ -260,17 +238,15 @@ public class SyncchartsVisualIDRegistry {
      * @generated
      */
     public static boolean canCreateNode(View containerView, int nodeVisualID) {
-        String containerModelID =
-                de.cau.cs.kieler.synccharts.diagram.part.SyncchartsVisualIDRegistry
-                        .getModelID(containerView);
+        String containerModelID = de.cau.cs.kieler.synccharts.diagram.part.SyncchartsVisualIDRegistry
+            .getModelID(containerView);
         if (!RegionEditPart.MODEL_ID.equals(containerModelID)) {
             return false;
         }
         int containerVisualID;
         if (RegionEditPart.MODEL_ID.equals(containerModelID)) {
-            containerVisualID =
-                    de.cau.cs.kieler.synccharts.diagram.part.SyncchartsVisualIDRegistry
-                            .getVisualID(containerView);
+            containerVisualID = de.cau.cs.kieler.synccharts.diagram.part.SyncchartsVisualIDRegistry
+                .getVisualID(containerView);
         } else {
             if (containerView instanceof Diagram) {
                 containerVisualID = RegionEditPart.VISUAL_ID;
@@ -291,43 +267,6 @@ public class SyncchartsVisualIDRegistry {
             if (StateInterfaceDeclarationEditPart.VISUAL_ID == nodeVisualID) {
                 return true;
             }
-            if (StateSignalCompartment2EditPart.VISUAL_ID == nodeVisualID) {
-                return true;
-            }
-            if (StateEntryActionCompartment2EditPart.VISUAL_ID == nodeVisualID) {
-                return true;
-            }
-            if (StateInnerActionCompartment2EditPart.VISUAL_ID == nodeVisualID) {
-                return true;
-            }
-            if (StateExitActionCompartment2EditPart.VISUAL_ID == nodeVisualID) {
-                return true;
-            }
-            if (StateSuspensionTriggerCompartment2EditPart.VISUAL_ID == nodeVisualID) {
-                return true;
-            }
-            if (StateRegionCompartmentEditPart.VISUAL_ID == nodeVisualID) {
-                return true;
-            }
-            if (TextualCodeEditPart.VISUAL_ID == nodeVisualID) {
-                return true;
-            }
-            break;
-        case Region2EditPart.VISUAL_ID:
-            if (RegionLabelEditPart.VISUAL_ID == nodeVisualID) {
-                return true;
-            }
-            if (RegionStateCompartmentEditPart.VISUAL_ID == nodeVisualID) {
-                return true;
-            }
-            break;
-        case State2EditPart.VISUAL_ID:
-            if (StateLabel2EditPart.VISUAL_ID == nodeVisualID) {
-                return true;
-            }
-            if (StateInterfaceDeclaration2EditPart.VISUAL_ID == nodeVisualID) {
-                return true;
-            }
             if (StateSignalCompartmentEditPart.VISUAL_ID == nodeVisualID) {
                 return true;
             }
@@ -344,9 +283,6 @@ public class SyncchartsVisualIDRegistry {
                 return true;
             }
             if (StateRegionCompartment2EditPart.VISUAL_ID == nodeVisualID) {
-                return true;
-            }
-            if (TextualCodeEditPart.VISUAL_ID == nodeVisualID) {
                 return true;
             }
             break;
@@ -375,38 +311,42 @@ public class SyncchartsVisualIDRegistry {
                 return true;
             }
             break;
-        case StateSignalCompartment2EditPart.VISUAL_ID:
-            if (SignalEditPart.VISUAL_ID == nodeVisualID) {
+        case TextualCodeEditPart.VISUAL_ID:
+            if (TextualCodeLabelEditPart.VISUAL_ID == nodeVisualID) {
                 return true;
             }
             break;
-        case StateEntryActionCompartment2EditPart.VISUAL_ID:
-            if (StateEntryActionEditPart.VISUAL_ID == nodeVisualID) {
+        case StateRegionEditPart.VISUAL_ID:
+            if (StateRegionLabelEditPart.VISUAL_ID == nodeVisualID) {
+                return true;
+            }
+            if (RegionStateCompartmentEditPart.VISUAL_ID == nodeVisualID) {
                 return true;
             }
             break;
-        case StateInnerActionCompartment2EditPart.VISUAL_ID:
-            if (StateInnerActionEditPart.VISUAL_ID == nodeVisualID) {
+        case RegionStateEditPart.VISUAL_ID:
+            if (RegionStateLabelEditPart.VISUAL_ID == nodeVisualID) {
                 return true;
             }
-            break;
-        case StateExitActionCompartment2EditPart.VISUAL_ID:
-            if (StateExitActionEditPart.VISUAL_ID == nodeVisualID) {
+            if (RegionState2LabelEditPart.VISUAL_ID == nodeVisualID) {
                 return true;
             }
-            break;
-        case StateSuspensionTriggerCompartment2EditPart.VISUAL_ID:
-            if (StateSuspensionTriggerEditPart.VISUAL_ID == nodeVisualID) {
+            if (StateSignalCompartment2EditPart.VISUAL_ID == nodeVisualID) {
                 return true;
             }
-            break;
-        case StateRegionCompartmentEditPart.VISUAL_ID:
-            if (Region2EditPart.VISUAL_ID == nodeVisualID) {
+            if (StateEntryActionCompartment2EditPart.VISUAL_ID == nodeVisualID) {
                 return true;
             }
-            break;
-        case RegionStateCompartmentEditPart.VISUAL_ID:
-            if (State2EditPart.VISUAL_ID == nodeVisualID) {
+            if (StateInnerActionCompartment2EditPart.VISUAL_ID == nodeVisualID) {
+                return true;
+            }
+            if (StateExitActionCompartment2EditPart.VISUAL_ID == nodeVisualID) {
+                return true;
+            }
+            if (StateSuspensionTriggerCompartment2EditPart.VISUAL_ID == nodeVisualID) {
+                return true;
+            }
+            if (StateRegionCompartmentEditPart.VISUAL_ID == nodeVisualID) {
                 return true;
             }
             break;
@@ -436,7 +376,51 @@ public class SyncchartsVisualIDRegistry {
             }
             break;
         case StateRegionCompartment2EditPart.VISUAL_ID:
-            if (Region2EditPart.VISUAL_ID == nodeVisualID) {
+            if (TextualCodeEditPart.VISUAL_ID == nodeVisualID) {
+                return true;
+            }
+            if (StateRegionEditPart.VISUAL_ID == nodeVisualID) {
+                return true;
+            }
+            break;
+        case RegionStateCompartmentEditPart.VISUAL_ID:
+            if (RegionStateEditPart.VISUAL_ID == nodeVisualID) {
+                return true;
+            }
+            if (TextualCodeEditPart.VISUAL_ID == nodeVisualID) {
+                return true;
+            }
+            break;
+        case StateSignalCompartment2EditPart.VISUAL_ID:
+            if (SignalEditPart.VISUAL_ID == nodeVisualID) {
+                return true;
+            }
+            break;
+        case StateEntryActionCompartment2EditPart.VISUAL_ID:
+            if (StateEntryActionEditPart.VISUAL_ID == nodeVisualID) {
+                return true;
+            }
+            break;
+        case StateInnerActionCompartment2EditPart.VISUAL_ID:
+            if (StateInnerActionEditPart.VISUAL_ID == nodeVisualID) {
+                return true;
+            }
+            break;
+        case StateExitActionCompartment2EditPart.VISUAL_ID:
+            if (StateExitActionEditPart.VISUAL_ID == nodeVisualID) {
+                return true;
+            }
+            break;
+        case StateSuspensionTriggerCompartment2EditPart.VISUAL_ID:
+            if (StateSuspensionTriggerEditPart.VISUAL_ID == nodeVisualID) {
+                return true;
+            }
+            break;
+        case StateRegionCompartmentEditPart.VISUAL_ID:
+            if (TextualCodeEditPart.VISUAL_ID == nodeVisualID) {
+                return true;
+            }
+            if (StateRegionEditPart.VISUAL_ID == nodeVisualID) {
                 return true;
             }
             break;
@@ -459,8 +443,7 @@ public class SyncchartsVisualIDRegistry {
         if (domainElement == null) {
             return -1;
         }
-        if (SyncchartsPackage.eINSTANCE.getTransition().isSuperTypeOf(
-                domainElement.eClass())) {
+        if (SyncchartsPackage.eINSTANCE.getTransition().isSuperTypeOf(domainElement.eClass())) {
             return TransitionEditPart.VISUAL_ID;
         }
         return -1;

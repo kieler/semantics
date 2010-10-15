@@ -1,6 +1,6 @@
 package de.cau.cs.kieler.synccharts.custom.layout;
 
-import static de.cau.cs.kieler.synccharts.custom.StateLayout.BODYTEXT;
+//import static de.cau.cs.kieler.synccharts.custom.StateLayout.BODYTEXT;
 import static de.cau.cs.kieler.synccharts.custom.StateLayout.COND_HEIGHT;
 import static de.cau.cs.kieler.synccharts.custom.StateLayout.COND_WIDTH;
 import static de.cau.cs.kieler.synccharts.custom.StateLayout.ENTRYACTIONS;
@@ -73,11 +73,12 @@ public class SSM03Configuration extends AbstractSyncChartsConfiguration{
 			    { INSIDEACTIONS }, { ExtendedTable.JUSTIFY }, 
 			    { EXITACTIONS }, { ExtendedTable.JUSTIFY }, 
 			    { SUSPENDTRIGGER }, { ExtendedTable.JUSTIFY }, 
-			    { BODYTEXT }, { ExtendedTable.JUSTIFY } })
+	//		    { BODYTEXT }, { ExtendedTable.JUSTIFY } 
+			    })
 			 .setVerticalAlignment(ExtendedTable.JUSTIFY)
 			 .setMinHeight(MIN_HEIGHT)
-			 .setMinWidth(MIN_WIDTH)
-			 .setAdjustableCanvas(BODYTEXT);
+			 .setMinWidth(MIN_WIDTH);
+	//		 .setAdjustableCanvas(BODYTEXT);
 	}
 
 }

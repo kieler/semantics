@@ -20,7 +20,6 @@ import org.eclipse.gmf.runtime.gef.ui.figures.NodeFigure;
 import org.eclipse.gmf.runtime.notation.View;
 import org.eclipse.swt.graphics.Color;
 
-import de.cau.cs.kieler.core.ui.figures.IAttributeAwareFigure;
 import de.cau.cs.kieler.synccharts.custom.InvisibleLabelFigure;
 import de.cau.cs.kieler.synccharts.diagram.edit.policies.StateInnerActionItemSemanticEditPolicy;
 import de.cau.cs.kieler.synccharts.diagram.part.SyncchartsVisualIDRegistry;
@@ -58,7 +57,7 @@ public class StateInnerActionEditPart extends ShapeNodeEditPart {
     protected void createDefaultEditPolicies() {
         super.createDefaultEditPolicies();
         installEditPolicy(EditPolicyRoles.SEMANTIC_ROLE,
-                new StateInnerActionItemSemanticEditPolicy());
+            new StateInnerActionItemSemanticEditPolicy());
         installEditPolicy(EditPolicy.LAYOUT_ROLE, createLayoutEditPolicy());
         // XXX need an SCR to runtime to have another abstract superclass that would let children add reasonable editpolicies
         // removeEditPolicy(org.eclipse.gmf.runtime.diagram.ui.editpolicies.EditPolicyRoles.CONNECTION_HANDLES_ROLE);
@@ -68,26 +67,24 @@ public class StateInnerActionEditPart extends ShapeNodeEditPart {
      * @generated
      */
     protected LayoutEditPolicy createLayoutEditPolicy() {
-        org.eclipse.gmf.runtime.diagram.ui.editpolicies.LayoutEditPolicy lep =
-                new org.eclipse.gmf.runtime.diagram.ui.editpolicies.LayoutEditPolicy() {
+        org.eclipse.gmf.runtime.diagram.ui.editpolicies.LayoutEditPolicy lep = new org.eclipse.gmf.runtime.diagram.ui.editpolicies.LayoutEditPolicy() {
 
-                    protected EditPolicy createChildEditPolicy(EditPart child) {
-                        EditPolicy result =
-                                child.getEditPolicy(EditPolicy.PRIMARY_DRAG_ROLE);
-                        if (result == null) {
-                            result = new NonResizableEditPolicy();
-                        }
-                        return result;
-                    }
+            protected EditPolicy createChildEditPolicy(EditPart child) {
+                EditPolicy result = child.getEditPolicy(EditPolicy.PRIMARY_DRAG_ROLE);
+                if (result == null) {
+                    result = new NonResizableEditPolicy();
+                }
+                return result;
+            }
 
-                    protected Command getMoveChildrenCommand(Request request) {
-                        return null;
-                    }
+            protected Command getMoveChildrenCommand(Request request) {
+                return null;
+            }
 
-                    protected Command getCreateCommand(CreateRequest request) {
-                        return null;
-                    }
-                };
+            protected Command getCreateCommand(CreateRequest request) {
+                return null;
+            }
+        };
         return lep;
     }
 
@@ -96,11 +93,6 @@ public class StateInnerActionEditPart extends ShapeNodeEditPart {
      */
     protected IFigure createNodeShape() {
         primaryShape = new InvisibleFigure();
-
-        if (primaryShape instanceof IAttributeAwareFigure) {
-            ((IAttributeAwareFigure) primaryShape).listenTo(this
-                    .getNotationView().getElement());
-        }
 
         return primaryShape;
     }
@@ -117,9 +109,8 @@ public class StateInnerActionEditPart extends ShapeNodeEditPart {
      */
     protected boolean addFixedChild(EditPart childEditPart) {
         if (childEditPart instanceof StateInnerActionLabelEditPart) {
-            ((StateInnerActionLabelEditPart) childEditPart)
-                    .setLabel(getPrimaryShape()
-                            .getFigureInvisibleFigureLabelFigure());
+            ((StateInnerActionLabelEditPart) childEditPart).setLabel(getPrimaryShape()
+                .getFigureInvisibleFigureLabelFigure());
             return true;
         }
         return false;
@@ -253,7 +244,7 @@ public class StateInnerActionEditPart extends ShapeNodeEditPart {
      */
     public EditPart getPrimaryChildEditPart() {
         return getChildBySemanticHint(SyncchartsVisualIDRegistry
-                .getType(StateInnerActionLabelEditPart.VISUAL_ID));
+            .getType(StateInnerActionLabelEditPart.VISUAL_ID));
     }
 
     /**

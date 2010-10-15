@@ -23,7 +23,7 @@ public class SyncChartsConfiguration extends AbstractSyncChartsConfiguration {
                         { EXITACTIONS }, { JUSTIFY },
                         { SUSPENDTRIGGER }, { JUSTIFY },
                         { POLYLINE }, { SEPARATOR },
-                        { BODYTEXT }, { JUSTIFY }, 
+                     //   { BODYTEXT }, { JUSTIFY }, 
                         { REGION }, { JUSTIFY } })
                 .setVerticalAlignment(JUSTIFY)
                 .setMinHeight(MIN_HEIGHT)
@@ -42,7 +42,7 @@ public class SyncChartsConfiguration extends AbstractSyncChartsConfiguration {
                         { SUSPENDTRIGGER }, { JUSTIFY },
                         { POLYLINE }, { SEPARATOR },
                         { INTERFACEDECL }, { JUSTIFY },
-                        { BODYTEXT }, { JUSTIFY }, 
+                    //    { BODYTEXT }, { JUSTIFY }, 
                         { REGION }, { JUSTIFY } })
                 .setVerticalAlignment(JUSTIFY)
                 .setMinHeight(MIN_HEIGHT)

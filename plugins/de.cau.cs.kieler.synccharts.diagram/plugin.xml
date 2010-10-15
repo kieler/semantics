@@ -256,7 +256,7 @@
       <viewProvider class="de.cau.cs.kieler.synccharts.diagram.providers.SyncchartsViewProvider">
          <Priority name="Lowest"/>
          <context viewClass="org.eclipse.gmf.runtime.notation.Diagram" semanticHints="Synccharts"/>
-         <context viewClass="org.eclipse.gmf.runtime.notation.Node" semanticHints="2005,3039,3040,3041,3042,3043,3044,3045,3046"/>
+         <context viewClass="org.eclipse.gmf.runtime.notation.Node" semanticHints="2005,3041,3042,3043,3044,3045,3046,3039,3040"/>
          <context viewClass="org.eclipse.gmf.runtime.notation.Edge" semanticHints="4005"/>
       </viewProvider>
    </extension>
@@ -269,13 +269,13 @@
             <method name="getType()" value="Synccharts"/>
          </object>
          <object class="org.eclipse.gmf.runtime.notation.Node" id="generated-nodes">
-            <method name="getType()" value="2005,3039,3040,3041,3042,3043,3044,3045,3046"/>
+            <method name="getType()" value="2005,3041,3042,3043,3044,3045,3046,3039,3040"/>
          </object>
          <object class="org.eclipse.gmf.runtime.notation.Edge" id="generated-links">
             <method name="getType()" value="4005"/>
          </object>
          <object class="org.eclipse.gmf.runtime.notation.Node" id="generated-labels">
-            <method name="getType()" value="5059,5060,5058,5056,5057,5051,5052,5053,5054,5055"/>
+            <method name="getType()" value="5059,5060,5051,5052,5053,5054,5055,5061,5058,5056,5057"/>
          </object>
          <object class="org.eclipse.gmf.runtime.notation.Node" id="generated-compartments">
             <method name="getType()" value="7054,7055,7056,7057,7058,7059,7060,7061,7062,7063,7064,7065,7066"/>
@@ -329,24 +329,6 @@
                edithelper="de.cau.cs.kieler.synccharts.diagram.edit.helpers.StateEditHelper">
             <param name="semanticHint" value="2005"/>
          </metamodelType>
-      </metamodel>
-      <metamodel nsURI="http://kieler.cs.cau.de/synccharts/0.2.3">
-         <specializationType
-               id="de.cau.cs.kieler.synccharts.diagram.Region_3039"
-               name="%metatype.name.Region_3039"
-               kind="org.eclipse.gmf.runtime.emf.type.core.IHintedType">
-            <specializes id="de.cau.cs.kieler.synccharts.diagram.Region_1000"/>
-            <param name="semanticHint" value="3039"/>
-         </specializationType>
-      </metamodel>
-      <metamodel nsURI="http://kieler.cs.cau.de/synccharts/0.2.3">
-         <specializationType
-               id="de.cau.cs.kieler.synccharts.diagram.State_3040"
-               name="%metatype.name.State_3040"
-               kind="org.eclipse.gmf.runtime.emf.type.core.IHintedType">
-            <specializes id="de.cau.cs.kieler.synccharts.diagram.State_2005"/>
-            <param name="semanticHint" value="3040"/>
-         </specializationType>
       </metamodel>
       <metamodel nsURI="http://kieler.cs.cau.de/expressions/0.1.2">
          <metamodelType
@@ -406,6 +388,24 @@
          </metamodelType>
       </metamodel>
       <metamodel nsURI="http://kieler.cs.cau.de/synccharts/0.2.3">
+         <specializationType
+               id="de.cau.cs.kieler.synccharts.diagram.Region_3039"
+               name="%metatype.name.Region_3039"
+               kind="org.eclipse.gmf.runtime.emf.type.core.IHintedType">
+            <specializes id="de.cau.cs.kieler.synccharts.diagram.Region_1000"/>
+            <param name="semanticHint" value="3039"/>
+         </specializationType>
+      </metamodel>
+      <metamodel nsURI="http://kieler.cs.cau.de/synccharts/0.2.3">
+         <specializationType
+               id="de.cau.cs.kieler.synccharts.diagram.State_3040"
+               name="%metatype.name.State_3040"
+               kind="org.eclipse.gmf.runtime.emf.type.core.IHintedType">
+            <specializes id="de.cau.cs.kieler.synccharts.diagram.State_2005"/>
+            <param name="semanticHint" value="3040"/>
+         </specializationType>
+      </metamodel>
+      <metamodel nsURI="http://kieler.cs.cau.de/synccharts/0.2.3">
          <metamodelType
                id="de.cau.cs.kieler.synccharts.diagram.Transition_4005"
                name="%metatype.name.Transition_4005"
@@ -429,14 +429,14 @@
       <binding context="de.cau.cs.kieler.synccharts.diagram.TypeContext">
          <elementType ref="de.cau.cs.kieler.synccharts.diagram.Region_1000"/>
          <elementType ref="de.cau.cs.kieler.synccharts.diagram.State_2005"/>
-         <elementType ref="de.cau.cs.kieler.synccharts.diagram.Region_3039"/>
-         <elementType ref="de.cau.cs.kieler.synccharts.diagram.State_3040"/>
          <elementType ref="de.cau.cs.kieler.synccharts.diagram.Signal_3041"/>
          <elementType ref="de.cau.cs.kieler.synccharts.diagram.Action_3042"/>
          <elementType ref="de.cau.cs.kieler.synccharts.diagram.Action_3043"/>
          <elementType ref="de.cau.cs.kieler.synccharts.diagram.Action_3044"/>
          <elementType ref="de.cau.cs.kieler.synccharts.diagram.Action_3045"/>
          <elementType ref="de.cau.cs.kieler.synccharts.diagram.TextualCode_3046"/>
+         <elementType ref="de.cau.cs.kieler.synccharts.diagram.Region_3039"/>
+         <elementType ref="de.cau.cs.kieler.synccharts.diagram.State_3040"/>
          <elementType ref="de.cau.cs.kieler.synccharts.diagram.Transition_4005"/>
          <advice ref="org.eclipse.gmf.runtime.diagram.core.advice.notationDepdendents"/>
       </binding>

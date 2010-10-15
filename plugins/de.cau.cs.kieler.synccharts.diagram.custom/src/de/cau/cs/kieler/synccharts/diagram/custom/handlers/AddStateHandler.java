@@ -36,9 +36,11 @@ import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.handlers.HandlerUtil;
 
-import de.cau.cs.kieler.synccharts.diagram.edit.parts.Region2EditPart;
+//import de.cau.cs.kieler.synccharts.diagram.edit.parts.Region2EditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.RegionEditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.RegionStateCompartmentEditPart;
+import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateRegionEditPart;
+//import de.cau.cs.kieler.synccharts.diagram.edit.parts.RegionStateCompartmentEditPart;
 import de.cau.cs.kieler.synccharts.diagram.providers.SyncchartsElementTypes;
 
 /**
@@ -70,12 +72,14 @@ public class AddStateHandler extends AbstractHandler implements IHandler {
             while (selectionIter.hasNext()) {
                 Object nextObj = selectionIter.next();
                 if (nextObj instanceof RegionEditPart
-                        || nextObj instanceof Region2EditPart) {
+                        || nextObj instanceof StateRegionEditPart
+                        ) {
                     addState((GraphicalEditPart) nextObj);
-                } else if (nextObj instanceof RegionStateCompartmentEditPart) {
+                }
+                    else if (nextObj instanceof RegionStateCompartmentEditPart) {
                     EditPart parent = ((EditPart) nextObj).getParent();
                     if (parent instanceof RegionEditPart
-                            || parent instanceof Region2EditPart) {
+                            || parent instanceof StateRegionEditPart) {
                         addState((GraphicalEditPart) parent);
                     }
                 }

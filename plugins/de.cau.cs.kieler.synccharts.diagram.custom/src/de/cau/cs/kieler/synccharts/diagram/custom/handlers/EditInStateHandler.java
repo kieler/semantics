@@ -33,9 +33,8 @@ import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.handlers.HandlerUtil;
 
-import de.cau.cs.kieler.synccharts.diagram.edit.parts.State2EditPart;
+import de.cau.cs.kieler.synccharts.diagram.edit.parts.RegionStateEditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateEditPart;
-import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateInterfaceDeclaration2EditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateInterfaceDeclarationEditPart;
 
 /**
@@ -70,13 +69,13 @@ public class EditInStateHandler extends AbstractHandler implements IHandler {
             while (selectionIter.hasNext()) {
                 Object nextObj = selectionIter.next();
                 if (nextObj instanceof StateEditPart
-                        || nextObj instanceof State2EditPart) {
+                        || nextObj instanceof RegionStateEditPart) {
                     editElement((ShapeNodeEditPart) nextObj, type);
                 } else if (nextObj instanceof ShapeCompartmentEditPart
                         || nextObj instanceof ITextAwareEditPart) {
                     EditPart parent = ((EditPart) nextObj).getParent();
                     if (parent instanceof StateEditPart
-                            || parent instanceof State2EditPart) {
+                            || parent instanceof RegionStateEditPart) {
                         editElement((ShapeNodeEditPart) parent, type);
                     }
                 }
@@ -100,7 +99,7 @@ public class EditInStateHandler extends AbstractHandler implements IHandler {
         String insertIfEmpty = null;
         if (type.equals(VAL_IFDECL)) {
             class1 = StateInterfaceDeclarationEditPart.class;
-            class2 = StateInterfaceDeclaration2EditPart.class;
+            //class2 = StateInterfaceDeclaration2EditPart.class;
             insertIfEmpty = DEFAULT_INTERFACEDECL_STRING;
         }
 

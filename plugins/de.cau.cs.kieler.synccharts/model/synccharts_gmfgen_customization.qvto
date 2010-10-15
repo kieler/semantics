@@ -61,8 +61,8 @@ main() {
 	model.diagram.preferences.noteLineColor := object GenConstantColor{name := DiagramColors::orange;};
 	
 	// customize state edit parts so it shows textwrap for the body text
-	model.diagram.topLevelNodes.allSubobjectsOfType(InnerClassViewmap)[InnerClassViewmap] -> map customizeTextWrap("FigureBodyTextFigure","StateFigure");
-	model.diagram.childNodes.allSubobjectsOfType(InnerClassViewmap)[InnerClassViewmap] -> map customizeTextWrap("FigureBodyTextFigure","StateFigure");
+	//model.diagram.topLevelNodes.allSubobjectsOfType(InnerClassViewmap)[InnerClassViewmap] -> map customizeTextWrap("FigureBodyTextFigure","StateFigure");
+	//model.diagram.childNodes.allSubobjectsOfType(InnerClassViewmap)[InnerClassViewmap] -> map customizeTextWrap("FigureBodyTextFigure","StateFigure");
 		   
     // customize state edit parts so it shows textwrap for the interface declaration
     model.diagram.topLevelNodes.allSubobjectsOfType(InnerClassViewmap)[InnerClassViewmap] -> map customizeTextWrap("FigureInterfaceDeclFigure","StateFigure");
@@ -116,6 +116,8 @@ mapping inout GenChildNode::childNodeNames(){
         case (self.modelFacet.childMetaFeature.ecoreFeature.name.startsWith("innerActions")) self ->map fixChildNodeName("StateInnerAction");
         case (self.modelFacet.childMetaFeature.ecoreFeature.name.startsWith("exitActions")) self ->map fixChildNodeName("StateExitAction");
         case (self.modelFacet.childMetaFeature.ecoreFeature.name.startsWith("suspensionTrigger")) self ->map fixChildNodeName("StateSuspensionTrigger");
+        case (self.modelFacet.childMetaFeature.ecoreFeature.name.startsWith("regions")) self ->map fixChildNodeName("StateRegion");
+        case (self.modelFacet.childMetaFeature.ecoreFeature.name.startsWith("states")) self ->map fixChildNodeName("RegionState");
      }
      } endif;
     } endif;
@@ -129,9 +131,15 @@ mapping inout GenChildNode::fixChildNodeName(in prefix:String){
         self.graphicalNodeEditPolicyClassName := prefix + "GraphicalNodeEditPolicy";
         self.itemSemanticEditPolicyClassName := prefix + "ItemSemanticEditPolicy";
 
+		var index : Integer := 1;
         self.labels ->forEach(label){
-            label.editPartClassName := prefix + "LabelEditPart";
+			if(index = 1) then{
+	            label.editPartClassName := prefix + "LabelEditPart";
+			} else{
+				label.editPartClassName := prefix + index.toString() + "LabelEditPart";
+			} endif;       	
             label.itemSemanticEditPolicyClassName := prefix + "LabelItemSemanticEditPolicy";
+            index := index.+(1);
         };   
     } endif;
     var index : Integer := 1;

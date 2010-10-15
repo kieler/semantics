@@ -36,45 +36,8 @@
       <diagramNode
           href="synccharts.gmfgraph#State"/>
       <children
-          compartment="//@nodes.0/@ownedChild/@compartments.5"
-          referencedChild="//@nodes.0/@ownedChild/@children.0/@ownedChild">
-        <containmentFeature
-            href="synccharts.ecore#//State/regions"/>
-        <childrenFeature
-            href="synccharts.ecore#//State/regions"/>
-        <ownedChild>
-          <domainMetaElement
-              href="synccharts.ecore#//Region"/>
-          <labelMappings
-              xsi:type="gmfmap:FeatureLabelMapping"
-              editorPattern="">
-            <diagramLabel
-                href="synccharts.gmfgraph#RegionId"/>
-            <features
-                href="synccharts.ecore#//Scope/label"/>
-            <editableFeatures
-                href="synccharts.ecore#//Scope/label"/>
-          </labelMappings>
-          <diagramNode
-              href="synccharts.gmfgraph#Region"/>
-          <children
-              compartment="//@nodes.0/@ownedChild/@children.0/@ownedChild/@compartments.0"
-              referencedChild="//@nodes.0/@ownedChild">
-            <containmentFeature
-                href="synccharts.ecore#//Region/states"/>
-            <childrenFeature
-                href="synccharts.ecore#//Region/states"/>
-          </children>
-          <compartments
-              children="//@nodes.0/@ownedChild/@children.0/@ownedChild/@children.0">
-            <compartment
-                href="synccharts.gmfgraph#StateCompartment"/>
-          </compartments>
-        </ownedChild>
-      </children>
-      <children
           compartment="//@nodes.0/@ownedChild/@compartments.0"
-          referencedChild="//@nodes.0/@ownedChild/@children.1/@ownedChild">
+          referencedChild="//@nodes.0/@ownedChild/@children.0/@ownedChild">
         <containmentFeature
             href="synccharts.ecore#//Scope/signals"/>
         <childrenFeature
@@ -98,7 +61,7 @@
       </children>
       <children
           compartment="//@nodes.0/@ownedChild/@compartments.1"
-          referencedChild="//@nodes.0/@ownedChild/@children.2/@ownedChild">
+          referencedChild="//@nodes.0/@ownedChild/@children.1/@ownedChild">
         <containmentFeature
             href="synccharts.ecore#//Scope/entryActions"/>
         <childrenFeature
@@ -121,7 +84,7 @@
       </children>
       <children
           compartment="//@nodes.0/@ownedChild/@compartments.2"
-          referencedChild="//@nodes.0/@ownedChild/@children.3/@ownedChild">
+          referencedChild="//@nodes.0/@ownedChild/@children.2/@ownedChild">
         <containmentFeature
             href="synccharts.ecore#//Scope/innerActions"/>
         <childrenFeature
@@ -144,7 +107,7 @@
       </children>
       <children
           compartment="//@nodes.0/@ownedChild/@compartments.3"
-          referencedChild="//@nodes.0/@ownedChild/@children.4/@ownedChild">
+          referencedChild="//@nodes.0/@ownedChild/@children.3/@ownedChild">
         <containmentFeature
             href="synccharts.ecore#//Scope/exitActions"/>
         <childrenFeature
@@ -167,7 +130,7 @@
       </children>
       <children
           compartment="//@nodes.0/@ownedChild/@compartments.4"
-          referencedChild="//@nodes.0/@ownedChild/@children.5/@ownedChild">
+          referencedChild="//@nodes.0/@ownedChild/@children.4/@ownedChild">
         <containmentFeature
             href="synccharts.ecore#//Scope/suspensionTrigger"/>
         <childrenFeature
@@ -189,7 +152,8 @@
         </ownedChild>
       </children>
       <children
-          referencedChild="//@nodes.0/@ownedChild/@children.6/@ownedChild">
+          compartment="//@nodes.0/@ownedChild/@compartments.5"
+          referencedChild="//@nodes.0/@ownedChild/@children.5/@ownedChild">
         <containmentFeature
             href="synccharts.ecore#//Scope/bodyText"/>
         <childrenFeature
@@ -200,43 +164,91 @@
           <labelMappings
               xsi:type="gmfmap:FeatureLabelMapping">
             <diagramLabel
-                href="synccharts.gmfgraph#BodyText"/>
+                href="synccharts.gmfgraph#TextualCodeText"/>
             <features
                 href="../../de.cau.cs.kieler.core.expressions/model/expressions.ecore#//TextualCode/code"/>
             <editableFeatures
                 href="../../de.cau.cs.kieler.core.expressions/model/expressions.ecore#//TextualCode/code"/>
           </labelMappings>
+          <tool
+              xsi:type="gmftool:CreationTool"
+              href="synccharts.gmftool#//@palette/@tools.0/@tools.2"/>
           <diagramNode
-              href="synccharts.gmfgraph#BodyText"/>
+              href="synccharts.gmfgraph#TextualCodeNode"/>
+        </ownedChild>
+      </children>
+      <children
+          compartment="//@nodes.0/@ownedChild/@compartments.5"
+          referencedChild="//@nodes.0/@ownedChild/@children.6/@ownedChild">
+        <containmentFeature
+            href="synccharts.ecore#//State/regions"/>
+        <childrenFeature
+            href="synccharts.ecore#//State/regions"/>
+        <ownedChild>
+          <domainMetaElement
+              href="synccharts.ecore#//Region"/>
+          <labelMappings
+              xsi:type="gmfmap:FeatureLabelMapping"
+              editorPattern="">
+            <diagramLabel
+                href="synccharts.gmfgraph#RegionId"/>
+            <features
+                href="synccharts.ecore#//Scope/label"/>
+            <editableFeatures
+                href="synccharts.ecore#//Scope/label"/>
+          </labelMappings>
+          <diagramNode
+              href="synccharts.gmfgraph#Region"/>
+          <children
+              compartment="//@nodes.0/@ownedChild/@children.6/@ownedChild/@compartments.0"
+              referencedChild="//@nodes.0/@ownedChild">
+            <containmentFeature
+                href="synccharts.ecore#//Region/states"/>
+            <childrenFeature
+                href="synccharts.ecore#//Region/states"/>
+          </children>
+          <children
+              compartment="//@nodes.0/@ownedChild/@children.6/@ownedChild/@compartments.0"
+              referencedChild="//@nodes.0/@ownedChild/@children.5/@ownedChild">
+            <containmentFeature
+                href="synccharts.ecore#//Scope/bodyText"/>
+            <childrenFeature
+                href="synccharts.ecore#//Scope/bodyText"/>
+          </children>
+          <compartments
+              children="//@nodes.0/@ownedChild/@children.6/@ownedChild/@children.0 //@nodes.0/@ownedChild/@children.6/@ownedChild/@children.1">
+            <compartment
+                href="synccharts.gmfgraph#StateCompartment"/>
+          </compartments>
         </ownedChild>
       </children>
       <compartments
-          children="//@nodes.0/@ownedChild/@children.1">
+          children="//@nodes.0/@ownedChild/@children.0">
         <compartment
             href="synccharts.gmfgraph#SignalCompartment"/>
       </compartments>
       <compartments
-          children="//@nodes.0/@ownedChild/@children.2">
+          children="//@nodes.0/@ownedChild/@children.1">
         <compartment
             href="synccharts.gmfgraph#EntryActionsCompartment"/>
       </compartments>
       <compartments
-          children="//@nodes.0/@ownedChild/@children.3">
+          children="//@nodes.0/@ownedChild/@children.2">
         <compartment
             href="synccharts.gmfgraph#InnerActionsCompartment"/>
       </compartments>
       <compartments
-          children="//@nodes.0/@ownedChild/@children.4">
+          children="//@nodes.0/@ownedChild/@children.3">
         <compartment
             href="synccharts.gmfgraph#ExitActionsCompartment"/>
       </compartments>
       <compartments
-          children="//@nodes.0/@ownedChild/@children.5">
+          children="//@nodes.0/@ownedChild/@children.4">
         <compartment
             href="synccharts.gmfgraph#SuspensionTriggerCompartment"/>
       </compartments>
       <compartments
-          children="//@nodes.0/@ownedChild/@children.0">
+          children="//@nodes.0/@ownedChild/@children.6 //@nodes.0/@ownedChild/@children.5">
         <compartment
             href="synccharts.gmfgraph#RegionCompartment"/>
       </compartments>

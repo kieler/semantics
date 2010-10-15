@@ -16,6 +16,10 @@
           xsi:type="gmftool:CreationTool"
           title="Transition"
           description="Create new Transition"/>
+      <tools
+          xsi:type="gmftool:CreationTool"
+          title="TextualCode"
+          description="Create a new arbitrary text node within a Region or State"/>
     </tools>
   </palette>
 </gmftool:ToolRegistry>

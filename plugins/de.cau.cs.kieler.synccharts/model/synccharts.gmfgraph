@@ -37,16 +37,6 @@
         </children>
         <children
             xsi:type="gmfgraph:Label"
-            name="BodyTextFigure"
-            text="">
-          <insets
-              top="5"
-              left="10"
-              bottom="5"
-              right="10"/>
-        </children>
-        <children
-            xsi:type="gmfgraph:Label"
             name="InterfaceDecl"
             text="">
           <insets
@@ -59,10 +49,8 @@
       <accessors
           figure="//@figures.0/@descriptors.0/@actualFigure/@children.0"/>
       <accessors
-          figure="//@figures.0/@descriptors.0/@actualFigure/@children.2"/>
-      <accessors
           accessor="getFigureInterfaceDeclFigure"
-          figure="//@figures.0/@descriptors.0/@actualFigure/@children.3"/>
+          figure="//@figures.0/@descriptors.0/@actualFigure/@children.2"/>
     </descriptors>
     <descriptors
         name="TransitionFigure">
@@ -129,6 +117,24 @@
       <accessors
           figure="//@figures.0/@descriptors.3/@actualFigure/@children.0"/>
     </descriptors>
+    <descriptors
+        name="TextualCodeFigure">
+      <actualFigure
+          xsi:type="gmfgraph:Rectangle"
+          outline="false"
+          fill="false"
+          lineWidth="0">
+        <layout
+            xsi:type="gmfgraph:CustomLayout"
+            qualifiedClassName="de.cau.cs.kieler.synccharts.custom.ListCompartmentLayout"/>
+        <children
+            xsi:type="gmfgraph:Label"
+            name="CodeLabelFigure"
+            text="text"/>
+      </actualFigure>
+      <accessors
+          figure="//@figures.0/@descriptors.4/@actualFigure/@children.0"/>
+    </descriptors>
   </figures>
   <nodes
       name="State"
@@ -139,6 +145,9 @@
   <nodes
       name="InvisibleNode"
       figure="InvisibleFigure"/>
+  <nodes
+      name="TextualCodeNode"
+      figure="TextualCodeFigure"/>
   <connections
       name="Transition"
       figure="TransitionFigure"/>
@@ -235,13 +244,13 @@
       elementIcon="false"
       accessor="//@figures.0/@descriptors.2/@accessors.0"/>
   <labels
-      name="BodyText"
+      name="InterfaceDecl"
       figure="StateFigure"
       elementIcon="false"
       accessor="//@figures.0/@descriptors.0/@accessors.1"/>
   <labels
-      name="InterfaceDecl"
-      figure="StateFigure"
+      name="TextualCodeText"
+      figure="TextualCodeFigure"
       elementIcon="false"
-      accessor="//@figures.0/@descriptors.0/@accessors.2"/>
+      accessor="//@figures.0/@descriptors.4/@accessors.0"/>
 </gmfgraph:Canvas>

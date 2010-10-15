@@ -19,12 +19,12 @@ import de.cau.cs.kieler.synccharts.SyncchartsFactory;
 /**
  * @generated
  */
-public class State2CreateCommand extends EditElementCommand {
+public class RegionStateCreateCommand extends EditElementCommand {
 
     /**
      * @generated
      */
-    public State2CreateCommand(CreateElementRequest req) {
+    public RegionStateCreateCommand(CreateElementRequest req) {
         super(req.getLabel(), null, req);
     }
 
@@ -33,8 +33,7 @@ public class State2CreateCommand extends EditElementCommand {
      * @generated
      */
     protected EObject getElementToEdit() {
-        EObject container =
-                ((CreateElementRequest) getRequest()).getContainer();
+        EObject container = ((CreateElementRequest) getRequest()).getContainer();
         if (container instanceof View) {
             container = ((View) container).getElement();
         }
@@ -52,8 +51,8 @@ public class State2CreateCommand extends EditElementCommand {
     /**
      * @generated
      */
-    protected CommandResult doExecuteWithResult(IProgressMonitor monitor,
-            IAdaptable info) throws ExecutionException {
+    protected CommandResult doExecuteWithResult(IProgressMonitor monitor, IAdaptable info)
+        throws ExecutionException {
         State newElement = SyncchartsFactory.eINSTANCE.createState();
 
         Region owner = (Region) getElementToEdit();
@@ -68,18 +67,14 @@ public class State2CreateCommand extends EditElementCommand {
     /**
      * @generated
      */
-    protected void doConfigure(State newElement, IProgressMonitor monitor,
-            IAdaptable info) throws ExecutionException {
-        IElementType elementType =
-                ((CreateElementRequest) getRequest()).getElementType();
-        ConfigureRequest configureRequest =
-                new ConfigureRequest(getEditingDomain(), newElement,
-                        elementType);
-        configureRequest.setClientContext(((CreateElementRequest) getRequest())
-                .getClientContext());
+    protected void doConfigure(State newElement, IProgressMonitor monitor, IAdaptable info)
+        throws ExecutionException {
+        IElementType elementType = ((CreateElementRequest) getRequest()).getElementType();
+        ConfigureRequest configureRequest = new ConfigureRequest(getEditingDomain(), newElement,
+            elementType);
+        configureRequest.setClientContext(((CreateElementRequest) getRequest()).getClientContext());
         configureRequest.addParameters(getRequest().getParameters());
-        ICommand configureCommand =
-                elementType.getEditCommand(configureRequest);
+        ICommand configureCommand = elementType.getEditCommand(configureRequest);
         if (configureCommand != null && configureCommand.canExecute()) {
             configureCommand.execute(monitor, info);
         }

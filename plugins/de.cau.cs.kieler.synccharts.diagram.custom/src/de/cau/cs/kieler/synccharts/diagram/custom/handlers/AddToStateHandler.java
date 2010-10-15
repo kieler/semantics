@@ -38,7 +38,8 @@ import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.handlers.HandlerUtil;
 
-import de.cau.cs.kieler.synccharts.diagram.edit.parts.State2EditPart;
+//import de.cau.cs.kieler.synccharts.diagram.edit.parts.State2EditPart;
+import de.cau.cs.kieler.synccharts.diagram.edit.parts.RegionStateEditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateEditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateEntryActionCompartment2EditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateEntryActionCompartmentEditPart;
@@ -46,8 +47,8 @@ import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateExitActionCompartment
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateExitActionCompartmentEditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateInnerActionCompartment2EditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateInnerActionCompartmentEditPart;
-import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateRegionCompartment2EditPart;
-import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateRegionCompartmentEditPart;
+//import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateRegionCompartment2EditPart;
+//import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateRegionCompartmentEditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateSignalCompartment2EditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateSignalCompartmentEditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateSuspensionTriggerCompartment2EditPart;
@@ -96,13 +97,13 @@ public class AddToStateHandler extends AbstractHandler implements IHandler {
             while (selectionIter.hasNext()) {
                 Object nextObj = selectionIter.next();
                 if (nextObj instanceof StateEditPart
-                        || nextObj instanceof State2EditPart) {
+                        || nextObj instanceof RegionStateEditPart) {
                     addElement((ShapeNodeEditPart) nextObj, type);
                 } else if (nextObj instanceof ShapeCompartmentEditPart
                         || nextObj instanceof ITextAwareEditPart) {
                     EditPart parent = ((EditPart) nextObj).getParent();
                     if (parent instanceof StateEditPart
-                            || parent instanceof State2EditPart) {
+                            || parent instanceof RegionStateEditPart) {
                         addElement((ShapeNodeEditPart) parent, type);
                     }
                 }
@@ -157,8 +158,8 @@ public class AddToStateHandler extends AbstractHandler implements IHandler {
             class2 = StateInnerActionCompartment2EditPart.class;
             elementType = SyncchartsElementTypes.Action_3043;
         } else if (type.equals(VAL_REGION)) {
-            class1 = StateRegionCompartmentEditPart.class;
-            class2 = StateRegionCompartment2EditPart.class;
+ //           class1 = StateRegionCompartmentEditPart.class;
+ //           class2 = StateRegionCompartment2EditPart.class;
             elementType = SyncchartsElementTypes.Region_3039;
         } else if (type.equals(VAL_SIGNAL)) {
             class1 = StateSignalCompartmentEditPart.class;

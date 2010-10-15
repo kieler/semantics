@@ -2,9 +2,11 @@ package de.cau.cs.kieler.synccharts.diagram.edit.policies;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.emf.ecore.EObject;
@@ -21,7 +23,8 @@ import org.eclipse.gmf.runtime.notation.Node;
 import org.eclipse.gmf.runtime.notation.View;
 
 import de.cau.cs.kieler.synccharts.SyncchartsPackage;
-import de.cau.cs.kieler.synccharts.diagram.edit.parts.Region2EditPart;
+import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateRegionEditPart;
+import de.cau.cs.kieler.synccharts.diagram.edit.parts.TextualCodeEditPart;
 import de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramUpdater;
 import de.cau.cs.kieler.synccharts.diagram.part.SyncchartsNodeDescriptor;
 import de.cau.cs.kieler.synccharts.diagram.part.SyncchartsVisualIDRegistry;
@@ -29,14 +32,23 @@ import de.cau.cs.kieler.synccharts.diagram.part.SyncchartsVisualIDRegistry;
 /**
  * @generated
  */
-public class StateRegionCompartmentCanonicalEditPolicy extends
-        CanonicalEditPolicy {
+public class StateRegionCompartmentCanonicalEditPolicy extends CanonicalEditPolicy {
 
     /**
      * @generated
      */
-    protected EStructuralFeature getFeatureToSynchronize() {
-        return SyncchartsPackage.eINSTANCE.getState_Regions();
+    private Set<EStructuralFeature> myFeaturesToSynchronize;
+
+    /**
+     * @generated
+     */
+    protected Set getFeaturesToSynchronize() {
+        if (myFeaturesToSynchronize == null) {
+            myFeaturesToSynchronize = new HashSet<EStructuralFeature>();
+            myFeaturesToSynchronize.add(SyncchartsPackage.eINSTANCE.getScope_BodyText());
+            myFeaturesToSynchronize.add(SyncchartsPackage.eINSTANCE.getState_Regions());
+        }
+        return myFeaturesToSynchronize;
     }
 
     /**
@@ -46,9 +58,8 @@ public class StateRegionCompartmentCanonicalEditPolicy extends
     protected List getSemanticChildrenList() {
         View viewObject = (View) getHost().getModel();
         LinkedList<EObject> result = new LinkedList<EObject>();
-        List<SyncchartsNodeDescriptor> childDescriptors =
-                SyncchartsDiagramUpdater
-                        .getStateRegionCompartment_7059SemanticChildren(viewObject);
+        List<SyncchartsNodeDescriptor> childDescriptors = SyncchartsDiagramUpdater
+            .getStateRegionCompartment_7066SemanticChildren(viewObject);
         for (SyncchartsNodeDescriptor d : childDescriptors) {
             result.add(d.getModelElement());
         }
@@ -58,18 +69,17 @@ public class StateRegionCompartmentCanonicalEditPolicy extends
     /**
      * @generated
      */
-    protected boolean isOrphaned(Collection<EObject> semanticChildren,
-            final View view) {
-        return isMyDiagramElement(view)
-                && !semanticChildren.contains(view.getElement());
+    protected boolean isOrphaned(Collection<EObject> semanticChildren, final View view) {
+        return isMyDiagramElement(view) && !semanticChildren.contains(view.getElement());
     }
 
     /**
      * @generated
      */
     private boolean isMyDiagramElement(View view) {
-        return Region2EditPart.VISUAL_ID == SyncchartsVisualIDRegistry
-                .getVisualID(view);
+        int visualID = SyncchartsVisualIDRegistry.getVisualID(view);
+        return visualID == TextualCodeEditPart.VISUAL_ID
+            || visualID == StateRegionEditPart.VISUAL_ID;
     }
 
     /**
@@ -80,10 +90,8 @@ public class StateRegionCompartmentCanonicalEditPolicy extends
             return;
         }
         LinkedList<IAdaptable> createdViews = new LinkedList<IAdaptable>();
-        List<SyncchartsNodeDescriptor> childDescriptors =
-                SyncchartsDiagramUpdater
-                        .getStateRegionCompartment_7059SemanticChildren((View) getHost()
-                                .getModel());
+        List<SyncchartsNodeDescriptor> childDescriptors = SyncchartsDiagramUpdater
+            .getStateRegionCompartment_7066SemanticChildren((View) getHost().getModel());
         LinkedList<View> orphaned = new LinkedList<View>();
         // we care to check only views we recognize as ours
         LinkedList<View> knownViewChildren = new LinkedList<View>();
@@ -97,11 +105,10 @@ public class StateRegionCompartmentCanonicalEditPolicy extends
         // iteration happens over list of desired semantic elements, trying to find best matching View, while original CEP
         // iterates views, potentially losing view (size/bounds) information - i.e. if there are few views to reference same EObject, only last one 
         // to answer isOrphaned == true will be used for the domain element representation, see #cleanCanonicalSemanticChildren()
-        for (Iterator<SyncchartsNodeDescriptor> descriptorsIterator =
-                childDescriptors.iterator(); descriptorsIterator.hasNext();) {
+        for (Iterator<SyncchartsNodeDescriptor> descriptorsIterator = childDescriptors.iterator(); descriptorsIterator
+            .hasNext();) {
             SyncchartsNodeDescriptor next = descriptorsIterator.next();
-            String hint =
-                    SyncchartsVisualIDRegistry.getType(next.getVisualID());
+            String hint = SyncchartsVisualIDRegistry.getType(next.getVisualID());
             LinkedList<View> perfectMatch = new LinkedList<View>(); // both semanticElement and hint match that of NodeDescriptor
             for (View childView : getViewChildren()) {
                 EObject semanticElement = childView.getElement();
@@ -124,18 +131,14 @@ public class StateRegionCompartmentCanonicalEditPolicy extends
         // or those we have potential matches to, and thus need to be recreated, preserving size/location information.
         orphaned.addAll(knownViewChildren);
         //
-        ArrayList<CreateViewRequest.ViewDescriptor> viewDescriptors =
-                new ArrayList<CreateViewRequest.ViewDescriptor>(
-                        childDescriptors.size());
+        ArrayList<CreateViewRequest.ViewDescriptor> viewDescriptors = new ArrayList<CreateViewRequest.ViewDescriptor>(
+            childDescriptors.size());
         for (SyncchartsNodeDescriptor next : childDescriptors) {
-            String hint =
-                    SyncchartsVisualIDRegistry.getType(next.getVisualID());
-            IAdaptable elementAdapter =
-                    new CanonicalElementAdapter(next.getModelElement(), hint);
-            CreateViewRequest.ViewDescriptor descriptor =
-                    new CreateViewRequest.ViewDescriptor(elementAdapter,
-                            Node.class, hint, ViewUtil.APPEND, false, host()
-                                    .getDiagramPreferencesHint());
+            String hint = SyncchartsVisualIDRegistry.getType(next.getVisualID());
+            IAdaptable elementAdapter = new CanonicalElementAdapter(next.getModelElement(), hint);
+            CreateViewRequest.ViewDescriptor descriptor = new CreateViewRequest.ViewDescriptor(
+                elementAdapter, Node.class, hint, ViewUtil.APPEND, false, host()
+                    .getDiagramPreferencesHint());
             viewDescriptors.add(descriptor);
         }
 
@@ -144,8 +147,8 @@ public class StateRegionCompartmentCanonicalEditPolicy extends
         CreateViewRequest request = getCreateViewRequest(viewDescriptors);
         Command cmd = getCreateViewCommand(request);
         if (cmd != null && cmd.canExecute()) {
-            SetViewMutabilityCommand.makeMutable(
-                    new EObjectAdapter(host().getNotationView())).execute();
+            SetViewMutabilityCommand.makeMutable(new EObjectAdapter(host().getNotationView()))
+                .execute();
             executeCommand(cmd);
             @SuppressWarnings("unchecked")
             List<IAdaptable> nl = (List<IAdaptable>) request.getNewObject();
@@ -156,9 +159,8 @@ public class StateRegionCompartmentCanonicalEditPolicy extends
         }
         if (createdViews.size() > 1) {
             // perform a layout of the container
-            DeferredLayoutCommand layoutCmd =
-                    new DeferredLayoutCommand(host().getEditingDomain(),
-                            createdViews, host());
+            DeferredLayoutCommand layoutCmd = new DeferredLayoutCommand(host().getEditingDomain(),
+                createdViews, host());
             executeCommand(new ICommandProxy(layoutCmd));
         }
 

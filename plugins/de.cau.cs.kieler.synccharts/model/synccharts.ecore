@@ -153,7 +153,8 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="bodyReference" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EObject"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="bodyContents" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EObject"
         containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="bodyText" eType="ecore:EClass ../../de.cau.cs.kieler.core.expressions/model/expressions.ecore#//TextualCode"
+    <eStructuralFeatures xsi:type="ecore:EReference" name="bodyText" upperBound="-1"
+        eType="ecore:EClass ../../de.cau.cs.kieler.core.expressions/model/expressions.ecore#//TextualCode"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="renamings" upperBound="-1"
         eType="#//Substitution" containment="true" eOpposite="#//Substitution/parentScope"/>

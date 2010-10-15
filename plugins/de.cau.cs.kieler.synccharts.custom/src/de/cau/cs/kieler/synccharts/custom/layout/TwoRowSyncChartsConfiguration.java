@@ -58,10 +58,11 @@ public class TwoRowSyncChartsConfiguration extends AbstractSyncChartsConfigurati
 		    { StateLayout.INSIDEACTIONS }, { ExtendedTable.JUSTIFY }, 
 		    { StateLayout.EXITACTIONS }, { ExtendedTable.JUSTIFY }, 
 		    { StateLayout.SUSPENDTRIGGER }, { ExtendedTable.JUSTIFY }, 
-		    { StateLayout.BODYTEXT }, { ExtendedTable.JUSTIFY } })
+//		    { StateLayout.BODYTEXT }, { ExtendedTable.JUSTIFY } 
+		    })
 		 .setVerticalAlignment(ExtendedTable.JUSTIFY)
 		 .setMinHeight(StateLayout.MIN_HEIGHT)
-		 .setMinWidth(StateLayout.MIN_WIDTH)
-		 .setAdjustableCanvas(StateLayout.BODYTEXT);
+		 .setMinWidth(StateLayout.MIN_WIDTH);
+//		 .setAdjustableCanvas(StateLayout.BODYTEXT);
 	}
 }

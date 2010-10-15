@@ -19,7 +19,7 @@ import de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorPlugin;
  * @generated
  */
 public class TransitionEditPart extends AdvancedRenderingConnectionEditPart implements
-        ITreeBranchEditPart {
+    ITreeBranchEditPart {
 
     /**
      * @generated
@@ -47,12 +47,12 @@ public class TransitionEditPart extends AdvancedRenderingConnectionEditPart impl
     protected boolean addFixedChild(EditPart childEditPart) {
         if (childEditPart instanceof TransitionLabelEditPart) {
             ((TransitionLabelEditPart) childEditPart).setLabel(getPrimaryShape()
-                    .getFigureTransitionTriggersAndEffectsFigure());
+                .getFigureTransitionTriggersAndEffectsFigure());
             return true;
         }
         if (childEditPart instanceof TransitionPriorityEditPart) {
             ((TransitionPriorityEditPart) childEditPart).setLabel(getPrimaryShape()
-                    .getFigureTransitionPriorityFigure());
+                .getFigureTransitionPriorityFigure());
             return true;
         }
         return false;
@@ -107,7 +107,7 @@ public class TransitionEditPart extends AdvancedRenderingConnectionEditPart impl
 
         if (figure instanceof SplineConnection) {
             ((SplineConnection) figure).setSplineMode(SyncchartsDiagramEditorPlugin.getInstance()
-                    .getPreferenceStore().getInt(SplineConnection.PREF_SPLINE_MODE));
+                .getPreferenceStore().getInt(SplineConnection.PREF_SPLINE_MODE));
         }
         return figure;
     }
@@ -181,6 +181,6 @@ public class TransitionEditPart extends AdvancedRenderingConnectionEditPart impl
      * @generated
      */
     static final Font FFIGURETRANSITIONPRIORITYFIGURE_FONT = new Font(Display.getCurrent(), "Sans",
-            7, SWT.NORMAL);
+        7, SWT.NORMAL);
 
 }

@@ -41,14 +41,13 @@ Require-Bundle: org.eclipse.core.runtime,
  de.cau.cs.kieler.core.annotations.edit;visibility:=reexport,
  de.cau.cs.kieler.core.expressions;visibility:=reexport,
  de.cau.cs.kieler.core.expressions.edit;visibility:=reexport,
+ de.cau.cs.kieler.karma;visibility:=reexport,
  de.cau.cs.kieler.synccharts;visibility:=reexport,
  de.cau.cs.kieler.synccharts.edit;visibility:=reexport,
  org.eclipse.emf.ecore;visibility:=reexport,
  org.eclipse.emf.ecore.edit;visibility:=reexport,
  org.eclipse.ocl.ecore;visibility:=reexport,
  org.eclipse.emf.validation;visibility:=reexport,
- org.eclipse.gef;visibility:=reexport,
- de.cau.cs.kieler.core,
- de.cau.cs.kieler.core.model;bundle-version="0.3.0"
+ org.eclipse.gef;visibility:=reexport
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: J2SE-1.5

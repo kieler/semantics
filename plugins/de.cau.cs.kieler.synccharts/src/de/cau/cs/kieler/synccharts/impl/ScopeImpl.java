@@ -195,14 +195,14 @@ public abstract class ScopeImpl extends AnnotatableImpl implements Scope {
     protected EObject bodyContents;
 
     /**
-     * The cached value of the '{@link #getBodyText() <em>Body Text</em>}' containment reference.
+     * The cached value of the '{@link #getBodyText() <em>Body Text</em>}' containment reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @see #getBodyText()
      * @generated
      * @ordered
      */
-    protected TextualCode bodyText;
+    protected EList<TextualCode> bodyText;
 
     /**
      * The cached value of the '{@link #getRenamings() <em>Renamings</em>}' containment reference list.
@@ -484,42 +484,11 @@ public abstract class ScopeImpl extends AnnotatableImpl implements Scope {
      * <!-- end-user-doc -->
      * @generated
      */
-    public TextualCode getBodyText() {
+    public EList<TextualCode> getBodyText() {
+        if (bodyText == null) {
+            bodyText = new EObjectContainmentEList<TextualCode>(TextualCode.class, this, SyncchartsPackage.SCOPE__BODY_TEXT);
+        }
         return bodyText;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public NotificationChain basicSetBodyText(TextualCode newBodyText, NotificationChain msgs) {
-        TextualCode oldBodyText = bodyText;
-        bodyText = newBodyText;
-        if (eNotificationRequired()) {
-            ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, SyncchartsPackage.SCOPE__BODY_TEXT, oldBodyText, newBodyText);
-            if (msgs == null) msgs = notification; else msgs.add(notification);
-        }
-        return msgs;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public void setBodyText(TextualCode newBodyText) {
-        if (newBodyText != bodyText) {
-            NotificationChain msgs = null;
-            if (bodyText != null)
-                msgs = ((InternalEObject)bodyText).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - SyncchartsPackage.SCOPE__BODY_TEXT, null, msgs);
-            if (newBodyText != null)
-                msgs = ((InternalEObject)newBodyText).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - SyncchartsPackage.SCOPE__BODY_TEXT, null, msgs);
-            msgs = basicSetBodyText(newBodyText, msgs);
-            if (msgs != null) msgs.dispatch();
-        }
-        else if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, SyncchartsPackage.SCOPE__BODY_TEXT, newBodyText, newBodyText));
     }
 
     /**
@@ -593,7 +562,7 @@ public abstract class ScopeImpl extends AnnotatableImpl implements Scope {
             case SyncchartsPackage.SCOPE__BODY_CONTENTS:
                 return basicSetBodyContents(null, msgs);
             case SyncchartsPackage.SCOPE__BODY_TEXT:
-                return basicSetBodyText(null, msgs);
+                return ((InternalEList<?>)getBodyText()).basicRemove(otherEnd, msgs);
             case SyncchartsPackage.SCOPE__RENAMINGS:
                 return ((InternalEList<?>)getRenamings()).basicRemove(otherEnd, msgs);
         }
@@ -684,7 +653,8 @@ public abstract class ScopeImpl extends AnnotatableImpl implements Scope {
                 setBodyContents((EObject)newValue);
                 return;
             case SyncchartsPackage.SCOPE__BODY_TEXT:
-                setBodyText((TextualCode)newValue);
+                getBodyText().clear();
+                getBodyText().addAll((Collection<? extends TextualCode>)newValue);
                 return;
             case SyncchartsPackage.SCOPE__RENAMINGS:
                 getRenamings().clear();
@@ -736,7 +706,7 @@ public abstract class ScopeImpl extends AnnotatableImpl implements Scope {
                 setBodyContents((EObject)null);
                 return;
             case SyncchartsPackage.SCOPE__BODY_TEXT:
-                setBodyText((TextualCode)null);
+                getBodyText().clear();
                 return;
             case SyncchartsPackage.SCOPE__RENAMINGS:
                 getRenamings().clear();
@@ -777,7 +747,7 @@ public abstract class ScopeImpl extends AnnotatableImpl implements Scope {
             case SyncchartsPackage.SCOPE__BODY_CONTENTS:
                 return bodyContents != null;
             case SyncchartsPackage.SCOPE__BODY_TEXT:
-                return bodyText != null;
+                return bodyText != null && !bodyText.isEmpty();
             case SyncchartsPackage.SCOPE__RENAMINGS:
                 return renamings != null && !renamings.isEmpty();
             case SyncchartsPackage.SCOPE__INTERFACE_DECLARATION:

@@ -48,13 +48,12 @@ import de.cau.cs.kieler.synccharts.diagram.providers.SyncchartsParserProvider;
 /**
  * @generated
  */
-public class StateEntryActionLabelEditPart extends CompartmentEditPart implements
-    ITextAwareEditPart {
+public class RegionState2LabelEditPart extends CompartmentEditPart implements ITextAwareEditPart {
 
     /**
      * @generated
      */
-    public static final int VISUAL_ID = 5052;
+    public static final int VISUAL_ID = 5057;
 
     /**
      * @generated
@@ -79,7 +78,7 @@ public class StateEntryActionLabelEditPart extends CompartmentEditPart implement
     /**
      * @generated
      */
-    public StateEntryActionLabelEditPart(View view) {
+    public RegionState2LabelEditPart(View view) {
         super(view);
     }
 
@@ -283,10 +282,10 @@ public class StateEntryActionLabelEditPart extends CompartmentEditPart implement
         if (parser == null) {
             parser = SyncchartsParserProvider
                 .getParser(
-                    SyncchartsElementTypes.Action_3042,
+                    SyncchartsElementTypes.State_3040,
                     getParserElement(),
                     SyncchartsVisualIDRegistry
-                        .getType(de.cau.cs.kieler.synccharts.diagram.edit.parts.StateEntryActionLabelEditPart.VISUAL_ID));
+                        .getType(de.cau.cs.kieler.synccharts.diagram.edit.parts.RegionState2LabelEditPart.VISUAL_ID));
         }
         return parser;
     }

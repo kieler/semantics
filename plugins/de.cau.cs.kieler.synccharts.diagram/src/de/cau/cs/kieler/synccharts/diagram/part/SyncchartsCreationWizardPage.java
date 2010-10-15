@@ -23,8 +23,8 @@ public class SyncchartsCreationWizardPage extends WizardNewFileCreationPage {
     /**
      * @generated
      */
-    public SyncchartsCreationWizardPage(String pageName,
-            IStructuredSelection selection, String fileExtension) {
+    public SyncchartsCreationWizardPage(String pageName, IStructuredSelection selection,
+        String fileExtension) {
         super(pageName, selection);
         this.fileExtension = fileExtension;
     }
@@ -69,8 +69,8 @@ public class SyncchartsCreationWizardPage extends WizardNewFileCreationPage {
      */
     public void createControl(Composite parent) {
         super.createControl(parent);
-        setFileName(SyncchartsDiagramEditorUtil.getUniqueFileName(
-                getContainerFullPath(), getFileName(), getExtension()));
+        setFileName(SyncchartsDiagramEditorUtil.getUniqueFileName(getContainerFullPath(),
+            getFileName(), getExtension()));
         setPageComplete(validatePage());
     }
 
@@ -81,20 +81,21 @@ public class SyncchartsCreationWizardPage extends WizardNewFileCreationPage {
         if (!super.validatePage()) {
             return false;
         }
+
         String extension = getExtension();
         if (extension != null) {
-        	StringTokenizer t = new StringTokenizer(extension, ",");
-        	String ext = null;
-        	while(t.hasMoreTokens()) {
-        		ext = t.nextToken();
+            StringTokenizer t = new StringTokenizer(extension, ",");
+            String ext = null;
+            while (t.hasMoreTokens()) {
+                ext = t.nextToken();
                 if (getFilePath().toString().endsWith("." + ext)) {
                     return true;
                 }
-        	}
-            setErrorMessage(NLS.bind(
-                    Messages.SyncchartsCreationWizardPageExtensionError,
-                    extension));
+            }
+            setErrorMessage(NLS
+                .bind(Messages.SyncchartsCreationWizardPageExtensionError, extension));
         }
         return false;
+
     }
 }

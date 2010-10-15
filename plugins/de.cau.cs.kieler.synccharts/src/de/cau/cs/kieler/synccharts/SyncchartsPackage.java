@@ -355,7 +355,7 @@ public interface SyncchartsPackage extends EPackage {
     int SCOPE__BODY_CONTENTS = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 9;
 
     /**
-     * The feature id for the '<em><b>Body Text</b></em>' containment reference.
+     * The feature id for the '<em><b>Body Text</b></em>' containment reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
@@ -500,7 +500,7 @@ public interface SyncchartsPackage extends EPackage {
     int REGION__BODY_CONTENTS = SCOPE__BODY_CONTENTS;
 
     /**
-     * The feature id for the '<em><b>Body Text</b></em>' containment reference.
+     * The feature id for the '<em><b>Body Text</b></em>' containment reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
@@ -709,7 +709,7 @@ public interface SyncchartsPackage extends EPackage {
     int STATE__BODY_CONTENTS = SCOPE__BODY_CONTENTS;
 
     /**
-     * The feature id for the '<em><b>Body Text</b></em>' containment reference.
+     * The feature id for the '<em><b>Body Text</b></em>' containment reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
@@ -1480,10 +1480,10 @@ public interface SyncchartsPackage extends EPackage {
     EReference getScope_BodyContents();
 
     /**
-     * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.synccharts.Scope#getBodyText <em>Body Text</em>}'.
+     * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.synccharts.Scope#getBodyText <em>Body Text</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for the containment reference '<em>Body Text</em>'.
+     * @return the meta object for the containment reference list '<em>Body Text</em>'.
      * @see de.cau.cs.kieler.synccharts.Scope#getBodyText()
      * @see #getScope()
      * @generated
@@ -1954,7 +1954,7 @@ public interface SyncchartsPackage extends EPackage {
         EReference SCOPE__BODY_CONTENTS = eINSTANCE.getScope_BodyContents();
 
         /**
-         * The meta object literal for the '<em><b>Body Text</b></em>' containment reference feature.
+         * The meta object literal for the '<em><b>Body Text</b></em>' containment reference list feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @generated

@@ -38,30 +38,22 @@ public class SyncchartsOCLFactory {
     /**
      * @generated
      */
-    public static SyncchartsAbstractExpression getExpression(int index,
-            EClassifier context, Map<String, EClassifier> environment) {
-        SyncchartsOCLFactory cached =
-                SyncchartsDiagramEditorPlugin.getInstance()
-                        .getSyncchartsOCLFactory();
+    public static SyncchartsAbstractExpression getExpression(int index, EClassifier context,
+        Map<String, EClassifier> environment) {
+        SyncchartsOCLFactory cached = SyncchartsDiagramEditorPlugin.getInstance()
+            .getSyncchartsOCLFactory();
         if (cached == null) {
-            SyncchartsDiagramEditorPlugin.getInstance()
-                    .setSyncchartsOCLFactory(
-                            cached = new SyncchartsOCLFactory());
+            SyncchartsDiagramEditorPlugin.getInstance().setSyncchartsOCLFactory(
+                cached = new SyncchartsOCLFactory());
         }
         if (index < 0 || index >= cached.expressions.length) {
             throw new IllegalArgumentException();
         }
         if (cached.expressions[index] == null) {
-            final String[] exprBodies =
-                    new String[] { "self.sourceState.outgoingTransitions->size()", //$NON-NLS-1$
-                    };
-            cached.expressions[index] =
-                    getExpression(
-                            exprBodies[index],
-                            context,
-                            environment == null ? Collections
-                                    .<String, EClassifier> emptyMap()
-                                    : environment);
+            final String[] exprBodies = new String[] { "self.sourceState.outgoingTransitions->size()", //$NON-NLS-1$
+            };
+            cached.expressions[index] = getExpression(exprBodies[index], context,
+                environment == null ? Collections.<String, EClassifier> emptyMap() : environment);
         }
         return cached.expressions[index];
     }
@@ -70,8 +62,8 @@ public class SyncchartsOCLFactory {
      * This is factory method, callers are responsible to keep reference to the return value if they want to reuse parsed expression
      * @generated
      */
-    public static SyncchartsAbstractExpression getExpression(String body,
-            EClassifier context, Map<String, EClassifier> environment) {
+    public static SyncchartsAbstractExpression getExpression(String body, EClassifier context,
+        Map<String, EClassifier> environment) {
         return new Expression(body, context, environment);
     }
 
@@ -79,10 +71,8 @@ public class SyncchartsOCLFactory {
      * This method will become private in the next release
      * @generated
      */
-    public static SyncchartsAbstractExpression getExpression(String body,
-            EClassifier context) {
-        return getExpression(body, context,
-                Collections.<String, EClassifier> emptyMap());
+    public static SyncchartsAbstractExpression getExpression(String body, EClassifier context) {
+        return getExpression(body, context, Collections.<String, EClassifier> emptyMap());
     }
 
     /**
@@ -103,8 +93,7 @@ public class SyncchartsOCLFactory {
         /**
          * @generated
          */
-        public Expression(String body, EClassifier context,
-                Map<String, EClassifier> environment) {
+        public Expression(String body, EClassifier context, Map<String, EClassifier> environment) {
             super(body, context);
             oclInstance = org.eclipse.ocl.ecore.OCL.newInstance();
             initCustomEnv(oclInstance.getEnvironment(), environment);
@@ -127,8 +116,7 @@ public class SyncchartsOCLFactory {
                 return null;
             }
             // on the first call, both evalEnvironment and extentMap are clear, for later we have finally, below.
-            EvaluationEnvironment<?, ?, ?, ?, ?> evalEnv =
-                    oclInstance.getEvaluationEnvironment();
+            EvaluationEnvironment<?, ?, ?, ?, ?> evalEnv = oclInstance.getEvaluationEnvironment();
             // initialize environment
             for (Object nextKey : env.keySet()) {
                 evalEnv.replace((String) nextKey, env.get(nextKey));
@@ -146,16 +134,14 @@ public class SyncchartsOCLFactory {
          * @generated
          */
         private static void initCustomEnv(
-                Environment<?, EClassifier, ?, ?, ?, EParameter, ?, ?, ?, ?, ?, ?> ecoreEnv,
-                Map<String, EClassifier> environment) {
+            Environment<?, EClassifier, ?, ?, ?, EParameter, ?, ?, ?, ?, ?, ?> ecoreEnv,
+            Map<String, EClassifier> environment) {
             // Use EObject as implicit root class for any object, to allow eContainer() and other EObject operations from OCL expressions
-            ParsingOptions.setOption(ecoreEnv,
-                    ParsingOptions.implicitRootClass(ecoreEnv),
-                    EcorePackage.eINSTANCE.getEObject());
+            ParsingOptions.setOption(ecoreEnv, ParsingOptions.implicitRootClass(ecoreEnv),
+                EcorePackage.eINSTANCE.getEObject());
             for (String varName : environment.keySet()) {
                 EClassifier varType = environment.get(varName);
-                ecoreEnv.addElement(varName,
-                        createVar(ecoreEnv, varName, varType), false);
+                ecoreEnv.addElement(varName, createVar(ecoreEnv, varName, varType), false);
             }
         }
 
@@ -163,8 +149,8 @@ public class SyncchartsOCLFactory {
          * @generated
          */
         private static Variable createVar(
-                Environment<?, EClassifier, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?> ecoreEnv,
-                String name, EClassifier type) {
+            Environment<?, EClassifier, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?> ecoreEnv, String name,
+            EClassifier type) {
             Variable var = EcoreFactory.eINSTANCE.createVariable();
             var.setName(name);
             var.setType(ecoreEnv.getUMLReflection().getOCLType(type));

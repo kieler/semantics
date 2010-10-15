@@ -21,10 +21,10 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import de.cau.cs.kieler.core.ui.handler.AbstractCutCopyPasteHandler;
 import de.cau.cs.kieler.core.ui.handler.ICutCopyPasteCommandFactory;
 import de.cau.cs.kieler.synccharts.diagram.custom.commands.SyncchartsCutCopyPasteCommandFactory;
-import de.cau.cs.kieler.synccharts.diagram.edit.parts.Region2EditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.RegionEditPart;
-import de.cau.cs.kieler.synccharts.diagram.edit.parts.State2EditPart;
+import de.cau.cs.kieler.synccharts.diagram.edit.parts.RegionStateEditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateEditPart;
+import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateRegionEditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.TransitionEditPart;
 
 /**
@@ -58,13 +58,13 @@ public class SyncchartsCutCopyPasteHandler extends AbstractCutCopyPasteHandler {
             Object object = iter.next();
             if (object instanceof EditPart) {
                 EditPart editPart = (EditPart) object;
-                if (editPart instanceof State2EditPart) {
+                if (editPart instanceof RegionStateEditPart) {
                     continue;
                 } else if (editPart instanceof StateEditPart) {
                     continue;
                 } else if (editPart instanceof RegionEditPart) {
                     continue;
-                } else if (editPart instanceof Region2EditPart) {
+                } else if (editPart instanceof StateRegionEditPart) {
                     continue;
                 } else if (editPart instanceof TransitionEditPart) {
                     continue;

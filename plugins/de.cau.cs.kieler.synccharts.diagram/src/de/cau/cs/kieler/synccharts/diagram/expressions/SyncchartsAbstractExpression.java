@@ -30,14 +30,11 @@ public abstract class SyncchartsAbstractExpression {
      */
     protected void setStatus(int severity, String message, Throwable throwable) {
         String pluginID = SyncchartsDiagramEditorPlugin.ID;
-        this.status =
-                new Status(severity, pluginID, -1, (message != null) ? message
-                        : "", throwable); //$NON-NLS-1$
+        this.status = new Status(severity, pluginID, -1,
+            (message != null) ? message : "", throwable); //$NON-NLS-1$
         if (!this.status.isOK()) {
-            SyncchartsDiagramEditorPlugin
-                    .getInstance()
-                    .logError(
-                            "Expression problem:" + message + "body:" + body(), throwable); //$NON-NLS-1$ //$NON-NLS-2$
+            SyncchartsDiagramEditorPlugin.getInstance().logError(
+                "Expression problem:" + message + "body:" + body(), throwable); //$NON-NLS-1$ //$NON-NLS-2$
         }
     }
 
@@ -103,7 +100,7 @@ public abstract class SyncchartsAbstractExpression {
                 return doEvaluate(context, env);
             } catch (Exception e) {
                 SyncchartsDiagramEditorPlugin.getInstance().logError(
-                        "Expression evaluation failure: " + body(), e); //$NON-NLS-1$
+                    "Expression evaluation failure: " + body(), e); //$NON-NLS-1$
             }
         }
         return null;
@@ -117,12 +114,11 @@ public abstract class SyncchartsAbstractExpression {
         if (targetType instanceof EEnum) {
             if (value instanceof EEnumLiteral) {
                 EEnumLiteral literal = (EEnumLiteral) value;
-                return (literal.getInstance() != null) ? literal.getInstance()
-                        : literal;
+                return (literal.getInstance() != null) ? literal.getInstance() : literal;
             }
         }
         if (false == value instanceof Number || targetType == null
-                || targetType.getInstanceClass() == null) {
+            || targetType.getInstanceClass() == null) {
             return value;
         }
         Class<?> targetClass = targetType.getInstanceClass();
