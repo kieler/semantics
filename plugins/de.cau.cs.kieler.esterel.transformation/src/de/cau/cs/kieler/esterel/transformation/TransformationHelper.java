@@ -13,9 +13,21 @@
  */
 package de.cau.cs.kieler.esterel.transformation;
 
-import org.eclipse.emf.ecore.EObject;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
 
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.xtext.parsetree.reconstr.Serializer;
+import org.eclipse.xtext.resource.SaveOptions;
+
+import com.google.inject.Injector;
+
+import de.cau.cs.kieler.core.expressions.ExpressionsFactory;
+import de.cau.cs.kieler.core.expressions.TextualCode;
+import de.cau.cs.kieler.esterel.EsterelStandaloneSetup;
 import de.cau.cs.kieler.synccharts.State;
+import de.cau.cs.kieler.synccharts.StateType;
 
 /**
  * Contains some helping functionality.
@@ -53,6 +65,26 @@ public final class TransformationHelper {
      */
     public static void setBodyReference(final State s, final EObject obj) {
         s.setBodyReference(obj);
+
+        Injector injector = new EsterelStandaloneSetup().createInjectorAndDoEMFRegistration();
+
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        OutputStreamWriter osw = new OutputStreamWriter(baos);
+
+        try {
+            Serializer serializerUtil = injector.getInstance(Serializer.class);
+            serializerUtil.serialize(obj, osw, SaveOptions.defaultOptions());
+//            System.out.println("Serialized result: " + baos.toString());
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        
+        TextualCode code = ExpressionsFactory.eINSTANCE.createTextualCode();
+        s.setType(StateType.TEXTUAL);
+        code.setCode(baos.toString());
+        s.getBodyText().add(code);
+
     }
 
 }

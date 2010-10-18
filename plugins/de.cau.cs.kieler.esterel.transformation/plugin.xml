@@ -12,6 +12,7 @@
    <extension
          point="de.cau.cs.kieler.core.kivi.combinations">
       <combination
+            active="true"
             class="de.cau.cs.kieler.esterel.transformation.kivi.TransformationCombination"
             description="Run automatic layout after a transformation."
             name="Transformation Combination">

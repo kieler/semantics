@@ -55,7 +55,7 @@ public final class XtendToJava {
         AbstractTransformationDataComponent component = components.get(identifier);
         if (component == null) {
             // TODO
-            System.err.println("NO TRANSFORMATIONSTATEMENT FOUND");
+            System.err.println("NO TRANSFORMATIONCOMPONENT FOUND");
         } else {
             boolean success = component.getQueue().add((ITransformationStatement) statement);
             if (!success) {

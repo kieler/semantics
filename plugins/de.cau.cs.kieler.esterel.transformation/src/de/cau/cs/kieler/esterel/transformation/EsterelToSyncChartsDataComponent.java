@@ -9,7 +9,6 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.jface.operation.IRunnableWithProgress;
-
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.actions.WorkspaceModifyOperation;
@@ -18,8 +17,6 @@ import org.eclipse.xtext.ui.editor.XtextEditor;
 import org.eclipse.xtext.ui.editor.model.IXtextDocument;
 import org.json.JSONObject;
 
-import de.cau.cs.kieler.core.expressions.ExpressionsFactory;
-import de.cau.cs.kieler.core.expressions.TextualCode;
 import de.cau.cs.kieler.sim.kiem.IJSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.JSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.KiemExecutionException;
@@ -114,9 +111,9 @@ public class EsterelToSyncChartsDataComponent extends JSONObjectDataComponent im
                     System.out.println("Reading Esterel Source Code.");
                     IXtextDocument document = xeditor.getDocument();
                     
-                    TextualCode code = ExpressionsFactory.eINSTANCE.createTextualCode();
-                    rootState.setBodyText(code);
-                    code.setCode(document.get());
+//                    TextualCode code = ExpressionsFactory.eINSTANCE.createTextualCode();
+//                    rootState.setBodyText(code);
+//                    code.setCode(document.get());
 
                     System.out.println("Parsing Esterel Source Code.");
                     Resource xtextResource = resourceSet.getResource(strlURI, true);

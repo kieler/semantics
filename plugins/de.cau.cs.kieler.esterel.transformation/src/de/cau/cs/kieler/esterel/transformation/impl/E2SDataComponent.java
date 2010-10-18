@@ -35,9 +35,12 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.actions.WorkspaceModifyOperation;
 import org.eclipse.ui.part.FileEditorInput;
 import org.eclipse.xtext.ui.editor.XtextEditor;
+import org.eclipse.xtext.ui.editor.model.IXtextDocument;
 
-import de.cau.cs.kieler.esterel.transformation.core.ITransformationStatement;
+import de.cau.cs.kieler.core.expressions.ExpressionsFactory;
+import de.cau.cs.kieler.core.expressions.TextualCode;
 import de.cau.cs.kieler.esterel.transformation.core.AbstractTransformationDataComponent;
+import de.cau.cs.kieler.esterel.transformation.core.ITransformationStatement;
 import de.cau.cs.kieler.synccharts.Region;
 import de.cau.cs.kieler.synccharts.State;
 import de.cau.cs.kieler.synccharts.StateType;
@@ -239,10 +242,10 @@ public class E2SDataComponent extends AbstractTransformationDataComponent {
 
                     System.out.println("Reading Esterel Source Code.");
 
-                    // IXtextDocument document = xeditor.getDocument();
-                    // TextualCode code = ExpressionsFactory.eINSTANCE.createTextualCode();
-                    // rootState.setBodyText(code);
-                    // code.setCode(document.get());
+                    IXtextDocument document = xeditor.getDocument();
+                    TextualCode code = ExpressionsFactory.eINSTANCE.createTextualCode();
+                    rootState.getBodyText().add(code);
+                    code.setCode(document.get());
 
                     System.out.println("Parsing Esterel Source Code.");
                     Resource xtextResource = resourceSet.getResource(strlURI, true);
