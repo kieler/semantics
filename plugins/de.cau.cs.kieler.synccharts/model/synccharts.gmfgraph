@@ -126,7 +126,7 @@
           lineWidth="0">
         <layout
             xsi:type="gmfgraph:CustomLayout"
-            qualifiedClassName="de.cau.cs.kieler.synccharts.custom.ListCompartmentLayout"/>
+            qualifiedClassName="de.cau.cs.kieler.synccharts.custom.ListLayout"/>
         <children
             xsi:type="gmfgraph:Label"
             name="CodeLabelFigure"

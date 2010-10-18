@@ -26,6 +26,7 @@ import org.eclipse.gmf.runtime.notation.View;
 import org.eclipse.swt.graphics.Color;
 
 import de.cau.cs.kieler.synccharts.custom.ListCompartmentLayout;
+import de.cau.cs.kieler.synccharts.custom.ListLayout;
 import de.cau.cs.kieler.synccharts.diagram.edit.policies.TextualCodeItemSemanticEditPolicy;
 import de.cau.cs.kieler.synccharts.diagram.part.SyncchartsVisualIDRegistry;
 
@@ -266,8 +267,7 @@ public class TextualCodeEditPart extends ShapeNodeEditPart {
          */
         public TextualCodeFigure() {
 
-            ListCompartmentLayout layoutThis = new ListCompartmentLayout();
-
+            ListLayout layoutThis = new ListLayout();
             this.setLayoutManager(layoutThis);
 
             this.setFill(false);
@@ -283,6 +283,7 @@ public class TextualCodeEditPart extends ShapeNodeEditPart {
 
             fFigureCodeLabelFigure = new WrappingLabel();
             fFigureCodeLabelFigure.setText("text");
+            fFigureCodeLabelFigure.setTextWrap(true);
 
             this.add(fFigureCodeLabelFigure);
 

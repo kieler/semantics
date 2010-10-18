@@ -68,6 +68,9 @@ main() {
     model.diagram.topLevelNodes.allSubobjectsOfType(InnerClassViewmap)[InnerClassViewmap] -> map customizeTextWrap("FigureInterfaceDeclFigure","StateFigure");
     model.diagram.childNodes.allSubobjectsOfType(InnerClassViewmap)[InnerClassViewmap] -> map customizeTextWrap("FigureInterfaceDeclFigure","StateFigure");
     
+    // customize state edit parts so it shows textwrap for the textual code elements
+    model.diagram.childNodes.allSubobjectsOfType(InnerClassViewmap)[InnerClassViewmap] -> map customizeTextWrap("FigureCodeLabelFigure","TextualCodeFigure");
+    
     // customize state edit parts so it shows textwrap for the transition labels
     model.diagram.links.allSubobjectsOfType(InnerClassViewmap)[InnerClassViewmap] -> map customizeTextWrap("FigureTransitionTriggersAndEffectsFigure","TransitionFigure");
 }
