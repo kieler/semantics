@@ -29,6 +29,7 @@ import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateRegionEditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateSuspensionTriggerEditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.TextualCodeEditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.TransitionEditPart;
+import de.cau.cs.kieler.synccharts.diagram.edit.parts.VariableEditPart;
 import de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorPlugin;
 
 /**
@@ -97,6 +98,11 @@ public class SyncchartsElementTypes {
      * @generated
      */
     public static final IElementType State_3040 = getElementType("de.cau.cs.kieler.synccharts.diagram.State_3040"); //$NON-NLS-1$
+    /**
+     * @generated
+     */
+    public static final IElementType Variable_3047 = getElementType("de.cau.cs.kieler.synccharts.diagram.Variable_3047"); //$NON-NLS-1$
+
     /**
      * @generated
      */
@@ -229,6 +235,8 @@ public class SyncchartsElementTypes {
 
             elements.put(State_3040, SyncchartsPackage.eINSTANCE.getState());
 
+            elements.put(Variable_3047, ExpressionsPackage.eINSTANCE.getVariable());
+
             elements.put(Transition_4005, SyncchartsPackage.eINSTANCE.getTransition());
         }
         return (ENamedElement) elements.get(type);
@@ -257,6 +265,7 @@ public class SyncchartsElementTypes {
             KNOWN_ELEMENT_TYPES.add(TextualCode_3046);
             KNOWN_ELEMENT_TYPES.add(Region_3039);
             KNOWN_ELEMENT_TYPES.add(State_3040);
+            KNOWN_ELEMENT_TYPES.add(Variable_3047);
             KNOWN_ELEMENT_TYPES.add(Transition_4005);
         }
         return KNOWN_ELEMENT_TYPES.contains(elementType);
@@ -287,6 +296,8 @@ public class SyncchartsElementTypes {
             return Region_3039;
         case RegionStateEditPart.VISUAL_ID:
             return State_3040;
+        case VariableEditPart.VISUAL_ID:
+            return Variable_3047;
         case TransitionEditPart.VISUAL_ID:
             return Transition_4005;
         }

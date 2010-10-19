@@ -41,6 +41,7 @@ import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateRegionEditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateSuspensionTriggerEditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.TextualCodeEditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.TransitionEditPart;
+import de.cau.cs.kieler.synccharts.diagram.edit.parts.VariableEditPart;
 import de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramUpdater;
 import de.cau.cs.kieler.synccharts.diagram.part.SyncchartsLinkDescriptor;
 import de.cau.cs.kieler.synccharts.diagram.part.SyncchartsNodeDescriptor;
@@ -319,6 +320,16 @@ public class RegionCanonicalEditPolicy extends CanonicalEditPolicy {
         case RegionStateEditPart.VISUAL_ID: {
             if (!domain2NotationMap.containsKey(view.getElement())) {
                 result.addAll(SyncchartsDiagramUpdater.getState_3040ContainedLinks(view));
+            }
+            if (!domain2NotationMap.containsKey(view.getElement())
+                || view.getEAnnotation("Shortcut") == null) { //$NON-NLS-1$
+                domain2NotationMap.put(view.getElement(), view);
+            }
+            break;
+        }
+        case VariableEditPart.VISUAL_ID: {
+            if (!domain2NotationMap.containsKey(view.getElement())) {
+                result.addAll(SyncchartsDiagramUpdater.getVariable_3047ContainedLinks(view));
             }
             if (!domain2NotationMap.containsKey(view.getElement())
                 || view.getEAnnotation("Shortcut") == null) { //$NON-NLS-1$

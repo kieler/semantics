@@ -172,7 +172,7 @@ public class StateLayout extends AbstractTableLayout {
 //                    || state.getBodyText().isEmpty();
 //            break;
         case SIGNALS:
-            isEmpty = state.getSignals().size() == 0;
+            isEmpty = (state.getSignals().size() == 0 && state.getVariables().size() == 0);
             break;
         case ENTRYACTIONS:
             isEmpty = state.getEntryActions().size() == 0;

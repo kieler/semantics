@@ -280,7 +280,7 @@
       <viewmap
           xsi:type="gmfgen:InnerClassViewmap"
           className="TextualCodeFigure"
-          classBody="&#xA;/**&#xA; * @generated&#xA; */&#xA;public class TextualCodeFigure extends org.eclipse.draw2d.RectangleFigure {&#xA;&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;private org.eclipse.gmf.runtime.draw2d.ui.figures.WrappingLabel fFigureCodeLabelFigure; &#xA;&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;public TextualCodeFigure() {&#xA;&#x9;&#x9;&#xA;&#x9;de.cau.cs.kieler.synccharts.custom.ListCompartmentLayout layoutThis = new de.cau.cs.kieler.synccharts.custom.ListCompartmentLayout();&#xA;&#xA;&#xA;&#x9;this.setLayoutManager(layoutThis);&#xA;&#xA;&#x9;&#x9;this.setFill(false);&#xA;this.setOutline(false);&#xA;this.setLineWidth(0);&#xA;&#x9;&#x9;createContents();&#xA;&#x9;}&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;private void createContents(){&#xA;&#xA;&#xA;fFigureCodeLabelFigure = new org.eclipse.gmf.runtime.draw2d.ui.figures.WrappingLabel();&#xA;fFigureCodeLabelFigure.setText(&quot;text&quot;);&#xA;&#xA;this.add(fFigureCodeLabelFigure);&#xA;&#xA;&#xA;&#x9;}&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;public org.eclipse.gmf.runtime.draw2d.ui.figures.WrappingLabel getFigureCodeLabelFigure() {&#xA;&#x9;&#x9;return fFigureCodeLabelFigure;&#xA;&#x9;}&#xA;&#xA;&#xA;}&#xA;&#xA;"/>
+          classBody="&#xA;/**&#xA; * @generated&#xA; */&#xA;public class TextualCodeFigure extends org.eclipse.draw2d.RectangleFigure {&#xA;&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;private org.eclipse.gmf.runtime.draw2d.ui.figures.WrappingLabel fFigureCodeLabelFigure; &#xA;&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;public TextualCodeFigure() {&#xA;&#x9;&#x9;&#xA;&#x9;de.cau.cs.kieler.synccharts.custom.ListLayout layoutThis = new de.cau.cs.kieler.synccharts.custom.ListLayout();&#xA;&#xA;&#xA;&#x9;this.setLayoutManager(layoutThis);&#xA;&#xA;&#x9;&#x9;this.setFill(false);&#xA;this.setOutline(false);&#xA;this.setLineWidth(0);&#xA;&#x9;&#x9;createContents();&#xA;&#x9;}&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;private void createContents(){&#xA;&#xA;&#xA;fFigureCodeLabelFigure = new org.eclipse.gmf.runtime.draw2d.ui.figures.WrappingLabel();&#xA;fFigureCodeLabelFigure.setText(&quot;&quot;);fFigureCodeLabelFigure.setTextWrap(true);&#xA;&#xA;&#xA;this.add(fFigureCodeLabelFigure);&#xA;&#xA;&#xA;&#x9;}&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;public org.eclipse.gmf.runtime.draw2d.ui.figures.WrappingLabel getFigureCodeLabelFigure() {&#xA;&#x9;&#x9;return fFigureCodeLabelFigure;&#xA;&#x9;}&#xA;&#xA;&#xA;}&#xA;&#xA;"/>
       <modelFacet>
         <metaClass
             href="../../de.cau.cs.kieler.core.expressions/model/expressions.genmodel#//expressions/TextualCode"/>
@@ -433,6 +433,51 @@
               href="synccharts.genmodel#//synccharts/Scope/interfaceDeclaration"/>
           <editableMetaFeatures
               href="synccharts.genmodel#//synccharts/Scope/interfaceDeclaration"/>
+        </modelFacet>
+      </labels>
+    </childNodes>
+    <childNodes
+        visualID="3047"
+        editPartClassName="VariableEditPart"
+        itemSemanticEditPolicyClassName="VariableItemSemanticEditPolicy"
+        notationViewFactoryClassName="VariableViewFactory"
+        canonicalEditPolicyClassName="VariableCanonicalEditPolicy"
+        graphicalNodeEditPolicyClassName="VariableGraphicalNodeEditPolicy"
+        createCommandClassName="VariableCreateCommand"
+        containers="//@diagram/@compartments.7 //@diagram/@compartments.0">
+      <diagramRunTimeClass
+          href="../../../plugin/org.eclipse.gmf.runtime.notation/model/notation.genmodel#//notation/Node"/>
+      <elementType
+          xsi:type="gmfgen:MetamodelType"
+          editHelperClassName="VariableEditHelper"/>
+      <viewmap
+          xsi:type="gmfgen:InnerClassViewmap"
+          className="InvisibleFigure"
+          classBody="&#xA;/**&#xA; * @generated&#xA; */&#xA;public class InvisibleFigure extends de.cau.cs.kieler.synccharts.custom.InvisibleLabelFigure {&#xA;&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;private org.eclipse.gmf.runtime.draw2d.ui.figures.WrappingLabel fFigureInvisibleFigureLabelFigure; &#xA;&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;public InvisibleFigure() {&#xA;&#x9;&#x9;&#x9;&#x9;&#xA;&#xA;&#x9;&#x9;createContents();&#xA;&#x9;}&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;private void createContents(){&#xA;&#xA;&#xA;fFigureInvisibleFigureLabelFigure = new org.eclipse.gmf.runtime.draw2d.ui.figures.WrappingLabel();&#xA;fFigureInvisibleFigureLabelFigure.setText(&quot;&lt;...>&quot;);&#xA;&#xA;this.add(fFigureInvisibleFigureLabelFigure);&#xA;&#xA;&#xA;&#x9;}&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;public org.eclipse.gmf.runtime.draw2d.ui.figures.WrappingLabel getFigureInvisibleFigureLabelFigure() {&#xA;&#x9;&#x9;return fFigureInvisibleFigureLabelFigure;&#xA;&#x9;}&#xA;&#xA;&#xA;}&#xA;&#xA;"/>
+      <modelFacet>
+        <metaClass
+            href="../../de.cau.cs.kieler.core.expressions/model/expressions.genmodel#//expressions/Variable"/>
+        <containmentMetaFeature
+            href="synccharts.genmodel#//synccharts/Scope/variables"/>
+        <childMetaFeature
+            href="synccharts.genmodel#//synccharts/Scope/variables"/>
+      </modelFacet>
+      <labels
+          visualID="5062"
+          editPartClassName="VariableNameEditPart"
+          itemSemanticEditPolicyClassName="VariableNameItemSemanticEditPolicy"
+          notationViewFactoryClassName="VariableNameViewFactory">
+        <diagramRunTimeClass
+            href="../../../plugin/org.eclipse.gmf.runtime.notation/model/notation.genmodel#//notation/Node"/>
+        <viewmap
+            xsi:type="gmfgen:ParentAssignedViewmap"
+            getterName="getFigureInvisibleFigureLabelFigure"
+            figureQualifiedClassName="org.eclipse.gmf.runtime.draw2d.ui.figures.WrappingLabel"/>
+        <modelFacet
+            xsi:type="gmfgen:FeatureLabelModelFacet"
+            parser="//@labelParsers/@implementations.0">
+          <metaFeatures
+              href="../../de.cau.cs.kieler.core.expressions/model/expressions.genmodel#//expressions/ValuedObject/name"/>
         </modelFacet>
       </labels>
     </childNodes>
@@ -607,8 +652,8 @@
         itemSemanticEditPolicyClassName="StateSignalCompartmentItemSemanticEditPolicy"
         notationViewFactoryClassName="StateSignalViewFactory"
         canonicalEditPolicyClassName="StateSignalCompartmentCanonicalEditPolicy"
-        childNodes="//@diagram/@childNodes.0"
-        title="Signal:"
+        childNodes="//@diagram/@childNodes.0 //@diagram/@childNodes.8"
+        title="Interface:"
         needsTitle="false"
         node="//@diagram/@topLevelNodes.0"
         listLayout="false">
@@ -733,8 +778,8 @@
         itemSemanticEditPolicyClassName="StateSignalCompartment2ItemSemanticEditPolicy"
         notationViewFactoryClassName="StateSignalViewFactory"
         canonicalEditPolicyClassName="StateSignalCompartment2CanonicalEditPolicy"
-        childNodes="//@diagram/@childNodes.0"
-        title="Signal:"
+        childNodes="//@diagram/@childNodes.0 //@diagram/@childNodes.8"
+        title="Interface:"
         needsTitle="false"
         node="//@diagram/@childNodes.7"
         listLayout="false">
@@ -961,6 +1006,9 @@
         parent="//@diagram/@childNodes.7"
         child="//@diagram/@childNodes.6"/>
     <childReferences
+        parent="//@diagram/@childNodes.7"
+        child="//@diagram/@childNodes.8"/>
+    <childReferences
         parent="//@diagram/@childNodes.6"
         child="//@diagram/@childNodes.7"/>
     <childReferences
@@ -969,6 +1017,9 @@
     <childReferences
         parent="//@diagram/@topLevelNodes.0"
         child="//@diagram/@childNodes.6"/>
+    <childReferences
+        parent="//@diagram/@topLevelNodes.0"
+        child="//@diagram/@childNodes.8"/>
     <childReferences
         parent="//@diagram"
         child="//@diagram/@topLevelNodes.0"/>
@@ -1064,7 +1115,7 @@
       extensibleViaService="true">
     <implementations
         xsi:type="gmfgen:PredefinedParser"
-        uses="//@diagram/@childNodes.0/@labels.0/@modelFacet //@diagram/@childNodes.1/@labels.0/@modelFacet //@diagram/@childNodes.2/@labels.0/@modelFacet //@diagram/@childNodes.3/@labels.0/@modelFacet //@diagram/@childNodes.4/@labels.0/@modelFacet //@diagram/@childNodes.5/@labels.0/@modelFacet //@diagram/@childNodes.7/@labels.0/@modelFacet //@diagram/@childNodes.7/@labels.1/@modelFacet //@diagram/@childNodes.6/@labels.0/@modelFacet //@diagram/@topLevelNodes.0/@labels.0/@modelFacet //@diagram/@topLevelNodes.0/@labels.1/@modelFacet //@diagram/@links.0/@labels.0/@modelFacet //@diagram/@links.0/@labels.1/@modelFacet"/>
+        uses="//@diagram/@childNodes.0/@labels.0/@modelFacet //@diagram/@childNodes.1/@labels.0/@modelFacet //@diagram/@childNodes.2/@labels.0/@modelFacet //@diagram/@childNodes.3/@labels.0/@modelFacet //@diagram/@childNodes.4/@labels.0/@modelFacet //@diagram/@childNodes.5/@labels.0/@modelFacet //@diagram/@childNodes.8/@labels.0/@modelFacet //@diagram/@childNodes.7/@labels.0/@modelFacet //@diagram/@childNodes.7/@labels.1/@modelFacet //@diagram/@childNodes.6/@labels.0/@modelFacet //@diagram/@topLevelNodes.0/@labels.0/@modelFacet //@diagram/@topLevelNodes.0/@labels.1/@modelFacet //@diagram/@links.0/@labels.0/@modelFacet //@diagram/@links.0/@labels.1/@modelFacet"/>
   </labelParsers>
   <contextMenus
       context="//@diagram">

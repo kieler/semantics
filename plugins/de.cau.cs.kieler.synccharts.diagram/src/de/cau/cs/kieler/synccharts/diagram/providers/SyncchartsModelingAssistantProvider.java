@@ -57,8 +57,9 @@ public class SyncchartsModelingAssistantProvider extends ModelingAssistantProvid
             return types;
         }
         if (editPart instanceof StateSignalCompartmentEditPart) {
-            ArrayList<IElementType> types = new ArrayList<IElementType>(1);
+            ArrayList<IElementType> types = new ArrayList<IElementType>(2);
             types.add(SyncchartsElementTypes.Signal_3041);
+            types.add(SyncchartsElementTypes.Variable_3047);
             return types;
         }
         if (editPart instanceof StateEntryActionCompartmentEditPart) {
@@ -94,8 +95,9 @@ public class SyncchartsModelingAssistantProvider extends ModelingAssistantProvid
             return types;
         }
         if (editPart instanceof StateSignalCompartment2EditPart) {
-            ArrayList<IElementType> types = new ArrayList<IElementType>(1);
+            ArrayList<IElementType> types = new ArrayList<IElementType>(2);
             types.add(SyncchartsElementTypes.Signal_3041);
+            types.add(SyncchartsElementTypes.Variable_3047);
             return types;
         }
         if (editPart instanceof StateEntryActionCompartment2EditPart) {

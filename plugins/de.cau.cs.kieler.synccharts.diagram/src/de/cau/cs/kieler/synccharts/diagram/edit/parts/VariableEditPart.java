@@ -1,13 +1,8 @@
 package de.cau.cs.kieler.synccharts.diagram.edit.parts;
 
-import org.eclipse.draw2d.FlowLayout;
-import org.eclipse.draw2d.GridLayout;
 import org.eclipse.draw2d.IFigure;
-import org.eclipse.draw2d.LayoutManager;
-import org.eclipse.draw2d.RectangleFigure;
 import org.eclipse.draw2d.Shape;
 import org.eclipse.draw2d.StackLayout;
-import org.eclipse.draw2d.XYLayout;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gef.EditPolicy;
 import org.eclipse.gef.Request;
@@ -25,20 +20,19 @@ import org.eclipse.gmf.runtime.gef.ui.figures.NodeFigure;
 import org.eclipse.gmf.runtime.notation.View;
 import org.eclipse.swt.graphics.Color;
 
-import de.cau.cs.kieler.synccharts.custom.ListCompartmentLayout;
-import de.cau.cs.kieler.synccharts.custom.ListLayout;
-import de.cau.cs.kieler.synccharts.diagram.edit.policies.TextualCodeItemSemanticEditPolicy;
+import de.cau.cs.kieler.synccharts.custom.InvisibleLabelFigure;
+import de.cau.cs.kieler.synccharts.diagram.edit.policies.VariableItemSemanticEditPolicy;
 import de.cau.cs.kieler.synccharts.diagram.part.SyncchartsVisualIDRegistry;
 
 /**
  * @generated
  */
-public class TextualCodeEditPart extends ShapeNodeEditPart {
+public class VariableEditPart extends ShapeNodeEditPart {
 
     /**
      * @generated
      */
-    public static final int VISUAL_ID = 3046;
+    public static final int VISUAL_ID = 3047;
 
     /**
      * @generated
@@ -53,7 +47,7 @@ public class TextualCodeEditPart extends ShapeNodeEditPart {
     /**
      * @generated
      */
-    public TextualCodeEditPart(View view) {
+    public VariableEditPart(View view) {
         super(view);
     }
 
@@ -62,7 +56,7 @@ public class TextualCodeEditPart extends ShapeNodeEditPart {
      */
     protected void createDefaultEditPolicies() {
         super.createDefaultEditPolicies();
-        installEditPolicy(EditPolicyRoles.SEMANTIC_ROLE, new TextualCodeItemSemanticEditPolicy());
+        installEditPolicy(EditPolicyRoles.SEMANTIC_ROLE, new VariableItemSemanticEditPolicy());
         installEditPolicy(EditPolicy.LAYOUT_ROLE, createLayoutEditPolicy());
         // XXX need an SCR to runtime to have another abstract superclass that would let children add reasonable editpolicies
         // removeEditPolicy(org.eclipse.gmf.runtime.diagram.ui.editpolicies.EditPolicyRoles.CONNECTION_HANDLES_ROLE);
@@ -97,7 +91,7 @@ public class TextualCodeEditPart extends ShapeNodeEditPart {
      * @generated
      */
     protected IFigure createNodeShape() {
-        primaryShape = new TextualCodeFigure();
+        primaryShape = new InvisibleFigure();
 
         return primaryShape;
     }
@@ -105,17 +99,17 @@ public class TextualCodeEditPart extends ShapeNodeEditPart {
     /**
      * @generated
      */
-    public TextualCodeFigure getPrimaryShape() {
-        return (TextualCodeFigure) primaryShape;
+    public InvisibleFigure getPrimaryShape() {
+        return (InvisibleFigure) primaryShape;
     }
 
     /**
      * @generated
      */
     protected boolean addFixedChild(EditPart childEditPart) {
-        if (childEditPart instanceof TextualCodeLabelEditPart) {
-            ((TextualCodeLabelEditPart) childEditPart).setLabel(getPrimaryShape()
-                .getFigureCodeLabelFigure());
+        if (childEditPart instanceof VariableNameEditPart) {
+            ((VariableNameEditPart) childEditPart).setLabel(getPrimaryShape()
+                .getFigureInvisibleFigureLabelFigure());
             return true;
         }
         return false;
@@ -125,7 +119,7 @@ public class TextualCodeEditPart extends ShapeNodeEditPart {
      * @generated
      */
     protected boolean removeFixedChild(EditPart childEditPart) {
-        if (childEditPart instanceof TextualCodeLabelEditPart) {
+        if (childEditPart instanceof VariableNameEditPart) {
             return true;
         }
         return false;
@@ -249,31 +243,24 @@ public class TextualCodeEditPart extends ShapeNodeEditPart {
      */
     public EditPart getPrimaryChildEditPart() {
         return getChildBySemanticHint(SyncchartsVisualIDRegistry
-            .getType(TextualCodeLabelEditPart.VISUAL_ID));
+            .getType(VariableNameEditPart.VISUAL_ID));
     }
 
     /**
      * @generated
      */
-    public class TextualCodeFigure extends RectangleFigure {
+    public class InvisibleFigure extends InvisibleLabelFigure {
 
         /**
          * @generated
          */
-        private WrappingLabel fFigureCodeLabelFigure;
+        private WrappingLabel fFigureInvisibleFigureLabelFigure;
 
         /**
          * @generated
          */
-        public TextualCodeFigure() {
+        public InvisibleFigure() {
 
-            ListLayout layoutThis = new ListLayout();
-
-            this.setLayoutManager(layoutThis);
-
-            this.setFill(false);
-            this.setOutline(false);
-            this.setLineWidth(0);
             createContents();
         }
 
@@ -282,19 +269,18 @@ public class TextualCodeEditPart extends ShapeNodeEditPart {
          */
         private void createContents() {
 
-            fFigureCodeLabelFigure = new WrappingLabel();
-            fFigureCodeLabelFigure.setText("");
-            fFigureCodeLabelFigure.setTextWrap(true);
+            fFigureInvisibleFigureLabelFigure = new WrappingLabel();
+            fFigureInvisibleFigureLabelFigure.setText("<...>");
 
-            this.add(fFigureCodeLabelFigure);
+            this.add(fFigureInvisibleFigureLabelFigure);
 
         }
 
         /**
          * @generated
          */
-        public WrappingLabel getFigureCodeLabelFigure() {
-            return fFigureCodeLabelFigure;
+        public WrappingLabel getFigureInvisibleFigureLabelFigure() {
+            return fFigureInvisibleFigureLabelFigure;
         }
 
     }

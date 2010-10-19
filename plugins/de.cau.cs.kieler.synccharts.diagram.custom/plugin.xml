@@ -198,6 +198,24 @@
                   value="Signal">
             </parameter>
          </command>
+         <command
+               commandId="de.cau.cs.kieler.synccharts.custom.contextMenu.addVariable"
+               icon="icons/obj16/Variable.gif"
+               label="Add Variable"
+               mnemonic="V"
+               style="push"
+               tooltip="Add a variable to the selected scope.">
+            <visibleWhen
+                  checkEnabled="false">
+               <reference
+                     definitionId="de.cau.cs.kieler.synccharts.custom.expressions.statePart">
+               </reference>
+            </visibleWhen>
+            <parameter
+                  name="de.cau.cs.kieler.synccharts.custom.parameters.type"
+                  value="Variable">
+            </parameter>
+         </command>
          <menu
                id="customAddMenu"
                label="Add Action/Suspension"

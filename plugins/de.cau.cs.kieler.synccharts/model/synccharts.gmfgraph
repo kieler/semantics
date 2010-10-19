@@ -130,7 +130,7 @@
         <children
             xsi:type="gmfgraph:Label"
             name="CodeLabelFigure"
-            text="text"/>
+            text=""/>
       </actualFigure>
       <accessors
           figure="//@figures.0/@descriptors.4/@actualFigure/@children.0"/>

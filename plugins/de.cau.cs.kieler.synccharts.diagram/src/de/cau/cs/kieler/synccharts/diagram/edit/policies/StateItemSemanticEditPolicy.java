@@ -31,6 +31,7 @@ import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateSuspensionTriggerComp
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateSuspensionTriggerEditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.TextualCodeEditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.TransitionEditPart;
+import de.cau.cs.kieler.synccharts.diagram.edit.parts.VariableEditPart;
 import de.cau.cs.kieler.synccharts.diagram.part.SyncchartsVisualIDRegistry;
 import de.cau.cs.kieler.synccharts.diagram.providers.SyncchartsElementTypes;
 
@@ -100,6 +101,12 @@ public class StateItemSemanticEditPolicy extends SyncchartsBaseItemSemanticEditP
                     Node cnode = (Node) cit.next();
                     switch (SyncchartsVisualIDRegistry.getVisualID(cnode)) {
                     case SignalEditPart.VISUAL_ID:
+                        cmd.add(new DestroyElementCommand(new DestroyElementRequest(
+                            getEditingDomain(), cnode.getElement(), false))); // directlyOwned: true
+                        // don't need explicit deletion of cnode as parent's view deletion would clean child views as well 
+                        // cmd.add(new org.eclipse.gmf.runtime.diagram.core.commands.DeleteCommand(getEditingDomain(), cnode));
+                        break;
+                    case VariableEditPart.VISUAL_ID:
                         cmd.add(new DestroyElementCommand(new DestroyElementRequest(
                             getEditingDomain(), cnode.getElement(), false))); // directlyOwned: true
                         // don't need explicit deletion of cnode as parent's view deletion would clean child views as well 

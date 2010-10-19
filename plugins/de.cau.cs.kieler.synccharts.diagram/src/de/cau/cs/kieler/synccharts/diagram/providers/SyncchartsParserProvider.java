@@ -28,6 +28,7 @@ import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateSuspensionTriggerLabe
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.TextualCodeLabelEditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.TransitionLabelEditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.TransitionPriorityEditPart;
+import de.cau.cs.kieler.synccharts.diagram.edit.parts.VariableNameEditPart;
 import de.cau.cs.kieler.synccharts.diagram.parsers.MessageFormatParser;
 import de.cau.cs.kieler.synccharts.diagram.part.SyncchartsVisualIDRegistry;
 
@@ -253,6 +254,24 @@ public class SyncchartsParserProvider extends AbstractProvider implements IParse
     /**
      * @generated
      */
+    private IParser variableName_5062Parser;
+
+    /**
+     * @generated
+     */
+    private IParser getVariableName_5062Parser() {
+        if (variableName_5062Parser == null) {
+            EAttribute[] features = new EAttribute[] { ExpressionsPackage.eINSTANCE
+                .getValuedObject_Name() };
+            MessageFormatParser parser = new MessageFormatParser(features);
+            variableName_5062Parser = parser;
+        }
+        return variableName_5062Parser;
+    }
+
+    /**
+     * @generated
+     */
     private IParser transitionLabel_6009Parser;
 
     /**
@@ -317,6 +336,8 @@ public class SyncchartsParserProvider extends AbstractProvider implements IParse
             return getStateLabel_5056Parser();
         case RegionState2LabelEditPart.VISUAL_ID:
             return getStateInterfaceDeclaration_5057Parser();
+        case VariableNameEditPart.VISUAL_ID:
+            return getVariableName_5062Parser();
         case TransitionLabelEditPart.VISUAL_ID:
             return getTransitionLabel_6009Parser();
         case TransitionPriorityEditPart.VISUAL_ID:

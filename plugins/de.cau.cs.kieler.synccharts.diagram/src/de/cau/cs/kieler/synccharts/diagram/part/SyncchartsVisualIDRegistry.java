@@ -46,6 +46,8 @@ import de.cau.cs.kieler.synccharts.diagram.edit.parts.TextualCodeLabelEditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.TransitionEditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.TransitionLabelEditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.TransitionPriorityEditPart;
+import de.cau.cs.kieler.synccharts.diagram.edit.parts.VariableEditPart;
+import de.cau.cs.kieler.synccharts.diagram.edit.parts.VariableNameEditPart;
 
 /**
  * This registry is used to determine which type of visual object should be
@@ -160,6 +162,9 @@ public class SyncchartsVisualIDRegistry {
             if (ExpressionsPackage.eINSTANCE.getSignal().isSuperTypeOf(domainElement.eClass())) {
                 return SignalEditPart.VISUAL_ID;
             }
+            if (ExpressionsPackage.eINSTANCE.getVariable().isSuperTypeOf(domainElement.eClass())) {
+                return VariableEditPart.VISUAL_ID;
+            }
             break;
         case StateEntryActionCompartmentEditPart.VISUAL_ID:
             if (SyncchartsPackage.eINSTANCE.getAction().isSuperTypeOf(domainElement.eClass())) {
@@ -200,6 +205,9 @@ public class SyncchartsVisualIDRegistry {
         case StateSignalCompartment2EditPart.VISUAL_ID:
             if (ExpressionsPackage.eINSTANCE.getSignal().isSuperTypeOf(domainElement.eClass())) {
                 return SignalEditPart.VISUAL_ID;
+            }
+            if (ExpressionsPackage.eINSTANCE.getVariable().isSuperTypeOf(domainElement.eClass())) {
+                return VariableEditPart.VISUAL_ID;
             }
             break;
         case StateEntryActionCompartment2EditPart.VISUAL_ID:
@@ -350,8 +358,16 @@ public class SyncchartsVisualIDRegistry {
                 return true;
             }
             break;
+        case VariableEditPart.VISUAL_ID:
+            if (VariableNameEditPart.VISUAL_ID == nodeVisualID) {
+                return true;
+            }
+            break;
         case StateSignalCompartmentEditPart.VISUAL_ID:
             if (SignalEditPart.VISUAL_ID == nodeVisualID) {
+                return true;
+            }
+            if (VariableEditPart.VISUAL_ID == nodeVisualID) {
                 return true;
             }
             break;
@@ -393,6 +409,9 @@ public class SyncchartsVisualIDRegistry {
             break;
         case StateSignalCompartment2EditPart.VISUAL_ID:
             if (SignalEditPart.VISUAL_ID == nodeVisualID) {
+                return true;
+            }
+            if (VariableEditPart.VISUAL_ID == nodeVisualID) {
                 return true;
             }
             break;

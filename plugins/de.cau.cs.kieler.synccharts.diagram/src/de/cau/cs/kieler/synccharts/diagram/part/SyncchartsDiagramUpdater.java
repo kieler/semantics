@@ -14,6 +14,7 @@ import org.eclipse.gmf.runtime.notation.View;
 
 import de.cau.cs.kieler.core.expressions.Signal;
 import de.cau.cs.kieler.core.expressions.TextualCode;
+import de.cau.cs.kieler.core.expressions.Variable;
 import de.cau.cs.kieler.synccharts.Action;
 import de.cau.cs.kieler.synccharts.Region;
 import de.cau.cs.kieler.synccharts.State;
@@ -43,6 +44,7 @@ import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateSuspensionTriggerComp
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateSuspensionTriggerEditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.TextualCodeEditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.TransitionEditPart;
+import de.cau.cs.kieler.synccharts.diagram.edit.parts.VariableEditPart;
 import de.cau.cs.kieler.synccharts.diagram.providers.SyncchartsElementTypes;
 
 /**
@@ -58,7 +60,7 @@ public class SyncchartsDiagramUpdater {
         case RegionEditPart.VISUAL_ID:
             return getRegion_1000SemanticChildren(view);
         case StateSignalCompartmentEditPart.VISUAL_ID:
-            return getStateSignal_7054SemanticChildren(view);
+            return getStateInterface_7054SemanticChildren(view);
         case StateEntryActionCompartmentEditPart.VISUAL_ID:
             return getStateOnEntryAction_7055SemanticChildren(view);
         case StateInnerActionCompartmentEditPart.VISUAL_ID:
@@ -72,7 +74,7 @@ public class SyncchartsDiagramUpdater {
         case RegionStateCompartmentEditPart.VISUAL_ID:
             return getRegionStateCompartment_7060SemanticChildren(view);
         case StateSignalCompartment2EditPart.VISUAL_ID:
-            return getStateSignal_7061SemanticChildren(view);
+            return getStateInterface_7061SemanticChildren(view);
         case StateEntryActionCompartment2EditPart.VISUAL_ID:
             return getStateOnEntryAction_7062SemanticChildren(view);
         case StateInnerActionCompartment2EditPart.VISUAL_ID:
@@ -110,7 +112,7 @@ public class SyncchartsDiagramUpdater {
     /**
      * @generated
      */
-    public static List<SyncchartsNodeDescriptor> getStateSignal_7054SemanticChildren(View view) {
+    public static List<SyncchartsNodeDescriptor> getStateInterface_7054SemanticChildren(View view) {
         if (false == view.eContainer() instanceof View) {
             return Collections.emptyList();
         }
@@ -124,6 +126,14 @@ public class SyncchartsDiagramUpdater {
             Signal childElement = (Signal) it.next();
             int visualID = SyncchartsVisualIDRegistry.getNodeVisualID(view, childElement);
             if (visualID == SignalEditPart.VISUAL_ID) {
+                result.add(new SyncchartsNodeDescriptor(childElement, visualID));
+                continue;
+            }
+        }
+        for (Iterator<?> it = modelElement.getVariables().iterator(); it.hasNext();) {
+            Variable childElement = (Variable) it.next();
+            int visualID = SyncchartsVisualIDRegistry.getNodeVisualID(view, childElement);
+            if (visualID == VariableEditPart.VISUAL_ID) {
                 result.add(new SyncchartsNodeDescriptor(childElement, visualID));
                 continue;
             }
@@ -297,7 +307,7 @@ public class SyncchartsDiagramUpdater {
     /**
      * @generated
      */
-    public static List<SyncchartsNodeDescriptor> getStateSignal_7061SemanticChildren(View view) {
+    public static List<SyncchartsNodeDescriptor> getStateInterface_7061SemanticChildren(View view) {
         if (false == view.eContainer() instanceof View) {
             return Collections.emptyList();
         }
@@ -311,6 +321,14 @@ public class SyncchartsDiagramUpdater {
             Signal childElement = (Signal) it.next();
             int visualID = SyncchartsVisualIDRegistry.getNodeVisualID(view, childElement);
             if (visualID == SignalEditPart.VISUAL_ID) {
+                result.add(new SyncchartsNodeDescriptor(childElement, visualID));
+                continue;
+            }
+        }
+        for (Iterator<?> it = modelElement.getVariables().iterator(); it.hasNext();) {
+            Variable childElement = (Variable) it.next();
+            int visualID = SyncchartsVisualIDRegistry.getNodeVisualID(view, childElement);
+            if (visualID == VariableEditPart.VISUAL_ID) {
                 result.add(new SyncchartsNodeDescriptor(childElement, visualID));
                 continue;
             }
@@ -473,6 +491,8 @@ public class SyncchartsDiagramUpdater {
             return getRegion_3039ContainedLinks(view);
         case RegionStateEditPart.VISUAL_ID:
             return getState_3040ContainedLinks(view);
+        case VariableEditPart.VISUAL_ID:
+            return getVariable_3047ContainedLinks(view);
         case TransitionEditPart.VISUAL_ID:
             return getTransition_4005ContainedLinks(view);
         }
@@ -502,6 +522,8 @@ public class SyncchartsDiagramUpdater {
             return getRegion_3039IncomingLinks(view);
         case RegionStateEditPart.VISUAL_ID:
             return getState_3040IncomingLinks(view);
+        case VariableEditPart.VISUAL_ID:
+            return getVariable_3047IncomingLinks(view);
         case TransitionEditPart.VISUAL_ID:
             return getTransition_4005IncomingLinks(view);
         }
@@ -531,6 +553,8 @@ public class SyncchartsDiagramUpdater {
             return getRegion_3039OutgoingLinks(view);
         case RegionStateEditPart.VISUAL_ID:
             return getState_3040OutgoingLinks(view);
+        case VariableEditPart.VISUAL_ID:
+            return getVariable_3047OutgoingLinks(view);
         case TransitionEditPart.VISUAL_ID:
             return getTransition_4005OutgoingLinks(view);
         }
@@ -611,6 +635,13 @@ public class SyncchartsDiagramUpdater {
         LinkedList<SyncchartsLinkDescriptor> result = new LinkedList<SyncchartsLinkDescriptor>();
         result.addAll(getContainedTypeModelFacetLinks_Transition_4005(modelElement));
         return result;
+    }
+
+    /**
+     * @generated
+     */
+    public static List<SyncchartsLinkDescriptor> getVariable_3047ContainedLinks(View view) {
+        return Collections.emptyList();
     }
 
     /**
@@ -698,6 +729,13 @@ public class SyncchartsDiagramUpdater {
     /**
      * @generated
      */
+    public static List<SyncchartsLinkDescriptor> getVariable_3047IncomingLinks(View view) {
+        return Collections.emptyList();
+    }
+
+    /**
+     * @generated
+     */
     public static List<SyncchartsLinkDescriptor> getTransition_4005IncomingLinks(View view) {
         return Collections.emptyList();
     }
@@ -769,6 +807,13 @@ public class SyncchartsDiagramUpdater {
         LinkedList<SyncchartsLinkDescriptor> result = new LinkedList<SyncchartsLinkDescriptor>();
         result.addAll(getOutgoingTypeModelFacetLinks_Transition_4005(modelElement));
         return result;
+    }
+
+    /**
+     * @generated
+     */
+    public static List<SyncchartsLinkDescriptor> getVariable_3047OutgoingLinks(View view) {
+        return Collections.emptyList();
     }
 
     /**

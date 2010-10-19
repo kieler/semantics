@@ -69,6 +69,7 @@ main() {
     model.diagram.childNodes.allSubobjectsOfType(InnerClassViewmap)[InnerClassViewmap] -> map customizeTextWrap("FigureInterfaceDeclFigure","StateFigure");
     
     // customize state edit parts so it shows textwrap for the textual code elements
+    model.diagram.topLevelNodes.allSubobjectsOfType(InnerClassViewmap)[InnerClassViewmap] -> map customizeTextWrap("FigureCodeLabelFigure","TextualCodeFigure");
     model.diagram.childNodes.allSubobjectsOfType(InnerClassViewmap)[InnerClassViewmap] -> map customizeTextWrap("FigureCodeLabelFigure","TextualCodeFigure");
     
     // customize state edit parts so it shows textwrap for the transition labels
@@ -176,7 +177,7 @@ mapping inout GenCompartment::compartmentSettings(){
                                             .replace("Compartment","");
     
 	self.title := switch {
-		case (name = "StateSignal")  "Signal:";
+		case (name = "StateSignal")  "Interface:";
 //		case (name = "StateVariable")  "Variable:";
 		case (name = "StateEntryAction")  "OnEntryAction:";
     	case (name = "StateInnerAction")  "OnInsideAction:";
@@ -188,6 +189,11 @@ mapping inout GenCompartment::compartmentSettings(){
 	};
 }
 
+// the GMFGen Model contains a class body attribute for each edit part which comprises
+// the whole Figure that corresponds to the edit Part
+// any customizations to that Figure have to be done in this big String in the GMFGen Model.
+// The following function searches for a special Child Figure declaration and adds the textwrap
+// option to it
 mapping inout InnerClassViewmap::customizeTextWrap(in figureName:String, in parentFigureName:String){	
 	// customize the Interface Declaration Label from a State
     if (self.className = parentFigureName) then {

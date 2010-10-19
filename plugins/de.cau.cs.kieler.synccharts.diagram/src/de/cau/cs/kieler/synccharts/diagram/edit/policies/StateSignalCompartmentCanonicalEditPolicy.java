@@ -2,10 +2,12 @@ package de.cau.cs.kieler.synccharts.diagram.edit.policies;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
+import java.util.Set;
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
@@ -22,6 +24,7 @@ import org.eclipse.gmf.runtime.notation.View;
 
 import de.cau.cs.kieler.synccharts.SyncchartsPackage;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.SignalEditPart;
+import de.cau.cs.kieler.synccharts.diagram.edit.parts.VariableEditPart;
 import de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramUpdater;
 import de.cau.cs.kieler.synccharts.diagram.part.SyncchartsNodeDescriptor;
 import de.cau.cs.kieler.synccharts.diagram.part.SyncchartsVisualIDRegistry;
@@ -34,8 +37,18 @@ public class StateSignalCompartmentCanonicalEditPolicy extends CanonicalEditPoli
     /**
      * @generated
      */
-    protected EStructuralFeature getFeatureToSynchronize() {
-        return SyncchartsPackage.eINSTANCE.getScope_Signals();
+    private Set<EStructuralFeature> myFeaturesToSynchronize;
+
+    /**
+     * @generated
+     */
+    protected Set getFeaturesToSynchronize() {
+        if (myFeaturesToSynchronize == null) {
+            myFeaturesToSynchronize = new HashSet<EStructuralFeature>();
+            myFeaturesToSynchronize.add(SyncchartsPackage.eINSTANCE.getScope_Signals());
+            myFeaturesToSynchronize.add(SyncchartsPackage.eINSTANCE.getScope_Variables());
+        }
+        return myFeaturesToSynchronize;
     }
 
     /**
@@ -46,7 +59,7 @@ public class StateSignalCompartmentCanonicalEditPolicy extends CanonicalEditPoli
         View viewObject = (View) getHost().getModel();
         LinkedList<EObject> result = new LinkedList<EObject>();
         List<SyncchartsNodeDescriptor> childDescriptors = SyncchartsDiagramUpdater
-            .getStateSignal_7054SemanticChildren(viewObject);
+            .getStateInterface_7054SemanticChildren(viewObject);
         for (SyncchartsNodeDescriptor d : childDescriptors) {
             result.add(d.getModelElement());
         }
@@ -64,7 +77,8 @@ public class StateSignalCompartmentCanonicalEditPolicy extends CanonicalEditPoli
      * @generated
      */
     private boolean isMyDiagramElement(View view) {
-        return SignalEditPart.VISUAL_ID == SyncchartsVisualIDRegistry.getVisualID(view);
+        int visualID = SyncchartsVisualIDRegistry.getVisualID(view);
+        return visualID == SignalEditPart.VISUAL_ID || visualID == VariableEditPart.VISUAL_ID;
     }
 
     /**
@@ -76,7 +90,7 @@ public class StateSignalCompartmentCanonicalEditPolicy extends CanonicalEditPoli
         }
         LinkedList<IAdaptable> createdViews = new LinkedList<IAdaptable>();
         List<SyncchartsNodeDescriptor> childDescriptors = SyncchartsDiagramUpdater
-            .getStateSignal_7054SemanticChildren((View) getHost().getModel());
+            .getStateInterface_7054SemanticChildren((View) getHost().getModel());
         LinkedList<View> orphaned = new LinkedList<View>();
         // we care to check only views we recognize as ours
         LinkedList<View> knownViewChildren = new LinkedList<View>();

@@ -222,8 +222,29 @@
           </compartments>
         </ownedChild>
       </children>
+      <children
+          compartment="//@nodes.0/@ownedChild/@compartments.0"
+          referencedChild="//@nodes.0/@ownedChild/@children.7/@ownedChild">
+        <containmentFeature
+            href="synccharts.ecore#//Scope/variables"/>
+        <childrenFeature
+            href="synccharts.ecore#//Scope/variables"/>
+        <ownedChild>
+          <domainMetaElement
+              href="../../de.cau.cs.kieler.core.expressions/model/expressions.ecore#//Variable"/>
+          <labelMappings
+              xsi:type="gmfmap:FeatureLabelMapping">
+            <diagramLabel
+                href="synccharts.gmfgraph#SignalName"/>
+            <features
+                href="../../de.cau.cs.kieler.core.expressions/model/expressions.ecore#//ValuedObject/name"/>
+          </labelMappings>
+          <diagramNode
+              href="synccharts.gmfgraph#InvisibleNode"/>
+        </ownedChild>
+      </children>
       <compartments
-          children="//@nodes.0/@ownedChild/@children.0">
+          children="//@nodes.0/@ownedChild/@children.0 //@nodes.0/@ownedChild/@children.7">
         <compartment
             href="synccharts.gmfgraph#SignalCompartment"/>
       </compartments>
