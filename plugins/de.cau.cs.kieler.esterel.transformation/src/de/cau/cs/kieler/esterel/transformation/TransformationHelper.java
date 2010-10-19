@@ -16,8 +16,16 @@ package de.cau.cs.kieler.esterel.transformation;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
+import java.util.Iterator;
+import java.util.List;
 
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.gmf.runtime.diagram.ui.editpolicies.CanonicalEditPolicy;
+import org.eclipse.gmf.runtime.diagram.ui.parts.IDiagramGraphicalViewer;
+import org.eclipse.gmf.runtime.diagram.ui.parts.IDiagramWorkbenchPart;
+import org.eclipse.gmf.runtime.notation.View;
+import org.eclipse.ui.IEditorPart;
+import org.eclipse.ui.PlatformUI;
 import org.eclipse.xtext.parsetree.reconstr.Serializer;
 import org.eclipse.xtext.resource.SaveOptions;
 
@@ -74,16 +82,31 @@ public final class TransformationHelper {
         try {
             Serializer serializerUtil = injector.getInstance(Serializer.class);
             serializerUtil.serialize(obj, osw, SaveOptions.defaultOptions());
-//            System.out.println("Serialized result: " + baos.toString());
+            // System.out.println("Serialized result: " + baos.toString());
         } catch (IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
-        
+
         TextualCode code = ExpressionsFactory.eINSTANCE.createTextualCode();
         s.setType(StateType.TEXTUAL);
         code.setCode(baos.toString());
         s.getBodyText().add(code);
+
+        IEditorPart activeEditor = PlatformUI.getWorkbench().getActiveWorkbenchWindow()
+                .getActivePage().getActiveEditor();
+
+        if (activeEditor instanceof IDiagramWorkbenchPart) {
+            EObject obj2 = ((View) ((IDiagramWorkbenchPart) activeEditor).getDiagramEditPart()
+                    .getModel()).getElement();
+            List<?> editPolicies = CanonicalEditPolicy.getRegisteredEditPolicies(obj2);
+            for (Iterator<?> it = editPolicies.iterator(); it.hasNext();) {
+                CanonicalEditPolicy nextEditPolicy = (CanonicalEditPolicy) it.next();
+                nextEditPolicy.refresh();
+            }
+            IDiagramGraphicalViewer graphViewer = ((IDiagramWorkbenchPart) activeEditor)
+                    .getDiagramGraphicalViewer();
+            graphViewer.flush();
+        }
 
     }
 

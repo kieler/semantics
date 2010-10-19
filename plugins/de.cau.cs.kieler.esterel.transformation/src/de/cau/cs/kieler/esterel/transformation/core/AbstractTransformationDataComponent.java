@@ -94,6 +94,12 @@ public abstract class AbstractTransformationDataComponent extends JSONObjectData
                 ITransformationStatement ts = queue.poll();
                 runner.executeTransformation(ts.getParameters(), ts.getTransformationName());
 
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
                 // update edit policies, so GMF will generate diagram elements
                 // for model elements which have been generated during the
                 // transformation.
@@ -103,6 +109,7 @@ public abstract class AbstractTransformationDataComponent extends JSONObjectData
                     List<?> editPolicies = CanonicalEditPolicy.getRegisteredEditPolicies(obj);
                     for (Iterator<?> it = editPolicies.iterator(); it.hasNext();) {
                         CanonicalEditPolicy nextEditPolicy = (CanonicalEditPolicy) it.next();
+                        System.out.println(nextEditPolicy.toString());
                         nextEditPolicy.refresh();
                     }
                     IDiagramGraphicalViewer graphViewer = ((IDiagramWorkbenchPart) activeEditor)

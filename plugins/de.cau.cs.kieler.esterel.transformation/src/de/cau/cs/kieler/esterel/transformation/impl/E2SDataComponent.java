@@ -13,6 +13,7 @@
  */
 package de.cau.cs.kieler.esterel.transformation.impl;
 
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -27,7 +28,11 @@ import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.transaction.util.TransactionUtil;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gef.EditPartViewer;
+import org.eclipse.gmf.runtime.diagram.ui.editpolicies.CanonicalEditPolicy;
+import org.eclipse.gmf.runtime.diagram.ui.editpolicies.SemanticEditPolicy;
 import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramEditor;
+import org.eclipse.gmf.runtime.diagram.ui.parts.IDiagramGraphicalViewer;
+import org.eclipse.gmf.runtime.diagram.ui.parts.IDiagramWorkbenchPart;
 import org.eclipse.gmf.runtime.notation.View;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.ui.IEditorPart;
@@ -258,6 +263,25 @@ public class E2SDataComponent extends AbstractTransformationDataComponent {
                     rootState.setBodyReference(esterelModule);
 
                     resource.save(null);
+
+                    // update edit policies, so GMF will generate diagram elements
+                    // for model elements which have been generated during the
+                    // transformation.
+                    IEditorPart activeEditor = PlatformUI.getWorkbench().getActiveWorkbenchWindow()
+                            .getActivePage().getActiveEditor();
+                    if (activeEditor instanceof IDiagramWorkbenchPart) {
+                        EObject obj = ((View) ((IDiagramWorkbenchPart) activeEditor)
+                                .getDiagramEditPart().getModel()).getElement();
+                        List<?> editPolicies = CanonicalEditPolicy.getRegisteredEditPolicies(obj);
+                        for (Iterator<?> it = editPolicies.iterator(); it.hasNext();) {
+                            CanonicalEditPolicy nextEditPolicy = (CanonicalEditPolicy) it.next();
+                            System.out.println(nextEditPolicy.toString());
+                            nextEditPolicy.refresh();
+                        }
+                        IDiagramGraphicalViewer graphViewer = ((IDiagramWorkbenchPart) activeEditor)
+                                .getDiagramGraphicalViewer();
+                        graphViewer.flush();
+                    }
 
                 } catch (Exception e) {
                     // throw new KiemInitializationException(

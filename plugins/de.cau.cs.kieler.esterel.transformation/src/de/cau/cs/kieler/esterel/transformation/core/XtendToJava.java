@@ -31,7 +31,7 @@ public final class XtendToJava {
         AbstractTransformationDataComponent>();
 
     /**
-     * private constructior, singleton.
+     * private constructor, singleton.
      */
     private XtendToJava() {
     }
