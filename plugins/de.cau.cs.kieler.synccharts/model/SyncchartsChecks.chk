@@ -79,7 +79,7 @@ context State if (type == StateType::CONDITIONAL)
 
 context State if (type != StateType::REFERENCE && type != StateType::TEXTUAL) 
 	ERROR "Only textual or reference states may contain body text!" :
-	(bodyText == null) || (bodyText.code.toString().trim().matches("")); 
+	(bodyText == null) || (bodyText.size == 0); // (bodyText.code.toString().trim().matches("")); <-- the string appears to be "[]" 
 	
 // ================================================================================================
 // General States 
