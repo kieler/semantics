@@ -18,14 +18,15 @@ import de.cau.cs.kieler.kiml.ui.layout.LayoutEffect;
 import de.cau.cs.kieler.synccharts.kivi.ModelChangedTrigger.ModelChangedState;
 
 /**
- * Applies automatic layout after a scope or action label has been changed.
+ * Applies automatic layout after the model has been changed.
+ * 
  * @author mmu
  *
  */
-public class LayoutAfterLabelChangedCombination extends AbstractCombination {
+public class LayoutAfterModelChangedCombination extends AbstractCombination {
 
     /**
-     * Apply automatic layout every time the label changed state is updated.
+     * Apply automatic layout every time the model changed state is updated.
      * 
      * @param state label changed state
      */
