@@ -45,8 +45,10 @@ public class HighlightSelectedTransitionsCombination extends AbstractCombination
         if (selection.getDiagramEditor() instanceof SyncchartsDiagramEditor) {
             for (EObject selected : selection.getSelectedEObjects()) {
                 if (selected instanceof Transition) {
-                    schedule(new HighlightEffect(selected, selection.getDiagramEditor(),
-                            ColorConstants.blue, true));
+                    HighlightEffect e = new HighlightEffect(selected, selection.getDiagramEditor(),
+                            ColorConstants.blue, true);
+                    e.setChangeWidth(false);
+                    schedule(e);
                 }
             }
         }
