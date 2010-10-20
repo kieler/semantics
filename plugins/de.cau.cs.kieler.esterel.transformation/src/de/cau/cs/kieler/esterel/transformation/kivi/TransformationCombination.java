@@ -31,6 +31,6 @@ public class TransformationCombination extends AbstractCombination {
     public void execute(final TransformingState trigger) {
         // System.out.println("Combination running!!");
         LayoutEffect effect = new LayoutEffect(trigger.getDiagramEditor(), trigger.getRootState());
-        effect.schedule();
+        schedule(effect);
     }
 }

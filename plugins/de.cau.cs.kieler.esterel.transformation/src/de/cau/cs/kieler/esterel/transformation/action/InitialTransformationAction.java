@@ -45,6 +45,7 @@ import de.cau.cs.kieler.synccharts.Region;
 import de.cau.cs.kieler.synccharts.State;
 import de.cau.cs.kieler.synccharts.StateType;
 import de.cau.cs.kieler.synccharts.SyncchartsFactory;
+import de.cau.cs.kieler.synccharts.SyncchartsPackage;
 import de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorUtil;
 
 /**
@@ -61,7 +62,6 @@ public class InitialTransformationAction implements IActionDelegate {
      * {@inheritDoc}
      */
     public void run(final IAction action) {
-
         doInitialEsterelTransformation();
         refreshEditPolicies();
         try {
@@ -88,6 +88,7 @@ public class InitialTransformationAction implements IActionDelegate {
         try {
             final URI strlURI = URI.createPlatformResourceURI(currentFile.getFullPath().toString(),
                     true);
+//            System.out.println(currentFile.getLocationURI().getPath() + "  "+ currentFile.getFullPath().toString());
 
             State rootState = createSyncchartDiagram();
 
@@ -104,6 +105,9 @@ public class InitialTransformationAction implements IActionDelegate {
             System.out.println("Attaching Esterel Model to SyncChart");
             rootState.setBodyReference(esterelModule);
 
+//            Region r = SyncchartsFactory.eINSTANCE.createRegion();
+//            rootState.getRegions().add(r);
+//            rootState.getRegions().remove(r);
             // xtextResource.save(null);
 
         } catch (Exception e) {

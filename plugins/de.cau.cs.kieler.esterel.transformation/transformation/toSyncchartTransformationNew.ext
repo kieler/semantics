@@ -44,6 +44,7 @@ Void ruleModule(State s, Module m):
 	let statement = m.modBody.statement.get(0):
 	let newState = new State:
 	let r = new Region:
+	s.bodyText.removeAll(s.bodyText) ->
 	s.regions.add(r) ->
 	s.setLabel(m.name) ->
 	r.states.add(newState) ->
@@ -62,6 +63,7 @@ Void ruleModule(State s, Module m):
 Void rule(State s, Halt h):
 	let r = new Region:
 	let ns = new State:
+	s.bodyText.removeAll(s.bodyText) ->
 	s.regions.add(r) ->
 	s.setLabel("Halt State") ->
 	ns.setIsInitial(true) ->
@@ -107,6 +109,7 @@ Void rule(State s, Halt h):
  	let finalState = new State:
  	let toFinalTrans = new Transition:
  	let caseStates = {}:
+ 	s.bodyText.removeAll(s.bodyText) ->
  	s.setLabel("Abort State") ->
  	s.regions.add(r) ->
  	r.states.add(initState) ->
@@ -130,6 +133,7 @@ Void handleAbort(Region parent, State s, Abort a):
 	let body = (AbortInstance) a.body:
 	let final = new State:
 	let t = new Transition:
+	s.bodyText.removeAll(s.bodyText) ->
 	parent.states.add(final) ->
 	final.setIsFinal(true) ->
 	t.setSourceState(s) ->
@@ -146,6 +150,7 @@ Void rule(State s, Await a):
  	let r = new Region :
  	let initState = new State:
  	let caseStates = {}:
+ 	s.bodyText.removeAll(s.bodyText) ->
  	s.setLabel("Await State") ->
  	s.regions.add(r) ->
  	initState.setIsInitial(true) ->
@@ -165,6 +170,7 @@ Void rule(State s, Await a):
 ruleAwaitInstance(Region region, State previous, AwaitInstance ai):
 	let s = new State:
 	let t = new Transition:
+	s.bodyText.removeAll(s.bodyText) ->
 	region.states.add(s) ->
 	t.setType(TransitionType::STRONGABORT) ->
 	t.setSourceState(previous) ->
@@ -179,6 +185,7 @@ Void rule(State s, Emit e):
 	let finalS = new State:
 	let r = new Region:
 	let emitTrans = new Transition:
+	s.bodyText.removeAll(s.bodyText) ->
 	s.regions.add(r) ->
 	s.setLabel("Emit State") ->
 	initS.setIsInitial(true) ->
@@ -198,6 +205,7 @@ Void rule(State s, Loop l):
 	let r = new Region:
 	let loopState = new State:
  	let selfTrans = new Transition:
+ 	s.bodyText.removeAll(s.bodyText) ->
 	s.setLabel("Loop_State") ->
  	s.regions.add(r) ->
  	r.states.add(loopState) ->
@@ -220,6 +228,7 @@ Void rule(State s, Loop l):
 Void rule(State s, Parallel p):
 	//let r = new Region:
 	s.setLabel("Parallel State") -> 
+	s.bodyText.removeAll(s.bodyText) ->
  	//s.regions.add(r) ->
  	ruleParallelRecursive(s, p.list)
 ;
@@ -242,6 +251,7 @@ Void ruleParallelRecursive(State parent, List[Statement] statements):
  Void rule(State s, Sequence seq):
  	let r = new Region:
  	let initial = new State:
+ 	s.bodyText.removeAll(s.bodyText) ->
 	s.setLabel("Sequence State") ->
 	s.regions.add(r) ->
 	initial.setIsInitial(true) ->

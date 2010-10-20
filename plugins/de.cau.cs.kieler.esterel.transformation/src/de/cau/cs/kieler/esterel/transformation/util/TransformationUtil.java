@@ -46,7 +46,10 @@ public class TransformationUtil {
      */
     public static String getSerializedString(final EObject e) {
 
-        EsterelPackage.eINSTANCE.eContents().contains(e.eClass());
+        if (!EsterelPackage.eINSTANCE.eContents().contains(e.eClass())) {
+            System.out.println("nixda");
+            return "";
+        }
 
         if (e == null) {
             return "";
@@ -65,5 +68,4 @@ public class TransformationUtil {
 
         return baos.toString();
     }
-
 }

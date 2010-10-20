@@ -73,6 +73,7 @@ public final class TransformationHelper {
      *            any EObject
      */
     public static void setBodyReference(final State s, final EObject obj) {
+        
         s.setBodyReference(obj);
 
         TextualCode code = ExpressionsFactory.eINSTANCE.createTextualCode();

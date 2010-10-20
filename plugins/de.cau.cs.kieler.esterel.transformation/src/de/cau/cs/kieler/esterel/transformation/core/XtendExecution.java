@@ -80,6 +80,7 @@ public class XtendExecution {
         if (editDomain == null) {
             // TODO
             System.err.println("NO EDITING DOMAIN SET");
+            return;
         }
         CommandStack stack = editDomain.getCommandStack();
         stack.execute(xCommand);

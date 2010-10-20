@@ -25,11 +25,11 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
+import org.eclipse.emf.transaction.TransactionalEditingDomain;
 import org.eclipse.emf.transaction.util.TransactionUtil;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gef.EditPartViewer;
 import org.eclipse.gmf.runtime.diagram.ui.editpolicies.CanonicalEditPolicy;
-import org.eclipse.gmf.runtime.diagram.ui.editpolicies.SemanticEditPolicy;
 import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramEditor;
 import org.eclipse.gmf.runtime.diagram.ui.parts.IDiagramGraphicalViewer;
 import org.eclipse.gmf.runtime.diagram.ui.parts.IDiagramWorkbenchPart;
@@ -84,42 +84,55 @@ public class E2SDataComponent extends AbstractTransformationDataComponent {
     public void preInitialize() {
 
         // first load the esterel file into a syncchart
-//        loadEsterelIntoSyncChart();
+        // loadEsterelIntoSyncChart();
 
-        // catch the first model and place it on the queue
-        // FIXME this should be done a better way!
-        PlatformUI.getWorkbench().getDisplay().asyncExec(new Runnable() {
+        boolean fromResource = false;
+        if (fromResource) {
+            final URI kixsURI = URI.createPlatformResourceURI("platform:/dfghj/abro.kixs", false);
+            ResourceSet resourceSet = new ResourceSetImpl();
+            resource = resourceSet.getResource(kixsURI, true);
+            Region rootRegion = (Region) resource.getContents().get(0);
+            State root = rootRegion.getStates().get(0);
 
-            public void run() {
-                IEditorPart editor = PlatformUI.getWorkbench().getActiveWorkbenchWindow()
-                        .getActivePage().getActiveEditor();
-                if (editor instanceof SyncchartsDiagramEditor) {
-                    EditPart rootEditPart = ((DiagramEditor) editor).getDiagramEditPart();
-                    EditPartViewer viewer = rootEditPart.getViewer();
+            TransactionalEditingDomain ted = TransactionalEditingDomain.Factory.INSTANCE
+                    .createEditingDomain(resourceSet);
 
-                    // programmatically select the root state
-                    viewer.select(rootEditPart);
+            getRunner().setEditDomain(ted);
 
-                    @SuppressWarnings("unchecked")
-                    List<EditPart> selected = viewer.getSelectedEditParts();
-                    if (selected.size() == 1) {
-                        EditPart selPart = selected.get(0);
-                        Object selView = selPart.getModel();
-                        EObject selModel = ((View) selView).getElement();
-                        State root = ((Region) selModel).getStates().get(0);
-                        // rootState = root;
-                        getRunner().setEditDomain(TransactionUtil.getEditingDomain(root));
-                        // initializing first statement
-                        // EcoreUtil.resolve(root.getBodyContents(), root);
-                        QueueStatement qs = new QueueStatement(INITIAL_TRANSFORMATION, root, root
-                                .getBodyReference());
-                        getQueue().add(qs);
-                    }
+            // initializing first statement
+            QueueStatement qs = new QueueStatement(INITIAL_TRANSFORMATION, root,
+                    root.getBodyReference());
+            getQueue().add(qs);
+            System.out.println("Added First Statement");
+        } else {
+            // catch the first model and place it on the queue
+            // FIXME this should be done a better way!
+            IEditorPart editor = getActiveEditor();
+            if (editor instanceof SyncchartsDiagramEditor) {
+                EditPart rootEditPart = ((DiagramEditor) editor).getDiagramEditPart();
+                EditPartViewer viewer = rootEditPart.getViewer();
+
+                // programmatically select the root state
+                viewer.select(rootEditPart);
+
+                @SuppressWarnings("unchecked")
+                List<EditPart> selected = viewer.getSelectedEditParts();
+                if (selected.size() == 1) {
+                    EditPart selPart = selected.get(0);
+                    Object selView = selPart.getModel();
+                    EObject selModel = ((View) selView).getElement();
+                    State root = ((Region) selModel).getStates().get(0);
+                    // rootState = root;
+                    getRunner().setEditDomain(getActiveEditorEditingDomain());
+                    // initializing first statement
+                    // EcoreUtil.resolve(root.getBodyContents(), root);
+                    QueueStatement qs = new QueueStatement(INITIAL_TRANSFORMATION, root,
+                            root.getBodyReference());
+                    getQueue().add(qs);
                 }
-                System.out.println("Added First Statement");
-
             }
-        });
+            System.out.println("Added First Statement");
+        }
     }
 
     /**
@@ -293,5 +306,4 @@ public class E2SDataComponent extends AbstractTransformationDataComponent {
             }
         });
     }
-
 }
