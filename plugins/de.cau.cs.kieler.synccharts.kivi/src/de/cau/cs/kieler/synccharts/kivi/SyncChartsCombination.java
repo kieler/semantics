@@ -198,7 +198,7 @@ public class SyncChartsCombination extends AbstractCombination {
                     .getHSB();
             float[] history = PreferenceConverter.getColor(getPreferenceStore(), HISTORY_COLOR)
                     .getHSB();
-            float[] current = new float[] { history[0] - (history[0] - inactive[0]) * factor,
+            float[] current = new float[] { history[0],
                     history[1] - (history[1] - inactive[1]) * factor,
                     history[2] - (history[2] - inactive[2]) * factor };
             return new Color(null, new RGB(current[0], current[1], current[2]));
