@@ -34,6 +34,7 @@ import com.google.inject.Injector;
 import de.cau.cs.kieler.core.expressions.ExpressionsFactory;
 import de.cau.cs.kieler.core.expressions.TextualCode;
 import de.cau.cs.kieler.esterel.EsterelStandaloneSetup;
+import de.cau.cs.kieler.esterel.transformation.util.TransformationUtil;
 import de.cau.cs.kieler.synccharts.State;
 import de.cau.cs.kieler.synccharts.StateType;
 
@@ -74,22 +75,9 @@ public final class TransformationHelper {
     public static void setBodyReference(final State s, final EObject obj) {
         s.setBodyReference(obj);
 
-        Injector injector = new EsterelStandaloneSetup().createInjectorAndDoEMFRegistration();
-
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        OutputStreamWriter osw = new OutputStreamWriter(baos);
-
-        try {
-            Serializer serializerUtil = injector.getInstance(Serializer.class);
-            serializerUtil.serialize(obj, osw, SaveOptions.defaultOptions());
-            // System.out.println("Serialized result: " + baos.toString());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
         TextualCode code = ExpressionsFactory.eINSTANCE.createTextualCode();
         s.setType(StateType.TEXTUAL);
-        code.setCode(baos.toString());
+        code.setCode(TransformationUtil.getSerializedString(obj));
         s.getBodyText().add(code);
 
         IEditorPart activeEditor = PlatformUI.getWorkbench().getActiveWorkbenchWindow()

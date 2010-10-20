@@ -18,5 +18,20 @@
             name="Transformation Combination">
       </combination>
    </extension>
+   <extension
+         point="org.eclipse.ui.popupMenus">
+      <objectContribution
+            id="de.cau.cs.kieler.esterel.transformation.est"
+            nameFilter="*.strl"
+            objectClass="org.eclipse.core.resources.IFile">
+         <action
+               class="de.cau.cs.kieler.esterel.transformation.action.InitialTransformationAction"
+               enablesFor="1"
+               id="de.cau.cs.kieler.esterel.transformation.initialTransformationHandler2"
+               label="Start Esterel To Syncchart Transformation"
+               menubarPath="de.cau.cs.kieler">
+         </action>
+      </objectContribution>
+   </extension>
 
 </plugin>

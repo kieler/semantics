@@ -84,7 +84,7 @@ public class E2SDataComponent extends AbstractTransformationDataComponent {
     public void preInitialize() {
 
         // first load the esterel file into a syncchart
-        loadEsterelIntoSyncChart();
+//        loadEsterelIntoSyncChart();
 
         // catch the first model and place it on the queue
         // FIXME this should be done a better way!

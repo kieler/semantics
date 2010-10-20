@@ -13,6 +13,7 @@
  */
 package de.cau.cs.kieler.esterel.transformation.core;
 
+import java.util.Arrays;
 import java.util.List;
 
 import org.eclipse.emf.common.command.AbstractCommand;
@@ -107,7 +108,7 @@ public class XtendExecution {
         public void execute() {
             XtendTransformationFramework framework = new XtendTransformationFramework();
             framework.setParameters(parameters);
-            System.out.println(transformation);
+            System.out.println(transformation + Arrays.toString(parameters));
             boolean init = framework.initializeTransformation(transformationFile, transformation,
                     basePackages.toArray(new String[basePackages.size()]));
 
