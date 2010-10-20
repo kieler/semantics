@@ -187,7 +187,7 @@ public class StateLayout extends AbstractTableLayout {
             isEmpty = state.getSuspensionTrigger() == null;
             break;
         case REGION:
-            isEmpty = state.getRegions().size() == 0;
+            isEmpty = (state.getRegions().size() == 0 && state.getBodyText().size() == 0);
             break;
 
         default:
