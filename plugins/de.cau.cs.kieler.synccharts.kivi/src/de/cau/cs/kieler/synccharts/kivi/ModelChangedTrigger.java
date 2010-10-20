@@ -21,6 +21,7 @@ import org.eclipse.emf.transaction.ResourceSetChangeEvent;
 import org.eclipse.emf.transaction.RollbackException;
 import org.eclipse.emf.transaction.TransactionalEditingDomain;
 import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramEditor;
+import org.eclipse.gmf.runtime.notation.NotationPackage;
 import org.eclipse.ui.IEditorPart;
 
 import de.cau.cs.kieler.core.kivi.AbstractTrigger;
@@ -97,7 +98,9 @@ public class ModelChangedTrigger extends AbstractTrigger {
                     .or(NotificationFilter.createFeatureFilter(SyncchartsPackage.eINSTANCE
                             .getRegion_States()))
                     .or(NotificationFilter.createFeatureFilter(SyncchartsPackage.eINSTANCE
-                            .getScope_Signals())));
+                            .getScope_Signals()))
+                    .or(NotificationFilter.createFeatureFilter(NotationPackage.eINSTANCE
+                            .getDrawerStyle_Collapsed())));
         }
 
         @Override
