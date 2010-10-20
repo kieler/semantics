@@ -192,10 +192,16 @@ public class SyncChartsCombination extends AbstractCombination {
             return new Color(null, PreferenceConverter.getColor(getPreferenceStore(),
                     HIGHLIGHT_COLOR));
         } else {
-            // FIXME fade to black is bad for black & white mode when the inactive states are grey
-            float[] hsb = PreferenceConverter.getColor(getPreferenceStore(), HISTORY_COLOR)
+            // fade history color to inactive color
+            float factor = ((float) step - 1.0f) / (float) steps;
+            float[] inactive = PreferenceConverter.getColor(getPreferenceStore(), INACTIVE_COLOR)
                     .getHSB();
-            return new Color(null, new RGB(hsb[0], hsb[1], hsb[2] - hsb[2] / steps * (step - 1)));
+            float[] history = PreferenceConverter.getColor(getPreferenceStore(), HISTORY_COLOR)
+                    .getHSB();
+            float[] current = new float[] { history[0] - (history[0] - inactive[0]) * factor,
+                    history[1] - (history[1] - inactive[1]) * factor,
+                    history[2] - (history[2] - inactive[2]) * factor };
+            return new Color(null, new RGB(current[0], current[1], current[2]));
         }
     }
 
