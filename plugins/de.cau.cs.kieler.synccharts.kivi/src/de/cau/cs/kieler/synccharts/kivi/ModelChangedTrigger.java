@@ -24,6 +24,7 @@ import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramEditor;
 import org.eclipse.gmf.runtime.notation.NotationPackage;
 import org.eclipse.ui.IEditorPart;
 
+import de.cau.cs.kieler.core.expressions.ExpressionsPackage;
 import de.cau.cs.kieler.core.kivi.AbstractTrigger;
 import de.cau.cs.kieler.core.kivi.AbstractTriggerState;
 import de.cau.cs.kieler.core.kivi.ITrigger;
@@ -99,6 +100,10 @@ public class ModelChangedTrigger extends AbstractTrigger {
                             .getRegion_States()))
                     .or(NotificationFilter.createFeatureFilter(SyncchartsPackage.eINSTANCE
                             .getScope_Signals()))
+                    .or(NotificationFilter.createFeatureFilter(SyncchartsPackage.eINSTANCE
+                            .getScope_Variables()))
+                    .or(NotificationFilter.createFeatureFilter(ExpressionsPackage.eINSTANCE
+                            .getValuedObject_Name()))
                     .or(NotificationFilter.createFeatureFilter(NotationPackage.eINSTANCE
                             .getDrawerStyle_Collapsed())));
         }
