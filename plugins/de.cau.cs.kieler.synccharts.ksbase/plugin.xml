@@ -213,6 +213,15 @@
                     transformationId="de.cau.cs.kieler.synccharts.ksbase.setNormalTermination"
                     validation="canTurnIntoNormalTermination">
               </transformation>
+              <transformation
+                    icon="icons/initialfinal.png"
+                    keyboardShortcut="M1+R F"
+                    name="Toggle Initial/Final"
+                    tooltip="Normal -&gt; Final -&gt; Initial -&gt; InitialFinal -&gt; Normal"
+                    transformation="toggleStateInitialFinal"
+                    transformationId="de.cau.cs.kieler.synccharts.ksbase.toggleStateInitial"
+                    validation="isNoRootState">
+              </transformation>
 			</transformations>
 			<menus>
 				<menuContribution locationURI="menu:de.cau.cs.kieler">
@@ -233,6 +242,9 @@
      </transformationCommand>
      <transformationCommand
            transformationId="de.cau.cs.kieler.synccharts.ksbase.addState">
+     </transformationCommand>
+     <transformationCommand
+           transformationId="de.cau.cs.kieler.synccharts.ksbase.toggleStateInitial">
      </transformationCommand>
      <separator
            id="de.cau.cs.kieler.synccharts.ksbase.separator2">
@@ -326,6 +338,9 @@
        <transformationCommand
              transformationId="de.cau.cs.kieler.synccharts.ksbase.addState">
        </transformationCommand>
+       <transformationCommand
+             transformationId="de.cau.cs.kieler.synccharts.ksbase.toggleStateInitial">
+       </transformationCommand>
        <separator
              id="de.cau.cs.kieler.synccharts.ksbase.separator7">
        </separator>
@@ -398,6 +413,9 @@
        </transformationCommand>
        <transformationCommand
              transformationId="de.cau.cs.kieler.ksbase.removeAllRegions">
+       </transformationCommand>
+       <transformationCommand
+             transformationId="de.cau.cs.kieler.synccharts.ksbase.toggleStateInitial">
        </transformationCommand>
        <transformationCommand
              transformationId="de.cau.cs.kieler.ksbase.selfLoop">

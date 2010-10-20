@@ -242,6 +242,15 @@ Void toggleFinal(State s):
  s.setIsFinal(!s.isFinal)
 ;
 
+Void toggleStateInitialFinal(State s):
+ switch{
+ 	case s.isInitial && s.isFinal: (s.setIsInitial(false) -> s.setIsFinal(false))
+ 	case s.isInitial: s.setIsFinal(true)
+ 	case s.isFinal: (s.setIsFinal(false) -> s.setIsInitial(true))
+ 	default: (s.setIsFinal(true) -> s.setIsInitial(false))
+ }
+;
+
 // Add a state to the parent state and add all Regions
 // to that new State
 Void encapsulateRegions(State parentState):
