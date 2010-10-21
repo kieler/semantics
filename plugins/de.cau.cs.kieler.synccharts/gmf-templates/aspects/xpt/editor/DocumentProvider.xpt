@@ -156,6 +156,15 @@ protected void setDocumentContent(org.eclipse.gmf.runtime.diagram.ui.resources.e
             
 		
 		org.eclipse.gmf.runtime.notation.Diagram diagram = org.eclipse.gmf.runtime.diagram.ui.resources.editor.internal.util.DiagramIOUtil.load(domain, storage, true, getProgressMonitor());
+		
+		«REM»
+		chsch: added to
+		* assure proper initialization of the domain model in case of kits domain models
+		* remove notation elements if the domain element is not present anymore (proxy can't be resolved)  
+        «ENDREM»		
+		de.cau.cs.kieler.synccharts.custom.SyncchartsUtil.assureInitializedDomainModel(domain, diagram);
+		de.cau.cs.kieler.synccharts.custom.SyncchartsUtil.cleanUpNotationModel(domain, diagram);		
+		
 		document.setContent(diagram);
 	} else «ENDIF»if(element instanceof «EXPAND uriEditorInputClassFQName») {
 		org.eclipse.emf.common.util.URI uri = ((«EXPAND uriEditorInputClassFQName») element).getURI();
