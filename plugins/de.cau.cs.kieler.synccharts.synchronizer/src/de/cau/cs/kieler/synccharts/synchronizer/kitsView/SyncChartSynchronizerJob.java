@@ -88,7 +88,8 @@ public class SyncChartSynchronizerJob extends Job implements ISelectionListener 
     private Scope container;
     private List<Transition> incomingTransitions;
 
-    private State target;
+    private State transitionTarget;
+    private int transitionPrio;
 
     private int index;
 
@@ -181,7 +182,8 @@ public class SyncChartSynchronizerJob extends Job implements ISelectionListener 
 
                             if (SyncchartsPackage.eINSTANCE.getState_OutgoingTransitions().equals(
                                     feature)) {
-                                ((Transition) copy).setTargetState(target);
+                                ((Transition) copy).setTargetState(transitionTarget);
+                                ((Transition) copy).setPriority(transitionPrio);
                             }
                             leftElement = rootRegionCopy;
                         }
@@ -385,7 +387,8 @@ public class SyncChartSynchronizerJob extends Job implements ISelectionListener 
                 @Override
                 public void process(XtextResource state) throws Exception {
                     Transition copy = createCopy(transition);
-                    target = copy.getTargetState();
+                    transitionTarget = copy.getTargetState();
+                    transitionPrio = copy.getPriority();
 
                     // keep the container of the model part of interest in mind
                     // we need it later on for proper reconstruction of the whole

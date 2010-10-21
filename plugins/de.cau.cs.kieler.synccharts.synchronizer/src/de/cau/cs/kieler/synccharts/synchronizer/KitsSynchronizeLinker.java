@@ -49,8 +49,6 @@ public class KitsSynchronizeLinker {
     private Map<EObject, EObject> LRmatchTable = null;
     private Map<EObject, EObject> RLmatchTable = null;
     
-    private boolean serializeActions = false;
-
     /**
      * Convenience method to initialize the linker.
      * 
@@ -100,18 +98,6 @@ public class KitsSynchronizeLinker {
         return this;
     }
     
-    
-    /**
-     * Configures linker to serialize action labels while linking.
-     * 
-     * @return the linker
-     */
-    public KitsSynchronizeLinker setSerializeActions() {
-        this.serializeActions = true;
-        return this;
-    }
-    
-
     /**
      * Implements linking.
      * 
@@ -127,8 +113,9 @@ public class KitsSynchronizeLinker {
 
                 public Void caseTransition(Transition transition) {
                     try {
-                        State target = (State) LRmatchTable.get(((Transition) RLmatchTable
-                                .get(transition)).getTargetState());
+                        State target = getMatched(getMatched(transition).getTargetState());
+//                            (State) LRmatchTable.get(((Transition) RLmatchTable
+//                                .get(transition)).getTargetState());
                         transition.setTargetState(target);
                     } catch (NullPointerException e) {
                         /* nothing */
@@ -138,15 +125,16 @@ public class KitsSynchronizeLinker {
                 }
 
                 public Void caseAssignment(Assignment assignment) {
-                    Variable variable = (Variable) LRmatchTable.get(((Assignment) RLmatchTable
-                            .get(assignment)).getVariable());
+                    Variable variable = getMatched(getMatched(assignment).getVariable()); 
+//                        (Variable) LRmatchTable.get(((Assignment) RLmatchTable
+//                            .get(assignment)).getVariable());
                     assignment.setVariable(variable);
                     return null;
                 }
 
                 public Void caseEmission(Emission emission) {
-                    Signal signal = (Signal) LRmatchTable.get(((Emission) RLmatchTable
-                            .get(emission)).getSignal());
+                    Emission e = getMatched(emission); //(Emission) RLmatchTable.get(emission);
+                    Signal signal = getMatched(e.getSignal()); //(Signal) LRmatchTable.get((e).getSignal());
                     emission.setSignal(signal);
                     return null;
                 }
@@ -155,9 +143,10 @@ public class KitsSynchronizeLinker {
                     if (ExpressionsPackage.eINSTANCE.getValuedObjectReference().isInstance(object)) {
                         ValuedObjectReference valuedObjectRef = (ValuedObjectReference) object;
 
-                        ValuedObject valuedObject = (ValuedObject) LRmatchTable
-                                .get(((ValuedObjectReference) RLmatchTable.get(valuedObjectRef))
-                                        .getValuedObject());
+                        ValuedObject valuedObject = getMatched(getMatched(valuedObjectRef).getValuedObject()); 
+//                            (ValuedObject) LRmatchTable
+//                                .get(((ValuedObjectReference) RLmatchTable.get(valuedObjectRef))
+//                                        .getValuedObject());
                         valuedObjectRef.setValuedObject(valuedObject);
                     }
                     return null;
@@ -166,8 +155,6 @@ public class KitsSynchronizeLinker {
             }.doSwitch(element);
 
         }
-
-        doSerializeActions(root);
         
         return this;
     }
@@ -187,8 +174,9 @@ public class KitsSynchronizeLinker {
             if (SyncchartsPackage.eINSTANCE.getTransition().isInstance(eObj)) {
                 Transition transition = (Transition) eObj;
                 try {
-                    State target = (State) LRmatchTable.get(((Transition) RLmatchTable
-                            .get(transition)).getTargetState());
+                    State target = getMatched(getMatched(transition).getTargetState());
+//                        (State) LRmatchTable.get(((Transition) RLmatchTable
+//                            .get(transition)).getTargetState());
                     if (target == null) {
                         target = ((Transition) RLmatchTable.get(transition)).getTargetState();
                     }
@@ -207,28 +195,27 @@ public class KitsSynchronizeLinker {
      * 
      * @param root the element whose transition labels should be serialized
      */
-    private void doSerializeActions(EObject root) {
+    public void serializeActions(EObject root) {
         EObject eObj = null;
         Transition transition = null;
         Transition counterpart = null;
-        if (serializeActions) {
-            for (Iterator<EObject> it = root.eAllContents(); it.hasNext();) {
-                eObj = it.next();
-                if (SyncchartsPackage.eINSTANCE.getTransition().isInstance(eObj)) {
-                    transition = (Transition) eObj;
-                    counterpart = getMatched(transition);
-                    if (Strings.isEmpty(counterpart.getLabel())
-                            || transition.isIsImmediate()
-                            || transition.isIsHistory()
-                            || transition.getDelay() == 0
-                            || transition.getTrigger() != null
-                            || transition.getEffects() != null && !transition.getEffects().isEmpty()) {
-                        String newLabel = "";
-                        newLabel = ActionLabelSerializer.toString(transition);
-                        transition.setLabel(newLabel);
-                    } else {
-                        transition.setLabel(new String(counterpart.getLabel()));
-                    }
+        for (Iterator<EObject> it = root.eAllContents(); it.hasNext();) {
+            eObj = it.next();
+            if (SyncchartsPackage.eINSTANCE.getTransition().isInstance(eObj)) {
+                transition = (Transition) eObj;
+                counterpart = getMatched(transition);
+                if (Strings.isEmpty(counterpart.getLabel())
+                        || transition.isIsImmediate()
+                        || transition.isIsHistory()
+                        || transition.getDelay() == 0
+                        || transition.getTrigger() != null
+                        || transition.getEffects() != null
+                        && !transition.getEffects().isEmpty()) {
+                    String newLabel = "";
+                    newLabel = ActionLabelSerializer.toString(transition);
+                    transition.setLabel(newLabel);
+                } else {
+                    transition.setLabel(new String(counterpart.getLabel()));
                 }
             }
         }
