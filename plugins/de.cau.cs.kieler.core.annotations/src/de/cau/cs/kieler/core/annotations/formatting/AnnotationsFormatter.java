@@ -48,6 +48,8 @@ public class AnnotationsFormatter extends AbstractDeclarativeFormatter {
             c.setLinewrap().after(f.getCOMMENT_ANNOTATIONRule());
             c.setLinewrap().after(f.getKeyValueAnnotationRule());
             
+            c.setLinewrap(2).before(f.getCOMMENT_ANNOTATIONRule());
+            
             c.setNoSpace().after(f.getKeyValueAnnotationAccess().getCommercialAtKeyword_0());
             c.setLinewrap().after(f.getKeyValueAnnotationAccess().getValueEStringParserRuleCall_2_0());
             

@@ -27,6 +27,52 @@ import org.eclipse.xtext.util.Strings;
 public class AnnotationsValueConverter extends DefaultTerminalConverters {
 
     /**
+     * Provides comment annotation converter dropping/attaching the leading/trailing characters.
+     * @return dedicated value converter
+     */
+    @ValueConverter(rule = "COMMENT_ANNOTATION")
+        public IValueConverter<String> CommentAnnotation() {
+                return new IValueConverter<String>() {
+
+                        public String toValue(String string, AbstractNode node) {
+                                return string.replace("/**","").replace("*/", "").trim();
+                        }
+
+                        public String toString(String value) {
+                                if (Strings.isEmpty(value)) {
+                                        return null;
+                                } else {
+                                        return "/** " + value + " */";
+                                }
+                        }
+                };
+    }
+
+    
+    /**
+     * Provides annotation key converter dropping/attaching the leading '@'.
+     * @return dedicated value converter
+     */
+    @ValueConverter(rule = "ANNOTATION_KEY")
+        public IValueConverter<String> AnnotationKey() {
+                return new IValueConverter<String>() {
+
+                        public String toValue(String string, AbstractNode node) {
+                                return string.replace("@","");
+                        }
+
+                        public String toString(String value) {
+                                if (Strings.isEmpty(value)) {
+                                        return null;
+                                } else {
+                                        return "\"" + "@" + value + "\""; 
+                                }
+                        }
+                };
+    }
+    
+
+    /**
      * Provides EString converter dropping/attaching the leading/trailing character.
      * 
      * @return dedicated value converter
