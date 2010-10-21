@@ -28,13 +28,6 @@ public class SignalFlowTrigger extends AbstractTrigger {
     private static SignalFlowTrigger instance;
 
     /**
-     * Default constructor.
-     */
-    public SignalFlowTrigger() {
-        instance = this;
-    }
-
-    /**
      * Get the faux-singleton instance.
      * 
      * @return the instance
@@ -46,11 +39,13 @@ public class SignalFlowTrigger extends AbstractTrigger {
     @Override
     public void register() {
         // showing/hiding of the button is done by the SyncChartsEditorTester
+        instance = this;
     }
 
     @Override
     public void unregister() {
         // see above
+        instance = null;
     }
 
     /**

@@ -34,13 +34,6 @@ public class StateActivityTrigger extends AbstractTrigger {
     private static StateActivityTrigger instance;
 
     /**
-     * Default constructor.
-     */
-    public StateActivityTrigger() {
-        instance = this;
-    }
-
-    /**
      * Convenience method to get the current instance of this trigger.
      * 
      * @return instance of this trigger
@@ -63,10 +56,12 @@ public class StateActivityTrigger extends AbstractTrigger {
 
     @Override
     public void register() {
+        instance = this;
     }
 
     @Override
     public void unregister() {
+        instance = null;
     }
 
     /**

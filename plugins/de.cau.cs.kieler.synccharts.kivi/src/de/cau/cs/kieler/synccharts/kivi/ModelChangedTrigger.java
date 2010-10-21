@@ -48,19 +48,14 @@ public class ModelChangedTrigger extends AbstractTrigger {
         return instance;
     }
 
-    /**
-     * Default constructor.
-     */
-    public ModelChangedTrigger() {
+    @Override
+    public void register() {
         instance = this;
     }
 
     @Override
-    public void register() {
-    }
-
-    @Override
     public void unregister() {
+        instance = null;
     }
 
     /**

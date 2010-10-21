@@ -15,7 +15,6 @@ package de.cau.cs.kieler.synccharts.kivi;
 
 import org.eclipse.core.expressions.PropertyTester;
 
-import de.cau.cs.kieler.core.kivi.ICombination;
 import de.cau.cs.kieler.core.kivi.KiVi;
 import de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditor;
 
@@ -32,11 +31,8 @@ public class SignalFlowTester extends PropertyTester {
      */
     public boolean test(final Object receiver, final String property, final Object[] args,
             final Object expectedValue) {
-        ICombination combination = KiVi.getInstance().getCombinationInstance(
-                SignalFlowCombination.class);
-        return receiver instanceof SyncchartsDiagramEditor
-                && KiVi.getInstance().isActive() && combination != null
-                && combination.isActive();
+        return receiver instanceof SyncchartsDiagramEditor && KiVi.getInstance().isActive()
+                && KiVi.getInstance().isCombinationClassActive(SignalFlowCombination.class);
     }
 
 }
