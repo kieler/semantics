@@ -866,10 +866,13 @@
         <unzip dest="${basedir}/${buildLabel}/${platform}" src="${zipfile}">
             <patternset includes="${basename}/${basename}.app/Contents/MacOS/${basename}.ini" />
             <patternset includes="${basename}/${basename}.ini" />
+            <patternset includes="${basename}/configuration/config.ini" />
             <patternset includes="${executables}" />
         </unzip>
         
-        <copy file="${config.dir}/config.ini" tofile="${basedir}/${buildLabel}/${platform}/${basename}/configuration/config.ini" overwrite="true" />
+        <!-- copy file="${config.dir}/config.ini" tofile="${basedir}/${buildLabel}/${platform}/${basename}/configuration/config.ini" overwrite="true" / -->
+        <concat destfile="${basedir}/${buildLabel}/${platform}/${basename}/configuration/config.ini"
+                append="true">osgi.instance.area.default=@user.home/kieler-workspace</concat>
 
         <if>
             <contains string="${zipfile}" substring="macosx" casesensitive="false" />
