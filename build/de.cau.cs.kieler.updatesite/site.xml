@@ -105,10 +105,10 @@
    <feature url="features/de.cau.cs.kieler.esterel.extended.source_0.1.0.qualifier.jar" id="de.cau.cs.kieler.esterel.extended.source" version="0.1.0.qualifier">
       <category name="KIELER Sources"/>
    </feature>
-   <feature url="features/de.cau.cs.kieler.papyrus_0.2.0.qualifier.jar" id="de.cau.cs.kieler.papyrus" version="0.2.0.qualifier">
+   <feature url="features/de.cau.cs.kieler.papyrus_0.3.0.qualifier.jar" id="de.cau.cs.kieler.papyrus" version="0.3.0.qualifier">
       <category name="KIELER"/>
    </feature>
-   <feature url="features/de.cau.cs.kieler.papyrus.source_0.2.0.qualifier.jar" id="de.cau.cs.kieler.papyrus.source" version="0.2.0.qualifier">
+   <feature url="features/de.cau.cs.kieler.papyrus.source_0.3.0.qualifier.jar" id="de.cau.cs.kieler.papyrus.source" version="0.3.0.qualifier">
       <category name="KIELER Sources"/>
    </feature>
    <feature url="features/de.cau.cs.kieler.uml2_0.2.0.qualifier.jar" id="de.cau.cs.kieler.uml2" version="0.2.0.qualifier">
