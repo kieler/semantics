@@ -55,6 +55,7 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.part.FileEditorInput;
 
+import de.cau.cs.kieler.synccharts.custom.SyncchartsUtil;
 import de.cau.cs.kieler.synccharts.custom.update.UpdateResourceFactoryImpl;
 import de.cau.cs.kieler.synccharts.listener.SyncchartsContentUtil;
 
@@ -224,6 +225,10 @@ public class SyncchartsDocumentProvider extends AbstractDocumentProvider impleme
             UpdateResourceFactoryImpl.checkDiagramEditorInput((FileEditorInput) element);
 
             Diagram diagram = DiagramIOUtil.load(domain, storage, true, getProgressMonitor());
+            
+            SyncchartsUtil.assureInitializedDomainModel(domain, diagram);
+            SyncchartsUtil.cleanUpNotationModel(domain, diagram);
+            
             document.setContent(diagram);
         } else if (element instanceof URIEditorInput) {
             URI uri = ((URIEditorInput) element).getURI();
