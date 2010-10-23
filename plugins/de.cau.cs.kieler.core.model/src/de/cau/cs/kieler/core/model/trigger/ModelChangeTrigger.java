@@ -7,14 +7,7 @@ import org.eclipse.emf.transaction.ResourceSetChangeEvent;
 import org.eclipse.emf.transaction.ResourceSetListener;
 import org.eclipse.emf.transaction.RollbackException;
 import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramEditor;
-import org.eclipse.gmf.runtime.notation.Anchor;
-import org.eclipse.gmf.runtime.notation.Bendpoints;
-import org.eclipse.gmf.runtime.notation.Guide;
-import org.eclipse.gmf.runtime.notation.LayoutConstraint;
 import org.eclipse.gmf.runtime.notation.NotationPackage;
-import org.eclipse.gmf.runtime.notation.Style;
-import org.eclipse.gmf.runtime.notation.View;
-import org.eclipse.gmf.runtime.notation.impl.ViewImpl;
 import org.eclipse.ui.IPartListener;
 import org.eclipse.ui.IWorkbenchPart;
 
@@ -52,7 +45,6 @@ public class ModelChangeTrigger extends AbstractTrigger implements IPartListener
         CombinedWorkbenchListener.removePartListener(this);
     }
 
-    @Override
     public void partActivated(IWorkbenchPart part) {
         if (part instanceof DiagramEditor) {
             ((DiagramEditor) part).getEditingDomain().addResourceSetListener(this);
@@ -60,39 +52,32 @@ public class ModelChangeTrigger extends AbstractTrigger implements IPartListener
 
     }
 
-    @Override
     public void partDeactivated(IWorkbenchPart part) {
         if (part instanceof DiagramEditor) {
             ((DiagramEditor) part).getEditingDomain().removeResourceSetListener(this);
         }
     }
 
-    @Override
     public void partBroughtToTop(IWorkbenchPart part) {
     }
 
-    @Override
     public void partClosed(IWorkbenchPart part) {
     }
 
-    @Override
     public void partOpened(IWorkbenchPart part) {
     }
 
     /**
      * No filter set here. Doing filtering in the resourceSetChanged method. {@inheritDoc}
      */
-    @Override
     public NotificationFilter getFilter() {
         return null;
     }
 
-    @Override
     public Command transactionAboutToCommit(ResourceSetChangeEvent event) throws RollbackException {
         return null;
     }
 
-    @Override
     public void resourceSetChanged(ResourceSetChangeEvent event) {
 
         boolean triggeredNotation = false;
@@ -110,17 +95,14 @@ public class ModelChangeTrigger extends AbstractTrigger implements IPartListener
         }
     }
 
-    @Override
     public boolean isAggregatePrecommitListener() {
         return true;
     }
 
-    @Override
     public boolean isPrecommitOnly() {
         return false;
     }
 
-    @Override
     public boolean isPostcommitOnly() {
         return true;
     }
@@ -141,7 +123,6 @@ public class ModelChangeTrigger extends AbstractTrigger implements IPartListener
             this.event = event;
         }
 
-        @Override
         public Class<? extends ITrigger> getTriggerClass() {
             return ModelChangeTrigger.class;
         }
@@ -167,7 +148,6 @@ public class ModelChangeTrigger extends AbstractTrigger implements IPartListener
             this.event = event;
         }
 
-        @Override
         public Class<? extends ITrigger> getTriggerClass() {
             return ModelChangeTrigger.class;
         }
