@@ -78,10 +78,4 @@
             type="org.eclipse.ui.IEditorPart">
       </propertyTester>
    </extension>
-   <extension
-         point="de.cau.cs.kieler.synccharts.triggerListener">
-      <triggerListener
-            class="de.cau.cs.kieler.synccharts.kivi.ModelChangedTrigger$ModelChangedTriggerListener">
-      </triggerListener>
-   </extension>
 </plugin>

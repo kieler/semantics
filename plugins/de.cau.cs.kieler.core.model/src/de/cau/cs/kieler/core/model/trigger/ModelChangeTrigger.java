@@ -129,6 +129,22 @@ public class ModelChangeTrigger extends AbstractTrigger implements IPartListener
      */
     public Command transactionAboutToCommit(final ResourceSetChangeEvent event)
             throws RollbackException {
+        boolean triggeredNotation = false;
+        boolean triggeredSemantic = false;
+        for (Notification notification : event.getNotifications()) {
+            if (!triggeredNotation && notationFilter.matches(notification)) {
+                triggeredNotation = true;
+            }
+            if (!triggeredSemantic && notationFilter.negated().matches(notification)) {
+                triggeredSemantic = true;
+            }
+        }
+        if (triggeredNotation) {
+            trigger(new DiagramChangeState(event, currentEditor));
+        }
+        if (triggeredSemantic) {
+            trigger(new ModelChangeState(event, currentEditor));
+        }
         return null;
     }
 
@@ -136,18 +152,7 @@ public class ModelChangeTrigger extends AbstractTrigger implements IPartListener
      * {@inheritDoc}
      */
     public void resourceSetChanged(final ResourceSetChangeEvent event) {
-        boolean triggeredNotation = false;
-        boolean triggeredSemantic = false;
-        for (Notification notification : event.getNotifications()) {
-            if (!triggeredNotation && notationFilter.matches(notification)) {
-                trigger(new DiagramChangeState(event, currentEditor));
-                triggeredNotation = true;
-            }
-            if (!triggeredSemantic && notationFilter.negated().matches(notification)) {
-                trigger(new ModelChangeState(event, currentEditor));
-                triggeredSemantic = true;
-            }
-        }
+        
     }
 
     /**
@@ -161,14 +166,14 @@ public class ModelChangeTrigger extends AbstractTrigger implements IPartListener
      * {@inheritDoc}
      */
     public boolean isPrecommitOnly() {
-        return false;
+        return true;
     }
 
     /**
      * {@inheritDoc}
      */
     public boolean isPostcommitOnly() {
-        return true;
+        return false;
     }
 
     /**
