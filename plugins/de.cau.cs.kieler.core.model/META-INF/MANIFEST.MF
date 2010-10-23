@@ -29,6 +29,7 @@ Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Export-Package: de.cau.cs.kieler.core.model.effects,
  de.cau.cs.kieler.core.model.transformation,
  de.cau.cs.kieler.core.model.transformation.xtend,
+ de.cau.cs.kieler.core.model.trigger,
  de.cau.cs.kieler.core.model.util,
  de.cau.cs.kieler.core.model.validation
 Bundle-Vendor: Christian-Albrechts-Universität zu Kiel
