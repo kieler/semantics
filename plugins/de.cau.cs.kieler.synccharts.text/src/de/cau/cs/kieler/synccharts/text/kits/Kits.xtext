@@ -12,24 +12,29 @@ RootRegion returns synccharts::Region:
     (annotations += StringAnnotation)*
     ('region' (id=ID)? (label=STRING)? ':')?
     (variables+=Variable|signals+=Signal)*
+    (bodyText+=TextualCode)* 
     (states+=State)*;
 
 // ---------------------------------------------------------------------------------------------------
 
 SingleRegion returns synccharts::Region:
-      (annotations += StringAnnotation)*
-      ('region' (id=ID)? (label=STRING)? ':'
-       (variables+=Variable|signals+=Signal)*)?
-      (states+=State)*;
+    (annotations += StringAnnotation)*
+    ('region' (id=ID)? (label=STRING)? ':'
+    (variables+=Variable|signals+=Signal)*)?
+    (bodyText+=TextualCode)* 
+    (states+=State)*;
 
 // ---------------------------------------------------------------------------------------------------
+
+TextualCode returns expressions::TextualCode:
+    'textual' 'code' ( '(' type = ID ')')? ':' code = STRING;
 
 Region returns synccharts::Region:
     (annotations += StringAnnotation)*
     'region' (id=ID)? (label=STRING)? ':'
     (variables+=Variable|signals+=Signal)*
-    (states+=State)+
-    ;
+    (bodyText+=TextualCode)* 
+    (states+=State)+;
 
 // ---------------------------------------------------------------------------------------------------
 

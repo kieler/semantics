@@ -9,95 +9,96 @@ import org.eclipse.xtext.parser.antlr.Lexer;
 
 T15 : 'region' ;
 T16 : ':' ;
-T17 : 'init' ;
-T18 : 'final' ;
-T19 : 'state' ;
-T20 : '@' ;
-T21 : '[' ;
-T22 : ',' ;
-T23 : ']' ;
-T24 : '{' ;
-T25 : 'onentry' ;
-T26 : 'oninner' ;
-T27 : 'onexit' ;
-T28 : 'suspension' ;
-T29 : '}' ;
-T30 : 'with' ;
-T31 : '#' ;
-T32 : '/' ;
-T33 : 'history' ;
-T34 : 'input' ;
-T35 : 'output' ;
-T36 : 'signal' ;
-T37 : ':=' ;
-T38 : 'combine' ;
-T39 : 'var' ;
-T40 : '(' ;
-T41 : ')' ;
-T42 : 'import' ;
-T43 : 'normal' ;
-T44 : 'conditional' ;
-T45 : 'reference' ;
-T46 : 'textual' ;
-T47 : '-->' ;
-T48 : 'o->' ;
-T49 : '>->' ;
-T50 : '=' ;
-T51 : '<' ;
-T52 : '<=' ;
-T53 : '>' ;
-T54 : '>=' ;
-T55 : '<>' ;
-T56 : 'pre' ;
-T57 : 'or' ;
-T58 : 'and' ;
-T59 : 'not' ;
-T60 : '+' ;
-T61 : '-' ;
-T62 : '*' ;
-T63 : 'mod' ;
-T64 : '?' ;
-T65 : 'pure' ;
-T66 : 'bool' ;
-T67 : 'unsigned' ;
-T68 : 'int' ;
-T69 : 'float' ;
-T70 : 'host' ;
-T71 : 'none' ;
-T72 : 'max' ;
-T73 : 'min' ;
+T17 : 'textual' ;
+T18 : 'code' ;
+T19 : '(' ;
+T20 : ')' ;
+T21 : 'init' ;
+T22 : 'final' ;
+T23 : 'state' ;
+T24 : '@' ;
+T25 : '[' ;
+T26 : ',' ;
+T27 : ']' ;
+T28 : '{' ;
+T29 : 'onentry' ;
+T30 : 'oninner' ;
+T31 : 'onexit' ;
+T32 : 'suspension' ;
+T33 : '}' ;
+T34 : 'with' ;
+T35 : '#' ;
+T36 : '/' ;
+T37 : 'history' ;
+T38 : 'input' ;
+T39 : 'output' ;
+T40 : 'signal' ;
+T41 : ':=' ;
+T42 : 'combine' ;
+T43 : 'var' ;
+T44 : 'import' ;
+T45 : 'normal' ;
+T46 : 'conditional' ;
+T47 : 'reference' ;
+T48 : '-->' ;
+T49 : 'o->' ;
+T50 : '>->' ;
+T51 : '=' ;
+T52 : '<' ;
+T53 : '<=' ;
+T54 : '>' ;
+T55 : '>=' ;
+T56 : '<>' ;
+T57 : 'pre' ;
+T58 : 'or' ;
+T59 : 'and' ;
+T60 : 'not' ;
+T61 : '+' ;
+T62 : '-' ;
+T63 : '*' ;
+T64 : 'mod' ;
+T65 : '?' ;
+T66 : 'pure' ;
+T67 : 'bool' ;
+T68 : 'unsigned' ;
+T69 : 'int' ;
+T70 : 'float' ;
+T71 : 'host' ;
+T72 : 'none' ;
+T73 : 'max' ;
+T74 : 'min' ;
 
-// $ANTLR src "../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kitsState/parser/antlr/internal/InternalKitsState.g" 4637
+// $ANTLR src "../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kitsState/parser/antlr/internal/InternalKitsState.g" 4776
 RULE_INT : '-'? ('0'..'9')+;
 
-// $ANTLR src "../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kitsState/parser/antlr/internal/InternalKitsState.g" 4639
+// $ANTLR src "../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kitsState/parser/antlr/internal/InternalKitsState.g" 4778
 RULE_FLOAT : ((RULE_INT '.' RULE_INT|RULE_INT ('.' RULE_INT)? ('e'|'E') '+'? RULE_INT) 'f'?|RULE_INT 'f');
 
-// $ANTLR src "../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kitsState/parser/antlr/internal/InternalKitsState.g" 4641
+// $ANTLR src "../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kitsState/parser/antlr/internal/InternalKitsState.g" 4780
 RULE_BOOLEAN : ('true'|'false');
 
-// $ANTLR src "../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kitsState/parser/antlr/internal/InternalKitsState.g" 4643
+// $ANTLR src "../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kitsState/parser/antlr/internal/InternalKitsState.g" 4782
 RULE_STRING : '"' ('\\' ('b'|'t'|'n'|'f'|'r'|'"'|'\''|'\\')|~(('\\'|'"')))* '"';
 
-// $ANTLR src "../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kitsState/parser/antlr/internal/InternalKitsState.g" 4645
+// $ANTLR src "../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kitsState/parser/antlr/internal/InternalKitsState.g" 4784
 RULE_HOSTCODE : '\'' ('\\' ('b'|'t'|'n'|'f'|'r'|'"'|'\''|'\\')|~(('\\'|'\'')))* '\'';
 
-// $ANTLR src "../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kitsState/parser/antlr/internal/InternalKitsState.g" 4647
+// $ANTLR src "../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kitsState/parser/antlr/internal/InternalKitsState.g" 4786
 RULE_COMMENT_ANNOTATION : '/**' ( options {greedy=false;} : . )*'*/';
 
-// $ANTLR src "../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kitsState/parser/antlr/internal/InternalKitsState.g" 4649
+// $ANTLR src "../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kitsState/parser/antlr/internal/InternalKitsState.g" 4788
 RULE_ML_COMMENT : '/*' ~('*') ( options {greedy=false;} : . )*'*/';
 
-// $ANTLR src "../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kitsState/parser/antlr/internal/InternalKitsState.g" 4651
+// $ANTLR src "../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kitsState/parser/antlr/internal/InternalKitsState.g" 4790
 RULE_ID : '^'? ('a'..'z'|'A'..'Z'|'_') ('a'..'z'|'A'..'Z'|'_'|'0'..'9')*;
 
-// $ANTLR src "../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kitsState/parser/antlr/internal/InternalKitsState.g" 4653
+// $ANTLR src "../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kitsState/parser/antlr/internal/InternalKitsState.g" 4792
 RULE_SL_COMMENT : '//' ~(('\n'|'\r'))* ('\r'? '\n')?;
 
-// $ANTLR src "../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kitsState/parser/antlr/internal/InternalKitsState.g" 4655
+// $ANTLR src "../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kitsState/parser/antlr/internal/InternalKitsState.g" 4794
 RULE_WS : (' '|'\t'|'\r'|'\n')+;
 
-// $ANTLR src "../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kitsState/parser/antlr/internal/InternalKitsState.g" 4657
+// $ANTLR src "../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kitsState/parser/antlr/internal/InternalKitsState.g" 4796
 RULE_ANY_OTHER : .;
 
 

@@ -252,9 +252,33 @@ ruleRootRegion returns [EObject current=null]
 ))*(
 (
 		{ 
-	        currentNode=createCompositeNode(grammarAccess.getRootRegionAccess().getStatesStateParserRuleCall_4_0(), currentNode); 
+	        currentNode=createCompositeNode(grammarAccess.getRootRegionAccess().getBodyTextTextualCodeParserRuleCall_4_0(), currentNode); 
 	    }
-		lv_states_8_0=ruleState		{
+		lv_bodyText_8_0=ruleTextualCode		{
+	        if ($current==null) {
+	            $current = factory.create(grammarAccess.getRootRegionRule().getType().getClassifier());
+	            associateNodeWithAstElement(currentNode.getParent(), $current);
+	        }
+	        try {
+	       		add(
+	       			$current, 
+	       			"bodyText",
+	        		lv_bodyText_8_0, 
+	        		"TextualCode", 
+	        		currentNode);
+	        } catch (ValueConverterException vce) {
+				handleValueConverterException(vce);
+	        }
+	        currentNode = currentNode.getParent();
+	    }
+
+)
+)*(
+(
+		{ 
+	        currentNode=createCompositeNode(grammarAccess.getRootRegionAccess().getStatesStateParserRuleCall_5_0(), currentNode); 
+	    }
+		lv_states_9_0=ruleState		{
 	        if ($current==null) {
 	            $current = factory.create(grammarAccess.getRootRegionRule().getType().getClassifier());
 	            associateNodeWithAstElement(currentNode.getParent(), $current);
@@ -263,7 +287,7 @@ ruleRootRegion returns [EObject current=null]
 	       		add(
 	       			$current, 
 	       			"states",
-	        		lv_states_8_0, 
+	        		lv_states_9_0, 
 	        		"State", 
 	        		currentNode);
 	        } catch (ValueConverterException vce) {
@@ -428,9 +452,33 @@ ruleSingleRegion returns [EObject current=null]
 ))*)?(
 (
 		{ 
-	        currentNode=createCompositeNode(grammarAccess.getSingleRegionAccess().getStatesStateParserRuleCall_2_0(), currentNode); 
+	        currentNode=createCompositeNode(grammarAccess.getSingleRegionAccess().getBodyTextTextualCodeParserRuleCall_2_0(), currentNode); 
 	    }
-		lv_states_7_0=ruleState		{
+		lv_bodyText_7_0=ruleTextualCode		{
+	        if ($current==null) {
+	            $current = factory.create(grammarAccess.getSingleRegionRule().getType().getClassifier());
+	            associateNodeWithAstElement(currentNode.getParent(), $current);
+	        }
+	        try {
+	       		add(
+	       			$current, 
+	       			"bodyText",
+	        		lv_bodyText_7_0, 
+	        		"TextualCode", 
+	        		currentNode);
+	        } catch (ValueConverterException vce) {
+				handleValueConverterException(vce);
+	        }
+	        currentNode = currentNode.getParent();
+	    }
+
+)
+)*(
+(
+		{ 
+	        currentNode=createCompositeNode(grammarAccess.getSingleRegionAccess().getStatesStateParserRuleCall_3_0(), currentNode); 
+	    }
+		lv_states_8_0=ruleState		{
 	        if ($current==null) {
 	            $current = factory.create(grammarAccess.getSingleRegionRule().getType().getClassifier());
 	            associateNodeWithAstElement(currentNode.getParent(), $current);
@@ -439,7 +487,7 @@ ruleSingleRegion returns [EObject current=null]
 	       		add(
 	       			$current, 
 	       			"states",
-	        		lv_states_7_0, 
+	        		lv_states_8_0, 
 	        		"State", 
 	        		currentNode);
 	        } catch (ValueConverterException vce) {
@@ -450,6 +498,97 @@ ruleSingleRegion returns [EObject current=null]
 
 )
 )*)
+;
+
+
+
+
+
+// Entry rule entryRuleTextualCode
+entryRuleTextualCode returns [EObject current=null] 
+	:
+	{ currentNode = createCompositeNode(grammarAccess.getTextualCodeRule(), currentNode); }
+	 iv_ruleTextualCode=ruleTextualCode 
+	 { $current=$iv_ruleTextualCode.current; } 
+	 EOF 
+;
+
+// Rule TextualCode
+ruleTextualCode returns [EObject current=null] 
+    @init { EObject temp=null; setCurrentLookahead(); resetLookahead(); 
+    }
+    @after { resetLookahead(); 
+    	lastConsumedNode = currentNode;
+    }:
+(	'textual' 
+    {
+        createLeafNode(grammarAccess.getTextualCodeAccess().getTextualKeyword_0(), null); 
+    }
+	'code' 
+    {
+        createLeafNode(grammarAccess.getTextualCodeAccess().getCodeKeyword_1(), null); 
+    }
+(	'(' 
+    {
+        createLeafNode(grammarAccess.getTextualCodeAccess().getLeftParenthesisKeyword_2_0(), null); 
+    }
+(
+(
+		lv_type_3_0=RULE_ID
+		{
+			createLeafNode(grammarAccess.getTextualCodeAccess().getTypeIDTerminalRuleCall_2_1_0(), "type"); 
+		}
+		{
+	        if ($current==null) {
+	            $current = factory.create(grammarAccess.getTextualCodeRule().getType().getClassifier());
+	            associateNodeWithAstElement(currentNode, $current);
+	        }
+	        try {
+	       		set(
+	       			$current, 
+	       			"type",
+	        		lv_type_3_0, 
+	        		"ID", 
+	        		lastConsumedNode);
+	        } catch (ValueConverterException vce) {
+				handleValueConverterException(vce);
+	        }
+	    }
+
+)
+)	')' 
+    {
+        createLeafNode(grammarAccess.getTextualCodeAccess().getRightParenthesisKeyword_2_2(), null); 
+    }
+)?	':' 
+    {
+        createLeafNode(grammarAccess.getTextualCodeAccess().getColonKeyword_3(), null); 
+    }
+(
+(
+		lv_code_6_0=RULE_STRING
+		{
+			createLeafNode(grammarAccess.getTextualCodeAccess().getCodeSTRINGTerminalRuleCall_4_0(), "code"); 
+		}
+		{
+	        if ($current==null) {
+	            $current = factory.create(grammarAccess.getTextualCodeRule().getType().getClassifier());
+	            associateNodeWithAstElement(currentNode, $current);
+	        }
+	        try {
+	       		set(
+	       			$current, 
+	       			"code",
+	        		lv_code_6_0, 
+	        		"STRING", 
+	        		lastConsumedNode);
+	        } catch (ValueConverterException vce) {
+				handleValueConverterException(vce);
+	        }
+	    }
+
+)
+))
 ;
 
 
@@ -604,9 +743,33 @@ ruleRegion returns [EObject current=null]
 ))*(
 (
 		{ 
-	        currentNode=createCompositeNode(grammarAccess.getRegionAccess().getStatesStateParserRuleCall_6_0(), currentNode); 
+	        currentNode=createCompositeNode(grammarAccess.getRegionAccess().getBodyTextTextualCodeParserRuleCall_6_0(), currentNode); 
 	    }
-		lv_states_7_0=ruleState		{
+		lv_bodyText_7_0=ruleTextualCode		{
+	        if ($current==null) {
+	            $current = factory.create(grammarAccess.getRegionRule().getType().getClassifier());
+	            associateNodeWithAstElement(currentNode.getParent(), $current);
+	        }
+	        try {
+	       		add(
+	       			$current, 
+	       			"bodyText",
+	        		lv_bodyText_7_0, 
+	        		"TextualCode", 
+	        		currentNode);
+	        } catch (ValueConverterException vce) {
+				handleValueConverterException(vce);
+	        }
+	        currentNode = currentNode.getParent();
+	    }
+
+)
+)*(
+(
+		{ 
+	        currentNode=createCompositeNode(grammarAccess.getRegionAccess().getStatesStateParserRuleCall_7_0(), currentNode); 
+	    }
+		lv_states_8_0=ruleState		{
 	        if ($current==null) {
 	            $current = factory.create(grammarAccess.getRegionRule().getType().getClassifier());
 	            associateNodeWithAstElement(currentNode.getParent(), $current);
@@ -615,7 +778,7 @@ ruleRegion returns [EObject current=null]
 	       		add(
 	       			$current, 
 	       			"states",
-	        		lv_states_7_0, 
+	        		lv_states_8_0, 
 	        		"State", 
 	        		currentNode);
 	        } catch (ValueConverterException vce) {

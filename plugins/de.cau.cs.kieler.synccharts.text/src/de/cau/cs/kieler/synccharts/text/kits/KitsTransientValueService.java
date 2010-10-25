@@ -97,9 +97,9 @@ public class KitsTransientValueService extends DefaultTransientValueService {
             return (scope.getLabel() == null || scope.getLabel().equals(scope.getId()));
         }
 
-        if (feature == SyncchartsPackage.eINSTANCE.getScope_BodyText()) {
-            return true;
-        }
+//        if (feature == SyncchartsPackage.eINSTANCE.getScope_BodyText()) {
+//            return true;
+//        }
         
         if (feature == SyncchartsPackage.eINSTANCE.getScope_BodyContents()) {
             return true;

@@ -53,8 +53,8 @@ public class KitsFormatter extends ActionsFormatter {
         c.setNoSpace().before(f.getSingleRegionAccess().getColonKeyword_1_3());
         c.setLinewrap().after(f.getSingleRegionAccess().getColonKeyword_1_3());
         
-        c.setNoLinewrap().before(f.getRootRegionAccess().getStatesStateParserRuleCall_4_0());
-        c.setNoLinewrap().before(f.getRootRegionAccess().getStatesAssignment_4());
+//        c.setNoLinewrap().before(f.getRootRegionAccess().getStatesStateParserRuleCall_4_0());
+        c.setNoLinewrap().before(f.getRootRegionAccess().getStatesAssignment_5());
         
         
         // does not work!
@@ -78,8 +78,6 @@ public class KitsFormatter extends ActionsFormatter {
         c.setLinewrap(2, 2, 2).between(f.getStateAccess().getRegionsRegionParserRuleCall_6_1_1_1_1_0(),
                 f.getStateAccess().getRegionsRegionParserRuleCall_6_1_1_1_1_0());
         
-
-
         /*
          *  STATE
          */
@@ -112,8 +110,8 @@ public class KitsFormatter extends ActionsFormatter {
 
         
         // does not work!
-        c.setLinewrap(2, 2, 2).between(f.getRegionAccess().getStatesAssignment_6(),
-                f.getRegionAccess().getStatesAssignment_6());
+        c.setLinewrap(2, 2, 2).between(f.getRegionAccess().getStatesAssignment_7(),
+                f.getRegionAccess().getStatesAssignment_7());
         
         
         
@@ -123,6 +121,9 @@ public class KitsFormatter extends ActionsFormatter {
         c.setLinewrap().after(f.getVariableRule());
         // c.setLinewrap().after(f.getVariableAccess().getSemicolonKeyword_4());
 
+        c.setLinewrap().after(f.getTextualCodeRule());
+        c.setNoSpace().before(f.getTextualCodeAccess().getColonKeyword_3());
+        
         // let each transition declaration begin on a new line
         // unfortunately, the first declaration doesn't work as intended
         // c.setLinewrap().before(f.getTransitionRule());
