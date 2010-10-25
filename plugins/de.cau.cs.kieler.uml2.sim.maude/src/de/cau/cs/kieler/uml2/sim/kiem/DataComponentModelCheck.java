@@ -181,9 +181,8 @@ public class DataComponentModelCheck extends DataComponent implements IJSONObjec
      */
     private String expandCheckingRule(String inputRule) {
         EObject rootElement = this.getModelRootElement();
-        TreeIterator allContents = rootElement.eAllContents();
 
-        String outputRule = JavaEscape.resolveStateNames(inputRule, allContents);
+        String outputRule = JavaEscape.resolveStateNames(inputRule, rootElement);
 
         return outputRule;
     }

@@ -315,11 +315,11 @@ public class JavaEscape {
 
     // FIXME: only works for simple transition labels
     public static String getGuard(String TransitionLabel, Transition transition) {
-        TreeIterator allContents = transition.eResource().getAllContents();
+        EObject rootElement = transition.eResource().getAllContents().next();
         
         if (TransitionLabel.contains("/[")) {
             if (TransitionLabel.substring(TransitionLabel.indexOf("/[") + 1) != "]") {
-                return resolveStateNames(TransitionLabel.substring(TransitionLabel.indexOf("[") + 1, TransitionLabel.indexOf("]")).trim(), allContents);
+                return resolveStateNames(TransitionLabel.substring(TransitionLabel.indexOf("[") + 1, TransitionLabel.indexOf("]")).trim(), rootElement);
             }
         }
         return "true";
@@ -327,7 +327,7 @@ public class JavaEscape {
 
     // ------------------------------------------------------------------------
 
-    public static String resolveStateNames(String inText, TreeIterator allContents) {
+    public static String resolveStateNames(String inText, EObject rootElement) {
         String outputText = "";
 
         boolean extractingStateName = false;
@@ -342,7 +342,8 @@ public class JavaEscape {
             if ((character.equals("\"")) && (extractingStateName)) {
                 extractingStateName = false;
                 // now try to resolve it
-                String stateMaudeId = resolveStateName(extractedStateName, allContents);
+                TreeIterator allContents = rootElement.eAllContents();
+                String stateMaudeId = resolveStateName(extractedStateName.trim(), allContents);
                 // add resolved id
                 outputText += stateMaudeId;
                 // reset name
