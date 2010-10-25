@@ -36,7 +36,7 @@ public class LayoutAfterCollapseCombination extends AbstractCombination {
         dontUndo();
         if (effectState.getEffect().hasJustExecuted()) {
             schedule(new LayoutEffect(effectState.getEffect().getTargetEditor(), effectState
-                    .getEffect().getTargetNode()));
+                    .getEffect().getTargetNode(), true, false, true));
         }
     }
 }

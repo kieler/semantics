@@ -80,7 +80,7 @@ public class LayoutAfterModelChangedCombination extends AbstractCombination {
                 if (modelFilter.matches(notification)
                         && notification.getNotifier() instanceof EObject) {
                     schedule(new LayoutEffect(modelState.getDiagramEditor(),
-                            (EObject) notification.getNotifier()));
+                            (EObject) notification.getNotifier(), true, false, true));
                 }
             }
         } else {
@@ -89,7 +89,7 @@ public class LayoutAfterModelChangedCombination extends AbstractCombination {
                 if (diagramFilter.matches(notification)
                         && notification.getNotifier() instanceof EObject) {
                     schedule(new LayoutEffect(diagramState.getDiagramEditor(),
-                            (EObject) notification.getNotifier()));
+                            (EObject) notification.getNotifier(), true, false, true));
                 }
             }
         }
