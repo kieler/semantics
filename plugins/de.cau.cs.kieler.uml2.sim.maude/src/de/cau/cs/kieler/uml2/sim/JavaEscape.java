@@ -343,7 +343,7 @@ public class JavaEscape {
                 extractingStateName = false;
                 // now try to resolve it
                 TreeIterator allContents = rootElement.eAllContents();
-                String stateMaudeId = resolveStateName(extractedStateName.trim(), allContents);
+                String stateMaudeId = resolveStateName(extractedStateName, allContents);
                 // add resolved id
                 outputText += stateMaudeId;
                 // reset name
