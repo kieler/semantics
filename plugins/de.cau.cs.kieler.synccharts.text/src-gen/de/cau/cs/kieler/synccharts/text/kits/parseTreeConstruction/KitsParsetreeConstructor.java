@@ -5060,11 +5060,13 @@ protected class Substitution_FormalAssignment_2 extends AssignmentToken  {
  *
  * // chsch: The action rule is used in Kits.xtext for entry-, inner-, exitActions, suspensionTrigger 
  * Action returns synccharts::Action:
- * 	{synccharts::Action} isImmediate?="#"? delay=INT? trigger=BooleanExpression? ("/" (effects+=Effect ","?)*)?;
+ * 	{synccharts::Action} isImmediate?="#"? delay=INT? trigger=BooleanExpression? ("/" effects+=Effect (","
+ * 	effects+=Effect)*)?;
  *
  **/
 
-// {synccharts::Action} isImmediate?="#"? delay=INT? trigger=BooleanExpression? ("/" (effects+=Effect ","?)*)?
+// {synccharts::Action} isImmediate?="#"? delay=INT? trigger=BooleanExpression? ("/" effects+=Effect (","
+// effects+=Effect)*)?
 protected class Action_Group extends GroupToken {
 	
 	public Action_Group(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -5240,7 +5242,7 @@ protected class Action_TriggerAssignment_3 extends AssignmentToken  {
 	}	
 }
 
-// ("/" (effects+=Effect ","?)*)?
+// ("/" effects+=Effect ("," effects+=Effect)*)?
 protected class Action_Group_4 extends GroupToken {
 	
 	public Action_Group_4(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -5255,7 +5257,8 @@ protected class Action_Group_4 extends GroupToken {
     @Override
 	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
 		switch(index) {
-			case 0: return new Action_Group_4_1(lastRuleCallOrigin, this, 0, inst);
+			case 0: return new Action_Group_4_2(lastRuleCallOrigin, this, 0, inst);
+			case 1: return new Action_EffectsAssignment_4_1(lastRuleCallOrigin, this, 1, inst);
 			default: return null;
 		}	
 	}
@@ -5287,22 +5290,91 @@ protected class Action_SolidusKeyword_4_0 extends KeywordToken  {
 
 }
 
-// (effects+=Effect ","?)*
-protected class Action_Group_4_1 extends GroupToken {
+// effects+=Effect
+protected class Action_EffectsAssignment_4_1 extends AssignmentToken  {
 	
-	public Action_Group_4_1(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
+	public Action_EffectsAssignment_4_1(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
 		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
 	}
 	
 	@Override
-	public Group getGrammarElement() {
-		return grammarAccess.getActionAccess().getGroup_4_1();
+	public Assignment getGrammarElement() {
+		return grammarAccess.getActionAccess().getEffectsAssignment_4_1();
 	}
 
     @Override
 	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
 		switch(index) {
-			case 0: return new Action_EffectsAssignment_4_1_0(lastRuleCallOrigin, this, 0, inst);
+			case 0: return new Effect_Alternatives(this, this, 0, inst);
+			default: return null;
+		}	
+	}
+
+    @Override	
+	public IEObjectConsumer tryConsume() {
+		if((value = eObjectConsumer.getConsumable("effects",true)) == null) return null;
+		IEObjectConsumer obj = eObjectConsumer.cloneAndConsume("effects");
+		if(value instanceof EObject) { // org::eclipse::xtext::impl::RuleCallImpl
+			IEObjectConsumer param = createEObjectConsumer((EObject)value);
+			if(param.isInstanceOf(grammarAccess.getEffectRule().getType().getClassifier())) {
+				type = AssignmentType.PARSER_RULE_CALL;
+				element = grammarAccess.getActionAccess().getEffectsEffectParserRuleCall_4_1_0(); 
+				consumed = obj;
+				return param;
+			}
+		}
+		return null;
+	}
+
+    @Override
+	public AbstractToken createFollowerAfterReturn(AbstractToken next,	int actIndex, int index, IEObjectConsumer inst) {
+		if(value == inst.getEObject() && !inst.isConsumed()) return null;
+		switch(index) {
+			case 0: return new Action_SolidusKeyword_4_0(lastRuleCallOrigin, next, actIndex, consumed);
+			default: return null;
+		}	
+	}	
+}
+
+// ("," effects+=Effect)*
+protected class Action_Group_4_2 extends GroupToken {
+	
+	public Action_Group_4_2(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
+		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
+	}
+	
+	@Override
+	public Group getGrammarElement() {
+		return grammarAccess.getActionAccess().getGroup_4_2();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
+		switch(index) {
+			case 0: return new Action_EffectsAssignment_4_2_1(lastRuleCallOrigin, this, 0, inst);
+			default: return null;
+		}	
+	}
+
+}
+
+// ","
+protected class Action_CommaKeyword_4_2_0 extends KeywordToken  {
+	
+	public Action_CommaKeyword_4_2_0(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
+		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
+	}
+	
+	@Override
+	public Keyword getGrammarElement() {
+		return grammarAccess.getActionAccess().getCommaKeyword_4_2_0();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
+		switch(index) {
+			case 0: return new Action_Group_4_2(lastRuleCallOrigin, this, 0, inst);
+			case 1: return new Action_EffectsAssignment_4_1(lastRuleCallOrigin, this, 1, inst);
 			default: return null;
 		}	
 	}
@@ -5310,15 +5382,15 @@ protected class Action_Group_4_1 extends GroupToken {
 }
 
 // effects+=Effect
-protected class Action_EffectsAssignment_4_1_0 extends AssignmentToken  {
+protected class Action_EffectsAssignment_4_2_1 extends AssignmentToken  {
 	
-	public Action_EffectsAssignment_4_1_0(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
+	public Action_EffectsAssignment_4_2_1(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
 		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
 	}
 	
 	@Override
 	public Assignment getGrammarElement() {
-		return grammarAccess.getActionAccess().getEffectsAssignment_4_1_0();
+		return grammarAccess.getActionAccess().getEffectsAssignment_4_2_1();
 	}
 
     @Override
@@ -5337,7 +5409,7 @@ protected class Action_EffectsAssignment_4_1_0 extends AssignmentToken  {
 			IEObjectConsumer param = createEObjectConsumer((EObject)value);
 			if(param.isInstanceOf(grammarAccess.getEffectRule().getType().getClassifier())) {
 				type = AssignmentType.PARSER_RULE_CALL;
-				element = grammarAccess.getActionAccess().getEffectsEffectParserRuleCall_4_1_0_0(); 
+				element = grammarAccess.getActionAccess().getEffectsEffectParserRuleCall_4_2_1_0(); 
 				consumed = obj;
 				return param;
 			}
@@ -5349,8 +5421,7 @@ protected class Action_EffectsAssignment_4_1_0 extends AssignmentToken  {
 	public AbstractToken createFollowerAfterReturn(AbstractToken next,	int actIndex, int index, IEObjectConsumer inst) {
 		if(value == inst.getEObject() && !inst.isConsumed()) return null;
 		switch(index) {
-			case 0: return new Action_Group_4_1(lastRuleCallOrigin, next, actIndex, consumed);
-			case 1: return new Action_SolidusKeyword_4_0(lastRuleCallOrigin, next, actIndex, consumed);
+			case 0: return new Action_CommaKeyword_4_2_0(lastRuleCallOrigin, next, actIndex, consumed);
 			default: return null;
 		}	
 	}	

@@ -2260,10 +2260,10 @@ ruleAction returns [EObject current=null]
     {
         createLeafNode(grammarAccess.getActionAccess().getSolidusKeyword_4_0(), null); 
     }
-((
+(
 (
 		{ 
-	        currentNode=createCompositeNode(grammarAccess.getActionAccess().getEffectsEffectParserRuleCall_4_1_0_0(), currentNode); 
+	        currentNode=createCompositeNode(grammarAccess.getActionAccess().getEffectsEffectParserRuleCall_4_1_0(), currentNode); 
 	    }
 		lv_effects_5_0=ruleEffect		{
 	        if ($current==null) {
@@ -2286,9 +2286,33 @@ ruleAction returns [EObject current=null]
 )
 )(	',' 
     {
-        createLeafNode(grammarAccess.getActionAccess().getCommaKeyword_4_1_1(), null); 
+        createLeafNode(grammarAccess.getActionAccess().getCommaKeyword_4_2_0(), null); 
     }
-)?)*)?)
+(
+(
+		{ 
+	        currentNode=createCompositeNode(grammarAccess.getActionAccess().getEffectsEffectParserRuleCall_4_2_1_0(), currentNode); 
+	    }
+		lv_effects_7_0=ruleEffect		{
+	        if ($current==null) {
+	            $current = factory.create(grammarAccess.getActionRule().getType().getClassifier());
+	            associateNodeWithAstElement(currentNode.getParent(), $current);
+	        }
+	        try {
+	       		add(
+	       			$current, 
+	       			"effects",
+	        		lv_effects_7_0, 
+	        		"Effect", 
+	        		currentNode);
+	        } catch (ValueConverterException vce) {
+				handleValueConverterException(vce);
+	        }
+	        currentNode = currentNode.getParent();
+	    }
+
+)
+))*)?)
 ;
 
 

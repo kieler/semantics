@@ -21,7 +21,7 @@ Transition returns synccharts::Transition:
 // chsch: The action rule is used in Kits.xtext for entry-, inner-, exitActions, suspensionTrigger 
 Action returns synccharts::Action:
     {synccharts::Action}
-	(isImmediate?='#')? (delay=INT)? (trigger=BooleanExpression)? ("/" (effects+=Effect (',')? )*)?; 		
+	(isImmediate?='#')? (delay=INT)? (trigger=BooleanExpression)? ("/" effects+=Effect ((',') effects+=Effect)*)?; 		
 
 
 Effect returns synccharts::Effect: 

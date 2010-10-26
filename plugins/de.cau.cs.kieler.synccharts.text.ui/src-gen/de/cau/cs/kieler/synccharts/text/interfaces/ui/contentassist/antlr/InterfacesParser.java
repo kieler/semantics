@@ -116,7 +116,7 @@ public class InterfacesParser extends AbstractContentAssistParser {
 					put(grammarAccess.getTransitionAccess().getGroup_4_2(), "rule__Transition__Group_4_2__0");
 					put(grammarAccess.getActionAccess().getGroup(), "rule__Action__Group__0");
 					put(grammarAccess.getActionAccess().getGroup_4(), "rule__Action__Group_4__0");
-					put(grammarAccess.getActionAccess().getGroup_4_1(), "rule__Action__Group_4_1__0");
+					put(grammarAccess.getActionAccess().getGroup_4_2(), "rule__Action__Group_4_2__0");
 					put(grammarAccess.getEmissionAccess().getGroup(), "rule__Emission__Group__0");
 					put(grammarAccess.getEmissionAccess().getGroup_1(), "rule__Emission__Group_1__0");
 					put(grammarAccess.getAssignmentAccess().getGroup(), "rule__Assignment__Group__0");
@@ -220,7 +220,8 @@ public class InterfacesParser extends AbstractContentAssistParser {
 					put(grammarAccess.getActionAccess().getIsImmediateAssignment_1(), "rule__Action__IsImmediateAssignment_1");
 					put(grammarAccess.getActionAccess().getDelayAssignment_2(), "rule__Action__DelayAssignment_2");
 					put(grammarAccess.getActionAccess().getTriggerAssignment_3(), "rule__Action__TriggerAssignment_3");
-					put(grammarAccess.getActionAccess().getEffectsAssignment_4_1_0(), "rule__Action__EffectsAssignment_4_1_0");
+					put(grammarAccess.getActionAccess().getEffectsAssignment_4_1(), "rule__Action__EffectsAssignment_4_1");
+					put(grammarAccess.getActionAccess().getEffectsAssignment_4_2_1(), "rule__Action__EffectsAssignment_4_2_1");
 					put(grammarAccess.getEmissionAccess().getSignalAssignment_0(), "rule__Emission__SignalAssignment_0");
 					put(grammarAccess.getEmissionAccess().getNewValueAssignment_1_1(), "rule__Emission__NewValueAssignment_1_1");
 					put(grammarAccess.getAssignmentAccess().getVariableAssignment_0(), "rule__Assignment__VariableAssignment_0");

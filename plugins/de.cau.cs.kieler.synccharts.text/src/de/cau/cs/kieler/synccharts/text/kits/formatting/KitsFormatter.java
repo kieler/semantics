@@ -120,7 +120,15 @@ public class KitsFormatter extends ActionsFormatter {
 
         c.setLinewrap().after(f.getVariableRule());
         // c.setLinewrap().after(f.getVariableAccess().getSemicolonKeyword_4());
+        c.setLinewrap().before(f.getVariableAccess().getVarKeyword_1());
 
+        c.setLinewrap().after(f.getActionRule());
+        c.setLinewrap().before(f.getStateAccess().getOnentryKeyword_6_1_1_0_2_0());
+        c.setLinewrap().before(f.getStateAccess().getOninnerKeyword_6_1_1_0_3_0());
+        c.setLinewrap().before(f.getStateAccess().getOnexitKeyword_6_1_1_0_4_0());
+        c.setLinewrap().before(f.getStateAccess().getSuspensionKeyword_6_1_1_0_5_0());
+        
+        
         c.setLinewrap().after(f.getTextualCodeRule());
         c.setNoSpace().before(f.getTextualCodeAccess().getColonKeyword_3());
         

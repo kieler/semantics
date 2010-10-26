@@ -141,6 +141,9 @@ public class KitsTransientValueService extends DefaultTransientValueService {
             if (ExpressionsPackage.eINSTANCE.getSignal().isInstance(owner)) {
                 return owner.eGet(feature).equals(ValueType.PURE)
                         && ((Signal) owner).getCombineOperator().equals(CombineOperator.NONE);
+            } else {
+                // the type of variables is mandatory, so serialize it! 
+                return false;
             }
         }
 
@@ -173,7 +176,13 @@ public class KitsTransientValueService extends DefaultTransientValueService {
 
         
         if (feature == SyncchartsPackage.eINSTANCE.getAction_Label()) {
-            return Strings.isEmpty((String) owner.eGet(feature)) || !actionIsEmpty((Action) owner);
+            if (SyncchartsPackage.eINSTANCE.getTransition().isInstance(owner)) {
+                return Strings.isEmpty((String) owner.eGet(feature)) || !actionIsEmpty((Action) owner);
+            } else {
+                // FIXME: the action label is not part of a parser rule yet, so it has to be marked transient
+                // what about unparsable actions (drawing tool ...)??
+                return true;
+            }
         }
         
         

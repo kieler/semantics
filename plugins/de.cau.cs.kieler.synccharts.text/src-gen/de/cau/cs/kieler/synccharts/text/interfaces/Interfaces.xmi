@@ -567,11 +567,14 @@
         </elements>
         <elements xsi:type="xtext:Group" cardinality="?">
           <elements xsi:type="xtext:Keyword" value="/"/>
+          <elements xsi:type="xtext:Assignment" feature="effects" operator="+=">
+            <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.2"/>
+          </elements>
           <elements xsi:type="xtext:Group" cardinality="*">
+            <elements xsi:type="xtext:Keyword" value=","/>
             <elements xsi:type="xtext:Assignment" feature="effects" operator="+=">
               <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.2"/>
             </elements>
-            <elements xsi:type="xtext:Keyword" cardinality="?" value=","/>
           </elements>
         </elements>
       </alternatives>
