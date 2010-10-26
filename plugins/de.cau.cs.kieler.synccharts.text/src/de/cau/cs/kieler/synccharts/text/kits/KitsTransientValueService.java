@@ -97,10 +97,6 @@ public class KitsTransientValueService extends DefaultTransientValueService {
             return (scope.getLabel() == null || scope.getLabel().equals(scope.getId()));
         }
 
-//        if (feature == SyncchartsPackage.eINSTANCE.getScope_BodyText()) {
-//            return true;
-//        }
-        
         if (feature == SyncchartsPackage.eINSTANCE.getScope_BodyContents()) {
             return true;
         }
@@ -109,7 +105,11 @@ public class KitsTransientValueService extends DefaultTransientValueService {
             return true;
         }
         
-        
+        if (SyncchartsPackage.eINSTANCE.getState().isInstance(owner)
+                && feature == SyncchartsPackage.eINSTANCE.getScope_BodyText()) {
+            return true;
+        }
+                
         /* suppress id serialization if id is equals to "" */
         if (SyncchartsPackage.eINSTANCE.getRegion().isInstance(owner)
                 && feature == SyncchartsPackage.eINSTANCE.getScope_Id()) {
