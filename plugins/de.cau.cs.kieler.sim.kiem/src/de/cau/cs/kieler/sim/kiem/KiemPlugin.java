@@ -149,7 +149,9 @@ public class KiemPlugin extends AbstractUIPlugin {
      */
     public KiemPlugin() {
         dataComponentList = this.getRegisteredDataComponentList();
-        dataComponentWrapperList = getDefaultComponentWrapperList();
+        // By default an empty list
+        // dataComponentWrapperList = getDefaultComponentWrapperList();
+        dataComponentWrapperList = new LinkedList<DataComponentWrapper>();
         updateEventManager();
         execution = null;
         aimedStepDuration = AIMED_STEP_DURATION_DEFAULT;
