@@ -13,45 +13,29 @@
  */
 package de.cau.cs.kieler.esterel.transformation.impl;
 
-import java.util.Iterator;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.eclipse.core.resources.IFile;
-import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.transaction.TransactionalEditingDomain;
-import org.eclipse.emf.transaction.util.TransactionUtil;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gef.EditPartViewer;
-import org.eclipse.gmf.runtime.diagram.ui.editpolicies.CanonicalEditPolicy;
 import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramEditor;
-import org.eclipse.gmf.runtime.diagram.ui.parts.IDiagramGraphicalViewer;
-import org.eclipse.gmf.runtime.diagram.ui.parts.IDiagramWorkbenchPart;
 import org.eclipse.gmf.runtime.notation.View;
-import org.eclipse.jface.operation.IRunnableWithProgress;
+import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.ui.IEditorPart;
-import org.eclipse.ui.PlatformUI;
-import org.eclipse.ui.actions.WorkspaceModifyOperation;
-import org.eclipse.ui.part.FileEditorInput;
-import org.eclipse.xtext.ui.editor.XtextEditor;
-import org.eclipse.xtext.ui.editor.model.IXtextDocument;
 
-import de.cau.cs.kieler.core.expressions.ExpressionsFactory;
-import de.cau.cs.kieler.core.expressions.TextualCode;
 import de.cau.cs.kieler.esterel.transformation.core.AbstractTransformationDataComponent;
-import de.cau.cs.kieler.esterel.transformation.core.ITransformationStatement;
+import de.cau.cs.kieler.esterel.transformation.core.AbstractTransformationStatement;
+import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
 import de.cau.cs.kieler.synccharts.Region;
 import de.cau.cs.kieler.synccharts.State;
-import de.cau.cs.kieler.synccharts.StateType;
-import de.cau.cs.kieler.synccharts.SyncchartsFactory;
 import de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditor;
-import de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorUtil;
 
 /**
  * DataComponent for transforming an esterel program stepwise into a syncchart.
@@ -77,14 +61,19 @@ public class E2SDataComponent extends AbstractTransformationDataComponent {
     private static final String IDENTIFIER = "de.cau.cs.kieler.esterel.transformation."
             + "impl.E2SDataComponent";
 
+    private State rootState;
+    private HashMap<State, QueueStatement> stateQueueMapping;
+
     /**
      * {@inheritDoc}
      */
     @Override
-    public void preInitialize() {
+    public void initialize() throws KiemInitializationException {
+        super.initialize();
 
         // first load the esterel file into a syncchart
         // loadEsterelIntoSyncChart();
+        stateQueueMapping = new HashMap<State, QueueStatement>();
 
         boolean fromResource = false;
         if (fromResource) {
@@ -102,7 +91,7 @@ public class E2SDataComponent extends AbstractTransformationDataComponent {
             // initializing first statement
             QueueStatement qs = new QueueStatement(INITIAL_TRANSFORMATION, root,
                     root.getBodyReference());
-            getQueue().add(qs);
+            appendToQueue(qs);
             System.out.println("Added First Statement");
         } else {
             // catch the first model and place it on the queue
@@ -122,17 +111,101 @@ public class E2SDataComponent extends AbstractTransformationDataComponent {
                     Object selView = selPart.getModel();
                     EObject selModel = ((View) selView).getElement();
                     State root = ((Region) selModel).getStates().get(0);
-                    // rootState = root;
+                    rootState = root;
                     getRunner().setEditDomain(getActiveEditorEditingDomain());
                     // initializing first statement
                     // EcoreUtil.resolve(root.getBodyContents(), root);
                     QueueStatement qs = new QueueStatement(INITIAL_TRANSFORMATION, root,
                             root.getBodyReference());
-                    getQueue().add(qs);
+                    appendToQueue(qs);
                 }
             }
             System.out.println("Added First Statement");
         }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void wrapup() throws KiemInitializationException {
+        super.wrapup();
+        stateQueueMapping = null;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public AbstractTransformationStatement getNextQueueStatement() {
+
+        // check if any state is selected
+        List<EObject> selected = getCurrentEditorSelection();
+
+        QueueStatement returnStatement = null;
+        // currently only for one selected item possible
+        if (!selected.isEmpty() && selected.size() == 1) {
+            for (EObject obj : selected) {
+                if (obj instanceof State) {
+
+                    QueueStatement qs = stateQueueMapping.get((State) obj);
+
+                    if (qs != null) {
+                        getQueue().clear();
+                        if (!qs.isDone()) {
+                            return qs;
+                        } else {
+                            recursivelyCollectQueueStatements(qs);
+                            if (getQueue().isEmpty()) {
+                                QueueStatement rootQs = stateQueueMapping.get(rootState);
+                                recursivelyCollectQueueStatements(rootQs);
+                            }
+                            return getQueue().poll();
+                        }
+                    }
+                    int i = 0;
+                } else {
+                    // if no further elements in the queue, check if there is another branch which
+                    // is not done yet
+                    if (getQueue().isEmpty()) {
+                        QueueStatement rootQs = stateQueueMapping.get(rootState);
+                        recursivelyCollectQueueStatements(rootQs);
+                    }
+                }
+            }
+        }
+        return super.getNextQueueStatement();
+    }
+
+    private void recursivelyCollectQueueStatements(QueueStatement parent) {
+        for (QueueStatement qs : parent.getChildren()) {
+            if (qs.isDone()) {
+                recursivelyCollectQueueStatements(qs);
+            } else {
+                getQueue().add(qs);
+            }
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean appendToQueue(final AbstractTransformationStatement statement) {
+
+        if (statement instanceof QueueStatement) {
+            // map the current transformation statement to the corresponding state
+            State currentState = ((QueueStatement) statement).getState();
+            stateQueueMapping.put(currentState, (QueueStatement) statement);
+
+            // register it at the parent
+            State parentState = currentState.getParentRegion().getParentState();
+            if (parentState != null) {
+                QueueStatement parentQs = stateQueueMapping.get(parentState);
+                parentQs.getChildren().add((QueueStatement) statement);
+            }
+        }
+        return super.appendToQueue(statement);
     }
 
     /**
@@ -168,7 +241,7 @@ public class E2SDataComponent extends AbstractTransformationDataComponent {
      * {@inheritDoc}
      */
     public boolean isObserver() {
-        return false;
+        return true;
     }
 
     /**
@@ -189,121 +262,35 @@ public class E2SDataComponent extends AbstractTransformationDataComponent {
      *            the esterel element
      * @return new QueueStatement
      */
-    public static ITransformationStatement getTransformationStatement(final String transName,
-            final State syncElement, final EObject estElement) {
+    public static AbstractTransformationStatement getTransformationStatement(
+            final String transName, final State syncElement, final EObject estElement) {
         QueueStatement qs = new QueueStatement(transName, syncElement, estElement);
         return qs;
     }
 
-    /**
-     * loads an esterel program initially into a syncchart TODO do this somewhere else.
-     */
-    private void loadEsterelIntoSyncChart() {
+    private List<EObject> getCurrentEditorSelection() {
+        LinkedList<EObject> selectedElements = null;
+        // get the active editor
+        IEditorPart editor = getActiveEditor();
+        if (editor instanceof SyncchartsDiagramEditor) {
+            EditPart rootEditPart = ((DiagramEditor) editor).getDiagramEditPart();
+            EditPartViewer viewer = rootEditPart.getViewer();
 
-        final String esterelLanguage = "de.cau.cs.kieler.esterel.Esterel";
-
-        PlatformUI.getWorkbench().getDisplay().syncExec(new Runnable() {
-
-            public void run() {
-                System.out.println("Initializing Esterel Transformation.");
-
-                System.out.println("Reading current Esterel Editor");
-                try {
-                    // get Editor must be done in UI Thread, otherwise null
-                    IEditorPart editor = PlatformUI.getWorkbench().getActiveWorkbenchWindow()
-                            .getActivePage().getActiveEditor();
-                    XtextEditor xeditor = ((XtextEditor) editor);
-                    if (!xeditor.getLanguageName().equals(esterelLanguage)) {
-                        throw new IllegalArgumentException("The currently open Xtext Editor is no"
-                                + " Esterel Editor. Editor language is "
-                                + xeditor.getLanguageName() + " but should be " + esterelLanguage);
-                    }
-
-                    IFile file = ((FileEditorInput) xeditor.getEditorInput()).getFile();
-
-                    final URI strlURI = URI.createPlatformResourceURI(
-                            file.getFullPath().toString(), true);
-                    final URI kidsURI = URI.createPlatformResourceURI(file.getFullPath()
-                            .removeFileExtension().addFileExtension("kids").toString(), false);
-                    final URI kixsURI = URI.createPlatformResourceURI(file.getFullPath()
-                            .removeFileExtension().addFileExtension("kixs").toString(), false);
-
-                    System.out.println("Creating new SyncCharts Diagram.");
-                    IRunnableWithProgress op = new WorkspaceModifyOperation(null) {
-                        protected void execute(final IProgressMonitor monitor)
-                                throws CoreException, InterruptedException {
-                            Resource diagram = SyncchartsDiagramEditorUtil.createDiagram(kidsURI,
-                                    kixsURI, monitor);
-                            try {
-                                diagram.save(null);
-                                SyncchartsDiagramEditorUtil.openDiagram(diagram);
-                            } catch (Exception e) {
-                                System.out.println(e);
-                                e.printStackTrace();
-                            }
-
+            // get the selection
+            ISelection selection = viewer.getSelection();
+            if (!selection.isEmpty()) {
+                selectedElements = new LinkedList<EObject>();
+                if (selection instanceof StructuredSelection) {
+                    // append all elements to the list being returned
+                    for (Object o : ((StructuredSelection) selection).toArray()) {
+                        if (o instanceof EditPart) {
+                            EObject selModel = ((View) ((EditPart) o).getModel()).getElement();
+                            selectedElements.add(selModel);
                         }
-                    };
-                    op.run(null);
-
-                    State rootState;
-
-                    System.out.println("Creating initial SyncCharts contents.");
-                    ResourceSet resourceSet = new ResourceSetImpl();
-                    Resource resource = resourceSet.getResource(kixsURI, true);
-                    SyncchartsFactory sf = SyncchartsFactory.eINSTANCE;
-                    Region rootRegion = (Region) resource.getContents().get(0);
-                    rootState = sf.createState();
-                    rootRegion.getStates().add(rootState);
-                    rootState.setLabel("EsterelState");
-                    rootState.setType(StateType.TEXTUAL);
-
-                    System.out.println("Reading Esterel Source Code.");
-
-                    IXtextDocument document = xeditor.getDocument();
-                    TextualCode code = ExpressionsFactory.eINSTANCE.createTextualCode();
-                    rootState.getBodyText().add(code);
-                    code.setCode(document.get());
-
-                    System.out.println("Parsing Esterel Source Code.");
-                    Resource xtextResource = resourceSet.getResource(strlURI, true);
-                    EObject esterelModule = xtextResource.getContents().get(0);
-
-                    // xeditor.getDocument().readOnly(new IUnitOfWork.Void<XtextResource>() {
-                    // });
-
-                    System.out.println("Attaching Esterel Model to SyncChart");
-                    rootState.setBodyReference(esterelModule);
-
-                    resource.save(null);
-
-                    // update edit policies, so GMF will generate diagram elements
-                    // for model elements which have been generated during the
-                    // transformation.
-                    IEditorPart activeEditor = PlatformUI.getWorkbench().getActiveWorkbenchWindow()
-                            .getActivePage().getActiveEditor();
-                    if (activeEditor instanceof IDiagramWorkbenchPart) {
-                        EObject obj = ((View) ((IDiagramWorkbenchPart) activeEditor)
-                                .getDiagramEditPart().getModel()).getElement();
-                        List<?> editPolicies = CanonicalEditPolicy.getRegisteredEditPolicies(obj);
-                        for (Iterator<?> it = editPolicies.iterator(); it.hasNext();) {
-                            CanonicalEditPolicy nextEditPolicy = (CanonicalEditPolicy) it.next();
-                            System.out.println(nextEditPolicy.toString());
-                            nextEditPolicy.refresh();
-                        }
-                        IDiagramGraphicalViewer graphViewer = ((IDiagramWorkbenchPart) activeEditor)
-                                .getDiagramGraphicalViewer();
-                        graphViewer.flush();
                     }
-
-                } catch (Exception e) {
-                    // throw new KiemInitializationException(
-                    // "Failed to initialize Esterel Transformation. No valid Esterel Editor found.",
-                    // true, e);
-                    e.printStackTrace();
                 }
-
             }
-        });
+        }
+        return selectedElements;
     }
 }

@@ -14,6 +14,7 @@
 package de.cau.cs.kieler.esterel.transformation.core;
 
 import java.io.IOException;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Queue;
@@ -35,6 +36,9 @@ import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
 import org.json.JSONObject;
 
+import com.sun.org.apache.bcel.internal.classfile.Code;
+
+import de.cau.cs.kieler.core.ui.util.EditorUtils;
 import de.cau.cs.kieler.core.util.Maybe;
 import de.cau.cs.kieler.esterel.transformation.kivi.TransformationTrigger;
 import de.cau.cs.kieler.sim.kiem.IJSONObjectDataComponent;
@@ -62,7 +66,7 @@ public abstract class AbstractTransformationDataComponent extends JSONObjectData
         IJSONObjectDataComponent {
 
     /** queue storing xpand transformations to be executed. */
-    private Queue<ITransformationStatement> queue;
+    private Queue<AbstractTransformationStatement> queue;
 
     private XtendExecution runner;
 
@@ -76,20 +80,14 @@ public abstract class AbstractTransformationDataComponent extends JSONObjectData
         // register this component, do extending class's initialize method and initialize the queue
         // and runner.
         XtendToJava.registerComponent(this);
-        queue = new LinkedBlockingQueue<ITransformationStatement>();
+        queue = new LinkedBlockingQueue<AbstractTransformationStatement>();
         runner = new XtendExecution(getTransformationFile(), getBasePackages());
-        preInitialize();
     }
 
     /**
      * {@inheritDoc}
      */
     public JSONObject step(final JSONObject arg0) throws KiemExecutionException {
-
-        if (queue.isEmpty()) {
-            System.out.println("NO FURTHER TRANSFORMATIONS");
-            return null;
-        }
 
         // poll a statement from the queue and execute
         PlatformUI.getWorkbench().getDisplay().asyncExec(new Runnable() {
@@ -101,8 +99,16 @@ public abstract class AbstractTransformationDataComponent extends JSONObjectData
                     return;
                 }
 
-                ITransformationStatement ts = queue.poll();
+                AbstractTransformationStatement ts = getNextQueueStatement();
+                if (ts == null) {
+                    System.out.println("NO FURTHER TRANSFORMATIONS");
+                    return;
+                }
+                if (ts.isDone()) {
+                    System.out.println("The current step was already performed");
+                }
                 runner.executeTransformation(ts.getParameters(), ts.getTransformationName());
+                ts.setDone(true);
 
                 if (resource != null) {
                     try {
@@ -149,10 +155,23 @@ public abstract class AbstractTransformationDataComponent extends JSONObjectData
     }
 
     /**
-     * @return the queue
+     * Append an element to the queue.
+     * 
+     * @param statement
+     *            the statement to append.
+     * @return <tt>true</tt> (as specified by {@link Collection#add})
      */
-    public Queue<ITransformationStatement> getQueue() {
-        return queue;
+    public boolean appendToQueue(final AbstractTransformationStatement statement) {
+        return queue.add(statement);
+    }
+
+    /**
+     * Returns the next element of the queue.
+     * 
+     * @return the next statement.
+     */
+    public AbstractTransformationStatement getNextQueueStatement() {
+        return queue.poll();
     }
 
     /**
@@ -161,11 +180,6 @@ public abstract class AbstractTransformationDataComponent extends JSONObjectData
     public XtendExecution getRunner() {
         return runner;
     }
-
-    /**
-     * method is called within the DataComponents initialize() method.
-     */
-    public abstract void preInitialize();
 
     /**
      * @return all base packages needed for the transformations planned.
@@ -182,30 +196,23 @@ public abstract class AbstractTransformationDataComponent extends JSONObjectData
      */
     public abstract String getIdentifier();
 
-    // protected DiagramEditor getActiveEditor() {
-    // final Maybe<DiagramEditor> maybe = new Maybe<DiagramEditor>();
-    // Display.getDefault().syncExec(new Runnable() {
-    // public void run() {
-    // // get the active editor
-    // IWorkbenchWindow window = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
-    // IWorkbenchPage activePage = window.getActivePage();
-    // IEditorPart editor = activePage.getActiveEditor();
-    // if (editor instanceof DiagramEditor) {
-    // maybe.set((DiagramEditor) editor);
-    // }
-    // }
-    // });
-    // return maybe.get();
-    // }
+    /**
+     * DON'T USE this method to add or remove elements of the queue. Use
+     * {@link AbstractTransformationDataComponent#appendToQueue(AbstractTransformationStatement)}
+     * and {@link AbstractTransformationDataComponent#getNextQueueStatement()} instead.
+     * 
+     * @return the queue
+     */
+    public Queue<AbstractTransformationStatement> getQueue() {
+        return queue;
+    }
 
     protected DiagramEditor getActiveEditor() {
+
         final Maybe<DiagramEditor> maybe = new Maybe<DiagramEditor>();
         Display.getDefault().syncExec(new Runnable() {
             public void run() {
-                // get the active editor
-                IWorkbenchWindow window = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
-                IWorkbenchPage activePage = window.getActivePage();
-                IEditorPart editor = activePage.getActiveEditor();
+                IEditorPart editor = EditorUtils.getLastActiveEditor();
                 if (editor instanceof DiagramEditor) {
                     maybe.set((DiagramEditor) editor);
                 }

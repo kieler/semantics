@@ -13,9 +13,12 @@
  */
 package de.cau.cs.kieler.esterel.transformation.impl;
 
+import java.util.LinkedList;
+
 import org.eclipse.emf.ecore.EObject;
 
-import de.cau.cs.kieler.esterel.transformation.core.ITransformationStatement;
+import de.cau.cs.kieler.esterel.transformation.core.AbstractTransformationStatement;
+import de.cau.cs.kieler.synccharts.State;
 
 /**
  * Class represents a queue statement used to store a transformation and an according module within
@@ -23,33 +26,35 @@ import de.cau.cs.kieler.esterel.transformation.core.ITransformationStatement;
  * 
  * @author uru
  */
-public class QueueStatement implements ITransformationStatement {
+public class QueueStatement extends AbstractTransformationStatement {
 
     private String transformation;
-    private EObject syncElement;
+    private State state;
     private EObject estElement;
+
+    private LinkedList<QueueStatement> children;
 
     /**
      * @param trans
      *            the name of the transformation to be run
-     * @param theSyncElement
+     * @param theState
      *            syncchartselement
      * @param theEstElement
      *            esterel element
      * 
      */
-    public QueueStatement(final String trans, final EObject theSyncElement,
-            final EObject theEstElement) {
+    public QueueStatement(final String trans, final State theState, final EObject theEstElement) {
         this.transformation = trans;
-        this.syncElement = theSyncElement;
+        this.state = theState;
         this.estElement = theEstElement;
+        children = new LinkedList<QueueStatement>();
     }
 
     /**
      * /** {@inheritDoc}
      */
     public EObject[] getParameters() {
-        return new EObject[] { syncElement, estElement };
+        return new EObject[] { state, estElement };
     }
 
     /**
@@ -57,5 +62,19 @@ public class QueueStatement implements ITransformationStatement {
      */
     public String getTransformationName() {
         return transformation;
+    }
+
+    /**
+     * @return the syncElement
+     */
+    public State getState() {
+        return state;
+    }
+
+    /**
+     * @return the children
+     */
+    public LinkedList<QueueStatement> getChildren() {
+        return children;
     }
 }

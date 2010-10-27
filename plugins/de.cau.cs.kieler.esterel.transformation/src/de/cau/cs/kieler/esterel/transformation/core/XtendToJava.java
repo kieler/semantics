@@ -27,8 +27,7 @@ public final class XtendToJava {
 
     private static XtendToJava instance = new XtendToJava();
 
-    private static HashMap<String, AbstractTransformationDataComponent> components = new HashMap<String, 
-        AbstractTransformationDataComponent>();
+    private static HashMap<String, AbstractTransformationDataComponent> components = new HashMap<String, AbstractTransformationDataComponent>();
 
     /**
      * private constructor, singleton.
@@ -57,7 +56,8 @@ public final class XtendToJava {
             // TODO
             System.err.println("NO TRANSFORMATIONCOMPONENT FOUND");
         } else {
-            boolean success = component.getQueue().add((ITransformationStatement) statement);
+            boolean success = component
+                    .appendToQueue(((AbstractTransformationStatement) statement));
             if (!success) {
                 System.err.println("ANOTHER ERROR");
             }

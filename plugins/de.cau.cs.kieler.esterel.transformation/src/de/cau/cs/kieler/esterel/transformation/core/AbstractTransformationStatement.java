@@ -20,16 +20,33 @@ import org.eclipse.emf.ecore.EObject;
  * 
  * @author uru
  */
-public interface ITransformationStatement {
+public abstract class AbstractTransformationStatement {
+
+    private boolean done = false;
 
     /**
      * @return the parameters being passed to the transformation.
      */
-    EObject[] getParameters();
+    public abstract EObject[] getParameters();
 
     /**
      * @return the name of the transformation to be executed.
      */
-    String getTransformationName();
+    public abstract String getTransformationName();
+
+    /**
+     * @return the done
+     */
+    public boolean isDone() {
+        return done;
+    }
+
+    /**
+     * @param nowDone
+     *            is this statement done?
+     */
+    public void setDone(final boolean nowDone) {
+        this.done = nowDone;
+    }
 
 }
