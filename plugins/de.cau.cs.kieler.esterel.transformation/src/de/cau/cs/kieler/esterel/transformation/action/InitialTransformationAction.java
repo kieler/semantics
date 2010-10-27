@@ -62,6 +62,7 @@ public class InitialTransformationAction implements IActionDelegate {
      * {@inheritDoc}
      */
     public void run(final IAction action) {
+        createSyncchartDiagram();
         doInitialEsterelTransformation();
         refreshEditPolicies();
         try {
@@ -84,16 +85,30 @@ public class InitialTransformationAction implements IActionDelegate {
         action.setEnabled(true);
     }
 
-    private void doInitialEsterelTransformation() {
+    protected void doInitialEsterelTransformation() {
         try {
             final URI strlURI = URI.createPlatformResourceURI(currentFile.getFullPath().toString(),
                     true);
-//            System.out.println(currentFile.getLocationURI().getPath() + "  "+ currentFile.getFullPath().toString());
+            // System.out.println(currentFile.getLocationURI().getPath() + "  "+
+            // currentFile.getFullPath().toString());
 
-            State rootState = createSyncchartDiagram();
+            ResourceSet resourceSet = new ResourceSetImpl();
+            final URI kixsURI = URI.createPlatformResourceURI(currentFile.getFullPath()
+                    .removeFileExtension().addFileExtension("kixs").toString(), false);
+
+            State rootState;
+
+            System.out.println("Creating initial SyncCharts contents.");
+            resource = resourceSet.getResource(kixsURI, true);
+            SyncchartsFactory sf = SyncchartsFactory.eINSTANCE;
+            Region rootRegion = (Region) resource.getContents().get(0);
+            rootState = sf.createState();
+            rootRegion.getStates().add(rootState);
+            rootState.setLabel("EsterelState");
+            rootState.setType(StateType.TEXTUAL);
 
             System.out.println("Parsing Esterel Source Code.");
-            ResourceSet resourceSet = new ResourceSetImpl();
+            // ResourceSet resourceSet = new ResourceSetImpl();
             Resource xtextResource = resourceSet.getResource(strlURI, true);
             EObject esterelModule = xtextResource.getContents().get(0);
 
@@ -105,9 +120,9 @@ public class InitialTransformationAction implements IActionDelegate {
             System.out.println("Attaching Esterel Model to SyncChart");
             rootState.setBodyReference(esterelModule);
 
-//            Region r = SyncchartsFactory.eINSTANCE.createRegion();
-//            rootState.getRegions().add(r);
-//            rootState.getRegions().remove(r);
+            // Region r = SyncchartsFactory.eINSTANCE.createRegion();
+            // rootState.getRegions().add(r);
+            // rootState.getRegions().remove(r);
             // xtextResource.save(null);
 
         } catch (Exception e) {
@@ -116,9 +131,9 @@ public class InitialTransformationAction implements IActionDelegate {
         }
     }
 
-    private State createSyncchartDiagram() {
+    private void createSyncchartDiagram() {
         try {
-            ResourceSet resourceSet = new ResourceSetImpl();
+
             // create corresponding syncchart
             final URI kidsURI = URI.createPlatformResourceURI(currentFile.getFullPath()
                     .removeFileExtension().addFileExtension("kids").toString(), false);
@@ -143,24 +158,10 @@ public class InitialTransformationAction implements IActionDelegate {
             };
             op.run(null);
 
-            State rootState;
-
-            System.out.println("Creating initial SyncCharts contents.");
-            resource = resourceSet.getResource(kixsURI, true);
-            SyncchartsFactory sf = SyncchartsFactory.eINSTANCE;
-            Region rootRegion = (Region) resource.getContents().get(0);
-            rootState = sf.createState();
-            rootRegion.getStates().add(rootState);
-            rootState.setLabel("EsterelState");
-            rootState.setType(StateType.TEXTUAL);
-
-            return rootState;
         } catch (Exception e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-
-        return null;
     }
 
     private void refreshEditPolicies() {
@@ -182,6 +183,13 @@ public class InitialTransformationAction implements IActionDelegate {
                     .getDiagramGraphicalViewer();
             graphViewer.flush();
         }
+    }
+
+    /**
+     * @return the currentFile
+     */
+    public IFile getCurrentFile() {
+        return currentFile;
     }
 
     // private List<IFile> getSelectedFilesOfEvent(final ExecutionEvent event) {

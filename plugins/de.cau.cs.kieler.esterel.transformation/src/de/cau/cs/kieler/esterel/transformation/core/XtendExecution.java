@@ -86,6 +86,11 @@ public class XtendExecution {
         stack.execute(xCommand);
     }
 
+    public void undoTransformation() {
+        CommandStack stack = editDomain.getCommandStack();
+        stack.undo();
+    }
+
     /**
      * inner class representing Xpand command. creating a framework and running the.
      * 
@@ -135,6 +140,13 @@ public class XtendExecution {
 
         public void redo() {
             // not supported yet
+        }
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public void undo() {
+            // nothing for this
         }
     }
 

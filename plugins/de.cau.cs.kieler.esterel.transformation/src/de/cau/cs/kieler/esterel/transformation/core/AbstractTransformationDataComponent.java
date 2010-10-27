@@ -89,12 +89,38 @@ public abstract class AbstractTransformationDataComponent extends JSONObjectData
      */
     public JSONObject step(final JSONObject arg0) throws KiemExecutionException {
 
+        if (isHistoryStep()) {
+            runner.undoTransformation();
+            PlatformUI.getWorkbench().getDisplay().asyncExec(new Runnable() {
+
+                public void run() {
+                    IEditorPart activeEditor = getActiveEditor();
+                    // update edit policies, so GMF will generate diagram elements
+                    // for model elements which have been generated during the
+                    // transformation.
+                    if (activeEditor instanceof IDiagramWorkbenchPart) {
+                        EObject obj = ((View) ((IDiagramWorkbenchPart) activeEditor)
+                                .getDiagramEditPart().getModel()).getElement();
+                        List<?> editPolicies = CanonicalEditPolicy.getRegisteredEditPolicies(obj);
+                        for (Iterator<?> it = editPolicies.iterator(); it.hasNext();) {
+                            CanonicalEditPolicy nextEditPolicy = (CanonicalEditPolicy) it.next();
+                            nextEditPolicy.refresh();
+                        }
+                        IDiagramGraphicalViewer graphViewer = ((IDiagramWorkbenchPart) activeEditor)
+                                .getDiagramGraphicalViewer();
+                        graphViewer.flush();
+                    }
+                }
+            });
+            return null;
+        }
+
+        final Maybe<Boolean> done = new Maybe<Boolean>();
         // poll a statement from the queue and execute
-        PlatformUI.getWorkbench().getDisplay().asyncExec(new Runnable() {
+        PlatformUI.getWorkbench().getDisplay().syncExec(new Runnable() {
 
             public void run() {
-                IEditorPart activeEditor = PlatformUI.getWorkbench().getActiveWorkbenchWindow()
-                        .getActivePage().getActiveEditor();
+                IEditorPart activeEditor = getActiveEditor();
                 if (!(activeEditor instanceof SyncchartsDiagramEditor)) {
                     return;
                 }
@@ -102,6 +128,7 @@ public abstract class AbstractTransformationDataComponent extends JSONObjectData
                 AbstractTransformationStatement ts = getNextQueueStatement();
                 if (ts == null) {
                     System.out.println("NO FURTHER TRANSFORMATIONS");
+                    done.set(true);
                     return;
                 }
                 if (ts.isDone()) {
@@ -142,6 +169,10 @@ public abstract class AbstractTransformationDataComponent extends JSONObjectData
 
             }
         });
+
+        if (done.get() != null && done.get()) {
+            throw new KiemExecutionException("No Further Transformations", true, null);
+        }
         return null;
     }
 
@@ -151,7 +182,7 @@ public abstract class AbstractTransformationDataComponent extends JSONObjectData
     public void wrapup() throws KiemInitializationException {
         queue = null;
         runner = null;
-        XtendToJava.removeComponent(this);
+        System.out.println("REMOVE::: " + XtendToJava.removeComponent(this));
     }
 
     /**
@@ -179,6 +210,28 @@ public abstract class AbstractTransformationDataComponent extends JSONObjectData
      */
     public XtendExecution getRunner() {
         return runner;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public boolean isObserver() {
+        return true;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public boolean isProducer() {
+        return true;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean isHistoryObserver() {
+        return true;
     }
 
     /**

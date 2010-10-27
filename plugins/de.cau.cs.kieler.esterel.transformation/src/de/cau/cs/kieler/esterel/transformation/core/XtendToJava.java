@@ -89,7 +89,7 @@ public final class XtendToJava {
      * @return true if it was removed
      */
     public static boolean removeComponent(final AbstractTransformationDataComponent comp) {
-        return components.remove(comp) != null;
+        return components.remove(comp.getIdentifier()) != null;
     }
 
 }

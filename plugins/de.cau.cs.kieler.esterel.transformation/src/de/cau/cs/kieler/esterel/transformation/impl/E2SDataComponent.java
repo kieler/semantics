@@ -54,7 +54,7 @@ public class E2SDataComponent extends AbstractTransformationDataComponent {
     private static final String TRANSFORMATION_FILE = "toSyncchartTransformationNew.ext";
 
     /** first transformation being executed. */
-    private static final String INITIAL_TRANSFORMATION = "initial";
+    public static final String INITIAL_TRANSFORMATION = "initial";
 
     // TODO needed?! can there be more than one data component of one type?
     /** any kind of identifier. */
@@ -237,19 +237,6 @@ public class E2SDataComponent extends AbstractTransformationDataComponent {
         return IDENTIFIER;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public boolean isObserver() {
-        return true;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public boolean isProducer() {
-        return true;
-    }
 
     /**
      * returns a QueueStatement for the passed parameters.

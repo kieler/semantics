@@ -16,6 +16,8 @@ package de.cau.cs.kieler.esterel.transformation.impl;
 import java.util.LinkedList;
 
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EcoreFactory;
+import org.eclipse.emf.ecore.EcorePackage;
 
 import de.cau.cs.kieler.esterel.transformation.core.AbstractTransformationStatement;
 import de.cau.cs.kieler.synccharts.State;
@@ -54,7 +56,7 @@ public class QueueStatement extends AbstractTransformationStatement {
      * /** {@inheritDoc}
      */
     public EObject[] getParameters() {
-        return new EObject[] { state, estElement };
+        return new EObject[] { state, estElement};
     }
 
     /**
