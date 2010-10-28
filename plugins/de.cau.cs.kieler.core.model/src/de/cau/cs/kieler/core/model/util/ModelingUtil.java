@@ -46,6 +46,8 @@ import org.eclipse.xtext.ui.editor.model.XtextDocument;
 import org.eclipse.xtext.util.concurrent.IUnitOfWork.Void;
 
 import de.cau.cs.kieler.core.annotations.NamedObject;
+import de.cau.cs.kieler.core.ui.util.MonitoredOperation;
+import de.cau.cs.kieler.core.util.Maybe;
 
 /**
  * Utility class with static methods to handle EMF models and GEF EditParts.
@@ -255,42 +257,54 @@ public final class ModelingUtil {
         }
         return result;
     }
-    
+
     /**
      * Find an EditPart corresponding to the given EObject in the DiagramEditPart.
      * 
-     * @param dep the DiagramEditPart to search in
-     * @param theElement the EObject to find
+     * @param dep
+     *            the DiagramEditPart to search in
+     * @param theElement
+     *            the EObject to find
      * @return the EditPart, or {@code null} if none was found
      */
     public static EditPart getEditPart(final DiagramEditPart dep, final EObject theElement) {
-        if (theElement == null) {
-            return null;
-        }
-        EditPart found = dep.findEditPart(null, theElement);
-        if (found != null) {
-            return found;
-        } else {
-            // the list always contains ConnectionEditParts
-            List<?> connections = dep.getConnections();
-            for (Object connection : connections) {
-                if (connection instanceof EditPart) {
-                    EditPart ep = (EditPart) connection;
-                    if (theElement.equals(((View) ep.getModel()).getElement())) {
-                        return ep;
+        // attempted fix for the concurrent modification exception on delete
+        final Maybe<EditPart> maybe = new Maybe<EditPart>();
+        MonitoredOperation.runInUI(new Runnable() {
+            public void run() {
+                if (theElement == null) {
+                    return;
+                }
+                EditPart found = dep.findEditPart(null, theElement);
+                if (found != null) {
+                    maybe.set(found);
+                    return;
+                } else {
+                    // the list always contains ConnectionEditParts
+                    List<?> connections = dep.getConnections();
+                    for (Object connection : connections) {
+                        if (connection instanceof EditPart) {
+                            EditPart ep = (EditPart) connection;
+                            if (theElement.equals(((View) ep.getModel()).getElement())) {
+                                maybe.set(ep);
+                                return;
+                            }
+                        }
                     }
                 }
             }
-        }
-        return null;
+        }, true);
+        return maybe.get();
     }
-    
+
     /**
-     * Find an EditPart corresponding to the given EObject in an arbitrary editor.
-     * However, only GMF editors are supported at the moment.
+     * Find an EditPart corresponding to the given EObject in an arbitrary editor. However, only GMF
+     * editors are supported at the moment.
      * 
-     * @param editorPart an editor part
-     * @param element the EObject to find
+     * @param editorPart
+     *            an editor part
+     * @param element
+     *            the EObject to find
      * @return the EditPart, or {@code null} if none was found
      */
     public static EditPart getEditPart(final IEditorPart editorPart, final EObject element) {
