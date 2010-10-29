@@ -16,8 +16,8 @@ package de.cau.cs.kieler.esterel.transformation.core;
 import java.util.HashMap;
 
 /**
- * Uses singleton pattern. Provides functionality to register an AbstractTransformationDataComponent
- * so that Xtend transformations can find their actual controlling java class in order to add some
+ * Static Class. Provides functionality to register an AbstractTransformationDataComponent so that
+ * Xtend transformations can find their actual controlling java class in order to add some
  * ITransformationStatement to the executing queue.
  * 
  * @author uru
@@ -30,16 +30,9 @@ public final class XtendToJava {
     private static HashMap<String, AbstractTransformationDataComponent> components = new HashMap<String, AbstractTransformationDataComponent>();
 
     /**
-     * private constructor, singleton.
+     * private constructor, static class.
      */
     private XtendToJava() {
-    }
-
-    /**
-     * @return the instance
-     */
-    public static XtendToJava getInstance() {
-        return instance;
     }
 
     /**

@@ -52,6 +52,7 @@ public class E2SDataComponent extends AbstractTransformationDataComponent {
     private static final String ESTEREL_PACKAGE = "de.cau.cs.kieler.esterel.esterel.EsterelPackage";
     private static final String ECORE_PACKAGE = "org.eclipse.emf.ecore.EcorePackage";
     private static final String TRANSFORMATION_FILE = "toSyncchartTransformationNew.ext";
+//    private static final String TRANSFORMATION_FILE = "optimization.ext";
 
     /** first transformation being executed. */
     public static final String INITIAL_TRANSFORMATION = "initial";

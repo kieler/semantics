@@ -22,6 +22,8 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EcoreFactory;
+import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
@@ -103,6 +105,7 @@ public class InitialTransformationAction implements IActionDelegate {
             SyncchartsFactory sf = SyncchartsFactory.eINSTANCE;
             Region rootRegion = (Region) resource.getContents().get(0);
             rootState = sf.createState();
+            rootState.setId("rsstate");
             rootRegion.getStates().add(rootState);
             rootState.setLabel("EsterelState");
             rootState.setType(StateType.TEXTUAL);

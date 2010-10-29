@@ -24,13 +24,19 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.transaction.TransactionalEditingDomain;
+import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramEditor;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.ui.IEditorPart;
 
 import de.cau.cs.kieler.core.expressions.ExpressionsFactory;
 import de.cau.cs.kieler.core.expressions.TextualCode;
+import de.cau.cs.kieler.core.ui.util.EditorUtils;
+import de.cau.cs.kieler.core.util.Maybe;
 import de.cau.cs.kieler.esterel.transformation.core.AbstractTransformationDataComponent;
 import de.cau.cs.kieler.esterel.transformation.core.AbstractTransformationStatement;
 import de.cau.cs.kieler.esterel.transformation.impl.DummyDataComponent;
 import de.cau.cs.kieler.esterel.transformation.impl.QueueStatement;
+import de.cau.cs.kieler.esterel.transformation.kivi.TransformationTrigger;
 import de.cau.cs.kieler.esterel.transformation.util.TransformationUtil;
 import de.cau.cs.kieler.synccharts.Region;
 import de.cau.cs.kieler.synccharts.State;
@@ -107,6 +113,9 @@ public class CompleteTransformationAction extends InitialTransformationAction {
             }
             dataComp.wrapup();
             dataComp = null;
+            if (TransformationTrigger.getInstance() != null) {
+                TransformationTrigger.getInstance().step(null, getActiveEditor());
+            }
             // appendToQueue(qs);
             // System.out.println("Added First Statement");
 
@@ -114,5 +123,19 @@ public class CompleteTransformationAction extends InitialTransformationAction {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
+    }
+
+    protected DiagramEditor getActiveEditor() {
+
+        final Maybe<DiagramEditor> maybe = new Maybe<DiagramEditor>();
+        Display.getDefault().syncExec(new Runnable() {
+            public void run() {
+                IEditorPart editor = EditorUtils.getLastActiveEditor();
+                if (editor instanceof DiagramEditor) {
+                    maybe.set((DiagramEditor) editor);
+                }
+            }
+        });
+        return maybe.get();
     }
 }
