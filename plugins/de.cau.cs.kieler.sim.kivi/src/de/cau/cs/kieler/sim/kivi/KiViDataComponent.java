@@ -42,7 +42,7 @@ public abstract class KiViDataComponent extends JSONObjectDataComponent implemen
         IJSONObjectDataComponent {
 
     private static final int DEFAULT_STEPS = 3;
-    
+
     private static final String DEFAULT_STATE_KEY = "state";
 
     private DiagramEditor diagramEditor;
@@ -50,15 +50,21 @@ public abstract class KiViDataComponent extends JSONObjectDataComponent implemen
     private Resource resource;
 
     private int steps;
-    
+
     private String stateKey;
 
     private DataComponentWrapper wrapper;
+
+    /** Remember when wrapup() was executed. */
+    private boolean wrapupDone = false;
 
     /**
      * {@inheritDoc}
      */
     public void initialize() throws KiemInitializationException {
+        synchronized (this) {
+            wrapupDone = false;
+        }
         diagramEditor = getActiveEditor();
         if (diagramEditor == null) {
             return;
@@ -80,14 +86,19 @@ public abstract class KiViDataComponent extends JSONObjectDataComponent implemen
 
     /**
      * {@inheritDoc}
+     * 
+     * Synchronized to avoid wrapup() finishing while step() still is running. This would lead to
+     * bad highlighting order: wrapup() undos all highlights, then step() executes a couple of new
+     * highlights that will remain active until the next simulation starts.
      */
-    public void wrapup() throws KiemInitializationException {
+    public synchronized void wrapup() throws KiemInitializationException {
         if (diagramEditor == null) {
             return;
         }
         if (StateActivityTrigger.getInstance() != null) {
             StateActivityTrigger.getInstance().step(null, diagramEditor);
         }
+        wrapupDone = true;
     }
 
     /**
@@ -154,7 +165,17 @@ public abstract class KiViDataComponent extends JSONObjectDataComponent implemen
                 currentJSONObject = pool.getData(null, index);
             }
             if (StateActivityTrigger.getInstance() != null) {
-                StateActivityTrigger.getInstance().step(statesByStep, diagramEditor);
+                /*
+                 * Synchronized to avoid wrapup() finishing while step() still is running. This
+                 * would lead to bad highlighting order: wrapup() undos all highlights, then step()
+                 * executes a couple of new highlights that will remain active until the next
+                 * simulation starts.
+                 */
+                synchronized (this) {
+                    if (!wrapupDone) {
+                        StateActivityTrigger.getInstance().step(statesByStep, diagramEditor);
+                    }
+                }
             }
         } catch (JSONException e) {
             // never happens because JSON.get() is checked by JSON.has()

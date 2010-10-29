@@ -223,6 +223,7 @@ public class HighlightEffect extends AbstractEffect {
                 }
             }
         }, true); // TODO investigate whether false works - would be massively faster
+                  // TODO false does *not* work, leads to a huge queue of highlights in the UI thread
         // targetFigure.repaint();
     }
 
