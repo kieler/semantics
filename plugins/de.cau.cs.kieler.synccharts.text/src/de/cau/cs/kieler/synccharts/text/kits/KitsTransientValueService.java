@@ -105,10 +105,10 @@ public class KitsTransientValueService extends DefaultTransientValueService {
             return true;
         }
         
-        if (SyncchartsPackage.eINSTANCE.getState().isInstance(owner)
-                && feature == SyncchartsPackage.eINSTANCE.getScope_BodyText()) {
-            return true;
-        }
+//        if (SyncchartsPackage.eINSTANCE.getState().isInstance(owner)
+//                && feature == SyncchartsPackage.eINSTANCE.getScope_BodyText()) {
+//            return true;
+//        }
                 
         /* suppress id serialization if id is equals to "" */
         if (SyncchartsPackage.eINSTANCE.getRegion().isInstance(owner)

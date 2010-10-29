@@ -55,8 +55,8 @@ public class KitsKeywordSerializer extends KeywordSerializer {
                 return null;
             }
         }
-        if (keyword == grammarAccess.getSingleRegionAccess().getRegionKeyword_1_0()
-                || keyword == grammarAccess.getSingleRegionAccess().getColonKeyword_1_3()) {
+        if (keyword == grammarAccess.getSingleRegionAccess().getRegionKeyword_1_0_0()
+                || keyword == grammarAccess.getSingleRegionAccess().getColonKeyword_1_0_3()) {
             Region region = (Region) context;
             if (region.eContainer() != null
                     && ((State) region.eContainer()).getRegions().size() == 1

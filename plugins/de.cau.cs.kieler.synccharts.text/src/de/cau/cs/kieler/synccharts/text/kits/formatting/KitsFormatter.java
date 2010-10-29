@@ -50,8 +50,8 @@ public class KitsFormatter extends ActionsFormatter {
         c.setNoSpace().before(f.getRootRegionAccess().getColonKeyword_2_3());
         c.setLinewrap().after(f.getRootRegionAccess().getColonKeyword_2_3());
         
-        c.setNoSpace().before(f.getSingleRegionAccess().getColonKeyword_1_3());
-        c.setLinewrap().after(f.getSingleRegionAccess().getColonKeyword_1_3());
+        c.setNoSpace().before(f.getSingleRegionAccess().getColonKeyword_1_0_3());
+        c.setLinewrap().after(f.getSingleRegionAccess().getColonKeyword_1_0_3());
         
 //        c.setNoLinewrap().before(f.getRootRegionAccess().getStatesStateParserRuleCall_4_0());
         c.setNoLinewrap().before(f.getRootRegionAccess().getStatesAssignment_5());
@@ -69,14 +69,14 @@ public class KitsFormatter extends ActionsFormatter {
                 f.getRegionAccess().getAnnotationsAssignment_0());
 
         // does not work!
-        c.setLinewrap(2, 2, 2).between(f.getStateAccess().getRegionsAssignment_6_1_1_1_0(),
-                f.getStateAccess().getRegionsAssignment_6_1_1_1_1());
+        c.setLinewrap(2, 2, 2).between(f.getStateAccess().getRegionsAssignment_6_1_1_2_0(),
+                f.getStateAccess().getRegionsAssignment_6_1_1_2_1());
 
-        c.setLinewrap(2, 2, 2).between(f.getStateAccess().getRegionsSingleRegionParserRuleCall_6_1_1_1_0_0(),
-                f.getStateAccess().getRegionsRegionParserRuleCall_6_1_1_1_1_0());
+        c.setLinewrap(2, 2, 2).between(f.getStateAccess().getRegionsSingleRegionParserRuleCall_6_1_1_2_0_0(),
+                f.getStateAccess().getRegionsRegionParserRuleCall_6_1_1_2_1_0());
         
-        c.setLinewrap(2, 2, 2).between(f.getStateAccess().getRegionsRegionParserRuleCall_6_1_1_1_1_0(),
-                f.getStateAccess().getRegionsRegionParserRuleCall_6_1_1_1_1_0());
+        c.setLinewrap(2, 2, 2).between(f.getStateAccess().getRegionsRegionParserRuleCall_6_1_1_2_1_0(),
+                f.getStateAccess().getRegionsRegionParserRuleCall_6_1_1_2_1_0());
         
         /*
          *  STATE

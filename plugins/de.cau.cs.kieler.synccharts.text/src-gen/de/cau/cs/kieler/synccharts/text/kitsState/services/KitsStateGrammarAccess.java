@@ -79,8 +79,8 @@ public class KitsStateGrammarAccess extends AbstractGrammarElementFinder {
 
 	//// ---------------------------------------------------------------------------------------------------
 	//SingleRegion returns synccharts::Region:
-	//	annotations+=StringAnnotation* ("region" id=ID? label=STRING? ":" (variables+=Variable | signals+=Signal)*)?
-	//	bodyText+=TextualCode* states+=State*;
+	//	annotations+=StringAnnotation* (("region" id=ID? label=STRING? ":") (variables+=Variable | signals+=Signal)*
+	//	bodyText+=TextualCode*)? states+=State*;
 	public KitsGrammarAccess.SingleRegionElements getSingleRegionAccess() {
 		return gaKits.getSingleRegionAccess();
 	}
@@ -117,7 +117,7 @@ public class KitsStateGrammarAccess extends AbstractGrammarElementFinder {
 	//	type=StateType? "state" id=ID label=STRING? ("@" bodyReference=[synccharts::State] ("[" renamings+=Substitution (","
 	//	renamings+=Substitution)* "]")? | "{" ((signals+=Signal | variables+=Variable | "onentry" entryActions+=Action |
 	//	"oninner" innerActions+=Action | "onexit" exitActions+=Action | "suspension" suspensionTrigger=Action)*
-	//	(regions+=SingleRegion regions+=Region*)?) "}")? outgoingTransitions+=Transition*;
+	//	bodyText+=TextualCode* (regions+=SingleRegion regions+=Region*)?) "}")? outgoingTransitions+=Transition*;
 	public KitsGrammarAccess.StateElements getStateAccess() {
 		return gaKits.getStateAccess();
 	}

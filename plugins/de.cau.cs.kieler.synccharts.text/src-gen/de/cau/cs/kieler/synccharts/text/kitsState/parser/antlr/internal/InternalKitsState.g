@@ -157,15 +157,15 @@ ruleSingleRegion returns [EObject current=null]
 	    }
 
 )
-)*(	'region' 
+)*((	'region' 
     {
-        createLeafNode(grammarAccess.getSingleRegionAccess().getRegionKeyword_1_0(), null); 
+        createLeafNode(grammarAccess.getSingleRegionAccess().getRegionKeyword_1_0_0(), null); 
     }
 (
 (
 		lv_id_2_0=RULE_ID
 		{
-			createLeafNode(grammarAccess.getSingleRegionAccess().getIdIDTerminalRuleCall_1_1_0(), "id"); 
+			createLeafNode(grammarAccess.getSingleRegionAccess().getIdIDTerminalRuleCall_1_0_1_0(), "id"); 
 		}
 		{
 	        if ($current==null) {
@@ -189,7 +189,7 @@ ruleSingleRegion returns [EObject current=null]
 (
 		lv_label_3_0=RULE_STRING
 		{
-			createLeafNode(grammarAccess.getSingleRegionAccess().getLabelSTRINGTerminalRuleCall_1_2_0(), "label"); 
+			createLeafNode(grammarAccess.getSingleRegionAccess().getLabelSTRINGTerminalRuleCall_1_0_2_0(), "label"); 
 		}
 		{
 	        if ($current==null) {
@@ -211,12 +211,12 @@ ruleSingleRegion returns [EObject current=null]
 )
 )?	':' 
     {
-        createLeafNode(grammarAccess.getSingleRegionAccess().getColonKeyword_1_3(), null); 
+        createLeafNode(grammarAccess.getSingleRegionAccess().getColonKeyword_1_0_3(), null); 
     }
-((
+)((
 (
 		{ 
-	        currentNode=createCompositeNode(grammarAccess.getSingleRegionAccess().getVariablesVariableParserRuleCall_1_4_0_0(), currentNode); 
+	        currentNode=createCompositeNode(grammarAccess.getSingleRegionAccess().getVariablesVariableParserRuleCall_1_1_0_0(), currentNode); 
 	    }
 		lv_variables_5_0=ruleVariable		{
 	        if ($current==null) {
@@ -241,7 +241,7 @@ ruleSingleRegion returns [EObject current=null]
     |(
 (
 		{ 
-	        currentNode=createCompositeNode(grammarAccess.getSingleRegionAccess().getSignalsSignalParserRuleCall_1_4_1_0(), currentNode); 
+	        currentNode=createCompositeNode(grammarAccess.getSingleRegionAccess().getSignalsSignalParserRuleCall_1_1_1_0(), currentNode); 
 	    }
 		lv_signals_6_0=ruleSignal		{
 	        if ($current==null) {
@@ -262,10 +262,10 @@ ruleSingleRegion returns [EObject current=null]
 	    }
 
 )
-))*)?(
+))*(
 (
 		{ 
-	        currentNode=createCompositeNode(grammarAccess.getSingleRegionAccess().getBodyTextTextualCodeParserRuleCall_2_0(), currentNode); 
+	        currentNode=createCompositeNode(grammarAccess.getSingleRegionAccess().getBodyTextTextualCodeParserRuleCall_1_2_0(), currentNode); 
 	    }
 		lv_bodyText_7_0=ruleTextualCode		{
 	        if ($current==null) {
@@ -286,10 +286,10 @@ ruleSingleRegion returns [EObject current=null]
 	    }
 
 )
-)*(
+)*)?(
 (
 		{ 
-	        currentNode=createCompositeNode(grammarAccess.getSingleRegionAccess().getStatesStateParserRuleCall_3_0(), currentNode); 
+	        currentNode=createCompositeNode(grammarAccess.getSingleRegionAccess().getStatesStateParserRuleCall_2_0(), currentNode); 
 	    }
 		lv_states_8_0=ruleState		{
 	        if ($current==null) {
@@ -1060,12 +1060,36 @@ ruleState returns [EObject current=null]
 	    }
 
 )
-)))*((
+)))*(
 (
 		{ 
-	        currentNode=createCompositeNode(grammarAccess.getStateAccess().getRegionsSingleRegionParserRuleCall_6_1_1_1_0_0(), currentNode); 
+	        currentNode=createCompositeNode(grammarAccess.getStateAccess().getBodyTextTextualCodeParserRuleCall_6_1_1_1_0(), currentNode); 
 	    }
-		lv_regions_27_0=ruleSingleRegion		{
+		lv_bodyText_27_0=ruleTextualCode		{
+	        if ($current==null) {
+	            $current = factory.create(grammarAccess.getStateRule().getType().getClassifier());
+	            associateNodeWithAstElement(currentNode.getParent(), $current);
+	        }
+	        try {
+	       		add(
+	       			$current, 
+	       			"bodyText",
+	        		lv_bodyText_27_0, 
+	        		"TextualCode", 
+	        		currentNode);
+	        } catch (ValueConverterException vce) {
+				handleValueConverterException(vce);
+	        }
+	        currentNode = currentNode.getParent();
+	    }
+
+)
+)*((
+(
+		{ 
+	        currentNode=createCompositeNode(grammarAccess.getStateAccess().getRegionsSingleRegionParserRuleCall_6_1_1_2_0_0(), currentNode); 
+	    }
+		lv_regions_28_0=ruleSingleRegion		{
 	        if ($current==null) {
 	            $current = factory.create(grammarAccess.getStateRule().getType().getClassifier());
 	            associateNodeWithAstElement(currentNode.getParent(), $current);
@@ -1074,7 +1098,7 @@ ruleState returns [EObject current=null]
 	       		add(
 	       			$current, 
 	       			"regions",
-	        		lv_regions_27_0, 
+	        		lv_regions_28_0, 
 	        		"SingleRegion", 
 	        		currentNode);
 	        } catch (ValueConverterException vce) {
@@ -1087,9 +1111,9 @@ ruleState returns [EObject current=null]
 )(
 (
 		{ 
-	        currentNode=createCompositeNode(grammarAccess.getStateAccess().getRegionsRegionParserRuleCall_6_1_1_1_1_0(), currentNode); 
+	        currentNode=createCompositeNode(grammarAccess.getStateAccess().getRegionsRegionParserRuleCall_6_1_1_2_1_0(), currentNode); 
 	    }
-		lv_regions_28_0=ruleRegion		{
+		lv_regions_29_0=ruleRegion		{
 	        if ($current==null) {
 	            $current = factory.create(grammarAccess.getStateRule().getType().getClassifier());
 	            associateNodeWithAstElement(currentNode.getParent(), $current);
@@ -1098,7 +1122,7 @@ ruleState returns [EObject current=null]
 	       		add(
 	       			$current, 
 	       			"regions",
-	        		lv_regions_28_0, 
+	        		lv_regions_29_0, 
 	        		"Region", 
 	        		currentNode);
 	        } catch (ValueConverterException vce) {
@@ -1117,7 +1141,7 @@ ruleState returns [EObject current=null]
 		{ 
 	        currentNode=createCompositeNode(grammarAccess.getStateAccess().getOutgoingTransitionsTransitionParserRuleCall_7_0(), currentNode); 
 	    }
-		lv_outgoingTransitions_30_0=ruleTransition		{
+		lv_outgoingTransitions_31_0=ruleTransition		{
 	        if ($current==null) {
 	            $current = factory.create(grammarAccess.getStateRule().getType().getClassifier());
 	            associateNodeWithAstElement(currentNode.getParent(), $current);
@@ -1126,7 +1150,7 @@ ruleState returns [EObject current=null]
 	       		add(
 	       			$current, 
 	       			"outgoingTransitions",
-	        		lv_outgoingTransitions_30_0, 
+	        		lv_outgoingTransitions_31_0, 
 	        		"Transition", 
 	        		currentNode);
 	        } catch (ValueConverterException vce) {
