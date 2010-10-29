@@ -183,34 +183,48 @@ Boolean isClipboardEmpty():
  JAVA de.cau.cs.kieler.synccharts.diagram.custom.commands.Utils.isClipboardEmpty()
 ;
 
-// check for the type of a list
 Boolean isStateList(List[Object] list):
- let head = list.get(0):
- head.metaType == State
+ let filtered = list.select(e|e.metaType == State):
+ filtered.size == list.size
 ;
+
 Boolean isRegionList(List[Object] list):
- let head = list.get(0):
- head.metaType == Region
+ let filtered = list.select(e|e.metaType == Region):
+ filtered.size == list.size
 ;
+
 Boolean isTransitionList(List[Object] list):
- let head = list.get(0):
- head.metaType == Transition
+ let filtered = list.select(e|e.metaType == Transition):
+ filtered.size == list.size
 ;
 
 // delegator to the different list pastes
 Void paste(List[Object] objects):
- (if (!isClipboardEmpty()) then 
-  (if (isStateList(objects)) then
-   (pasteStateList(objects))
-   else
-   (if (isRegionList(objects)) then
-    (pasteRegionList(objects))
-    else
-    (if (isTransitionList(objects)) then pasteTransitionList(objects)
-   )
+ let states = objects.select(e|e.metaType == State):
+ let regions = objects.select(e|e.metaType == Region):
+ let trans = objects.select(e|e.metaType == Transition):
+ (if (!isClipboardEmpty()) then
+ (if (isSpecialCase(objects)) then (applySpecialCase(objects)) else
+  (if (!states.isEmpty) then (pasteStateList(states)) else
+  (if (!regions.isEmpty) then (pasteRegionList(regions)) else
+  (if (!trans.isEmpty) then (pasteTransitionList(trans))
+  )
+  )
   )
  )
  )
+;
+
+Boolean isSpecialCase(List[Object] objects):
+ let states = objects.select(e|e.metaType == State):
+ let trans = objects.select(e|e.metaType == Transition):
+ states.size == 1 && trans.size == 1
+;
+
+Void applySpecialCase(List[Object] objects):
+ let stateList = objects.select(e|e.metaType == State):
+ let transList = objects.select(e|e.metaType == Transition):
+ pasteOnStateTransition(stateList.get(0), transList.get(0))
 ;
 
 // dummy matcher
@@ -788,12 +802,12 @@ Void pasteInternal(Object noop0, Object noop1, Object noop2):
 // *** State and Transition selected ***
 
 // a state and a transition selected in any order
-Void paste(Transition trans, State state):
- paste(state, trans)
+Void pasteOnTransitionState(Transition trans, State state):
+ pasteOnStateTransition(state, trans)
 ;
 
 // a state and a transition selected in any order
-Void paste(State state, Transition trans):
+Void pasteOnStateTransition(State state, Transition trans):
  let clipBoard = getObjectFromClipboard():
  if (!isClipboardEmpty()) then pasteInternal(state, trans, clipBoard)
 ;

@@ -118,13 +118,15 @@
             id="de.cau.cs.kieler.core.ui.command.removeMarkers"
             name="Remove Problem Markers">
       </command>
-      <command
+      <!-- 
+      REMOVED: not working currently
+      <command 
             categoryId="de.cau.cs.kieler"
             defaultHandler="de.cau.cs.kieler.core.ui.handler.ReportBugHandler"
             description="Report a bug in KIELER or make suggestions about possible enhancements."
             id="de.cau.cs.kieler.core.ui.bugReport"
             name="Report Bug or Enhancement...">
-      </command>
+      </command> -->
    </extension>
    <extension
          point="org.eclipse.ui.newWizards">
