@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.ui.intro.configExtension">
+      <configExtension
+            configId="org.eclipse.ui.intro.universalConfig"
+            content="intro/introContent.xml">
+      </configExtension>
+   </extension>
+   <extension
+         point="de.cau.cs.kieler.kex">
+      <example
+            author="pkl"
+            contact="pkl@informatik.uni-kiel.de"
+            description="This is the &lt;b&gt;quick start &lt;/b&gt; example."
+            generation_date="Fri Jul 07 09:05:16 CEST 2010"
+            root_directory="examples/"
+            title="Synccharts Quick Start">
+         <category
+               id="de.cau.cs.kieler.synccharts">
+         </category>
+         <example_resource
+               direct_open="false"
+               local_path="examples/synccharts_quickstart/"
+               resource_type="project">
+         </example_resource>
+         <example_resource
+               direct_open="false"
+               local_path="examples/synccharts_quickstart/abro/"
+               resource_type="folder">
+         </example_resource>
+         <example_resource
+               direct_open="true"
+               local_path="examples/synccharts_quickstart/abro/abro.kids"
+               resource_type="file">
+         </example_resource>
+         <example_resource
+               direct_open="false"
+               local_path="examples/synccharts_quickstart/abro/abro.kixs"
+               resource_type="file">
+         </example_resource>
+      </example>
+   </extension>
+
+</plugin>

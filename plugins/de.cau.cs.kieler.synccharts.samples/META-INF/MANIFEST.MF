@@ -1,0 +1,13 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Samples
+Bundle-SymbolicName: de.cau.cs.kieler.synccharts.samples;singleton:=true
+Bundle-Version: 0.1.0.qualifier
+Bundle-Activator: de.cau.cs.kieler.synccharts.samples.Activator
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ de.cau.cs.kieler.synccharts.diagram;bundle-version="0.3.0",
+ org.eclipse.ui.intro
+Bundle-ActivationPolicy: lazy
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-Vendor: Christian-Albrechts-Universität zu Kiel
