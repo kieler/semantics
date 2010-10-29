@@ -37,8 +37,8 @@ public class KitsStateParser extends AbstractContentAssistParser {
 			nameMappings = new HashMap<AbstractElement, String>() {
 				private static final long serialVersionUID = 1L;
 				{
-					put(grammarAccess.getRootRegionAccess().getAlternatives_3(), "rule__RootRegion__Alternatives_3");
-					put(grammarAccess.getSingleRegionAccess().getAlternatives_1_1(), "rule__SingleRegion__Alternatives_1_1");
+					put(grammarAccess.getRootRegionAccess().getAlternatives_1_5(), "rule__RootRegion__Alternatives_1_5");
+					put(grammarAccess.getSingleRegionAccess().getAlternatives_0_5(), "rule__SingleRegion__Alternatives_0_5");
 					put(grammarAccess.getRegionAccess().getAlternatives_5(), "rule__Region__Alternatives_5");
 					put(grammarAccess.getStateAccess().getAlternatives_1(), "rule__State__Alternatives_1");
 					put(grammarAccess.getStateAccess().getAlternatives_6(), "rule__State__Alternatives_6");
@@ -66,10 +66,9 @@ public class KitsStateParser extends AbstractContentAssistParser {
 					put(grammarAccess.getValueTypeAccess().getAlternatives(), "rule__ValueType__Alternatives");
 					put(grammarAccess.getCombineOperatorAccess().getAlternatives(), "rule__CombineOperator__Alternatives");
 					put(grammarAccess.getRootRegionAccess().getGroup(), "rule__RootRegion__Group__0");
-					put(grammarAccess.getRootRegionAccess().getGroup_2(), "rule__RootRegion__Group_2__0");
+					put(grammarAccess.getRootRegionAccess().getGroup_1(), "rule__RootRegion__Group_1__0");
 					put(grammarAccess.getSingleRegionAccess().getGroup(), "rule__SingleRegion__Group__0");
-					put(grammarAccess.getSingleRegionAccess().getGroup_1(), "rule__SingleRegion__Group_1__0");
-					put(grammarAccess.getSingleRegionAccess().getGroup_1_0(), "rule__SingleRegion__Group_1_0__0");
+					put(grammarAccess.getSingleRegionAccess().getGroup_0(), "rule__SingleRegion__Group_0__0");
 					put(grammarAccess.getTextualCodeAccess().getGroup(), "rule__TextualCode__Group__0");
 					put(grammarAccess.getTextualCodeAccess().getGroup_2(), "rule__TextualCode__Group_2__0");
 					put(grammarAccess.getRegionAccess().getGroup(), "rule__Region__Group__0");
@@ -132,20 +131,20 @@ public class KitsStateParser extends AbstractContentAssistParser {
 					put(grammarAccess.getKeyValueAnnotationAccess().getGroup(), "rule__KeyValueAnnotation__Group__0");
 					put(grammarAccess.getImportAnnotationAccess().getGroup(), "rule__ImportAnnotation__Group__0");
 					put(grammarAccess.getRootRegionAccess().getAnnotationsAssignment_0(), "rule__RootRegion__AnnotationsAssignment_0");
-					put(grammarAccess.getRootRegionAccess().getAnnotationsAssignment_1(), "rule__RootRegion__AnnotationsAssignment_1");
-					put(grammarAccess.getRootRegionAccess().getIdAssignment_2_1(), "rule__RootRegion__IdAssignment_2_1");
-					put(grammarAccess.getRootRegionAccess().getLabelAssignment_2_2(), "rule__RootRegion__LabelAssignment_2_2");
-					put(grammarAccess.getRootRegionAccess().getVariablesAssignment_3_0(), "rule__RootRegion__VariablesAssignment_3_0");
-					put(grammarAccess.getRootRegionAccess().getSignalsAssignment_3_1(), "rule__RootRegion__SignalsAssignment_3_1");
-					put(grammarAccess.getRootRegionAccess().getBodyTextAssignment_4(), "rule__RootRegion__BodyTextAssignment_4");
-					put(grammarAccess.getRootRegionAccess().getStatesAssignment_5(), "rule__RootRegion__StatesAssignment_5");
-					put(grammarAccess.getSingleRegionAccess().getAnnotationsAssignment_0(), "rule__SingleRegion__AnnotationsAssignment_0");
-					put(grammarAccess.getSingleRegionAccess().getIdAssignment_1_0_1(), "rule__SingleRegion__IdAssignment_1_0_1");
-					put(grammarAccess.getSingleRegionAccess().getLabelAssignment_1_0_2(), "rule__SingleRegion__LabelAssignment_1_0_2");
-					put(grammarAccess.getSingleRegionAccess().getVariablesAssignment_1_1_0(), "rule__SingleRegion__VariablesAssignment_1_1_0");
-					put(grammarAccess.getSingleRegionAccess().getSignalsAssignment_1_1_1(), "rule__SingleRegion__SignalsAssignment_1_1_1");
-					put(grammarAccess.getSingleRegionAccess().getBodyTextAssignment_1_2(), "rule__SingleRegion__BodyTextAssignment_1_2");
-					put(grammarAccess.getSingleRegionAccess().getStatesAssignment_2(), "rule__SingleRegion__StatesAssignment_2");
+					put(grammarAccess.getRootRegionAccess().getAnnotationsAssignment_1_0(), "rule__RootRegion__AnnotationsAssignment_1_0");
+					put(grammarAccess.getRootRegionAccess().getIdAssignment_1_2(), "rule__RootRegion__IdAssignment_1_2");
+					put(grammarAccess.getRootRegionAccess().getLabelAssignment_1_3(), "rule__RootRegion__LabelAssignment_1_3");
+					put(grammarAccess.getRootRegionAccess().getVariablesAssignment_1_5_0(), "rule__RootRegion__VariablesAssignment_1_5_0");
+					put(grammarAccess.getRootRegionAccess().getSignalsAssignment_1_5_1(), "rule__RootRegion__SignalsAssignment_1_5_1");
+					put(grammarAccess.getRootRegionAccess().getBodyTextAssignment_1_6(), "rule__RootRegion__BodyTextAssignment_1_6");
+					put(grammarAccess.getRootRegionAccess().getStatesAssignment_2(), "rule__RootRegion__StatesAssignment_2");
+					put(grammarAccess.getSingleRegionAccess().getAnnotationsAssignment_0_0(), "rule__SingleRegion__AnnotationsAssignment_0_0");
+					put(grammarAccess.getSingleRegionAccess().getIdAssignment_0_2(), "rule__SingleRegion__IdAssignment_0_2");
+					put(grammarAccess.getSingleRegionAccess().getLabelAssignment_0_3(), "rule__SingleRegion__LabelAssignment_0_3");
+					put(grammarAccess.getSingleRegionAccess().getVariablesAssignment_0_5_0(), "rule__SingleRegion__VariablesAssignment_0_5_0");
+					put(grammarAccess.getSingleRegionAccess().getSignalsAssignment_0_5_1(), "rule__SingleRegion__SignalsAssignment_0_5_1");
+					put(grammarAccess.getSingleRegionAccess().getBodyTextAssignment_0_6(), "rule__SingleRegion__BodyTextAssignment_0_6");
+					put(grammarAccess.getSingleRegionAccess().getStatesAssignment_1(), "rule__SingleRegion__StatesAssignment_1");
 					put(grammarAccess.getTextualCodeAccess().getTypeAssignment_2_1(), "rule__TextualCode__TypeAssignment_2_1");
 					put(grammarAccess.getTextualCodeAccess().getCodeAssignment_4(), "rule__TextualCode__CodeAssignment_4");
 					put(grammarAccess.getRegionAccess().getAnnotationsAssignment_0(), "rule__Region__AnnotationsAssignment_0");

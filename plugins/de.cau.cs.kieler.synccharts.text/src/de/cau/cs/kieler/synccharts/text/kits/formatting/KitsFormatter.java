@@ -47,14 +47,14 @@ public class KitsFormatter extends ActionsFormatter {
         c.setNoSpace().before(f.getRegionAccess().getColonKeyword_4());
         c.setLinewrap().after(f.getRegionAccess().getColonKeyword_4());
         
-        c.setNoSpace().before(f.getRootRegionAccess().getColonKeyword_2_3());
-        c.setLinewrap().after(f.getRootRegionAccess().getColonKeyword_2_3());
+        c.setNoSpace().before(f.getRootRegionAccess().getColonKeyword_1_4());
+        c.setLinewrap().after(f.getRootRegionAccess().getColonKeyword_1_4());
         
-        c.setNoSpace().before(f.getSingleRegionAccess().getColonKeyword_1_0_3());
-        c.setLinewrap().after(f.getSingleRegionAccess().getColonKeyword_1_0_3());
+        c.setNoSpace().before(f.getSingleRegionAccess().getColonKeyword_0_4());
+        c.setLinewrap().after(f.getSingleRegionAccess().getColonKeyword_0_4());
         
 //        c.setNoLinewrap().before(f.getRootRegionAccess().getStatesStateParserRuleCall_4_0());
-        c.setNoLinewrap().before(f.getRootRegionAccess().getStatesAssignment_5());
+        c.setNoLinewrap().before(f.getRootRegionAccess().getStatesAssignment_2());
         
         
         // does not work!

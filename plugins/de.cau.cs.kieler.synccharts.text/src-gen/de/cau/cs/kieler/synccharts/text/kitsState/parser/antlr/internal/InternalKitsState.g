@@ -133,10 +133,10 @@ ruleSingleRegion returns [EObject current=null]
     @after { resetLookahead(); 
     	lastConsumedNode = currentNode;
     }:
-((
+(((
 (
 		{ 
-	        currentNode=createCompositeNode(grammarAccess.getSingleRegionAccess().getAnnotationsStringAnnotationParserRuleCall_0_0(), currentNode); 
+	        currentNode=createCompositeNode(grammarAccess.getSingleRegionAccess().getAnnotationsStringAnnotationParserRuleCall_0_0_0(), currentNode); 
 	    }
 		lv_annotations_0_0=ruleStringAnnotation		{
 	        if ($current==null) {
@@ -157,15 +157,15 @@ ruleSingleRegion returns [EObject current=null]
 	    }
 
 )
-)*((	'region' 
+)*	'region' 
     {
-        createLeafNode(grammarAccess.getSingleRegionAccess().getRegionKeyword_1_0_0(), null); 
+        createLeafNode(grammarAccess.getSingleRegionAccess().getRegionKeyword_0_1(), null); 
     }
 (
 (
 		lv_id_2_0=RULE_ID
 		{
-			createLeafNode(grammarAccess.getSingleRegionAccess().getIdIDTerminalRuleCall_1_0_1_0(), "id"); 
+			createLeafNode(grammarAccess.getSingleRegionAccess().getIdIDTerminalRuleCall_0_2_0(), "id"); 
 		}
 		{
 	        if ($current==null) {
@@ -189,7 +189,7 @@ ruleSingleRegion returns [EObject current=null]
 (
 		lv_label_3_0=RULE_STRING
 		{
-			createLeafNode(grammarAccess.getSingleRegionAccess().getLabelSTRINGTerminalRuleCall_1_0_2_0(), "label"); 
+			createLeafNode(grammarAccess.getSingleRegionAccess().getLabelSTRINGTerminalRuleCall_0_3_0(), "label"); 
 		}
 		{
 	        if ($current==null) {
@@ -211,12 +211,12 @@ ruleSingleRegion returns [EObject current=null]
 )
 )?	':' 
     {
-        createLeafNode(grammarAccess.getSingleRegionAccess().getColonKeyword_1_0_3(), null); 
+        createLeafNode(grammarAccess.getSingleRegionAccess().getColonKeyword_0_4(), null); 
     }
-)((
+((
 (
 		{ 
-	        currentNode=createCompositeNode(grammarAccess.getSingleRegionAccess().getVariablesVariableParserRuleCall_1_1_0_0(), currentNode); 
+	        currentNode=createCompositeNode(grammarAccess.getSingleRegionAccess().getVariablesVariableParserRuleCall_0_5_0_0(), currentNode); 
 	    }
 		lv_variables_5_0=ruleVariable		{
 	        if ($current==null) {
@@ -241,7 +241,7 @@ ruleSingleRegion returns [EObject current=null]
     |(
 (
 		{ 
-	        currentNode=createCompositeNode(grammarAccess.getSingleRegionAccess().getSignalsSignalParserRuleCall_1_1_1_0(), currentNode); 
+	        currentNode=createCompositeNode(grammarAccess.getSingleRegionAccess().getSignalsSignalParserRuleCall_0_5_1_0(), currentNode); 
 	    }
 		lv_signals_6_0=ruleSignal		{
 	        if ($current==null) {
@@ -265,7 +265,7 @@ ruleSingleRegion returns [EObject current=null]
 ))*(
 (
 		{ 
-	        currentNode=createCompositeNode(grammarAccess.getSingleRegionAccess().getBodyTextTextualCodeParserRuleCall_1_2_0(), currentNode); 
+	        currentNode=createCompositeNode(grammarAccess.getSingleRegionAccess().getBodyTextTextualCodeParserRuleCall_0_6_0(), currentNode); 
 	    }
 		lv_bodyText_7_0=ruleTextualCode		{
 	        if ($current==null) {
@@ -289,7 +289,7 @@ ruleSingleRegion returns [EObject current=null]
 )*)?(
 (
 		{ 
-	        currentNode=createCompositeNode(grammarAccess.getSingleRegionAccess().getStatesStateParserRuleCall_2_0(), currentNode); 
+	        currentNode=createCompositeNode(grammarAccess.getSingleRegionAccess().getStatesStateParserRuleCall_1_0(), currentNode); 
 	    }
 		lv_states_8_0=ruleState		{
 	        if ($current==null) {

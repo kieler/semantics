@@ -9,20 +9,23 @@ import "platform:/resource/de.cau.cs.kieler.synccharts.text/model/syncchartsExte
 
 RootRegion returns synccharts::Region:
     (annotations+=ImportAnnotation)*
-    (annotations += StringAnnotation)*
-    ('region' (id=ID)? (label=STRING)? ':')?
-    (variables+=Variable|signals+=Signal)*
-    (bodyText+=TextualCode)* 
+    (
+      (annotations += StringAnnotation)*
+      'region' (id=ID)? (label=STRING)? ':'
+      (variables+=Variable|signals+=Signal)*
+      (bodyText+=TextualCode)* 
+     )?
     (states+=State)*;
 
 // ---------------------------------------------------------------------------------------------------
 
 SingleRegion returns synccharts::Region:
-    (annotations += StringAnnotation)*
-    ( ('region' (id=ID)? (label=STRING)? ':')
+    (
+      (annotations += StringAnnotation)*
+      'region' (id=ID)? (label=STRING)? ':'
       (variables+=Variable|signals+=Signal)*
       (bodyText+=TextualCode)*
-    )?
+     )?
     (states+=State)*;
 
 // ---------------------------------------------------------------------------------------------------

@@ -24,32 +24,32 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Assignment cAnnotationsAssignment_0 = (Assignment)cGroup.eContents().get(0);
 		private final RuleCall cAnnotationsImportAnnotationParserRuleCall_0_0 = (RuleCall)cAnnotationsAssignment_0.eContents().get(0);
-		private final Assignment cAnnotationsAssignment_1 = (Assignment)cGroup.eContents().get(1);
-		private final RuleCall cAnnotationsStringAnnotationParserRuleCall_1_0 = (RuleCall)cAnnotationsAssignment_1.eContents().get(0);
-		private final Group cGroup_2 = (Group)cGroup.eContents().get(2);
-		private final Keyword cRegionKeyword_2_0 = (Keyword)cGroup_2.eContents().get(0);
-		private final Assignment cIdAssignment_2_1 = (Assignment)cGroup_2.eContents().get(1);
-		private final RuleCall cIdIDTerminalRuleCall_2_1_0 = (RuleCall)cIdAssignment_2_1.eContents().get(0);
-		private final Assignment cLabelAssignment_2_2 = (Assignment)cGroup_2.eContents().get(2);
-		private final RuleCall cLabelSTRINGTerminalRuleCall_2_2_0 = (RuleCall)cLabelAssignment_2_2.eContents().get(0);
-		private final Keyword cColonKeyword_2_3 = (Keyword)cGroup_2.eContents().get(3);
-		private final Alternatives cAlternatives_3 = (Alternatives)cGroup.eContents().get(3);
-		private final Assignment cVariablesAssignment_3_0 = (Assignment)cAlternatives_3.eContents().get(0);
-		private final RuleCall cVariablesVariableParserRuleCall_3_0_0 = (RuleCall)cVariablesAssignment_3_0.eContents().get(0);
-		private final Assignment cSignalsAssignment_3_1 = (Assignment)cAlternatives_3.eContents().get(1);
-		private final RuleCall cSignalsSignalParserRuleCall_3_1_0 = (RuleCall)cSignalsAssignment_3_1.eContents().get(0);
-		private final Assignment cBodyTextAssignment_4 = (Assignment)cGroup.eContents().get(4);
-		private final RuleCall cBodyTextTextualCodeParserRuleCall_4_0 = (RuleCall)cBodyTextAssignment_4.eContents().get(0);
-		private final Assignment cStatesAssignment_5 = (Assignment)cGroup.eContents().get(5);
-		private final RuleCall cStatesStateParserRuleCall_5_0 = (RuleCall)cStatesAssignment_5.eContents().get(0);
+		private final Group cGroup_1 = (Group)cGroup.eContents().get(1);
+		private final Assignment cAnnotationsAssignment_1_0 = (Assignment)cGroup_1.eContents().get(0);
+		private final RuleCall cAnnotationsStringAnnotationParserRuleCall_1_0_0 = (RuleCall)cAnnotationsAssignment_1_0.eContents().get(0);
+		private final Keyword cRegionKeyword_1_1 = (Keyword)cGroup_1.eContents().get(1);
+		private final Assignment cIdAssignment_1_2 = (Assignment)cGroup_1.eContents().get(2);
+		private final RuleCall cIdIDTerminalRuleCall_1_2_0 = (RuleCall)cIdAssignment_1_2.eContents().get(0);
+		private final Assignment cLabelAssignment_1_3 = (Assignment)cGroup_1.eContents().get(3);
+		private final RuleCall cLabelSTRINGTerminalRuleCall_1_3_0 = (RuleCall)cLabelAssignment_1_3.eContents().get(0);
+		private final Keyword cColonKeyword_1_4 = (Keyword)cGroup_1.eContents().get(4);
+		private final Alternatives cAlternatives_1_5 = (Alternatives)cGroup_1.eContents().get(5);
+		private final Assignment cVariablesAssignment_1_5_0 = (Assignment)cAlternatives_1_5.eContents().get(0);
+		private final RuleCall cVariablesVariableParserRuleCall_1_5_0_0 = (RuleCall)cVariablesAssignment_1_5_0.eContents().get(0);
+		private final Assignment cSignalsAssignment_1_5_1 = (Assignment)cAlternatives_1_5.eContents().get(1);
+		private final RuleCall cSignalsSignalParserRuleCall_1_5_1_0 = (RuleCall)cSignalsAssignment_1_5_1.eContents().get(0);
+		private final Assignment cBodyTextAssignment_1_6 = (Assignment)cGroup_1.eContents().get(6);
+		private final RuleCall cBodyTextTextualCodeParserRuleCall_1_6_0 = (RuleCall)cBodyTextAssignment_1_6.eContents().get(0);
+		private final Assignment cStatesAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final RuleCall cStatesStateParserRuleCall_2_0 = (RuleCall)cStatesAssignment_2.eContents().get(0);
 		
 		//RootRegion returns synccharts::Region:
-		//	annotations+=ImportAnnotation* annotations+=StringAnnotation* ("region" id=ID? label=STRING? ":")?
-		//	(variables+=Variable | signals+=Signal)* bodyText+=TextualCode* states+=State*;
+		//	annotations+=ImportAnnotation* (annotations+=StringAnnotation* "region" id=ID? label=STRING? ":" (variables+=Variable
+		//	| signals+=Signal)* bodyText+=TextualCode*)? states+=State*;
 		public ParserRule getRule() { return rule; }
 
-		//annotations+=ImportAnnotation* annotations+=StringAnnotation* ("region" id=ID? label=STRING? ":")? (variables+=Variable
-		//| signals+=Signal)* bodyText+=TextualCode* states+=State*
+		//annotations+=ImportAnnotation* (annotations+=StringAnnotation* "region" id=ID? label=STRING? ":" (variables+=Variable |
+		//signals+=Signal)* bodyText+=TextualCode*)? states+=State*
 		public Group getGroup() { return cGroup; }
 
 		//annotations+=ImportAnnotation*
@@ -58,150 +58,148 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 		//ImportAnnotation
 		public RuleCall getAnnotationsImportAnnotationParserRuleCall_0_0() { return cAnnotationsImportAnnotationParserRuleCall_0_0; }
 
-		//annotations+=StringAnnotation*
-		public Assignment getAnnotationsAssignment_1() { return cAnnotationsAssignment_1; }
-
-		//StringAnnotation
-		public RuleCall getAnnotationsStringAnnotationParserRuleCall_1_0() { return cAnnotationsStringAnnotationParserRuleCall_1_0; }
-
-		//("region" id=ID? label=STRING? ":")?
-		public Group getGroup_2() { return cGroup_2; }
-
-		//"region"
-		public Keyword getRegionKeyword_2_0() { return cRegionKeyword_2_0; }
-
-		//id=ID?
-		public Assignment getIdAssignment_2_1() { return cIdAssignment_2_1; }
-
-		//ID
-		public RuleCall getIdIDTerminalRuleCall_2_1_0() { return cIdIDTerminalRuleCall_2_1_0; }
-
-		//label=STRING?
-		public Assignment getLabelAssignment_2_2() { return cLabelAssignment_2_2; }
-
-		//STRING
-		public RuleCall getLabelSTRINGTerminalRuleCall_2_2_0() { return cLabelSTRINGTerminalRuleCall_2_2_0; }
-
-		//":"
-		public Keyword getColonKeyword_2_3() { return cColonKeyword_2_3; }
-
-		//(variables+=Variable | signals+=Signal)*
-		public Alternatives getAlternatives_3() { return cAlternatives_3; }
-
-		//variables+=Variable
-		public Assignment getVariablesAssignment_3_0() { return cVariablesAssignment_3_0; }
-
-		//Variable
-		public RuleCall getVariablesVariableParserRuleCall_3_0_0() { return cVariablesVariableParserRuleCall_3_0_0; }
-
-		//signals+=Signal
-		public Assignment getSignalsAssignment_3_1() { return cSignalsAssignment_3_1; }
-
-		//Signal
-		public RuleCall getSignalsSignalParserRuleCall_3_1_0() { return cSignalsSignalParserRuleCall_3_1_0; }
-
-		//bodyText+=TextualCode*
-		public Assignment getBodyTextAssignment_4() { return cBodyTextAssignment_4; }
-
-		//TextualCode
-		public RuleCall getBodyTextTextualCodeParserRuleCall_4_0() { return cBodyTextTextualCodeParserRuleCall_4_0; }
-
-		//states+=State*
-		public Assignment getStatesAssignment_5() { return cStatesAssignment_5; }
-
-		//State
-		public RuleCall getStatesStateParserRuleCall_5_0() { return cStatesStateParserRuleCall_5_0; }
-	}
-
-	public class SingleRegionElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "SingleRegion");
-		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Assignment cAnnotationsAssignment_0 = (Assignment)cGroup.eContents().get(0);
-		private final RuleCall cAnnotationsStringAnnotationParserRuleCall_0_0 = (RuleCall)cAnnotationsAssignment_0.eContents().get(0);
-		private final Group cGroup_1 = (Group)cGroup.eContents().get(1);
-		private final Group cGroup_1_0 = (Group)cGroup_1.eContents().get(0);
-		private final Keyword cRegionKeyword_1_0_0 = (Keyword)cGroup_1_0.eContents().get(0);
-		private final Assignment cIdAssignment_1_0_1 = (Assignment)cGroup_1_0.eContents().get(1);
-		private final RuleCall cIdIDTerminalRuleCall_1_0_1_0 = (RuleCall)cIdAssignment_1_0_1.eContents().get(0);
-		private final Assignment cLabelAssignment_1_0_2 = (Assignment)cGroup_1_0.eContents().get(2);
-		private final RuleCall cLabelSTRINGTerminalRuleCall_1_0_2_0 = (RuleCall)cLabelAssignment_1_0_2.eContents().get(0);
-		private final Keyword cColonKeyword_1_0_3 = (Keyword)cGroup_1_0.eContents().get(3);
-		private final Alternatives cAlternatives_1_1 = (Alternatives)cGroup_1.eContents().get(1);
-		private final Assignment cVariablesAssignment_1_1_0 = (Assignment)cAlternatives_1_1.eContents().get(0);
-		private final RuleCall cVariablesVariableParserRuleCall_1_1_0_0 = (RuleCall)cVariablesAssignment_1_1_0.eContents().get(0);
-		private final Assignment cSignalsAssignment_1_1_1 = (Assignment)cAlternatives_1_1.eContents().get(1);
-		private final RuleCall cSignalsSignalParserRuleCall_1_1_1_0 = (RuleCall)cSignalsAssignment_1_1_1.eContents().get(0);
-		private final Assignment cBodyTextAssignment_1_2 = (Assignment)cGroup_1.eContents().get(2);
-		private final RuleCall cBodyTextTextualCodeParserRuleCall_1_2_0 = (RuleCall)cBodyTextAssignment_1_2.eContents().get(0);
-		private final Assignment cStatesAssignment_2 = (Assignment)cGroup.eContents().get(2);
-		private final RuleCall cStatesStateParserRuleCall_2_0 = (RuleCall)cStatesAssignment_2.eContents().get(0);
-		
-		//// ---------------------------------------------------------------------------------------------------
-		//SingleRegion returns synccharts::Region:
-		//	annotations+=StringAnnotation* (("region" id=ID? label=STRING? ":") (variables+=Variable | signals+=Signal)*
-		//	bodyText+=TextualCode*)? states+=State*;
-		public ParserRule getRule() { return rule; }
-
-		//annotations+=StringAnnotation* (("region" id=ID? label=STRING? ":") (variables+=Variable | signals+=Signal)*
-		//bodyText+=TextualCode*)? states+=State*
-		public Group getGroup() { return cGroup; }
-
-		//annotations+=StringAnnotation*
-		public Assignment getAnnotationsAssignment_0() { return cAnnotationsAssignment_0; }
-
-		//StringAnnotation
-		public RuleCall getAnnotationsStringAnnotationParserRuleCall_0_0() { return cAnnotationsStringAnnotationParserRuleCall_0_0; }
-
-		//(("region" id=ID? label=STRING? ":") (variables+=Variable | signals+=Signal)* bodyText+=TextualCode*)?
+		//(annotations+=StringAnnotation* "region" id=ID? label=STRING? ":" (variables+=Variable | signals+=Signal)*
+		//bodyText+=TextualCode*)?
 		public Group getGroup_1() { return cGroup_1; }
 
-		//"region" id=ID? label=STRING? ":"
-		public Group getGroup_1_0() { return cGroup_1_0; }
+		//annotations+=StringAnnotation*
+		public Assignment getAnnotationsAssignment_1_0() { return cAnnotationsAssignment_1_0; }
+
+		//StringAnnotation
+		public RuleCall getAnnotationsStringAnnotationParserRuleCall_1_0_0() { return cAnnotationsStringAnnotationParserRuleCall_1_0_0; }
 
 		//"region"
-		public Keyword getRegionKeyword_1_0_0() { return cRegionKeyword_1_0_0; }
+		public Keyword getRegionKeyword_1_1() { return cRegionKeyword_1_1; }
 
 		//id=ID?
-		public Assignment getIdAssignment_1_0_1() { return cIdAssignment_1_0_1; }
+		public Assignment getIdAssignment_1_2() { return cIdAssignment_1_2; }
 
 		//ID
-		public RuleCall getIdIDTerminalRuleCall_1_0_1_0() { return cIdIDTerminalRuleCall_1_0_1_0; }
+		public RuleCall getIdIDTerminalRuleCall_1_2_0() { return cIdIDTerminalRuleCall_1_2_0; }
 
 		//label=STRING?
-		public Assignment getLabelAssignment_1_0_2() { return cLabelAssignment_1_0_2; }
+		public Assignment getLabelAssignment_1_3() { return cLabelAssignment_1_3; }
 
 		//STRING
-		public RuleCall getLabelSTRINGTerminalRuleCall_1_0_2_0() { return cLabelSTRINGTerminalRuleCall_1_0_2_0; }
+		public RuleCall getLabelSTRINGTerminalRuleCall_1_3_0() { return cLabelSTRINGTerminalRuleCall_1_3_0; }
 
 		//":"
-		public Keyword getColonKeyword_1_0_3() { return cColonKeyword_1_0_3; }
+		public Keyword getColonKeyword_1_4() { return cColonKeyword_1_4; }
 
 		//(variables+=Variable | signals+=Signal)*
-		public Alternatives getAlternatives_1_1() { return cAlternatives_1_1; }
+		public Alternatives getAlternatives_1_5() { return cAlternatives_1_5; }
 
 		//variables+=Variable
-		public Assignment getVariablesAssignment_1_1_0() { return cVariablesAssignment_1_1_0; }
+		public Assignment getVariablesAssignment_1_5_0() { return cVariablesAssignment_1_5_0; }
 
 		//Variable
-		public RuleCall getVariablesVariableParserRuleCall_1_1_0_0() { return cVariablesVariableParserRuleCall_1_1_0_0; }
+		public RuleCall getVariablesVariableParserRuleCall_1_5_0_0() { return cVariablesVariableParserRuleCall_1_5_0_0; }
 
 		//signals+=Signal
-		public Assignment getSignalsAssignment_1_1_1() { return cSignalsAssignment_1_1_1; }
+		public Assignment getSignalsAssignment_1_5_1() { return cSignalsAssignment_1_5_1; }
 
 		//Signal
-		public RuleCall getSignalsSignalParserRuleCall_1_1_1_0() { return cSignalsSignalParserRuleCall_1_1_1_0; }
+		public RuleCall getSignalsSignalParserRuleCall_1_5_1_0() { return cSignalsSignalParserRuleCall_1_5_1_0; }
 
 		//bodyText+=TextualCode*
-		public Assignment getBodyTextAssignment_1_2() { return cBodyTextAssignment_1_2; }
+		public Assignment getBodyTextAssignment_1_6() { return cBodyTextAssignment_1_6; }
 
 		//TextualCode
-		public RuleCall getBodyTextTextualCodeParserRuleCall_1_2_0() { return cBodyTextTextualCodeParserRuleCall_1_2_0; }
+		public RuleCall getBodyTextTextualCodeParserRuleCall_1_6_0() { return cBodyTextTextualCodeParserRuleCall_1_6_0; }
 
 		//states+=State*
 		public Assignment getStatesAssignment_2() { return cStatesAssignment_2; }
 
 		//State
 		public RuleCall getStatesStateParserRuleCall_2_0() { return cStatesStateParserRuleCall_2_0; }
+	}
+
+	public class SingleRegionElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "SingleRegion");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Group cGroup_0 = (Group)cGroup.eContents().get(0);
+		private final Assignment cAnnotationsAssignment_0_0 = (Assignment)cGroup_0.eContents().get(0);
+		private final RuleCall cAnnotationsStringAnnotationParserRuleCall_0_0_0 = (RuleCall)cAnnotationsAssignment_0_0.eContents().get(0);
+		private final Keyword cRegionKeyword_0_1 = (Keyword)cGroup_0.eContents().get(1);
+		private final Assignment cIdAssignment_0_2 = (Assignment)cGroup_0.eContents().get(2);
+		private final RuleCall cIdIDTerminalRuleCall_0_2_0 = (RuleCall)cIdAssignment_0_2.eContents().get(0);
+		private final Assignment cLabelAssignment_0_3 = (Assignment)cGroup_0.eContents().get(3);
+		private final RuleCall cLabelSTRINGTerminalRuleCall_0_3_0 = (RuleCall)cLabelAssignment_0_3.eContents().get(0);
+		private final Keyword cColonKeyword_0_4 = (Keyword)cGroup_0.eContents().get(4);
+		private final Alternatives cAlternatives_0_5 = (Alternatives)cGroup_0.eContents().get(5);
+		private final Assignment cVariablesAssignment_0_5_0 = (Assignment)cAlternatives_0_5.eContents().get(0);
+		private final RuleCall cVariablesVariableParserRuleCall_0_5_0_0 = (RuleCall)cVariablesAssignment_0_5_0.eContents().get(0);
+		private final Assignment cSignalsAssignment_0_5_1 = (Assignment)cAlternatives_0_5.eContents().get(1);
+		private final RuleCall cSignalsSignalParserRuleCall_0_5_1_0 = (RuleCall)cSignalsAssignment_0_5_1.eContents().get(0);
+		private final Assignment cBodyTextAssignment_0_6 = (Assignment)cGroup_0.eContents().get(6);
+		private final RuleCall cBodyTextTextualCodeParserRuleCall_0_6_0 = (RuleCall)cBodyTextAssignment_0_6.eContents().get(0);
+		private final Assignment cStatesAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final RuleCall cStatesStateParserRuleCall_1_0 = (RuleCall)cStatesAssignment_1.eContents().get(0);
+		
+		//// ---------------------------------------------------------------------------------------------------
+		//SingleRegion returns synccharts::Region:
+		//	(annotations+=StringAnnotation* "region" id=ID? label=STRING? ":" (variables+=Variable | signals+=Signal)*
+		//	bodyText+=TextualCode*)? states+=State*;
+		public ParserRule getRule() { return rule; }
+
+		//(annotations+=StringAnnotation* "region" id=ID? label=STRING? ":" (variables+=Variable | signals+=Signal)*
+		//bodyText+=TextualCode*)? states+=State*
+		public Group getGroup() { return cGroup; }
+
+		//(annotations+=StringAnnotation* "region" id=ID? label=STRING? ":" (variables+=Variable | signals+=Signal)*
+		//bodyText+=TextualCode*)?
+		public Group getGroup_0() { return cGroup_0; }
+
+		//annotations+=StringAnnotation*
+		public Assignment getAnnotationsAssignment_0_0() { return cAnnotationsAssignment_0_0; }
+
+		//StringAnnotation
+		public RuleCall getAnnotationsStringAnnotationParserRuleCall_0_0_0() { return cAnnotationsStringAnnotationParserRuleCall_0_0_0; }
+
+		//"region"
+		public Keyword getRegionKeyword_0_1() { return cRegionKeyword_0_1; }
+
+		//id=ID?
+		public Assignment getIdAssignment_0_2() { return cIdAssignment_0_2; }
+
+		//ID
+		public RuleCall getIdIDTerminalRuleCall_0_2_0() { return cIdIDTerminalRuleCall_0_2_0; }
+
+		//label=STRING?
+		public Assignment getLabelAssignment_0_3() { return cLabelAssignment_0_3; }
+
+		//STRING
+		public RuleCall getLabelSTRINGTerminalRuleCall_0_3_0() { return cLabelSTRINGTerminalRuleCall_0_3_0; }
+
+		//":"
+		public Keyword getColonKeyword_0_4() { return cColonKeyword_0_4; }
+
+		//(variables+=Variable | signals+=Signal)*
+		public Alternatives getAlternatives_0_5() { return cAlternatives_0_5; }
+
+		//variables+=Variable
+		public Assignment getVariablesAssignment_0_5_0() { return cVariablesAssignment_0_5_0; }
+
+		//Variable
+		public RuleCall getVariablesVariableParserRuleCall_0_5_0_0() { return cVariablesVariableParserRuleCall_0_5_0_0; }
+
+		//signals+=Signal
+		public Assignment getSignalsAssignment_0_5_1() { return cSignalsAssignment_0_5_1; }
+
+		//Signal
+		public RuleCall getSignalsSignalParserRuleCall_0_5_1_0() { return cSignalsSignalParserRuleCall_0_5_1_0; }
+
+		//bodyText+=TextualCode*
+		public Assignment getBodyTextAssignment_0_6() { return cBodyTextAssignment_0_6; }
+
+		//TextualCode
+		public RuleCall getBodyTextTextualCodeParserRuleCall_0_6_0() { return cBodyTextTextualCodeParserRuleCall_0_6_0; }
+
+		//states+=State*
+		public Assignment getStatesAssignment_1() { return cStatesAssignment_1; }
+
+		//State
+		public RuleCall getStatesStateParserRuleCall_1_0() { return cStatesStateParserRuleCall_1_0; }
 	}
 
 	public class TextualCodeElements extends AbstractParserRuleElementFinder {
@@ -1166,8 +1164,8 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 
 	
 	//RootRegion returns synccharts::Region:
-	//	annotations+=ImportAnnotation* annotations+=StringAnnotation* ("region" id=ID? label=STRING? ":")?
-	//	(variables+=Variable | signals+=Signal)* bodyText+=TextualCode* states+=State*;
+	//	annotations+=ImportAnnotation* (annotations+=StringAnnotation* "region" id=ID? label=STRING? ":" (variables+=Variable
+	//	| signals+=Signal)* bodyText+=TextualCode*)? states+=State*;
 	public RootRegionElements getRootRegionAccess() {
 		return (pRootRegion != null) ? pRootRegion : (pRootRegion = new RootRegionElements());
 	}
@@ -1178,7 +1176,7 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 
 	//// ---------------------------------------------------------------------------------------------------
 	//SingleRegion returns synccharts::Region:
-	//	annotations+=StringAnnotation* (("region" id=ID? label=STRING? ":") (variables+=Variable | signals+=Signal)*
+	//	(annotations+=StringAnnotation* "region" id=ID? label=STRING? ":" (variables+=Variable | signals+=Signal)*
 	//	bodyText+=TextualCode*)? states+=State*;
 	public SingleRegionElements getSingleRegionAccess() {
 		return (pSingleRegion != null) ? pSingleRegion : (pSingleRegion = new SingleRegionElements());
