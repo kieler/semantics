@@ -835,9 +835,10 @@ public class DataComponent extends JSONObjectSimulationDataComponent implements
      * #checkModelValidation (org.eclipse.emf.ecore.EObject)
      */
     public boolean checkModelValidation(EObject rootEObject) {
-        // Enable KlePto checks in possibly open GMF SyncCharts editor
-        ValidationManager.enableCheck("de.cau.cs.kieler.uml2.UMLMaudeChecks");
-        ValidationManager.validateActiveEditor();
+        //FIXME: Reenable this later
+    	// Enable KlePto checks in possibly open GMF SyncCharts editor
+        //ValidationManager.enableCheck("de.cau.cs.kieler.uml2.UMLMaudeChecks");
+        //ValidationManager.validateActiveEditor();
 
         // We don't want a dependency to synccharts diagram (custom) for validation
         // because we might want to simulate head less!!!
