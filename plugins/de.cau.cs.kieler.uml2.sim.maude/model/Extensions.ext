@@ -104,6 +104,15 @@ Set[String] getInitialStates(Package package):
 	all.getId()
 ;
 
+// Get ids of all initial state targets and their regions
+Set[String] getInitialStates(StateMachine sm):
+	let initialPseudoStates = (Set[Vertex])sm.eAllContents.select(e|e.metaType == Pseudostate && ((Vertex)e).isInitial()):
+	let initialStates = initialPseudoStates.outgoing.target:
+	let initialRegions = initialStates.getParent():
+	let all = initialStates.addAll(initialRegions):
+	all.getId()
+;
+
 //-----------------------------------------------------------------------------
 
 // Get all transition of the state machine
