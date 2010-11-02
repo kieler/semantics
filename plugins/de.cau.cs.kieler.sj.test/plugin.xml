@@ -4,7 +4,7 @@
    <extension
          point="de.cau.cs.kieler.sim.kiem.json.datacomponent">
       <content
-            class="de.cau.cs.kieler.sj.SJValidationSimulatorDataComponent"
+            class="de.cau.cs.kieler.sj.test.SJValidationSimulatorDataComponent"
             id="de.cau.cs.kieler.sj.validationsimulator"
             name="SJ Validation Simulator">
       </content>
