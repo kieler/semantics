@@ -314,4 +314,8 @@ litigation.
          id="de.cau.cs.kieler.kaom.source"
          version="0.0.0"/>
 
+   <includes
+         id="de.cau.cs.kieler.sj"
+         version="0.0.0"/>
+
 </feature>
