@@ -10,6 +10,9 @@
    </extension>
    <extension
          point="de.cau.cs.kieler.kex">
+      <category
+            id="de.cau.cs.kieler.synccharts">
+      </category>
       <example
             author="pkl"
             contact="pkl@informatik.uni-kiel.de"
