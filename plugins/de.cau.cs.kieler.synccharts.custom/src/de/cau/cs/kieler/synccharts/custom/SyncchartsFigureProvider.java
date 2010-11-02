@@ -19,17 +19,14 @@ import org.eclipse.draw2d.Graphics;
 import org.eclipse.draw2d.IFigure;
 import org.eclipse.draw2d.LayoutManager;
 import org.eclipse.draw2d.RoundedRectangle;
+import org.eclipse.draw2d.Shape;
 import org.eclipse.draw2d.geometry.Dimension;
 import org.eclipse.draw2d.geometry.Rectangle;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.gmf.runtime.diagram.ui.figures.BorderItemLocator;
-import org.eclipse.gmf.runtime.draw2d.ui.render.RenderedImage;
-import org.eclipse.gmf.runtime.draw2d.ui.render.factory.RenderedImageFactory;
-import org.eclipse.gmf.runtime.draw2d.ui.render.figures.ScalableImageFigure;
 
 import de.cau.cs.kieler.core.ui.figures.DoubleRoundedRectangle;
 import de.cau.cs.kieler.karma.IRenderingProvider;
-import de.cau.cs.kieler.synccharts.State;
 import de.cau.cs.kieler.synccharts.custom.layout.SyncChartsConfiguration;
 
 /**
@@ -39,6 +36,33 @@ import de.cau.cs.kieler.synccharts.custom.layout.SyncChartsConfiguration;
  * 
  */
 public class SyncchartsFigureProvider implements IRenderingProvider {
+
+    private static class RoundedRectangleWithBorder extends RoundedRectangle {
+
+        /**
+         * @see Shape#outlineShape(Graphics)
+         */
+        @Override
+        protected void fillShape(final Graphics graphics) {
+            graphics.fillRoundRectangle(getBounds(), corner.width,
+                    corner.height);
+
+            float lineInset = Math.max(1.0f, getLineWidthFloat()) / 2.0f;
+            int inset1 = (int) Math.floor(lineInset);
+            int inset2 = (int) Math.ceil(lineInset);
+
+            Rectangle r = Rectangle.SINGLETON.setBounds(getBounds());
+            r.x += inset1;
+            r.y += inset1;
+            r.width -= inset1 + inset2;
+            r.height -= inset1 + inset2;
+
+            graphics.drawRoundRectangle(r,
+                    Math.max(0, corner.width - (int) lineInset),
+                    Math.max(0, corner.height - (int) lineInset));
+        }
+
+    }
 
     /** line width for initial states. */
     private static final int INIT_LINE_WIDTH = 4;
@@ -61,8 +85,8 @@ public class SyncchartsFigureProvider implements IRenderingProvider {
     /**
      * {@inheritDoc}
      */
-    public IFigure getFigureByString(final String input, final IFigure oldFigure,
-            final EObject object) {
+    public IFigure getFigureByString(final String input,
+            final IFigure oldFigure, final EObject object) {
         if (input.equals("normalState")) {
             return createNormalFigure();
         } else if (input.equals("initialState")) {
@@ -149,13 +173,15 @@ public class SyncchartsFigureProvider implements IRenderingProvider {
     }
 
     /**
-     * Create a figure for reference States using a double rounded rectangle as basis.
+     * Create a figure for reference States using a double rounded rectangle as
+     * basis.
      * 
      * @param simple
      *            true if the state is simple, false if not
      * @return a figure for reference States
      */
-    private RoundedRectangle createDoubleRoundedRectangleReferenceFigure(final boolean simple) {
+    private RoundedRectangle createDoubleRoundedRectangleReferenceFigure(
+            final boolean simple) {
         RoundedRectangle figure = new DoubleRoundedRectangle() {
             @Override
             protected void outlineShape(final Graphics graphics) {
@@ -176,8 +202,8 @@ public class SyncchartsFigureProvider implements IRenderingProvider {
                 rect.y += distance;
                 rect.width -= 2 * distance;
                 rect.height -= 2 * distance;
-                graphics.drawRoundRectangle(rect, cornerWidth - distance * BORDER_WIDTH,
-                        cornerHeight - distance * BORDER_WIDTH);
+                graphics.drawRoundRectangle(rect, cornerWidth - distance
+                        * BORDER_WIDTH, cornerHeight - distance * BORDER_WIDTH);
 
                 setUpReferenceState(graphics, rect, simple);
             }
@@ -195,8 +221,8 @@ public class SyncchartsFigureProvider implements IRenderingProvider {
      * @param simple
      *            true if the state is simple, false if not
      */
-    private void setUpReferenceState(final Graphics graphics, final Rectangle r,
-            final boolean simple) {
+    private void setUpReferenceState(final Graphics graphics,
+            final Rectangle r, final boolean simple) {
         if (simple) {
             int refX = r.x + r.width / 2 - REFERENCE_SIGN_WIDTH / 2;
             int refY = r.y + r.height - REFERENCE_SIGN_OFFSET;
@@ -234,7 +260,8 @@ public class SyncchartsFigureProvider implements IRenderingProvider {
      *            true if the state is simple, false if not
      * @return a figure for reference States
      */
-    private RoundedRectangle createRoundedRectangleReferenceFigure(final boolean simple) {
+    private RoundedRectangle createRoundedRectangleReferenceFigure(
+            final boolean simple) {
         RoundedRectangle figure = new RoundedRectangle() {
             @Override
             protected void outlineShape(final Graphics graphics) {
@@ -248,7 +275,8 @@ public class SyncchartsFigureProvider implements IRenderingProvider {
                 r.width -= inset1 + inset2;
                 r.height -= inset1 + inset2;
 
-                graphics.drawRoundRectangle(r, Math.max(0, corner.width - (int) lineInset),
+                graphics.drawRoundRectangle(r,
+                        Math.max(0, corner.width - (int) lineInset),
                         Math.max(0, corner.height - (int) lineInset));
 
                 setUpReferenceState(graphics, r, simple);
@@ -264,8 +292,10 @@ public class SyncchartsFigureProvider implements IRenderingProvider {
      *            the figure to change
      */
     private void makeNormalState(final RoundedRectangle figure) {
-        figure.setCornerDimensions(new Dimension(StateLayout.MIN_WIDTH, StateLayout.MIN_HEIGHT));
-        figure.setFill(false);
+        figure.setCornerDimensions(new Dimension(StateLayout.MIN_WIDTH,
+                StateLayout.MIN_HEIGHT));
+        figure.setFill(true);
+        figure.setOpaque(false);
         figure.setLineWidth(1);
         figure.setForegroundColor(ColorConstants.black);
     }
@@ -308,7 +338,7 @@ public class SyncchartsFigureProvider implements IRenderingProvider {
      * @return a figure for normal states
      */
     private IFigure createNormalFigure() {
-        RoundedRectangle figure = new RoundedRectangle();
+        RoundedRectangle figure = new RoundedRectangleWithBorder();
         makeNormalState(figure);
         return figure;
     }
@@ -319,7 +349,7 @@ public class SyncchartsFigureProvider implements IRenderingProvider {
      * @return a figure for initial states.
      */
     private IFigure createInitialFigure() {
-        RoundedRectangle figure = new RoundedRectangle();
+        RoundedRectangle figure = new RoundedRectangleWithBorder();
         makeInitialState(figure);
         return figure;
     }
@@ -364,7 +394,7 @@ public class SyncchartsFigureProvider implements IRenderingProvider {
             StateLayout stateLayout = (StateLayout) oldLayoutManager;
             stateLayout.setModelElement(object);
         }
-        
+
         // TODO Auto-generated method stub
         return oldLayoutManager;
     }
@@ -377,7 +407,8 @@ public class SyncchartsFigureProvider implements IRenderingProvider {
         return null;
     }
 
-    public BorderItemLocator getBorderItemLocatorByString(String input,final IFigure parent, final Object locator, final EObject object) {
+    public BorderItemLocator getBorderItemLocatorByString(final String input,
+            final IFigure parent, final Object locator, final EObject object) {
         // TODO Auto-generated method stub
         return null;
     }
