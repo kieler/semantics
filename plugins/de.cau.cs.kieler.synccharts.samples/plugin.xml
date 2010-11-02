@@ -14,10 +14,11 @@
             id="de.cau.cs.kieler.synccharts">
       </category>
       <example
-            author="pkl"
+            author="KIELER Workgroup"
             contact="pkl@informatik.uni-kiel.de"
             description="This is the &lt;b&gt;quick start &lt;/b&gt; example."
             generation_date="Fri Jul 07 09:05:16 CEST 2010"
+            overview_pic="examples/synccharts_quickstart/abro.png"
             root_directory="examples/"
             title="Synccharts Quick Start">
          <category
