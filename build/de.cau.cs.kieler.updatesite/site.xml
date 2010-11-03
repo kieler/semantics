@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<site associateSitesURL="associateSites.xml">
+<site
+      associateSitesURL="associateSites.xml">
    <description name="KIELER Nightly Builds" url="http://rtsys.informatik.uni-kiel.de/~kieler/updatesite/nightly/">
       Update site for the KIELER project nightly builds
    </description>
@@ -121,6 +122,12 @@
       <category name="KIELER"/>
    </feature>
    <feature url="features/de.cau.cs.kieler.core.model.source_0.1.0.qualifier.jar" id="de.cau.cs.kieler.core.model.source" version="0.1.0.qualifier">
+      <category name="KIELER Sources"/>
+   </feature>
+   <feature url="features/de.cau.cs.kieler.kex_0.1.0.qualifier.jar" id="de.cau.cs.kieler.kex" version="0.1.0.qualifier">
+      <category name="KIELER"/>
+   </feature>
+   <feature url="features/de.cau.cs.kieler.kex.source_0.1.0.qualifier.jar" id="de.cau.cs.kieler.kex.source" version="0.1.0.qualifier">
       <category name="KIELER Sources"/>
    </feature>
    <category-def name="KIELER" label="KIELER">
