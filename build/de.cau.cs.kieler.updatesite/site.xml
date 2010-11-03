@@ -130,6 +130,12 @@
    <feature url="features/de.cau.cs.kieler.kex.source_0.1.0.qualifier.jar" id="de.cau.cs.kieler.kex.source" version="0.1.0.qualifier">
       <category name="KIELER Sources"/>
    </feature>
+   <feature url="features/de.cau.cs.kieler.sj_0.1.0.qualifier.jar" id="de.cau.cs.kieler.sj" version="0.1.0.qualifier">
+      <category name="KIELER"/>
+   </feature>
+   <feature url="features/de.cau.cs.kieler.sj.source_0.1.0.qualifier.jar" id="de.cau.cs.kieler.sj.source" version="0.1.0.qualifier">
+      <category name="KIELER Sources"/>
+   </feature>
    <category-def name="KIELER" label="KIELER">
       <description>
          Kiel Integrated Environment for Layout Eclipse RichClient
