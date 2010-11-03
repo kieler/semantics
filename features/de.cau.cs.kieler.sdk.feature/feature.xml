@@ -318,4 +318,16 @@ litigation.
          id="de.cau.cs.kieler.sj"
          version="0.0.0"/>
 
+   <includes
+         id="de.cau.cs.kieler.sj.source"
+         version="0.0.0"/>
+
+   <includes
+         id="de.cau.cs.kieler.kex"
+         version="0.0.0"/>
+
+   <includes
+         id="de.cau.cs.kieler.kex.source"
+         version="0.0.0"/>
+
 </feature>
