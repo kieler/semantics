@@ -64,6 +64,24 @@ public class SyncChartsCombination extends AbstractCombination {
             + ".inactiveColor";
 
     /**
+     * The preference key for the background color of inactive states.
+     */
+    public static final String INACTIVE_BGCOLOR = SyncChartsCombination.class.getCanonicalName()
+            + ".inactiveBGColor";
+
+    /**
+     * The preference key for the highlight background color.
+     */
+    public static final String HIGHLIGHT_BGCOLOR = SyncChartsCombination.class.getCanonicalName()
+            + ".highlightBGColor";
+
+    /**
+     * The preference key for the history background color.
+     */
+    public static final String HISTORY_BGCOLOR = SyncChartsCombination.class.getCanonicalName()
+            + ".historyBGColor";
+
+    /**
      * The preference key for the black & white mode.
      */
     public static final String BW_MODE = SyncChartsCombination.class.getCanonicalName() + ".bwMode";
@@ -77,12 +95,24 @@ public class SyncChartsCombination extends AbstractCombination {
             new CombinationParameter(HIGHLIGHT_COLOR, getPreferenceStore(), "Highlight Color",
                     "The color to use for highlighting active states", ColorConstants.red.getRGB(),
                     CombinationParameter.RGB_TYPE),
+            new CombinationParameter(HIGHLIGHT_BGCOLOR, getPreferenceStore(),
+                    "Highlight Background Color",
+                    "The background color to use for highlighting active states",
+                    ColorConstants.white.getRGB(), CombinationParameter.RGB_TYPE),
             new CombinationParameter(HISTORY_COLOR, getPreferenceStore(), "History Color",
                     "The color to use for highlighting previously active states",
                     ColorConstants.blue.getRGB(), CombinationParameter.RGB_TYPE),
+            new CombinationParameter(HISTORY_BGCOLOR, getPreferenceStore(),
+                    "History Background Color",
+                    "The background color to use for highlighting previously active states",
+                    ColorConstants.white.getRGB(), CombinationParameter.RGB_TYPE),
             new CombinationParameter(INACTIVE_COLOR, getPreferenceStore(), "Inactive Color",
                     "The color to use for highlighting inactive states",
                     ColorConstants.gray.getRGB(), CombinationParameter.RGB_TYPE),
+            new CombinationParameter(INACTIVE_BGCOLOR, getPreferenceStore(),
+                    "Inactive Background Color",
+                    "The background color to use for highlighting inactive states",
+                    ColorConstants.white.getRGB(), CombinationParameter.RGB_TYPE),
             new CombinationParameter(BW_MODE, getPreferenceStore(), "Black && White",
                     "Dashed lines for active states, dotted lines for history states.", false,
                     CombinationParameter.BOOLEAN_TYPE),
@@ -110,7 +140,7 @@ public class SyncChartsCombination extends AbstractCombination {
 
         if (isFC()) {
             // initially collapse all states
-            init(activeStates.getDiagramEditor());
+            collapseAll(activeStates.getDiagramEditor());
         }
 
         EObject root = activeStates.getDiagramEditor().getDiagram().getElement();
@@ -119,7 +149,8 @@ public class SyncChartsCombination extends AbstractCombination {
             if (current.eContainer() != root
                     && (current instanceof State || current instanceof Transition)) {
                 HighlightEffect effect = new HighlightEffect(current,
-                        activeStates.getDiagramEditor(), getColor(-1, -1), true);
+                        activeStates.getDiagramEditor(), getColor(-1, -1), getBackgroundColor(-1,
+                                -1), true);
                 effect.setChangeWidth(false);
                 schedule(effect);
             }
@@ -131,9 +162,11 @@ public class SyncChartsCombination extends AbstractCombination {
             for (EObject e : currentStep) {
                 if (isBW() && i != 0) {
                     schedule(new HighlightEffect(e, activeStates.getDiagramEditor(), getColor(i,
+                            activeStates.getActiveStates().size()), getBackgroundColor(i,
                             activeStates.getActiveStates().size()), SWT.LINE_DASH));
                 } else {
                     schedule(new HighlightEffect(e, activeStates.getDiagramEditor(), getColor(i,
+                            activeStates.getActiveStates().size()), getBackgroundColor(i,
                             activeStates.getActiveStates().size())));
                 }
                 if (isFC()) {
@@ -149,7 +182,7 @@ public class SyncChartsCombination extends AbstractCombination {
      * 
      * @throws KielerModelException
      */
-    private void init(final DiagramEditor editor) {
+    private void collapseAll(final DiagramEditor editor) {
         Collection<EObject> states = ModelingUtil.getAllByType(
                 SyncchartsPackage.eINSTANCE.getState(), editor.getDiagramEditPart());
         for (EObject state : states) {
@@ -197,6 +230,27 @@ public class SyncChartsCombination extends AbstractCombination {
             float[] inactive = PreferenceConverter.getColor(getPreferenceStore(), INACTIVE_COLOR)
                     .getHSB();
             float[] history = PreferenceConverter.getColor(getPreferenceStore(), HISTORY_COLOR)
+                    .getHSB();
+            float[] current = new float[] { history[0],
+                    history[1] - (history[1] - inactive[1]) * factor,
+                    history[2] - (history[2] - inactive[2]) * factor };
+            return new Color(null, new RGB(current[0], current[1], current[2]));
+        }
+    }
+
+    private Color getBackgroundColor(final int step, final int steps) {
+        if (step == -1) {
+            return new Color(null, PreferenceConverter.getColor(getPreferenceStore(),
+                    INACTIVE_BGCOLOR));
+        } else if (step == 0) {
+            return new Color(null, PreferenceConverter.getColor(getPreferenceStore(),
+                    HIGHLIGHT_BGCOLOR));
+        } else {
+            // fade history color to inactive color
+            float factor = ((float) step - 1.0f) / (float) steps;
+            float[] inactive = PreferenceConverter.getColor(getPreferenceStore(), INACTIVE_BGCOLOR)
+                    .getHSB();
+            float[] history = PreferenceConverter.getColor(getPreferenceStore(), HISTORY_BGCOLOR)
                     .getHSB();
             float[] current = new float[] { history[0],
                     history[1] - (history[1] - inactive[1]) * factor,

@@ -59,6 +59,10 @@ public class HighlightEffect extends AbstractEffect {
 
     private Color color = ColorConstants.red;
 
+    private Color originalBackgroundColor;
+
+    private Color backgroundColor;
+
     private boolean highlightChildren = false;
 
     private boolean changeWidth = true;
@@ -124,12 +128,50 @@ public class HighlightEffect extends AbstractEffect {
      * @param editor
      *            the editor to highlight in
      * @param highlightColor
+     *            the color to use for highlighting
+     * @param background
+     *            the color to use for painting the background
+     * @param lineStyle
+     *            the line style to use for borders (black/white mode)
+     */
+    public HighlightEffect(final EObject eObject, final DiagramEditor editor,
+            final Color highlightColor, final Color background, final int lineStyle) {
+        this(eObject, editor, highlightColor, lineStyle);
+        backgroundColor = background;
+    }
+
+    /**
+     * Create a new instance for the given edit part using the given color.
+     * 
+     * @param eObject
+     *            the EObject to highlight
+     * @param editor
+     *            the editor to highlight in
+     * @param highlightColor
      *            the color to highlight the state with
      */
     public HighlightEffect(final EObject eObject, final DiagramEditor editor,
             final Color highlightColor) {
         this(eObject, editor);
         color = highlightColor;
+    }
+
+    /**
+     * Create a new instance for the given edit part using the given color.
+     * 
+     * @param eObject
+     *            the EObject to highlight
+     * @param editor
+     *            the editor to highlight in
+     * @param highlightColor
+     *            the color to highlight the state with
+     * @param background
+     *            the color to use for painting the background
+     */
+    public HighlightEffect(final EObject eObject, final DiagramEditor editor,
+            final Color highlightColor, final Color background) {
+        this(eObject, editor, highlightColor);
+        backgroundColor = background;
     }
 
     /**
@@ -148,6 +190,26 @@ public class HighlightEffect extends AbstractEffect {
             final Color highlightColor, final boolean children) {
         this(eObject, editor, highlightColor);
         highlightChildren = children;
+    }
+
+    /**
+     * Create a new instance for the given edit part using the given color.
+     * 
+     * @param eObject
+     *            the EObject to highlight
+     * @param editor
+     *            the editor to highlight in
+     * @param highlightColor
+     *            the color to highlight the state with
+     * @param background
+     *            the color to use for painting the background
+     * @param children
+     *            true if labels should be highlighted in the given color as well
+     */
+    public HighlightEffect(final EObject eObject, final DiagramEditor editor,
+            final Color highlightColor, final Color background, final boolean children) {
+        this(eObject, editor, highlightColor, children);
+        backgroundColor = background;
     }
 
     /**
@@ -221,9 +283,19 @@ public class HighlightEffect extends AbstractEffect {
                 } else {
                     targetFigure.setForegroundColor(originalColor);
                 }
+                // background
+                if (originalBackgroundColor == null) {
+                    originalBackgroundColor = targetFigure.getBackgroundColor();
+                }
+                if (backgroundColor != null) {
+                    targetFigure.setBackgroundColor(backgroundColor);
+                } else {
+                    targetFigure.setBackgroundColor(originalBackgroundColor);
+                }
             }
         }, true); // TODO investigate whether false works - would be massively faster
-                  // TODO false does *not* work, leads to a huge queue of highlights in the UI thread
+                  // TODO false does *not* work, leads to a huge queue of highlights in the UI
+                  // thread
         // targetFigure.repaint();
     }
 
@@ -245,6 +317,9 @@ public class HighlightEffect extends AbstractEffect {
                             }
                         }
                     }
+                }
+                if (originalBackgroundColor != null) {
+                    targetFigure.setBackgroundColor(originalBackgroundColor);
                 }
 
                 if (targetFigure instanceof Shape) {
@@ -268,6 +343,7 @@ public class HighlightEffect extends AbstractEffect {
                 // targetFigure.repaint();
 
                 originalColor = null;
+                originalBackgroundColor = null;
                 originalWidth = -1;
                 originalStyle = -1;
 
@@ -327,6 +403,7 @@ public class HighlightEffect extends AbstractEffect {
             HighlightEffect otherEffect = (HighlightEffect) other;
             if (otherEffect.targetFigure == targetFigure) {
                 originalColor = otherEffect.originalColor;
+                originalBackgroundColor = otherEffect.originalBackgroundColor;
                 originalWidth = otherEffect.originalWidth;
                 originalStyle = otherEffect.originalStyle;
                 return this;
@@ -337,6 +414,7 @@ public class HighlightEffect extends AbstractEffect {
                 HighlightEffect otherEffect = (HighlightEffect) undo;
                 if (otherEffect.targetFigure == targetFigure) {
                     originalColor = otherEffect.originalColor;
+                    originalBackgroundColor = otherEffect.originalBackgroundColor;
                     originalWidth = otherEffect.originalWidth;
                     originalStyle = otherEffect.originalStyle;
                     return this;
