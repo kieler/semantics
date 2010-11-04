@@ -9,7 +9,7 @@
    <extension point="de.cau.cs.kieler.kex">
       <category id="de.cau.cs.kieler.synccharts">
       </category>
-      <example author="KIELER Workgroup" contact="pkl@informatik.uni-kiel.de" description="This is the &lt;b&gt;quick start &lt;/b&gt; example." generation_date="Fri Jul 07 09:05:16 CEST 2010" overview_pic="examples/synccharts_quickstart/abro.png" root_directory="examples/" title="Synccharts Quick Start">
+      <example author="KIELER Workgroup" contact="kieler@informatik.uni-kiel.de" description="This is quick start generats a project and the standard  model ABRO.gt; example." generation_date="Fri Jul 07 09:05:16 CEST 2010" overview_pic="examples/synccharts_quickstart/abro.png" root_directory="examples/" title="Synccharts Quick Start">
          <category id="de.cau.cs.kieler.synccharts">
          </category>
          <example_resource direct_open="false" local_path="examples/synccharts_quickstart/" resource_type="project">
@@ -19,37 +19,37 @@
          <example_resource direct_open="false" local_path="examples/synccharts_quickstart/abro.kixs" resource_type="file">
          </example_resource>
       </example>
-   <example author="KIELER Workgroup" contact="http://www.informatik.uni-kiel.de/rtsys/kieler/" description="This example shows the synchronisation of Signals A and B." generation_date="Tue Nov 02 20:58:16 CET 2010" overview_pic="examples/ab_sync/ABSync.png" root_directory="examples" title="AB Sync">
+   <example author="KIELER Workgroup" contact="kieler@informatik.uni-kiel.de" description="This example shows the synchronisation of Signals A and B." generation_date="Tue Nov 02 20:58:16 CET 2010" overview_pic="examples/ab_sync/ABSync.png" root_directory="examples" title="AB Sync">
 <category id="de.cau.cs.kieler.synccharts"/>
 <example_resource direct_open="false" local_path="examples/ab_sync" resource_type="folder"/>
 <example_resource direct_open="true" local_path="examples/ab_sync/ABSync.kids" resource_type="file"/>
 <example_resource direct_open="false" local_path="examples/ab_sync/ABSync.kixs" resource_type="file"/>
 </example>
-<example author="KIELER Workgroup" contact="http://www.informatik.uni-kiel.de/rtsys/kieler/" description="Shows the modelling of an dvd player in synccharts." generation_date="Tue Nov 02 21:00:27 CET 2010" overview_pic="examples/dvd_player/dvdplayer.png" root_directory="examples" title="DVD Player">
+<example author="KIELER Workgroup" contact="kieler@informatik.uni-kiel.de" description="Shows the modelling of an dvd player in synccharts." generation_date="Tue Nov 02 21:00:27 CET 2010" overview_pic="examples/dvd_player/dvdplayer.png" root_directory="examples" title="DVD Player">
 <category id="de.cau.cs.kieler.synccharts"/>
 <example_resource direct_open="false" local_path="examples/dvd_player" resource_type="folder"/>
 <example_resource direct_open="true" local_path="examples/dvd_player/dvdplayer.kids" resource_type="file"/>
 <example_resource direct_open="false" local_path="examples/dvd_player/dvdplayer.kixs" resource_type="file"/>
 </example>
-<example author="KIELER Workgroup" contact="http://www.informatik.uni-kiel.de/rtsys/kieler/" description="This example contains of an elevator with two floors.&#13;&#10;The interacting of floors and the elevator door shows &#13;&#10;concurrency in synccharts." generation_date="Tue Nov 02 21:08:07 CET 2010" overview_pic="examples/elevator/elevator.png" root_directory="examples" title="Elevator">
+<example author="KIELER Workgroup" contact="kieler@informatik.uni-kiel.de" description="This example contains of an elevator with two floors.&#13;&#10;The interacting of floors and the elevator door shows &#13;&#10;concurrency in synccharts." generation_date="Tue Nov 02 21:08:07 CET 2010" overview_pic="examples/elevator/elevator.png" root_directory="examples" title="Elevator">
 <category id="de.cau.cs.kieler.synccharts"/>
 <example_resource direct_open="false" local_path="examples/elevator" resource_type="folder"/>
 <example_resource direct_open="true" local_path="examples/elevator/elevator.kids" resource_type="file"/>
 <example_resource direct_open="false" local_path="examples/elevator/elevator.kixs" resource_type="file"/>
 </example>
-<example author="KIELER Workgroup" contact="http://www.informatik.uni-kiel.de/rtsys/kieler/" description="This example shows the producer consumer principle with synccharts." generation_date="Tue Nov 02 21:11:03 CET 2010" overview_pic="" root_directory="examples" title="Producer Consumer">
+<example author="KIELER Workgroup" contact="kieler@informatik.uni-kiel.de" description="This example shows the producer consumer principle with synccharts." generation_date="Tue Nov 02 21:11:03 CET 2010" overview_pic="" root_directory="examples" title="Producer Consumer">
 <category id="de.cau.cs.kieler.synccharts"/>
 <example_resource direct_open="false" local_path="examples/producer_consumer" resource_type="folder"/>
 <example_resource direct_open="true" local_path="examples/producer_consumer/producer_consumer.kids" resource_type="file"/>
 <example_resource direct_open="false" local_path="examples/producer_consumer/producer_consumer.kixs" resource_type="file"/>
 </example>
-<example author="KIELER Workgroup" contact="http://www.informatik.uni-kiel.de/rtsys/kieler/" description="The traffic light shows how concurrency works in synccharts. " generation_date="Tue Nov 02 21:14:24 CET 2010" overview_pic="examples/synccharts_traffic_light/traffic_light.png" root_directory="examples" title="Synccharts Traffic Light">
+<example author="KIELER Workgroup" contact="kieler@informatik.uni-kiel.de" description="The traffic light shows how concurrency works in synccharts. " generation_date="Tue Nov 02 21:14:24 CET 2010" overview_pic="examples/synccharts_traffic_light/traffic_light.png" root_directory="examples" title="Synccharts Traffic Light">
 <category id="de.cau.cs.kieler.synccharts"/>
 <example_resource direct_open="false" local_path="examples/synccharts_traffic_light" resource_type="folder"/>
 <example_resource direct_open="true" local_path="examples/synccharts_traffic_light/traffic_light.kids" resource_type="file"/>
 <example_resource direct_open="false" local_path="examples/synccharts_traffic_light/traffic_light.kixs" resource_type="file"/>
 </example>
-<example author="KIELER Workgroup" contact="http://www.informatik.uni-kiel.de/rtsys/kieler/" description="The token ring principle in synccharts." generation_date="Tue Nov 02 21:17:19 CET 2010" overview_pic="examples/token_ring/tokenring.png" root_directory="examples" title="Token Ring">
+<example author="KIELER Workgroup" contact="kieler@informatik.uni-kiel.de" description="The token ring principle in synccharts." generation_date="Tue Nov 02 21:17:19 CET 2010" overview_pic="examples/token_ring/tokenring.png" root_directory="examples" title="Token Ring">
 <category id="de.cau.cs.kieler.synccharts"/>
 <example_resource direct_open="false" local_path="examples/token_ring" resource_type="folder"/>
 <example_resource direct_open="true" local_path="examples/token_ring/tokenring.kids" resource_type="file"/>
