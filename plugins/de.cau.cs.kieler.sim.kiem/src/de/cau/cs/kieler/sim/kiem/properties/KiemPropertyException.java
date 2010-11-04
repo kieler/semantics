@@ -27,7 +27,21 @@ package de.cau.cs.kieler.sim.kiem.properties;
 public class KiemPropertyException extends Exception {
 
     private static final long serialVersionUID = -1023528743545009469L;
+    
+    private boolean silent;
 
+    // -------------------------------------------------------------------------
+
+    /**
+     * Returns the value of the silent flag.
+     * 
+     * @return the silent flag
+     * 
+     */
+    public boolean isSilent() {
+        return silent;
+    }
+    
     // -------------------------------------------------------------------------
 
     /**
@@ -38,6 +52,10 @@ public class KiemPropertyException extends Exception {
      */
     public KiemPropertyException(final String message) {
         super(message);
+        silent = false;
+        if (message == null) {
+            silent = true;
+        }
     }
 
     /**
@@ -50,6 +68,24 @@ public class KiemPropertyException extends Exception {
      */
     public KiemPropertyException(final String message, final Exception cause) {
         super(message, cause);
+        silent = false;
+        if (message == null) {
+            silent = true;
+        }
     }
 
+    /**
+     * Instantiates a new KiemPropertyException with optionally silent flag
+     * 
+     * @param message
+     *            the message
+     * @param cause
+     *            the cause
+     * @param silentParam
+     *            the silent flag
+     */
+    public KiemPropertyException(final String message, final Exception cause, final boolean silentParam) {
+        super(message, cause);
+        silent = silentParam;
+    }
 }

@@ -639,7 +639,53 @@ public abstract class JSONObjectSimulationDataComponent extends JSONObjectDataCo
     }
 
     // -------------------------------------------------------------------------
+    
+    private void saveEditor() {
+        Display.getDefault().syncExec(new Runnable() {
+            public void run() {
+                IEditorSite part = modelEditor.getEditorSite();
+                part.getPage().saveEditor((IEditorPart) part.getPart(), false);
+                // modelEditor.doSaveAs(); // doSave(new IProgressMonitor());
+            }
+        });
+    }
 
+    // -------------------------------------------------------------------------
+    
+   int askForModelIsSavedReturnValue = 0;
+    
+    private boolean askForModelIsSaved() throws KiemPropertyException {
+        Display.getDefault().syncExec(new Runnable() {
+            public void run() {
+                final Shell shell = Display.getDefault().getShells()[0];
+                
+                String[] buttons = { "Yes", "No", "Cancel" };
+
+                MessageDialog dlg = new MessageDialog(shell, "Save Execution", null, "'"
+                        + modelEditor.getEditorInput().getName() + "' has been modified. Save changes before proceeding?", 
+                        MessageDialog.QUESTION,
+                        buttons, 0);
+
+                askForModelIsSavedReturnValue = 2;
+                try {
+                    askForModelIsSavedReturnValue = dlg.open();
+                } catch (Exception e) {
+                    askForModelIsSavedReturnValue = 2; // implicit CANCEL on exception
+                }                
+            }
+        });
+        
+        if (askForModelIsSavedReturnValue == 2) {
+            // do not show a message, just abort execution initialization
+            throw new KiemPropertyException("User aborted model simulation/execution.", null, true);
+        }
+        return (askForModelIsSavedReturnValue == 0);
+    }
+    
+    // -------------------------------------------------------------------------
+
+    
+    
     /*
      * (non-Javadoc)
      * 
@@ -674,14 +720,9 @@ public abstract class JSONObjectSimulationDataComponent extends JSONObjectDataCo
 
         if (modelEditor.isDirty()) {
             try {
-                final Shell shell = Display.getCurrent().getShells()[0];
-                boolean b = MessageDialog.openQuestion(shell, "Save Resource", "'"
-                        + modelEditor.getEditorInput().getName() + "'"
-                        + " has been modified. Save changes before simulating?");
+                boolean b = askForModelIsSaved();
                 if (b) {
-                    IEditorSite part = modelEditor.getEditorSite();
-                    part.getPage().saveEditor((IEditorPart) part.getPart(), false);
-                    // modelEditor.doSaveAs(); // doSave(new IProgressMonitor());
+                    saveEditor();
                     modelTimeStamp = this.getInputModelEObject(this.modelEditor).eResource()
                             .getTimeStamp();
                     simulatingOldModelVersion = false;
@@ -690,11 +731,13 @@ public abstract class JSONObjectSimulationDataComponent extends JSONObjectDataCo
                     modelTimeStamp = this.getInputModelEObject(this.modelEditor).eResource()
                             .getTimeStamp();
                 }
+            } catch (KiemPropertyException e) {
+                throw e;
             } catch (Exception e) {
                 // if dialog cannot be opened, throw error
                 throw new KiemPropertyException("There are unsaved changes of the model opened "
-                        + "in the editor to simulate.\n\nPlease save these changes before "
-                        + "starting the simulation!");
+                        + "in the editor to simulate.\nYou should save these changes before "
+                        + "starting any simulation/execution!");
             }
         } else {
             // not dirty

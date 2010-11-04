@@ -25,6 +25,7 @@ import de.cau.cs.kieler.sim.kiem.Messages;
 import de.cau.cs.kieler.sim.kiem.internal.DataComponentWrapper;
 import de.cau.cs.kieler.sim.kiem.internal.EventManager;
 import de.cau.cs.kieler.sim.kiem.properties.KiemProperty;
+import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyException;
 
 /**
  * This implements the concurrent initialization that can be aborted from outside e.g. by user
@@ -232,8 +233,12 @@ public class InitializeExecution implements Runnable {
                     dataComponentWrapper.checkProperties(properties);
                 }
             } catch (Exception e) {
+                boolean silent = false; 
+                if (e instanceof KiemPropertyException) {
+                    silent = ((KiemPropertyException)e).isSilent(); 
+                }
                 this.kIEMInstance.showError(null, dataComponentWrapper.getDataComponent()
-                        .getConfigurationElement().getContributor().getName(), e, false);
+                        .getConfigurationElement().getContributor().getName(), e, silent);
                 return false;
             }
         }
