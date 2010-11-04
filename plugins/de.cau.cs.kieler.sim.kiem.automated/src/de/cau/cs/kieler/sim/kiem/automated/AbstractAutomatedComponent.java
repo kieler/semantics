@@ -21,6 +21,7 @@ import org.eclipse.core.runtime.Path;
 import de.cau.cs.kieler.sim.kiem.JSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
 import de.cau.cs.kieler.sim.kiem.properties.KiemProperty;
+import de.cau.cs.kieler.sim.kiem.ui.datacomponent.JSONObjectSimulationDataComponent;
 
 /**
  * Default implementation of an automated component.
@@ -29,7 +30,7 @@ import de.cau.cs.kieler.sim.kiem.properties.KiemProperty;
  * @kieler.rating 2010-03-16 yellow ctr, tam
  */
 public abstract class AbstractAutomatedComponent extends
-        JSONObjectDataComponent implements IAutomatedComponent {
+        JSONObjectSimulationDataComponent implements IAutomatedComponent {
 
     /**
      * The model file.

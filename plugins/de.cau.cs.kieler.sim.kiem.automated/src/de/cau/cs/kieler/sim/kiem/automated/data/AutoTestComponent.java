@@ -81,7 +81,7 @@ public class AutoTestComponent extends AbstractAutomatedProducer {
     /**
      * {@inheritDoc}
      */
-    public JSONObject step(final JSONObject jSONObject)
+    public JSONObject doStep(final JSONObject jSONObject)
             throws KiemExecutionException {
         stepCounter++;
         if (stepCounter == (2 * 2) && iteration == 2) {

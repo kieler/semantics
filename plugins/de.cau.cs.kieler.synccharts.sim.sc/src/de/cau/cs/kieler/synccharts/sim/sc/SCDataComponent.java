@@ -53,6 +53,7 @@ import de.cau.cs.kieler.sim.kiem.automated.AbstractAutomatedProducer;
 import de.cau.cs.kieler.sim.kiem.properties.KiemProperty;
 import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyTypeChoice;
 import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyTypeFile;
+import de.cau.cs.kieler.sim.kiem.ui.datacomponent.JSONObjectSimulationDataComponent;
 import de.cau.cs.kieler.synccharts.Region;
 import de.cau.cs.kieler.synccharts.codegen.sc.WorkflowGenerator;
 
@@ -116,7 +117,7 @@ public class SCDataComponent extends AbstractAutomatedProducer {
 
             if (!validation || (validation && newValidation)) {
                 // compile
-                String compiler = (getProperties()[0]).getValue();
+                String compiler = (getProperties()[1]).getValue();
                 String compile = compiler + " " + outPath + "sim.c " + outPath + "sim_data.c "
                         + outPath + "misc.c " + bundleLocation + "cJSON.c " + "-I "
                         + bundleLocation + " " + "-o " + outPath
@@ -183,7 +184,7 @@ public class SCDataComponent extends AbstractAutomatedProducer {
      * communication JSON Strings are exchanged via std. I/O.
      * 
      */
-    public JSONObject step(final JSONObject jSONObject) throws KiemExecutionException {
+    public JSONObject doStep(final JSONObject jSONObject) throws KiemExecutionException {
         JSONObject out = null;
         try {
             jSONObject.remove("state");
@@ -250,7 +251,7 @@ public class SCDataComponent extends AbstractAutomatedProducer {
     }
 
     @Override
-    public KiemProperty[] provideProperties() {
+    public KiemProperty[] doProvideProperties() {
         final int numberOfProperties = 3;
         KiemProperty[] properties = new KiemProperty[numberOfProperties];
         KiemPropertyTypeFile compilerFile = new KiemPropertyTypeFile(true);
@@ -291,48 +292,48 @@ public class SCDataComponent extends AbstractAutomatedProducer {
 
     // -------------------------------------------------------------------------
 
-    private DiagramEditor diagramEditor = null;
-    private boolean diagramEditorFlag = false;
-
-    DiagramEditor getInputEditor() {
-        String kiemEditorProperty = this.getProperties()[0].getValue();
-        diagramEditorFlag = false;
-
-        Display.getDefault().syncExec(new Runnable() {
-            public void run() {
-                // get the active editor as a default case (if property is empty)
-                IWorkbenchWindow window = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
-                IWorkbenchPage activePage = window.getActivePage();
-                IEditorPart editor = activePage.getActiveEditor();
-                if (editor instanceof DiagramEditor) {
-                    diagramEditor = (DiagramEditor) editor;
-                }
-                diagramEditorFlag = true;
-            }
-        });
-
-        while (!diagramEditorFlag) {
-            try {
-                Thread.sleep(100);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-
-        return diagramEditor;
-    }
+//    private DiagramEditor diagramEditor = null;
+//    private boolean diagramEditorFlag = false;
+//
+//    DiagramEditor getInputEditor() {
+//        String kiemEditorProperty = this.getProperties()[0].getValue();
+//        diagramEditorFlag = false;
+//
+//        Display.getDefault().syncExec(new Runnable() {
+//            public void run() {
+//                // get the active editor as a default case (if property is empty)
+//                IWorkbenchWindow window = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
+//                IWorkbenchPage activePage = window.getActivePage();
+//                IEditorPart editor = activePage.getActiveEditor();
+//                if (editor instanceof DiagramEditor) {
+//                    diagramEditor = (DiagramEditor) editor;
+//                }
+//                diagramEditorFlag = true;
+//            }
+//        });
+//
+//        while (!diagramEditorFlag) {
+//            try {
+//                Thread.sleep(100);
+//            } catch (InterruptedException e) {
+//                e.printStackTrace();
+//            }
+//        }
+//
+//        return diagramEditor;
+//    }
 
     // -------------------------------------------------------------------------
 
-    public String getInputModel() {
-        DiagramEditor inputEditor = this.getInputEditor();
-        // now extract the file
-        View notationElement = ((View) inputEditor.getDiagramEditPart().getModel());
-        EObject myModel = (EObject) notationElement.getElement();
-        URI uri = myModel.eResource().getURI();
-
-        return uri.toPlatformString(false);
-    } 
+//    public String getInputModel() {
+//        DiagramEditor inputEditor = this.getInputEditor();
+//        // now extract the file
+//        View notationElement = ((View) inputEditor.getDiagramEditPart().getModel());
+//        EObject myModel = (EObject) notationElement.getElement();
+//        URI uri = myModel.eResource().getURI();
+//
+//        return uri.toPlatformString(false);
+//    } 
     
     // -------------------------------------------------------------------------
 
@@ -345,11 +346,11 @@ public class SCDataComponent extends AbstractAutomatedProducer {
      * 
      */
     @Override
-    public JSONObject provideInitialVariables() {
+    public JSONObject doProvideInitialVariables() {
 
         JSONObject returnObj = new JSONObject();
 
-        if ((getProperties()[1]).getValue().equals("")) {
+        if ((getProperties()[2]).getValue().equals("")) {
             String tempDir = System.getProperty("java.io.tmpdir");
             // for Windows (tmpdir ends with backslash)
             if (tempDir.endsWith("\\")) {
@@ -357,7 +358,7 @@ public class SCDataComponent extends AbstractAutomatedProducer {
             }
             outPath = tempDir + File.separator + randomString() + File.separator;
         } else {
-            outPath = (getProperties()[1]).getValue();
+            outPath = (getProperties()[3]).getValue();
             if (!outPath.endsWith(File.separator)) {
                 outPath += File.separator;
             }
