@@ -65,6 +65,8 @@ public class ConfigurationsPreferencePage extends PreferencePage implements
     private Button matchingCheck;
     /** Checkbox for enabling/disabling the recent schedules combo. */
     private Button recentCheck;
+    /** The check box for enabling/disabling execution summary message. */
+    private Button summaryMessageCheck;
 
     /** the group where the properties text fields are displayed. */
     private Group propertiesGroup;
@@ -102,8 +104,7 @@ public class ConfigurationsPreferencePage extends PreferencePage implements
     /**
      * Build the page.
      * 
-     * @param parent
-     *            the parent component.
+     * @param parent the parent component.
      */
     private void buildPage(final Composite parent) {
         propertiesGroup = new Group(parent, SWT.NONE);
@@ -140,12 +141,18 @@ public class ConfigurationsPreferencePage extends PreferencePage implements
         }
 
         ConfigPageListener listener = new ConfigPageListener();
+
         // button for always use defaults dialog
         alwaysUseDefaultsButton = new Button(propertiesGroup, SWT.NONE);
         alwaysUseDefaultsButton.setText("Property usage...");
         alwaysUseDefaultsButton
                 .setToolTipText(Tools.IGNORED_KEYS_BUTTON_TOOLTIP);
         alwaysUseDefaultsButton.addListener(SWT.Selection, listener);
+
+        // checkbox for the execution summary message
+        summaryMessageCheck = new Button(propertiesGroup, SWT.CHECK);
+        summaryMessageCheck.setText("disable execution summary message");
+        summaryMessageCheck.addListener(SWT.Selection, listener);
 
         // checkbox for the recent schedules
         recentCheck = new Button(propertiesGroup, SWT.CHECK);
@@ -175,6 +182,8 @@ public class ConfigurationsPreferencePage extends PreferencePage implements
      * Confirm the status of the checkboxes.
      */
     private void checkButtonStatus() {
+        summaryMessageCheck.setSelection(ContributionManager.getInstance()
+                .isSummaryMessageDisabled());
         recentCheck.setSelection(ContributionManager.getInstance()
                 .isComponentEnabled(ContributionManager.RECENT_COMBO));
         matchingCheck.setSelection(ContributionManager.getInstance()
@@ -257,11 +266,9 @@ public class ConfigurationsPreferencePage extends PreferencePage implements
     /**
      * Toggle either of the combo boxes.
      * 
-     * @param comboId
-     *            either ContributionManager.RECENT_COMBO or
+     * @param comboId either ContributionManager.RECENT_COMBO or
      *            ContributionManager.MATCHING_COMBO
-     * @param enabled
-     *            true if the combo should be enabled, false if not
+     * @param enabled true if the combo should be enabled, false if not
      */
     private void toggleCombo(final int comboId, final boolean enabled) {
         ContributionManager.getInstance().toggleCombo(comboId, enabled);
@@ -284,6 +291,11 @@ public class ConfigurationsPreferencePage extends PreferencePage implements
          */
         public final void handleEvent(final Event event) {
             try {
+                if (event.widget == summaryMessageCheck) {
+                    ContributionManager.getInstance()
+                            .setSummaryMessageDisabled(
+                                    summaryMessageCheck.getSelection());
+                }
                 if (event.widget == matchingCheck) {
                     toggleCombo(ContributionManager.MATCHING_COMBO,
                             matchingCheck.getSelection());
@@ -339,8 +351,7 @@ public class ConfigurationsPreferencePage extends PreferencePage implements
          * 
          * Creates a new input field.
          * 
-         * @param propertyParam
-         *            the property associated with this field.
+         * @param propertyParam the property associated with this field.
          */
         public KiemIntegerPropertyInputField(final KiemProperty propertyParam) {
             this.property = propertyParam;

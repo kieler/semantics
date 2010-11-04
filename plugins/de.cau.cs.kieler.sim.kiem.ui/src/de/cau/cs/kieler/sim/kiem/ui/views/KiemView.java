@@ -68,10 +68,12 @@ import de.cau.cs.kieler.sim.kiem.ui.AimedStepDurationTextField;
 import de.cau.cs.kieler.sim.kiem.ui.DropDownAction;
 import de.cau.cs.kieler.sim.kiem.ui.KiemIcons;
 import de.cau.cs.kieler.sim.kiem.ui.StepTextField;
+import de.cau.cs.kieler.sim.kiem.config.managers.ContributionManager;
 
 /**
- * The Class KiemView is only instantiated once when the view part is registered in the Eclipse IDE.
- * It holds the DataComponent table list view and buttons to control the execution.
+ * The Class KiemView is only instantiated once when the view part is registered
+ * in the Eclipse IDE. It holds the DataComponent table list view and buttons to
+ * control the execution.
  * 
  * @author Christian Motika - cmot AT informatik.uni-kiel.de, soh
  * @kieler.rating 2009-01-15 proposed yellow
@@ -136,7 +138,8 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
     private static KiemView kIEMViewInstance;
 
     /** The Constant columnBoundsCollapsed - no properties visible. */
-    private static final int[] COLUMN_BOUNDS_COLLAPSED = { 250, 0, 20, 120, 50, 50 };
+    private static final int[] COLUMN_BOUNDS_COLLAPSED = { 250, 0, 20, 120, 50,
+            50 };
 
     /** The Constant columnBounds - properties visible. */
     private static final int[] COLUMN_BOUNDS = { 250, 200, 20, 120, 50, 50 };
@@ -145,23 +148,25 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
     private int columnProperty = -1;
 
     /** The Constant columnTitlesCollapsed - properties not visible. */
-    private static final String[] COLUMN_TITLES_COLLAPSED = { Messages.mTableComponentName,
-            Messages.mTableValue, Messages.mTableEnabled, Messages.mTableType,
-            Messages.mTableMaster };
+    private static final String[] COLUMN_TITLES_COLLAPSED = {
+            Messages.mTableComponentName, Messages.mTableValue,
+            Messages.mTableEnabled, Messages.mTableType, Messages.mTableMaster };
 
     /** The Constant columnTitles - properties visible. */
-    private static final String[] COLUMN_TITLES = { Messages.mTableComponentNameKey,
-            Messages.mTableValue, Messages.mTableEnabled, Messages.mTableType,
-            Messages.mTableMaster };
+    private static final String[] COLUMN_TITLES = {
+            Messages.mTableComponentNameKey, Messages.mTableValue,
+            Messages.mTableEnabled, Messages.mTableType, Messages.mTableMaster };
 
     /** The Constant columnToolTipCollapsed - properties not visible. */
-    private static final String[] COLUMN_TOOLTIP_COLLAPSED = { Messages.mTableHintComponentName,
-            Messages.mTableHintValue, Messages.mTableHintEnabled, Messages.mTableHintType,
+    private static final String[] COLUMN_TOOLTIP_COLLAPSED = {
+            Messages.mTableHintComponentName, Messages.mTableHintValue,
+            Messages.mTableHintEnabled, Messages.mTableHintType,
             Messages.mTableHintMaster };
 
     /** The Constant columnToolTip - properties visible. */
-    private static final String[] COLUMN_TOOLTIP = { Messages.mTableHintComponentNameKey,
-            Messages.mTableHintValue, Messages.mTableHintEnabled, Messages.mTableHintType,
+    private static final String[] COLUMN_TOOLTIP = {
+            Messages.mTableHintComponentNameKey, Messages.mTableHintValue,
+            Messages.mTableHintEnabled, Messages.mTableHintType,
             Messages.mTableHintMaster };
 
     /** The Constant DISABLED_COLOR_GRAY. */
@@ -207,19 +212,20 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
     // -------------------------------------------------------------------------
 
     /**
-     * Refreshes the text colors of enabled or master components. Disabled DataComponents will get a
-     * gray text color, enabled master components are indicated by a blue text color.
+     * Refreshes the text colors of enabled or master components. Disabled
+     * DataComponents will get a gray text color, enabled master components are
+     * indicated by a blue text color.
      */
     private void refreshEnabledDisabledTextColors() {
         // change the text color (black or gray)
         Color colorEnabled = new Color(null, new RGB(0, 0, 0));
-        Color colorDisabled = new Color(null, new RGB(DISABLED_COLOR_GRAY, DISABLED_COLOR_GRAY,
-                DISABLED_COLOR_GRAY));
+        Color colorDisabled = new Color(null, new RGB(DISABLED_COLOR_GRAY,
+                DISABLED_COLOR_GRAY, DISABLED_COLOR_GRAY));
         Color colorMaster = new Color(null, new RGB(0, 0, MASTER_COLOR_BLUE));
         int disabledCounter = 0; // we must decrement the visible index by this
         for (int c = 0; c < kIEMInstance.getDataComponentWrapperList().size(); c++) {
-            DataComponentWrapper dataComponentWrapper = kIEMInstance.getDataComponentWrapperList()
-                    .get(c);
+            DataComponentWrapper dataComponentWrapper = kIEMInstance
+                    .getDataComponentWrapperList().get(c);
             if (dataComponentWrapper.getDataComponent().isInvisible()) {
                 // ignore invisible components
                 disabledCounter++;
@@ -236,9 +242,11 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
 
             try {
                 // update text colors
-                viewer.getTree().getItem(c - disabledCounter).setForeground(currentColor);
+                viewer.getTree().getItem(c - disabledCounter)
+                        .setForeground(currentColor);
                 // enable sub items
-                int subItemCnt = viewer.getTree().getItem(c - disabledCounter).getItemCount();
+                int subItemCnt = viewer.getTree().getItem(c - disabledCounter)
+                        .getItemCount();
                 for (int cc = 0; cc < subItemCnt; cc++) {
                     viewer.getTree().getItem(c - disabledCounter).getItem(cc)
                             .setForeground(currentColor);
@@ -259,8 +267,8 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
      */
     @Override
     public void createPartControl(final Composite parent) {
-        viewer = new KiemTableViewer(parent, SWT.HIDE_SELECTION | SWT.MULTI | SWT.H_SCROLL
-                | SWT.V_SCROLL | SWT.FULL_SELECTION);
+        viewer = new KiemTableViewer(parent, SWT.HIDE_SELECTION | SWT.MULTI
+                | SWT.H_SCROLL | SWT.V_SCROLL | SWT.FULL_SELECTION);
         createColumns(viewer);
         viewer.setContentProvider(new KiemContentProvider());
         viewer.setLabelProvider(new KiemLabelProvider(this));
@@ -281,8 +289,7 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
     /**
      * This will create the columns for the table.
      * 
-     * @param viewerParam
-     *            the viewer
+     * @param viewerParam the viewer
      */
     private void createColumns(final KiemTableViewer viewerParam) {
         for (int i = 0; i < COLUMN_TITLES.length; i++) {
@@ -293,10 +300,12 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
             column.getColumn().setToolTipText(COLUMN_TOOLTIP_COLLAPSED[i]);
             column.getColumn().setWidth(COLUMN_BOUNDS_COLLAPSED[i]);
             if (i == 2) {
-                column.setEditingSupport(new KiemComponentEditing(this, viewerParam, i));
+                column.setEditingSupport(new KiemComponentEditing(this,
+                        viewerParam, i));
             }
             if (i == 1) {
-                column.setEditingSupport(new KiemPropertyEditing(this, viewerParam, i));
+                column.setEditingSupport(new KiemPropertyEditing(this,
+                        viewerParam, i));
             }
         }
         Tree tree = viewerParam.getTree();
@@ -307,10 +316,10 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
     // -------------------------------------------------------------------------
 
     /**
-     * Refreshes the tables columns an fold/unfold KiemProperties i.e., the value column.
+     * Refreshes the tables columns an fold/unfold KiemProperties i.e., the
+     * value column.
      * 
-     * @param collapsed
-     *            the collapsed
+     * @param collapsed the collapsed
      */
     private void refreshTableColumns(final boolean collapsed) {
         Tree tree = viewer.getTree();
@@ -366,15 +375,16 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
     // -------------------------------------------------------------------------
 
     /**
-     * Hook tree action for the table. Updates the view when the tree is collapsed or expanded in
-     * order to adapt the columns.
+     * Hook tree action for the table. Updates the view when the tree is
+     * collapsed or expanded in order to adapt the columns.
      */
     private void hookTreeAction() {
         viewer.addTreeListener(new ITreeViewerListener() {
             public void treeCollapsed(final TreeExpansionEvent event) {
                 if (event.getElement() instanceof DataComponentWrapper) {
                     // set a flag that the properties are collapsed
-                    ((DataComponentWrapper) event.getElement()).setUnfolded(false);
+                    ((DataComponentWrapper) event.getElement())
+                            .setUnfolded(false);
                     updateColumnsCollapsed();
                 }
                 updateViewAsyncKeepSelection();
@@ -383,7 +393,8 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
             public void treeExpanded(final TreeExpansionEvent event) {
                 if (event.getElement() instanceof DataComponentWrapper) {
                     // set a flag that the properties are expanded
-                    ((DataComponentWrapper) event.getElement()).setUnfolded(true);
+                    ((DataComponentWrapper) event.getElement())
+                            .setUnfolded(true);
                     updateColumnsCollapsed();
                 }
                 updateViewAsyncKeepSelection();
@@ -410,7 +421,8 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
     // -------------------------------------------------------------------------
 
     /**
-     * Hook context menu for the table and triggers the {@link #buildContextMenu(IMenuManager)}.
+     * Hook context menu for the table and triggers the
+     * {@link #buildContextMenu(IMenuManager)}.
      */
     private void hookContextMenu() {
         MenuManager menuMgr = new MenuManager("#PopupMenu");
@@ -430,8 +442,7 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
     /**
      * Builds the context menu for the table.
      * 
-     * @param manager
-     *            the manager
+     * @param manager the manager
      */
     private void buildContextMenu(final IMenuManager manager) {
         manager.add(getActionEnableDisable());
@@ -505,23 +516,25 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
     // -------------------------------------------------------------------------
 
     /**
-     * Add components contributed by other plugins through the ToolBarContributor extension point.
+     * Add components contributed by other plugins through the
+     * ToolBarContributor extension point.
      * 
      * author soh
      * 
-     * @param manager
-     *            the manager where to add the components
+     * @param manager the manager where to add the components
      */
     private void addExternalContributions(final IToolBarManager manager) {
         IConfigurationElement[] contributors = Platform.getExtensionRegistry()
-                .getConfigurationElementsFor("de.cau.cs.kieler.sim.kiem.toolbarContributor");
+                .getConfigurationElementsFor(
+                        "de.cau.cs.kieler.sim.kiem.toolbarContributor");
 
         for (IConfigurationElement element : contributors) {
             try {
                 IKiemToolbarContributor contributor = (IKiemToolbarContributor) (element
                         .createExecutableExtension("class"));
 
-                ControlContribution[] contributions = contributor.provideToolbarContributions(null);
+                ControlContribution[] contributions = contributor
+                        .provideToolbarContributions(null);
 
                 if (contributions != null) {
                     for (ControlContribution contribution : contributions) {
@@ -563,22 +576,20 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
     // -------------------------------------------------------------------------
 
     /**
-     * Show an input dialog with the message, a default value and a specific title.
+     * Show an input dialog with the message, a default value and a specific
+     * title.
      * 
-     * @param title
-     *            the title of the dialog
-     * @param message
-     *            the message to present
-     * @param defaultValue
-     *            the default value
+     * @param title the title of the dialog
+     * @param message the message to present
+     * @param defaultValue the default value
      * 
      * @return the string value entered or null if aborted
      */
     private String showInputDialog(final String title, final String message,
             final String defaultValue) {
 
-        InputDialog dlg = new InputDialog(this.getSite().getShell(), title, message, defaultValue,
-                null);
+        InputDialog dlg = new InputDialog(this.getSite().getShell(), title,
+                message, defaultValue, null);
         dlg.open();
         if (dlg.getReturnCode() == InputDialog.OK) {
             return dlg.getValue();
@@ -591,13 +602,22 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
     /**
      * Show message dialog with the message and a specific title.
      * 
-     * @param title
-     *            the title of the dialog
-     * @param message
-     *            the message to present
+     * @param title the title of the dialog
+     * @param message the message to present
      */
     private void showMessage(final String title, final String message) {
-        MessageDialog.openInformation(viewer.getControl().getShell(), Messages.mViewTitle, message);
+        ContributionManager cm = ContributionManager.getInstance();
+
+        if ((cm != null) && !cm.isSummaryMessageDisabled()) {
+            String[] buttons = new String[] { "Disable this Message", "Ok" };
+            MessageDialog messageDialog = new MessageDialog(viewer.getControl() 
+                    .getShell(), Messages.mViewTitle, null, message,
+                    MessageDialog.INFORMATION, buttons, 1);
+            if (messageDialog.open() == 0) {
+                // if the user selects to disable the message, then save this in the configuration manager
+                cm.setSummaryMessageDisabled(true);
+            }
+        }
     }
 
     // -------------------------------------------------------------------------
@@ -605,11 +625,11 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
     /**
      * Show warning dialog with the message.
      * 
-     * @param message
-     *            the message to present
+     * @param message the message to present
      */
     public void showWarning(final String message) {
-        MessageDialog.openWarning(viewer.getControl().getShell(), Messages.mViewTitle, message);
+        MessageDialog.openWarning(viewer.getControl().getShell(),
+                Messages.mViewTitle, message);
     }
 
     // -------------------------------------------------------------------------
@@ -617,21 +637,21 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
     /**
      * Show error dialog with the message.
      * 
-     * @param message
-     *            the message to present
+     * @param message the message to present
      */
     public void showError(final String message) {
-        MessageDialog.openError(viewer.getControl().getShell(), Messages.mViewTitle, message);
+        MessageDialog.openError(viewer.getControl().getShell(),
+                Messages.mViewTitle, message);
     }
 
     // ---------------------------------------------------------------------------
 
     /**
-     * Sets the all actions (tool bar buttons and context menu entires) to enabled or disabled. This
-     * method is used to block any user input during the initialization phase for example.
+     * Sets the all actions (tool bar buttons and context menu entires) to
+     * enabled or disabled. This method is used to block any user input during
+     * the initialization phase for example.
      * 
-     * @param enabled
-     *            the new enabled status
+     * @param enabled the new enabled status
      */
     public void setAllEnabled(final boolean enabled) {
         allDisabled = !enabled;
@@ -684,8 +704,8 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
      * - delete.
      */
     public void updateEnabledEnabledDisabledUpDownAddDelete() {
-        Object selection = ((org.eclipse.jface.viewers.StructuredSelection) viewer.getSelection())
-                .getFirstElement();
+        Object selection = ((org.eclipse.jface.viewers.StructuredSelection) viewer
+                .getSelection()).getFirstElement();
         if (kIEMInstance.getExecution() != null) {
             // execution is running
             if (getActionEnableDisable().isEnabled()) {
@@ -724,7 +744,8 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
                 getActionDown().setEnabled(false);
             }
         } else {
-            StructuredSelection structSelection = ((StructuredSelection) viewer.getSelection());
+            StructuredSelection structSelection = ((StructuredSelection) viewer
+                    .getSelection());
             DataComponentWrapper dataComponentWrapper = (DataComponentWrapper) structSelection
                     .getFirstElement();
             if (!getActionEnableDisable().isEnabled()) {
@@ -750,13 +771,15 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
             int listIndexMostBottom = -1;
             for (int c = 0; c < selections.size(); c++) {
                 if (selections.toArray()[c] instanceof DataComponentWrapper) {
-                    dataComponentWrapper = (DataComponentWrapper) selections.toArray()[c];
-                    int index = kIEMInstance.getDataComponentWrapperList().indexOf(
-                            dataComponentWrapper);
+                    dataComponentWrapper = (DataComponentWrapper) selections
+                            .toArray()[c];
+                    int index = kIEMInstance.getDataComponentWrapperList()
+                            .indexOf(dataComponentWrapper);
                     if ((listIndexMostTop == -1) || (index < listIndexMostTop)) {
                         listIndexMostTop = index;
                     }
-                    if ((listIndexMostBottom == -1) || (listIndexMostBottom < index)) {
+                    if ((listIndexMostBottom == -1)
+                            || (listIndexMostBottom < index)) {
                         listIndexMostBottom = index;
                     }
                 }
@@ -771,7 +794,8 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
                     getActionUp().setEnabled(true);
                 }
             }
-            if (listIndexMostBottom >= kIEMInstance.getDataComponentWrapperList().size() - 1) {
+            if (listIndexMostBottom >= kIEMInstance
+                    .getDataComponentWrapperList().size() - 1) {
                 // currently bottom
                 if (getActionDown().isEnabled()) {
                     getActionDown().setEnabled(false);
@@ -792,7 +816,8 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
      * @return true, if is abortion possible
      */
     private boolean isAbortionPossible() {
-        boolean returnValue = (kIEMInstance != null && kIEMInstance.isInitializingExecution());
+        boolean returnValue = (kIEMInstance != null && kIEMInstance
+                .isInitializingExecution());
         return returnValue;
     }
 
@@ -801,7 +826,8 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
     /**
      * Updates the table view synchronously from within another thread. <BR>
      * <BR>
-     * BE CAREFUL WITH USING THIS METHOD BECAUSE THIS COULD MORE EASILY PRODUCE DEADLOCKS
+     * BE CAREFUL WITH USING THIS METHOD BECAUSE THIS COULD MORE EASILY PRODUCE
+     * DEADLOCKS
      */
     public void updateViewSync() {
         Display.getDefault().syncExec(new Runnable() {
@@ -840,7 +866,8 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
     // -------------------------------------------------------------------------
 
     /**
-     * Updates steps in the steps text field asynchronously from within another thread.
+     * Updates steps in the steps text field asynchronously from within another
+     * thread.
      */
     public void updateStepsAsync() {
         Display.getDefault().asyncExec(new Runnable() {
@@ -873,8 +900,7 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
     /**
      * Updates the table if it is not busy.
      * 
-     * @param deselect
-     *            a table entry
+     * @param deselect a table entry
      */
     protected void updateView(final boolean deselect) {
         // do not update if not necessary
@@ -912,8 +938,10 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
             if (obj != null) {
                 if ((obj instanceof KiemProperty)
                         || ((obj instanceof DataComponentWrapper)
-                                && (((DataComponentWrapper) obj).getProperties() != null)
-                                && (((DataComponentWrapper) obj).getProperties().length > 0) && (((DataComponentWrapper) obj)
+                                && (((DataComponentWrapper) obj)
+                                        .getProperties() != null)
+                                && (((DataComponentWrapper) obj)
+                                        .getProperties().length > 0) && (((DataComponentWrapper) obj)
                                 .isUnfolded()))) {
                     // unfolded - show property headers
                     refreshTableColumns(false);
@@ -932,14 +960,15 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
     // -------------------------------------------------------------------------
 
     /**
-     * Updates the enableness of the actions that control the execution. If a master is present, the
-     * this functionality may be implemented by him.
+     * Updates the enableness of the actions that control the execution. If a
+     * master is present, the this functionality may be implemented by him.
      */
     private void updateEnabled() {
         updateStepsAsync();
         updateEnabledEnabledDisabledUpDownAddDelete();
         if (KiemPlugin.getDefault().getCurrentMaster() != null) {
-            if (!KiemPlugin.getDefault().getCurrentMaster().isMasterImplementingGUI()) {
+            if (!KiemPlugin.getDefault().getCurrentMaster()
+                    .isMasterImplementingGUI()) {
                 // if the master is not implementing the GUI
                 if (getActionStepBack().isEnabled()) {
                     getActionStepBack().setEnabled(false);
@@ -970,24 +999,45 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
             } else {
                 // master is responsible for enabling/disabling
                 // buttons
-                getActionStepBack().setEnabled(
-                        KiemPlugin.getDefault().getCurrentMaster()
-                                .masterGUIisEnabled(AbstractDataComponent.MASTER_CMD_STEPBACK));
+                getActionStepBack()
+                        .setEnabled(
+                                KiemPlugin
+                                        .getDefault()
+                                        .getCurrentMaster()
+                                        .masterGUIisEnabled(
+                                                AbstractDataComponent.MASTER_CMD_STEPBACK));
                 getActionStep().setEnabled(
-                        KiemPlugin.getDefault().getCurrentMaster()
-                                .masterGUIisEnabled(AbstractDataComponent.MASTER_CMD_STEP));
+                        KiemPlugin
+                                .getDefault()
+                                .getCurrentMaster()
+                                .masterGUIisEnabled(
+                                        AbstractDataComponent.MASTER_CMD_STEP));
+                getActionMacroStep()
+                        .setEnabled(
+                                KiemPlugin
+                                        .getDefault()
+                                        .getCurrentMaster()
+                                        .masterGUIisEnabled(
+                                                AbstractDataComponent.MASTER_CMD_MACROSTEP));
                 getActionMacroStep().setEnabled(
-                        KiemPlugin.getDefault().getCurrentMaster()
-                                .masterGUIisEnabled(AbstractDataComponent.MASTER_CMD_MACROSTEP));
-                getActionMacroStep().setEnabled(
-                        KiemPlugin.getDefault().getCurrentMaster()
-                                .masterGUIisEnabled(AbstractDataComponent.MASTER_CMD_RUN));
-                getActionPause().setEnabled(
-                        KiemPlugin.getDefault().getCurrentMaster()
-                                .masterGUIisEnabled(AbstractDataComponent.MASTER_CMD_PAUSE));
+                        KiemPlugin
+                                .getDefault()
+                                .getCurrentMaster()
+                                .masterGUIisEnabled(
+                                        AbstractDataComponent.MASTER_CMD_RUN));
+                getActionPause()
+                        .setEnabled(
+                                KiemPlugin
+                                        .getDefault()
+                                        .getCurrentMaster()
+                                        .masterGUIisEnabled(
+                                                AbstractDataComponent.MASTER_CMD_PAUSE));
                 getActionStop().setEnabled(
-                        KiemPlugin.getDefault().getCurrentMaster()
-                                .masterGUIisEnabled(AbstractDataComponent.MASTER_CMD_STOP));
+                        KiemPlugin
+                                .getDefault()
+                                .getCurrentMaster()
+                                .masterGUIisEnabled(
+                                        AbstractDataComponent.MASTER_CMD_STOP));
                 // getActionStepBack().setEnabled(currentMaster.masterGUIisEnabledStepBack());
                 // getActionStep().setEnabled(currentMaster.masterGUIisEnabledStep());
                 // getActionMacroStep().setEnabled(currentMaster.masterGUIisEnabledMacroStep());
@@ -1095,10 +1145,11 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
     // -------------------------------------------------------------------------
 
     /**
-     * Gets the action add. It calls the AddDataComponentDialog to let the user select a
-     * DataComponent to add. This will be added (and hence instantiated) by calling the
-     * {@link de.cau.cs.kieler.sim.kiem.KiemPlugin#addTodataComponentWrapperList} method of the KIEM
-     * plug-in.
+     * Gets the action add. It calls the AddDataComponentDialog to let the user
+     * select a DataComponent to add. This will be added (and hence
+     * instantiated) by calling the
+     * {@link de.cau.cs.kieler.sim.kiem.KiemPlugin#addTodataComponentWrapperList}
+     * method of the KIEM plug-in.
      * 
      * @return the action add
      */
@@ -1109,19 +1160,23 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
         actionAdd = new Action() {
             @Override
             public void run() {
-                AddDataComponentDialog addDialog = new AddDataComponentDialog(viewer.getControl()
-                        .getShell());
-                addDialog.setComponentWrapperList(kIEMInstance.getDataComponentWrapperList());
-                addDialog
-                        .setComponentList(KiemPlugin.getDefault().getRegisteredDataComponentList());
+                AddDataComponentDialog addDialog = new AddDataComponentDialog(
+                        viewer.getControl().getShell());
+                addDialog.setComponentWrapperList(kIEMInstance
+                        .getDataComponentWrapperList());
+                addDialog.setComponentList(KiemPlugin.getDefault()
+                        .getRegisteredDataComponentList());
                 if (addDialog.open() == 0) {
-                    List<AbstractDataComponent> selected = addDialog.getSelectedComponents();
+                    List<AbstractDataComponent> selected = addDialog
+                            .getSelectedComponents();
                     if (selected != null) {
                         for (int c = 0; c < selected.size(); c++) {
-                            kIEMInstance.addTodataComponentWrapperList(selected.get(c));
+                            kIEMInstance.addTodataComponentWrapperList(selected
+                                    .get(c));
                         }
                         setDirty(true);
-                        KiemPlugin.getDefault().checkForSingleEnabledMaster(false);
+                        KiemPlugin.getDefault().checkForSingleEnabledMaster(
+                                false);
                         viewer.refresh();
                         updateView(true);
                     }
@@ -1137,8 +1192,8 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
     // -------------------------------------------------------------------------
 
     /**
-     * Gets the action delete. Deletes all selected DataComponentWrappers from the
-     * DataComponentWrapperList.
+     * Gets the action delete. Deletes all selected DataComponentWrappers from
+     * the DataComponentWrapperList.
      * 
      * @return the action delete
      */
@@ -1158,11 +1213,14 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
                 for (int c = 0; c < selection.size(); c++) {
                     DataComponentWrapper dataComponentWrapper = (DataComponentWrapper) selection
                             .toArray()[c];
-                    if (kIEMInstance.getDataComponentWrapperList().contains(dataComponentWrapper)) {
+                    if (kIEMInstance.getDataComponentWrapperList().contains(
+                            dataComponentWrapper)) {
                         dataComponentWrapper.getDataComponent().finalize();
-                        kIEMInstance.getDataComponentWrapperList().remove(dataComponentWrapper);
+                        kIEMInstance.getDataComponentWrapperList().remove(
+                                dataComponentWrapper);
                         setDirty(true);
-                        KiemPlugin.getDefault().checkForSingleEnabledMaster(false);
+                        KiemPlugin.getDefault().checkForSingleEnabledMaster(
+                                false);
                         // call garbage collector
                         System.gc();
                     }
@@ -1179,7 +1237,8 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
     // -------------------------------------------------------------------------
 
     /**
-     * Gets the action enable disable. Enables or disables all selected DataComponentWrappers.
+     * Gets the action enable disable. Enables or disables all selected
+     * DataComponentWrappers.
      * 
      * @return the action enable disable
      */
@@ -1203,15 +1262,16 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
                             .getFirstElement();
                     boolean enabledDisabled = !firstDataCompWrapper.isEnabled();
 
-                    IStructuredSelection selection = (StructuredSelection) viewer.getSelection();
+                    IStructuredSelection selection = (StructuredSelection) viewer
+                            .getSelection();
                     for (int c = 0; c < selection.size(); c++) {
                         DataComponentWrapper dataComponentWrapper = (DataComponentWrapper) selection
                                 .toArray()[c];
                         dataComponentWrapper.setEnabled(enabledDisabled);
                         setDirty(true);
                     }
-                    KiemPlugin.getDefault()
-                            .checkForSingleEnabledMaster(false, firstDataCompWrapper);
+                    KiemPlugin.getDefault().checkForSingleEnabledMaster(false,
+                            firstDataCompWrapper);
                     updateView(true);
                 } catch (Exception e) {
                     // if wrong component (property), do not enable == ignore
@@ -1227,8 +1287,8 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
     // -------------------------------------------------------------------------
 
     /**
-     * Gets the action up. Schedules all selected DataComponentWrappers before their current
-     * position (if possible).
+     * Gets the action up. Schedules all selected DataComponentWrappers before
+     * their current position (if possible).
      * 
      * @return the action up
      */
@@ -1246,12 +1306,14 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
                     if (selections.toArray()[c] instanceof DataComponentWrapper) {
                         DataComponentWrapper dataComponentWrapper = (DataComponentWrapper) selections
                                 .toArray()[c];
-                        int listIndex = kIEMInstance.getDataComponentWrapperList().indexOf(
-                                dataComponentWrapper);
+                        int listIndex = kIEMInstance
+                                .getDataComponentWrapperList().indexOf(
+                                        dataComponentWrapper);
                         if (listIndex > 0) {
-                            kIEMInstance.getDataComponentWrapperList().remove(listIndex);
-                            kIEMInstance.getDataComponentWrapperList().add(listIndex - 1,
-                                    dataComponentWrapper);
+                            kIEMInstance.getDataComponentWrapperList().remove(
+                                    listIndex);
+                            kIEMInstance.getDataComponentWrapperList().add(
+                                    listIndex - 1, dataComponentWrapper);
                             setDirty(true);
                         }
                     } // end if DataComponent (not property)
@@ -1271,8 +1333,8 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
     // -------------------------------------------------------------------------
 
     /**
-     * Gets the action down. Schedules all selected DataComponentWrappers behind their current
-     * positions (if possible).
+     * Gets the action down. Schedules all selected DataComponentWrappers behind
+     * their current positions (if possible).
      * 
      * @return the action down
      */
@@ -1290,12 +1352,15 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
                     if (selections.toArray()[c] instanceof DataComponentWrapper) {
                         DataComponentWrapper dataComponentWrapper = (DataComponentWrapper) selections
                                 .toArray()[c];
-                        int listIndex = kIEMInstance.getDataComponentWrapperList().indexOf(
-                                dataComponentWrapper);
-                        if (listIndex < kIEMInstance.getDataComponentWrapperList().size() - 1) {
-                            kIEMInstance.getDataComponentWrapperList().remove(listIndex);
-                            kIEMInstance.getDataComponentWrapperList().add(listIndex + 1,
-                                    dataComponentWrapper);
+                        int listIndex = kIEMInstance
+                                .getDataComponentWrapperList().indexOf(
+                                        dataComponentWrapper);
+                        if (listIndex < kIEMInstance
+                                .getDataComponentWrapperList().size() - 1) {
+                            kIEMInstance.getDataComponentWrapperList().remove(
+                                    listIndex);
+                            kIEMInstance.getDataComponentWrapperList().add(
+                                    listIndex + 1, dataComponentWrapper);
                             setDirty(true);
                         }
                     } // if DataComponent (not Property)
@@ -1315,8 +1380,8 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
     // -------------------------------------------------------------------------
 
     /**
-     * Gets the action step back. Triggers the execution to make a step back. If a master is
-     * present, the this functionality may be implemented by him.
+     * Gets the action step back. Triggers the execution to make a step back. If
+     * a master is present, the this functionality may be implemented by him.
      * 
      * @return the action step back
      */
@@ -1333,13 +1398,17 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
                                 && KiemPlugin.getDefault().getCurrentMaster()
                                         .isMasterImplementingGUI()) {
                             // if a master implements the action
-                            KiemPlugin.getDefault().getCurrentMaster()
-                                    .masterGUI(AbstractDataComponent.MASTER_CMD_STEPBACK);
+                            KiemPlugin
+                                    .getDefault()
+                                    .getCurrentMaster()
+                                    .masterGUI(
+                                            AbstractDataComponent.MASTER_CMD_STEPBACK);
                             // currentMaster.masterGUIstepBack();
                         } else {
                             // otherwise default implementation
                             if (kIEMInstance.initExecution()) {
-                                kIEMInstance.getExecution().stepBackExecutionSync();
+                                kIEMInstance.getExecution()
+                                        .stepBackExecutionSync();
                             }
                         }
                     }
@@ -1349,15 +1418,17 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
         actionStepBack.setText(Messages.mActionStepBack);
         actionStepBack.setToolTipText(Messages.mActionHintStepBack);
         actionStepBack.setImageDescriptor(KiemIcons.IMGDESCR_STEPBACK);
-        actionStepBack.setDisabledImageDescriptor(KiemIcons.IMGDESCR_STEPBACK_DISABLED);
+        actionStepBack
+                .setDisabledImageDescriptor(KiemIcons.IMGDESCR_STEPBACK_DISABLED);
         return actionStepBack;
     }
 
     // -------------------------------------------------------------------------
 
     /**
-     * Gets the action step forward to the most recent step. Triggers the execution to make a step
-     * forward to the most recent one. This action is only available if no master is present.
+     * Gets the action step forward to the most recent step. Triggers the
+     * execution to make a step forward to the most recent one. This action is
+     * only available if no master is present.
      * 
      * @return the action step FMC
      */
@@ -1379,7 +1450,8 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
                             // otherwise default implementation
                             if (kIEMInstance.initExecution()) {
                                 kIEMInstance.getExecution().stepExecutionPause(
-                                        kIEMInstance.getExecution().getMaximumSteps());
+                                        kIEMInstance.getExecution()
+                                                .getMaximumSteps());
                             }
                         }
                     }
@@ -1389,16 +1461,17 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
         actionStepFMC.setText(Messages.mActionStepFMC);
         actionStepFMC.setToolTipText(Messages.mActionHintStepFMC);
         actionStepFMC.setImageDescriptor(KiemIcons.IMGDESCR_STEP);
-        actionStepFMC.setDisabledImageDescriptor(KiemIcons.IMGDESCR_STEP_DISABLED);
+        actionStepFMC
+                .setDisabledImageDescriptor(KiemIcons.IMGDESCR_STEP_DISABLED);
         return actionStepFMC;
     }
 
     // -------------------------------------------------------------------------
 
     /**
-     * Gets the action user defined step. Triggers the execution to make a step forward or backward
-     * to the one that the user set in the dialog window. This action is only available if no master
-     * is present.
+     * Gets the action user defined step. Triggers the execution to make a step
+     * forward or backward to the one that the user set in the dialog window.
+     * This action is only available if no master is present.
      * 
      * @return the user defined action step
      */
@@ -1419,13 +1492,16 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
                         } else {
                             // otherwise default implementation
                             if (kIEMInstance.initExecution()) {
-                                String value = showInputDialog(Messages.mActionStepUserDialogTitle,
+                                String value = showInputDialog(
+                                        Messages.mActionStepUserDialogTitle,
                                         Messages.mActionStepUserDialogText, ""
-                                                + kIEMInstance.getExecution().getMaximumSteps());
+                                                + kIEMInstance.getExecution()
+                                                        .getMaximumSteps());
                                 if (value != null) {
                                     try {
                                         long step = Long.parseLong(value);
-                                        kIEMInstance.getExecution().stepExecutionPause(step);
+                                        kIEMInstance.getExecution()
+                                                .stepExecutionPause(step);
                                     } catch (Exception e) {
                                         // no error should appear here
                                     }
@@ -1439,16 +1515,17 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
         actionStepUser.setText(Messages.mActionStepUser);
         actionStepUser.setToolTipText(Messages.mActionHintStepUser);
         actionStepUser.setImageDescriptor(KiemIcons.IMGDESCR_STEP);
-        actionStepUser.setDisabledImageDescriptor(KiemIcons.IMGDESCR_STEP_DISABLED);
+        actionStepUser
+                .setDisabledImageDescriptor(KiemIcons.IMGDESCR_STEP_DISABLED);
         return actionStepUser;
     }
 
     // -------------------------------------------------------------------------
 
     /**
-     * Gets the action user run defined step. Triggers the execution to run forward or jump backward
-     * to the step that the user set in the dialog window. This action is only available if no
-     * master is present.
+     * Gets the action user run defined step. Triggers the execution to run
+     * forward or jump backward to the step that the user set in the dialog
+     * window. This action is only available if no master is present.
      * 
      * @return the user defined action step
      */
@@ -1469,13 +1546,16 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
                         } else {
                             // otherwise default implementation
                             if (kIEMInstance.initExecution()) {
-                                String value = showInputDialog(Messages.mActionRunUserDialogTitle,
+                                String value = showInputDialog(
+                                        Messages.mActionRunUserDialogTitle,
                                         Messages.mActionRunUserDialogText, ""
-                                                + kIEMInstance.getExecution().getMaximumSteps());
+                                                + kIEMInstance.getExecution()
+                                                        .getMaximumSteps());
                                 if (value != null) {
                                     try {
                                         long step = Long.parseLong(value);
-                                        kIEMInstance.getExecution().runExecutionPause(step);
+                                        kIEMInstance.getExecution()
+                                                .runExecutionPause(step);
                                     } catch (Exception e) {
                                         // no error should appear here
                                     }
@@ -1489,15 +1569,16 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
         actionRunUser.setText(Messages.mActionRunUser);
         actionRunUser.setToolTipText(Messages.mActionHintRunUser);
         actionRunUser.setImageDescriptor(KiemIcons.IMGDESCR_STEP);
-        actionRunUser.setDisabledImageDescriptor(KiemIcons.IMGDESCR_STEP_DISABLED);
+        actionRunUser
+                .setDisabledImageDescriptor(KiemIcons.IMGDESCR_STEP_DISABLED);
         return actionRunUser;
     }
 
     // -------------------------------------------------------------------------
 
     /**
-     * Gets the action step. Triggers the execution to make a step. If a master is present, the this
-     * functionality may be implemented by him.
+     * Gets the action step. Triggers the execution to make a step. If a master
+     * is present, the this functionality may be implemented by him.
      * 
      * @return the action step
      */
@@ -1516,15 +1597,19 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
                                 && KiemPlugin.getDefault().getCurrentMaster()
                                         .isMasterImplementingGUI()) {
                             // if a master implements the action
-                            KiemPlugin.getDefault().getCurrentMaster()
-                                    .masterGUI(AbstractDataComponent.MASTER_CMD_STEP);
+                            KiemPlugin
+                                    .getDefault()
+                                    .getCurrentMaster()
+                                    .masterGUI(
+                                            AbstractDataComponent.MASTER_CMD_STEP);
                             // currentMaster.masterGUIstep();
                         } else {
                             // otherwise default implementation
                             if (kIEMInstance.getExecution() == null) {
                                 if (kIEMInstance.initExecution()) {
                                     // per default make a pause as a first step
-                                    kIEMInstance.getExecution().pauseExecutionSync();
+                                    kIEMInstance.getExecution()
+                                            .pauseExecutionSync();
                                 }
                             } else if (kIEMInstance.initExecution()) {
                                 kIEMInstance.getExecution().stepExecutionSync();
@@ -1545,8 +1630,8 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
     // -------------------------------------------------------------------------
 
     /**
-     * Gets the action macro step. Triggers the execution to make a macro step. If a master is
-     * present, the this functionality may be implemented by him.
+     * Gets the action macro step. Triggers the execution to make a macro step.
+     * If a master is present, the this functionality may be implemented by him.
      * 
      * @return the action macro step
      */
@@ -1563,13 +1648,17 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
                                 && KiemPlugin.getDefault().getCurrentMaster()
                                         .isMasterImplementingGUI()) {
                             // if a master implements the action
-                            KiemPlugin.getDefault().getCurrentMaster()
-                                    .masterGUI(AbstractDataComponent.MASTER_CMD_MACROSTEP);
+                            KiemPlugin
+                                    .getDefault()
+                                    .getCurrentMaster()
+                                    .masterGUI(
+                                            AbstractDataComponent.MASTER_CMD_MACROSTEP);
                             // currentMaster.masterGUImacroStep();
                         } else {
                             // otherwise default implementation
                             if (kIEMInstance.initExecution()) {
-                                kIEMInstance.getExecution().macroStepExecutionSync();
+                                kIEMInstance.getExecution()
+                                        .macroStepExecutionSync();
                             }
                         }
                     }
@@ -1579,15 +1668,16 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
         actionMacroStep.setText(Messages.mActionMacroStep);
         actionMacroStep.setToolTipText(Messages.mActionHintMacroStep);
         actionMacroStep.setImageDescriptor(KiemIcons.IMGDESCR_MACROSTEP);
-        actionMacroStep.setDisabledImageDescriptor(KiemIcons.IMGDESCR_MACROSTEP_DISABLED);
+        actionMacroStep
+                .setDisabledImageDescriptor(KiemIcons.IMGDESCR_MACROSTEP_DISABLED);
         return actionMacroStep;
     }
 
     // -------------------------------------------------------------------------
 
     /**
-     * Gets the action run. Triggers the execution to go into run mode. If a master is present, the
-     * this functionality may be implemented by him.
+     * Gets the action run. Triggers the execution to go into run mode. If a
+     * master is present, the this functionality may be implemented by him.
      * 
      * @return the action run
      */
@@ -1604,8 +1694,11 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
                                 && KiemPlugin.getDefault().getCurrentMaster()
                                         .isMasterImplementingGUI()) {
                             // if a master implements the action
-                            KiemPlugin.getDefault().getCurrentMaster()
-                                    .masterGUI(AbstractDataComponent.MASTER_CMD_RUN);
+                            KiemPlugin
+                                    .getDefault()
+                                    .getCurrentMaster()
+                                    .masterGUI(
+                                            AbstractDataComponent.MASTER_CMD_RUN);
                             // currentMaster.masterGUIrun();
                         } else {
                             // otherwise default implementation
@@ -1627,8 +1720,8 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
     // -------------------------------------------------------------------------
 
     /**
-     * Gets the action pause. Triggers the execution to pause. If a master is present, the this
-     * functionality may be implemented by him.
+     * Gets the action pause. Triggers the execution to pause. If a master is
+     * present, the this functionality may be implemented by him.
      * 
      * @return the action pause
      */
@@ -1640,7 +1733,8 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
             @Override
             public void run() {
                 if ((KiemPlugin.getDefault().getCurrentMaster() != null)
-                        && KiemPlugin.getDefault().getCurrentMaster().isMasterImplementingGUI()) {
+                        && KiemPlugin.getDefault().getCurrentMaster()
+                                .isMasterImplementingGUI()) {
                     // if a master implements the action
                     KiemPlugin.getDefault().getCurrentMaster()
                             .masterGUI(AbstractDataComponent.MASTER_CMD_PAUSE);
@@ -1657,17 +1751,18 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
         actionPause.setText(Messages.mActionPause);
         actionPause.setToolTipText(Messages.mActionHintPause);
         actionPause.setImageDescriptor(KiemIcons.IMGDESCR_PAUSE);
-        actionPause.setDisabledImageDescriptor(KiemIcons.IMGDESCR_PAUSE_DISABLED);
+        actionPause
+                .setDisabledImageDescriptor(KiemIcons.IMGDESCR_PAUSE_DISABLED);
         return actionPause;
     }
 
     // -------------------------------------------------------------------------
 
     /**
-     * Gets action stop. Triggers the execution to stop. If a master is present, the this
-     * functionality may be implemented by him.<BR>
-     * All collected timing data will be presented to the user and the execution is being released.
-     * A master will also have to do this.
+     * Gets action stop. Triggers the execution to stop. If a master is present,
+     * the this functionality may be implemented by him.<BR>
+     * All collected timing data will be presented to the user and the execution
+     * is being released. A master will also have to do this.
      * 
      * Use this button also as abortion button iff execution is not yet existing
      * 
@@ -1682,17 +1777,21 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
             public void run() {
                 // if the execution is not yet fully (!) started then we use the stop button as an
                 // abortion button implicitly
-                if (kIEMInstance == null || kIEMInstance.isInitializingExecution()) {
-                    if (kIEMInstance != null && kIEMInstance.getExecution() != null) {
+                if (kIEMInstance == null
+                        || kIEMInstance.isInitializingExecution()) {
+                    if (kIEMInstance != null
+                            && kIEMInstance.getExecution() != null) {
                         kIEMInstance.getExecution().abortExecutionAsync();
                     }
-                    if (kIEMInstance != null && kIEMInstance.isInitializingExecution()) {
+                    if (kIEMInstance != null
+                            && kIEMInstance.isInitializingExecution()) {
                         kIEMInstance.cancelInitialization();
                     }
                     kIEMInstance.setExecution(null);
                     updateView(true);
                 } else if ((KiemPlugin.getDefault().getCurrentMaster() != null)
-                        && KiemPlugin.getDefault().getCurrentMaster().isMasterImplementingGUI()) {
+                        && KiemPlugin.getDefault().getCurrentMaster()
+                                .isMasterImplementingGUI()) {
                     // if a master implements the action
                     KiemPlugin.getDefault().getCurrentMaster()
                             .masterGUI(AbstractDataComponent.MASTER_CMD_STOP);
@@ -1709,14 +1808,19 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
                     // otherwise default implementation
                     if (kIEMInstance.getExecution() != null) {
                         // get results
-                        executionTime = kIEMInstance.getExecution().getExecutionDuration();
-                        minStepDuration = kIEMInstance.getExecution().getMinimumStepDuration();
+                        executionTime = kIEMInstance.getExecution()
+                                .getExecutionDuration();
+                        minStepDuration = kIEMInstance.getExecution()
+                                .getMinimumStepDuration();
                         wavStepDuration = kIEMInstance.getExecution()
                                 .getWeightedAverageStepDuration();
-                        aveStepDuration = kIEMInstance.getExecution().getAverageStepDuration();
-                        maxStepDuration = kIEMInstance.getExecution().getMaximumStepDuration();
+                        aveStepDuration = kIEMInstance.getExecution()
+                                .getAverageStepDuration();
+                        maxStepDuration = kIEMInstance.getExecution()
+                                .getMaximumStepDuration();
                         steps = kIEMInstance.getExecution().getMaximumSteps();
-                        aimedStepDuration = kIEMInstance.getExecution().getAimedStepDuration();
+                        aimedStepDuration = kIEMInstance.getExecution()
+                                .getAimedStepDuration();
 
                         kIEMInstance.getExecution().stopExecutionSync();
                     }
@@ -1725,16 +1829,28 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
                     updateView(true);
 
                     // show execution results
-                    showMessage(Messages.mTimingResultsTitle, Messages.mTimingResultsNumberOfSteps
-                            + +steps + "\n" + Messages.mTimingResultsOverallExecutionTime
-                            + +executionTime + " ms\n\n" + Messages.mTimingResultsAimedStepDuration
-                            + +aimedStepDuration + " ms\n"
-                            + Messages.mTimingResultsMinimumStepDuration + +minStepDuration
-                            + " ms\n" + Messages.mTimingResultsWheightedAverageStepDuration
-                            + +wavStepDuration + " ms\n"
-                            + Messages.mTimingResultsAverageStepDuration + +aveStepDuration
-                            + " ms\n" + Messages.mTimingResultsMaximumStepDuration
-                            + +maxStepDuration + " ms");
+                    showMessage(
+                            Messages.mTimingResultsTitle,
+                            Messages.mTimingResultsNumberOfSteps
+                                    + +steps
+                                    + "\n"
+                                    + Messages.mTimingResultsOverallExecutionTime
+                                    + +executionTime
+                                    + " ms\n\n"
+                                    + Messages.mTimingResultsAimedStepDuration
+                                    + +aimedStepDuration
+                                    + " ms\n"
+                                    + Messages.mTimingResultsMinimumStepDuration
+                                    + +minStepDuration
+                                    + " ms\n"
+                                    + Messages.mTimingResultsWheightedAverageStepDuration
+                                    + +wavStepDuration
+                                    + " ms\n"
+                                    + Messages.mTimingResultsAverageStepDuration
+                                    + +aveStepDuration
+                                    + " ms\n"
+                                    + Messages.mTimingResultsMaximumStepDuration
+                                    + +maxStepDuration + " ms");
                 }
                 updateView(true);
             }
@@ -1757,7 +1873,8 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
         if (aimedStepDurationTextField != null) {
             return aimedStepDurationTextField;
         }
-        aimedStepDurationTextField = new AimedStepDurationTextField(kIEMInstance);
+        aimedStepDurationTextField = new AimedStepDurationTextField(
+                kIEMInstance);
         return aimedStepDurationTextField;
     }
 
@@ -1779,8 +1896,8 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
     // -------------------------------------------------------------------------
 
     /**
-     * Passing the focus request to the viewer's control. This is necessary be- cause KiemView
-     * extends the ViewPart class.
+     * Passing the focus request to the viewer's control. This is necessary be-
+     * cause KiemView extends the ViewPart class.
      */
     @Override
     public void setFocus() {
@@ -1822,11 +1939,10 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
     // -------------------------------------------------------------------------
 
     /**
-     * Sets the dirty flag. Dirty means that the currentFile has been modified since the last
-     * save/load action.
+     * Sets the dirty flag. Dirty means that the currentFile has been modified
+     * since the last save/load action.
      * 
-     * @param isDirtyParam
-     *            the new dirty
+     * @param isDirtyParam the new dirty
      */
     public void setDirty(boolean isDirtyParam) {
         KiemPlugin.getDefault().setDirty(isDirtyParam);
@@ -1857,7 +1973,8 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
      * {@inheritDoc}
      */
     public int promptToSaveOnClose() {
-        return KiemPlugin.getDefault().promptToSaveOnClose(viewer.getControl().getShell());
+        return KiemPlugin.getDefault().promptToSaveOnClose(
+                viewer.getControl().getShell());
     }
 
 }

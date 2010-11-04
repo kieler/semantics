@@ -48,6 +48,9 @@ public final class ContributionManager extends AbstractManager {
     /** true if the plugin is running in advanced mode. */
     private boolean isInAdvancedMode = false;
 
+    /** true if the plugin will not display the execution summary message. */
+    private boolean isSummaryMessageDisabled = false;
+
     /** true if the recent combo should be visible, false if not. */
     private boolean isRecentVisible = true;
 
@@ -175,6 +178,32 @@ public final class ContributionManager extends AbstractManager {
 
     // --------------------------------------------------------------------------
 
+    /**
+     * Getter for the isSummaryMessageDisabled.
+     * 
+     * @return the isSummaryMessageDisabled flag
+     */
+    public boolean isSummaryMessageDisabled() {
+        load();
+        return this.isSummaryMessageDisabled;
+    }
+
+    /**
+     * Setter for the isSummaryMessageDisabled.
+     * 
+     * @param isSummaryMessageDisabledParam
+     *            the isInAdvancedMode to set
+     */
+    public void setSummaryMessageDisabled(final boolean isSummaryMessageDisabledParam) {
+        this.isSummaryMessageDisabled = isSummaryMessageDisabledParam;
+
+        // update visibility of the config data component in the KIEM view
+        KiemPlugin.getDefault().updateViewAsync();
+
+        save();
+    }
+    
+    
     /**
      * Getter for the isInAdvancedMode.
      * 
