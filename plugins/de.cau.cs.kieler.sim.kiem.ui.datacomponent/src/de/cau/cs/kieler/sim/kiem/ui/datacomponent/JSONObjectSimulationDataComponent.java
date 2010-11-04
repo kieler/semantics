@@ -741,8 +741,15 @@ public abstract class JSONObjectSimulationDataComponent extends JSONObjectDataCo
             }
         } else {
             // not dirty
-            modelTimeStamp = this.getInputModelEObject(this.modelEditor).eResource().getTimeStamp();
-            simulatingOldModelVersion = false;
+            EObject eObject = this.getInputModelEObject(this.modelEditor);
+            if (eObject != null) {
+                modelTimeStamp = eObject.eResource().getTimeStamp();
+                simulatingOldModelVersion = false;
+            }
+            else {
+                // if dialog cannot be opened, throw error
+                throw new KiemPropertyException("The selected Editor cannot be used for simulation/execution!");
+            }
         }
     }
 
