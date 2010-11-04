@@ -48,6 +48,7 @@ import org.eclipse.swt.graphics.RGB;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Menu;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeColumn;
 import org.eclipse.ui.IActionBars;
@@ -585,16 +586,27 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
      * 
      * @return the string value entered or null if aborted
      */
+    public String inputDialogReturnValue = "";
+    
     private String showInputDialog(final String title, final String message,
             final String defaultValue) {
+        
+        inputDialogReturnValue = null;
+        
+        Display.getDefault().syncExec(new Runnable() {
+            public void run() {
+                final Shell shell = Display.getCurrent().getShells()[0];
+                
+                InputDialog dlg = new InputDialog(shell, title,
+                        message, defaultValue, null);
+                dlg.open();
+                if (dlg.getReturnCode() == InputDialog.OK) {
+                    inputDialogReturnValue = dlg.getValue();
+                }
+            }
+        });
 
-        InputDialog dlg = new InputDialog(this.getSite().getShell(), title,
-                message, defaultValue, null);
-        dlg.open();
-        if (dlg.getReturnCode() == InputDialog.OK) {
-            return dlg.getValue();
-        }
-        return null;
+        return inputDialogReturnValue;
     }
 
     // -------------------------------------------------------------------------
