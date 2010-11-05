@@ -39,6 +39,20 @@
                </with>
             </visibleWhen>
          </command>
+         <command
+               commandId="de.cau.cs.kieler.core.model.showhierarchy"
+               icon="icons/rainbow.gif"
+               style="toggle">
+            <visibleWhen
+                  checkEnabled="false">
+               <with
+                     variable="activeEditor">
+                  <instanceof
+                        value="org.eclipse.gmf.runtime.diagram.ui.parts.DiagramEditor">
+                  </instanceof>
+               </with>
+            </visibleWhen>
+         </command>
       </menuContribution>
       <menuContribution
             class="de.cau.cs.kieler.core.model.ui.ValidationMenuContributionFactory"
@@ -67,12 +81,13 @@
             description="Show the hierarchy levels of a diagram by painting each level in a different color."
             name="Show Hierarchy Levels">
       </combination>
-      <combination
+<!--      <combination
             active="true"
             class="de.cau.cs.kieler.core.model.combinations.SynchronizeViewsCombination"
             description="Synchronize Notation model views with semantical operations from KSBASE"
             name="Synchronize Notation Model">
       </combination>
+      -->
    </extension>
 
 </plugin>
