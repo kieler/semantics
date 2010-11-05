@@ -241,7 +241,6 @@ public class SCDataComponent extends AbstractAutomatedProducer {
         return true;
     }
 
-    @Override
     public KiemProperty[] doProvideProperties() {
         final int numberOfProperties = 3;
         KiemProperty[] properties = new KiemProperty[numberOfProperties];
@@ -336,7 +335,6 @@ public class SCDataComponent extends AbstractAutomatedProducer {
      *         started.
      * 
      */
-    @Override
     public JSONObject doProvideInitialVariables() {
 
         JSONObject returnObj = new JSONObject();
@@ -366,7 +364,7 @@ public class SCDataComponent extends AbstractAutomatedProducer {
             if (validation) {
                 wf = new WorkflowGenerator(fileLocation);
             } else {
-                String fileLocation2 = this.getInputModel();
+                String fileLocation2 = getInputModel();
                 wf = new WorkflowGenerator(fileLocation2);
             }
             // generate Code from SyncChart
