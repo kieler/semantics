@@ -465,7 +465,7 @@ public class ExecutePtolemyModel {
                 ModalController ctrl = modalController;
                 Director director = ctrl.getDirector();
                 if (director instanceof FSMDirector) {
-                    FSMDirector fsmDirector = (FSMDirector) director;
+//                    FSMDirector fsmDirector = (FSMDirector) director;
                     // fsmDirector._getLastChosenTransition();
                 }
                 Transition transition = ctrl.getLastChosenTransition();

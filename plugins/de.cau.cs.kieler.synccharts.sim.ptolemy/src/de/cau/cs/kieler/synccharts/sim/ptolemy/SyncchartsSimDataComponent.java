@@ -31,7 +31,6 @@ import org.eclipse.emf.mwe.core.issues.Issues;
 import org.eclipse.emf.mwe.core.monitor.ProgressMonitor;
 import org.eclipse.emf.mwe.internal.core.Workflow;
 import org.eclipse.emf.mwe.utils.Reader;
-import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramEditor;
 import org.eclipse.ui.IViewPart;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchWindow;
@@ -78,24 +77,6 @@ public class SyncchartsSimDataComponent extends
 
     /** The Ptolemy model. */
     private Resource ptolemyModel;
-
-    /** The transformation completed flag. */
-    private boolean transformationCompleted;
-
-    /** The transformation error flag. */
-    private boolean transformationError;
-
-    /** The editor of the model being simulated. */
-    private DiagramEditor modelEditor;
-
-    /** The model time stamp. */
-    private long modelTimeStamp;
-
-    /**
-     * A flag that becomes true if the user was warned about unsaved changes
-     * during the simulation.
-     */
-    private boolean simulatingOldModelVersion;
 
     // -------------------------------------------------------------------------
 
