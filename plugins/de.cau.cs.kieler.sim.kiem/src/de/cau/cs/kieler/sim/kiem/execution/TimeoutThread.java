@@ -48,6 +48,9 @@ public class TimeoutThread extends Thread {
     /** The timeout lower bound. Ensures a reasonable timeout of >100ms. */
     private static final int TIMEOUT_LOWER_BOUND = 100;
 
+    /** The timeout lower bound fragment. */
+    private static final int TIMEOUT_FRAGMENT = 10;
+    
     /** The timeout to count down (ms). */
     private int timeout;
 
@@ -216,8 +219,9 @@ public class TimeoutThread extends Thread {
                     // check if currently deactivated then reset time
                     while (TimeoutThread.awaitUserResponse) {
                         try {
-                            Thread.sleep(10);
+                            Thread.sleep(TIMEOUT_FRAGMENT);
                         } catch (InterruptedException e) {
+                            // Ignore thread errors because they are irrelevant here.
                         }
                         // set new stop time
                         stopTime = System.currentTimeMillis() + this.timeout;

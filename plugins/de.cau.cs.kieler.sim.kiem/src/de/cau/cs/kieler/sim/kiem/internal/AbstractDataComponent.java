@@ -39,6 +39,9 @@ import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyException;
  */
 public abstract class AbstractDataComponent implements IDataComponent, IExecutableExtension {
 
+    /** The getShell() timeout. */
+    private static final int GET_SHELL_TIMEOUT = 10;
+    
     /** The name of the DataComponent. */
     private String name;
 
@@ -95,7 +98,7 @@ public abstract class AbstractDataComponent implements IDataComponent, IExecutab
         }
         while (currentShell == null) {
             try {
-                Thread.sleep(10);
+                Thread.sleep(GET_SHELL_TIMEOUT);
             } catch (InterruptedException e) {
                 // do not sleep
             }

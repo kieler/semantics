@@ -235,7 +235,7 @@ public class InitializeExecution implements Runnable {
             } catch (Exception e) {
                 boolean silent = false; 
                 if (e instanceof KiemPropertyException) {
-                    silent = ((KiemPropertyException)e).isSilent(); 
+                    silent = ((KiemPropertyException) e).isSilent(); 
                 }
                 this.kIEMInstance.showError(null, dataComponentWrapper.getDataComponent()
                         .getConfigurationElement().getContributor().getName(), e, silent);

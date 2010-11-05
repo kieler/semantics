@@ -19,7 +19,6 @@ import java.io.File;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.jface.viewers.CellEditor;
-import org.eclipse.jface.viewers.DialogCellEditor;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
@@ -214,11 +213,11 @@ public class KiemPropertyTypeFile extends KiemPropertyType implements IKiemPrope
         /**
          * Instantiates a new custom dialog cell editor.
          * 
-         * @param parent
-         *            the parent
+         * @param parent the parent
+         * @param isEditableParam the isEditable parameter
          */
-        public CustomDialogCellEditor(final Composite parent, boolean isEditable) {
-            super(parent, isEditable);
+        public CustomDialogCellEditor(final Composite parent, boolean isEditableParam) {
+            super(parent, isEditableParam);
         }
 
         // ---------------------------------------------------------------------
