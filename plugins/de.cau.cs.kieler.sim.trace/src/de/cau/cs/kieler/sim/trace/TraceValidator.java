@@ -46,7 +46,7 @@ public class TraceValidator extends AbstractAutomatedProducer   {
     /**
      * {@inheritDoc}
      */
-    public JSONObject step(final JSONObject input) throws KiemExecutionException {
+    public JSONObject doStep(final JSONObject input) throws KiemExecutionException {
 
         JSONObject res = new JSONObject();
         if (traceReader != null) {
@@ -136,8 +136,7 @@ public class TraceValidator extends AbstractAutomatedProducer   {
     // --------------------------------------------------------------------------
     // additional methods
     /** {@inheritDoc} */
-    @Override
-    public JSONObject provideInitialVariables() throws KiemInitializationException {
+    public JSONObject doProvideInitialVariables() throws KiemInitializationException {
         JSONObject res = new JSONObject();
         traceReader = null;
         for (DataComponentWrapper component : KiemPlugin.getDefault().getDataComponentWrapperList()) {

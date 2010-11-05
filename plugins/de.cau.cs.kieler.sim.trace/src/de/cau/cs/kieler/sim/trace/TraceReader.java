@@ -89,7 +89,7 @@ public class TraceReader extends AbstractAutomatedProducer  {
     /**
      * {@inheritDoc}
      */
-    public JSONObject step(final JSONObject input) throws KiemExecutionException {
+    public JSONObject doStep(final JSONObject input) throws KiemExecutionException {
 
         JSONObject res = new JSONObject();
         if (current != null) {
@@ -141,7 +141,7 @@ public class TraceReader extends AbstractAutomatedProducer  {
     }
 
     @Override
-    public KiemProperty[] provideProperties() {
+    public KiemProperty[] doProvideProperties() {
         KiemProperty[] properties = new KiemProperty[1];
 
         fileProperty = new KiemPropertyTypeFile();
@@ -155,7 +155,7 @@ public class TraceReader extends AbstractAutomatedProducer  {
     }
 
     @Override
-    public JSONObject provideInitialVariables() throws KiemInitializationException {
+    public JSONObject doProvideInitialVariables() throws KiemInitializationException {
         JSONObject signals = new JSONObject();
         if (tracelist != null) {
             if (current != null) {
