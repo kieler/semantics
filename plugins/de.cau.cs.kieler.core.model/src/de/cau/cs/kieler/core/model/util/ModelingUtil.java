@@ -23,7 +23,9 @@ import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.InternalEObject;
+import org.eclipse.emf.ecore.plugin.RegistryReader;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.gef.EditPart;
@@ -39,6 +41,7 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IEditorSite;
 import org.eclipse.ui.PlatformUI;
+import org.eclipse.xtend.typesystem.emf.EcoreUtil2;
 import org.eclipse.xtext.resource.XtextResource;
 import org.eclipse.xtext.ui.editor.XtextEditor;
 import org.eclipse.xtext.ui.editor.model.IXtextDocument;
@@ -628,6 +631,25 @@ public final class ModelingUtil {
         }
 
         return fragment;
+    }
+
+    /**
+     * Check whether a package class is registered in EMF or not
+     * @param packageClass
+     * @return
+     */
+    public static boolean packageExists(String packageClass) {
+       try{
+            EPackage p = EcoreUtil2.getEPackageByClassName(packageClass);
+            if (p != null){
+                return true;
+            }
+            else{
+                return false;
+            }
+        } catch (Exception e) {
+            return false;
+        }
     }
 
 }

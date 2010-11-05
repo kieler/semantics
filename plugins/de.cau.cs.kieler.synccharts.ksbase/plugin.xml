@@ -132,7 +132,7 @@
        <transformation
              tooltip="Moving all regions to the parent state and removing the selected state"
              icon="icons/flatten.gif"
-             keyboardShortcut="M1+R A"
+             keyboardShortcut="M1+R X"
              name="Extract State"
              transformation="flattenState"
              transformationId="de.cau.cs.kieler.ksbase.flattenState">
@@ -215,7 +215,7 @@
               </transformation>
               <transformation
                     icon="icons/initialfinal.png"
-                    keyboardShortcut="M1+R F"
+                    keyboardShortcut="M1+R I"
                     name="Toggle Initial/Final"
                     tooltip="Normal -&gt; Final -&gt; Initial -&gt; InitialFinal -&gt; Normal"
                     transformation="toggleStateInitialFinal"
