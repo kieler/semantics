@@ -35,8 +35,8 @@ import org.eclipse.gmf.runtime.diagram.ui.parts.IDiagramGraphicalViewer;
 import org.eclipse.gmf.runtime.diagram.ui.parts.IDiagramWorkbenchPart;
 import org.eclipse.gmf.runtime.notation.View;
 import org.eclipse.jface.action.IAction;
+import org.eclipse.jface.dialogs.IInputValidator;
 import org.eclipse.jface.dialogs.InputDialog;
-import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
@@ -61,10 +61,11 @@ import de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorUtil;
  */
 public class InitialTransformationAction implements IActionDelegate {
 
+    private IInputValidator kixsValidator = new KixsInputValidator();
     private IFile currentFile;
     private IFile kixsFile;
 
-    Resource resource;
+    protected Resource resource;
 
     /**
      * {@inheritDoc}
@@ -154,9 +155,11 @@ public class InitialTransformationAction implements IActionDelegate {
             if (myFile.exists()) {
                 System.out.println("gibts scho");
                 Shell shell = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell();
+                String currentName = currentFile.getName();
+                currentName = currentName.substring(0, currentName.lastIndexOf(".") + 1) + "kixs";
                 InputDialog inputdiag = new InputDialog(shell, "Existing File.",
-                        "File already exists. Overwrite or pick a new name.",
-                        currentFile.getName(), null);
+                        "File already exists. Overwrite or pick a new name.", currentName,
+                        kixsValidator);
                 if (inputdiag.open() == InputDialog.OK) {
                     String newName = inputdiag.getValue();
                     IPath newPath = new Path(currentFile.getFullPath().removeLastSegments(1)
@@ -223,24 +226,25 @@ public class InitialTransformationAction implements IActionDelegate {
         return currentFile;
     }
 
-    // private List<IFile> getSelectedFilesOfEvent(final ExecutionEvent event) {
-    // LinkedList<IFile> files = new LinkedList<IFile>();
-    // Object object = event.getApplicationContext();
-    // if (object instanceof EvaluationContext) {
-    // EvaluationContext evalContext = (EvaluationContext) object;
-    // // get list of selected files
-    // Object defVar = evalContext.getDefaultVariable();
-    // if (defVar instanceof Iterable<?>) {
-    // Iterable<?> iterable = (Iterable<?>) defVar;
-    // Iterator<?> iter = iterable.iterator();
-    // while (iter.hasNext()) {
-    // Object o = iter.next();
-    // if (o instanceof IFile) {
-    // files.add((IFile) o);
-    // }
-    // }
-    // }
-    // }
-    // return files;
-    // }
+    /**
+     * assures that string inputs have the file extention ".kixs".
+     * 
+     * @author uru
+     * 
+     */
+    class KixsInputValidator implements IInputValidator {
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public String isValid(final String newText) {
+            int i = newText.lastIndexOf(".");
+            String fileExt = newText.substring(i + 1, newText.length());
+            if (fileExt.equals("kixs")) {
+                return null;
+            } else {
+                return "File extention has to be .kixs";
+            }
+        }
+    }
 }
