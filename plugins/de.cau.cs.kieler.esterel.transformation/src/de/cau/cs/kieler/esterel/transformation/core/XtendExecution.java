@@ -14,12 +14,22 @@
 package de.cau.cs.kieler.esterel.transformation.core;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 
 import org.eclipse.emf.common.command.AbstractCommand;
 import org.eclipse.emf.common.command.CommandStack;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.mwe.core.ConfigurationException;
+import org.eclipse.emf.transaction.RecordingCommand;
 import org.eclipse.emf.transaction.TransactionalEditingDomain;
+import org.eclipse.internal.xtend.xtend.XtendFile;
+import org.eclipse.xtend.XtendFacade;
+import org.eclipse.xtend.expression.ExecutionContextImpl;
+import org.eclipse.xtend.expression.Variable;
+import org.eclipse.xtend.typesystem.emf.EcoreUtil2;
+import org.eclipse.xtend.typesystem.emf.EmfMetaModel;
 
 import de.cau.cs.kieler.core.model.transformation.TransformationException;
 import de.cau.cs.kieler.core.model.transformation.xtend.XtendTransformationFramework;
@@ -37,7 +47,7 @@ public class XtendExecution {
     private String transformationFile;
     /** list with all needed base packages. */
     private List<String> basePackages;
-    /** editing domain for the graphical elements being edited. */
+    /** editing domain for the elements being edited. */
     private TransactionalEditingDomain editDomain;
 
     /**
@@ -73,15 +83,15 @@ public class XtendExecution {
      */
     public void executeTransformation(final EObject[] parameter, final String transformation) {
 
-        // create command
-        XpandCommand xCommand = new XpandCommand(parameter, transformation);
-
         // get editing domain and execute
         if (editDomain == null) {
             // TODO
             System.err.println("NO EDITING DOMAIN SET");
             return;
         }
+
+        // create command
+        XpandCommand xCommand = new XpandCommand(parameter, transformation);
         CommandStack stack = editDomain.getCommandStack();
         stack.execute(xCommand);
     }
@@ -97,36 +107,54 @@ public class XtendExecution {
      * @author uru
      * 
      */
-    private class XpandCommand extends AbstractCommand {
+    private class XpandCommand extends RecordingCommand {
 
+        private XtendFacade xtendFacade;
         private Object[] parameters;
         private String transformation;
 
+        /** Cached MetaModelPackages. **/
+        private HashMap<String, EPackage> packageCache;
+
         public XpandCommand(final EObject[] elements, final String transforma) {
+            super(editDomain, "Transformation Command");
             parameters = elements;
             transformation = transforma;
-        }
+            packageCache = new HashMap<String, EPackage>();
 
-        /**
-         * creates a <code>XtendTransformationFramework</code> with the corresponding information
-         * and executes the transformation.
-         */
-        public void execute() {
-            XtendTransformationFramework framework = new XtendTransformationFramework();
-            framework.setParameters(parameters);
-            System.out.println(transformation + Arrays.toString(parameters));
-            boolean init = framework.initializeTransformation(transformationFile, transformation,
-                    basePackages.toArray(new String[basePackages.size()]));
-
-            if (!init) {
-                // TODO throw exception
-                System.err.println("ERROR INITIALIZING");
+            if (transformationFile.contains("." + XtendFile.FILE_EXTENSION)) {
+                transformationFile = transformationFile.substring(0,
+                        transformationFile.indexOf("." + XtendFile.FILE_EXTENSION));
             }
 
-            try {
-                framework.executeTransformation();
-            } catch (TransformationException e) {
-                e.printStackTrace();
+            HashMap<String, Variable> map = new HashMap<String, Variable>();
+            map.put("recursive", new Variable("boolean", true));
+            ExecutionContextImpl exec = new ExecutionContextImpl(map);
+
+            xtendFacade = XtendFacade.create(exec, transformationFile);
+            // Register all meta models
+            for (String basePackage : basePackages) {
+                // The EMFMetaMetaModel,
+                EmfMetaModel metaModel;
+
+                // Load the EPackage class by using EcoreUtils
+                EPackage pack = packageCache.get(basePackage);
+                if (pack == null) {
+                    try {
+                        pack = EcoreUtil2.getEPackageByClassName(basePackage);
+                        packageCache.put(basePackage, pack);
+                    } catch (ConfigurationException ce) {
+                        // package class could not be found
+                        // this is bad and should not happen.
+                        // We will return 'false' here and try
+                        // again later.
+                        System.err.println("ERRORRRRRR");
+                        return;
+                    }
+                }
+                // create EMFMetaModel with the given EPackage
+                metaModel = new EmfMetaModel(pack);
+                xtendFacade.registerMetaModel(metaModel);
             }
         }
 
@@ -138,16 +166,34 @@ public class XtendExecution {
             return true;
         }
 
-        public void redo() {
-            // not supported yet
-        }
         /**
-         * {@inheritDoc}
+         * creates a <code>XtendTransformationFramework</code> with the corresponding information
+         * and executes the transformation.
          */
         @Override
-        public void undo() {
-            // nothing for this
+        protected void doExecute() {
+            // XtendTransformationFramework framework = new XtendTransformationFramework();
+            // framework.setParameters(parameters);
+
+            System.out.println(transformation + Arrays.toString(parameters));
+            // boolean init = framework.initializeTransformation(transformationFile, transformation,
+            // basePackages.toArray(new String[basePackages.size()]));
+
+            // if (!init) {
+            // // TODO throw exception
+            // System.err.println("ERROR INITIALIZING");
+            // }
+
+            Object o = xtendFacade.call(transformation, parameters);
+
+            // try {
+            // framework.executeTransformation();
+            // } catch (TransformationException e) {
+            // e.printStackTrace();
+            // }
+
         }
+
     }
 
 }

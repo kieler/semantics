@@ -19,15 +19,31 @@ Void initial(State s):
 	appendTransformation("initial", ns) ->
 	s
 ;
- */
+
+ 
+ recRule(s,e):
+   if (doRecursion())
+     rule(s,e)
+     ;
+  */
+  
+Void recursiveRule(State s, emf::EObject e):
+	((boolean) GLOBALVAR recursive) ? rule(s, e) : s
+	-> s
+;
  
  
 Void initial(State s, emf::EObject noneed):
  	let m = ((emf::EObject) s.bodyReference):
  	let mo = (Program) castToEMF(m):
  	let selfTrans = new Transition:
- 	ruleModule(s, mo.module.get(0)) -> 
- 	s
+ 	//ruleModule(s, mo.module.get(0)) ->  	s
+ 	recursiveRule(s, mo.module.get(0)) ->  s
+;
+
+// just dummy for xtend 
+Void rule(State s, emf::EObject noneed):
+	s.setLabel("damn you")
 ;
 
 /*
@@ -47,6 +63,7 @@ Void ruleModule(State s, Module m):
 	s.bodyText.removeAll(s.bodyText) ->
 	//s.regions.add(r) ->
 	s.setLabel(m.name) ->
+	
 	//r.states.add(newState) ->
 	//newState.setIsInitial(true) ->
 	//newState.setIsFinal(true) -> 
@@ -58,6 +75,34 @@ Void ruleModule(State s, Module m):
 	//appendNextTransformation(newState, statement)
 	setJavaBodyContents(s, statement) ->
 	appendNextTransformation(s, statement)
+	->
+	recursiveRule(s, statement)
+;
+
+/*
+ * rule 1 (module)
+ */ 
+Void rule(State s, Module m):
+	let statement = m.modBody.statement.get(0):
+	let newState = new State:
+	let r = new Region:
+	s.bodyText.removeAll(s.bodyText) ->
+	//s.regions.add(r) ->
+	s.setLabel(m.name) ->
+	
+	//r.states.add(newState) ->
+	//newState.setIsInitial(true) ->
+	//newState.setIsFinal(true) -> 
+	s.setIsInitial(true) ->
+	s.setIsFinal(true) ->
+	// TODO set singals
+	// TODO set body content
+	//setJavaBodyContents(newState, statement) ->
+	//appendNextTransformation(newState, statement)
+	setJavaBodyContents(s, statement) ->
+	appendNextTransformation(s, statement)
+		->
+	recursiveRule(s, statement)
 ;
 
 
@@ -131,6 +176,8 @@ Void rule(State s, Halt h):
  	setJavaBodyContents(initState, a.statement) ->
  	appendNextTransformation(initState, (emf::EObject) a.statement) ->
  	a
+ 	->
+	recursiveRule(initState, a.statement)
  ;
  
 Void handleAbort(Region parent, State s, Abort a):
@@ -223,6 +270,8 @@ Void rule(State s, Loop l):
  	
  	setJavaBodyContents(loopState, l.body.statement) ->
  	appendNextTransformation(loopState, l.body.statement)
+ 	->
+	recursiveRule(loopState, l.body.statement)
  ;
   
   
