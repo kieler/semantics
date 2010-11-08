@@ -18,12 +18,15 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IWorkspace;
+import org.eclipse.core.resources.IWorkspaceRoot;
+import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.EcoreFactory;
-import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
@@ -32,9 +35,12 @@ import org.eclipse.gmf.runtime.diagram.ui.parts.IDiagramGraphicalViewer;
 import org.eclipse.gmf.runtime.diagram.ui.parts.IDiagramWorkbenchPart;
 import org.eclipse.gmf.runtime.notation.View;
 import org.eclipse.jface.action.IAction;
+import org.eclipse.jface.dialogs.InputDialog;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IActionDelegate;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.PlatformUI;
@@ -47,7 +53,6 @@ import de.cau.cs.kieler.synccharts.Region;
 import de.cau.cs.kieler.synccharts.State;
 import de.cau.cs.kieler.synccharts.StateType;
 import de.cau.cs.kieler.synccharts.SyncchartsFactory;
-import de.cau.cs.kieler.synccharts.SyncchartsPackage;
 import de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorUtil;
 
 /**
@@ -57,6 +62,7 @@ import de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorUtil;
 public class InitialTransformationAction implements IActionDelegate {
 
     private IFile currentFile;
+    private IFile kixsFile;
 
     Resource resource;
 
@@ -95,7 +101,7 @@ public class InitialTransformationAction implements IActionDelegate {
             // currentFile.getFullPath().toString());
 
             ResourceSet resourceSet = new ResourceSetImpl();
-            final URI kixsURI = URI.createPlatformResourceURI(currentFile.getFullPath()
+            final URI kixsURI = URI.createPlatformResourceURI(kixsFile.getFullPath()
                     .removeFileExtension().addFileExtension("kixs").toString(), false);
 
             State rootState;
@@ -137,10 +143,32 @@ public class InitialTransformationAction implements IActionDelegate {
     private void createSyncchartDiagram() {
         try {
 
+            // access workspace
+            IWorkspace workspace = ResourcesPlugin.getWorkspace();
+            IWorkspaceRoot myWorkspaceRoot = workspace.getRoot();
+
+            // get a file relative to Workspace
+            IPath myPath = currentFile.getFullPath().removeFileExtension().addFileExtension("kixs");
+            IFile myFile = myWorkspaceRoot.getFile(myPath);
+
+            if (myFile.exists()) {
+                System.out.println("gibts scho");
+                Shell shell = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell();
+                InputDialog inputdiag = new InputDialog(shell, "Existing File.",
+                        "File already exists. Overwrite or pick a new name.",
+                        currentFile.getName(), null);
+                if (inputdiag.open() == InputDialog.OK) {
+                    String newName = inputdiag.getValue();
+                    IPath newPath = new Path(currentFile.getFullPath().removeLastSegments(1)
+                            .append(newName).toString());
+                    kixsFile = myWorkspaceRoot.getFile(newPath);
+                }
+            }
+
             // create corresponding syncchart
-            final URI kidsURI = URI.createPlatformResourceURI(currentFile.getFullPath()
+            final URI kidsURI = URI.createPlatformResourceURI(kixsFile.getFullPath()
                     .removeFileExtension().addFileExtension("kids").toString(), false);
-            final URI kixsURI = URI.createPlatformResourceURI(currentFile.getFullPath()
+            final URI kixsURI = URI.createPlatformResourceURI(kixsFile.getFullPath()
                     .removeFileExtension().addFileExtension("kixs").toString(), false);
 
             System.out.println("Creating new SyncCharts Diagram.");
