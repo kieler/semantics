@@ -45,15 +45,19 @@ Void ruleModule(State s, Module m):
 	let newState = new State:
 	let r = new Region:
 	s.bodyText.removeAll(s.bodyText) ->
-	s.regions.add(r) ->
+	//s.regions.add(r) ->
 	s.setLabel(m.name) ->
-	r.states.add(newState) ->
-	newState.setIsInitial(true) ->
-	newState.setIsFinal(true) -> 
+	//r.states.add(newState) ->
+	//newState.setIsInitial(true) ->
+	//newState.setIsFinal(true) -> 
+	s.setIsInitial(true) ->
+	s.setIsFinal(true) ->
 	// TODO set singals
 	// TODO set body content
-	setJavaBodyContents(newState, statement) ->
-	appendNextTransformation(newState, statement)
+	//setJavaBodyContents(newState, statement) ->
+	//appendNextTransformation(newState, statement)
+	setJavaBodyContents(s, statement) ->
+	appendNextTransformation(s, statement)
 ;
 
 
@@ -206,7 +210,7 @@ Void rule(State s, Loop l):
 	let loopState = new State:
  	let selfTrans = new Transition:
  	s.bodyText.removeAll(s.bodyText) ->
-	s.setLabel("Loop_State") ->
+	(s.label.trim().length == 0) ? s.setLabel("Loop_State") : s ->
  	s.regions.add(r) ->
  	r.states.add(loopState) ->
  	loopState.setIsInitial(true) ->

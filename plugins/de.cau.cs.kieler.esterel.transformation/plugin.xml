@@ -28,7 +28,7 @@
                class="de.cau.cs.kieler.esterel.transformation.action.InitialTransformationAction"
                enablesFor="1"
                id="de.cau.cs.kieler.esterel.transformation.initialTransformationHandler2"
-               label="Start Esterel To Syncchart Transformation"
+               label="Transform to SyncChart"
                menubarPath="de.cau.cs.kieler">
          </action>
       </objectContribution>
