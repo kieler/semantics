@@ -25,6 +25,7 @@ import org.eclipse.emf.ecore.EObject;
 import de.cau.cs.kieler.core.expressions.Signal;
 import de.cau.cs.kieler.core.expressions.ValuedObject;
 import de.cau.cs.kieler.core.expressions.ValuedObjectReference;
+import de.cau.cs.kieler.core.model.util.ModelingUtil;
 import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
 import de.cau.cs.kieler.synccharts.Action;
 import de.cau.cs.kieler.synccharts.Effect;
@@ -86,8 +87,7 @@ public final class Helper {
     /**
      * Computes a list with all states in the right order of their priority.
      * 
-     * @param state
-     *            the root state to start with
+     * @param state the root state to start with
      * @return a sorted list (by priority) of states
      */
     public static List<StatePlusTransition> computeThreadPriorities(
@@ -114,8 +114,7 @@ public final class Helper {
     /**
      * Computes the real priority of the given state.
      * 
-     * @param state
-     *            the state you want to get the priority
+     * @param state the state you want to get the priority
      * @return priority of the state
      */
     public static int getRealThreadPriority(final State state) {
@@ -125,8 +124,7 @@ public final class Helper {
     /**
      * Computes the real optimized priority of the given state.
      * 
-     * @param state
-     *            the state you want to get the priority
+     * @param state the state you want to get the priority
      * @return priority of the state
      */
     public static int getRealOptimizedThreadPriority(final State state) {
@@ -136,8 +134,7 @@ public final class Helper {
     /**
      * Computes the real priority of the given state.
      * 
-     * @param state
-     *            the state you want to get the priority
+     * @param state the state you want to get the priority
      * @return priority of the state
      */
     public static int getSmallestThreadPriority(final State state) {
@@ -147,8 +144,7 @@ public final class Helper {
     /**
      * Computes the weak priority of the given state.
      * 
-     * @param state
-     *            the state you want to get the priority
+     * @param state the state you want to get the priority
      * @return priority of the state
      */
     public static int getWeakThreadPriority(final State state) {
@@ -158,8 +154,7 @@ public final class Helper {
     /**
      * Computes the weak optimized priority of the given state.
      * 
-     * @param state
-     *            the state you want to get the priority
+     * @param state the state you want to get the priority
      * @return priority of the state
      */
     public static int getOptimizedWeakThreadPriority(final State state) {
@@ -169,8 +164,7 @@ public final class Helper {
     /**
      * A simple method to print debug information.
      * 
-     * @param s
-     *            debug information
+     * @param s debug information
      */
     public static void debug(final String s) {
         System.out.println(s);
@@ -179,10 +173,8 @@ public final class Helper {
     /**
      * A method to throw an error.
      * 
-     * @param s
-     *            error information
-     * @throws KiemInitializationException
-     *             for error handling
+     * @param s error information
+     * @throws KiemInitializationException for error handling
      */
     public static void error(final String s) throws KiemInitializationException {
         throw new KiemInitializationException("Error while generating SC code",
@@ -193,8 +185,7 @@ public final class Helper {
      * Computes a sorted list with states. The order of the list is the control
      * flow of all states in a region beginning with the initial one.
      * 
-     * @param state
-     *            the initial state to start with
+     * @param state the initial state to start with
      * @return a list, sorted by the control flow in the SyncChart
      */
     public static List<State> sortStateControlFlow(final State state) {
@@ -206,8 +197,7 @@ public final class Helper {
      * Computes a list of all signals (global and local) that are used in the
      * state and his child-states.
      * 
-     * @param state
-     *            the state in which signals should be listed
+     * @param state the state in which signals should be listed
      * @return a list of all signals in the states and child-states
      */
     public static List<Signal> allSignals(final State state) {
@@ -219,10 +209,8 @@ public final class Helper {
     /**
      * Returns unique a label for a state independent on the flag.
      * 
-     * @param state
-     *            the state for which a label should be generated
-     * @param flag
-     *            what kind of label is desired
+     * @param state the state for which a label should be generated
+     * @param flag what kind of label is desired
      * @return unique label for a state
      * 
      *         TODO: Implement the cases LABEL_ANY_ID and
@@ -251,8 +239,7 @@ public final class Helper {
     /**
      * Not used?
      * 
-     * @param state
-     *            nut used?
+     * @param state nut used?
      * @return not used?
      */
     public static List<StateAndSignals> getStateSignals(final State state) {
@@ -264,8 +251,7 @@ public final class Helper {
     /**
      * Computes if the given state has signal dependent states.
      * 
-     * @param transition
-     *            transition to search for dependencies
+     * @param transition transition to search for dependencies
      * @return true if the state has signal dependencies otherwise false
      */
     public static boolean hasDependentState(final Transition transition) {
@@ -275,8 +261,7 @@ public final class Helper {
     /**
      * Computes if the given state has signal dependent states.
      * 
-     * @param transition
-     *            transition to search for dependencies
+     * @param transition transition to search for dependencies
      * @return true if the transition is signal dependent otherwise false
      */
     public static boolean isSignalDependent(final Transition transition) {
@@ -311,18 +296,27 @@ public final class Helper {
      * Returns a string with the complete hierarchy of a state.
      */
     private static String getStateNameCompleteHierarchie(final State state) {
-        String regionPrefix = "";
-        if (state.getParentRegion().getParentState() != null) {
-            if (state.getParentRegion().getParentState().getRegions().size() > 1) {
-                regionPrefix = state.getParentRegion().getId() + "_";
-            }
-        }
-        if (state.getParentRegion().getParentState() != null) {
-            return getStateNameCompleteHierarchie(state.getParentRegion()
-                    .getParentState()) + "_" + regionPrefix + state.getId();
-        } else {
-            return regionPrefix + state.getId();
-        }
+        //TODO: This is an ad-hoc fix for the release, this uses the
+        //fragmentUriToKielerUri() method and replaces all invalid characters with underlines
+//        String regionPrefix = "";
+        String fragmentUri = ModelingUtil.getFragmentUri(state);
+        String kielerUri = ModelingUtil.fragmentUriToKielerUri(fragmentUri, state.eResource());
+        kielerUri = kielerUri.replaceAll("/" , "_");
+        kielerUri = kielerUri.replaceAll("\\." , "_");
+        kielerUri = kielerUri.replaceAll("@" , "_");
+        return  kielerUri;
+//        if (state.getParentRegion().getParentState() != null) {
+//            if (state.getParentRegion().getParentState().getRegions().size() > 1) {
+//                regionPrefix = state.getParentRegion().getId() + "_";
+//            }
+//        }
+//        if (state.getParentRegion().getParentState() != null) {
+//            return getStateNameCompleteHierarchie(state.getParentRegion()
+//                    .getParentState()) + "_" + regionPrefix + state.getId();
+//        } else {
+//            return ((state.hashCode() + state.getParentRegion().hashCode())+ "").replace("-", "")
+//                    + "_" + regionPrefix + state.getId();
+//        }
     }
 
     /*
