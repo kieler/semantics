@@ -33,16 +33,7 @@ import de.cau.cs.kieler.sim.kiem.KiemExecutionException;
 import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
 
 /**
- * 
- * Every extending class also has to implement the following method. This is used within the .ext
- * file to receive a correct transformation statement.
- * 
- * <pre>
- * public static ITransformationStatement getTransformationStatement(String transName, State synMod,
- *         EObject estMod) {
- *         ... 
- * }
- * </pre>
+ * Abstract implementation of a TransformationDataComponent.
  * 
  * @author uru
  * 
@@ -50,8 +41,7 @@ import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
 public abstract class AbstractTransformationDataComponent extends JSONObjectDataComponent implements
         IJSONObjectDataComponent {
 
-    TransactionalEditingDomain domain;
-
+    private TransactionalEditingDomain domain;
     private Shell shell;
 
     /**
@@ -85,18 +75,13 @@ public abstract class AbstractTransformationDataComponent extends JSONObjectData
                         getBasePackages(), domain);
             }
         } else {
-
             PlatformUI.getWorkbench().getDisplay().syncExec(new Runnable() {
-
                 @Override
                 public void run() {
-                    // IWorkbench wb = PlatformUI.getWorkbench();
-                    // shell = wb.getActiveWorkbenchWindow().getShell();
                     MessageDialog.openInformation(shell, "Done",
                             "Transformation finished. No further elements to process.");
                 }
             });
-
             throw new KiemExecutionException("No Further Transformations", true, false, true, null);
         }
         return null;
@@ -145,6 +130,10 @@ public abstract class AbstractTransformationDataComponent extends JSONObjectData
      */
     public abstract TransformationDescriptor getNextTransformation();
 
+    /**
+     * 
+     * @return the currently active editor.
+     */
     protected DiagramEditor getActiveEditor() {
 
         final Maybe<DiagramEditor> maybe = new Maybe<DiagramEditor>();
@@ -159,6 +148,10 @@ public abstract class AbstractTransformationDataComponent extends JSONObjectData
         return maybe.get();
     }
 
+    /**
+     * 
+     * @return currently active editor's editing domain
+     */
     protected TransactionalEditingDomain getActiveEditorEditingDomain() {
         DiagramEditor activeEditor = getActiveEditor();
         if (activeEditor != null) {
@@ -167,7 +160,13 @@ public abstract class AbstractTransformationDataComponent extends JSONObjectData
         return null;
     }
 
-    protected TransactionalEditingDomain getEditingDomainForResourceSet(ResourceSet rs) {
+    /**
+     * 
+     * @param rs
+     *            some resource set.
+     * @return an editing domain for this resource set.
+     */
+    protected TransactionalEditingDomain getEditingDomainForResourceSet(final ResourceSet rs) {
         return TransactionalEditingDomain.Factory.INSTANCE.createEditingDomain(rs);
     }
 

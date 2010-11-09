@@ -5,7 +5,7 @@ import expressions;
 import utilities;
 import esterel;
 
-extension feature;
+//extension feature;
  
 /*
  * initial test transformation
@@ -77,9 +77,6 @@ Void ruleModule(State s, Module m):
 	// TODO set body content
 	//setJavaBodyContents(newState, statement) ->
 	//appendNextTransformation(newState, statement)
-	setJavaBodyContents(s, statement) ->
-	appendNextTransformation(s, statement)
-	->
 	recursiveRule(s, statement)
 ;
 
@@ -103,9 +100,6 @@ Void rule(State s, Module m):
 	// TODO set body content
 	//setJavaBodyContents(newState, statement) ->
 	//appendNextTransformation(newState, statement)
-	setJavaBodyContents(s, statement) ->
-	appendNextTransformation(s, statement)
-		->
 	recursiveRule(s, statement)
 ;
 
@@ -178,9 +172,6 @@ Void rule(State s, Halt h):
  	// handle cases (only for ABRO currently)
  	handleAbort(r, initState, a) ->
  	setJavaBodyContents(initState, a.statement) ->
- 	appendNextTransformation(initState, (emf::EObject) a.statement) ->
- 	a
- 	->
 	recursiveRule(initState, a.statement)
  ;
  
@@ -273,8 +264,6 @@ Void rule(State s, Loop l):
  	loopState.outgoingTransitions.add(selfTrans) ->
  	
  	setJavaBodyContents(loopState, l.body.statement) ->
- 	appendNextTransformation(loopState, l.body.statement)
- 	->
 	recursiveRule(loopState, l.body.statement)
  ;
   
@@ -298,8 +287,7 @@ Void ruleParallelRecursive(State parent, List[Statement] statements):
 	
 	((statements.size > 1) ? ruleParallelRecursive(parent, statements.withoutFirst()) : s) ->
 	
-	setJavaBodyContents(s, statements.first()) ->
-	appendNextTransformation(s, statements.first())  
+	setJavaBodyContents(s, statements.first())
 ;
 
 /*
@@ -318,8 +306,7 @@ Void ruleParallelRecursive(State parent, List[Statement] statements):
 	(seq.list.size > 1) ? ruleSequenceRecursive(r, initial, seq.list.withoutFirst()) : s
 	->
 		// body of first sequence state
-	setJavaBodyContents(initial, seq.list.first()) ->
-	appendNextTransformation(initial, seq.list.first())  
+	setJavaBodyContents(initial, seq.list.first()) 
 ;
 
 Void ruleSequenceRecursive(Region region, State previous, List[Statement] statements):
@@ -337,8 +324,7 @@ Void ruleSequenceRecursive(Region region, State previous, List[Statement] statem
 	// else finished
 	s.setIsFinal(true)) ->
 	
-	setJavaBodyContents(s, statements.first()) ->
-	appendNextTransformation(s, statements.first())
+	setJavaBodyContents(s, statements.first())
 ;
 
 
@@ -363,48 +349,18 @@ Void rule(State s, Block b):
  ;
  
  
- 
-appendNextTransformation(State s, emf::EObject esterel):
-//	appendTransformation(createTransformationStatement("rule", s, esterel), 
-	//"de.cau.cs.kieler.esterel.transformation.impl.E2SDataComponent")
-	s
-	/*switch {
-		case Abort.isInstance(esterel): appendTransformation("ruleAbort", s, esterel)
-		case Await.isInstance(esterel): appendTransformation("ruleAwait", s, esterel)
-		case Emit.isInstance(esterel): appendTransformation("ruleEmit", s, esterel)
-		case Loop.isInstance(esterel): appendTransformation("ruleLoop", s, esterel)
-		case Nothing.isInstance(esterel): appendTransformation("ruleNothing",  s, esterel)
-		case Pause.isInstance(esterel): appendTransformation("rulePause", s, esterel)
-		case Sequence.isInstance(esterel): appendTransformation("ruleSequence", s, esterel)
-		default: appendTransformation("ruleAbort", s, esterel)
-	}*/
-;
- 
- 
- 
-Object createTransformationStatement(String str, State syncModel, emf::EObject estModel):
-	//JAVA de.cau.cs.kieler.esterel.transformation.impl.E2SDataComponent.getTransformationStatement(java.lang.String,
-//de.cau.cs.kieler.synccharts.State, org.eclipse.emf.ecore.EObject)
-str
-;
 
-/*
- * passes information about a new transformation to the data component.
- */
-Void appendTransformation(Object o, String s):
-	JAVA de.cau.cs.kieler.esterel.transformation.core.XtendToJava.appendTransformation(java.lang.Object, java.lang.String)
-; 
  
 emf::EObject castToEMF(emf::EObject o):
-	JAVA  de.cau.cs.kieler.esterel.transformation.TransformationHelper.castToEObjcet(org.eclipse.emf.ecore.EObject)
+	JAVA  de.cau.cs.kieler.esterel.transformation.util.TransformationUtil.castToEObjcet(org.eclipse.emf.ecore.EObject)
 ;
 
 ecore::EObject castToEcore(emf::EObject o):
-	JAVA  de.cau.cs.kieler.esterel.transformation.TransformationHelper.castToEObjcet(org.eclipse.emf.ecore.EObject)
+	JAVA  de.cau.cs.kieler.esterel.transformation.util.TransformationUtil.castToEObjcet(org.eclipse.emf.ecore.EObject)
 ;
 
 Void setJavaBodyContents(State s, emf::EObject o):
-	JAVA  de.cau.cs.kieler.esterel.transformation.TransformationHelper.setBodyReference(de.cau.cs.kieler.synccharts.State, org.eclipse.emf.ecore.EObject)
+	JAVA  de.cau.cs.kieler.esterel.transformation.util.TransformationUtil.setBodyReference(de.cau.cs.kieler.synccharts.State, org.eclipse.emf.ecore.EObject)
 ;
 
  

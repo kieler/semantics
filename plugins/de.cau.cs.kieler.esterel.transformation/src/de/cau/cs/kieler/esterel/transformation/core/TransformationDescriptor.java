@@ -20,7 +20,6 @@ package de.cau.cs.kieler.esterel.transformation.core;
 public class TransformationDescriptor {
 
     private String transformationName;
-
     private Object[] parameters;
 
     /**

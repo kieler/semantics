@@ -23,15 +23,20 @@ import org.eclipse.xtext.resource.SaveOptions;
 
 import com.google.inject.Injector;
 
+import de.cau.cs.kieler.core.expressions.ExpressionsFactory;
+import de.cau.cs.kieler.core.expressions.TextualCode;
 import de.cau.cs.kieler.esterel.EsterelStandaloneSetup;
 import de.cau.cs.kieler.esterel.esterel.EsterelPackage;
-import de.cau.cs.kieler.esterel.esterel.impl.EsterelPackageImpl;
+import de.cau.cs.kieler.synccharts.State;
+import de.cau.cs.kieler.synccharts.StateType;
 
 /**
+ * utility class.
+ * 
  * @author uru
  * 
  */
-public class TransformationUtil {
+public final class TransformationUtil {
 
     private static Injector injector;
 
@@ -39,19 +44,21 @@ public class TransformationUtil {
         injector = new EsterelStandaloneSetup().createInjectorAndDoEMFRegistration();
     }
 
+    /** utility class. */
+    private TransformationUtil() {
+
+    }
+
     /**
-     * @TODO make sure only esterel elements are accepted°!!!
+     * 
      * @param e
-     * @return
+     *            esterel object
+     * @return serialized string
      */
     public static String getSerializedString(final EObject e) {
 
         if (!EsterelPackage.eINSTANCE.eContents().contains(e.eClass())) {
             System.out.println("nixda");
-            return "";
-        }
-
-        if (e == null) {
             return "";
         }
 
@@ -67,5 +74,35 @@ public class TransformationUtil {
         }
 
         return baos.toString();
+    }
+
+    /**
+     * Do some casting. Dunno why this is needed. But else Xtend editor marks some casts as error.
+     * 
+     * @param obj
+     *            object to cast
+     * @return casted object
+     */
+    public static EObject castToEObjcet(final EObject obj) {
+        return obj;
+    }
+
+    /**
+     * Convenient method for setting the body reference for a state. Maybe in some later state to
+     * any kind of actions here.
+     * 
+     * @param s
+     *            state
+     * @param obj
+     *            any EObject
+     */
+    public static void setBodyReference(final State s, final EObject obj) {
+
+        s.setBodyReference(obj);
+
+        TextualCode code = ExpressionsFactory.eINSTANCE.createTextualCode();
+        s.setType(StateType.TEXTUAL);
+        code.setCode(TransformationUtil.getSerializedString(obj));
+        s.getBodyText().add(code);
     }
 }
