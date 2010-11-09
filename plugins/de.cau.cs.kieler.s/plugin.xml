@@ -5,7 +5,7 @@
 
   <extension point="org.eclipse.emf.ecore.generated_package">
     <package 
-       uri = "http://www.cau.de/cs/kieler/s" 
+       uri = "http://www.cau.de/cs/kieler/s/S" 
        class = "de.cau.cs.kieler.s.s.SPackage"
        genModel = "de/cau/cs/kieler/s/S.genmodel" /> 
 	
@@ -19,7 +19,8 @@
            <menuContribution
                  locationURI="menu:de.cau.cs.kieler">
               <transformationCommand
-                    transformationId="de.cau.cs.kieler.s.addPrios"></transformationCommand>
+                    transformationId="de.cau.cs.kieler.s.addPrios">
+              </transformationCommand>
               <transformationCommand
                     transformationId="de.cau.cs.kieler.s.kernelExpand">
               </transformationCommand>
