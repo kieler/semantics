@@ -104,11 +104,6 @@ public abstract class AbstractSRuntimeModule extends DefaultRuntimeModule {
 		return org.eclipse.xtext.naming.DefaultDeclarativeQualifiedNameProvider.class;
 	}
 
-	// contributed by org.eclipse.xtext.generator.formatting.FormatterFragment
-	public Class<? extends org.eclipse.xtext.formatting.IFormatter> bindIFormatter() {
-		return de.cau.cs.kieler.s.formatting.SFormatter.class;
-	}
-
 	// contributed by org.eclipse.xtext.generator.builder.BuilderIntegrationFragment
 	public Class<? extends org.eclipse.xtext.resource.IContainer.Manager> bindIContainer$Manager() {
 		return org.eclipse.xtext.resource.containers.StateBasedContainerManager.class;
@@ -127,6 +122,11 @@ public abstract class AbstractSRuntimeModule extends DefaultRuntimeModule {
 	// contributed by org.eclipse.xtext.generator.builder.BuilderIntegrationFragment
 	public void configureIResourceDescriptionsBuilderScope(com.google.inject.Binder binder) {
 		binder.bind(org.eclipse.xtext.resource.IResourceDescriptions.class).annotatedWith(com.google.inject.name.Names.named(org.eclipse.xtext.scoping.impl.AbstractGlobalScopeProvider.NAMED_BUILDER_SCOPE)).to(org.eclipse.xtext.resource.impl.ResourceSetBasedResourceDescriptions.class);
+	}
+
+	// contributed by org.eclipse.xtext.generator.formatting.FormatterFragment
+	public Class<? extends org.eclipse.xtext.formatting.IFormatter> bindIFormatter() {
+		return de.cau.cs.kieler.s.formatting.SFormatter.class;
 	}
 
 }
