@@ -42,17 +42,26 @@ public class TransformationEffect extends AbstractEffect {
     private TransactionalEditingDomain editingDomain;
 
     /**
-     * @param parameters
-     * @param transformationName
-     * @param editingDomain
+     * Default constructor.
+     * 
+     * @param extentionFile
+     *            file containing the extentions.
+     * @param theTransformationName
+     *            name of the transformation to run.
+     * @param theParameters
+     *            parameters to pass.
+     * @param basePackages
+     *            emf packages needed within the transformation.
+     * @param theEditingDomain
+     *            editing domain in which the transformation should be performed.
      */
-    public TransformationEffect(final String extentionFile, final String transformationName,
-            final Object[] parameters, final String[] basePackages,
-            final TransactionalEditingDomain editingDomain) {
+    public TransformationEffect(final String extentionFile, final String theTransformationName,
+            final Object[] theParameters, final String[] basePackages,
+            final TransactionalEditingDomain theEditingDomain) {
         super();
-        this.parameters = parameters;
-        this.transformationName = transformationName;
-        this.editingDomain = editingDomain;
+        this.parameters = theParameters;
+        this.transformationName = theTransformationName;
+        this.editingDomain = theEditingDomain;
 
         String extentionWithout = extentionFile;
         // cut off file extention
@@ -68,6 +77,15 @@ public class TransformationEffect extends AbstractEffect {
         xtendFacade = XtendFacade.create(exec, extentionWithout);
         registerEPackages(basePackages);
 
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void undo() {
+        System.out.println("TransformEffect undo");
+        super.undo();
     }
 
     /**
@@ -91,7 +109,7 @@ public class TransformationEffect extends AbstractEffect {
 
     }
 
-    private void registerEPackages(String[] basePackages) {
+    private void registerEPackages(final String[] basePackages) {
         // Register all meta models
         for (String basePackage : basePackages) {
             try {

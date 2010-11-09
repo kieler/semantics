@@ -22,11 +22,13 @@ Void initial(State s):
 
  
  recRule(s,e):
+ let s = new State:
+
    if (doRecursion())
      rule(s,e)
      ;
-  */
-  
+ 
+   */
 Void recursiveRule(State s, emf::EObject e):
 	((boolean) GLOBALVAR recursive) ? rule(s, e) : s
 	-> s
@@ -207,7 +209,7 @@ Void rule(State s, Await a):
  	s.setLabel("Await State") ->
  	s.regions.add(r) ->
  	initState.setIsInitial(true) ->
- 	
+ 	s.setType(StateType::NORMAL) ->
  	//(AwaitInstance.isInstance(a.body) ? 
  	ruleAwaitInstance(r, initState, (AwaitInstance) a.body) ->
  	//AwaitCase.isInstance(a.body) ? 
@@ -363,8 +365,9 @@ Void rule(State s, Block b):
  
  
 appendNextTransformation(State s, emf::EObject esterel):
-	appendTransformation(createTransformationStatement("rule", s, esterel), 
-	"de.cau.cs.kieler.esterel.transformation.impl.E2SDataComponent")
+//	appendTransformation(createTransformationStatement("rule", s, esterel), 
+	//"de.cau.cs.kieler.esterel.transformation.impl.E2SDataComponent")
+	s
 	/*switch {
 		case Abort.isInstance(esterel): appendTransformation("ruleAbort", s, esterel)
 		case Await.isInstance(esterel): appendTransformation("ruleAwait", s, esterel)
@@ -380,8 +383,9 @@ appendNextTransformation(State s, emf::EObject esterel):
  
  
 Object createTransformationStatement(String str, State syncModel, emf::EObject estModel):
-	JAVA de.cau.cs.kieler.esterel.transformation.impl.E2SDataComponent.getTransformationStatement(java.lang.String,
-de.cau.cs.kieler.synccharts.State, org.eclipse.emf.ecore.EObject)
+	//JAVA de.cau.cs.kieler.esterel.transformation.impl.E2SDataComponent.getTransformationStatement(java.lang.String,
+//de.cau.cs.kieler.synccharts.State, org.eclipse.emf.ecore.EObject)
+str
 ;
 
 /*

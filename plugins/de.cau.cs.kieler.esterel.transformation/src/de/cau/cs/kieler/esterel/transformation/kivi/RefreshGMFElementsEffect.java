@@ -32,14 +32,15 @@ import de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditor;
  */
 public class RefreshGMFElementsEffect extends AbstractEffect {
 
-    SyncchartsDiagramEditor activeEditor;
+    private SyncchartsDiagramEditor activeEditor;
 
     /**
-     * @param activeEditor
+     * @param theActiveEditor
+     *            active editor which should be refreshed.
      */
-    public RefreshGMFElementsEffect(final SyncchartsDiagramEditor activeEditor) {
+    public RefreshGMFElementsEffect(final SyncchartsDiagramEditor theActiveEditor) {
         super();
-        this.activeEditor = activeEditor;
+        this.activeEditor = theActiveEditor;
     }
 
     /**
@@ -50,7 +51,7 @@ public class RefreshGMFElementsEffect extends AbstractEffect {
         // update edit policies, so GMF will generate diagram elements
         // for model elements which have been generated during the
         // transformation.
-        Display.getDefault().syncExec(new Runnable() {
+        Display.getDefault().asyncExec(new Runnable() {
             public void run() {
                 if (activeEditor instanceof IDiagramWorkbenchPart) {
                     EObject obj = ((View) ((IDiagramWorkbenchPart) activeEditor)

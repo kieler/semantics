@@ -27,10 +27,18 @@ public class TransformationTrigger extends AbstractTrigger {
 
     private static TransformationTrigger instance;
 
+    /**
+     * default constructor.
+     */
     public TransformationTrigger() {
         instance = this;
     }
 
+    /**
+     * faux singleton.
+     * 
+     * @return instance
+     */
     public static TransformationTrigger getInstance() {
         return instance;
     }
@@ -49,10 +57,25 @@ public class TransformationTrigger extends AbstractTrigger {
     public void unregister() {
     }
 
-    public void step(String extentionFile, String transformationName, Object[] parameters,
-            String[] basePackages, TransactionalEditingDomain editingDomain) {
-        trigger(new TransformationDescriptor(extentionFile, transformationName, parameters,
-                basePackages, editingDomain));
+    /**
+     * initiates a transformation.
+     * 
+     * @param extentionFile
+     *            file containing the extentions.
+     * @param theTransformationName
+     *            name of the transformation to run.
+     * @param theParameters
+     *            parameters to pass.
+     * @param basePackages
+     *            emf packages needed within the transformation.
+     * @param theEditingDomain
+     *            editing domain in which the transformation should be performed.
+     */
+    public void step(final String extentionFile, final String theTransformationName,
+            final Object[] theParameters, final String[] basePackages,
+            final TransactionalEditingDomain theEditingDomain) {
+        trigger(new TransformationState(extentionFile, theTransformationName, theParameters,
+                basePackages, theEditingDomain));
     }
 
     /**
@@ -60,7 +83,7 @@ public class TransformationTrigger extends AbstractTrigger {
      * @author uru
      * 
      */
-    public static final class TransformationDescriptor extends AbstractTriggerState {
+    public static final class TransformationState extends AbstractTriggerState {
 
         private String extentionFile;
         private String transformationName;
@@ -71,24 +94,30 @@ public class TransformationTrigger extends AbstractTrigger {
         /**
          * Default Constructor.
          */
-        public TransformationDescriptor() {
+        public TransformationState() {
         }
 
         /**
-         * @param extentionFile
-         * @param transformationName
-         * @param parameters
-         * @param basePackages
-         * @param editingDomain
+         * @param theExtentionFile
+         *            file containing the extentions.
+         * @param theTransformationName
+         *            name of the transformation to run.
+         * @param theParameters
+         *            parameters to pass.
+         * @param theBasePackages
+         *            emf packages needed within the transformation.
+         * @param theEditingDomain
+         *            editing domain in which the transformation should be performed.
          */
-        public TransformationDescriptor(final String extentionFile, final String transformationName,
-                final Object[] parameters, final String[] basePackages, final TransactionalEditingDomain editingDomain) {
+        public TransformationState(final String theExtentionFile,
+                final String theTransformationName, final Object[] theParameters,
+                final String[] theBasePackages, final TransactionalEditingDomain theEditingDomain) {
             super();
-            this.extentionFile = extentionFile;
-            this.transformationName = transformationName;
-            this.parameters = parameters;
-            this.basePackages = basePackages;
-            this.editingDomain = editingDomain;
+            this.extentionFile = theExtentionFile;
+            this.transformationName = theTransformationName;
+            this.parameters = theParameters;
+            this.basePackages = theBasePackages;
+            this.editingDomain = theEditingDomain;
         }
 
         /**
