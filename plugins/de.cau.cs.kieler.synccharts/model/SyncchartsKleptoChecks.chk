@@ -16,6 +16,11 @@ context Signal if (type != ValueType::PURE) WARNING "KLEPTO: Only pure signals a
 context State if (type != StateType::NORMAL) WARNING "KLEPTO: Only normal states are supported in the simulation!" :
   false;  
 
+//FIXME: In Ptolemy there is currently no complete Cannot-Analysis 
+//this implies the following restriction
+context Transition WARNING "KLEPTO: Strong aborts should currently not be used!\nThis could lead to falsely rejected constructive models due to Ptolemy limitations." :
+  type != TransitionType::STRONGABORT;
+
 context State WARNING "KLEPTO: Exit actions cannot be simulated yet!" :
   exitActions.size == 0;
 
