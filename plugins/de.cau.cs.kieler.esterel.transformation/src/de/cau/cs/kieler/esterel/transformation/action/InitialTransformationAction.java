@@ -65,7 +65,7 @@ public class InitialTransformationAction implements IActionDelegate {
     private IFile currentFile;
     private IFile kixsFile;
 
-    protected Resource resource;
+    private Resource resource;
 
     /**
      * {@inheritDoc}
