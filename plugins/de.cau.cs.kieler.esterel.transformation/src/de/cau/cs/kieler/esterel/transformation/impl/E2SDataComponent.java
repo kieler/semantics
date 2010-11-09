@@ -55,7 +55,7 @@ public class E2SDataComponent extends AbstractTransformationDataComponent {
 //    private static final String TRANSFORMATION_FILE = "optimization.ext";
 
     /** first transformation being executed. */
-    public static final String INITIAL_TRANSFORMATION = "initial";
+    public static final String INITIAL_TRANSFORMATION = "rule";
 
     // TODO needed?! can there be more than one data component of one type?
     /** any kind of identifier. */

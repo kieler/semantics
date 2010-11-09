@@ -31,22 +31,16 @@ import org.eclipse.gmf.runtime.diagram.ui.parts.IDiagramWorkbenchPart;
 import org.eclipse.gmf.runtime.notation.View;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IEditorPart;
-import org.eclipse.ui.IWorkbenchPage;
-import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
 import org.json.JSONObject;
 
-import com.sun.org.apache.bcel.internal.classfile.Code;
-
 import de.cau.cs.kieler.core.ui.util.EditorUtils;
 import de.cau.cs.kieler.core.util.Maybe;
-import de.cau.cs.kieler.esterel.transformation.kivi.AfterTransformationTrigger;
 import de.cau.cs.kieler.esterel.transformation.kivi.TransformationTrigger;
 import de.cau.cs.kieler.sim.kiem.IJSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.JSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.KiemExecutionException;
 import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
-import de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditor;
 
 /**
  * 
@@ -142,7 +136,6 @@ public abstract class AbstractTransformationDataComponent extends JSONObjectData
 
         ts.setDone(true);
 
-        
         if (resource != null) {
             try {
                 resource.save(null);
@@ -151,35 +144,6 @@ public abstract class AbstractTransformationDataComponent extends JSONObjectData
                 e.printStackTrace();
             }
         }
-        // apply automatic layout by triggering the trigger (null layouts whole diagram)
-        if (AfterTransformationTrigger.getInstance() != null) {
-            AfterTransformationTrigger.getInstance().step(null,
-                    (DiagramEditor) getActiveEditor());
-        }
-        
-        
-        
-
-        // // poll a statement from the queue and execute
-        // PlatformUI.getWorkbench().getDisplay().syncExec(new Runnable() {
-        //
-        // public void run() {
-        // IEditorPart activeEditor = getActiveEditor();
-        // if (!(activeEditor instanceof SyncchartsDiagramEditor)) {
-        // return;
-        // }
-        //
-        // if (resource != null) {
-        // try {
-        // resource.save(null);
-        // } catch (IOException e) {
-        // // TODO Auto-generated catch block
-        // e.printStackTrace();
-        // }
-        // }
-        // }
-        // });
-        
 
         if (done.get() != null && done.get()) {
             throw new KiemExecutionException("No Further Transformations", true, null);

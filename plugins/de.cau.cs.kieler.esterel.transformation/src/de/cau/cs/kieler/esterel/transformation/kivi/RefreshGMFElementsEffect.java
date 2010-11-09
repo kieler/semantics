@@ -18,16 +18,12 @@ import java.util.List;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.gmf.runtime.diagram.ui.editpolicies.CanonicalEditPolicy;
-import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramEditor;
 import org.eclipse.gmf.runtime.diagram.ui.parts.IDiagramGraphicalViewer;
 import org.eclipse.gmf.runtime.diagram.ui.parts.IDiagramWorkbenchPart;
 import org.eclipse.gmf.runtime.notation.View;
 import org.eclipse.swt.widgets.Display;
-import org.eclipse.ui.IEditorPart;
 
 import de.cau.cs.kieler.core.kivi.AbstractEffect;
-import de.cau.cs.kieler.core.ui.util.EditorUtils;
-import de.cau.cs.kieler.core.util.Maybe;
 import de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditor;
 
 /**
@@ -36,48 +32,40 @@ import de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditor;
  */
 public class RefreshGMFElementsEffect extends AbstractEffect {
 
+    SyncchartsDiagramEditor activeEditor;
+
+    /**
+     * @param activeEditor
+     */
+    public RefreshGMFElementsEffect(final SyncchartsDiagramEditor activeEditor) {
+        super();
+        this.activeEditor = activeEditor;
+    }
+
     /**
      * {@inheritDoc}
      */
     @Override
     public void execute() {
-        final IEditorPart activeEditor = getActiveEditor();
-        if (activeEditor instanceof SyncchartsDiagramEditor) {
-            // update edit policies, so GMF will generate diagram elements
-            // for model elements which have been generated during the
-            // transformation.
-            Display.getDefault().syncExec(new Runnable() {
-                public void run() {
-                    if (activeEditor instanceof IDiagramWorkbenchPart) {
-                        EObject obj = ((View) ((IDiagramWorkbenchPart) activeEditor)
-                                .getDiagramEditPart().getModel()).getElement();
-                        List<?> editPolicies = CanonicalEditPolicy.getRegisteredEditPolicies(obj);
-                        for (Iterator<?> it = editPolicies.iterator(); it.hasNext();) {
-                            CanonicalEditPolicy nextEditPolicy = (CanonicalEditPolicy) it.next();
-                            nextEditPolicy.refresh();
-                        }
-                        IDiagramGraphicalViewer graphViewer = ((IDiagramWorkbenchPart) activeEditor)
-                                .getDiagramGraphicalViewer();
-                        graphViewer.flush();
-                    }
-                }
-            });
-        }
-
-    }
-
-    private DiagramEditor getActiveEditor() {
-
-        final Maybe<DiagramEditor> maybe = new Maybe<DiagramEditor>();
+        // update edit policies, so GMF will generate diagram elements
+        // for model elements which have been generated during the
+        // transformation.
         Display.getDefault().syncExec(new Runnable() {
             public void run() {
-                IEditorPart editor = EditorUtils.getLastActiveEditor();
-                if (editor instanceof DiagramEditor) {
-                    maybe.set((DiagramEditor) editor);
+                if (activeEditor instanceof IDiagramWorkbenchPart) {
+                    EObject obj = ((View) ((IDiagramWorkbenchPart) activeEditor)
+                            .getDiagramEditPart().getModel()).getElement();
+                    List<?> editPolicies = CanonicalEditPolicy.getRegisteredEditPolicies(obj);
+                    for (Iterator<?> it = editPolicies.iterator(); it.hasNext();) {
+                        CanonicalEditPolicy nextEditPolicy = (CanonicalEditPolicy) it.next();
+                        nextEditPolicy.refresh();
+                    }
+                    IDiagramGraphicalViewer graphViewer = ((IDiagramWorkbenchPart) activeEditor)
+                            .getDiagramGraphicalViewer();
+                    graphViewer.flush();
                 }
             }
         });
-        return maybe.get();
     }
 
 }

@@ -69,10 +69,9 @@ public class TransformationTrigger extends AbstractTrigger {
         private TransactionalEditingDomain editingDomain;
 
         /**
-         * 
+         * Default Constructor.
          */
         public TransformationDescriptor() {
-            // TODO Auto-generated constructor stub
         }
 
         /**
@@ -82,8 +81,8 @@ public class TransformationTrigger extends AbstractTrigger {
          * @param basePackages
          * @param editingDomain
          */
-        public TransformationDescriptor(String extentionFile, String transformationName,
-                Object[] parameters, String[] basePackages, TransactionalEditingDomain editingDomain) {
+        public TransformationDescriptor(final String extentionFile, final String transformationName,
+                final Object[] parameters, final String[] basePackages, final TransactionalEditingDomain editingDomain) {
             super();
             this.extentionFile = extentionFile;
             this.transformationName = transformationName;

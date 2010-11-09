@@ -13,11 +13,6 @@
  */
 package de.cau.cs.kieler.esterel.transformation.action;
 
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Queue;
-import java.util.concurrent.LinkedBlockingQueue;
-
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -32,11 +27,8 @@ import de.cau.cs.kieler.core.expressions.ExpressionsFactory;
 import de.cau.cs.kieler.core.expressions.TextualCode;
 import de.cau.cs.kieler.core.ui.util.EditorUtils;
 import de.cau.cs.kieler.core.util.Maybe;
-import de.cau.cs.kieler.esterel.transformation.core.AbstractTransformationDataComponent;
-import de.cau.cs.kieler.esterel.transformation.core.AbstractTransformationStatement;
 import de.cau.cs.kieler.esterel.transformation.impl.DummyDataComponent;
 import de.cau.cs.kieler.esterel.transformation.impl.QueueStatement;
-import de.cau.cs.kieler.esterel.transformation.kivi.AfterTransformationTrigger;
 import de.cau.cs.kieler.esterel.transformation.util.TransformationUtil;
 import de.cau.cs.kieler.synccharts.Region;
 import de.cau.cs.kieler.synccharts.State;
@@ -113,9 +105,9 @@ public class CompleteTransformationAction extends InitialTransformationAction {
             }
             dataComp.wrapup();
             dataComp = null;
-            if (AfterTransformationTrigger.getInstance() != null) {
-                AfterTransformationTrigger.getInstance().step(null, getActiveEditor());
-            }
+//            if (AfterTransformationTrigger.getInstance() != null) {
+//                AfterTransformationTrigger.getInstance().step(null, getActiveEditor());
+//            }
             // appendToQueue(qs);
             // System.out.println("Added First Statement");
 

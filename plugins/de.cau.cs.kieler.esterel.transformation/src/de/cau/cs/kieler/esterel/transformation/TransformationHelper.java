@@ -73,30 +73,13 @@ public final class TransformationHelper {
      *            any EObject
      */
     public static void setBodyReference(final State s, final EObject obj) {
-        
+
         s.setBodyReference(obj);
 
         TextualCode code = ExpressionsFactory.eINSTANCE.createTextualCode();
         s.setType(StateType.TEXTUAL);
         code.setCode(TransformationUtil.getSerializedString(obj));
         s.getBodyText().add(code);
-
-        IEditorPart activeEditor = PlatformUI.getWorkbench().getActiveWorkbenchWindow()
-                .getActivePage().getActiveEditor();
-
-        if (activeEditor instanceof IDiagramWorkbenchPart) {
-            EObject obj2 = ((View) ((IDiagramWorkbenchPart) activeEditor).getDiagramEditPart()
-                    .getModel()).getElement();
-            List<?> editPolicies = CanonicalEditPolicy.getRegisteredEditPolicies(obj2);
-            for (Iterator<?> it = editPolicies.iterator(); it.hasNext();) {
-                CanonicalEditPolicy nextEditPolicy = (CanonicalEditPolicy) it.next();
-                nextEditPolicy.refresh();
-            }
-            IDiagramGraphicalViewer graphViewer = ((IDiagramWorkbenchPart) activeEditor)
-                    .getDiagramGraphicalViewer();
-            graphViewer.flush();
-        }
-
     }
 
 }

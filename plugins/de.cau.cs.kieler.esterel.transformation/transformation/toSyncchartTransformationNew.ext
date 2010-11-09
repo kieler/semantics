@@ -32,26 +32,28 @@ Void recursiveRule(State s, emf::EObject e):
 	-> s
 ;
  
+// just dummy for xtend 
+Void rule(State s, emf::EObject noneed):
+	s.setLabel("damn you")
+;
  
+/* 
 Void initial(State s, emf::EObject noneed):
  	let m = ((emf::EObject) s.bodyReference):
  	let mo = (Program) castToEMF(m):
  	let selfTrans = new Transition:
  	//ruleModule(s, mo.module.get(0)) ->  	s
  	recursiveRule(s, mo.module.get(0)) ->  s
+;*/
+
+
+// rule for Program, forwards the first module
+Void rule(State s, Program p):
+ 	let m = ((emf::EObject) s.bodyReference):
+ 	let mo = (Program) castToEMF(m):	
+	rule(s, mo.module.get(0))
 ;
 
-// just dummy for xtend 
-Void rule(State s, emf::EObject noneed):
-	s.setLabel("damn you")
-;
-
-/*
-Void sandbox():
-	let l = new Loop:
-	l
-;
-*/
 
 /*
  * rule 1 (module)
@@ -398,7 +400,7 @@ ecore::EObject castToEcore(emf::EObject o):
 ;
 
 Void setJavaBodyContents(State s, emf::EObject o):
-	s//JAVA  de.cau.cs.kieler.esterel.transformation.TransformationHelper.setBodyReference(de.cau.cs.kieler.synccharts.State, org.eclipse.emf.ecore.EObject)
+	JAVA  de.cau.cs.kieler.esterel.transformation.TransformationHelper.setBodyReference(de.cau.cs.kieler.synccharts.State, org.eclipse.emf.ecore.EObject)
 ;
 
  

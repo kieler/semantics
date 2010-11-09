@@ -13,9 +13,18 @@
  */
 package de.cau.cs.kieler.esterel.transformation.kivi;
 
+import org.eclipse.emf.common.command.Command;
+import org.eclipse.emf.common.command.CommandStack;
+import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramEditor;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.ui.IEditorPart;
+
 import de.cau.cs.kieler.core.kivi.AbstractCombination;
+import de.cau.cs.kieler.core.ui.util.EditorUtils;
+import de.cau.cs.kieler.core.util.Maybe;
 import de.cau.cs.kieler.esterel.transformation.kivi.TransformationTrigger.TransformationDescriptor;
 import de.cau.cs.kieler.kiml.ui.layout.LayoutEffect;
+import de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditor;
 
 /**
  * @author uru
@@ -24,13 +33,36 @@ import de.cau.cs.kieler.kiml.ui.layout.LayoutEffect;
 public class TransformationCombination extends AbstractCombination {
 
     public void execute(final TransformationDescriptor descriptor) {
+
+        // start the transformation
         TransformationEffect effect = new TransformationEffect(descriptor.getExtentionFile(),
                 descriptor.getTransformationName(), descriptor.getParameters(),
                 descriptor.getBasePackages(), descriptor.getEditingDomain());
         effect.schedule();
-        
-        RefreshGMFElementsEffect gmfEffect = new RefreshGMFElementsEffect();
-        gmfEffect.schedule();
-        
+
+        DiagramEditor activeEditor = getActiveEditor();
+        if (activeEditor instanceof SyncchartsDiagramEditor) {
+            // refresh GMF edit policies
+            RefreshGMFElementsEffect gmfEffect = new RefreshGMFElementsEffect(
+                    (SyncchartsDiagramEditor) activeEditor);
+            gmfEffect.schedule();
+
+            // apply automatic layout by triggering the trigger (null layouts whole diagram)
+            LayoutEffect layoutEffect = new LayoutEffect(activeEditor, null);
+            layoutEffect.schedule();
+        }
+    }
+
+    private DiagramEditor getActiveEditor() {
+        final Maybe<DiagramEditor> maybe = new Maybe<DiagramEditor>();
+        Display.getDefault().syncExec(new Runnable() {
+            public void run() {
+                IEditorPart editor = EditorUtils.getLastActiveEditor();
+                if (editor instanceof DiagramEditor) {
+                    maybe.set((DiagramEditor) editor);
+                }
+            }
+        });
+        return maybe.get();
     }
 }
