@@ -27,7 +27,7 @@ public abstract class AbstractTransformationStatement {
     /**
      * @return the parameters being passed to the transformation.
      */
-    public abstract EObject[] getParameters();
+    public abstract Object[] getParameters();
 
     /**
      * @return the name of the transformation to be executed.

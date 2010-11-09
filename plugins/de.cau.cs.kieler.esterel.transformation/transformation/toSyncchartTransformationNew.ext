@@ -398,7 +398,7 @@ ecore::EObject castToEcore(emf::EObject o):
 ;
 
 Void setJavaBodyContents(State s, emf::EObject o):
-	JAVA  de.cau.cs.kieler.esterel.transformation.TransformationHelper.setBodyReference(de.cau.cs.kieler.synccharts.State, org.eclipse.emf.ecore.EObject)
+	s//JAVA  de.cau.cs.kieler.esterel.transformation.TransformationHelper.setBodyReference(de.cau.cs.kieler.synccharts.State, org.eclipse.emf.ecore.EObject)
 ;
 
  

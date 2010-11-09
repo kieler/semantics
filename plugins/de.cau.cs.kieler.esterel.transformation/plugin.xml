@@ -13,8 +13,14 @@
          point="de.cau.cs.kieler.core.kivi.combinations">
       <combination
             active="true"
-            class="de.cau.cs.kieler.esterel.transformation.kivi.TransformationCombination"
+            class="de.cau.cs.kieler.esterel.transformation.kivi.AfterTransformationCombination"
             description="Run automatic layout after a transformation."
+            name="After Transformation Combination">
+      </combination>
+      <combination
+            active="true"
+            class="de.cau.cs.kieler.esterel.transformation.kivi.TransformationCombination"
+            description="Performs a Transformation"
             name="Transformation Combination">
       </combination>
    </extension>

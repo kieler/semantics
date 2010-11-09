@@ -40,6 +40,7 @@ import com.sun.org.apache.bcel.internal.classfile.Code;
 
 import de.cau.cs.kieler.core.ui.util.EditorUtils;
 import de.cau.cs.kieler.core.util.Maybe;
+import de.cau.cs.kieler.esterel.transformation.kivi.AfterTransformationTrigger;
 import de.cau.cs.kieler.esterel.transformation.kivi.TransformationTrigger;
 import de.cau.cs.kieler.sim.kiem.IJSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.JSONObjectDataComponent;
@@ -72,6 +73,8 @@ public abstract class AbstractTransformationDataComponent extends JSONObjectData
 
     protected Resource resource;
 
+    TransactionalEditingDomain domain;
+
     /**
      * {@inheritDoc}
      */
@@ -82,6 +85,7 @@ public abstract class AbstractTransformationDataComponent extends JSONObjectData
         XtendToJava.registerComponent(this);
         queue = new LinkedBlockingQueue<AbstractTransformationStatement>();
         runner = new XtendExecution(getTransformationFile(), getBasePackages());
+        domain = getActiveEditorEditingDomain();
     }
 
     /**
@@ -116,59 +120,66 @@ public abstract class AbstractTransformationDataComponent extends JSONObjectData
         }
 
         final Maybe<Boolean> done = new Maybe<Boolean>();
-        // poll a statement from the queue and execute
-        PlatformUI.getWorkbench().getDisplay().syncExec(new Runnable() {
 
-            public void run() {
-                IEditorPart activeEditor = getActiveEditor();
-                if (!(activeEditor instanceof SyncchartsDiagramEditor)) {
-                    return;
-                }
+        AbstractTransformationStatement ts = getNextQueueStatement();
+        if (ts == null) {
+            System.out.println("NO FURTHER TRANSFORMATIONS");
+            done.set(true);
+            return null;
+        }
+        if (ts.isDone()) {
+            System.out.println("The current step was already performed");
+        }
 
-                AbstractTransformationStatement ts = getNextQueueStatement();
-                if (ts == null) {
-                    System.out.println("NO FURTHER TRANSFORMATIONS");
-                    done.set(true);
-                    return;
-                }
-                if (ts.isDone()) {
-                    System.out.println("The current step was already performed");
-                }
-                runner.executeTransformation(ts.getParameters(), ts.getTransformationName());
-                ts.setDone(true);
+        // runner.executeTransformation(ts.getParameters(), ts.getTransformationName());
 
-                if (resource != null) {
-                    try {
-                        resource.save(null);
-                    } catch (IOException e) {
-                        // TODO Auto-generated catch block
-                        e.printStackTrace();
-                    }
-                }
+        System.out.println("Trigger");
+        if (TransformationTrigger.getInstance() != null) {
+            TransformationTrigger.getInstance().step(getTransformationFile(),
+                    ts.getTransformationName(), ts.getParameters(),
+                    getBasePackages().toArray(new String[getBasePackages().size()]), domain);
+        }
 
-                // update edit policies, so GMF will generate diagram elements
-                // for model elements which have been generated during the
-                // transformation.
-                if (activeEditor instanceof IDiagramWorkbenchPart) {
-                    EObject obj = ((View) ((IDiagramWorkbenchPart) activeEditor)
-                            .getDiagramEditPart().getModel()).getElement();
-                    List<?> editPolicies = CanonicalEditPolicy.getRegisteredEditPolicies(obj);
-                    for (Iterator<?> it = editPolicies.iterator(); it.hasNext();) {
-                        CanonicalEditPolicy nextEditPolicy = (CanonicalEditPolicy) it.next();
-                        nextEditPolicy.refresh();
-                    }
-                    IDiagramGraphicalViewer graphViewer = ((IDiagramWorkbenchPart) activeEditor)
-                            .getDiagramGraphicalViewer();
-                    graphViewer.flush();
-                }
+        ts.setDone(true);
 
-                // apply automatic layout by triggering the trigger (null layouts whole diagram)
-                if (TransformationTrigger.getInstance() != null) {
-                    TransformationTrigger.getInstance().step(null, (DiagramEditor) activeEditor);
-                }
-
+        
+        if (resource != null) {
+            try {
+                resource.save(null);
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
             }
-        });
+        }
+        // apply automatic layout by triggering the trigger (null layouts whole diagram)
+        if (AfterTransformationTrigger.getInstance() != null) {
+            AfterTransformationTrigger.getInstance().step(null,
+                    (DiagramEditor) getActiveEditor());
+        }
+        
+        
+        
+
+        // // poll a statement from the queue and execute
+        // PlatformUI.getWorkbench().getDisplay().syncExec(new Runnable() {
+        //
+        // public void run() {
+        // IEditorPart activeEditor = getActiveEditor();
+        // if (!(activeEditor instanceof SyncchartsDiagramEditor)) {
+        // return;
+        // }
+        //
+        // if (resource != null) {
+        // try {
+        // resource.save(null);
+        // } catch (IOException e) {
+        // // TODO Auto-generated catch block
+        // e.printStackTrace();
+        // }
+        // }
+        // }
+        // });
+        
 
         if (done.get() != null && done.get()) {
             throw new KiemExecutionException("No Further Transformations", true, null);

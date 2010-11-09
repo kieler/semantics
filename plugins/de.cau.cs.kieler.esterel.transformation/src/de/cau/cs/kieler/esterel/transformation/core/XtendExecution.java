@@ -18,6 +18,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import org.eclipse.emf.common.command.AbstractCommand;
+import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.command.CommandStack;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
@@ -81,7 +82,7 @@ public class XtendExecution {
      * @param transformation
      *            the name of the transformation to run
      */
-    public void executeTransformation(final EObject[] parameter, final String transformation) {
+    public void executeTransformation(final Object[] parameter, final String transformation) {
 
         // get editing domain and execute
         if (editDomain == null) {
@@ -98,7 +99,13 @@ public class XtendExecution {
 
     public void undoTransformation() {
         CommandStack stack = editDomain.getCommandStack();
-        stack.undo();
+
+        Command c = stack.getUndoCommand();
+        do {
+            stack.undo();
+            c = stack.getUndoCommand();
+        } while ((!c.getLabel().equals("Transformation Command")));
+
     }
 
     /**
@@ -116,7 +123,7 @@ public class XtendExecution {
         /** Cached MetaModelPackages. **/
         private HashMap<String, EPackage> packageCache;
 
-        public XpandCommand(final EObject[] elements, final String transforma) {
+        public XpandCommand(final Object[] elements, final String transforma) {
             super(editDomain, "Transformation Command");
             parameters = elements;
             transformation = transforma;

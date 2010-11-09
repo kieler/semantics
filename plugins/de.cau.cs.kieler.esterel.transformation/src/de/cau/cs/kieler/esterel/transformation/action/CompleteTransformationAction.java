@@ -36,7 +36,7 @@ import de.cau.cs.kieler.esterel.transformation.core.AbstractTransformationDataCo
 import de.cau.cs.kieler.esterel.transformation.core.AbstractTransformationStatement;
 import de.cau.cs.kieler.esterel.transformation.impl.DummyDataComponent;
 import de.cau.cs.kieler.esterel.transformation.impl.QueueStatement;
-import de.cau.cs.kieler.esterel.transformation.kivi.TransformationTrigger;
+import de.cau.cs.kieler.esterel.transformation.kivi.AfterTransformationTrigger;
 import de.cau.cs.kieler.esterel.transformation.util.TransformationUtil;
 import de.cau.cs.kieler.synccharts.Region;
 import de.cau.cs.kieler.synccharts.State;
@@ -113,8 +113,8 @@ public class CompleteTransformationAction extends InitialTransformationAction {
             }
             dataComp.wrapup();
             dataComp = null;
-            if (TransformationTrigger.getInstance() != null) {
-                TransformationTrigger.getInstance().step(null, getActiveEditor());
+            if (AfterTransformationTrigger.getInstance() != null) {
+                AfterTransformationTrigger.getInstance().step(null, getActiveEditor());
             }
             // appendToQueue(qs);
             // System.out.println("Added First Statement");

@@ -14,7 +14,7 @@
 package de.cau.cs.kieler.esterel.transformation.kivi;
 
 import de.cau.cs.kieler.core.kivi.AbstractCombination;
-import de.cau.cs.kieler.esterel.transformation.kivi.TransformationTrigger.TransformingState;
+import de.cau.cs.kieler.esterel.transformation.kivi.TransformationTrigger.TransformationDescriptor;
 import de.cau.cs.kieler.kiml.ui.layout.LayoutEffect;
 
 /**
@@ -22,15 +22,15 @@ import de.cau.cs.kieler.kiml.ui.layout.LayoutEffect;
  * 
  */
 public class TransformationCombination extends AbstractCombination {
-    /**
-     * Execute autolayout.
-     * 
-     * @param trigger
-     *            corresponding trigger
-     */
-    public void execute(final TransformingState trigger) {
-        // System.out.println("Combination running!!");
-        LayoutEffect effect = new LayoutEffect(trigger.getDiagramEditor(), trigger.getRootState());
-        schedule(effect);
+
+    public void execute(final TransformationDescriptor descriptor) {
+        TransformationEffect effect = new TransformationEffect(descriptor.getExtentionFile(),
+                descriptor.getTransformationName(), descriptor.getParameters(),
+                descriptor.getBasePackages(), descriptor.getEditingDomain());
+        effect.schedule();
+        
+        RefreshGMFElementsEffect gmfEffect = new RefreshGMFElementsEffect();
+        gmfEffect.schedule();
+        
     }
 }

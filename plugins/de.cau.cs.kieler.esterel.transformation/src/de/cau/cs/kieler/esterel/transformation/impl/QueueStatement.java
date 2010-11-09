@@ -32,7 +32,7 @@ public class QueueStatement extends AbstractTransformationStatement {
 
     private String transformation;
     private State state;
-    private EObject estElement;
+    private Object estElement;
 
     private LinkedList<QueueStatement> children;
 
@@ -45,7 +45,7 @@ public class QueueStatement extends AbstractTransformationStatement {
      *            esterel element
      * 
      */
-    public QueueStatement(final String trans, final State theState, final EObject theEstElement) {
+    public QueueStatement(final String trans, final State theState, final Object theEstElement) {
         this.transformation = trans;
         this.state = theState;
         this.estElement = theEstElement;
@@ -55,8 +55,8 @@ public class QueueStatement extends AbstractTransformationStatement {
     /**
      * /** {@inheritDoc}
      */
-    public EObject[] getParameters() {
-        return new EObject[] { state, estElement};
+    public Object[] getParameters() {
+        return new Object[] { state, estElement };
     }
 
     /**
