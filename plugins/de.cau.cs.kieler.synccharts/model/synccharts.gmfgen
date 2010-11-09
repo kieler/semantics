@@ -950,7 +950,7 @@
   <plugin
       name="SyncCharts Diagram Editor"
       provider="Christian-Albrechts-Universit√§t zu Kiel"
-      version="0.3.0.qualifier"
+      version="0.4.0.qualifier"
       printingEnabled="true">
     <requiredPlugins>org.eclipse.draw2d</requiredPlugins>
     <requiredPlugins>de.cau.cs.kieler.core.ui</requiredPlugins>
