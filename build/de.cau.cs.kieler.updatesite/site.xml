@@ -136,6 +136,18 @@
    <feature url="features/de.cau.cs.kieler.sj.source_0.1.0.qualifier.jar" id="de.cau.cs.kieler.sj.source" version="0.1.0.qualifier">
       <category name="KIELER Sources"/>
    </feature>
+   <feature url="features/de.cau.cs.kieler.kaom.ptolemy_0.1.0.qualifier.jar" id="de.cau.cs.kieler.kaom.ptolemy" version="0.1.0.qualifier">
+      <category name="KIELER"/>
+   </feature>
+   <feature url="features/de.cau.cs.kieler.kaom.ptolemy.source_0.1.0.qualifier.jar" id="de.cau.cs.kieler.kaom.ptolemy.source" version="0.1.0.qualifier">
+      <category name="KIELER Sources"/>
+   </feature>
+   <feature url="features/de.cau.cs.kieler.kvid_0.1.0.qualifier.jar" id="de.cau.cs.kieler.kvid" version="0.1.0.qualifier">
+      <category name="KIELER"/>
+   </feature>
+   <feature url="features/de.cau.cs.kieler.kvid.source_0.1.0.qualifier.jar" id="de.cau.cs.kieler.kvid.source" version="0.1.0.qualifier">
+      <category name="KIELER Sources"/>
+   </feature>
    <category-def name="KIELER" label="KIELER">
       <description>
          Kiel Integrated Environment for Layout Eclipse RichClient

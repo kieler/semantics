@@ -26,9 +26,6 @@ import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import ptolemy.domains.sr.lib.Combine;
-import ptolemy.actor.gui.Configuration;
-import ptolemy.actor.gui.Effigy;
 import ptolemy.actor.kiel.KielerIO;
 import ptolemy.actor.Actor;
 import ptolemy.actor.CompositeActor;
@@ -46,12 +43,10 @@ import ptolemy.kernel.InstantiableNamedObj;
 import ptolemy.kernel.util.KernelException;
 import ptolemy.kernel.util.NamedObj;
 import ptolemy.kernel.util.StringAttribute;
-import ptolemy.moml.MoMLParser; //import ptolemy.actor.kiel.*;
+import ptolemy.moml.MoMLParser;
 import ptolemy.data.Token;
-import ptolemy.data.expr.Parameter;
 import de.cau.cs.kieler.sim.kiem.JSONSignalValues;
 
-//import de.cau.cs.kieler.sim.ptolemy.DynamicClasspath;
 
 /**
  * The class ExecutePtolemyModel implements the PtolemyExecutor. This is the component that enables
