@@ -5,18 +5,20 @@
          point="de.cau.cs.kieler.sim.kiem.json.datacomponent">
       <content
             class="de.cau.cs.kieler.esterel.transformation.impl.EsterelToSyncChartDataComponent"
-            id="de.cau.cs.kieler.esterel.transformation"
+            id="de.cau.cs.kieler.esterel.transformation.transformation"
             name="Esterel to SyncCharts Transformation">
       </content>
    </extension>
    <extension
+         point="de.cau.cs.kieler.sim.kiem.json.datacomponent">
+      <content
+            class="de.cau.cs.kieler.esterel.transformation.impl.SyncChartsOptimizationDataComponent"
+            id="de.cau.cs.kieler.esterel.transformation.optimization"
+            name="SyncChartsOptimizationDataComponent">
+      </content>
+   </extension>
+   <extension
          point="de.cau.cs.kieler.core.kivi.combinations">
-      <combination
-            active="true"
-            class="de.cau.cs.kieler.esterel.transformation.kivi.AfterTransformationCombination"
-            description="Run automatic layout after a transformation."
-            name="After Transformation Combination">
-      </combination>
       <combination
             active="true"
             class="de.cau.cs.kieler.esterel.transformation.kivi.TransformationCombination"

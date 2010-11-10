@@ -1,0 +1,170 @@
+import synccharts;
+import annotations;
+import expressions;
+import utilities;
+import esterel;
+import ecore;
+
+extension feature; 
+
+
+/*
+	rule1 : Remove unnecessary conditional state 
+		if conditional, one plain outgoing transition
+*/
+Boolean rule1applies(State s):
+	switch {
+		case isConditional(s) && isOneOutTransition(s) : 
+			(isTransitionWithout(s.outgoingTransitions.get(0)) ? true : false)
+		default : false
+	}
+;
+
+/*
+	rule2 : Remove unnecessary plain states
+		if simplestate, is not final nor initial, has only one outgoing transition
+		an trigger = #tick
+*/
+Boolean rule2applies(State s):
+	switch {
+		case isSimpleState(s) && !s.isFinal && !s.isInitial &&
+			isOneOutTransition(s) && isTransitionTick(s.outgoingTransitions.get(0)):
+				true
+		default : false
+	}
+;
+
+/*
+	rule2.2 : remove unnecessary plain states where in and out have the same trigger (not immediate)
+*/
+// TODO
+
+/*
+	rule6 : remove unnecessary macro states
+		if no outgoing weak/strong abortions, no signals or variables, 
+		is no parallel macro state, has a parent macro state 
+*/
+Boolean rule6applies(State s):
+	switch {
+		// TODO check if just test for interfaceDecls or signals and vars
+		case !hasOutWeakTransitions(s) && !hasOutStrongTransitions(s) &&
+			!hasSignalsVariables(s) && hasParentMacroState(s) && isParallelMacroState(s):
+				true
+		default: false
+	}
+;
+
+Void rule6(State s):
+	let r = s.regions.first():
+	let initial = findInitialState(r):
+	let finalMacros = r.states.select(e|!isSimpleState(e) && e.isFinal):
+	let finalSimples = r.states.select(e|isSimpleState(e) && e.isFinal):
+	let incomingTrans = s.incomingTransitions.copyList():
+	
+	// reroute all incoming transitions to the initial state
+	incomingTrans.setTargetState(initial) ->
+	// final macros become nonfinal 
+	finalMacros.setIsFinal(false) ->
+	// final simples become nonfinal
+	finalSimples.setIsFinal(false) ->
+	
+	// if normal termination exist 
+	(s.outgoingTransitions.size == 1) ?
+	(
+	finalSimples.createStrongAbortTo(s.outgoingTransitions.get(0).targetState) ->
+	finalMacros.copyNormalTransitionFrom(s.outgoingTransitions.get(0))
+	)
+	: s
+	
+	// copy whole stuff 
+	->
+	//s.parentRegion.copyWholeRegionContents(r) ->
+	s.parentRegion.states.addAll(r.states) ->
+	
+	s.parentRegion.states.remove(s)
+	//s
+;
+
+
+/*
+	Predicates
+*/
+
+Boolean isConditional(State s):
+	s.type == StateType::CONDITIONAL
+;
+
+Boolean isOneOutTransition(State s):
+	s.outgoingTransitions.size == 1
+;
+
+Boolean isTransitionWithout(Transition t):
+	t.trigger == null && t.effects.size == 0
+;
+
+Boolean isTransitionTick(Transition t):
+	// TODO add "tick"
+	t.isImmediate && true
+;
+
+Boolean hasOutWeakTransitions(State s):
+	s.outgoingTransitions.type == TransitionType::WEAKABORT
+;
+
+Boolean hasOutStrongTransitions(State s):
+	s.outgoingTransitions.type == TransitionType::STRONGABORT
+;
+
+Boolean hasInterfaceDeclaration(State s):
+	s.interfaceDecls.size == 0
+;
+
+Boolean hasParentMacroState(State s):
+	s.parentRegion.parentState != null
+;
+
+Boolean isParallelMacroState(State s):
+	s.regions.size > 1	
+;
+
+/*
+	convinient methods
+*/
+State findInitialState(Region r):
+	let initials = r.states.select(e|e.isInitial):
+	initials.get(0)
+;
+
+Void copyWholeRegionContents(Region from, Region to):
+	let allStates = from.states:
+	to.states.addAll(allStates) 
+	//from.states.removeAll(allStates)
+;
+
+
+/*
+	creation methods
+*/
+Void createStrongAbortTo(State from, State to):
+	let t = new Transition:
+	t.setType(TransitionType::STRONGABORT) ->
+	t.setSourceState(from) ->
+	t.setTargetState(to) ->
+	t.setIsImmediate(true) ->
+	// todo t.setTrigger tick
+	from.outgoingTransitions.add(t)
+;
+
+Void copyNormalTransitionFrom(State from, Transition t):
+	let newT = new Transition:
+	newT.setSourceState(from) ->
+	newT.setType(t.type) ->
+	newT.setTrigger(t.trigger) -> 
+	newT.setEffects(t.effects) ->
+	newT.setTargetState(t.targetState)
+;
+
+List[Transition] copyList(List[Transition] list):
+	let copy = {}:
+	copy.addAll(list)
+;

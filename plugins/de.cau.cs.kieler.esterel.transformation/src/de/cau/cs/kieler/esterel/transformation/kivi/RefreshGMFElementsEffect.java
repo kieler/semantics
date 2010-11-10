@@ -18,13 +18,13 @@ import java.util.List;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.gmf.runtime.diagram.ui.editpolicies.CanonicalEditPolicy;
+import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramEditor;
 import org.eclipse.gmf.runtime.diagram.ui.parts.IDiagramGraphicalViewer;
 import org.eclipse.gmf.runtime.diagram.ui.parts.IDiagramWorkbenchPart;
 import org.eclipse.gmf.runtime.notation.View;
 import org.eclipse.swt.widgets.Display;
 
 import de.cau.cs.kieler.core.kivi.AbstractEffect;
-import de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditor;
 
 /**
  * @author uru
@@ -32,13 +32,13 @@ import de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditor;
  */
 public class RefreshGMFElementsEffect extends AbstractEffect {
 
-    private SyncchartsDiagramEditor activeEditor;
+    private DiagramEditor activeEditor;
 
     /**
      * @param theActiveEditor
      *            active editor which should be refreshed.
      */
-    public RefreshGMFElementsEffect(final SyncchartsDiagramEditor theActiveEditor) {
+    public RefreshGMFElementsEffect(final DiagramEditor theActiveEditor) {
         super();
         this.activeEditor = theActiveEditor;
     }
