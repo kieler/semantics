@@ -7,7 +7,7 @@ Bundle-Activator: de.cau.cs.kieler.s.sc.S2SCPlugin
 Bundle-Vendor: Christian-Albrechts-Universität zu Kiel
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
- de.cau.cs.kieler.s;bundle-version="0.2.0",
+ de.cau.cs.kieler.s_old;bundle-version="0.2.0",
  de.cau.cs.kieler.s.codegen;bundle-version="0.2.0",
  org.eclipse.emf.mwe.utils;resolution:=optional,
  de.cau.cs.kieler.core.expressions;bundle-version="0.1.0",
