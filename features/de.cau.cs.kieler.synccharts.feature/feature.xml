@@ -160,6 +160,8 @@ This Agreement is governed by the laws of the State of New York and the intellec
       <import feature="org.eclipse.xtext.runtime" version="1.0.0" match="greaterOrEqual"/>
       <import feature="org.eclipse.xtext.ui" version="1.0.0" match="greaterOrEqual"/>
       <import plugin="de.cau.cs.kieler.sim.kivi"/>
+      <import feature="de.cau.cs.kieler.kex" version="0.1.0.qualifier" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.ui.intro" version="3.4.0" match="greaterOrEqual"/>
    </requires>
 
    <plugin
@@ -260,6 +262,13 @@ This Agreement is governed by the laws of the State of New York and the intellec
 
    <plugin
          id="de.cau.cs.kieler.synccharts.kivi"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="de.cau.cs.kieler.synccharts.samples"
          download-size="0"
          install-size="0"
          version="0.0.0"
