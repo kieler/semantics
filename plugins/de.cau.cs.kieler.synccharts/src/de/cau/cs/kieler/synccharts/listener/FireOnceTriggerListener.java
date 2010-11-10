@@ -32,6 +32,10 @@ public abstract class FireOnceTriggerListener extends FailSafeTriggerListener {
      */
     @Override
     public Command transactionAboutToCommit(ResourceSetChangeEvent event) throws RollbackException {
+        //FIXME: (haf) transaction.isActive() is synchronized an may deadlock if other stuff is changing the model
+        //       this can especially happen if changes are called from some other thread and both have to synchronize
+        //       on UI thread. Then UI synchronization and this transaction synchronization can deadlock. Workaround
+        //       is to run the model changes themselves on the UI thread, which is usually not what one wants.
         if (event.getTransaction() != null && transaction != null && transaction.isActive()) {
             // do nothing if the last transaction seen is not yet committed.
             // That means
