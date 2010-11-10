@@ -65,16 +65,15 @@ Void cutInternal(List[Object] list):
  let states = list.select(e|e.metaType.name.matches("State")):
  let regions = list.select(e|e.metaType.name.matches("Region")):
  let trans = list.select(e|e.metaType.name.matches("Transition")):
- (if (!states.isEmpty) then (
-    cutInternalStateList(states)
- ) else (
-    (if (!regions.isEmpty) then (
-       cutInternalRegionList(regions)
-     ) else (
-       cutInternalTransitionList(trans)
-     )
-    )
- ))
+ switch{
+ case states.size == 1: cutInternal(states.get(0))
+ case states.size > 1: cutInternalStateList(states)
+ case regions.size == 1: cutInternal(regions.get(0))
+ case regions.size > 1: cutInternalRegionList(regions)
+ case trans.size == 1: cutInternal(trans.get(0))
+ case trans.size > 1: cutInternalTransitionList(trans)
+ default : states.toString()
+ }
 ;
 
 // remove each state
@@ -157,13 +156,15 @@ Void copyInternal(List[Object] list):
  let states = list.select(e|e.metaType == State):
  let regions = list.select(e|e.metaType == Region):
  let trans = list.select(e|e.metaType == Transition):
- (if (!states.isEmpty) then (copyInternalStateList(states)) else (
- (if (!regions.isEmpty) then (copyInternalRegionList(regions)) else (
- (if (!trans.isEmpty) then (copyInternalTransitionList(trans)) else (
- null
- ))
- ))
- ))
+  switch{
+ case states.size == 1: copyInternal(states.get(0))
+ case states.size > 1: copyInternalStateList(states)
+ case regions.size == 1: copyInternal(regions.get(0))
+ case regions.size > 1: copyInternalRegionList(regions)
+ case trans.size == 1: copyInternal(trans.get(0))
+ case trans.size > 1: copyInternalTransitionList(trans)
+ default : states.toString()
+ }
 ;
 
 // dummy for matching
@@ -204,14 +205,16 @@ Void paste(List[Object] objects):
  let regions = objects.select(e|e.metaType == Region):
  let trans = objects.select(e|e.metaType == Transition):
  (if (!isClipboardEmpty()) then
- (if (isSpecialCase(objects)) then (applySpecialCase(objects)) else
-  (if (!states.isEmpty) then (pasteStateList(states)) else
-  (if (!regions.isEmpty) then (pasteRegionList(regions)) else
-  (if (!trans.isEmpty) then (pasteTransitionList(trans))
-  )
-  )
-  )
- )
+  switch{
+  case isSpecialCase(objects) : applySpecialCase(objects)
+ case states.size == 1: paste(states.get(0))
+ case states.size > 1: pasteStateList(states)
+ case regions.size == 1: paste(regions.get(0))
+ case regions.size > 1: pasteRegionList(regions)
+ case trans.size == 1: paste(trans.get(0))
+ case trans.size > 1: pasteTransitionList(trans)
+ default : states.toString()
+ }
  )
 ;
 
@@ -262,12 +265,13 @@ Void pasteRegionIntoRegion(Region region, Region target):
 ;
 
 Void pasteInternal(Region target, List[Object] list):
- (if (isStateList(list)) then pasteInternalStates(target, list) else 
- (if (isRegionList(list)) then pasteInternalRegions(target, list) else 
- (if (isTransitionList(list)) then pasteInternalTransitions(target, list)
- )
- )
- )
+ switch{
+ case list.size == 1 : pasteInternal(target, list.get(0))
+ case isStateList(list) : pasteInternalStates(target, list)
+ case isRegionList(list) : pasteInternalRegions(target, list)
+ case isTransitionList(list) : pasteInternalTransitions(target, list)
+ default : list.toString()
+ }
 ;
 
 Void pasteInternalStates(Region target, List[State] states):
@@ -359,10 +363,13 @@ Void pasteInternal(State target, Region region):
 ;
 
 Void pasteInternal(State target, List[Object] list):
- if (isStateList(list)) then pasteInternalStates(target, list)
- else (if (isRegionList(list)) then pasteInternalRegions(target, list)
- else (if (isTransitionList(list)) then pasteInternalTransitions(target, list)
- ))
+ switch{
+ case list.size == 1 : pasteInternal(target, list.get(0))
+ case isStateList(list) : pasteInternalStates(target, list)
+ case isRegionList(list) : pasteInternalRegions(target, list)
+ case isTransitionList(list) : pasteInternalTransitions(target, list)
+ default : list.toString()
+ }
 ;
 
 Void pasteInternalStates(State target, List[State] states):
@@ -419,10 +426,13 @@ Void replaceWithStateFromClipboard(State target):
 
 // replace each state from the selection with the ones in clipboard
 Void pasteStateList(List[State] targets, List[Object] list):
- if (isStateList(list)) then pasteStateListStates(targets, list)
- else (if (isRegionList(list)) then pasteStateListRegions(targets, list)
- else (if (isTransitionList(list)) then pasteStateListTransitions(targets, list)
- ))
+ switch{
+ case list.size == 1 : pasteStateList(targets, list.get(0))
+ case isStateList(list) : pasteStateListStates(targets, list)
+ case isRegionList(list) : pasteStateListRegions(targets, list)
+ case isTransitionList(list) : pasteStateListTransitions(targets, list)
+ default : list.toString()
+ }
 ;
 
 Void pasteStateListStates(List[State] targets, List[State] states):
@@ -525,10 +535,13 @@ Void replaceWithRegionFromClipboard(Region target):
 ;
 
 Void pasteRegionList(List[Region] targets, List[Object] list):
- if (isStateList(list)) then pasteRegionListStates(targets, list)
- else (if (isRegionList(list)) then pasteRegionListRegions(targets, list)
- else (if (isTransitionList(list)) then pasteRegionListTransitions(targets, list)
- ))
+  switch{
+ case list.size == 1 : pasteRegionList(targets, list.get(0))
+ case isStateList(list) : pasteRegionListStates(targets, list)
+ case isRegionList(list) : pasteRegionListRegions(targets, list)
+ case isTransitionList(list) : pasteRegionListTransitions(targets, list)
+ default : list.toString()
+ }
 ;
 
 Void pasteRegionListStates(List[Region] targets, List[State] states):
@@ -610,10 +623,13 @@ Void pasteInternal(Transition target, Transition trans):
 ;
 
 Void pasteInternal(Transition target, List[Object] list):
- if (isStateList(list)) then pasteInternalStates(target, list)
- else (if (isRegionList(list)) then pasteInternalRegions(target, list)
- else (if (isTransitionList(list)) then pasteInternalTransitions(target, list)
- ))
+  switch{
+ case list.size == 1 : pasteInternal(target, list.get(0))
+ case isStateList(list) : pasteInternalStates(target, list)
+ case isRegionList(list) : pasteInternalRegions(target, list)
+ case isTransitionList(list) : pasteInternalTransitions(target, list)
+ default : list.toString()
+ }
 ;
 
 // replace a transition with many others
@@ -722,10 +738,13 @@ Void replaceWithTransition(Transition target):
 ;
 
 Void pasteTransitionList(List[Transition] targets, List[Object] list):
- if (isStateList(list)) then pasteTransitionListStates(targets, list)
- else (if (isRegionList(list)) then pasteTransitionListRegions(targets, list)
- else (if (isTransitionList(list)) then pasteTransitionListTransitions(targets, list)
- ))
+  switch{
+ case list.size == 1 : pasteTransitionList(targets, list.get(0))
+ case isStateList(list) : pasteTransitionListStates(targets, list)
+ case isRegionList(list) : pasteTransitionListRegions(targets, list)
+ case isTransitionList(list) : pasteTransitionListTransitions(targets, list)
+ default : list.toString()
+ }
 ;
 
 Void pasteTransitionListTransitions(List[Transition] targets, List[Transition] transList):
@@ -823,9 +842,12 @@ Void pasteInternal(State state, Transition trans, Region region):
 ;
 
 Void pasteInternal(State state, Transition trans, List[Object] list):
- if (isStateList(list)) then pasteInternalStates(state, trans, list)
- else (if (isRegionList(list)) then pasteInternalRegions(state, trans, list)
- )
+ switch{
+ case list.size == 1 : pasteInternal(state, trans, list.get(0))
+ case isStateList(list) : pasteInternalStates(state, trans, list)
+ case isRegionList(list) : pasteInternalRegions(state, trans, list)
+ default : list.toString()
+ }
 ;
 
 // insert states into a transition by encapsulating
