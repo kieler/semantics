@@ -44,7 +44,7 @@ import ptolemy.kernel.InstantiableNamedObj;
 import ptolemy.kernel.util.KernelException;
 import ptolemy.kernel.util.NamedObj;
 import ptolemy.kernel.util.StringAttribute;
-import ptolemy.moml.MoMLParser; //import ptolemy.actor.kiel.*;
+import org.ptolemy.MoMLParser; //import ptolemy.actor.kiel.*;
 import ptolemy.data.expr.Parameter;
 import de.cau.cs.kieler.sim.kiem.JSONSignalValues;
 
