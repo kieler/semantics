@@ -310,6 +310,13 @@
             name="KIELER">
       </category>
    </extension>
+   <extension
+         point="org.eclipse.ui.exportWizards">
+      <category
+            id="de.cau.cs.kieler"
+            name="KIELER">
+      </category>
+   </extension>
  <!--  <extension
          point="org.eclipse.ui.intro.config">
       <config
