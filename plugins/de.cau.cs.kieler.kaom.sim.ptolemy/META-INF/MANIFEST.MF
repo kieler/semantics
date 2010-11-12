@@ -6,7 +6,7 @@ Bundle-Version: 0.1.0.qualifier
 Bundle-Activator: de.cau.cs.kieler.kaom.sim.ptolemy.KaomSimPtolemyPlugin
 Bundle-Vendor: Christian-Albrechts-Universität zu Kiel
 Require-Bundle: org.eclipse.core.runtime,
- de.cau.cs.kieler.sim.kiem;bundle-version="0.1.0",
+ de.cau.cs.kieler.sim.kiem,
  org.eclipse.emf.ecore,
  org.eclipse.emf.ecore.xmi,
  org.eclipse.emf.ecore.xmi;bundle-version="2.5.0",
@@ -14,10 +14,11 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.xtend.typesystem.emf;bundle-version="0.7.0",
  org.eclipse.core.runtime;bundle-version="3.2.0",
  org.eclipse.gmf.runtime.diagram.ui;bundle-version="1.2.0",
- de.cau.cs.kieler.core.ui;bundle-version="0.1.0",
- de.cau.cs.kieler.core;bundle-version="0.1.4",
+ de.cau.cs.kieler.core.ui,
+ de.cau.cs.kieler.core,
  org.json;bundle-version="0.1.0",
- org.ptolemy;bundle-version="8.0.0"
+ org.ptolemy;bundle-version="8.0.0",
+ de.cau.cs.kieler.sim.ptolemy
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-ActivationPolicy: lazy
 Bundle-ClassPath: .,
