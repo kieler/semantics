@@ -2,7 +2,7 @@
 <feature
       id="de.cau.cs.kieler.sdk"
       label="KIELER SDK"
-      version="0.2.0.qualifier"
+      version="0.4.0.qualifier"
       provider-name="Christian-Albrechts-Universität zu Kiel">
 
    <description url="http://rtsys.informatik.uni-kiel.de/trac/kieler/wiki/">
@@ -328,6 +328,46 @@ litigation.
 
    <includes
          id="de.cau.cs.kieler.kex.source"
+         version="0.0.0"/>
+
+   <includes
+         id="de.cau.cs.kieler.core.model"
+         version="0.0.0"/>
+
+   <includes
+         id="de.cau.cs.kieler.core.model.source"
+         version="0.0.0"/>
+
+   <includes
+         id="de.cau.cs.kieler.uml2"
+         version="0.0.0"/>
+
+   <includes
+         id="de.cau.cs.kieler.uml2.source"
+         version="0.0.0"/>
+
+   <includes
+         id="de.cau.cs.kieler.kvid"
+         version="0.0.0"/>
+
+   <includes
+         id="de.cau.cs.kieler.kvid.source"
+         version="0.0.0"/>
+
+   <includes
+         id="de.cau.cs.kieler.kaom.ptolemy"
+         version="0.0.0"/>
+
+   <includes
+         id="de.cau.cs.kieler.kaom.ptolemy.source"
+         version="0.0.0"/>
+
+   <includes
+         id="de.cau.cs.kieler.keg"
+         version="0.0.0"/>
+
+   <includes
+         id="de.cau.cs.kieler.keg.source"
          version="0.0.0"/>
 
 </feature>
