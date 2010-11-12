@@ -44,7 +44,8 @@ import ptolemy.kernel.InstantiableNamedObj;
 import ptolemy.kernel.util.KernelException;
 import ptolemy.kernel.util.NamedObj;
 import ptolemy.kernel.util.StringAttribute;
-import org.ptolemy.MoMLParser; //import ptolemy.actor.kiel.*;
+import ptolemy.moml.MoMLParser; //org.ptolemy.MoMLParser; //import ptolemy.actor.kiel.*;
+//import org.ptolemy.MoMLParser; //import ptolemy.actor.kiel.*;
 import ptolemy.data.expr.Parameter;
 import de.cau.cs.kieler.sim.kiem.JSONSignalValues;
 
@@ -355,7 +356,9 @@ public class ExecutePtolemyModel {
                 fillKielerIOList(kielerIOList, compositeActor.entityList());
             }
 
-            if (child instanceof KielerIO) {
+            System.out.println(child.getClass().getName());
+            
+            if (child.getClass().getName().equals("ptolemy.actor.kiel.KielerIO")) {
                 kielerIOList.add((KielerIO) child);
             }
             if (child instanceof ModalModel) {
