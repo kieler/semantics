@@ -132,7 +132,7 @@ public final class DataComponent extends AbstractAutomatedProducer {
     /**
      * {@inheritDoc}
      */
-    public JSONObject step(final JSONObject data) throws KiemExecutionException {
+    public JSONObject doStep(final JSONObject data) throws KiemExecutionException {
         JSONObject res = new JSONObject();
         LinkedList<Signal> inputs = assembler.getInputs();
         LinkedList<Signal> outputs = new LinkedList<Signal>();
@@ -228,7 +228,7 @@ public final class DataComponent extends AbstractAutomatedProducer {
     }
 
     @Override
-    public KiemProperty[] provideProperties() {
+    public KiemProperty[] doProvideProperties() {
         LinkedList<KiemProperty> properties = new LinkedList<KiemProperty>();
 
         String[] serialPorts = RxtxSerialConnection.getSerialPorts();
@@ -262,7 +262,7 @@ public final class DataComponent extends AbstractAutomatedProducer {
     }
 
     @Override
-    public JSONObject provideInitialVariables() throws KiemInitializationException {
+    public JSONObject doProvideInitialVariables() throws KiemInitializationException {
         IWorkbench workbench = PlatformUI.getWorkbench();
         IWorkbenchPage page = null;
         if (workbench != null) {
