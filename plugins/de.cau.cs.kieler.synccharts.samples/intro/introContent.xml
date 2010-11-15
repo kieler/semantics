@@ -9,7 +9,7 @@
             url="http://org.eclipse.ui.intro/runAction?pluginId=de.cau.cs.kieler.kex.ui&amp;class=de.cau.cs.kieler.kex.ui.actions.QuickStartAction&amp;id=de.cau.cs.kieler.kex.ui&amp;exampleTitle=Synccharts Quick Start&amp;sourceType=KIELER"
             id="synccharts-quick-start"
             style-id="content-link">
-			<text>Creates a project with the synccharts standard example "ABRO"</text>
+			<text>Creates a project with the synccharts standard example ABRO</text>
         </link>
       </extensionContent>
 </introContent>
