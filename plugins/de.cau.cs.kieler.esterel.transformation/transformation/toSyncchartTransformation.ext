@@ -6,29 +6,33 @@ import utilities;
 import esterel;
 
 //extension feature;
+extension org::eclipse::xtend::util::stdlib::cloning;
+ 
  
 /*
- * initial test transformation
-
-Void initial(State s):
-	let r = new Region:
-	let ns = new State:
-	r.states.add(ns) ->
-	s.regions.add(r) ->
-	ns.setLabel("InnerStateXY") ->
-	appendTransformation("initial", ns) ->
-	s
-;
-
+ * Some notes: 
+ * - keep in mind to add states to their parents first, so potential transitions 
+ *   generate a notification which is handled
+ * - if the parent state has a label, do not overwrite it
+ * - if automatic recursion is desired, use the recursiveRule()
+ * - remember to pass the GLOBALVAR "recursive" to the XtendFacade
+ */
  
- recRule(s,e):
- let s = new State:
-
-   if (doRecursion())
-     rule(s,e)
-     ;
+ 
+/*
  
    */
+   
+  Void sandbox(State s):
+  let t = new Transition:
+  let e = new Effect:
+ 
+  s
+  ;
+
+
+
+
 Void recursiveRule(State s, emf::EObject e):
 	((boolean) GLOBALVAR recursive) ? rule(s, e) : s
 	-> s
@@ -39,66 +43,27 @@ Void rule(State s, emf::EObject noneed):
 	s.setLabel("damn you")
 ;
  
-/* 
-Void initial(State s, emf::EObject noneed):
- 	let m = ((emf::EObject) s.bodyReference):
- 	let mo = (Program) castToEMF(m):
- 	let selfTrans = new Transition:
- 	//ruleModule(s, mo.module.get(0)) ->  	s
- 	recursiveRule(s, mo.module.get(0)) ->  s
-;*/
-
 
 // rule for Program, forwards the first module
 Void rule(State s, Program p):
  	let m = ((emf::EObject) s.bodyReference):
  	let mo = (Program) castToEMF(m):	
-	rule(s, mo.module.get(0))
-;
-
-
-/*
- * rule 1 (module)
- */ 
-Void ruleModule(State s, Module m):
-	let statement = m.modBody.statement.get(0):
-	let newState = new State:
-	let r = new Region:
-	s.bodyText.removeAll(s.bodyText) ->
-	//s.regions.add(r) ->
-	s.setLabel(m.name) ->
-	
-	//r.states.add(newState) ->
-	//newState.setIsInitial(true) ->
-	//newState.setIsFinal(true) -> 
-	s.setIsInitial(true) ->
-	s.setIsFinal(true) ->
-	// TODO set singals
-	// TODO set body content
-	//setJavaBodyContents(newState, statement) ->
-	//appendNextTransformation(newState, statement)
-	recursiveRule(s, statement)
+	rule(s, mo.modules.get(0))
 ;
 
 /*
  * rule 1 (module)
  */ 
 Void rule(State s, Module m):
-	let statement = m.modBody.statement.get(0):
-	let newState = new State:
-	let r = new Region:
+	let statement = m.body.statements.get(0):
 	s.bodyText.removeAll(s.bodyText) ->
-	//s.regions.add(r) ->
 	s.setLabel(m.name) ->
-	
-	//r.states.add(newState) ->
-	//newState.setIsInitial(true) ->
-	//newState.setIsFinal(true) -> 
 	s.setIsInitial(true) ->
 	s.setIsFinal(true) ->
 	// TODO set singals
+	m.interface.intSignalDecls.extractSignals(s)->	
 	// TODO set body content
-	//setJavaBodyContents(newState, statement) ->
+	setJavaBodyContents(s, statement) ->
 	//appendNextTransformation(newState, statement)
 	recursiveRule(s, statement)
 ;
@@ -116,36 +81,6 @@ Void rule(State s, Halt h):
 	ns.setIsInitial(true) ->
 	r.states.add(ns)
 ;
-
-/*
- * rule 5 (abort)
-
- Void ruleAbort(State s):
- 	let a = (Abort) castToEMF(s.bodyContents):
- 	let r = new Region:
- 	let initState = new State:
- 	let finalState = new State:
- 	let toFinalTrans = new Transition:
- 	let caseStates = {}:
- 	s.setLabel("Abort State") ->
- 	s.regions.add(r) ->
- 	r.states.add(initState) ->
- 	r.states.add(finalState) ->
- 	
- 	// connect initial and final state in case of a normal termination
- 	toFinalTrans.setSourceState(initState) ->
- 	toFinalTrans.setTargetState(finalState) ->
- 	toFinalTrans.setType(TransitionType::NORMALTERMINATION) ->
- 	initState.setIsInitial(true) ->
- 	finalState.setIsFinal(true) ->
- 	
- 	// handle cases (only for ABRO currently)
- 	handleAbort(r, initState, a) ->
- 	setJavaBodyContents(initState, a.statement) ->
- 	appendNextTransformation(a.statement, initState) ->
- 	a
- ;
- */
  
  /*
  * rule 5 (abort)
@@ -231,17 +166,27 @@ Void rule(State s, Emit e):
 	let finalS = new State:
 	let r = new Region:
 	let emitTrans = new Transition:
+	let emission = new Emission:
 	s.bodyText.removeAll(s.bodyText) ->
 	s.regions.add(r) ->
 	s.setLabel("Emit State") ->
 	initS.setIsInitial(true) ->
 	finalS.setIsFinal(true) ->
-	emitTrans.setSourceState(initS) ->
-	emitTrans.setTargetState(finalS) ->
-	// TODO emit emitTrans.setEffects(e.signal + effect)
+	
 	// add new states to region
 	r.states.add(initS) ->
-	r.states.add(finalS)
+	r.states.add(finalS) ->
+	
+	// add the effect
+	emitTrans.setIsImmediate(true) ->
+	emission.setSignal(e.signal) ->
+	emission.setNewValue(e.expr.expr) ->
+	emitTrans.effects.add(emission) ->
+	// TODO emit emitTrans.setEffects(e.signal + effect)
+	emitTrans.setSourceState(initS) ->
+	emitTrans.setTargetState(finalS) ->
+	initS.outgoingTransitions.add(emitTrans) ->
+	finalS.incomingTransitions.add(emitTrans)
 ;
 
 /*
@@ -363,4 +308,30 @@ Void setJavaBodyContents(State s, emf::EObject o):
 	JAVA  de.cau.cs.kieler.esterel.transformation.util.TransformationUtil.setBodyReference(de.cau.cs.kieler.synccharts.State, org.eclipse.emf.ecore.EObject)
 ;
 
- 
+
+
+ /*
+  * Convenient methods
+  */
+
+// extracts all signals from InterfaceSignalDecl and adds them to the state
+Void extractSignals(InterfaceSignalDecl decl, State s):
+	let copy = (List[ISignal]) clone(decl.signals):
+	copy.addSignalToState(s)
+;
+
+// adds sig to the state, does some processing
+Void addSignalToState(Signal sig, State st):
+	switch {
+		case Input.isInstance(sig) : (sig.setIsInput(true) ->  sig.setIsOutput(false))
+		case Output.isInstance(sig) : (sig.setIsInput(false) ->  sig.setIsOutput(true))
+		case InputOutput.isInstance(sig) : (sig.setIsInput(true) ->  sig.setIsOutput(true))
+   		default : sig //no information about input/output
+	} ->
+	st.signals.add(sig)
+;
+
+/*List[ISignal] copyList(List[ISignal] list):
+	let copy = {}:
+	copy.addAll(list)
+;*/

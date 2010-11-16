@@ -46,7 +46,6 @@ public class RefreshGMFElementsEffect extends AbstractEffect {
     /**
      * {@inheritDoc}
      */
-    @Override
     public void execute() {
         // update edit policies, so GMF will generate diagram elements
         // for model elements which have been generated during the

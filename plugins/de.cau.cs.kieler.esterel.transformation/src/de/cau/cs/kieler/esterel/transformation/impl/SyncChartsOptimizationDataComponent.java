@@ -13,6 +13,7 @@
  */
 package de.cau.cs.kieler.esterel.transformation.impl;
 
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -45,6 +46,8 @@ public class SyncChartsOptimizationDataComponent extends AbstractTransformationD
     private static final String TRANSFORMATION_FILE = "syncchartOptimization.ext";
 
     private State rootState;
+
+    private HashSet<State> workedStates = new HashSet<State>();
 
     /**
      * {@inheritDoc}
@@ -101,20 +104,32 @@ public class SyncChartsOptimizationDataComponent extends AbstractTransformationD
 
         State foo = null;
         List<State> states = rootState.getRegions().get(0).getStates();
-        for(State s : states){
-            if(s.getRegions().size() > 0) {
+        for (State s : states) {
+            if (!workedStates.contains(s)) {
                 foo = s;
             }
         }
-        System.out.println(foo);
-        TransformationDescriptor descriptor = new TransformationDescriptor("rule6",
-                new Object[] { foo });
-        
-        RefreshGMFElementsEffect effect = new RefreshGMFElementsEffect(getActiveEditor());
-        effect.execute();
-        
+        System.out.println("foo "  + foo);
+        if (foo != null) {
+            TransformationDescriptor descriptor = new TransformationDescriptor("rule",
+                    new Object[] { foo });
+            workedStates.add(foo);
 
-        return descriptor;
+            RefreshGMFElementsEffect effect = new RefreshGMFElementsEffect(getActiveEditor());
+            effect.execute();
+            return descriptor;
+        }
+
+        return null;
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void wrapup() throws KiemInitializationException {
+        super.wrapup();
+        workedStates.clear();
     }
 
 }

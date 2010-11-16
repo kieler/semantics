@@ -51,7 +51,6 @@ public abstract class AbstractTransformationDataComponent extends JSONObjectData
         domain = getActiveEditorEditingDomain();
         PlatformUI.getWorkbench().getDisplay().syncExec(new Runnable() {
 
-            @Override
             public void run() {
                 IWorkbench wb = PlatformUI.getWorkbench();
                 shell = wb.getActiveWorkbenchWindow().getShell();
@@ -76,7 +75,6 @@ public abstract class AbstractTransformationDataComponent extends JSONObjectData
             }
         } else {
             PlatformUI.getWorkbench().getDisplay().syncExec(new Runnable() {
-                @Override
                 public void run() {
                     MessageDialog.openInformation(shell, "Done",
                             "Transformation finished. No further elements to process.");

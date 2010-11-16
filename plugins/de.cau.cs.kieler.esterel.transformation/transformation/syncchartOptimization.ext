@@ -9,6 +9,16 @@ extension feature;
 
 
 /*
+ 	Main algorithm
+*/
+Void rule(State s):
+	if rule2applies(s) then rule2(s) ->
+	if rule6applies(s) then rule6(s) 
+;
+
+
+
+/*
 	rule1 : Remove unnecessary conditional state 
 		if conditional, one plain outgoing transition
 */
@@ -28,10 +38,24 @@ Boolean rule1applies(State s):
 Boolean rule2applies(State s):
 	switch {
 		case isSimpleState(s) && !s.isFinal && !s.isInitial &&
-			isOneOutTransition(s) && isTransitionTick(s.outgoingTransitions.get(0)):
+			isOneOutTransition(s) && isOutTransitionTick(s.outgoingTransitions.get(0)):
 				true
 		default : false
 	}
+;
+
+Void rule2(State s):
+	let incomingTrans = s.incomingTransitions.copyList():
+	let outgoingTrans = s.outgoingTransitions.first():
+	let effects = outgoingTrans.effects:
+	// bend transitions
+	incomingTrans.setTargetState(outgoingTrans.targetState) ->
+	// append effects
+	incomingTrans.effects.addAll(effects) ->
+
+	// remove state and outgoing transition
+	s.outgoingTransitions.remove(outgoingTrans) ->
+	s.parentRegion.states.remove(s)
 ;
 
 /*
@@ -47,8 +71,8 @@ Boolean rule2applies(State s):
 Boolean rule6applies(State s):
 	switch {
 		// TODO check if just test for interfaceDecls or signals and vars
-		case !hasOutWeakTransitions(s) && !hasOutStrongTransitions(s) &&
-			!hasSignalsVariables(s) && hasParentMacroState(s) && isParallelMacroState(s):
+		case !hasOutWeakTransitions(s) && !hasOutStrongTransitions(s) && !isSimpleState(s) &&
+			!hasSignalsVariables(s) && hasParentMacroState(s) && !isParallelMacroState(s):
 				true
 		default: false
 	}
@@ -63,6 +87,7 @@ Void rule6(State s):
 	
 	// reroute all incoming transitions to the initial state
 	incomingTrans.setTargetState(initial) ->
+	initial.incomingTransitions.addAll(incomingTrans) ->
 	// final macros become nonfinal 
 	finalMacros.setIsFinal(false) ->
 	// final simples become nonfinal
@@ -78,11 +103,9 @@ Void rule6(State s):
 	
 	// copy whole stuff 
 	->
-	//s.parentRegion.copyWholeRegionContents(r) ->
-	s.parentRegion.states.addAll(r.states) ->
-	
-	s.parentRegion.states.remove(s)
-	//s
+	s.parentRegion.states.addAll(r.states.copyList()) ->
+	s.outgoingTransitions.remove(s.outgoingTransitions.get(0)) ->
+	s.removeStateFromRegion()
 ;
 
 
@@ -102,17 +125,19 @@ Boolean isTransitionWithout(Transition t):
 	t.trigger == null && t.effects.size == 0
 ;
 
-Boolean isTransitionTick(Transition t):
+Boolean isOutTransitionTick(Transition t):
 	// TODO add "tick"
 	t.isImmediate && true
 ;
 
 Boolean hasOutWeakTransitions(State s):
-	s.outgoingTransitions.type == TransitionType::WEAKABORT
+	let weaks = s.outgoingTransitions.select(e|e.type == TransitionType::WEAKABORT):
+	weaks.size > 0
 ;
 
 Boolean hasOutStrongTransitions(State s):
-	s.outgoingTransitions.type == TransitionType::STRONGABORT
+	let strongs = s.outgoingTransitions.select(e|e.type == TransitionType::STRONGABORT):
+	strongs.size > 0 
 ;
 
 Boolean hasInterfaceDeclaration(State s):
@@ -135,13 +160,6 @@ State findInitialState(Region r):
 	initials.get(0)
 ;
 
-Void copyWholeRegionContents(Region from, Region to):
-	let allStates = from.states:
-	to.states.addAll(allStates) 
-	//from.states.removeAll(allStates)
-;
-
-
 /*
 	creation methods
 */
@@ -152,7 +170,8 @@ Void createStrongAbortTo(State from, State to):
 	t.setTargetState(to) ->
 	t.setIsImmediate(true) ->
 	// todo t.setTrigger tick
-	from.outgoingTransitions.add(t)
+	from.outgoingTransitions.add(t) ->
+	to.incomingTransitions.add(t)
 ;
 
 Void copyNormalTransitionFrom(State from, Transition t):
@@ -161,10 +180,19 @@ Void copyNormalTransitionFrom(State from, Transition t):
 	newT.setType(t.type) ->
 	newT.setTrigger(t.trigger) -> 
 	newT.setEffects(t.effects) ->
-	newT.setTargetState(t.targetState)
+	newT.setTargetState(t.targetState) ->
+	from.outgoingTransitions.add(newT) ->
+	t.targetState.incomingTransitions.add(newT)
 ;
 
 List[Transition] copyList(List[Transition] list):
 	let copy = {}:
 	copy.addAll(list)
+;
+
+// remove a state from the region
+Void removeStateFromRegion(State state):
+ state.outgoingTransitions.removeAll(state.outgoingTransitions) ->
+ state.incomingTransitions.removeAll(state.incomingTransitions) ->
+ state.parentRegion.states.remove(state)
 ;

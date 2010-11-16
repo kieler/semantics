@@ -71,7 +71,7 @@ public class TransformationEffect extends AbstractEffect {
         }
 
         HashMap<String, Variable> map = new HashMap<String, Variable>();
-        map.put("recursive", new Variable("boolean", true));
+        map.put("recursive", new Variable("boolean", false));
         ExecutionContextImpl exec = new ExecutionContextImpl(map);
 
         xtendFacade = XtendFacade.create(exec, extentionWithout);
@@ -91,13 +91,11 @@ public class TransformationEffect extends AbstractEffect {
     /**
      * {@inheritDoc}
      */
-    @Override
     public void execute() {
 
         // FIXME workaround to avoid deadlock with FireOnceTriggerListener
         PlatformUI.getWorkbench().getDisplay().asyncExec(new Runnable() {
 
-            @Override
             public void run() {
                 TransformationCommand command = new TransformationCommand(xtendFacade, parameters,
                         transformationName, editingDomain);

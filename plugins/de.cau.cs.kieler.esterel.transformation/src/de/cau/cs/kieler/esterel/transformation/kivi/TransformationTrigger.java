@@ -158,7 +158,6 @@ public class TransformationTrigger extends AbstractTrigger {
         /**
          * {@inheritDoc}
          */
-        @Override
         public Class<? extends ITrigger> getTriggerClass() {
             return TransformationTrigger.class;
         }
