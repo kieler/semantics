@@ -397,7 +397,7 @@ public class KiemPlugin extends AbstractUIPlugin {
                     eventManager.notify(new KiemEvent(KiemEvent.CALL_FOR_SHELL));
                 }
 
-                // FIXME: scheduling problem, race condition!
+                // FIXME: scheduling problem, race condition possible!
 
                 // if no one provided a shell or the user does'nt have changes to save...
                 if (KiemPlugin.parentShell == null

@@ -180,7 +180,7 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
 
     /** True if all actions are (temporary) disabled. */
     private boolean allDisabled;
-
+    
     // -------------------------------------------------------------------------
 
     /**
@@ -224,7 +224,9 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
                 DISABLED_COLOR_GRAY, DISABLED_COLOR_GRAY));
         Color colorMaster = new Color(null, new RGB(0, 0, MASTER_COLOR_BLUE));
         int disabledCounter = 0; // we must decrement the visible index by this
-        for (int c = 0; c < kIEMInstance.getDataComponentWrapperList().size(); c++) {
+        List<DataComponentWrapper> dataComponentWrapperList = kIEMInstance.getDataComponentWrapperList();
+        int wrapperListSize = dataComponentWrapperList.size();
+        for (int c = 0; c < wrapperListSize; c++) {
             DataComponentWrapper dataComponentWrapper = kIEMInstance
                     .getDataComponentWrapperList().get(c);
             if (dataComponentWrapper.getDataComponent().isInvisible()) {
@@ -926,6 +928,9 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
         }
         updateColumnsCollapsed();
         try {
+            viewer.setContentProvider(new KiemContentProvider());
+            viewer.setLabelProvider(new KiemLabelProvider(this));
+            viewer.setInput(kIEMInstance.getDataComponentWrapperList());
             viewer.refresh();
         } catch (Exception e) {
             // catch any viewer refresh errors here

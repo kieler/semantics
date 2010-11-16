@@ -37,6 +37,7 @@ public class KiemEventListener implements IKiemEventListener {
                 } else if (event.isEvent(KiemEvent.LOAD)) {
                     KiemPlugin.getDefault().setDirty(false);
                     KiemView.getInstance().setDirty(false);
+                    KiemView.getInstance().updateViewAsync();
                     // // rebuild view toolbar buttons
                     // KiemView.getInstance().buildLocalToolBar();
                 } else if (event.isEvent(KiemEvent.CALL_FOR_SHELL)) {
