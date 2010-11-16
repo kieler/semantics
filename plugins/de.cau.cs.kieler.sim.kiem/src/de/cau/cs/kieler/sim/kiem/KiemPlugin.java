@@ -855,6 +855,7 @@ public class KiemPlugin extends AbstractUIPlugin {
                                 // warnings with unusable properties can
                                 // only occur if this is intended, i.e., the
                                 // component id calculation was modified!
+                                e.printStackTrace();
                             }
                         }
                     }
@@ -871,13 +872,15 @@ public class KiemPlugin extends AbstractUIPlugin {
                 } // end if
             } // next cc
 
-            updateEventManager();
             if (!componentRestored) {
                 this.showWarning(Messages.mWarningLoadingDataComponentProperty.replace(
                         "%COMPONENTNAME", componentId), null, null, false);
             } // end if - failed
 
         } // next c
+        
+        // Update the event managers wrapper list
+        updateEventManager();
     }
 
     // -------------------------------------------------------------------------
