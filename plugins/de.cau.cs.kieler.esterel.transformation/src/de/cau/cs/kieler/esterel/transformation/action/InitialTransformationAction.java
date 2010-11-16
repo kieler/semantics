@@ -153,7 +153,6 @@ public class InitialTransformationAction implements IActionDelegate {
             IFile myFile = myWorkspaceRoot.getFile(myPath);
 
             if (myFile.exists()) {
-                System.out.println("gibts scho");
                 Shell shell = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell();
                 String currentName = currentFile.getName();
                 currentName = currentName.substring(0, currentName.lastIndexOf(".") + 1) + "kixs";
@@ -166,6 +165,8 @@ public class InitialTransformationAction implements IActionDelegate {
                             .append(newName).toString());
                     kixsFile = myWorkspaceRoot.getFile(newPath);
                 }
+            } else {
+                kixsFile = myWorkspaceRoot.getFile(myPath);
             }
 
             // create corresponding syncchart

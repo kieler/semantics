@@ -98,11 +98,13 @@ public final class TransformationUtil {
      */
     public static void setBodyReference(final State s, final EObject obj) {
 
-        s.setBodyReference(obj);
+        if (obj != null) {
+            s.setBodyReference(obj);
 
-        TextualCode code = ExpressionsFactory.eINSTANCE.createTextualCode();
-        s.setType(StateType.TEXTUAL);
-        code.setCode(TransformationUtil.getSerializedString(obj));
-        s.getBodyText().add(code);
+            TextualCode code = ExpressionsFactory.eINSTANCE.createTextualCode();
+            s.setType(StateType.TEXTUAL);
+            code.setCode(TransformationUtil.getSerializedString(obj));
+            s.getBodyText().add(code);
+        }
     }
 }

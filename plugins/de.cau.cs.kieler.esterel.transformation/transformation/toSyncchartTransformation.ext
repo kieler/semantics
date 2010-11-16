@@ -1,11 +1,11 @@
 import ecore;
-import synccharts;
 import annotations;
 import expressions;
+import synccharts;
 import utilities;
 import esterel;
 
-//extension feature;
+extension feature;
 extension org::eclipse::xtend::util::stdlib::cloning;
  
  
@@ -16,6 +16,7 @@ extension org::eclipse::xtend::util::stdlib::cloning;
  * - if the parent state has a label, do not overwrite it
  * - if automatic recursion is desired, use the recursiveRule()
  * - remember to pass the GLOBALVAR "recursive" to the XtendFacade
+ * - add / remove bodytext!
  */
  
  
@@ -26,8 +27,11 @@ extension org::eclipse::xtend::util::stdlib::cloning;
   Void sandbox(State s):
   let t = new Transition:
   let e = new Effect:
- 
-  s
+  let de = new DelayExpr:
+ // ((synccharts::Action)t).setLabel("foobat") ->
+  // addSelfLoop(s)->
+
+s	
   ;
 
 
@@ -56,7 +60,8 @@ Void rule(State s, Program p):
  */ 
 Void rule(State s, Module m):
 	let statement = m.body.statements.get(0):
-	s.bodyText.removeAll(s.bodyText) ->
+	removeBodyText(s) ->
+	// always set label here!
 	s.setLabel(m.name) ->
 	s.setIsInitial(true) ->
 	s.setIsFinal(true) ->
@@ -75,9 +80,9 @@ Void rule(State s, Module m):
 Void rule(State s, Halt h):
 	let r = new Region:
 	let ns = new State:
-	s.bodyText.removeAll(s.bodyText) ->
+	removeBodyText(s) ->
 	s.regions.add(r) ->
-	s.setLabel("Halt State") ->
+	s.setLabelIfEmpty("Halt State") ->
 	ns.setIsInitial(true) ->
 	r.states.add(ns)
 ;
@@ -88,40 +93,63 @@ Void rule(State s, Halt h):
  Void rule(State s, Abort a):
  	let r = new Region:
  	let initState = new State:
+ 	let caseStates = {}:
  	let finalState = new State:
  	let toFinalTrans = new Transition:
- 	let caseStates = {}:
- 	s.bodyText.removeAll(s.bodyText) ->
- 	s.setLabel("Abort State") ->
+ 	removeBodyText(s) ->
+ 	s.setLabelIfEmpty("Abort State") ->
+ 	// add new state
  	s.regions.add(r) ->
  	r.states.add(initState) ->
  	r.states.add(finalState) ->
- 	
- 	// connect initial and final state in case of a normal termination
- 	toFinalTrans.setSourceState(initState) ->
- 	toFinalTrans.setTargetState(finalState) ->
+ 	// connect initial and final state with of a normal termination
  	toFinalTrans.setType(TransitionType::NORMALTERMINATION) ->
- 	initState.setIsInitial(true) ->
- 	finalState.setIsFinal(true) ->
- 	
- 	// handle cases (only for ABRO currently)
- 	handleAbort(r, initState, a) ->
- 	setJavaBodyContents(initState, a.statement) ->
+ 	toFinalTrans.setPriority(1) ->
+	initState.setIsInitial(true) ->
+	finalState.setIsFinal(true) ->
+	
+	// just an instance or cases?
+ 	(AbortInstance.isInstance(a.body) ?
+	 	handleAbortCaseSingle(r, initState, 1,
+	 		((AbortInstance)a.body).delay, 
+	 		((AbortInstance)a.body).statement)
+ 	:
+ 		(toFinalTrans.setPriority(((AbortCase)a.body).cases.size + 1) ->
+ 		// handle cases (only for ABRO currently)
+	 	handleAbortCases(r, initState, 1, ((AbortCase)a.body).cases))
+	) -> 	
+	// handle abort's body statement
+	toFinalTrans.connectTransition(initState, finalState) ->
+	setJavaBodyContents(initState, a.statement) ->
 	recursiveRule(initState, a.statement)
  ;
- 
-Void handleAbort(Region parent, State s, Abort a):
-	let body = (AbortInstance) a.body:
-	let final = new State:
-	let t = new Transition:
-	s.bodyText.removeAll(s.bodyText) ->
-	parent.states.add(final) ->
-	final.setIsFinal(true) ->
-	t.setSourceState(s) ->
-	t.setTargetState(final) ->
-	t.setType(TransitionType::STRONGABORT) ->
-	//t.setTrigger(body.delay.event.signal)
-	s	
+		
+Void handleAbortCases(Region parent, State source, Integer prio, List[AbortCaseSingle] cases):
+	(cases.size > 1) ?
+		(handleAbortCaseSingle(parent, source, prio, cases.first().delay, cases.first().statement) ->
+		handleAbortCases(parent, source, prio + 1, cases.withoutFirst()))
+		:
+		handleAbortCaseSingle(parent, source, prio, cases.first().delay, cases.first().statement)
+;
+
+Void handleAbortCaseSingle(Region parent, State source, Integer prio, DelayExpr expr, Statement body):
+	let caseState = new State:
+	let trans = new Transition:
+	caseState.setIsFinal(true) ->
+	parent.states.add(caseState) ->
+	
+	// create and add transition
+	trans.setType(TransitionType::STRONGABORT) ->
+	trans.setPriority(prio) ->
+	// TODO correct adding of delayevent
+	if (expr.event != null  && expr.event.signal != null) then
+		trans.setLabel(expr.event.signal.name)
+		->
+		
+	trans.connectTransition(source, caseState) ->
+	// set body text
+	setJavaBodyContents(caseState, body)  ->
+	recursiveRule(caseState, body)
 ;
 
 /*
@@ -131,33 +159,31 @@ Void rule(State s, Await a):
  	let r = new Region :
  	let initState = new State:
  	let caseStates = {}:
- 	s.bodyText.removeAll(s.bodyText) ->
- 	s.setLabel("Await State") ->
+	removeBodyText(s) ->
+ 	s.setLabelIfEmpty("Await State") ->
+ 	// add state
  	s.regions.add(r) ->
  	initState.setIsInitial(true) ->
- 	s.setType(StateType::NORMAL) ->
- 	//(AwaitInstance.isInstance(a.body) ? 
- 	ruleAwaitInstance(r, initState, (AwaitInstance) a.body) ->
- 	//AwaitCase.isInstance(a.body) ? 
- 	// handle cases
- 	//((AwaitCase) a.body).cases.handleAwaitCase(caseStates, initState) : "" ->
- 	//: a ->
- 	// handle instance
- 	//->
  	r.states.add(initState) ->
- 	r.states.addAll(caseStates)
+
+ 	// just one instance or cases?
+	AwaitInstance.isInstance(a.body)?
+		handleAwaitCaseSingle(r, initState, 1, 
+			((AwaitInstance)a.body).delay, 
+			((AwaitInstance)a.body).statement)
+	:
+		handleAwaitCases(r, initState, 1, ((AwaitCase)a.body).cases)
 ;
  
-ruleAwaitInstance(Region region, State previous, AwaitInstance ai):
-	let s = new State:
-	let t = new Transition:
-	s.bodyText.removeAll(s.bodyText) ->
-	region.states.add(s) ->
-	t.setType(TransitionType::STRONGABORT) ->
-	t.setSourceState(previous) ->
-	t.setTargetState(s) ->
-	s.setIsFinal(true)
+// as abort and await cases are equal, we use AbortCaseSingles 
+Void handleAwaitCases(Region r, State previous, Integer prio, List[AbortCaseSingle] cases):
+	handleAbortCases(r, previous, prio, cases)
 ;
+
+Void handleAwaitCaseSingle(Region r, State previous, Integer prio, DelayExpr expr, Statement body):
+	handleAbortCaseSingle(r, previous, prio, expr, body)
+;
+
  /*
   * rule 12 (emit)
   */
@@ -167,7 +193,7 @@ Void rule(State s, Emit e):
 	let r = new Region:
 	let emitTrans = new Transition:
 	let emission = new Emission:
-	s.bodyText.removeAll(s.bodyText) ->
+	removeBodyText(s) ->
 	s.regions.add(r) ->
 	s.setLabel("Emit State") ->
 	initS.setIsInitial(true) ->
@@ -182,11 +208,10 @@ Void rule(State s, Emit e):
 	emission.setSignal(e.signal) ->
 	emission.setNewValue(e.expr.expr) ->
 	emitTrans.effects.add(emission) ->
-	// TODO emit emitTrans.setEffects(e.signal + effect)
+	// add transition to state
 	emitTrans.setSourceState(initS) ->
 	emitTrans.setTargetState(finalS) ->
-	initS.outgoingTransitions.add(emitTrans) ->
-	finalS.incomingTransitions.add(emitTrans)
+	initS.outgoingTransitions.add(emitTrans)
 ;
 
 /*
@@ -196,43 +221,57 @@ Void rule(State s, Loop l):
 	let r = new Region:
 	let loopState = new State:
  	let selfTrans = new Transition:
- 	s.bodyText.removeAll(s.bodyText) ->
-	(s.label.trim().length == 0) ? s.setLabel("Loop_State") : s ->
+ 	removeBodyText(s) ->
+ 	// setup state
+	s.setLabelIfEmpty("Loop_State") ->
  	s.regions.add(r) ->
  	r.states.add(loopState) ->
  	loopState.setIsInitial(true) ->
- 	
+ 	// setup transition
  	selfTrans.setType(TransitionType::NORMALTERMINATION) ->
- 	selfTrans.setSourceState(loopState) ->
- 	selfTrans.setTargetState(loopState) ->  
- 	
- 	loopState.outgoingTransitions.add(selfTrans) ->
+ 	selfTrans.connectTransition(loopState, loopState) ->
  	
  	setJavaBodyContents(loopState, l.body.statement) ->
 	recursiveRule(loopState, l.body.statement)
  ;
   
   
- /* rule 19 (parallel)
-  *
+ /* 
+  * rule 19 (parallel)
   */
 Void rule(State s, Parallel p):
-	//let r = new Region:
-	s.setLabel("Parallel State") -> 
-	s.bodyText.removeAll(s.bodyText) ->
- 	//s.regions.add(r) ->
+	removeBodyText(s) ->
+	s.setLabelIfEmpty("Parallel State") -> 
+	
  	ruleParallelRecursive(s, p.list)
 ;
 
 Void ruleParallelRecursive(State parent, List[Statement] statements):
-	let r = new Region:
-	let s = new State:
-	parent.regions.add(r) ->
-	r.states.add(s) ->
-	
-	((statements.size > 1) ? ruleParallelRecursive(parent, statements.withoutFirst()) : s) ->
-	
-	setJavaBodyContents(s, statements.first())
+	// if inner parallel, extract the statements
+	(Parallel.isInstance(statements.first()) ? 
+		(
+		statements.addAll(((Parallel)statements.first()).list) ->
+		statements.remove(statements.first()) ->
+		ruleParallelRecursive(parent, statements)
+		)
+	: 
+		// else create this state and add it to the parallel region
+		(
+		let r = new Region:
+		let s = new State:
+		parent.regions.add(r) ->
+		r.states.add(s) ->
+		// add this to parallel
+		s.setIsFinal(true) ->
+		s.setIsInitial(true) ->
+		
+		if(statements.size > 1) then
+			ruleParallelRecursive(parent, statements.withoutFirst()) ->
+		
+		setJavaBodyContents(s, statements.first()) ->
+		recursiveRule(s, statements.first())
+		)
+	)	
 ;
 
 /*
@@ -241,59 +280,62 @@ Void ruleParallelRecursive(State parent, List[Statement] statements):
  Void rule(State s, Sequence seq):
  	let r = new Region:
  	let initial = new State:
- 	s.bodyText.removeAll(s.bodyText) ->
-	s.setLabel("Sequence State") ->
+ 	let list = (List[Statement]){}:
+ 	s.removeBodyText() ->
+ 	// create initial state
+	s.setLabelIfEmpty("Sequence State") ->
 	s.regions.add(r) ->
 	initial.setIsInitial(true) ->
 	r.states.add(initial) ->
 	
+	// as the grammar generates nested sequences, we flatten it first
+	// this is important to conserve order!
+	seq.flattenSequence(list) ->
+	
 	// call recursively
-	(seq.list.size > 1) ? ruleSequenceRecursive(r, initial, seq.list.withoutFirst()) : s
-	->
-		// body of first sequence state
-	setJavaBodyContents(initial, seq.list.first()) 
+	ruleSequenceRecursive(r, initial, list.withoutFirst()) ->
+	 
+	// process body of first sequence state
+	setJavaBodyContents(initial, list.first()) ->
+	recursiveRule(initial, list.first())
+	
+;
+
+Void flattenSequence(Statement s, List list):
+	Sequence.isInstance(s) ? (
+		(Sequence)s).list.flattenSequence(list) 
+		:
+		(list.add(s))
 ;
 
 Void ruleSequenceRecursive(Region region, State previous, List[Statement] statements):
 	let s = new State:
 	let t = new Transition:
+	// create the new state and add to the sequence chain
 	region.states.add(s) ->
 	t.setType(TransitionType::NORMALTERMINATION) ->
-	t.setSourceState(previous) ->
-	t.setTargetState(s) ->
+	t.connectTransition(previous, s) ->
 		
-	((statements.size > 1) ? 
+	(((statements.size > 1) ? 
 	// if more than 1 element we have to handle another one
 	ruleSequenceRecursive(region, s, statements.withoutFirst())  
 	: 
-	// else finished
-	s.setIsFinal(true)) ->
+	// else finished and the last one is a final state!
+	s.setIsFinal(true)))
 	
-	setJavaBodyContents(s, statements.first())
+	->
+	setJavaBodyContents(s, statements.first()) ->
+	recursiveRule(s, statements.first())
 ;
 
 
+/*
+	omit the block, theres a parallel in it!
+*/
 Void rule(State s, Block b):
 	rule(s, (Parallel) b.statement)
 ;
 
- 
- /*
-  * helping method
-  * realises a new await case
-  */
- Void handleAwaitCase(AbortCaseSingle ac, List[State] fstates, State initState):
- 	let finalState = new State:
-	let trans = new Transition:
-	trans.setType(TransitionType::STRONGABORT) ->
-	trans.setSourceState(initState) ->
-	trans.setTargetState(finalState) ->
-	//trans.setTrigger(ac.delayExpr) ->
-	//finalState.setBodyContents(ac.statement) ->
-	fstates.add(finalState)
- ;
- 
- 
 
  
 emf::EObject castToEMF(emf::EObject o):
@@ -310,6 +352,7 @@ Void setJavaBodyContents(State s, emf::EObject o):
 
 
 
+
  /*
   * Convenient methods
   */
@@ -317,7 +360,8 @@ Void setJavaBodyContents(State s, emf::EObject o):
 // extracts all signals from InterfaceSignalDecl and adds them to the state
 Void extractSignals(InterfaceSignalDecl decl, State s):
 	let copy = (List[ISignal]) clone(decl.signals):
-	copy.addSignalToState(s)
+	if copy.size > 0 then
+		copy.addSignalToState(s)
 ;
 
 // adds sig to the state, does some processing
@@ -329,6 +373,24 @@ Void addSignalToState(Signal sig, State st):
    		default : sig //no information about input/output
 	} ->
 	st.signals.add(sig)
+;
+
+// connects a transition to the two passed states
+Void connectTransition(Transition t, State source, State target):
+	t.setSourceState(source) ->
+	t.setTargetState(target) ->
+	source.outgoingTransitions.add(t)
+;
+
+// removes ALL !! body text, set state type to NORMAL
+Void removeBodyText(State s):
+ 	s.bodyText.removeAll(s.bodyText) ->
+ 	s.setType(StateType::NORMAL)
+;
+
+// only set the label if there's no previous label
+Void setLabelIfEmpty(State s, String label):
+	(s.label.trim().length == 0) ? s.setLabel(label) : s
 ;
 
 /*List[ISignal] copyList(List[ISignal] list):
