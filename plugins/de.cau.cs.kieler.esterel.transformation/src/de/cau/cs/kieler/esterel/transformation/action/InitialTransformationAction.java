@@ -236,7 +236,6 @@ public class InitialTransformationAction implements IActionDelegate {
         /**
          * {@inheritDoc}
          */
-        @Override
         public String isValid(final String newText) {
             int i = newText.lastIndexOf(".");
             String fileExt = newText.substring(i + 1, newText.length());
