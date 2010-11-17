@@ -1,4 +1,4 @@
-package de.cau.cs.kieler.synccharts.samples;
+package de.cau.cs.kieler.synccharts.examples;
 
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
