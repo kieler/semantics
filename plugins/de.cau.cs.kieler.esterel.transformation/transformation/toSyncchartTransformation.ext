@@ -73,6 +73,19 @@ Void rule(State s, Module m):
 	recursiveRule(s, statement)
 ;
 
+/*
+ * rule 2 (nothing)
+ */ 
+Void rule(State s, Nothing n):
+	let nState = new State:
+	let r = new Region:
+	s.removeBodyText() ->
+	s.regions.add(r) ->
+	s.setLabelIfEmpty("Nothing State") ->
+	r.states.add(nState) ->
+	nState.setIsFinal(true) ->
+	nState.setIsInitial(true)
+;
 
 /*
  * rule 3 (halt)
@@ -87,6 +100,26 @@ Void rule(State s, Halt h):
 	r.states.add(ns)
 ;
  
+/*
+ * rule 4 (pause)
+ */
+Void rule(State s, Pause p):
+	let r = new Region:
+	let initS = new State:
+	let finalS = new State:
+	let t = new Transition:
+	// setup states
+	s.removeBodyText() ->
+	s.setLabelIfEmpty("Pause State") ->
+	s.regions.add(r) ->
+	r.states.addAll({initS, finalS}) ->
+	initS.setIsInitial(true) ->
+	finalS.setIsFinal(true) ->
+	// add transition
+	t.setType(TransitionType::STRONGABORT) ->
+	t.connectTransition(initS, finalS)
+;
+
  /*
  * rule 5 (abort)
  */
@@ -153,6 +186,35 @@ Void handleAbortCaseSingle(Region parent, State source, Integer prio, DelayExpr 
 ;
 
 /*
+ * rule 6 (weak abort)
+ */
+// TODO
+
+/*
+ * rule 7 (assign)
+ */
+ Void rule(State s, esterel::Assignment assign):
+ 	let r = new Region:
+ 	let initS = new State:
+ 	let finalS = new State:
+ 	let t = new Transition:
+ 	let sa = new Assignment:
+ 	s.removeBodyText() ->
+ 	// setup states
+ 	s.setLabelIfEmpty("Assign State") ->
+ 	s.regions.add(r) ->
+ 	r.states.addAll({initS, finalS}) ->
+ 	initS.setIsInitial(true) ->
+ 	finalS.setIsFinal(true) ->
+ 	// init transition
+ 	t.connectTransition(initS, finalS) ->
+ 	sa.setVariable(assign.var) ->
+ 	if (assign.expr.expr != null) then
+ 		sa.setExpression(assign.expr.expr)
+ 	// TODO assignment
+ ;
+
+/*
  * rule 8 (await)
  */
 Void rule(State s, Await a):
@@ -215,7 +277,35 @@ Void rule(State s, Emit e):
 ;
 
 /*
- * rule 17 (loop)
+ * rule 13 (every)
+ */
+Void rule(State s, EveryDo e):
+	let r = new Region:
+	let initS = new State:
+	let everyS = new State:
+	let initT = new Transition:
+	let everyT = new Transition:
+	s.removeBodyText() ->
+	// setup states
+	s.setLabelIfEmpty("Every State") ->
+	s.regions.add(r) ->
+	r.states.addAll({initS, everyS}) ->
+	initS.setIsInitial(true) ->
+	// init transitions
+	initT.setType(TransitionType::STRONGABORT) ->
+	everyT.setType(TransitionType::STRONGABORT) ->
+	initT.connectTransition(initS, everyS) ->
+	everyT.connectTransition(everyS, everyS) ->
+	// TODO Delays
+	
+	// recursive
+	everyS.setJavaBodyContents(e.statement) ->
+	everyS.recursiveRule(e.statement)
+;
+
+
+/*
+ * rule 17 (loop) & rule 18 (loop each)
  */
 Void rule(State s, Loop l):
 	let r = new Region:
@@ -223,7 +313,8 @@ Void rule(State s, Loop l):
  	let selfTrans = new Transition:
  	removeBodyText(s) ->
  	// setup state
-	s.setLabelIfEmpty("Loop_State") ->
+	(LoopEach.isInstance(l.end) ? s.setLabelIfEmpty("LoopEach State") 
+			: s.setLabelIfEmpty("Loop_State")) ->
  	s.regions.add(r) ->
  	r.states.add(loopState) ->
  	loopState.setIsInitial(true) ->
@@ -231,11 +322,15 @@ Void rule(State s, Loop l):
  	selfTrans.setType(TransitionType::NORMALTERMINATION) ->
  	selfTrans.connectTransition(loopState, loopState) ->
  	
+ 	if LoopEach.isInstance(l.end) then
+ 		(selfTrans.setType(TransitionType::STRONGABORT) ->
+ 		 s) -> // TODO add delay!!)->
+ 	
  	setJavaBodyContents(loopState, l.body.statement) ->
 	recursiveRule(loopState, l.body.statement)
  ;
-  
-  
+ 
+
  /* 
   * rule 19 (parallel)
   */
