@@ -268,7 +268,7 @@ This Agreement is governed by the laws of the State of New York and the intellec
          unpack="false"/>
 
    <plugin
-         id="de.cau.cs.kieler.synccharts.samples"
+         id="de.cau.cs.kieler.synccharts.examples"
          download-size="0"
          install-size="0"
          version="0.0.0"

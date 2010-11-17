@@ -1,9 +1,9 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: Samples
-Bundle-SymbolicName: de.cau.cs.kieler.synccharts.samples;singleton:=true
+Bundle-Name: KIELER SyncCharts Examples
+Bundle-SymbolicName: de.cau.cs.kieler.synccharts.examples;singleton:=true
 Bundle-Version: 0.1.0.qualifier
-Bundle-Activator: de.cau.cs.kieler.synccharts.samples.Activator
+Bundle-Activator: de.cau.cs.kieler.synccharts.examples.SyncChartsExamplesPlugin
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  de.cau.cs.kieler.synccharts.diagram;bundle-version="0.3.0",
