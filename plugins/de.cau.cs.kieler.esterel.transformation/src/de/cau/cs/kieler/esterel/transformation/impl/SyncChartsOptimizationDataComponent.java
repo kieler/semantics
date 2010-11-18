@@ -13,6 +13,7 @@
  */
 package de.cau.cs.kieler.esterel.transformation.impl;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
@@ -48,6 +49,7 @@ public class SyncChartsOptimizationDataComponent extends AbstractTransformationD
     private State rootState;
 
     private HashSet<State> workedStates = new HashSet<State>();
+    private ArrayList<LinkedList<State>> stateHierarchy = new ArrayList<LinkedList<State>>(5);
 
     /**
      * {@inheritDoc}
@@ -72,6 +74,8 @@ public class SyncChartsOptimizationDataComponent extends AbstractTransformationD
                 EObject selModel = ((View) selView).getElement();
                 State root = ((Region) selModel).getStates().get(0);
                 rootState = root;
+                
+                collectAllStatesRecursivley(rootState, 0);
             }
         }
     }
@@ -109,7 +113,7 @@ public class SyncChartsOptimizationDataComponent extends AbstractTransformationD
                 foo = s;
             }
         }
-        System.out.println("foo "  + foo);
+        System.out.println("foo " + foo);
         if (foo != null) {
             TransformationDescriptor descriptor = new TransformationDescriptor("rule",
                     new Object[] { foo });
@@ -122,7 +126,7 @@ public class SyncChartsOptimizationDataComponent extends AbstractTransformationD
 
         return null;
     }
-    
+
     /**
      * {@inheritDoc}
      */
@@ -130,6 +134,21 @@ public class SyncChartsOptimizationDataComponent extends AbstractTransformationD
     public void wrapup() throws KiemInitializationException {
         super.wrapup();
         workedStates.clear();
+    }    
+
+    private void collectAllStatesRecursivley(State parent, int level) {
+        LinkedList<State> levelStates = stateHierarchy.get(level);
+        if (levelStates == null) {
+            levelStates = new LinkedList<State>();
+            stateHierarchy.set(level, levelStates);
+        }
+        levelStates.add(parent);
+
+        for (Region r : parent.getRegions()) {
+            for (State s : r.getStates()) {
+                collectAllStatesRecursivley(s, level + 1);
+            }
+        }
     }
 
 }

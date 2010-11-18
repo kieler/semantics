@@ -71,7 +71,7 @@ public class TransformationEffect extends AbstractEffect {
         }
 
         HashMap<String, Variable> map = new HashMap<String, Variable>();
-        map.put("recursive", new Variable("boolean", false));
+        map.put("recursive", new Variable("boolean", true));
         ExecutionContextImpl exec = new ExecutionContextImpl(map);
 
         xtendFacade = XtendFacade.create(exec, extentionWithout);

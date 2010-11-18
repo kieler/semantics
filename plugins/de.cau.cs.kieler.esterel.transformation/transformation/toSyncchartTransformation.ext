@@ -179,9 +179,12 @@ Void handleAbortCaseSingle(Region parent, State source, Integer prio, DelayExpr 
 	trans.addDelayToTrigger(expr) ->
 		
 	trans.connectTransition(source, caseState) ->
-	// set body text
-	setJavaBodyContents(caseState, body)  ->
-	recursiveRule(caseState, body)
+	
+	// care! the "do" body of about might be null
+	if (body != null) then
+		// set body text 
+		(setJavaBodyContents(caseState, body)  ->
+		recursiveRule(caseState, body))
 ;
 
 /*
@@ -246,6 +249,15 @@ Void handleAwaitCaseSingle(Region r, State previous, Integer prio, DelayExpr exp
 ;
 
  /*
+  * rule 10 (doupto)
+  */
+
+  
+  
+  
+
+
+ /*
   * rule 12 (emit)
   */
 Void rule(State s, Emit e):
@@ -256,7 +268,7 @@ Void rule(State s, Emit e):
 	let emission = new Emission:
 	removeBodyText(s) ->
 	s.regions.add(r) ->
-	s.setLabel("Emit State") ->
+	s.setLabelIfEmpty("Emit State") ->
 	initS.setIsInitial(true) ->
 	finalS.setIsFinal(true) ->
 	
@@ -267,7 +279,7 @@ Void rule(State s, Emit e):
 	// add the effect
 	emitTrans.setIsImmediate(true) ->
 	emission.setSignal(e.signal) ->
-	emission.setNewValue(e.expr.expr) ->
+	emission.setNewValue((Expression)clone(e.expr.expr)) ->
 	emitTrans.effects.add(emission) ->
 	// add transition to state
 	emitTrans.setSourceState(initS) ->
@@ -301,6 +313,49 @@ Void rule(State s, EveryDo e):
 	// recursive
 	everyS.setJavaBodyContents(e.statement) ->
 	everyS.recursiveRule(e.statement)
+;
+
+/*
+ * rule 15 (localsignal)
+ */
+Void rule(State s, LocalSignalDecl ls):
+	let r = new Region:
+	let sigS = new State:
+	s.removeBodyText() ->
+	s.setLabelIfEmpty("Localsignal State") ->
+	// setup
+	s.regions.add(r) ->
+	r.states.add(sigS) ->
+	sigS.setIsInitial(true) ->
+	sigS.setIsFinal(true) ->
+	
+	ls.signalList.extractLocalSignals(s) ->
+	
+	// recursive
+	sigS.setJavaBodyContents(ls.statement) ->
+	sigS.recursiveRule(ls.statement)
+;
+
+
+/*
+ * rule 16 (localvariable)
+ */
+Void rule(State s, LocalVariable v):
+	let r = new Region:
+	let varS = new State:
+	s.removeBodyText() ->
+	s.setLabelIfEmpty("Localvariable State") ->
+	// setup
+	s.regions.add(r) ->
+	r.states.add(varS) ->
+	varS.setIsInitial(true) ->
+	varS.setIsFinal(true) ->
+	
+	s.interfaceDecls.add((InterfaceDeclaration)clone(v.var)) ->
+	
+	// recursive
+	varS.setJavaBodyContents( v.statement) ->
+	varS.recursiveRule(v.statement)
 ;
 
 
@@ -369,6 +424,48 @@ Void ruleParallelRecursive(State parent, List[Statement] statements):
 	)	
 ;
 
+Void rule(State s, Present p):
+	let r = new Region:
+	let pS = new State:
+	s.removeBodyText() ->
+	s.setLabelIfEmpty("Present State") ->
+	// setup
+	s.regions.add(r) ->
+	r.states.add(pS) ->
+	pS.setIsInitial(true) ->
+	
+	(PresentEventBody.isInstance(p.body) ? 
+		s // not supported yet 
+		:
+		handlePresentCases(r, pS, 1, ((PresentCaseList)p.body).cases)
+	) 
+	
+;
+
+Void handlePresentCases(Region parent, State previous, Integer prio, List[PresentCase] cases):
+	(cases.size > 1) ?
+		(handlePresentCaseSingle(parent, previous, prio, cases.first().event.expression, cases.first().statement) ->
+		handlePresentCases(parent, previous, prio, cases.withoutFirst()))
+		:
+		(handlePresentCaseSingle(parent, previous, prio, cases.first().event.expression, cases.first().statement)
+	)
+;
+
+Void handlePresentCaseSingle(Region parent, State previous, Integer prio, Expression e, Statement st):
+	let newS = new State:
+	let t = new Transition:
+	// setup
+	parent.states.add(newS) ->
+	t.setPriority(prio) ->
+	t.setTrigger(e) ->
+	
+	t.connectTransition(previous, newS) ->
+	
+	// recursive
+	newS.setJavaBodyContents(st) ->
+	newS.recursiveRule(st)
+;
+
 /*
  * rule 23 (sequence)
  */
@@ -425,6 +522,40 @@ Void ruleSequenceRecursive(Region region, State previous, List[Statement] statem
 
 
 /*
+ * rule 24 (suspend)
+ */
+Void rule(State s, Suspend sus):
+	let r = new Region:
+	let susState = new State:
+	let act = new Action:
+	s.removeBodyText() ->
+	s.setLabelIfEmpty("Suspend State") ->
+	s.regions.add(r) ->
+	r.states.add(susState) ->
+	
+	// setup
+	susState.setIsInitial(true) ->
+	susState.setIsFinal(true) ->
+	// add suspension
+	act.addDelayToTrigger(sus.delay) ->
+	susState.setSuspensionTrigger(act) ->
+	
+	// recursive
+	susState.setJavaBodyContents(sus.statement) ->
+	susState.recursiveRule(sus.statement)
+	
+;
+
+/*
+ * rule 25 (sustain)
+ */
+Void rule(State s, Sustain sus):
+s
+;
+
+
+
+/*
 	omit the block, theres a parallel in it!
 */
 Void rule(State s, Block b):
@@ -455,7 +586,7 @@ Void setJavaBodyContents(State s, emf::EObject o):
 
 // extracts the expression and immediate information of a esterel::DelayExpr
 // and adds them to the synccharts::Transition
-Void addDelayToTrigger(Transition t, DelayExpr delay):
+Void addDelayToTrigger(Action t, DelayExpr delay):
 	if delay.isImmediate then t.setIsImmediate(true) ->
 	// clone the expression as in should stay in esterel model too
 	t.setTrigger((Expression)clone(delay.event.expr)) ->
@@ -469,6 +600,14 @@ Void extractSignals(InterfaceSignalDecl decl, State s):
 	let copy = (List[ISignal]) clone(decl.signals):
 	if copy.size > 0 then
 		copy.addSignalToState(s)
+;
+
+// extracts all local signals
+Void extractLocalSignals(LocalSignalList lsl, State s):
+	if LocalSignal.isInstance(lsl) then
+		(let copy = (List[ISignal]) clone(((LocalSignal)lsl).signal):
+		copy.addSignalToState(s)
+		)
 ;
 
 // adds sig to the state, does some processing
@@ -497,7 +636,8 @@ Void removeBodyText(State s):
 
 // only set the label if there's no previous label
 Void setLabelIfEmpty(State s, String label):
-	(s.label.trim().length == 0) ? s.setLabel(label) : s
+	(s.label == null || s.label.trim().length == 0) ? 
+		s.setLabel(label) : s
 ;
 
 /*List[ISignal] copyList(List[ISignal] list):
