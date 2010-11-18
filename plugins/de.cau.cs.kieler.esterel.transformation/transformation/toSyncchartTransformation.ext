@@ -174,10 +174,9 @@ Void handleAbortCaseSingle(Region parent, State source, Integer prio, DelayExpr 
 	// create and add transition
 	trans.setType(TransitionType::STRONGABORT) ->
 	trans.setPriority(prio) ->
-	// TODO correct adding of delayevent
-	if (expr.event != null  && expr.event.signal != null) then
-		trans.setLabel(expr.event.signal.name)
-		->
+	
+	// handle delayexpr
+	trans.addDelayToTrigger(expr) ->
 		
 	trans.connectTransition(source, caseState) ->
 	// set body text
@@ -296,8 +295,9 @@ Void rule(State s, EveryDo e):
 	everyT.setType(TransitionType::STRONGABORT) ->
 	initT.connectTransition(initS, everyS) ->
 	everyT.connectTransition(everyS, everyS) ->
-	// TODO Delays
-	
+	// add delays
+	initT.addDelayToTrigger(e.delay) ->
+	everyT.addDelayToTrigger(e.delay) ->
 	// recursive
 	everyS.setJavaBodyContents(e.statement) ->
 	everyS.recursiveRule(e.statement)
@@ -324,7 +324,7 @@ Void rule(State s, Loop l):
  	
  	if LoopEach.isInstance(l.end) then
  		(selfTrans.setType(TransitionType::STRONGABORT) ->
- 		 s) -> // TODO add delay!!)->
+ 		 s) -> selfTrans.addDelayToTrigger(((LoopDelay)l.end).delay) ->
  	
  	setJavaBodyContents(loopState, l.body.statement) ->
 	recursiveRule(loopState, l.body.statement)
@@ -451,6 +451,18 @@ Void setJavaBodyContents(State s, emf::EObject o):
  /*
   * Convenient methods
   */
+
+
+// extracts the expression and immediate information of a esterel::DelayExpr
+// and adds them to the synccharts::Transition
+Void addDelayToTrigger(Transition t, DelayExpr delay):
+	if delay.isImmediate then t.setIsImmediate(true) ->
+	// clone the expression as in should stay in esterel model too
+	t.setTrigger((Expression)clone(delay.event.expr)) ->
+	if delay.expr != null then
+		t -> // TODO not yet supported, as synccharts do not offer a delay expression! 
+	t		
+;
 
 // extracts all signals from InterfaceSignalDecl and adds them to the state
 Void extractSignals(InterfaceSignalDecl decl, State s):
