@@ -39,15 +39,16 @@ public class SerializerListener extends FireOnceTriggerListener {
     @Override
     protected Command trigger(TransactionalEditingDomain domain, Notification notification) {
         Action action = null;
-        if (notification.getNotifier() instanceof State
-                && notification.getEventType() == Notification.ADD) {
-            System.out.println("Resource Set Changed: " + notification);
-            action = (Action) notification.getNewValue();
-        } else if (notification.getEventType() == Notification.ADD) {
+        if (notification.getNotifier() instanceof State) {
+            if (notification.getEventType() == Notification.ADD) {
+                System.out.println("Resource Set Changed: " + notification);
+                action = (Action) notification.getNewValue();
+            }
+        } else {
             action = (Action) notification.getNotifier();
         }
 
-        if (LabelParserBridgePlugin.getDefault().doAutomaticSerialization()) {
+        if (LabelParserBridgePlugin.getDefault().doAutomaticSerialization() && action != null) {
             Command cmd = actionLabelProcessor.getProcessActionCommand(action,
                     ActionLabelProcessorWrapper.SERIALIZE);
             // cmd.execute();
