@@ -6,13 +6,14 @@ import esterel;
 import ecore;
 
 extension feature; 
-
+extension org::eclipse::xtend::util::stdlib::cloning;
 
 /*
  	Main algorithm
 */
 Void rule(State s):
 	if rule2applies(s) then rule2(s) ->
+	if rule5applies(s) then rule5(s) ->
 	if rule6applies(s) then rule6(s) 
 ;
 
@@ -51,10 +52,10 @@ Void rule2(State s):
 	// bend transitions
 	incomingTrans.setTargetState(outgoingTrans.targetState) ->
 	// append effects
-	incomingTrans.effects.addAll(effects) ->
+	incomingTrans.addEffects(effects) ->
 
 	// remove state and outgoing transition
-	s.outgoingTransitions.remove(outgoingTrans) ->
+	outgoingTrans.removeTransition() ->
 	s.parentRegion.states.remove(s)
 ;
 
@@ -62,6 +63,34 @@ Void rule2(State s):
 	rule2.2 : remove unnecessary plain states where in and out have the same trigger (not immediate)
 */
 // TODO
+
+
+
+
+/*
+	rule5 : Remove unnecessary normal terminations
+		macro state with no final states and outgoing transition
+*/
+Boolean rule5applies(State s):
+	switch {
+		case !isSimpleState(s) && hasOutTransitions(s) && !hasFinalSubState(s):
+				true
+		default: false
+	}
+;
+
+Void rule5(State s):
+	let outTrans = s.outgoingTransitions.select(e|e.type == TransitionType::NORMALTERMINATION
+		&& (s.isInitial || e.sourceState != e.targetState)).copyList():
+	outTrans.removeTransAndPossiblyState()
+;
+
+Void removeTransAndPossiblyState(Transition t):
+	let target = t.targetState:
+	t.removeTransition() ->
+	if(target.incomingTransitions.isEmpty) then
+		removeStateFromRegion(target)
+;
 
 /*
 	rule6 : remove unnecessary macro states
@@ -88,14 +117,16 @@ Void rule6(State s):
 	// reroute all incoming transitions to the initial state
 	incomingTrans.setTargetState(initial) ->
 	initial.incomingTransitions.addAll(incomingTrans) ->
+	initial.setIsInitial(false) ->
+	
+	// if normal termination exist 
+	(s.outgoingTransitions.size == 1) ?
+	(
 	// final macros become nonfinal 
 	finalMacros.setIsFinal(false) ->
 	// final simples become nonfinal
 	finalSimples.setIsFinal(false) ->
 	
-	// if normal termination exist 
-	(s.outgoingTransitions.size == 1) ?
-	(
 	finalSimples.createStrongAbortTo(s.outgoingTransitions.get(0).targetState) ->
 	finalMacros.copyNormalTransitionFrom(s.outgoingTransitions.get(0))
 	)
@@ -104,7 +135,8 @@ Void rule6(State s):
 	// copy whole stuff 
 	->
 	s.parentRegion.states.addAll(r.states.copyList()) ->
-	s.outgoingTransitions.remove(s.outgoingTransitions.get(0)) ->
+	if (s.outgoingTransitions.size > 0) then
+		s.outgoingTransitions.remove(s.outgoingTransitions.get(0)) ->
 	s.removeStateFromRegion()
 ;
 
@@ -130,6 +162,9 @@ Boolean isOutTransitionTick(Transition t):
 	t.isImmediate && true
 ;
 
+Boolean hasOutTransitions(State s):
+	!s.outgoingTransitions.isEmpty
+;
 Boolean hasOutWeakTransitions(State s):
 	let weaks = s.outgoingTransitions.select(e|e.type == TransitionType::WEAKABORT):
 	weaks.size > 0
@@ -142,6 +177,13 @@ Boolean hasOutStrongTransitions(State s):
 
 Boolean hasInterfaceDeclaration(State s):
 	s.interfaceDecls.size == 0
+;
+
+Boolean hasFinalSubState(State s):
+	let regs = s.regions:
+	let states = regs.states:
+	let finalStates = states.select(e|e.isFinal):
+	!finalStates.isEmpty
 ;
 
 Boolean hasParentMacroState(State s):
@@ -185,9 +227,23 @@ Void copyNormalTransitionFrom(State from, Transition t):
 	t.targetState.incomingTransitions.add(newT)
 ;
 
+Void addEffects(Transition t, List[Effect] effects):
+	// make sure to clone! as it's containment
+	t.effects.addAll(clone(effects))
+; 
+
 List[Transition] copyList(List[Transition] list):
 	let copy = {}:
 	copy.addAll(list)
+;
+
+Void removeTransition(Transition t):
+	let source = t.sourceState:
+	let target = t.targetState:
+	source.outgoingTransitions.remove(t) ->
+	target.incomingTransitions.remove(t) ->
+	t.setTargetState(null) ->
+	t.setSourceState(null)
 ;
 
 // remove a state from the region

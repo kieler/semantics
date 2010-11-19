@@ -50,6 +50,7 @@ public class SyncChartsOptimizationDataComponent extends AbstractTransformationD
 
     private HashSet<State> workedStates = new HashSet<State>();
     private ArrayList<LinkedList<State>> stateHierarchy = new ArrayList<LinkedList<State>>(5);
+    private LinkedList<State> flattenedStates;
 
     /**
      * {@inheritDoc}
@@ -74,8 +75,12 @@ public class SyncChartsOptimizationDataComponent extends AbstractTransformationD
                 EObject selModel = ((View) selView).getElement();
                 State root = ((Region) selModel).getStates().get(0);
                 rootState = root;
-                
+
                 collectAllStatesRecursivley(rootState, 0);
+                flattenedStates = new LinkedList<State>();
+                for (int i = stateHierarchy.size() - 1; i >= 0; i--) {
+                    flattenedStates.addAll(stateHierarchy.get(i));
+                }
             }
         }
     }
@@ -113,15 +118,18 @@ public class SyncChartsOptimizationDataComponent extends AbstractTransformationD
                 foo = s;
             }
         }
-        System.out.println("foo " + foo);
-        if (foo != null) {
-            TransformationDescriptor descriptor = new TransformationDescriptor("rule",
-                    new Object[] { foo });
-            workedStates.add(foo);
 
-            RefreshGMFElementsEffect effect = new RefreshGMFElementsEffect(getActiveEditor());
-            effect.execute();
-            return descriptor;
+        if (!flattenedStates.isEmpty()) {
+            foo = flattenedStates.poll();
+            System.out.println("foo " + flattenedStates.size() + " " + foo );
+            if (foo != null) {
+                TransformationDescriptor descriptor = new TransformationDescriptor("rule",
+                        new Object[] { foo });
+                workedStates.add(foo);
+                return descriptor;
+            }
+        } else {
+            System.out.println("DONE");
         }
 
         return null;
@@ -134,14 +142,18 @@ public class SyncChartsOptimizationDataComponent extends AbstractTransformationD
     public void wrapup() throws KiemInitializationException {
         super.wrapup();
         workedStates.clear();
-    }    
+        flattenedStates.clear();
+        stateHierarchy.clear();
+    }
 
     private void collectAllStatesRecursivley(State parent, int level) {
-        LinkedList<State> levelStates = stateHierarchy.get(level);
-        if (levelStates == null) {
-            levelStates = new LinkedList<State>();
-            stateHierarchy.set(level, levelStates);
+
+        if (stateHierarchy.size() <= level || stateHierarchy.get(level) == null) {
+            LinkedList<State> levelStates = new LinkedList<State>();
+//            stateHierarchy.ensureCapacity(level + 1);
+            stateHierarchy.add(level, levelStates);
         }
+        LinkedList<State> levelStates = stateHierarchy.get(level);
         levelStates.add(parent);
 
         for (Region r : parent.getRegions()) {
