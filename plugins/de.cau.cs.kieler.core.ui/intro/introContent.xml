@@ -58,11 +58,11 @@
    
     <extensionContent
         id="de.cau.cs.kieler.intro.samples"
-        name="KIELER Samples"
+        name="KIELER Examples"
         path="samples/@"
         style="css/intro.css">
         <group
-            label="KIELER Samples"
+            label="KIELER Examples"
             id="group"
             style-id="content-group">
 	        <text> The following examples help you to become familiar with in KIELER.</text>
@@ -71,7 +71,7 @@
 	            label="Quick Starts"
 	            id="quickstarts"
 	            style-id="content-group">
-			 	<text> Quickstart samples create a project with at least one example.</text>
+			 	<text> Quickstart examples create a project with at least one example.</text>
 			<anchor id="quickstarts.anchor"/>
 	        </group>
     	 </group>
