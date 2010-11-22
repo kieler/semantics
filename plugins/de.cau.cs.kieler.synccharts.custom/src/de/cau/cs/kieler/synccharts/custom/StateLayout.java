@@ -19,7 +19,6 @@ import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.ecore.EObject;
 
 import de.cau.cs.kieler.core.ui.figures.DoubleRoundedRectangle;
-import de.cau.cs.kieler.core.ui.figures.IAttributeAwareFigure;
 import de.cau.cs.kieler.core.ui.figures.layout.AbstractTableLayout;
 import de.cau.cs.kieler.core.ui.figures.layout.container.Cell;
 import de.cau.cs.kieler.core.ui.figures.layout.container.ExtendedTable;

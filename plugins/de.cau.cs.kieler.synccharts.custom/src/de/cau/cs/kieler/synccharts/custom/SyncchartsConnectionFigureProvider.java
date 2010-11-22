@@ -25,6 +25,7 @@ import org.eclipse.draw2d.RotatableDecoration;
 import org.eclipse.draw2d.geometry.PointList;
 import org.eclipse.draw2d.geometry.Rectangle;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.gef.EditPart;
 import org.eclipse.gmf.runtime.diagram.ui.figures.BorderItemLocator;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.LineAttributes;
@@ -44,7 +45,7 @@ public class SyncchartsConnectionFigureProvider implements IRenderingProvider {
      * {@inheritDoc}
      */
     public IFigure getFigureByString(final String input, final IFigure oldFigure,
-            final EObject object) {
+            final EObject object, final EditPart part) {
         if (oldFigure instanceof PolylineConnection) {
             PolylineConnection splineFigure = (PolylineConnection) oldFigure;
             splineFigure.setForegroundColor(ColorConstants.black);

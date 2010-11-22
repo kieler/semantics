@@ -25,7 +25,7 @@
             </featureValueCondition>
             <compoundCondition
                   figureParam="simpleInitialFinalRefState"
-                  layoutParam="reference">
+                  layoutParam="reference/final">
                <compoundCondition
                      figureParam="simpleRefState"
                      layoutParam="simpleRefState">
@@ -158,7 +158,7 @@
             </compoundCondition>
             <compoundCondition
                   figureParam="simpleFinalRefState"
-                  layoutParam="reference">
+                  layoutParam="reference/final">
                <compoundCondition
                      figureParam="simpleRefState"
                      layoutParam="simpleRefState">
@@ -265,7 +265,7 @@
             </compoundCondition>
             <compoundCondition
                   figureParam="initialFinalRefState"
-                  layoutParam="reference">
+                  layoutParam="reference/final">
                <featureValueCondition
                      feature="type"
                      figureParam="normalState"
@@ -320,7 +320,7 @@
             </compoundCondition>
             <compoundCondition
                   figureParam="finalRefState"
-                  layoutParam="reference">
+                  layoutParam="reference/final">
                <featureValueCondition
                      feature="type"
                      figureParam="normalState"
@@ -349,7 +349,7 @@
             </featureValueCondition>
             <compoundCondition
                   figureParam="initialFinalState"
-                  layoutParam="simpleNormal">
+                  layoutParam="simpleNormal/final">
                <featureValueCondition
                      feature="isInitial"
                      figureParam="initialState"
@@ -413,7 +413,7 @@
             </compoundCondition>
             <compoundCondition
                   figureParam="initialFinalState"
-                  layoutParam="complexNormal">
+                  layoutParam="complexNormal/final">
                <compoundCondition
                      figureParam="initialFinalState"
                      layoutParam="initialFinalState">
@@ -503,7 +503,7 @@
             </compoundCondition>
             <compoundCondition
                   figureParam="finalState"
-                  layoutParam="simpleNormal">
+                  layoutParam="simpleNormal/final">
                <featureValueCondition
                      feature="isFinal"
                      figureParam="finalState"
@@ -560,7 +560,7 @@
             </compoundCondition>
             <compoundCondition
                   figureParam="finalState"
-                  layoutParam="complexNormal">
+                  layoutParam="complexNormal/final">
                <featureValueCondition
                      feature="isFinal"
                      figureParam="finalState"

@@ -23,10 +23,14 @@ import org.eclipse.draw2d.Shape;
 import org.eclipse.draw2d.geometry.Dimension;
 import org.eclipse.draw2d.geometry.Rectangle;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.gef.EditPart;
 import org.eclipse.gmf.runtime.diagram.ui.figures.BorderItemLocator;
 
 import de.cau.cs.kieler.core.ui.figures.DoubleRoundedRectangle;
+import de.cau.cs.kieler.core.ui.figures.layout.container.Cell;
+import de.cau.cs.kieler.core.ui.figures.layout.container.ExtendedTable;
 import de.cau.cs.kieler.karma.IRenderingProvider;
+import de.cau.cs.kieler.synccharts.State;
 import de.cau.cs.kieler.synccharts.custom.layout.SyncChartsConfiguration;
 
 /**
@@ -44,8 +48,7 @@ public class SyncchartsFigureProvider implements IRenderingProvider {
          */
         @Override
         protected void fillShape(final Graphics graphics) {
-            graphics.fillRoundRectangle(getBounds(), corner.width,
-                    corner.height);
+            graphics.fillRoundRectangle(getBounds(), corner.width, corner.height);
 
             float lineInset = Math.max(1.0f, getLineWidthFloat()) / 2.0f;
             int inset1 = (int) Math.floor(lineInset);
@@ -57,8 +60,7 @@ public class SyncchartsFigureProvider implements IRenderingProvider {
             r.width -= inset1 + inset2;
             r.height -= inset1 + inset2;
 
-            graphics.drawRoundRectangle(r,
-                    Math.max(0, corner.width - (int) lineInset),
+            graphics.drawRoundRectangle(r, Math.max(0, corner.width - (int) lineInset),
                     Math.max(0, corner.height - (int) lineInset));
         }
 
@@ -85,8 +87,8 @@ public class SyncchartsFigureProvider implements IRenderingProvider {
     /**
      * {@inheritDoc}
      */
-    public IFigure getFigureByString(final String input,
-            final IFigure oldFigure, final EObject object) {
+    public IFigure getFigureByString(final String input, final IFigure oldFigure,
+            final EObject object, final EditPart part) {
         if (input.equals("normalState")) {
             return createNormalFigure();
         } else if (input.equals("initialState")) {
@@ -173,15 +175,13 @@ public class SyncchartsFigureProvider implements IRenderingProvider {
     }
 
     /**
-     * Create a figure for reference States using a double rounded rectangle as
-     * basis.
+     * Create a figure for reference States using a double rounded rectangle as basis.
      * 
      * @param simple
      *            true if the state is simple, false if not
      * @return a figure for reference States
      */
-    private RoundedRectangle createDoubleRoundedRectangleReferenceFigure(
-            final boolean simple) {
+    private RoundedRectangle createDoubleRoundedRectangleReferenceFigure(final boolean simple) {
         RoundedRectangle figure = new DoubleRoundedRectangle() {
             @Override
             protected void outlineShape(final Graphics graphics) {
@@ -202,8 +202,8 @@ public class SyncchartsFigureProvider implements IRenderingProvider {
                 rect.y += distance;
                 rect.width -= 2 * distance;
                 rect.height -= 2 * distance;
-                graphics.drawRoundRectangle(rect, cornerWidth - distance
-                        * BORDER_WIDTH, cornerHeight - distance * BORDER_WIDTH);
+                graphics.drawRoundRectangle(rect, cornerWidth - distance * BORDER_WIDTH,
+                        cornerHeight - distance * BORDER_WIDTH);
 
                 setUpReferenceState(graphics, rect, simple);
             }
@@ -221,8 +221,8 @@ public class SyncchartsFigureProvider implements IRenderingProvider {
      * @param simple
      *            true if the state is simple, false if not
      */
-    private void setUpReferenceState(final Graphics graphics,
-            final Rectangle r, final boolean simple) {
+    private void setUpReferenceState(final Graphics graphics, final Rectangle r,
+            final boolean simple) {
         if (simple) {
             int refX = r.x + r.width / 2 - REFERENCE_SIGN_WIDTH / 2;
             int refY = r.y + r.height - REFERENCE_SIGN_OFFSET;
@@ -260,8 +260,7 @@ public class SyncchartsFigureProvider implements IRenderingProvider {
      *            true if the state is simple, false if not
      * @return a figure for reference States
      */
-    private RoundedRectangle createRoundedRectangleReferenceFigure(
-            final boolean simple) {
+    private RoundedRectangle createRoundedRectangleReferenceFigure(final boolean simple) {
         RoundedRectangle figure = new RoundedRectangle() {
             @Override
             protected void outlineShape(final Graphics graphics) {
@@ -275,8 +274,7 @@ public class SyncchartsFigureProvider implements IRenderingProvider {
                 r.width -= inset1 + inset2;
                 r.height -= inset1 + inset2;
 
-                graphics.drawRoundRectangle(r,
-                        Math.max(0, corner.width - (int) lineInset),
+                graphics.drawRoundRectangle(r, Math.max(0, corner.width - (int) lineInset),
                         Math.max(0, corner.height - (int) lineInset));
 
                 setUpReferenceState(graphics, r, simple);
@@ -292,8 +290,7 @@ public class SyncchartsFigureProvider implements IRenderingProvider {
      *            the figure to change
      */
     private void makeNormalState(final RoundedRectangle figure) {
-        figure.setCornerDimensions(new Dimension(StateLayout.MIN_WIDTH,
-                StateLayout.MIN_HEIGHT));
+        figure.setCornerDimensions(new Dimension(StateLayout.MIN_WIDTH, StateLayout.MIN_HEIGHT));
         figure.setFill(true);
         figure.setOpaque(false);
         figure.setLineWidth(1);
@@ -390,25 +387,117 @@ public class SyncchartsFigureProvider implements IRenderingProvider {
      */
     public LayoutManager getLayoutManagerByString(final String input,
             final LayoutManager oldLayoutManager, final EObject object) {
-        if (oldLayoutManager instanceof StateLayout) {
-            StateLayout stateLayout = (StateLayout) oldLayoutManager;
-            stateLayout.setModelElement(object);
+        
+         if (oldLayoutManager instanceof StateLayout) { 
+             StateLayout stateLayout = (StateLayout) oldLayoutManager; 
+             stateLayout.setModelElement(object); 
+         }
+         
+        
+        /*
+        StateLayout.AbstractSyncChartsConfiguration layout = new SyncChartsConfiguration();
+        if (oldLayoutManager instanceof StateLayout && object instanceof State) {
+            State state = (State) object;
+            StateLayout stateLayout = ((StateLayout) oldLayoutManager);
+            ExtendedTable newLayout;
+            if (input.startsWith("simpleNormal")) {
+                newLayout = layouts.simpleStateLayout;
+            } else if (input.startsWith("complexNormal")) {
+                setIsEmptyValues(layouts.complexStateLayout, state);
+                newLayout = layouts.complexStateLayout;
+            } else if (input.startsWith("reference")) {
+                setIsEmptyValues(layouts.referenceStateLayout, state);
+                newLayout = layouts.referenceStateLayout;
+            } else if (input.startsWith("conditional")) {
+                setIsEmptyValues(layouts.conditionalStateLayout, state);
+                newLayout = layouts.conditionalStateLayout;
+            } else if (input.startsWith("textual")) {
+                setIsEmptyValues(layouts.complexStateLayout, state);
+                newLayout = layouts.complexStateLayout;
+            } else {
+                newLayout = layouts.simpleStateLayout;
+            }
+            if (input.endsWith("/final")) {
+                newLayout.padding(DoubleRoundedRectangle.BORDER_WIDTH);
+            } else {
+                newLayout.padding(0);
+            }
+            stateLayout.setCorrespondingLayout(newLayout);
         }
-
-        // TODO Auto-generated method stub
+        */
         return oldLayoutManager;
     }
-
-    /**
-     * {@inheritDoc}
-     */
-    public LayoutManager getDefaultLayoutManager() {
-        // TODO Auto-generated method stub
-        return null;
+    
+    /** Define isEmpty-value for every graphical element. */
+    private void setIsEmptyValues(final ExtendedTable layout, final State state) {
+        for (int row = 0; row < layout.table.length; row++) {
+            for (int column = 0; column < layout.table[row].length; column++) {
+                Cell cell = layout.table[row][column];
+                cell.isEmpty = isEmptyCell(cell.figure, state);
+            }
+        }
     }
+    
+    /** the layout elements resp. the indices of the children */
+    public static final int STATELABEL = 0;
+    public static final int POLYLINE = 1;
+    //public static final int BODYTEXT = 2;
+    public static final int INTERFACEDECL = 2;
+    public static final int SIGNALS = 3;
+    public static final int ENTRYACTIONS = 4;
+    public static final int INSIDEACTIONS = 5;
+    public static final int EXITACTIONS = 6;
+    public static final int SUSPENDTRIGGER = 7;
+    public static final int REGION = 8;
+    
+    /**
+     * Method defines for every graphical element if it will be painted or
+     * hidden. It does so by checking constraints for the associated model
+     * elements.
+     */
+    private boolean isEmptyCell(final int figureConstant, final State state) {
+        boolean isEmpty = false;
+        switch (figureConstant) {
+        case STATELABEL:
+            isEmpty = false;
+            break;
+        case INTERFACEDECL:
+            isEmpty = state.getInterfaceDeclaration() == null
+                    || state.getInterfaceDeclaration().length() == 0;
+            break;
+//        case BODYTEXT:
+//            isEmpty = state.getBodyText() == null
+//                    || state.getBodyText().isEmpty();
+//            break;
+        case SIGNALS:
+            isEmpty = (state.getSignals().size() == 0 && state.getVariables().size() == 0);
+            break;
+        case ENTRYACTIONS:
+            isEmpty = state.getEntryActions().size() == 0;
+            break;
+        case INSIDEACTIONS:
+            isEmpty = state.getInnerActions().size() == 0;
+            break;
+        case EXITACTIONS:
+            isEmpty = state.getExitActions().size() == 0;
+            break;
+        case SUSPENDTRIGGER:
+            isEmpty = state.getSuspensionTrigger() == null;
+            break;
+        case REGION:
+            isEmpty = (state.getRegions().size() == 0 && state.getBodyText().size() == 0);
+            break;
 
-    public BorderItemLocator getBorderItemLocatorByString(final String input,
-            final IFigure parent, final Object locator, final EObject object) {
+        default:
+            isEmpty = false;
+            break;
+        }
+        return isEmpty;
+    }
+    
+
+    public BorderItemLocator getBorderItemLocatorByString(final String input, final IFigure parent,
+            final Object locator, final EObject object) {
         // TODO Auto-generated method stub
         return null;
     }
