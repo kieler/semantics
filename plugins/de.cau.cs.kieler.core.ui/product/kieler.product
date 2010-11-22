@@ -45,7 +45,7 @@ openFile</programArgsMac>
       startupProgressRect="10,310,480,15"
       startupMessageRect="10,287,480,20"
       startupForegroundColor="000000" />
-   <launcher name="Kieler">
+   <launcher name="kieler">
       <linux icon="/de.cau.cs.kieler.core.ui/icons/kiel_64.xpm"/>
       <macosx icon="/de.cau.cs.kieler.core.ui/icons/kiel.icns"/>
       <solaris/>
