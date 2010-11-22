@@ -27,6 +27,7 @@ public class KiemPropertyException extends Exception {
 
     private static final long serialVersionUID = -1023528743545009469L;
 
+    /** The silent flag. */
     private boolean silent;
 
     // -------------------------------------------------------------------------

@@ -1281,6 +1281,7 @@ public class KiemPlugin extends AbstractUIPlugin {
             silent = ((KiemExecutionException) exception).isSilent();
         } else if (exception instanceof KiemInitializationException) {
             mustStop = ((KiemInitializationException) exception).isMustStop();
+            silent = ((KiemInitializationException) exception).isSilent();
         }
 
         // show error or warning message dialog

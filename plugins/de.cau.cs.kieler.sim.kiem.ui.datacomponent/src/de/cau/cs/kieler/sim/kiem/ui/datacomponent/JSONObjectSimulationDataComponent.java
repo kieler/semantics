@@ -345,6 +345,41 @@ public abstract class JSONObjectSimulationDataComponent extends JSONObjectDataCo
     }
     
     // -------------------------------------------------------------------------
+    
+    int askForModelErrorReturnValue = 0;
+     
+     private boolean askForModelError() throws KiemInitializationException {
+         Display.getDefault().syncExec(new Runnable() {
+             public void run() {
+                 final Shell shell = Display.getDefault().getShells()[0];
+                 
+                 String[] buttons = { "Yes", "No", "Cancel" };
+
+                 MessageDialog dlg = new MessageDialog(shell, "Errors or Warnings exist", null, "'"
+                         + modelEditor.getEditorInput().getName() + "'" 
+                         + " contains unsolved problems. Please check the Eclipse Problems View to fix these"
+                         + ".\n\nNote that while errors or simulation warnings exist, the"
+                         + " execution of the model is rather unpredictable.\n\nDo you still want to continue?",
+                         MessageDialog.QUESTION,
+                         buttons, 0);
+
+                 askForModelErrorReturnValue = 2;
+                 try {
+                     askForModelErrorReturnValue = dlg.open();
+                 } catch (Exception e) {
+                     askForModelErrorReturnValue = 2; // implicit CANCEL on exception
+                 }                
+             }
+         });
+         
+         if ((askForModelErrorReturnValue == 2)||(askForModelErrorReturnValue == 1)) {
+             // do not show a message, just abort execution initialization
+             throw new KiemInitializationException("User aborted model simulation/execution.", true, null, true);
+         }
+         return (askForModelErrorReturnValue == 0);
+     }
+     
+     // -------------------------------------------------------------------------
 
     public final JSONObject provideInitialVariables() throws KiemInitializationException {
         JSONObject returnObj = new JSONObject();
@@ -357,27 +392,11 @@ public abstract class JSONObjectSimulationDataComponent extends JSONObjectDataCo
         if (!ok) {
             // bring Problems View to the front otherwise
             bringProblemsViewToFront();
-            // prompt the user
-            try {
-                final Shell shell = Display.getCurrent().getShells()[0];
-                MessageDialog
-                        .openWarning(
-                                shell,
-                                "Errors or Warnings exist",
-                                "'"
-                                        + modelEditor.getEditorInput().getName()
-                                        + "'"
-                                        + " contains unsolved problems. Please check the Eclipse Problems View to fix these"
-                                        + ".\n\nNote that while errors or simulation warnings exist, the"
-                                        + " execution of the model is rather unpredictable.\n\n");
-                // + diagnostic.toString());
-            } catch (Exception e) {
-                // in case of an error here, do not start simulation
-                throw new KiemInitializationException(
-                        "Please fix all errors and simulation warnings listed "
-                                + "in the Eclipse Problems View before simulating.\n\n", false,
-                        null);
-            }
+            
+            // the following method may throw an Exception and abort the initialization in the case
+            // that the user hits cancel or no.
+            askForModelError();
+            
         }
         try {
             // first do the model transformation
