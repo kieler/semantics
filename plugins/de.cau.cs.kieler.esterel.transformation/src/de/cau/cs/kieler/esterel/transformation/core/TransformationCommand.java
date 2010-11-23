@@ -31,7 +31,7 @@ import de.cau.cs.kieler.esterel.transformation.kivi.RefreshGMFElementsEffect;
  * @author uru
  * 
  */
-public class TransformationCommand extends RecordingCommand {
+public class TransformationCommand extends MyRecordingCommand {
 
     private XtendFacade xtendFacade;
     private Object[] parameters;
@@ -79,7 +79,30 @@ public class TransformationCommand extends RecordingCommand {
         super.preExecute();
         RefreshGMFElementsEffect gmf = new RefreshGMFElementsEffect(getActiveEditor());
         gmf.execute();
-        System.out.println("preexecute");
+        System.out.println("pre execute");
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected void postExecute() {
+        super.postExecute();
+        RefreshGMFElementsEffect gmf = new RefreshGMFElementsEffect(getActiveEditor());
+        gmf.execute();
+        System.out.println("post execute");
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void undo() {
+        super.undo();
+        RefreshGMFElementsEffect gmf = new RefreshGMFElementsEffect(getActiveEditor());
+        gmf.execute();
+        System.out.println("undooo");
+        
     }
 
     private DiagramEditor getActiveEditor() {

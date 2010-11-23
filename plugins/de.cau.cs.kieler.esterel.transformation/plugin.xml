@@ -9,6 +9,27 @@
             name="Esterel to SyncCharts Transformation">
       </content>
    </extension>
+  
+  <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            locationURI="popup:de.cau.cs.kieler">
+         <command
+               commandId="de.cau.cs.kieler.esterel.transformation.command1"
+               label="Refresh GMF Edit Policies"
+               style="push">
+            <visibleWhen
+                  checkEnabled="true">
+               <with
+                     variable="activeEditorId">
+                  <equals
+                        value="de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorID">
+                  </equals>
+               </with>
+            </visibleWhen>
+         </command>
+      </menuContribution>
+   </extension>
    <extension
          point="de.cau.cs.kieler.sim.kiem.json.datacomponent">
       <content
@@ -40,6 +61,15 @@
                menubarPath="de.cau.cs.kieler">
          </action>
       </objectContribution>
+   </extension>
+   <extension
+         point="org.eclipse.ui.commands">
+      <command
+            categoryId="de.cau.cs.kieler"
+            defaultHandler="de.cau.cs.kieler.esterel.transformation.RefreshGMFPoliciesHandler"
+            id="de.cau.cs.kieler.esterel.transformation.command1"
+            name="Refresh Edit Policies">
+      </command>
    </extension>
 
 </plugin>

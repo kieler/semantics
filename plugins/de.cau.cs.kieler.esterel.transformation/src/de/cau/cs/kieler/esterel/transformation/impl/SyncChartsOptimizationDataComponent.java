@@ -64,7 +64,7 @@ public class SyncChartsOptimizationDataComponent extends AbstractTransformationD
         super.initialize();
 
         HashMap<String, Variable> globalVars = new HashMap<String, Variable>();
-        globalVars.put("recursive", new Variable("boolean", false));
+        globalVars.put("recursive", new Variable("boolean", true));
 
         facade = AbstractTransformationDataComponent.initializeFacade(TRANSFORMATION_FILE,
                 getBasePackages(), globalVars);
