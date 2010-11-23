@@ -185,7 +185,7 @@ public abstract class AbstractDataComponent implements IDataComponent, IExecutab
         } else {
             type += "0";
         }
-        return this.getDataComponentId() + type + propertiesId.hashCode();
+        return this.getCurrentComponentID() + type + propertiesId.hashCode();
     }
 
     // -------------------------------------------------------------------------
