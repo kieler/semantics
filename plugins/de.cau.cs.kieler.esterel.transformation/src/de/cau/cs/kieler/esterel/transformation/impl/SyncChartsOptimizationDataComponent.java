@@ -14,6 +14,7 @@
 package de.cau.cs.kieler.esterel.transformation.impl;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
@@ -24,10 +25,11 @@ import org.eclipse.gef.EditPartViewer;
 import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramEditor;
 import org.eclipse.gmf.runtime.notation.View;
 import org.eclipse.ui.IEditorPart;
+import org.eclipse.xtend.XtendFacade;
+import org.eclipse.xtend.expression.Variable;
 
 import de.cau.cs.kieler.esterel.transformation.core.AbstractTransformationDataComponent;
 import de.cau.cs.kieler.esterel.transformation.core.TransformationDescriptor;
-import de.cau.cs.kieler.esterel.transformation.kivi.RefreshGMFElementsEffect;
 import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
 import de.cau.cs.kieler.synccharts.Region;
 import de.cau.cs.kieler.synccharts.State;
@@ -48,6 +50,8 @@ public class SyncChartsOptimizationDataComponent extends AbstractTransformationD
 
     private State rootState;
 
+    private XtendFacade facade;
+
     private HashSet<State> workedStates = new HashSet<State>();
     private ArrayList<LinkedList<State>> stateHierarchy = new ArrayList<LinkedList<State>>(5);
     private LinkedList<State> flattenedStates;
@@ -58,6 +62,12 @@ public class SyncChartsOptimizationDataComponent extends AbstractTransformationD
     @Override
     public void initialize() throws KiemInitializationException {
         super.initialize();
+
+        HashMap<String, Variable> globalVars = new HashMap<String, Variable>();
+        globalVars.put("recursive", new Variable("boolean", false));
+
+        facade = AbstractTransformationDataComponent.initializeFacade(TRANSFORMATION_FILE,
+                getBasePackages(), globalVars);
 
         IEditorPart editor = getActiveEditor();
         if (editor instanceof SyncchartsDiagramEditor) {
@@ -111,23 +121,24 @@ public class SyncChartsOptimizationDataComponent extends AbstractTransformationD
     @Override
     public TransformationDescriptor getNextTransformation() {
 
-        State foo = null;
-        List<State> states = rootState.getRegions().get(0).getStates();
-        for (State s : states) {
-            if (!workedStates.contains(s)) {
-                foo = s;
-            }
-        }
+        // State foo = null;
+        // List<State> states = rootState.getRegions().get(0).getStates();
+        // for (State s : states) {
+        // if (!workedStates.contains(s)) {
+        // foo = s;
+        // }
+        // }
 
         if (!flattenedStates.isEmpty()) {
-            foo = flattenedStates.poll();
-            System.out.println("foo " + flattenedStates.size() + " " + foo );
-            if (foo != null) {
-                TransformationDescriptor descriptor = new TransformationDescriptor("rule",
-                        new Object[] { foo });
-                workedStates.add(foo);
-                return descriptor;
-            }
+            // foo = flattenedStates.poll();
+            System.out.println(" ######### foo " + flattenedStates.size() + " "
+                    + flattenedStates.get(0));
+            // if (foo != null) {
+            TransformationDescriptor descriptor = new TransformationDescriptor("ruleAll",
+                    new Object[] { flattenedStates });
+            // workedStates.add(foo);
+            return descriptor;
+            // }
         } else {
             System.out.println("DONE");
         }
@@ -146,11 +157,11 @@ public class SyncChartsOptimizationDataComponent extends AbstractTransformationD
         stateHierarchy.clear();
     }
 
-    private void collectAllStatesRecursivley(State parent, int level) {
+    private void collectAllStatesRecursivley(final State parent, final int level) {
 
         if (stateHierarchy.size() <= level || stateHierarchy.get(level) == null) {
             LinkedList<State> levelStates = new LinkedList<State>();
-//            stateHierarchy.ensureCapacity(level + 1);
+            // stateHierarchy.ensureCapacity(level + 1);
             stateHierarchy.add(level, levelStates);
         }
         LinkedList<State> levelStates = stateHierarchy.get(level);
@@ -161,6 +172,14 @@ public class SyncChartsOptimizationDataComponent extends AbstractTransformationD
                 collectAllStatesRecursivley(s, level + 1);
             }
         }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public XtendFacade getXtendFacade() {
+        return facade;
     }
 
 }

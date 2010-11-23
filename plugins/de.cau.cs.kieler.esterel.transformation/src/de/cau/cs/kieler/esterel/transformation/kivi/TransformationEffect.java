@@ -13,19 +13,10 @@
  */
 package de.cau.cs.kieler.esterel.transformation.kivi;
 
-import java.util.HashMap;
-
 import org.eclipse.emf.common.command.CommandStack;
-import org.eclipse.emf.ecore.EPackage;
-import org.eclipse.emf.mwe.core.ConfigurationException;
 import org.eclipse.emf.transaction.TransactionalEditingDomain;
-import org.eclipse.internal.xtend.xtend.XtendFile;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.xtend.XtendFacade;
-import org.eclipse.xtend.expression.ExecutionContextImpl;
-import org.eclipse.xtend.expression.Variable;
-import org.eclipse.xtend.typesystem.emf.EcoreUtil2;
-import org.eclipse.xtend.typesystem.emf.EmfMetaModel;
 
 import de.cau.cs.kieler.core.kivi.AbstractEffect;
 import de.cau.cs.kieler.esterel.transformation.core.TransformationCommand;
@@ -44,39 +35,22 @@ public class TransformationEffect extends AbstractEffect {
     /**
      * Default constructor.
      * 
-     * @param extentionFile
-     *            file containing the extentions.
+     * @param facade
+     *            the XtendFacade responsible for calling the transformation.
      * @param theTransformationName
      *            name of the transformation to run.
      * @param theParameters
      *            parameters to pass.
-     * @param basePackages
-     *            emf packages needed within the transformation.
      * @param theEditingDomain
      *            editing domain in which the transformation should be performed.
      */
-    public TransformationEffect(final String extentionFile, final String theTransformationName,
-            final Object[] theParameters, final String[] basePackages,
-            final TransactionalEditingDomain theEditingDomain) {
+    public TransformationEffect(final XtendFacade facade, final String theTransformationName,
+            final Object[] theParameters, final TransactionalEditingDomain theEditingDomain) {
         super();
         this.parameters = theParameters;
         this.transformationName = theTransformationName;
+        this.xtendFacade = facade;
         this.editingDomain = theEditingDomain;
-
-        String extentionWithout = extentionFile;
-        // cut off file extention
-        if (extentionWithout.contains("." + XtendFile.FILE_EXTENSION)) {
-            extentionWithout = extentionWithout.substring(0,
-                    extentionWithout.indexOf("." + XtendFile.FILE_EXTENSION));
-        }
-
-        HashMap<String, Variable> map = new HashMap<String, Variable>();
-        map.put("recursive", new Variable("boolean", true));
-        ExecutionContextImpl exec = new ExecutionContextImpl(map);
-
-        xtendFacade = XtendFacade.create(exec, extentionWithout);
-        registerEPackages(basePackages);
-
     }
 
     /**
@@ -105,24 +79,6 @@ public class TransformationEffect extends AbstractEffect {
             }
         });
 
-    }
-
-    private void registerEPackages(final String[] basePackages) {
-        // Register all meta models
-        for (String basePackage : basePackages) {
-            try {
-                EPackage pack = EcoreUtil2.getEPackageByClassName(basePackage);
-
-                // create EMFMetaModel with the given EPackage
-                EmfMetaModel metaModel = new EmfMetaModel(pack);
-                xtendFacade.registerMetaModel(metaModel);
-            } catch (ConfigurationException ce) {
-                // package class could not be found
-                // this is bad and should not happen.
-                System.err.println("ERRORRRRRR");
-                return;
-            }
-        }
     }
 
 }

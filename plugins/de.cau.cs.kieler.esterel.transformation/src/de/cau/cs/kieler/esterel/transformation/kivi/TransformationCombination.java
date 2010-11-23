@@ -37,11 +37,11 @@ public class TransformationCombination extends AbstractCombination {
      *            the descriptor containing information about the transformation.
      */
     public void execute(final TransformationState descriptor) {
-
         // start the transformation
-        TransformationEffect effect = new TransformationEffect(descriptor.getExtentionFile(),
+        TransformationEffect effect = new TransformationEffect(descriptor.getXtendFacade(),
                 descriptor.getTransformationName(), descriptor.getParameters(),
-                descriptor.getBasePackages(), descriptor.getEditingDomain());
+                descriptor.getEditingDomain());
+
         effect.schedule();
 
         DiagramEditor activeEditor = getActiveEditor();

@@ -16,6 +16,7 @@ package de.cau.cs.kieler.esterel.transformation.util;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
+import java.util.List;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtext.parsetree.reconstr.Serializer;
@@ -106,5 +107,9 @@ public final class TransformationUtil {
             code.setCode(TransformationUtil.getSerializedString(obj));
             s.getBodyText().add(code);
         }
+    }
+
+    public static void addToList(final List<State> list, final List<State> list2) {
+        System.out.println("fofo " + list + " " + list2);
     }
 }

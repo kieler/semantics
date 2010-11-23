@@ -13,6 +13,7 @@
  */
 package de.cau.cs.kieler.esterel.transformation.impl;
 
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -24,6 +25,8 @@ import org.eclipse.gmf.runtime.notation.View;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.ui.IEditorPart;
+import org.eclipse.xtend.XtendFacade;
+import org.eclipse.xtend.expression.Variable;
 
 import de.cau.cs.kieler.esterel.transformation.core.AbstractTransformationDataComponent;
 import de.cau.cs.kieler.esterel.transformation.core.TransformationDescriptor;
@@ -55,12 +58,20 @@ public class EsterelToSyncChartDataComponent extends AbstractTransformationDataC
     /** current synccharts root state. */
     private State rootState;
 
+    private XtendFacade facade;
+
     /**
      * {@inheritDoc}
      */
     @Override
     public void initialize() throws KiemInitializationException {
         super.initialize();
+
+        HashMap<String, Variable> globalVars = new HashMap<String, Variable>();
+        globalVars.put("recursive", new Variable("boolean", false));
+
+        facade = AbstractTransformationDataComponent.initializeFacade(TRANSFORMATION_FILE,
+                getBasePackages(), globalVars);
 
         boolean fromResource = false;
         if (fromResource) {
@@ -104,6 +115,14 @@ public class EsterelToSyncChartDataComponent extends AbstractTransformationDataC
             }
             System.out.println("Added First Statement");
         }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public XtendFacade getXtendFacade() {
+        return facade;
     }
 
     /**

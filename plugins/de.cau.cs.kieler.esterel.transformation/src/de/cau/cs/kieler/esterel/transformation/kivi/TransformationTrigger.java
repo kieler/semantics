@@ -14,6 +14,7 @@
 package de.cau.cs.kieler.esterel.transformation.kivi;
 
 import org.eclipse.emf.transaction.TransactionalEditingDomain;
+import org.eclipse.xtend.XtendFacade;
 
 import de.cau.cs.kieler.core.kivi.AbstractTrigger;
 import de.cau.cs.kieler.core.kivi.AbstractTriggerState;
@@ -60,22 +61,19 @@ public class TransformationTrigger extends AbstractTrigger {
     /**
      * initiates a transformation.
      * 
-     * @param extentionFile
-     *            file containing the extentions.
+     * @param facade
+     *            the xtendfacade
      * @param theTransformationName
      *            name of the transformation to run.
      * @param theParameters
      *            parameters to pass.
-     * @param basePackages
-     *            emf packages needed within the transformation.
      * @param theEditingDomain
      *            editing domain in which the transformation should be performed.
      */
-    public void step(final String extentionFile, final String theTransformationName,
-            final Object[] theParameters, final String[] basePackages,
-            final TransactionalEditingDomain theEditingDomain) {
-        trigger(new TransformationState(extentionFile, theTransformationName, theParameters,
-                basePackages, theEditingDomain));
+    public void step(final XtendFacade facade, final String theTransformationName,
+            final Object[] theParameters, final TransactionalEditingDomain theEditingDomain) {
+        trigger(new TransformationState(facade, theTransformationName, theParameters,
+                theEditingDomain));
     }
 
     /**
@@ -85,10 +83,9 @@ public class TransformationTrigger extends AbstractTrigger {
      */
     public static final class TransformationState extends AbstractTriggerState {
 
-        private String extentionFile;
+        private XtendFacade xtendFacade;
         private String transformationName;
         private Object[] parameters;
-        private String[] basePackages;
         private TransactionalEditingDomain editingDomain;
 
         /**
@@ -98,33 +95,29 @@ public class TransformationTrigger extends AbstractTrigger {
         }
 
         /**
-         * @param theExtentionFile
-         *            file containing the extentions.
+         * @param facade
+         *            the xtendfacade
          * @param theTransformationName
          *            name of the transformation to run.
          * @param theParameters
          *            parameters to pass.
-         * @param theBasePackages
-         *            emf packages needed within the transformation.
          * @param theEditingDomain
          *            editing domain in which the transformation should be performed.
          */
-        public TransformationState(final String theExtentionFile,
-                final String theTransformationName, final Object[] theParameters,
-                final String[] theBasePackages, final TransactionalEditingDomain theEditingDomain) {
+        public TransformationState(final XtendFacade facade, final String theTransformationName,
+                final Object[] theParameters, final TransactionalEditingDomain theEditingDomain) {
             super();
-            this.extentionFile = theExtentionFile;
             this.transformationName = theTransformationName;
             this.parameters = theParameters;
-            this.basePackages = theBasePackages;
+            this.xtendFacade = facade;
             this.editingDomain = theEditingDomain;
         }
 
         /**
-         * @return the extentionFile
+         * @return the xtendFacade
          */
-        public String getExtentionFile() {
-            return extentionFile;
+        public XtendFacade getXtendFacade() {
+            return xtendFacade;
         }
 
         /**
@@ -139,13 +132,6 @@ public class TransformationTrigger extends AbstractTrigger {
          */
         public Object[] getParameters() {
             return parameters;
-        }
-
-        /**
-         * @return the basePackages
-         */
-        public String[] getBasePackages() {
-            return basePackages;
         }
 
         /**

@@ -18,7 +18,14 @@ import java.util.Vector;
 
 import org.eclipse.emf.transaction.RecordingCommand;
 import org.eclipse.emf.transaction.TransactionalEditingDomain;
+import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramEditor;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.ui.IEditorPart;
 import org.eclipse.xtend.XtendFacade;
+
+import de.cau.cs.kieler.core.ui.util.EditorUtils;
+import de.cau.cs.kieler.core.util.Maybe;
+import de.cau.cs.kieler.esterel.transformation.kivi.RefreshGMFElementsEffect;
 
 /**
  * @author uru
@@ -62,6 +69,30 @@ public class TransformationCommand extends RecordingCommand {
         Object o = xtendFacade.call(transformationName, parameters);
         result = new Vector<Object>(1);
         result.add(o);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected void preExecute() {
+        super.preExecute();
+        RefreshGMFElementsEffect gmf = new RefreshGMFElementsEffect(getActiveEditor());
+        gmf.execute();
+        System.out.println("preexecute");
+    }
+
+    private DiagramEditor getActiveEditor() {
+        final Maybe<DiagramEditor> maybe = new Maybe<DiagramEditor>();
+        Display.getDefault().syncExec(new Runnable() {
+            public void run() {
+                IEditorPart editor = EditorUtils.getLastActiveEditor();
+                if (editor instanceof DiagramEditor) {
+                    maybe.set((DiagramEditor) editor);
+                }
+            }
+        });
+        return maybe.get();
     }
 
     /**

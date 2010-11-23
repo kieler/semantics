@@ -11,13 +11,34 @@ extension org::eclipse::xtend::util::stdlib::cloning;
 /*
  	Main algorithm
 */
-Void rule(State s):
-	if rule2applies(s) then rule2(s) ->
-	if rule5applies(s) then rule5(s) ->
-	if rule6applies(s) then rule6(s) 
+Boolean rule(List[State] states):
+	//if rule2applies(s) then rule2(s) ->
+	//if rule5applies(s) then rule5(s) ->
+	//if rule6applies(s) then rule6(s) 
+	let s = states.first():
+	switch{
+		case rule2applies(s) :
+			(rule2(s) -> recursiveRule(states))
+		case rule5applies(s) :
+			(rule5(s) -> recursiveRule(states))	 
+		case rule6applies(s) :
+			(rule6(s, states) -> recursiveRule(states)) 
+		default :
+		(states.remove(states.first()) -> ruleAll(states))
+	}
 ;
 
+Void ruleAll(List[State] states):
+	//states.remove(states.first()) ->
+	if states.size > 0 then 
+		rule(states) 
+;
 
+Void recursiveRule(List[State] states):
+	 if ((boolean) GLOBALVAR recursive) then
+		ruleAll(states)
+		
+	;
 
 /*
 	rule1 : Remove unnecessary conditional state 
@@ -73,7 +94,7 @@ Void rule2(State s):
 */
 Boolean rule5applies(State s):
 	switch {
-		case !isSimpleState(s) && hasOutTransitions(s) && !hasFinalSubState(s):
+		case !isSimpleState(s) && hasOutNormalTransitions(s) && !hasFinalSubState(s):
 				true
 		default: false
 	}
@@ -107,16 +128,19 @@ Boolean rule6applies(State s):
 	}
 ;
 
-Void rule6(State s):
+Void rule6(State s, List[State] states):
 	let r = s.regions.first():
 	let initial = findInitialState(r):
 	let finalMacros = r.states.select(e|!isSimpleState(e) && e.isFinal):
 	let finalSimples = r.states.select(e|isSimpleState(e) && e.isFinal):
 	let incomingTrans = s.incomingTransitions.copyList():
+	let normalTerms = s.outgoingTransitions.select(e|e.type == TransitionType::NORMALTERMINATION):
 	
 	// reroute all incoming transitions to the initial state
 	incomingTrans.setTargetState(initial) ->
 	initial.incomingTransitions.addAll(incomingTrans) ->
+	
+	if !incomingTrans.isEmpty then
 	initial.setIsInitial(false) ->
 	
 	// if normal termination exist 
@@ -128,15 +152,24 @@ Void rule6(State s):
 	finalSimples.setIsFinal(false) ->
 	
 	finalSimples.createStrongAbortTo(s.outgoingTransitions.get(0).targetState) ->
-	finalMacros.copyNormalTransitionFrom(s.outgoingTransitions.get(0))
+	if !normalTerms.isEmpty then
+		finalMacros.copyNormalTransitionFrom(normalTerms.get(0))
 	)
 	: s
 	
 	// copy whole stuff 
 	->
-	s.parentRegion.states.addAll(r.states.copyList()) ->
-	if (s.outgoingTransitions.size > 0) then
-		s.outgoingTransitions.remove(s.outgoingTransitions.get(0)) ->
+	(let copyStates = r.states.copyList():
+	s.parentRegion.states.addAll(copyStates) ->
+	// add the inner states to the list, as there might be new optimization potential
+	states.addAll(copyStates)) ->
+	//addToList(states, )
+	
+	
+	
+	// remove old normal termination and old state
+	if (!normalTerms.isEmpty) then
+		normalTerms.removeTransition() ->
 	s.removeStateFromRegion()
 ;
 
@@ -168,6 +201,11 @@ Boolean hasOutTransitions(State s):
 Boolean hasOutWeakTransitions(State s):
 	let weaks = s.outgoingTransitions.select(e|e.type == TransitionType::WEAKABORT):
 	weaks.size > 0
+;
+
+Boolean hasOutNormalTransitions(State s):
+	let normals = s.outgoingTransitions.select(e|e.type == TransitionType::NORMALTERMINATION):
+	normals.size > 0
 ;
 
 Boolean hasOutStrongTransitions(State s):
@@ -207,24 +245,33 @@ State findInitialState(Region r):
 */
 Void createStrongAbortTo(State from, State to):
 	let t = new Transition:
-	t.setType(TransitionType::STRONGABORT) ->
+	from.outgoingTransitions.add(t) ->
 	t.setSourceState(from) ->
 	t.setTargetState(to) ->
-	t.setIsImmediate(true) ->
+	to.incomingTransitions.add(t) ->
+	
+	
+	t.setType(TransitionType::STRONGABORT) ->
+	t.setIsImmediate(true)
 	// todo t.setTrigger tick
-	from.outgoingTransitions.add(t) ->
-	to.incomingTransitions.add(t)
 ;
 
 Void copyNormalTransitionFrom(State from, Transition t):
+	/*let newT = (Transition) clone(t):
+	newT.setType(TransitionType::NORMALTERMINATION) ->
+	newT.setSourceState(from) ->
+	from.outgoingTransitions.add(newT)
+*/
+
 	let newT = new Transition:
 	newT.setSourceState(from) ->
 	newT.setType(t.type) ->
-	newT.setTrigger(t.trigger) -> 
-	newT.setEffects(t.effects) ->
+	newT.setTrigger((Expression) clone(t.trigger)) -> 
+	newT.setEffects((List[Effect]) clone(t.effects)) ->
 	newT.setTargetState(t.targetState) ->
 	from.outgoingTransitions.add(newT) ->
 	t.targetState.incomingTransitions.add(newT)
+	
 ;
 
 Void addEffects(Transition t, List[Effect] effects):
@@ -240,10 +287,10 @@ List[Transition] copyList(List[Transition] list):
 Void removeTransition(Transition t):
 	let source = t.sourceState:
 	let target = t.targetState:
-	source.outgoingTransitions.remove(t) ->
-	target.incomingTransitions.remove(t) ->
 	t.setTargetState(null) ->
-	t.setSourceState(null)
+	t.setSourceState(null) ->
+	source.outgoingTransitions.remove(t) ->
+	target.incomingTransitions.remove(t)
 ;
 
 // remove a state from the region
@@ -251,4 +298,8 @@ Void removeStateFromRegion(State state):
  state.outgoingTransitions.removeAll(state.outgoingTransitions) ->
  state.incomingTransitions.removeAll(state.incomingTransitions) ->
  state.parentRegion.states.remove(state)
+;
+  
+Void addToList(List list, List list2):
+	JAVA  de.cau.cs.kieler.esterel.transformation.util.TransformationUtil.addToList(java.util.List, java.util.List)
 ;
