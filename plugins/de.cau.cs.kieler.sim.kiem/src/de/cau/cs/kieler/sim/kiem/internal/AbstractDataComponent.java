@@ -81,6 +81,9 @@ public abstract class AbstractDataComponent implements IDataComponent, IExecutab
     /** The current shell. */
     private static Shell currentShell = null;
 
+    /** The current Component ID set by the corresponding Extension. */
+    private String currentComponentID = "";
+
     // -------------------------------------------------------------------------
     
     /**
@@ -117,6 +120,10 @@ public abstract class AbstractDataComponent implements IDataComponent, IExecutab
     public AbstractDataComponent() {
         super();
         properties = provideProperties();
+        // set the current component ID per default to the plugin ID
+        // it should be set after creating the component according
+        // to another "real" ID
+        this.currentComponentID = this.getPluginId();
     }
 
     // -------------------------------------------------------------------------
@@ -178,7 +185,7 @@ public abstract class AbstractDataComponent implements IDataComponent, IExecutab
         } else {
             type += "0";
         }
-        return this.getPluginId() + type + propertiesId.hashCode();
+        return this.getDataComponentId() + type + propertiesId.hashCode();
     }
 
     // -------------------------------------------------------------------------
@@ -800,6 +807,25 @@ public abstract class AbstractDataComponent implements IDataComponent, IExecutab
      */
     public void notifyEvent(final KiemEvent event) {
         // no default implementation
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * @param currentComponentIDParam the currentComponentID to set
+     */
+    public void setCurrentComponentID(String currentComponentIDParam) {
+        currentComponentID = currentComponentIDParam;
+    }
+
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * @return the currentID
+     */
+    public String getCurrentComponentID() {
+        return currentComponentID;
     }
 
 }

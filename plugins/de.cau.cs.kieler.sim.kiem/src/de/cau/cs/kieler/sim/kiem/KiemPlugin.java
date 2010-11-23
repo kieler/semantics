@@ -926,6 +926,8 @@ public class KiemPlugin extends AbstractUIPlugin {
                         .createExecutableExtension("class");
                 dataComponent.setConfigurationElemenet(jsonComponents[i]);
                 dataComponentList.add(dataComponent);
+                String currentComponentID = jsonComponents[i].getAttribute("ID");
+                dataComponent.setCurrentComponentID(currentComponentID);
             } catch (Exception e) {
                 // throw new RuntimeException
                 // ("Error at loading a KIEM data component plugin");
@@ -941,6 +943,8 @@ public class KiemPlugin extends AbstractUIPlugin {
                         .createExecutableExtension("class");
                 dataComponent.setConfigurationElemenet(stringComponents[i]);
                 dataComponentList.add(dataComponent);
+                String currentComponentID = stringComponents[i].getAttribute("ID");
+                dataComponent.setCurrentComponentID(currentComponentID);
                 // System.out.println(dataComponent.getName());
             } catch (Exception e) {
                 // throw new RuntimeException
@@ -1146,8 +1150,13 @@ public class KiemPlugin extends AbstractUIPlugin {
                     .createExecutableExtension("class");
             componentClone.setConfigurationElemenet(componentConfigEle);
 
+            // clone the component ID (set e.g. by some configuration extension)
+            String currentComponentID = component.getCurrentComponentID();
+            componentClone.setCurrentComponentID(currentComponentID);
+
             DataComponentWrapper dataComponentWrapper = new DataComponentWrapper(componentClone);
             this.dataComponentWrapperList.add(dataComponentWrapper);
+            
             return dataComponentWrapper;
         } catch (CoreException e) {
             e.printStackTrace();
