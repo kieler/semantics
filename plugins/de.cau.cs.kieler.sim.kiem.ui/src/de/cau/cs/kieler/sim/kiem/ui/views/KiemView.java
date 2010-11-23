@@ -928,11 +928,6 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
         }
         updateColumnsCollapsed();
         try {
-//            viewer.refresh();
-//            viewer.setContentProvider(new KiemContentProvider());
-//            viewer.setLabelProvider(new KiemLabelProvider(this));
-            Object obj = kIEMInstance.getDataComponentWrapperList();
-            viewer.setInput(obj);
             viewer.refresh();
         } catch (Exception e) {
             // catch any viewer refresh errors here
