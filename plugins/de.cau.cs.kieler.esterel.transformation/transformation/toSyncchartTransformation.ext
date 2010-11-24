@@ -63,8 +63,8 @@ Void rule(State s, Module m):
 	removeBodyText(s) ->
 	// always set label here!
 	s.setLabel(m.name) ->
-	s.setIsInitial(true) ->
-	s.setIsFinal(true) ->
+	//s.setIsInitial(true) ->
+	//s.setIsFinal(true) ->
 	// TODO set singals
 	m.interface.intSignalDecls.extractSignals(s)->	
 	// TODO set body content
@@ -172,7 +172,7 @@ Void handleAbortCaseSingle(Region parent, State source, Integer prio, DelayExpr 
 	parent.states.add(caseState) ->
 	
 	// create and add transition
-	trans.setType(TransitionType::STRONGABORT) ->
+	trans.setType(TransitionType::WEAKABORT) ->
 	trans.setPriority(prio) ->
 	
 	// handle delayexpr
@@ -597,8 +597,15 @@ Void addDelayToTrigger(Action t, DelayExpr delay):
 
 // extracts all signals from InterfaceSignalDecl and adds them to the state
 Void extractSignals(InterfaceSignalDecl decl, State s):
-	let copy = (List[ISignal]) clone(decl.signals):
-	if copy.size > 0 then
+	let clonedDecl = (InterfaceSignalDecl) clone(decl):
+	let copy = (List[Signal]) copyList(clonedDecl.signals):
+	switch {
+		case Input.isInstance(decl) : (copy.setIsInput(true) ->  copy.setIsOutput(false))
+		case Output.isInstance(decl) : (copy.setIsInput(false) ->  copy.setIsOutput(true))
+		case InputOutput.isInstance(decl) : (copy.setIsInput(true) ->  copy.setIsOutput(true))
+   		default : decl //no information about input/output
+	} ->
+	if clonedDecl.signals.size > 0 then
 		copy.addSignalToState(s)
 ;
 
@@ -612,12 +619,6 @@ Void extractLocalSignals(LocalSignalList lsl, State s):
 
 // adds sig to the state, does some processing
 Void addSignalToState(Signal sig, State st):
-	switch {
-		case Input.isInstance(sig) : (sig.setIsInput(true) ->  sig.setIsOutput(false))
-		case Output.isInstance(sig) : (sig.setIsInput(false) ->  sig.setIsOutput(true))
-		case InputOutput.isInstance(sig) : (sig.setIsInput(true) ->  sig.setIsOutput(true))
-   		default : sig //no information about input/output
-	} ->
 	st.signals.add(sig)
 ;
 
@@ -641,7 +642,7 @@ Void setLabelIfEmpty(State s, String label):
 		s.setLabel(label) : s
 ;
 
-/*List[ISignal] copyList(List[ISignal] list):
+List[ISignal] copyList(List[ISignal] list):
 	let copy = {}:
 	copy.addAll(list)
-;*/
+;

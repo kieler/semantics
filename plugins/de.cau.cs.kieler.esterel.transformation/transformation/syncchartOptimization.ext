@@ -50,6 +50,7 @@ Boolean rule1applies(State s):
 			(isTransitionWithout(s.outgoingTransitions.get(0)) ? true : false)
 		default : false
 	}
+	
 ;
 
 /*
@@ -136,13 +137,14 @@ Void rule6(State s, List[State] states):
 	let incomingTrans = s.incomingTransitions.copyList():
 	let normalTerms = s.outgoingTransitions.select(e|e.type == TransitionType::NORMALTERMINATION):
 	
+	if (!incomingTrans.isEmpty) then
+		(if (!s.hasOnlySelfLoop()) then
+			initial.setIsInitial(false)) ->
+			
 	// reroute all incoming transitions to the initial state
 	incomingTrans.setTargetState(initial) ->
 	initial.incomingTransitions.addAll(incomingTrans) ->
-	
-	if !incomingTrans.isEmpty then
-	initial.setIsInitial(false) ->
-	
+		
 	// if normal termination exist 
 	(s.outgoingTransitions.size == 1) ?
 	(
@@ -151,7 +153,7 @@ Void rule6(State s, List[State] states):
 	// final simples become nonfinal
 	finalSimples.setIsFinal(false) ->
 	
-	finalSimples.createStrongAbortTo(s.outgoingTransitions.get(0).targetState) ->
+	finalSimples.createWeakAbortTo(s.outgoingTransitions.get(0).targetState) ->
 	if !normalTerms.isEmpty then
 		finalMacros.copyNormalTransitionFrom(normalTerms.get(0))
 	)
@@ -197,6 +199,11 @@ Boolean isTransitionWithout(Transition t):
 Boolean isOutTransitionTick(Transition t):
 	// TODO add "tick"
 	t.isImmediate && true
+;
+
+Boolean hasOnlySelfLoop(State s):
+	let self = s.incomingTransitions.select(e|e.targetState == e.sourceState):
+	self.size > 0 && self.size == s.outgoingTransitions.size
 ;
 
 Boolean hasOutTransitions(State s):
@@ -247,7 +254,7 @@ State findInitialState(Region r):
 /*
 	creation methods
 */
-Void createStrongAbortTo(State from, State to):
+Void createWeakAbortTo(State from, State to):
 	let t = new Transition:
 	from.outgoingTransitions.add(t) ->
 	t.setSourceState(from) ->
@@ -255,7 +262,7 @@ Void createStrongAbortTo(State from, State to):
 	to.incomingTransitions.add(t) ->
 	
 	
-	t.setType(TransitionType::STRONGABORT) ->
+	t.setType(TransitionType::WEAKABORT) ->
 	t.setIsImmediate(true)
 	// todo t.setTrigger tick
 ;
