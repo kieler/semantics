@@ -162,8 +162,12 @@ Void rule6(State s, List[State] states):
 	(let copyStates = r.states.copyList():
 	s.parentRegion.states.addAll(copyStates) ->
 	// add the inner states to the list, as there might be new optimization potential
-	states.addAll(copyStates)) ->
-	//addToList(states, )
+	//states.addAll(copyStates)
+	states.addToFrontOfList(copyStates)
+	) 
+	
+	->
+	
 	
 	
 	
@@ -300,6 +304,6 @@ Void removeStateFromRegion(State state):
  state.parentRegion.states.remove(state)
 ;
   
-Void addToList(List list, List list2):
-	JAVA  de.cau.cs.kieler.esterel.transformation.util.TransformationUtil.addToList(java.util.List, java.util.List)
+Void addToFrontOfList(List list, List list2):
+	JAVA  de.cau.cs.kieler.esterel.transformation.util.TransformationUtil.addToFrontOfList(java.util.List, java.util.List)
 ;

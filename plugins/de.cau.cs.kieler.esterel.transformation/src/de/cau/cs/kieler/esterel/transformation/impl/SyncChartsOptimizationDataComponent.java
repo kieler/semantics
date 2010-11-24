@@ -30,7 +30,9 @@ import org.eclipse.xtend.expression.Variable;
 
 import de.cau.cs.kieler.esterel.transformation.core.AbstractTransformationDataComponent;
 import de.cau.cs.kieler.esterel.transformation.core.TransformationDescriptor;
+import de.cau.cs.kieler.esterel.transformation.util.TransformationUtil;
 import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
+import de.cau.cs.kieler.sim.kiem.properties.KiemProperty;
 import de.cau.cs.kieler.synccharts.Region;
 import de.cau.cs.kieler.synccharts.State;
 import de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditor;
@@ -54,7 +56,7 @@ public class SyncChartsOptimizationDataComponent extends AbstractTransformationD
 
     private HashSet<State> workedStates = new HashSet<State>();
     private ArrayList<LinkedList<State>> stateHierarchy = new ArrayList<LinkedList<State>>(5);
-    private LinkedList<State> flattenedStates;
+    private LinkedList<State> flattenedStates = new LinkedList<State>();;
 
     /**
      * {@inheritDoc}
@@ -63,8 +65,13 @@ public class SyncChartsOptimizationDataComponent extends AbstractTransformationD
     public void initialize() throws KiemInitializationException {
         super.initialize();
 
+        // get recursive property
+        KiemProperty prop = getProperties()[0];
+        boolean recursive = prop.getValueAsBoolean();
+
+        // init global variables
         HashMap<String, Variable> globalVars = new HashMap<String, Variable>();
-        globalVars.put("recursive", new Variable("boolean", true));
+        globalVars.put("recursive", new Variable("boolean", recursive));
 
         facade = AbstractTransformationDataComponent.initializeFacade(TRANSFORMATION_FILE,
                 getBasePackages(), globalVars);
@@ -86,6 +93,7 @@ public class SyncChartsOptimizationDataComponent extends AbstractTransformationD
                 State root = ((Region) selModel).getStates().get(0);
                 rootState = root;
 
+                // collect initial set of all possible states
                 collectAllStatesRecursivley(rootState, 0);
                 flattenedStates = new LinkedList<State>();
                 for (int i = stateHierarchy.size() - 1; i >= 0; i--) {
@@ -121,13 +129,29 @@ public class SyncChartsOptimizationDataComponent extends AbstractTransformationD
     @Override
     public TransformationDescriptor getNextTransformation() {
 
-        // State foo = null;
-        // List<State> states = rootState.getRegions().get(0).getStates();
-        // for (State s : states) {
-        // if (!workedStates.contains(s)) {
-        // foo = s;
-        // }
-        // }
+        if (flattenedStates.isEmpty()) {
+            return null;
+        }
+
+        State start = rootState;
+
+        List<EObject> selected = TransformationUtil.getCurrentEditorSelection();
+        // currently only for one selected item possible
+        if (!selected.isEmpty() && selected.size() == 1) {
+            for (EObject obj : selected) {
+                if (obj instanceof State) {
+                    start = (State) obj;
+                }
+            }
+        }
+
+        // collect all possible states
+        stateHierarchy.clear();
+        collectAllStatesRecursivley(start, 0);
+        flattenedStates = new LinkedList<State>();
+        for (int i = stateHierarchy.size() - 1; i >= 0; i--) {
+            flattenedStates.addAll(stateHierarchy.get(i));
+        }
 
         if (!flattenedStates.isEmpty()) {
             // foo = flattenedStates.poll();
@@ -180,6 +204,18 @@ public class SyncChartsOptimizationDataComponent extends AbstractTransformationD
     @Override
     public XtendFacade getXtendFacade() {
         return facade;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public KiemProperty[] provideProperties() {
+        final int numberOfProperties = 1;
+        KiemProperty[] properties = new KiemProperty[numberOfProperties];
+
+        properties[0] = new KiemProperty("Recursive", true);
+        return properties;
     }
 
 }

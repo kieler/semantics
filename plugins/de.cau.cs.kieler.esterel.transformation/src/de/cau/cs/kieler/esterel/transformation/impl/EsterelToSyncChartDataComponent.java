@@ -30,7 +30,9 @@ import org.eclipse.xtend.expression.Variable;
 
 import de.cau.cs.kieler.esterel.transformation.core.AbstractTransformationDataComponent;
 import de.cau.cs.kieler.esterel.transformation.core.TransformationDescriptor;
+import de.cau.cs.kieler.esterel.transformation.util.TransformationUtil;
 import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
+import de.cau.cs.kieler.sim.kiem.properties.KiemProperty;
 import de.cau.cs.kieler.synccharts.Region;
 import de.cau.cs.kieler.synccharts.State;
 import de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditor;
@@ -67,8 +69,13 @@ public class EsterelToSyncChartDataComponent extends AbstractTransformationDataC
     public void initialize() throws KiemInitializationException {
         super.initialize();
 
+        // get recursive property
+        KiemProperty prop = getProperties()[0];
+        boolean recursive = prop.getValueAsBoolean();
+
+        // init global variables
         HashMap<String, Variable> globalVars = new HashMap<String, Variable>();
-        globalVars.put("recursive", new Variable("boolean", true));
+        globalVars.put("recursive", new Variable("boolean", recursive));
 
         facade = AbstractTransformationDataComponent.initializeFacade(TRANSFORMATION_FILE,
                 getBasePackages(), globalVars);
@@ -133,7 +140,7 @@ public class EsterelToSyncChartDataComponent extends AbstractTransformationDataC
 
         State start = rootState;
 
-        List<EObject> selected = getCurrentEditorSelection();
+        List<EObject> selected = TransformationUtil.getCurrentEditorSelection();
         // currently only for one selected item possible
         if (!selected.isEmpty() && selected.size() == 1) {
             for (EObject obj : selected) {
@@ -210,30 +217,16 @@ public class EsterelToSyncChartDataComponent extends AbstractTransformationDataC
         return TRANSFORMATION_FILE;
     }
 
-    private List<EObject> getCurrentEditorSelection() {
-        LinkedList<EObject> selectedElements = null;
-        // get the active editor
-        IEditorPart editor = getActiveEditor();
-        if (editor instanceof SyncchartsDiagramEditor) {
-            EditPart rootEditPart = ((DiagramEditor) editor).getDiagramEditPart();
-            EditPartViewer viewer = rootEditPart.getViewer();
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public KiemProperty[] provideProperties() {
+        final int numberOfProperties = 1;
+        KiemProperty[] properties = new KiemProperty[numberOfProperties];
 
-            // get the selection
-            ISelection selection = viewer.getSelection();
-            if (!selection.isEmpty()) {
-                selectedElements = new LinkedList<EObject>();
-                if (selection instanceof StructuredSelection) {
-                    // append all elements to the list being returned
-                    for (Object o : ((StructuredSelection) selection).toArray()) {
-                        if (o instanceof EditPart) {
-                            EObject selModel = ((View) ((EditPart) o).getModel()).getElement();
-                            selectedElements.add(selModel);
-                        }
-                    }
-                }
-            }
-        }
-        return selectedElements;
+        properties[0] = new KiemProperty("Recursive", true);
+        return properties;
     }
 
     // /**

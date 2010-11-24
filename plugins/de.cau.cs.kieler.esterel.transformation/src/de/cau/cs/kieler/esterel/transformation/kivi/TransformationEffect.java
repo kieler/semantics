@@ -13,13 +13,26 @@
  */
 package de.cau.cs.kieler.esterel.transformation.kivi;
 
+import java.util.Iterator;
+import java.util.List;
+
 import org.eclipse.emf.common.command.CommandStack;
+import org.eclipse.emf.common.command.CompoundCommand;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.transaction.RecordingCommand;
 import org.eclipse.emf.transaction.TransactionalEditingDomain;
+import org.eclipse.gmf.runtime.diagram.ui.editpolicies.CanonicalEditPolicy;
+import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramEditor;
+import org.eclipse.gmf.runtime.diagram.ui.parts.IDiagramGraphicalViewer;
+import org.eclipse.gmf.runtime.diagram.ui.parts.IDiagramWorkbenchPart;
+import org.eclipse.gmf.runtime.notation.View;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.xtend.XtendFacade;
 
 import de.cau.cs.kieler.core.kivi.AbstractEffect;
 import de.cau.cs.kieler.esterel.transformation.core.TransformationCommand;
+import de.cau.cs.kieler.esterel.transformation.util.TransformationUtil;
 
 /**
  * @author uru
@@ -27,10 +40,14 @@ import de.cau.cs.kieler.esterel.transformation.core.TransformationCommand;
  */
 public class TransformationEffect extends AbstractEffect {
 
+    private static final String COMMAND_NAME = "Transformation Command";
+
     private XtendFacade xtendFacade;
     private Object[] parameters;
     private String transformationName;
     private TransactionalEditingDomain editingDomain;
+
+    private Object result = null;
 
     /**
      * Default constructor.
@@ -68,17 +85,68 @@ public class TransformationEffect extends AbstractEffect {
     public void execute() {
 
         // FIXME workaround to avoid deadlock with FireOnceTriggerListener
-        PlatformUI.getWorkbench().getDisplay().asyncExec(new Runnable() {
+        PlatformUI.getWorkbench().getDisplay().syncExec(new Runnable() {
 
             public void run() {
+
+                // create a compound command to make sure all gmf elements are refreshed
+                // after the transformation was executed
+                // for some reason it is important to do this in a seperate command!
+                CompoundCommand cc = new CompoundCommand(COMMAND_NAME);
+
                 TransformationCommand command = new TransformationCommand(xtendFacade, parameters,
                         transformationName, editingDomain);
-                CommandStack stack = editingDomain.getCommandStack();
-                stack.execute(command);
+                cc.append(command);
+                cc.append(new RefreshGMFElementsCommand(editingDomain));
 
+                CommandStack stack = editingDomain.getCommandStack();
+                stack.execute(cc);
+                result = command.getResult();
             }
         });
-
     }
 
+    /**
+     * @return the result
+     */
+    public Object getResult() {
+        return result;
+    }
+
+    /**
+     * inner class refreshing the GMF edit policies.
+     * 
+     * @author uru
+     * 
+     */
+    private class RefreshGMFElementsCommand extends RecordingCommand {
+
+        /**
+         * @param domain
+         */
+        public RefreshGMFElementsCommand(final TransactionalEditingDomain domain) {
+            super(domain);
+        }
+
+        @Override
+        protected void doExecute() {
+            final DiagramEditor activeEditor = TransformationUtil.getActiveEditor();
+            Display.getDefault().syncExec(new Runnable() {
+                public void run() {
+                    if (activeEditor instanceof IDiagramWorkbenchPart) {
+                        EObject obj = ((View) ((IDiagramWorkbenchPart) activeEditor)
+                                .getDiagramEditPart().getModel()).getElement();
+                        List<?> editPolicies = CanonicalEditPolicy.getRegisteredEditPolicies(obj);
+                        for (Iterator<?> it = editPolicies.iterator(); it.hasNext();) {
+                            CanonicalEditPolicy nextEditPolicy = (CanonicalEditPolicy) it.next();
+                            nextEditPolicy.refresh();
+                        }
+                        IDiagramGraphicalViewer graphViewer = ((IDiagramWorkbenchPart) activeEditor)
+                                .getDiagramGraphicalViewer();
+                        graphViewer.flush();
+                    }
+                }
+            });
+        }
+    }
 }

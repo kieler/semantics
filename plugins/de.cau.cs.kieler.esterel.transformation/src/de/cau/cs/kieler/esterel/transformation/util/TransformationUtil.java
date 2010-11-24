@@ -16,9 +16,18 @@ package de.cau.cs.kieler.esterel.transformation.util;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
+import java.util.LinkedList;
 import java.util.List;
 
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.gef.EditPart;
+import org.eclipse.gef.EditPartViewer;
+import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramEditor;
+import org.eclipse.gmf.runtime.notation.View;
+import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.jface.viewers.StructuredSelection;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.ui.IEditorPart;
 import org.eclipse.xtext.parsetree.reconstr.Serializer;
 import org.eclipse.xtext.resource.SaveOptions;
 
@@ -26,10 +35,13 @@ import com.google.inject.Injector;
 
 import de.cau.cs.kieler.core.expressions.ExpressionsFactory;
 import de.cau.cs.kieler.core.expressions.TextualCode;
+import de.cau.cs.kieler.core.ui.util.EditorUtils;
+import de.cau.cs.kieler.core.util.Maybe;
 import de.cau.cs.kieler.esterel.EsterelStandaloneSetup;
 import de.cau.cs.kieler.esterel.esterel.EsterelPackage;
 import de.cau.cs.kieler.synccharts.State;
 import de.cau.cs.kieler.synccharts.StateType;
+import de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditor;
 
 /**
  * utility class.
@@ -109,7 +121,46 @@ public final class TransformationUtil {
         }
     }
 
-    public static void addToList(final List<State> list, final List<State> list2) {
-        System.out.println("fofo " + list + " " + list2);
+    public static void addToFrontOfList(final List<State> list, final List<State> list2) {
+        list.addAll(0, list2);
+    }
+
+    public static DiagramEditor getActiveEditor() {
+        final Maybe<DiagramEditor> maybe = new Maybe<DiagramEditor>();
+        Display.getDefault().syncExec(new Runnable() {
+            public void run() {
+                IEditorPart editor = EditorUtils.getLastActiveEditor();
+                if (editor instanceof DiagramEditor) {
+                    maybe.set((DiagramEditor) editor);
+                }
+            }
+        });
+        return maybe.get();
+    }
+
+    public static List<EObject> getCurrentEditorSelection() {
+        LinkedList<EObject> selectedElements = null;
+        // get the active editor
+        IEditorPart editor = getActiveEditor();
+        if (editor instanceof SyncchartsDiagramEditor) {
+            EditPart rootEditPart = ((DiagramEditor) editor).getDiagramEditPart();
+            EditPartViewer viewer = rootEditPart.getViewer();
+
+            // get the selection
+            ISelection selection = viewer.getSelection();
+            if (!selection.isEmpty()) {
+                selectedElements = new LinkedList<EObject>();
+                if (selection instanceof StructuredSelection) {
+                    // append all elements to the list being returned
+                    for (Object o : ((StructuredSelection) selection).toArray()) {
+                        if (o instanceof EditPart) {
+                            EObject selModel = ((View) ((EditPart) o).getModel()).getElement();
+                            selectedElements.add(selModel);
+                        }
+                    }
+                }
+            }
+        }
+        return selectedElements;
     }
 }

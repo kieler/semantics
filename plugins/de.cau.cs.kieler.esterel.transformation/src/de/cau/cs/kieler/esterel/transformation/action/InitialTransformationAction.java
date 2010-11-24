@@ -75,7 +75,9 @@ public class InitialTransformationAction implements IActionDelegate {
         doInitialEsterelTransformation();
         refreshEditPolicies();
         try {
-            resource.save(null);
+            if (resource != null) {
+                resource.save(null);
+            }
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();

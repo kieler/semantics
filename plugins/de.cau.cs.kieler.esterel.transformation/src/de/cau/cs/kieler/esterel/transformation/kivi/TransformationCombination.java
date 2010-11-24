@@ -18,6 +18,7 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IEditorPart;
 
 import de.cau.cs.kieler.core.kivi.AbstractCombination;
+import de.cau.cs.kieler.core.kivi.triggers.EffectTrigger.EffectTriggerState;
 import de.cau.cs.kieler.core.ui.util.EditorUtils;
 import de.cau.cs.kieler.core.util.Maybe;
 import de.cau.cs.kieler.esterel.transformation.kivi.TransformationTrigger.TransformationState;
@@ -30,30 +31,41 @@ import de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditor;
  */
 public class TransformationCombination extends AbstractCombination {
 
+    private TransformationEffect effect;
+
     /**
      * executes this combination.
      * 
      * @param descriptor
      *            the descriptor containing information about the transformation.
+     * @param transformationTrigger
+     *            used to determine if the transformation was already executed and the result can be
+     *            retrieved.
      */
-    public void execute(final TransformationState descriptor) {
-        // start the transformation
-        TransformationEffect effect = new TransformationEffect(descriptor.getXtendFacade(),
-                descriptor.getTransformationName(), descriptor.getParameters(),
-                descriptor.getEditingDomain());
+    public void execute(final TransformationState descriptor,
+            final EffectTriggerState<TransformationEffect> transformationTrigger) {
 
-        effect.schedule();
+        if (transformationTrigger.getSequenceNumber() > descriptor.getSequenceNumber()) {
+            System.out.println("effect has been executed" + effect.getResult());
+        } else {
+            System.out.println("standard execution");
+            // start the transformation
+            effect = new TransformationEffect(descriptor.getXtendFacade(),
+                    descriptor.getTransformationName(), descriptor.getParameters(),
+                    descriptor.getEditingDomain());
+            effect.schedule();
 
-        DiagramEditor activeEditor = getActiveEditor();
-        if (activeEditor instanceof SyncchartsDiagramEditor) {
-            // refresh GMF edit policies
-            RefreshGMFElementsEffect gmfEffect = new RefreshGMFElementsEffect(
-                    (SyncchartsDiagramEditor) activeEditor);
-            gmfEffect.schedule();
+            DiagramEditor activeEditor = getActiveEditor();
+            if (activeEditor instanceof SyncchartsDiagramEditor) {
+                // refresh GMF edit policies
+                RefreshGMFElementsEffect gmfEffect = new RefreshGMFElementsEffect(
+                        (SyncchartsDiagramEditor) activeEditor);
+                gmfEffect.schedule();
 
-            // apply automatic layout by triggering the trigger (null layouts whole diagram)
-            LayoutEffect layoutEffect = new LayoutEffect(activeEditor, null);
-            layoutEffect.schedule();
+                // apply automatic layout by triggering the trigger (null layouts whole diagram)
+                LayoutEffect layoutEffect = new LayoutEffect(activeEditor, null);
+                layoutEffect.schedule();
+            }
         }
     }
 

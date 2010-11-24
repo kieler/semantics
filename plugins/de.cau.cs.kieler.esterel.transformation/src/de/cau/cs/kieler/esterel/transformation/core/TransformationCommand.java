@@ -18,26 +18,17 @@ import java.util.Vector;
 
 import org.eclipse.emf.transaction.RecordingCommand;
 import org.eclipse.emf.transaction.TransactionalEditingDomain;
-import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramEditor;
-import org.eclipse.swt.widgets.Display;
-import org.eclipse.ui.IEditorPart;
 import org.eclipse.xtend.XtendFacade;
-
-import de.cau.cs.kieler.core.ui.util.EditorUtils;
-import de.cau.cs.kieler.core.util.Maybe;
-import de.cau.cs.kieler.esterel.transformation.kivi.RefreshGMFElementsEffect;
 
 /**
  * @author uru
  * 
  */
-public class TransformationCommand extends MyRecordingCommand {
+public class TransformationCommand extends RecordingCommand {
 
     private XtendFacade xtendFacade;
     private Object[] parameters;
     private String transformationName;
-
-    private static final String COMMAND_NAME = "Transformation Command";
 
     private Collection<Object> result;
 
@@ -50,7 +41,7 @@ public class TransformationCommand extends MyRecordingCommand {
      */
     public TransformationCommand(final XtendFacade xtendFacade, final Object[] parameters,
             final String transformationName, final TransactionalEditingDomain editingDomain) {
-        super(editingDomain, COMMAND_NAME);
+        super(editingDomain);
         this.xtendFacade = xtendFacade;
         this.parameters = parameters;
         this.transformationName = transformationName;
@@ -69,54 +60,60 @@ public class TransformationCommand extends MyRecordingCommand {
         Object o = xtendFacade.call(transformationName, parameters);
         result = new Vector<Object>(1);
         result.add(o);
+
+        // RefreshGMFElementsEffect gmf = new RefreshGMFElementsEffect(getActiveEditor());
+        // gmf.execute();
+
+//        final DiagramEditor activeEditor = getActiveEditor();
+
+        // for (CanonicalEditPolicy p : CanonicalEditPolicy.getRegisteredEditPolicies(activeEditor
+        // .getDiagram().getElement())) {
+        // p.refresh();
+        // }
+
+        // Display.getDefault().syncExec(new Runnable() {
+        // public void run() {
+        // if (activeEditor instanceof IDiagramWorkbenchPart) {
+        // EObject obj = ((View) ((IDiagramWorkbenchPart) activeEditor)
+        // .getDiagramEditPart().getModel()).getElement();
+        // List<?> editPolicies = CanonicalEditPolicy.getRegisteredEditPolicies(obj);
+        // for (Iterator<?> it = editPolicies.iterator(); it.hasNext();) {
+        // CanonicalEditPolicy nextEditPolicy = (CanonicalEditPolicy) it.next();
+        // nextEditPolicy.refresh();
+        // }
+        // IDiagramGraphicalViewer graphViewer = ((IDiagramWorkbenchPart) activeEditor)
+        // .getDiagramGraphicalViewer();
+        // graphViewer.flush();
+        // }
+        // }
+        // });
+
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    protected void preExecute() {
-        super.preExecute();
-        RefreshGMFElementsEffect gmf = new RefreshGMFElementsEffect(getActiveEditor());
-        gmf.execute();
-        System.out.println("pre execute");
-    }
-    
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    protected void postExecute() {
-        super.postExecute();
-        RefreshGMFElementsEffect gmf = new RefreshGMFElementsEffect(getActiveEditor());
-        gmf.execute();
-        System.out.println("post execute");
-    }
-    
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void undo() {
-        super.undo();
-        RefreshGMFElementsEffect gmf = new RefreshGMFElementsEffect(getActiveEditor());
-        gmf.execute();
-        System.out.println("undooo");
-        
-    }
+//    /**
+//     * {@inheritDoc}
+//     */
+//    @Override
+//    public void undo() {
+//        super.undo();
+//        // RefreshGMFElementsEffect gmf = new RefreshGMFElementsEffect(getActiveEditor());
+//        // gmf.execute();
+//        // System.out.println("undooo");
+//
+//    }
 
-    private DiagramEditor getActiveEditor() {
-        final Maybe<DiagramEditor> maybe = new Maybe<DiagramEditor>();
-        Display.getDefault().syncExec(new Runnable() {
-            public void run() {
-                IEditorPart editor = EditorUtils.getLastActiveEditor();
-                if (editor instanceof DiagramEditor) {
-                    maybe.set((DiagramEditor) editor);
-                }
-            }
-        });
-        return maybe.get();
-    }
+//    private DiagramEditor getActiveEditor() {
+//        final Maybe<DiagramEditor> maybe = new Maybe<DiagramEditor>();
+//        Display.getDefault().syncExec(new Runnable() {
+//            public void run() {
+//                IEditorPart editor = EditorUtils.getLastActiveEditor();
+//                if (editor instanceof DiagramEditor) {
+//                    maybe.set((DiagramEditor) editor);
+//                }
+//            }
+//        });
+//        return maybe.get();
+//    }
 
     /**
      * {@inheritDoc}
