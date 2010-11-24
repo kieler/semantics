@@ -9,14 +9,14 @@
    <extension point="de.cau.cs.kieler.kex">
       <category id="de.cau.cs.kieler.synccharts">
       </category>
-      <example author="KIELER Workgroup" contact="kieler@informatik.uni-kiel.de" description="This quick start example generates a project with the standard model ABRO." generation_date="Fri Jul 07 09:05:16 CEST 2010" overview_pic="examples/synccharts_quickstart/abro.png" root_directory="examples/" title="SyncCharts Quick Start">
+      <example author="KIELER Workgroup" contact="kieler@informatik.uni-kiel.de" description="This is the SyncCharts standard model ABRO." generation_date="Fri Jul 07 09:05:16 CEST 2010" overview_pic="examples/abro/abro.png" root_directory="examples/" title="ABRO">
          <category id="de.cau.cs.kieler.synccharts">
          </category>
-         <example_resource direct_open="false" local_path="examples/synccharts_quickstart/" resource_type="project">
+         <example_resource direct_open="false" local_path="examples/abro/" resource_type="folder">
          </example_resource>
-         <example_resource direct_open="true" local_path="examples/synccharts_quickstart/abro.kids" resource_type="file">
+         <example_resource direct_open="true" local_path="examples/abro/abro.kids" resource_type="file">
          </example_resource>
-         <example_resource direct_open="false" local_path="examples/synccharts_quickstart/abro.kixs" resource_type="file">
+         <example_resource direct_open="false" local_path="examples/abro/abro.kixs" resource_type="file">
          </example_resource>
       </example>
    <example author="KIELER Workgroup" contact="kieler@informatik.uni-kiel.de" description="This example shows the synchronisation of signals A and B." generation_date="Tue Nov 02 20:58:16 CET 2010" overview_pic="examples/ab_sync/ABSync.png" root_directory="examples" title="AB Sync">

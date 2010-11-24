@@ -6,10 +6,10 @@
 
         <link
             label="SyncCharts Quick Start"
-            url="http://org.eclipse.ui.intro/runAction?pluginId=de.cau.cs.kieler.kex.ui&amp;class=de.cau.cs.kieler.kex.ui.actions.QuickStartAction&amp;id=de.cau.cs.kieler.kex.ui&amp;exampleTitle=SyncCharts Quick Start&amp;sourceType=KIELER"
+            url="http://org.eclipse.ui.intro/runAction?pluginId=de.cau.cs.kieler.kex.ui&amp;class=de.cau.cs.kieler.kex.ui.actions.QuickStartAction&amp;id=de.cau.cs.kieler.kex.ui&amp;exampleTitle=ABRO&amp;sourceType=KIELER&amp;projectName=synccharts_quickstart"
             id="synccharts-quick-start"
             style-id="content-link">
-			<text>Creates a project with the SyncCharts standard example ABRO</text>
+			<text>Creates a project with the SyncCharts standard example ABRO.</text>
         </link>
       </extensionContent>
 </introContent>
