@@ -24,18 +24,15 @@ org.eclipse.platform
 256m
 --launcher.defaultAction
 openFile</programArgsMac>
-      <vmArgsLin>-XX:MaxPermSize=256m</vmArgsLin>
+      <vmArgs>-Xms40m
+-Xmx256m
+-XX:MaxPermSize=256m</vmArgs>
       <vmArgsMac>-XstartOnFirstThread
 -Dorg.eclipse.swt.internal.carbon.smallFonts
 -Dosgi.requiredJavaVersion=1.5
 -Dorg.eclipse.swt.internal.carbon.smallFonts
--Xms40m
--Xmx256m
 -XstartOnFirstThread
--Xdock:icon=../Resources/kiel.icns
--XX:MaxPermSize=256m</vmArgsMac>
-      <vmArgsSol>-XX:MaxPermSize=256m</vmArgsSol>
-      <vmArgsWin>-XX:MaxPermSize=256m</vmArgsWin>
+-Xdock:icon=../Resources/kiel.icns</vmArgsMac>
    </launcherArgs>
 
    <windowImages i16="/de.cau.cs.kieler.core.ui/icons/kiel_16.gif" i32="/de.cau.cs.kieler.core.ui/icons/kiel_32.gif" i48="/de.cau.cs.kieler.core.ui/icons/kiel_48.gif" i64="/de.cau.cs.kieler.core.ui/icons/kiel_64.gif" i128="/de.cau.cs.kieler.core.ui/icons/kiel_128.gif"/>
