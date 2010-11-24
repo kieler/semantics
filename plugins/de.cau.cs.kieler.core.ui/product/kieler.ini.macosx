@@ -9,10 +9,10 @@ org.eclipse.platform
 --launcher.defaultAction
 openFile
 -vmargs
--Dosgi.requiredJavaVersion=1.5
--Dorg.eclipse.swt.internal.carbon.smallFonts
 -Xms40m
 -Xmx256m
--XstartOnFirstThread
--Xdock:icon=../Resources/kiel.icns
 -XX:MaxPermSize=256m
+-XstartOnFirstThread
+-Dorg.eclipse.swt.internal.carbon.smallFonts
+-Dosgi.requiredJavaVersion=1.5
+-Xdock:icon=../Resources/kiel.icns
