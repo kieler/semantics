@@ -351,7 +351,8 @@ Void rule(State s, LocalVariable v):
 	varS.setIsInitial(true) ->
 	varS.setIsFinal(true) ->
 	
-	s.interfaceDecls.add((InterfaceDeclaration)clone(v.var)) ->
+	// TODO
+	//s.interfaceDecls.add((InterfaceDeclaration)clone(v.var)) ->
 	
 	// recursive
 	varS.setJavaBodyContents( v.statement) ->

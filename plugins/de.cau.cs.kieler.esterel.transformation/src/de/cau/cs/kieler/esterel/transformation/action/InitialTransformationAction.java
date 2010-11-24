@@ -13,7 +13,7 @@
  */
 package de.cau.cs.kieler.esterel.transformation.action;
 
-import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.util.Iterator;
 import java.util.List;
 
@@ -24,7 +24,9 @@ import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Path;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -43,16 +45,22 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IActionDelegate;
 import org.eclipse.ui.IEditorPart;
+import org.eclipse.ui.IWorkbenchPage;
+import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.actions.WorkspaceModifyOperation;
+import org.eclipse.ui.part.FileEditorInput;
+import org.eclipse.ui.statushandlers.StatusManager;
 
 import de.cau.cs.kieler.core.expressions.ExpressionsFactory;
 import de.cau.cs.kieler.core.expressions.TextualCode;
+import de.cau.cs.kieler.esterel.transformation.Activator;
 import de.cau.cs.kieler.esterel.transformation.util.TransformationUtil;
 import de.cau.cs.kieler.synccharts.Region;
 import de.cau.cs.kieler.synccharts.State;
 import de.cau.cs.kieler.synccharts.StateType;
 import de.cau.cs.kieler.synccharts.SyncchartsFactory;
+import de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditor;
 import de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorUtil;
 
 /**
@@ -62,26 +70,74 @@ import de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorUtil;
 public class InitialTransformationAction implements IActionDelegate {
 
     private IInputValidator kixsValidator = new KixsInputValidator();
-    private IFile currentFile;
+    private IFile strlFile;
     private IFile kixsFile;
-
-    private Resource resource;
+    private IFile kidsFile;
+    private IWorkspaceRoot workspaceRoot;
 
     /**
      * {@inheritDoc}
      */
     public void run(final IAction action) {
-        createSyncchartDiagram();
-        doInitialEsterelTransformation();
-        refreshEditPolicies();
+
+        if (strlFile == null || !strlFile.exists()) {
+            return;
+        }
+
         try {
-            if (resource != null) {
-                resource.save(null);
-            }
-        } catch (IOException e) {
+
+            // start with a progress dialog as parsing and opening might take some time
+            PlatformUI.getWorkbench().getProgressService()
+                    .run(false, true, new IRunnableWithProgress() {
+                        public void run(final IProgressMonitor uiMonitor) {
+
+                            // CHECKSTYLEOFF MagicNumber
+                            // used some numbers to estimate work done
+                            uiMonitor.beginTask("Initial Transformation", 100);
+                            // access workspace
+                            IWorkspace workspace = ResourcesPlugin.getWorkspace();
+                            workspaceRoot = workspace.getRoot();
+
+                            // get files relative to Workspace
+                            IPath kidsPath = strlFile.getFullPath().removeFileExtension()
+                                    .addFileExtension("kids");
+                            IPath kixsPath = strlFile.getFullPath().removeFileExtension()
+                                    .addFileExtension("kixs");
+                            kidsFile = workspaceRoot.getFile(kidsPath);
+                            kixsFile = workspaceRoot.getFile(kixsPath);
+
+                            // create all the elements
+                            createSyncchartDiagram();
+                            uiMonitor.worked(40);
+                            doInitialEsterelTransformation();
+                            uiMonitor.worked(60);
+                            refreshEditPolicies();
+                            uiMonitor.worked(90);
+                            // CHECKSTYLEON MagicNumber
+
+                            // open the editor with the kids file
+                            IWorkbenchPage page = PlatformUI.getWorkbench()
+                                    .getActiveWorkbenchWindow().getActivePage();
+                            try {
+                                page.openEditor(new FileEditorInput(kidsFile),
+                                        SyncchartsDiagramEditor.ID);
+                            } catch (PartInitException e) {
+                                e.printStackTrace();
+                                Status myStatus = new Status(IStatus.ERROR, Activator.PLUGIN_ID,
+                                        "Problem opening the SyncCharts Diagram.", e);
+                                StatusManager.getManager().handle(myStatus, StatusManager.SHOW);
+                            }
+
+                        }
+                    });
+        } catch (InvocationTargetException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (InterruptedException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
+
     }
 
     /**
@@ -92,112 +148,108 @@ public class InitialTransformationAction implements IActionDelegate {
         if (!(selection instanceof IStructuredSelection) || selection.isEmpty()) {
             return;
         }
-        currentFile = (IFile) ((IStructuredSelection) selection).getFirstElement();
+        strlFile = (IFile) ((IStructuredSelection) selection).getFirstElement();
         action.setEnabled(true);
     }
 
-    protected void doInitialEsterelTransformation() {
+    /**
+     * @return the currentFile
+     */
+    public IFile getCurrentFile() {
+        return strlFile;
+    }
+
+    /**
+     * Fill the root esterel elements into the syncchart.
+     */
+    private void doInitialEsterelTransformation() {
         try {
-            final URI strlURI = URI.createPlatformResourceURI(currentFile.getFullPath().toString(),
-                    true);
-            // System.out.println(currentFile.getLocationURI().getPath() + "  "+
-            // currentFile.getFullPath().toString());
-
             ResourceSet resourceSet = new ResourceSetImpl();
-            final URI kixsURI = URI.createPlatformResourceURI(kixsFile.getFullPath()
-                    .removeFileExtension().addFileExtension("kixs").toString(), false);
+            final URI strlURI = URI.createPlatformResourceURI(strlFile.getFullPath().toString(),
+                    true);
+            final URI kixsURI = URI.createPlatformResourceURI(kixsFile.getFullPath().toString(),
+                    false);
 
-            State rootState;
-
-            System.out.println("Creating initial SyncCharts contents.");
-            resource = resourceSet.getResource(kixsURI, true);
+            // setup initial syncchart with one state in the global region
+            Resource resource = resourceSet.getResource(kixsURI, true);
             SyncchartsFactory sf = SyncchartsFactory.eINSTANCE;
             Region rootRegion = (Region) resource.getContents().get(0);
-            rootState = sf.createState();
+            State rootState = sf.createState();
             rootState.setId("rsstate");
             rootRegion.getStates().add(rootState);
             rootState.setLabel("EsterelState");
             rootState.setType(StateType.TEXTUAL);
 
-            System.out.println("Parsing Esterel Source Code.");
-            // ResourceSet resourceSet = new ResourceSetImpl();
+            // get the esterel code and add it as body reference
             Resource xtextResource = resourceSet.getResource(strlURI, true);
             EObject esterelModule = xtextResource.getContents().get(0);
+            rootState.setBodyReference(esterelModule);
 
-            System.out.println("Reading Esterel Source Code - Setting Body Contents.");
+            // parse the esterel code and display as textual code
             TextualCode code = ExpressionsFactory.eINSTANCE.createTextualCode();
             rootState.getBodyText().add(code);
             code.setCode(TransformationUtil.getSerializedString(esterelModule));
 
-            System.out.println("Attaching Esterel Model to SyncChart");
-            rootState.setBodyReference(esterelModule);
-
-            // Region r = SyncchartsFactory.eINSTANCE.createRegion();
-            // rootState.getRegions().add(r);
-            // rootState.getRegions().remove(r);
-            // xtextResource.save(null);
+            // save the resource
+            resource.save(null);
 
         } catch (Exception e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
+            Status myStatus = new Status(IStatus.ERROR, Activator.PLUGIN_ID,
+                    "Problem parsing the Esterel file.", e);
+            StatusManager.getManager().handle(myStatus, StatusManager.SHOW);
         }
     }
 
+    /**
+     * Creates a new SyncChart.
+     */
     private void createSyncchartDiagram() {
         try {
-
-            // access workspace
-            IWorkspace workspace = ResourcesPlugin.getWorkspace();
-            IWorkspaceRoot myWorkspaceRoot = workspace.getRoot();
-
-            // get a file relative to Workspace
-            IPath myPath = currentFile.getFullPath().removeFileExtension().addFileExtension("kixs");
-            IFile myFile = myWorkspaceRoot.getFile(myPath);
-
-            if (myFile.exists()) {
+            if (kixsFile.exists()) {
                 Shell shell = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell();
-                String currentName = currentFile.getName();
+                String currentName = strlFile.getName();
                 currentName = currentName.substring(0, currentName.lastIndexOf(".") + 1) + "kixs";
                 InputDialog inputdiag = new InputDialog(shell, "Existing File.",
-                        "File already exists. Overwrite or pick a new name.", currentName,
+                        "File already exists. Overwrite or choose a new name.", currentName,
                         kixsValidator);
                 if (inputdiag.open() == InputDialog.OK) {
                     String newName = inputdiag.getValue();
-                    IPath newPath = new Path(currentFile.getFullPath().removeLastSegments(1)
+                    IPath newPath = new Path(strlFile.getFullPath().removeLastSegments(1)
                             .append(newName).toString());
-                    kixsFile = myWorkspaceRoot.getFile(newPath);
+                    kixsFile = workspaceRoot.getFile(newPath);
                 }
-            } else {
-                kixsFile = myWorkspaceRoot.getFile(myPath);
             }
 
             // create corresponding syncchart
-            final URI kidsURI = URI.createPlatformResourceURI(kixsFile.getFullPath()
-                    .removeFileExtension().addFileExtension("kids").toString(), false);
-            final URI kixsURI = URI.createPlatformResourceURI(kixsFile.getFullPath()
-                    .removeFileExtension().addFileExtension("kixs").toString(), false);
+            final URI kidsURI = URI.createPlatformResourceURI(kidsFile.getFullPath().toString(),
+                    false);
+            final URI kixsURI = URI.createPlatformResourceURI(kixsFile.getFullPath().toString(),
+                    false);
 
             System.out.println("Creating new SyncCharts Diagram.");
-            IRunnableWithProgress op = new WorkspaceModifyOperation(null) {
+
+            // create a new SyncCharts Diagram.
+            final IRunnableWithProgress op = new WorkspaceModifyOperation(null) {
                 protected void execute(final IProgressMonitor monitor) throws CoreException,
                         InterruptedException {
                     Resource diagram = SyncchartsDiagramEditorUtil.createDiagram(kidsURI, kixsURI,
                             monitor);
                     try {
                         diagram.save(null);
-                        SyncchartsDiagramEditorUtil.openDiagram(diagram);
                     } catch (Exception e) {
-                        System.out.println(e);
                         e.printStackTrace();
                     }
-
                 }
             };
+            // run
             op.run(null);
 
         } catch (Exception e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
+            Status myStatus = new Status(IStatus.ERROR, Activator.PLUGIN_ID,
+                    "Problem creating a new SyncChartsDiagram.", e);
+            StatusManager.getManager().handle(myStatus, StatusManager.SHOW);
         }
     }
 
@@ -220,13 +272,6 @@ public class InitialTransformationAction implements IActionDelegate {
                     .getDiagramGraphicalViewer();
             graphViewer.flush();
         }
-    }
-
-    /**
-     * @return the currentFile
-     */
-    public IFile getCurrentFile() {
-        return currentFile;
     }
 
     /**

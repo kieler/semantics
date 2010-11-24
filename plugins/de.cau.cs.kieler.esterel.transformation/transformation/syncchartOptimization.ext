@@ -25,7 +25,9 @@ Boolean rule(List[State] states):
 			(rule6(s, states) -> recursiveRule(states)) 
 		default :
 		(states.remove(states.first()) -> ruleAll(states))
-	}
+	} ->
+	// clear the body references
+	s.clearBodyReferences()
 ;
 
 Void ruleAll(List[State] states):
@@ -225,7 +227,7 @@ Boolean hasOutStrongTransitions(State s):
 ;
 
 Boolean hasInterfaceDeclaration(State s):
-	s.interfaceDecls.size == 0
+	s// TODO s.interfaceDecls.size == 0
 ;
 
 Boolean hasFinalSubState(State s):
@@ -309,6 +311,12 @@ Void removeStateFromRegion(State state):
  state.outgoingTransitions.removeAll(state.outgoingTransitions) ->
  state.incomingTransitions.removeAll(state.incomingTransitions) ->
  state.parentRegion.states.remove(state)
+;
+  
+Void clearBodyReferences(State s):
+	let states = (Set[State]) s.eAllContents.select(e| State.isInstance(e) && ((State)e).bodyReference != null):
+	states.add(s) ->
+	states.setBodyReference(null)
 ;
   
 Void addToFrontOfList(List list, List list2):
