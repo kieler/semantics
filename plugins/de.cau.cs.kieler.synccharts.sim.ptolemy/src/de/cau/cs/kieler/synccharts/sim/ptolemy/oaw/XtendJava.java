@@ -186,16 +186,29 @@ public class XtendJava {
     // }
 
     // -------------------------------------------------------------------------
+    
+    public static String removeBlancs(final String inText) {
+        if (inText == null) {
+            return "";
+        }
+        return inText.replaceAll(" ", "");
+    }
+    
+    // -------------------------------------------------------------------------
 
     public final static String getStateId(final State myState) {
         if (myState == null) {
             return "";
         }
+        String returnId = "";
         if ((myState.getLabel() != null) && (myState.getLabel().length() > 0)) {
-            return (myState.getLabel() + "_" + hash(getURIFragment(myState)));
+            returnId = (removeBlancs(myState.getLabel()) + "_" + hash(getURIFragment(myState)));
         } else {
-            return (myState.getId() + "_" + hash(getURIFragment(myState)));
+            returnId =  (removeBlancs(myState.getId()) + "_" + hash(getURIFragment(myState)));
         }
+        System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>" + returnId);
+        return returnId;
+        
         // return hash(getURIFragment(myState));
     }
 
