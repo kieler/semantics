@@ -81,7 +81,7 @@ public final class TransformationUtil {
         try {
             Serializer serializerUtil = injector.getInstance(Serializer.class);
             serializerUtil.serialize(e, osw, SaveOptions.defaultOptions());
-            // System.out.println("Serialized result: " + baos.toString());
+             //System.out.println("Serialized result: " + baos.toString());
         } catch (IOException ex) {
             ex.printStackTrace();
         }

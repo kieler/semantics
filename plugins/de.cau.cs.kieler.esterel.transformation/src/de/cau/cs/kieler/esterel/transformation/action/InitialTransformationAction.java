@@ -13,6 +13,11 @@
  */
 package de.cau.cs.kieler.esterel.transformation.action;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.OutputStreamWriter;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Iterator;
 import java.util.List;
@@ -27,11 +32,14 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.gmf.runtime.diagram.ui.editpolicies.CanonicalEditPolicy;
 import org.eclipse.gmf.runtime.diagram.ui.parts.IDiagramGraphicalViewer;
 import org.eclipse.gmf.runtime.diagram.ui.parts.IDiagramWorkbenchPart;
@@ -51,9 +59,19 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.actions.WorkspaceModifyOperation;
 import org.eclipse.ui.part.FileEditorInput;
 import org.eclipse.ui.statushandlers.StatusManager;
+import org.eclipse.xtext.parsetree.reconstr.Serializer;
+import org.eclipse.xtext.resource.IResourceFactory;
+import org.eclipse.xtext.resource.SaveOptions;
+import org.eclipse.xtext.resource.XtextResource;
+import org.eclipse.xtext.resource.XtextResourceSet;
+
+import com.google.inject.Injector;
 
 import de.cau.cs.kieler.core.expressions.ExpressionsFactory;
 import de.cau.cs.kieler.core.expressions.TextualCode;
+import de.cau.cs.kieler.esterel.EsterelStandaloneSetup;
+import de.cau.cs.kieler.esterel.esterel.Module;
+import de.cau.cs.kieler.esterel.esterel.Program;
 import de.cau.cs.kieler.esterel.transformation.Activator;
 import de.cau.cs.kieler.esterel.transformation.util.TransformationUtil;
 import de.cau.cs.kieler.synccharts.Region;
@@ -75,10 +93,94 @@ public class InitialTransformationAction implements IActionDelegate {
     private IFile kidsFile;
     private IWorkspaceRoot workspaceRoot;
 
+    private Injector injector;
+
+    private String times = "";
+
     /**
      * {@inheritDoc}
      */
     public void run(final IAction action) {
+        
+//        times = "";
+//        injector = new EsterelStandaloneSetup().createInjectorAndDoEMFRegistration();
+//        XtextResourceSet rs = injector.getInstance(XtextResourceSet.class);
+//        IResourceFactory resourceFactory = injector.getInstance(IResourceFactory.class);
+//        URI uri = URI.createFileURI("test/test.strl"); // uri of your resource, may be fictional
+//
+//        long start = System.currentTimeMillis();
+//        final XtextResource resource = (XtextResource) resourceFactory.createResource(uri);
+//        rs.getResources().add(resource);
+//
+//        // we are sure f exists, as we read the path automatically
+//        File f = new File( strlFile.getRawLocation().toOSString());
+//        FileInputStream fis;
+//        try {
+//            fis = new FileInputStream(f);
+//
+//            resource.load(fis, null);
+//        } catch (Exception e1) {
+//            // TODO Auto-generated catch block
+//            e1.printStackTrace();
+//        }
+//        EcoreUtil.resolveAll(resource);
+//        long end = System.currentTimeMillis();
+//        times += f.getName() + " Parse: " + (end - start) + "ms";
+//
+//        start = System.currentTimeMillis();
+//        // serialize
+//        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+//        final OutputStreamWriter osw = new OutputStreamWriter(baos);
+//
+//        Runnable r = new Runnable() {
+//
+//            public void run() {
+//                // TODO Auto-generated method stub
+//                try {
+//                    Program p = (Program) resource.getContents().get(0);
+//                    Module m1 = p.getModules().get(0);
+//                    
+////                    TreeIterator<EObject> it = m1.eAllContents();
+////                    while(it.hasNext()) {
+////                        EObject e = it.next();
+////                        e.eAdapters().clear();
+////                        if(e instanceof MinimalEObjectImpl.Container){
+////                            MinimalEObjectImpl.Container cont = (MinimalEObjectImpl.Container) e;
+////                            
+////                        }
+////                        int i = 0;
+////                    }
+//                    Serializer serializerUtil = injector.getInstance(Serializer.class);
+//                    serializerUtil.serialize(p, osw,
+//                            SaveOptions.defaultOptions());
+//                    // System.out.println("Serialized result: " + baos.toString());
+//                } catch (Exception ex) {
+//                    //ex.printStackTrace();
+//                    System.out.println("SERIALIZE ERROR");
+//                }
+//            }
+//        };
+//        Thread t = new Thread(r);
+//        t.start();
+//        try {
+//            t.join(20000);
+//            end = System.currentTimeMillis();
+//            if (t.isAlive()) {
+//                t.suspend();
+//                times += " Serialize: exceeded time limit\n";
+//            } else {
+//                times += " Serialize: " + (end - start) + "ms\n";
+//            }
+//
+//        } catch (Exception e) {
+//            System.out.println("Some Thread error");
+//        }
+//        
+//        System.out.println(times);
+//
+//        if (1 == 1) {
+//            return;
+//        }
 
         if (strlFile == null || !strlFile.exists()) {
             return;
@@ -106,12 +208,21 @@ public class InitialTransformationAction implements IActionDelegate {
                             kidsFile = workspaceRoot.getFile(kidsPath);
                             kixsFile = workspaceRoot.getFile(kixsPath);
 
+                            System.out.println(strlFile.toString());
                             // create all the elements
+                            long start = System.currentTimeMillis();
+                            System.out.println("Start: " + start);
                             createSyncchartDiagram();
+                            long opened = System.currentTimeMillis();
+                            System.out.println("Opened: " + opened);
                             uiMonitor.worked(40);
                             doInitialEsterelTransformation();
+                            long esterel = System.currentTimeMillis();
+                            System.out.println("Esterel: " + esterel);
                             uiMonitor.worked(60);
                             refreshEditPolicies();
+                            long refresh = System.currentTimeMillis();
+                            System.out.println("Refresh: " + refresh);
                             uiMonitor.worked(90);
                             // CHECKSTYLEON MagicNumber
 
@@ -128,6 +239,11 @@ public class InitialTransformationAction implements IActionDelegate {
                                 StatusManager.getManager().handle(myStatus, StatusManager.SHOW);
                             }
 
+                            long showing = System.currentTimeMillis();
+                            System.out.println("Showing: " + showing);
+                            long total = showing - start;
+                            System.out
+                                    .println("Total: " + total + " Sek: " + (total / 1000f) + "s");
                         }
                     });
         } catch (InvocationTargetException e) {
