@@ -218,6 +218,12 @@ Void paste(List[Object] objects):
  )
 ;
 
+// dummy preventing false positives while validating
+// this file
+Void paste(EObject object):
+ null
+;
+
 Boolean isSpecialCase(List[Object] objects):
  let states = objects.select(e|e.metaType == State):
  let trans = objects.select(e|e.metaType == Transition):
