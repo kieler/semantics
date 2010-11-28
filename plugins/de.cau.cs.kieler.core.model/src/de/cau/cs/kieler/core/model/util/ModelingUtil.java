@@ -273,15 +273,16 @@ public final class ModelingUtil {
     public static EditPart getEditPart(final DiagramEditPart dep, final EObject theElement) {
         // attempted fix for the concurrent modification exception on delete
         final Maybe<EditPart> maybe = new Maybe<EditPart>();
-        MonitoredOperation.runInUI(new Runnable() {
-            public void run() {
+        // FIXME mmu: temporary disabled using the UI thread to test slowness on haf's Mac
+//        MonitoredOperation.runInUI(new Runnable() {
+//            public void run() {
                 if (theElement == null) {
-                    return;
+                    return null;
                 }
                 EditPart found = dep.findEditPart(null, theElement);
                 if (found != null) {
                     maybe.set(found);
-                    return;
+//                    return;
                 } else {
                     // the list always contains ConnectionEditParts
                     List<?> connections = dep.getConnections();
@@ -290,13 +291,13 @@ public final class ModelingUtil {
                             EditPart ep = (EditPart) connection;
                             if (theElement.equals(((View) ep.getModel()).getElement())) {
                                 maybe.set(ep);
-                                return;
+//                                return;
                             }
                         }
                     }
                 }
-            }
-        }, true);
+//            }
+//        }, true);
         return maybe.get();
     }
 
