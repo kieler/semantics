@@ -18,15 +18,17 @@ Copyright 2010 by Christian-Albrechts-University of Kiel, Department of Computer
    </configIni>
 
    <launcherArgs>
+      <programArgs>--launcher.XXMaxPermSize 256M
+--launcher.XXPermSize 128M</programArgs>
       <programArgsMac>-showsplash
 org.eclipse.platform
---launcher.XXMaxPermSize
-256m
 --launcher.defaultAction
 openFile</programArgsMac>
-      <vmArgs>-Xms40m
--Xmx256m
--XX:MaxPermSize=256m</vmArgs>
+      <vmArgs>-Xms512M
+-Xmn256m
+-Xmx1024m 
+-XX:PermSize 128M
+-XX:MaxPermSize 256M</vmArgs>
       <vmArgsMac>-XstartOnFirstThread
 -Dorg.eclipse.swt.internal.carbon.smallFonts
 -Dosgi.requiredJavaVersion=1.5
