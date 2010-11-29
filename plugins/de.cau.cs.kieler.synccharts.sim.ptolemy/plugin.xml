@@ -15,13 +15,13 @@
             file="execution/synccharts_ptolemy.execution">
          <editor
                id="de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorID"
-               name="Synccharts Diagram Editing"
-               priority="10">
+               name="SyncCharts Diagram Editor"
+               priority="8">
          </editor>
          <editor
                id="de.cau.cs.kieler.synccharts.presentation.SyncchartsEditorID"
-               name="Synccharts Model Editor"
-               priority="8">
+               name="SyncCharts Model Editor"
+               priority="7">
          </editor>
       </executionFile>
    </extension>
