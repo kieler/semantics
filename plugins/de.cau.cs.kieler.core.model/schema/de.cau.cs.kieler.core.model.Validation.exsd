@@ -112,7 +112,7 @@ The Validation has to have either a checkfilePath or a validator.
          <attribute name="isEnabledByDefault" type="boolean">
             <annotation>
                <documentation>
-                  
+                  True if the check file should be enabled if the user has made no choice yet.
                </documentation>
             </annotation>
          </attribute>

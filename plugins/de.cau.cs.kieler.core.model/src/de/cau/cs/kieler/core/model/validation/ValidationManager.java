@@ -200,6 +200,8 @@ public final class ValidationManager {
      *            the name to display
      * @param tooltip
      *            the tooltip to display
+     * @param isEnabledByDefault
+     *            true if the checkfile should be enabled by default
      */
     public static void registerCheckFile(final String id,
             final EPackage ePackage, final String file,
