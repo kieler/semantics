@@ -2,17 +2,20 @@
 ../../../plugins/org.eclipse.equinox.launcher_1.1.0.v20100507.jar
 --launcher.library
 ../../../plugins/org.eclipse.equinox.launcher.cocoa.macosx_1.1.1.R36x_v20100810
--showsplash org.eclipse.platform
---launcher.XXMaxPermSize 256M
---launcher.XXPermSize 128M
---launcher.defaultAction openFile
-
+-showsplash
+org.eclipse.platform
+--launcher.XXPermSize
+128m
+--launcher.XXMaxPermSize
+256m
+--launcher.defaultAction
+openFile
 -vmargs
--Xms512M
+-Xms512m
 -Xmn256m
 -Xmx1024m 
--XX:PermSize 128M
--XX:MaxPermSize 256M
+-XX:PermSize=128m
+-XX:MaxPermSize=256m
 -XstartOnFirstThread
 -Dorg.eclipse.swt.internal.carbon.smallFonts
 -Dosgi.requiredJavaVersion=1.5
