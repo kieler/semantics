@@ -211,8 +211,8 @@ Void handleAbortCaseSingle(Region parent, State source, Integer prio, DelayExpr 
  	// init transition
  	t.connectTransition(initS, finalS) ->
  	sa.setVariable(assign.var) ->
- 	if (assign.expr.expr != null) then
- 		sa.setExpression(assign.expr.expr)
+ 	if (assign.expr != null) then
+ 		sa.setExpression(assign.expr)
  	// TODO assignment
  ;
 
@@ -248,13 +248,78 @@ Void handleAwaitCaseSingle(Region r, State previous, Integer prio, DelayExpr exp
 	handleAbortCaseSingle(r, previous, prio, expr, body)
 ;
 
+
+ /*
+  * rule 10 & 11 (do upto & watching)
+  */
+ Void rule(State s, Do d):
+ 	// end is either DoUpto or DoWatching and just effects the outgoing context.
+ 	// hence we transform the "do" statement here and then decide
+ 	let r = new Region :
+ 	let initState = new State:
+	removeBodyText(s) ->
+	s.regions.add(r) ->
+	r.states.add(initState) ->
+	initState.setIsInitial(true) ->
+ 	
+ 	// handle end
+ 	((DoUpto.isInstance(d.end)) ? 
+ 		handleDoUpto(s, initState, r, (DoUpto) castToEMF(d.end) )
+ 		:
+ 		handleDoWatching(s, initState, r, (DoWatching) castToEMF(d.end) )
+ 	 ) ->
+ 		
+ 	// recursive
+ 	initState.setJavaBodyContents(d.statement) ->
+ 	initState.recursiveRule(d.statement)
+ ;
+
  /*
   * rule 10 (doupto)
   */
+Void handleDoUpto(State parent, State previous, Region parentR, DoUpto du):
+	let finalS = new State:
+	let t = new Transition:
+	
+	parent.setLabelIfEmpty("Doupto State") ->
+	parentR.states.add(finalS) ->
+	finalS.setIsFinal(true) ->
+	
+	t.setType(TransitionType::WEAKABORT) ->
+	t.connectTransition(previous, finalS) ->
+	t.addDelayToTrigger(du.expr)
+;
 
-  
-  
-  
+
+ /*
+  * rule 11 (do watching)
+  */
+Void handleDoWatching(State parent, State previous, Region parentR, DoWatching dw):
+	let abortF = new State:
+	let normalF = new State:
+	let abortT = new Transition:
+	let normalT = new Transition:
+	
+	// setup
+	parent.setLabelIfEmpty("Dowatching State") ->
+	parentR.states.addAll({ abortF, normalF}) ->
+	normalF.setId("_") ->
+	normalF.setIsFinal(true) ->
+	abortF.setIsFinal(true) ->
+	
+	// transitions
+	abortT.setType(TransitionType::WEAKABORT) ->
+	normalT.setType(TransitionType::NORMALTERMINATION) ->
+	abortT.connectTransition(previous, abortF) ->
+	normalT.connectTransition(previous, normalF) ->
+	
+	abortT.addDelayToTrigger(dw.delay) ->
+	
+	// if timeout
+	if (dw.end != null) then
+		(abortF.setJavaBodyContents(dw.end.statement) ->
+		abortF.recursiveRule(dw.end.statement) )
+;
 
 
  /*
@@ -279,7 +344,7 @@ Void rule(State s, Emit e):
 	// add the effect
 	emitTrans.setIsImmediate(true) ->
 	emission.setSignal(e.signal) ->
-	emission.setNewValue((Expression)clone(e.expr.expr)) ->
+	emission.setNewValue((Expression)clone(e.expr)) ->
 	emitTrans.effects.add(emission) ->
 	// add transition to state
 	emitTrans.setSourceState(initS) ->
@@ -314,6 +379,11 @@ Void rule(State s, EveryDo e):
 	everyS.setJavaBodyContents(e.statement) ->
 	everyS.recursiveRule(e.statement)
 ;
+
+/*
+ * rule 14 (if)
+ */
+
 
 /*
  * rule 15 (localsignal)
