@@ -383,6 +383,61 @@ Void rule(State s, EveryDo e):
 /*
  * rule 14 (if)
  */
+Void rule(State s, IfTest ift):
+	let r = new Region:
+	let initS = new State:
+	// priority for possible else case
+	let maxprio = 2 + ift.elsif.size:
+	s.removeBodyText() ->
+	s.setLabelIfEmpty("If State") ->
+
+	s.regions.add(r) ->
+	r.states.add(initS) ->
+	initS.setIsInitial(true) ->
+
+	// first if
+	handleIfSingle(r, initS, 1, ift.expr, (ift.thenPart != null) ? ift.thenPart.statement : null) ->
+	
+	// possible else ifs
+	if (!ift.elsif.isEmpty) then
+		handleElseIfParts(r, initS, 2, ift.elsif) ->
+	
+	// possible else
+	if (ift.elsePart != null) then
+		handleIfSingle(r, initS, maxprio, null, ift.elsePart.statement)
+	
+;
+
+Void handleElseIfParts(Region parent, State previous, Integer prio, List[ElsIf] elses):
+	handleIfSingle(parent, previous, prio, elses.first().expr, 
+		(elses.first().thenPart != null) ? elses.first().thenPart.statement : null) ->
+	if(elses.size > 1) then
+		handleElseIfParts(parent, previous, prio+1, elses.withoutFirst())
+;
+
+Void handleIfSingle(Region parent, State previous, Integer prio, Expression e, Statement s):
+	let ifS = new State:
+	let ifT = new Transition:
+	parent.states.add(ifS) ->
+	ifS.setIsFinal(true) ->
+	
+	// setup transition
+	if (e != null) then
+	( castToEcore(e) ->
+		ifT.setTrigger((Expression) clone(e))) ->
+	ifT.connectTransition(previous, ifS) ->
+	ifT.setPriority(prio) ->
+	
+	// if thenpart, recursive
+	if (s != null) then
+		(ifS.setJavaBodyContents(s) ->
+		ifS.recursiveRule(s)) ->
+		
+	// create artificial nothing
+	if (s == null) then 
+		(let n = new Nothing:
+		rule(ifS, n))
+;
 
 
 /*
@@ -495,6 +550,9 @@ Void ruleParallelRecursive(State parent, List[Statement] statements):
 	)	
 ;
 
+ /* 
+  * rule 20 (present)
+  */
 Void rule(State s, Present p):
 	let r = new Region:
 	let pS = new State:
@@ -622,6 +680,14 @@ Void rule(State s, Suspend sus):
  */
 Void rule(State s, Sustain sus):
 s
+;
+
+ /* 
+  * rule 26 (trap)
+  */
+Void rule(State s, Trap t):
+	s.removeBodyText() ->
+	s.setLabelIfEmpty("Trap State")
 ;
 
 

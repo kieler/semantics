@@ -11,34 +11,38 @@ extension org::eclipse::xtend::util::stdlib::cloning;
 /*
  	Main algorithm
 */
-Boolean rule(List[State] states):
+Boolean rule(List[State] states, Integer max):
 	//if rule2applies(s) then rule2(s) ->
 	//if rule5applies(s) then rule5(s) ->
 	//if rule6applies(s) then rule6(s) 
 	let s = states.first():
 	switch{
+		case max > 100:
+			s
 		case rule2applies(s) :
-			(rule2(s) -> recursiveRule(states))
+			(rule2(s) -> recursiveRule(states, max))
+		case rule4applies(s):
+			(rule4(s) -> recursiveRule(states, max))
 		case rule5applies(s) :
-			(rule5(s) -> recursiveRule(states))	 
+			(rule5(s) -> recursiveRule(states, max))	 
 		case rule6applies(s) :
-			(rule6(s, states) -> recursiveRule(states)) 
+			(rule6(s, states) -> recursiveRule(states, max)) 
 		default :
-		(states.remove(states.first()) -> ruleAll(states))
+		(states.remove(states.first()) -> ruleAll(states, max))
 	} ->
 	// clear the body references
 	s.clearBodyReferences()
 ;
 
-Void ruleAll(List[State] states):
+Void ruleAll(List[State] states, Integer max):
 	//states.remove(states.first()) ->
 	if states.size > 0 then 
-		rule(states) 
+		rule(states, max + 1) 
 ;
 
-Void recursiveRule(List[State] states):
+Void recursiveRule(List[State] states, Integer max):
 	 if ((boolean) GLOBALVAR recursive) then
-		ruleAll(states)
+		ruleAll(states, max)
 		
 	;
 
@@ -90,6 +94,40 @@ Void rule2(State s):
 
 
 
+/*
+	rule4: Remove simple final states if there is more than one and bend transitions
+		more than 1 final simplestate
+*/
+Boolean rule4applies(State s):
+	switch {
+		case hasMultipleSimpleFinalSubStates(s) : 
+			true
+		default: false
+	}
+;
+
+Void rule4(State s):
+	let regions = (List[Region]) s.regions.select(e | e.states.select(e|e.isSimpleState() && e.isFinal).size > 1):
+	regions.handleRule4()	
+;
+
+Void handleRule4(Region r):
+	let simpleFinals = r.states.select(e|e.isSimpleState() && e.isFinal):
+	let firstFinal = simpleFinals.first():
+	let simpleWithoutFirst = simpleFinals.withoutFirst():
+	simpleWithoutFirst.handleRule4rec(firstFinal)
+;
+
+Void handleRule4rec(State s, State to):
+	let incomings = s.incomingTransitions.copyList():
+	incomings.bendAndRemove(to)
+;
+
+Void bendAndRemove(Transition t, State to):
+	let oldTarget = t.targetState:
+	t.setTargetState(to) ->
+	oldTarget.removeStateFromRegion()
+;
 
 /*
 	rule5 : Remove unnecessary normal terminations
@@ -237,6 +275,11 @@ Boolean hasFinalSubState(State s):
 	!finalStates.isEmpty
 ;
 
+Boolean hasMultipleSimpleFinalSubStates(State s):
+	let regions = s.regions.select(e | e.states.select(e|e.isSimpleState() && e.isFinal).size > 1):
+	!regions.isEmpty
+;
+
 Boolean hasParentMacroState(State s):
 	s.parentRegion.parentState != null
 ;
@@ -320,5 +363,6 @@ Void clearBodyReferences(State s):
 ;
   
 Void addToFrontOfList(List list, List list2):
-	JAVA  de.cau.cs.kieler.esterel.transformation.util.TransformationUtil.addToFrontOfList(java.util.List, java.util.List)
+	//JAVA  de.cau.cs.kieler.esterel.transformation.util.TransformationUtil.addToFrontOfList(java.util.List, java.util.List)
+	list
 ;
