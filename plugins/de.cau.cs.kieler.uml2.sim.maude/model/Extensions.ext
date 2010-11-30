@@ -92,6 +92,11 @@ Set[String] getEmfId(Package package, String maudeStateId) :
  let vertexSelectedList = vertexList.select(e|e.getId().toString().matches(maudeStateId.toString())):
  vertexSelectedList.getEMFId()
 ;
+Set[String] getEmfId(StateMachine sm, String maudeStateId) :
+ let vertexList = (Set[Vertex])sm.getStates():
+ let vertexSelectedList = vertexList.select(e|e.getId().toString().matches(maudeStateId.toString())):
+ vertexSelectedList.getEMFId()
+;
 
 //-----------------------------------------------------------------------------
 

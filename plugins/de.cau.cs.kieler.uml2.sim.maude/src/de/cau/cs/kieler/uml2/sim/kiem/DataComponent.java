@@ -299,6 +299,7 @@ public class DataComponent extends JSONObjectSimulationDataComponent implements
      * @return the current state ids
      */
     public String getCurrentStateIds(String[] currentStates) {
+        // FIXME: Seems not to work in some cases ?!
         String stateIds = "";
         for (String maudeStateId : currentStates) {
             System.out.println("Search for " + maudeStateId);

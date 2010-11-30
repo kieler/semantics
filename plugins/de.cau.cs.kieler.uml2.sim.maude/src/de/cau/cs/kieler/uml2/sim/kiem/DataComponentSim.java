@@ -307,6 +307,7 @@ public class DataComponentSim extends DataComponent implements
             returnObj.accumulate(stateName, getCurrentStateIds(currentStates));
         } catch (Exception e) {
             // ignore any errors
+        	e.printStackTrace();
         }
 
         // no actions can be extracted so far
