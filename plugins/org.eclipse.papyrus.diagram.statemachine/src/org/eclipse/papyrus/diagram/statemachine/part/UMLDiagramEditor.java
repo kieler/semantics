@@ -25,7 +25,6 @@ import org.eclipse.gmf.runtime.diagram.ui.internal.parts.PaletteToolTransferDrag
 import org.eclipse.gmf.runtime.diagram.ui.resources.editor.document.IDiagramDocument;
 import org.eclipse.gmf.runtime.diagram.ui.resources.editor.document.IDocumentProvider;
 import org.eclipse.gmf.runtime.notation.Diagram;
-import org.eclipse.gmf.runtime.notation.View;
 import org.eclipse.jface.util.LocalSelectionTransfer;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.StructuredSelection;
@@ -334,13 +333,10 @@ public class UMLDiagramEditor extends UmlGmfDiagramEditor implements
 		super.dispose();
 	}
 
-	
 	/**
 	 * @generated
 	 */
 	public void doSave(IProgressMonitor progressMonitor) {
-		ValidateAction.runValidation(this.getDiagramEditPart(), (View) this.getDiagramEditPart().getDiagramView());
-
 		// The saving of the resource is done by the CoreMultiDiagramEditor
 		savedOperation = getOperationHistory().getUndoOperation(
 				getUndoContext());
