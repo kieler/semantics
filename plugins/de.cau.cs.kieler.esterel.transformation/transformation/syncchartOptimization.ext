@@ -11,39 +11,43 @@ extension org::eclipse::xtend::util::stdlib::cloning;
 /*
  	Main algorithm
 */
-Boolean rule(List[State] states, Integer max):
+Boolean ruleAll(List[State] states, Integer max):
 	//if rule2applies(s) then rule2(s) ->
 	//if rule5applies(s) then rule5(s) ->
 	//if rule6applies(s) then rule6(s) 
-	let s = states.first():
-	switch{
-		case max > 100:
-			s
-		case rule2applies(s) :
-			(rule2(s) -> recursiveRule(states, max))
-		case rule4applies(s):
-			(rule4(s) -> recursiveRule(states, max))
-		case rule5applies(s) :
-			(rule5(s) -> recursiveRule(states, max))	 
-		case rule6applies(s) :
-			(rule6(s, states) -> recursiveRule(states, max)) 
-		default :
-		(states.remove(states.first()) -> ruleAll(states, max))
-	} ->
-	// clear the body references
-	s.clearBodyReferences()
+	
+	if states.size > 0 then 
+	(
+		let s = states.first():
+		switch{
+			case rule2applies(s) :
+				(rule2(s)  )
+			case rule4applies(s):
+				(rule4(s))
+			case rule5applies(s) :
+				(rule5(s) )	 
+			case rule6applies(s) :
+				(rule6(s, states)) 
+			default :
+			// clear the body references and remove state
+			(s.clearBodyReferences() -> states.remove(states.first()))
+		} 		
+	) ->
+	
+	//if max < 102 then
+	recursiveRule(states, max)
 ;
 
+/*
 Void ruleAll(List[State] states, Integer max):
 	//states.remove(states.first()) ->
 	if states.size > 0 then 
-		rule(states, max + 1) 
-;
+		rule(states, max + 1)		
+;*/
 
 Void recursiveRule(List[State] states, Integer max):
-	 if ((boolean) GLOBALVAR recursive) then
-		ruleAll(states, max)
-		
+	 if ((boolean) GLOBALVAR recursive) && states.size > 0 then
+		ruleAll(states, max + 1)
 	;
 
 /*
@@ -356,6 +360,7 @@ Void removeStateFromRegion(State state):
  state.parentRegion.states.remove(state)
 ;
   
+ // clears bodycontents of all child states of State s.
 Void clearBodyReferences(State s):
 	let states = (Set[State]) s.eAllContents.select(e| State.isInstance(e) && ((State)e).bodyReference != null):
 	states.add(s) ->
@@ -363,6 +368,5 @@ Void clearBodyReferences(State s):
 ;
   
 Void addToFrontOfList(List list, List list2):
-	//JAVA  de.cau.cs.kieler.esterel.transformation.util.TransformationUtil.addToFrontOfList(java.util.List, java.util.List)
-	list
+	JAVA  de.cau.cs.kieler.esterel.transformation.util.TransformationUtil.addToFrontOfList(java.util.List, java.util.List)
 ;

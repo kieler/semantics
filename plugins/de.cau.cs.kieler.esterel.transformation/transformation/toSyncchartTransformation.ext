@@ -44,7 +44,7 @@ Void recursiveRule(State s, emf::EObject e):
  
 // just dummy for xtend 
 Void rule(State s, emf::EObject noneed):
-	s.setLabel("damn you")
+	s.setLabel("Not Supported yet: " + noneed.metaType)
 ;
  
 
@@ -347,9 +347,7 @@ Void rule(State s, Emit e):
 	emission.setNewValue((Expression)clone(e.expr)) ->
 	emitTrans.effects.add(emission) ->
 	// add transition to state
-	emitTrans.setSourceState(initS) ->
-	emitTrans.setTargetState(finalS) ->
-	initS.outgoingTransitions.add(emitTrans)
+	emitTrans.connectTransition(initS, finalS)
 ;
 
 /*
@@ -682,15 +680,128 @@ Void rule(State s, Sustain sus):
 s
 ;
 
+
  /* 
   * rule 26 (trap)
   */
 Void rule(State s, Trap t):
+	let r = new Region: 
+	let trapS = new State:
+	let finalS = new State:
+	let normalT = new Transition:
+	let haltS = new State:
+	let haltT = new Transition:
+	let haltSig = new Signal:
+	
 	s.removeBodyText() ->
-	s.setLabelIfEmpty("Trap State")
+	s.setLabelIfEmpty("Trap State") ->
+	// setup
+	s.regions.add(r) ->
+	r.states.addAll({trapS, finalS, haltS}) ->
+	
+	// normal termination
+	finalS.setIsFinal(true) ->
+	normalT.setType(TransitionType::NORMALTERMINATION) ->
+	normalT.connectTransition(trapS, finalS) ->
+	
+	// halt due to higher trap
+	trapS.setIsInitial(true) ->
+	// new signal to halt execution if higher trap fires
+	haltSig.setName("traphalt") ->
+	haltSig.addSignalToState(s) ->
+	haltT.connectTransition(trapS, haltS) ->
+	// immediate transition with traphalt signal
+	haltT.setIsImmediate(true) ->
+	(let vo = new ValuedObjectReference:
+	vo.setValuedObject(haltSig) ->
+	haltT.setTrigger(vo)) ->
+	
+	// handlers
+	if !t.trapHandler.isEmpty then
+		(let handleState = new State:
+		 let handleExpr = new OperatorExpression:
+		 let handleT = new Transition:
+		 // setup state
+		 handleState.setLabel("Trap Handler State") ->
+		 handleState.setIsFinal(true) ->
+		 r.states.add(handleState) ->
+		 // transition
+		 handleExpr.setOperator(OperatorType::OR) ->
+		 handleT.setIsImmediate(true) ->
+		 handleT.connectTransition(trapS, handleState) ->
+		 handleT.setTrigger(handleExpr) ->
+		 // create handler
+		 handleTrapHandler(handleState, handleExpr, t.trapHandler)
+		) ->
+
+
+	trapS.setJavaBodyContents(t.statement) ->
+	trapS.recursiveRule(t.statement)
+;
+
+Void handleTrapHandler(State handleState, OperatorExpression handleExpr, List[TrapHandler] handler):
+	handleTrapHandlerSingle(handleState, handleExpr, handler.first()) ->
+	if(handler.size > 1) then
+		handleTrapHandler(handleState, handleExpr, handler.withoutFirst())
+;
+
+Void handleTrapHandlerSingle(State handleState, OperatorExpression handleExpr, TrapHandler handler):
+	let r = new Region:
+	let initS = new State:
+	let macroS = new State:
+	let macroT = new Transition:
+	let finalS = new State:
+	let finalT = new Transition:
+	handleState.regions.add(r) ->
+	r.states.addAll({initS, macroS, finalS}) ->
+	initS.setIsInitial(true) ->
+	
+	// finalState setup
+	finalS.setIsFinal(true) ->
+	finalT.setIsImmediate(true) ->
+	finalT.setPriority(2) ->
+	finalT.connectTransition(initS, finalS) ->
+	
+	// macroState setup
+	macroS.setIsFinal(true) ->
+	macroT.setIsImmediate(true) ->
+	macroT.setPriority(1) ->
+	macroT.connectTransition(initS, macroS) ->
+	macroT.setTrigger((Expression) clone(handler.trapExpr)) ->
+	handleExpr.subExpressions.add((Expression) clone(handler.trapExpr)) ->
+	
+	// recursive
+	macroS.setJavaBodyContents(handler.statement) ->
+	macroS.recursiveRule(handler.statement) 
 ;
 
 
+ /* 
+  * rule 27 (exit)
+  */
+Void rule(State s, Exit e):
+	let initS = new State:
+	let finalS = new State:
+	let r = new Region:
+	let emitTrans = new Transition:
+	let emission = new Emission:
+	removeBodyText(s) ->
+	s.regions.add(r) ->
+	s.setLabelIfEmpty("Exit State") ->
+	initS.setIsInitial(true) ->
+	
+	// add new states to region
+	r.states.add(initS) ->
+	r.states.add(finalS) ->
+	
+	// add the effect
+	emitTrans.setIsImmediate(true) ->
+	emission.setSignal(e.trap) ->
+	emission.setNewValue((Expression)clone(e.dataExpr)) ->
+	emitTrans.effects.add(emission) ->
+	// add transition to state
+	emitTrans.connectTransition(initS, finalS)
+;
 
 /*
 	omit the block, theres a parallel in it!
