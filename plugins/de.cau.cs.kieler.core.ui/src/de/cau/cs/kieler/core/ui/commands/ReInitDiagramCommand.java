@@ -100,23 +100,30 @@ public abstract class ReInitDiagramCommand extends AbstractHandler {
                         path = ((org.eclipse.core.internal.resources.File) o)
                                 .getFullPath();
                     } else if (o instanceof EditPart) {
-                        EditPart editPart = (EditPart) o;
-                        EObject eObj = ((View) editPart.getModel())
-                                .getElement();
-                        // no model element found for the edit part
-                        if (eObj == null) {
-                            super.setBaseEnabled(false);
-                            return;
+                        try {
+                            EditPart editPart = (EditPart) o;
+                            EObject eObj = ((View) editPart.getModel())
+                                    .getElement();
+                            // no model element found for the edit part
+                            if (eObj == null) {
+                                super.setBaseEnabled(false);
+                                return;
+                            }
+                            Resource res = eObj.eResource();
+                            // edit part doesn't belong to a resource
+                            if (res == null) {
+                                super.setBaseEnabled(false);
+                                return;
+                            }
+                            URI uri = res.getURI();
+                            // set the path to the path of the file
+                            path = Path
+                                    .fromOSString(uri.toPlatformString(true));
+                        } catch (ClassCastException e0) {
+                            // do nothing
+                            // this occurs in case of graphiti diagrams
+                            // FIXME: find a solution
                         }
-                        Resource res = eObj.eResource();
-                        // edit part doesn't belong to a resource
-                        if (res == null) {
-                            super.setBaseEnabled(false);
-                            return;
-                        }
-                        URI uri = res.getURI();
-                        // set the path to the path of the file
-                        path = Path.fromOSString(uri.toPlatformString(true));
                     }
                     // check if file has the model extension
                     if (path != null
@@ -402,7 +409,8 @@ public abstract class ReInitDiagramCommand extends AbstractHandler {
             return;
         }
         if (diagramRoot == null) {
-            IStatus status = new Status(IStatus.ERROR, CoreUIPlugin.PLUGIN_ID, "DiagramRoot is null.");
+            IStatus status = new Status(IStatus.ERROR, CoreUIPlugin.PLUGIN_ID,
+                    "DiagramRoot is null.");
             StatusManager.getManager().handle(status, StatusManager.LOG);
             return;
         }
