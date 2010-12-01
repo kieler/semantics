@@ -128,8 +128,10 @@ public final class TransformationUtil {
 
     public static void debug(final EObject obj) {
         System.out.println("Debug: " + obj);
-        System.out.println(((Region) obj).getParentState());
-        System.out.println(((Region) obj).getStates());
+        if (obj instanceof Region) {
+            System.out.println(((Region) obj).getParentState());
+            System.out.println(((Region) obj).getStates());
+        }
     }
 
     public static DiagramEditor getActiveEditor() {

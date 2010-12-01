@@ -25,12 +25,14 @@ Boolean ruleAll(List[State] states, Integer max):
 			case rule4applies(s):
 				(rule4(s))
 			case rule5applies(s) :
-				(rule5(s) )	 
+				//s.setLabel("rule5") 
+				(rule5(s))	 
 			case rule6applies(s) :
+				//s.setLabel("rule6")  
 				(rule6(s, states)) 
 			default :
 			// clear the body references and remove state
-			(s.clearBodyReferences() -> states.remove(states.first()))
+			(s.clearBodyReferences() -> states.remove(states.first()) -> ruleAll(states, max))
 		} 		
 	) ->
 	
@@ -136,10 +138,11 @@ Void bendAndRemove(Transition t, State to):
 /*
 	rule5 : Remove unnecessary normal terminations
 		macro state with no final states and outgoing transition
+		care: do not remove loopstates
 */
 Boolean rule5applies(State s):
 	switch {
-		case !isSimpleState(s) && hasOutNormalTransitions(s) && !hasFinalSubState(s):
+		case !isSimpleState(s) && hasOutNormalTransitions(s) && !hasFinalSubState(s) && !hasOnlySelfLoop(s):
 				true
 		default: false
 	}
@@ -165,6 +168,8 @@ Void removeTransAndPossiblyState(Transition t):
 */
 Boolean rule6applies(State s):
 	switch {
+		// do not remove inital loopstate 
+		
 		// TODO check if just test for interfaceDecls or signals and vars
 		case !hasOutWeakTransitions(s) && !hasOutStrongTransitions(s) && !isSimpleState(s) &&
 			!hasSignalsVariables(s) && hasParentMacroState(s) && !isParallelMacroState(s):
@@ -181,6 +186,7 @@ Void rule6(State s, List[State] states):
 	let incomingTrans = s.incomingTransitions.copyList():
 	let normalTerms = s.outgoingTransitions.select(e|e.type == TransitionType::NORMALTERMINATION):
 	
+	// do not make states without incoming transitions or only one selfloop noninitial
 	if (!incomingTrans.isEmpty) then
 		(if (!s.hasOnlySelfLoop()) then
 			initial.setIsInitial(false)) ->
@@ -273,11 +279,16 @@ Boolean hasInterfaceDeclaration(State s):
 ;
 
 Boolean hasFinalSubState(State s):
-	let regs = s.regions:
-	let states = regs.states:
-	let finalStates = states.select(e|e.isFinal):
-	!finalStates.isEmpty
+	let states = (List[State]) {}:
+	s.regions.collectStates(states) ->
+	states.debug() ->
+	!states.select(e|e.isFinal).isEmpty
 ;
+
+Void collectStates(Region r, List[State] states):
+	states.addAll(r.states)
+;
+
 
 Boolean hasMultipleSimpleFinalSubStates(State s):
 	let regions = s.regions.select(e | e.states.select(e|e.isSimpleState() && e.isFinal).size > 1):
@@ -298,7 +309,13 @@ Boolean isParallelMacroState(State s):
 State findInitialState(Region r):
 	let initials = r.states.select(e|e.isInitial):
 	if initials.isEmpty then
-	debug(r) ->
+	 (let s = new State:
+	 let sig = new Signal:
+	 sig.setName("fail") ->
+	 s.setLabel("here i fail") ->
+	 s.signals.add(sig) ->
+	 r.states.add(s) ->
+	 initials.add(s) ) ->
 	initials.get(0)
 ;
 
@@ -384,5 +401,9 @@ Void debug(EObject obj):
 ;
 
 Void debug(Region r):
+	JAVA  de.cau.cs.kieler.esterel.transformation.util.TransformationUtil.debug(org.eclipse.emf.ecore.EObject)
+;
+
+Void debug(State s):
 	JAVA  de.cau.cs.kieler.esterel.transformation.util.TransformationUtil.debug(org.eclipse.emf.ecore.EObject)
 ;

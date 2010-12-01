@@ -66,7 +66,8 @@ Void rule(State s, Module m):
 	//s.setIsInitial(true) ->
 	//s.setIsFinal(true) ->
 	// TODO set singals
-	m.interface.intSignalDecls.extractSignals(s)->	
+	if(!m.interface.intSignalDecls.isEmpty) then
+		m.interface.intSignalDecls.extractSignals(s) ->	
 	// TODO set body content
 	setJavaBodyContents(s, statement) ->
 	//appendNextTransformation(newState, statement)
@@ -116,7 +117,7 @@ Void rule(State s, Pause p):
 	initS.setIsInitial(true) ->
 	finalS.setIsFinal(true) ->
 	// add transition
-	t.setType(TransitionType::STRONGABORT) ->
+	t.setType(TransitionType::WEAKABORT) ->
 	t.connectTransition(initS, finalS)
 ;
 
@@ -200,20 +201,23 @@ Void handleAbortCaseSingle(Region parent, State source, Integer prio, DelayExpr 
  	let initS = new State:
  	let finalS = new State:
  	let t = new Transition:
- 	let sa = new Assignment:
+ 	let sa = new synccharts::Assignment:
  	s.removeBodyText() ->
  	// setup states
  	s.setLabelIfEmpty("Assign State") ->
  	s.regions.add(r) ->
- 	r.states.addAll({initS, finalS}) ->
  	initS.setIsInitial(true) ->
  	finalS.setIsFinal(true) ->
+ 	r.states.addAll({initS, finalS}) ->
  	// init transition
  	t.connectTransition(initS, finalS) ->
+
  	sa.setVariable(assign.var) ->
  	if (assign.expr != null) then
- 		sa.setExpression(assign.expr)
- 	// TODO assignment
+ 		sa.setExpression((Expression) clone(assign.expr)) ->
+ 		
+ 	//add assignment to the transition
+ 	t.effects.add(sa)
  ;
 
 /*
@@ -366,8 +370,8 @@ Void rule(State s, EveryDo e):
 	r.states.addAll({initS, everyS}) ->
 	initS.setIsInitial(true) ->
 	// init transitions
-	initT.setType(TransitionType::STRONGABORT) ->
-	everyT.setType(TransitionType::STRONGABORT) ->
+	initT.setType(TransitionType::WEAKABORT) ->
+	everyT.setType(TransitionType::WEAKABORT) ->
 	initT.connectTransition(initS, everyS) ->
 	everyT.connectTransition(everyS, everyS) ->
 	// add delays
@@ -474,8 +478,8 @@ Void rule(State s, LocalVariable v):
 	varS.setIsInitial(true) ->
 	varS.setIsFinal(true) ->
 	
-	// TODO
-	//s.interfaceDecls.add((InterfaceDeclaration)clone(v.var)) ->
+	// add variables to state
+	v.var.varDecls.extractLocalVariables(s) ->
 	
 	// recursive
 	varS.setJavaBodyContents( v.statement) ->
@@ -502,7 +506,7 @@ Void rule(State s, Loop l):
  	selfTrans.connectTransition(loopState, loopState) ->
  	
  	if LoopEach.isInstance(l.end) then
- 		(selfTrans.setType(TransitionType::STRONGABORT) ->
+ 		(selfTrans.setType(TransitionType::WEAKABORT) ->
  		 s) -> selfTrans.addDelayToTrigger(((LoopDelay)l.end).delay) ->
  	
  	setJavaBodyContents(loopState, l.body.statement) ->
@@ -735,8 +739,7 @@ Void rule(State s, Trap t):
 	vo.setValuedObject(haltSig) ->
 	haltT.setTrigger(vo)) ->
 	
-	// handlers
-	if !t.trapHandler.isEmpty then
+	// setup exit state
 		(let handleState = new State:
 		 let handleExpr = new OperatorExpression:
 		 let handleT = new Transition:
@@ -748,9 +751,12 @@ Void rule(State s, Trap t):
 		 handleExpr.setOperator(OperatorType::OR) ->
 		 handleT.setIsImmediate(true) ->
 		 handleT.connectTransition(trapS, handleState) ->
+		 // collect traps 
+		 t.trapDeclList.collectTraps(handleExpr) ->
 		 handleT.setTrigger(handleExpr) ->
-		 // create handler
-		 handleTrapHandler(handleState, handleExpr, t.trapHandler)
+		 // create handler if existing
+		 if !t.trapHandler.isEmpty then
+		 	handleTrapHandler(handleState, t.trapHandler)
 		) ->
 
 
@@ -758,13 +764,13 @@ Void rule(State s, Trap t):
 	trapS.recursiveRule(t.statement)
 ;
 
-Void handleTrapHandler(State handleState, OperatorExpression handleExpr, List[TrapHandler] handler):
-	handleTrapHandlerSingle(handleState, handleExpr, handler.first()) ->
+Void handleTrapHandler(State handleState, List[TrapHandler] handler):
+	handleTrapHandlerSingle(handleState, handler.first()) ->
 	if(handler.size > 1) then
-		handleTrapHandler(handleState, handleExpr, handler.withoutFirst())
+		handleTrapHandler(handleState, handler.withoutFirst())
 ;
 
-Void handleTrapHandlerSingle(State handleState, OperatorExpression handleExpr, TrapHandler handler):
+Void handleTrapHandlerSingle(State handleState, TrapHandler handler):
 	let r = new Region:
 	let initS = new State:
 	let macroS = new State:
@@ -787,7 +793,6 @@ Void handleTrapHandlerSingle(State handleState, OperatorExpression handleExpr, T
 	macroT.setPriority(1) ->
 	macroT.connectTransition(initS, macroS) ->
 	macroT.setTrigger((Expression) clone(handler.trapExpr)) ->
-	handleExpr.subExpressions.add((Expression) clone(handler.trapExpr)) ->
 	
 	// recursive
 	macroS.setJavaBodyContents(handler.statement) ->
@@ -876,6 +881,16 @@ Void extractSignals(InterfaceSignalDecl decl, State s):
 		copy.addSignalToState(s)
 ;
 
+// extract all variables
+Void extractLocalVariables(VariableDecl decl, State s):
+	let vars = (List[IVariable]) clone(decl.variables):
+	vars.addVariableToState(s)
+;
+
+Void addVariableToState(expressions::Variable v, State s):
+	s.variables.add(v)
+;
+
 // extracts all local signals
 Void extractLocalSignals(LocalSignalList lsl, State s):
 	if LocalSignal.isInstance(lsl) then
@@ -907,6 +922,17 @@ Void removeBodyText(State s):
 Void setLabelIfEmpty(State s, String label):
 	(s.label == null || s.label.trim().length == 0) ? 
 		s.setLabel(label) : s
+;
+
+// collect all traps in an "or" expression
+Void collectTraps(TrapDeclList traps, OperatorExpression expr):
+ 	traps.trapDecls.addTrapToExpression(expr)
+;
+// as trap just extends ISignal .. TrapDecl is unknown here
+Void addTrapToExpression(ISignal trap, OperatorExpression expr):
+	let ref = new ValuedObjectReference:
+	ref.setValuedObject(trap) ->
+	expr.subExpressions.add(ref)
 ;
 
 List[ISignal] copyList(List[ISignal] list):
