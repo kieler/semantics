@@ -281,7 +281,6 @@ Boolean hasInterfaceDeclaration(State s):
 Boolean hasFinalSubState(State s):
 	let states = (List[State]) {}:
 	s.regions.collectStates(states) ->
-	states.debug() ->
 	!states.select(e|e.isFinal).isEmpty
 ;
 
