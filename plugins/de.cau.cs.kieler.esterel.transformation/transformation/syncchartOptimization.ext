@@ -297,6 +297,8 @@ Boolean isParallelMacroState(State s):
 */
 State findInitialState(Region r):
 	let initials = r.states.select(e|e.isInitial):
+	if initials.isEmpty then
+	debug(r) ->
 	initials.get(0)
 ;
 
@@ -355,9 +357,15 @@ Void removeTransition(Transition t):
 
 // remove a state from the region
 Void removeStateFromRegion(State state):
+	let parent = state.parentRegion:
  state.outgoingTransitions.removeAll(state.outgoingTransitions) ->
  state.incomingTransitions.removeAll(state.incomingTransitions) ->
- state.parentRegion.states.remove(state)
+ parent.states.remove(state)
+ ->
+ // todo verify
+ if parent.states.isEmpty then
+ 	parent.parentState.regions.remove(parent)
+ 	
 ;
   
  // clears bodycontents of all child states of State s.
@@ -369,4 +377,12 @@ Void clearBodyReferences(State s):
   
 Void addToFrontOfList(List list, List list2):
 	JAVA  de.cau.cs.kieler.esterel.transformation.util.TransformationUtil.addToFrontOfList(java.util.List, java.util.List)
+;
+
+Void debug(EObject obj):
+	JAVA  de.cau.cs.kieler.esterel.transformation.util.TransformationUtil.debug(org.eclipse.emf.ecore.EObject)
+;
+
+Void debug(Region r):
+	JAVA  de.cau.cs.kieler.esterel.transformation.util.TransformationUtil.debug(org.eclipse.emf.ecore.EObject)
 ;

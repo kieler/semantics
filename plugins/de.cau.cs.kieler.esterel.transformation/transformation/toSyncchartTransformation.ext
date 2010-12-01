@@ -677,7 +677,26 @@ Void rule(State s, Suspend sus):
  * rule 25 (sustain)
  */
 Void rule(State s, Sustain sus):
-s
+	let r = new Region:
+	let initS = new State:
+	let finalS = new State:
+	let initT = new Transition:
+	let sustT = new Transition:
+	let emission = new Emission:
+	
+	s.removeBodyText() ->
+	s.setLabelIfEmpty("Sustain State") ->
+	s.regions.add(r) ->
+	r.states.addAll({initS, finalS}) ->
+	initS.setIsInitial(true) ->
+	
+	// setup transitions
+	initT.connectTransition(initS, finalS) ->
+	sustT.connectTransition(finalS, finalS) ->
+	emission.setSignal(sus.signal) ->
+	emission.setNewValue(sus.dataExpr) ->
+	initT.effects.add(emission) ->
+	sustT.effects.add((Emission) clone(emission))
 ;
 
 

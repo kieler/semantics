@@ -39,6 +39,7 @@ import de.cau.cs.kieler.core.ui.util.EditorUtils;
 import de.cau.cs.kieler.core.util.Maybe;
 import de.cau.cs.kieler.esterel.EsterelStandaloneSetup;
 import de.cau.cs.kieler.esterel.esterel.EsterelPackage;
+import de.cau.cs.kieler.synccharts.Region;
 import de.cau.cs.kieler.synccharts.State;
 import de.cau.cs.kieler.synccharts.StateType;
 import de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditor;
@@ -81,7 +82,7 @@ public final class TransformationUtil {
         try {
             Serializer serializerUtil = injector.getInstance(Serializer.class);
             serializerUtil.serialize(e, osw, SaveOptions.defaultOptions());
-             //System.out.println("Serialized result: " + baos.toString());
+            // System.out.println("Serialized result: " + baos.toString());
         } catch (IOException ex) {
             ex.printStackTrace();
         }
@@ -123,6 +124,12 @@ public final class TransformationUtil {
 
     public static void addToFrontOfList(final List<State> list, final List<State> list2) {
         list.addAll(0, list2);
+    }
+
+    public static void debug(final EObject obj) {
+        System.out.println("Debug: " + obj);
+        System.out.println(((Region) obj).getParentState());
+        System.out.println(((Region) obj).getStates());
     }
 
     public static DiagramEditor getActiveEditor() {

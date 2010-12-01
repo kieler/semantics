@@ -19,6 +19,7 @@ import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gef.EditPartViewer;
@@ -92,6 +93,18 @@ public class SyncChartsOptimizationDataComponent extends AbstractTransformationD
                 EObject selModel = ((View) selView).getElement();
                 State root = ((Region) selModel).getStates().get(0);
                 rootState = root;
+
+                // check if model was transformed completely
+                TreeIterator<EObject> it = root.eAllContents();
+                while (it.hasNext()) {
+                    EObject curr = it.next();
+                    if (curr instanceof State) {
+                        if (!((State) curr).getBodyText().isEmpty()) {
+                            throw new KiemInitializationException(
+                                    "Model has not been transformed completely!", true, null);
+                        }
+                    }
+                }
 
                 // collect initial set of all possible states
                 collectAllStatesRecursivley(rootState, 0);
