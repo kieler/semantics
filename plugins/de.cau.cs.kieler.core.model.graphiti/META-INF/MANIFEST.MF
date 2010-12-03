@@ -1,0 +1,22 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: KIELER Utility Code for Graphiti
+Bundle-SymbolicName: de.cau.cs.kieler.core.model.graphiti;singleton:=true
+Bundle-Version: 0.1.0.qualifier
+Bundle-Vendor: Christian-Albrechts-Universität zu Kiel
+Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Require-Bundle: org.eclipse.graphiti;bundle-version="0.7.0",
+ org.eclipse.graphiti.ui;bundle-version="0.7.0",
+ org.eclipse.core.runtime;bundle-version="3.6.0",
+ org.eclipse.core.resources;bundle-version="3.6.0",
+ org.eclipse.jface;bundle-version="3.6.0",
+ org.eclipse.ui;bundle-version="3.6.0",
+ org.eclipse.ui.ide;bundle-version="3.6.0",
+ de.cau.cs.kieler.core,
+ org.eclipse.emf.transaction;bundle-version="1.4.0",
+ org.eclipse.emf.workspace;bundle-version="1.4.0",
+ org.eclipse.emf.ecore.xmi;bundle-version="2.5.0"
+Export-Package: de.cau.cs.kieler.core.model.graphiti,
+ de.cau.cs.kieler.core.model.graphiti.ui
+Bundle-Activator: de.cau.cs.kieler.core.model.graphiti.KielerGraphitiPlugin
+Bundle-ActivationPolicy: lazy
