@@ -280,11 +280,18 @@ public class CombinedWorkbenchListener implements IStartup, IWindowListener,
             if (window != null) {
                 windowOpened(window);
             } else {
-                IWorkbenchWindow[] openWindows = theWorkbench.getWorkbenchWindows();
-                if (openWindows != null && openWindows.length > 0) {
-                    for (IWorkbenchWindow w : openWindows) {
-                        windowOpened(w);
+                try {
+                    IWorkbenchWindow[] openWindows = theWorkbench
+                            .getWorkbenchWindows();
+                    if (openWindows != null && openWindows.length > 0) {
+                        for (IWorkbenchWindow w : openWindows) {
+                            windowOpened(w);
+                        }
                     }
+                } catch (NullPointerException e0) {
+                    // in some cases of errors during early startup
+                    // the window manager might be null causing
+                    // getWorkbenchWindows() to throw a NPE
                 }
             }
         }

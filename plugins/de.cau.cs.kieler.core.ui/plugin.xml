@@ -2,21 +2,13 @@
 <?eclipse version="3.2"?>
 <plugin>
    <extension-point id="balloonPopupBarContribution" name="Balloon Popup Bar Contribution" schema="schema/balloonPopupBarContribution.exsd"/>
+   <extension-point id="customSplashExtension" name="Splash Extensions" schema="schema/customSplashExtension.exsd"/>
    <extension
          point="org.eclipse.ui.views">
       <category
             id="de.cau.cs.kieler"
             name="KIELER">
       </category>
-      <view
-            allowMultiple="true"
-            category="de.cau.cs.kieler"
-            class="de.cau.cs.kieler.core.ui.views.BugReportView"
-            icon="icons/kiel_16.gif"
-            id="de.cau.cs.kieler.core.ui.bugReportView"
-            name="Bug Report View"
-            restorable="true">
-      </view>
    </extension>
    <extension
          point="org.eclipse.ui.menus">
@@ -26,10 +18,6 @@
                id="de.cau.cs.kieler"
                label="KIELER"
                mnemonic="K">
-            <command
-                  commandId="de.cau.cs.kieler.core.ui.bugReport"
-                  style="push">
-            </command>
             <separator
                   name="de.cau.cs.kieler.core.ui.separator2"
                   visible="true">
@@ -118,15 +106,6 @@
             id="de.cau.cs.kieler.core.ui.command.removeMarkers"
             name="Remove Problem Markers">
       </command>
-      <!-- 
-      REMOVED: not working currently
-      <command 
-            categoryId="de.cau.cs.kieler"
-            defaultHandler="de.cau.cs.kieler.core.ui.handler.ReportBugHandler"
-            description="Report a bug in KIELER or make suggestions about possible enhancements."
-            id="de.cau.cs.kieler.core.ui.bugReport"
-            name="Report Bug or Enhancement...">
-      </command> -->
    </extension>
    <extension
          point="org.eclipse.ui.newWizards">
@@ -188,7 +167,7 @@
             name="KIELER">
          <property
                name="aboutText"
-               value="KIELER - a research project on enhancing the model-based design of complex systems.&#x0A;&#x0A;http://www.informatik.uni-kiel.de/rtsys/kieler/&#x0A;&#x0A;Copyright 2009 by Christian-Albrechts-University of Kiel, Department of Computer Science, Real-Time and Embedded Systems Group.">
+               value="KIELER - a research project on enhancing the model-based design of complex systems.&#x0A;&#x0A;http://www.informatik.uni-kiel.de/rtsys/kieler/&#x0A;&#x0A;Copyright 2010 by Christian-Albrechts-University of Kiel, Department of Computer Science, Real-Time and Embedded Systems Group.">
          </property>
          <property
                name="aboutImage"
@@ -197,18 +176,6 @@
          <property
                name="appName"
                value="KIELER">
-         </property>
-         <property
-               name="startupForegroundColor"
-               value="000000">
-         </property>
-         <property
-               name="startupMessageRect"
-               value="10,287,480,20">
-         </property>
-         <property
-               name="startupProgressRect"
-               value="10,310,480,15">
          </property>
          <property
                name="preferenceCustomization"
@@ -316,6 +283,24 @@
             id="de.cau.cs.kieler"
             name="KIELER">
       </category>
+   </extension>
+   <extension
+         point="org.eclipse.ui.splashHandlers">
+      <splashHandler
+            class="de.cau.cs.kieler.core.ui.splashHandlers.CustomExtensibleSplashHandler"
+            id="de.cau.cs.kieler.core.ui.splashHandlers.extensible">
+      </splashHandler>
+      <splashHandlerProductBinding
+            productId="de.cau.cs.kieler.core.ui.product"
+            splashId="de.cau.cs.kieler.core.ui.splashHandlers.extensible">
+      </splashHandlerProductBinding>
+   </extension>
+   <extension
+         point="de.cau.cs.kieler.core.ui.customSplashExtension">
+      <splashExtension
+            id="version"
+            text="0.4.0">
+      </splashExtension>
    </extension>
  <!--  <extension
          point="org.eclipse.ui.intro.config">
