@@ -176,6 +176,7 @@ This Agreement is governed by the laws of the State of New York and the intellec
       <feature id="de.cau.cs.kieler.kvid" version="0.1.0.qualifier"/>
       <feature id="org.ptolemy" version="8.0.0.qualifier"/>
       <feature id="de.cau.cs.kieler.sj" version="0.1.0.qualifier"/>
+      <feature id="net.sourceforge.lpsolve" version="5.5.2.qualifier"/>
    </features>
 
 
