@@ -17,6 +17,7 @@ extension org::eclipse::xtend::util::stdlib::cloning;
  * - if automatic recursion is desired, use the recursiveRule()
  * - remember to pass the GLOBALVAR "recursive" to the XtendFacade
  * - add / remove bodytext!
+ * - DO NOT use states.addAll{s1, s2}. this does NOT trigger the listener for unique ids!
  */
  
  
@@ -30,7 +31,7 @@ extension org::eclipse::xtend::util::stdlib::cloning;
   let de = new DelayExpr:
  // ((synccharts::Action)t).setLabel("foobat") ->
   // addSelfLoop(s)->
-
+	
 s	
   ;
 
@@ -97,8 +98,9 @@ Void rule(State s, Halt h):
 	removeBodyText(s) ->
 	s.regions.add(r) ->
 	s.setLabelIfEmpty("Halt State") ->
-	ns.setIsInitial(true) ->
-	r.states.add(ns)
+	r.states.add(ns) ->
+	ns.setIsInitial(true)
+	
 ;
  
 /*
@@ -113,7 +115,8 @@ Void rule(State s, Pause p):
 	s.removeBodyText() ->
 	s.setLabelIfEmpty("Pause State") ->
 	s.regions.add(r) ->
-	r.states.addAll({initS, finalS}) ->
+	r.states.add(initS) ->
+	r.states.add(finalS) ->
 	initS.setIsInitial(true) ->
 	finalS.setIsFinal(true) ->
 	// add transition
@@ -124,14 +127,19 @@ Void rule(State s, Pause p):
  /*
  * rule 5 (abort)
  */
- Void rule(State s, Abort a):
- 	let r = new Region:
+Void rule(State s, Abort a):
+	ruleAbort(s, a)
+;
+ 
+// helping rule, to allow usual aborts as well as weak aborts to be handled
+Void ruleAbort(State s, Abort a):
+  	let r = new Region:
  	let initState = new State:
  	let caseStates = {}:
  	let finalState = new State:
  	let toFinalTrans = new Transition:
  	removeBodyText(s) ->
- 	s.setLabelIfEmpty("Abort State") ->
+ 	(WeakAbort.isInstance(a) ? s.setLabelIfEmpty("Weak Abort State") : s.setLabelIfEmpty("Abort State")) ->
  	// add new state
  	s.regions.add(r) ->
  	r.states.add(initState) ->
@@ -142,45 +150,45 @@ Void rule(State s, Pause p):
 	initState.setIsInitial(true) ->
 	finalState.setIsFinal(true) ->
 	
-	// just an instance or cases?
+	// just an instance or cases? 
  	(AbortInstance.isInstance(a.body) ?
-	 	handleAbortCaseSingle(r, initState, 1,
+	 	handleAbortCaseSingle(r, initState, 1, 
 	 		((AbortInstance)a.body).delay, 
-	 		((AbortInstance)a.body).statement)
+	 		((AbortInstance)a.body).statement,
+	 		WeakAbort.isInstance(a)) 
  	:
  		(toFinalTrans.setPriority(((AbortCase)a.body).cases.size + 1) ->
  		// handle cases (only for ABRO currently)
-	 	handleAbortCases(r, initState, 1, ((AbortCase)a.body).cases))
+	 	handleAbortCases(r, initState, 1, ((AbortCase)a.body).cases, WeakAbort.isInstance(a)))
 	) -> 	
 	// handle abort's body statement
 	toFinalTrans.connectTransition(initState, finalState) ->
 	setJavaBodyContents(initState, a.statement) ->
 	recursiveRule(initState, a.statement)
- ;
+;
 		
-Void handleAbortCases(Region parent, State source, Integer prio, List[AbortCaseSingle] cases):
+Void handleAbortCases(Region parent, State source, Integer prio, List[AbortCaseSingle] cases, boolean weak):
 	(cases.size > 1) ?
-		(handleAbortCaseSingle(parent, source, prio, cases.first().delay, cases.first().statement) ->
-		handleAbortCases(parent, source, prio + 1, cases.withoutFirst()))
+		(handleAbortCaseSingle(parent, source, prio, cases.first().delay, cases.first().statement, weak) ->
+		handleAbortCases(parent, source, prio + 1, cases.withoutFirst(), weak))
 		:
-		handleAbortCaseSingle(parent, source, prio, cases.first().delay, cases.first().statement)
+		handleAbortCaseSingle(parent, source, prio, cases.first().delay, cases.first().statement, weak)
 ;
 
-Void handleAbortCaseSingle(Region parent, State source, Integer prio, DelayExpr expr, Statement body):
+Void handleAbortCaseSingle(Region parent, State source, Integer prio, DelayExpr expr, Statement body, boolean weak):
 	let caseState = new State:
 	let trans = new Transition:
 	caseState.setIsFinal(true) ->
 	parent.states.add(caseState) ->
 	
 	// create and add transition
-	trans.setType(TransitionType::WEAKABORT) ->
+	if !weak then trans.setType(TransitionType::STRONGABORT) ->
 	trans.setPriority(prio) ->
 	
 	// handle delayexpr
 	trans.addDelayToTrigger(expr) ->
 		
 	trans.connectTransition(source, caseState) ->
-	
 	// care! the "do" body of about might be null
 	if (body != null) then
 		// set body text 
@@ -208,7 +216,8 @@ Void handleAbortCaseSingle(Region parent, State source, Integer prio, DelayExpr 
  	s.regions.add(r) ->
  	initS.setIsInitial(true) ->
  	finalS.setIsFinal(true) ->
- 	r.states.addAll({initS, finalS}) ->
+ 	r.states.add(initS) ->
+ 	r.states.add(finalS) ->
  	// init transition
  	t.connectTransition(initS, finalS) ->
 
@@ -245,11 +254,11 @@ Void rule(State s, Await a):
  
 // as abort and await cases are equal, we use AbortCaseSingles 
 Void handleAwaitCases(Region r, State previous, Integer prio, List[AbortCaseSingle] cases):
-	handleAbortCases(r, previous, prio, cases)
+	handleAbortCases(r, previous, prio, cases, false)
 ;
 
 Void handleAwaitCaseSingle(Region r, State previous, Integer prio, DelayExpr expr, Statement body):
-	handleAbortCaseSingle(r, previous, prio, expr, body)
+	handleAbortCaseSingle(r, previous, prio, expr, body, false)
 ;
 
 
@@ -306,7 +315,8 @@ Void handleDoWatching(State parent, State previous, Region parentR, DoWatching d
 	
 	// setup
 	parent.setLabelIfEmpty("Dowatching State") ->
-	parentR.states.addAll({ abortF, normalF}) ->
+	parentR.states.add(abortF) ->
+	parentR.states.add(normalF) ->
 	normalF.setId("_") ->
 	normalF.setIsFinal(true) ->
 	abortF.setIsFinal(true) ->
@@ -367,7 +377,8 @@ Void rule(State s, EveryDo e):
 	// setup states
 	s.setLabelIfEmpty("Every State") ->
 	s.regions.add(r) ->
-	r.states.addAll({initS, everyS}) ->
+	r.states.add(initS) ->
+	r.states.add(everyS) ->
 	initS.setIsInitial(true) ->
 	// init transitions
 	initT.setType(TransitionType::WEAKABORT) ->
@@ -521,7 +532,8 @@ Void rule(State s, Parallel p):
 	removeBodyText(s) ->
 	s.setLabelIfEmpty("Parallel State") -> 
 	
- 	ruleParallelRecursive(s, p.list)
+	// important to copy the list here! otherwise esterel resource gets destroyed
+ 	ruleParallelRecursive(s, p.list.copyList())
 ;
 
 Void ruleParallelRecursive(State parent, List[Statement] statements):
@@ -566,11 +578,19 @@ Void rule(State s, Present p):
 	pS.setIsInitial(true) ->
 	
 	(PresentEventBody.isInstance(p.body) ? 
-		s // not supported yet 
+		// handle present ... then ... form
+		(let event = ((PresentEventBody)p.body).event.expression:
+		let thenPart = ((PresentEventBody)p.body).thenPart:  
+		handleIfSingle(r, pS, 1, event, thenPart != null ? thenPart.statement : null) 
+		)
 		:
+		// handle present cases
 		handlePresentCases(r, pS, 1, ((PresentCaseList)p.body).cases)
-	) 
+	) ->
 	
+	if p.elsePart != null then
+		// TODO change 50! calculate the correct maximal priority
+		handleIfSingle(r, pS, 50, null, p.elsePart.statement)
 ;
 
 Void handlePresentCases(Region parent, State previous, Integer prio, List[PresentCase] cases):
@@ -582,13 +602,14 @@ Void handlePresentCases(Region parent, State previous, Integer prio, List[Presen
 	)
 ;
 
+// TODO check if this is redundant to if single
 Void handlePresentCaseSingle(Region parent, State previous, Integer prio, Expression e, Statement st):
 	let newS = new State:
 	let t = new Transition:
 	// setup
 	parent.states.add(newS) ->
 	t.setPriority(prio) ->
-	t.setTrigger(e) ->
+	t.setTrigger((Expression) clone(e)) ->
 	
 	t.connectTransition(previous, newS) ->
 	
@@ -691,14 +712,15 @@ Void rule(State s, Sustain sus):
 	s.removeBodyText() ->
 	s.setLabelIfEmpty("Sustain State") ->
 	s.regions.add(r) ->
-	r.states.addAll({initS, finalS}) ->
+	r.states.add(initS) ->
+	r.states.add(finalS) ->
 	initS.setIsInitial(true) ->
 	
 	// setup transitions
 	initT.connectTransition(initS, finalS) ->
 	sustT.connectTransition(finalS, finalS) ->
 	emission.setSignal(sus.signal) ->
-	emission.setNewValue(sus.dataExpr) ->
+	emission.setNewValue((Expression) clone(sus.dataExpr)) ->
 	initT.effects.add(emission) ->
 	sustT.effects.add((Emission) clone(emission))
 ;
@@ -720,11 +742,14 @@ Void rule(State s, Trap t):
 	s.setLabelIfEmpty("Trap State") ->
 	// setup
 	s.regions.add(r) ->
-	r.states.addAll({trapS, finalS, haltS}) ->
+	r.states.add(trapS) ->
+	r.states.add(finalS) ->
+	r.states.add(haltS) ->
 	
 	// normal termination
 	finalS.setIsFinal(true) ->
 	normalT.setType(TransitionType::NORMALTERMINATION) ->
+	normalT.setPriority(3) ->
 	normalT.connectTransition(trapS, finalS) ->
 	
 	// halt due to higher trap
@@ -735,29 +760,31 @@ Void rule(State s, Trap t):
 	haltT.connectTransition(trapS, haltS) ->
 	// immediate transition with traphalt signal
 	haltT.setIsImmediate(true) ->
+	haltT.setPriority(1) ->
 	(let vo = new ValuedObjectReference:
 	vo.setValuedObject(haltSig) ->
 	haltT.setTrigger(vo)) ->
 	
 	// setup exit state
-		(let handleState = new State:
-		 let handleExpr = new OperatorExpression:
-		 let handleT = new Transition:
-		 // setup state
-		 handleState.setLabel("Trap Handler State") ->
-		 handleState.setIsFinal(true) ->
-		 r.states.add(handleState) ->
-		 // transition
-		 handleExpr.setOperator(OperatorType::OR) ->
-		 handleT.setIsImmediate(true) ->
-		 handleT.connectTransition(trapS, handleState) ->
-		 // collect traps 
-		 t.trapDeclList.collectTraps(handleExpr) ->
-		 handleT.setTrigger(handleExpr) ->
-		 // create handler if existing
-		 if !t.trapHandler.isEmpty then
-		 	handleTrapHandler(handleState, t.trapHandler)
-		) ->
+	(let handleState = new State:
+	 let handleExpr = new OperatorExpression:
+	 let handleT = new Transition:
+	 // setup state
+	 handleState.setLabel("Trap Handler State") ->
+	 handleState.setIsFinal(true) ->
+	 r.states.add(handleState) ->
+	 // transition
+	 handleExpr.setOperator(OperatorType::OR) ->
+	 handleT.setIsImmediate(true) ->
+	 handleT.setPriority(2) ->
+	 handleT.connectTransition(trapS, handleState) ->
+	 // collect traps 
+	 t.trapDeclList.collectTraps(handleExpr) ->
+	 handleT.setTrigger(handleExpr) ->
+	 // create handler if existing
+	 if !t.trapHandler.isEmpty then
+	 	handleTrapHandler(handleState, t.trapHandler)
+	) ->
 
 
 	trapS.setJavaBodyContents(t.statement) ->
@@ -778,7 +805,9 @@ Void handleTrapHandlerSingle(State handleState, TrapHandler handler):
 	let finalS = new State:
 	let finalT = new Transition:
 	handleState.regions.add(r) ->
-	r.states.addAll({initS, macroS, finalS}) ->
+	r.states.add(initS) ->
+	r.states.add(macroS) ->
+	r.states.add(finalS) ->
 	initS.setIsInitial(true) ->
 	
 	// finalState setup
@@ -802,6 +831,7 @@ Void handleTrapHandlerSingle(State handleState, TrapHandler handler):
 
  /* 
   * rule 27 (exit)
+  * TODO: add traphalts of possible parent traps
   */
 Void rule(State s, Exit e):
 	let initS = new State:
@@ -826,6 +856,15 @@ Void rule(State s, Exit e):
 	// add transition to state
 	emitTrans.connectTransition(initS, finalS)
 ;
+
+ /* 
+  * rule 28 (weak abort)
+  * 
+  */
+Void rule(State s, WeakAbort wa):
+	ruleAbort(s, wa)
+;
+
 
 /*
 	omit the block, theres a parallel in it!
@@ -881,11 +920,11 @@ Void extractSignals(InterfaceSignalDecl decl, State s):
 		copy.addSignalToState(s)
 ;
 
-// extract all variables
+// extract all variables 
 Void extractLocalVariables(VariableDecl decl, State s):
 	let vars = (List[IVariable]) clone(decl.variables):
 	vars.addVariableToState(s)
-;
+; 
 
 Void addVariableToState(expressions::Variable v, State s):
 	s.variables.add(v)
@@ -935,7 +974,7 @@ Void addTrapToExpression(ISignal trap, OperatorExpression expr):
 	expr.subExpressions.add(ref)
 ;
 
-List[ISignal] copyList(List[ISignal] list):
+List copyList(List list):
 	let copy = {}:
 	copy.addAll(list)
 ;
