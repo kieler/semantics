@@ -128,7 +128,7 @@ context State if (parentRegion == null || parentRegion.parentState == null)
    (signals.exists(s | s.isOutput));
 */
 
-context State if (parentRegion == null || parentRegion.parentState == null)
+context State if ((parentRegion == null || parentRegion.parentState == null) && bodyText.isEmpty)
   ERROR "The root state should have at least one Region containing at least one State! 
   Try upgrading the root state!":
    (regions.size > 0 && regions.forAll(r|r.states.size > 0));
@@ -140,7 +140,7 @@ context State if (parentRegion != null && parentRegion.parentState == null)
 // ================================================================================================
 // Regions
 
-context Region if (parentState != null) // not checked for root state
+context Region if (parentState != null && bodyText.isEmpty ) // not checked for root state
 	ERROR "Every region should have exactly one initial state!" : 
 	(states.select(s|s.isInitial).size == 1);
 
@@ -154,7 +154,7 @@ context Region if ((parentState.parentRegion.parentState != null) &&
 		+ "has to contain at least one final state in every parallel region." :
 	(states.select(s|s.isFinal).size > 0);
 
-context Region 
+context Region if (bodyText.isEmpty) // only check if no textual macrostate
 	ERROR "An empty Region does not make sense! Remove the Region or add States to it!" : 
 	(states.size > 0);
 
