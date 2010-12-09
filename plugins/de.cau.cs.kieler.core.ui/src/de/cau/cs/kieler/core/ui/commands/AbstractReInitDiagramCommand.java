@@ -58,7 +58,7 @@ import de.cau.cs.kieler.core.ui.CoreUIPlugin;
  * @author soh
  * @kieler.rating 2010-06-14 proposed yellow soh
  */
-public abstract class ReInitDiagramCommand extends AbstractHandler {
+public abstract class AbstractReInitDiagramCommand extends AbstractHandler {
 
     /**
      * Provides the file extension for the diagram file.
@@ -100,30 +100,23 @@ public abstract class ReInitDiagramCommand extends AbstractHandler {
                         path = ((org.eclipse.core.internal.resources.File) o)
                                 .getFullPath();
                     } else if (o instanceof EditPart) {
-                        try {
-                            EditPart editPart = (EditPart) o;
-                            EObject eObj = ((View) editPart.getModel())
-                                    .getElement();
-                            // no model element found for the edit part
-                            if (eObj == null) {
-                                super.setBaseEnabled(false);
-                                return;
-                            }
-                            Resource res = eObj.eResource();
-                            // edit part doesn't belong to a resource
-                            if (res == null) {
-                                super.setBaseEnabled(false);
-                                return;
-                            }
-                            URI uri = res.getURI();
-                            // set the path to the path of the file
-                            path = Path
-                                    .fromOSString(uri.toPlatformString(true));
-                        } catch (ClassCastException e0) {
-                            // do nothing
-                            // this occurs in case of graphiti diagrams
-                            // FIXME: find a solution
+                        EditPart editPart = (EditPart) o;
+                        EObject eObj = getEObjectFromEditPart(editPart);
+                        // no model element found for the edit part
+                        if (eObj == null) {
+                            super.setBaseEnabled(false);
+                            return;
                         }
+                        Resource res = eObj.eResource();
+                        // edit part doesn't belong to a resource
+                        if (res == null) {
+                            super.setBaseEnabled(false);
+                            return;
+                        }
+                        URI uri = res.getURI();
+                        // set the path to the path of the file
+                        path = Path.fromOSString(uri.toPlatformString(true));
+
                     }
                     // check if file has the model extension
                     if (path != null
@@ -136,6 +129,14 @@ public abstract class ReInitDiagramCommand extends AbstractHandler {
             }
         }
         super.setBaseEnabled(false);
+    }
+
+    public EObject getEObjectFromEditPart(final EditPart editPart) {
+        Object model = editPart.getModel();
+        if (model instanceof View) {
+            return ((View) model).getElement();
+        }
+        return null;
     }
 
     /**
@@ -160,10 +161,13 @@ public abstract class ReInitDiagramCommand extends AbstractHandler {
                         path = ((org.eclipse.core.internal.resources.File) o)
                                 .getFullPath();
                     } else if (o instanceof EditPart) {
-                        EditPart eObj = (EditPart) o;
-                        URI uri = ((View) eObj.getModel()).getElement()
-                                .eResource().getURI();
-                        path = Path.fromOSString(uri.toPlatformString(true));
+                        EditPart editPart = (EditPart) o;
+                        EObject eObj = getEObjectFromEditPart(editPart);
+                        if (eObj != null) {
+                            URI uri = eObj.eResource().getURI();
+                            path = Path
+                                    .fromOSString(uri.toPlatformString(true));
+                        }
                     }
                     if (path != null) {
                         IFile file = ResourcesPlugin.getWorkspace().getRoot()
@@ -233,8 +237,22 @@ public abstract class ReInitDiagramCommand extends AbstractHandler {
     public void reinitialize(final IFile path) {
         List<IFile> partners = getPartners(path);
 
-        List<IFile> selection = getUserSelection(partners);
-
+        List<IFile> selection = new LinkedList<IFile>();
+        if (partners.isEmpty()) {
+            IPath plain = path.getFullPath().removeFileExtension();
+            IPath newPath = plain.addFileExtension(getDiagramExtension());
+            IFile file = ResourcesPlugin.getWorkspace().getRoot()
+                    .getFile(newPath);
+            int i = 0;
+            while (file.exists()) {
+                newPath = plain.append(i++ + "");
+                file = ResourcesPlugin.getWorkspace().getRoot()
+                        .getFile(newPath);
+            }
+            selection.add(file);
+        } else {
+            selection = getUserSelection(partners);
+        }
         for (IFile partner : selection) {
             performPreOperationActions(path, partners);
 
@@ -258,6 +276,7 @@ public abstract class ReInitDiagramCommand extends AbstractHandler {
 
             performPostOperationAction(path, partners);
         }
+
     }
 
     /**
@@ -396,40 +415,43 @@ public abstract class ReInitDiagramCommand extends AbstractHandler {
         URI domainModelURI = URI.createPlatformResourceURI(builder.toString(),
                 true);
 
-        TransactionalEditingDomain editingDomain = GMFEditingDomainFactory.INSTANCE
-                .createEditingDomain();
+        TransactionalEditingDomain editingDomain = createEditingDomain();
         ResourceSet resourceSet = editingDomain.getResourceSet();
 
-        EObject diagramRoot = null;
+        EObject modelRoot = null;
         try {
             Resource resource = resourceSet.getResource(domainModelURI, true);
-            diagramRoot = resource.getContents().get(0);
+            modelRoot = resource.getContents().get(0);
         } catch (WrappedException ex) {
             ex.printStackTrace();
             return;
         }
-        if (diagramRoot == null) {
+        if (modelRoot == null) {
             IStatus status = new Status(IStatus.ERROR, CoreUIPlugin.PLUGIN_ID,
                     "DiagramRoot is null.");
             StatusManager.getManager().handle(status, StatusManager.LOG);
             return;
         }
-        createNewDiagram(diagramRoot, editingDomain, diagramPath);
+        createNewDiagram(modelRoot, editingDomain, diagramPath);
+    }
+
+    protected TransactionalEditingDomain createEditingDomain() {
+        return GMFEditingDomainFactory.INSTANCE.createEditingDomain();
     }
 
     /**
      * Create a new diagram file from the given semantics model. Subclasses must
      * override this as it is specific for each different diagram type.
      * 
-     * @param diagramRoot
-     *            the root element.
+     * @param modelRoot
+     *            the root element of the domain model.
      * @param editingDomain
      *            the editing domain.
      * @param diagramPath
      *            the destination file
      * @return true if the creation was successful
      */
-    public abstract boolean createNewDiagram(final EObject diagramRoot,
+    public abstract boolean createNewDiagram(final EObject modelRoot,
             final TransactionalEditingDomain editingDomain,
             final IFile diagramPath);
 

@@ -53,7 +53,7 @@ import de.cau.cs.kieler.core.expressions.Signal;
 import de.cau.cs.kieler.core.expressions.ValuedObject;
 import de.cau.cs.kieler.core.expressions.ValuedObjectReference;
 import de.cau.cs.kieler.core.expressions.Variable;
-import de.cau.cs.kieler.core.ui.commands.ReInitDiagramCommand;
+import de.cau.cs.kieler.core.ui.commands.AbstractReInitDiagramCommand;
 import de.cau.cs.kieler.synccharts.Action;
 import de.cau.cs.kieler.synccharts.Emission;
 import de.cau.cs.kieler.synccharts.Region;
@@ -76,7 +76,7 @@ public class UpdateResourceFactoryImpl extends XMIResourceFactoryImpl {
     /**
      * The command for reinitializing the diagram.
      */
-    private static ReInitDiagramCommand cmd;
+    private static AbstractReInitDiagramCommand cmd;
 
     /**
      * Set the reinitialize command for automatic migration. FIXME: currently
@@ -86,7 +86,7 @@ public class UpdateResourceFactoryImpl extends XMIResourceFactoryImpl {
      *            the param
      */
     public static void setReInitDiagramCommand(
-            final ReInitDiagramCommand cmdParam) {
+            final AbstractReInitDiagramCommand cmdParam) {
         cmd = cmdParam;
     }
 

@@ -42,7 +42,7 @@ import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.progress.WorkbenchJob;
 
-import de.cau.cs.kieler.core.ui.commands.ReInitDiagramCommand;
+import de.cau.cs.kieler.core.ui.commands.AbstractReInitDiagramCommand;
 import de.cau.cs.kieler.core.ui.util.EditorUtils;
 import de.cau.cs.kieler.kiml.ui.layout.EclipseLayoutServices;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.RegionEditPart;
@@ -57,7 +57,8 @@ import de.cau.cs.kieler.synccharts.diagram.part.SyncchartsVisualIDRegistry;
  * @author soh
  * @kieler.rating 2010-03-01 proposed yellow
  */
-public class ReInitSyncchartsDiagramCommand extends ReInitDiagramCommand {
+public class ReInitSyncchartsDiagramCommand extends
+        AbstractReInitDiagramCommand {
 
     /** File extension for diagram files. */
     private static final String DIAGRAM_EXTENSION = "kids";
