@@ -13,7 +13,7 @@ import org.eclipse.gmf.runtime.emf.type.core.IElementType;
 import org.eclipse.gmf.runtime.emf.ui.services.parser.ParserHintAdapter;
 import org.eclipse.gmf.runtime.notation.View;
 
-import de.cau.cs.kieler.core.expressions.ExpressionsPackage;
+import de.cau.cs.kieler.core.kexpressions.KExpressionsPackage;
 import de.cau.cs.kieler.synccharts.SyncchartsPackage;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.RegionState2LabelEditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.RegionStateLabelEditPart;
@@ -84,7 +84,7 @@ public class SyncchartsParserProvider extends AbstractProvider implements IParse
      */
     private IParser getSignalName_5051Parser() {
         if (signalName_5051Parser == null) {
-            EAttribute[] features = new EAttribute[] { ExpressionsPackage.eINSTANCE
+            EAttribute[] features = new EAttribute[] { KExpressionsPackage.eINSTANCE
                 .getValuedObject_Name() };
             MessageFormatParser parser = new MessageFormatParser(features);
             parser.setViewPattern("{0},"); //$NON-NLS-1$
@@ -185,9 +185,9 @@ public class SyncchartsParserProvider extends AbstractProvider implements IParse
      */
     private IParser getTextualCodeCode_5061Parser() {
         if (textualCodeCode_5061Parser == null) {
-            EAttribute[] features = new EAttribute[] { ExpressionsPackage.eINSTANCE
+            EAttribute[] features = new EAttribute[] { KExpressionsPackage.eINSTANCE
                 .getTextualCode_Code() };
-            EAttribute[] editableFeatures = new EAttribute[] { ExpressionsPackage.eINSTANCE
+            EAttribute[] editableFeatures = new EAttribute[] { KExpressionsPackage.eINSTANCE
                 .getTextualCode_Code() };
             MessageFormatParser parser = new MessageFormatParser(features, editableFeatures);
             textualCodeCode_5061Parser = parser;
@@ -261,7 +261,7 @@ public class SyncchartsParserProvider extends AbstractProvider implements IParse
      */
     private IParser getVariableName_5062Parser() {
         if (variableName_5062Parser == null) {
-            EAttribute[] features = new EAttribute[] { ExpressionsPackage.eINSTANCE
+            EAttribute[] features = new EAttribute[] { KExpressionsPackage.eINSTANCE
                 .getValuedObject_Name() };
             MessageFormatParser parser = new MessageFormatParser(features);
             variableName_5062Parser = parser;

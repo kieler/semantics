@@ -6,7 +6,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.gmf.runtime.notation.Diagram;
 import org.eclipse.gmf.runtime.notation.View;
 
-import de.cau.cs.kieler.core.expressions.ExpressionsPackage;
+import de.cau.cs.kieler.core.kexpressions.KExpressionsPackage;
 import de.cau.cs.kieler.synccharts.Region;
 import de.cau.cs.kieler.synccharts.SyncchartsPackage;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.RegionEditPart;
@@ -159,10 +159,10 @@ public class SyncchartsVisualIDRegistry {
             }
             break;
         case StateSignalCompartmentEditPart.VISUAL_ID:
-            if (ExpressionsPackage.eINSTANCE.getSignal().isSuperTypeOf(domainElement.eClass())) {
+            if (KExpressionsPackage.eINSTANCE.getSignal().isSuperTypeOf(domainElement.eClass())) {
                 return SignalEditPart.VISUAL_ID;
             }
-            if (ExpressionsPackage.eINSTANCE.getVariable().isSuperTypeOf(domainElement.eClass())) {
+            if (KExpressionsPackage.eINSTANCE.getVariable().isSuperTypeOf(domainElement.eClass())) {
                 return VariableEditPart.VISUAL_ID;
             }
             break;
@@ -187,7 +187,7 @@ public class SyncchartsVisualIDRegistry {
             }
             break;
         case StateRegionCompartment2EditPart.VISUAL_ID:
-            if (ExpressionsPackage.eINSTANCE.getTextualCode().isSuperTypeOf(domainElement.eClass())) {
+            if (KExpressionsPackage.eINSTANCE.getTextualCode().isSuperTypeOf(domainElement.eClass())) {
                 return TextualCodeEditPart.VISUAL_ID;
             }
             if (SyncchartsPackage.eINSTANCE.getRegion().isSuperTypeOf(domainElement.eClass())) {
@@ -198,15 +198,15 @@ public class SyncchartsVisualIDRegistry {
             if (SyncchartsPackage.eINSTANCE.getState().isSuperTypeOf(domainElement.eClass())) {
                 return RegionStateEditPart.VISUAL_ID;
             }
-            if (ExpressionsPackage.eINSTANCE.getTextualCode().isSuperTypeOf(domainElement.eClass())) {
+            if (KExpressionsPackage.eINSTANCE.getTextualCode().isSuperTypeOf(domainElement.eClass())) {
                 return TextualCodeEditPart.VISUAL_ID;
             }
             break;
         case StateSignalCompartment2EditPart.VISUAL_ID:
-            if (ExpressionsPackage.eINSTANCE.getSignal().isSuperTypeOf(domainElement.eClass())) {
+            if (KExpressionsPackage.eINSTANCE.getSignal().isSuperTypeOf(domainElement.eClass())) {
                 return SignalEditPart.VISUAL_ID;
             }
-            if (ExpressionsPackage.eINSTANCE.getVariable().isSuperTypeOf(domainElement.eClass())) {
+            if (KExpressionsPackage.eINSTANCE.getVariable().isSuperTypeOf(domainElement.eClass())) {
                 return VariableEditPart.VISUAL_ID;
             }
             break;
@@ -231,7 +231,7 @@ public class SyncchartsVisualIDRegistry {
             }
             break;
         case StateRegionCompartmentEditPart.VISUAL_ID:
-            if (ExpressionsPackage.eINSTANCE.getTextualCode().isSuperTypeOf(domainElement.eClass())) {
+            if (KExpressionsPackage.eINSTANCE.getTextualCode().isSuperTypeOf(domainElement.eClass())) {
                 return TextualCodeEditPart.VISUAL_ID;
             }
             if (SyncchartsPackage.eINSTANCE.getRegion().isSuperTypeOf(domainElement.eClass())) {

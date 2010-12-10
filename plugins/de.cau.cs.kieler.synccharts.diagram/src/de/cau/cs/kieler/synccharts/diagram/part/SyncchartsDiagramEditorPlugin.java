@@ -22,7 +22,7 @@ import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
 import de.cau.cs.kieler.core.annotations.provider.AnnotationsItemProviderAdapterFactory;
-import de.cau.cs.kieler.core.expressions.provider.ExpressionsItemProviderAdapterFactory;
+import de.cau.cs.kieler.core.kexpressions.provider.KExpressionsItemProviderAdapterFactory;
 import de.cau.cs.kieler.synccharts.diagram.edit.policies.SyncchartsBaseItemSemanticEditPolicy;
 import de.cau.cs.kieler.synccharts.diagram.expressions.SyncchartsOCLFactory;
 import de.cau.cs.kieler.synccharts.diagram.providers.ElementInitializers;
@@ -125,7 +125,7 @@ public class SyncchartsDiagramEditorPlugin extends AbstractUIPlugin {
         factories.add(new SyncchartsItemProviderAdapterFactory());
         factories.add(new AnnotationsItemProviderAdapterFactory());
         factories.add(new EcoreItemProviderAdapterFactory());
-        factories.add(new ExpressionsItemProviderAdapterFactory());
+        factories.add(new KExpressionsItemProviderAdapterFactory());
         factories.add(new ResourceItemProviderAdapterFactory());
         factories.add(new ReflectiveItemProviderAdapterFactory());
     }

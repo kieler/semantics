@@ -16,7 +16,7 @@ import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.resource.ImageRegistry;
 import org.eclipse.swt.graphics.Image;
 
-import de.cau.cs.kieler.core.expressions.ExpressionsPackage;
+import de.cau.cs.kieler.core.kexpressions.KExpressionsPackage;
 import de.cau.cs.kieler.synccharts.SyncchartsPackage;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.RegionEditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.RegionStateEditPart;
@@ -219,7 +219,7 @@ public class SyncchartsElementTypes {
 
             elements.put(State_2005, SyncchartsPackage.eINSTANCE.getState());
 
-            elements.put(Signal_3041, ExpressionsPackage.eINSTANCE.getSignal());
+            elements.put(Signal_3041, KExpressionsPackage.eINSTANCE.getSignal());
 
             elements.put(Action_3042, SyncchartsPackage.eINSTANCE.getAction());
 
@@ -229,13 +229,13 @@ public class SyncchartsElementTypes {
 
             elements.put(Action_3045, SyncchartsPackage.eINSTANCE.getAction());
 
-            elements.put(TextualCode_3046, ExpressionsPackage.eINSTANCE.getTextualCode());
+            elements.put(TextualCode_3046, KExpressionsPackage.eINSTANCE.getTextualCode());
 
             elements.put(Region_3039, SyncchartsPackage.eINSTANCE.getRegion());
 
             elements.put(State_3040, SyncchartsPackage.eINSTANCE.getState());
 
-            elements.put(Variable_3047, ExpressionsPackage.eINSTANCE.getVariable());
+            elements.put(Variable_3047, KExpressionsPackage.eINSTANCE.getVariable());
 
             elements.put(Transition_4005, SyncchartsPackage.eINSTANCE.getTransition());
         }
