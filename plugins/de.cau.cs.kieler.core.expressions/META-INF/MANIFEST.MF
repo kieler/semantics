@@ -1,22 +1,28 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Expressions for Synchronous Signals Metamodel
-Bundle-SymbolicName: de.cau.cs.kieler.core.expressions;singleton:=true
+Bundle-SymbolicName: de.cau.cs.kieler.core.kexpressions;singleton:=true
 Bundle-Version: 0.1.0.qualifier
 Bundle-ClassPath: .
 Bundle-Vendor: Christian-Albrechts-Universität zu Kiel
 Bundle-Localization: plugin
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
-Export-Package: de.cau.cs.kieler.core.expressions,
- de.cau.cs.kieler.core.expressions.formatting,
- de.cau.cs.kieler.core.expressions.impl,
- de.cau.cs.kieler.core.expressions.parseTreeConstruction,
- de.cau.cs.kieler.core.expressions.parser.antlr,
- de.cau.cs.kieler.core.expressions.parser.antlr.internal,
- de.cau.cs.kieler.core.expressions.scoping,
- de.cau.cs.kieler.core.expressions.services,
- de.cau.cs.kieler.core.expressions.util,
- de.cau.cs.kieler.core.expressions.validation
+Export-Package: de.cau.cs.kieler.core.kexpressions,
+ de.cau.cs.kieler.core.kexpressions.formatting,
+ de.cau.cs.kieler.core.kexpressions.impl,
+ de.cau.cs.kieler.core.kexpressions.parseTreeConstruction,
+ de.cau.cs.kieler.core.kexpressions.parser.antlr,
+ de.cau.cs.kieler.core.kexpressions.parser.antlr.internal,
+ de.cau.cs.kieler.core.kexpressions.scoping,
+ de.cau.cs.kieler.core.kexpressions.services,
+ de.cau.cs.kieler.core.kexpressions.util,
+ de.cau.cs.kieler.core.kexpressions.validation,
+ de.cau.cs.kieler.core.kexpressions,
+ de.cau.cs.kieler.core.kexpressions.services,
+ de.cau.cs.kieler.core.kexpressions.parseTreeConstruction,
+ de.cau.cs.kieler.core.kexpressions.parser.antlr,
+ de.cau.cs.kieler.core.kexpressions.parser.antlr.internal,
+ de.cau.cs.kieler.core.kexpressions.validation
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.emf.ecore;visibility:=reexport,
  org.eclipse.xtext;bundle-version="1.0.0",
@@ -26,6 +32,6 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.emf.mwe2.launch;bundle-version="1.0.0",
  org.eclipse.xtext.util,
  org.antlr.runtime,
- de.cau.cs.kieler.core.annotations
+ de.cau.cs.kieler.core.annotations;bundle-version="0.1.0"
 Bundle-ActivationPolicy: lazy
 Import-Package: org.apache.log4j;version="1.2.15"
