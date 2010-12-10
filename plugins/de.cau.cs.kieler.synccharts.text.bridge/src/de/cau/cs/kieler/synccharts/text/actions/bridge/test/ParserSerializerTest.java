@@ -27,9 +27,9 @@ import org.junit.Test;
 import com.google.inject.Injector;
 
 import de.cau.cs.kieler.core.KielerException;
-import de.cau.cs.kieler.core.expressions.ExpressionsFactory;
-import de.cau.cs.kieler.core.expressions.Signal;
-import de.cau.cs.kieler.core.expressions.Variable;
+import de.cau.cs.kieler.core.kexpressions.KExpressionsFactory;
+import de.cau.cs.kieler.core.kexpressions.Signal;
+import de.cau.cs.kieler.core.kexpressions.Variable;
 import de.cau.cs.kieler.synccharts.Action;
 import de.cau.cs.kieler.synccharts.Region;
 import de.cau.cs.kieler.synccharts.State;
@@ -80,14 +80,14 @@ public class ParserSerializerTest {
 
         // Create one signal for each letter
         for (int i = A; i <= Z; i++) { // ASCII letters A to Z
-            Signal sig = ExpressionsFactory.eINSTANCE.createSignal();
+            Signal sig = KExpressionsFactory.eINSTANCE.createSignal();
             char[] letters = Character.toChars(i);
             String letter = String.copyValueOf(letters);
             sig.setName(letter);
             sig.setIsInput(true);
             rootState.getSignals().add(sig);
 
-            Variable var = ExpressionsFactory.eINSTANCE.createVariable();
+            Variable var = KExpressionsFactory.eINSTANCE.createVariable();
             var.setName("var" + letter);
             region.getVariables().add(var);
         }

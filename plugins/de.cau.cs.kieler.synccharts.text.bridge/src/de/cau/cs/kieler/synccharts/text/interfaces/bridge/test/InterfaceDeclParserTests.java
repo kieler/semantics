@@ -25,10 +25,10 @@ import org.junit.Test;
 import com.google.inject.Injector;
 
 import de.cau.cs.kieler.core.KielerException;
-import de.cau.cs.kieler.core.expressions.CombineOperator;
-import de.cau.cs.kieler.core.expressions.ExpressionsFactory;
-import de.cau.cs.kieler.core.expressions.Signal;
-import de.cau.cs.kieler.core.expressions.Variable;
+import de.cau.cs.kieler.core.kexpressions.CombineOperator;
+import de.cau.cs.kieler.core.kexpressions.KExpressionsFactory;
+import de.cau.cs.kieler.core.kexpressions.Signal;
+import de.cau.cs.kieler.core.kexpressions.Variable;
 import de.cau.cs.kieler.synccharts.Region;
 import de.cau.cs.kieler.synccharts.State;
 import de.cau.cs.kieler.synccharts.SyncchartsFactory;
@@ -108,7 +108,7 @@ public class InterfaceDeclParserTests {
 
     @Test
     public void testSerializeSingle() throws Exception {
-        Signal sig = ExpressionsFactory.eINSTANCE.createSignal();
+        Signal sig = KExpressionsFactory.eINSTANCE.createSignal();
         sig.setName("IAMSPECIAL");
         rootState.getSignals().add(sig);
         String serialized = serialize(rootState);
@@ -129,7 +129,7 @@ public class InterfaceDeclParserTests {
             } else {
                 rootState.getRegions().get(0).getSignals().add(sig);
             }
-            Variable var = ExpressionsFactory.eINSTANCE.createVariable();
+            Variable var = KExpressionsFactory.eINSTANCE.createVariable();
             var.setName(prefix + "var" + letter);
             rootState.getRegions().get(0).getVariables().add(var);
             serialize(rootState);
@@ -270,7 +270,7 @@ public class InterfaceDeclParserTests {
     }
     
     private Signal generateRandomSignal(String name) {
-        Signal sig = ExpressionsFactory.eINSTANCE.createSignal();
+        Signal sig = KExpressionsFactory.eINSTANCE.createSignal();
         if (Math.random() < 0.5) {
             sig.setIsInput(true);
             if (Math.random() < 0.5) {

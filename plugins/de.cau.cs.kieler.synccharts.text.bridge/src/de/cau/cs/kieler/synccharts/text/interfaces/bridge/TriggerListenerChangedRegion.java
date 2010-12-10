@@ -21,10 +21,10 @@ import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emf.transaction.NotificationFilter;
 import org.eclipse.emf.transaction.TransactionalEditingDomain;
 
-import de.cau.cs.kieler.core.expressions.ExpressionsPackage;
-import de.cau.cs.kieler.core.expressions.Signal;
-import de.cau.cs.kieler.core.expressions.ValuedObject;
-import de.cau.cs.kieler.core.expressions.Variable;
+import de.cau.cs.kieler.core.kexpressions.KExpressionsPackage;
+import de.cau.cs.kieler.core.kexpressions.Signal;
+import de.cau.cs.kieler.core.kexpressions.ValuedObject;
+import de.cau.cs.kieler.core.kexpressions.Variable;
 import de.cau.cs.kieler.synccharts.Region;
 import de.cau.cs.kieler.synccharts.State;
 import de.cau.cs.kieler.synccharts.SyncchartsPackage;
@@ -50,16 +50,16 @@ public class TriggerListenerChangedRegion extends FireOnceTriggerListener {
      */
     public TriggerListenerChangedRegion() {
         super(NotificationFilter.createFeatureFilter(
-                ExpressionsPackage.eINSTANCE.getValuedObject_Name()).or(
-                NotificationFilter.createFeatureFilter(ExpressionsPackage.eINSTANCE
+                KExpressionsPackage.eINSTANCE.getValuedObject_Name()).or(
+                NotificationFilter.createFeatureFilter(KExpressionsPackage.eINSTANCE
                         .getValuedObject_InitialValue())).or(
-                NotificationFilter.createFeatureFilter(ExpressionsPackage.eINSTANCE
+                NotificationFilter.createFeatureFilter(KExpressionsPackage.eINSTANCE
                         .getValuedObject_Type())).or(
-                NotificationFilter.createFeatureFilter(ExpressionsPackage.eINSTANCE
+                NotificationFilter.createFeatureFilter(KExpressionsPackage.eINSTANCE
                         .getSignal_CombineOperator())).or(
-                NotificationFilter.createFeatureFilter(ExpressionsPackage.eINSTANCE
+                NotificationFilter.createFeatureFilter(KExpressionsPackage.eINSTANCE
                         .getValuedObject_HostType())).or(
-                NotificationFilter.createFeatureFilter(ExpressionsPackage.eINSTANCE
+                NotificationFilter.createFeatureFilter(KExpressionsPackage.eINSTANCE
                         .getSignal_HostCombineOperator())).or(
                 NotificationFilter.createFeatureFilter(
                         SyncchartsPackage.eINSTANCE.getScope_Signals()).and(
@@ -131,7 +131,7 @@ public class TriggerListenerChangedRegion extends FireOnceTriggerListener {
             Variable var = (Variable) vo;
             if (notification.getOldValue() == null
                     && notification.getFeature().equals(
-                            ExpressionsPackage.eINSTANCE.getValuedObject_Name())) {
+                            KExpressionsPackage.eINSTANCE.getValuedObject_Name())) {
                 // new variable was created
                 occuredChange = InterfaceDeclSerializeCommand.REGION_VARIABLE_NEW;
             } else if (notification.getFeature().equals(
@@ -142,7 +142,7 @@ public class TriggerListenerChangedRegion extends FireOnceTriggerListener {
                 occuredChange = InterfaceDeclSerializeCommand.REGION_VARIABLE;
                 // modified or renamed
                 if (notification.getFeature().equals(
-                        ExpressionsPackage.eINSTANCE.getValuedObject_Name())) {
+                        KExpressionsPackage.eINSTANCE.getValuedObject_Name())) {
                     // if it isnt catched in 1st&2nd case it has to be a
                     // renaming
                     oldName = notification.getOldStringValue();
@@ -158,7 +158,7 @@ public class TriggerListenerChangedRegion extends FireOnceTriggerListener {
             // determine what happened for the serializer
             if (notification.getOldValue() == null
                     && notification.getFeature().equals(
-                            ExpressionsPackage.eINSTANCE.getValuedObject_Name())) {
+                            KExpressionsPackage.eINSTANCE.getValuedObject_Name())) {
                 occuredChange = InterfaceDeclSerializeCommand.REGION_SIGNAL_NEW;
             } else if (notification.getFeature().equals(
                     SyncchartsPackage.eINSTANCE.getScope_Signals())) {
@@ -166,7 +166,7 @@ public class TriggerListenerChangedRegion extends FireOnceTriggerListener {
             } else {
                 occuredChange = InterfaceDeclSerializeCommand.REGION_SIGNAL;
                 if (notification.getFeature().equals(
-                        ExpressionsPackage.eINSTANCE.getValuedObject_Name())) {
+                        KExpressionsPackage.eINSTANCE.getValuedObject_Name())) {
                     // if it isnt catched in 1st&2nd case it has to be a
                     // renaming
                     oldName = notification.getOldStringValue();

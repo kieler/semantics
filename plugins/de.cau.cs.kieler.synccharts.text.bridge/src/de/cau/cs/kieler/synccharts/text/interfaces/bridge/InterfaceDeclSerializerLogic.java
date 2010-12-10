@@ -17,10 +17,10 @@ package de.cau.cs.kieler.synccharts.text.interfaces.bridge;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.util.EcoreUtil.Copier;
 
-import de.cau.cs.kieler.core.expressions.CombineOperator;
-import de.cau.cs.kieler.core.expressions.Signal;
-import de.cau.cs.kieler.core.expressions.ValueType;
-import de.cau.cs.kieler.core.expressions.Variable;
+import de.cau.cs.kieler.core.kexpressions.CombineOperator;
+import de.cau.cs.kieler.core.kexpressions.Signal;
+import de.cau.cs.kieler.core.kexpressions.ValueType;
+import de.cau.cs.kieler.core.kexpressions.Variable;
 import de.cau.cs.kieler.synccharts.Region;
 import de.cau.cs.kieler.synccharts.text.interfaces.interfaces.InOutputSignals;
 import de.cau.cs.kieler.synccharts.text.interfaces.interfaces.InputSignals;

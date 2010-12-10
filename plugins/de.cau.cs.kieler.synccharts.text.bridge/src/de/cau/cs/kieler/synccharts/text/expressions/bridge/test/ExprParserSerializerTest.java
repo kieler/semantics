@@ -34,11 +34,11 @@ import com.google.inject.Injector;
 
 import de.cau.cs.kieler.core.KielerException;
 import de.cau.cs.kieler.core.KielerModelException;
-import de.cau.cs.kieler.core.expressions.Expression;
-import de.cau.cs.kieler.core.expressions.ExpressionsFactory;
-import de.cau.cs.kieler.core.expressions.ExpressionsStandaloneSetup;
-import de.cau.cs.kieler.core.expressions.Signal;
-import de.cau.cs.kieler.core.expressions.Variable;
+import de.cau.cs.kieler.core.kexpressions.Expression;
+import de.cau.cs.kieler.core.kexpressions.KExpressionsFactory;
+import de.cau.cs.kieler.core.kexpressions.KExpressionsStandaloneSetup;
+import de.cau.cs.kieler.core.kexpressions.Signal;
+import de.cau.cs.kieler.core.kexpressions.Variable;
 import de.cau.cs.kieler.synccharts.Region;
 import de.cau.cs.kieler.synccharts.State;
 import de.cau.cs.kieler.synccharts.SyncchartsFactory;
@@ -85,14 +85,14 @@ public class ExprParserSerializerTest {
 
         // Create one signal for each letter
         for (int i = A; i <= Z; i++) { // ASCII letters A to Z
-            Signal sig = ExpressionsFactory.eINSTANCE.createSignal();
+            Signal sig = KExpressionsFactory.eINSTANCE.createSignal();
             char[] letters = Character.toChars(i);
             String letter = String.copyValueOf(letters);
             sig.setName(letter);
             sig.setIsInput(true);
             rootState.getSignals().add(sig);
 
-            Variable var = ExpressionsFactory.eINSTANCE.createVariable();
+            Variable var = KExpressionsFactory.eINSTANCE.createVariable();
             var.setName("var" + letter);
             region.getVariables().add(var);
         }
@@ -118,7 +118,7 @@ public class ExprParserSerializerTest {
      */
     @Before
     public void setUpParserAndSerializer() throws Exception {
-        injector = new ExpressionsStandaloneSetup() {
+        injector = new KExpressionsStandaloneSetup() {
         	
         	public Injector createInjector() {
         		return Guice.createInjector(new de.cau.cs.kieler.synccharts.text.expressions.bridge.test.ExpressionsRuntimeModule());

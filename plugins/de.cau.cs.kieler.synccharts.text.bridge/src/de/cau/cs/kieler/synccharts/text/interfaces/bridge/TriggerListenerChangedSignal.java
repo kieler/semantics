@@ -23,9 +23,9 @@ import org.eclipse.emf.transaction.NotificationFilter;
 import org.eclipse.emf.transaction.TransactionalEditingDomain;
 import org.eclipse.ui.statushandlers.StatusManager;
 
-import de.cau.cs.kieler.core.expressions.ExpressionsPackage;
-import de.cau.cs.kieler.core.expressions.Signal;
-import de.cau.cs.kieler.core.expressions.Variable;
+import de.cau.cs.kieler.core.kexpressions.KExpressionsPackage;
+import de.cau.cs.kieler.core.kexpressions.Signal;
+import de.cau.cs.kieler.core.kexpressions.Variable;
 import de.cau.cs.kieler.synccharts.Region;
 import de.cau.cs.kieler.synccharts.State;
 import de.cau.cs.kieler.synccharts.SyncchartsPackage;
@@ -46,20 +46,20 @@ public class TriggerListenerChangedSignal extends FireOnceTriggerListener {
      */
     public TriggerListenerChangedSignal() {
         super(NotificationFilter.createFeatureFilter(
-                ExpressionsPackage.eINSTANCE.getValuedObject_Name()).or(
-                NotificationFilter.createFeatureFilter(ExpressionsPackage.eINSTANCE
+                KExpressionsPackage.eINSTANCE.getValuedObject_Name()).or(
+                NotificationFilter.createFeatureFilter(KExpressionsPackage.eINSTANCE
                         .getValuedObject_InitialValue())).or(
-                NotificationFilter.createFeatureFilter(ExpressionsPackage.eINSTANCE
+                NotificationFilter.createFeatureFilter(KExpressionsPackage.eINSTANCE
                         .getValuedObject_Type())).or(
-                NotificationFilter.createFeatureFilter(ExpressionsPackage.eINSTANCE
+                NotificationFilter.createFeatureFilter(KExpressionsPackage.eINSTANCE
                         .getSignal_CombineOperator())).or(
-                NotificationFilter.createFeatureFilter(ExpressionsPackage.eINSTANCE
+                NotificationFilter.createFeatureFilter(KExpressionsPackage.eINSTANCE
                         .getValuedObject_HostType())).or(
-                NotificationFilter.createFeatureFilter(ExpressionsPackage.eINSTANCE
+                NotificationFilter.createFeatureFilter(KExpressionsPackage.eINSTANCE
                         .getSignal_HostCombineOperator())).or(
-                NotificationFilter.createFeatureFilter(ExpressionsPackage.eINSTANCE
+                NotificationFilter.createFeatureFilter(KExpressionsPackage.eINSTANCE
                         .getSignal_IsInput())).or(
-                NotificationFilter.createFeatureFilter(ExpressionsPackage.eINSTANCE
+                NotificationFilter.createFeatureFilter(KExpressionsPackage.eINSTANCE
                         .getSignal_IsOutput())).or(
                 NotificationFilter.createFeatureFilter(
                         SyncchartsPackage.eINSTANCE.getScope_Signals()).and(
@@ -142,16 +142,16 @@ public class TriggerListenerChangedSignal extends FireOnceTriggerListener {
         int occuredChange = -1;
         if (notification.getOldValue() == null
                 && notification.getFeature().equals(
-                        ExpressionsPackage.eINSTANCE.getValuedObject_Name())) {
+                        KExpressionsPackage.eINSTANCE.getValuedObject_Name())) {
             occuredChange = InterfaceDeclSerializeCommand.NEW;
         } else if (notification.getFeature().equals(
-                ExpressionsPackage.eINSTANCE.getValuedObject_Name())) {
+                KExpressionsPackage.eINSTANCE.getValuedObject_Name())) {
             occuredChange = InterfaceDeclSerializeCommand.NAME;
         } else if (notification.getFeature()
-                .equals(ExpressionsPackage.eINSTANCE.getSignal_IsInput())) {
+                .equals(KExpressionsPackage.eINSTANCE.getSignal_IsInput())) {
             occuredChange = InterfaceDeclSerializeCommand.INPUT;
         } else if (notification.getFeature().equals(
-                ExpressionsPackage.eINSTANCE.getSignal_IsOutput())) {
+                KExpressionsPackage.eINSTANCE.getSignal_IsOutput())) {
             occuredChange = InterfaceDeclSerializeCommand.OUTPUT;
         } else if (notification.getFeature().equals(SyncchartsPackage.eINSTANCE.getScope_Signals())
                 && notification.getEventType() == Notification.REMOVE) {
@@ -161,7 +161,7 @@ public class TriggerListenerChangedSignal extends FireOnceTriggerListener {
         try {
             // renaming
             if (notification.getFeature()
-                    .equals(ExpressionsPackage.eINSTANCE.getValuedObject_Name())) {
+                    .equals(KExpressionsPackage.eINSTANCE.getValuedObject_Name())) {
                 cc.append(interfaceDeclProcessor.getSerializationCommand(state, sig, notification
                         .getOldStringValue(), occuredChange));
             } else if (occuredChange != -1) {

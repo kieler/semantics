@@ -34,9 +34,9 @@ import org.eclipse.xtext.resource.XtextResourceSet;
 import com.google.inject.Injector;
 
 import de.cau.cs.kieler.core.KielerModelException;
-import de.cau.cs.kieler.core.expressions.ExpressionsFactory;
-import de.cau.cs.kieler.core.expressions.Signal;
-import de.cau.cs.kieler.core.expressions.Variable;
+import de.cau.cs.kieler.core.kexpressions.KExpressionsFactory;
+import de.cau.cs.kieler.core.kexpressions.Signal;
+import de.cau.cs.kieler.core.kexpressions.Variable;
 import de.cau.cs.kieler.synccharts.Region;
 import de.cau.cs.kieler.synccharts.State;
 import de.cau.cs.kieler.synccharts.text.interfaces.interfaces.InOutputSignals;
@@ -173,7 +173,7 @@ public class InterfaceDeclParseCommand extends AbstractCommand {
             // remove old signals
             if (currentState.getSignals().size() == 1) {
                 currentState.getSignals().add(
-                        ExpressionsFactory.eINSTANCE.createSignal());
+                        KExpressionsFactory.eINSTANCE.createSignal());
             }
             currentState.getSignals().clear();
             // remove all renamings
@@ -182,12 +182,12 @@ public class InterfaceDeclParseCommand extends AbstractCommand {
             for (Region r : currentState.getRegions()) {
                 if (r.getSignals().size() == 1) {
                     r.getSignals().add(
-                            ExpressionsFactory.eINSTANCE.createSignal());
+                            KExpressionsFactory.eINSTANCE.createSignal());
                 }
                 r.getSignals().clear();
                 if (r.getVariables().size() == 1) {
                     r.getVariables().add(
-                            ExpressionsFactory.eINSTANCE.createVariable());
+                            KExpressionsFactory.eINSTANCE.createVariable());
                 }
                 r.getVariables().clear();
             }
