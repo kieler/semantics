@@ -152,7 +152,7 @@
       </eAnnotations>
     </eLiterals>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Signal" eSuperTypes="#//ValuedObject platform:/plugin/de.cau.cs.kieler.core.annotations/model/annotations.ecore#//Annotatable">
+  <eClassifiers xsi:type="ecore:EClass" name="Signal" eSuperTypes="#//ValuedObject">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
       <details key="documentation" value="A Signal is the first-class data object in synchronous languages used for communication.&#xA;Signals extend ValuedObject and therefore have a name and may carry a value. A Signal can&#xA;be part of a module's interface and therefore be an input, an output (or even both). If a Signal&#xA;is neither input nor output, it is considered to be a local signal with a limited scope not visible&#xA;to the outside.&#xA;&lt;p>&#xA;As the value of a Signal is unique in one tick, the interpreter needs to know how to handle &#xA;multiple emissions of the same Signal in a tick. Therefore a combineOperator can be set. Such &#xA;operator needs to be commutative. It can be chosen from a pre-defined enumeration or by&#xA;a String referencing a function in the target language (e.g. a C or Java function name that &#xA;has exactly two parameters and produces one combined result of the corresponding data type).&#xA;&#xA;"/>
     </eAnnotations>
