@@ -1344,6 +1344,26 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 		return getTextEffectAccess().getRule();
 	}
 
+	//enum DivOperator returns expressions::OperatorType:
+	//	DIV=":";
+	public ActionsGrammarAccess.DivOperatorElements getDivOperatorAccess() {
+		return gaActions.getDivOperatorAccess();
+	}
+	
+	public EnumRule getDivOperatorRule() {
+		return getDivOperatorAccess().getRule();
+	}
+
+	//Root returns ecore::EObject:
+	//	Expression | InterfaceDeclaration;
+	public ExpressionsGrammarAccess.RootElements getRootAccess() {
+		return gaActions.getRootAccess();
+	}
+	
+	public ParserRule getRootRule() {
+		return getRootAccess().getRule();
+	}
+
 	//// --------------------------
 	////
 	////   EXPRESSIONS
@@ -1416,6 +1436,18 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 		return getNotOrValuedExpressionAccess().getRule();
 	}
 
+	//// Example: not A, not false, not (A or B)
+	//// at the latter we need the parans to indicate the right binding
+	//NotExpression returns Expression:
+	//	{OperatorExpression} operator=NotOperator subExpressions+=NotExpression | AtomicExpression;
+	public ExpressionsGrammarAccess.NotExpressionElements getNotExpressionAccess() {
+		return gaActions.getNotExpressionAccess();
+	}
+	
+	public ParserRule getNotExpressionRule() {
+		return getNotExpressionAccess().getRule();
+	}
+
 	//// everything that evaluates to a primitive number value
 	//ValuedExpression returns Expression:
 	//	AddExpression;
@@ -1449,9 +1481,12 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 		return getSubExpressionAccess().getRule();
 	}
 
+	////    ({OperatorExpression} subExpressions+=MultExpression (operator=SubOperator subExpressions+=MultExpression)+)
+	////	| ({OperatorExpression} subExpressions+=MultExpression subExpressions+=NIntValue)
+	////    | MultExpression;
 	//// Example: 2 * 4
 	//MultExpression returns Expression:
-	//	ModExpression ({OperatorExpression.subExpressions+=current} operator=MultOperator subExpressions+=ModExpression)*;
+	//	DivExpression ({OperatorExpression.subExpressions+=current} operator=MultOperator subExpressions+=DivExpression)*;
 	public ExpressionsGrammarAccess.MultExpressionElements getMultExpressionAccess() {
 		return gaActions.getMultExpressionAccess();
 	}
@@ -1460,9 +1495,21 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 		return getMultExpressionAccess().getRule();
 	}
 
+	//// Example: (2 / 4)
+	//// note: division always has to have parantheses because the '/' sign is also used for trigger/effect delimiter
+	//DivExpression returns Expression:
+	//	ModExpression ({OperatorExpression.subExpressions+=current} operator=DivOperator subExpressions+=ModExpression)?;
+	public ExpressionsGrammarAccess.DivExpressionElements getDivExpressionAccess() {
+		return gaActions.getDivExpressionAccess();
+	}
+	
+	public ParserRule getDivExpressionRule() {
+		return getDivExpressionAccess().getRule();
+	}
+
 	//// Example: varA mod ?B
 	//ModExpression returns Expression:
-	//	AtomicValuedExpression ({OperatorExpression.subExpressions+=current} operator=ModOperator
+	//	NegExpression ({OperatorExpression.subExpressions+=current} operator=ModOperator
 	//	subExpressions+=AtomicValuedExpression)?;
 	public ExpressionsGrammarAccess.ModExpressionElements getModExpressionAccess() {
 		return gaActions.getModExpressionAccess();
@@ -1474,14 +1521,14 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 
 	//// Example: not A, not false, not (A or B)
 	//// at the latter we need the parans to indicate the right binding
-	//NotExpression returns Expression:
-	//	{OperatorExpression} operator=NotOperator subExpressions+=NotExpression | AtomicExpression;
-	public ExpressionsGrammarAccess.NotExpressionElements getNotExpressionAccess() {
-		return gaActions.getNotExpressionAccess();
+	//NegExpression returns Expression:
+	//	{OperatorExpression} operator=SubOperator subExpressions+=NegExpression | AtomicValuedExpression;
+	public ExpressionsGrammarAccess.NegExpressionElements getNegExpressionAccess() {
+		return gaActions.getNegExpressionAccess();
 	}
 	
-	public ParserRule getNotExpressionRule() {
-		return getNotExpressionAccess().getRule();
+	public ParserRule getNegExpressionRule() {
+		return getNegExpressionAccess().getRule();
 	}
 
 	//AtomicExpression returns Expression:
@@ -1495,26 +1542,14 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//AtomicValuedExpression returns Expression:
-	//	IntValue | FloatValue | "(" DivExpression ")" | "(" ValuedExpression ")" | AtomicExpression;
+	//	IntValue //    | '(' DivExpression ')'
+	//	| FloatValue | "(" ValuedExpression ")" | AtomicExpression;
 	public ExpressionsGrammarAccess.AtomicValuedExpressionElements getAtomicValuedExpressionAccess() {
 		return gaActions.getAtomicValuedExpressionAccess();
 	}
 	
 	public ParserRule getAtomicValuedExpressionRule() {
 		return getAtomicValuedExpressionAccess().getRule();
-	}
-
-	//// Example: (2 / 4)
-	//// note: division always has to have parantheses because the '/' sign is also used for trigger/effect delimiter
-	//DivExpression returns Expression:
-	//	AtomicValuedExpression {OperatorExpression.subExpressions+=current} operator=DivOperator
-	//	subExpressions+=AtomicValuedExpression;
-	public ExpressionsGrammarAccess.DivExpressionElements getDivExpressionAccess() {
-		return gaActions.getDivExpressionAccess();
-	}
-	
-	public ParserRule getDivExpressionRule() {
-		return getDivExpressionAccess().getRule();
 	}
 
 	//// Example: pre(pre(?A)), pre(pre(A)), ?A, A varX
@@ -1561,6 +1596,8 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 		return getIntValueAccess().getRule();
 	}
 
+	////NIntValue returns IntValue:
+	////	value=NINT;
 	//FloatValue:
 	//	value=Float;
 	public ExpressionsGrammarAccess.FloatValueElements getFloatValueAccess() {
@@ -1594,6 +1631,100 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 		return getAnyTypeAccess().getRule();
 	}
 
+	//// --------------------------
+	////
+	////  Interface Declarations
+	////
+	//// --------------------------
+	//InterfaceDeclaration:
+	//	InterfaceSignalDecl | InterfaceVariableDecl;
+	public ExpressionsGrammarAccess.InterfaceDeclarationElements getInterfaceDeclarationAccess() {
+		return gaActions.getInterfaceDeclarationAccess();
+	}
+	
+	public ParserRule getInterfaceDeclarationRule() {
+		return getInterfaceDeclarationAccess().getRule();
+	}
+
+	//ISignal:
+	//	name=ID channelDescr=ChannelDescription?;
+	public ExpressionsGrammarAccess.ISignalElements getISignalAccess() {
+		return gaActions.getISignalAccess();
+	}
+	
+	public ParserRule getISignalRule() {
+		return getISignalAccess().getRule();
+	}
+
+	//InterfaceSignalDecl:
+	//	{Input} "input" signals+=ISignal ("," signals+=ISignal)* ";" | {Output} "output" signals+=ISignal (","
+	//	signals+=ISignal)* ";" | {InputOutput} "inputoutput" signals+=ISignal ("," signals+=ISignal)* ";" | {Return} "return"
+	//	signals+=ISignal ("," signals+=ISignal)* ";";
+	public ExpressionsGrammarAccess.InterfaceSignalDeclElements getInterfaceSignalDeclAccess() {
+		return gaActions.getInterfaceSignalDeclAccess();
+	}
+	
+	public ParserRule getInterfaceSignalDeclRule() {
+		return getInterfaceSignalDeclAccess().getRule();
+	}
+
+	//ChannelDescription:
+	//	":" type=TypeIdentifier | "(" type=TypeIdentifier ")" | ":=" expression=Expression ":" type=TypeIdentifier;
+	public ExpressionsGrammarAccess.ChannelDescriptionElements getChannelDescriptionAccess() {
+		return gaActions.getChannelDescriptionAccess();
+	}
+	
+	public ParserRule getChannelDescriptionRule() {
+		return getChannelDescriptionAccess().getRule();
+	}
+
+	//// Variables
+	//InterfaceVariableDecl:
+	//	"var" varDecls+=VariableDecl ("," varDecls+=VariableDecl)*;
+	public ExpressionsGrammarAccess.InterfaceVariableDeclElements getInterfaceVariableDeclAccess() {
+		return gaActions.getInterfaceVariableDeclAccess();
+	}
+	
+	public ParserRule getInterfaceVariableDeclRule() {
+		return getInterfaceVariableDeclAccess().getRule();
+	}
+
+	//VariableDecl:
+	//	variables+=IVariable ("," variables+=IVariable)* ":" type=TypeIdentifier;
+	public ExpressionsGrammarAccess.VariableDeclElements getVariableDeclAccess() {
+		return gaActions.getVariableDeclAccess();
+	}
+	
+	public ParserRule getVariableDeclRule() {
+		return getVariableDeclAccess().getRule();
+	}
+
+	//IVariable:
+	//	name=ID (":=" expression=Expression)?;
+	public ExpressionsGrammarAccess.IVariableElements getIVariableAccess() {
+		return gaActions.getIVariableAccess();
+	}
+	
+	public ParserRule getIVariableRule() {
+		return getIVariableAccess().getRule();
+	}
+
+	//// transform ID to hostcode
+	//TypeIdentifier:
+	//	type=ValueType | typeID=ID | "combine" (type=ValueType | typeID=ID) "with" operator=CombineOperator;
+	public ExpressionsGrammarAccess.TypeIdentifierElements getTypeIdentifierAccess() {
+		return gaActions.getTypeIdentifierAccess();
+	}
+	
+	public ParserRule getTypeIdentifierRule() {
+		return getTypeIdentifierAccess().getRule();
+	}
+
+	//// --------------------------
+	////
+	////  Terminals...
+	////
+	//// --------------------------
 	//enum CompareOperator returns OperatorType:
 	//	EQ="=" | LT="<" | LEQ="<=" | GT=">" | GEQ=">=" | NE="<>";
 	public ExpressionsGrammarAccess.CompareOperatorElements getCompareOperatorAccess() {
@@ -1684,16 +1815,6 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 		return getModOperatorAccess().getRule();
 	}
 
-	//enum DivOperator returns OperatorType:
-	//	DIV="/";
-	public ExpressionsGrammarAccess.DivOperatorElements getDivOperatorAccess() {
-		return gaActions.getDivOperatorAccess();
-	}
-	
-	public EnumRule getDivOperatorRule() {
-		return getDivOperatorAccess().getRule();
-	}
-
 	//enum ValueTestOperator returns OperatorType:
 	//	VAL="?";
 	public ExpressionsGrammarAccess.ValueTestOperatorElements getValueTestOperatorAccess() {
@@ -1733,6 +1854,9 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 		return gaActions.getINTRule();
 	} 
 
+	////// redefine INT terminal to allow negative numbers
+	////terminal NINT returns ecore::EInt:
+	////    '-'?('0'..'9')+;
 	//// make sure the Float rule does not shadow the INT rule
 	//terminal Float returns ecore::EFloatObject:
 	//	(INT "." INT | INT ("." INT)? ("e" | "E") "+"? INT) "f"? | INT "f";

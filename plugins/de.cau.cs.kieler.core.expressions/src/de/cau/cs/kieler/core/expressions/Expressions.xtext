@@ -5,6 +5,12 @@ import "platform:/resource/de.cau.cs.kieler.core.annotations/model/annotations.e
 
 import "http://www.eclipse.org/emf/2002/Ecore" as ecore
 
+
+Root returns ecore::EObject:
+    Expression
+    | InterfaceDeclaration;
+
+
 // --------------------------
 //
 //   EXPRESSIONS
@@ -46,6 +52,14 @@ NotOrValuedExpression returns Expression:
     ;
 
 
+// Example: not A, not false, not (A or B)
+// at the latter we need the parans to indicate the right binding
+NotExpression returns Expression:
+	{OperatorExpression} operator=NotOperator subExpressions+=(NotExpression)
+    | AtomicExpression
+    ;
+  
+    
 // everything that evaluates to a primitive number value
 ValuedExpression returns Expression:
 	AddExpression;
@@ -59,23 +73,32 @@ AddExpression returns Expression:
 // Example: varA - ?B
 SubExpression returns Expression:
 	MultExpression ({OperatorExpression.subExpressions+=current} operator=SubOperator subExpressions+=MultExpression)*;
+//    ({OperatorExpression} subExpressions+=MultExpression (operator=SubOperator subExpressions+=MultExpression)+)
+//	| ({OperatorExpression} subExpressions+=MultExpression subExpressions+=NIntValue)
+//    | MultExpression;
 
 
 // Example: 2 * 4
 MultExpression returns Expression:
-	ModExpression ({OperatorExpression.subExpressions+=current} operator=MultOperator subExpressions+=ModExpression)*;
+	DivExpression ({OperatorExpression.subExpressions+=current} operator=MultOperator subExpressions+=DivExpression)*;
 
+
+// Example: (2 / 4)
+// note: division always has to have parantheses because the '/' sign is also used for trigger/effect delimiter
+DivExpression returns Expression:
+	ModExpression ({OperatorExpression.subExpressions+=current} operator=DivOperator subExpressions+=ModExpression)?;
+	
 
 // Example: varA mod ?B
 ModExpression returns Expression:
-	AtomicValuedExpression ({OperatorExpression.subExpressions+=current} operator=ModOperator subExpressions+=AtomicValuedExpression)?;
+	NegExpression ({OperatorExpression.subExpressions+=current} operator=ModOperator subExpressions+=AtomicValuedExpression)?;
 
 
 // Example: not A, not false, not (A or B)
 // at the latter we need the parans to indicate the right binding
-NotExpression returns Expression:
-	{OperatorExpression} operator=NotOperator subExpressions+=(NotExpression)
-    | AtomicExpression
+NegExpression returns Expression:
+	{OperatorExpression} operator=SubOperator subExpressions+=(NegExpression)
+    | AtomicValuedExpression
     ;
   
     
@@ -90,16 +113,10 @@ AtomicExpression returns Expression:
 AtomicValuedExpression returns Expression:
     IntValue
     | FloatValue
-    | '(' DivExpression ')'
+//    | '(' DivExpression ')'
     | '(' ValuedExpression ')'
     | AtomicExpression 
     ;
-
-
-// Example: (2 / 4)
-// note: division always has to have parantheses because the '/' sign is also used for trigger/effect delimiter
-DivExpression returns Expression:
-	AtomicValuedExpression {OperatorExpression.subExpressions+=current} operator=DivOperator subExpressions+=AtomicValuedExpression;
 
 
 // Example: pre(pre(?A)), pre(pre(A)), ?A, A varX
@@ -123,6 +140,9 @@ TextExpression returns TextExpression:
 IntValue returns IntValue:
 	value=INT;
 
+//NIntValue returns IntValue:
+//	value=NINT;
+
 
 FloatValue returns FloatValue:
 	value=Float;
@@ -137,6 +157,56 @@ BooleanValue returns BooleanValue:
 // used in Kits.xtext 
 AnyType returns ecore::EString:
     Boolean | INT |Float | ID | STRING;
+
+
+// --------------------------
+//
+//  Interface Declarations
+//
+// --------------------------
+
+InterfaceDeclaration:
+	InterfaceSignalDecl 
+	| InterfaceVariableDecl
+;
+
+ISignal returns ISignal:
+	name=ID (channelDescr=ChannelDescription)?;
+
+InterfaceSignalDecl:
+	{Input} "input" signals+=ISignal ("," signals+=ISignal)* ";" |
+	{Output} "output" signals+=ISignal ("," signals+=ISignal)* ";" |
+	{InputOutput} "inputoutput" signals+=ISignal ("," signals+=ISignal)* ";" |
+	{Return} "return" signals+=ISignal ("," signals+=ISignal)* ";";
+
+ChannelDescription:
+	(":" type=TypeIdentifier)
+	| ("(" type=TypeIdentifier ")")
+	| (":=" expression=Expression ":" type=TypeIdentifier);
+
+// Variables
+InterfaceVariableDecl:
+	"var" (varDecls+=VariableDecl) ("," varDecls+=VariableDecl)*;
+	
+VariableDecl:
+	(variables+=IVariable) ("," variables+=IVariable)* ":" type=TypeIdentifier;
+
+IVariable:
+	 name=ID (":=" expression=Expression)?;
+
+// transform ID to hostcode
+TypeIdentifier:
+	type=ValueType 
+	| typeID=ID
+	| ("combine" (type=ValueType | typeID=ID) "with" operator=CombineOperator);
+	
+	
+
+// --------------------------
+//
+//  Terminals...
+//
+// --------------------------
 
 
 enum CompareOperator returns OperatorType:
@@ -189,6 +259,10 @@ enum CombineOperator returns CombineOperator:
 // redefine INT terminal to allow negative numbers
 terminal INT returns ecore::EInt:
     '-'?('0'..'9')+;
+
+//// redefine INT terminal to allow negative numbers
+//terminal NINT returns ecore::EInt:
+//    '-'?('0'..'9')+;
 
 
 // make sure the Float rule does not shadow the INT rule

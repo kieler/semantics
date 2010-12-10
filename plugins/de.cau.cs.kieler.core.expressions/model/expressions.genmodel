@@ -43,6 +43,8 @@
       <genEnumLiterals ecoreEnumLiteral="expressions.ecore#//ValueType/INT"/>
       <genEnumLiterals ecoreEnumLiteral="expressions.ecore#//ValueType/FLOAT"/>
       <genEnumLiterals ecoreEnumLiteral="expressions.ecore#//ValueType/HOST"/>
+      <genEnumLiterals ecoreEnumLiteral="expressions.ecore#//ValueType/DOUBLE"/>
+      <genEnumLiterals ecoreEnumLiteral="expressions.ecore#//ValueType/STRING"/>
     </genEnums>
     <genClasses ecoreClass="expressions.ecore#//ComplexExpression">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference expressions.ecore#//ComplexExpression/subExpressions"/>
@@ -84,5 +86,35 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute expressions.ecore#//OperatorExpression/operator"/>
     </genClasses>
     <genClasses ecoreClass="expressions.ecore#//TextExpression"/>
+    <genClasses ecoreClass="expressions.ecore#//InterfaceDeclaration"/>
+    <genClasses ecoreClass="expressions.ecore#//InterfaceSignalDecl">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference expressions.ecore#//InterfaceSignalDecl/signals"/>
+    </genClasses>
+    <genClasses ecoreClass="expressions.ecore#//ISignal">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference expressions.ecore#//ISignal/channelDescr"/>
+    </genClasses>
+    <genClasses ecoreClass="expressions.ecore#//ChannelDescription">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference expressions.ecore#//ChannelDescription/type"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference expressions.ecore#//ChannelDescription/expression"/>
+    </genClasses>
+    <genClasses ecoreClass="expressions.ecore#//TypeIdentifier">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute expressions.ecore#//TypeIdentifier/type"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute expressions.ecore#//TypeIdentifier/typeID"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute expressions.ecore#//TypeIdentifier/operator"/>
+    </genClasses>
+    <genClasses ecoreClass="expressions.ecore#//InterfaceVariableDecl">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference expressions.ecore#//InterfaceVariableDecl/varDecls"/>
+    </genClasses>
+    <genClasses ecoreClass="expressions.ecore#//VariableDecl">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference expressions.ecore#//VariableDecl/variables"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference expressions.ecore#//VariableDecl/type"/>
+    </genClasses>
+    <genClasses ecoreClass="expressions.ecore#//IVariable">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference expressions.ecore#//IVariable/expression"/>
+    </genClasses>
+    <genClasses ecoreClass="expressions.ecore#//Input"/>
+    <genClasses ecoreClass="expressions.ecore#//Output"/>
+    <genClasses ecoreClass="expressions.ecore#//InputOutput"/>
+    <genClasses ecoreClass="expressions.ecore#//Return"/>
   </genPackages>
 </genmodel:GenModel>

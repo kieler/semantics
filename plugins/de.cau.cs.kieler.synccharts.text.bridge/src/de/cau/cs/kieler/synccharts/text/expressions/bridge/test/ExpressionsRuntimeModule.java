@@ -16,13 +16,14 @@ package de.cau.cs.kieler.synccharts.text.expressions.bridge.test;
 /**
  * Use this class to register components to be used at runtime / without the Equinox extension registry.
  */
-public class ExpressionsRuntimeModule extends de.cau.cs.kieler.core.expressions.AbstractExpressionsRuntimeModule {
+public class ExpressionsRuntimeModule extends de.cau.cs.kieler.core.expressions.ExpressionsRuntimeModule {
 	
 	// contributed by org.eclipse.xtext.generator.scoping.AbstractScopingFragment
 	public Class<? extends org.eclipse.xtext.scoping.IScopeProvider> bindIScopeProvider() {
 		return de.cau.cs.kieler.synccharts.text.actions.scoping.ActionsScopeProvider.class;
 	}
 
-
-
+//	public Class<? extends org.eclipse.xtext.conversion.IValueConverterService> bindIValueConverterService() {
+//	        return de.cau.cs.kieler.core.expressions.formatting.ExpressionsValueConverter.class;
+//	}
 }

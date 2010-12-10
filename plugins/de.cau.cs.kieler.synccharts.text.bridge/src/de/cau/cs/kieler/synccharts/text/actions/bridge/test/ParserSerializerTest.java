@@ -303,7 +303,7 @@ public class ParserSerializerTest {
      */
     @Test
     public void testSerializerHostCode() throws Exception {
-        this.parseAndSerialize("/ \"This is some host code\"");
+        this.parseAndSerialize("/ \'This is some host code\'");
     }
 
     /**
@@ -314,7 +314,7 @@ public class ParserSerializerTest {
      */
     @Test
     public void testSerializerHostCodeType() throws Exception {
-        this.parseAndSerialize("/ \"This is some host code\"(Natural)");
+        this.parseAndSerialize("/ \'This is some host code\'(Natural)");
     }
 
     /**
@@ -325,8 +325,8 @@ public class ParserSerializerTest {
      */
     @Test
     public void testSerializerHostCodeEverywhere() throws Exception {
-        this.parseAndSerialize("A and \"HostCode\" and 4 < \"Hooooost\" /"
-                + " \"This is some host code\"");
+        this.parseAndSerialize("A and \'HostCode\' and 4 < \'Hooooost\' /"
+                + " \'This is some host code\'");
 //        this.parseAndSerialize("(A and \"HostCode\"(host)) and (4 < \"Hooooost\") /"
 //                + " \"This is some host code\"(Natural)");
     }
@@ -361,7 +361,7 @@ public class ParserSerializerTest {
      */
     @Test
     public void testSerializerBoolExpressionAllEffects() throws Exception {
-        this.parseAndSerialize("A and B / C(3), varA:=5, \"host code\"(Esterel)");
+        this.parseAndSerialize("A and B / C(3), varA:=5, \'host code\'(Esterel)");
     }
 
     /**
@@ -394,7 +394,18 @@ public class ParserSerializerTest {
      */
     @Test
     public void testSerializerDelayedPlain() throws Exception {
-        this.parseAndSerialize("3");
+        this.parseAndSerialize("3 tick");
+    }
+
+    /**
+     * A JUnit test for the Labelparser.
+     * 
+     * @throws Exception
+     *             if parsing fails
+     */
+    @Test
+    public void testSerializerDelayedConst() throws Exception {
+        this.parseAndSerialize("3 true");
     }
 
     /**
@@ -416,7 +427,7 @@ public class ParserSerializerTest {
      */
     @Test
     public void testSerializerDelayedEffect() throws Exception {
-        this.parseAndSerialize("3 / B");
+        this.parseAndSerialize("3 tick / B");
     }
 
     /**
@@ -515,7 +526,7 @@ public class ParserSerializerTest {
      */
     @Test
     public void testSerializerDiv() throws Exception {
-        this.parseAndSerialize("(varA / ?B) > varB");
+        this.parseAndSerialize("varA : ?B > varB");
     }
 
     /**
@@ -537,7 +548,7 @@ public class ParserSerializerTest {
      */
     @Test
     public void testSerializerPlusDiv() throws Exception {
-        this.parseAndSerialize("(5 / varA) - (?B / 2) > 3");
+        this.parseAndSerialize("5 : varA - ?B : 2 > 3");
     }
 
     /**
@@ -548,7 +559,7 @@ public class ParserSerializerTest {
      */
     @Test
     public void testSerializerMultDiv() throws Exception {
-        this.parseAndSerialize("varA * (?B / 2) < 2");
+        this.parseAndSerialize("varA * ?B : 2 < 2");
     }
 
     /**
@@ -592,7 +603,7 @@ public class ParserSerializerTest {
      */
     @Test
     public void testSerializerCtr1() throws Exception {
-        this.parseAndSerialize("5 * (?A / 5) = ?A / B");
+        this.parseAndSerialize("5 * ?A : 5 = ?A / B");
     }
 
     /**
@@ -677,7 +688,7 @@ public class ParserSerializerTest {
      */
     private void parse(final String textToParse) throws KielerException, IOException {
         ActionLabelParseCommand parseCommand = new ActionLabelParseCommand(transition, textToParse,
-                parser, injector);
+                parser, injector, true);
         parseCommand.parse();
     }
 

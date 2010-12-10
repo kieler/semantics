@@ -70,6 +70,16 @@ public class ExpressionsValueConverter extends AnnotationsValueConverter {
                             "INT-value may not be null. (null indeed, zero is ok)", null, null);
                 return value.toString();
             }
+            
+            protected void assertValidValue(Integer value) {
+                // Nothing to do, super method throws exception if value < 0
+//                if (value >= 0) {
+//                    throw new ValueConverterException(
+//                            "NINT must be < 0", null, null);
+//                }
+            }
+            
+            
         };
     }
 

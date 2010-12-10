@@ -39,4 +39,6 @@ Assignment returns synccharts::Assignment:
 TextEffect returns synccharts::TextEffect:
  	code=HOSTCODE ("(" type=ID ")")?;
 
+enum DivOperator returns expressions::OperatorType:	
+	DIV=":";
 	

@@ -24,7 +24,6 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource.Diagnostic;
 import org.eclipse.xtext.parser.IParseResult;
-import org.eclipse.xtext.parser.antlr.IAntlrParser;
 import org.eclipse.xtext.resource.XtextResource;
 import org.eclipse.xtext.resource.XtextResourceSet;
 import org.junit.Before;
@@ -137,6 +136,50 @@ public class ExprParserSerializerTest {
     @Test
     public void testSerializerSum() throws Exception {
         this.parseAndSerialize("5 + 5");
+    }
+
+    /**
+     * A JUnit test for the Expressionparser.
+     * 
+     * @throws Exception
+     *             if parsing fails
+     */
+    @Test
+    public void testSerializerNeg() throws Exception {
+        this.parseAndSerialize("- 5");
+    }
+
+    /**
+     * A JUnit test for the Expressionparser.
+     * 
+     * @throws Exception
+     *             if parsing fails
+     */
+    @Test
+    public void testSerializerNeg2() throws Exception {
+        this.parseAndSerialize("-5");
+    }
+
+    /**
+     * A JUnit test for the Expressionparser.
+     * 
+     * @throws Exception
+     *             if parsing fails
+     */
+    @Test
+    public void testSerializerDiff() throws Exception {
+        this.parseAndSerialize("5 - 5");
+    }
+
+    /**
+     * A JUnit test for the Expressionparser.
+     * 
+     * @throws Exception
+     *             if parsing fails
+     */
+    @Test
+    public void testSerializerDiff2() throws Exception {
+        this.parseAndSerialize("5-5");
     }
 
     /**
@@ -262,7 +305,7 @@ public class ExprParserSerializerTest {
      */
     @Test
     public void testSerializerHostCode() throws Exception {
-        this.parseAndSerialize("\"This is some host code\"");
+        this.parseAndSerialize("\'This is some host code\'");
     }
 
     /**
@@ -273,7 +316,7 @@ public class ExprParserSerializerTest {
      */
     @Test
     public void testSerializerHostCodeType() throws Exception {
-        this.parseAndSerialize("\"This is some host code\"(Natural)");
+        this.parseAndSerialize("\'This is some host code\'(Natural)");
     }
 
     /**
@@ -284,7 +327,7 @@ public class ExprParserSerializerTest {
      */
     @Test
     public void testSerializerHostCodeEverywhere() throws Exception {
-        this.parseAndSerialize("A and \"HostCode\"(host) and 4 < \"Hooooost\"");
+        this.parseAndSerialize("A and \'HostCode\'(esterel) and 4 < \'Hooooost\'");
     }
 
 //    /**
@@ -427,7 +470,7 @@ public class ExprParserSerializerTest {
      */
     @Test
     public void testSerializerDiv() throws Exception {
-        this.parseAndSerialize("(varA / ?B) > varB");
+        this.parseAndSerialize("varA / ?B > varB");
     }
 
     /**
@@ -449,7 +492,7 @@ public class ExprParserSerializerTest {
      */
     @Test
     public void testSerializerPlusDiv() throws Exception {
-        this.parseAndSerialize("(5 / varA) - (?B / 2) > 3");
+        this.parseAndSerialize("5 / varA - ?B / 2 > 3");
     }
 
     /**
@@ -460,7 +503,7 @@ public class ExprParserSerializerTest {
      */
     @Test
     public void testSerializerMultDiv() throws Exception {
-        this.parseAndSerialize("varA * (?B / 2) < 2");
+        this.parseAndSerialize("varA * ?B / 2 < 2");
     }
 
     /**
@@ -504,7 +547,7 @@ public class ExprParserSerializerTest {
      */
     @Test
     public void testSerializerCtr1() throws Exception {
-        this.parseAndSerialize("5 * (?A / 5) = ?A");
+        this.parseAndSerialize("5 * ?A / 5 = ?A");
     }
 
     /**
