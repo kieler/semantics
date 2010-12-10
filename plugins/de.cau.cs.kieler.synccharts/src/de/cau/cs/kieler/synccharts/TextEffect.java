@@ -13,7 +13,7 @@
  */
 package de.cau.cs.kieler.synccharts;
 
-import de.cau.cs.kieler.core.expressions.TextualCode;
+import de.cau.cs.kieler.core.kexpressions.TextualCode;
 
 /**
  * <!-- begin-user-doc -->

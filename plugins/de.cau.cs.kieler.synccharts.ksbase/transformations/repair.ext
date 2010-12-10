@@ -1,5 +1,5 @@
 import synccharts;
-import expressions;
+import kexpressions;
 import utilities;
 
 // Helper method to set the label on a transition

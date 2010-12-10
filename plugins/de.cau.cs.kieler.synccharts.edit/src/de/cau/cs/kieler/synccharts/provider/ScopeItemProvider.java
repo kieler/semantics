@@ -19,7 +19,7 @@ import de.cau.cs.kieler.core.annotations.AnnotationsPackage;
 
 import de.cau.cs.kieler.core.annotations.provider.AnnotatableItemProvider;
 
-import de.cau.cs.kieler.core.expressions.ExpressionsFactory;
+import de.cau.cs.kieler.core.kexpressions.KExpressionsFactory;
 
 import de.cau.cs.kieler.synccharts.Scope;
 import de.cau.cs.kieler.synccharts.SyncchartsFactory;
@@ -283,12 +283,22 @@ public class ScopeItemProvider
         newChildDescriptors.add
             (createChildParameter
                 (SyncchartsPackage.Literals.SCOPE__SIGNALS,
-                 ExpressionsFactory.eINSTANCE.createSignal()));
+                 KExpressionsFactory.eINSTANCE.createSignal()));
+
+        newChildDescriptors.add
+            (createChildParameter
+                (SyncchartsPackage.Literals.SCOPE__SIGNALS,
+                 KExpressionsFactory.eINSTANCE.createISignal()));
 
         newChildDescriptors.add
             (createChildParameter
                 (SyncchartsPackage.Literals.SCOPE__VARIABLES,
-                 ExpressionsFactory.eINSTANCE.createVariable()));
+                 KExpressionsFactory.eINSTANCE.createVariable()));
+
+        newChildDescriptors.add
+            (createChildParameter
+                (SyncchartsPackage.Literals.SCOPE__VARIABLES,
+                 KExpressionsFactory.eINSTANCE.createIVariable()));
 
         newChildDescriptors.add
             (createChildParameter
@@ -488,67 +498,127 @@ public class ScopeItemProvider
         newChildDescriptors.add
             (createChildParameter
                 (SyncchartsPackage.Literals.SCOPE__BODY_CONTENTS,
-                 ExpressionsFactory.eINSTANCE.createExpression()));
+                 KExpressionsFactory.eINSTANCE.createExpression()));
 
         newChildDescriptors.add
             (createChildParameter
                 (SyncchartsPackage.Literals.SCOPE__BODY_CONTENTS,
-                 ExpressionsFactory.eINSTANCE.createComplexExpression()));
+                 KExpressionsFactory.eINSTANCE.createComplexExpression()));
 
         newChildDescriptors.add
             (createChildParameter
                 (SyncchartsPackage.Literals.SCOPE__BODY_CONTENTS,
-                 ExpressionsFactory.eINSTANCE.createTextualCode()));
+                 KExpressionsFactory.eINSTANCE.createTextualCode()));
 
         newChildDescriptors.add
             (createChildParameter
                 (SyncchartsPackage.Literals.SCOPE__BODY_CONTENTS,
-                 ExpressionsFactory.eINSTANCE.createValuedObject()));
+                 KExpressionsFactory.eINSTANCE.createValuedObject()));
 
         newChildDescriptors.add
             (createChildParameter
                 (SyncchartsPackage.Literals.SCOPE__BODY_CONTENTS,
-                 ExpressionsFactory.eINSTANCE.createSignal()));
+                 KExpressionsFactory.eINSTANCE.createSignal()));
 
         newChildDescriptors.add
             (createChildParameter
                 (SyncchartsPackage.Literals.SCOPE__BODY_CONTENTS,
-                 ExpressionsFactory.eINSTANCE.createVariable()));
+                 KExpressionsFactory.eINSTANCE.createVariable()));
 
         newChildDescriptors.add
             (createChildParameter
                 (SyncchartsPackage.Literals.SCOPE__BODY_CONTENTS,
-                 ExpressionsFactory.eINSTANCE.createValuedObjectReference()));
+                 KExpressionsFactory.eINSTANCE.createValuedObjectReference()));
 
         newChildDescriptors.add
             (createChildParameter
                 (SyncchartsPackage.Literals.SCOPE__BODY_CONTENTS,
-                 ExpressionsFactory.eINSTANCE.createValue()));
+                 KExpressionsFactory.eINSTANCE.createValue()));
 
         newChildDescriptors.add
             (createChildParameter
                 (SyncchartsPackage.Literals.SCOPE__BODY_CONTENTS,
-                 ExpressionsFactory.eINSTANCE.createIntValue()));
+                 KExpressionsFactory.eINSTANCE.createIntValue()));
 
         newChildDescriptors.add
             (createChildParameter
                 (SyncchartsPackage.Literals.SCOPE__BODY_CONTENTS,
-                 ExpressionsFactory.eINSTANCE.createFloatValue()));
+                 KExpressionsFactory.eINSTANCE.createFloatValue()));
 
         newChildDescriptors.add
             (createChildParameter
                 (SyncchartsPackage.Literals.SCOPE__BODY_CONTENTS,
-                 ExpressionsFactory.eINSTANCE.createBooleanValue()));
+                 KExpressionsFactory.eINSTANCE.createBooleanValue()));
 
         newChildDescriptors.add
             (createChildParameter
                 (SyncchartsPackage.Literals.SCOPE__BODY_CONTENTS,
-                 ExpressionsFactory.eINSTANCE.createOperatorExpression()));
+                 KExpressionsFactory.eINSTANCE.createOperatorExpression()));
 
         newChildDescriptors.add
             (createChildParameter
                 (SyncchartsPackage.Literals.SCOPE__BODY_CONTENTS,
-                 ExpressionsFactory.eINSTANCE.createTextExpression()));
+                 KExpressionsFactory.eINSTANCE.createTextExpression()));
+
+        newChildDescriptors.add
+            (createChildParameter
+                (SyncchartsPackage.Literals.SCOPE__BODY_CONTENTS,
+                 KExpressionsFactory.eINSTANCE.createInterfaceDeclaration()));
+
+        newChildDescriptors.add
+            (createChildParameter
+                (SyncchartsPackage.Literals.SCOPE__BODY_CONTENTS,
+                 KExpressionsFactory.eINSTANCE.createInterfaceSignalDecl()));
+
+        newChildDescriptors.add
+            (createChildParameter
+                (SyncchartsPackage.Literals.SCOPE__BODY_CONTENTS,
+                 KExpressionsFactory.eINSTANCE.createISignal()));
+
+        newChildDescriptors.add
+            (createChildParameter
+                (SyncchartsPackage.Literals.SCOPE__BODY_CONTENTS,
+                 KExpressionsFactory.eINSTANCE.createChannelDescription()));
+
+        newChildDescriptors.add
+            (createChildParameter
+                (SyncchartsPackage.Literals.SCOPE__BODY_CONTENTS,
+                 KExpressionsFactory.eINSTANCE.createTypeIdentifier()));
+
+        newChildDescriptors.add
+            (createChildParameter
+                (SyncchartsPackage.Literals.SCOPE__BODY_CONTENTS,
+                 KExpressionsFactory.eINSTANCE.createInterfaceVariableDecl()));
+
+        newChildDescriptors.add
+            (createChildParameter
+                (SyncchartsPackage.Literals.SCOPE__BODY_CONTENTS,
+                 KExpressionsFactory.eINSTANCE.createVariableDecl()));
+
+        newChildDescriptors.add
+            (createChildParameter
+                (SyncchartsPackage.Literals.SCOPE__BODY_CONTENTS,
+                 KExpressionsFactory.eINSTANCE.createIVariable()));
+
+        newChildDescriptors.add
+            (createChildParameter
+                (SyncchartsPackage.Literals.SCOPE__BODY_CONTENTS,
+                 KExpressionsFactory.eINSTANCE.createInput()));
+
+        newChildDescriptors.add
+            (createChildParameter
+                (SyncchartsPackage.Literals.SCOPE__BODY_CONTENTS,
+                 KExpressionsFactory.eINSTANCE.createOutput()));
+
+        newChildDescriptors.add
+            (createChildParameter
+                (SyncchartsPackage.Literals.SCOPE__BODY_CONTENTS,
+                 KExpressionsFactory.eINSTANCE.createInputOutput()));
+
+        newChildDescriptors.add
+            (createChildParameter
+                (SyncchartsPackage.Literals.SCOPE__BODY_CONTENTS,
+                 KExpressionsFactory.eINSTANCE.createReturn()));
 
         newChildDescriptors.add
             (createChildParameter
@@ -558,12 +628,12 @@ public class ScopeItemProvider
         newChildDescriptors.add
             (createChildParameter
                 (SyncchartsPackage.Literals.SCOPE__BODY_TEXT,
-                 ExpressionsFactory.eINSTANCE.createTextualCode()));
+                 KExpressionsFactory.eINSTANCE.createTextualCode()));
 
         newChildDescriptors.add
             (createChildParameter
                 (SyncchartsPackage.Literals.SCOPE__BODY_TEXT,
-                 ExpressionsFactory.eINSTANCE.createTextExpression()));
+                 KExpressionsFactory.eINSTANCE.createTextExpression()));
 
         newChildDescriptors.add
             (createChildParameter

@@ -9,7 +9,7 @@
     </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EReference" name="effects" upperBound="-1"
         eType="#//Effect" containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="trigger" eType="ecore:EClass ../../de.cau.cs.kieler.core.expressions/model/expressions.ecore#//Expression"
+    <eStructuralFeatures xsi:type="ecore:EReference" name="trigger" eType="ecore:EClass ../../de.cau.cs.kieler.core.kexpressions/model/kexpressions.ecore#//Expression"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="delay" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"
         defaultValueLiteral="1"/>
@@ -21,9 +21,9 @@
       <details key="documentation" value="An Assignment assigns a new value to a {@link Variable}.&#xA;It carries a reference to a Variable and an {@link Expression} &#xA;that represents the new value for that Variable."/>
     </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EReference" name="variable" lowerBound="1"
-        eType="ecore:EClass ../../de.cau.cs.kieler.core.expressions/model/expressions.ecore#//Variable"/>
+        eType="ecore:EClass ../../de.cau.cs.kieler.core.kexpressions/model/kexpressions.ecore#//Variable"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="expression" lowerBound="1"
-        eType="ecore:EClass ../../de.cau.cs.kieler.core.expressions/model/expressions.ecore#//Expression"
+        eType="ecore:EClass ../../de.cau.cs.kieler.core.kexpressions/model/kexpressions.ecore#//Expression"
         containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Effect" abstract="true">
@@ -36,8 +36,8 @@
       <details key="documentation" value="An Emission represents setting an {@link Signal}&#xA;from &quot;absent&quot; to &quot;present&quot; in a tick.&#xA;An Emission has a reference to the Signal&#xA;that it emits.&#xA;For valued Signals, an Emission may carry an&#xA;{@link Expression} that represents the new&#xA;value for that signal."/>
     </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EReference" name="signal" lowerBound="1"
-        eType="ecore:EClass ../../de.cau.cs.kieler.core.expressions/model/expressions.ecore#//Signal"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="newValue" eType="ecore:EClass ../../de.cau.cs.kieler.core.expressions/model/expressions.ecore#//Expression"
+        eType="ecore:EClass ../../de.cau.cs.kieler.core.kexpressions/model/kexpressions.ecore#//Signal"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="newValue" eType="ecore:EClass ../../de.cau.cs.kieler.core.kexpressions/model/kexpressions.ecore#//Expression"
         containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Region" eSuperTypes="#//Scope">
@@ -137,10 +137,10 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="id" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="label" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="signals" upperBound="-1"
-        eType="ecore:EClass ../../de.cau.cs.kieler.core.expressions/model/expressions.ecore#//Signal"
+        eType="ecore:EClass ../../de.cau.cs.kieler.core.kexpressions/model/kexpressions.ecore#//Signal"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="variables" upperBound="-1"
-        eType="ecore:EClass ../../de.cau.cs.kieler.core.expressions/model/expressions.ecore#//Variable"
+        eType="ecore:EClass ../../de.cau.cs.kieler.core.kexpressions/model/kexpressions.ecore#//Variable"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="suspensionTrigger" eType="#//Action"
         containment="true"/>
@@ -154,7 +154,7 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="bodyContents" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EObject"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="bodyText" upperBound="-1"
-        eType="ecore:EClass ../../de.cau.cs.kieler.core.expressions/model/expressions.ecore#//TextualCode"
+        eType="ecore:EClass ../../de.cau.cs.kieler.core.kexpressions/model/kexpressions.ecore#//TextualCode"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="renamings" upperBound="-1"
         eType="#//Substitution" containment="true" eOpposite="#//Substitution/parentScope"/>
@@ -165,7 +165,7 @@
       <details key="documentation" value="A Parsable is a String that represents model information&#xA;that can be parsed by some external parser. It is used to&#xA;technically distinguish simple Strings from information&#xA;that will be post processed by a parser and hence does not&#xA;carry semantical information in its own.&#xA;"/>
     </eAnnotations>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="TextEffect" eSuperTypes="../../de.cau.cs.kieler.core.expressions/model/expressions.ecore#//TextualCode #//Effect">
+  <eClassifiers xsi:type="ecore:EClass" name="TextEffect" eSuperTypes="../../de.cau.cs.kieler.core.kexpressions/model/kexpressions.ecore#//TextualCode #//Effect">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
       <details key="documentation" value="An TextEffect is a {@link TextualCode} that allows to&#xA;escape to some textual host code in an effect. This&#xA;can be any arbitrary String."/>
     </eAnnotations>

@@ -15,7 +15,7 @@ package de.cau.cs.kieler.synccharts;
 
 import de.cau.cs.kieler.core.annotations.Annotatable;
 
-import de.cau.cs.kieler.core.expressions.Expression;
+import de.cau.cs.kieler.core.kexpressions.Expression;
 
 import org.eclipse.emf.common.util.EList;
 

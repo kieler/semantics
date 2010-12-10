@@ -118,7 +118,7 @@ public final class SyncchartsUtil {
                 && !((InternalEObject) diagram.getElement()).eIsProxy()) {
             try {
                 ActionLabelProcessorWrapper.processActionLabels(diagram.getElement(),
-                        ActionLabelProcessorWrapper.SERIALIZE);
+                        ActionLabelProcessorWrapper.SERIALIZE, false);
             } catch (Exception e) {
                 throw new KielerRuntimeException(MSG_LABEL_SERIAL_FAILED);
             }

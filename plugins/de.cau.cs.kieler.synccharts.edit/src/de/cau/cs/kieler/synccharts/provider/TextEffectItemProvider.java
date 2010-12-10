@@ -14,7 +14,7 @@
 package de.cau.cs.kieler.synccharts.provider;
 
 
-import de.cau.cs.kieler.core.expressions.provider.TextualCodeItemProvider;
+import de.cau.cs.kieler.core.kexpressions.provider.TextualCodeItemProvider;
 
 import de.cau.cs.kieler.synccharts.TextEffect;
 
@@ -98,7 +98,7 @@ public class TextEffectItemProvider
      */
     @Override
     public String getText(Object object) {
-        String label = crop(((TextEffect)object).getCode());
+        String label = ((TextEffect)object).getCode();
         return label == null || label.length() == 0 ?
             getString("_UI_TextEffect_type") :
             getString("_UI_TextEffect_type") + " " + label;

@@ -43,9 +43,16 @@ public class NoteSynchronizationTriggerListener extends FireOnceTriggerListener 
             .getNamedObject_Name()));
 
     static final NotificationFilter addedNoteFilter = NotificationFilter.createEventTypeFilter(
-        Notification.ADD).and(
-        NotificationFilter.createFeatureFilter(NotationPackage.eINSTANCE
-            .getView_PersistedChildren()));
+            Notification.ADD).and(
+            NotificationFilter.createFeatureFilter(NotationPackage.eINSTANCE
+                .getView_PersistedChildren()));
+
+    static final NotificationFilter conntectedNoteFilter = NotificationFilter.createEventTypeFilter(
+            Notification.SET).and(
+                    NotificationFilter.createFeatureFilter(
+                            NotationPackage.eINSTANCE.getView_SourceEdges()).or(
+                            NotificationFilter.createFeatureFilter(NotationPackage.eINSTANCE
+                                    .getView_TargetEdges())));
 
     static final NotificationFilter setDescriptionFilter = NotificationFilter
         .createEventTypeFilter(Notification.SET).and(

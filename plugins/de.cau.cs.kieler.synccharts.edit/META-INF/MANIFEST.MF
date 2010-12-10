@@ -17,6 +17,6 @@ Require-Bundle: de.cau.cs.kieler.synccharts.custom,
  de.cau.cs.kieler.core.annotations.edit;visibility:=reexport,
  org.eclipse.emf.ecore;visibility:=reexport,
  org.eclipse.emf.ecore.edit;visibility:=reexport,
- de.cau.cs.kieler.core.expressions;visibility:=reexport,
- de.cau.cs.kieler.core.expressions.edit;visibility:=reexport
+ de.cau.cs.kieler.core.kexpressions;visibility:=reexport,
+ de.cau.cs.kieler.core.kexpressions.edit;visibility:=reexport
 Bundle-ActivationPolicy: lazy

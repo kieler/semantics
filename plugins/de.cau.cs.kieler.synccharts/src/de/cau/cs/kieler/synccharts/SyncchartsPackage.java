@@ -15,7 +15,7 @@ package de.cau.cs.kieler.synccharts;
 
 import de.cau.cs.kieler.core.annotations.AnnotationsPackage;
 
-import de.cau.cs.kieler.core.expressions.ExpressionsPackage;
+import de.cau.cs.kieler.core.kexpressions.KExpressionsPackage;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
@@ -942,7 +942,7 @@ public interface SyncchartsPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int TEXT_EFFECT__CODE = ExpressionsPackage.TEXTUAL_CODE__CODE;
+    int TEXT_EFFECT__CODE = KExpressionsPackage.TEXTUAL_CODE__CODE;
 
     /**
      * The feature id for the '<em><b>Type</b></em>' attribute.
@@ -951,7 +951,7 @@ public interface SyncchartsPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int TEXT_EFFECT__TYPE = ExpressionsPackage.TEXTUAL_CODE__TYPE;
+    int TEXT_EFFECT__TYPE = KExpressionsPackage.TEXTUAL_CODE__TYPE;
 
     /**
      * The number of structural features of the '<em>Text Effect</em>' class.
@@ -960,7 +960,7 @@ public interface SyncchartsPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int TEXT_EFFECT_FEATURE_COUNT = ExpressionsPackage.TEXTUAL_CODE_FEATURE_COUNT + 0;
+    int TEXT_EFFECT_FEATURE_COUNT = KExpressionsPackage.TEXTUAL_CODE_FEATURE_COUNT + 0;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.synccharts.StateType <em>State Type</em>}' enum.

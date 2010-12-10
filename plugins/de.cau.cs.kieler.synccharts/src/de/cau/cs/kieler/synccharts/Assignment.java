@@ -13,8 +13,8 @@
  */
 package de.cau.cs.kieler.synccharts;
 
-import de.cau.cs.kieler.core.expressions.Expression;
-import de.cau.cs.kieler.core.expressions.Variable;
+import de.cau.cs.kieler.core.kexpressions.Expression;
+import de.cau.cs.kieler.core.kexpressions.Variable;
 
 /**
  * <!-- begin-user-doc -->

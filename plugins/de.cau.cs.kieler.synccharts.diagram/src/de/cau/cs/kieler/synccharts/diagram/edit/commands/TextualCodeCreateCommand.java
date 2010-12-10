@@ -12,8 +12,8 @@ import org.eclipse.gmf.runtime.emf.type.core.requests.ConfigureRequest;
 import org.eclipse.gmf.runtime.emf.type.core.requests.CreateElementRequest;
 import org.eclipse.gmf.runtime.notation.View;
 
-import de.cau.cs.kieler.core.expressions.ExpressionsFactory;
-import de.cau.cs.kieler.core.expressions.TextualCode;
+import de.cau.cs.kieler.core.kexpressions.KExpressionsFactory;
+import de.cau.cs.kieler.core.kexpressions.TextualCode;
 import de.cau.cs.kieler.synccharts.Scope;
 
 /**
@@ -53,7 +53,7 @@ public class TextualCodeCreateCommand extends EditElementCommand {
      */
     protected CommandResult doExecuteWithResult(IProgressMonitor monitor, IAdaptable info)
         throws ExecutionException {
-        TextualCode newElement = ExpressionsFactory.eINSTANCE.createTextualCode();
+        TextualCode newElement = KExpressionsFactory.eINSTANCE.createTextualCode();
 
         Scope owner = (Scope) getElementToEdit();
         owner.getBodyText().add(newElement);

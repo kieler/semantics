@@ -16,7 +16,7 @@ package de.cau.cs.kieler.synccharts.provider;
 
 import de.cau.cs.kieler.core.annotations.provider.AnnotatableItemProvider;
 
-import de.cau.cs.kieler.core.expressions.ExpressionsFactory;
+import de.cau.cs.kieler.core.kexpressions.KExpressionsFactory;
 
 import de.cau.cs.kieler.synccharts.Action;
 import de.cau.cs.kieler.synccharts.SyncchartsFactory;
@@ -262,47 +262,47 @@ public class ActionItemProvider
         newChildDescriptors.add
             (createChildParameter
                 (SyncchartsPackage.Literals.ACTION__TRIGGER,
-                 ExpressionsFactory.eINSTANCE.createExpression()));
+                 KExpressionsFactory.eINSTANCE.createExpression()));
 
         newChildDescriptors.add
             (createChildParameter
                 (SyncchartsPackage.Literals.ACTION__TRIGGER,
-                 ExpressionsFactory.eINSTANCE.createComplexExpression()));
+                 KExpressionsFactory.eINSTANCE.createComplexExpression()));
 
         newChildDescriptors.add
             (createChildParameter
                 (SyncchartsPackage.Literals.ACTION__TRIGGER,
-                 ExpressionsFactory.eINSTANCE.createValuedObjectReference()));
+                 KExpressionsFactory.eINSTANCE.createValuedObjectReference()));
 
         newChildDescriptors.add
             (createChildParameter
                 (SyncchartsPackage.Literals.ACTION__TRIGGER,
-                 ExpressionsFactory.eINSTANCE.createValue()));
+                 KExpressionsFactory.eINSTANCE.createValue()));
 
         newChildDescriptors.add
             (createChildParameter
                 (SyncchartsPackage.Literals.ACTION__TRIGGER,
-                 ExpressionsFactory.eINSTANCE.createIntValue()));
+                 KExpressionsFactory.eINSTANCE.createIntValue()));
 
         newChildDescriptors.add
             (createChildParameter
                 (SyncchartsPackage.Literals.ACTION__TRIGGER,
-                 ExpressionsFactory.eINSTANCE.createFloatValue()));
+                 KExpressionsFactory.eINSTANCE.createFloatValue()));
 
         newChildDescriptors.add
             (createChildParameter
                 (SyncchartsPackage.Literals.ACTION__TRIGGER,
-                 ExpressionsFactory.eINSTANCE.createBooleanValue()));
+                 KExpressionsFactory.eINSTANCE.createBooleanValue()));
 
         newChildDescriptors.add
             (createChildParameter
                 (SyncchartsPackage.Literals.ACTION__TRIGGER,
-                 ExpressionsFactory.eINSTANCE.createOperatorExpression()));
+                 KExpressionsFactory.eINSTANCE.createOperatorExpression()));
 
         newChildDescriptors.add
             (createChildParameter
                 (SyncchartsPackage.Literals.ACTION__TRIGGER,
-                 ExpressionsFactory.eINSTANCE.createTextExpression()));
+                 KExpressionsFactory.eINSTANCE.createTextExpression()));
     }
 
     /**

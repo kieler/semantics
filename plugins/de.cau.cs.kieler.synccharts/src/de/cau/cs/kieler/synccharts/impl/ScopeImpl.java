@@ -15,9 +15,9 @@ package de.cau.cs.kieler.synccharts.impl;
 
 import de.cau.cs.kieler.core.annotations.impl.AnnotatableImpl;
 
-import de.cau.cs.kieler.core.expressions.Signal;
-import de.cau.cs.kieler.core.expressions.TextualCode;
-import de.cau.cs.kieler.core.expressions.Variable;
+import de.cau.cs.kieler.core.kexpressions.Signal;
+import de.cau.cs.kieler.core.kexpressions.TextualCode;
+import de.cau.cs.kieler.core.kexpressions.Variable;
 
 import de.cau.cs.kieler.synccharts.Action;
 import de.cau.cs.kieler.synccharts.Scope;

@@ -1,5 +1,5 @@
 import synccharts;
-import expressions;
+import kexpressions;
 
 transform(Scope scope) :
 	selectReferenceMacroStates(scope).expandMacroState() -> scope

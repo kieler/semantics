@@ -12,8 +12,8 @@ import org.eclipse.gmf.runtime.emf.type.core.requests.ConfigureRequest;
 import org.eclipse.gmf.runtime.emf.type.core.requests.CreateElementRequest;
 import org.eclipse.gmf.runtime.notation.View;
 
-import de.cau.cs.kieler.core.expressions.ExpressionsFactory;
-import de.cau.cs.kieler.core.expressions.Variable;
+import de.cau.cs.kieler.core.kexpressions.KExpressionsFactory;
+import de.cau.cs.kieler.core.kexpressions.Variable;
 import de.cau.cs.kieler.synccharts.Scope;
 
 /**
@@ -53,7 +53,7 @@ public class VariableCreateCommand extends EditElementCommand {
      */
     protected CommandResult doExecuteWithResult(IProgressMonitor monitor, IAdaptable info)
         throws ExecutionException {
-        Variable newElement = ExpressionsFactory.eINSTANCE.createVariable();
+        Variable newElement = KExpressionsFactory.eINSTANCE.createVariable();
 
         Scope owner = (Scope) getElementToEdit();
         owner.getVariables().add(newElement);

@@ -12,8 +12,8 @@ import org.eclipse.gmf.runtime.emf.type.core.requests.ConfigureRequest;
 import org.eclipse.gmf.runtime.emf.type.core.requests.CreateElementRequest;
 import org.eclipse.gmf.runtime.notation.View;
 
-import de.cau.cs.kieler.core.expressions.ExpressionsFactory;
-import de.cau.cs.kieler.core.expressions.Signal;
+import de.cau.cs.kieler.core.kexpressions.KExpressionsFactory;
+import de.cau.cs.kieler.core.kexpressions.Signal;
 import de.cau.cs.kieler.synccharts.Scope;
 
 /**
@@ -53,7 +53,7 @@ public class SignalCreateCommand extends EditElementCommand {
      */
     protected CommandResult doExecuteWithResult(IProgressMonitor monitor, IAdaptable info)
         throws ExecutionException {
-        Signal newElement = ExpressionsFactory.eINSTANCE.createSignal();
+        Signal newElement = KExpressionsFactory.eINSTANCE.createSignal();
 
         Scope owner = (Scope) getElementToEdit();
         owner.getSignals().add(newElement);

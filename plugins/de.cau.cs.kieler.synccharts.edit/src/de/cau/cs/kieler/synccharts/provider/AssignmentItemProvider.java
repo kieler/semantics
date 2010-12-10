@@ -14,7 +14,7 @@
 package de.cau.cs.kieler.synccharts.provider;
 
 
-import de.cau.cs.kieler.core.expressions.ExpressionsFactory;
+import de.cau.cs.kieler.core.kexpressions.KExpressionsFactory;
 
 import de.cau.cs.kieler.synccharts.Assignment;
 import de.cau.cs.kieler.synccharts.SyncchartsPackage;
@@ -189,47 +189,47 @@ public class AssignmentItemProvider
         newChildDescriptors.add
             (createChildParameter
                 (SyncchartsPackage.Literals.ASSIGNMENT__EXPRESSION,
-                 ExpressionsFactory.eINSTANCE.createExpression()));
+                 KExpressionsFactory.eINSTANCE.createExpression()));
 
         newChildDescriptors.add
             (createChildParameter
                 (SyncchartsPackage.Literals.ASSIGNMENT__EXPRESSION,
-                 ExpressionsFactory.eINSTANCE.createComplexExpression()));
+                 KExpressionsFactory.eINSTANCE.createComplexExpression()));
 
         newChildDescriptors.add
             (createChildParameter
                 (SyncchartsPackage.Literals.ASSIGNMENT__EXPRESSION,
-                 ExpressionsFactory.eINSTANCE.createValuedObjectReference()));
+                 KExpressionsFactory.eINSTANCE.createValuedObjectReference()));
 
         newChildDescriptors.add
             (createChildParameter
                 (SyncchartsPackage.Literals.ASSIGNMENT__EXPRESSION,
-                 ExpressionsFactory.eINSTANCE.createValue()));
+                 KExpressionsFactory.eINSTANCE.createValue()));
 
         newChildDescriptors.add
             (createChildParameter
                 (SyncchartsPackage.Literals.ASSIGNMENT__EXPRESSION,
-                 ExpressionsFactory.eINSTANCE.createIntValue()));
+                 KExpressionsFactory.eINSTANCE.createIntValue()));
 
         newChildDescriptors.add
             (createChildParameter
                 (SyncchartsPackage.Literals.ASSIGNMENT__EXPRESSION,
-                 ExpressionsFactory.eINSTANCE.createFloatValue()));
+                 KExpressionsFactory.eINSTANCE.createFloatValue()));
 
         newChildDescriptors.add
             (createChildParameter
                 (SyncchartsPackage.Literals.ASSIGNMENT__EXPRESSION,
-                 ExpressionsFactory.eINSTANCE.createBooleanValue()));
+                 KExpressionsFactory.eINSTANCE.createBooleanValue()));
 
         newChildDescriptors.add
             (createChildParameter
                 (SyncchartsPackage.Literals.ASSIGNMENT__EXPRESSION,
-                 ExpressionsFactory.eINSTANCE.createOperatorExpression()));
+                 KExpressionsFactory.eINSTANCE.createOperatorExpression()));
 
         newChildDescriptors.add
             (createChildParameter
                 (SyncchartsPackage.Literals.ASSIGNMENT__EXPRESSION,
-                 ExpressionsFactory.eINSTANCE.createTextExpression()));
+                 KExpressionsFactory.eINSTANCE.createTextExpression()));
     }
 
 }

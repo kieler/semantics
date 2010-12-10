@@ -26,11 +26,11 @@ import org.eclipse.emf.compare.match.service.MatchService;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtext.util.Strings;
 
-import de.cau.cs.kieler.core.expressions.ExpressionsPackage;
-import de.cau.cs.kieler.core.expressions.Signal;
-import de.cau.cs.kieler.core.expressions.ValuedObject;
-import de.cau.cs.kieler.core.expressions.ValuedObjectReference;
-import de.cau.cs.kieler.core.expressions.Variable;
+import de.cau.cs.kieler.core.kexpressions.KExpressionsPackage;
+import de.cau.cs.kieler.core.kexpressions.Signal;
+import de.cau.cs.kieler.core.kexpressions.ValuedObject;
+import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference;
+import de.cau.cs.kieler.core.kexpressions.Variable;
 import de.cau.cs.kieler.synccharts.Assignment;
 import de.cau.cs.kieler.synccharts.Emission;
 import de.cau.cs.kieler.synccharts.State;
@@ -140,7 +140,7 @@ public class KitsSynchronizeLinker {
                 }
 
                 public Void defaultCase(EObject object) {
-                    if (ExpressionsPackage.eINSTANCE.getValuedObjectReference().isInstance(object)) {
+                    if (KExpressionsPackage.eINSTANCE.getValuedObjectReference().isInstance(object)) {
                         ValuedObjectReference valuedObjectRef = (ValuedObjectReference) object;
 
                         ValuedObject valuedObject = getMatched(getMatched(valuedObjectRef).getValuedObject()); 

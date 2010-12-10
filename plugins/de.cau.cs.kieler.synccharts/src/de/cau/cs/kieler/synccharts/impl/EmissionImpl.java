@@ -13,8 +13,8 @@
  */
 package de.cau.cs.kieler.synccharts.impl;
 
-import de.cau.cs.kieler.core.expressions.Expression;
-import de.cau.cs.kieler.core.expressions.Signal;
+import de.cau.cs.kieler.core.kexpressions.Expression;
+import de.cau.cs.kieler.core.kexpressions.Signal;
 
 import de.cau.cs.kieler.synccharts.Emission;
 import de.cau.cs.kieler.synccharts.SyncchartsPackage;

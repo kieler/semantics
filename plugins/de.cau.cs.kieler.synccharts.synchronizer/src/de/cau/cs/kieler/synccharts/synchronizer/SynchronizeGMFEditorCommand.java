@@ -65,7 +65,7 @@ public class SynchronizeGMFEditorCommand extends AbstractTransactionalCommand {
         try {
             ActionLabelProcessorWrapper.processActionLabels(((Diagram) this.passiveEditor
                     .getDiagramEditPart().getModel()).getElement(),
-                    ActionLabelProcessorWrapper.PARSE);
+                    ActionLabelProcessorWrapper.PARSE, false);
 //                    ActionLabelProcessorWrapper.SERIALIZE);
         } catch (Exception e) {
 //            EditorUtils.log(new Status(IStatus.WARNING, SyncchartsSynchronizerPlugin.PLUGIN_ID,
