@@ -264,21 +264,21 @@ litigation.
          unpack="false"/>
 
    <plugin
-         id="de.cau.cs.kieler.core.expressions"
+         id="de.cau.cs.kieler.core.kexpressions"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
 
    <plugin
-         id="de.cau.cs.kieler.core.expressions.edit"
+         id="de.cau.cs.kieler.core.kexpressions.edit"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
 
    <plugin
-         id="de.cau.cs.kieler.core.expressions.ui"
+         id="de.cau.cs.kieler.core.kexpressions.ui"
          download-size="0"
          install-size="0"
          version="0.0.0"
