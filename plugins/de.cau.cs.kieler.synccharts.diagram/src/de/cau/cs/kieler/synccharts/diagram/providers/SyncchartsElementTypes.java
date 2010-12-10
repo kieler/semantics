@@ -143,7 +143,7 @@ public class SyncchartsElementTypes {
             EClass eClass = (EClass) element;
             if (!eClass.isAbstract()) {
                 return SyncchartsDiagramEditorPlugin.getInstance().getItemImageDescriptor(
-                    eClass.getEPackage().getEFactoryInstance().create(eClass));
+                        eClass.getEPackage().getEFactoryInstance().create(eClass));
             }
         }
         // TODO : support structural features

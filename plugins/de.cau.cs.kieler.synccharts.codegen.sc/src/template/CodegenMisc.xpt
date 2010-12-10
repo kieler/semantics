@@ -2,7 +2,7 @@
 	A misc template file.
 «ENDREM»
 
-«IMPORT expressions»
+«IMPORT kexpressions»
 «IMPORT synccharts»
 
 «EXTENSION template::Helper»

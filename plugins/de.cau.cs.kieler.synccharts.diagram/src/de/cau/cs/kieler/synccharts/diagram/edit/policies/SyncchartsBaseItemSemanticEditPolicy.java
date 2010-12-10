@@ -100,7 +100,7 @@ public class SyncchartsBaseItemSemanticEditPolicy extends SemanticEditPolicy {
         if (completedRequest instanceof DestroyRequest) {
             DestroyRequest destroyRequest = (DestroyRequest) completedRequest;
             return shouldProceed(destroyRequest) ? addDeleteViewCommand(semanticCommand,
-                destroyRequest) : null;
+                    destroyRequest) : null;
         }
         return semanticCommand;
     }
@@ -110,7 +110,7 @@ public class SyncchartsBaseItemSemanticEditPolicy extends SemanticEditPolicy {
      */
     protected Command addDeleteViewCommand(Command mainCommand, DestroyRequest completedRequest) {
         Command deleteViewCommand = getGEFWrapper(new DeleteCommand(getEditingDomain(),
-            (View) getHost().getModel()));
+                (View) getHost().getModel()));
         return mainCommand == null ? deleteViewCommand : mainCommand.chain(deleteViewCommand);
     }
 
@@ -120,19 +120,19 @@ public class SyncchartsBaseItemSemanticEditPolicy extends SemanticEditPolicy {
     private Command getEditHelperCommand(IEditCommandRequest request, Command editPolicyCommand) {
         if (editPolicyCommand != null) {
             ICommand command = editPolicyCommand instanceof ICommandProxy ? ((ICommandProxy) editPolicyCommand)
-                .getICommand() : new CommandProxy(editPolicyCommand);
+                    .getICommand() : new CommandProxy(editPolicyCommand);
             request.setParameter(SyncchartsBaseEditHelper.EDIT_POLICY_COMMAND, command);
         }
         IElementType requestContextElementType = getContextElementType(request);
         request.setParameter(SyncchartsBaseEditHelper.CONTEXT_ELEMENT_TYPE,
-            requestContextElementType);
+                requestContextElementType);
         ICommand command = requestContextElementType.getEditCommand(request);
         request.setParameter(SyncchartsBaseEditHelper.EDIT_POLICY_COMMAND, null);
         request.setParameter(SyncchartsBaseEditHelper.CONTEXT_ELEMENT_TYPE, null);
         if (command != null) {
             if (!(command instanceof CompositeTransactionalCommand)) {
                 command = new CompositeTransactionalCommand(getEditingDomain(), command.getLabel())
-                    .compose(command);
+                        .compose(command);
             }
             return new ICommandProxy(command);
         }
@@ -144,7 +144,7 @@ public class SyncchartsBaseItemSemanticEditPolicy extends SemanticEditPolicy {
      */
     private IElementType getContextElementType(IEditCommandRequest request) {
         IElementType requestContextElementType = SyncchartsElementTypes
-            .getElementType(getVisualID(request));
+                .getElementType(getVisualID(request));
         return requestContextElementType != null ? requestContextElementType : myElementType;
     }
 
@@ -245,7 +245,7 @@ public class SyncchartsBaseItemSemanticEditPolicy extends SemanticEditPolicy {
      * @generated
      */
     protected Command getReorientReferenceRelationshipCommand(
-        ReorientReferenceRelationshipRequest req) {
+            ReorientReferenceRelationshipRequest req) {
         return UnexecutableCommand.INSTANCE;
     }
 
@@ -293,7 +293,7 @@ public class SyncchartsBaseItemSemanticEditPolicy extends SemanticEditPolicy {
         LinkConstraints cached = SyncchartsDiagramEditorPlugin.getInstance().getLinkConstraints();
         if (cached == null) {
             SyncchartsDiagramEditorPlugin.getInstance().setLinkConstraints(
-                cached = new LinkConstraints());
+                    cached = new LinkConstraints());
         }
         return cached;
     }
@@ -321,7 +321,7 @@ public class SyncchartsBaseItemSemanticEditPolicy extends SemanticEditPolicy {
          * @generated
          */
         public boolean canExistTransition_4005(State container, Transition linkInstance,
-            State source, State target) {
+                State source, State target) {
             return true;
         }
     }

@@ -114,7 +114,7 @@ public class StateRegionEditPart extends ShapeNodeEditPart {
     protected boolean addFixedChild(EditPart childEditPart) {
         if (childEditPart instanceof StateRegionLabelEditPart) {
             ((StateRegionLabelEditPart) childEditPart).setLabel(getPrimaryShape()
-                .getFigureRegionIdFigure());
+                    .getFigureRegionIdFigure());
             return true;
         }
         return false;
@@ -248,7 +248,7 @@ public class StateRegionEditPart extends ShapeNodeEditPart {
      */
     public EditPart getPrimaryChildEditPart() {
         return getChildBySemanticHint(SyncchartsVisualIDRegistry
-            .getType(StateRegionLabelEditPart.VISUAL_ID));
+                .getType(StateRegionLabelEditPart.VISUAL_ID));
     }
 
     /**
@@ -282,7 +282,7 @@ public class StateRegionEditPart extends ShapeNodeEditPart {
             fFigureRegionIdFigure.setFont(FFIGUREREGIONIDFIGURE_FONT);
 
             fFigureRegionIdFigure.setBorder(new MarginBorder(getMapMode().DPtoLP(0), getMapMode()
-                .DPtoLP(2), getMapMode().DPtoLP(0), getMapMode().DPtoLP(2)));
+                    .DPtoLP(2), getMapMode().DPtoLP(0), getMapMode().DPtoLP(2)));
 
             this.add(fFigureRegionIdFigure);
 
@@ -301,6 +301,6 @@ public class StateRegionEditPart extends ShapeNodeEditPart {
      * @generated
      */
     static final Font FFIGUREREGIONIDFIGURE_FONT = new Font(Display.getCurrent(), "Sans", 7,
-        SWT.NORMAL);
+            SWT.NORMAL);
 
 }

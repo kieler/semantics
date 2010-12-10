@@ -1502,7 +1502,7 @@ String hash(String s) :
 //Get URIFragment of an model element to identify it. 
 int getPortType(Signal signal, synccharts::Region region) :
 	JAVA de.cau.cs.kieler.synccharts.sim.ptolemy.oaw.XtendJava.
-			getPortType(de.cau.cs.kieler.core.expressions.Signal,
+			getPortType(de.cau.cs.kieler.core.kexpressions.Signal,
 						de.cau.cs.kieler.synccharts.Region)
 ;
 
@@ -1551,7 +1551,7 @@ boolean isMacroState(synccharts::State state) :
 String buildTrigger(expressions::Expression expression, 
 					String terminatedURIHash) :
 	JAVA de.cau.cs.kieler.synccharts.sim.ptolemy.oaw.XtendJava.
-			buildTrigger(de.cau.cs.kieler.core.expressions.Expression, 
+			buildTrigger(de.cau.cs.kieler.core.kexpressions.Expression, 
 						 java.lang.String)
 ;
 

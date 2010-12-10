@@ -60,23 +60,24 @@ public class SynchronizeGMFEditorCommand extends AbstractTransactionalCommand {
         EObject model = ((Diagram) ((DiagramDocumentEditor) passiveEditor).getDiagramEditPart()
                 .getModel()).getElement();
 
-        new KitsSynchronizeLinker().setDiffModel(diffModel).linkElement(model).serializeActions(model);
-        
+        new KitsSynchronizeLinker().setDiffModel(diffModel).linkElement(model)
+                .serializeActions(model);
+
         try {
             ActionLabelProcessorWrapper.processActionLabels(((Diagram) this.passiveEditor
                     .getDiagramEditPart().getModel()).getElement(),
-                    ActionLabelProcessorWrapper.PARSE, false);
-//                    ActionLabelProcessorWrapper.SERIALIZE);
+                    ActionLabelProcessorWrapper.PARSE);
+            // ActionLabelProcessorWrapper.SERIALIZE);
         } catch (Exception e) {
-//            EditorUtils.log(new Status(IStatus.WARNING, SyncchartsSynchronizerPlugin.PLUGIN_ID,
-//                    SyncchartsUtil.MSG_LABEL_SERIAL_FAILED, e));
+            // EditorUtils.log(new Status(IStatus.WARNING, SyncchartsSynchronizerPlugin.PLUGIN_ID,
+            // SyncchartsUtil.MSG_LABEL_SERIAL_FAILED, e));
         }
 
-//        for (CanonicalEditPolicy p : CanonicalEditPolicy.getRegisteredEditPolicies(model)) {
-//            p.refresh();
-//        }
-//
-//        ((DiagramDocumentEditor) passiveEditor).getDiagramGraphicalViewer().flush();
+        // for (CanonicalEditPolicy p : CanonicalEditPolicy.getRegisteredEditPolicies(model)) {
+        // p.refresh();
+        // }
+        //
+        // ((DiagramDocumentEditor) passiveEditor).getDiagramGraphicalViewer().flush();
 
         return CommandResult.newOKCommandResult();
     }

@@ -87,7 +87,7 @@ public class SyncchartsNavigatorContentProvider implements ICommonContentProvide
     @SuppressWarnings({ "unchecked", "serial", "rawtypes" })
     public SyncchartsNavigatorContentProvider() {
         TransactionalEditingDomain editingDomain = GMFEditingDomainFactory.INSTANCE
-            .createEditingDomain();
+                .createEditingDomain();
         myEditingDomain = (AdapterFactoryEditingDomain) editingDomain;
         myEditingDomain.setResourceToReadOnlyMap(new HashMap() {
             public Object get(Object key) {
@@ -105,28 +105,28 @@ public class SyncchartsNavigatorContentProvider implements ICommonContentProvide
             }
         };
         myWorkspaceSynchronizer = new WorkspaceSynchronizer(editingDomain,
-            new WorkspaceSynchronizer.Delegate() {
-                public void dispose() {
-                }
+                new WorkspaceSynchronizer.Delegate() {
+                    public void dispose() {
+                    }
 
-                public boolean handleResourceChanged(final Resource resource) {
-                    unloadAllResources();
-                    asyncRefresh();
-                    return true;
-                }
+                    public boolean handleResourceChanged(final Resource resource) {
+                        unloadAllResources();
+                        asyncRefresh();
+                        return true;
+                    }
 
-                public boolean handleResourceDeleted(Resource resource) {
-                    unloadAllResources();
-                    asyncRefresh();
-                    return true;
-                }
+                    public boolean handleResourceDeleted(Resource resource) {
+                        unloadAllResources();
+                        asyncRefresh();
+                        return true;
+                    }
 
-                public boolean handleResourceMoved(Resource resource, final URI newURI) {
-                    unloadAllResources();
-                    asyncRefresh();
-                    return true;
-                }
-            });
+                    public boolean handleResourceMoved(Resource resource, final URI newURI) {
+                        unloadAllResources();
+                        asyncRefresh();
+                        return true;
+                    }
+                });
     }
 
     /**
@@ -208,7 +208,7 @@ public class SyncchartsNavigatorContentProvider implements ICommonContentProvide
                 }
             }
             result.addAll(createNavigatorItems(
-                selectViewsByType(topViews, RegionEditPart.MODEL_ID), file, false));
+                    selectViewsByType(topViews, RegionEditPart.MODEL_ID), file, false));
             return result.toArray();
         }
 
@@ -234,147 +234,65 @@ public class SyncchartsNavigatorContentProvider implements ICommonContentProvide
     private Object[] getViewChildren(View view, Object parentElement) {
         switch (SyncchartsVisualIDRegistry.getVisualID(view)) {
 
-        case RegionEditPart.VISUAL_ID: {
-            LinkedList<SyncchartsAbstractNavigatorItem> result = new LinkedList<SyncchartsAbstractNavigatorItem>();
-            Diagram sv = (Diagram) view;
-            SyncchartsNavigatorGroup links = new SyncchartsNavigatorGroup(
-                Messages.NavigatorGroupName_Region_1000_links,
-                "icons/linksNavigatorGroup.gif", parentElement); //$NON-NLS-1$
-            Collection<View> connectedViews;
-            connectedViews = getChildrenByType(Collections.singleton(sv),
-                SyncchartsVisualIDRegistry.getType(StateEditPart.VISUAL_ID));
-            result.addAll(createNavigatorItems(connectedViews, parentElement, false));
-            connectedViews = getDiagramLinksByType(Collections.singleton(sv),
-                SyncchartsVisualIDRegistry.getType(TransitionEditPart.VISUAL_ID));
-            links.addChildren(createNavigatorItems(connectedViews, links, false));
-            if (!links.isEmpty()) {
-                result.add(links);
-            }
-            return result.toArray();
-        }
-
         case StateEditPart.VISUAL_ID: {
             LinkedList<SyncchartsAbstractNavigatorItem> result = new LinkedList<SyncchartsAbstractNavigatorItem>();
             Node sv = (Node) view;
             SyncchartsNavigatorGroup incominglinks = new SyncchartsNavigatorGroup(
-                Messages.NavigatorGroupName_State_2005_incominglinks,
-                "icons/incomingLinksNavigatorGroup.gif", parentElement); //$NON-NLS-1$
+                    Messages.NavigatorGroupName_State_2005_incominglinks,
+                    "icons/incomingLinksNavigatorGroup.gif", parentElement); //$NON-NLS-1$
             SyncchartsNavigatorGroup outgoinglinks = new SyncchartsNavigatorGroup(
-                Messages.NavigatorGroupName_State_2005_outgoinglinks,
-                "icons/outgoingLinksNavigatorGroup.gif", parentElement); //$NON-NLS-1$
+                    Messages.NavigatorGroupName_State_2005_outgoinglinks,
+                    "icons/outgoingLinksNavigatorGroup.gif", parentElement); //$NON-NLS-1$
             Collection<View> connectedViews;
             connectedViews = getChildrenByType(Collections.singleton(sv),
-                SyncchartsVisualIDRegistry.getType(StateSignalCompartmentEditPart.VISUAL_ID));
+                    SyncchartsVisualIDRegistry.getType(StateSignalCompartmentEditPart.VISUAL_ID));
             connectedViews = getChildrenByType(connectedViews,
-                SyncchartsVisualIDRegistry.getType(SignalEditPart.VISUAL_ID));
+                    SyncchartsVisualIDRegistry.getType(SignalEditPart.VISUAL_ID));
             result.addAll(createNavigatorItems(connectedViews, parentElement, false));
             connectedViews = getChildrenByType(Collections.singleton(sv),
-                SyncchartsVisualIDRegistry.getType(StateEntryActionCompartmentEditPart.VISUAL_ID));
+                    SyncchartsVisualIDRegistry
+                            .getType(StateEntryActionCompartmentEditPart.VISUAL_ID));
             connectedViews = getChildrenByType(connectedViews,
-                SyncchartsVisualIDRegistry.getType(StateEntryActionEditPart.VISUAL_ID));
+                    SyncchartsVisualIDRegistry.getType(StateEntryActionEditPart.VISUAL_ID));
             result.addAll(createNavigatorItems(connectedViews, parentElement, false));
             connectedViews = getChildrenByType(Collections.singleton(sv),
-                SyncchartsVisualIDRegistry.getType(StateInnerActionCompartmentEditPart.VISUAL_ID));
+                    SyncchartsVisualIDRegistry
+                            .getType(StateInnerActionCompartmentEditPart.VISUAL_ID));
             connectedViews = getChildrenByType(connectedViews,
-                SyncchartsVisualIDRegistry.getType(StateInnerActionEditPart.VISUAL_ID));
+                    SyncchartsVisualIDRegistry.getType(StateInnerActionEditPart.VISUAL_ID));
             result.addAll(createNavigatorItems(connectedViews, parentElement, false));
             connectedViews = getChildrenByType(Collections.singleton(sv),
-                SyncchartsVisualIDRegistry.getType(StateExitActionCompartmentEditPart.VISUAL_ID));
+                    SyncchartsVisualIDRegistry
+                            .getType(StateExitActionCompartmentEditPart.VISUAL_ID));
             connectedViews = getChildrenByType(connectedViews,
-                SyncchartsVisualIDRegistry.getType(StateExitActionEditPart.VISUAL_ID));
+                    SyncchartsVisualIDRegistry.getType(StateExitActionEditPart.VISUAL_ID));
             result.addAll(createNavigatorItems(connectedViews, parentElement, false));
             connectedViews = getChildrenByType(Collections.singleton(sv),
-                SyncchartsVisualIDRegistry
-                    .getType(StateSuspensionTriggerCompartmentEditPart.VISUAL_ID));
+                    SyncchartsVisualIDRegistry
+                            .getType(StateSuspensionTriggerCompartmentEditPart.VISUAL_ID));
             connectedViews = getChildrenByType(connectedViews,
-                SyncchartsVisualIDRegistry.getType(StateSuspensionTriggerEditPart.VISUAL_ID));
+                    SyncchartsVisualIDRegistry.getType(StateSuspensionTriggerEditPart.VISUAL_ID));
             result.addAll(createNavigatorItems(connectedViews, parentElement, false));
             connectedViews = getChildrenByType(Collections.singleton(sv),
-                SyncchartsVisualIDRegistry.getType(StateRegionCompartment2EditPart.VISUAL_ID));
+                    SyncchartsVisualIDRegistry.getType(StateRegionCompartment2EditPart.VISUAL_ID));
             connectedViews = getChildrenByType(connectedViews,
-                SyncchartsVisualIDRegistry.getType(TextualCodeEditPart.VISUAL_ID));
+                    SyncchartsVisualIDRegistry.getType(TextualCodeEditPart.VISUAL_ID));
             result.addAll(createNavigatorItems(connectedViews, parentElement, false));
             connectedViews = getChildrenByType(Collections.singleton(sv),
-                SyncchartsVisualIDRegistry.getType(StateRegionCompartment2EditPart.VISUAL_ID));
+                    SyncchartsVisualIDRegistry.getType(StateRegionCompartment2EditPart.VISUAL_ID));
             connectedViews = getChildrenByType(connectedViews,
-                SyncchartsVisualIDRegistry.getType(StateRegionEditPart.VISUAL_ID));
+                    SyncchartsVisualIDRegistry.getType(StateRegionEditPart.VISUAL_ID));
             result.addAll(createNavigatorItems(connectedViews, parentElement, false));
             connectedViews = getChildrenByType(Collections.singleton(sv),
-                SyncchartsVisualIDRegistry.getType(StateSignalCompartmentEditPart.VISUAL_ID));
+                    SyncchartsVisualIDRegistry.getType(StateSignalCompartmentEditPart.VISUAL_ID));
             connectedViews = getChildrenByType(connectedViews,
-                SyncchartsVisualIDRegistry.getType(VariableEditPart.VISUAL_ID));
+                    SyncchartsVisualIDRegistry.getType(VariableEditPart.VISUAL_ID));
             result.addAll(createNavigatorItems(connectedViews, parentElement, false));
             connectedViews = getIncomingLinksByType(Collections.singleton(sv),
-                SyncchartsVisualIDRegistry.getType(TransitionEditPart.VISUAL_ID));
+                    SyncchartsVisualIDRegistry.getType(TransitionEditPart.VISUAL_ID));
             incominglinks.addChildren(createNavigatorItems(connectedViews, incominglinks, true));
             connectedViews = getOutgoingLinksByType(Collections.singleton(sv),
-                SyncchartsVisualIDRegistry.getType(TransitionEditPart.VISUAL_ID));
-            outgoinglinks.addChildren(createNavigatorItems(connectedViews, outgoinglinks, true));
-            if (!incominglinks.isEmpty()) {
-                result.add(incominglinks);
-            }
-            if (!outgoinglinks.isEmpty()) {
-                result.add(outgoinglinks);
-            }
-            return result.toArray();
-        }
-
-        case RegionStateEditPart.VISUAL_ID: {
-            LinkedList<SyncchartsAbstractNavigatorItem> result = new LinkedList<SyncchartsAbstractNavigatorItem>();
-            Node sv = (Node) view;
-            SyncchartsNavigatorGroup incominglinks = new SyncchartsNavigatorGroup(
-                Messages.NavigatorGroupName_State_3040_incominglinks,
-                "icons/incomingLinksNavigatorGroup.gif", parentElement); //$NON-NLS-1$
-            SyncchartsNavigatorGroup outgoinglinks = new SyncchartsNavigatorGroup(
-                Messages.NavigatorGroupName_State_3040_outgoinglinks,
-                "icons/outgoingLinksNavigatorGroup.gif", parentElement); //$NON-NLS-1$
-            Collection<View> connectedViews;
-            connectedViews = getChildrenByType(Collections.singleton(sv),
-                SyncchartsVisualIDRegistry.getType(StateSignalCompartment2EditPart.VISUAL_ID));
-            connectedViews = getChildrenByType(connectedViews,
-                SyncchartsVisualIDRegistry.getType(SignalEditPart.VISUAL_ID));
-            result.addAll(createNavigatorItems(connectedViews, parentElement, false));
-            connectedViews = getChildrenByType(Collections.singleton(sv),
-                SyncchartsVisualIDRegistry.getType(StateEntryActionCompartment2EditPart.VISUAL_ID));
-            connectedViews = getChildrenByType(connectedViews,
-                SyncchartsVisualIDRegistry.getType(StateEntryActionEditPart.VISUAL_ID));
-            result.addAll(createNavigatorItems(connectedViews, parentElement, false));
-            connectedViews = getChildrenByType(Collections.singleton(sv),
-                SyncchartsVisualIDRegistry.getType(StateInnerActionCompartment2EditPart.VISUAL_ID));
-            connectedViews = getChildrenByType(connectedViews,
-                SyncchartsVisualIDRegistry.getType(StateInnerActionEditPart.VISUAL_ID));
-            result.addAll(createNavigatorItems(connectedViews, parentElement, false));
-            connectedViews = getChildrenByType(Collections.singleton(sv),
-                SyncchartsVisualIDRegistry.getType(StateExitActionCompartment2EditPart.VISUAL_ID));
-            connectedViews = getChildrenByType(connectedViews,
-                SyncchartsVisualIDRegistry.getType(StateExitActionEditPart.VISUAL_ID));
-            result.addAll(createNavigatorItems(connectedViews, parentElement, false));
-            connectedViews = getChildrenByType(Collections.singleton(sv),
-                SyncchartsVisualIDRegistry
-                    .getType(StateSuspensionTriggerCompartment2EditPart.VISUAL_ID));
-            connectedViews = getChildrenByType(connectedViews,
-                SyncchartsVisualIDRegistry.getType(StateSuspensionTriggerEditPart.VISUAL_ID));
-            result.addAll(createNavigatorItems(connectedViews, parentElement, false));
-            connectedViews = getChildrenByType(Collections.singleton(sv),
-                SyncchartsVisualIDRegistry.getType(StateRegionCompartmentEditPart.VISUAL_ID));
-            connectedViews = getChildrenByType(connectedViews,
-                SyncchartsVisualIDRegistry.getType(TextualCodeEditPart.VISUAL_ID));
-            result.addAll(createNavigatorItems(connectedViews, parentElement, false));
-            connectedViews = getChildrenByType(Collections.singleton(sv),
-                SyncchartsVisualIDRegistry.getType(StateRegionCompartmentEditPart.VISUAL_ID));
-            connectedViews = getChildrenByType(connectedViews,
-                SyncchartsVisualIDRegistry.getType(StateRegionEditPart.VISUAL_ID));
-            result.addAll(createNavigatorItems(connectedViews, parentElement, false));
-            connectedViews = getChildrenByType(Collections.singleton(sv),
-                SyncchartsVisualIDRegistry.getType(StateSignalCompartment2EditPart.VISUAL_ID));
-            connectedViews = getChildrenByType(connectedViews,
-                SyncchartsVisualIDRegistry.getType(VariableEditPart.VISUAL_ID));
-            result.addAll(createNavigatorItems(connectedViews, parentElement, false));
-            connectedViews = getIncomingLinksByType(Collections.singleton(sv),
-                SyncchartsVisualIDRegistry.getType(TransitionEditPart.VISUAL_ID));
-            incominglinks.addChildren(createNavigatorItems(connectedViews, incominglinks, true));
-            connectedViews = getOutgoingLinksByType(Collections.singleton(sv),
-                SyncchartsVisualIDRegistry.getType(TransitionEditPart.VISUAL_ID));
+                    SyncchartsVisualIDRegistry.getType(TransitionEditPart.VISUAL_ID));
             outgoinglinks.addChildren(createNavigatorItems(connectedViews, outgoinglinks, true));
             if (!incominglinks.isEmpty()) {
                 result.add(incominglinks);
@@ -389,23 +307,23 @@ public class SyncchartsNavigatorContentProvider implements ICommonContentProvide
             LinkedList<SyncchartsAbstractNavigatorItem> result = new LinkedList<SyncchartsAbstractNavigatorItem>();
             Edge sv = (Edge) view;
             SyncchartsNavigatorGroup target = new SyncchartsNavigatorGroup(
-                Messages.NavigatorGroupName_Transition_4005_target,
-                "icons/linkTargetNavigatorGroup.gif", parentElement); //$NON-NLS-1$
+                    Messages.NavigatorGroupName_Transition_4005_target,
+                    "icons/linkTargetNavigatorGroup.gif", parentElement); //$NON-NLS-1$
             SyncchartsNavigatorGroup source = new SyncchartsNavigatorGroup(
-                Messages.NavigatorGroupName_Transition_4005_source,
-                "icons/linkSourceNavigatorGroup.gif", parentElement); //$NON-NLS-1$
+                    Messages.NavigatorGroupName_Transition_4005_source,
+                    "icons/linkSourceNavigatorGroup.gif", parentElement); //$NON-NLS-1$
             Collection<View> connectedViews;
             connectedViews = getLinksTargetByType(Collections.singleton(sv),
-                SyncchartsVisualIDRegistry.getType(StateEditPart.VISUAL_ID));
+                    SyncchartsVisualIDRegistry.getType(StateEditPart.VISUAL_ID));
             target.addChildren(createNavigatorItems(connectedViews, target, true));
             connectedViews = getLinksTargetByType(Collections.singleton(sv),
-                SyncchartsVisualIDRegistry.getType(RegionStateEditPart.VISUAL_ID));
+                    SyncchartsVisualIDRegistry.getType(RegionStateEditPart.VISUAL_ID));
             target.addChildren(createNavigatorItems(connectedViews, target, true));
             connectedViews = getLinksSourceByType(Collections.singleton(sv),
-                SyncchartsVisualIDRegistry.getType(StateEditPart.VISUAL_ID));
+                    SyncchartsVisualIDRegistry.getType(StateEditPart.VISUAL_ID));
             source.addChildren(createNavigatorItems(connectedViews, source, true));
             connectedViews = getLinksSourceByType(Collections.singleton(sv),
-                SyncchartsVisualIDRegistry.getType(RegionStateEditPart.VISUAL_ID));
+                    SyncchartsVisualIDRegistry.getType(RegionStateEditPart.VISUAL_ID));
             source.addChildren(createNavigatorItems(connectedViews, source, true));
             if (!target.isEmpty()) {
                 result.add(target);
@@ -416,20 +334,108 @@ public class SyncchartsNavigatorContentProvider implements ICommonContentProvide
             return result.toArray();
         }
 
+        case RegionEditPart.VISUAL_ID: {
+            LinkedList<SyncchartsAbstractNavigatorItem> result = new LinkedList<SyncchartsAbstractNavigatorItem>();
+            Diagram sv = (Diagram) view;
+            SyncchartsNavigatorGroup links = new SyncchartsNavigatorGroup(
+                    Messages.NavigatorGroupName_Region_1000_links,
+                    "icons/linksNavigatorGroup.gif", parentElement); //$NON-NLS-1$
+            Collection<View> connectedViews;
+            connectedViews = getChildrenByType(Collections.singleton(sv),
+                    SyncchartsVisualIDRegistry.getType(StateEditPart.VISUAL_ID));
+            result.addAll(createNavigatorItems(connectedViews, parentElement, false));
+            connectedViews = getDiagramLinksByType(Collections.singleton(sv),
+                    SyncchartsVisualIDRegistry.getType(TransitionEditPart.VISUAL_ID));
+            links.addChildren(createNavigatorItems(connectedViews, links, false));
+            if (!links.isEmpty()) {
+                result.add(links);
+            }
+            return result.toArray();
+        }
+
         case StateRegionEditPart.VISUAL_ID: {
             LinkedList<SyncchartsAbstractNavigatorItem> result = new LinkedList<SyncchartsAbstractNavigatorItem>();
             Node sv = (Node) view;
             Collection<View> connectedViews;
             connectedViews = getChildrenByType(Collections.singleton(sv),
-                SyncchartsVisualIDRegistry.getType(RegionStateCompartmentEditPart.VISUAL_ID));
+                    SyncchartsVisualIDRegistry.getType(RegionStateCompartmentEditPart.VISUAL_ID));
             connectedViews = getChildrenByType(connectedViews,
-                SyncchartsVisualIDRegistry.getType(RegionStateEditPart.VISUAL_ID));
+                    SyncchartsVisualIDRegistry.getType(RegionStateEditPart.VISUAL_ID));
             result.addAll(createNavigatorItems(connectedViews, parentElement, false));
             connectedViews = getChildrenByType(Collections.singleton(sv),
-                SyncchartsVisualIDRegistry.getType(RegionStateCompartmentEditPart.VISUAL_ID));
+                    SyncchartsVisualIDRegistry.getType(RegionStateCompartmentEditPart.VISUAL_ID));
             connectedViews = getChildrenByType(connectedViews,
-                SyncchartsVisualIDRegistry.getType(TextualCodeEditPart.VISUAL_ID));
+                    SyncchartsVisualIDRegistry.getType(TextualCodeEditPart.VISUAL_ID));
             result.addAll(createNavigatorItems(connectedViews, parentElement, false));
+            return result.toArray();
+        }
+
+        case RegionStateEditPart.VISUAL_ID: {
+            LinkedList<SyncchartsAbstractNavigatorItem> result = new LinkedList<SyncchartsAbstractNavigatorItem>();
+            Node sv = (Node) view;
+            SyncchartsNavigatorGroup incominglinks = new SyncchartsNavigatorGroup(
+                    Messages.NavigatorGroupName_State_3040_incominglinks,
+                    "icons/incomingLinksNavigatorGroup.gif", parentElement); //$NON-NLS-1$
+            SyncchartsNavigatorGroup outgoinglinks = new SyncchartsNavigatorGroup(
+                    Messages.NavigatorGroupName_State_3040_outgoinglinks,
+                    "icons/outgoingLinksNavigatorGroup.gif", parentElement); //$NON-NLS-1$
+            Collection<View> connectedViews;
+            connectedViews = getChildrenByType(Collections.singleton(sv),
+                    SyncchartsVisualIDRegistry.getType(StateSignalCompartment2EditPart.VISUAL_ID));
+            connectedViews = getChildrenByType(connectedViews,
+                    SyncchartsVisualIDRegistry.getType(SignalEditPart.VISUAL_ID));
+            result.addAll(createNavigatorItems(connectedViews, parentElement, false));
+            connectedViews = getChildrenByType(Collections.singleton(sv),
+                    SyncchartsVisualIDRegistry
+                            .getType(StateEntryActionCompartment2EditPart.VISUAL_ID));
+            connectedViews = getChildrenByType(connectedViews,
+                    SyncchartsVisualIDRegistry.getType(StateEntryActionEditPart.VISUAL_ID));
+            result.addAll(createNavigatorItems(connectedViews, parentElement, false));
+            connectedViews = getChildrenByType(Collections.singleton(sv),
+                    SyncchartsVisualIDRegistry
+                            .getType(StateInnerActionCompartment2EditPart.VISUAL_ID));
+            connectedViews = getChildrenByType(connectedViews,
+                    SyncchartsVisualIDRegistry.getType(StateInnerActionEditPart.VISUAL_ID));
+            result.addAll(createNavigatorItems(connectedViews, parentElement, false));
+            connectedViews = getChildrenByType(Collections.singleton(sv),
+                    SyncchartsVisualIDRegistry
+                            .getType(StateExitActionCompartment2EditPart.VISUAL_ID));
+            connectedViews = getChildrenByType(connectedViews,
+                    SyncchartsVisualIDRegistry.getType(StateExitActionEditPart.VISUAL_ID));
+            result.addAll(createNavigatorItems(connectedViews, parentElement, false));
+            connectedViews = getChildrenByType(Collections.singleton(sv),
+                    SyncchartsVisualIDRegistry
+                            .getType(StateSuspensionTriggerCompartment2EditPart.VISUAL_ID));
+            connectedViews = getChildrenByType(connectedViews,
+                    SyncchartsVisualIDRegistry.getType(StateSuspensionTriggerEditPart.VISUAL_ID));
+            result.addAll(createNavigatorItems(connectedViews, parentElement, false));
+            connectedViews = getChildrenByType(Collections.singleton(sv),
+                    SyncchartsVisualIDRegistry.getType(StateRegionCompartmentEditPart.VISUAL_ID));
+            connectedViews = getChildrenByType(connectedViews,
+                    SyncchartsVisualIDRegistry.getType(TextualCodeEditPart.VISUAL_ID));
+            result.addAll(createNavigatorItems(connectedViews, parentElement, false));
+            connectedViews = getChildrenByType(Collections.singleton(sv),
+                    SyncchartsVisualIDRegistry.getType(StateRegionCompartmentEditPart.VISUAL_ID));
+            connectedViews = getChildrenByType(connectedViews,
+                    SyncchartsVisualIDRegistry.getType(StateRegionEditPart.VISUAL_ID));
+            result.addAll(createNavigatorItems(connectedViews, parentElement, false));
+            connectedViews = getChildrenByType(Collections.singleton(sv),
+                    SyncchartsVisualIDRegistry.getType(StateSignalCompartment2EditPart.VISUAL_ID));
+            connectedViews = getChildrenByType(connectedViews,
+                    SyncchartsVisualIDRegistry.getType(VariableEditPart.VISUAL_ID));
+            result.addAll(createNavigatorItems(connectedViews, parentElement, false));
+            connectedViews = getIncomingLinksByType(Collections.singleton(sv),
+                    SyncchartsVisualIDRegistry.getType(TransitionEditPart.VISUAL_ID));
+            incominglinks.addChildren(createNavigatorItems(connectedViews, incominglinks, true));
+            connectedViews = getOutgoingLinksByType(Collections.singleton(sv),
+                    SyncchartsVisualIDRegistry.getType(TransitionEditPart.VISUAL_ID));
+            outgoinglinks.addChildren(createNavigatorItems(connectedViews, outgoinglinks, true));
+            if (!incominglinks.isEmpty()) {
+                result.add(incominglinks);
+            }
+            if (!outgoinglinks.isEmpty()) {
+                result.add(outgoinglinks);
+            }
             return result.toArray();
         }
         }
@@ -533,9 +539,9 @@ public class SyncchartsNavigatorContentProvider implements ICommonContentProvide
      * @generated
      */
     private Collection<SyncchartsNavigatorItem> createNavigatorItems(Collection<View> views,
-        Object parent, boolean isLeafs) {
+            Object parent, boolean isLeafs) {
         ArrayList<SyncchartsNavigatorItem> result = new ArrayList<SyncchartsNavigatorItem>(
-            views.size());
+                views.size());
         for (View nextView : views) {
             result.add(new SyncchartsNavigatorItem(nextView, parent, isLeafs));
         }

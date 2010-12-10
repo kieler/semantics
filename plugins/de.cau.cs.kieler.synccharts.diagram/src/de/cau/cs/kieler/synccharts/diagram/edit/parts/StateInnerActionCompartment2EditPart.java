@@ -75,11 +75,11 @@ public class StateInnerActionCompartment2EditPart extends ShapeCompartmentEditPa
         super.createDefaultEditPolicies();
         installEditPolicy(EditPolicy.PRIMARY_DRAG_ROLE, new ResizableCompartmentEditPolicy());
         installEditPolicy(EditPolicyRoles.SEMANTIC_ROLE,
-            new StateInnerActionCompartment2ItemSemanticEditPolicy());
+                new StateInnerActionCompartment2ItemSemanticEditPolicy());
         installEditPolicy(EditPolicyRoles.CREATION_ROLE, new CreationEditPolicy());
         installEditPolicy(EditPolicyRoles.DRAG_DROP_ROLE, new DragDropEditPolicy());
         installEditPolicy(EditPolicyRoles.CANONICAL_ROLE,
-            new StateInnerActionCompartment2CanonicalEditPolicy());
+                new StateInnerActionCompartment2CanonicalEditPolicy());
     }
 
     /**

@@ -31,7 +31,7 @@ public class SyncchartsMarkerNavigationProvider extends AbstractModelMarkerNavig
      */
     protected void doGotoMarker(IMarker marker) {
         String elementId = marker.getAttribute(
-            org.eclipse.gmf.runtime.common.core.resources.IMarker.ELEMENT_ID, null);
+                org.eclipse.gmf.runtime.common.core.resources.IMarker.ELEMENT_ID, null);
         if (elementId == null || !(getEditor() instanceof DiagramEditor)) {
             return;
         }
@@ -44,7 +44,7 @@ public class SyncchartsMarkerNavigationProvider extends AbstractModelMarkerNavig
         EditPart targetEditPart = (EditPart) editPartRegistry.get(targetView);
         if (targetEditPart != null) {
             SyncchartsDiagramEditorUtil.selectElementsInDiagram(editor,
-                Arrays.asList(new EditPart[] { targetEditPart }));
+                    Arrays.asList(new EditPart[] { targetEditPart }));
         }
     }
 
@@ -56,7 +56,7 @@ public class SyncchartsMarkerNavigationProvider extends AbstractModelMarkerNavig
             resource.deleteMarkers(MARKER_TYPE, true, IResource.DEPTH_ZERO);
         } catch (CoreException e) {
             SyncchartsDiagramEditorPlugin.getInstance().logError(
-                "Failed to delete validation markers", e); //$NON-NLS-1$
+                    "Failed to delete validation markers", e); //$NON-NLS-1$
         }
     }
 
@@ -64,14 +64,14 @@ public class SyncchartsMarkerNavigationProvider extends AbstractModelMarkerNavig
      * @generated
      */
     public static IMarker addMarker(IFile file, String elementId, String location, String message,
-        int statusSeverity) {
+            int statusSeverity) {
         IMarker marker = null;
         try {
             marker = file.createMarker(MARKER_TYPE);
             marker.setAttribute(IMarker.MESSAGE, message);
             marker.setAttribute(IMarker.LOCATION, location);
             marker.setAttribute(org.eclipse.gmf.runtime.common.ui.resources.IMarker.ELEMENT_ID,
-                elementId);
+                    elementId);
             int markerSeverity = IMarker.SEVERITY_INFO;
             if (statusSeverity == IStatus.WARNING) {
                 markerSeverity = IMarker.SEVERITY_WARNING;
@@ -81,7 +81,7 @@ public class SyncchartsMarkerNavigationProvider extends AbstractModelMarkerNavig
             marker.setAttribute(IMarker.SEVERITY, markerSeverity);
         } catch (CoreException e) {
             SyncchartsDiagramEditorPlugin.getInstance().logError(
-                "Failed to create validation marker", e); //$NON-NLS-1$
+                    "Failed to create validation marker", e); //$NON-NLS-1$
         }
         return marker;
     }

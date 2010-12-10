@@ -18,7 +18,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.transaction.NotificationFilter;
 import org.eclipse.gmf.runtime.notation.NotationPackage;
 
-import de.cau.cs.kieler.core.expressions.ExpressionsPackage;
+import de.cau.cs.kieler.core.kexpressions.KExpressionsPackage;
 import de.cau.cs.kieler.core.kivi.AbstractCombination;
 import de.cau.cs.kieler.kiml.ui.layout.LayoutEffect;
 import de.cau.cs.kieler.synccharts.SyncchartsPackage;
@@ -59,7 +59,7 @@ public class LayoutAfterModelChangedCombination extends AbstractCombination {
                     .getScope_Signals()))
             .or(NotificationFilter.createFeatureFilter(SyncchartsPackage.eINSTANCE
                     .getScope_Variables()))
-            .or(NotificationFilter.createFeatureFilter(ExpressionsPackage.eINSTANCE
+            .or(NotificationFilter.createFeatureFilter(KExpressionsPackage.eINSTANCE
                     .getValuedObject_Name()));
     private NotificationFilter diagramFilter = NotificationFilter
             .createFeatureFilter(NotationPackage.eINSTANCE.getDrawerStyle_Collapsed());

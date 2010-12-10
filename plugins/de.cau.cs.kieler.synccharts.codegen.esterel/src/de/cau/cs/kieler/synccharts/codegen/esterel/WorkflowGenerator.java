@@ -37,7 +37,7 @@ import org.eclipse.xpand2.output.Outlet;
 import org.eclipse.xtend.typesystem.emf.EmfMetaModel;
 
 import de.cau.cs.kieler.core.annotations.AnnotationsPackage;
-import de.cau.cs.kieler.core.expressions.ExpressionsPackage;
+import de.cau.cs.kieler.core.kexpressions.KExpressionsPackage;
 import de.cau.cs.kieler.synccharts.SyncchartsPackage;
 
 /**
@@ -71,7 +71,7 @@ public class WorkflowGenerator {
                 .getActivePage();
 
         final EPackage p1 = SyncchartsPackage.eINSTANCE;
-        final EPackage p2 = ExpressionsPackage.eINSTANCE;
+        final EPackage p2 = KExpressionsPackage.eINSTANCE;
         final EPackage p3 = AnnotationsPackage.eINSTANCE;
         
         editor = activePage.getActiveEditor();

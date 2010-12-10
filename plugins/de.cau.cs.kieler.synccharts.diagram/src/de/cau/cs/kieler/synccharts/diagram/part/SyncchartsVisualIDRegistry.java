@@ -75,7 +75,7 @@ public class SyncchartsVisualIDRegistry {
             }
         }
         return de.cau.cs.kieler.synccharts.diagram.part.SyncchartsVisualIDRegistry.getVisualID(view
-            .getType());
+                .getType());
     }
 
     /**
@@ -102,7 +102,7 @@ public class SyncchartsVisualIDRegistry {
         } catch (NumberFormatException e) {
             if (Boolean.TRUE.toString().equalsIgnoreCase(Platform.getDebugOption(DEBUG_KEY))) {
                 SyncchartsDiagramEditorPlugin.getInstance().logError(
-                    "Unable to parse view type as a visualID number: " + type);
+                        "Unable to parse view type as a visualID number: " + type);
             }
         }
         return -1;
@@ -123,7 +123,7 @@ public class SyncchartsVisualIDRegistry {
             return -1;
         }
         if (SyncchartsPackage.eINSTANCE.getRegion().isSuperTypeOf(domainElement.eClass())
-            && isDiagram((Region) domainElement)) {
+                && isDiagram((Region) domainElement)) {
             return RegionEditPart.VISUAL_ID;
         }
         return -1;
@@ -137,14 +137,14 @@ public class SyncchartsVisualIDRegistry {
             return -1;
         }
         String containerModelID = de.cau.cs.kieler.synccharts.diagram.part.SyncchartsVisualIDRegistry
-            .getModelID(containerView);
+                .getModelID(containerView);
         if (!RegionEditPart.MODEL_ID.equals(containerModelID)) {
             return -1;
         }
         int containerVisualID;
         if (RegionEditPart.MODEL_ID.equals(containerModelID)) {
             containerVisualID = de.cau.cs.kieler.synccharts.diagram.part.SyncchartsVisualIDRegistry
-                .getVisualID(containerView);
+                    .getVisualID(containerView);
         } else {
             if (containerView instanceof Diagram) {
                 containerVisualID = RegionEditPart.VISUAL_ID;
@@ -187,7 +187,8 @@ public class SyncchartsVisualIDRegistry {
             }
             break;
         case StateRegionCompartment2EditPart.VISUAL_ID:
-            if (KExpressionsPackage.eINSTANCE.getTextualCode().isSuperTypeOf(domainElement.eClass())) {
+            if (KExpressionsPackage.eINSTANCE.getTextualCode()
+                    .isSuperTypeOf(domainElement.eClass())) {
                 return TextualCodeEditPart.VISUAL_ID;
             }
             if (SyncchartsPackage.eINSTANCE.getRegion().isSuperTypeOf(domainElement.eClass())) {
@@ -198,7 +199,8 @@ public class SyncchartsVisualIDRegistry {
             if (SyncchartsPackage.eINSTANCE.getState().isSuperTypeOf(domainElement.eClass())) {
                 return RegionStateEditPart.VISUAL_ID;
             }
-            if (KExpressionsPackage.eINSTANCE.getTextualCode().isSuperTypeOf(domainElement.eClass())) {
+            if (KExpressionsPackage.eINSTANCE.getTextualCode()
+                    .isSuperTypeOf(domainElement.eClass())) {
                 return TextualCodeEditPart.VISUAL_ID;
             }
             break;
@@ -231,7 +233,8 @@ public class SyncchartsVisualIDRegistry {
             }
             break;
         case StateRegionCompartmentEditPart.VISUAL_ID:
-            if (KExpressionsPackage.eINSTANCE.getTextualCode().isSuperTypeOf(domainElement.eClass())) {
+            if (KExpressionsPackage.eINSTANCE.getTextualCode()
+                    .isSuperTypeOf(domainElement.eClass())) {
                 return TextualCodeEditPart.VISUAL_ID;
             }
             if (SyncchartsPackage.eINSTANCE.getRegion().isSuperTypeOf(domainElement.eClass())) {
@@ -247,14 +250,14 @@ public class SyncchartsVisualIDRegistry {
      */
     public static boolean canCreateNode(View containerView, int nodeVisualID) {
         String containerModelID = de.cau.cs.kieler.synccharts.diagram.part.SyncchartsVisualIDRegistry
-            .getModelID(containerView);
+                .getModelID(containerView);
         if (!RegionEditPart.MODEL_ID.equals(containerModelID)) {
             return false;
         }
         int containerVisualID;
         if (RegionEditPart.MODEL_ID.equals(containerModelID)) {
             containerVisualID = de.cau.cs.kieler.synccharts.diagram.part.SyncchartsVisualIDRegistry
-                .getVisualID(containerView);
+                    .getVisualID(containerView);
         } else {
             if (containerView instanceof Diagram) {
                 containerVisualID = RegionEditPart.VISUAL_ID;

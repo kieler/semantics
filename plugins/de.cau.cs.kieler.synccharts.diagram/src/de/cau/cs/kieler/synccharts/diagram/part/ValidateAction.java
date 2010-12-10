@@ -69,7 +69,7 @@ public class ValidateAction extends Action {
                 new WorkspaceModifyDelegatingOperation(new IRunnableWithProgress() {
 
                     public void run(IProgressMonitor monitor) throws InterruptedException,
-                        InvocationTargetException {
+                            InvocationTargetException {
                         runValidation(part.getDiagramEditPart(), part.getDiagram());
                     }
                 }).run(new NullProgressMonitor());
@@ -105,7 +105,7 @@ public class ValidateAction extends Action {
      */
     public static void runNonUIValidation(View view) {
         DiagramEditPart diagramEditPart = OffscreenEditPartFactory.getInstance()
-            .createDiagramEditPart(view.getDiagram());
+                .createDiagramEditPart(view.getDiagram());
         runValidation(diagramEditPart, view);
     }
 
@@ -144,14 +144,14 @@ public class ValidateAction extends Action {
      */
     private static void validate(DiagramEditPart diagramEditPart, View view) {
         IFile target = view.eResource() != null ? WorkspaceSynchronizer.getFile(view.eResource())
-            : null;
+                : null;
         if (target != null) {
             SyncchartsMarkerNavigationProvider.deleteMarkers(target);
         }
         Diagnostic diagnostic = runEMFValidator(view);
         createMarkers(target, diagnostic, diagramEditPart);
         IBatchValidator validator = (IBatchValidator) ModelValidationService.getInstance()
-            .newValidator(EvaluationMode.BATCH);
+                .newValidator(EvaluationMode.BATCH);
         validator.setIncludeLiveConstraints(true);
         if (view.isSetElement() && view.getElement() != null) {
             IStatus status = validator.validate(view.getElement());
@@ -163,22 +163,22 @@ public class ValidateAction extends Action {
      * @generated
      */
     private static void createMarkers(IFile target, IStatus validationStatus,
-        DiagramEditPart diagramEditPart) {
+            DiagramEditPart diagramEditPart) {
         if (validationStatus.isOK()) {
             return;
         }
         final IStatus rootStatus = validationStatus;
         List allStatuses = new ArrayList();
         SyncchartsDiagramEditorUtil.LazyElement2ViewMap element2ViewMap = new SyncchartsDiagramEditorUtil.LazyElement2ViewMap(
-            diagramEditPart.getDiagramView(), collectTargetElements(rootStatus,
-                new HashSet<EObject>(), allStatuses));
+                diagramEditPart.getDiagramView(), collectTargetElements(rootStatus,
+                        new HashSet<EObject>(), allStatuses));
         for (Iterator it = allStatuses.iterator(); it.hasNext();) {
             IConstraintStatus nextStatus = (IConstraintStatus) it.next();
             View view = SyncchartsDiagramEditorUtil.findView(diagramEditPart,
-                nextStatus.getTarget(), element2ViewMap);
+                    nextStatus.getTarget(), element2ViewMap);
             addMarker(diagramEditPart.getViewer(), target, view.eResource().getURIFragment(view),
-                EMFCoreUtil.getQualifiedName(nextStatus.getTarget(), true),
-                nextStatus.getMessage(), nextStatus.getSeverity());
+                    EMFCoreUtil.getQualifiedName(nextStatus.getTarget(), true),
+                    nextStatus.getMessage(), nextStatus.getSeverity());
         }
     }
 
@@ -186,26 +186,26 @@ public class ValidateAction extends Action {
      * @generated
      */
     private static void createMarkers(IFile target, Diagnostic emfValidationStatus,
-        DiagramEditPart diagramEditPart) {
+            DiagramEditPart diagramEditPart) {
         if (emfValidationStatus.getSeverity() == Diagnostic.OK) {
             return;
         }
         final Diagnostic rootStatus = emfValidationStatus;
         List allDiagnostics = new ArrayList();
         SyncchartsDiagramEditorUtil.LazyElement2ViewMap element2ViewMap = new SyncchartsDiagramEditorUtil.LazyElement2ViewMap(
-            diagramEditPart.getDiagramView(), collectTargetElements(rootStatus,
-                new HashSet<EObject>(), allDiagnostics));
+                diagramEditPart.getDiagramView(), collectTargetElements(rootStatus,
+                        new HashSet<EObject>(), allDiagnostics));
         for (Iterator it = emfValidationStatus.getChildren().iterator(); it.hasNext();) {
             Diagnostic nextDiagnostic = (Diagnostic) it.next();
             List data = nextDiagnostic.getData();
             if (data != null && !data.isEmpty() && data.get(0) instanceof EObject) {
                 EObject element = (EObject) data.get(0);
                 View view = SyncchartsDiagramEditorUtil.findView(diagramEditPart, element,
-                    element2ViewMap);
+                        element2ViewMap);
                 addMarker(diagramEditPart.getViewer(), target, view.eResource()
-                    .getURIFragment(view), EMFCoreUtil.getQualifiedName(element, true),
-                    nextDiagnostic.getMessage(),
-                    diagnosticToStatusSeverity(nextDiagnostic.getSeverity()));
+                        .getURIFragment(view), EMFCoreUtil.getQualifiedName(element, true),
+                        nextDiagnostic.getMessage(),
+                        diagnosticToStatusSeverity(nextDiagnostic.getSeverity()));
             }
         }
     }
@@ -214,12 +214,12 @@ public class ValidateAction extends Action {
      * @generated
      */
     private static void addMarker(EditPartViewer viewer, IFile target, String elementId,
-        String location, String message, int statusSeverity) {
+            String location, String message, int statusSeverity) {
         if (target == null) {
             return;
         }
         SyncchartsMarkerNavigationProvider.addMarker(target, elementId, location, message,
-            statusSeverity);
+                statusSeverity);
     }
 
     /**
@@ -233,7 +233,7 @@ public class ValidateAction extends Action {
         } else if (diagnosticSeverity == Diagnostic.WARNING) {
             return IStatus.WARNING;
         } else if (diagnosticSeverity == Diagnostic.ERROR
-            || diagnosticSeverity == Diagnostic.CANCEL) {
+                || diagnosticSeverity == Diagnostic.CANCEL) {
             return IStatus.ERROR;
         }
         return IStatus.INFO;
@@ -243,7 +243,7 @@ public class ValidateAction extends Action {
      * @generated
      */
     private static Set<EObject> collectTargetElements(IStatus status,
-        Set<EObject> targetElementCollector, List allConstraintStatuses) {
+            Set<EObject> targetElementCollector, List allConstraintStatuses) {
         if (status instanceof IConstraintStatus) {
             targetElementCollector.add(((IConstraintStatus) status).getTarget());
             allConstraintStatuses.add(status);
@@ -261,7 +261,7 @@ public class ValidateAction extends Action {
      * @generated
      */
     private static Set<EObject> collectTargetElements(Diagnostic diagnostic,
-        Set<EObject> targetElementCollector, List allDiagnostics) {
+            Set<EObject> targetElementCollector, List allDiagnostics) {
         List data = diagnostic.getData();
         EObject target = null;
         if (data != null && !data.isEmpty() && data.get(0) instanceof EObject) {
@@ -272,7 +272,7 @@ public class ValidateAction extends Action {
         if (diagnostic.getChildren() != null && !diagnostic.getChildren().isEmpty()) {
             for (Iterator it = diagnostic.getChildren().iterator(); it.hasNext();) {
                 collectTargetElements((Diagnostic) it.next(), targetElementCollector,
-                    allDiagnostics);
+                        allDiagnostics);
             }
         }
         return targetElementCollector;

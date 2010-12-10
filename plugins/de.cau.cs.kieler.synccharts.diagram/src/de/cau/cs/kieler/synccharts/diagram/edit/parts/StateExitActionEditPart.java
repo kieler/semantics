@@ -57,7 +57,7 @@ public class StateExitActionEditPart extends ShapeNodeEditPart {
     protected void createDefaultEditPolicies() {
         super.createDefaultEditPolicies();
         installEditPolicy(EditPolicyRoles.SEMANTIC_ROLE,
-            new StateExitActionItemSemanticEditPolicy());
+                new StateExitActionItemSemanticEditPolicy());
         installEditPolicy(EditPolicy.LAYOUT_ROLE, createLayoutEditPolicy());
         // XXX need an SCR to runtime to have another abstract superclass that would let children add reasonable editpolicies
         // removeEditPolicy(org.eclipse.gmf.runtime.diagram.ui.editpolicies.EditPolicyRoles.CONNECTION_HANDLES_ROLE);
@@ -110,7 +110,7 @@ public class StateExitActionEditPart extends ShapeNodeEditPart {
     protected boolean addFixedChild(EditPart childEditPart) {
         if (childEditPart instanceof StateExitActionLabelEditPart) {
             ((StateExitActionLabelEditPart) childEditPart).setLabel(getPrimaryShape()
-                .getFigureInvisibleFigureLabelFigure());
+                    .getFigureInvisibleFigureLabelFigure());
             return true;
         }
         return false;
@@ -244,7 +244,7 @@ public class StateExitActionEditPart extends ShapeNodeEditPart {
      */
     public EditPart getPrimaryChildEditPart() {
         return getChildBySemanticHint(SyncchartsVisualIDRegistry
-            .getType(StateExitActionLabelEditPart.VISUAL_ID));
+                .getType(StateExitActionLabelEditPart.VISUAL_ID));
     }
 
     /**

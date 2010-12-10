@@ -52,7 +52,7 @@ public class StateEntryActionCreateCommand extends EditElementCommand {
      * @generated
      */
     protected CommandResult doExecuteWithResult(IProgressMonitor monitor, IAdaptable info)
-        throws ExecutionException {
+            throws ExecutionException {
         Action newElement = SyncchartsFactory.eINSTANCE.createAction();
 
         Scope owner = (Scope) getElementToEdit();
@@ -68,10 +68,10 @@ public class StateEntryActionCreateCommand extends EditElementCommand {
      * @generated
      */
     protected void doConfigure(Action newElement, IProgressMonitor monitor, IAdaptable info)
-        throws ExecutionException {
+            throws ExecutionException {
         IElementType elementType = ((CreateElementRequest) getRequest()).getElementType();
         ConfigureRequest configureRequest = new ConfigureRequest(getEditingDomain(), newElement,
-            elementType);
+                elementType);
         configureRequest.setClientContext(((CreateElementRequest) getRequest()).getClientContext());
         configureRequest.addParameters(getRequest().getParameters());
         ICommand configureCommand = elementType.getEditCommand(configureRequest);

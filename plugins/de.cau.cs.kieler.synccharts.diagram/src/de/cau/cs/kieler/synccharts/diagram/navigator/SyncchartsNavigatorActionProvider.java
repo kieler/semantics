@@ -121,7 +121,7 @@ public class SyncchartsNavigatorActionProvider extends CommonActionProvider {
                 if (selectedElement instanceof Diagram) {
                     Diagram diagram = (Diagram) selectedElement;
                     if (RegionEditPart.MODEL_ID.equals(SyncchartsVisualIDRegistry
-                        .getModelID(diagram))) {
+                            .getModelID(diagram))) {
                         myDiagram = diagram;
                     }
                 }
@@ -143,7 +143,7 @@ public class SyncchartsNavigatorActionProvider extends CommonActionProvider {
                 page.openEditor(editorInput, SyncchartsDiagramEditor.ID);
             } catch (PartInitException e) {
                 SyncchartsDiagramEditorPlugin.getInstance().logError(
-                    "Exception while openning diagram", e); //$NON-NLS-1$
+                        "Exception while openning diagram", e); //$NON-NLS-1$
             }
         }
 
@@ -162,7 +162,7 @@ public class SyncchartsNavigatorActionProvider extends CommonActionProvider {
             }
             URI uri = EcoreUtil.getURI(diagram);
             String editorName = uri.lastSegment() + '#'
-                + diagram.eResource().getContents().indexOf(diagram);
+                    + diagram.eResource().getContents().indexOf(diagram);
             IEditorInput editorInput = new URIEditorInput(uri, editorName);
             return editorInput;
         }

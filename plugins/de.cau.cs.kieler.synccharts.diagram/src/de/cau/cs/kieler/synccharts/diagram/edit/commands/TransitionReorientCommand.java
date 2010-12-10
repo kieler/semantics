@@ -71,7 +71,7 @@ public class TransitionReorientCommand extends EditElementCommand {
         }
         State container = (State) getLink().eContainer();
         return SyncchartsBaseItemSemanticEditPolicy.getLinkConstraints().canExistTransition_4005(
-            container, getLink(), getNewSource(), target);
+                container, getLink(), getNewSource(), target);
     }
 
     /**
@@ -87,14 +87,14 @@ public class TransitionReorientCommand extends EditElementCommand {
         }
         State container = (State) getLink().eContainer();
         return SyncchartsBaseItemSemanticEditPolicy.getLinkConstraints().canExistTransition_4005(
-            container, getLink(), source, getNewTarget());
+                container, getLink(), source, getNewTarget());
     }
 
     /**
      * @generated
      */
     protected CommandResult doExecuteWithResult(IProgressMonitor monitor, IAdaptable info)
-        throws ExecutionException {
+            throws ExecutionException {
         if (!canExecute()) {
             throw new ExecutionException("Invalid arguments in reorient link command"); //$NON-NLS-1$
         }

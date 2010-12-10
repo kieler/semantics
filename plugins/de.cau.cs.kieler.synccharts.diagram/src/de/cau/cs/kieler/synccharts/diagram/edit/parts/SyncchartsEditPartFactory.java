@@ -207,7 +207,7 @@ public class SyncchartsEditPartFactory implements EditPartFactory {
                 } else {
                     int avr = FigureUtilities.getFontMetrics(text.getFont()).getAverageCharWidth();
                     rect.setSize(new Dimension(text.computeSize(SWT.DEFAULT, SWT.DEFAULT)).expand(
-                        avr * 2, 0));
+                            avr * 2, 0));
                 }
             }
             if (!rect.equals(new Rectangle(text.getBounds()))) {
@@ -250,7 +250,7 @@ public class SyncchartsEditPartFactory implements EditPartFactory {
             if (!text.getFont().isDisposed()) {
                 int avr = FigureUtilities.getFontMetrics(text.getFont()).getAverageCharWidth();
                 rect.setSize(new Dimension(text.computeSize(SWT.DEFAULT, SWT.DEFAULT)).expand(
-                    avr * 2, 0));
+                        avr * 2, 0));
             }
             if (!rect.equals(new Rectangle(text.getBounds()))) {
                 text.setBounds(rect.x, rect.y, rect.width, rect.height);

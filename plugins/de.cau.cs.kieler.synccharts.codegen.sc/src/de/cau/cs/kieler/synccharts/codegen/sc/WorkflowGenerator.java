@@ -51,7 +51,7 @@ import org.eclipse.xpand2.output.Outlet;
 import org.eclipse.xtend.expression.AbstractExpressionsUsingWorkflowComponent.GlobalVar;
 import org.eclipse.xtend.typesystem.emf.EmfMetaModel;
 
-import de.cau.cs.kieler.core.expressions.ExpressionsPackage;
+import de.cau.cs.kieler.core.kexpressions.KExpressionsPackage;
 import de.cau.cs.kieler.synccharts.Region;
 import de.cau.cs.kieler.synccharts.SyncchartsPackage;
 
@@ -148,7 +148,7 @@ public class WorkflowGenerator {
         String filename = ((Region) myModel).getStates().get(0).getId();
 
         // Meta model
-        EmfMetaModel metaModel1 = new EmfMetaModel(ExpressionsPackage.eINSTANCE);
+        EmfMetaModel metaModel1 = new EmfMetaModel(KExpressionsPackage.eINSTANCE);
         EmfMetaModel metaModel2 = new EmfMetaModel(SyncchartsPackage.eINSTANCE);
 
         //FIXME: This is a really hacky way to set the path ... consider this for 

@@ -109,7 +109,7 @@ public class VariableEditPart extends ShapeNodeEditPart {
     protected boolean addFixedChild(EditPart childEditPart) {
         if (childEditPart instanceof VariableNameEditPart) {
             ((VariableNameEditPart) childEditPart).setLabel(getPrimaryShape()
-                .getFigureInvisibleFigureLabelFigure());
+                    .getFigureInvisibleFigureLabelFigure());
             return true;
         }
         return false;
@@ -243,7 +243,7 @@ public class VariableEditPart extends ShapeNodeEditPart {
      */
     public EditPart getPrimaryChildEditPart() {
         return getChildBySemanticHint(SyncchartsVisualIDRegistry
-            .getType(VariableNameEditPart.VISUAL_ID));
+                .getType(VariableNameEditPart.VISUAL_ID));
     }
 
     /**

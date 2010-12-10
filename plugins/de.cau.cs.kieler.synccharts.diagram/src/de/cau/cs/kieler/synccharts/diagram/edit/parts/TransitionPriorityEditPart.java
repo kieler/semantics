@@ -81,9 +81,9 @@ public class TransitionPriorityEditPart extends LabelEditPart implements ITextAw
      */
     static {
         registerSnapBackPosition(
-            SyncchartsVisualIDRegistry
-                .getType(de.cau.cs.kieler.synccharts.diagram.edit.parts.TransitionPriorityEditPart.VISUAL_ID),
-            new Point(0, 60));
+                SyncchartsVisualIDRegistry
+                        .getType(de.cau.cs.kieler.synccharts.diagram.edit.parts.TransitionPriorityEditPart.VISUAL_ID),
+                new Point(0, 60));
     }
 
     /**
@@ -100,7 +100,7 @@ public class TransitionPriorityEditPart extends LabelEditPart implements ITextAw
         super.createDefaultEditPolicies();
         installEditPolicy(EditPolicy.DIRECT_EDIT_ROLE, new LabelDirectEditPolicy());
         installEditPolicy(EditPolicy.SELECTION_FEEDBACK_ROLE,
-            new SyncchartsTextSelectionEditPolicy());
+                new SyncchartsTextSelectionEditPolicy());
         installEditPolicy(EditPolicy.PRIMARY_DRAG_ROLE, new RegionEditPart.LinkLabelDragPolicy());
     }
 
@@ -203,7 +203,7 @@ public class TransitionPriorityEditPart extends LabelEditPart implements ITextAw
         EObject parserElement = getParserElement();
         if (parserElement != null && getParser() != null) {
             text = getParser().getPrintString(new EObjectAdapter(parserElement),
-                getParserOptions().intValue());
+                    getParserOptions().intValue());
         }
         if (text == null || text.length() == 0) {
             text = defaultText;
@@ -234,7 +234,7 @@ public class TransitionPriorityEditPart extends LabelEditPart implements ITextAw
             return ""; //$NON-NLS-1$
         }
         return getParser().getEditString(new EObjectAdapter(getParserElement()),
-            getParserOptions().intValue());
+                getParserOptions().intValue());
     }
 
     /**
@@ -256,15 +256,15 @@ public class TransitionPriorityEditPart extends LabelEditPart implements ITextAw
                     final IParser parser = getParser();
                     try {
                         IParserEditStatus valid = (IParserEditStatus) getEditingDomain()
-                            .runExclusive(new RunnableWithResult.Impl<IParserEditStatus>() {
+                                .runExclusive(new RunnableWithResult.Impl<IParserEditStatus>() {
 
-                                public void run() {
-                                    setResult(parser.isValidEditString(new EObjectAdapter(element),
-                                        (String) value));
-                                }
-                            });
+                                    public void run() {
+                                        setResult(parser.isValidEditString(new EObjectAdapter(
+                                                element), (String) value));
+                                    }
+                                });
                         return valid.getCode() == ParserEditStatus.EDITABLE ? null : valid
-                            .getMessage();
+                                .getMessage();
                     } catch (InterruptedException ie) {
                         ie.printStackTrace();
                     }
@@ -299,11 +299,11 @@ public class TransitionPriorityEditPart extends LabelEditPart implements ITextAw
     public IParser getParser() {
         if (parser == null) {
             parser = SyncchartsParserProvider
-                .getParser(
-                    SyncchartsElementTypes.Transition_4005,
-                    getParserElement(),
-                    SyncchartsVisualIDRegistry
-                        .getType(de.cau.cs.kieler.synccharts.diagram.edit.parts.TransitionPriorityEditPart.VISUAL_ID));
+                    .getParser(
+                            SyncchartsElementTypes.Transition_4005,
+                            getParserElement(),
+                            SyncchartsVisualIDRegistry
+                                    .getType(de.cau.cs.kieler.synccharts.diagram.edit.parts.TransitionPriorityEditPart.VISUAL_ID));
         }
         return parser;
     }
@@ -315,7 +315,7 @@ public class TransitionPriorityEditPart extends LabelEditPart implements ITextAw
         if (manager == null) {
 
             setManager(new TextDirectEditManager(this, WrapTextCellEditor.class,
-                SyncchartsEditPartFactory.getTextCellEditorLocator(this)));
+                    SyncchartsEditPartFactory.getTextCellEditorLocator(this)));
         }
         return manager;
     }
@@ -365,12 +365,12 @@ public class TransitionPriorityEditPart extends LabelEditPart implements ITextAw
                 public void run() {
                     if (isActive() && isEditable()) {
                         if (theRequest.getExtendedData().get(
-                            RequestConstants.REQ_DIRECTEDIT_EXTENDEDDATA_INITIAL_CHAR) instanceof Character) {
+                                RequestConstants.REQ_DIRECTEDIT_EXTENDEDDATA_INITIAL_CHAR) instanceof Character) {
                             Character initialChar = (Character) theRequest.getExtendedData().get(
-                                RequestConstants.REQ_DIRECTEDIT_EXTENDEDDATA_INITIAL_CHAR);
+                                    RequestConstants.REQ_DIRECTEDIT_EXTENDEDDATA_INITIAL_CHAR);
                             performDirectEdit(initialChar.charValue());
                         } else if ((theRequest instanceof DirectEditRequest)
-                            && (getEditText().equals(getLabelText()))) {
+                                && (getEditText().equals(getLabelText()))) {
                             DirectEditRequest editRequest = (DirectEditRequest) theRequest;
                             performDirectEdit(editRequest.getLocation());
                         } else {
@@ -417,7 +417,7 @@ public class TransitionPriorityEditPart extends LabelEditPart implements ITextAw
      */
     protected void refreshUnderline() {
         FontStyle style = (FontStyle) getFontStyleOwnerView().getStyle(
-            NotationPackage.eINSTANCE.getFontStyle());
+                NotationPackage.eINSTANCE.getFontStyle());
         if (style != null && getFigure() instanceof WrappingLabel) {
             ((WrappingLabel) getFigure()).setTextUnderline(style.isUnderline());
         }
@@ -428,7 +428,7 @@ public class TransitionPriorityEditPart extends LabelEditPart implements ITextAw
      */
     protected void refreshStrikeThrough() {
         FontStyle style = (FontStyle) getFontStyleOwnerView().getStyle(
-            NotationPackage.eINSTANCE.getFontStyle());
+                NotationPackage.eINSTANCE.getFontStyle());
         if (style != null && getFigure() instanceof WrappingLabel) {
             ((WrappingLabel) getFigure()).setTextStrikeThrough(style.isStrikeThrough());
         }
@@ -439,11 +439,11 @@ public class TransitionPriorityEditPart extends LabelEditPart implements ITextAw
      */
     protected void refreshFont() {
         FontStyle style = (FontStyle) getFontStyleOwnerView().getStyle(
-            NotationPackage.eINSTANCE.getFontStyle());
+                NotationPackage.eINSTANCE.getFontStyle());
         if (style != null) {
             FontData fontData = new FontData(style.getFontName(), style.getFontHeight(),
-                (style.isBold() ? SWT.BOLD : SWT.NORMAL)
-                    | (style.isItalic() ? SWT.ITALIC : SWT.NORMAL));
+                    (style.isBold() ? SWT.BOLD : SWT.NORMAL)
+                            | (style.isItalic() ? SWT.ITALIC : SWT.NORMAL));
             setFont(fontData);
         }
     }
@@ -462,7 +462,7 @@ public class TransitionPriorityEditPart extends LabelEditPart implements ITextAw
         if (getParser() instanceof ISemanticParser) {
             EObject element = resolveSemanticElement();
             parserElements = ((ISemanticParser) getParser())
-                .getSemanticElementsBeingParsed(element);
+                    .getSemanticElementsBeingParsed(element);
             for (int i = 0; i < parserElements.size(); i++) {
                 addListenerFilter("SemanticModel" + i, this, (EObject) parserElements.get(i)); //$NON-NLS-1$
             }
@@ -519,13 +519,13 @@ public class TransitionPriorityEditPart extends LabelEditPart implements ITextAw
         } else if (NotationPackage.eINSTANCE.getFontStyle_StrikeThrough().equals(feature)) {
             refreshStrikeThrough();
         } else if (NotationPackage.eINSTANCE.getFontStyle_FontHeight().equals(feature)
-            || NotationPackage.eINSTANCE.getFontStyle_FontName().equals(feature)
-            || NotationPackage.eINSTANCE.getFontStyle_Bold().equals(feature)
-            || NotationPackage.eINSTANCE.getFontStyle_Italic().equals(feature)) {
+                || NotationPackage.eINSTANCE.getFontStyle_FontName().equals(feature)
+                || NotationPackage.eINSTANCE.getFontStyle_Bold().equals(feature)
+                || NotationPackage.eINSTANCE.getFontStyle_Italic().equals(feature)) {
             refreshFont();
         } else {
             if (getParser() != null
-                && getParser().isAffectingEvent(event, getParserOptions().intValue())) {
+                    && getParser().isAffectingEvent(event, getParserOptions().intValue())) {
                 refreshLabel();
             }
             if (getParser() instanceof ISemanticParser) {

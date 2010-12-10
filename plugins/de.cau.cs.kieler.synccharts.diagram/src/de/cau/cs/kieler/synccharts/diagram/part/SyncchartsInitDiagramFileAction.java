@@ -68,7 +68,7 @@ public class SyncchartsInitDiagramFileAction implements IObjectActionDelegate {
      */
     public void run(IAction action) {
         TransactionalEditingDomain editingDomain = GMFEditingDomainFactory.INSTANCE
-            .createEditingDomain();
+                .createEditingDomain();
         ResourceSet resourceSet = editingDomain.getResourceSet();
         EObject diagramRoot = null;
         try {
@@ -76,17 +76,17 @@ public class SyncchartsInitDiagramFileAction implements IObjectActionDelegate {
             diagramRoot = (EObject) resource.getContents().get(0);
         } catch (WrappedException ex) {
             SyncchartsDiagramEditorPlugin.getInstance().logError(
-                "Unable to load resource: " + domainModelURI, ex); //$NON-NLS-1$
+                    "Unable to load resource: " + domainModelURI, ex); //$NON-NLS-1$
         }
         if (diagramRoot == null) {
             MessageDialog.openError(getShell(), Messages.InitDiagramFile_ResourceErrorDialogTitle,
-                Messages.InitDiagramFile_ResourceErrorDialogMessage);
+                    Messages.InitDiagramFile_ResourceErrorDialogMessage);
             return;
         }
         Wizard wizard = new SyncchartsNewDiagramFileWizard(domainModelURI, diagramRoot,
-            editingDomain);
+                editingDomain);
         wizard.setWindowTitle(NLS.bind(Messages.InitDiagramFile_WizardTitle,
-            RegionEditPart.MODEL_ID));
+                RegionEditPart.MODEL_ID));
         SyncchartsDiagramEditorUtil.runWizard(getShell(), wizard, "InitDiagramFile"); //$NON-NLS-1$
     }
 }

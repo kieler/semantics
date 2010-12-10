@@ -1,5 +1,5 @@
 import synccharts;
-import expressions;
+import kexpressions;
 
 List[Transition] sortTransitionPrios(State transitions):
 	transitions.outgoingTransitions.sortBy(e|e.priority).reject(e|e.type==TransitionType::NORMALTERMINATION);

@@ -28,7 +28,7 @@ public class StateEntryActionItemSemanticEditPolicy extends SyncchartsBaseItemSe
     protected Command getDestroyElementCommand(DestroyElementRequest req) {
         View view = (View) getHost().getModel();
         CompositeTransactionalCommand cmd = new CompositeTransactionalCommand(getEditingDomain(),
-            null);
+                null);
         cmd.setTransactionNestingEnabled(false);
         EAnnotation annotation = view.getEAnnotation("Shortcut"); //$NON-NLS-1$
         if (annotation == null) {

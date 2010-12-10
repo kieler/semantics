@@ -37,7 +37,7 @@ public class RegionItemSemanticEditPolicy extends SyncchartsBaseItemSemanticEdit
      */
     protected Command getDuplicateCommand(DuplicateElementsRequest req) {
         TransactionalEditingDomain editingDomain = ((IGraphicalEditPart) getHost())
-            .getEditingDomain();
+                .getEditingDomain();
         return getGEFWrapper(new DuplicateAnythingCommand(editingDomain, req));
     }
 
@@ -50,9 +50,9 @@ public class RegionItemSemanticEditPolicy extends SyncchartsBaseItemSemanticEdit
          * @generated
          */
         public DuplicateAnythingCommand(TransactionalEditingDomain editingDomain,
-            DuplicateElementsRequest req) {
+                DuplicateElementsRequest req) {
             super(editingDomain, req.getLabel(), req.getElementsToBeDuplicated(), req
-                .getAllDuplicatedElementsMap());
+                    .getAllDuplicatedElementsMap());
         }
 
     }

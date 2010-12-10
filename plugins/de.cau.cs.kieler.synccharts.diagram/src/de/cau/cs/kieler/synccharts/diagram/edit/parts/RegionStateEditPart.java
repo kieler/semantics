@@ -119,12 +119,12 @@ public class RegionStateEditPart extends AdvancedRenderingShapeNodeEditPart {
     protected boolean addFixedChild(EditPart childEditPart) {
         if (childEditPart instanceof RegionStateLabelEditPart) {
             ((RegionStateLabelEditPart) childEditPart).setLabel(getPrimaryShape()
-                .getFigureStateNameFigure());
+                    .getFigureStateNameFigure());
             return true;
         }
         if (childEditPart instanceof RegionState2LabelEditPart) {
             ((RegionState2LabelEditPart) childEditPart).setLabel(getPrimaryShape()
-                .getFigureInterfaceDeclFigure());
+                    .getFigureInterfaceDeclFigure());
             return true;
         }
         return false;
@@ -262,7 +262,7 @@ public class RegionStateEditPart extends AdvancedRenderingShapeNodeEditPart {
      */
     public EditPart getPrimaryChildEditPart() {
         return getChildBySemanticHint(SyncchartsVisualIDRegistry
-            .getType(RegionStateLabelEditPart.VISUAL_ID));
+                .getType(RegionStateLabelEditPart.VISUAL_ID));
     }
 
     /**
@@ -357,7 +357,7 @@ public class RegionStateEditPart extends AdvancedRenderingShapeNodeEditPart {
             fFigureStateNameFigure.setText("");
 
             fFigureStateNameFigure.setBorder(new MarginBorder(getMapMode().DPtoLP(5), getMapMode()
-                .DPtoLP(10), getMapMode().DPtoLP(5), getMapMode().DPtoLP(10)));
+                    .DPtoLP(10), getMapMode().DPtoLP(5), getMapMode().DPtoLP(10)));
 
             this.add(fFigureStateNameFigure);
 
@@ -372,7 +372,7 @@ public class RegionStateEditPart extends AdvancedRenderingShapeNodeEditPart {
             fFigureInterfaceDeclFigure.setTextWrap(true);
 
             fFigureInterfaceDeclFigure.setBorder(new MarginBorder(getMapMode().DPtoLP(5),
-                getMapMode().DPtoLP(10), getMapMode().DPtoLP(5), getMapMode().DPtoLP(10)));
+                    getMapMode().DPtoLP(10), getMapMode().DPtoLP(5), getMapMode().DPtoLP(10)));
 
             this.add(fFigureInterfaceDeclFigure);
 

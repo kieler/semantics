@@ -109,7 +109,7 @@ public class SignalEditPart extends ShapeNodeEditPart {
     protected boolean addFixedChild(EditPart childEditPart) {
         if (childEditPart instanceof SignalNameEditPart) {
             ((SignalNameEditPart) childEditPart).setLabel(getPrimaryShape()
-                .getFigureInvisibleFigureLabelFigure());
+                    .getFigureInvisibleFigureLabelFigure());
             return true;
         }
         return false;
@@ -243,7 +243,7 @@ public class SignalEditPart extends ShapeNodeEditPart {
      */
     public EditPart getPrimaryChildEditPart() {
         return getChildBySemanticHint(SyncchartsVisualIDRegistry
-            .getType(SignalNameEditPart.VISUAL_ID));
+                .getType(SignalNameEditPart.VISUAL_ID));
     }
 
     /**

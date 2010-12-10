@@ -50,7 +50,7 @@ public class SyncchartsModelingAssistantProvider extends ModelingAssistantProvid
      */
     public List getTypesForPopupBar(IAdaptable host) {
         IGraphicalEditPart editPart = (IGraphicalEditPart) host
-            .getAdapter(IGraphicalEditPart.class);
+                .getAdapter(IGraphicalEditPart.class);
         if (editPart instanceof RegionEditPart) {
             ArrayList<IElementType> types = new ArrayList<IElementType>(1);
             types.add(SyncchartsElementTypes.State_2005);
@@ -134,7 +134,7 @@ public class SyncchartsModelingAssistantProvider extends ModelingAssistantProvid
      */
     public List getRelTypesOnSource(IAdaptable source) {
         IGraphicalEditPart sourceEditPart = (IGraphicalEditPart) source
-            .getAdapter(IGraphicalEditPart.class);
+                .getAdapter(IGraphicalEditPart.class);
         if (sourceEditPart instanceof StateEditPart) {
             return ((StateEditPart) sourceEditPart).getMARelTypesOnSource();
         }
@@ -149,7 +149,7 @@ public class SyncchartsModelingAssistantProvider extends ModelingAssistantProvid
      */
     public List getRelTypesOnTarget(IAdaptable target) {
         IGraphicalEditPart targetEditPart = (IGraphicalEditPart) target
-            .getAdapter(IGraphicalEditPart.class);
+                .getAdapter(IGraphicalEditPart.class);
         if (targetEditPart instanceof StateEditPart) {
             return ((StateEditPart) targetEditPart).getMARelTypesOnTarget();
         }
@@ -164,15 +164,15 @@ public class SyncchartsModelingAssistantProvider extends ModelingAssistantProvid
      */
     public List getRelTypesOnSourceAndTarget(IAdaptable source, IAdaptable target) {
         IGraphicalEditPart sourceEditPart = (IGraphicalEditPart) source
-            .getAdapter(IGraphicalEditPart.class);
+                .getAdapter(IGraphicalEditPart.class);
         IGraphicalEditPart targetEditPart = (IGraphicalEditPart) target
-            .getAdapter(IGraphicalEditPart.class);
+                .getAdapter(IGraphicalEditPart.class);
         if (sourceEditPart instanceof StateEditPart) {
             return ((StateEditPart) sourceEditPart).getMARelTypesOnSourceAndTarget(targetEditPart);
         }
         if (sourceEditPart instanceof RegionStateEditPart) {
             return ((RegionStateEditPart) sourceEditPart)
-                .getMARelTypesOnSourceAndTarget(targetEditPart);
+                    .getMARelTypesOnSourceAndTarget(targetEditPart);
         }
         return Collections.EMPTY_LIST;
     }
@@ -182,7 +182,7 @@ public class SyncchartsModelingAssistantProvider extends ModelingAssistantProvid
      */
     public List getTypesForSource(IAdaptable target, IElementType relationshipType) {
         IGraphicalEditPart targetEditPart = (IGraphicalEditPart) target
-            .getAdapter(IGraphicalEditPart.class);
+                .getAdapter(IGraphicalEditPart.class);
         if (targetEditPart instanceof StateEditPart) {
             return ((StateEditPart) targetEditPart).getMATypesForSource(relationshipType);
         }
@@ -197,7 +197,7 @@ public class SyncchartsModelingAssistantProvider extends ModelingAssistantProvid
      */
     public List getTypesForTarget(IAdaptable source, IElementType relationshipType) {
         IGraphicalEditPart sourceEditPart = (IGraphicalEditPart) source
-            .getAdapter(IGraphicalEditPart.class);
+                .getAdapter(IGraphicalEditPart.class);
         if (sourceEditPart instanceof StateEditPart) {
             return ((StateEditPart) sourceEditPart).getMATypesForTarget(relationshipType);
         }
@@ -229,7 +229,7 @@ public class SyncchartsModelingAssistantProvider extends ModelingAssistantProvid
             return null;
         }
         IGraphicalEditPart editPart = (IGraphicalEditPart) host
-            .getAdapter(IGraphicalEditPart.class);
+                .getAdapter(IGraphicalEditPart.class);
         if (editPart == null) {
             return null;
         }
@@ -261,7 +261,7 @@ public class SyncchartsModelingAssistantProvider extends ModelingAssistantProvid
     protected EObject selectElement(EObject[] elements) {
         Shell shell = Display.getCurrent().getActiveShell();
         ILabelProvider labelProvider = new AdapterFactoryLabelProvider(
-            SyncchartsDiagramEditorPlugin.getInstance().getItemProvidersAdapterFactory());
+                SyncchartsDiagramEditorPlugin.getInstance().getItemProvidersAdapterFactory());
         ElementListSelectionDialog dialog = new ElementListSelectionDialog(shell, labelProvider);
         dialog.setMessage(Messages.SyncchartsModelingAssistantProviderMessage);
         dialog.setTitle(Messages.SyncchartsModelingAssistantProviderTitle);

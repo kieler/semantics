@@ -279,7 +279,7 @@ public class SyncchartsSimDataComponent extends
 
         // Meta models
         EmfMetaModel metaModel0 = new EmfMetaModel(
-                de.cau.cs.kieler.core.expressions.ExpressionsPackage.eINSTANCE);
+                de.cau.cs.kieler.core.kexpressions.KExpressionsPackage.eINSTANCE);
         EmfMetaModel metaModel1 = new EmfMetaModel(
                 de.cau.cs.kieler.synccharts.SyncchartsPackage.eINSTANCE);
         EmfMetaModel metaModel2 = new EmfMetaModel(

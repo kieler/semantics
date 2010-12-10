@@ -117,12 +117,12 @@ public class StateEditPart extends AdvancedRenderingShapeNodeEditPart {
     protected boolean addFixedChild(EditPart childEditPart) {
         if (childEditPart instanceof StateLabelEditPart) {
             ((StateLabelEditPart) childEditPart).setLabel(getPrimaryShape()
-                .getFigureStateNameFigure());
+                    .getFigureStateNameFigure());
             return true;
         }
         if (childEditPart instanceof StateInterfaceDeclarationEditPart) {
             ((StateInterfaceDeclarationEditPart) childEditPart).setLabel(getPrimaryShape()
-                .getFigureInterfaceDeclFigure());
+                    .getFigureInterfaceDeclFigure());
             return true;
         }
         return false;
@@ -260,7 +260,7 @@ public class StateEditPart extends AdvancedRenderingShapeNodeEditPart {
      */
     public EditPart getPrimaryChildEditPart() {
         return getChildBySemanticHint(SyncchartsVisualIDRegistry
-            .getType(StateLabelEditPart.VISUAL_ID));
+                .getType(StateLabelEditPart.VISUAL_ID));
     }
 
     /**
@@ -355,7 +355,7 @@ public class StateEditPart extends AdvancedRenderingShapeNodeEditPart {
             fFigureStateNameFigure.setText("");
 
             fFigureStateNameFigure.setBorder(new MarginBorder(getMapMode().DPtoLP(5), getMapMode()
-                .DPtoLP(10), getMapMode().DPtoLP(5), getMapMode().DPtoLP(10)));
+                    .DPtoLP(10), getMapMode().DPtoLP(5), getMapMode().DPtoLP(10)));
 
             this.add(fFigureStateNameFigure);
 
@@ -370,7 +370,7 @@ public class StateEditPart extends AdvancedRenderingShapeNodeEditPart {
             fFigureInterfaceDeclFigure.setTextWrap(true);
 
             fFigureInterfaceDeclFigure.setBorder(new MarginBorder(getMapMode().DPtoLP(5),
-                getMapMode().DPtoLP(10), getMapMode().DPtoLP(5), getMapMode().DPtoLP(10)));
+                    getMapMode().DPtoLP(10), getMapMode().DPtoLP(5), getMapMode().DPtoLP(10)));
 
             this.add(fFigureInterfaceDeclFigure);
 

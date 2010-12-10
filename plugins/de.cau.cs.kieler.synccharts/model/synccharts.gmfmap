@@ -44,7 +44,7 @@
             href="synccharts.ecore#//Scope/signals"/>
         <ownedChild>
           <domainMetaElement
-              href="../../de.cau.cs.kieler.core.expressions/model/expressions.ecore#//Signal"/>
+              href="../../de.cau.cs.kieler.core.kexpressions/model/kexpressions.ecore#//Signal"/>
           <labelMappings
               xsi:type="gmfmap:FeatureLabelMapping"
               viewPattern="{0},"
@@ -53,7 +53,7 @@
             <diagramLabel
                 href="synccharts.gmfgraph#SignalName"/>
             <features
-                href="../../de.cau.cs.kieler.core.expressions/model/expressions.ecore#//ValuedObject/name"/>
+                href="../../de.cau.cs.kieler.core.kexpressions/model/kexpressions.ecore#//ValuedObject/name"/>
           </labelMappings>
           <diagramNode
               href="synccharts.gmfgraph#InvisibleNode"/>
@@ -160,15 +160,15 @@
             href="synccharts.ecore#//Scope/bodyText"/>
         <ownedChild>
           <domainMetaElement
-              href="../../de.cau.cs.kieler.core.expressions/model/expressions.ecore#//TextualCode"/>
+              href="../../de.cau.cs.kieler.core.kexpressions/model/kexpressions.ecore#//TextualCode"/>
           <labelMappings
               xsi:type="gmfmap:FeatureLabelMapping">
             <diagramLabel
                 href="synccharts.gmfgraph#TextualCodeText"/>
             <features
-                href="../../de.cau.cs.kieler.core.expressions/model/expressions.ecore#//TextualCode/code"/>
+                href="../../de.cau.cs.kieler.core.kexpressions/model/kexpressions.ecore#//TextualCode/code"/>
             <editableFeatures
-                href="../../de.cau.cs.kieler.core.expressions/model/expressions.ecore#//TextualCode/code"/>
+                href="../../de.cau.cs.kieler.core.kexpressions/model/kexpressions.ecore#//TextualCode/code"/>
           </labelMappings>
           <tool
               xsi:type="gmftool:CreationTool"
@@ -231,13 +231,13 @@
             href="synccharts.ecore#//Scope/variables"/>
         <ownedChild>
           <domainMetaElement
-              href="../../de.cau.cs.kieler.core.expressions/model/expressions.ecore#//Variable"/>
+              href="../../de.cau.cs.kieler.core.kexpressions/model/kexpressions.ecore#//Variable"/>
           <labelMappings
               xsi:type="gmfmap:FeatureLabelMapping">
             <diagramLabel
                 href="synccharts.gmfgraph#SignalName"/>
             <features
-                href="../../de.cau.cs.kieler.core.expressions/model/expressions.ecore#//ValuedObject/name"/>
+                href="../../de.cau.cs.kieler.core.kexpressions/model/kexpressions.ecore#//ValuedObject/name"/>
           </labelMappings>
           <diagramNode
               href="synccharts.gmfgraph#InvisibleNode"/>

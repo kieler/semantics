@@ -24,7 +24,7 @@ public class SyncchartsCreationWizardPage extends WizardNewFileCreationPage {
      * @generated
      */
     public SyncchartsCreationWizardPage(String pageName, IStructuredSelection selection,
-        String fileExtension) {
+            String fileExtension) {
         super(pageName, selection);
         this.fileExtension = fileExtension;
     }
@@ -70,7 +70,7 @@ public class SyncchartsCreationWizardPage extends WizardNewFileCreationPage {
     public void createControl(Composite parent) {
         super.createControl(parent);
         setFileName(SyncchartsDiagramEditorUtil.getUniqueFileName(getContainerFullPath(),
-            getFileName(), getExtension()));
+                getFileName(), getExtension()));
         setPageComplete(validatePage());
     }
 
@@ -93,7 +93,7 @@ public class SyncchartsCreationWizardPage extends WizardNewFileCreationPage {
                 }
             }
             setErrorMessage(NLS
-                .bind(Messages.SyncchartsCreationWizardPageExtensionError, extension));
+                    .bind(Messages.SyncchartsCreationWizardPageExtensionError, extension));
         }
         return false;
 

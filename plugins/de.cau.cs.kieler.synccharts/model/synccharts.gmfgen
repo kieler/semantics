@@ -47,7 +47,7 @@
           classBody="&#xA;/**&#xA; * @generated&#xA; */&#xA;public class InvisibleFigure extends de.cau.cs.kieler.synccharts.custom.InvisibleLabelFigure {&#xA;&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;private org.eclipse.gmf.runtime.draw2d.ui.figures.WrappingLabel fFigureInvisibleFigureLabelFigure; &#xA;&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;public InvisibleFigure() {&#xA;&#x9;&#x9;&#x9;&#x9;&#xA;&#xA;&#x9;&#x9;createContents();&#xA;&#x9;}&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;private void createContents(){&#xA;&#xA;&#xA;fFigureInvisibleFigureLabelFigure = new org.eclipse.gmf.runtime.draw2d.ui.figures.WrappingLabel();&#xA;fFigureInvisibleFigureLabelFigure.setText(&quot;&lt;...>&quot;);&#xA;&#xA;this.add(fFigureInvisibleFigureLabelFigure);&#xA;&#xA;&#xA;&#x9;}&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;public org.eclipse.gmf.runtime.draw2d.ui.figures.WrappingLabel getFigureInvisibleFigureLabelFigure() {&#xA;&#x9;&#x9;return fFigureInvisibleFigureLabelFigure;&#xA;&#x9;}&#xA;&#xA;&#xA;}&#xA;&#xA;"/>
       <modelFacet>
         <metaClass
-            href="../../de.cau.cs.kieler.core.expressions/model/expressions.genmodel#//expressions/Signal"/>
+            href="../../de.cau.cs.kieler.core.kexpressions/model/kexpressions.genmodel#//kexpressions/Signal"/>
         <containmentMetaFeature
             href="synccharts.genmodel#//synccharts/Scope/signals"/>
         <childMetaFeature
@@ -71,7 +71,7 @@
             editorPattern="{0}"
             editPattern="{0}">
           <metaFeatures
-              href="../../de.cau.cs.kieler.core.expressions/model/expressions.genmodel#//expressions/ValuedObject/name"/>
+              href="../../de.cau.cs.kieler.core.kexpressions/model/kexpressions.genmodel#//kexpressions/ValuedObject/name"/>
         </modelFacet>
       </labels>
     </childNodes>
@@ -283,7 +283,7 @@
           classBody="&#xA;/**&#xA; * @generated&#xA; */&#xA;public class TextualCodeFigure extends org.eclipse.draw2d.RectangleFigure {&#xA;&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;private org.eclipse.gmf.runtime.draw2d.ui.figures.WrappingLabel fFigureCodeLabelFigure; &#xA;&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;public TextualCodeFigure() {&#xA;&#x9;&#x9;&#xA;&#x9;de.cau.cs.kieler.synccharts.custom.ListLayout layoutThis = new de.cau.cs.kieler.synccharts.custom.ListLayout();&#xA;&#xA;&#xA;&#x9;this.setLayoutManager(layoutThis);&#xA;&#xA;&#x9;&#x9;this.setFill(false);&#xA;this.setOutline(false);&#xA;this.setLineWidth(0);&#xA;&#x9;&#x9;createContents();&#xA;&#x9;}&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;private void createContents(){&#xA;&#xA;&#xA;fFigureCodeLabelFigure = new org.eclipse.gmf.runtime.draw2d.ui.figures.WrappingLabel();&#xA;fFigureCodeLabelFigure.setText(&quot;&quot;);fFigureCodeLabelFigure.setTextWrap(true);&#xA;&#xA;&#xA;this.add(fFigureCodeLabelFigure);&#xA;&#xA;&#xA;&#x9;}&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;public org.eclipse.gmf.runtime.draw2d.ui.figures.WrappingLabel getFigureCodeLabelFigure() {&#xA;&#x9;&#x9;return fFigureCodeLabelFigure;&#xA;&#x9;}&#xA;&#xA;&#xA;}&#xA;&#xA;"/>
       <modelFacet>
         <metaClass
-            href="../../de.cau.cs.kieler.core.expressions/model/expressions.genmodel#//expressions/TextualCode"/>
+            href="../../de.cau.cs.kieler.core.kexpressions/model/kexpressions.genmodel#//kexpressions/TextualCode"/>
         <containmentMetaFeature
             href="synccharts.genmodel#//synccharts/Scope/bodyText"/>
         <childMetaFeature
@@ -309,9 +309,9 @@
             xsi:type="gmfgen:FeatureLabelModelFacet"
             parser="//@labelParsers/@implementations.0">
           <metaFeatures
-              href="../../de.cau.cs.kieler.core.expressions/model/expressions.genmodel#//expressions/TextualCode/code"/>
+              href="../../de.cau.cs.kieler.core.kexpressions/model/kexpressions.genmodel#//kexpressions/TextualCode/code"/>
           <editableMetaFeatures
-              href="../../de.cau.cs.kieler.core.expressions/model/expressions.genmodel#//expressions/TextualCode/code"/>
+              href="../../de.cau.cs.kieler.core.kexpressions/model/kexpressions.genmodel#//kexpressions/TextualCode/code"/>
         </modelFacet>
       </labels>
     </childNodes>
@@ -456,7 +456,7 @@
           classBody="&#xA;/**&#xA; * @generated&#xA; */&#xA;public class InvisibleFigure extends de.cau.cs.kieler.synccharts.custom.InvisibleLabelFigure {&#xA;&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;private org.eclipse.gmf.runtime.draw2d.ui.figures.WrappingLabel fFigureInvisibleFigureLabelFigure; &#xA;&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;public InvisibleFigure() {&#xA;&#x9;&#x9;&#x9;&#x9;&#xA;&#xA;&#x9;&#x9;createContents();&#xA;&#x9;}&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;private void createContents(){&#xA;&#xA;&#xA;fFigureInvisibleFigureLabelFigure = new org.eclipse.gmf.runtime.draw2d.ui.figures.WrappingLabel();&#xA;fFigureInvisibleFigureLabelFigure.setText(&quot;&lt;...>&quot;);&#xA;&#xA;this.add(fFigureInvisibleFigureLabelFigure);&#xA;&#xA;&#xA;&#x9;}&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;public org.eclipse.gmf.runtime.draw2d.ui.figures.WrappingLabel getFigureInvisibleFigureLabelFigure() {&#xA;&#x9;&#x9;return fFigureInvisibleFigureLabelFigure;&#xA;&#x9;}&#xA;&#xA;&#xA;}&#xA;&#xA;"/>
       <modelFacet>
         <metaClass
-            href="../../de.cau.cs.kieler.core.expressions/model/expressions.genmodel#//expressions/Variable"/>
+            href="../../de.cau.cs.kieler.core.kexpressions/model/kexpressions.genmodel#//kexpressions/Variable"/>
         <containmentMetaFeature
             href="synccharts.genmodel#//synccharts/Scope/variables"/>
         <childMetaFeature
@@ -477,7 +477,7 @@
             xsi:type="gmfgen:FeatureLabelModelFacet"
             parser="//@labelParsers/@implementations.0">
           <metaFeatures
-              href="../../de.cau.cs.kieler.core.expressions/model/expressions.genmodel#//expressions/ValuedObject/name"/>
+              href="../../de.cau.cs.kieler.core.kexpressions/model/kexpressions.genmodel#//kexpressions/ValuedObject/name"/>
         </modelFacet>
       </labels>
     </childNodes>
@@ -958,8 +958,8 @@
     <requiredPlugins>de.cau.cs.kieler.synccharts.text.bridge</requiredPlugins>
     <requiredPlugins>de.cau.cs.kieler.core.annotations</requiredPlugins>
     <requiredPlugins>de.cau.cs.kieler.core.annotations.edit</requiredPlugins>
-    <requiredPlugins>de.cau.cs.kieler.core.expressions</requiredPlugins>
-    <requiredPlugins>de.cau.cs.kieler.core.expressions.edit</requiredPlugins>
+    <requiredPlugins>de.cau.cs.kieler.core.kexpressions</requiredPlugins>
+    <requiredPlugins>de.cau.cs.kieler.core.kexpressions.edit</requiredPlugins>
     <requiredPlugins>de.cau.cs.kieler.karma</requiredPlugins>
   </plugin>
   <editor/>

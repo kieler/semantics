@@ -38,7 +38,7 @@ public class StateRegionItemSemanticEditPolicy extends SyncchartsBaseItemSemanti
     protected Command getDestroyElementCommand(DestroyElementRequest req) {
         View view = (View) getHost().getModel();
         CompositeTransactionalCommand cmd = new CompositeTransactionalCommand(getEditingDomain(),
-            null);
+                null);
         cmd.setTransactionNestingEnabled(false);
         EAnnotation annotation = view.getEAnnotation("Shortcut"); //$NON-NLS-1$
         if (annotation == null) {
@@ -70,7 +70,7 @@ public class StateRegionItemSemanticEditPolicy extends SyncchartsBaseItemSemanti
                             Edge incomingLink = (Edge) it.next();
                             if (SyncchartsVisualIDRegistry.getVisualID(incomingLink) == TransitionEditPart.VISUAL_ID) {
                                 DestroyElementRequest r = new DestroyElementRequest(
-                                    incomingLink.getElement(), false);
+                                        incomingLink.getElement(), false);
                                 cmd.add(new DestroyElementCommand(r));
                                 cmd.add(new DeleteCommand(getEditingDomain(), incomingLink));
                                 continue;
@@ -80,20 +80,20 @@ public class StateRegionItemSemanticEditPolicy extends SyncchartsBaseItemSemanti
                             Edge outgoingLink = (Edge) it.next();
                             if (SyncchartsVisualIDRegistry.getVisualID(outgoingLink) == TransitionEditPart.VISUAL_ID) {
                                 DestroyElementRequest r = new DestroyElementRequest(
-                                    outgoingLink.getElement(), false);
+                                        outgoingLink.getElement(), false);
                                 cmd.add(new DestroyElementCommand(r));
                                 cmd.add(new DeleteCommand(getEditingDomain(), outgoingLink));
                                 continue;
                             }
                         }
                         cmd.add(new DestroyElementCommand(new DestroyElementRequest(
-                            getEditingDomain(), cnode.getElement(), false))); // directlyOwned: true
+                                getEditingDomain(), cnode.getElement(), false))); // directlyOwned: true
                         // don't need explicit deletion of cnode as parent's view deletion would clean child views as well 
                         // cmd.add(new org.eclipse.gmf.runtime.diagram.core.commands.DeleteCommand(getEditingDomain(), cnode));
                         break;
                     case TextualCodeEditPart.VISUAL_ID:
                         cmd.add(new DestroyElementCommand(new DestroyElementRequest(
-                            getEditingDomain(), cnode.getElement(), false))); // directlyOwned: true
+                                getEditingDomain(), cnode.getElement(), false))); // directlyOwned: true
                         // don't need explicit deletion of cnode as parent's view deletion would clean child views as well 
                         // cmd.add(new org.eclipse.gmf.runtime.diagram.core.commands.DeleteCommand(getEditingDomain(), cnode));
                         break;

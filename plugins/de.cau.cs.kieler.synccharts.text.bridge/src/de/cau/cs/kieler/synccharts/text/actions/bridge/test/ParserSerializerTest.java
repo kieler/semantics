@@ -40,8 +40,7 @@ import de.cau.cs.kieler.synccharts.text.actions.bridge.ActionLabelParseCommand;
 import de.cau.cs.kieler.synccharts.text.actions.bridge.ActionLabelSerializer;
 
 /**
- * JUnit Test Case for the SyncCharts Editor Transition label parser and its
- * serializer.
+ * JUnit Test Case for the SyncCharts Editor Transition label parser and its serializer.
  * 
  * @author haf
  * 
@@ -61,8 +60,8 @@ public class ParserSerializerTest {
     private static final int Z = 90;
 
     /**
-     * Create a simple SyncChart, one root state machine and two states
-     * connected by one transition. The transition will then be tested.
+     * Create a simple SyncChart, one root state machine and two states connected by one transition.
+     * The transition will then be tested.
      * 
      * @throws java.lang.Exception
      *             Something failed
@@ -103,11 +102,12 @@ public class ParserSerializerTest {
         transition = SyncchartsFactory.eINSTANCE.createTransition();
         transition.setSourceState(s1);
         transition.setTargetState(s2);
-        
-//        Injector injector = new KitsStandaloneSetup().createInjector();
-//        Resource r = injector.getInstance(XtextResourceSet.class).createResource(URI.createFileURI("test.kits"));
-//        r.getContents().add(this.rootRegion);
-//        r.save(System.out, Collections.EMPTY_MAP);
+
+        // Injector injector = new KitsStandaloneSetup().createInjector();
+        // Resource r =
+        // injector.getInstance(XtextResourceSet.class).createResource(URI.createFileURI("test.kits"));
+        // r.getContents().add(this.rootRegion);
+        // r.save(System.out, Collections.EMPTY_MAP);
     }
 
     /**
@@ -152,8 +152,7 @@ public class ParserSerializerTest {
 
     @Test
     public void testParser3() throws KielerException, IOException {
-        this.parse("A and B and C or D and not D or  "
-                + "not (B and (C or D))");
+        this.parse("A and B and C or D and not D or  " + "not (B and (C or D))");
     }
 
     /**
@@ -283,7 +282,7 @@ public class ParserSerializerTest {
     public void testSerializerEmissionComplexValue() throws Exception {
         this.parseAndSerialize("/ A(?B + 100)");
     }
-    
+
     /**
      * A JUnit test for the Labelparser.
      * 
@@ -327,8 +326,8 @@ public class ParserSerializerTest {
     public void testSerializerHostCodeEverywhere() throws Exception {
         this.parseAndSerialize("A and \'HostCode\' and 4 < \'Hooooost\' /"
                 + " \'This is some host code\'");
-//        this.parseAndSerialize("(A and \"HostCode\"(host)) and (4 < \"Hooooost\") /"
-//                + " \"This is some host code\"(Natural)");
+        // this.parseAndSerialize("(A and \"HostCode\"(host)) and (4 < \"Hooooost\") /"
+        // + " \"This is some host code\"(Natural)");
     }
 
     /**
@@ -640,9 +639,8 @@ public class ParserSerializerTest {
     }
 
     /**
-     * A JUnit test for the Labelparser.
-     * Parses only as floats will be transformed into a
-     * normal form internally. (see next test case)
+     * A JUnit test for the Labelparser. Parses only as floats will be transformed into a normal
+     * form internally. (see next test case)
      * 
      * @throws Exception
      *             if parsing fails
@@ -675,20 +673,20 @@ public class ParserSerializerTest {
     }
 
     /**
-     * Create a new parse command and execute its parse method. Likely to throw
-     * exceptions if the text could not be parsed.
+     * Create a new parse command and execute its parse method. Likely to throw exceptions if the
+     * text could not be parsed.
      * 
      * @param textToParse
      *            String to be parsed
      * @throws KielerException
      *             the main exception if something failed
      * @throws IOException
-     *             unlikely to be thrown, only if there are internal errors
-     *             regarding the resource factories.
+     *             unlikely to be thrown, only if there are internal errors regarding the resource
+     *             factories.
      */
     private void parse(final String textToParse) throws KielerException, IOException {
         ActionLabelParseCommand parseCommand = new ActionLabelParseCommand(transition, textToParse,
-                parser, injector, true);
+                parser, injector);
         parseCommand.parse();
     }
 
@@ -709,7 +707,7 @@ public class ParserSerializerTest {
     private void parseAndSerialize(final String inputString) throws KielerException, IOException {
         parse(inputString);
         // Our Inofficial simple custom Serializer
-//        String serializedString = ActionLabelSerializer.toString(transition);
+        // String serializedString = ActionLabelSerializer.toString(transition);
         // Official XText Serializer
         String serializedString = serialize(transition);
         if (inputString.equals(serializedString)) {

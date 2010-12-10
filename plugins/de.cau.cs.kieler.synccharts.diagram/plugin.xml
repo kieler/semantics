@@ -330,7 +330,7 @@
             <param name="semanticHint" value="2005"/>
          </metamodelType>
       </metamodel>
-      <metamodel nsURI="http://kieler.cs.cau.de/expressions/0.1.2">
+      <metamodel nsURI="http://kieler.cs.cau.de/kexpressions/0.1.2">
          <metamodelType
                id="de.cau.cs.kieler.synccharts.diagram.Signal_3041"
                name="%metatype.name.Signal_3041"
@@ -377,7 +377,7 @@
             <param name="semanticHint" value="3045"/>
          </specializationType>
       </metamodel>
-      <metamodel nsURI="http://kieler.cs.cau.de/expressions/0.1.2">
+      <metamodel nsURI="http://kieler.cs.cau.de/kexpressions/0.1.2">
          <metamodelType
                id="de.cau.cs.kieler.synccharts.diagram.TextualCode_3046"
                name="%metatype.name.TextualCode_3046"
@@ -405,7 +405,7 @@
             <param name="semanticHint" value="3040"/>
          </specializationType>
       </metamodel>
-      <metamodel nsURI="http://kieler.cs.cau.de/expressions/0.1.2">
+      <metamodel nsURI="http://kieler.cs.cau.de/kexpressions/0.1.2">
          <metamodelType
                id="de.cau.cs.kieler.synccharts.diagram.Variable_3047"
                name="%metatype.name.Variable_3047"

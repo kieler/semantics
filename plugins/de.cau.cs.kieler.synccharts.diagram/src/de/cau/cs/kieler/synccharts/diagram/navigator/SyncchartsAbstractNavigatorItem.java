@@ -24,7 +24,7 @@ public abstract class SyncchartsAbstractNavigatorItem extends PlatformObject {
 
             public Object getAdapter(Object adaptableObject, Class adapterType) {
                 if (adaptableObject instanceof de.cau.cs.kieler.synccharts.diagram.navigator.SyncchartsAbstractNavigatorItem
-                    && adapterType == ITabbedPropertySheetPageContributor.class) {
+                        && adapterType == ITabbedPropertySheetPageContributor.class) {
                     return propertySheetPageContributor;
                 }
                 return null;

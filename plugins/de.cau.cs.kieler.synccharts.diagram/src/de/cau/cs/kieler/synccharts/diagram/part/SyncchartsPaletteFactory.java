@@ -48,10 +48,10 @@ public class SyncchartsPaletteFactory {
         types.add(SyncchartsElementTypes.State_2005);
         types.add(SyncchartsElementTypes.State_3040);
         NodeToolEntry entry = new NodeToolEntry(Messages.State1CreationTool_title,
-            Messages.State1CreationTool_desc, types);
+                Messages.State1CreationTool_desc, types);
         entry.setId("createState1CreationTool"); //$NON-NLS-1$
         entry.setSmallIcon(SyncchartsElementTypes
-            .getImageDescriptor(SyncchartsElementTypes.State_2005));
+                .getImageDescriptor(SyncchartsElementTypes.State_2005));
         entry.setLargeIcon(entry.getSmallIcon());
         return entry;
     }
@@ -61,11 +61,11 @@ public class SyncchartsPaletteFactory {
      */
     private ToolEntry createTransition2CreationTool() {
         LinkToolEntry entry = new LinkToolEntry(Messages.Transition2CreationTool_title,
-            Messages.Transition2CreationTool_desc,
-            Collections.singletonList(SyncchartsElementTypes.Transition_4005));
+                Messages.Transition2CreationTool_desc,
+                Collections.singletonList(SyncchartsElementTypes.Transition_4005));
         entry.setId("createTransition2CreationTool"); //$NON-NLS-1$
         entry.setSmallIcon(SyncchartsElementTypes
-            .getImageDescriptor(SyncchartsElementTypes.Transition_4005));
+                .getImageDescriptor(SyncchartsElementTypes.Transition_4005));
         entry.setLargeIcon(entry.getSmallIcon());
         return entry;
     }
@@ -75,11 +75,11 @@ public class SyncchartsPaletteFactory {
      */
     private ToolEntry createTextualCode3CreationTool() {
         NodeToolEntry entry = new NodeToolEntry(Messages.TextualCode3CreationTool_title,
-            Messages.TextualCode3CreationTool_desc,
-            Collections.singletonList(SyncchartsElementTypes.TextualCode_3046));
+                Messages.TextualCode3CreationTool_desc,
+                Collections.singletonList(SyncchartsElementTypes.TextualCode_3046));
         entry.setId("createTextualCode3CreationTool"); //$NON-NLS-1$
         entry.setSmallIcon(SyncchartsElementTypes
-            .getImageDescriptor(SyncchartsElementTypes.TextualCode_3046));
+                .getImageDescriptor(SyncchartsElementTypes.TextualCode_3046));
         entry.setLargeIcon(entry.getSmallIcon());
         return entry;
     }

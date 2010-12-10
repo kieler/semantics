@@ -6,8 +6,8 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.transaction.NotificationFilter;
 import org.eclipse.emf.transaction.TransactionalEditingDomain;
 
-import de.cau.cs.kieler.core.expressions.ExpressionsPackage;
-import de.cau.cs.kieler.core.expressions.ValuedObject;
+import de.cau.cs.kieler.core.kexpressions.KExpressionsPackage;
+import de.cau.cs.kieler.core.kexpressions.ValuedObject;
 import de.cau.cs.kieler.synccharts.listener.FireOnceTriggerListener;
 import de.cau.cs.kieler.synccharts.text.actions.bridge.ActionLabelProcessorWrapper;
 import de.cau.cs.kieler.synccharts.text.actions.bridge.LabelParserBridgePlugin;
@@ -23,7 +23,7 @@ public class RenamedSignalsListener extends FireOnceTriggerListener {
 
     public RenamedSignalsListener() {
         super(NotificationFilter
-                .createFeatureFilter(ExpressionsPackage.eINSTANCE
+                .createFeatureFilter(KExpressionsPackage.eINSTANCE
                         .getValuedObject_Name()));
     }
 

@@ -20,9 +20,9 @@ public class SyncchartsNavigatorItem extends SyncchartsAbstractNavigatorItem {
 
             public Object getAdapter(Object adaptableObject, Class adapterType) {
                 if (adaptableObject instanceof de.cau.cs.kieler.synccharts.diagram.navigator.SyncchartsNavigatorItem
-                    && (adapterType == View.class || adapterType == EObject.class)) {
+                        && (adapterType == View.class || adapterType == EObject.class)) {
                     return ((de.cau.cs.kieler.synccharts.diagram.navigator.SyncchartsNavigatorItem) adaptableObject)
-                        .getView();
+                            .getView();
                 }
                 return null;
             }
@@ -72,11 +72,10 @@ public class SyncchartsNavigatorItem extends SyncchartsAbstractNavigatorItem {
     public boolean equals(Object obj) {
         if (obj instanceof de.cau.cs.kieler.synccharts.diagram.navigator.SyncchartsNavigatorItem) {
             return EcoreUtil
-                .getURI(getView())
-                .equals(
-                    EcoreUtil
-                        .getURI(((de.cau.cs.kieler.synccharts.diagram.navigator.SyncchartsNavigatorItem) obj)
-                            .getView()));
+                    .getURI(getView())
+                    .equals(EcoreUtil
+                            .getURI(((de.cau.cs.kieler.synccharts.diagram.navigator.SyncchartsNavigatorItem) obj)
+                                    .getView()));
         }
         return super.equals(obj);
     }

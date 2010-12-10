@@ -60,9 +60,9 @@ public class SyncchartsDomainNavigatorContentProvider implements ICommonContentP
      */
     public SyncchartsDomainNavigatorContentProvider() {
         myAdapterFctoryContentProvier = new AdapterFactoryContentProvider(
-            SyncchartsDiagramEditorPlugin.getInstance().getItemProvidersAdapterFactory());
+                SyncchartsDiagramEditorPlugin.getInstance().getItemProvidersAdapterFactory());
         TransactionalEditingDomain editingDomain = GMFEditingDomainFactory.INSTANCE
-            .createEditingDomain();
+                .createEditingDomain();
         myEditingDomain = (AdapterFactoryEditingDomain) editingDomain;
         myEditingDomain.setResourceToReadOnlyMap(new HashMap() {
             public Object get(Object key) {
@@ -80,28 +80,28 @@ public class SyncchartsDomainNavigatorContentProvider implements ICommonContentP
             }
         };
         myWorkspaceSynchronizer = new WorkspaceSynchronizer(editingDomain,
-            new WorkspaceSynchronizer.Delegate() {
-                public void dispose() {
-                }
+                new WorkspaceSynchronizer.Delegate() {
+                    public void dispose() {
+                    }
 
-                public boolean handleResourceChanged(final Resource resource) {
-                    unloadAllResources();
-                    asyncRefresh();
-                    return true;
-                }
+                    public boolean handleResourceChanged(final Resource resource) {
+                        unloadAllResources();
+                        asyncRefresh();
+                        return true;
+                    }
 
-                public boolean handleResourceDeleted(Resource resource) {
-                    unloadAllResources();
-                    asyncRefresh();
-                    return true;
-                }
+                    public boolean handleResourceDeleted(Resource resource) {
+                        unloadAllResources();
+                        asyncRefresh();
+                        return true;
+                    }
 
-                public boolean handleResourceMoved(Resource resource, final URI newURI) {
-                    unloadAllResources();
-                    asyncRefresh();
-                    return true;
-                }
-            });
+                    public boolean handleResourceMoved(Resource resource, final URI newURI) {
+                        unloadAllResources();
+                        asyncRefresh();
+                        return true;
+                    }
+                });
     }
 
     /**
@@ -180,8 +180,8 @@ public class SyncchartsDomainNavigatorContentProvider implements ICommonContentP
 
         if (parentElement instanceof SyncchartsDomainNavigatorItem) {
             return wrapEObjects(
-                myAdapterFctoryContentProvier.getChildren(((SyncchartsDomainNavigatorItem) parentElement)
-                    .getEObject()), parentElement);
+                    myAdapterFctoryContentProvier.getChildren(((SyncchartsDomainNavigatorItem) parentElement)
+                            .getEObject()), parentElement);
         }
         return EMPTY_ARRAY;
     }
@@ -194,7 +194,7 @@ public class SyncchartsDomainNavigatorContentProvider implements ICommonContentP
         for (int i = 0; i < objects.length; i++) {
             if (objects[i] instanceof EObject) {
                 result.add(new SyncchartsDomainNavigatorItem((EObject) objects[i], parentElement,
-                    myAdapterFctoryContentProvier));
+                        myAdapterFctoryContentProvier));
             }
         }
         return result.toArray();

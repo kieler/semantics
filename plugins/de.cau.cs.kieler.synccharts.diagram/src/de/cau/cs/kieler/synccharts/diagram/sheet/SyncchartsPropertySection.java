@@ -23,7 +23,7 @@ import org.eclipse.ui.views.properties.IPropertySourceProvider;
  * @generated
  */
 public class SyncchartsPropertySection extends AdvancedPropertySection implements
-    IPropertySourceProvider {
+        IPropertySourceProvider {
 
     /**
      * @generated
@@ -35,7 +35,7 @@ public class SyncchartsPropertySection extends AdvancedPropertySection implement
         AdapterFactory af = getAdapterFactory(object);
         if (af != null) {
             IItemPropertySource ips = (IItemPropertySource) af.adapt(object,
-                IItemPropertySource.class);
+                    IItemPropertySource.class);
             if (ips != null) {
                 return new PropertySource(object, ips);
             }

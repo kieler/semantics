@@ -85,9 +85,9 @@ public class ModelElementSelectionPage extends WizardPage {
         layoutData.widthHint = 300;
         modelViewer.getTree().setLayoutData(layoutData);
         modelViewer.setContentProvider(new AdapterFactoryContentProvider(
-            SyncchartsDiagramEditorPlugin.getInstance().getItemProvidersAdapterFactory()));
+                SyncchartsDiagramEditorPlugin.getInstance().getItemProvidersAdapterFactory()));
         modelViewer.setLabelProvider(new AdapterFactoryLabelProvider(SyncchartsDiagramEditorPlugin
-            .getInstance().getItemProvidersAdapterFactory()));
+                .getInstance().getItemProvidersAdapterFactory()));
         if (selectedModelElement != null) {
             modelViewer.setInput(selectedModelElement.eResource());
             modelViewer.setSelection(new StructuredSelection(selectedModelElement));
@@ -95,7 +95,7 @@ public class ModelElementSelectionPage extends WizardPage {
         modelViewer.addSelectionChangedListener(new ISelectionChangedListener() {
             public void selectionChanged(SelectionChangedEvent event) {
                 ModelElementSelectionPage.this.updateSelection((IStructuredSelection) event
-                    .getSelection());
+                        .getSelection());
             }
         });
 

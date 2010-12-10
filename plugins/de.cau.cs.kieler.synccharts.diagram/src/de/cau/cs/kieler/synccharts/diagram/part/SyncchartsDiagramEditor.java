@@ -60,7 +60,7 @@ public class SyncchartsDiagramEditor extends DiagramDocumentEditor implements IG
         super.initializeGraphicalViewerContents();
 
         for (CanonicalEditPolicy c : CanonicalEditPolicy.getRegisteredEditPolicies(getDiagram()
-            .getElement())) {
+                .getElement())) {
             c.refresh();
         }
 
@@ -148,7 +148,7 @@ public class SyncchartsDiagramEditor extends DiagramDocumentEditor implements IG
      */
     public TransactionalEditingDomain getEditingDomain() {
         IDocument document = getEditorInput() != null ? getDocumentProvider().getDocument(
-            getEditorInput()) : null;
+                getEditorInput()) : null;
         if (document instanceof IDiagramDocument) {
             return ((IDiagramDocument) document).getEditingDomain();
         }
@@ -195,7 +195,7 @@ public class SyncchartsDiagramEditor extends DiagramDocumentEditor implements IG
         IEditorInput input = getEditorInput();
         SaveAsDialog dialog = new SaveAsDialog(shell);
         IFile original = input instanceof IFileEditorInput ? ((IFileEditorInput) input).getFile()
-            : null;
+                : null;
         if (original != null) {
             dialog.setOriginalFile(original);
         }
@@ -207,7 +207,7 @@ public class SyncchartsDiagramEditor extends DiagramDocumentEditor implements IG
         }
         if (provider.isDeleted(input) && original != null) {
             String message = NLS.bind(Messages.SyncchartsDiagramEditor_SavingDeletedFile,
-                original.getName());
+                    original.getName());
             dialog.setErrorMessage(null);
             dialog.setMessage(message, IMessageProvider.WARNING);
         }
@@ -229,13 +229,13 @@ public class SyncchartsDiagramEditor extends DiagramDocumentEditor implements IG
         final IEditorInput newInput = new FileEditorInput(file);
         // Check if the editor is already open
         IEditorMatchingStrategy matchingStrategy = getEditorDescriptor()
-            .getEditorMatchingStrategy();
+                .getEditorMatchingStrategy();
         IEditorReference[] editorRefs = PlatformUI.getWorkbench().getActiveWorkbenchWindow()
-            .getActivePage().getEditorReferences();
+                .getActivePage().getEditorReferences();
         for (int i = 0; i < editorRefs.length; i++) {
             if (matchingStrategy.matches(editorRefs[i], newInput)) {
                 MessageDialog.openWarning(shell, Messages.SyncchartsDiagramEditor_SaveAsErrorTitle,
-                    Messages.SyncchartsDiagramEditor_SaveAsErrorMessage);
+                        Messages.SyncchartsDiagramEditor_SaveAsErrorMessage);
                 return;
             }
         }
@@ -243,13 +243,13 @@ public class SyncchartsDiagramEditor extends DiagramDocumentEditor implements IG
         try {
             provider.aboutToChange(newInput);
             getDocumentProvider(newInput).saveDocument(progressMonitor, newInput,
-                getDocumentProvider().getDocument(getEditorInput()), true);
+                    getDocumentProvider().getDocument(getEditorInput()), true);
             success = true;
         } catch (CoreException x) {
             IStatus status = x.getStatus();
             if (status == null || status.getSeverity() != IStatus.CANCEL) {
                 ErrorDialog.openError(shell, Messages.SyncchartsDiagramEditor_SaveErrorTitle,
-                    Messages.SyncchartsDiagramEditor_SaveErrorMessage, x.getStatus());
+                        Messages.SyncchartsDiagramEditor_SaveErrorMessage, x.getStatus());
             }
         } finally {
             provider.changed(newInput);
@@ -292,10 +292,10 @@ public class SyncchartsDiagramEditor extends DiagramDocumentEditor implements IG
     protected void configureGraphicalViewer() {
         super.configureGraphicalViewer();
         DiagramEditorContextMenuProvider provider = new DiagramEditorContextMenuProvider(this,
-            getDiagramGraphicalViewer());
+                getDiagramGraphicalViewer());
         getDiagramGraphicalViewer().setContextMenu(provider);
         getSite().registerContextMenu(ActionIds.DIAGRAM_EDITOR_CONTEXT_MENU, provider,
-            getDiagramGraphicalViewer());
+                getDiagramGraphicalViewer());
     }
 
 }

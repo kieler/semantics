@@ -24,6 +24,6 @@ public class ExpressionsRuntimeModule extends de.cau.cs.kieler.core.kexpressions
 	}
 
 //	public Class<? extends org.eclipse.xtext.conversion.IValueConverterService> bindIValueConverterService() {
-//	        return de.cau.cs.kieler.core.expressions.formatting.ExpressionsValueConverter.class;
+//	        return de.cau.cs.kieler.core.kexpressions.formatting.ExpressionsValueConverter.class;
 //	}
 }

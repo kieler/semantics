@@ -28,7 +28,7 @@ import org.eclipse.xtext.parser.antlr.IAntlrParser;
 import com.google.inject.Injector;
 
 import de.cau.cs.kieler.core.KielerModelException;
-import de.cau.cs.kieler.core.expressions.ValuedObject;
+import de.cau.cs.kieler.core.kexpressions.ValuedObject;
 import de.cau.cs.kieler.core.model.util.PossiblyEmptyCompoundCommand;
 import de.cau.cs.kieler.synccharts.Action;
 import de.cau.cs.kieler.synccharts.Region;

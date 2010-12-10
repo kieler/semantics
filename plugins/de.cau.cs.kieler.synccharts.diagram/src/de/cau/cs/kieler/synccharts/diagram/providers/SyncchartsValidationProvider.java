@@ -28,7 +28,7 @@ public class SyncchartsValidationProvider {
      * @generated
      */
     public static void runWithConstraints(TransactionalEditingDomain editingDomain,
-        Runnable operation) {
+            Runnable operation) {
         final Runnable op = operation;
         Runnable task = new Runnable() {
             public void run() {
@@ -60,8 +60,8 @@ public class SyncchartsValidationProvider {
         }
         if (object instanceof View) {
             return constraintsActive
-                && RegionEditPart.MODEL_ID.equals(SyncchartsVisualIDRegistry
-                    .getModelID((View) object));
+                    && RegionEditPart.MODEL_ID.equals(SyncchartsVisualIDRegistry
+                            .getModelID((View) object));
         }
         return true;
     }

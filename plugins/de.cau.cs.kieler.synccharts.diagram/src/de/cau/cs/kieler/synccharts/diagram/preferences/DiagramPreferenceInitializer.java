@@ -29,19 +29,19 @@ public class DiagramPreferenceInitializer extends AbstractPreferenceInitializer 
         store.setDefault(IPreferenceConstants.PREF_ENABLE_ANTIALIAS, true);
 
         PreferenceConverter.setDefault(store, IPreferenceConstants.PREF_FONT_COLOR,
-            DiagramColorConstants.black.getRGB());
+                DiagramColorConstants.black.getRGB());
 
         PreferenceConverter.setDefault(store, IPreferenceConstants.PREF_FILL_COLOR,
-            DiagramColorConstants.white.getRGB());
+                DiagramColorConstants.white.getRGB());
 
         PreferenceConverter.setDefault(store, IPreferenceConstants.PREF_LINE_COLOR,
-            DiagramColorConstants.black.getRGB());
+                DiagramColorConstants.black.getRGB());
 
         PreferenceConverter.setDefault(store, IPreferenceConstants.PREF_NOTE_FILL_COLOR,
-            DiagramColorConstants.yellow.getRGB());
+                DiagramColorConstants.yellow.getRGB());
 
         PreferenceConverter.setDefault(store, IPreferenceConstants.PREF_NOTE_LINE_COLOR,
-            DiagramColorConstants.orange.getRGB());
+                DiagramColorConstants.orange.getRGB());
         store.setDefault(IPreferenceConstants.PREF_LINE_STYLE, Routing.MANUAL);
         store.setDefault(IPreferenceConstants.PREF_SHOW_RULERS, false);
         store.setDefault(IPreferenceConstants.PREF_RULER_UNITS, RulerProvider.UNIT_CENTIMETERS);

@@ -18,7 +18,7 @@ public class SyncchartsDomainNavigatorLabelProvider implements ICommonLabelProvi
      * @generated
      */
     private AdapterFactoryLabelProvider myAdapterFactoryLabelProvider = new AdapterFactoryLabelProvider(
-        SyncchartsDiagramEditorPlugin.getInstance().getItemProvidersAdapterFactory());
+            SyncchartsDiagramEditorPlugin.getInstance().getItemProvidersAdapterFactory());
 
     /**
      * @generated
@@ -32,7 +32,7 @@ public class SyncchartsDomainNavigatorLabelProvider implements ICommonLabelProvi
     public Image getImage(Object element) {
         if (element instanceof SyncchartsDomainNavigatorItem) {
             return myAdapterFactoryLabelProvider.getImage(((SyncchartsDomainNavigatorItem) element)
-                .getEObject());
+                    .getEObject());
         }
         return null;
     }
@@ -43,7 +43,7 @@ public class SyncchartsDomainNavigatorLabelProvider implements ICommonLabelProvi
     public String getText(Object element) {
         if (element instanceof SyncchartsDomainNavigatorItem) {
             return myAdapterFactoryLabelProvider.getText(((SyncchartsDomainNavigatorItem) element)
-                .getEObject());
+                    .getEObject());
         }
         return null;
     }

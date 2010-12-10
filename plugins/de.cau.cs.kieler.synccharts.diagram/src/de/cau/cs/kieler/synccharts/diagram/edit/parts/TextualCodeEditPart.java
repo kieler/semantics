@@ -115,7 +115,7 @@ public class TextualCodeEditPart extends ShapeNodeEditPart {
     protected boolean addFixedChild(EditPart childEditPart) {
         if (childEditPart instanceof TextualCodeLabelEditPart) {
             ((TextualCodeLabelEditPart) childEditPart).setLabel(getPrimaryShape()
-                .getFigureCodeLabelFigure());
+                    .getFigureCodeLabelFigure());
             return true;
         }
         return false;
@@ -249,7 +249,7 @@ public class TextualCodeEditPart extends ShapeNodeEditPart {
      */
     public EditPart getPrimaryChildEditPart() {
         return getChildBySemanticHint(SyncchartsVisualIDRegistry
-            .getType(TextualCodeLabelEditPart.VISUAL_ID));
+                .getType(TextualCodeLabelEditPart.VISUAL_ID));
     }
 
     /**

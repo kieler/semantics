@@ -1,5 +1,5 @@
 «IMPORT synccharts»
-«IMPORT expressions»
+«IMPORT kexpressions»
 
 «EXTENSION templates::helper»
 
@@ -152,7 +152,7 @@ end module
 «REM»«DEFINE Trigger FOR VariableReference»«variable.name»«ENDDEFINE»«ENDREM»
 «DEFINE Trigger FOR ValuedObjectReference»«valuedObject.name»«ENDDEFINE»
 «DEFINE Trigger FOR TextualCode»«code»«ENDDEFINE»
-«DEFINE Trigger FOR expressions::Expression»//ERROR: unknown expression«ENDDEFINE»
+«DEFINE Trigger FOR kexpressions::Expression»//ERROR: unknown expression«ENDDEFINE»
 
 
 «DEFINE Effect FOR Emission»emit «signal.name»«IF newValue!=null»(«EXPAND Trigger FOR newValue»)«ENDIF»;«ENDDEFINE»

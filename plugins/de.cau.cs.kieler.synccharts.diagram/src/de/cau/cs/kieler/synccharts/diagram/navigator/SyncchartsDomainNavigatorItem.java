@@ -29,7 +29,7 @@ public class SyncchartsDomainNavigatorItem extends PlatformObject {
                     }
                     if (adapterType == IPropertySource.class) {
                         return domainNavigatorItem.getPropertySourceProvider().getPropertySource(
-                            eObject);
+                                eObject);
                     }
                 }
 
@@ -61,7 +61,7 @@ public class SyncchartsDomainNavigatorItem extends PlatformObject {
      * @generated
      */
     public SyncchartsDomainNavigatorItem(EObject eObject, Object parent,
-        IPropertySourceProvider propertySourceProvider) {
+            IPropertySourceProvider propertySourceProvider) {
         myParent = parent;
         myEObject = eObject;
         myPropertySourceProvider = propertySourceProvider;
@@ -94,11 +94,10 @@ public class SyncchartsDomainNavigatorItem extends PlatformObject {
     public boolean equals(Object obj) {
         if (obj instanceof de.cau.cs.kieler.synccharts.diagram.navigator.SyncchartsDomainNavigatorItem) {
             return EcoreUtil
-                .getURI(getEObject())
-                .equals(
-                    EcoreUtil
-                        .getURI(((de.cau.cs.kieler.synccharts.diagram.navigator.SyncchartsDomainNavigatorItem) obj)
-                            .getEObject()));
+                    .getURI(getEObject())
+                    .equals(EcoreUtil
+                            .getURI(((de.cau.cs.kieler.synccharts.diagram.navigator.SyncchartsDomainNavigatorItem) obj)
+                                    .getEObject()));
         }
         return super.equals(obj);
     }
