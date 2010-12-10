@@ -15,7 +15,7 @@
 package de.cau.cs.kieler.synccharts.text.actions.formatting;
 
 
-import de.cau.cs.kieler.core.expressions.formatting.ExpressionsValueConverter;
+import de.cau.cs.kieler.core.kexpressions.formatting.KExpressionsValueConverter;
 
 /**
  * Delegates to {@link ExpressionsValueConverter}.
@@ -23,6 +23,6 @@ import de.cau.cs.kieler.core.expressions.formatting.ExpressionsValueConverter;
  * 
  * @author haf
  */
-public class ActionsValueConverter extends ExpressionsValueConverter {
+public class ActionsValueConverter extends KExpressionsValueConverter {
 
 }

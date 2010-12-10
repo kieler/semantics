@@ -2,7 +2,7 @@ grammar de.cau.cs.kieler.synccharts.text.kits.Kits with de.cau.cs.kieler.synccha
 
 import "http://www.eclipse.org/emf/2002/Ecore" as ecore
 import "platform:/resource/de.cau.cs.kieler.core.annotations/model/annotations.ecore" as annotations
-import "platform:/resource/de.cau.cs.kieler.core.expressions/model/expressions.ecore" as expressions 
+import "platform:/resource/de.cau.cs.kieler.core.kexpressions/model/kexpressions.ecore" as kexpressions 
 import "platform:/resource/de.cau.cs.kieler.synccharts/model/synccharts.ecore" as synccharts
 import "platform:/resource/de.cau.cs.kieler.synccharts.text/model/syncchartsExtended.ecore" as syncchartsExtended
 
@@ -30,7 +30,7 @@ SingleRegion returns synccharts::Region:
 
 // ---------------------------------------------------------------------------------------------------
 
-TextualCode returns expressions::TextualCode:
+TextualCode returns kexpressions::TextualCode:
     'textual' 'code' ( '(' type = ID ')')? ':' code = STRING;
 
 Region returns synccharts::Region:
@@ -90,7 +90,7 @@ Transition returns synccharts::Transition:
 
 // ---------------------------------------------------------------------------------------------------
 
-Signal returns expressions::Signal:
+Signal returns kexpressions::Signal:
     (annotations += StringAnnotation)*
     (isInput?='input')?
 	(isOutput?='output')?
@@ -103,7 +103,7 @@ Signal returns expressions::Signal:
 
 // ---------------------------------------------------------------------------------------------------
 
-Variable returns expressions::Variable:
+Variable returns kexpressions::Variable:
     (annotations += StringAnnotation)*
     'var' name=ID (':=' initialValue=AnyType)? ':' (type = ValueType | hostType = STRING);
 

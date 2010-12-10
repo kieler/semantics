@@ -13,7 +13,7 @@ Workflow {
     bean = StandaloneSetup {
 		platformUri = "${runtimeProject}/.."
 			registerGeneratedEPackage = "de.cau.cs.kieler.synccharts.SyncchartsPackage"
-			registerGeneratedEPackage = "de.cau.cs.kieler.core.expressions.ExpressionsPackage"
+			registerGeneratedEPackage = "de.cau.cs.kieler.core.kexpressions.KExpressionsPackage"
 			registerGeneratedEPackage = "de.cau.cs.kieler.core.annotations.AnnotationsPackage" 
 	}
 
@@ -36,7 +36,7 @@ Workflow {
 
 			// generates Java API for the generated EPackages 
 			fragment = ecore.EcoreGeneratorFragment {
-				referencedGenModels = "platform:/resource/de.cau.cs.kieler.core.annotations/model/annotations.genmodel, platform:/resource/de.cau.cs.kieler.core.expressions/model/expressions.genmodel, platform:/resource/de.cau.cs.kieler.synccharts/model/synccharts.genmodel"
+				referencedGenModels = "platform:/resource/de.cau.cs.kieler.core.annotations/model/annotations.genmodel, platform:/resource/de.cau.cs.kieler.core.kexpressions/model/kexpressions.genmodel, platform:/resource/de.cau.cs.kieler.synccharts/model/synccharts.genmodel"
 			}
 
 			// Java API to access grammar elements (required by several other fragments)

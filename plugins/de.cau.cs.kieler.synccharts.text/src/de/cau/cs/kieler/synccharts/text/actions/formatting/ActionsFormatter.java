@@ -5,7 +5,7 @@ package de.cau.cs.kieler.synccharts.text.actions.formatting;
 
 import org.eclipse.xtext.formatting.impl.FormattingConfig;
 
-import de.cau.cs.kieler.core.expressions.formatting.ExpressionsFormatter;
+import de.cau.cs.kieler.core.kexpressions.formatting.KExpressionsFormatter;
 import de.cau.cs.kieler.synccharts.text.actions.services.ActionsGrammarAccess;
 
 /**
@@ -16,7 +16,7 @@ import de.cau.cs.kieler.synccharts.text.actions.services.ActionsGrammarAccess;
  * 
  * Also see {@link org.eclipse.xtext.xtext.XtextFormattingTokenSerializer} as an example
  */
-public class ActionsFormatter extends ExpressionsFormatter {
+public class ActionsFormatter extends KExpressionsFormatter {
 	
 	@Override
 	protected void configureFormatting(FormattingConfig c) {
@@ -32,7 +32,7 @@ public class ActionsFormatter extends ExpressionsFormatter {
 	 * @param f GrammarAccess provided by caller
 	 */
 	protected void customConfigureFormatting(FormattingConfig c, ActionsGrammarAccess f) {
-		super.customConfigureFormatting(c, f.getExpressionsGrammarAccess());
+		super.customConfigureFormatting(c, f.getKExpressionsGrammarAccess());
 		
 		// avoid space in valued Emission like 'X (5 + 7)' -> 'X(5 + 7)'
 		c.setNoSpace().before(f.getEmissionAccess().getLeftParenthesisKeyword_1_0());

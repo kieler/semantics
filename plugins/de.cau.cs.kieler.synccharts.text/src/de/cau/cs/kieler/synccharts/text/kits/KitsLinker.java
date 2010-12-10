@@ -31,7 +31,7 @@ import org.eclipse.xtext.parsetree.NodeUtil;
 
 import com.google.inject.Inject;
 
-import de.cau.cs.kieler.core.expressions.ExpressionsPackage;
+import de.cau.cs.kieler.core.kexpressions.KExpressionsPackage;
 import de.cau.cs.kieler.synccharts.State;
 import de.cau.cs.kieler.synccharts.SyncchartsPackage;
 import de.cau.cs.kieler.synccharts.Transition;
@@ -65,7 +65,7 @@ public class KitsLinker extends AbstractCleaningLinker {
                     || SyncchartsPackage.eINSTANCE.getTransition().isInstance(obj)
                     || SyncchartsPackage.eINSTANCE.getEmission().isInstance(obj)
                     || SyncchartsPackage.eINSTANCE.getAssignment().isInstance(obj)
-                    || ExpressionsPackage.eINSTANCE.getValuedObjectReference().isInstance(obj)) {
+                    || KExpressionsPackage.eINSTANCE.getValuedObjectReference().isInstance(obj)) {
 
                 /* reveal the dedicated parse tree element */
                 final CompositeNode node = NodeUtil.getNodeAdapter(obj).getParserNode();

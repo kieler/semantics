@@ -23,7 +23,7 @@ import org.eclipse.xtext.parsetree.reconstr.impl.ValueSerializer;
 
 import com.google.inject.Inject;
 
-import de.cau.cs.kieler.core.expressions.ExpressionsPackage;
+import de.cau.cs.kieler.core.kexpressions.KExpressionsPackage;
 import de.cau.cs.kieler.synccharts.SyncchartsPackage;
 import de.cau.cs.kieler.synccharts.text.kits.KitsTransientValueService;
 
@@ -49,19 +49,19 @@ public class KitsEnumLiteralSerializer extends EnumLiteralSerializer {
         // if we have a valuedObject under consideration and are processing the call of a
         // parser rule called from an assignment to a feature of the valuedObject
         // here: ... type = ValueType ... ,i.e. the call of the ValueType rule
-        if (ExpressionsPackage.eINSTANCE.getValuedObject().isInstance(context)
+        if (KExpressionsPackage.eINSTANCE.getValuedObject().isInstance(context)
                 && XtextPackage.eINSTANCE.getAssignment().isInstance(ruleCall.eContainer())) {
 
             Assignment a = (Assignment) ruleCall.eContainer();
 
             // if the feature the assignment is made to is the 'type' feature
             if (a.getFeature()
-                    .equals(ExpressionsPackage.eINSTANCE.getValuedObject_Type().getName())) {
+                    .equals(KExpressionsPackage.eINSTANCE.getValuedObject_Type().getName())) {
 
                 // ask the transientValueService;
                 // note that the return inverse value semantics!
                 return !transientValueService.isTransient(context,
-                        ExpressionsPackage.eINSTANCE.getValuedObject_Type(), -1);
+                        KExpressionsPackage.eINSTANCE.getValuedObject_Type(), -1);
             }
         }
 
@@ -69,19 +69,19 @@ public class KitsEnumLiteralSerializer extends EnumLiteralSerializer {
         // parser rule called from an assignment to a feature of the signal
         // here: ... combineOperator = CombineOperator ... ,i.e. the call of the CombineOperator
         // rule
-        if (ExpressionsPackage.eINSTANCE.getSignal().isInstance(context)
+        if (KExpressionsPackage.eINSTANCE.getSignal().isInstance(context)
                 && XtextPackage.eINSTANCE.getAssignment().isInstance(ruleCall.eContainer())) {
 
             Assignment a = (Assignment) ruleCall.eContainer();
 
             // if the feature the assignment is made to is the 'type' feature
             if (a.getFeature().equals(
-                    ExpressionsPackage.eINSTANCE.getSignal_CombineOperator().getName())) {
+                    KExpressionsPackage.eINSTANCE.getSignal_CombineOperator().getName())) {
 
                 // ask the transientValueService;
                 // note that the return inverse value semantics!
                 return !transientValueService.isTransient(context,
-                        ExpressionsPackage.eINSTANCE.getSignal_CombineOperator(), -1);
+                        KExpressionsPackage.eINSTANCE.getSignal_CombineOperator(), -1);
             }
         }
 

@@ -27,11 +27,11 @@ import org.eclipse.xtext.parser.IParseResult;
 import org.eclipse.xtext.resource.SaveOptions;
 import org.eclipse.xtext.util.Strings;
 
-import de.cau.cs.kieler.core.expressions.CombineOperator;
-import de.cau.cs.kieler.core.expressions.ExpressionsPackage;
-import de.cau.cs.kieler.core.expressions.Signal;
-import de.cau.cs.kieler.core.expressions.ValueType;
-import de.cau.cs.kieler.core.expressions.ValuedObject;
+import de.cau.cs.kieler.core.kexpressions.CombineOperator;
+import de.cau.cs.kieler.core.kexpressions.KExpressionsPackage;
+import de.cau.cs.kieler.core.kexpressions.Signal;
+import de.cau.cs.kieler.core.kexpressions.ValueType;
+import de.cau.cs.kieler.core.kexpressions.ValuedObject;
 import de.cau.cs.kieler.synccharts.Region;
 import de.cau.cs.kieler.synccharts.Scope;
 import de.cau.cs.kieler.synccharts.State;
@@ -132,7 +132,7 @@ public class KitsResource extends LazyLinkingResource {
             if (SyncchartsPackage.eINSTANCE.getState().isInstance(o)) {
                 setupPriorities((State) o);
             }
-            if (ExpressionsPackage.eINSTANCE.getValuedObject().isInstance(o)) {
+            if (KExpressionsPackage.eINSTANCE.getValuedObject().isInstance(o)) {
                 setupTypes((ValuedObject) o);
             }
         }
@@ -240,7 +240,7 @@ public class KitsResource extends LazyLinkingResource {
         if (!Strings.isEmpty(v.getHostType())) {
             v.setType(ValueType.HOST);
         }
-        if (ExpressionsPackage.eINSTANCE.getSignal().isInstance(v)) {
+        if (KExpressionsPackage.eINSTANCE.getSignal().isInstance(v)) {
             if (!Strings.isEmpty(((Signal) v).getHostCombineOperator())) {
                 ((Signal) v).setCombineOperator(CombineOperator.HOST);
             }

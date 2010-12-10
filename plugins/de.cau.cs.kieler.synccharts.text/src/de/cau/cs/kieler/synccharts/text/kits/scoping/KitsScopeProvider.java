@@ -31,11 +31,11 @@ import org.eclipse.xtext.scoping.IScope;
 import org.eclipse.xtext.scoping.impl.AbstractDeclarativeScopeProvider;
 import org.eclipse.xtext.scoping.impl.SimpleScope;
 
-import de.cau.cs.kieler.core.expressions.ExpressionsPackage;
-import de.cau.cs.kieler.core.expressions.OperatorExpression;
-import de.cau.cs.kieler.core.expressions.OperatorType;
-import de.cau.cs.kieler.core.expressions.Signal;
-import de.cau.cs.kieler.core.expressions.Variable;
+import de.cau.cs.kieler.core.kexpressions.KExpressionsPackage;
+import de.cau.cs.kieler.core.kexpressions.OperatorExpression;
+import de.cau.cs.kieler.core.kexpressions.OperatorType;
+import de.cau.cs.kieler.core.kexpressions.Signal;
+import de.cau.cs.kieler.core.kexpressions.Variable;
 import de.cau.cs.kieler.synccharts.Assignment;
 import de.cau.cs.kieler.synccharts.Emission;
 import de.cau.cs.kieler.synccharts.Region;
@@ -138,7 +138,7 @@ public class KitsScopeProvider extends AbstractDeclarativeScopeProvider {
 
         // this branch will be entered during linking if the valuedObjectReference
         // is contained by a '?' OperatorExpression
-        if (ExpressionsPackage.eINSTANCE.getOperatorExpression().isInstance(obj.eContainer())
+        if (KExpressionsPackage.eINSTANCE.getOperatorExpression().isInstance(obj.eContainer())
                 && (((OperatorExpression) obj.eContainer()).getOperator() == OperatorType.VAL || ((OperatorExpression) obj
                         .eContainer()).getOperator() == OperatorType.PRE)) {
             return l;
@@ -147,7 +147,7 @@ public class KitsScopeProvider extends AbstractDeclarativeScopeProvider {
         // this branch will be entered computing the content assist proposals
         // if the text input leads to a valid model!
         // otherwise used context is nearly unpredictable
-        if (ExpressionsPackage.eINSTANCE.getOperatorExpression().isInstance(obj)
+        if (KExpressionsPackage.eINSTANCE.getOperatorExpression().isInstance(obj)
                 && (((OperatorExpression) obj).getOperator() == OperatorType.VAL || ((OperatorExpression) obj)
                         .getOperator() == OperatorType.PRE)) {
             return l;

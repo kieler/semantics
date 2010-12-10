@@ -18,11 +18,11 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.xtext.parsetree.reconstr.impl.DefaultTransientValueService;
 
-import de.cau.cs.kieler.core.expressions.CombineOperator;
-import de.cau.cs.kieler.core.expressions.ExpressionsPackage;
-import de.cau.cs.kieler.core.expressions.Signal;
-import de.cau.cs.kieler.core.expressions.ValueType;
-import de.cau.cs.kieler.core.expressions.Variable;
+import de.cau.cs.kieler.core.kexpressions.CombineOperator;
+import de.cau.cs.kieler.core.kexpressions.KExpressionsPackage;
+import de.cau.cs.kieler.core.kexpressions.Signal;
+import de.cau.cs.kieler.core.kexpressions.ValueType;
+import de.cau.cs.kieler.core.kexpressions.Variable;
 import de.cau.cs.kieler.synccharts.SyncchartsPackage;
 
 /**
@@ -38,7 +38,7 @@ public class InterfacesTransientValueService extends
         DefaultTransientValueService {
 
     private static SyncchartsPackage sync = SyncchartsPackage.eINSTANCE;
-    private static ExpressionsPackage exp = ExpressionsPackage.eINSTANCE;
+    private static KExpressionsPackage exp = KExpressionsPackage.eINSTANCE;
 
     /**
      * {@inheritDoc}
