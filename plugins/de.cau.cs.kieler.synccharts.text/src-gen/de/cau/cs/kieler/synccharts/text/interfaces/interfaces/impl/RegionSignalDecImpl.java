@@ -5,8 +5,8 @@
  */
 package de.cau.cs.kieler.synccharts.text.interfaces.interfaces.impl;
 
-import de.cau.cs.kieler.core.expressions.Signal;
-import de.cau.cs.kieler.core.expressions.Variable;
+import de.cau.cs.kieler.core.kexpressions.Signal;
+import de.cau.cs.kieler.core.kexpressions.Variable;
 
 import de.cau.cs.kieler.synccharts.Region;
 

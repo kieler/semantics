@@ -5,7 +5,7 @@
  */
 package de.cau.cs.kieler.synccharts.text.interfaces.interfaces.impl;
 
-import de.cau.cs.kieler.core.expressions.ExpressionsPackage;
+import de.cau.cs.kieler.core.kexpressions.KExpressionsPackage;
 
 import de.cau.cs.kieler.synccharts.SyncchartsPackage;
 
@@ -443,7 +443,7 @@ public class InterfacesPackageImpl extends EPackageImpl implements InterfacesPac
 
     // Obtain other dependent packages
     SyncchartsPackage theSyncchartsPackage = (SyncchartsPackage)EPackage.Registry.INSTANCE.getEPackage(SyncchartsPackage.eNS_URI);
-    ExpressionsPackage theExpressionsPackage = (ExpressionsPackage)EPackage.Registry.INSTANCE.getEPackage(ExpressionsPackage.eNS_URI);
+    KExpressionsPackage theKExpressionsPackage = (KExpressionsPackage)EPackage.Registry.INSTANCE.getEPackage(KExpressionsPackage.eNS_URI);
 
     // Create type parameters
 
@@ -462,23 +462,23 @@ public class InterfacesPackageImpl extends EPackageImpl implements InterfacesPac
 
     initEClass(regionSignalDecEClass, RegionSignalDec.class, "RegionSignalDec", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getRegionSignalDec_Region(), theSyncchartsPackage.getRegion(), null, "region", null, 0, 1, RegionSignalDec.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getRegionSignalDec_Vars(), theExpressionsPackage.getVariable(), null, "vars", null, 0, -1, RegionSignalDec.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getRegionSignalDec_Signals(), theExpressionsPackage.getSignal(), null, "signals", null, 0, -1, RegionSignalDec.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getRegionSignalDec_Vars(), theKExpressionsPackage.getVariable(), null, "vars", null, 0, -1, RegionSignalDec.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getRegionSignalDec_Signals(), theKExpressionsPackage.getSignal(), null, "signals", null, 0, -1, RegionSignalDec.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(variablesEClass, Variables.class, "Variables", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getVariables_Vars(), theExpressionsPackage.getVariable(), null, "vars", null, 0, -1, Variables.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getVariables_Vars(), theKExpressionsPackage.getVariable(), null, "vars", null, 0, -1, Variables.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(signalsEClass, Signals.class, "Signals", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getSignals_Signals(), theExpressionsPackage.getSignal(), null, "signals", null, 0, -1, Signals.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getSignals_Signals(), theKExpressionsPackage.getSignal(), null, "signals", null, 0, -1, Signals.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(inputSignalsEClass, InputSignals.class, "InputSignals", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getInputSignals_Signals(), theExpressionsPackage.getSignal(), null, "signals", null, 0, -1, InputSignals.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getInputSignals_Signals(), theKExpressionsPackage.getSignal(), null, "signals", null, 0, -1, InputSignals.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(outputSignalsEClass, OutputSignals.class, "OutputSignals", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getOutputSignals_Signals(), theExpressionsPackage.getSignal(), null, "signals", null, 0, -1, OutputSignals.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getOutputSignals_Signals(), theKExpressionsPackage.getSignal(), null, "signals", null, 0, -1, OutputSignals.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(inOutputSignalsEClass, InOutputSignals.class, "InOutputSignals", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getInOutputSignals_Signals(), theExpressionsPackage.getSignal(), null, "signals", null, 0, -1, InOutputSignals.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getInOutputSignals_Signals(), theKExpressionsPackage.getSignal(), null, "signals", null, 0, -1, InOutputSignals.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     // Create resource
     createResource(eNS_URI);

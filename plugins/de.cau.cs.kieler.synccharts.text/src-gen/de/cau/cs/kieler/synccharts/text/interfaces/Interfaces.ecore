@@ -19,34 +19,34 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="RegionSignalDec">
     <eStructuralFeatures xsi:type="ecore:EReference" name="region" eType="ecore:EClass ../../../../../../../../../de.cau.cs.kieler.synccharts/model/synccharts.ecore#//Region"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="vars" upperBound="-1" eType="ecore:EClass ../../../../../../../../../de.cau.cs.kieler.core.expressions/model/expressions.ecore#//Variable"
+    <eStructuralFeatures xsi:type="ecore:EReference" name="vars" upperBound="-1" eType="ecore:EClass ../../../../../../../../../de.cau.cs.kieler.core.kexpressions/model/kexpressions.ecore#//Variable"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="signals" upperBound="-1"
-        eType="ecore:EClass ../../../../../../../../../de.cau.cs.kieler.core.expressions/model/expressions.ecore#//Signal"
+        eType="ecore:EClass ../../../../../../../../../de.cau.cs.kieler.core.kexpressions/model/kexpressions.ecore#//Signal"
         containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Variables">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="vars" upperBound="-1" eType="ecore:EClass ../../../../../../../../../de.cau.cs.kieler.core.expressions/model/expressions.ecore#//Variable"
+    <eStructuralFeatures xsi:type="ecore:EReference" name="vars" upperBound="-1" eType="ecore:EClass ../../../../../../../../../de.cau.cs.kieler.core.kexpressions/model/kexpressions.ecore#//Variable"
         containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Signals">
     <eStructuralFeatures xsi:type="ecore:EReference" name="signals" upperBound="-1"
-        eType="ecore:EClass ../../../../../../../../../de.cau.cs.kieler.core.expressions/model/expressions.ecore#//Signal"
+        eType="ecore:EClass ../../../../../../../../../de.cau.cs.kieler.core.kexpressions/model/kexpressions.ecore#//Signal"
         containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="InputSignals">
     <eStructuralFeatures xsi:type="ecore:EReference" name="signals" upperBound="-1"
-        eType="ecore:EClass ../../../../../../../../../de.cau.cs.kieler.core.expressions/model/expressions.ecore#//Signal"
+        eType="ecore:EClass ../../../../../../../../../de.cau.cs.kieler.core.kexpressions/model/kexpressions.ecore#//Signal"
         containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="OutputSignals">
     <eStructuralFeatures xsi:type="ecore:EReference" name="signals" upperBound="-1"
-        eType="ecore:EClass ../../../../../../../../../de.cau.cs.kieler.core.expressions/model/expressions.ecore#//Signal"
+        eType="ecore:EClass ../../../../../../../../../de.cau.cs.kieler.core.kexpressions/model/kexpressions.ecore#//Signal"
         containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="InOutputSignals">
     <eStructuralFeatures xsi:type="ecore:EReference" name="signals" upperBound="-1"
-        eType="ecore:EClass ../../../../../../../../../de.cau.cs.kieler.core.expressions/model/expressions.ecore#//Signal"
+        eType="ecore:EClass ../../../../../../../../../de.cau.cs.kieler.core.kexpressions/model/kexpressions.ecore#//Signal"
         containment="true"/>
   </eClassifiers>
 </ecore:EPackage>

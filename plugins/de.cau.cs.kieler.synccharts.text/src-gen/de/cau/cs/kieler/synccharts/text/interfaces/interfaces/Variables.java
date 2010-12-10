@@ -5,7 +5,7 @@
  */
 package de.cau.cs.kieler.synccharts.text.interfaces.interfaces;
 
-import de.cau.cs.kieler.core.expressions.Variable;
+import de.cau.cs.kieler.core.kexpressions.Variable;
 
 import org.eclipse.emf.common.util.EList;
 
@@ -31,7 +31,7 @@ public interface Variables extends EObject
 {
   /**
    * Returns the value of the '<em><b>Vars</b></em>' containment reference list.
-   * The list contents are of type {@link de.cau.cs.kieler.core.expressions.Variable}.
+   * The list contents are of type {@link de.cau.cs.kieler.core.kexpressions.Variable}.
    * <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Vars</em>' containment reference list isn't clear,
