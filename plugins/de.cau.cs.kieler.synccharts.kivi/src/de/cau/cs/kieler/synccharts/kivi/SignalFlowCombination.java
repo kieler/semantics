@@ -53,6 +53,7 @@ public class SignalFlowCombination extends AbstractCombination {
             "The color to paint the signal flow arrows in", ColorConstants.red.getRGB(),
             CombinationParameter.RGB_TYPE) };
 
+    private static final int DEFAULT_LENGTH = 15;
     /**
      * Execute the combination using the signal flow active state and the selection state.
      * 
@@ -110,6 +111,22 @@ public class SignalFlowCombination extends AbstractCombination {
                                     getColor(), false));
                         }
                     }
+                }
+            }
+
+            // haf: handle global inputs and outputs
+            for (Pair<Signal, Transition> trigger : triggers) {
+                if (trigger.getFirst().isIsInput()
+                        && isRelevant(selection.getSelectedEObjects(), trigger.getSecond())) {
+                    schedule(new PointerEffect(trigger.getSecond(), getColor(), DEFAULT_LENGTH, true,
+                            PointerEffect.Direction.NORTH, false));
+                }
+            }
+            for (Pair<Signal, Transition> effect : effects) {
+                if (effect.getFirst().isIsOutput()
+                        && isRelevant(selection.getSelectedEObjects(), effect.getSecond())) {
+                    schedule(new PointerEffect(effect.getSecond(), getColor(), DEFAULT_LENGTH, false,
+                            PointerEffect.Direction.SOUTH, false));
                 }
             }
         }
