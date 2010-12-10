@@ -7,7 +7,7 @@ import org.eclipse.emf.compare.diff.metamodel.UpdateReference;
 import org.eclipse.emf.compare.util.EFactory;
 import org.eclipse.emf.ecore.EObject;
 
-import de.cau.cs.kieler.core.expressions.ValuedObjectReference;
+import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference;
 import de.cau.cs.kieler.synccharts.Assignment;
 import de.cau.cs.kieler.synccharts.Emission;
 

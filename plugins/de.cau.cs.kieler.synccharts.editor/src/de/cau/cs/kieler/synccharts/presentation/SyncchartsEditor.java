@@ -168,7 +168,8 @@ import de.cau.cs.kieler.synccharts.provider.SyncchartsItemProviderAdapterFactory
 
 import de.cau.cs.kieler.core.annotations.provider.AnnotationsItemProviderAdapterFactory;
 
-import de.cau.cs.kieler.core.expressions.provider.ExpressionsItemProviderAdapterFactory;
+import de.cau.cs.kieler.core.kexpressions.provider.KExpressionsItemProviderAdapterFactory;
+import de.cau.cs.kieler.core.kexpressions.provider.KExpressionsItemProviderAdapterFactory;
 
 import org.eclipse.emf.ecore.provider.EcoreItemProviderAdapterFactory;
 
@@ -717,7 +718,7 @@ public class SyncchartsEditor
         adapterFactory.addAdapterFactory(new SyncchartsItemProviderAdapterFactory());
         adapterFactory.addAdapterFactory(new AnnotationsItemProviderAdapterFactory());
         adapterFactory.addAdapterFactory(new EcoreItemProviderAdapterFactory());
-        adapterFactory.addAdapterFactory(new ExpressionsItemProviderAdapterFactory());
+        adapterFactory.addAdapterFactory(new KExpressionsItemProviderAdapterFactory());
         adapterFactory.addAdapterFactory(new ReflectiveItemProviderAdapterFactory());
 
         // Create the command stack that will notify this editor as commands are executed.

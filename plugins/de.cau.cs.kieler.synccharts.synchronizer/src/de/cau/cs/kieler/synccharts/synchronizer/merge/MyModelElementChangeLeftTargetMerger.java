@@ -19,8 +19,8 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.xtext.util.Strings;
 
-import de.cau.cs.kieler.core.expressions.ExpressionsPackage;
-import de.cau.cs.kieler.core.expressions.ValuedObject;
+import de.cau.cs.kieler.core.kexpressions.KExpressionsPackage;
+import de.cau.cs.kieler.core.kexpressions.ValuedObject;
 import de.cau.cs.kieler.synccharts.Transition;
 
 /**
@@ -61,7 +61,7 @@ public class MyModelElementChangeLeftTargetMerger extends DefaultMerger {
 //            System.out.println("Hier " + origin.eResource());
         }
         
-        if (ExpressionsPackage.eINSTANCE.getValuedObject().isInstance(element)
+        if (KExpressionsPackage.eINSTANCE.getValuedObject().isInstance(element)
                 && Strings.isEmpty(((ValuedObject) element).getName())) {
             super.undoInTarget();
             return;

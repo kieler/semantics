@@ -137,7 +137,7 @@ public class ExpandMacroStatesCommand extends AbstractHandler {
         //metaModel = new EmfMetaModel(SyncchartsPackage.eINSTANCE);
         // CMOTs
         metaModel = new EmfMetaModel(de.cau.cs.kieler.synccharts.SyncchartsPackage.eINSTANCE);
-        EmfMetaModel expressions = new EmfMetaModel(de.cau.cs.kieler.core.expressions.ExpressionsPackage.eINSTANCE);
+        EmfMetaModel expressions = new EmfMetaModel(de.cau.cs.kieler.core.kexpressions.KExpressionsPackage.eINSTANCE);
         
         xmiReader = new Reader();
         xmiReader.setUri(path.toOSString());

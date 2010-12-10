@@ -28,8 +28,8 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.commands.ICommandService;
 import org.eclipse.xtext.util.Strings;
 
-import de.cau.cs.kieler.core.expressions.ExpressionsPackage;
-import de.cau.cs.kieler.core.expressions.ValuedObject;
+import de.cau.cs.kieler.core.kexpressions.KExpressionsPackage;
+import de.cau.cs.kieler.core.kexpressions.ValuedObject;
 import de.cau.cs.kieler.synccharts.SyncchartsPackage;
 import de.cau.cs.kieler.synccharts.synchronizer.kitsView.KitsView;
 
@@ -128,7 +128,7 @@ public class ModelSynchronizer implements IStartup {
 //             System.out.println("Notifier = " + n.getNotifier() + n.getFeature());
             
             // drop a few notifications that don't care semantic information
-            if (ExpressionsPackage.eINSTANCE.getValuedObject().isInstance(n.getNewValue())
+            if (KExpressionsPackage.eINSTANCE.getValuedObject().isInstance(n.getNewValue())
                     && Strings.isEmpty(((ValuedObject) n.getNewValue()).getName())) {
                 continue;
             }

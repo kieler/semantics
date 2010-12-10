@@ -21,7 +21,7 @@ import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.ecore.EObject;
 
 import de.cau.cs.kieler.core.KielerRuntimeException;
-import de.cau.cs.kieler.core.expressions.ExpressionsPackage;
+import de.cau.cs.kieler.core.kexpressions.KExpressionsPackage;
 import de.cau.cs.kieler.synccharts.SyncchartsPackage;
 
 /**
@@ -38,14 +38,14 @@ public class LinkingAdapter implements Adapter {
             boolean includeContent) {
         if (SyncchartsPackage.eINSTANCE.getAssignment().isInstance(theCopy)
                 || SyncchartsPackage.eINSTANCE.getEmission().isInstance(theCopy)
-                || ExpressionsPackage.eINSTANCE.getValuedObjectReference().isInstance(theCopy)) {
+                || KExpressionsPackage.eINSTANCE.getValuedObjectReference().isInstance(theCopy)) {
             new LinkingAdapter(theSource, theCopy);
         } else {
             if (SyncchartsPackage.eINSTANCE.getTransition().isInstance(theCopy)) {
                 new LinkingAdapter(theSource, theCopy);
             }
             if (includeContent
-                    && (SyncchartsPackage.eINSTANCE.getScope().isInstance(theCopy) || ExpressionsPackage.eINSTANCE
+                    && (SyncchartsPackage.eINSTANCE.getScope().isInstance(theCopy) || KExpressionsPackage.eINSTANCE
                             .getExpression().isInstance(theCopy))) {
 
                 Iterator<EObject> it_s = theSource.eAllContents();

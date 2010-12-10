@@ -9,7 +9,7 @@ import org.eclipse.emf.transaction.TransactionalEditingDomain;
 import org.eclipse.emf.transaction.TriggerListener;
 
 import de.cau.cs.kieler.core.annotations.AnnotationsPackage;
-import de.cau.cs.kieler.core.expressions.ExpressionsPackage;
+import de.cau.cs.kieler.core.kexpressions.KExpressionsPackage;
 
 public class ModelChangeTriggerListener extends TriggerListener {
 
@@ -19,7 +19,7 @@ public class ModelChangeTriggerListener extends TriggerListener {
         super(NotificationFilter.createNotifierTypeFilter(
                 AnnotationsPackage.eINSTANCE.getAnnotatable()).or(
                 NotificationFilter.createNotifierTypeFilter(
-                        ExpressionsPackage.eINSTANCE.getExpression())));
+                        KExpressionsPackage.eINSTANCE.getExpression())));
     }
 
     public Command transactionAboutToCommit(ResourceSetChangeEvent event) throws RollbackException {

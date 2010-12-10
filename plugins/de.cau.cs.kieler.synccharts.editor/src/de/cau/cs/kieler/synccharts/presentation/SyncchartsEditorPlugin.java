@@ -15,7 +15,8 @@ package de.cau.cs.kieler.synccharts.presentation;
 
 import de.cau.cs.kieler.core.annotations.provider.AnnotationsEditPlugin;
 
-import de.cau.cs.kieler.core.expressions.provider.ExpressionsEditPlugin;
+import de.cau.cs.kieler.core.kexpressions.provider.KExpressionsEditPlugin;
+import de.cau.cs.kieler.core.kexpressions.provider.KExpressionsEditPlugin;
 
 import org.eclipse.emf.common.EMFPlugin;
 
@@ -66,7 +67,7 @@ public final class SyncchartsEditorPlugin extends EMFPlugin {
             (new ResourceLocator [] {
                 AnnotationsEditPlugin.INSTANCE,
                 EcoreEditPlugin.INSTANCE,
-                ExpressionsEditPlugin.INSTANCE,
+                KExpressionsEditPlugin.INSTANCE,
             });
     }
 
