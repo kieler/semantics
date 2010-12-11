@@ -153,7 +153,7 @@ Void ruleAbort(State s, Abort a):
 	// just an instance or cases? 
  	(AbortInstance.isInstance(a.body) ?
 	 	handleAbortCaseSingle(r, initState, 1, 
-	 		((AbortInstance)a.body).delay, 
+	 		((AbortInstance)a.body).delay,
 	 		((AbortInstance)a.body).statement,
 	 		WeakAbort.isInstance(a)) 
  	:
@@ -222,8 +222,18 @@ Void handleAbortCaseSingle(Region parent, State source, Integer prio, DelayExpr 
  	t.connectTransition(initS, finalS) ->
 
  	sa.setVariable(assign.var) ->
- 	if (assign.expr != null) then
- 		sa.setExpression((Expression) clone(assign.expr)) ->
+ 	
+ 	
+ 	
+ 	/*if FunctionExpression.isInstance(assign.expr) then
+ 		 (let host = new TextExpression:
+ 		 s.setLabel("foo2") ->
+ 		 host.setCode(((FunctionExpression)assign.expr).funcion.name) ->
+ 		 sa.setExpression(host) 
+ 		 )  ->
+ 	*/
+ 	//if (assign.expr != null) then
+ 	//	(sa.setExpression(((Expression) clone(assign.expr)).convertEsterelExpression())) ->
  		
  	//add assignment to the transition
  	t.effects.add(sa)
@@ -254,11 +264,11 @@ Void rule(State s, Await a):
  
 // as abort and await cases are equal, we use AbortCaseSingles 
 Void handleAwaitCases(Region r, State previous, Integer prio, List[AbortCaseSingle] cases):
-	handleAbortCases(r, previous, prio, cases, false)
+	handleAbortCases(r, previous, prio, cases, true)
 ;
 
 Void handleAwaitCaseSingle(Region r, State previous, Integer prio, DelayExpr expr, Statement body):
-	handleAbortCaseSingle(r, previous, prio, expr, body, false)
+	handleAbortCaseSingle(r, previous, prio, expr, body, true)
 ;
 
 
@@ -972,6 +982,21 @@ Void addTrapToExpression(ISignal trap, OperatorExpression expr):
 	let ref = new ValuedObjectReference:
 	ref.setValuedObject(trap) ->
 	expr.subExpressions.add(ref)
+;
+
+// esterel provides additional expression constructs which need to be converted into a synccharts adequate form.
+Void convertEsterelExpression(Expression e):
+	let funcs = e.eAllContents.select(e|FunctionExpression.isInstance(e)):
+	((Set[FunctionExpression])funcs).convertEsterelFunction()
+;
+
+Void convertEsterelFunction(FunctionExpression fe):
+	let textualCode = new TextualCode:
+	let parentExpr = (Expression) fe.eContainer:
+	textualCode.setCode(fe.funcion.name) 
+	//->
+	//parentExpr.subExpressions.remove(fe) ->
+	//parentExpr.subExpressions.add(textualCode)
 ;
 
 List copyList(List list):
