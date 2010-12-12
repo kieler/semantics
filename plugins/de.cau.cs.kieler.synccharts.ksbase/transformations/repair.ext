@@ -3,7 +3,8 @@ import kexpressions;
 import utilities;
 
 // Helper method to set the label on a transition
-Void setLabel(Action action, String label):
+//  chsch: casting to Object avoids false positive error marker, see line 216
+Void setLabel(Action action, Object label):
  JAVA de.cau.cs.kieler.synccharts.ksbase.SyncchartsKsbasePlugin.setLabel(de.cau.cs.kieler.synccharts.Action, java.lang.String)
 ;
 
@@ -167,11 +168,11 @@ List[Signal] getUnReferencedSignals(Scope scope):
  scope.signals.select(e|e.signalNotRead(scope) && e.signalNotEmitted(scope))
 ;
 
-Boolean variableNotRead(expressions::Variable var, Scope scope):
+Boolean variableNotRead(kexpressions::Variable var, Scope scope):
  scope.eAllContents.typeSelect(ValuedObjectReference).select(reference|reference.valuedObject.name == var.name).isEmpty
 ;
 
-Boolean variableNotWritten(expressions::Variable var, Scope scope):
+Boolean variableNotWritten(kexpressions::Variable var, Scope scope):
  scope.eAllContents.typeSelect(Assignment).select(assignment|assignment.variable.name == var.name).isEmpty
 ;
 
@@ -209,8 +210,9 @@ Void removeVariablesFromScope(Scope scope, List[Variable] variables):
 // FIXME: Disabled for now as more complex syntax analysis would be necessary
 
 Void fixWhiteSpacesInAction(Action action):
+// chsch: cast to Object aboids false positive error marker
  //if (action != null) then setLabel(action, action.label.replaceAll(" " , ""))
- if (action != null) then setLabel(action, action.label)
+ if (action != null) then setLabel(action, (Object) action.label)
 ;
 
 // === end WhiteSpaces ===
