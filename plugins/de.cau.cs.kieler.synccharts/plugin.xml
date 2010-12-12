@@ -62,7 +62,7 @@
                checkfilePath="model/SyncchartsChecks.chk"
                tooltip="Checks whether the syncchart is valid.">
             <referenceEPackageNsURI
-                  nsURI="http://kieler.cs.cau.de/expressions">
+                  nsURI="http://kieler.cs.cau.de/kexpressions/0.1.2">
             </referenceEPackageNsURI>
          </Validation>
          <Validation
@@ -74,7 +74,7 @@
                checkfilePath="model/SyncchartsKleptoChecks.chk"
                tooltip="Check whether the syncchart can be simulated with Klepto.">
             <referenceEPackageNsURI
-                  nsURI="http://kieler.cs.cau.de/expressions">
+                  nsURI="http://kieler.cs.cau.de/kexpressions/0.1.2">
             </referenceEPackageNsURI>
          </Validation>
          <Validation
@@ -86,7 +86,7 @@
                checkfilePath="model/SyncchartsScChecks.chk"
                tooltip="Checks whether SC code can be generated from the syncchart.">
             <referenceEPackageNsURI
-                  nsURI="http://kieler.cs.cau.de/expressions">
+                  nsURI="http://kieler.cs.cau.de/kexpressions/0.1.2">
             </referenceEPackageNsURI>
          </Validation>
       </extension>
