@@ -38,6 +38,7 @@ import de.cau.cs.kieler.core.kexpressions.TextualCode;
 import de.cau.cs.kieler.core.ui.util.EditorUtils;
 import de.cau.cs.kieler.core.util.Maybe;
 import de.cau.cs.kieler.esterel.EsterelStandaloneSetup;
+import de.cau.cs.kieler.esterel.esterel.EsterelPackage;
 import de.cau.cs.kieler.synccharts.Region;
 import de.cau.cs.kieler.synccharts.State;
 import de.cau.cs.kieler.synccharts.StateType;
