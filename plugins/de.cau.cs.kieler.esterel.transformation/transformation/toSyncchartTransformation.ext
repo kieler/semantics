@@ -527,7 +527,7 @@ Void rule(State s, Loop l):
  	selfTrans.connectTransition(loopState, loopState) ->
  	
  	if LoopEach.isInstance(l.end) then
- 		(selfTrans.setType(TransitionType::WEAKABORT) ->
+ 		(selfTrans.setType(TransitionType::STRONGABORT) ->
  		 s) -> selfTrans.addDelayToTrigger(((LoopDelay)l.end).delay) ->
  	
  	setJavaBodyContents(loopState, l.body.statement) ->
