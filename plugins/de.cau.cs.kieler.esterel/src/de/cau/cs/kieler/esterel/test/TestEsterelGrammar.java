@@ -14,23 +14,33 @@
 package de.cau.cs.kieler.esterel.test;
 
 import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileFilter;
 import java.io.FileInputStream;
 import java.io.FileReader;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.util.HashMap;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource.Diagnostic;
 import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.xtext.junit.AbstractXtextTests;
+import org.eclipse.xtext.parsetree.reconstr.IParseTreeConstructor.TreeConstructionDiagnostic;
+import org.eclipse.xtext.parsetree.reconstr.Serializer;
+import org.eclipse.xtext.parsetree.reconstr.XtextSerializationException;
 import org.eclipse.xtext.resource.IResourceFactory;
+import org.eclipse.xtext.resource.SaveOptions;
 import org.eclipse.xtext.resource.XtextResource;
 import org.eclipse.xtext.resource.XtextResourceSet;
+import org.eclipse.xtext.validation.IConcreteSyntaxValidator.InvalidConcreteSyntaxException;
 import org.junit.Before;
 import org.junit.Test;
 
 import com.google.inject.Injector;
 
+import de.cau.cs.kieler.core.util.Maybe;
 import de.cau.cs.kieler.esterel.EsterelStandaloneSetup;
 
 /**
@@ -42,7 +52,12 @@ import de.cau.cs.kieler.esterel.EsterelStandaloneSetup;
  * @author uru
  * 
  */
-public class TestEsterelGrammar {
+public class TestEsterelGrammar extends AbstractXtextTests {
+
+    /** in ms. */
+    private static final int SERIALIZATION_TIME_LIMIT = 4000;
+
+    private boolean serialize = true;
 
     /** contains test files that are supposed to fail. */
     private File[] filesFail = null;
@@ -52,6 +67,8 @@ public class TestEsterelGrammar {
     private File[] filesRest = null;
     /** injector for the parser. */
     private Injector injector;
+
+    private String times = "";
 
     /**
      * Set up. Create injector, read all available testfiles.
@@ -106,13 +123,34 @@ public class TestEsterelGrammar {
         HashMap<String, String> errors = new HashMap<String, String>();
         for (File f : filesTest) {
 
-            // fetch resource and possible errors
+            String error = "";
+            // parse
             XtextResource resource = parseFile(f);
+            // fetch resource and possible errors
             if (!resource.getErrors().isEmpty()) {
-                String error = "";
+                error += "### Parse: \n";
                 for (Diagnostic d : resource.getErrors()) {
                     error += d.getMessage() + "\n";
                 }
+            }
+            // serialize
+            if (serialize) {
+                Exception ex = serializeResource(resource);
+                if (ex != null) {
+                    error += "### Serialization: \n";
+                    if (ex instanceof InvalidConcreteSyntaxException) {
+                        error += ((InvalidConcreteSyntaxException) ex).toString();
+                    } else if (ex instanceof XtextSerializationException) {
+                        if (((XtextSerializationException) ex).getReport() != null) {
+                            for (TreeConstructionDiagnostic d : ((XtextSerializationException) ex)
+                                    .getReport().getDiagnostics()) {
+                                error += d.getLikelyErrorReasons() + "\n";
+                            }
+                        }
+                    }
+                }
+            }
+            if (!error.equals("")) {
                 errors.put(f.getName(), error);
             }
             // EObject model = resource.getParseResult().getRootASTElement();
@@ -188,14 +226,72 @@ public class TestEsterelGrammar {
         XtextResourceSet rs = injector.getInstance(XtextResourceSet.class);
         IResourceFactory resourceFactory = injector.getInstance(IResourceFactory.class);
         URI uri = URI.createFileURI("test/test.strl"); // uri of your resource, may be fictional
-        XtextResource resource = (XtextResource) resourceFactory.createResource(uri);
+
+        long start = System.currentTimeMillis();
+        final XtextResource resource = (XtextResource) resourceFactory.createResource(uri);
         rs.getResources().add(resource);
+        long end = System.currentTimeMillis();
+        times += f.getName() + " Parse: " + (end - start) + "ms";
 
         // we are sure f exists, as we read the path automatically
         FileInputStream fis = new FileInputStream(f);
         resource.load(fis, null);
         EcoreUtil.resolveAll(resource);
+
         return resource;
+    }
+
+    /**
+     * serialize the passed resource.
+     * 
+     * @param resource
+     * @return possible thrown exception either XtextSerializationException or
+     *         InvalidConcreteSyntaxException
+     * @throws Exception
+     */
+    @SuppressWarnings("deprecation")
+    private Exception serializeResource(final XtextResource resource) throws Exception {
+
+        long start = System.currentTimeMillis();
+        // serialize
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        final OutputStreamWriter osw = new OutputStreamWriter(baos);
+
+        final Maybe<Exception> possibleException = new Maybe<Exception>();
+        Runnable r = new Runnable() {
+
+            public void run() {
+                try {
+                    Serializer serializerUtil = injector.getInstance(Serializer.class);
+                    serializerUtil.serialize(resource.getContents().get(0), osw,
+                            SaveOptions.defaultOptions());
+                } catch (XtextSerializationException e) {
+                    possibleException.set(e);
+                } catch (InvalidConcreteSyntaxException icse) {
+                    possibleException.set(icse);
+                } catch (IOException ioe) {
+                    ioe.printStackTrace();
+                }
+            }
+        };
+        Thread t = new Thread(r);
+        t.start();
+        try {
+            t.join(SERIALIZATION_TIME_LIMIT);
+            long end = System.currentTimeMillis();
+            if (t.isAlive()) {
+                // FIXME ugly hack to preempt eternal serialization
+
+                t.suspend();
+                times += " Serialize: exceeded time limit\n";
+            } else {
+                times += " Serialize: " + (end - start) + "ms\n";
+            }
+
+        } catch (Exception e) {
+            System.out.println("Some Thread error");
+        }
+        return possibleException.get();
     }
 
     /**
@@ -232,10 +328,17 @@ public class TestEsterelGrammar {
     public TestEsterelGrammar() {
         try {
             setup();
-//            testFailFiles();
+            // testFailFiles();
             testSuccFiles();
+
         } catch (Exception e) {
             e.printStackTrace();
+
+        } finally {
+            System.out.println(times);
+
+            // needed due to thread hack
+            System.exit(0);
         }
     }
 

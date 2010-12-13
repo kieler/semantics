@@ -13,7 +13,11 @@ Require-Bundle: de.cau.cs.kieler.esterel;visibility:=reexport,
  org.antlr.runtime,
  org.eclipse.xtext.ui,
  org.eclipse.xtext.ui.shared,
- org.eclipse.jdt.core;bundle-version="3.5.2"
+ org.eclipse.jdt.core;bundle-version="3.5.2",
+ org.eclipse.xtext.builder,
+ de.cau.cs.kieler.core.kexpressions;bundle-version="0.1.0",
+ de.cau.cs.kieler.core.kexpressions.ui;bundle-version="0.1.0",
+ de.cau.cs.kieler.core.annotations.edit;bundle-version="0.1.0"
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Export-Package: de.cau.cs.kieler.esterel.ui,
  de.cau.cs.kieler.esterel.ui.contentassist,
