@@ -33,12 +33,11 @@ import org.eclipse.xtext.resource.SaveOptions;
 
 import com.google.inject.Injector;
 
-import de.cau.cs.kieler.core.expressions.ExpressionsFactory;
-import de.cau.cs.kieler.core.expressions.TextualCode;
+import de.cau.cs.kieler.core.kexpressions.KExpressionsFactory;
+import de.cau.cs.kieler.core.kexpressions.TextualCode;
 import de.cau.cs.kieler.core.ui.util.EditorUtils;
 import de.cau.cs.kieler.core.util.Maybe;
 import de.cau.cs.kieler.esterel.EsterelStandaloneSetup;
-import de.cau.cs.kieler.esterel.esterel.EsterelPackage;
 import de.cau.cs.kieler.synccharts.Region;
 import de.cau.cs.kieler.synccharts.State;
 import de.cau.cs.kieler.synccharts.StateType;
@@ -115,7 +114,7 @@ public final class TransformationUtil {
         if (obj != null) {
             s.setBodyReference(obj);
 
-            TextualCode code = ExpressionsFactory.eINSTANCE.createTextualCode();
+            TextualCode code = KExpressionsFactory.eINSTANCE.createTextualCode();
             s.setType(StateType.TEXTUAL);
             code.setCode(TransformationUtil.getSerializedString(obj));
             s.getBodyText().add(code);

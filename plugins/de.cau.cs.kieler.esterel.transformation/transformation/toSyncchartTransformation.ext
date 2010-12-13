@@ -1,6 +1,6 @@
 import ecore;
 import annotations;
-import expressions;
+import kexpressions;
 import synccharts;
 import utilities;
 import esterel;

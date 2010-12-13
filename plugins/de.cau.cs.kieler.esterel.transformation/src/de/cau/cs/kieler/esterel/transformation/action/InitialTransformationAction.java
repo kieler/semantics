@@ -13,11 +13,6 @@
  */
 package de.cau.cs.kieler.esterel.transformation.action;
 
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.OutputStreamWriter;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Iterator;
 import java.util.List;
@@ -32,14 +27,11 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Status;
-import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
-import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.gmf.runtime.diagram.ui.editpolicies.CanonicalEditPolicy;
 import org.eclipse.gmf.runtime.diagram.ui.parts.IDiagramGraphicalViewer;
 import org.eclipse.gmf.runtime.diagram.ui.parts.IDiagramWorkbenchPart;
@@ -59,19 +51,11 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.actions.WorkspaceModifyOperation;
 import org.eclipse.ui.part.FileEditorInput;
 import org.eclipse.ui.statushandlers.StatusManager;
-import org.eclipse.xtext.parsetree.reconstr.Serializer;
-import org.eclipse.xtext.resource.IResourceFactory;
-import org.eclipse.xtext.resource.SaveOptions;
-import org.eclipse.xtext.resource.XtextResource;
-import org.eclipse.xtext.resource.XtextResourceSet;
 
 import com.google.inject.Injector;
 
-import de.cau.cs.kieler.core.expressions.ExpressionsFactory;
-import de.cau.cs.kieler.core.expressions.TextualCode;
-import de.cau.cs.kieler.esterel.EsterelStandaloneSetup;
-import de.cau.cs.kieler.esterel.esterel.Module;
-import de.cau.cs.kieler.esterel.esterel.Program;
+import de.cau.cs.kieler.core.kexpressions.KExpressionsFactory;
+import de.cau.cs.kieler.core.kexpressions.TextualCode;
 import de.cau.cs.kieler.esterel.transformation.Activator;
 import de.cau.cs.kieler.esterel.transformation.util.TransformationUtil;
 import de.cau.cs.kieler.synccharts.Region;
@@ -302,7 +286,7 @@ public class InitialTransformationAction implements IActionDelegate {
             rootState.setBodyReference(esterelModule);
 
             // parse the esterel code and display as textual code
-            TextualCode code = ExpressionsFactory.eINSTANCE.createTextualCode();
+            TextualCode code = KExpressionsFactory.eINSTANCE.createTextualCode();
             rootState.getBodyText().add(code);
             code.setCode(TransformationUtil.getSerializedString(esterelModule));
 

@@ -46,8 +46,8 @@ public class SyncChartsOptimizationDataComponent extends AbstractTransformationD
 
     // base packages and xpand transformation file.
     private static final String SYNCCHARTS_PACKAGE = "de.cau.cs.kieler.synccharts.SyncchartsPackage";
-    private static final String EXPRESSIONS_PACKAGE = "de.cau.cs.kieler.core.expressions."
-            + "ExpressionsPackage";
+    private static final String EXPRESSIONS_PACKAGE = "de.cau.cs.kieler.core.kexpressions."
+            + "KExpressionsPackage";
     private static final String ECORE_PACKAGE = "org.eclipse.emf.ecore.EcorePackage";
     private static final String TRANSFORMATION_FILE = "syncchartOptimization.ext";
 
