@@ -2,10 +2,12 @@
  * <copyright>
  * </copyright>
  *
+
  */
 package de.cau.cs.kieler.esterel.esterel.impl;
 
-import de.cau.cs.kieler.esterel.esterel.DataExpr;
+import de.cau.cs.kieler.core.kexpressions.Expression;
+
 import de.cau.cs.kieler.esterel.esterel.EsterelPackage;
 import de.cau.cs.kieler.esterel.esterel.Repeat;
 import de.cau.cs.kieler.esterel.esterel.Statement;
@@ -28,6 +30,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.RepeatImpl#isPositive <em>Positive</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.RepeatImpl#getDataExpr <em>Data Expr</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.RepeatImpl#getStatement <em>Statement</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.RepeatImpl#getOptEnd <em>Opt End</em>}</li>
  * </ul>
  * </p>
  *
@@ -63,7 +66,7 @@ public class RepeatImpl extends StatementImpl implements Repeat
    * @generated
    * @ordered
    */
-  protected DataExpr dataExpr;
+  protected Expression dataExpr;
 
   /**
    * The cached value of the '{@link #getStatement() <em>Statement</em>}' containment reference.
@@ -74,6 +77,26 @@ public class RepeatImpl extends StatementImpl implements Repeat
    * @ordered
    */
   protected Statement statement;
+
+  /**
+   * The default value of the '{@link #getOptEnd() <em>Opt End</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getOptEnd()
+   * @generated
+   * @ordered
+   */
+  protected static final String OPT_END_EDEFAULT = null;
+
+  /**
+   * The cached value of the '{@link #getOptEnd() <em>Opt End</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getOptEnd()
+   * @generated
+   * @ordered
+   */
+  protected String optEnd = OPT_END_EDEFAULT;
 
   /**
    * <!-- begin-user-doc -->
@@ -124,7 +147,7 @@ public class RepeatImpl extends StatementImpl implements Repeat
    * <!-- end-user-doc -->
    * @generated
    */
-  public DataExpr getDataExpr()
+  public Expression getDataExpr()
   {
     return dataExpr;
   }
@@ -134,9 +157,9 @@ public class RepeatImpl extends StatementImpl implements Repeat
    * <!-- end-user-doc -->
    * @generated
    */
-  public NotificationChain basicSetDataExpr(DataExpr newDataExpr, NotificationChain msgs)
+  public NotificationChain basicSetDataExpr(Expression newDataExpr, NotificationChain msgs)
   {
-    DataExpr oldDataExpr = dataExpr;
+    Expression oldDataExpr = dataExpr;
     dataExpr = newDataExpr;
     if (eNotificationRequired())
     {
@@ -151,7 +174,7 @@ public class RepeatImpl extends StatementImpl implements Repeat
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setDataExpr(DataExpr newDataExpr)
+  public void setDataExpr(Expression newDataExpr)
   {
     if (newDataExpr != dataExpr)
     {
@@ -220,6 +243,29 @@ public class RepeatImpl extends StatementImpl implements Repeat
    * <!-- end-user-doc -->
    * @generated
    */
+  public String getOptEnd()
+  {
+    return optEnd;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setOptEnd(String newOptEnd)
+  {
+    String oldOptEnd = optEnd;
+    optEnd = newOptEnd;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.REPEAT__OPT_END, oldOptEnd, optEnd));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
   {
@@ -249,6 +295,8 @@ public class RepeatImpl extends StatementImpl implements Repeat
         return getDataExpr();
       case EsterelPackage.REPEAT__STATEMENT:
         return getStatement();
+      case EsterelPackage.REPEAT__OPT_END:
+        return getOptEnd();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -267,10 +315,13 @@ public class RepeatImpl extends StatementImpl implements Repeat
         setPositive((Boolean)newValue);
         return;
       case EsterelPackage.REPEAT__DATA_EXPR:
-        setDataExpr((DataExpr)newValue);
+        setDataExpr((Expression)newValue);
         return;
       case EsterelPackage.REPEAT__STATEMENT:
         setStatement((Statement)newValue);
+        return;
+      case EsterelPackage.REPEAT__OPT_END:
+        setOptEnd((String)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -290,10 +341,13 @@ public class RepeatImpl extends StatementImpl implements Repeat
         setPositive(POSITIVE_EDEFAULT);
         return;
       case EsterelPackage.REPEAT__DATA_EXPR:
-        setDataExpr((DataExpr)null);
+        setDataExpr((Expression)null);
         return;
       case EsterelPackage.REPEAT__STATEMENT:
         setStatement((Statement)null);
+        return;
+      case EsterelPackage.REPEAT__OPT_END:
+        setOptEnd(OPT_END_EDEFAULT);
         return;
     }
     super.eUnset(featureID);
@@ -315,6 +369,8 @@ public class RepeatImpl extends StatementImpl implements Repeat
         return dataExpr != null;
       case EsterelPackage.REPEAT__STATEMENT:
         return statement != null;
+      case EsterelPackage.REPEAT__OPT_END:
+        return OPT_END_EDEFAULT == null ? optEnd != null : !OPT_END_EDEFAULT.equals(optEnd);
     }
     return super.eIsSet(featureID);
   }
@@ -332,6 +388,8 @@ public class RepeatImpl extends StatementImpl implements Repeat
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (positive: ");
     result.append(positive);
+    result.append(", optEnd: ");
+    result.append(optEnd);
     result.append(')');
     return result.toString();
   }

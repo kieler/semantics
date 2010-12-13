@@ -2,9 +2,11 @@
  * <copyright>
  * </copyright>
  *
+
  */
 package de.cau.cs.kieler.esterel.esterel;
 
+import org.eclipse.emf.ecore.EObject;
 
 /**
  * <!-- begin-user-doc -->
@@ -15,8 +17,7 @@ package de.cau.cs.kieler.esterel.esterel;
  * The following features are supported:
  * <ul>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.Do#getStatement <em>Statement</em>}</li>
- *   <li>{@link de.cau.cs.kieler.esterel.esterel.Do#getEndUp <em>End Up</em>}</li>
- *   <li>{@link de.cau.cs.kieler.esterel.esterel.Do#getEndWatch <em>End Watch</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.esterel.esterel.Do#getEnd <em>End</em>}</li>
  * </ul>
  * </p>
  *
@@ -53,55 +54,29 @@ public interface Do extends Statement
   void setStatement(Statement value);
 
   /**
-   * Returns the value of the '<em><b>End Up</b></em>' containment reference.
+   * Returns the value of the '<em><b>End</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>End Up</em>' containment reference isn't clear,
+   * If the meaning of the '<em>End</em>' containment reference isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>End Up</em>' containment reference.
-   * @see #setEndUp(DoUpto)
-   * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getDo_EndUp()
+   * @return the value of the '<em>End</em>' containment reference.
+   * @see #setEnd(EObject)
+   * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getDo_End()
    * @model containment="true"
    * @generated
    */
-  DoUpto getEndUp();
+  EObject getEnd();
 
   /**
-   * Sets the value of the '{@link de.cau.cs.kieler.esterel.esterel.Do#getEndUp <em>End Up</em>}' containment reference.
+   * Sets the value of the '{@link de.cau.cs.kieler.esterel.esterel.Do#getEnd <em>End</em>}' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @param value the new value of the '<em>End Up</em>' containment reference.
-   * @see #getEndUp()
+   * @param value the new value of the '<em>End</em>' containment reference.
+   * @see #getEnd()
    * @generated
    */
-  void setEndUp(DoUpto value);
-
-  /**
-   * Returns the value of the '<em><b>End Watch</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>End Watch</em>' containment reference isn't clear,
-   * there really should be more of a description here...
-   * </p>
-   * <!-- end-user-doc -->
-   * @return the value of the '<em>End Watch</em>' containment reference.
-   * @see #setEndWatch(DoWatching)
-   * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getDo_EndWatch()
-   * @model containment="true"
-   * @generated
-   */
-  DoWatching getEndWatch();
-
-  /**
-   * Sets the value of the '{@link de.cau.cs.kieler.esterel.esterel.Do#getEndWatch <em>End Watch</em>}' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @param value the new value of the '<em>End Watch</em>' containment reference.
-   * @see #getEndWatch()
-   * @generated
-   */
-  void setEndWatch(DoWatching value);
+  void setEnd(EObject value);
 
 } // Do

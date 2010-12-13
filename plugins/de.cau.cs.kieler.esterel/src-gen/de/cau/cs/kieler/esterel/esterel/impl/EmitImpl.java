@@ -2,13 +2,15 @@
  * <copyright>
  * </copyright>
  *
+
  */
 package de.cau.cs.kieler.esterel.esterel.impl;
 
-import de.cau.cs.kieler.esterel.esterel.DataExpr;
+import de.cau.cs.kieler.core.kexpressions.Expression;
+import de.cau.cs.kieler.core.kexpressions.ISignal;
+
 import de.cau.cs.kieler.esterel.esterel.Emit;
 import de.cau.cs.kieler.esterel.esterel.EsterelPackage;
-import de.cau.cs.kieler.esterel.esterel.Signal;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
@@ -43,7 +45,7 @@ public class EmitImpl extends StatementImpl implements Emit
    * @generated
    * @ordered
    */
-  protected Signal signal;
+  protected ISignal signal;
 
   /**
    * The default value of the '{@link #getTick() <em>Tick</em>}' attribute.
@@ -73,7 +75,7 @@ public class EmitImpl extends StatementImpl implements Emit
    * @generated
    * @ordered
    */
-  protected DataExpr expr;
+  protected Expression expr;
 
   /**
    * <!-- begin-user-doc -->
@@ -101,12 +103,12 @@ public class EmitImpl extends StatementImpl implements Emit
    * <!-- end-user-doc -->
    * @generated
    */
-  public Signal getSignal()
+  public ISignal getSignal()
   {
     if (signal != null && signal.eIsProxy())
     {
       InternalEObject oldSignal = (InternalEObject)signal;
-      signal = (Signal)eResolveProxy(oldSignal);
+      signal = (ISignal)eResolveProxy(oldSignal);
       if (signal != oldSignal)
       {
         if (eNotificationRequired())
@@ -121,7 +123,7 @@ public class EmitImpl extends StatementImpl implements Emit
    * <!-- end-user-doc -->
    * @generated
    */
-  public Signal basicGetSignal()
+  public ISignal basicGetSignal()
   {
     return signal;
   }
@@ -131,9 +133,9 @@ public class EmitImpl extends StatementImpl implements Emit
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setSignal(Signal newSignal)
+  public void setSignal(ISignal newSignal)
   {
-    Signal oldSignal = signal;
+    ISignal oldSignal = signal;
     signal = newSignal;
     if (eNotificationRequired())
       eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.EMIT__SIGNAL, oldSignal, signal));
@@ -167,7 +169,7 @@ public class EmitImpl extends StatementImpl implements Emit
    * <!-- end-user-doc -->
    * @generated
    */
-  public DataExpr getExpr()
+  public Expression getExpr()
   {
     return expr;
   }
@@ -177,9 +179,9 @@ public class EmitImpl extends StatementImpl implements Emit
    * <!-- end-user-doc -->
    * @generated
    */
-  public NotificationChain basicSetExpr(DataExpr newExpr, NotificationChain msgs)
+  public NotificationChain basicSetExpr(Expression newExpr, NotificationChain msgs)
   {
-    DataExpr oldExpr = expr;
+    Expression oldExpr = expr;
     expr = newExpr;
     if (eNotificationRequired())
     {
@@ -194,7 +196,7 @@ public class EmitImpl extends StatementImpl implements Emit
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setExpr(DataExpr newExpr)
+  public void setExpr(Expression newExpr)
   {
     if (newExpr != expr)
     {
@@ -258,13 +260,13 @@ public class EmitImpl extends StatementImpl implements Emit
     switch (featureID)
     {
       case EsterelPackage.EMIT__SIGNAL:
-        setSignal((Signal)newValue);
+        setSignal((ISignal)newValue);
         return;
       case EsterelPackage.EMIT__TICK:
         setTick((String)newValue);
         return;
       case EsterelPackage.EMIT__EXPR:
-        setExpr((DataExpr)newValue);
+        setExpr((Expression)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -281,13 +283,13 @@ public class EmitImpl extends StatementImpl implements Emit
     switch (featureID)
     {
       case EsterelPackage.EMIT__SIGNAL:
-        setSignal((Signal)null);
+        setSignal((ISignal)null);
         return;
       case EsterelPackage.EMIT__TICK:
         setTick(TICK_EDEFAULT);
         return;
       case EsterelPackage.EMIT__EXPR:
-        setExpr((DataExpr)null);
+        setExpr((Expression)null);
         return;
     }
     super.eUnset(featureID);

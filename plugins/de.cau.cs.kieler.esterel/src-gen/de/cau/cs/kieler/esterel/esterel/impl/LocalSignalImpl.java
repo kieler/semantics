@@ -2,12 +2,14 @@
  * <copyright>
  * </copyright>
  *
+
  */
 package de.cau.cs.kieler.esterel.esterel.impl;
 
+import de.cau.cs.kieler.core.kexpressions.ISignal;
+
 import de.cau.cs.kieler.esterel.esterel.EsterelPackage;
 import de.cau.cs.kieler.esterel.esterel.LocalSignal;
-import de.cau.cs.kieler.esterel.esterel.Signal;
 
 import java.util.Collection;
 
@@ -44,7 +46,7 @@ public class LocalSignalImpl extends LocalSignalListImpl implements LocalSignal
    * @generated
    * @ordered
    */
-  protected EList<Signal> signal;
+  protected EList<ISignal> signal;
 
   /**
    * <!-- begin-user-doc -->
@@ -72,11 +74,11 @@ public class LocalSignalImpl extends LocalSignalListImpl implements LocalSignal
    * <!-- end-user-doc -->
    * @generated
    */
-  public EList<Signal> getSignal()
+  public EList<ISignal> getSignal()
   {
     if (signal == null)
     {
-      signal = new EObjectContainmentEList<Signal>(Signal.class, this, EsterelPackage.LOCAL_SIGNAL__SIGNAL);
+      signal = new EObjectContainmentEList<ISignal>(ISignal.class, this, EsterelPackage.LOCAL_SIGNAL__SIGNAL);
     }
     return signal;
   }
@@ -126,7 +128,7 @@ public class LocalSignalImpl extends LocalSignalListImpl implements LocalSignal
     {
       case EsterelPackage.LOCAL_SIGNAL__SIGNAL:
         getSignal().clear();
-        getSignal().addAll((Collection<? extends Signal>)newValue);
+        getSignal().addAll((Collection<? extends ISignal>)newValue);
         return;
     }
     super.eSet(featureID, newValue);

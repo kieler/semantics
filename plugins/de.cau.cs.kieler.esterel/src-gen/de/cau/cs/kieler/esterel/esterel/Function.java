@@ -2,6 +2,7 @@
  * <copyright>
  * </copyright>
  *
+
  */
 package de.cau.cs.kieler.esterel.esterel;
 
@@ -56,45 +57,45 @@ public interface Function extends EObject
   void setName(String value);
 
   /**
-   * Returns the value of the '<em><b>Id List</b></em>' attribute list.
-   * The list contents are of type {@link java.lang.String}.
+   * Returns the value of the '<em><b>Id List</b></em>' containment reference list.
+   * The list contents are of type {@link de.cau.cs.kieler.esterel.esterel.TypeIdentifier}.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Id List</em>' attribute list isn't clear,
+   * If the meaning of the '<em>Id List</em>' containment reference list isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Id List</em>' attribute list.
+   * @return the value of the '<em>Id List</em>' containment reference list.
    * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getFunction_IdList()
-   * @model unique="false"
+   * @model containment="true"
    * @generated
    */
-  EList<String> getIdList();
+  EList<TypeIdentifier> getIdList();
 
   /**
-   * Returns the value of the '<em><b>Type</b></em>' attribute.
+   * Returns the value of the '<em><b>Type</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Type</em>' attribute isn't clear,
+   * If the meaning of the '<em>Type</em>' containment reference isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Type</em>' attribute.
-   * @see #setType(String)
+   * @return the value of the '<em>Type</em>' containment reference.
+   * @see #setType(TypeIdentifier)
    * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getFunction_Type()
-   * @model
+   * @model containment="true"
    * @generated
    */
-  String getType();
+  TypeIdentifier getType();
 
   /**
-   * Sets the value of the '{@link de.cau.cs.kieler.esterel.esterel.Function#getType <em>Type</em>}' attribute.
+   * Sets the value of the '{@link de.cau.cs.kieler.esterel.esterel.Function#getType <em>Type</em>}' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Type</em>' attribute.
+   * @param value the new value of the '<em>Type</em>' containment reference.
    * @see #getType()
    * @generated
    */
-  void setType(String value);
+  void setType(TypeIdentifier value);
 
 } // Function

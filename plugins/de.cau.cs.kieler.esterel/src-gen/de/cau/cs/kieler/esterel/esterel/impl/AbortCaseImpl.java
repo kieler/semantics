@@ -2,6 +2,7 @@
  * <copyright>
  * </copyright>
  *
+
  */
 package de.cau.cs.kieler.esterel.esterel.impl;
 
@@ -11,12 +12,15 @@ import de.cau.cs.kieler.esterel.esterel.EsterelPackage;
 
 import java.util.Collection;
 
+import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 
 import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
+
+import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
@@ -29,6 +33,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * The following features are implemented:
  * <ul>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.AbortCaseImpl#getCases <em>Cases</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.AbortCaseImpl#getOptEnd <em>Opt End</em>}</li>
  * </ul>
  * </p>
  *
@@ -45,6 +50,26 @@ public class AbortCaseImpl extends AbortBodyImpl implements AbortCase
    * @ordered
    */
   protected EList<AbortCaseSingle> cases;
+
+  /**
+   * The default value of the '{@link #getOptEnd() <em>Opt End</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getOptEnd()
+   * @generated
+   * @ordered
+   */
+  protected static final String OPT_END_EDEFAULT = null;
+
+  /**
+   * The cached value of the '{@link #getOptEnd() <em>Opt End</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getOptEnd()
+   * @generated
+   * @ordered
+   */
+  protected String optEnd = OPT_END_EDEFAULT;
 
   /**
    * <!-- begin-user-doc -->
@@ -86,6 +111,29 @@ public class AbortCaseImpl extends AbortBodyImpl implements AbortCase
    * <!-- end-user-doc -->
    * @generated
    */
+  public String getOptEnd()
+  {
+    return optEnd;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setOptEnd(String newOptEnd)
+  {
+    String oldOptEnd = optEnd;
+    optEnd = newOptEnd;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.ABORT_CASE__OPT_END, oldOptEnd, optEnd));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
   {
@@ -109,6 +157,8 @@ public class AbortCaseImpl extends AbortBodyImpl implements AbortCase
     {
       case EsterelPackage.ABORT_CASE__CASES:
         return getCases();
+      case EsterelPackage.ABORT_CASE__OPT_END:
+        return getOptEnd();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -128,6 +178,9 @@ public class AbortCaseImpl extends AbortBodyImpl implements AbortCase
         getCases().clear();
         getCases().addAll((Collection<? extends AbortCaseSingle>)newValue);
         return;
+      case EsterelPackage.ABORT_CASE__OPT_END:
+        setOptEnd((String)newValue);
+        return;
     }
     super.eSet(featureID, newValue);
   }
@@ -145,6 +198,9 @@ public class AbortCaseImpl extends AbortBodyImpl implements AbortCase
       case EsterelPackage.ABORT_CASE__CASES:
         getCases().clear();
         return;
+      case EsterelPackage.ABORT_CASE__OPT_END:
+        setOptEnd(OPT_END_EDEFAULT);
+        return;
     }
     super.eUnset(featureID);
   }
@@ -161,8 +217,27 @@ public class AbortCaseImpl extends AbortBodyImpl implements AbortCase
     {
       case EsterelPackage.ABORT_CASE__CASES:
         return cases != null && !cases.isEmpty();
+      case EsterelPackage.ABORT_CASE__OPT_END:
+        return OPT_END_EDEFAULT == null ? optEnd != null : !OPT_END_EDEFAULT.equals(optEnd);
     }
     return super.eIsSet(featureID);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public String toString()
+  {
+    if (eIsProxy()) return super.toString();
+
+    StringBuffer result = new StringBuffer(super.toString());
+    result.append(" (optEnd: ");
+    result.append(optEnd);
+    result.append(')');
+    return result.toString();
   }
 
 } //AbortCaseImpl

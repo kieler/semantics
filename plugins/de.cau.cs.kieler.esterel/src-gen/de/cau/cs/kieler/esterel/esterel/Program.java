@@ -2,6 +2,7 @@
  * <copyright>
  * </copyright>
  *
+
  */
 package de.cau.cs.kieler.esterel.esterel;
 
@@ -17,7 +18,7 @@ import org.eclipse.emf.ecore.EObject;
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link de.cau.cs.kieler.esterel.esterel.Program#getModule <em>Module</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.esterel.esterel.Program#getModules <em>Modules</em>}</li>
  * </ul>
  * </p>
  *
@@ -28,19 +29,19 @@ import org.eclipse.emf.ecore.EObject;
 public interface Program extends EObject
 {
   /**
-   * Returns the value of the '<em><b>Module</b></em>' containment reference list.
+   * Returns the value of the '<em><b>Modules</b></em>' containment reference list.
    * The list contents are of type {@link de.cau.cs.kieler.esterel.esterel.Module}.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Module</em>' containment reference list isn't clear,
+   * If the meaning of the '<em>Modules</em>' containment reference list isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Module</em>' containment reference list.
-   * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getProgram_Module()
+   * @return the value of the '<em>Modules</em>' containment reference list.
+   * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getProgram_Modules()
    * @model containment="true"
    * @generated
    */
-  EList<Module> getModule();
+  EList<Module> getModules();
 
 } // Program

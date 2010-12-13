@@ -2,8 +2,11 @@
  * <copyright>
  * </copyright>
  *
+
  */
 package de.cau.cs.kieler.esterel.esterel;
+
+import de.cau.cs.kieler.core.kexpressions.Expression;
 
 import org.eclipse.emf.ecore.EObject;
 
@@ -15,8 +18,9 @@ import org.eclipse.emf.ecore.EObject;
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link de.cau.cs.kieler.esterel.esterel.DelayExpr#getEvent <em>Event</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.DelayExpr#getExpr <em>Expr</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.esterel.esterel.DelayExpr#getEvent <em>Event</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.esterel.esterel.DelayExpr#isIsImmediate <em>Is Immediate</em>}</li>
  * </ul>
  * </p>
  *
@@ -26,6 +30,32 @@ import org.eclipse.emf.ecore.EObject;
  */
 public interface DelayExpr extends EObject
 {
+  /**
+   * Returns the value of the '<em><b>Expr</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Expr</em>' containment reference isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Expr</em>' containment reference.
+   * @see #setExpr(Expression)
+   * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getDelayExpr_Expr()
+   * @model containment="true"
+   * @generated
+   */
+  Expression getExpr();
+
+  /**
+   * Sets the value of the '{@link de.cau.cs.kieler.esterel.esterel.DelayExpr#getExpr <em>Expr</em>}' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Expr</em>' containment reference.
+   * @see #getExpr()
+   * @generated
+   */
+  void setExpr(Expression value);
+
   /**
    * Returns the value of the '<em><b>Event</b></em>' containment reference.
    * <!-- begin-user-doc -->
@@ -53,29 +83,29 @@ public interface DelayExpr extends EObject
   void setEvent(DelayEvent value);
 
   /**
-   * Returns the value of the '<em><b>Expr</b></em>' containment reference.
+   * Returns the value of the '<em><b>Is Immediate</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Expr</em>' containment reference isn't clear,
+   * If the meaning of the '<em>Is Immediate</em>' attribute isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Expr</em>' containment reference.
-   * @see #setExpr(DataExpr)
-   * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getDelayExpr_Expr()
-   * @model containment="true"
+   * @return the value of the '<em>Is Immediate</em>' attribute.
+   * @see #setIsImmediate(boolean)
+   * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getDelayExpr_IsImmediate()
+   * @model
    * @generated
    */
-  DataExpr getExpr();
+  boolean isIsImmediate();
 
   /**
-   * Sets the value of the '{@link de.cau.cs.kieler.esterel.esterel.DelayExpr#getExpr <em>Expr</em>}' containment reference.
+   * Sets the value of the '{@link de.cau.cs.kieler.esterel.esterel.DelayExpr#isIsImmediate <em>Is Immediate</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Expr</em>' containment reference.
-   * @see #getExpr()
+   * @param value the new value of the '<em>Is Immediate</em>' attribute.
+   * @see #isIsImmediate()
    * @generated
    */
-  void setExpr(DataExpr value);
+  void setIsImmediate(boolean value);
 
 } // DelayExpr

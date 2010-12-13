@@ -2,6 +2,7 @@
  * <copyright>
  * </copyright>
  *
+
  */
 package de.cau.cs.kieler.esterel.esterel.impl;
 
@@ -28,7 +29,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.PresentCaseListImpl#getCase <em>Case</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.PresentCaseListImpl#getCases <em>Cases</em>}</li>
  * </ul>
  * </p>
  *
@@ -37,14 +38,14 @@ import org.eclipse.emf.ecore.util.InternalEList;
 public class PresentCaseListImpl extends PresentBodyImpl implements PresentCaseList
 {
   /**
-   * The cached value of the '{@link #getCase() <em>Case</em>}' containment reference list.
+   * The cached value of the '{@link #getCases() <em>Cases</em>}' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getCase()
+   * @see #getCases()
    * @generated
    * @ordered
    */
-  protected EList<PresentCase> case_;
+  protected EList<PresentCase> cases;
 
   /**
    * <!-- begin-user-doc -->
@@ -72,13 +73,13 @@ public class PresentCaseListImpl extends PresentBodyImpl implements PresentCaseL
    * <!-- end-user-doc -->
    * @generated
    */
-  public EList<PresentCase> getCase()
+  public EList<PresentCase> getCases()
   {
-    if (case_ == null)
+    if (cases == null)
     {
-      case_ = new EObjectContainmentEList<PresentCase>(PresentCase.class, this, EsterelPackage.PRESENT_CASE_LIST__CASE);
+      cases = new EObjectContainmentEList<PresentCase>(PresentCase.class, this, EsterelPackage.PRESENT_CASE_LIST__CASES);
     }
-    return case_;
+    return cases;
   }
 
   /**
@@ -91,8 +92,8 @@ public class PresentCaseListImpl extends PresentBodyImpl implements PresentCaseL
   {
     switch (featureID)
     {
-      case EsterelPackage.PRESENT_CASE_LIST__CASE:
-        return ((InternalEList<?>)getCase()).basicRemove(otherEnd, msgs);
+      case EsterelPackage.PRESENT_CASE_LIST__CASES:
+        return ((InternalEList<?>)getCases()).basicRemove(otherEnd, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
@@ -107,8 +108,8 @@ public class PresentCaseListImpl extends PresentBodyImpl implements PresentCaseL
   {
     switch (featureID)
     {
-      case EsterelPackage.PRESENT_CASE_LIST__CASE:
-        return getCase();
+      case EsterelPackage.PRESENT_CASE_LIST__CASES:
+        return getCases();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -124,9 +125,9 @@ public class PresentCaseListImpl extends PresentBodyImpl implements PresentCaseL
   {
     switch (featureID)
     {
-      case EsterelPackage.PRESENT_CASE_LIST__CASE:
-        getCase().clear();
-        getCase().addAll((Collection<? extends PresentCase>)newValue);
+      case EsterelPackage.PRESENT_CASE_LIST__CASES:
+        getCases().clear();
+        getCases().addAll((Collection<? extends PresentCase>)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -142,8 +143,8 @@ public class PresentCaseListImpl extends PresentBodyImpl implements PresentCaseL
   {
     switch (featureID)
     {
-      case EsterelPackage.PRESENT_CASE_LIST__CASE:
-        getCase().clear();
+      case EsterelPackage.PRESENT_CASE_LIST__CASES:
+        getCases().clear();
         return;
     }
     super.eUnset(featureID);
@@ -159,8 +160,8 @@ public class PresentCaseListImpl extends PresentBodyImpl implements PresentCaseL
   {
     switch (featureID)
     {
-      case EsterelPackage.PRESENT_CASE_LIST__CASE:
-        return case_ != null && !case_.isEmpty();
+      case EsterelPackage.PRESENT_CASE_LIST__CASES:
+        return cases != null && !cases.isEmpty();
     }
     return super.eIsSet(featureID);
   }

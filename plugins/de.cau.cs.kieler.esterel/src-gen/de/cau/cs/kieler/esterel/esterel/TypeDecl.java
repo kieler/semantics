@@ -2,6 +2,7 @@
  * <copyright>
  * </copyright>
  *
+
  */
 package de.cau.cs.kieler.esterel.esterel;
 
@@ -17,7 +18,7 @@ import org.eclipse.emf.ecore.EObject;
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link de.cau.cs.kieler.esterel.esterel.TypeDecl#getType <em>Type</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.esterel.esterel.TypeDecl#getTypes <em>Types</em>}</li>
  * </ul>
  * </p>
  *
@@ -28,19 +29,19 @@ import org.eclipse.emf.ecore.EObject;
 public interface TypeDecl extends EObject
 {
   /**
-   * Returns the value of the '<em><b>Type</b></em>' containment reference list.
+   * Returns the value of the '<em><b>Types</b></em>' containment reference list.
    * The list contents are of type {@link de.cau.cs.kieler.esterel.esterel.Type}.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Type</em>' containment reference list isn't clear,
+   * If the meaning of the '<em>Types</em>' containment reference list isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Type</em>' containment reference list.
-   * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getTypeDecl_Type()
+   * @return the value of the '<em>Types</em>' containment reference list.
+   * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getTypeDecl_Types()
    * @model containment="true"
    * @generated
    */
-  EList<Type> getType();
+  EList<Type> getTypes();
 
 } // TypeDecl

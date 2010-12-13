@@ -2,6 +2,7 @@
  * <copyright>
  * </copyright>
  *
+
  */
 package de.cau.cs.kieler.esterel.esterel.impl;
 
@@ -26,6 +27,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * The following features are implemented:
  * <ul>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.LoopImpl#getBody <em>Body</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.LoopImpl#getEnd1 <em>End1</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.LoopImpl#getEnd <em>End</em>}</li>
  * </ul>
  * </p>
@@ -43,6 +45,26 @@ public class LoopImpl extends StatementImpl implements Loop
    * @ordered
    */
   protected LoopBody body;
+
+  /**
+   * The default value of the '{@link #getEnd1() <em>End1</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getEnd1()
+   * @generated
+   * @ordered
+   */
+  protected static final String END1_EDEFAULT = null;
+
+  /**
+   * The cached value of the '{@link #getEnd1() <em>End1</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getEnd1()
+   * @generated
+   * @ordered
+   */
+  protected String end1 = END1_EDEFAULT;
 
   /**
    * The cached value of the '{@link #getEnd() <em>End</em>}' containment reference.
@@ -128,6 +150,29 @@ public class LoopImpl extends StatementImpl implements Loop
    * <!-- end-user-doc -->
    * @generated
    */
+  public String getEnd1()
+  {
+    return end1;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setEnd1(String newEnd1)
+  {
+    String oldEnd1 = end1;
+    end1 = newEnd1;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.LOOP__END1, oldEnd1, end1));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public LoopEach getEnd()
   {
     return end;
@@ -201,6 +246,8 @@ public class LoopImpl extends StatementImpl implements Loop
     {
       case EsterelPackage.LOOP__BODY:
         return getBody();
+      case EsterelPackage.LOOP__END1:
+        return getEnd1();
       case EsterelPackage.LOOP__END:
         return getEnd();
     }
@@ -219,6 +266,9 @@ public class LoopImpl extends StatementImpl implements Loop
     {
       case EsterelPackage.LOOP__BODY:
         setBody((LoopBody)newValue);
+        return;
+      case EsterelPackage.LOOP__END1:
+        setEnd1((String)newValue);
         return;
       case EsterelPackage.LOOP__END:
         setEnd((LoopEach)newValue);
@@ -240,6 +290,9 @@ public class LoopImpl extends StatementImpl implements Loop
       case EsterelPackage.LOOP__BODY:
         setBody((LoopBody)null);
         return;
+      case EsterelPackage.LOOP__END1:
+        setEnd1(END1_EDEFAULT);
+        return;
       case EsterelPackage.LOOP__END:
         setEnd((LoopEach)null);
         return;
@@ -259,10 +312,29 @@ public class LoopImpl extends StatementImpl implements Loop
     {
       case EsterelPackage.LOOP__BODY:
         return body != null;
+      case EsterelPackage.LOOP__END1:
+        return END1_EDEFAULT == null ? end1 != null : !END1_EDEFAULT.equals(end1);
       case EsterelPackage.LOOP__END:
         return end != null;
     }
     return super.eIsSet(featureID);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public String toString()
+  {
+    if (eIsProxy()) return super.toString();
+
+    StringBuffer result = new StringBuffer(super.toString());
+    result.append(" (end1: ");
+    result.append(end1);
+    result.append(')');
+    return result.toString();
   }
 
 } //LoopImpl

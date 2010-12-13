@@ -2,6 +2,7 @@
  * <copyright>
  * </copyright>
  *
+
  */
 package de.cau.cs.kieler.esterel.esterel;
 
@@ -14,8 +15,7 @@ package de.cau.cs.kieler.esterel.esterel;
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link de.cau.cs.kieler.esterel.esterel.WeakAbortInstance#getDelay <em>Delay</em>}</li>
- *   <li>{@link de.cau.cs.kieler.esterel.esterel.WeakAbortInstance#getStatement <em>Statement</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.esterel.esterel.WeakAbortInstance#getEnd <em>End</em>}</li>
  * </ul>
  * </p>
  *
@@ -23,58 +23,32 @@ package de.cau.cs.kieler.esterel.esterel;
  * @model
  * @generated
  */
-public interface WeakAbortInstance extends WeakAbortBody
+public interface WeakAbortInstance extends AbortInstance
 {
   /**
-   * Returns the value of the '<em><b>Delay</b></em>' containment reference.
+   * Returns the value of the '<em><b>End</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Delay</em>' containment reference isn't clear,
+   * If the meaning of the '<em>End</em>' containment reference isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Delay</em>' containment reference.
-   * @see #setDelay(DelayExpr)
-   * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getWeakAbortInstance_Delay()
+   * @return the value of the '<em>End</em>' containment reference.
+   * @see #setEnd(WeakAbortEnd)
+   * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getWeakAbortInstance_End()
    * @model containment="true"
    * @generated
    */
-  DelayExpr getDelay();
+  WeakAbortEnd getEnd();
 
   /**
-   * Sets the value of the '{@link de.cau.cs.kieler.esterel.esterel.WeakAbortInstance#getDelay <em>Delay</em>}' containment reference.
+   * Sets the value of the '{@link de.cau.cs.kieler.esterel.esterel.WeakAbortInstance#getEnd <em>End</em>}' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Delay</em>' containment reference.
-   * @see #getDelay()
+   * @param value the new value of the '<em>End</em>' containment reference.
+   * @see #getEnd()
    * @generated
    */
-  void setDelay(DelayExpr value);
-
-  /**
-   * Returns the value of the '<em><b>Statement</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Statement</em>' containment reference isn't clear,
-   * there really should be more of a description here...
-   * </p>
-   * <!-- end-user-doc -->
-   * @return the value of the '<em>Statement</em>' containment reference.
-   * @see #setStatement(Statement)
-   * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getWeakAbortInstance_Statement()
-   * @model containment="true"
-   * @generated
-   */
-  Statement getStatement();
-
-  /**
-   * Sets the value of the '{@link de.cau.cs.kieler.esterel.esterel.WeakAbortInstance#getStatement <em>Statement</em>}' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Statement</em>' containment reference.
-   * @see #getStatement()
-   * @generated
-   */
-  void setStatement(Statement value);
+  void setEnd(WeakAbortEnd value);
 
 } // WeakAbortInstance

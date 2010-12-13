@@ -2,9 +2,11 @@
  * <copyright>
  * </copyright>
  *
+
  */
 package de.cau.cs.kieler.esterel.esterel;
 
+import de.cau.cs.kieler.core.kexpressions.Expression;
 
 /**
  * <!-- begin-user-doc -->
@@ -17,6 +19,7 @@ package de.cau.cs.kieler.esterel.esterel;
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.Repeat#isPositive <em>Positive</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.Repeat#getDataExpr <em>Data Expr</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.Repeat#getStatement <em>Statement</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.esterel.esterel.Repeat#getOptEnd <em>Opt End</em>}</li>
  * </ul>
  * </p>
  *
@@ -61,12 +64,12 @@ public interface Repeat extends Statement
    * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Data Expr</em>' containment reference.
-   * @see #setDataExpr(DataExpr)
+   * @see #setDataExpr(Expression)
    * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getRepeat_DataExpr()
    * @model containment="true"
    * @generated
    */
-  DataExpr getDataExpr();
+  Expression getDataExpr();
 
   /**
    * Sets the value of the '{@link de.cau.cs.kieler.esterel.esterel.Repeat#getDataExpr <em>Data Expr</em>}' containment reference.
@@ -76,7 +79,7 @@ public interface Repeat extends Statement
    * @see #getDataExpr()
    * @generated
    */
-  void setDataExpr(DataExpr value);
+  void setDataExpr(Expression value);
 
   /**
    * Returns the value of the '<em><b>Statement</b></em>' containment reference.
@@ -103,5 +106,31 @@ public interface Repeat extends Statement
    * @generated
    */
   void setStatement(Statement value);
+
+  /**
+   * Returns the value of the '<em><b>Opt End</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Opt End</em>' attribute isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Opt End</em>' attribute.
+   * @see #setOptEnd(String)
+   * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getRepeat_OptEnd()
+   * @model
+   * @generated
+   */
+  String getOptEnd();
+
+  /**
+   * Sets the value of the '{@link de.cau.cs.kieler.esterel.esterel.Repeat#getOptEnd <em>Opt End</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Opt End</em>' attribute.
+   * @see #getOptEnd()
+   * @generated
+   */
+  void setOptEnd(String value);
 
 } // Repeat

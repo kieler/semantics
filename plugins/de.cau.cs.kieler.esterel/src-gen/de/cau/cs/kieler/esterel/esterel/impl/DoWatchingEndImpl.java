@@ -2,6 +2,7 @@
  * <copyright>
  * </copyright>
  *
+
  */
 package de.cau.cs.kieler.esterel.esterel.impl;
 
@@ -26,6 +27,7 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  * The following features are implemented:
  * <ul>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.DoWatchingEndImpl#getStatement <em>Statement</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.DoWatchingEndImpl#getOptEnd <em>Opt End</em>}</li>
  * </ul>
  * </p>
  *
@@ -42,6 +44,26 @@ public class DoWatchingEndImpl extends MinimalEObjectImpl.Container implements D
    * @ordered
    */
   protected Statement statement;
+
+  /**
+   * The default value of the '{@link #getOptEnd() <em>Opt End</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getOptEnd()
+   * @generated
+   * @ordered
+   */
+  protected static final String OPT_END_EDEFAULT = null;
+
+  /**
+   * The cached value of the '{@link #getOptEnd() <em>Opt End</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getOptEnd()
+   * @generated
+   * @ordered
+   */
+  protected String optEnd = OPT_END_EDEFAULT;
 
   /**
    * <!-- begin-user-doc -->
@@ -117,6 +139,29 @@ public class DoWatchingEndImpl extends MinimalEObjectImpl.Container implements D
    * <!-- end-user-doc -->
    * @generated
    */
+  public String getOptEnd()
+  {
+    return optEnd;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setOptEnd(String newOptEnd)
+  {
+    String oldOptEnd = optEnd;
+    optEnd = newOptEnd;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.DO_WATCHING_END__OPT_END, oldOptEnd, optEnd));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
   {
@@ -140,6 +185,8 @@ public class DoWatchingEndImpl extends MinimalEObjectImpl.Container implements D
     {
       case EsterelPackage.DO_WATCHING_END__STATEMENT:
         return getStatement();
+      case EsterelPackage.DO_WATCHING_END__OPT_END:
+        return getOptEnd();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -156,6 +203,9 @@ public class DoWatchingEndImpl extends MinimalEObjectImpl.Container implements D
     {
       case EsterelPackage.DO_WATCHING_END__STATEMENT:
         setStatement((Statement)newValue);
+        return;
+      case EsterelPackage.DO_WATCHING_END__OPT_END:
+        setOptEnd((String)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -174,6 +224,9 @@ public class DoWatchingEndImpl extends MinimalEObjectImpl.Container implements D
       case EsterelPackage.DO_WATCHING_END__STATEMENT:
         setStatement((Statement)null);
         return;
+      case EsterelPackage.DO_WATCHING_END__OPT_END:
+        setOptEnd(OPT_END_EDEFAULT);
+        return;
     }
     super.eUnset(featureID);
   }
@@ -190,8 +243,27 @@ public class DoWatchingEndImpl extends MinimalEObjectImpl.Container implements D
     {
       case EsterelPackage.DO_WATCHING_END__STATEMENT:
         return statement != null;
+      case EsterelPackage.DO_WATCHING_END__OPT_END:
+        return OPT_END_EDEFAULT == null ? optEnd != null : !OPT_END_EDEFAULT.equals(optEnd);
     }
     return super.eIsSet(featureID);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public String toString()
+  {
+    if (eIsProxy()) return super.toString();
+
+    StringBuffer result = new StringBuffer(super.toString());
+    result.append(" (optEnd: ");
+    result.append(optEnd);
+    result.append(')');
+    return result.toString();
   }
 
 } //DoWatchingEndImpl

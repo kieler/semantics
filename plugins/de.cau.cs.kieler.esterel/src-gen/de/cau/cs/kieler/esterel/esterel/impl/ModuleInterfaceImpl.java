@@ -2,17 +2,20 @@
  * <copyright>
  * </copyright>
  *
+
  */
 package de.cau.cs.kieler.esterel.esterel.impl;
 
-import de.cau.cs.kieler.esterel.esterel.ConstantDecl;
+import de.cau.cs.kieler.core.kexpressions.InterfaceSignalDecl;
+
+import de.cau.cs.kieler.esterel.esterel.ConstantDecls;
 import de.cau.cs.kieler.esterel.esterel.EsterelPackage;
 import de.cau.cs.kieler.esterel.esterel.FunctionDecl;
 import de.cau.cs.kieler.esterel.esterel.ModuleInterface;
 import de.cau.cs.kieler.esterel.esterel.ProcedureDecl;
 import de.cau.cs.kieler.esterel.esterel.RelationDecl;
 import de.cau.cs.kieler.esterel.esterel.SensorDecl;
-import de.cau.cs.kieler.esterel.esterel.SignalDecl;
+import de.cau.cs.kieler.esterel.esterel.TaskDecl;
 import de.cau.cs.kieler.esterel.esterel.TypeDecl;
 
 import java.util.Collection;
@@ -36,13 +39,14 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.ModuleInterfaceImpl#getIntSignalDecl <em>Int Signal Decl</em>}</li>
- *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.ModuleInterfaceImpl#getIntTypeDecl <em>Int Type Decl</em>}</li>
- *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.ModuleInterfaceImpl#getIntSensorDecl <em>Int Sensor Decl</em>}</li>
- *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.ModuleInterfaceImpl#getIntConstantDecl <em>Int Constant Decl</em>}</li>
- *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.ModuleInterfaceImpl#getIntRelationDecl <em>Int Relation Decl</em>}</li>
- *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.ModuleInterfaceImpl#getIntFunctionDecl <em>Int Function Decl</em>}</li>
- *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.ModuleInterfaceImpl#getIntProcedureDecl <em>Int Procedure Decl</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.ModuleInterfaceImpl#getIntSignalDecls <em>Int Signal Decls</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.ModuleInterfaceImpl#getIntTypeDecls <em>Int Type Decls</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.ModuleInterfaceImpl#getIntSensorDecls <em>Int Sensor Decls</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.ModuleInterfaceImpl#getIntConstantDecls <em>Int Constant Decls</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.ModuleInterfaceImpl#getIntRelationDecls <em>Int Relation Decls</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.ModuleInterfaceImpl#getIntTaskDecls <em>Int Task Decls</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.ModuleInterfaceImpl#getIntFunctionDecls <em>Int Function Decls</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.ModuleInterfaceImpl#getIntProcedureDecls <em>Int Procedure Decls</em>}</li>
  * </ul>
  * </p>
  *
@@ -51,74 +55,84 @@ import org.eclipse.emf.ecore.util.InternalEList;
 public class ModuleInterfaceImpl extends MinimalEObjectImpl.Container implements ModuleInterface
 {
   /**
-   * The cached value of the '{@link #getIntSignalDecl() <em>Int Signal Decl</em>}' containment reference list.
+   * The cached value of the '{@link #getIntSignalDecls() <em>Int Signal Decls</em>}' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getIntSignalDecl()
+   * @see #getIntSignalDecls()
    * @generated
    * @ordered
    */
-  protected EList<SignalDecl> intSignalDecl;
+  protected EList<InterfaceSignalDecl> intSignalDecls;
 
   /**
-   * The cached value of the '{@link #getIntTypeDecl() <em>Int Type Decl</em>}' containment reference list.
+   * The cached value of the '{@link #getIntTypeDecls() <em>Int Type Decls</em>}' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getIntTypeDecl()
+   * @see #getIntTypeDecls()
    * @generated
    * @ordered
    */
-  protected EList<TypeDecl> intTypeDecl;
+  protected EList<TypeDecl> intTypeDecls;
 
   /**
-   * The cached value of the '{@link #getIntSensorDecl() <em>Int Sensor Decl</em>}' containment reference list.
+   * The cached value of the '{@link #getIntSensorDecls() <em>Int Sensor Decls</em>}' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getIntSensorDecl()
+   * @see #getIntSensorDecls()
    * @generated
    * @ordered
    */
-  protected EList<SensorDecl> intSensorDecl;
+  protected EList<SensorDecl> intSensorDecls;
 
   /**
-   * The cached value of the '{@link #getIntConstantDecl() <em>Int Constant Decl</em>}' containment reference list.
+   * The cached value of the '{@link #getIntConstantDecls() <em>Int Constant Decls</em>}' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getIntConstantDecl()
+   * @see #getIntConstantDecls()
    * @generated
    * @ordered
    */
-  protected EList<ConstantDecl> intConstantDecl;
+  protected EList<ConstantDecls> intConstantDecls;
 
   /**
-   * The cached value of the '{@link #getIntRelationDecl() <em>Int Relation Decl</em>}' containment reference list.
+   * The cached value of the '{@link #getIntRelationDecls() <em>Int Relation Decls</em>}' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getIntRelationDecl()
+   * @see #getIntRelationDecls()
    * @generated
    * @ordered
    */
-  protected EList<RelationDecl> intRelationDecl;
+  protected EList<RelationDecl> intRelationDecls;
 
   /**
-   * The cached value of the '{@link #getIntFunctionDecl() <em>Int Function Decl</em>}' containment reference list.
+   * The cached value of the '{@link #getIntTaskDecls() <em>Int Task Decls</em>}' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getIntFunctionDecl()
+   * @see #getIntTaskDecls()
    * @generated
    * @ordered
    */
-  protected EList<FunctionDecl> intFunctionDecl;
+  protected EList<TaskDecl> intTaskDecls;
 
   /**
-   * The cached value of the '{@link #getIntProcedureDecl() <em>Int Procedure Decl</em>}' containment reference list.
+   * The cached value of the '{@link #getIntFunctionDecls() <em>Int Function Decls</em>}' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getIntProcedureDecl()
+   * @see #getIntFunctionDecls()
    * @generated
    * @ordered
    */
-  protected EList<ProcedureDecl> intProcedureDecl;
+  protected EList<FunctionDecl> intFunctionDecls;
+
+  /**
+   * The cached value of the '{@link #getIntProcedureDecls() <em>Int Procedure Decls</em>}' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getIntProcedureDecls()
+   * @generated
+   * @ordered
+   */
+  protected EList<ProcedureDecl> intProcedureDecls;
 
   /**
    * <!-- begin-user-doc -->
@@ -146,13 +160,13 @@ public class ModuleInterfaceImpl extends MinimalEObjectImpl.Container implements
    * <!-- end-user-doc -->
    * @generated
    */
-  public EList<SignalDecl> getIntSignalDecl()
+  public EList<InterfaceSignalDecl> getIntSignalDecls()
   {
-    if (intSignalDecl == null)
+    if (intSignalDecls == null)
     {
-      intSignalDecl = new EObjectContainmentEList<SignalDecl>(SignalDecl.class, this, EsterelPackage.MODULE_INTERFACE__INT_SIGNAL_DECL);
+      intSignalDecls = new EObjectContainmentEList<InterfaceSignalDecl>(InterfaceSignalDecl.class, this, EsterelPackage.MODULE_INTERFACE__INT_SIGNAL_DECLS);
     }
-    return intSignalDecl;
+    return intSignalDecls;
   }
 
   /**
@@ -160,13 +174,13 @@ public class ModuleInterfaceImpl extends MinimalEObjectImpl.Container implements
    * <!-- end-user-doc -->
    * @generated
    */
-  public EList<TypeDecl> getIntTypeDecl()
+  public EList<TypeDecl> getIntTypeDecls()
   {
-    if (intTypeDecl == null)
+    if (intTypeDecls == null)
     {
-      intTypeDecl = new EObjectContainmentEList<TypeDecl>(TypeDecl.class, this, EsterelPackage.MODULE_INTERFACE__INT_TYPE_DECL);
+      intTypeDecls = new EObjectContainmentEList<TypeDecl>(TypeDecl.class, this, EsterelPackage.MODULE_INTERFACE__INT_TYPE_DECLS);
     }
-    return intTypeDecl;
+    return intTypeDecls;
   }
 
   /**
@@ -174,13 +188,13 @@ public class ModuleInterfaceImpl extends MinimalEObjectImpl.Container implements
    * <!-- end-user-doc -->
    * @generated
    */
-  public EList<SensorDecl> getIntSensorDecl()
+  public EList<SensorDecl> getIntSensorDecls()
   {
-    if (intSensorDecl == null)
+    if (intSensorDecls == null)
     {
-      intSensorDecl = new EObjectContainmentEList<SensorDecl>(SensorDecl.class, this, EsterelPackage.MODULE_INTERFACE__INT_SENSOR_DECL);
+      intSensorDecls = new EObjectContainmentEList<SensorDecl>(SensorDecl.class, this, EsterelPackage.MODULE_INTERFACE__INT_SENSOR_DECLS);
     }
-    return intSensorDecl;
+    return intSensorDecls;
   }
 
   /**
@@ -188,13 +202,13 @@ public class ModuleInterfaceImpl extends MinimalEObjectImpl.Container implements
    * <!-- end-user-doc -->
    * @generated
    */
-  public EList<ConstantDecl> getIntConstantDecl()
+  public EList<ConstantDecls> getIntConstantDecls()
   {
-    if (intConstantDecl == null)
+    if (intConstantDecls == null)
     {
-      intConstantDecl = new EObjectContainmentEList<ConstantDecl>(ConstantDecl.class, this, EsterelPackage.MODULE_INTERFACE__INT_CONSTANT_DECL);
+      intConstantDecls = new EObjectContainmentEList<ConstantDecls>(ConstantDecls.class, this, EsterelPackage.MODULE_INTERFACE__INT_CONSTANT_DECLS);
     }
-    return intConstantDecl;
+    return intConstantDecls;
   }
 
   /**
@@ -202,13 +216,13 @@ public class ModuleInterfaceImpl extends MinimalEObjectImpl.Container implements
    * <!-- end-user-doc -->
    * @generated
    */
-  public EList<RelationDecl> getIntRelationDecl()
+  public EList<RelationDecl> getIntRelationDecls()
   {
-    if (intRelationDecl == null)
+    if (intRelationDecls == null)
     {
-      intRelationDecl = new EObjectContainmentEList<RelationDecl>(RelationDecl.class, this, EsterelPackage.MODULE_INTERFACE__INT_RELATION_DECL);
+      intRelationDecls = new EObjectContainmentEList<RelationDecl>(RelationDecl.class, this, EsterelPackage.MODULE_INTERFACE__INT_RELATION_DECLS);
     }
-    return intRelationDecl;
+    return intRelationDecls;
   }
 
   /**
@@ -216,13 +230,13 @@ public class ModuleInterfaceImpl extends MinimalEObjectImpl.Container implements
    * <!-- end-user-doc -->
    * @generated
    */
-  public EList<FunctionDecl> getIntFunctionDecl()
+  public EList<TaskDecl> getIntTaskDecls()
   {
-    if (intFunctionDecl == null)
+    if (intTaskDecls == null)
     {
-      intFunctionDecl = new EObjectContainmentEList<FunctionDecl>(FunctionDecl.class, this, EsterelPackage.MODULE_INTERFACE__INT_FUNCTION_DECL);
+      intTaskDecls = new EObjectContainmentEList<TaskDecl>(TaskDecl.class, this, EsterelPackage.MODULE_INTERFACE__INT_TASK_DECLS);
     }
-    return intFunctionDecl;
+    return intTaskDecls;
   }
 
   /**
@@ -230,13 +244,27 @@ public class ModuleInterfaceImpl extends MinimalEObjectImpl.Container implements
    * <!-- end-user-doc -->
    * @generated
    */
-  public EList<ProcedureDecl> getIntProcedureDecl()
+  public EList<FunctionDecl> getIntFunctionDecls()
   {
-    if (intProcedureDecl == null)
+    if (intFunctionDecls == null)
     {
-      intProcedureDecl = new EObjectContainmentEList<ProcedureDecl>(ProcedureDecl.class, this, EsterelPackage.MODULE_INTERFACE__INT_PROCEDURE_DECL);
+      intFunctionDecls = new EObjectContainmentEList<FunctionDecl>(FunctionDecl.class, this, EsterelPackage.MODULE_INTERFACE__INT_FUNCTION_DECLS);
     }
-    return intProcedureDecl;
+    return intFunctionDecls;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EList<ProcedureDecl> getIntProcedureDecls()
+  {
+    if (intProcedureDecls == null)
+    {
+      intProcedureDecls = new EObjectContainmentEList<ProcedureDecl>(ProcedureDecl.class, this, EsterelPackage.MODULE_INTERFACE__INT_PROCEDURE_DECLS);
+    }
+    return intProcedureDecls;
   }
 
   /**
@@ -249,20 +277,22 @@ public class ModuleInterfaceImpl extends MinimalEObjectImpl.Container implements
   {
     switch (featureID)
     {
-      case EsterelPackage.MODULE_INTERFACE__INT_SIGNAL_DECL:
-        return ((InternalEList<?>)getIntSignalDecl()).basicRemove(otherEnd, msgs);
-      case EsterelPackage.MODULE_INTERFACE__INT_TYPE_DECL:
-        return ((InternalEList<?>)getIntTypeDecl()).basicRemove(otherEnd, msgs);
-      case EsterelPackage.MODULE_INTERFACE__INT_SENSOR_DECL:
-        return ((InternalEList<?>)getIntSensorDecl()).basicRemove(otherEnd, msgs);
-      case EsterelPackage.MODULE_INTERFACE__INT_CONSTANT_DECL:
-        return ((InternalEList<?>)getIntConstantDecl()).basicRemove(otherEnd, msgs);
-      case EsterelPackage.MODULE_INTERFACE__INT_RELATION_DECL:
-        return ((InternalEList<?>)getIntRelationDecl()).basicRemove(otherEnd, msgs);
-      case EsterelPackage.MODULE_INTERFACE__INT_FUNCTION_DECL:
-        return ((InternalEList<?>)getIntFunctionDecl()).basicRemove(otherEnd, msgs);
-      case EsterelPackage.MODULE_INTERFACE__INT_PROCEDURE_DECL:
-        return ((InternalEList<?>)getIntProcedureDecl()).basicRemove(otherEnd, msgs);
+      case EsterelPackage.MODULE_INTERFACE__INT_SIGNAL_DECLS:
+        return ((InternalEList<?>)getIntSignalDecls()).basicRemove(otherEnd, msgs);
+      case EsterelPackage.MODULE_INTERFACE__INT_TYPE_DECLS:
+        return ((InternalEList<?>)getIntTypeDecls()).basicRemove(otherEnd, msgs);
+      case EsterelPackage.MODULE_INTERFACE__INT_SENSOR_DECLS:
+        return ((InternalEList<?>)getIntSensorDecls()).basicRemove(otherEnd, msgs);
+      case EsterelPackage.MODULE_INTERFACE__INT_CONSTANT_DECLS:
+        return ((InternalEList<?>)getIntConstantDecls()).basicRemove(otherEnd, msgs);
+      case EsterelPackage.MODULE_INTERFACE__INT_RELATION_DECLS:
+        return ((InternalEList<?>)getIntRelationDecls()).basicRemove(otherEnd, msgs);
+      case EsterelPackage.MODULE_INTERFACE__INT_TASK_DECLS:
+        return ((InternalEList<?>)getIntTaskDecls()).basicRemove(otherEnd, msgs);
+      case EsterelPackage.MODULE_INTERFACE__INT_FUNCTION_DECLS:
+        return ((InternalEList<?>)getIntFunctionDecls()).basicRemove(otherEnd, msgs);
+      case EsterelPackage.MODULE_INTERFACE__INT_PROCEDURE_DECLS:
+        return ((InternalEList<?>)getIntProcedureDecls()).basicRemove(otherEnd, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
@@ -277,20 +307,22 @@ public class ModuleInterfaceImpl extends MinimalEObjectImpl.Container implements
   {
     switch (featureID)
     {
-      case EsterelPackage.MODULE_INTERFACE__INT_SIGNAL_DECL:
-        return getIntSignalDecl();
-      case EsterelPackage.MODULE_INTERFACE__INT_TYPE_DECL:
-        return getIntTypeDecl();
-      case EsterelPackage.MODULE_INTERFACE__INT_SENSOR_DECL:
-        return getIntSensorDecl();
-      case EsterelPackage.MODULE_INTERFACE__INT_CONSTANT_DECL:
-        return getIntConstantDecl();
-      case EsterelPackage.MODULE_INTERFACE__INT_RELATION_DECL:
-        return getIntRelationDecl();
-      case EsterelPackage.MODULE_INTERFACE__INT_FUNCTION_DECL:
-        return getIntFunctionDecl();
-      case EsterelPackage.MODULE_INTERFACE__INT_PROCEDURE_DECL:
-        return getIntProcedureDecl();
+      case EsterelPackage.MODULE_INTERFACE__INT_SIGNAL_DECLS:
+        return getIntSignalDecls();
+      case EsterelPackage.MODULE_INTERFACE__INT_TYPE_DECLS:
+        return getIntTypeDecls();
+      case EsterelPackage.MODULE_INTERFACE__INT_SENSOR_DECLS:
+        return getIntSensorDecls();
+      case EsterelPackage.MODULE_INTERFACE__INT_CONSTANT_DECLS:
+        return getIntConstantDecls();
+      case EsterelPackage.MODULE_INTERFACE__INT_RELATION_DECLS:
+        return getIntRelationDecls();
+      case EsterelPackage.MODULE_INTERFACE__INT_TASK_DECLS:
+        return getIntTaskDecls();
+      case EsterelPackage.MODULE_INTERFACE__INT_FUNCTION_DECLS:
+        return getIntFunctionDecls();
+      case EsterelPackage.MODULE_INTERFACE__INT_PROCEDURE_DECLS:
+        return getIntProcedureDecls();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -306,33 +338,37 @@ public class ModuleInterfaceImpl extends MinimalEObjectImpl.Container implements
   {
     switch (featureID)
     {
-      case EsterelPackage.MODULE_INTERFACE__INT_SIGNAL_DECL:
-        getIntSignalDecl().clear();
-        getIntSignalDecl().addAll((Collection<? extends SignalDecl>)newValue);
+      case EsterelPackage.MODULE_INTERFACE__INT_SIGNAL_DECLS:
+        getIntSignalDecls().clear();
+        getIntSignalDecls().addAll((Collection<? extends InterfaceSignalDecl>)newValue);
         return;
-      case EsterelPackage.MODULE_INTERFACE__INT_TYPE_DECL:
-        getIntTypeDecl().clear();
-        getIntTypeDecl().addAll((Collection<? extends TypeDecl>)newValue);
+      case EsterelPackage.MODULE_INTERFACE__INT_TYPE_DECLS:
+        getIntTypeDecls().clear();
+        getIntTypeDecls().addAll((Collection<? extends TypeDecl>)newValue);
         return;
-      case EsterelPackage.MODULE_INTERFACE__INT_SENSOR_DECL:
-        getIntSensorDecl().clear();
-        getIntSensorDecl().addAll((Collection<? extends SensorDecl>)newValue);
+      case EsterelPackage.MODULE_INTERFACE__INT_SENSOR_DECLS:
+        getIntSensorDecls().clear();
+        getIntSensorDecls().addAll((Collection<? extends SensorDecl>)newValue);
         return;
-      case EsterelPackage.MODULE_INTERFACE__INT_CONSTANT_DECL:
-        getIntConstantDecl().clear();
-        getIntConstantDecl().addAll((Collection<? extends ConstantDecl>)newValue);
+      case EsterelPackage.MODULE_INTERFACE__INT_CONSTANT_DECLS:
+        getIntConstantDecls().clear();
+        getIntConstantDecls().addAll((Collection<? extends ConstantDecls>)newValue);
         return;
-      case EsterelPackage.MODULE_INTERFACE__INT_RELATION_DECL:
-        getIntRelationDecl().clear();
-        getIntRelationDecl().addAll((Collection<? extends RelationDecl>)newValue);
+      case EsterelPackage.MODULE_INTERFACE__INT_RELATION_DECLS:
+        getIntRelationDecls().clear();
+        getIntRelationDecls().addAll((Collection<? extends RelationDecl>)newValue);
         return;
-      case EsterelPackage.MODULE_INTERFACE__INT_FUNCTION_DECL:
-        getIntFunctionDecl().clear();
-        getIntFunctionDecl().addAll((Collection<? extends FunctionDecl>)newValue);
+      case EsterelPackage.MODULE_INTERFACE__INT_TASK_DECLS:
+        getIntTaskDecls().clear();
+        getIntTaskDecls().addAll((Collection<? extends TaskDecl>)newValue);
         return;
-      case EsterelPackage.MODULE_INTERFACE__INT_PROCEDURE_DECL:
-        getIntProcedureDecl().clear();
-        getIntProcedureDecl().addAll((Collection<? extends ProcedureDecl>)newValue);
+      case EsterelPackage.MODULE_INTERFACE__INT_FUNCTION_DECLS:
+        getIntFunctionDecls().clear();
+        getIntFunctionDecls().addAll((Collection<? extends FunctionDecl>)newValue);
+        return;
+      case EsterelPackage.MODULE_INTERFACE__INT_PROCEDURE_DECLS:
+        getIntProcedureDecls().clear();
+        getIntProcedureDecls().addAll((Collection<? extends ProcedureDecl>)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -348,26 +384,29 @@ public class ModuleInterfaceImpl extends MinimalEObjectImpl.Container implements
   {
     switch (featureID)
     {
-      case EsterelPackage.MODULE_INTERFACE__INT_SIGNAL_DECL:
-        getIntSignalDecl().clear();
+      case EsterelPackage.MODULE_INTERFACE__INT_SIGNAL_DECLS:
+        getIntSignalDecls().clear();
         return;
-      case EsterelPackage.MODULE_INTERFACE__INT_TYPE_DECL:
-        getIntTypeDecl().clear();
+      case EsterelPackage.MODULE_INTERFACE__INT_TYPE_DECLS:
+        getIntTypeDecls().clear();
         return;
-      case EsterelPackage.MODULE_INTERFACE__INT_SENSOR_DECL:
-        getIntSensorDecl().clear();
+      case EsterelPackage.MODULE_INTERFACE__INT_SENSOR_DECLS:
+        getIntSensorDecls().clear();
         return;
-      case EsterelPackage.MODULE_INTERFACE__INT_CONSTANT_DECL:
-        getIntConstantDecl().clear();
+      case EsterelPackage.MODULE_INTERFACE__INT_CONSTANT_DECLS:
+        getIntConstantDecls().clear();
         return;
-      case EsterelPackage.MODULE_INTERFACE__INT_RELATION_DECL:
-        getIntRelationDecl().clear();
+      case EsterelPackage.MODULE_INTERFACE__INT_RELATION_DECLS:
+        getIntRelationDecls().clear();
         return;
-      case EsterelPackage.MODULE_INTERFACE__INT_FUNCTION_DECL:
-        getIntFunctionDecl().clear();
+      case EsterelPackage.MODULE_INTERFACE__INT_TASK_DECLS:
+        getIntTaskDecls().clear();
         return;
-      case EsterelPackage.MODULE_INTERFACE__INT_PROCEDURE_DECL:
-        getIntProcedureDecl().clear();
+      case EsterelPackage.MODULE_INTERFACE__INT_FUNCTION_DECLS:
+        getIntFunctionDecls().clear();
+        return;
+      case EsterelPackage.MODULE_INTERFACE__INT_PROCEDURE_DECLS:
+        getIntProcedureDecls().clear();
         return;
     }
     super.eUnset(featureID);
@@ -383,20 +422,22 @@ public class ModuleInterfaceImpl extends MinimalEObjectImpl.Container implements
   {
     switch (featureID)
     {
-      case EsterelPackage.MODULE_INTERFACE__INT_SIGNAL_DECL:
-        return intSignalDecl != null && !intSignalDecl.isEmpty();
-      case EsterelPackage.MODULE_INTERFACE__INT_TYPE_DECL:
-        return intTypeDecl != null && !intTypeDecl.isEmpty();
-      case EsterelPackage.MODULE_INTERFACE__INT_SENSOR_DECL:
-        return intSensorDecl != null && !intSensorDecl.isEmpty();
-      case EsterelPackage.MODULE_INTERFACE__INT_CONSTANT_DECL:
-        return intConstantDecl != null && !intConstantDecl.isEmpty();
-      case EsterelPackage.MODULE_INTERFACE__INT_RELATION_DECL:
-        return intRelationDecl != null && !intRelationDecl.isEmpty();
-      case EsterelPackage.MODULE_INTERFACE__INT_FUNCTION_DECL:
-        return intFunctionDecl != null && !intFunctionDecl.isEmpty();
-      case EsterelPackage.MODULE_INTERFACE__INT_PROCEDURE_DECL:
-        return intProcedureDecl != null && !intProcedureDecl.isEmpty();
+      case EsterelPackage.MODULE_INTERFACE__INT_SIGNAL_DECLS:
+        return intSignalDecls != null && !intSignalDecls.isEmpty();
+      case EsterelPackage.MODULE_INTERFACE__INT_TYPE_DECLS:
+        return intTypeDecls != null && !intTypeDecls.isEmpty();
+      case EsterelPackage.MODULE_INTERFACE__INT_SENSOR_DECLS:
+        return intSensorDecls != null && !intSensorDecls.isEmpty();
+      case EsterelPackage.MODULE_INTERFACE__INT_CONSTANT_DECLS:
+        return intConstantDecls != null && !intConstantDecls.isEmpty();
+      case EsterelPackage.MODULE_INTERFACE__INT_RELATION_DECLS:
+        return intRelationDecls != null && !intRelationDecls.isEmpty();
+      case EsterelPackage.MODULE_INTERFACE__INT_TASK_DECLS:
+        return intTaskDecls != null && !intTaskDecls.isEmpty();
+      case EsterelPackage.MODULE_INTERFACE__INT_FUNCTION_DECLS:
+        return intFunctionDecls != null && !intFunctionDecls.isEmpty();
+      case EsterelPackage.MODULE_INTERFACE__INT_PROCEDURE_DECLS:
+        return intProcedureDecls != null && !intProcedureDecls.isEmpty();
     }
     return super.eIsSet(featureID);
   }

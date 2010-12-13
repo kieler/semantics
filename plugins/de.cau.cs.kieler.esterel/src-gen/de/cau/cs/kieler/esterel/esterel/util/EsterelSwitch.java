@@ -2,8 +2,18 @@
  * <copyright>
  * </copyright>
  *
+
  */
 package de.cau.cs.kieler.esterel.esterel.util;
+
+import de.cau.cs.kieler.core.annotations.Annotatable;
+
+import de.cau.cs.kieler.core.kexpressions.ComplexExpression;
+import de.cau.cs.kieler.core.kexpressions.Expression;
+import de.cau.cs.kieler.core.kexpressions.ISignal;
+import de.cau.cs.kieler.core.kexpressions.Signal;
+import de.cau.cs.kieler.core.kexpressions.ValuedObject;
+import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference;
 
 import de.cau.cs.kieler.esterel.esterel.*;
 
@@ -123,10 +133,34 @@ public class EsterelSwitch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
-      case EsterelPackage.SIGNAL_DECL:
+      case EsterelPackage.CHANNEL_DESCRIPTION:
       {
-        SignalDecl signalDecl = (SignalDecl)theEObject;
-        T result = caseSignalDecl(signalDecl);
+        ChannelDescription channelDescription = (ChannelDescription)theEObject;
+        T result = caseChannelDescription(channelDescription);
+        if (result == null) result = caseKExpressions_ChannelDescription(channelDescription);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case EsterelPackage.TYPE_IDENTIFIER:
+      {
+        TypeIdentifier typeIdentifier = (TypeIdentifier)theEObject;
+        T result = caseTypeIdentifier(typeIdentifier);
+        if (result == null) result = caseKExpressions_TypeIdentifier(typeIdentifier);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case EsterelPackage.LOCAL_SIGNAL_DECL:
+      {
+        LocalSignalDecl localSignalDecl = (LocalSignalDecl)theEObject;
+        T result = caseLocalSignalDecl(localSignalDecl);
+        if (result == null) result = caseStatement(localSignalDecl);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case EsterelPackage.LOCAL_SIGNAL_LIST:
+      {
+        LocalSignalList localSignalList = (LocalSignalList)theEObject;
+        T result = caseLocalSignalList(localSignalList);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -181,24 +215,31 @@ public class EsterelSwitch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
-      case EsterelPackage.CONSTANT_DECL:
+      case EsterelPackage.CONSTANT_DECLS:
       {
-        ConstantDecl constantDecl = (ConstantDecl)theEObject;
-        T result = caseConstantDecl(constantDecl);
+        ConstantDecls constantDecls = (ConstantDecls)theEObject;
+        T result = caseConstantDecls(constantDecls);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
-      case EsterelPackage.ONE_TYPE_CONSTANT_DECL:
+      case EsterelPackage.ONE_TYPE_CONSTANT_DECLS:
       {
-        OneTypeConstantDecl oneTypeConstantDecl = (OneTypeConstantDecl)theEObject;
-        T result = caseOneTypeConstantDecl(oneTypeConstantDecl);
+        OneTypeConstantDecls oneTypeConstantDecls = (OneTypeConstantDecls)theEObject;
+        T result = caseOneTypeConstantDecls(oneTypeConstantDecls);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
-      case EsterelPackage.CONSTANT:
+      case EsterelPackage.CONSTANT_WITH_VALUE:
       {
-        Constant constant = (Constant)theEObject;
-        T result = caseConstant(constant);
+        ConstantWithValue constantWithValue = (ConstantWithValue)theEObject;
+        T result = caseConstantWithValue(constantWithValue);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case EsterelPackage.CONSTANT_VALUE:
+      {
+        ConstantValue constantValue = (ConstantValue)theEObject;
+        T result = caseConstantValue(constantValue);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -216,6 +257,13 @@ public class EsterelSwitch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
+      case EsterelPackage.FUNCTION_CALL:
+      {
+        FunctionCall functionCall = (FunctionCall)theEObject;
+        T result = caseFunctionCall(functionCall);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
       case EsterelPackage.PROCEDURE_DECL:
       {
         ProcedureDecl procedureDecl = (ProcedureDecl)theEObject;
@@ -227,6 +275,20 @@ public class EsterelSwitch<T>
       {
         Procedure procedure = (Procedure)theEObject;
         T result = caseProcedure(procedure);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case EsterelPackage.TASK_DECL:
+      {
+        TaskDecl taskDecl = (TaskDecl)theEObject;
+        T result = caseTaskDecl(taskDecl);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case EsterelPackage.TASK:
+      {
+        Task task = (Task)theEObject;
+        T result = caseTask(task);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -273,6 +335,7 @@ public class EsterelSwitch<T>
         AbortInstance abortInstance = (AbortInstance)theEObject;
         T result = caseAbortInstance(abortInstance);
         if (result == null) result = caseAbortBody(abortInstance);
+        if (result == null) result = caseWeakAbortBody(abortInstance);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -281,6 +344,7 @@ public class EsterelSwitch<T>
         AbortCase abortCase = (AbortCase)theEObject;
         T result = caseAbortCase(abortCase);
         if (result == null) result = caseAbortBody(abortCase);
+        if (result == null) result = caseWeakAbortBody(abortCase);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -288,6 +352,27 @@ public class EsterelSwitch<T>
       {
         AbortCaseSingle abortCaseSingle = (AbortCaseSingle)theEObject;
         T result = caseAbortCaseSingle(abortCaseSingle);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case EsterelPackage.WEAK_ABORT_BODY:
+      {
+        WeakAbortBody weakAbortBody = (WeakAbortBody)theEObject;
+        T result = caseWeakAbortBody(weakAbortBody);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case EsterelPackage.WEAK_ABORT_END:
+      {
+        WeakAbortEnd weakAbortEnd = (WeakAbortEnd)theEObject;
+        T result = caseWeakAbortEnd(weakAbortEnd);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case EsterelPackage.WEAK_ABORT_END_ALT:
+      {
+        WeakAbortEndAlt weakAbortEndAlt = (WeakAbortEndAlt)theEObject;
+        T result = caseWeakAbortEndAlt(weakAbortEndAlt);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -396,13 +481,6 @@ public class EsterelSwitch<T>
         IfTest ifTest = (IfTest)theEObject;
         T result = caseIfTest(ifTest);
         if (result == null) result = caseStatement(ifTest);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      case EsterelPackage.ELS_IF_PART:
-      {
-        ElsIfPart elsIfPart = (ElsIfPart)theEObject;
-        T result = caseElsIfPart(elsIfPart);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -583,25 +661,17 @@ public class EsterelSwitch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
+      case EsterelPackage.TASK_RENAMING:
+      {
+        TaskRenaming taskRenaming = (TaskRenaming)theEObject;
+        T result = caseTaskRenaming(taskRenaming);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
       case EsterelPackage.SIGNAL_RENAMING:
       {
         SignalRenaming signalRenaming = (SignalRenaming)theEObject;
         T result = caseSignalRenaming(signalRenaming);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      case EsterelPackage.LOCAL_SIGNAL_DECL:
-      {
-        LocalSignalDecl localSignalDecl = (LocalSignalDecl)theEObject;
-        T result = caseLocalSignalDecl(localSignalDecl);
-        if (result == null) result = caseStatement(localSignalDecl);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      case EsterelPackage.LOCAL_SIGNAL_LIST:
-      {
-        LocalSignalList localSignalList = (LocalSignalList)theEObject;
-        T result = caseLocalSignalList(localSignalList);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -636,20 +706,6 @@ public class EsterelSwitch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
-      case EsterelPackage.TRAP_DECL:
-      {
-        TrapDecl trapDecl = (TrapDecl)theEObject;
-        T result = caseTrapDecl(trapDecl);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      case EsterelPackage.TRAP_HANDLER_LIST:
-      {
-        TrapHandlerList trapHandlerList = (TrapHandlerList)theEObject;
-        T result = caseTrapHandlerList(trapHandlerList);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
       case EsterelPackage.TRAP_HANDLER:
       {
         TrapHandler trapHandler = (TrapHandler)theEObject;
@@ -657,213 +713,11 @@ public class EsterelSwitch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
-      case EsterelPackage.VARIABLE:
+      case EsterelPackage.LOCAL_VARIABLE:
       {
-        Variable variable = (Variable)theEObject;
-        T result = caseVariable(variable);
-        if (result == null) result = caseStatement(variable);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      case EsterelPackage.VARIABLE_DECL:
-      {
-        VariableDecl variableDecl = (VariableDecl)theEObject;
-        T result = caseVariableDecl(variableDecl);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      case EsterelPackage.VARIABLE_LIST:
-      {
-        VariableList variableList = (VariableList)theEObject;
-        T result = caseVariableList(variableList);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      case EsterelPackage.VARIABLE_SINGLE:
-      {
-        VariableSingle variableSingle = (VariableSingle)theEObject;
-        T result = caseVariableSingle(variableSingle);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      case EsterelPackage.WEAK_ABORT:
-      {
-        WeakAbort weakAbort = (WeakAbort)theEObject;
-        T result = caseWeakAbort(weakAbort);
-        if (result == null) result = caseStatement(weakAbort);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      case EsterelPackage.WEAK_ABORT_BODY:
-      {
-        WeakAbortBody weakAbortBody = (WeakAbortBody)theEObject;
-        T result = caseWeakAbortBody(weakAbortBody);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      case EsterelPackage.WEAK_ABORT_INSTANCE:
-      {
-        WeakAbortInstance weakAbortInstance = (WeakAbortInstance)theEObject;
-        T result = caseWeakAbortInstance(weakAbortInstance);
-        if (result == null) result = caseWeakAbortBody(weakAbortInstance);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      case EsterelPackage.WEAK_ABORT_CASE:
-      {
-        WeakAbortCase weakAbortCase = (WeakAbortCase)theEObject;
-        T result = caseWeakAbortCase(weakAbortCase);
-        if (result == null) result = caseWeakAbortBody(weakAbortCase);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      case EsterelPackage.DATA_EXPR:
-      {
-        DataExpr dataExpr = (DataExpr)theEObject;
-        T result = caseDataExpr(dataExpr);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      case EsterelPackage.DATA_MULT:
-      {
-        DataMult dataMult = (DataMult)theEObject;
-        T result = caseDataMult(dataMult);
-        if (result == null) result = caseDataExpr(dataMult);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      case EsterelPackage.DATA_EQUATION:
-      {
-        DataEquation dataEquation = (DataEquation)theEObject;
-        T result = caseDataEquation(dataEquation);
-        if (result == null) result = caseDataMult(dataEquation);
-        if (result == null) result = caseDataExpr(dataEquation);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      case EsterelPackage.DATA_MINUS:
-      {
-        DataMinus dataMinus = (DataMinus)theEObject;
-        T result = caseDataMinus(dataMinus);
-        if (result == null) result = caseDataEquation(dataMinus);
-        if (result == null) result = caseDataMult(dataMinus);
-        if (result == null) result = caseDataExpr(dataMinus);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      case EsterelPackage.DATA_UNARY_EXPR:
-      {
-        DataUnaryExpr dataUnaryExpr = (DataUnaryExpr)theEObject;
-        T result = caseDataUnaryExpr(dataUnaryExpr);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      case EsterelPackage.DATA_VALUE_ID:
-      {
-        DataValueID dataValueID = (DataValueID)theEObject;
-        T result = caseDataValueID(dataValueID);
-        if (result == null) result = caseDataUnaryExpr(dataValueID);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      case EsterelPackage.DATA_VALUE_FLOAT:
-      {
-        DataValueFloat dataValueFloat = (DataValueFloat)theEObject;
-        T result = caseDataValueFloat(dataValueFloat);
-        if (result == null) result = caseDataUnaryExpr(dataValueFloat);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      case EsterelPackage.DATA_VALUE_BOOLEAN:
-      {
-        DataValueBoolean dataValueBoolean = (DataValueBoolean)theEObject;
-        T result = caseDataValueBoolean(dataValueBoolean);
-        if (result == null) result = caseDataUnaryExpr(dataValueBoolean);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      case EsterelPackage.DATA_VALUE_INT:
-      {
-        DataValueInt dataValueInt = (DataValueInt)theEObject;
-        T result = caseDataValueInt(dataValueInt);
-        if (result == null) result = caseDataUnaryExpr(dataValueInt);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      case EsterelPackage.DATA_VALUE_STRING:
-      {
-        DataValueString dataValueString = (DataValueString)theEObject;
-        T result = caseDataValueString(dataValueString);
-        if (result == null) result = caseDataUnaryExpr(dataValueString);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      case EsterelPackage.DATA_BLOCK:
-      {
-        DataBlock dataBlock = (DataBlock)theEObject;
-        T result = caseDataBlock(dataBlock);
-        if (result == null) result = caseDataUnaryExpr(dataBlock);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      case EsterelPackage.DATA_CURRENT:
-      {
-        DataCurrent dataCurrent = (DataCurrent)theEObject;
-        T result = caseDataCurrent(dataCurrent);
-        if (result == null) result = caseDataUnaryExpr(dataCurrent);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      case EsterelPackage.DATA_PRE:
-      {
-        DataPre dataPre = (DataPre)theEObject;
-        T result = caseDataPre(dataPre);
-        if (result == null) result = caseDataUnaryExpr(dataPre);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      case EsterelPackage.DATA_TRAP:
-      {
-        DataTrap dataTrap = (DataTrap)theEObject;
-        T result = caseDataTrap(dataTrap);
-        if (result == null) result = caseDataUnaryExpr(dataTrap);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      case EsterelPackage.DATA_FUNCTION:
-      {
-        DataFunction dataFunction = (DataFunction)theEObject;
-        T result = caseDataFunction(dataFunction);
-        if (result == null) result = caseDataUnaryExpr(dataFunction);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      case EsterelPackage.TRAP_EXPR:
-      {
-        TrapExpr trapExpr = (TrapExpr)theEObject;
-        T result = caseTrapExpr(trapExpr);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      case EsterelPackage.SIG_EXPR:
-      {
-        SigExpr sigExpr = (SigExpr)theEObject;
-        T result = caseSigExpr(sigExpr);
-        if (result == null) result = caseTrapExpr(sigExpr);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      case EsterelPackage.SIG_EXPR_AND:
-      {
-        SigExprAND sigExprAND = (SigExprAND)theEObject;
-        T result = caseSigExprAND(sigExprAND);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      case EsterelPackage.SIG_EXPR_UNARY:
-      {
-        SigExprUnary sigExprUnary = (SigExprUnary)theEObject;
-        T result = caseSigExprUnary(sigExprUnary);
+        LocalVariable localVariable = (LocalVariable)theEObject;
+        T result = caseLocalVariable(localVariable);
+        if (result == null) result = caseStatement(localVariable);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -881,63 +735,57 @@ public class EsterelSwitch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
-      case EsterelPackage.CHANNEL_DESCRIPTION:
+      case EsterelPackage.EXEC:
       {
-        ChannelDescription channelDescription = (ChannelDescription)theEObject;
-        T result = caseChannelDescription(channelDescription);
+        Exec exec = (Exec)theEObject;
+        T result = caseExec(exec);
+        if (result == null) result = caseStatement(exec);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
-      case EsterelPackage.CHANNEL_TYPE:
+      case EsterelPackage.EXEC_BODY:
       {
-        ChannelType channelType = (ChannelType)theEObject;
-        T result = caseChannelType(channelType);
+        ExecBody execBody = (ExecBody)theEObject;
+        T result = caseExecBody(execBody);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
-      case EsterelPackage.SIGNAL:
+      case EsterelPackage.EXEC_CASE:
       {
-        Signal signal = (Signal)theEObject;
-        T result = caseSignal(signal);
+        ExecCase execCase = (ExecCase)theEObject;
+        T result = caseExecCase(execCase);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
-      case EsterelPackage.SENSOR:
+      case EsterelPackage.SENSOR_WITH_TYPE:
       {
-        Sensor sensor = (Sensor)theEObject;
-        T result = caseSensor(sensor);
+        SensorWithType sensorWithType = (SensorWithType)theEObject;
+        T result = caseSensorWithType(sensorWithType);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
-      case EsterelPackage.INPUT:
+      case EsterelPackage.ESTEREL_TYPE_IDENTIFIER:
       {
-        Input input = (Input)theEObject;
-        T result = caseInput(input);
-        if (result == null) result = caseSignalDecl(input);
+        EsterelTypeIdentifier esterelTypeIdentifier = (EsterelTypeIdentifier)theEObject;
+        T result = caseEsterelTypeIdentifier(esterelTypeIdentifier);
+        if (result == null) result = caseKExpressions_TypeIdentifier(esterelTypeIdentifier);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
-      case EsterelPackage.OUTPUT:
+      case EsterelPackage.ESTEREL_TYPE:
       {
-        Output output = (Output)theEObject;
-        T result = caseOutput(output);
-        if (result == null) result = caseSignalDecl(output);
+        EsterelType esterelType = (EsterelType)theEObject;
+        T result = caseEsterelType(esterelType);
+        if (result == null) result = caseTypeIdentifier(esterelType);
+        if (result == null) result = caseKExpressions_TypeIdentifier(esterelType);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
-      case EsterelPackage.INPUT_OUTPUT:
+      case EsterelPackage.LOCAL_SIGNAL:
       {
-        InputOutput inputOutput = (InputOutput)theEObject;
-        T result = caseInputOutput(inputOutput);
-        if (result == null) result = caseSignalDecl(inputOutput);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      case EsterelPackage.RETURN:
-      {
-        Return return_ = (Return)theEObject;
-        T result = caseReturn(return_);
-        if (result == null) result = caseSignalDecl(return_);
+        LocalSignal localSignal = (LocalSignal)theEObject;
+        T result = caseLocalSignal(localSignal);
+        if (result == null) result = caseLocalSignalList(localSignal);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -946,6 +794,15 @@ public class EsterelSwitch<T>
         Relation relation = (Relation)theEObject;
         T result = caseRelation(relation);
         if (result == null) result = caseRelationDecl(relation);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case EsterelPackage.CONSTANT:
+      {
+        Constant constant = (Constant)theEObject;
+        T result = caseConstant(constant);
+        if (result == null) result = caseValuedObject(constant);
+        if (result == null) result = caseAnnotatable(constant);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -965,19 +822,77 @@ public class EsterelSwitch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
-      case EsterelPackage.LOCAL_SIGNAL:
+      case EsterelPackage.WEAK_ABORT:
       {
-        LocalSignal localSignal = (LocalSignal)theEObject;
-        T result = caseLocalSignal(localSignal);
-        if (result == null) result = caseLocalSignalList(localSignal);
+        WeakAbort weakAbort = (WeakAbort)theEObject;
+        T result = caseWeakAbort(weakAbort);
+        if (result == null) result = caseAbort(weakAbort);
+        if (result == null) result = caseStatement(weakAbort);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
-      case EsterelPackage.DATA_TICK:
+      case EsterelPackage.WEAK_ABORT_INSTANCE:
       {
-        DataTick dataTick = (DataTick)theEObject;
-        T result = caseDataTick(dataTick);
-        if (result == null) result = caseDataUnaryExpr(dataTick);
+        WeakAbortInstance weakAbortInstance = (WeakAbortInstance)theEObject;
+        T result = caseWeakAbortInstance(weakAbortInstance);
+        if (result == null) result = caseAbortInstance(weakAbortInstance);
+        if (result == null) result = caseAbortBody(weakAbortInstance);
+        if (result == null) result = caseWeakAbortBody(weakAbortInstance);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case EsterelPackage.WEAK_ABORT_CASE:
+      {
+        WeakAbortCase weakAbortCase = (WeakAbortCase)theEObject;
+        T result = caseWeakAbortCase(weakAbortCase);
+        if (result == null) result = caseAbortCase(weakAbortCase);
+        if (result == null) result = caseAbortBody(weakAbortCase);
+        if (result == null) result = caseWeakAbortBody(weakAbortCase);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case EsterelPackage.TRAP_DECL:
+      {
+        TrapDecl trapDecl = (TrapDecl)theEObject;
+        T result = caseTrapDecl(trapDecl);
+        if (result == null) result = caseISignal(trapDecl);
+        if (result == null) result = caseSignal(trapDecl);
+        if (result == null) result = caseValuedObject(trapDecl);
+        if (result == null) result = caseAnnotatable(trapDecl);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case EsterelPackage.TRAP_EXPRESSION:
+      {
+        TrapExpression trapExpression = (TrapExpression)theEObject;
+        T result = caseTrapExpression(trapExpression);
+        if (result == null) result = caseExpression(trapExpression);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case EsterelPackage.FUNCTION_EXPRESSION:
+      {
+        FunctionExpression functionExpression = (FunctionExpression)theEObject;
+        T result = caseFunctionExpression(functionExpression);
+        if (result == null) result = caseExpression(functionExpression);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case EsterelPackage.CONSTANT_EXPRESSION:
+      {
+        ConstantExpression constantExpression = (ConstantExpression)theEObject;
+        T result = caseConstantExpression(constantExpression);
+        if (result == null) result = caseExpression(constantExpression);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case EsterelPackage.TRAP_REFERENCE_EXPR:
+      {
+        TrapReferenceExpr trapReferenceExpr = (TrapReferenceExpr)theEObject;
+        T result = caseTrapReferenceExpr(trapReferenceExpr);
+        if (result == null) result = caseValuedObjectReference(trapReferenceExpr);
+        if (result == null) result = caseComplexExpression(trapReferenceExpr);
+        if (result == null) result = caseExpression(trapReferenceExpr);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -1050,17 +965,65 @@ public class EsterelSwitch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>Signal Decl</em>'.
+   * Returns the result of interpreting the object as an instance of '<em>Channel Description</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
    * returning a non-null result will terminate the switch.
    * <!-- end-user-doc -->
    * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Signal Decl</em>'.
+   * @return the result of interpreting the object as an instance of '<em>Channel Description</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
    */
-  public T caseSignalDecl(SignalDecl object)
+  public T caseChannelDescription(ChannelDescription object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Type Identifier</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Type Identifier</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseTypeIdentifier(TypeIdentifier object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Local Signal Decl</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Local Signal Decl</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseLocalSignalDecl(LocalSignalDecl object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Local Signal List</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Local Signal List</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseLocalSignalList(LocalSignalList object)
   {
     return null;
   }
@@ -1178,49 +1141,65 @@ public class EsterelSwitch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>Constant Decl</em>'.
+   * Returns the result of interpreting the object as an instance of '<em>Constant Decls</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
    * returning a non-null result will terminate the switch.
    * <!-- end-user-doc -->
    * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Constant Decl</em>'.
+   * @return the result of interpreting the object as an instance of '<em>Constant Decls</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
    */
-  public T caseConstantDecl(ConstantDecl object)
+  public T caseConstantDecls(ConstantDecls object)
   {
     return null;
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>One Type Constant Decl</em>'.
+   * Returns the result of interpreting the object as an instance of '<em>One Type Constant Decls</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
    * returning a non-null result will terminate the switch.
    * <!-- end-user-doc -->
    * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>One Type Constant Decl</em>'.
+   * @return the result of interpreting the object as an instance of '<em>One Type Constant Decls</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
    */
-  public T caseOneTypeConstantDecl(OneTypeConstantDecl object)
+  public T caseOneTypeConstantDecls(OneTypeConstantDecls object)
   {
     return null;
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>Constant</em>'.
+   * Returns the result of interpreting the object as an instance of '<em>Constant With Value</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
    * returning a non-null result will terminate the switch.
    * <!-- end-user-doc -->
    * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Constant</em>'.
+   * @return the result of interpreting the object as an instance of '<em>Constant With Value</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
    */
-  public T caseConstant(Constant object)
+  public T caseConstantWithValue(ConstantWithValue object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Constant Value</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Constant Value</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseConstantValue(ConstantValue object)
   {
     return null;
   }
@@ -1258,6 +1237,22 @@ public class EsterelSwitch<T>
   }
 
   /**
+   * Returns the result of interpreting the object as an instance of '<em>Function Call</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Function Call</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseFunctionCall(FunctionCall object)
+  {
+    return null;
+  }
+
+  /**
    * Returns the result of interpreting the object as an instance of '<em>Procedure Decl</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
@@ -1285,6 +1280,38 @@ public class EsterelSwitch<T>
    * @generated
    */
   public T caseProcedure(Procedure object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Task Decl</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Task Decl</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseTaskDecl(TaskDecl object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Task</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Task</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseTask(Task object)
   {
     return null;
   }
@@ -1413,6 +1440,54 @@ public class EsterelSwitch<T>
    * @generated
    */
   public T caseAbortCaseSingle(AbortCaseSingle object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Weak Abort Body</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Weak Abort Body</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseWeakAbortBody(WeakAbortBody object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Weak Abort End</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Weak Abort End</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseWeakAbortEnd(WeakAbortEnd object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Weak Abort End Alt</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Weak Abort End Alt</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseWeakAbortEndAlt(WeakAbortEndAlt object)
   {
     return null;
   }
@@ -1637,22 +1712,6 @@ public class EsterelSwitch<T>
    * @generated
    */
   public T caseIfTest(IfTest object)
-  {
-    return null;
-  }
-
-  /**
-   * Returns the result of interpreting the object as an instance of '<em>Els If Part</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Els If Part</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseElsIfPart(ElsIfPart object)
   {
     return null;
   }
@@ -2042,6 +2101,22 @@ public class EsterelSwitch<T>
   }
 
   /**
+   * Returns the result of interpreting the object as an instance of '<em>Task Renaming</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Task Renaming</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseTaskRenaming(TaskRenaming object)
+  {
+    return null;
+  }
+
+  /**
    * Returns the result of interpreting the object as an instance of '<em>Signal Renaming</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
@@ -2053,38 +2128,6 @@ public class EsterelSwitch<T>
    * @generated
    */
   public T caseSignalRenaming(SignalRenaming object)
-  {
-    return null;
-  }
-
-  /**
-   * Returns the result of interpreting the object as an instance of '<em>Local Signal Decl</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Local Signal Decl</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseLocalSignalDecl(LocalSignalDecl object)
-  {
-    return null;
-  }
-
-  /**
-   * Returns the result of interpreting the object as an instance of '<em>Local Signal List</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Local Signal List</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseLocalSignalList(LocalSignalList object)
   {
     return null;
   }
@@ -2154,38 +2197,6 @@ public class EsterelSwitch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>Trap Decl</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Trap Decl</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseTrapDecl(TrapDecl object)
-  {
-    return null;
-  }
-
-  /**
-   * Returns the result of interpreting the object as an instance of '<em>Trap Handler List</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Trap Handler List</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseTrapHandlerList(TrapHandlerList object)
-  {
-    return null;
-  }
-
-  /**
    * Returns the result of interpreting the object as an instance of '<em>Trap Handler</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
@@ -2202,433 +2213,17 @@ public class EsterelSwitch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>Variable</em>'.
+   * Returns the result of interpreting the object as an instance of '<em>Local Variable</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
    * returning a non-null result will terminate the switch.
    * <!-- end-user-doc -->
    * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Variable</em>'.
+   * @return the result of interpreting the object as an instance of '<em>Local Variable</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
    */
-  public T caseVariable(Variable object)
-  {
-    return null;
-  }
-
-  /**
-   * Returns the result of interpreting the object as an instance of '<em>Variable Decl</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Variable Decl</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseVariableDecl(VariableDecl object)
-  {
-    return null;
-  }
-
-  /**
-   * Returns the result of interpreting the object as an instance of '<em>Variable List</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Variable List</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseVariableList(VariableList object)
-  {
-    return null;
-  }
-
-  /**
-   * Returns the result of interpreting the object as an instance of '<em>Variable Single</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Variable Single</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseVariableSingle(VariableSingle object)
-  {
-    return null;
-  }
-
-  /**
-   * Returns the result of interpreting the object as an instance of '<em>Weak Abort</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Weak Abort</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseWeakAbort(WeakAbort object)
-  {
-    return null;
-  }
-
-  /**
-   * Returns the result of interpreting the object as an instance of '<em>Weak Abort Body</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Weak Abort Body</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseWeakAbortBody(WeakAbortBody object)
-  {
-    return null;
-  }
-
-  /**
-   * Returns the result of interpreting the object as an instance of '<em>Weak Abort Instance</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Weak Abort Instance</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseWeakAbortInstance(WeakAbortInstance object)
-  {
-    return null;
-  }
-
-  /**
-   * Returns the result of interpreting the object as an instance of '<em>Weak Abort Case</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Weak Abort Case</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseWeakAbortCase(WeakAbortCase object)
-  {
-    return null;
-  }
-
-  /**
-   * Returns the result of interpreting the object as an instance of '<em>Data Expr</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Data Expr</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseDataExpr(DataExpr object)
-  {
-    return null;
-  }
-
-  /**
-   * Returns the result of interpreting the object as an instance of '<em>Data Mult</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Data Mult</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseDataMult(DataMult object)
-  {
-    return null;
-  }
-
-  /**
-   * Returns the result of interpreting the object as an instance of '<em>Data Equation</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Data Equation</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseDataEquation(DataEquation object)
-  {
-    return null;
-  }
-
-  /**
-   * Returns the result of interpreting the object as an instance of '<em>Data Minus</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Data Minus</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseDataMinus(DataMinus object)
-  {
-    return null;
-  }
-
-  /**
-   * Returns the result of interpreting the object as an instance of '<em>Data Unary Expr</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Data Unary Expr</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseDataUnaryExpr(DataUnaryExpr object)
-  {
-    return null;
-  }
-
-  /**
-   * Returns the result of interpreting the object as an instance of '<em>Data Value ID</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Data Value ID</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseDataValueID(DataValueID object)
-  {
-    return null;
-  }
-
-  /**
-   * Returns the result of interpreting the object as an instance of '<em>Data Value Float</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Data Value Float</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseDataValueFloat(DataValueFloat object)
-  {
-    return null;
-  }
-
-  /**
-   * Returns the result of interpreting the object as an instance of '<em>Data Value Boolean</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Data Value Boolean</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseDataValueBoolean(DataValueBoolean object)
-  {
-    return null;
-  }
-
-  /**
-   * Returns the result of interpreting the object as an instance of '<em>Data Value Int</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Data Value Int</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseDataValueInt(DataValueInt object)
-  {
-    return null;
-  }
-
-  /**
-   * Returns the result of interpreting the object as an instance of '<em>Data Value String</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Data Value String</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseDataValueString(DataValueString object)
-  {
-    return null;
-  }
-
-  /**
-   * Returns the result of interpreting the object as an instance of '<em>Data Block</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Data Block</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseDataBlock(DataBlock object)
-  {
-    return null;
-  }
-
-  /**
-   * Returns the result of interpreting the object as an instance of '<em>Data Current</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Data Current</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseDataCurrent(DataCurrent object)
-  {
-    return null;
-  }
-
-  /**
-   * Returns the result of interpreting the object as an instance of '<em>Data Pre</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Data Pre</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseDataPre(DataPre object)
-  {
-    return null;
-  }
-
-  /**
-   * Returns the result of interpreting the object as an instance of '<em>Data Trap</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Data Trap</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseDataTrap(DataTrap object)
-  {
-    return null;
-  }
-
-  /**
-   * Returns the result of interpreting the object as an instance of '<em>Data Function</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Data Function</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseDataFunction(DataFunction object)
-  {
-    return null;
-  }
-
-  /**
-   * Returns the result of interpreting the object as an instance of '<em>Trap Expr</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Trap Expr</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseTrapExpr(TrapExpr object)
-  {
-    return null;
-  }
-
-  /**
-   * Returns the result of interpreting the object as an instance of '<em>Sig Expr</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Sig Expr</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseSigExpr(SigExpr object)
-  {
-    return null;
-  }
-
-  /**
-   * Returns the result of interpreting the object as an instance of '<em>Sig Expr AND</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Sig Expr AND</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseSigExprAND(SigExprAND object)
-  {
-    return null;
-  }
-
-  /**
-   * Returns the result of interpreting the object as an instance of '<em>Sig Expr Unary</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Sig Expr Unary</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseSigExprUnary(SigExprUnary object)
+  public T caseLocalVariable(LocalVariable object)
   {
     return null;
   }
@@ -2666,129 +2261,113 @@ public class EsterelSwitch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>Channel Description</em>'.
+   * Returns the result of interpreting the object as an instance of '<em>Exec</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
    * returning a non-null result will terminate the switch.
    * <!-- end-user-doc -->
    * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Channel Description</em>'.
+   * @return the result of interpreting the object as an instance of '<em>Exec</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
    */
-  public T caseChannelDescription(ChannelDescription object)
+  public T caseExec(Exec object)
   {
     return null;
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>Channel Type</em>'.
+   * Returns the result of interpreting the object as an instance of '<em>Exec Body</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
    * returning a non-null result will terminate the switch.
    * <!-- end-user-doc -->
    * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Channel Type</em>'.
+   * @return the result of interpreting the object as an instance of '<em>Exec Body</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
    */
-  public T caseChannelType(ChannelType object)
+  public T caseExecBody(ExecBody object)
   {
     return null;
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>Signal</em>'.
+   * Returns the result of interpreting the object as an instance of '<em>Exec Case</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
    * returning a non-null result will terminate the switch.
    * <!-- end-user-doc -->
    * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Signal</em>'.
+   * @return the result of interpreting the object as an instance of '<em>Exec Case</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
    */
-  public T caseSignal(Signal object)
+  public T caseExecCase(ExecCase object)
   {
     return null;
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>Sensor</em>'.
+   * Returns the result of interpreting the object as an instance of '<em>Sensor With Type</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
    * returning a non-null result will terminate the switch.
    * <!-- end-user-doc -->
    * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Sensor</em>'.
+   * @return the result of interpreting the object as an instance of '<em>Sensor With Type</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
    */
-  public T caseSensor(Sensor object)
+  public T caseSensorWithType(SensorWithType object)
   {
     return null;
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>Input</em>'.
+   * Returns the result of interpreting the object as an instance of '<em>Type Identifier</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
    * returning a non-null result will terminate the switch.
    * <!-- end-user-doc -->
    * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Input</em>'.
+   * @return the result of interpreting the object as an instance of '<em>Type Identifier</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
    */
-  public T caseInput(Input object)
+  public T caseEsterelTypeIdentifier(EsterelTypeIdentifier object)
   {
     return null;
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>Output</em>'.
+   * Returns the result of interpreting the object as an instance of '<em>Type</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
    * returning a non-null result will terminate the switch.
    * <!-- end-user-doc -->
    * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Output</em>'.
+   * @return the result of interpreting the object as an instance of '<em>Type</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
    */
-  public T caseOutput(Output object)
+  public T caseEsterelType(EsterelType object)
   {
     return null;
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>Input Output</em>'.
+   * Returns the result of interpreting the object as an instance of '<em>Local Signal</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
    * returning a non-null result will terminate the switch.
    * <!-- end-user-doc -->
    * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Input Output</em>'.
+   * @return the result of interpreting the object as an instance of '<em>Local Signal</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
    */
-  public T caseInputOutput(InputOutput object)
-  {
-    return null;
-  }
-
-  /**
-   * Returns the result of interpreting the object as an instance of '<em>Return</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Return</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseReturn(Return object)
+  public T caseLocalSignal(LocalSignal object)
   {
     return null;
   }
@@ -2805,6 +2384,22 @@ public class EsterelSwitch<T>
    * @generated
    */
   public T caseRelation(Relation object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Constant</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Constant</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseConstant(Constant object)
   {
     return null;
   }
@@ -2842,33 +2437,273 @@ public class EsterelSwitch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>Local Signal</em>'.
+   * Returns the result of interpreting the object as an instance of '<em>Weak Abort</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
    * returning a non-null result will terminate the switch.
    * <!-- end-user-doc -->
    * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Local Signal</em>'.
+   * @return the result of interpreting the object as an instance of '<em>Weak Abort</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
    */
-  public T caseLocalSignal(LocalSignal object)
+  public T caseWeakAbort(WeakAbort object)
   {
     return null;
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>Data Tick</em>'.
+   * Returns the result of interpreting the object as an instance of '<em>Weak Abort Instance</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
    * returning a non-null result will terminate the switch.
    * <!-- end-user-doc -->
    * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Data Tick</em>'.
+   * @return the result of interpreting the object as an instance of '<em>Weak Abort Instance</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
    */
-  public T caseDataTick(DataTick object)
+  public T caseWeakAbortInstance(WeakAbortInstance object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Weak Abort Case</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Weak Abort Case</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseWeakAbortCase(WeakAbortCase object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Trap Decl</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Trap Decl</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseTrapDecl(TrapDecl object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Trap Expression</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Trap Expression</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseTrapExpression(TrapExpression object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Function Expression</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Function Expression</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseFunctionExpression(FunctionExpression object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Constant Expression</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Constant Expression</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseConstantExpression(ConstantExpression object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Trap Reference Expr</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Trap Reference Expr</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseTrapReferenceExpr(TrapReferenceExpr object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Channel Description</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Channel Description</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseKExpressions_ChannelDescription(de.cau.cs.kieler.core.kexpressions.ChannelDescription object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Type Identifier</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Type Identifier</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseKExpressions_TypeIdentifier(de.cau.cs.kieler.core.kexpressions.TypeIdentifier object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Annotatable</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Annotatable</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseAnnotatable(Annotatable object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Valued Object</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Valued Object</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseValuedObject(ValuedObject object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Signal</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Signal</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseSignal(Signal object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>ISignal</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>ISignal</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseISignal(ISignal object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Expression</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Expression</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseExpression(Expression object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Complex Expression</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Complex Expression</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseComplexExpression(ComplexExpression object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Valued Object Reference</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Valued Object Reference</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseValuedObjectReference(ValuedObjectReference object)
   {
     return null;
   }

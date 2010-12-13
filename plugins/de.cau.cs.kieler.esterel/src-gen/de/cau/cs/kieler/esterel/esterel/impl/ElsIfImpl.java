@@ -2,10 +2,12 @@
  * <copyright>
  * </copyright>
  *
+
  */
 package de.cau.cs.kieler.esterel.esterel.impl;
 
-import de.cau.cs.kieler.esterel.esterel.DataExpr;
+import de.cau.cs.kieler.core.kexpressions.Expression;
+
 import de.cau.cs.kieler.esterel.esterel.ElsIf;
 import de.cau.cs.kieler.esterel.esterel.EsterelPackage;
 import de.cau.cs.kieler.esterel.esterel.ThenPart;
@@ -43,7 +45,7 @@ public class ElsIfImpl extends MinimalEObjectImpl.Container implements ElsIf
    * @generated
    * @ordered
    */
-  protected DataExpr expr;
+  protected Expression expr;
 
   /**
    * The cached value of the '{@link #getThenPart() <em>Then Part</em>}' containment reference.
@@ -81,7 +83,7 @@ public class ElsIfImpl extends MinimalEObjectImpl.Container implements ElsIf
    * <!-- end-user-doc -->
    * @generated
    */
-  public DataExpr getExpr()
+  public Expression getExpr()
   {
     return expr;
   }
@@ -91,9 +93,9 @@ public class ElsIfImpl extends MinimalEObjectImpl.Container implements ElsIf
    * <!-- end-user-doc -->
    * @generated
    */
-  public NotificationChain basicSetExpr(DataExpr newExpr, NotificationChain msgs)
+  public NotificationChain basicSetExpr(Expression newExpr, NotificationChain msgs)
   {
-    DataExpr oldExpr = expr;
+    Expression oldExpr = expr;
     expr = newExpr;
     if (eNotificationRequired())
     {
@@ -108,7 +110,7 @@ public class ElsIfImpl extends MinimalEObjectImpl.Container implements ElsIf
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setExpr(DataExpr newExpr)
+  public void setExpr(Expression newExpr)
   {
     if (newExpr != expr)
     {
@@ -219,7 +221,7 @@ public class ElsIfImpl extends MinimalEObjectImpl.Container implements ElsIf
     switch (featureID)
     {
       case EsterelPackage.ELS_IF__EXPR:
-        setExpr((DataExpr)newValue);
+        setExpr((Expression)newValue);
         return;
       case EsterelPackage.ELS_IF__THEN_PART:
         setThenPart((ThenPart)newValue);
@@ -239,7 +241,7 @@ public class ElsIfImpl extends MinimalEObjectImpl.Container implements ElsIf
     switch (featureID)
     {
       case EsterelPackage.ELS_IF__EXPR:
-        setExpr((DataExpr)null);
+        setExpr((Expression)null);
         return;
       case EsterelPackage.ELS_IF__THEN_PART:
         setThenPart((ThenPart)null);

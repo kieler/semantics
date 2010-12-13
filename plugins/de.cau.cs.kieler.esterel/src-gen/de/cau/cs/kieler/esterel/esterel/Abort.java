@@ -2,9 +2,11 @@
  * <copyright>
  * </copyright>
  *
+
  */
 package de.cau.cs.kieler.esterel.esterel;
 
+import org.eclipse.emf.ecore.EObject;
 
 /**
  * <!-- begin-user-doc -->
@@ -60,12 +62,12 @@ public interface Abort extends Statement
    * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Body</em>' containment reference.
-   * @see #setBody(AbortBody)
+   * @see #setBody(EObject)
    * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getAbort_Body()
    * @model containment="true"
    * @generated
    */
-  AbortBody getBody();
+  EObject getBody();
 
   /**
    * Sets the value of the '{@link de.cau.cs.kieler.esterel.esterel.Abort#getBody <em>Body</em>}' containment reference.
@@ -75,6 +77,6 @@ public interface Abort extends Statement
    * @see #getBody()
    * @generated
    */
-  void setBody(AbortBody value);
+  void setBody(EObject value);
 
 } // Abort

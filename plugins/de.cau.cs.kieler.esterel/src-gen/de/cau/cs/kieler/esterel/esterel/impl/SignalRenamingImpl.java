@@ -2,11 +2,13 @@
  * <copyright>
  * </copyright>
  *
+
  */
 package de.cau.cs.kieler.esterel.esterel.impl;
 
+import de.cau.cs.kieler.core.kexpressions.ISignal;
+
 import de.cau.cs.kieler.esterel.esterel.EsterelPackage;
-import de.cau.cs.kieler.esterel.esterel.Signal;
 import de.cau.cs.kieler.esterel.esterel.SignalRenaming;
 
 import org.eclipse.emf.common.notify.Notification;
@@ -41,7 +43,7 @@ public class SignalRenamingImpl extends MinimalEObjectImpl.Container implements 
    * @generated
    * @ordered
    */
-  protected Signal newName;
+  protected ISignal newName;
 
   /**
    * The cached value of the '{@link #getOldName() <em>Old Name</em>}' reference.
@@ -51,7 +53,7 @@ public class SignalRenamingImpl extends MinimalEObjectImpl.Container implements 
    * @generated
    * @ordered
    */
-  protected Signal oldName;
+  protected ISignal oldName;
 
   /**
    * <!-- begin-user-doc -->
@@ -79,12 +81,12 @@ public class SignalRenamingImpl extends MinimalEObjectImpl.Container implements 
    * <!-- end-user-doc -->
    * @generated
    */
-  public Signal getNewName()
+  public ISignal getNewName()
   {
     if (newName != null && newName.eIsProxy())
     {
       InternalEObject oldNewName = (InternalEObject)newName;
-      newName = (Signal)eResolveProxy(oldNewName);
+      newName = (ISignal)eResolveProxy(oldNewName);
       if (newName != oldNewName)
       {
         if (eNotificationRequired())
@@ -99,7 +101,7 @@ public class SignalRenamingImpl extends MinimalEObjectImpl.Container implements 
    * <!-- end-user-doc -->
    * @generated
    */
-  public Signal basicGetNewName()
+  public ISignal basicGetNewName()
   {
     return newName;
   }
@@ -109,9 +111,9 @@ public class SignalRenamingImpl extends MinimalEObjectImpl.Container implements 
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setNewName(Signal newNewName)
+  public void setNewName(ISignal newNewName)
   {
-    Signal oldNewName = newName;
+    ISignal oldNewName = newName;
     newName = newNewName;
     if (eNotificationRequired())
       eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.SIGNAL_RENAMING__NEW_NAME, oldNewName, newName));
@@ -122,12 +124,12 @@ public class SignalRenamingImpl extends MinimalEObjectImpl.Container implements 
    * <!-- end-user-doc -->
    * @generated
    */
-  public Signal getOldName()
+  public ISignal getOldName()
   {
     if (oldName != null && oldName.eIsProxy())
     {
       InternalEObject oldOldName = (InternalEObject)oldName;
-      oldName = (Signal)eResolveProxy(oldOldName);
+      oldName = (ISignal)eResolveProxy(oldOldName);
       if (oldName != oldOldName)
       {
         if (eNotificationRequired())
@@ -142,7 +144,7 @@ public class SignalRenamingImpl extends MinimalEObjectImpl.Container implements 
    * <!-- end-user-doc -->
    * @generated
    */
-  public Signal basicGetOldName()
+  public ISignal basicGetOldName()
   {
     return oldName;
   }
@@ -152,9 +154,9 @@ public class SignalRenamingImpl extends MinimalEObjectImpl.Container implements 
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setOldName(Signal newOldName)
+  public void setOldName(ISignal newOldName)
   {
-    Signal oldOldName = oldName;
+    ISignal oldOldName = oldName;
     oldName = newOldName;
     if (eNotificationRequired())
       eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.SIGNAL_RENAMING__OLD_NAME, oldOldName, oldName));
@@ -191,10 +193,10 @@ public class SignalRenamingImpl extends MinimalEObjectImpl.Container implements 
     switch (featureID)
     {
       case EsterelPackage.SIGNAL_RENAMING__NEW_NAME:
-        setNewName((Signal)newValue);
+        setNewName((ISignal)newValue);
         return;
       case EsterelPackage.SIGNAL_RENAMING__OLD_NAME:
-        setOldName((Signal)newValue);
+        setOldName((ISignal)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -211,10 +213,10 @@ public class SignalRenamingImpl extends MinimalEObjectImpl.Container implements 
     switch (featureID)
     {
       case EsterelPackage.SIGNAL_RENAMING__NEW_NAME:
-        setNewName((Signal)null);
+        setNewName((ISignal)null);
         return;
       case EsterelPackage.SIGNAL_RENAMING__OLD_NAME:
-        setOldName((Signal)null);
+        setOldName((ISignal)null);
         return;
     }
     super.eUnset(featureID);

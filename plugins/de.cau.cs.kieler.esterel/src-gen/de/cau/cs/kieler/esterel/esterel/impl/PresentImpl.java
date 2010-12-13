@@ -2,6 +2,7 @@
  * <copyright>
  * </copyright>
  *
+
  */
 package de.cau.cs.kieler.esterel.esterel.impl;
 
@@ -27,6 +28,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * <ul>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.PresentImpl#getBody <em>Body</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.PresentImpl#getElsePart <em>Else Part</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.PresentImpl#getOptEnd <em>Opt End</em>}</li>
  * </ul>
  * </p>
  *
@@ -53,6 +55,26 @@ public class PresentImpl extends StatementImpl implements Present
    * @ordered
    */
   protected ElsePart elsePart;
+
+  /**
+   * The default value of the '{@link #getOptEnd() <em>Opt End</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getOptEnd()
+   * @generated
+   * @ordered
+   */
+  protected static final String OPT_END_EDEFAULT = null;
+
+  /**
+   * The cached value of the '{@link #getOptEnd() <em>Opt End</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getOptEnd()
+   * @generated
+   * @ordered
+   */
+  protected String optEnd = OPT_END_EDEFAULT;
 
   /**
    * <!-- begin-user-doc -->
@@ -176,6 +198,29 @@ public class PresentImpl extends StatementImpl implements Present
    * <!-- end-user-doc -->
    * @generated
    */
+  public String getOptEnd()
+  {
+    return optEnd;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setOptEnd(String newOptEnd)
+  {
+    String oldOptEnd = optEnd;
+    optEnd = newOptEnd;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.PRESENT__OPT_END, oldOptEnd, optEnd));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
   {
@@ -203,6 +248,8 @@ public class PresentImpl extends StatementImpl implements Present
         return getBody();
       case EsterelPackage.PRESENT__ELSE_PART:
         return getElsePart();
+      case EsterelPackage.PRESENT__OPT_END:
+        return getOptEnd();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -222,6 +269,9 @@ public class PresentImpl extends StatementImpl implements Present
         return;
       case EsterelPackage.PRESENT__ELSE_PART:
         setElsePart((ElsePart)newValue);
+        return;
+      case EsterelPackage.PRESENT__OPT_END:
+        setOptEnd((String)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -243,6 +293,9 @@ public class PresentImpl extends StatementImpl implements Present
       case EsterelPackage.PRESENT__ELSE_PART:
         setElsePart((ElsePart)null);
         return;
+      case EsterelPackage.PRESENT__OPT_END:
+        setOptEnd(OPT_END_EDEFAULT);
+        return;
     }
     super.eUnset(featureID);
   }
@@ -261,8 +314,27 @@ public class PresentImpl extends StatementImpl implements Present
         return body != null;
       case EsterelPackage.PRESENT__ELSE_PART:
         return elsePart != null;
+      case EsterelPackage.PRESENT__OPT_END:
+        return OPT_END_EDEFAULT == null ? optEnd != null : !OPT_END_EDEFAULT.equals(optEnd);
     }
     return super.eIsSet(featureID);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public String toString()
+  {
+    if (eIsProxy()) return super.toString();
+
+    StringBuffer result = new StringBuffer(super.toString());
+    result.append(" (optEnd: ");
+    result.append(optEnd);
+    result.append(')');
+    return result.toString();
   }
 
 } //PresentImpl

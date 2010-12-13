@@ -2,6 +2,7 @@
  * <copyright>
  * </copyright>
  *
+
  */
 package de.cau.cs.kieler.esterel.esterel;
 
@@ -56,35 +57,35 @@ public interface Procedure extends EObject
   void setName(String value);
 
   /**
-   * Returns the value of the '<em><b>Id List1</b></em>' attribute list.
-   * The list contents are of type {@link java.lang.String}.
+   * Returns the value of the '<em><b>Id List1</b></em>' containment reference list.
+   * The list contents are of type {@link de.cau.cs.kieler.esterel.esterel.TypeIdentifier}.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Id List1</em>' attribute list isn't clear,
+   * If the meaning of the '<em>Id List1</em>' containment reference list isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Id List1</em>' attribute list.
+   * @return the value of the '<em>Id List1</em>' containment reference list.
    * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getProcedure_IdList1()
-   * @model unique="false"
+   * @model containment="true"
    * @generated
    */
-  EList<String> getIdList1();
+  EList<TypeIdentifier> getIdList1();
 
   /**
-   * Returns the value of the '<em><b>Id List2</b></em>' attribute list.
-   * The list contents are of type {@link java.lang.String}.
+   * Returns the value of the '<em><b>Id List2</b></em>' containment reference list.
+   * The list contents are of type {@link de.cau.cs.kieler.esterel.esterel.TypeIdentifier}.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Id List2</em>' attribute list isn't clear,
+   * If the meaning of the '<em>Id List2</em>' containment reference list isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Id List2</em>' attribute list.
+   * @return the value of the '<em>Id List2</em>' containment reference list.
    * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getProcedure_IdList2()
-   * @model unique="false"
+   * @model containment="true"
    * @generated
    */
-  EList<String> getIdList2();
+  EList<TypeIdentifier> getIdList2();
 
 } // Procedure

@@ -2,6 +2,7 @@
  * <copyright>
  * </copyright>
  *
+
  */
 package de.cau.cs.kieler.esterel.esterel.impl;
 
@@ -30,7 +31,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.ProgramImpl#getModule <em>Module</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.ProgramImpl#getModules <em>Modules</em>}</li>
  * </ul>
  * </p>
  *
@@ -39,14 +40,14 @@ import org.eclipse.emf.ecore.util.InternalEList;
 public class ProgramImpl extends MinimalEObjectImpl.Container implements Program
 {
   /**
-   * The cached value of the '{@link #getModule() <em>Module</em>}' containment reference list.
+   * The cached value of the '{@link #getModules() <em>Modules</em>}' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getModule()
+   * @see #getModules()
    * @generated
    * @ordered
    */
-  protected EList<Module> module;
+  protected EList<Module> modules;
 
   /**
    * <!-- begin-user-doc -->
@@ -74,13 +75,13 @@ public class ProgramImpl extends MinimalEObjectImpl.Container implements Program
    * <!-- end-user-doc -->
    * @generated
    */
-  public EList<Module> getModule()
+  public EList<Module> getModules()
   {
-    if (module == null)
+    if (modules == null)
     {
-      module = new EObjectContainmentEList<Module>(Module.class, this, EsterelPackage.PROGRAM__MODULE);
+      modules = new EObjectContainmentEList<Module>(Module.class, this, EsterelPackage.PROGRAM__MODULES);
     }
-    return module;
+    return modules;
   }
 
   /**
@@ -93,8 +94,8 @@ public class ProgramImpl extends MinimalEObjectImpl.Container implements Program
   {
     switch (featureID)
     {
-      case EsterelPackage.PROGRAM__MODULE:
-        return ((InternalEList<?>)getModule()).basicRemove(otherEnd, msgs);
+      case EsterelPackage.PROGRAM__MODULES:
+        return ((InternalEList<?>)getModules()).basicRemove(otherEnd, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
@@ -109,8 +110,8 @@ public class ProgramImpl extends MinimalEObjectImpl.Container implements Program
   {
     switch (featureID)
     {
-      case EsterelPackage.PROGRAM__MODULE:
-        return getModule();
+      case EsterelPackage.PROGRAM__MODULES:
+        return getModules();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -126,9 +127,9 @@ public class ProgramImpl extends MinimalEObjectImpl.Container implements Program
   {
     switch (featureID)
     {
-      case EsterelPackage.PROGRAM__MODULE:
-        getModule().clear();
-        getModule().addAll((Collection<? extends Module>)newValue);
+      case EsterelPackage.PROGRAM__MODULES:
+        getModules().clear();
+        getModules().addAll((Collection<? extends Module>)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -144,8 +145,8 @@ public class ProgramImpl extends MinimalEObjectImpl.Container implements Program
   {
     switch (featureID)
     {
-      case EsterelPackage.PROGRAM__MODULE:
-        getModule().clear();
+      case EsterelPackage.PROGRAM__MODULES:
+        getModules().clear();
         return;
     }
     super.eUnset(featureID);
@@ -161,8 +162,8 @@ public class ProgramImpl extends MinimalEObjectImpl.Container implements Program
   {
     switch (featureID)
     {
-      case EsterelPackage.PROGRAM__MODULE:
-        return module != null && !module.isEmpty();
+      case EsterelPackage.PROGRAM__MODULES:
+        return modules != null && !modules.isEmpty();
     }
     return super.eIsSet(featureID);
   }

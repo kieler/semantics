@@ -2,8 +2,11 @@
  * <copyright>
  * </copyright>
  *
+
  */
 package de.cau.cs.kieler.esterel.esterel;
+
+import de.cau.cs.kieler.core.kexpressions.Expression;
 
 import org.eclipse.emf.ecore.EObject;
 
@@ -16,6 +19,7 @@ import org.eclipse.emf.ecore.EObject;
  * The following features are supported:
  * <ul>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.PresentEvent#getExpression <em>Expression</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.esterel.esterel.PresentEvent#getTick <em>Tick</em>}</li>
  * </ul>
  * </p>
  *
@@ -34,12 +38,12 @@ public interface PresentEvent extends EObject
    * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Expression</em>' containment reference.
-   * @see #setExpression(SigExpr)
+   * @see #setExpression(Expression)
    * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getPresentEvent_Expression()
    * @model containment="true"
    * @generated
    */
-  SigExpr getExpression();
+  Expression getExpression();
 
   /**
    * Sets the value of the '{@link de.cau.cs.kieler.esterel.esterel.PresentEvent#getExpression <em>Expression</em>}' containment reference.
@@ -49,6 +53,32 @@ public interface PresentEvent extends EObject
    * @see #getExpression()
    * @generated
    */
-  void setExpression(SigExpr value);
+  void setExpression(Expression value);
+
+  /**
+   * Returns the value of the '<em><b>Tick</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Tick</em>' attribute isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Tick</em>' attribute.
+   * @see #setTick(String)
+   * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getPresentEvent_Tick()
+   * @model
+   * @generated
+   */
+  String getTick();
+
+  /**
+   * Sets the value of the '{@link de.cau.cs.kieler.esterel.esterel.PresentEvent#getTick <em>Tick</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Tick</em>' attribute.
+   * @see #getTick()
+   * @generated
+   */
+  void setTick(String value);
 
 } // PresentEvent

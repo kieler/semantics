@@ -2,12 +2,11 @@
  * <copyright>
  * </copyright>
  *
+
  */
 package de.cau.cs.kieler.esterel.esterel.impl;
 
 import de.cau.cs.kieler.esterel.esterel.Do;
-import de.cau.cs.kieler.esterel.esterel.DoUpto;
-import de.cau.cs.kieler.esterel.esterel.DoWatching;
 import de.cau.cs.kieler.esterel.esterel.EsterelPackage;
 import de.cau.cs.kieler.esterel.esterel.Statement;
 
@@ -15,6 +14,7 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
@@ -27,8 +27,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * The following features are implemented:
  * <ul>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.DoImpl#getStatement <em>Statement</em>}</li>
- *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.DoImpl#getEndUp <em>End Up</em>}</li>
- *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.DoImpl#getEndWatch <em>End Watch</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.DoImpl#getEnd <em>End</em>}</li>
  * </ul>
  * </p>
  *
@@ -47,24 +46,14 @@ public class DoImpl extends StatementImpl implements Do
   protected Statement statement;
 
   /**
-   * The cached value of the '{@link #getEndUp() <em>End Up</em>}' containment reference.
+   * The cached value of the '{@link #getEnd() <em>End</em>}' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getEndUp()
+   * @see #getEnd()
    * @generated
    * @ordered
    */
-  protected DoUpto endUp;
-
-  /**
-   * The cached value of the '{@link #getEndWatch() <em>End Watch</em>}' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getEndWatch()
-   * @generated
-   * @ordered
-   */
-  protected DoWatching endWatch;
+  protected EObject end;
 
   /**
    * <!-- begin-user-doc -->
@@ -140,9 +129,9 @@ public class DoImpl extends StatementImpl implements Do
    * <!-- end-user-doc -->
    * @generated
    */
-  public DoUpto getEndUp()
+  public EObject getEnd()
   {
-    return endUp;
+    return end;
   }
 
   /**
@@ -150,13 +139,13 @@ public class DoImpl extends StatementImpl implements Do
    * <!-- end-user-doc -->
    * @generated
    */
-  public NotificationChain basicSetEndUp(DoUpto newEndUp, NotificationChain msgs)
+  public NotificationChain basicSetEnd(EObject newEnd, NotificationChain msgs)
   {
-    DoUpto oldEndUp = endUp;
-    endUp = newEndUp;
+    EObject oldEnd = end;
+    end = newEnd;
     if (eNotificationRequired())
     {
-      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, EsterelPackage.DO__END_UP, oldEndUp, newEndUp);
+      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, EsterelPackage.DO__END, oldEnd, newEnd);
       if (msgs == null) msgs = notification; else msgs.add(notification);
     }
     return msgs;
@@ -167,68 +156,20 @@ public class DoImpl extends StatementImpl implements Do
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setEndUp(DoUpto newEndUp)
+  public void setEnd(EObject newEnd)
   {
-    if (newEndUp != endUp)
+    if (newEnd != end)
     {
       NotificationChain msgs = null;
-      if (endUp != null)
-        msgs = ((InternalEObject)endUp).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.DO__END_UP, null, msgs);
-      if (newEndUp != null)
-        msgs = ((InternalEObject)newEndUp).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.DO__END_UP, null, msgs);
-      msgs = basicSetEndUp(newEndUp, msgs);
+      if (end != null)
+        msgs = ((InternalEObject)end).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.DO__END, null, msgs);
+      if (newEnd != null)
+        msgs = ((InternalEObject)newEnd).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.DO__END, null, msgs);
+      msgs = basicSetEnd(newEnd, msgs);
       if (msgs != null) msgs.dispatch();
     }
     else if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.DO__END_UP, newEndUp, newEndUp));
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public DoWatching getEndWatch()
-  {
-    return endWatch;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public NotificationChain basicSetEndWatch(DoWatching newEndWatch, NotificationChain msgs)
-  {
-    DoWatching oldEndWatch = endWatch;
-    endWatch = newEndWatch;
-    if (eNotificationRequired())
-    {
-      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, EsterelPackage.DO__END_WATCH, oldEndWatch, newEndWatch);
-      if (msgs == null) msgs = notification; else msgs.add(notification);
-    }
-    return msgs;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public void setEndWatch(DoWatching newEndWatch)
-  {
-    if (newEndWatch != endWatch)
-    {
-      NotificationChain msgs = null;
-      if (endWatch != null)
-        msgs = ((InternalEObject)endWatch).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.DO__END_WATCH, null, msgs);
-      if (newEndWatch != null)
-        msgs = ((InternalEObject)newEndWatch).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.DO__END_WATCH, null, msgs);
-      msgs = basicSetEndWatch(newEndWatch, msgs);
-      if (msgs != null) msgs.dispatch();
-    }
-    else if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.DO__END_WATCH, newEndWatch, newEndWatch));
+      eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.DO__END, newEnd, newEnd));
   }
 
   /**
@@ -243,10 +184,8 @@ public class DoImpl extends StatementImpl implements Do
     {
       case EsterelPackage.DO__STATEMENT:
         return basicSetStatement(null, msgs);
-      case EsterelPackage.DO__END_UP:
-        return basicSetEndUp(null, msgs);
-      case EsterelPackage.DO__END_WATCH:
-        return basicSetEndWatch(null, msgs);
+      case EsterelPackage.DO__END:
+        return basicSetEnd(null, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
@@ -263,10 +202,8 @@ public class DoImpl extends StatementImpl implements Do
     {
       case EsterelPackage.DO__STATEMENT:
         return getStatement();
-      case EsterelPackage.DO__END_UP:
-        return getEndUp();
-      case EsterelPackage.DO__END_WATCH:
-        return getEndWatch();
+      case EsterelPackage.DO__END:
+        return getEnd();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -284,11 +221,8 @@ public class DoImpl extends StatementImpl implements Do
       case EsterelPackage.DO__STATEMENT:
         setStatement((Statement)newValue);
         return;
-      case EsterelPackage.DO__END_UP:
-        setEndUp((DoUpto)newValue);
-        return;
-      case EsterelPackage.DO__END_WATCH:
-        setEndWatch((DoWatching)newValue);
+      case EsterelPackage.DO__END:
+        setEnd((EObject)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -307,11 +241,8 @@ public class DoImpl extends StatementImpl implements Do
       case EsterelPackage.DO__STATEMENT:
         setStatement((Statement)null);
         return;
-      case EsterelPackage.DO__END_UP:
-        setEndUp((DoUpto)null);
-        return;
-      case EsterelPackage.DO__END_WATCH:
-        setEndWatch((DoWatching)null);
+      case EsterelPackage.DO__END:
+        setEnd((EObject)null);
         return;
     }
     super.eUnset(featureID);
@@ -329,10 +260,8 @@ public class DoImpl extends StatementImpl implements Do
     {
       case EsterelPackage.DO__STATEMENT:
         return statement != null;
-      case EsterelPackage.DO__END_UP:
-        return endUp != null;
-      case EsterelPackage.DO__END_WATCH:
-        return endWatch != null;
+      case EsterelPackage.DO__END:
+        return end != null;
     }
     return super.eIsSet(featureID);
   }

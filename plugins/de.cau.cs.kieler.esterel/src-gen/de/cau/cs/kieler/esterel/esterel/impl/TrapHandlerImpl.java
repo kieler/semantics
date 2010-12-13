@@ -2,12 +2,14 @@
  * <copyright>
  * </copyright>
  *
+
  */
 package de.cau.cs.kieler.esterel.esterel.impl;
 
+import de.cau.cs.kieler.core.kexpressions.Expression;
+
 import de.cau.cs.kieler.esterel.esterel.EsterelPackage;
 import de.cau.cs.kieler.esterel.esterel.Statement;
-import de.cau.cs.kieler.esterel.esterel.TrapExpr;
 import de.cau.cs.kieler.esterel.esterel.TrapHandler;
 
 import org.eclipse.emf.common.notify.Notification;
@@ -43,7 +45,7 @@ public class TrapHandlerImpl extends MinimalEObjectImpl.Container implements Tra
    * @generated
    * @ordered
    */
-  protected TrapExpr trapExpr;
+  protected Expression trapExpr;
 
   /**
    * The cached value of the '{@link #getStatement() <em>Statement</em>}' containment reference.
@@ -81,7 +83,7 @@ public class TrapHandlerImpl extends MinimalEObjectImpl.Container implements Tra
    * <!-- end-user-doc -->
    * @generated
    */
-  public TrapExpr getTrapExpr()
+  public Expression getTrapExpr()
   {
     return trapExpr;
   }
@@ -91,9 +93,9 @@ public class TrapHandlerImpl extends MinimalEObjectImpl.Container implements Tra
    * <!-- end-user-doc -->
    * @generated
    */
-  public NotificationChain basicSetTrapExpr(TrapExpr newTrapExpr, NotificationChain msgs)
+  public NotificationChain basicSetTrapExpr(Expression newTrapExpr, NotificationChain msgs)
   {
-    TrapExpr oldTrapExpr = trapExpr;
+    Expression oldTrapExpr = trapExpr;
     trapExpr = newTrapExpr;
     if (eNotificationRequired())
     {
@@ -108,7 +110,7 @@ public class TrapHandlerImpl extends MinimalEObjectImpl.Container implements Tra
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setTrapExpr(TrapExpr newTrapExpr)
+  public void setTrapExpr(Expression newTrapExpr)
   {
     if (newTrapExpr != trapExpr)
     {
@@ -219,7 +221,7 @@ public class TrapHandlerImpl extends MinimalEObjectImpl.Container implements Tra
     switch (featureID)
     {
       case EsterelPackage.TRAP_HANDLER__TRAP_EXPR:
-        setTrapExpr((TrapExpr)newValue);
+        setTrapExpr((Expression)newValue);
         return;
       case EsterelPackage.TRAP_HANDLER__STATEMENT:
         setStatement((Statement)newValue);
@@ -239,7 +241,7 @@ public class TrapHandlerImpl extends MinimalEObjectImpl.Container implements Tra
     switch (featureID)
     {
       case EsterelPackage.TRAP_HANDLER__TRAP_EXPR:
-        setTrapExpr((TrapExpr)null);
+        setTrapExpr((Expression)null);
         return;
       case EsterelPackage.TRAP_HANDLER__STATEMENT:
         setStatement((Statement)null);

@@ -2,12 +2,14 @@
  * <copyright>
  * </copyright>
  *
+
  */
 package de.cau.cs.kieler.esterel.esterel.impl;
 
+import de.cau.cs.kieler.core.kexpressions.ISignal;
+
 import de.cau.cs.kieler.esterel.esterel.EsterelPackage;
 import de.cau.cs.kieler.esterel.esterel.RelationIncompatibility;
-import de.cau.cs.kieler.esterel.esterel.Signal;
 
 import java.util.Collection;
 
@@ -40,7 +42,7 @@ public class RelationIncompatibilityImpl extends RelationTypeImpl implements Rel
    * @generated
    * @ordered
    */
-  protected EList<Signal> incomp;
+  protected EList<ISignal> incomp;
 
   /**
    * <!-- begin-user-doc -->
@@ -68,11 +70,11 @@ public class RelationIncompatibilityImpl extends RelationTypeImpl implements Rel
    * <!-- end-user-doc -->
    * @generated
    */
-  public EList<Signal> getIncomp()
+  public EList<ISignal> getIncomp()
   {
     if (incomp == null)
     {
-      incomp = new EObjectResolvingEList<Signal>(Signal.class, this, EsterelPackage.RELATION_INCOMPATIBILITY__INCOMP);
+      incomp = new EObjectResolvingEList<ISignal>(ISignal.class, this, EsterelPackage.RELATION_INCOMPATIBILITY__INCOMP);
     }
     return incomp;
   }
@@ -106,7 +108,7 @@ public class RelationIncompatibilityImpl extends RelationTypeImpl implements Rel
     {
       case EsterelPackage.RELATION_INCOMPATIBILITY__INCOMP:
         getIncomp().clear();
-        getIncomp().addAll((Collection<? extends Signal>)newValue);
+        getIncomp().addAll((Collection<? extends ISignal>)newValue);
         return;
     }
     super.eSet(featureID, newValue);

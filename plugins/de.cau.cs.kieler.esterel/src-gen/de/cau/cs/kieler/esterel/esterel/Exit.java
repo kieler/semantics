@@ -2,9 +2,11 @@
  * <copyright>
  * </copyright>
  *
+
  */
 package de.cau.cs.kieler.esterel.esterel;
 
+import de.cau.cs.kieler.core.kexpressions.Expression;
 
 /**
  * <!-- begin-user-doc -->
@@ -60,12 +62,12 @@ public interface Exit extends Statement
    * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Data Expr</em>' containment reference.
-   * @see #setDataExpr(DataExpr)
+   * @see #setDataExpr(Expression)
    * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getExit_DataExpr()
    * @model containment="true"
    * @generated
    */
-  DataExpr getDataExpr();
+  Expression getDataExpr();
 
   /**
    * Sets the value of the '{@link de.cau.cs.kieler.esterel.esterel.Exit#getDataExpr <em>Data Expr</em>}' containment reference.
@@ -75,6 +77,6 @@ public interface Exit extends Statement
    * @see #getDataExpr()
    * @generated
    */
-  void setDataExpr(DataExpr value);
+  void setDataExpr(Expression value);
 
 } // Exit

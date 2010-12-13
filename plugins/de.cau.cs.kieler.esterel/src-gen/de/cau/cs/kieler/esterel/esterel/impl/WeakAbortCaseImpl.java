@@ -2,24 +2,21 @@
  * <copyright>
  * </copyright>
  *
+
  */
 package de.cau.cs.kieler.esterel.esterel.impl;
 
-import de.cau.cs.kieler.esterel.esterel.AbortCaseSingle;
 import de.cau.cs.kieler.esterel.esterel.EsterelPackage;
 import de.cau.cs.kieler.esterel.esterel.WeakAbortCase;
+import de.cau.cs.kieler.esterel.esterel.WeakAbortEnd;
 
-import java.util.Collection;
-
+import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
-
-import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
-import org.eclipse.emf.ecore.util.EObjectContainmentEList;
-import org.eclipse.emf.ecore.util.InternalEList;
+import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
 /**
  * <!-- begin-user-doc -->
@@ -28,23 +25,23 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.WeakAbortCaseImpl#getCases <em>Cases</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.WeakAbortCaseImpl#getEnd <em>End</em>}</li>
  * </ul>
  * </p>
  *
  * @generated
  */
-public class WeakAbortCaseImpl extends WeakAbortBodyImpl implements WeakAbortCase
+public class WeakAbortCaseImpl extends AbortCaseImpl implements WeakAbortCase
 {
   /**
-   * The cached value of the '{@link #getCases() <em>Cases</em>}' containment reference list.
+   * The cached value of the '{@link #getEnd() <em>End</em>}' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getCases()
+   * @see #getEnd()
    * @generated
    * @ordered
    */
-  protected EList<AbortCaseSingle> cases;
+  protected WeakAbortEnd end;
 
   /**
    * <!-- begin-user-doc -->
@@ -72,13 +69,47 @@ public class WeakAbortCaseImpl extends WeakAbortBodyImpl implements WeakAbortCas
    * <!-- end-user-doc -->
    * @generated
    */
-  public EList<AbortCaseSingle> getCases()
+  public WeakAbortEnd getEnd()
   {
-    if (cases == null)
+    return end;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public NotificationChain basicSetEnd(WeakAbortEnd newEnd, NotificationChain msgs)
+  {
+    WeakAbortEnd oldEnd = end;
+    end = newEnd;
+    if (eNotificationRequired())
     {
-      cases = new EObjectContainmentEList<AbortCaseSingle>(AbortCaseSingle.class, this, EsterelPackage.WEAK_ABORT_CASE__CASES);
+      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, EsterelPackage.WEAK_ABORT_CASE__END, oldEnd, newEnd);
+      if (msgs == null) msgs = notification; else msgs.add(notification);
     }
-    return cases;
+    return msgs;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setEnd(WeakAbortEnd newEnd)
+  {
+    if (newEnd != end)
+    {
+      NotificationChain msgs = null;
+      if (end != null)
+        msgs = ((InternalEObject)end).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.WEAK_ABORT_CASE__END, null, msgs);
+      if (newEnd != null)
+        msgs = ((InternalEObject)newEnd).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.WEAK_ABORT_CASE__END, null, msgs);
+      msgs = basicSetEnd(newEnd, msgs);
+      if (msgs != null) msgs.dispatch();
+    }
+    else if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.WEAK_ABORT_CASE__END, newEnd, newEnd));
   }
 
   /**
@@ -91,8 +122,8 @@ public class WeakAbortCaseImpl extends WeakAbortBodyImpl implements WeakAbortCas
   {
     switch (featureID)
     {
-      case EsterelPackage.WEAK_ABORT_CASE__CASES:
-        return ((InternalEList<?>)getCases()).basicRemove(otherEnd, msgs);
+      case EsterelPackage.WEAK_ABORT_CASE__END:
+        return basicSetEnd(null, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
@@ -107,8 +138,8 @@ public class WeakAbortCaseImpl extends WeakAbortBodyImpl implements WeakAbortCas
   {
     switch (featureID)
     {
-      case EsterelPackage.WEAK_ABORT_CASE__CASES:
-        return getCases();
+      case EsterelPackage.WEAK_ABORT_CASE__END:
+        return getEnd();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -118,15 +149,13 @@ public class WeakAbortCaseImpl extends WeakAbortBodyImpl implements WeakAbortCas
    * <!-- end-user-doc -->
    * @generated
    */
-  @SuppressWarnings("unchecked")
   @Override
   public void eSet(int featureID, Object newValue)
   {
     switch (featureID)
     {
-      case EsterelPackage.WEAK_ABORT_CASE__CASES:
-        getCases().clear();
-        getCases().addAll((Collection<? extends AbortCaseSingle>)newValue);
+      case EsterelPackage.WEAK_ABORT_CASE__END:
+        setEnd((WeakAbortEnd)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -142,8 +171,8 @@ public class WeakAbortCaseImpl extends WeakAbortBodyImpl implements WeakAbortCas
   {
     switch (featureID)
     {
-      case EsterelPackage.WEAK_ABORT_CASE__CASES:
-        getCases().clear();
+      case EsterelPackage.WEAK_ABORT_CASE__END:
+        setEnd((WeakAbortEnd)null);
         return;
     }
     super.eUnset(featureID);
@@ -159,8 +188,8 @@ public class WeakAbortCaseImpl extends WeakAbortBodyImpl implements WeakAbortCas
   {
     switch (featureID)
     {
-      case EsterelPackage.WEAK_ABORT_CASE__CASES:
-        return cases != null && !cases.isEmpty();
+      case EsterelPackage.WEAK_ABORT_CASE__END:
+        return end != null;
     }
     return super.eIsSet(featureID);
   }

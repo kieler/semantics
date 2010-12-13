@@ -2,8 +2,11 @@
  * <copyright>
  * </copyright>
  *
+
  */
 package de.cau.cs.kieler.esterel.esterel;
+
+import de.cau.cs.kieler.core.kexpressions.ISignal;
 
 import org.eclipse.emf.common.util.EList;
 
@@ -17,7 +20,7 @@ import org.eclipse.emf.ecore.EObject;
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link de.cau.cs.kieler.esterel.esterel.TrapDeclList#getTrapDecl <em>Trap Decl</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.esterel.esterel.TrapDeclList#getTrapDecls <em>Trap Decls</em>}</li>
  * </ul>
  * </p>
  *
@@ -28,19 +31,19 @@ import org.eclipse.emf.ecore.EObject;
 public interface TrapDeclList extends EObject
 {
   /**
-   * Returns the value of the '<em><b>Trap Decl</b></em>' containment reference list.
-   * The list contents are of type {@link de.cau.cs.kieler.esterel.esterel.TrapDecl}.
+   * Returns the value of the '<em><b>Trap Decls</b></em>' containment reference list.
+   * The list contents are of type {@link de.cau.cs.kieler.core.kexpressions.ISignal}.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Trap Decl</em>' containment reference list isn't clear,
+   * If the meaning of the '<em>Trap Decls</em>' containment reference list isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Trap Decl</em>' containment reference list.
-   * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getTrapDeclList_TrapDecl()
+   * @return the value of the '<em>Trap Decls</em>' containment reference list.
+   * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getTrapDeclList_TrapDecls()
    * @model containment="true"
    * @generated
    */
-  EList<TrapDecl> getTrapDecl();
+  EList<ISignal> getTrapDecls();
 
 } // TrapDeclList

@@ -2,12 +2,14 @@
  * <copyright>
  * </copyright>
  *
+
  */
 package de.cau.cs.kieler.esterel.esterel.impl;
 
+import de.cau.cs.kieler.core.kexpressions.ISignal;
+
 import de.cau.cs.kieler.esterel.esterel.EsterelPackage;
 import de.cau.cs.kieler.esterel.esterel.RelationImplication;
-import de.cau.cs.kieler.esterel.esterel.Signal;
 
 import org.eclipse.emf.common.notify.Notification;
 
@@ -40,7 +42,7 @@ public class RelationImplicationImpl extends RelationTypeImpl implements Relatio
    * @generated
    * @ordered
    */
-  protected Signal first;
+  protected ISignal first;
 
   /**
    * The cached value of the '{@link #getSecond() <em>Second</em>}' reference.
@@ -50,7 +52,7 @@ public class RelationImplicationImpl extends RelationTypeImpl implements Relatio
    * @generated
    * @ordered
    */
-  protected Signal second;
+  protected ISignal second;
 
   /**
    * <!-- begin-user-doc -->
@@ -78,12 +80,12 @@ public class RelationImplicationImpl extends RelationTypeImpl implements Relatio
    * <!-- end-user-doc -->
    * @generated
    */
-  public Signal getFirst()
+  public ISignal getFirst()
   {
     if (first != null && first.eIsProxy())
     {
       InternalEObject oldFirst = (InternalEObject)first;
-      first = (Signal)eResolveProxy(oldFirst);
+      first = (ISignal)eResolveProxy(oldFirst);
       if (first != oldFirst)
       {
         if (eNotificationRequired())
@@ -98,7 +100,7 @@ public class RelationImplicationImpl extends RelationTypeImpl implements Relatio
    * <!-- end-user-doc -->
    * @generated
    */
-  public Signal basicGetFirst()
+  public ISignal basicGetFirst()
   {
     return first;
   }
@@ -108,9 +110,9 @@ public class RelationImplicationImpl extends RelationTypeImpl implements Relatio
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setFirst(Signal newFirst)
+  public void setFirst(ISignal newFirst)
   {
-    Signal oldFirst = first;
+    ISignal oldFirst = first;
     first = newFirst;
     if (eNotificationRequired())
       eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.RELATION_IMPLICATION__FIRST, oldFirst, first));
@@ -121,12 +123,12 @@ public class RelationImplicationImpl extends RelationTypeImpl implements Relatio
    * <!-- end-user-doc -->
    * @generated
    */
-  public Signal getSecond()
+  public ISignal getSecond()
   {
     if (second != null && second.eIsProxy())
     {
       InternalEObject oldSecond = (InternalEObject)second;
-      second = (Signal)eResolveProxy(oldSecond);
+      second = (ISignal)eResolveProxy(oldSecond);
       if (second != oldSecond)
       {
         if (eNotificationRequired())
@@ -141,7 +143,7 @@ public class RelationImplicationImpl extends RelationTypeImpl implements Relatio
    * <!-- end-user-doc -->
    * @generated
    */
-  public Signal basicGetSecond()
+  public ISignal basicGetSecond()
   {
     return second;
   }
@@ -151,9 +153,9 @@ public class RelationImplicationImpl extends RelationTypeImpl implements Relatio
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setSecond(Signal newSecond)
+  public void setSecond(ISignal newSecond)
   {
-    Signal oldSecond = second;
+    ISignal oldSecond = second;
     second = newSecond;
     if (eNotificationRequired())
       eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.RELATION_IMPLICATION__SECOND, oldSecond, second));
@@ -190,10 +192,10 @@ public class RelationImplicationImpl extends RelationTypeImpl implements Relatio
     switch (featureID)
     {
       case EsterelPackage.RELATION_IMPLICATION__FIRST:
-        setFirst((Signal)newValue);
+        setFirst((ISignal)newValue);
         return;
       case EsterelPackage.RELATION_IMPLICATION__SECOND:
-        setSecond((Signal)newValue);
+        setSecond((ISignal)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -210,10 +212,10 @@ public class RelationImplicationImpl extends RelationTypeImpl implements Relatio
     switch (featureID)
     {
       case EsterelPackage.RELATION_IMPLICATION__FIRST:
-        setFirst((Signal)null);
+        setFirst((ISignal)null);
         return;
       case EsterelPackage.RELATION_IMPLICATION__SECOND:
-        setSecond((Signal)null);
+        setSecond((ISignal)null);
         return;
     }
     super.eUnset(featureID);

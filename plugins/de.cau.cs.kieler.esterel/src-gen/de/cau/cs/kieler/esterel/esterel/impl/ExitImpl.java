@@ -2,10 +2,12 @@
  * <copyright>
  * </copyright>
  *
+
  */
 package de.cau.cs.kieler.esterel.esterel.impl;
 
-import de.cau.cs.kieler.esterel.esterel.DataExpr;
+import de.cau.cs.kieler.core.kexpressions.Expression;
+
 import de.cau.cs.kieler.esterel.esterel.EsterelPackage;
 import de.cau.cs.kieler.esterel.esterel.Exit;
 import de.cau.cs.kieler.esterel.esterel.TrapDecl;
@@ -52,7 +54,7 @@ public class ExitImpl extends StatementImpl implements Exit
    * @generated
    * @ordered
    */
-  protected DataExpr dataExpr;
+  protected Expression dataExpr;
 
   /**
    * <!-- begin-user-doc -->
@@ -123,7 +125,7 @@ public class ExitImpl extends StatementImpl implements Exit
    * <!-- end-user-doc -->
    * @generated
    */
-  public DataExpr getDataExpr()
+  public Expression getDataExpr()
   {
     return dataExpr;
   }
@@ -133,9 +135,9 @@ public class ExitImpl extends StatementImpl implements Exit
    * <!-- end-user-doc -->
    * @generated
    */
-  public NotificationChain basicSetDataExpr(DataExpr newDataExpr, NotificationChain msgs)
+  public NotificationChain basicSetDataExpr(Expression newDataExpr, NotificationChain msgs)
   {
-    DataExpr oldDataExpr = dataExpr;
+    Expression oldDataExpr = dataExpr;
     dataExpr = newDataExpr;
     if (eNotificationRequired())
     {
@@ -150,7 +152,7 @@ public class ExitImpl extends StatementImpl implements Exit
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setDataExpr(DataExpr newDataExpr)
+  public void setDataExpr(Expression newDataExpr)
   {
     if (newDataExpr != dataExpr)
     {
@@ -215,7 +217,7 @@ public class ExitImpl extends StatementImpl implements Exit
         setTrap((TrapDecl)newValue);
         return;
       case EsterelPackage.EXIT__DATA_EXPR:
-        setDataExpr((DataExpr)newValue);
+        setDataExpr((Expression)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -235,7 +237,7 @@ public class ExitImpl extends StatementImpl implements Exit
         setTrap((TrapDecl)null);
         return;
       case EsterelPackage.EXIT__DATA_EXPR:
-        setDataExpr((DataExpr)null);
+        setDataExpr((Expression)null);
         return;
     }
     super.eUnset(featureID);

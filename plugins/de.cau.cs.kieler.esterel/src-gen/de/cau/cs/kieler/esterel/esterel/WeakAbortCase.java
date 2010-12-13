@@ -2,10 +2,10 @@
  * <copyright>
  * </copyright>
  *
+
  */
 package de.cau.cs.kieler.esterel.esterel;
 
-import org.eclipse.emf.common.util.EList;
 
 /**
  * <!-- begin-user-doc -->
@@ -15,7 +15,7 @@ import org.eclipse.emf.common.util.EList;
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link de.cau.cs.kieler.esterel.esterel.WeakAbortCase#getCases <em>Cases</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.esterel.esterel.WeakAbortCase#getEnd <em>End</em>}</li>
  * </ul>
  * </p>
  *
@@ -23,22 +23,32 @@ import org.eclipse.emf.common.util.EList;
  * @model
  * @generated
  */
-public interface WeakAbortCase extends WeakAbortBody
+public interface WeakAbortCase extends AbortCase
 {
   /**
-   * Returns the value of the '<em><b>Cases</b></em>' containment reference list.
-   * The list contents are of type {@link de.cau.cs.kieler.esterel.esterel.AbortCaseSingle}.
+   * Returns the value of the '<em><b>End</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Cases</em>' containment reference list isn't clear,
+   * If the meaning of the '<em>End</em>' containment reference isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Cases</em>' containment reference list.
-   * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getWeakAbortCase_Cases()
+   * @return the value of the '<em>End</em>' containment reference.
+   * @see #setEnd(WeakAbortEnd)
+   * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getWeakAbortCase_End()
    * @model containment="true"
    * @generated
    */
-  EList<AbortCaseSingle> getCases();
+  WeakAbortEnd getEnd();
+
+  /**
+   * Sets the value of the '{@link de.cau.cs.kieler.esterel.esterel.WeakAbortCase#getEnd <em>End</em>}' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>End</em>' containment reference.
+   * @see #getEnd()
+   * @generated
+   */
+  void setEnd(WeakAbortEnd value);
 
 } // WeakAbortCase

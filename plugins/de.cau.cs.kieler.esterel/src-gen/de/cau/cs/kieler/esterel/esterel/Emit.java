@@ -2,9 +2,12 @@
  * <copyright>
  * </copyright>
  *
+
  */
 package de.cau.cs.kieler.esterel.esterel;
 
+import de.cau.cs.kieler.core.kexpressions.Expression;
+import de.cau.cs.kieler.core.kexpressions.ISignal;
 
 /**
  * <!-- begin-user-doc -->
@@ -35,12 +38,12 @@ public interface Emit extends Statement
    * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Signal</em>' reference.
-   * @see #setSignal(Signal)
+   * @see #setSignal(ISignal)
    * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getEmit_Signal()
    * @model
    * @generated
    */
-  Signal getSignal();
+  ISignal getSignal();
 
   /**
    * Sets the value of the '{@link de.cau.cs.kieler.esterel.esterel.Emit#getSignal <em>Signal</em>}' reference.
@@ -50,7 +53,7 @@ public interface Emit extends Statement
    * @see #getSignal()
    * @generated
    */
-  void setSignal(Signal value);
+  void setSignal(ISignal value);
 
   /**
    * Returns the value of the '<em><b>Tick</b></em>' attribute.
@@ -87,12 +90,12 @@ public interface Emit extends Statement
    * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Expr</em>' containment reference.
-   * @see #setExpr(DataExpr)
+   * @see #setExpr(Expression)
    * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getEmit_Expr()
    * @model containment="true"
    * @generated
    */
-  DataExpr getExpr();
+  Expression getExpr();
 
   /**
    * Sets the value of the '{@link de.cau.cs.kieler.esterel.esterel.Emit#getExpr <em>Expr</em>}' containment reference.
@@ -102,6 +105,6 @@ public interface Emit extends Statement
    * @see #getExpr()
    * @generated
    */
-  void setExpr(DataExpr value);
+  void setExpr(Expression value);
 
 } // Emit

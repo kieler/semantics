@@ -2,6 +2,7 @@
  * <copyright>
  * </copyright>
  *
+
  */
 package de.cau.cs.kieler.esterel.esterel;
 
@@ -15,7 +16,7 @@ import org.eclipse.emf.common.util.EList;
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link de.cau.cs.kieler.esterel.esterel.PresentCaseList#getCase <em>Case</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.esterel.esterel.PresentCaseList#getCases <em>Cases</em>}</li>
  * </ul>
  * </p>
  *
@@ -26,19 +27,19 @@ import org.eclipse.emf.common.util.EList;
 public interface PresentCaseList extends PresentBody
 {
   /**
-   * Returns the value of the '<em><b>Case</b></em>' containment reference list.
+   * Returns the value of the '<em><b>Cases</b></em>' containment reference list.
    * The list contents are of type {@link de.cau.cs.kieler.esterel.esterel.PresentCase}.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Case</em>' containment reference list isn't clear,
+   * If the meaning of the '<em>Cases</em>' containment reference list isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Case</em>' containment reference list.
-   * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getPresentCaseList_Case()
+   * @return the value of the '<em>Cases</em>' containment reference list.
+   * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getPresentCaseList_Cases()
    * @model containment="true"
    * @generated
    */
-  EList<PresentCase> getCase();
+  EList<PresentCase> getCases();
 
 } // PresentCaseList

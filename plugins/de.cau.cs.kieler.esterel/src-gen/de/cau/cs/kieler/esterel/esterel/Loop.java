@@ -2,6 +2,7 @@
  * <copyright>
  * </copyright>
  *
+
  */
 package de.cau.cs.kieler.esterel.esterel;
 
@@ -15,6 +16,7 @@ package de.cau.cs.kieler.esterel.esterel;
  * The following features are supported:
  * <ul>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.Loop#getBody <em>Body</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.esterel.esterel.Loop#getEnd1 <em>End1</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.Loop#getEnd <em>End</em>}</li>
  * </ul>
  * </p>
@@ -50,6 +52,32 @@ public interface Loop extends Statement
    * @generated
    */
   void setBody(LoopBody value);
+
+  /**
+   * Returns the value of the '<em><b>End1</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>End1</em>' attribute isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>End1</em>' attribute.
+   * @see #setEnd1(String)
+   * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getLoop_End1()
+   * @model
+   * @generated
+   */
+  String getEnd1();
+
+  /**
+   * Sets the value of the '{@link de.cau.cs.kieler.esterel.esterel.Loop#getEnd1 <em>End1</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>End1</em>' attribute.
+   * @see #getEnd1()
+   * @generated
+   */
+  void setEnd1(String value);
 
   /**
    * Returns the value of the '<em><b>End</b></em>' containment reference.

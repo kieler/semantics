@@ -2,12 +2,12 @@
  * <copyright>
  * </copyright>
  *
+
  */
 package de.cau.cs.kieler.esterel.esterel.impl;
 
-import de.cau.cs.kieler.esterel.esterel.DelayExpr;
 import de.cau.cs.kieler.esterel.esterel.EsterelPackage;
-import de.cau.cs.kieler.esterel.esterel.Statement;
+import de.cau.cs.kieler.esterel.esterel.WeakAbortEnd;
 import de.cau.cs.kieler.esterel.esterel.WeakAbortInstance;
 
 import org.eclipse.emf.common.notify.Notification;
@@ -25,34 +25,23 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.WeakAbortInstanceImpl#getDelay <em>Delay</em>}</li>
- *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.WeakAbortInstanceImpl#getStatement <em>Statement</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.WeakAbortInstanceImpl#getEnd <em>End</em>}</li>
  * </ul>
  * </p>
  *
  * @generated
  */
-public class WeakAbortInstanceImpl extends WeakAbortBodyImpl implements WeakAbortInstance
+public class WeakAbortInstanceImpl extends AbortInstanceImpl implements WeakAbortInstance
 {
   /**
-   * The cached value of the '{@link #getDelay() <em>Delay</em>}' containment reference.
+   * The cached value of the '{@link #getEnd() <em>End</em>}' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getDelay()
+   * @see #getEnd()
    * @generated
    * @ordered
    */
-  protected DelayExpr delay;
-
-  /**
-   * The cached value of the '{@link #getStatement() <em>Statement</em>}' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getStatement()
-   * @generated
-   * @ordered
-   */
-  protected Statement statement;
+  protected WeakAbortEnd end;
 
   /**
    * <!-- begin-user-doc -->
@@ -80,9 +69,9 @@ public class WeakAbortInstanceImpl extends WeakAbortBodyImpl implements WeakAbor
    * <!-- end-user-doc -->
    * @generated
    */
-  public DelayExpr getDelay()
+  public WeakAbortEnd getEnd()
   {
-    return delay;
+    return end;
   }
 
   /**
@@ -90,13 +79,13 @@ public class WeakAbortInstanceImpl extends WeakAbortBodyImpl implements WeakAbor
    * <!-- end-user-doc -->
    * @generated
    */
-  public NotificationChain basicSetDelay(DelayExpr newDelay, NotificationChain msgs)
+  public NotificationChain basicSetEnd(WeakAbortEnd newEnd, NotificationChain msgs)
   {
-    DelayExpr oldDelay = delay;
-    delay = newDelay;
+    WeakAbortEnd oldEnd = end;
+    end = newEnd;
     if (eNotificationRequired())
     {
-      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, EsterelPackage.WEAK_ABORT_INSTANCE__DELAY, oldDelay, newDelay);
+      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, EsterelPackage.WEAK_ABORT_INSTANCE__END, oldEnd, newEnd);
       if (msgs == null) msgs = notification; else msgs.add(notification);
     }
     return msgs;
@@ -107,68 +96,20 @@ public class WeakAbortInstanceImpl extends WeakAbortBodyImpl implements WeakAbor
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setDelay(DelayExpr newDelay)
+  public void setEnd(WeakAbortEnd newEnd)
   {
-    if (newDelay != delay)
+    if (newEnd != end)
     {
       NotificationChain msgs = null;
-      if (delay != null)
-        msgs = ((InternalEObject)delay).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.WEAK_ABORT_INSTANCE__DELAY, null, msgs);
-      if (newDelay != null)
-        msgs = ((InternalEObject)newDelay).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.WEAK_ABORT_INSTANCE__DELAY, null, msgs);
-      msgs = basicSetDelay(newDelay, msgs);
+      if (end != null)
+        msgs = ((InternalEObject)end).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.WEAK_ABORT_INSTANCE__END, null, msgs);
+      if (newEnd != null)
+        msgs = ((InternalEObject)newEnd).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.WEAK_ABORT_INSTANCE__END, null, msgs);
+      msgs = basicSetEnd(newEnd, msgs);
       if (msgs != null) msgs.dispatch();
     }
     else if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.WEAK_ABORT_INSTANCE__DELAY, newDelay, newDelay));
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public Statement getStatement()
-  {
-    return statement;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public NotificationChain basicSetStatement(Statement newStatement, NotificationChain msgs)
-  {
-    Statement oldStatement = statement;
-    statement = newStatement;
-    if (eNotificationRequired())
-    {
-      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, EsterelPackage.WEAK_ABORT_INSTANCE__STATEMENT, oldStatement, newStatement);
-      if (msgs == null) msgs = notification; else msgs.add(notification);
-    }
-    return msgs;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public void setStatement(Statement newStatement)
-  {
-    if (newStatement != statement)
-    {
-      NotificationChain msgs = null;
-      if (statement != null)
-        msgs = ((InternalEObject)statement).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.WEAK_ABORT_INSTANCE__STATEMENT, null, msgs);
-      if (newStatement != null)
-        msgs = ((InternalEObject)newStatement).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.WEAK_ABORT_INSTANCE__STATEMENT, null, msgs);
-      msgs = basicSetStatement(newStatement, msgs);
-      if (msgs != null) msgs.dispatch();
-    }
-    else if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.WEAK_ABORT_INSTANCE__STATEMENT, newStatement, newStatement));
+      eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.WEAK_ABORT_INSTANCE__END, newEnd, newEnd));
   }
 
   /**
@@ -181,10 +122,8 @@ public class WeakAbortInstanceImpl extends WeakAbortBodyImpl implements WeakAbor
   {
     switch (featureID)
     {
-      case EsterelPackage.WEAK_ABORT_INSTANCE__DELAY:
-        return basicSetDelay(null, msgs);
-      case EsterelPackage.WEAK_ABORT_INSTANCE__STATEMENT:
-        return basicSetStatement(null, msgs);
+      case EsterelPackage.WEAK_ABORT_INSTANCE__END:
+        return basicSetEnd(null, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
@@ -199,10 +138,8 @@ public class WeakAbortInstanceImpl extends WeakAbortBodyImpl implements WeakAbor
   {
     switch (featureID)
     {
-      case EsterelPackage.WEAK_ABORT_INSTANCE__DELAY:
-        return getDelay();
-      case EsterelPackage.WEAK_ABORT_INSTANCE__STATEMENT:
-        return getStatement();
+      case EsterelPackage.WEAK_ABORT_INSTANCE__END:
+        return getEnd();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -217,11 +154,8 @@ public class WeakAbortInstanceImpl extends WeakAbortBodyImpl implements WeakAbor
   {
     switch (featureID)
     {
-      case EsterelPackage.WEAK_ABORT_INSTANCE__DELAY:
-        setDelay((DelayExpr)newValue);
-        return;
-      case EsterelPackage.WEAK_ABORT_INSTANCE__STATEMENT:
-        setStatement((Statement)newValue);
+      case EsterelPackage.WEAK_ABORT_INSTANCE__END:
+        setEnd((WeakAbortEnd)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -237,11 +171,8 @@ public class WeakAbortInstanceImpl extends WeakAbortBodyImpl implements WeakAbor
   {
     switch (featureID)
     {
-      case EsterelPackage.WEAK_ABORT_INSTANCE__DELAY:
-        setDelay((DelayExpr)null);
-        return;
-      case EsterelPackage.WEAK_ABORT_INSTANCE__STATEMENT:
-        setStatement((Statement)null);
+      case EsterelPackage.WEAK_ABORT_INSTANCE__END:
+        setEnd((WeakAbortEnd)null);
         return;
     }
     super.eUnset(featureID);
@@ -257,10 +188,8 @@ public class WeakAbortInstanceImpl extends WeakAbortBodyImpl implements WeakAbor
   {
     switch (featureID)
     {
-      case EsterelPackage.WEAK_ABORT_INSTANCE__DELAY:
-        return delay != null;
-      case EsterelPackage.WEAK_ABORT_INSTANCE__STATEMENT:
-        return statement != null;
+      case EsterelPackage.WEAK_ABORT_INSTANCE__END:
+        return end != null;
     }
     return super.eIsSet(featureID);
   }

@@ -2,12 +2,13 @@
  * <copyright>
  * </copyright>
  *
+
  */
 package de.cau.cs.kieler.esterel.esterel.impl;
 
 import de.cau.cs.kieler.esterel.esterel.EsterelPackage;
-import de.cau.cs.kieler.esterel.esterel.Sensor;
 import de.cau.cs.kieler.esterel.esterel.SensorDecl;
+import de.cau.cs.kieler.esterel.esterel.SensorWithType;
 
 import java.util.Collection;
 
@@ -30,7 +31,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.SensorDeclImpl#getSensor <em>Sensor</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.SensorDeclImpl#getSensors <em>Sensors</em>}</li>
  * </ul>
  * </p>
  *
@@ -39,14 +40,14 @@ import org.eclipse.emf.ecore.util.InternalEList;
 public class SensorDeclImpl extends MinimalEObjectImpl.Container implements SensorDecl
 {
   /**
-   * The cached value of the '{@link #getSensor() <em>Sensor</em>}' containment reference list.
+   * The cached value of the '{@link #getSensors() <em>Sensors</em>}' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getSensor()
+   * @see #getSensors()
    * @generated
    * @ordered
    */
-  protected EList<Sensor> sensor;
+  protected EList<SensorWithType> sensors;
 
   /**
    * <!-- begin-user-doc -->
@@ -74,13 +75,13 @@ public class SensorDeclImpl extends MinimalEObjectImpl.Container implements Sens
    * <!-- end-user-doc -->
    * @generated
    */
-  public EList<Sensor> getSensor()
+  public EList<SensorWithType> getSensors()
   {
-    if (sensor == null)
+    if (sensors == null)
     {
-      sensor = new EObjectContainmentEList<Sensor>(Sensor.class, this, EsterelPackage.SENSOR_DECL__SENSOR);
+      sensors = new EObjectContainmentEList<SensorWithType>(SensorWithType.class, this, EsterelPackage.SENSOR_DECL__SENSORS);
     }
-    return sensor;
+    return sensors;
   }
 
   /**
@@ -93,8 +94,8 @@ public class SensorDeclImpl extends MinimalEObjectImpl.Container implements Sens
   {
     switch (featureID)
     {
-      case EsterelPackage.SENSOR_DECL__SENSOR:
-        return ((InternalEList<?>)getSensor()).basicRemove(otherEnd, msgs);
+      case EsterelPackage.SENSOR_DECL__SENSORS:
+        return ((InternalEList<?>)getSensors()).basicRemove(otherEnd, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
@@ -109,8 +110,8 @@ public class SensorDeclImpl extends MinimalEObjectImpl.Container implements Sens
   {
     switch (featureID)
     {
-      case EsterelPackage.SENSOR_DECL__SENSOR:
-        return getSensor();
+      case EsterelPackage.SENSOR_DECL__SENSORS:
+        return getSensors();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -126,9 +127,9 @@ public class SensorDeclImpl extends MinimalEObjectImpl.Container implements Sens
   {
     switch (featureID)
     {
-      case EsterelPackage.SENSOR_DECL__SENSOR:
-        getSensor().clear();
-        getSensor().addAll((Collection<? extends Sensor>)newValue);
+      case EsterelPackage.SENSOR_DECL__SENSORS:
+        getSensors().clear();
+        getSensors().addAll((Collection<? extends SensorWithType>)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -144,8 +145,8 @@ public class SensorDeclImpl extends MinimalEObjectImpl.Container implements Sens
   {
     switch (featureID)
     {
-      case EsterelPackage.SENSOR_DECL__SENSOR:
-        getSensor().clear();
+      case EsterelPackage.SENSOR_DECL__SENSORS:
+        getSensors().clear();
         return;
     }
     super.eUnset(featureID);
@@ -161,8 +162,8 @@ public class SensorDeclImpl extends MinimalEObjectImpl.Container implements Sens
   {
     switch (featureID)
     {
-      case EsterelPackage.SENSOR_DECL__SENSOR:
-        return sensor != null && !sensor.isEmpty();
+      case EsterelPackage.SENSOR_DECL__SENSORS:
+        return sensors != null && !sensors.isEmpty();
     }
     return super.eIsSet(featureID);
   }

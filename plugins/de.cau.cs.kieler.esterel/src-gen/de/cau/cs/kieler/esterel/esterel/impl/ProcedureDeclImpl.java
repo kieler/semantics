@@ -2,6 +2,7 @@
  * <copyright>
  * </copyright>
  *
+
  */
 package de.cau.cs.kieler.esterel.esterel.impl;
 
@@ -30,7 +31,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.ProcedureDeclImpl#getProcedure <em>Procedure</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.ProcedureDeclImpl#getProcedures <em>Procedures</em>}</li>
  * </ul>
  * </p>
  *
@@ -39,14 +40,14 @@ import org.eclipse.emf.ecore.util.InternalEList;
 public class ProcedureDeclImpl extends MinimalEObjectImpl.Container implements ProcedureDecl
 {
   /**
-   * The cached value of the '{@link #getProcedure() <em>Procedure</em>}' containment reference list.
+   * The cached value of the '{@link #getProcedures() <em>Procedures</em>}' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getProcedure()
+   * @see #getProcedures()
    * @generated
    * @ordered
    */
-  protected EList<Procedure> procedure;
+  protected EList<Procedure> procedures;
 
   /**
    * <!-- begin-user-doc -->
@@ -74,13 +75,13 @@ public class ProcedureDeclImpl extends MinimalEObjectImpl.Container implements P
    * <!-- end-user-doc -->
    * @generated
    */
-  public EList<Procedure> getProcedure()
+  public EList<Procedure> getProcedures()
   {
-    if (procedure == null)
+    if (procedures == null)
     {
-      procedure = new EObjectContainmentEList<Procedure>(Procedure.class, this, EsterelPackage.PROCEDURE_DECL__PROCEDURE);
+      procedures = new EObjectContainmentEList<Procedure>(Procedure.class, this, EsterelPackage.PROCEDURE_DECL__PROCEDURES);
     }
-    return procedure;
+    return procedures;
   }
 
   /**
@@ -93,8 +94,8 @@ public class ProcedureDeclImpl extends MinimalEObjectImpl.Container implements P
   {
     switch (featureID)
     {
-      case EsterelPackage.PROCEDURE_DECL__PROCEDURE:
-        return ((InternalEList<?>)getProcedure()).basicRemove(otherEnd, msgs);
+      case EsterelPackage.PROCEDURE_DECL__PROCEDURES:
+        return ((InternalEList<?>)getProcedures()).basicRemove(otherEnd, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
@@ -109,8 +110,8 @@ public class ProcedureDeclImpl extends MinimalEObjectImpl.Container implements P
   {
     switch (featureID)
     {
-      case EsterelPackage.PROCEDURE_DECL__PROCEDURE:
-        return getProcedure();
+      case EsterelPackage.PROCEDURE_DECL__PROCEDURES:
+        return getProcedures();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -126,9 +127,9 @@ public class ProcedureDeclImpl extends MinimalEObjectImpl.Container implements P
   {
     switch (featureID)
     {
-      case EsterelPackage.PROCEDURE_DECL__PROCEDURE:
-        getProcedure().clear();
-        getProcedure().addAll((Collection<? extends Procedure>)newValue);
+      case EsterelPackage.PROCEDURE_DECL__PROCEDURES:
+        getProcedures().clear();
+        getProcedures().addAll((Collection<? extends Procedure>)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -144,8 +145,8 @@ public class ProcedureDeclImpl extends MinimalEObjectImpl.Container implements P
   {
     switch (featureID)
     {
-      case EsterelPackage.PROCEDURE_DECL__PROCEDURE:
-        getProcedure().clear();
+      case EsterelPackage.PROCEDURE_DECL__PROCEDURES:
+        getProcedures().clear();
         return;
     }
     super.eUnset(featureID);
@@ -161,8 +162,8 @@ public class ProcedureDeclImpl extends MinimalEObjectImpl.Container implements P
   {
     switch (featureID)
     {
-      case EsterelPackage.PROCEDURE_DECL__PROCEDURE:
-        return procedure != null && !procedure.isEmpty();
+      case EsterelPackage.PROCEDURE_DECL__PROCEDURES:
+        return procedures != null && !procedures.isEmpty();
     }
     return super.eIsSet(featureID);
   }

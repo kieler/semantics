@@ -2,6 +2,7 @@
  * <copyright>
  * </copyright>
  *
+
  */
 package de.cau.cs.kieler.esterel.esterel.impl;
 
@@ -28,7 +29,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.RelationImpl#getRelation <em>Relation</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.RelationImpl#getRelations <em>Relations</em>}</li>
  * </ul>
  * </p>
  *
@@ -37,14 +38,14 @@ import org.eclipse.emf.ecore.util.InternalEList;
 public class RelationImpl extends RelationDeclImpl implements Relation
 {
   /**
-   * The cached value of the '{@link #getRelation() <em>Relation</em>}' containment reference list.
+   * The cached value of the '{@link #getRelations() <em>Relations</em>}' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getRelation()
+   * @see #getRelations()
    * @generated
    * @ordered
    */
-  protected EList<RelationType> relation;
+  protected EList<RelationType> relations;
 
   /**
    * <!-- begin-user-doc -->
@@ -72,13 +73,13 @@ public class RelationImpl extends RelationDeclImpl implements Relation
    * <!-- end-user-doc -->
    * @generated
    */
-  public EList<RelationType> getRelation()
+  public EList<RelationType> getRelations()
   {
-    if (relation == null)
+    if (relations == null)
     {
-      relation = new EObjectContainmentEList<RelationType>(RelationType.class, this, EsterelPackage.RELATION__RELATION);
+      relations = new EObjectContainmentEList<RelationType>(RelationType.class, this, EsterelPackage.RELATION__RELATIONS);
     }
-    return relation;
+    return relations;
   }
 
   /**
@@ -91,8 +92,8 @@ public class RelationImpl extends RelationDeclImpl implements Relation
   {
     switch (featureID)
     {
-      case EsterelPackage.RELATION__RELATION:
-        return ((InternalEList<?>)getRelation()).basicRemove(otherEnd, msgs);
+      case EsterelPackage.RELATION__RELATIONS:
+        return ((InternalEList<?>)getRelations()).basicRemove(otherEnd, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
@@ -107,8 +108,8 @@ public class RelationImpl extends RelationDeclImpl implements Relation
   {
     switch (featureID)
     {
-      case EsterelPackage.RELATION__RELATION:
-        return getRelation();
+      case EsterelPackage.RELATION__RELATIONS:
+        return getRelations();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -124,9 +125,9 @@ public class RelationImpl extends RelationDeclImpl implements Relation
   {
     switch (featureID)
     {
-      case EsterelPackage.RELATION__RELATION:
-        getRelation().clear();
-        getRelation().addAll((Collection<? extends RelationType>)newValue);
+      case EsterelPackage.RELATION__RELATIONS:
+        getRelations().clear();
+        getRelations().addAll((Collection<? extends RelationType>)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -142,8 +143,8 @@ public class RelationImpl extends RelationDeclImpl implements Relation
   {
     switch (featureID)
     {
-      case EsterelPackage.RELATION__RELATION:
-        getRelation().clear();
+      case EsterelPackage.RELATION__RELATIONS:
+        getRelations().clear();
         return;
     }
     super.eUnset(featureID);
@@ -159,8 +160,8 @@ public class RelationImpl extends RelationDeclImpl implements Relation
   {
     switch (featureID)
     {
-      case EsterelPackage.RELATION__RELATION:
-        return relation != null && !relation.isEmpty();
+      case EsterelPackage.RELATION__RELATIONS:
+        return relations != null && !relations.isEmpty();
     }
     return super.eIsSet(featureID);
   }

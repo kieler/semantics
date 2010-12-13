@@ -2,11 +2,11 @@
  * <copyright>
  * </copyright>
  *
+
  */
 package de.cau.cs.kieler.esterel.esterel.impl;
 
 import de.cau.cs.kieler.esterel.esterel.Abort;
-import de.cau.cs.kieler.esterel.esterel.AbortBody;
 import de.cau.cs.kieler.esterel.esterel.EsterelPackage;
 import de.cau.cs.kieler.esterel.esterel.Statement;
 
@@ -14,6 +14,7 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
@@ -52,7 +53,7 @@ public class AbortImpl extends StatementImpl implements Abort
    * @generated
    * @ordered
    */
-  protected AbortBody body;
+  protected EObject body;
 
   /**
    * <!-- begin-user-doc -->
@@ -128,7 +129,7 @@ public class AbortImpl extends StatementImpl implements Abort
    * <!-- end-user-doc -->
    * @generated
    */
-  public AbortBody getBody()
+  public EObject getBody()
   {
     return body;
   }
@@ -138,9 +139,9 @@ public class AbortImpl extends StatementImpl implements Abort
    * <!-- end-user-doc -->
    * @generated
    */
-  public NotificationChain basicSetBody(AbortBody newBody, NotificationChain msgs)
+  public NotificationChain basicSetBody(EObject newBody, NotificationChain msgs)
   {
-    AbortBody oldBody = body;
+    EObject oldBody = body;
     body = newBody;
     if (eNotificationRequired())
     {
@@ -155,7 +156,7 @@ public class AbortImpl extends StatementImpl implements Abort
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setBody(AbortBody newBody)
+  public void setBody(EObject newBody)
   {
     if (newBody != body)
     {
@@ -221,7 +222,7 @@ public class AbortImpl extends StatementImpl implements Abort
         setStatement((Statement)newValue);
         return;
       case EsterelPackage.ABORT__BODY:
-        setBody((AbortBody)newValue);
+        setBody((EObject)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -241,7 +242,7 @@ public class AbortImpl extends StatementImpl implements Abort
         setStatement((Statement)null);
         return;
       case EsterelPackage.ABORT__BODY:
-        setBody((AbortBody)null);
+        setBody((EObject)null);
         return;
     }
     super.eUnset(featureID);

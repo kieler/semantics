@@ -2,9 +2,12 @@
  * <copyright>
  * </copyright>
  *
+
  */
 package de.cau.cs.kieler.esterel.esterel;
 
+import de.cau.cs.kieler.core.kexpressions.Expression;
+import de.cau.cs.kieler.core.kexpressions.IVariable;
 
 /**
  * <!-- begin-user-doc -->
@@ -14,7 +17,7 @@ package de.cau.cs.kieler.esterel.esterel;
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link de.cau.cs.kieler.esterel.esterel.Assignment#getVariable <em>Variable</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.esterel.esterel.Assignment#getVar <em>Var</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.Assignment#getExpr <em>Expr</em>}</li>
  * </ul>
  * </p>
@@ -26,30 +29,30 @@ package de.cau.cs.kieler.esterel.esterel;
 public interface Assignment extends Statement
 {
   /**
-   * Returns the value of the '<em><b>Variable</b></em>' attribute.
+   * Returns the value of the '<em><b>Var</b></em>' reference.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Variable</em>' attribute isn't clear,
+   * If the meaning of the '<em>Var</em>' reference isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Variable</em>' attribute.
-   * @see #setVariable(String)
-   * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getAssignment_Variable()
+   * @return the value of the '<em>Var</em>' reference.
+   * @see #setVar(IVariable)
+   * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getAssignment_Var()
    * @model
    * @generated
    */
-  String getVariable();
+  IVariable getVar();
 
   /**
-   * Sets the value of the '{@link de.cau.cs.kieler.esterel.esterel.Assignment#getVariable <em>Variable</em>}' attribute.
+   * Sets the value of the '{@link de.cau.cs.kieler.esterel.esterel.Assignment#getVar <em>Var</em>}' reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Variable</em>' attribute.
-   * @see #getVariable()
+   * @param value the new value of the '<em>Var</em>' reference.
+   * @see #getVar()
    * @generated
    */
-  void setVariable(String value);
+  void setVar(IVariable value);
 
   /**
    * Returns the value of the '<em><b>Expr</b></em>' containment reference.
@@ -60,12 +63,12 @@ public interface Assignment extends Statement
    * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Expr</em>' containment reference.
-   * @see #setExpr(DataExpr)
+   * @see #setExpr(Expression)
    * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getAssignment_Expr()
    * @model containment="true"
    * @generated
    */
-  DataExpr getExpr();
+  Expression getExpr();
 
   /**
    * Sets the value of the '{@link de.cau.cs.kieler.esterel.esterel.Assignment#getExpr <em>Expr</em>}' containment reference.
@@ -75,6 +78,6 @@ public interface Assignment extends Statement
    * @see #getExpr()
    * @generated
    */
-  void setExpr(DataExpr value);
+  void setExpr(Expression value);
 
 } // Assignment

@@ -2,6 +2,7 @@
  * <copyright>
  * </copyright>
  *
+
  */
 package de.cau.cs.kieler.esterel.esterel.impl;
 
@@ -27,8 +28,9 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  * The following features are implemented:
  * <ul>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.ModuleImpl#getName <em>Name</em>}</li>
- *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.ModuleImpl#getModInt <em>Mod Int</em>}</li>
- *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.ModuleImpl#getModBody <em>Mod Body</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.ModuleImpl#getInterface <em>Interface</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.ModuleImpl#getBody <em>Body</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.ModuleImpl#getEnd <em>End</em>}</li>
  * </ul>
  * </p>
  *
@@ -57,24 +59,44 @@ public class ModuleImpl extends MinimalEObjectImpl.Container implements Module
   protected String name = NAME_EDEFAULT;
 
   /**
-   * The cached value of the '{@link #getModInt() <em>Mod Int</em>}' containment reference.
+   * The cached value of the '{@link #getInterface() <em>Interface</em>}' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getModInt()
+   * @see #getInterface()
    * @generated
    * @ordered
    */
-  protected ModuleInterface modInt;
+  protected ModuleInterface interface_;
 
   /**
-   * The cached value of the '{@link #getModBody() <em>Mod Body</em>}' containment reference.
+   * The cached value of the '{@link #getBody() <em>Body</em>}' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getModBody()
+   * @see #getBody()
    * @generated
    * @ordered
    */
-  protected ModuleBody modBody;
+  protected ModuleBody body;
+
+  /**
+   * The default value of the '{@link #getEnd() <em>End</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getEnd()
+   * @generated
+   * @ordered
+   */
+  protected static final String END_EDEFAULT = null;
+
+  /**
+   * The cached value of the '{@link #getEnd() <em>End</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getEnd()
+   * @generated
+   * @ordered
+   */
+  protected String end = END_EDEFAULT;
 
   /**
    * <!-- begin-user-doc -->
@@ -125,9 +147,9 @@ public class ModuleImpl extends MinimalEObjectImpl.Container implements Module
    * <!-- end-user-doc -->
    * @generated
    */
-  public ModuleInterface getModInt()
+  public ModuleInterface getInterface()
   {
-    return modInt;
+    return interface_;
   }
 
   /**
@@ -135,13 +157,13 @@ public class ModuleImpl extends MinimalEObjectImpl.Container implements Module
    * <!-- end-user-doc -->
    * @generated
    */
-  public NotificationChain basicSetModInt(ModuleInterface newModInt, NotificationChain msgs)
+  public NotificationChain basicSetInterface(ModuleInterface newInterface, NotificationChain msgs)
   {
-    ModuleInterface oldModInt = modInt;
-    modInt = newModInt;
+    ModuleInterface oldInterface = interface_;
+    interface_ = newInterface;
     if (eNotificationRequired())
     {
-      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, EsterelPackage.MODULE__MOD_INT, oldModInt, newModInt);
+      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, EsterelPackage.MODULE__INTERFACE, oldInterface, newInterface);
       if (msgs == null) msgs = notification; else msgs.add(notification);
     }
     return msgs;
@@ -152,20 +174,20 @@ public class ModuleImpl extends MinimalEObjectImpl.Container implements Module
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setModInt(ModuleInterface newModInt)
+  public void setInterface(ModuleInterface newInterface)
   {
-    if (newModInt != modInt)
+    if (newInterface != interface_)
     {
       NotificationChain msgs = null;
-      if (modInt != null)
-        msgs = ((InternalEObject)modInt).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.MODULE__MOD_INT, null, msgs);
-      if (newModInt != null)
-        msgs = ((InternalEObject)newModInt).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.MODULE__MOD_INT, null, msgs);
-      msgs = basicSetModInt(newModInt, msgs);
+      if (interface_ != null)
+        msgs = ((InternalEObject)interface_).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.MODULE__INTERFACE, null, msgs);
+      if (newInterface != null)
+        msgs = ((InternalEObject)newInterface).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.MODULE__INTERFACE, null, msgs);
+      msgs = basicSetInterface(newInterface, msgs);
       if (msgs != null) msgs.dispatch();
     }
     else if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.MODULE__MOD_INT, newModInt, newModInt));
+      eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.MODULE__INTERFACE, newInterface, newInterface));
   }
 
   /**
@@ -173,9 +195,9 @@ public class ModuleImpl extends MinimalEObjectImpl.Container implements Module
    * <!-- end-user-doc -->
    * @generated
    */
-  public ModuleBody getModBody()
+  public ModuleBody getBody()
   {
-    return modBody;
+    return body;
   }
 
   /**
@@ -183,13 +205,13 @@ public class ModuleImpl extends MinimalEObjectImpl.Container implements Module
    * <!-- end-user-doc -->
    * @generated
    */
-  public NotificationChain basicSetModBody(ModuleBody newModBody, NotificationChain msgs)
+  public NotificationChain basicSetBody(ModuleBody newBody, NotificationChain msgs)
   {
-    ModuleBody oldModBody = modBody;
-    modBody = newModBody;
+    ModuleBody oldBody = body;
+    body = newBody;
     if (eNotificationRequired())
     {
-      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, EsterelPackage.MODULE__MOD_BODY, oldModBody, newModBody);
+      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, EsterelPackage.MODULE__BODY, oldBody, newBody);
       if (msgs == null) msgs = notification; else msgs.add(notification);
     }
     return msgs;
@@ -200,20 +222,43 @@ public class ModuleImpl extends MinimalEObjectImpl.Container implements Module
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setModBody(ModuleBody newModBody)
+  public void setBody(ModuleBody newBody)
   {
-    if (newModBody != modBody)
+    if (newBody != body)
     {
       NotificationChain msgs = null;
-      if (modBody != null)
-        msgs = ((InternalEObject)modBody).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.MODULE__MOD_BODY, null, msgs);
-      if (newModBody != null)
-        msgs = ((InternalEObject)newModBody).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.MODULE__MOD_BODY, null, msgs);
-      msgs = basicSetModBody(newModBody, msgs);
+      if (body != null)
+        msgs = ((InternalEObject)body).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.MODULE__BODY, null, msgs);
+      if (newBody != null)
+        msgs = ((InternalEObject)newBody).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.MODULE__BODY, null, msgs);
+      msgs = basicSetBody(newBody, msgs);
       if (msgs != null) msgs.dispatch();
     }
     else if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.MODULE__MOD_BODY, newModBody, newModBody));
+      eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.MODULE__BODY, newBody, newBody));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public String getEnd()
+  {
+    return end;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setEnd(String newEnd)
+  {
+    String oldEnd = end;
+    end = newEnd;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.MODULE__END, oldEnd, end));
   }
 
   /**
@@ -226,10 +271,10 @@ public class ModuleImpl extends MinimalEObjectImpl.Container implements Module
   {
     switch (featureID)
     {
-      case EsterelPackage.MODULE__MOD_INT:
-        return basicSetModInt(null, msgs);
-      case EsterelPackage.MODULE__MOD_BODY:
-        return basicSetModBody(null, msgs);
+      case EsterelPackage.MODULE__INTERFACE:
+        return basicSetInterface(null, msgs);
+      case EsterelPackage.MODULE__BODY:
+        return basicSetBody(null, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
@@ -246,10 +291,12 @@ public class ModuleImpl extends MinimalEObjectImpl.Container implements Module
     {
       case EsterelPackage.MODULE__NAME:
         return getName();
-      case EsterelPackage.MODULE__MOD_INT:
-        return getModInt();
-      case EsterelPackage.MODULE__MOD_BODY:
-        return getModBody();
+      case EsterelPackage.MODULE__INTERFACE:
+        return getInterface();
+      case EsterelPackage.MODULE__BODY:
+        return getBody();
+      case EsterelPackage.MODULE__END:
+        return getEnd();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -267,11 +314,14 @@ public class ModuleImpl extends MinimalEObjectImpl.Container implements Module
       case EsterelPackage.MODULE__NAME:
         setName((String)newValue);
         return;
-      case EsterelPackage.MODULE__MOD_INT:
-        setModInt((ModuleInterface)newValue);
+      case EsterelPackage.MODULE__INTERFACE:
+        setInterface((ModuleInterface)newValue);
         return;
-      case EsterelPackage.MODULE__MOD_BODY:
-        setModBody((ModuleBody)newValue);
+      case EsterelPackage.MODULE__BODY:
+        setBody((ModuleBody)newValue);
+        return;
+      case EsterelPackage.MODULE__END:
+        setEnd((String)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -290,11 +340,14 @@ public class ModuleImpl extends MinimalEObjectImpl.Container implements Module
       case EsterelPackage.MODULE__NAME:
         setName(NAME_EDEFAULT);
         return;
-      case EsterelPackage.MODULE__MOD_INT:
-        setModInt((ModuleInterface)null);
+      case EsterelPackage.MODULE__INTERFACE:
+        setInterface((ModuleInterface)null);
         return;
-      case EsterelPackage.MODULE__MOD_BODY:
-        setModBody((ModuleBody)null);
+      case EsterelPackage.MODULE__BODY:
+        setBody((ModuleBody)null);
+        return;
+      case EsterelPackage.MODULE__END:
+        setEnd(END_EDEFAULT);
         return;
     }
     super.eUnset(featureID);
@@ -312,10 +365,12 @@ public class ModuleImpl extends MinimalEObjectImpl.Container implements Module
     {
       case EsterelPackage.MODULE__NAME:
         return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
-      case EsterelPackage.MODULE__MOD_INT:
-        return modInt != null;
-      case EsterelPackage.MODULE__MOD_BODY:
-        return modBody != null;
+      case EsterelPackage.MODULE__INTERFACE:
+        return interface_ != null;
+      case EsterelPackage.MODULE__BODY:
+        return body != null;
+      case EsterelPackage.MODULE__END:
+        return END_EDEFAULT == null ? end != null : !END_EDEFAULT.equals(end);
     }
     return super.eIsSet(featureID);
   }
@@ -333,6 +388,8 @@ public class ModuleImpl extends MinimalEObjectImpl.Container implements Module
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (name: ");
     result.append(name);
+    result.append(", end: ");
+    result.append(end);
     result.append(')');
     return result.toString();
   }

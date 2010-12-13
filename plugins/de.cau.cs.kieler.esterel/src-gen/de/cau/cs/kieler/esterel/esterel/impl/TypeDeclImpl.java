@@ -2,6 +2,7 @@
  * <copyright>
  * </copyright>
  *
+
  */
 package de.cau.cs.kieler.esterel.esterel.impl;
 
@@ -30,7 +31,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.TypeDeclImpl#getType <em>Type</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.TypeDeclImpl#getTypes <em>Types</em>}</li>
  * </ul>
  * </p>
  *
@@ -39,14 +40,14 @@ import org.eclipse.emf.ecore.util.InternalEList;
 public class TypeDeclImpl extends MinimalEObjectImpl.Container implements TypeDecl
 {
   /**
-   * The cached value of the '{@link #getType() <em>Type</em>}' containment reference list.
+   * The cached value of the '{@link #getTypes() <em>Types</em>}' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getType()
+   * @see #getTypes()
    * @generated
    * @ordered
    */
-  protected EList<Type> type;
+  protected EList<Type> types;
 
   /**
    * <!-- begin-user-doc -->
@@ -74,13 +75,13 @@ public class TypeDeclImpl extends MinimalEObjectImpl.Container implements TypeDe
    * <!-- end-user-doc -->
    * @generated
    */
-  public EList<Type> getType()
+  public EList<Type> getTypes()
   {
-    if (type == null)
+    if (types == null)
     {
-      type = new EObjectContainmentEList<Type>(Type.class, this, EsterelPackage.TYPE_DECL__TYPE);
+      types = new EObjectContainmentEList<Type>(Type.class, this, EsterelPackage.TYPE_DECL__TYPES);
     }
-    return type;
+    return types;
   }
 
   /**
@@ -93,8 +94,8 @@ public class TypeDeclImpl extends MinimalEObjectImpl.Container implements TypeDe
   {
     switch (featureID)
     {
-      case EsterelPackage.TYPE_DECL__TYPE:
-        return ((InternalEList<?>)getType()).basicRemove(otherEnd, msgs);
+      case EsterelPackage.TYPE_DECL__TYPES:
+        return ((InternalEList<?>)getTypes()).basicRemove(otherEnd, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
@@ -109,8 +110,8 @@ public class TypeDeclImpl extends MinimalEObjectImpl.Container implements TypeDe
   {
     switch (featureID)
     {
-      case EsterelPackage.TYPE_DECL__TYPE:
-        return getType();
+      case EsterelPackage.TYPE_DECL__TYPES:
+        return getTypes();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -126,9 +127,9 @@ public class TypeDeclImpl extends MinimalEObjectImpl.Container implements TypeDe
   {
     switch (featureID)
     {
-      case EsterelPackage.TYPE_DECL__TYPE:
-        getType().clear();
-        getType().addAll((Collection<? extends Type>)newValue);
+      case EsterelPackage.TYPE_DECL__TYPES:
+        getTypes().clear();
+        getTypes().addAll((Collection<? extends Type>)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -144,8 +145,8 @@ public class TypeDeclImpl extends MinimalEObjectImpl.Container implements TypeDe
   {
     switch (featureID)
     {
-      case EsterelPackage.TYPE_DECL__TYPE:
-        getType().clear();
+      case EsterelPackage.TYPE_DECL__TYPES:
+        getTypes().clear();
         return;
     }
     super.eUnset(featureID);
@@ -161,8 +162,8 @@ public class TypeDeclImpl extends MinimalEObjectImpl.Container implements TypeDe
   {
     switch (featureID)
     {
-      case EsterelPackage.TYPE_DECL__TYPE:
-        return type != null && !type.isEmpty();
+      case EsterelPackage.TYPE_DECL__TYPES:
+        return types != null && !types.isEmpty();
     }
     return super.eIsSet(featureID);
   }

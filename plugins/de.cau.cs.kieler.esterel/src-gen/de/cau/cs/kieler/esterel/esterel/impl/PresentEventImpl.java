@@ -2,12 +2,14 @@
  * <copyright>
  * </copyright>
  *
+
  */
 package de.cau.cs.kieler.esterel.esterel.impl;
 
+import de.cau.cs.kieler.core.kexpressions.Expression;
+
 import de.cau.cs.kieler.esterel.esterel.EsterelPackage;
 import de.cau.cs.kieler.esterel.esterel.PresentEvent;
-import de.cau.cs.kieler.esterel.esterel.SigExpr;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
@@ -26,6 +28,7 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  * The following features are implemented:
  * <ul>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.PresentEventImpl#getExpression <em>Expression</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.PresentEventImpl#getTick <em>Tick</em>}</li>
  * </ul>
  * </p>
  *
@@ -41,7 +44,27 @@ public class PresentEventImpl extends MinimalEObjectImpl.Container implements Pr
    * @generated
    * @ordered
    */
-  protected SigExpr expression;
+  protected Expression expression;
+
+  /**
+   * The default value of the '{@link #getTick() <em>Tick</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getTick()
+   * @generated
+   * @ordered
+   */
+  protected static final String TICK_EDEFAULT = null;
+
+  /**
+   * The cached value of the '{@link #getTick() <em>Tick</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getTick()
+   * @generated
+   * @ordered
+   */
+  protected String tick = TICK_EDEFAULT;
 
   /**
    * <!-- begin-user-doc -->
@@ -69,7 +92,7 @@ public class PresentEventImpl extends MinimalEObjectImpl.Container implements Pr
    * <!-- end-user-doc -->
    * @generated
    */
-  public SigExpr getExpression()
+  public Expression getExpression()
   {
     return expression;
   }
@@ -79,9 +102,9 @@ public class PresentEventImpl extends MinimalEObjectImpl.Container implements Pr
    * <!-- end-user-doc -->
    * @generated
    */
-  public NotificationChain basicSetExpression(SigExpr newExpression, NotificationChain msgs)
+  public NotificationChain basicSetExpression(Expression newExpression, NotificationChain msgs)
   {
-    SigExpr oldExpression = expression;
+    Expression oldExpression = expression;
     expression = newExpression;
     if (eNotificationRequired())
     {
@@ -96,7 +119,7 @@ public class PresentEventImpl extends MinimalEObjectImpl.Container implements Pr
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setExpression(SigExpr newExpression)
+  public void setExpression(Expression newExpression)
   {
     if (newExpression != expression)
     {
@@ -110,6 +133,29 @@ public class PresentEventImpl extends MinimalEObjectImpl.Container implements Pr
     }
     else if (eNotificationRequired())
       eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.PRESENT_EVENT__EXPRESSION, newExpression, newExpression));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public String getTick()
+  {
+    return tick;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setTick(String newTick)
+  {
+    String oldTick = tick;
+    tick = newTick;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.PRESENT_EVENT__TICK, oldTick, tick));
   }
 
   /**
@@ -140,6 +186,8 @@ public class PresentEventImpl extends MinimalEObjectImpl.Container implements Pr
     {
       case EsterelPackage.PRESENT_EVENT__EXPRESSION:
         return getExpression();
+      case EsterelPackage.PRESENT_EVENT__TICK:
+        return getTick();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -155,7 +203,10 @@ public class PresentEventImpl extends MinimalEObjectImpl.Container implements Pr
     switch (featureID)
     {
       case EsterelPackage.PRESENT_EVENT__EXPRESSION:
-        setExpression((SigExpr)newValue);
+        setExpression((Expression)newValue);
+        return;
+      case EsterelPackage.PRESENT_EVENT__TICK:
+        setTick((String)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -172,7 +223,10 @@ public class PresentEventImpl extends MinimalEObjectImpl.Container implements Pr
     switch (featureID)
     {
       case EsterelPackage.PRESENT_EVENT__EXPRESSION:
-        setExpression((SigExpr)null);
+        setExpression((Expression)null);
+        return;
+      case EsterelPackage.PRESENT_EVENT__TICK:
+        setTick(TICK_EDEFAULT);
         return;
     }
     super.eUnset(featureID);
@@ -190,8 +244,27 @@ public class PresentEventImpl extends MinimalEObjectImpl.Container implements Pr
     {
       case EsterelPackage.PRESENT_EVENT__EXPRESSION:
         return expression != null;
+      case EsterelPackage.PRESENT_EVENT__TICK:
+        return TICK_EDEFAULT == null ? tick != null : !TICK_EDEFAULT.equals(tick);
     }
     return super.eIsSet(featureID);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public String toString()
+  {
+    if (eIsProxy()) return super.toString();
+
+    StringBuffer result = new StringBuffer(super.toString());
+    result.append(" (tick: ");
+    result.append(tick);
+    result.append(')');
+    return result.toString();
   }
 
 } //PresentEventImpl

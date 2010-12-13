@@ -2,8 +2,18 @@
  * <copyright>
  * </copyright>
  *
+
  */
 package de.cau.cs.kieler.esterel.esterel.util;
+
+import de.cau.cs.kieler.core.annotations.Annotatable;
+
+import de.cau.cs.kieler.core.kexpressions.ComplexExpression;
+import de.cau.cs.kieler.core.kexpressions.Expression;
+import de.cau.cs.kieler.core.kexpressions.ISignal;
+import de.cau.cs.kieler.core.kexpressions.Signal;
+import de.cau.cs.kieler.core.kexpressions.ValuedObject;
+import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference;
 
 import de.cau.cs.kieler.esterel.esterel.*;
 
@@ -98,9 +108,24 @@ public class EsterelAdapterFactory extends AdapterFactoryImpl
         return createModuleInterfaceAdapter();
       }
       @Override
-      public Adapter caseSignalDecl(SignalDecl object)
+      public Adapter caseChannelDescription(ChannelDescription object)
       {
-        return createSignalDeclAdapter();
+        return createChannelDescriptionAdapter();
+      }
+      @Override
+      public Adapter caseTypeIdentifier(TypeIdentifier object)
+      {
+        return createTypeIdentifierAdapter();
+      }
+      @Override
+      public Adapter caseLocalSignalDecl(LocalSignalDecl object)
+      {
+        return createLocalSignalDeclAdapter();
+      }
+      @Override
+      public Adapter caseLocalSignalList(LocalSignalList object)
+      {
+        return createLocalSignalListAdapter();
       }
       @Override
       public Adapter caseSensorDecl(SensorDecl object)
@@ -138,19 +163,24 @@ public class EsterelAdapterFactory extends AdapterFactoryImpl
         return createTypeAdapter();
       }
       @Override
-      public Adapter caseConstantDecl(ConstantDecl object)
+      public Adapter caseConstantDecls(ConstantDecls object)
       {
-        return createConstantDeclAdapter();
+        return createConstantDeclsAdapter();
       }
       @Override
-      public Adapter caseOneTypeConstantDecl(OneTypeConstantDecl object)
+      public Adapter caseOneTypeConstantDecls(OneTypeConstantDecls object)
       {
-        return createOneTypeConstantDeclAdapter();
+        return createOneTypeConstantDeclsAdapter();
       }
       @Override
-      public Adapter caseConstant(Constant object)
+      public Adapter caseConstantWithValue(ConstantWithValue object)
       {
-        return createConstantAdapter();
+        return createConstantWithValueAdapter();
+      }
+      @Override
+      public Adapter caseConstantValue(ConstantValue object)
+      {
+        return createConstantValueAdapter();
       }
       @Override
       public Adapter caseFunctionDecl(FunctionDecl object)
@@ -163,6 +193,11 @@ public class EsterelAdapterFactory extends AdapterFactoryImpl
         return createFunctionAdapter();
       }
       @Override
+      public Adapter caseFunctionCall(FunctionCall object)
+      {
+        return createFunctionCallAdapter();
+      }
+      @Override
       public Adapter caseProcedureDecl(ProcedureDecl object)
       {
         return createProcedureDeclAdapter();
@@ -171,6 +206,16 @@ public class EsterelAdapterFactory extends AdapterFactoryImpl
       public Adapter caseProcedure(Procedure object)
       {
         return createProcedureAdapter();
+      }
+      @Override
+      public Adapter caseTaskDecl(TaskDecl object)
+      {
+        return createTaskDeclAdapter();
+      }
+      @Override
+      public Adapter caseTask(Task object)
+      {
+        return createTaskAdapter();
       }
       @Override
       public Adapter caseStatement(Statement object)
@@ -211,6 +256,21 @@ public class EsterelAdapterFactory extends AdapterFactoryImpl
       public Adapter caseAbortCaseSingle(AbortCaseSingle object)
       {
         return createAbortCaseSingleAdapter();
+      }
+      @Override
+      public Adapter caseWeakAbortBody(WeakAbortBody object)
+      {
+        return createWeakAbortBodyAdapter();
+      }
+      @Override
+      public Adapter caseWeakAbortEnd(WeakAbortEnd object)
+      {
+        return createWeakAbortEndAdapter();
+      }
+      @Override
+      public Adapter caseWeakAbortEndAlt(WeakAbortEndAlt object)
+      {
+        return createWeakAbortEndAltAdapter();
       }
       @Override
       public Adapter caseAwait(Await object)
@@ -281,11 +341,6 @@ public class EsterelAdapterFactory extends AdapterFactoryImpl
       public Adapter caseIfTest(IfTest object)
       {
         return createIfTestAdapter();
-      }
-      @Override
-      public Adapter caseElsIfPart(ElsIfPart object)
-      {
-        return createElsIfPartAdapter();
       }
       @Override
       public Adapter caseElsIf(ElsIf object)
@@ -408,19 +463,14 @@ public class EsterelAdapterFactory extends AdapterFactoryImpl
         return createProcedureRenamingAdapter();
       }
       @Override
+      public Adapter caseTaskRenaming(TaskRenaming object)
+      {
+        return createTaskRenamingAdapter();
+      }
+      @Override
       public Adapter caseSignalRenaming(SignalRenaming object)
       {
         return createSignalRenamingAdapter();
-      }
-      @Override
-      public Adapter caseLocalSignalDecl(LocalSignalDecl object)
-      {
-        return createLocalSignalDeclAdapter();
-      }
-      @Override
-      public Adapter caseLocalSignalList(LocalSignalList object)
-      {
-        return createLocalSignalListAdapter();
       }
       @Override
       public Adapter caseSuspend(Suspend object)
@@ -443,154 +493,14 @@ public class EsterelAdapterFactory extends AdapterFactoryImpl
         return createTrapDeclListAdapter();
       }
       @Override
-      public Adapter caseTrapDecl(TrapDecl object)
-      {
-        return createTrapDeclAdapter();
-      }
-      @Override
-      public Adapter caseTrapHandlerList(TrapHandlerList object)
-      {
-        return createTrapHandlerListAdapter();
-      }
-      @Override
       public Adapter caseTrapHandler(TrapHandler object)
       {
         return createTrapHandlerAdapter();
       }
       @Override
-      public Adapter caseVariable(Variable object)
+      public Adapter caseLocalVariable(LocalVariable object)
       {
-        return createVariableAdapter();
-      }
-      @Override
-      public Adapter caseVariableDecl(VariableDecl object)
-      {
-        return createVariableDeclAdapter();
-      }
-      @Override
-      public Adapter caseVariableList(VariableList object)
-      {
-        return createVariableListAdapter();
-      }
-      @Override
-      public Adapter caseVariableSingle(VariableSingle object)
-      {
-        return createVariableSingleAdapter();
-      }
-      @Override
-      public Adapter caseWeakAbort(WeakAbort object)
-      {
-        return createWeakAbortAdapter();
-      }
-      @Override
-      public Adapter caseWeakAbortBody(WeakAbortBody object)
-      {
-        return createWeakAbortBodyAdapter();
-      }
-      @Override
-      public Adapter caseWeakAbortInstance(WeakAbortInstance object)
-      {
-        return createWeakAbortInstanceAdapter();
-      }
-      @Override
-      public Adapter caseWeakAbortCase(WeakAbortCase object)
-      {
-        return createWeakAbortCaseAdapter();
-      }
-      @Override
-      public Adapter caseDataExpr(DataExpr object)
-      {
-        return createDataExprAdapter();
-      }
-      @Override
-      public Adapter caseDataMult(DataMult object)
-      {
-        return createDataMultAdapter();
-      }
-      @Override
-      public Adapter caseDataEquation(DataEquation object)
-      {
-        return createDataEquationAdapter();
-      }
-      @Override
-      public Adapter caseDataMinus(DataMinus object)
-      {
-        return createDataMinusAdapter();
-      }
-      @Override
-      public Adapter caseDataUnaryExpr(DataUnaryExpr object)
-      {
-        return createDataUnaryExprAdapter();
-      }
-      @Override
-      public Adapter caseDataValueID(DataValueID object)
-      {
-        return createDataValueIDAdapter();
-      }
-      @Override
-      public Adapter caseDataValueFloat(DataValueFloat object)
-      {
-        return createDataValueFloatAdapter();
-      }
-      @Override
-      public Adapter caseDataValueBoolean(DataValueBoolean object)
-      {
-        return createDataValueBooleanAdapter();
-      }
-      @Override
-      public Adapter caseDataValueInt(DataValueInt object)
-      {
-        return createDataValueIntAdapter();
-      }
-      @Override
-      public Adapter caseDataValueString(DataValueString object)
-      {
-        return createDataValueStringAdapter();
-      }
-      @Override
-      public Adapter caseDataBlock(DataBlock object)
-      {
-        return createDataBlockAdapter();
-      }
-      @Override
-      public Adapter caseDataCurrent(DataCurrent object)
-      {
-        return createDataCurrentAdapter();
-      }
-      @Override
-      public Adapter caseDataPre(DataPre object)
-      {
-        return createDataPreAdapter();
-      }
-      @Override
-      public Adapter caseDataTrap(DataTrap object)
-      {
-        return createDataTrapAdapter();
-      }
-      @Override
-      public Adapter caseDataFunction(DataFunction object)
-      {
-        return createDataFunctionAdapter();
-      }
-      @Override
-      public Adapter caseTrapExpr(TrapExpr object)
-      {
-        return createTrapExprAdapter();
-      }
-      @Override
-      public Adapter caseSigExpr(SigExpr object)
-      {
-        return createSigExprAdapter();
-      }
-      @Override
-      public Adapter caseSigExprAND(SigExprAND object)
-      {
-        return createSigExprANDAdapter();
-      }
-      @Override
-      public Adapter caseSigExprUnary(SigExprUnary object)
-      {
-        return createSigExprUnaryAdapter();
+        return createLocalVariableAdapter();
       }
       @Override
       public Adapter caseDelayExpr(DelayExpr object)
@@ -603,49 +513,49 @@ public class EsterelAdapterFactory extends AdapterFactoryImpl
         return createDelayEventAdapter();
       }
       @Override
-      public Adapter caseChannelDescription(ChannelDescription object)
+      public Adapter caseExec(Exec object)
       {
-        return createChannelDescriptionAdapter();
+        return createExecAdapter();
       }
       @Override
-      public Adapter caseChannelType(ChannelType object)
+      public Adapter caseExecBody(ExecBody object)
       {
-        return createChannelTypeAdapter();
+        return createExecBodyAdapter();
       }
       @Override
-      public Adapter caseSignal(Signal object)
+      public Adapter caseExecCase(ExecCase object)
       {
-        return createSignalAdapter();
+        return createExecCaseAdapter();
       }
       @Override
-      public Adapter caseSensor(Sensor object)
+      public Adapter caseSensorWithType(SensorWithType object)
       {
-        return createSensorAdapter();
+        return createSensorWithTypeAdapter();
       }
       @Override
-      public Adapter caseInput(Input object)
+      public Adapter caseEsterelTypeIdentifier(EsterelTypeIdentifier object)
       {
-        return createInputAdapter();
+        return createEsterelTypeIdentifierAdapter();
       }
       @Override
-      public Adapter caseOutput(Output object)
+      public Adapter caseEsterelType(EsterelType object)
       {
-        return createOutputAdapter();
+        return createEsterelTypeAdapter();
       }
       @Override
-      public Adapter caseInputOutput(InputOutput object)
+      public Adapter caseLocalSignal(LocalSignal object)
       {
-        return createInputOutputAdapter();
-      }
-      @Override
-      public Adapter caseReturn(Return object)
-      {
-        return createReturnAdapter();
+        return createLocalSignalAdapter();
       }
       @Override
       public Adapter caseRelation(Relation object)
       {
         return createRelationAdapter();
+      }
+      @Override
+      public Adapter caseConstant(Constant object)
+      {
+        return createConstantAdapter();
       }
       @Override
       public Adapter caseParallel(Parallel object)
@@ -658,14 +568,89 @@ public class EsterelAdapterFactory extends AdapterFactoryImpl
         return createSequenceAdapter();
       }
       @Override
-      public Adapter caseLocalSignal(LocalSignal object)
+      public Adapter caseWeakAbort(WeakAbort object)
       {
-        return createLocalSignalAdapter();
+        return createWeakAbortAdapter();
       }
       @Override
-      public Adapter caseDataTick(DataTick object)
+      public Adapter caseWeakAbortInstance(WeakAbortInstance object)
       {
-        return createDataTickAdapter();
+        return createWeakAbortInstanceAdapter();
+      }
+      @Override
+      public Adapter caseWeakAbortCase(WeakAbortCase object)
+      {
+        return createWeakAbortCaseAdapter();
+      }
+      @Override
+      public Adapter caseTrapDecl(TrapDecl object)
+      {
+        return createTrapDeclAdapter();
+      }
+      @Override
+      public Adapter caseTrapExpression(TrapExpression object)
+      {
+        return createTrapExpressionAdapter();
+      }
+      @Override
+      public Adapter caseFunctionExpression(FunctionExpression object)
+      {
+        return createFunctionExpressionAdapter();
+      }
+      @Override
+      public Adapter caseConstantExpression(ConstantExpression object)
+      {
+        return createConstantExpressionAdapter();
+      }
+      @Override
+      public Adapter caseTrapReferenceExpr(TrapReferenceExpr object)
+      {
+        return createTrapReferenceExprAdapter();
+      }
+      @Override
+      public Adapter caseKExpressions_ChannelDescription(de.cau.cs.kieler.core.kexpressions.ChannelDescription object)
+      {
+        return createKExpressions_ChannelDescriptionAdapter();
+      }
+      @Override
+      public Adapter caseKExpressions_TypeIdentifier(de.cau.cs.kieler.core.kexpressions.TypeIdentifier object)
+      {
+        return createKExpressions_TypeIdentifierAdapter();
+      }
+      @Override
+      public Adapter caseAnnotatable(Annotatable object)
+      {
+        return createAnnotatableAdapter();
+      }
+      @Override
+      public Adapter caseValuedObject(ValuedObject object)
+      {
+        return createValuedObjectAdapter();
+      }
+      @Override
+      public Adapter caseSignal(Signal object)
+      {
+        return createSignalAdapter();
+      }
+      @Override
+      public Adapter caseISignal(ISignal object)
+      {
+        return createISignalAdapter();
+      }
+      @Override
+      public Adapter caseExpression(Expression object)
+      {
+        return createExpressionAdapter();
+      }
+      @Override
+      public Adapter caseComplexExpression(ComplexExpression object)
+      {
+        return createComplexExpressionAdapter();
+      }
+      @Override
+      public Adapter caseValuedObjectReference(ValuedObjectReference object)
+      {
+        return createValuedObjectReferenceAdapter();
       }
       @Override
       public Adapter defaultCase(EObject object)
@@ -750,16 +735,61 @@ public class EsterelAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.esterel.esterel.SignalDecl <em>Signal Decl</em>}'.
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.esterel.esterel.ChannelDescription <em>Channel Description</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
    * it's useful to ignore a case when inheritance will catch all the cases anyway.
    * <!-- end-user-doc -->
    * @return the new adapter.
-   * @see de.cau.cs.kieler.esterel.esterel.SignalDecl
+   * @see de.cau.cs.kieler.esterel.esterel.ChannelDescription
    * @generated
    */
-  public Adapter createSignalDeclAdapter()
+  public Adapter createChannelDescriptionAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.esterel.esterel.TypeIdentifier <em>Type Identifier</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.cau.cs.kieler.esterel.esterel.TypeIdentifier
+   * @generated
+   */
+  public Adapter createTypeIdentifierAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.esterel.esterel.LocalSignalDecl <em>Local Signal Decl</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.cau.cs.kieler.esterel.esterel.LocalSignalDecl
+   * @generated
+   */
+  public Adapter createLocalSignalDeclAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.esterel.esterel.LocalSignalList <em>Local Signal List</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.cau.cs.kieler.esterel.esterel.LocalSignalList
+   * @generated
+   */
+  public Adapter createLocalSignalListAdapter()
   {
     return null;
   }
@@ -870,46 +900,61 @@ public class EsterelAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.esterel.esterel.ConstantDecl <em>Constant Decl</em>}'.
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.esterel.esterel.ConstantDecls <em>Constant Decls</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
    * it's useful to ignore a case when inheritance will catch all the cases anyway.
    * <!-- end-user-doc -->
    * @return the new adapter.
-   * @see de.cau.cs.kieler.esterel.esterel.ConstantDecl
+   * @see de.cau.cs.kieler.esterel.esterel.ConstantDecls
    * @generated
    */
-  public Adapter createConstantDeclAdapter()
+  public Adapter createConstantDeclsAdapter()
   {
     return null;
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.esterel.esterel.OneTypeConstantDecl <em>One Type Constant Decl</em>}'.
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.esterel.esterel.OneTypeConstantDecls <em>One Type Constant Decls</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
    * it's useful to ignore a case when inheritance will catch all the cases anyway.
    * <!-- end-user-doc -->
    * @return the new adapter.
-   * @see de.cau.cs.kieler.esterel.esterel.OneTypeConstantDecl
+   * @see de.cau.cs.kieler.esterel.esterel.OneTypeConstantDecls
    * @generated
    */
-  public Adapter createOneTypeConstantDeclAdapter()
+  public Adapter createOneTypeConstantDeclsAdapter()
   {
     return null;
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.esterel.esterel.Constant <em>Constant</em>}'.
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.esterel.esterel.ConstantWithValue <em>Constant With Value</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
    * it's useful to ignore a case when inheritance will catch all the cases anyway.
    * <!-- end-user-doc -->
    * @return the new adapter.
-   * @see de.cau.cs.kieler.esterel.esterel.Constant
+   * @see de.cau.cs.kieler.esterel.esterel.ConstantWithValue
    * @generated
    */
-  public Adapter createConstantAdapter()
+  public Adapter createConstantWithValueAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.esterel.esterel.ConstantValue <em>Constant Value</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.cau.cs.kieler.esterel.esterel.ConstantValue
+   * @generated
+   */
+  public Adapter createConstantValueAdapter()
   {
     return null;
   }
@@ -945,6 +990,21 @@ public class EsterelAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.esterel.esterel.FunctionCall <em>Function Call</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.cau.cs.kieler.esterel.esterel.FunctionCall
+   * @generated
+   */
+  public Adapter createFunctionCallAdapter()
+  {
+    return null;
+  }
+
+  /**
    * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.esterel.esterel.ProcedureDecl <em>Procedure Decl</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
@@ -970,6 +1030,36 @@ public class EsterelAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createProcedureAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.esterel.esterel.TaskDecl <em>Task Decl</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.cau.cs.kieler.esterel.esterel.TaskDecl
+   * @generated
+   */
+  public Adapter createTaskDeclAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.esterel.esterel.Task <em>Task</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.cau.cs.kieler.esterel.esterel.Task
+   * @generated
+   */
+  public Adapter createTaskAdapter()
   {
     return null;
   }
@@ -1090,6 +1180,51 @@ public class EsterelAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createAbortCaseSingleAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.esterel.esterel.WeakAbortBody <em>Weak Abort Body</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.cau.cs.kieler.esterel.esterel.WeakAbortBody
+   * @generated
+   */
+  public Adapter createWeakAbortBodyAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.esterel.esterel.WeakAbortEnd <em>Weak Abort End</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.cau.cs.kieler.esterel.esterel.WeakAbortEnd
+   * @generated
+   */
+  public Adapter createWeakAbortEndAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.esterel.esterel.WeakAbortEndAlt <em>Weak Abort End Alt</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.cau.cs.kieler.esterel.esterel.WeakAbortEndAlt
+   * @generated
+   */
+  public Adapter createWeakAbortEndAltAdapter()
   {
     return null;
   }
@@ -1300,21 +1435,6 @@ public class EsterelAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createIfTestAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.esterel.esterel.ElsIfPart <em>Els If Part</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see de.cau.cs.kieler.esterel.esterel.ElsIfPart
-   * @generated
-   */
-  public Adapter createElsIfPartAdapter()
   {
     return null;
   }
@@ -1680,6 +1800,21 @@ public class EsterelAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.esterel.esterel.TaskRenaming <em>Task Renaming</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.cau.cs.kieler.esterel.esterel.TaskRenaming
+   * @generated
+   */
+  public Adapter createTaskRenamingAdapter()
+  {
+    return null;
+  }
+
+  /**
    * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.esterel.esterel.SignalRenaming <em>Signal Renaming</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
@@ -1690,36 +1825,6 @@ public class EsterelAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createSignalRenamingAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.esterel.esterel.LocalSignalDecl <em>Local Signal Decl</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see de.cau.cs.kieler.esterel.esterel.LocalSignalDecl
-   * @generated
-   */
-  public Adapter createLocalSignalDeclAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.esterel.esterel.LocalSignalList <em>Local Signal List</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see de.cau.cs.kieler.esterel.esterel.LocalSignalList
-   * @generated
-   */
-  public Adapter createLocalSignalListAdapter()
   {
     return null;
   }
@@ -1785,36 +1890,6 @@ public class EsterelAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.esterel.esterel.TrapDecl <em>Trap Decl</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see de.cau.cs.kieler.esterel.esterel.TrapDecl
-   * @generated
-   */
-  public Adapter createTrapDeclAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.esterel.esterel.TrapHandlerList <em>Trap Handler List</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see de.cau.cs.kieler.esterel.esterel.TrapHandlerList
-   * @generated
-   */
-  public Adapter createTrapHandlerListAdapter()
-  {
-    return null;
-  }
-
-  /**
    * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.esterel.esterel.TrapHandler <em>Trap Handler</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
@@ -1830,406 +1905,16 @@ public class EsterelAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.esterel.esterel.Variable <em>Variable</em>}'.
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.esterel.esterel.LocalVariable <em>Local Variable</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
    * it's useful to ignore a case when inheritance will catch all the cases anyway.
    * <!-- end-user-doc -->
    * @return the new adapter.
-   * @see de.cau.cs.kieler.esterel.esterel.Variable
+   * @see de.cau.cs.kieler.esterel.esterel.LocalVariable
    * @generated
    */
-  public Adapter createVariableAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.esterel.esterel.VariableDecl <em>Variable Decl</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see de.cau.cs.kieler.esterel.esterel.VariableDecl
-   * @generated
-   */
-  public Adapter createVariableDeclAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.esterel.esterel.VariableList <em>Variable List</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see de.cau.cs.kieler.esterel.esterel.VariableList
-   * @generated
-   */
-  public Adapter createVariableListAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.esterel.esterel.VariableSingle <em>Variable Single</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see de.cau.cs.kieler.esterel.esterel.VariableSingle
-   * @generated
-   */
-  public Adapter createVariableSingleAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.esterel.esterel.WeakAbort <em>Weak Abort</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see de.cau.cs.kieler.esterel.esterel.WeakAbort
-   * @generated
-   */
-  public Adapter createWeakAbortAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.esterel.esterel.WeakAbortBody <em>Weak Abort Body</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see de.cau.cs.kieler.esterel.esterel.WeakAbortBody
-   * @generated
-   */
-  public Adapter createWeakAbortBodyAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.esterel.esterel.WeakAbortInstance <em>Weak Abort Instance</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see de.cau.cs.kieler.esterel.esterel.WeakAbortInstance
-   * @generated
-   */
-  public Adapter createWeakAbortInstanceAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.esterel.esterel.WeakAbortCase <em>Weak Abort Case</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see de.cau.cs.kieler.esterel.esterel.WeakAbortCase
-   * @generated
-   */
-  public Adapter createWeakAbortCaseAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.esterel.esterel.DataExpr <em>Data Expr</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see de.cau.cs.kieler.esterel.esterel.DataExpr
-   * @generated
-   */
-  public Adapter createDataExprAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.esterel.esterel.DataMult <em>Data Mult</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see de.cau.cs.kieler.esterel.esterel.DataMult
-   * @generated
-   */
-  public Adapter createDataMultAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.esterel.esterel.DataEquation <em>Data Equation</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see de.cau.cs.kieler.esterel.esterel.DataEquation
-   * @generated
-   */
-  public Adapter createDataEquationAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.esterel.esterel.DataMinus <em>Data Minus</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see de.cau.cs.kieler.esterel.esterel.DataMinus
-   * @generated
-   */
-  public Adapter createDataMinusAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.esterel.esterel.DataUnaryExpr <em>Data Unary Expr</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see de.cau.cs.kieler.esterel.esterel.DataUnaryExpr
-   * @generated
-   */
-  public Adapter createDataUnaryExprAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.esterel.esterel.DataValueID <em>Data Value ID</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see de.cau.cs.kieler.esterel.esterel.DataValueID
-   * @generated
-   */
-  public Adapter createDataValueIDAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.esterel.esterel.DataValueFloat <em>Data Value Float</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see de.cau.cs.kieler.esterel.esterel.DataValueFloat
-   * @generated
-   */
-  public Adapter createDataValueFloatAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.esterel.esterel.DataValueBoolean <em>Data Value Boolean</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see de.cau.cs.kieler.esterel.esterel.DataValueBoolean
-   * @generated
-   */
-  public Adapter createDataValueBooleanAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.esterel.esterel.DataValueInt <em>Data Value Int</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see de.cau.cs.kieler.esterel.esterel.DataValueInt
-   * @generated
-   */
-  public Adapter createDataValueIntAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.esterel.esterel.DataValueString <em>Data Value String</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see de.cau.cs.kieler.esterel.esterel.DataValueString
-   * @generated
-   */
-  public Adapter createDataValueStringAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.esterel.esterel.DataBlock <em>Data Block</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see de.cau.cs.kieler.esterel.esterel.DataBlock
-   * @generated
-   */
-  public Adapter createDataBlockAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.esterel.esterel.DataCurrent <em>Data Current</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see de.cau.cs.kieler.esterel.esterel.DataCurrent
-   * @generated
-   */
-  public Adapter createDataCurrentAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.esterel.esterel.DataPre <em>Data Pre</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see de.cau.cs.kieler.esterel.esterel.DataPre
-   * @generated
-   */
-  public Adapter createDataPreAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.esterel.esterel.DataTrap <em>Data Trap</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see de.cau.cs.kieler.esterel.esterel.DataTrap
-   * @generated
-   */
-  public Adapter createDataTrapAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.esterel.esterel.DataFunction <em>Data Function</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see de.cau.cs.kieler.esterel.esterel.DataFunction
-   * @generated
-   */
-  public Adapter createDataFunctionAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.esterel.esterel.TrapExpr <em>Trap Expr</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see de.cau.cs.kieler.esterel.esterel.TrapExpr
-   * @generated
-   */
-  public Adapter createTrapExprAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.esterel.esterel.SigExpr <em>Sig Expr</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see de.cau.cs.kieler.esterel.esterel.SigExpr
-   * @generated
-   */
-  public Adapter createSigExprAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.esterel.esterel.SigExprAND <em>Sig Expr AND</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see de.cau.cs.kieler.esterel.esterel.SigExprAND
-   * @generated
-   */
-  public Adapter createSigExprANDAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.esterel.esterel.SigExprUnary <em>Sig Expr Unary</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see de.cau.cs.kieler.esterel.esterel.SigExprUnary
-   * @generated
-   */
-  public Adapter createSigExprUnaryAdapter()
+  public Adapter createLocalVariableAdapter()
   {
     return null;
   }
@@ -2265,121 +1950,106 @@ public class EsterelAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.esterel.esterel.ChannelDescription <em>Channel Description</em>}'.
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.esterel.esterel.Exec <em>Exec</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
    * it's useful to ignore a case when inheritance will catch all the cases anyway.
    * <!-- end-user-doc -->
    * @return the new adapter.
-   * @see de.cau.cs.kieler.esterel.esterel.ChannelDescription
+   * @see de.cau.cs.kieler.esterel.esterel.Exec
    * @generated
    */
-  public Adapter createChannelDescriptionAdapter()
+  public Adapter createExecAdapter()
   {
     return null;
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.esterel.esterel.ChannelType <em>Channel Type</em>}'.
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.esterel.esterel.ExecBody <em>Exec Body</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
    * it's useful to ignore a case when inheritance will catch all the cases anyway.
    * <!-- end-user-doc -->
    * @return the new adapter.
-   * @see de.cau.cs.kieler.esterel.esterel.ChannelType
+   * @see de.cau.cs.kieler.esterel.esterel.ExecBody
    * @generated
    */
-  public Adapter createChannelTypeAdapter()
+  public Adapter createExecBodyAdapter()
   {
     return null;
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.esterel.esterel.Signal <em>Signal</em>}'.
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.esterel.esterel.ExecCase <em>Exec Case</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
    * it's useful to ignore a case when inheritance will catch all the cases anyway.
    * <!-- end-user-doc -->
    * @return the new adapter.
-   * @see de.cau.cs.kieler.esterel.esterel.Signal
+   * @see de.cau.cs.kieler.esterel.esterel.ExecCase
    * @generated
    */
-  public Adapter createSignalAdapter()
+  public Adapter createExecCaseAdapter()
   {
     return null;
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.esterel.esterel.Sensor <em>Sensor</em>}'.
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.esterel.esterel.SensorWithType <em>Sensor With Type</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
    * it's useful to ignore a case when inheritance will catch all the cases anyway.
    * <!-- end-user-doc -->
    * @return the new adapter.
-   * @see de.cau.cs.kieler.esterel.esterel.Sensor
+   * @see de.cau.cs.kieler.esterel.esterel.SensorWithType
    * @generated
    */
-  public Adapter createSensorAdapter()
+  public Adapter createSensorWithTypeAdapter()
   {
     return null;
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.esterel.esterel.Input <em>Input</em>}'.
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.esterel.esterel.EsterelTypeIdentifier <em>Type Identifier</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
    * it's useful to ignore a case when inheritance will catch all the cases anyway.
    * <!-- end-user-doc -->
    * @return the new adapter.
-   * @see de.cau.cs.kieler.esterel.esterel.Input
+   * @see de.cau.cs.kieler.esterel.esterel.EsterelTypeIdentifier
    * @generated
    */
-  public Adapter createInputAdapter()
+  public Adapter createEsterelTypeIdentifierAdapter()
   {
     return null;
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.esterel.esterel.Output <em>Output</em>}'.
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.esterel.esterel.EsterelType <em>Type</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
    * it's useful to ignore a case when inheritance will catch all the cases anyway.
    * <!-- end-user-doc -->
    * @return the new adapter.
-   * @see de.cau.cs.kieler.esterel.esterel.Output
+   * @see de.cau.cs.kieler.esterel.esterel.EsterelType
    * @generated
    */
-  public Adapter createOutputAdapter()
+  public Adapter createEsterelTypeAdapter()
   {
     return null;
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.esterel.esterel.InputOutput <em>Input Output</em>}'.
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.esterel.esterel.LocalSignal <em>Local Signal</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
    * it's useful to ignore a case when inheritance will catch all the cases anyway.
    * <!-- end-user-doc -->
    * @return the new adapter.
-   * @see de.cau.cs.kieler.esterel.esterel.InputOutput
+   * @see de.cau.cs.kieler.esterel.esterel.LocalSignal
    * @generated
    */
-  public Adapter createInputOutputAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.esterel.esterel.Return <em>Return</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see de.cau.cs.kieler.esterel.esterel.Return
-   * @generated
-   */
-  public Adapter createReturnAdapter()
+  public Adapter createLocalSignalAdapter()
   {
     return null;
   }
@@ -2395,6 +2065,21 @@ public class EsterelAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createRelationAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.esterel.esterel.Constant <em>Constant</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.cau.cs.kieler.esterel.esterel.Constant
+   * @generated
+   */
+  public Adapter createConstantAdapter()
   {
     return null;
   }
@@ -2430,31 +2115,256 @@ public class EsterelAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.esterel.esterel.LocalSignal <em>Local Signal</em>}'.
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.esterel.esterel.WeakAbort <em>Weak Abort</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
    * it's useful to ignore a case when inheritance will catch all the cases anyway.
    * <!-- end-user-doc -->
    * @return the new adapter.
-   * @see de.cau.cs.kieler.esterel.esterel.LocalSignal
+   * @see de.cau.cs.kieler.esterel.esterel.WeakAbort
    * @generated
    */
-  public Adapter createLocalSignalAdapter()
+  public Adapter createWeakAbortAdapter()
   {
     return null;
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.esterel.esterel.DataTick <em>Data Tick</em>}'.
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.esterel.esterel.WeakAbortInstance <em>Weak Abort Instance</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
    * it's useful to ignore a case when inheritance will catch all the cases anyway.
    * <!-- end-user-doc -->
    * @return the new adapter.
-   * @see de.cau.cs.kieler.esterel.esterel.DataTick
+   * @see de.cau.cs.kieler.esterel.esterel.WeakAbortInstance
    * @generated
    */
-  public Adapter createDataTickAdapter()
+  public Adapter createWeakAbortInstanceAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.esterel.esterel.WeakAbortCase <em>Weak Abort Case</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.cau.cs.kieler.esterel.esterel.WeakAbortCase
+   * @generated
+   */
+  public Adapter createWeakAbortCaseAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.esterel.esterel.TrapDecl <em>Trap Decl</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.cau.cs.kieler.esterel.esterel.TrapDecl
+   * @generated
+   */
+  public Adapter createTrapDeclAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.esterel.esterel.TrapExpression <em>Trap Expression</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.cau.cs.kieler.esterel.esterel.TrapExpression
+   * @generated
+   */
+  public Adapter createTrapExpressionAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.esterel.esterel.FunctionExpression <em>Function Expression</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.cau.cs.kieler.esterel.esterel.FunctionExpression
+   * @generated
+   */
+  public Adapter createFunctionExpressionAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.esterel.esterel.ConstantExpression <em>Constant Expression</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.cau.cs.kieler.esterel.esterel.ConstantExpression
+   * @generated
+   */
+  public Adapter createConstantExpressionAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.esterel.esterel.TrapReferenceExpr <em>Trap Reference Expr</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.cau.cs.kieler.esterel.esterel.TrapReferenceExpr
+   * @generated
+   */
+  public Adapter createTrapReferenceExprAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.core.kexpressions.ChannelDescription <em>Channel Description</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.cau.cs.kieler.core.kexpressions.ChannelDescription
+   * @generated
+   */
+  public Adapter createKExpressions_ChannelDescriptionAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.core.kexpressions.TypeIdentifier <em>Type Identifier</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.cau.cs.kieler.core.kexpressions.TypeIdentifier
+   * @generated
+   */
+  public Adapter createKExpressions_TypeIdentifierAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.core.annotations.Annotatable <em>Annotatable</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.cau.cs.kieler.core.annotations.Annotatable
+   * @generated
+   */
+  public Adapter createAnnotatableAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.core.kexpressions.ValuedObject <em>Valued Object</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.cau.cs.kieler.core.kexpressions.ValuedObject
+   * @generated
+   */
+  public Adapter createValuedObjectAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.core.kexpressions.Signal <em>Signal</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.cau.cs.kieler.core.kexpressions.Signal
+   * @generated
+   */
+  public Adapter createSignalAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.core.kexpressions.ISignal <em>ISignal</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.cau.cs.kieler.core.kexpressions.ISignal
+   * @generated
+   */
+  public Adapter createISignalAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.core.kexpressions.Expression <em>Expression</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.cau.cs.kieler.core.kexpressions.Expression
+   * @generated
+   */
+  public Adapter createExpressionAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.core.kexpressions.ComplexExpression <em>Complex Expression</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.cau.cs.kieler.core.kexpressions.ComplexExpression
+   * @generated
+   */
+  public Adapter createComplexExpressionAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.core.kexpressions.ValuedObjectReference <em>Valued Object Reference</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
+   * @generated
+   */
+  public Adapter createValuedObjectReferenceAdapter()
   {
     return null;
   }

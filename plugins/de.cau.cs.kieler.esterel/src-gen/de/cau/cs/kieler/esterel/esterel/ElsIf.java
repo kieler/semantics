@@ -2,8 +2,11 @@
  * <copyright>
  * </copyright>
  *
+
  */
 package de.cau.cs.kieler.esterel.esterel;
+
+import de.cau.cs.kieler.core.kexpressions.Expression;
 
 import org.eclipse.emf.ecore.EObject;
 
@@ -35,12 +38,12 @@ public interface ElsIf extends EObject
    * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Expr</em>' containment reference.
-   * @see #setExpr(DataExpr)
+   * @see #setExpr(Expression)
    * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getElsIf_Expr()
    * @model containment="true"
    * @generated
    */
-  DataExpr getExpr();
+  Expression getExpr();
 
   /**
    * Sets the value of the '{@link de.cau.cs.kieler.esterel.esterel.ElsIf#getExpr <em>Expr</em>}' containment reference.
@@ -50,7 +53,7 @@ public interface ElsIf extends EObject
    * @see #getExpr()
    * @generated
    */
-  void setExpr(DataExpr value);
+  void setExpr(Expression value);
 
   /**
    * Returns the value of the '<em><b>Then Part</b></em>' containment reference.

@@ -2,6 +2,7 @@
  * <copyright>
  * </copyright>
  *
+
  */
 package de.cau.cs.kieler.esterel.esterel;
 
@@ -16,8 +17,9 @@ import org.eclipse.emf.ecore.EObject;
  * The following features are supported:
  * <ul>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.Module#getName <em>Name</em>}</li>
- *   <li>{@link de.cau.cs.kieler.esterel.esterel.Module#getModInt <em>Mod Int</em>}</li>
- *   <li>{@link de.cau.cs.kieler.esterel.esterel.Module#getModBody <em>Mod Body</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.esterel.esterel.Module#getInterface <em>Interface</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.esterel.esterel.Module#getBody <em>Body</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.esterel.esterel.Module#getEnd <em>End</em>}</li>
  * </ul>
  * </p>
  *
@@ -54,55 +56,81 @@ public interface Module extends EObject
   void setName(String value);
 
   /**
-   * Returns the value of the '<em><b>Mod Int</b></em>' containment reference.
+   * Returns the value of the '<em><b>Interface</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Mod Int</em>' containment reference isn't clear,
+   * If the meaning of the '<em>Interface</em>' containment reference isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Mod Int</em>' containment reference.
-   * @see #setModInt(ModuleInterface)
-   * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getModule_ModInt()
+   * @return the value of the '<em>Interface</em>' containment reference.
+   * @see #setInterface(ModuleInterface)
+   * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getModule_Interface()
    * @model containment="true"
    * @generated
    */
-  ModuleInterface getModInt();
+  ModuleInterface getInterface();
 
   /**
-   * Sets the value of the '{@link de.cau.cs.kieler.esterel.esterel.Module#getModInt <em>Mod Int</em>}' containment reference.
+   * Sets the value of the '{@link de.cau.cs.kieler.esterel.esterel.Module#getInterface <em>Interface</em>}' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Mod Int</em>' containment reference.
-   * @see #getModInt()
+   * @param value the new value of the '<em>Interface</em>' containment reference.
+   * @see #getInterface()
    * @generated
    */
-  void setModInt(ModuleInterface value);
+  void setInterface(ModuleInterface value);
 
   /**
-   * Returns the value of the '<em><b>Mod Body</b></em>' containment reference.
+   * Returns the value of the '<em><b>Body</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Mod Body</em>' containment reference isn't clear,
+   * If the meaning of the '<em>Body</em>' containment reference isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Mod Body</em>' containment reference.
-   * @see #setModBody(ModuleBody)
-   * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getModule_ModBody()
+   * @return the value of the '<em>Body</em>' containment reference.
+   * @see #setBody(ModuleBody)
+   * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getModule_Body()
    * @model containment="true"
    * @generated
    */
-  ModuleBody getModBody();
+  ModuleBody getBody();
 
   /**
-   * Sets the value of the '{@link de.cau.cs.kieler.esterel.esterel.Module#getModBody <em>Mod Body</em>}' containment reference.
+   * Sets the value of the '{@link de.cau.cs.kieler.esterel.esterel.Module#getBody <em>Body</em>}' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Mod Body</em>' containment reference.
-   * @see #getModBody()
+   * @param value the new value of the '<em>Body</em>' containment reference.
+   * @see #getBody()
    * @generated
    */
-  void setModBody(ModuleBody value);
+  void setBody(ModuleBody value);
+
+  /**
+   * Returns the value of the '<em><b>End</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>End</em>' attribute isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>End</em>' attribute.
+   * @see #setEnd(String)
+   * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getModule_End()
+   * @model
+   * @generated
+   */
+  String getEnd();
+
+  /**
+   * Sets the value of the '{@link de.cau.cs.kieler.esterel.esterel.Module#getEnd <em>End</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>End</em>' attribute.
+   * @see #getEnd()
+   * @generated
+   */
+  void setEnd(String value);
 
 } // Module

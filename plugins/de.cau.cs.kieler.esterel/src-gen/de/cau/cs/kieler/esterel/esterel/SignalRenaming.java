@@ -2,8 +2,11 @@
  * <copyright>
  * </copyright>
  *
+
  */
 package de.cau.cs.kieler.esterel.esterel;
+
+import de.cau.cs.kieler.core.kexpressions.ISignal;
 
 import org.eclipse.emf.ecore.EObject;
 
@@ -35,12 +38,12 @@ public interface SignalRenaming extends EObject
    * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>New Name</em>' reference.
-   * @see #setNewName(Signal)
+   * @see #setNewName(ISignal)
    * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getSignalRenaming_NewName()
    * @model
    * @generated
    */
-  Signal getNewName();
+  ISignal getNewName();
 
   /**
    * Sets the value of the '{@link de.cau.cs.kieler.esterel.esterel.SignalRenaming#getNewName <em>New Name</em>}' reference.
@@ -50,7 +53,7 @@ public interface SignalRenaming extends EObject
    * @see #getNewName()
    * @generated
    */
-  void setNewName(Signal value);
+  void setNewName(ISignal value);
 
   /**
    * Returns the value of the '<em><b>Old Name</b></em>' reference.
@@ -61,12 +64,12 @@ public interface SignalRenaming extends EObject
    * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Old Name</em>' reference.
-   * @see #setOldName(Signal)
+   * @see #setOldName(ISignal)
    * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getSignalRenaming_OldName()
    * @model
    * @generated
    */
-  Signal getOldName();
+  ISignal getOldName();
 
   /**
    * Sets the value of the '{@link de.cau.cs.kieler.esterel.esterel.SignalRenaming#getOldName <em>Old Name</em>}' reference.
@@ -76,6 +79,6 @@ public interface SignalRenaming extends EObject
    * @see #getOldName()
    * @generated
    */
-  void setOldName(Signal value);
+  void setOldName(ISignal value);
 
 } // SignalRenaming

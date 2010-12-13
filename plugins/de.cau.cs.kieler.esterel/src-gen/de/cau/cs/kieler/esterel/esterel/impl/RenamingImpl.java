@@ -2,6 +2,7 @@
  * <copyright>
  * </copyright>
  *
+
  */
 package de.cau.cs.kieler.esterel.esterel.impl;
 
@@ -30,7 +31,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.RenamingImpl#getRenaming <em>Renaming</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.RenamingImpl#getRenamings <em>Renamings</em>}</li>
  * </ul>
  * </p>
  *
@@ -39,14 +40,14 @@ import org.eclipse.emf.ecore.util.InternalEList;
 public class RenamingImpl extends MinimalEObjectImpl.Container implements Renaming
 {
   /**
-   * The cached value of the '{@link #getRenaming() <em>Renaming</em>}' containment reference list.
+   * The cached value of the '{@link #getRenamings() <em>Renamings</em>}' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getRenaming()
+   * @see #getRenamings()
    * @generated
    * @ordered
    */
-  protected EList<EObject> renaming;
+  protected EList<EObject> renamings;
 
   /**
    * <!-- begin-user-doc -->
@@ -74,13 +75,13 @@ public class RenamingImpl extends MinimalEObjectImpl.Container implements Renami
    * <!-- end-user-doc -->
    * @generated
    */
-  public EList<EObject> getRenaming()
+  public EList<EObject> getRenamings()
   {
-    if (renaming == null)
+    if (renamings == null)
     {
-      renaming = new EObjectContainmentEList<EObject>(EObject.class, this, EsterelPackage.RENAMING__RENAMING);
+      renamings = new EObjectContainmentEList<EObject>(EObject.class, this, EsterelPackage.RENAMING__RENAMINGS);
     }
-    return renaming;
+    return renamings;
   }
 
   /**
@@ -93,8 +94,8 @@ public class RenamingImpl extends MinimalEObjectImpl.Container implements Renami
   {
     switch (featureID)
     {
-      case EsterelPackage.RENAMING__RENAMING:
-        return ((InternalEList<?>)getRenaming()).basicRemove(otherEnd, msgs);
+      case EsterelPackage.RENAMING__RENAMINGS:
+        return ((InternalEList<?>)getRenamings()).basicRemove(otherEnd, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
@@ -109,8 +110,8 @@ public class RenamingImpl extends MinimalEObjectImpl.Container implements Renami
   {
     switch (featureID)
     {
-      case EsterelPackage.RENAMING__RENAMING:
-        return getRenaming();
+      case EsterelPackage.RENAMING__RENAMINGS:
+        return getRenamings();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -126,9 +127,9 @@ public class RenamingImpl extends MinimalEObjectImpl.Container implements Renami
   {
     switch (featureID)
     {
-      case EsterelPackage.RENAMING__RENAMING:
-        getRenaming().clear();
-        getRenaming().addAll((Collection<? extends EObject>)newValue);
+      case EsterelPackage.RENAMING__RENAMINGS:
+        getRenamings().clear();
+        getRenamings().addAll((Collection<? extends EObject>)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -144,8 +145,8 @@ public class RenamingImpl extends MinimalEObjectImpl.Container implements Renami
   {
     switch (featureID)
     {
-      case EsterelPackage.RENAMING__RENAMING:
-        getRenaming().clear();
+      case EsterelPackage.RENAMING__RENAMINGS:
+        getRenamings().clear();
         return;
     }
     super.eUnset(featureID);
@@ -161,8 +162,8 @@ public class RenamingImpl extends MinimalEObjectImpl.Container implements Renami
   {
     switch (featureID)
     {
-      case EsterelPackage.RENAMING__RENAMING:
-        return renaming != null && !renaming.isEmpty();
+      case EsterelPackage.RENAMING__RENAMINGS:
+        return renamings != null && !renamings.isEmpty();
     }
     return super.eIsSet(featureID);
   }

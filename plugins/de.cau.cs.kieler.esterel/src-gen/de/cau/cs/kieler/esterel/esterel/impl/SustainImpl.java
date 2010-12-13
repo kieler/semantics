@@ -2,12 +2,14 @@
  * <copyright>
  * </copyright>
  *
+
  */
 package de.cau.cs.kieler.esterel.esterel.impl;
 
-import de.cau.cs.kieler.esterel.esterel.DataExpr;
+import de.cau.cs.kieler.core.kexpressions.Expression;
+import de.cau.cs.kieler.core.kexpressions.ISignal;
+
 import de.cau.cs.kieler.esterel.esterel.EsterelPackage;
-import de.cau.cs.kieler.esterel.esterel.Signal;
 import de.cau.cs.kieler.esterel.esterel.Sustain;
 
 import org.eclipse.emf.common.notify.Notification;
@@ -43,7 +45,7 @@ public class SustainImpl extends StatementImpl implements Sustain
    * @generated
    * @ordered
    */
-  protected Signal signal;
+  protected ISignal signal;
 
   /**
    * The default value of the '{@link #getTick() <em>Tick</em>}' attribute.
@@ -73,7 +75,7 @@ public class SustainImpl extends StatementImpl implements Sustain
    * @generated
    * @ordered
    */
-  protected DataExpr dataExpr;
+  protected Expression dataExpr;
 
   /**
    * <!-- begin-user-doc -->
@@ -101,12 +103,12 @@ public class SustainImpl extends StatementImpl implements Sustain
    * <!-- end-user-doc -->
    * @generated
    */
-  public Signal getSignal()
+  public ISignal getSignal()
   {
     if (signal != null && signal.eIsProxy())
     {
       InternalEObject oldSignal = (InternalEObject)signal;
-      signal = (Signal)eResolveProxy(oldSignal);
+      signal = (ISignal)eResolveProxy(oldSignal);
       if (signal != oldSignal)
       {
         if (eNotificationRequired())
@@ -121,7 +123,7 @@ public class SustainImpl extends StatementImpl implements Sustain
    * <!-- end-user-doc -->
    * @generated
    */
-  public Signal basicGetSignal()
+  public ISignal basicGetSignal()
   {
     return signal;
   }
@@ -131,9 +133,9 @@ public class SustainImpl extends StatementImpl implements Sustain
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setSignal(Signal newSignal)
+  public void setSignal(ISignal newSignal)
   {
-    Signal oldSignal = signal;
+    ISignal oldSignal = signal;
     signal = newSignal;
     if (eNotificationRequired())
       eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.SUSTAIN__SIGNAL, oldSignal, signal));
@@ -167,7 +169,7 @@ public class SustainImpl extends StatementImpl implements Sustain
    * <!-- end-user-doc -->
    * @generated
    */
-  public DataExpr getDataExpr()
+  public Expression getDataExpr()
   {
     return dataExpr;
   }
@@ -177,9 +179,9 @@ public class SustainImpl extends StatementImpl implements Sustain
    * <!-- end-user-doc -->
    * @generated
    */
-  public NotificationChain basicSetDataExpr(DataExpr newDataExpr, NotificationChain msgs)
+  public NotificationChain basicSetDataExpr(Expression newDataExpr, NotificationChain msgs)
   {
-    DataExpr oldDataExpr = dataExpr;
+    Expression oldDataExpr = dataExpr;
     dataExpr = newDataExpr;
     if (eNotificationRequired())
     {
@@ -194,7 +196,7 @@ public class SustainImpl extends StatementImpl implements Sustain
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setDataExpr(DataExpr newDataExpr)
+  public void setDataExpr(Expression newDataExpr)
   {
     if (newDataExpr != dataExpr)
     {
@@ -258,13 +260,13 @@ public class SustainImpl extends StatementImpl implements Sustain
     switch (featureID)
     {
       case EsterelPackage.SUSTAIN__SIGNAL:
-        setSignal((Signal)newValue);
+        setSignal((ISignal)newValue);
         return;
       case EsterelPackage.SUSTAIN__TICK:
         setTick((String)newValue);
         return;
       case EsterelPackage.SUSTAIN__DATA_EXPR:
-        setDataExpr((DataExpr)newValue);
+        setDataExpr((Expression)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -281,13 +283,13 @@ public class SustainImpl extends StatementImpl implements Sustain
     switch (featureID)
     {
       case EsterelPackage.SUSTAIN__SIGNAL:
-        setSignal((Signal)null);
+        setSignal((ISignal)null);
         return;
       case EsterelPackage.SUSTAIN__TICK:
         setTick(TICK_EDEFAULT);
         return;
       case EsterelPackage.SUSTAIN__DATA_EXPR:
-        setDataExpr((DataExpr)null);
+        setDataExpr((Expression)null);
         return;
     }
     super.eUnset(featureID);

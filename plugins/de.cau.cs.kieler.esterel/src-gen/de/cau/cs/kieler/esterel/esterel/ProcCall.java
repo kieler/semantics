@@ -2,8 +2,12 @@
  * <copyright>
  * </copyright>
  *
+
  */
 package de.cau.cs.kieler.esterel.esterel;
+
+import de.cau.cs.kieler.core.kexpressions.Expression;
+import de.cau.cs.kieler.core.kexpressions.IVariable;
 
 import org.eclipse.emf.common.util.EList;
 
@@ -17,7 +21,7 @@ import org.eclipse.emf.common.util.EList;
  * <ul>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.ProcCall#getProc <em>Proc</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.ProcCall#getVarList <em>Var List</em>}</li>
- *   <li>{@link de.cau.cs.kieler.esterel.esterel.ProcCall#getExpr <em>Expr</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.esterel.esterel.ProcCall#getKexpressions <em>Kexpressions</em>}</li>
  * </ul>
  * </p>
  *
@@ -55,7 +59,7 @@ public interface ProcCall extends Statement
 
   /**
    * Returns the value of the '<em><b>Var List</b></em>' reference list.
-   * The list contents are of type {@link de.cau.cs.kieler.esterel.esterel.VariableSingle}.
+   * The list contents are of type {@link de.cau.cs.kieler.core.kexpressions.IVariable}.
    * <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Var List</em>' reference list isn't clear,
@@ -67,22 +71,22 @@ public interface ProcCall extends Statement
    * @model
    * @generated
    */
-  EList<VariableSingle> getVarList();
+  EList<IVariable> getVarList();
 
   /**
-   * Returns the value of the '<em><b>Expr</b></em>' containment reference list.
-   * The list contents are of type {@link de.cau.cs.kieler.esterel.esterel.DataExpr}.
+   * Returns the value of the '<em><b>Kexpressions</b></em>' containment reference list.
+   * The list contents are of type {@link de.cau.cs.kieler.core.kexpressions.Expression}.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Expr</em>' containment reference list isn't clear,
+   * If the meaning of the '<em>Kexpressions</em>' containment reference list isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Expr</em>' containment reference list.
-   * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getProcCall_Expr()
+   * @return the value of the '<em>Kexpressions</em>' containment reference list.
+   * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getProcCall_Kexpressions()
    * @model containment="true"
    * @generated
    */
-  EList<DataExpr> getExpr();
+  EList<Expression> getKexpressions();
 
 } // ProcCall

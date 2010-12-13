@@ -2,9 +2,11 @@
  * <copyright>
  * </copyright>
  *
+
  */
 package de.cau.cs.kieler.esterel.esterel;
 
+import de.cau.cs.kieler.core.kexpressions.ISignal;
 
 /**
  * <!-- begin-user-doc -->
@@ -34,12 +36,12 @@ public interface RelationImplication extends RelationType
    * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>First</em>' reference.
-   * @see #setFirst(Signal)
+   * @see #setFirst(ISignal)
    * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getRelationImplication_First()
    * @model
    * @generated
    */
-  Signal getFirst();
+  ISignal getFirst();
 
   /**
    * Sets the value of the '{@link de.cau.cs.kieler.esterel.esterel.RelationImplication#getFirst <em>First</em>}' reference.
@@ -49,7 +51,7 @@ public interface RelationImplication extends RelationType
    * @see #getFirst()
    * @generated
    */
-  void setFirst(Signal value);
+  void setFirst(ISignal value);
 
   /**
    * Returns the value of the '<em><b>Second</b></em>' reference.
@@ -60,12 +62,12 @@ public interface RelationImplication extends RelationType
    * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Second</em>' reference.
-   * @see #setSecond(Signal)
+   * @see #setSecond(ISignal)
    * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getRelationImplication_Second()
    * @model
    * @generated
    */
-  Signal getSecond();
+  ISignal getSecond();
 
   /**
    * Sets the value of the '{@link de.cau.cs.kieler.esterel.esterel.RelationImplication#getSecond <em>Second</em>}' reference.
@@ -75,6 +77,6 @@ public interface RelationImplication extends RelationType
    * @see #getSecond()
    * @generated
    */
-  void setSecond(Signal value);
+  void setSecond(ISignal value);
 
 } // RelationImplication

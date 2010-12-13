@@ -2,6 +2,7 @@
  * <copyright>
  * </copyright>
  *
+
  */
 package de.cau.cs.kieler.esterel.esterel;
 
@@ -17,7 +18,7 @@ import org.eclipse.emf.ecore.EObject;
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link de.cau.cs.kieler.esterel.esterel.SensorDecl#getSensor <em>Sensor</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.esterel.esterel.SensorDecl#getSensors <em>Sensors</em>}</li>
  * </ul>
  * </p>
  *
@@ -28,19 +29,19 @@ import org.eclipse.emf.ecore.EObject;
 public interface SensorDecl extends EObject
 {
   /**
-   * Returns the value of the '<em><b>Sensor</b></em>' containment reference list.
-   * The list contents are of type {@link de.cau.cs.kieler.esterel.esterel.Sensor}.
+   * Returns the value of the '<em><b>Sensors</b></em>' containment reference list.
+   * The list contents are of type {@link de.cau.cs.kieler.esterel.esterel.SensorWithType}.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Sensor</em>' containment reference list isn't clear,
+   * If the meaning of the '<em>Sensors</em>' containment reference list isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Sensor</em>' containment reference list.
-   * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getSensorDecl_Sensor()
+   * @return the value of the '<em>Sensors</em>' containment reference list.
+   * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getSensorDecl_Sensors()
    * @model containment="true"
    * @generated
    */
-  EList<Sensor> getSensor();
+  EList<SensorWithType> getSensors();
 
 } // SensorDecl

@@ -2,24 +2,29 @@
  * <copyright>
  * </copyright>
  *
+
  */
 package de.cau.cs.kieler.esterel.esterel.impl;
 
 import de.cau.cs.kieler.esterel.esterel.EsterelPackage;
 import de.cau.cs.kieler.esterel.esterel.Function;
+import de.cau.cs.kieler.esterel.esterel.TypeIdentifier;
 
 import java.util.Collection;
 
 import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.notify.NotificationChain;
 
 import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
-import org.eclipse.emf.ecore.util.EDataTypeEList;
+import org.eclipse.emf.ecore.util.EObjectContainmentEList;
+import org.eclipse.emf.ecore.util.InternalEList;
 
 /**
  * <!-- begin-user-doc -->
@@ -59,34 +64,24 @@ public class FunctionImpl extends MinimalEObjectImpl.Container implements Functi
   protected String name = NAME_EDEFAULT;
 
   /**
-   * The cached value of the '{@link #getIdList() <em>Id List</em>}' attribute list.
+   * The cached value of the '{@link #getIdList() <em>Id List</em>}' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @see #getIdList()
    * @generated
    * @ordered
    */
-  protected EList<String> idList;
+  protected EList<TypeIdentifier> idList;
 
   /**
-   * The default value of the '{@link #getType() <em>Type</em>}' attribute.
+   * The cached value of the '{@link #getType() <em>Type</em>}' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @see #getType()
    * @generated
    * @ordered
    */
-  protected static final String TYPE_EDEFAULT = null;
-
-  /**
-   * The cached value of the '{@link #getType() <em>Type</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getType()
-   * @generated
-   * @ordered
-   */
-  protected String type = TYPE_EDEFAULT;
+  protected TypeIdentifier type;
 
   /**
    * <!-- begin-user-doc -->
@@ -137,11 +132,11 @@ public class FunctionImpl extends MinimalEObjectImpl.Container implements Functi
    * <!-- end-user-doc -->
    * @generated
    */
-  public EList<String> getIdList()
+  public EList<TypeIdentifier> getIdList()
   {
     if (idList == null)
     {
-      idList = new EDataTypeEList<String>(String.class, this, EsterelPackage.FUNCTION__ID_LIST);
+      idList = new EObjectContainmentEList<TypeIdentifier>(TypeIdentifier.class, this, EsterelPackage.FUNCTION__ID_LIST);
     }
     return idList;
   }
@@ -151,7 +146,7 @@ public class FunctionImpl extends MinimalEObjectImpl.Container implements Functi
    * <!-- end-user-doc -->
    * @generated
    */
-  public String getType()
+  public TypeIdentifier getType()
   {
     return type;
   }
@@ -161,12 +156,55 @@ public class FunctionImpl extends MinimalEObjectImpl.Container implements Functi
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setType(String newType)
+  public NotificationChain basicSetType(TypeIdentifier newType, NotificationChain msgs)
   {
-    String oldType = type;
+    TypeIdentifier oldType = type;
     type = newType;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.FUNCTION__TYPE, oldType, type));
+    {
+      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, EsterelPackage.FUNCTION__TYPE, oldType, newType);
+      if (msgs == null) msgs = notification; else msgs.add(notification);
+    }
+    return msgs;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setType(TypeIdentifier newType)
+  {
+    if (newType != type)
+    {
+      NotificationChain msgs = null;
+      if (type != null)
+        msgs = ((InternalEObject)type).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.FUNCTION__TYPE, null, msgs);
+      if (newType != null)
+        msgs = ((InternalEObject)newType).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.FUNCTION__TYPE, null, msgs);
+      msgs = basicSetType(newType, msgs);
+      if (msgs != null) msgs.dispatch();
+    }
+    else if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.FUNCTION__TYPE, newType, newType));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
+  {
+    switch (featureID)
+    {
+      case EsterelPackage.FUNCTION__ID_LIST:
+        return ((InternalEList<?>)getIdList()).basicRemove(otherEnd, msgs);
+      case EsterelPackage.FUNCTION__TYPE:
+        return basicSetType(null, msgs);
+    }
+    return super.eInverseRemove(otherEnd, featureID, msgs);
   }
 
   /**
@@ -205,10 +243,10 @@ public class FunctionImpl extends MinimalEObjectImpl.Container implements Functi
         return;
       case EsterelPackage.FUNCTION__ID_LIST:
         getIdList().clear();
-        getIdList().addAll((Collection<? extends String>)newValue);
+        getIdList().addAll((Collection<? extends TypeIdentifier>)newValue);
         return;
       case EsterelPackage.FUNCTION__TYPE:
-        setType((String)newValue);
+        setType((TypeIdentifier)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -231,7 +269,7 @@ public class FunctionImpl extends MinimalEObjectImpl.Container implements Functi
         getIdList().clear();
         return;
       case EsterelPackage.FUNCTION__TYPE:
-        setType(TYPE_EDEFAULT);
+        setType((TypeIdentifier)null);
         return;
     }
     super.eUnset(featureID);
@@ -252,7 +290,7 @@ public class FunctionImpl extends MinimalEObjectImpl.Container implements Functi
       case EsterelPackage.FUNCTION__ID_LIST:
         return idList != null && !idList.isEmpty();
       case EsterelPackage.FUNCTION__TYPE:
-        return TYPE_EDEFAULT == null ? type != null : !TYPE_EDEFAULT.equals(type);
+        return type != null;
     }
     return super.eIsSet(featureID);
   }
@@ -270,10 +308,6 @@ public class FunctionImpl extends MinimalEObjectImpl.Container implements Functi
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (name: ");
     result.append(name);
-    result.append(", idList: ");
-    result.append(idList);
-    result.append(", type: ");
-    result.append(type);
     result.append(')');
     return result.toString();
   }

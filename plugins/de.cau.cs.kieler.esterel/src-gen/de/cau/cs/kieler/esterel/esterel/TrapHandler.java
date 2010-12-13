@@ -2,8 +2,11 @@
  * <copyright>
  * </copyright>
  *
+
  */
 package de.cau.cs.kieler.esterel.esterel;
+
+import de.cau.cs.kieler.core.kexpressions.Expression;
 
 import org.eclipse.emf.ecore.EObject;
 
@@ -35,12 +38,12 @@ public interface TrapHandler extends EObject
    * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Trap Expr</em>' containment reference.
-   * @see #setTrapExpr(TrapExpr)
+   * @see #setTrapExpr(Expression)
    * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getTrapHandler_TrapExpr()
    * @model containment="true"
    * @generated
    */
-  TrapExpr getTrapExpr();
+  Expression getTrapExpr();
 
   /**
    * Sets the value of the '{@link de.cau.cs.kieler.esterel.esterel.TrapHandler#getTrapExpr <em>Trap Expr</em>}' containment reference.
@@ -50,7 +53,7 @@ public interface TrapHandler extends EObject
    * @see #getTrapExpr()
    * @generated
    */
-  void setTrapExpr(TrapExpr value);
+  void setTrapExpr(Expression value);
 
   /**
    * Returns the value of the '<em><b>Statement</b></em>' containment reference.

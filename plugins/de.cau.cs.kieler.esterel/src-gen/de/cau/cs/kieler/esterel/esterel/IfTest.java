@@ -2,9 +2,13 @@
  * <copyright>
  * </copyright>
  *
+
  */
 package de.cau.cs.kieler.esterel.esterel;
 
+import de.cau.cs.kieler.core.kexpressions.Expression;
+
+import org.eclipse.emf.common.util.EList;
 
 /**
  * <!-- begin-user-doc -->
@@ -16,8 +20,9 @@ package de.cau.cs.kieler.esterel.esterel;
  * <ul>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.IfTest#getExpr <em>Expr</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.IfTest#getThenPart <em>Then Part</em>}</li>
- *   <li>{@link de.cau.cs.kieler.esterel.esterel.IfTest#getElseIf <em>Else If</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.esterel.esterel.IfTest#getElsif <em>Elsif</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.IfTest#getElsePart <em>Else Part</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.esterel.esterel.IfTest#getOptEnd <em>Opt End</em>}</li>
  * </ul>
  * </p>
  *
@@ -36,12 +41,12 @@ public interface IfTest extends Statement
    * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Expr</em>' containment reference.
-   * @see #setExpr(DataExpr)
+   * @see #setExpr(Expression)
    * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getIfTest_Expr()
    * @model containment="true"
    * @generated
    */
-  DataExpr getExpr();
+  Expression getExpr();
 
   /**
    * Sets the value of the '{@link de.cau.cs.kieler.esterel.esterel.IfTest#getExpr <em>Expr</em>}' containment reference.
@@ -51,7 +56,7 @@ public interface IfTest extends Statement
    * @see #getExpr()
    * @generated
    */
-  void setExpr(DataExpr value);
+  void setExpr(Expression value);
 
   /**
    * Returns the value of the '<em><b>Then Part</b></em>' containment reference.
@@ -80,30 +85,20 @@ public interface IfTest extends Statement
   void setThenPart(ThenPart value);
 
   /**
-   * Returns the value of the '<em><b>Else If</b></em>' containment reference.
+   * Returns the value of the '<em><b>Elsif</b></em>' containment reference list.
+   * The list contents are of type {@link de.cau.cs.kieler.esterel.esterel.ElsIf}.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Else If</em>' containment reference isn't clear,
+   * If the meaning of the '<em>Elsif</em>' containment reference list isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Else If</em>' containment reference.
-   * @see #setElseIf(ElsIfPart)
-   * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getIfTest_ElseIf()
+   * @return the value of the '<em>Elsif</em>' containment reference list.
+   * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getIfTest_Elsif()
    * @model containment="true"
    * @generated
    */
-  ElsIfPart getElseIf();
-
-  /**
-   * Sets the value of the '{@link de.cau.cs.kieler.esterel.esterel.IfTest#getElseIf <em>Else If</em>}' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Else If</em>' containment reference.
-   * @see #getElseIf()
-   * @generated
-   */
-  void setElseIf(ElsIfPart value);
+  EList<ElsIf> getElsif();
 
   /**
    * Returns the value of the '<em><b>Else Part</b></em>' containment reference.
@@ -130,5 +125,31 @@ public interface IfTest extends Statement
    * @generated
    */
   void setElsePart(ElsePart value);
+
+  /**
+   * Returns the value of the '<em><b>Opt End</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Opt End</em>' attribute isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Opt End</em>' attribute.
+   * @see #setOptEnd(String)
+   * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getIfTest_OptEnd()
+   * @model
+   * @generated
+   */
+  String getOptEnd();
+
+  /**
+   * Sets the value of the '{@link de.cau.cs.kieler.esterel.esterel.IfTest#getOptEnd <em>Opt End</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Opt End</em>' attribute.
+   * @see #getOptEnd()
+   * @generated
+   */
+  void setOptEnd(String value);
 
 } // IfTest

@@ -2,8 +2,11 @@
  * <copyright>
  * </copyright>
  *
+
  */
 package de.cau.cs.kieler.esterel.esterel;
+
+import de.cau.cs.kieler.core.kexpressions.Expression;
 
 import org.eclipse.emf.ecore.EObject;
 
@@ -15,10 +18,8 @@ import org.eclipse.emf.ecore.EObject;
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link de.cau.cs.kieler.esterel.esterel.DelayEvent#getSignal <em>Signal</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.DelayEvent#getTick <em>Tick</em>}</li>
- *   <li>{@link de.cau.cs.kieler.esterel.esterel.DelayEvent#getPreSigExpr <em>Pre Sig Expr</em>}</li>
- *   <li>{@link de.cau.cs.kieler.esterel.esterel.DelayEvent#getBlockSigExpr <em>Block Sig Expr</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.esterel.esterel.DelayEvent#getExpr <em>Expr</em>}</li>
  * </ul>
  * </p>
  *
@@ -28,32 +29,6 @@ import org.eclipse.emf.ecore.EObject;
  */
 public interface DelayEvent extends EObject
 {
-  /**
-   * Returns the value of the '<em><b>Signal</b></em>' reference.
-   * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Signal</em>' reference isn't clear,
-   * there really should be more of a description here...
-   * </p>
-   * <!-- end-user-doc -->
-   * @return the value of the '<em>Signal</em>' reference.
-   * @see #setSignal(Signal)
-   * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getDelayEvent_Signal()
-   * @model
-   * @generated
-   */
-  Signal getSignal();
-
-  /**
-   * Sets the value of the '{@link de.cau.cs.kieler.esterel.esterel.DelayEvent#getSignal <em>Signal</em>}' reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Signal</em>' reference.
-   * @see #getSignal()
-   * @generated
-   */
-  void setSignal(Signal value);
-
   /**
    * Returns the value of the '<em><b>Tick</b></em>' attribute.
    * <!-- begin-user-doc -->
@@ -81,55 +56,29 @@ public interface DelayEvent extends EObject
   void setTick(String value);
 
   /**
-   * Returns the value of the '<em><b>Pre Sig Expr</b></em>' containment reference.
+   * Returns the value of the '<em><b>Expr</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Pre Sig Expr</em>' containment reference isn't clear,
+   * If the meaning of the '<em>Expr</em>' containment reference isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Pre Sig Expr</em>' containment reference.
-   * @see #setPreSigExpr(SigExpr)
-   * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getDelayEvent_PreSigExpr()
+   * @return the value of the '<em>Expr</em>' containment reference.
+   * @see #setExpr(Expression)
+   * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getDelayEvent_Expr()
    * @model containment="true"
    * @generated
    */
-  SigExpr getPreSigExpr();
+  Expression getExpr();
 
   /**
-   * Sets the value of the '{@link de.cau.cs.kieler.esterel.esterel.DelayEvent#getPreSigExpr <em>Pre Sig Expr</em>}' containment reference.
+   * Sets the value of the '{@link de.cau.cs.kieler.esterel.esterel.DelayEvent#getExpr <em>Expr</em>}' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Pre Sig Expr</em>' containment reference.
-   * @see #getPreSigExpr()
+   * @param value the new value of the '<em>Expr</em>' containment reference.
+   * @see #getExpr()
    * @generated
    */
-  void setPreSigExpr(SigExpr value);
-
-  /**
-   * Returns the value of the '<em><b>Block Sig Expr</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Block Sig Expr</em>' containment reference isn't clear,
-   * there really should be more of a description here...
-   * </p>
-   * <!-- end-user-doc -->
-   * @return the value of the '<em>Block Sig Expr</em>' containment reference.
-   * @see #setBlockSigExpr(SigExpr)
-   * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getDelayEvent_BlockSigExpr()
-   * @model containment="true"
-   * @generated
-   */
-  SigExpr getBlockSigExpr();
-
-  /**
-   * Sets the value of the '{@link de.cau.cs.kieler.esterel.esterel.DelayEvent#getBlockSigExpr <em>Block Sig Expr</em>}' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Block Sig Expr</em>' containment reference.
-   * @see #getBlockSigExpr()
-   * @generated
-   */
-  void setBlockSigExpr(SigExpr value);
+  void setExpr(Expression value);
 
 } // DelayEvent

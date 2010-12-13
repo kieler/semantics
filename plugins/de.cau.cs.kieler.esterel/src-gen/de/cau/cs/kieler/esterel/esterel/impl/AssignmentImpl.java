@@ -2,11 +2,14 @@
  * <copyright>
  * </copyright>
  *
+
  */
 package de.cau.cs.kieler.esterel.esterel.impl;
 
+import de.cau.cs.kieler.core.kexpressions.Expression;
+import de.cau.cs.kieler.core.kexpressions.IVariable;
+
 import de.cau.cs.kieler.esterel.esterel.Assignment;
-import de.cau.cs.kieler.esterel.esterel.DataExpr;
 import de.cau.cs.kieler.esterel.esterel.EsterelPackage;
 
 import org.eclipse.emf.common.notify.Notification;
@@ -24,7 +27,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.AssignmentImpl#getVariable <em>Variable</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.AssignmentImpl#getVar <em>Var</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.AssignmentImpl#getExpr <em>Expr</em>}</li>
  * </ul>
  * </p>
@@ -34,24 +37,14 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 public class AssignmentImpl extends StatementImpl implements Assignment
 {
   /**
-   * The default value of the '{@link #getVariable() <em>Variable</em>}' attribute.
+   * The cached value of the '{@link #getVar() <em>Var</em>}' reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getVariable()
+   * @see #getVar()
    * @generated
    * @ordered
    */
-  protected static final String VARIABLE_EDEFAULT = null;
-
-  /**
-   * The cached value of the '{@link #getVariable() <em>Variable</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getVariable()
-   * @generated
-   * @ordered
-   */
-  protected String variable = VARIABLE_EDEFAULT;
+  protected IVariable var;
 
   /**
    * The cached value of the '{@link #getExpr() <em>Expr</em>}' containment reference.
@@ -61,7 +54,7 @@ public class AssignmentImpl extends StatementImpl implements Assignment
    * @generated
    * @ordered
    */
-  protected DataExpr expr;
+  protected Expression expr;
 
   /**
    * <!-- begin-user-doc -->
@@ -89,9 +82,19 @@ public class AssignmentImpl extends StatementImpl implements Assignment
    * <!-- end-user-doc -->
    * @generated
    */
-  public String getVariable()
+  public IVariable getVar()
   {
-    return variable;
+    if (var != null && var.eIsProxy())
+    {
+      InternalEObject oldVar = (InternalEObject)var;
+      var = (IVariable)eResolveProxy(oldVar);
+      if (var != oldVar)
+      {
+        if (eNotificationRequired())
+          eNotify(new ENotificationImpl(this, Notification.RESOLVE, EsterelPackage.ASSIGNMENT__VAR, oldVar, var));
+      }
+    }
+    return var;
   }
 
   /**
@@ -99,12 +102,22 @@ public class AssignmentImpl extends StatementImpl implements Assignment
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setVariable(String newVariable)
+  public IVariable basicGetVar()
   {
-    String oldVariable = variable;
-    variable = newVariable;
+    return var;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setVar(IVariable newVar)
+  {
+    IVariable oldVar = var;
+    var = newVar;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.ASSIGNMENT__VARIABLE, oldVariable, variable));
+      eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.ASSIGNMENT__VAR, oldVar, var));
   }
 
   /**
@@ -112,7 +125,7 @@ public class AssignmentImpl extends StatementImpl implements Assignment
    * <!-- end-user-doc -->
    * @generated
    */
-  public DataExpr getExpr()
+  public Expression getExpr()
   {
     return expr;
   }
@@ -122,9 +135,9 @@ public class AssignmentImpl extends StatementImpl implements Assignment
    * <!-- end-user-doc -->
    * @generated
    */
-  public NotificationChain basicSetExpr(DataExpr newExpr, NotificationChain msgs)
+  public NotificationChain basicSetExpr(Expression newExpr, NotificationChain msgs)
   {
-    DataExpr oldExpr = expr;
+    Expression oldExpr = expr;
     expr = newExpr;
     if (eNotificationRequired())
     {
@@ -139,7 +152,7 @@ public class AssignmentImpl extends StatementImpl implements Assignment
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setExpr(DataExpr newExpr)
+  public void setExpr(Expression newExpr)
   {
     if (newExpr != expr)
     {
@@ -181,8 +194,9 @@ public class AssignmentImpl extends StatementImpl implements Assignment
   {
     switch (featureID)
     {
-      case EsterelPackage.ASSIGNMENT__VARIABLE:
-        return getVariable();
+      case EsterelPackage.ASSIGNMENT__VAR:
+        if (resolve) return getVar();
+        return basicGetVar();
       case EsterelPackage.ASSIGNMENT__EXPR:
         return getExpr();
     }
@@ -199,11 +213,11 @@ public class AssignmentImpl extends StatementImpl implements Assignment
   {
     switch (featureID)
     {
-      case EsterelPackage.ASSIGNMENT__VARIABLE:
-        setVariable((String)newValue);
+      case EsterelPackage.ASSIGNMENT__VAR:
+        setVar((IVariable)newValue);
         return;
       case EsterelPackage.ASSIGNMENT__EXPR:
-        setExpr((DataExpr)newValue);
+        setExpr((Expression)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -219,11 +233,11 @@ public class AssignmentImpl extends StatementImpl implements Assignment
   {
     switch (featureID)
     {
-      case EsterelPackage.ASSIGNMENT__VARIABLE:
-        setVariable(VARIABLE_EDEFAULT);
+      case EsterelPackage.ASSIGNMENT__VAR:
+        setVar((IVariable)null);
         return;
       case EsterelPackage.ASSIGNMENT__EXPR:
-        setExpr((DataExpr)null);
+        setExpr((Expression)null);
         return;
     }
     super.eUnset(featureID);
@@ -239,29 +253,12 @@ public class AssignmentImpl extends StatementImpl implements Assignment
   {
     switch (featureID)
     {
-      case EsterelPackage.ASSIGNMENT__VARIABLE:
-        return VARIABLE_EDEFAULT == null ? variable != null : !VARIABLE_EDEFAULT.equals(variable);
+      case EsterelPackage.ASSIGNMENT__VAR:
+        return var != null;
       case EsterelPackage.ASSIGNMENT__EXPR:
         return expr != null;
     }
     return super.eIsSet(featureID);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public String toString()
-  {
-    if (eIsProxy()) return super.toString();
-
-    StringBuffer result = new StringBuffer(super.toString());
-    result.append(" (variable: ");
-    result.append(variable);
-    result.append(')');
-    return result.toString();
   }
 
 } //AssignmentImpl

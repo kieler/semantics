@@ -2,14 +2,16 @@
  * <copyright>
  * </copyright>
  *
+
  */
 package de.cau.cs.kieler.esterel.esterel.impl;
 
-import de.cau.cs.kieler.esterel.esterel.DataExpr;
+import de.cau.cs.kieler.core.kexpressions.Expression;
+import de.cau.cs.kieler.core.kexpressions.IVariable;
+
 import de.cau.cs.kieler.esterel.esterel.EsterelPackage;
 import de.cau.cs.kieler.esterel.esterel.ProcCall;
 import de.cau.cs.kieler.esterel.esterel.Procedure;
-import de.cau.cs.kieler.esterel.esterel.VariableSingle;
 
 import java.util.Collection;
 
@@ -36,7 +38,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * <ul>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.ProcCallImpl#getProc <em>Proc</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.ProcCallImpl#getVarList <em>Var List</em>}</li>
- *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.ProcCallImpl#getExpr <em>Expr</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.ProcCallImpl#getKexpressions <em>Kexpressions</em>}</li>
  * </ul>
  * </p>
  *
@@ -62,17 +64,17 @@ public class ProcCallImpl extends StatementImpl implements ProcCall
    * @generated
    * @ordered
    */
-  protected EList<VariableSingle> varList;
+  protected EList<IVariable> varList;
 
   /**
-   * The cached value of the '{@link #getExpr() <em>Expr</em>}' containment reference list.
+   * The cached value of the '{@link #getKexpressions() <em>Kexpressions</em>}' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getExpr()
+   * @see #getKexpressions()
    * @generated
    * @ordered
    */
-  protected EList<DataExpr> expr;
+  protected EList<Expression> kexpressions;
 
   /**
    * <!-- begin-user-doc -->
@@ -143,11 +145,11 @@ public class ProcCallImpl extends StatementImpl implements ProcCall
    * <!-- end-user-doc -->
    * @generated
    */
-  public EList<VariableSingle> getVarList()
+  public EList<IVariable> getVarList()
   {
     if (varList == null)
     {
-      varList = new EObjectResolvingEList<VariableSingle>(VariableSingle.class, this, EsterelPackage.PROC_CALL__VAR_LIST);
+      varList = new EObjectResolvingEList<IVariable>(IVariable.class, this, EsterelPackage.PROC_CALL__VAR_LIST);
     }
     return varList;
   }
@@ -157,13 +159,13 @@ public class ProcCallImpl extends StatementImpl implements ProcCall
    * <!-- end-user-doc -->
    * @generated
    */
-  public EList<DataExpr> getExpr()
+  public EList<Expression> getKexpressions()
   {
-    if (expr == null)
+    if (kexpressions == null)
     {
-      expr = new EObjectContainmentEList<DataExpr>(DataExpr.class, this, EsterelPackage.PROC_CALL__EXPR);
+      kexpressions = new EObjectContainmentEList<Expression>(Expression.class, this, EsterelPackage.PROC_CALL__KEXPRESSIONS);
     }
-    return expr;
+    return kexpressions;
   }
 
   /**
@@ -176,8 +178,8 @@ public class ProcCallImpl extends StatementImpl implements ProcCall
   {
     switch (featureID)
     {
-      case EsterelPackage.PROC_CALL__EXPR:
-        return ((InternalEList<?>)getExpr()).basicRemove(otherEnd, msgs);
+      case EsterelPackage.PROC_CALL__KEXPRESSIONS:
+        return ((InternalEList<?>)getKexpressions()).basicRemove(otherEnd, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
@@ -197,8 +199,8 @@ public class ProcCallImpl extends StatementImpl implements ProcCall
         return basicGetProc();
       case EsterelPackage.PROC_CALL__VAR_LIST:
         return getVarList();
-      case EsterelPackage.PROC_CALL__EXPR:
-        return getExpr();
+      case EsterelPackage.PROC_CALL__KEXPRESSIONS:
+        return getKexpressions();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -219,11 +221,11 @@ public class ProcCallImpl extends StatementImpl implements ProcCall
         return;
       case EsterelPackage.PROC_CALL__VAR_LIST:
         getVarList().clear();
-        getVarList().addAll((Collection<? extends VariableSingle>)newValue);
+        getVarList().addAll((Collection<? extends IVariable>)newValue);
         return;
-      case EsterelPackage.PROC_CALL__EXPR:
-        getExpr().clear();
-        getExpr().addAll((Collection<? extends DataExpr>)newValue);
+      case EsterelPackage.PROC_CALL__KEXPRESSIONS:
+        getKexpressions().clear();
+        getKexpressions().addAll((Collection<? extends Expression>)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -245,8 +247,8 @@ public class ProcCallImpl extends StatementImpl implements ProcCall
       case EsterelPackage.PROC_CALL__VAR_LIST:
         getVarList().clear();
         return;
-      case EsterelPackage.PROC_CALL__EXPR:
-        getExpr().clear();
+      case EsterelPackage.PROC_CALL__KEXPRESSIONS:
+        getKexpressions().clear();
         return;
     }
     super.eUnset(featureID);
@@ -266,8 +268,8 @@ public class ProcCallImpl extends StatementImpl implements ProcCall
         return proc != null;
       case EsterelPackage.PROC_CALL__VAR_LIST:
         return varList != null && !varList.isEmpty();
-      case EsterelPackage.PROC_CALL__EXPR:
-        return expr != null && !expr.isEmpty();
+      case EsterelPackage.PROC_CALL__KEXPRESSIONS:
+        return kexpressions != null && !kexpressions.isEmpty();
     }
     return super.eIsSet(featureID);
   }

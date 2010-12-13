@@ -2,11 +2,13 @@
  * <copyright>
  * </copyright>
  *
+
  */
 package de.cau.cs.kieler.esterel.esterel.impl;
 
+import de.cau.cs.kieler.core.kexpressions.ISignal;
+
 import de.cau.cs.kieler.esterel.esterel.EsterelPackage;
-import de.cau.cs.kieler.esterel.esterel.TrapDecl;
 import de.cau.cs.kieler.esterel.esterel.TrapDeclList;
 
 import java.util.Collection;
@@ -30,7 +32,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.TrapDeclListImpl#getTrapDecl <em>Trap Decl</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.TrapDeclListImpl#getTrapDecls <em>Trap Decls</em>}</li>
  * </ul>
  * </p>
  *
@@ -39,14 +41,14 @@ import org.eclipse.emf.ecore.util.InternalEList;
 public class TrapDeclListImpl extends MinimalEObjectImpl.Container implements TrapDeclList
 {
   /**
-   * The cached value of the '{@link #getTrapDecl() <em>Trap Decl</em>}' containment reference list.
+   * The cached value of the '{@link #getTrapDecls() <em>Trap Decls</em>}' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getTrapDecl()
+   * @see #getTrapDecls()
    * @generated
    * @ordered
    */
-  protected EList<TrapDecl> trapDecl;
+  protected EList<ISignal> trapDecls;
 
   /**
    * <!-- begin-user-doc -->
@@ -74,13 +76,13 @@ public class TrapDeclListImpl extends MinimalEObjectImpl.Container implements Tr
    * <!-- end-user-doc -->
    * @generated
    */
-  public EList<TrapDecl> getTrapDecl()
+  public EList<ISignal> getTrapDecls()
   {
-    if (trapDecl == null)
+    if (trapDecls == null)
     {
-      trapDecl = new EObjectContainmentEList<TrapDecl>(TrapDecl.class, this, EsterelPackage.TRAP_DECL_LIST__TRAP_DECL);
+      trapDecls = new EObjectContainmentEList<ISignal>(ISignal.class, this, EsterelPackage.TRAP_DECL_LIST__TRAP_DECLS);
     }
-    return trapDecl;
+    return trapDecls;
   }
 
   /**
@@ -93,8 +95,8 @@ public class TrapDeclListImpl extends MinimalEObjectImpl.Container implements Tr
   {
     switch (featureID)
     {
-      case EsterelPackage.TRAP_DECL_LIST__TRAP_DECL:
-        return ((InternalEList<?>)getTrapDecl()).basicRemove(otherEnd, msgs);
+      case EsterelPackage.TRAP_DECL_LIST__TRAP_DECLS:
+        return ((InternalEList<?>)getTrapDecls()).basicRemove(otherEnd, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
@@ -109,8 +111,8 @@ public class TrapDeclListImpl extends MinimalEObjectImpl.Container implements Tr
   {
     switch (featureID)
     {
-      case EsterelPackage.TRAP_DECL_LIST__TRAP_DECL:
-        return getTrapDecl();
+      case EsterelPackage.TRAP_DECL_LIST__TRAP_DECLS:
+        return getTrapDecls();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -126,9 +128,9 @@ public class TrapDeclListImpl extends MinimalEObjectImpl.Container implements Tr
   {
     switch (featureID)
     {
-      case EsterelPackage.TRAP_DECL_LIST__TRAP_DECL:
-        getTrapDecl().clear();
-        getTrapDecl().addAll((Collection<? extends TrapDecl>)newValue);
+      case EsterelPackage.TRAP_DECL_LIST__TRAP_DECLS:
+        getTrapDecls().clear();
+        getTrapDecls().addAll((Collection<? extends ISignal>)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -144,8 +146,8 @@ public class TrapDeclListImpl extends MinimalEObjectImpl.Container implements Tr
   {
     switch (featureID)
     {
-      case EsterelPackage.TRAP_DECL_LIST__TRAP_DECL:
-        getTrapDecl().clear();
+      case EsterelPackage.TRAP_DECL_LIST__TRAP_DECLS:
+        getTrapDecls().clear();
         return;
     }
     super.eUnset(featureID);
@@ -161,8 +163,8 @@ public class TrapDeclListImpl extends MinimalEObjectImpl.Container implements Tr
   {
     switch (featureID)
     {
-      case EsterelPackage.TRAP_DECL_LIST__TRAP_DECL:
-        return trapDecl != null && !trapDecl.isEmpty();
+      case EsterelPackage.TRAP_DECL_LIST__TRAP_DECLS:
+        return trapDecls != null && !trapDecls.isEmpty();
     }
     return super.eIsSet(featureID);
   }

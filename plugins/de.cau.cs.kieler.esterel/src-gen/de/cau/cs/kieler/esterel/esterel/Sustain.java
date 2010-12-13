@@ -2,9 +2,12 @@
  * <copyright>
  * </copyright>
  *
+
  */
 package de.cau.cs.kieler.esterel.esterel;
 
+import de.cau.cs.kieler.core.kexpressions.Expression;
+import de.cau.cs.kieler.core.kexpressions.ISignal;
 
 /**
  * <!-- begin-user-doc -->
@@ -35,12 +38,12 @@ public interface Sustain extends Statement
    * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Signal</em>' reference.
-   * @see #setSignal(Signal)
+   * @see #setSignal(ISignal)
    * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getSustain_Signal()
    * @model
    * @generated
    */
-  Signal getSignal();
+  ISignal getSignal();
 
   /**
    * Sets the value of the '{@link de.cau.cs.kieler.esterel.esterel.Sustain#getSignal <em>Signal</em>}' reference.
@@ -50,7 +53,7 @@ public interface Sustain extends Statement
    * @see #getSignal()
    * @generated
    */
-  void setSignal(Signal value);
+  void setSignal(ISignal value);
 
   /**
    * Returns the value of the '<em><b>Tick</b></em>' attribute.
@@ -87,12 +90,12 @@ public interface Sustain extends Statement
    * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Data Expr</em>' containment reference.
-   * @see #setDataExpr(DataExpr)
+   * @see #setDataExpr(Expression)
    * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getSustain_DataExpr()
    * @model containment="true"
    * @generated
    */
-  DataExpr getDataExpr();
+  Expression getDataExpr();
 
   /**
    * Sets the value of the '{@link de.cau.cs.kieler.esterel.esterel.Sustain#getDataExpr <em>Data Expr</em>}' containment reference.
@@ -102,6 +105,6 @@ public interface Sustain extends Statement
    * @see #getDataExpr()
    * @generated
    */
-  void setDataExpr(DataExpr value);
+  void setDataExpr(Expression value);
 
 } // Sustain

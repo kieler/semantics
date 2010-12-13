@@ -2,6 +2,7 @@
  * <copyright>
  * </copyright>
  *
+
  */
 package de.cau.cs.kieler.esterel.esterel.impl;
 
@@ -30,7 +31,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.ModuleBodyImpl#getStatement <em>Statement</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.esterel.esterel.impl.ModuleBodyImpl#getStatements <em>Statements</em>}</li>
  * </ul>
  * </p>
  *
@@ -39,14 +40,14 @@ import org.eclipse.emf.ecore.util.InternalEList;
 public class ModuleBodyImpl extends MinimalEObjectImpl.Container implements ModuleBody
 {
   /**
-   * The cached value of the '{@link #getStatement() <em>Statement</em>}' containment reference list.
+   * The cached value of the '{@link #getStatements() <em>Statements</em>}' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getStatement()
+   * @see #getStatements()
    * @generated
    * @ordered
    */
-  protected EList<Statement> statement;
+  protected EList<Statement> statements;
 
   /**
    * <!-- begin-user-doc -->
@@ -74,13 +75,13 @@ public class ModuleBodyImpl extends MinimalEObjectImpl.Container implements Modu
    * <!-- end-user-doc -->
    * @generated
    */
-  public EList<Statement> getStatement()
+  public EList<Statement> getStatements()
   {
-    if (statement == null)
+    if (statements == null)
     {
-      statement = new EObjectContainmentEList<Statement>(Statement.class, this, EsterelPackage.MODULE_BODY__STATEMENT);
+      statements = new EObjectContainmentEList<Statement>(Statement.class, this, EsterelPackage.MODULE_BODY__STATEMENTS);
     }
-    return statement;
+    return statements;
   }
 
   /**
@@ -93,8 +94,8 @@ public class ModuleBodyImpl extends MinimalEObjectImpl.Container implements Modu
   {
     switch (featureID)
     {
-      case EsterelPackage.MODULE_BODY__STATEMENT:
-        return ((InternalEList<?>)getStatement()).basicRemove(otherEnd, msgs);
+      case EsterelPackage.MODULE_BODY__STATEMENTS:
+        return ((InternalEList<?>)getStatements()).basicRemove(otherEnd, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
@@ -109,8 +110,8 @@ public class ModuleBodyImpl extends MinimalEObjectImpl.Container implements Modu
   {
     switch (featureID)
     {
-      case EsterelPackage.MODULE_BODY__STATEMENT:
-        return getStatement();
+      case EsterelPackage.MODULE_BODY__STATEMENTS:
+        return getStatements();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -126,9 +127,9 @@ public class ModuleBodyImpl extends MinimalEObjectImpl.Container implements Modu
   {
     switch (featureID)
     {
-      case EsterelPackage.MODULE_BODY__STATEMENT:
-        getStatement().clear();
-        getStatement().addAll((Collection<? extends Statement>)newValue);
+      case EsterelPackage.MODULE_BODY__STATEMENTS:
+        getStatements().clear();
+        getStatements().addAll((Collection<? extends Statement>)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -144,8 +145,8 @@ public class ModuleBodyImpl extends MinimalEObjectImpl.Container implements Modu
   {
     switch (featureID)
     {
-      case EsterelPackage.MODULE_BODY__STATEMENT:
-        getStatement().clear();
+      case EsterelPackage.MODULE_BODY__STATEMENTS:
+        getStatements().clear();
         return;
     }
     super.eUnset(featureID);
@@ -161,8 +162,8 @@ public class ModuleBodyImpl extends MinimalEObjectImpl.Container implements Modu
   {
     switch (featureID)
     {
-      case EsterelPackage.MODULE_BODY__STATEMENT:
-        return statement != null && !statement.isEmpty();
+      case EsterelPackage.MODULE_BODY__STATEMENTS:
+        return statements != null && !statements.isEmpty();
     }
     return super.eIsSet(featureID);
   }

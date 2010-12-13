@@ -2,6 +2,7 @@
  * <copyright>
  * </copyright>
  *
+
  */
 package de.cau.cs.kieler.esterel.esterel;
 
@@ -16,6 +17,7 @@ package de.cau.cs.kieler.esterel.esterel;
  * <ul>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.Present#getBody <em>Body</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.esterel.Present#getElsePart <em>Else Part</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.esterel.esterel.Present#getOptEnd <em>Opt End</em>}</li>
  * </ul>
  * </p>
  *
@@ -76,5 +78,31 @@ public interface Present extends Statement
    * @generated
    */
   void setElsePart(ElsePart value);
+
+  /**
+   * Returns the value of the '<em><b>Opt End</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Opt End</em>' attribute isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Opt End</em>' attribute.
+   * @see #setOptEnd(String)
+   * @see de.cau.cs.kieler.esterel.esterel.EsterelPackage#getPresent_OptEnd()
+   * @model
+   * @generated
+   */
+  String getOptEnd();
+
+  /**
+   * Sets the value of the '{@link de.cau.cs.kieler.esterel.esterel.Present#getOptEnd <em>Opt End</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Opt End</em>' attribute.
+   * @see #getOptEnd()
+   * @generated
+   */
+  void setOptEnd(String value);
 
 } // Present
