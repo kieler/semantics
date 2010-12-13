@@ -936,7 +936,7 @@ Void extractLocalVariables(VariableDecl decl, State s):
 	vars.addVariableToState(s)
 ; 
 
-Void addVariableToState(expressions::Variable v, State s):
+Void addVariableToState(kexpressions::Variable v, State s):
 	s.variables.add(v)
 ;
 
